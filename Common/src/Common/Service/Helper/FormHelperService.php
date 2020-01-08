@@ -4,6 +4,8 @@ namespace Common\Service\Helper;
 
 use Common\Form\Elements\Types\Address;
 use Common\Service\Table\TableBuilder;
+use Dvsa\Olcs\CompaniesHouse\Service\Exception\ServiceException;
+use Dvsa\Olcs\Transfer\Query\CompaniesHouse\ByNumber;
 use Zend\Form\Element;
 use Zend\Form\Element\Checkbox;
 use Zend\Form\Element\DateSelect;
@@ -32,9 +34,6 @@ class FormHelperService extends AbstractHelperService
     const ALTER_LABEL_RESET = 0;
     const ALTER_LABEL_APPEND = 1;
     const ALTER_LABEL_PREPEND = 2;
-
-    const MIN_COMPANY_NUMBER_LENGTH = 1;
-    const MAX_COMPANY_NUMBER_LENGTH = 8;
 
     /**
      * Create a form
@@ -729,80 +728,39 @@ class FormHelperService extends AbstractHelperService
      */
     public function processCompanyNumberLookupForm(Form $form, $data, $detailsFieldset, $addressFieldset = null)
     {
-        $companyNumber = $data[$detailsFieldset]['companyNumber']['company_number'];
-        if (strlen($companyNumber) >= self::MIN_COMPANY_NUMBER_LENGTH &&
-            strlen($companyNumber) <= self::MAX_COMPANY_NUMBER_LENGTH) {
-            list($result, $message) = $this->doCompanySearch($companyNumber);
-
-            // company not found so let's try alternative search with/without leading zero
-            if (!isset($message) && !$result['Count']) {
-                if (substr($companyNumber, 0, 1) === '0' && strlen($companyNumber) == self::MAX_COMPANY_NUMBER_LENGTH) {
-                    $companyNumber = ltrim($companyNumber, '0');
-                } else {
-                    $companyNumber = str_pad($companyNumber, self::MAX_COMPANY_NUMBER_LENGTH, "0", STR_PAD_LEFT);
-                }
-                if (strlen($companyNumber) >= self::MIN_COMPANY_NUMBER_LENGTH &&
-                    strlen($companyNumber) <= self::MAX_COMPANY_NUMBER_LENGTH) {
-                    list($result, $message) = $this->doCompanySearch($companyNumber);
-                }
-            }
-
-            if (isset($result) && $result['Count'] === 1) {
-                $form->get($detailsFieldset)->get('name')->setValue($result['Results'][0]['CompanyName']);
-
-                if ($addressFieldset && isset($result['Results'][0]['RegAddress']['AddressLine'])) {
-                    $this->populateRegisteredAddressFieldset(
-                        $form->get($addressFieldset),
-                        $result['Results'][0]['RegAddress']['AddressLine']
-                    );
-                }
-
-                return;
-            }
-
-            if (!isset($message)) {
-                $message = 'company_number.search_no_results.error';
-            }
-        } else {
-            $message = 'company_number.length.validation.error';
+        if (empty($data) && !isset($data['results'])) {
+            $this->setCompanyNotFoundError($form, $detailsFieldset);
+            return;
         }
 
-        $translator = $this->getServiceLocator()->get('translator');
+        $result = $data['results'][0];
+        $form->get($detailsFieldset)->get('name')->setValue($result['company_name'] ?? '');
 
-        $form->get($detailsFieldset)->get('companyNumber')->setMessages(
-            array(
-                'company_number' => array($translator->translate($message)),
-            )
-        );
+        if ($addressFieldset && isset($result['registered_office_address'])) {
+            $this->populateRegisteredAddressFieldset(
+                $form->get($addressFieldset),
+                $result['registered_office_address']
+            );
+        }
     }
 
-    /**
-     * Do Company Search
-     *
-     * @param string $companyNumber Company number
-     *
-     * @return array
-     */
-    protected function doCompanySearch($companyNumber)
+    public function setCompanyNotFoundError($form, $detailsFieldset)
     {
-        $result = null;
-        $message = null;
-        try {
-            $result = $this->getServiceLocator()
-                ->get('Data\CompaniesHouse')
-                ->search('companyDetails', $companyNumber);
-        } catch (\Exception $e) {
-            // ResponseHelper throws root-level exceptions so can't be more specific here :(
-            $message = 'company_number.search_error.error';
-        }
-        return [$result, $message];
+        $message = 'company_number.search_no_results.error';
+        $this->setCompaniesHouseFormMessage($form, $detailsFieldset, $message);
+    }
+
+    public function setInvalidCompanyNumberErrors($form, $detailsFieldset)
+    {
+        $message = 'company_number.length.validation.error';
+        $this->setCompaniesHouseFormMessage($form, $detailsFieldset, $message);
     }
 
     /**
      * Remove a value option from an element
      *
      * @param \Zend\Form\Element\(Select|Radio) $element Select element or a Radio group
-     * @param string                            $index   Index
+     * @param string $index Index
      *
      * @return void
      */
@@ -820,7 +778,7 @@ class FormHelperService extends AbstractHelperService
      * Set current option of element
      *
      * @param \Zend\Form\Element\(Select|Radio) $element Select element or a Radio group
-     * @param string                            $index   Index
+     * @param string $index Index
      *
      * @return void
      */
@@ -944,24 +902,22 @@ class FormHelperService extends AbstractHelperService
      *
      * @return \Zend\Form\Fieldset
      */
-    public function populateRegisteredAddressFieldset($fieldset, $data)
+    protected function populateRegisteredAddressFieldset($fieldset, $data)
     {
-        // parse out postcode from address data
-        $postcode = '';
+        $postal_code = $data['postal_code'] ?? '';
         $postcodeValidator = new PostcodeValidator(['locale' => 'en-GB']);
-        foreach ($data as $key => $datum) {
-            if ($postcodeValidator->isValid($datum)) {
-                $postcode = $datum;
-                unset($data[$key]);
-            }
+        $addressData['postcode'] = $postcodeValidator->isValid($postal_code) ? $postal_code : '';
+
+        $mappedFields = [
+            'locality' => 'town',
+            'address_line_1' => 'addressLine1',
+            'address_line_2' => 'addressLine2',
+            'address_line_3' => 'addressLine3',
+            'address_line_4' => 'addressLine4',
+        ];
+        foreach ($mappedFields as $key => $value) {
+            $addressData[$value] = $data[$key] ?? '';
         }
-
-        // populate remaining fields in order
-        $fields = ['addressLine1', 'addressLine2', 'addressLine3', 'addressLine4', 'town'];
-        $data = array_pad($data, count($fields), '');
-        $addressData = array_combine($fields, $data);
-
-        $addressData['postcode'] = $postcode;
 
         foreach ($addressData as $field => $value) {
             $fieldset->get($field)->setValue($value);
@@ -1003,7 +959,7 @@ class FormHelperService extends AbstractHelperService
      * Remove Value Option
      *
      * @param \Zend\Form\Element\(Select|Radio) $element Element (Select|Radio)
-     * @param string                            $key     Key
+     * @param string $key Key
      *
      * @return void
      */
@@ -1014,5 +970,21 @@ class FormHelperService extends AbstractHelperService
         unset($options[$key]);
 
         $element->setValueOptions($options);
+    }
+
+    /**
+     * @param        $form
+     * @param        $detailsFieldset
+     * @param string $message
+     */
+    protected function setCompaniesHouseFormMessage($form, $detailsFieldset, string $message)
+    {
+        $translator = $this->getServiceLocator()->get('translator');
+
+        $form->get($detailsFieldset)->get('companyNumber')->setMessages(
+            array(
+                'company_number' => array($translator->translate($message)),
+            )
+        );
     }
 }
