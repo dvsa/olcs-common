@@ -5,7 +5,9 @@ namespace Common\Controller\Lva;
 use Common\Controller\Lva\Traits\CrudTableTrait;
 use Common\Data\Mapper\Lva\BusinessDetails as Mapper;
 use Common\Data\Mapper\Lva\CompanySubsidiary as CompanySubsidiaryMapper;
+use Common\Service\Cqrs\Exception\NotFoundException;
 use Dvsa\Olcs\Transfer\Command as TransferCmd;
+use Dvsa\Olcs\Transfer\Query\CompaniesHouse\ByNumber;
 use Dvsa\Olcs\Transfer\Query\CompanySubsidiary\CompanySubsidiary;
 use Dvsa\Olcs\Transfer\Query\Licence\BusinessDetails;
 use Dvsa\Olcs\Transfer\Query\QueryInterface;
@@ -19,7 +21,7 @@ use Zend\Form\Form;
 abstract class AbstractBusinessDetailsController extends AbstractController
 {
     use CrudTableTrait;
-
+    const COMPANY_NUMBER_LENGTH = 8;
     protected $section = 'business_details';
     protected $baseRoute = 'lva-%s/business_details';
 
@@ -67,10 +69,35 @@ abstract class AbstractBusinessDetailsController extends AbstractController
             return $this->renderForm($form);
         }
 
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+
+        $detailsFieldset = 'data';
         // If we are performing a company number lookup
         if (isset($data['data']['companyNumber']['submit_lookup_company'])) {
-            $this->getServiceLocator()->get('Helper\Form')
-                ->processCompanyNumberLookupForm($form, $data, 'data', 'registeredAddress');
+            $companyNumber = $data['data']['companyNumber']['company_number'];
+
+            if (!$this->isValidCompanyNumber($companyNumber)) {
+                $formHelper->setInvalidCompanyNumberErrors($form, $detailsFieldset);
+                return $this->renderForm($form);
+            }
+
+            try {
+                $response = $this->handleQuery(ByNumber::create(['companyNumber' => $companyNumber]));
+            } catch (NotFoundException $exception) {
+                $formHelper->setCompanyNotFoundError($form, $detailsFieldset);
+                return $this->renderForm($form);
+            }
+
+            if ($response->isOk()) {
+                $formHelper->processCompanyNumberLookupForm(
+                    $form,
+                    $response->getResult(),
+                    $detailsFieldset,
+                    'registeredAddress'
+                );
+            } else {
+                $formHelper->setCompanyNotFoundError($form, $detailsFieldset);
+            }
 
             return $this->renderForm($form);
         }
@@ -228,8 +255,8 @@ abstract class AbstractBusinessDetailsController extends AbstractController
      * User has pressed 'Add another' on trading names
      * So we need to duplicate the trading names field to produce another input
      *
-     * @param array             $tradingNames Trading names
-     * @param \Common\Form\Form $form         Form
+     * @param array $tradingNames Trading names
+     * @param \Common\Form\Form $form Form
      *
      * @return void
      */
@@ -333,8 +360,8 @@ abstract class AbstractBusinessDetailsController extends AbstractController
     /**
      * Populate tables
      *
-     * @param \Common\Form\Form $form    Form
-     * @param array             $orgData Data
+     * @param \Common\Form\Form $form Form
+     * @param array $orgData Data
      *
      * @return void
      */
@@ -383,7 +410,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
     /**
      * Map errors
      *
-     * @param Form  $form   Form
+     * @param Form $form Form
      * @param array $errors Errors
      *
      * @return void
@@ -406,5 +433,10 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         }
 
         $form->setMessages($formMessages);
+    }
+
+    private function isValidCompanyNumber($companyNumber)
+    {
+        return strlen($companyNumber) == self::COMPANY_NUMBER_LENGTH;
     }
 }

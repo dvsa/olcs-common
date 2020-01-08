@@ -2,19 +2,20 @@
 
 namespace CommonTest\Service\Helper;
 
-use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Helper\FormHelperService;
+use Common\Service\Helper\TranslationHelperService;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Form\Element\Select;
 use Zend\Form\FormInterface;
 use Zend\InputFilter\InputFilterInterface;
 
 /**
-* @covers \Common\Service\Helper\FormHelperService
+ * @covers \Common\Service\Helper\FormHelperService
  */
 class FormHelperServiceTest extends MockeryTestCase
 {
-    /** @var FormHelperService  */
+    /** @var FormHelperService */
     private $sut;
     /** @var \Zend\ServiceManager\ServiceLocatorInterface | m\MockInterface */
     private $mockSm;
@@ -30,8 +31,6 @@ class FormHelperServiceTest extends MockeryTestCase
     private $mockTransSrv;
     /** @var  \Common\Service\Data\AddressDataService| m\MockInterface */
     private $mockDataAddress;
-    /** @var  \Common\Service\Data\CompaniesHouseDataService | m\MockInterface */
-    private $mockDataCompHouse;
 
     public function setUp()
     {
@@ -42,7 +41,6 @@ class FormHelperServiceTest extends MockeryTestCase
         $this->mockRenderer = m::mock(\Zend\View\Renderer\RendererInterface::class);
         $this->mockHlpAddr = m::mock(\Common\Service\Helper\AddressHelperService::class);
 
-        $this->mockDataCompHouse = m::mock(\Common\Service\Data\CompaniesHouseDataService::class);
         $this->mockDataAddress = m::mock(\Common\Service\Data\AddressDataService::class);
 
         $this->mockSm = m::mock(\Zend\ServiceManager\ServiceLocatorInterface::class);
@@ -53,8 +51,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->shouldReceive('get')->with('Helper\Translation')->andReturn($this->mockTransSrv)
             ->shouldReceive('get')->with('translator')->andReturn($this->mockTransSrv)
             ->shouldReceive('get')->with('Helper\Address')->andReturn($this->mockHlpAddr)
-            ->shouldReceive('get')->with('Data\Address')->andReturn($this->mockDataAddress)
-            ->shouldReceive('get')->with('Data\CompaniesHouse')->andReturn($this->mockDataCompHouse);
+            ->shouldReceive('get')->with('Data\Address')->andReturn($this->mockDataAddress);
 
         $this->sut = new FormHelperService();
         $this->sut->setServiceLocator($this->mockSm);
@@ -468,11 +465,11 @@ class FormHelperServiceTest extends MockeryTestCase
             ->andReturn(
                 [
                     m::mock('Zend\Form\Fieldset')
-                    ->shouldReceive('getName')
-                    ->andReturn('nested')
-                    ->shouldReceive('getFieldsets')
-                    ->andReturn([$fieldset])
-                    ->getMock()
+                        ->shouldReceive('getName')
+                        ->andReturn('nested')
+                        ->shouldReceive('getFieldsets')
+                        ->andReturn([$fieldset])
+                        ->getMock()
                 ]
             );
 
@@ -1030,43 +1027,20 @@ class FormHelperServiceTest extends MockeryTestCase
         $this->sut->removeFieldList($form, 'foo', ['bar']);
     }
 
-    public function testProcessCompanyLookupValidData()
+    /**
+     * @dataProvider companyProfileProvider
+     */
+    public function testProcessCompanyLookupValidData($companyProfile, $expected)
     {
-        $this->mockDataCompHouse
-            ->shouldReceive('search')
-            ->with('companyDetails', '12345678')
-            ->andReturn(
-                [
-                    'Count' => 1,
-                    'Results' => [
-                        [
-                            'CompanyName' => 'Looked Up Company',
-                            'RegAddress' => [
-                                'AddressLine' => [
-                                    'MILLENNIUM STADIUM',
-                                    'WESTGATE STREET',
-                                    'CARDIFF',
-                                    'CF10 1NS',
-                                ],
-                            ],
-                        ],
-                    ],
-                ]
-            )
-            ->getMock();
-
         $form = m::mock('Zend\Form\Form');
 
         $data = [
-            'data' => [
-                'companyNumber' => [
-                    'company_number' => '12345678'
-                ]
+            'results' => [
+                $companyProfile
             ]
         ];
-
         $nameElement = m::mock()->shouldReceive('setValue')
-            ->with('Looked Up Company')
+            ->with($expected['name'])
             ->getMock();
 
         $fieldset = m::mock()->shouldReceive('get')
@@ -1078,38 +1052,14 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with('data')
             ->andReturn($fieldset);
 
-        $addressFieldset = m::mock()
-            ->shouldReceive('get')
-            ->with('postcode')
-            ->andReturn(
-                m::mock()->shouldReceive('setValue')->with('CF10 1NS')->getMock()
-            )
-            ->shouldReceive('get')
-            ->with('addressLine1')
-            ->andReturn(
-                m::mock()->shouldReceive('setValue')->with('MILLENNIUM STADIUM')->getMock()
-            )
-            ->shouldReceive('get')
-            ->with('addressLine2')
-            ->andReturn(
-                m::mock()->shouldReceive('setValue')->with('WESTGATE STREET')->getMock()
-            )
-            ->shouldReceive('get')
-            ->with('addressLine3')
-            ->andReturn(
-                m::mock()->shouldReceive('setValue')->with('CARDIFF')->getMock()
-            )
-            ->shouldReceive('get')
-            ->with('addressLine4')
-            ->andReturn(
-                m::mock()->shouldReceive('setValue')->with('')->getMock()
-            )
-            ->shouldReceive('get')
-            ->with('town')
-            ->andReturn(
-                m::mock()->shouldReceive('setValue')->with('')->getMock()
-            )
-            ->getMock();
+        $addressFieldset = m::mock();
+        foreach ($expected['address'] as $key => $value) {
+            $addressFieldset->shouldReceive('get')
+                ->with($key)
+                ->andReturn(
+                    m::mock()->shouldReceive('setValue')->with($value)->getMock()
+                );
+        }
 
         $form->shouldReceive('get')
             ->with('registeredAddress')
@@ -1118,186 +1068,134 @@ class FormHelperServiceTest extends MockeryTestCase
         $this->sut->processCompanyNumberLookupForm($form, $data, 'data', 'registeredAddress');
     }
 
-    /**
-     * @dataProvider companyNumberProvider
-     */
-    public function testProcessCompanyLookupWithNoResults($firstNumber, $secondNumber)
-    {
-        $service = m::mock()
-            ->shouldReceive('search')
-            ->with('companyDetails', $firstNumber)
-            ->andReturn(
-                [
-                    'Count' => 0,
-                    'Results' => []
-                ]
-            )
-            ->once()
-            ->shouldReceive('search')
-            ->with('companyDetails', $secondNumber)
-            ->andReturn(
-                [
-                    'Count' => 0,
-                    'Results' => []
-                ]
-            )
-            ->once()
-            ->getMock();
-
-        $translator = m::mock()
-            ->shouldReceive('translate')
-            ->with('company_number.search_no_results.error')
-            ->andReturn('No results')
-            ->getMock();
-
-        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
-            ->shouldReceive('get')
-            ->with('Data\CompaniesHouse')
-            ->andReturn($service)
-            ->shouldReceive('get')
-            ->with('translator')
-            ->andReturn($translator)
-            ->getMock();
-
-        $this->sut->setServiceLocator($sm);
-
-        $form = m::mock('Zend\Form\Form');
-
-        $data = [
-            'data' => [
-                'companyNumber' => [
-                    'company_number' => $firstNumber
-                ]
-            ]
-        ];
-
-        $numberElement = m::mock()->shouldReceive('setMessages')
-            ->with(
-                [
-                    'company_number' => ['No results']
-                ]
-            )
-            ->getMock();
-
-        $fieldset = m::mock()->shouldReceive('get')
-            ->with('companyNumber')
-            ->andReturn($numberElement)
-            ->getMock();
-
-        $form->shouldReceive('get')
-            ->with('data')
-            ->andReturn($fieldset);
-
-        $this->sut->processCompanyNumberLookupForm($form, $data, 'data');
-    }
-
-    public function companyNumberProvider()
+    public function companyProfileProvider()
     {
         return [
-            ['01234567', '1234567'],
-            ['1234567', '01234567'],
+            'full profile data' => [
+                'companyProfile' => [
+                    'company_name' => 'Acme Ltd',
+                    'registered_office_address' => [
+                        'postal_code' => 'CF10 1NS',
+                        'locality' => 'CARDIFF',
+                        'address_line_1' => 'MILLENNIUM STADIUM',
+                        'address_line_2' => 'WESTGATE STREET',
+                        'address_line_3' => 'In a town',
+                        'address_line_4' => 'Somewhere',
+                    ]
+                ],
+                'expected' => [
+                    'name' => 'Acme Ltd',
+                    'address' => [
+                        'postcode' => 'CF10 1NS',
+                        'town' => 'CARDIFF',
+                        'addressLine1' => 'MILLENNIUM STADIUM',
+                        'addressLine2' => 'WESTGATE STREET',
+                        'addressLine3' => 'In a town',
+                        'addressLine4' => 'Somewhere',
+                    ]
+                ]
+            ],
+            'missing company name' => [
+                'companyProfile' => [
+                    'registered_office_address' => [
+                        'postal_code' => 'CF10 1NS',
+                        'locality' => 'CARDIFF',
+                        'address_line_1' => 'MILLENNIUM STADIUM',
+                        'address_line_2' => 'WESTGATE STREET',
+                        'address_line_3' => 'In a town',
+                        'address_line_4' => 'Somewhere',
+                    ]
+                ],
+                'expected' => [
+                    'name' => '',
+                    'address' => [
+                        'postcode' => 'CF10 1NS',
+                        'town' => 'CARDIFF',
+                        'addressLine1' => 'MILLENNIUM STADIUM',
+                        'addressLine2' => 'WESTGATE STREET',
+                        'addressLine3' => 'In a town',
+                        'addressLine4' => 'Somewhere',
+                    ]
+                ]
+            ],
+            'partial address' => [
+                'companyProfile' => [
+                    'company_name' => 'Acme Ltd',
+                    'registered_office_address' => [
+                        'postal_code' => 'CF10 1NS',
+                        'locality' => 'CARDIFF',
+                        'address_line_1' => 'MILLENNIUM STADIUM',
+                    ]
+                ],
+                'expected' => [
+                    'name' => 'Acme Ltd',
+                    'address' => [
+                        'postcode' => 'CF10 1NS',
+                        'town' => 'CARDIFF',
+                        'addressLine1' => 'MILLENNIUM STADIUM',
+                        'addressLine2' => '',
+                        'addressLine3' => '',
+                        'addressLine4' => '',
+                    ]
+                ]
+            ],
+            'missing address' => [
+                'companyProfile' => [
+                    'company_name' => 'Acme Ltd',
+                ],
+                'expected' => [
+                    'name' => 'Acme Ltd',
+                    'address' => [
+                    ]
+                ]
+            ],
         ];
     }
 
-    public function testProcessCompanyLookupInvalidNumber()
+    public function testProcessCompanyLookupInvalidData()
     {
-        $translator = m::mock()
-            ->shouldReceive('translate')
-            ->with('company_number.length.validation.error')
-            ->andReturn('Bad length')
-            ->getMock();
+        $form = $this->createMockFormForCompanyErrors('company_number.search_no_results.error', 'data');
+        $this->sut->processCompanyNumberLookupForm($form, [], 'data', 'registeredAddress');
+    }
 
-        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
-            ->shouldReceive('get')
-            ->with('translator')
-            ->andReturn($translator)
-            ->getMock();
+    public function testSetCompanyNotFoundError()
+    {
+        $form = $this->createMockFormForCompanyErrors('company_number.search_no_results.error', 'data');
+        $this->sut->setCompanyNotFoundError($form, 'data');
+    }
 
-        $this->sut->setServiceLocator($sm);
+    public function testSetInvalidCompanyNumberErrors()
+    {
+        $form = $this->createMockFormForCompanyErrors('company_number.length.validation.error', 'data');
+        $this->sut->setInvalidCompanyNumberErrors($form, 'data');
+    }
 
+    protected function createMockFormForCompanyErrors(string $message, $fieldset)
+    {
         $form = m::mock('Zend\Form\Form');
+        $translated = $message . '_TRANSLATED';
 
-        $data = [
-            'data' => [
-                'companyNumber' => [
-                    'company_number' => '123456789'
-                ]
-            ]
-        ];
+        $this->mockTransSrv
+            ->shouldReceive('translate')->with($message)->andReturn($translated);
 
-        $numberElement = m::mock()->shouldReceive('setMessages')
-            ->with(
-                [
-                    'company_number' => ['Bad length']
+        $companyNumberElement = m::mock()->shouldReceive('setMessages')
+            ->with([
+                'company_number' => [
+                    $translated
                 ]
-            )
+            ])
             ->getMock();
 
         $fieldset = m::mock()->shouldReceive('get')
             ->with('companyNumber')
-            ->andReturn($numberElement)
+            ->andReturn($companyNumberElement)
             ->getMock();
 
         $form->shouldReceive('get')
             ->with('data')
             ->andReturn($fieldset);
 
-        $this->sut->processCompanyNumberLookupForm($form, $data, 'data');
-    }
-
-    public function testProcessCompanyLookupError()
-    {
-        $service = m::mock()
-            ->shouldReceive('search')
-            ->with('companyDetails', '12345678')
-            ->andThrow(new \Exception('xml gateway error'))
-            ->getMock();
-
-        $translator = m::mock()
-            ->shouldReceive('translate')
-            ->with('company_number.search_error.error')
-            ->andReturn('API error')
-            ->getMock();
-
-        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
-            ->shouldReceive('get')
-            ->with('Data\CompaniesHouse')
-            ->andReturn($service)
-            ->shouldReceive('get')
-            ->with('translator')
-            ->andReturn($translator)
-            ->getMock();
-
-        $this->sut->setServiceLocator($sm);
-
-        $form = m::mock('Zend\Form\Form');
-
-        $data = [
-            'data' => [
-                'companyNumber' => [
-                    'company_number' => '12345678'
-                ]
-            ]
-        ];
-
-        $numberElement = m::mock()->shouldReceive('setMessages')
-            ->with(
-                [
-                    'company_number' => ['API error']
-                ]
-            )
-            ->getMock();
-
-        $fieldset = m::mock()->shouldReceive('get')
-            ->with('companyNumber')
-            ->andReturn($numberElement)
-            ->getMock();
-
-        $form->shouldReceive('get')
-            ->with('data')
-            ->andReturn($fieldset);
-
-        $this->sut->processCompanyNumberLookupForm($form, $data, 'data');
+        return $form;
     }
 
     public function testSetFormActionFromRequestWhenFormHasAction()
@@ -1486,10 +1384,10 @@ class FormHelperServiceTest extends MockeryTestCase
     {
         $validatorName = '\Zend\Validator\GreaterThan';
 
-        $form      = m::mock('Zend\Form\Form');
+        $form = m::mock('Zend\Form\Form');
         $validator = m::mock($validatorName);
-        $element   = m::mock();
-        $filter    = m::mock('\Zend\InputFilter\InputFilter');
+        $element = m::mock();
+        $filter = m::mock('\Zend\InputFilter\InputFilter');
 
         $form->shouldReceive('getInputFilter')->andReturn($filter);
 
@@ -1514,9 +1412,9 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testGetValidatorNotFoundReturnsNull()
     {
-        $form      = m::mock('Zend\Form\Form');
-        $element   = m::mock();
-        $filter    = m::mock('\Zend\InputFilter\InputFilter');
+        $form = m::mock('Zend\Form\Form');
+        $element = m::mock();
+        $filter = m::mock('\Zend\InputFilter\InputFilter');
 
         $form->shouldReceive('getInputFilter')->andReturn($filter);
 
@@ -1570,9 +1468,9 @@ class FormHelperServiceTest extends MockeryTestCase
     public function testSetDefaultDate()
     {
         // mocks
-        $field      = m::mock();
+        $field = m::mock();
         $dateHelper = m::mock();
-        $today      = m::mock('\DateTime');
+        $today = m::mock('\DateTime');
 
         // expectations
         $this->mockSm->shouldReceive('get')->with('Helper\Date')->andReturn($dateHelper);
@@ -1586,7 +1484,7 @@ class FormHelperServiceTest extends MockeryTestCase
     public function testSetDefaultDateFieldAlreadyHasValue()
     {
         // mocks
-        $field      = m::mock();
+        $field = m::mock();
 
         // expectations
         $this->mockSm->shouldReceive('get')->with('Helper\Date')->never();
