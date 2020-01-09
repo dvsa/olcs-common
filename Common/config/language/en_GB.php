@@ -4079,12 +4079,5 @@ return [
 
     'qanda.date.error.invalid-date' => 'Enter a valid date',
 
-    'st_permit_usage_transit_only' => 'Transit only',
-    'st_permit_usage_cross_trade_only' => 'Cross-trade only',
-    'st_permit_usage_both' => 'Both transit and cross-trade',
-
-    'inter_journey_less_60' => 'Less than 60%',
-    'inter_journey_60_90' => '60% to 90%',
-    'inter_journey_more_90' => 'More than 90%',
     // Potentially unused translations
 ];
