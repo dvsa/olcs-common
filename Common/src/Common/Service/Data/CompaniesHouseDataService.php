@@ -3,6 +3,7 @@
 namespace Common\Service\Data;
 
 use Common\Service\Entity\Exceptions\UnexpectedResponseException;
+use Dvsa\Olcs\Api\Domain\QueryHandler\CompaniesHouse\ByNumber;
 use Dvsa\Olcs\Transfer\Query\CompaniesHouse\GetList;
 
 /**
@@ -23,7 +24,8 @@ class CompaniesHouseDataService extends AbstractDataService
      */
     public function search($type, $value)
     {
-        $dtoData = GetList::create(['type' => $type, 'value' => $value]);
+        //$dtoData = GetList::create(['type' => $type, 'value' => $value]);
+        $dtoData = \Dvsa\Olcs\Transfer\Query\CompaniesHouse\ByNumber::create(['companyNumber'=>$value]);
         $response = $this->handleQuery($dtoData);
 
         if (!$response->isOk()) {
