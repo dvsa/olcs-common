@@ -39,5 +39,4 @@ trait CompanySearch
     {
         return strlen($companyNumber) === self::$companyNameLength;
     }
-
 }

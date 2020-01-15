@@ -22,7 +22,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
     use CrudTableTrait, CompanySearch;
 
     const COMPANY_NUMBER_LENGTH = 8;
-    
+
     protected $section = 'business_details';
     protected $baseRoute = 'lva-%s/business_details';
 
@@ -78,11 +78,15 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         if (isset($data['data']['companyNumber']['submit_lookup_company'])) {
             $companyNumber = $data['data']['companyNumber']['company_number'];
 
-            if($this->isValidCompanyNumber($companyNumber)) {
-                $form = $this->populateCompanyDetails($formHelper, $form, $detailsFieldset, $addressFieldset, $companyNumber);
-            }
-            else
-            {
+            if ($this->isValidCompanyNumber($companyNumber)) {
+                $form = $this->populateCompanyDetails(
+                    $formHelper,
+                    $form,
+                    $detailsFieldset,
+                    $addressFieldset,
+                    $companyNumber
+                );
+            } else {
                 $formHelper->setInvalidCompanyNumberErrors($form, $detailsFieldset);
             }
 
@@ -242,8 +246,8 @@ abstract class AbstractBusinessDetailsController extends AbstractController
      * User has pressed 'Add another' on trading names
      * So we need to duplicate the trading names field to produce another input
      *
-     * @param array $tradingNames Trading names
-     * @param \Common\Form\Form $form Form
+     * @param array             $tradingNames Trading names
+     * @param \Common\Form\Form $form         Form
      *
      * @return void
      */
@@ -347,8 +351,8 @@ abstract class AbstractBusinessDetailsController extends AbstractController
     /**
      * Populate tables
      *
-     * @param \Common\Form\Form $form Form
-     * @param array $orgData Data
+     * @param \Common\Form\Form $form    Form
+     * @param array             $orgData Data
      *
      * @return void
      */
@@ -397,7 +401,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
     /**
      * Map errors
      *
-     * @param Form $form Form
+     * @param Form  $form   Form
      * @param array $errors Errors
      *
      * @return void
