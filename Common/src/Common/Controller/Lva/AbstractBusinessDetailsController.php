@@ -3,11 +3,10 @@
 namespace Common\Controller\Lva;
 
 use Common\Controller\Lva\Traits\CrudTableTrait;
+use Common\Controller\Traits\CompanySearch;
 use Common\Data\Mapper\Lva\BusinessDetails as Mapper;
 use Common\Data\Mapper\Lva\CompanySubsidiary as CompanySubsidiaryMapper;
-use Common\Service\Cqrs\Exception\NotFoundException;
 use Dvsa\Olcs\Transfer\Command as TransferCmd;
-use Dvsa\Olcs\Transfer\Query\CompaniesHouse\ByNumber;
 use Dvsa\Olcs\Transfer\Query\CompanySubsidiary\CompanySubsidiary;
 use Dvsa\Olcs\Transfer\Query\Licence\BusinessDetails;
 use Dvsa\Olcs\Transfer\Query\QueryInterface;
@@ -20,8 +19,8 @@ use Zend\Form\Form;
  */
 abstract class AbstractBusinessDetailsController extends AbstractController
 {
-    use CrudTableTrait;
-    const COMPANY_NUMBER_LENGTH = 8;
+    use CrudTableTrait, CompanySearch;
+
     protected $section = 'business_details';
     protected $baseRoute = 'lva-%s/business_details';
 
@@ -70,33 +69,19 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         }
 
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
-
+        $addressFieldset = 'registeredAddress';
         $detailsFieldset = 'data';
+
         // If we are performing a company number lookup
         if (isset($data['data']['companyNumber']['submit_lookup_company'])) {
             $companyNumber = $data['data']['companyNumber']['company_number'];
 
-            if (!$this->isValidCompanyNumber($companyNumber)) {
+            if($this->isValidCompanyNumber($companyNumber)) {
+                $form = $this->populateCompanyDetails($formHelper, $form, $detailsFieldset, $addressFieldset, $companyNumber);
+            }
+            else
+            {
                 $formHelper->setInvalidCompanyNumberErrors($form, $detailsFieldset);
-                return $this->renderForm($form);
-            }
-
-            try {
-                $response = $this->handleQuery(ByNumber::create(['companyNumber' => $companyNumber]));
-            } catch (NotFoundException $exception) {
-                $formHelper->setCompanyNotFoundError($form, $detailsFieldset);
-                return $this->renderForm($form);
-            }
-
-            if ($response->isOk()) {
-                $formHelper->processCompanyNumberLookupForm(
-                    $form,
-                    $response->getResult(),
-                    $detailsFieldset,
-                    'registeredAddress'
-                );
-            } else {
-                $formHelper->setCompanyNotFoundError($form, $detailsFieldset);
             }
 
             return $this->renderForm($form);
