@@ -11,7 +11,7 @@ trait CompanySearch
 {
     public static $companyNameLength = 8;
 
-    protected function populateCompanyDetails(FormHelper $formHelper, $form, $detailsFieldset, $addressFieldset, $companyNumber): Form
+    public function populateCompanyDetails(FormHelper $formHelper, $form, $detailsFieldset, $addressFieldset, $companyNumber): Form
     {
         try {
             $response = $this->handleQuery(ByNumber::create(['companyNumber' => $companyNumber]));
