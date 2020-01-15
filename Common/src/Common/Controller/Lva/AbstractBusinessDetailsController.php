@@ -21,9 +21,10 @@ abstract class AbstractBusinessDetailsController extends AbstractController
 {
     use CrudTableTrait, CompanySearch;
 
+    const COMPANY_NUMBER_LENGTH = 8;
+    
     protected $section = 'business_details';
     protected $baseRoute = 'lva-%s/business_details';
-    const COMPANY_NUMBER_LENGTH = 8;
 
     /**
      * Business details section
