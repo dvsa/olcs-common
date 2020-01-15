@@ -4,6 +4,7 @@
 namespace Common\Controller\Traits;
 
 use Common\Form\Form;
+use Common\Service\Cqrs\Exception\NotFoundException;
 use Common\Service\Helper\FormHelperService as FormHelper;
 use Dvsa\Olcs\Transfer\Query\CompaniesHouse\ByNumber;
 
@@ -35,7 +36,7 @@ trait CompanySearch
     }
 
 
-    private function isValidCompanyNumber($companyNumber)
+    public function isValidCompanyNumber($companyNumber)
     {
         return strlen($companyNumber) === self::$companyNameLength;
     }

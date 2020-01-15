@@ -4,6 +4,7 @@
 namespace CommonTest\Controller\Traits\Stubs;
 
 use Common\Controller\Traits\CompanySearch;
+use Common\Service\Cqrs\Exception\NotFoundException;
 
 class CompanySearchStub
 {
@@ -15,5 +16,12 @@ class CompanySearchStub
     {
         $this->stubResponse->dto = $dto;
         return $this->stubResponse;
+        //throw new NotFoundException('test');
+    }
+
+    public function renderForm($form)
+    {
+        $this->form = $form;
+        return $form;
     }
 }
