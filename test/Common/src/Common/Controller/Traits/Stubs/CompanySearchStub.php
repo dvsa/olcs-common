@@ -16,7 +16,6 @@ class CompanySearchStub
     {
         $this->stubResponse->dto = $dto;
         return $this->stubResponse;
-        //throw new NotFoundException('test');
     }
 
     public function renderForm($form)
