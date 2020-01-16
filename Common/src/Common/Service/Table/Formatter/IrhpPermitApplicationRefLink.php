@@ -27,7 +27,7 @@ class IrhpPermitApplicationRefLink implements FormatterInterface
         return isset($data['irhpPermitApplication']['relatedApplication']) ? sprintf(
             '<a href="%s">%s</a>',
             $sm->get('Helper\Url')->fromRoute(
-                'licence/permits',
+                'licence/irhp-application',
                 [
                     'action' => 'index',
                     'licence' => $data['irhpPermitApplication']['relatedApplication']['licence']['id']

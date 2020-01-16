@@ -35,8 +35,8 @@ class IssuedPermitLicencePermitReferenceTest extends MockeryTestCase
     public function testFormatLinkToIssuedPermits($row, $expectedOutput)
     {
         $this->urlHelper->shouldReceive('fromRoute')
-            ->with('licence/irhp-permits', ['permitid' => $row['id'], 'licence' => $row['licenceId'], 'permitTypeId' => $row['typeId']])
-            ->andReturn('http://internal/licence/'.$row['licenceId'].'/permits/'.$row['id'].'/'.$row['typeId'].'/irhp-permits/');
+            ->with('licence/irhp-application/irhp-permits', ['irhpAppId' => $row['id'], 'licence' => $row['licenceId'], 'permitTypeId' => $row['typeId']])
+            ->andReturn('http://internal/licence/'.$row['licenceId'].'/irhp-application/'.$row['id'].'/'.$row['typeId'].'/irhp-permits/');
 
         $this->assertEquals(
             $expectedOutput,
@@ -54,7 +54,7 @@ class IssuedPermitLicencePermitReferenceTest extends MockeryTestCase
                     'applicationRef' => 'ECMT>1234567',
                     'typeId' => RefData::ECMT_PERMIT_TYPE_ID
                 ],
-                '<a href="http://internal/licence/200/permits/3/1/irhp-permits/">ECMT&gt;1234567</a>'
+                '<a href="http://internal/licence/200/irhp-application/3/1/irhp-permits/">ECMT&gt;1234567</a>'
             ],
             [
                 [
@@ -63,7 +63,7 @@ class IssuedPermitLicencePermitReferenceTest extends MockeryTestCase
                     'applicationRef' => 'ECMT>2345678',
                     'typeId' => RefData::ECMT_SHORT_TERM_PERMIT_TYPE_ID
                 ],
-                '<a href="http://internal/licence/202/permits/5/2/irhp-permits/">ECMT&gt;2345678</a>'
+                '<a href="http://internal/licence/202/irhp-application/5/2/irhp-permits/">ECMT&gt;2345678</a>'
             ],
             [
                 [
@@ -72,7 +72,7 @@ class IssuedPermitLicencePermitReferenceTest extends MockeryTestCase
                     'applicationRef' => 'ECMT>3456789',
                     'typeId' => RefData::ECMT_REMOVAL_PERMIT_TYPE_ID
                 ],
-                '<a href="http://internal/licence/204/permits/7/3/irhp-permits/">ECMT&gt;3456789</a>'
+                '<a href="http://internal/licence/204/irhp-application/7/3/irhp-permits/">ECMT&gt;3456789</a>'
             ],
             [
                 [
@@ -81,7 +81,7 @@ class IssuedPermitLicencePermitReferenceTest extends MockeryTestCase
                     'applicationRef' => 'IRHP>7654321',
                     'typeId' => RefData::IRHP_BILATERAL_PERMIT_TYPE_ID
                 ],
-                '<a href="http://internal/licence/206/permits/44/4/irhp-permits/">IRHP&gt;7654321</a>'
+                '<a href="http://internal/licence/206/irhp-application/44/4/irhp-permits/">IRHP&gt;7654321</a>'
             ],
             [
                 [
@@ -90,7 +90,7 @@ class IssuedPermitLicencePermitReferenceTest extends MockeryTestCase
                     'applicationRef' => 'IRHP>6543210',
                     'typeId' => RefData::IRHP_MULTILATERAL_PERMIT_TYPE_ID
                 ],
-                '<a href="http://internal/licence/208/permits/46/5/irhp-permits/">IRHP&gt;6543210</a>'
+                '<a href="http://internal/licence/208/irhp-application/46/5/irhp-permits/">IRHP&gt;6543210</a>'
             ]
         ];
     }

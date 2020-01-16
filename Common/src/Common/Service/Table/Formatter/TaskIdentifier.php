@@ -63,9 +63,9 @@ class TaskIdentifier implements FormatterInterface
                 break;
             case 'ECMT Permit Application':
                 $url = $urlHelper->fromRoute(
-                    'licence/permits/application',
+                    'licence/irhp-application/application',
                     array(
-                        'permitid' => $data['linkId'],
+                        'irhpAppId' => $data['linkId'],
                         'licence' => $data['licenceId'],
                         'action' => 'edit'
                     )
