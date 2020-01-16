@@ -266,7 +266,6 @@ class Module
 
         $translator->setLocale('en_GB')->setFallbackLocale('en_GB');
         $translator->addTranslationFilePattern('phparray', __DIR__ . '/config/language/', '%s.php');
-        $translator->addTranslationFilePattern('phparray', __DIR__ . '/config/sic-codes/', 'sicCodes_%s.php');
         $translator->addTranslationFile('phparray', __DIR__ . '/config/language/cy_GB_refdata.php', 'default', 'cy_GB');
 
         /** @var LanguageListener $languagePrefListener */
@@ -297,7 +296,6 @@ class Module
 
         /* @var $request \Zend\Http\PhpEnvironment\Request */
         if ($request->getHeaders()->get('xforwardedhost')) {
-
             $host = $request->getHeaders()->get('xforwardedhost')->getFieldValue();
 
             $hosts = explode(',', $host);
@@ -318,7 +316,6 @@ class Module
         // if X-Forwarded-Proto Header exists (ie from AWS ELB) then set the request as this so that route
         // generated URLS will have the correct scheme
         if ($request->getHeaders()->get('xforwardedproto')) {
-
             $proto = $request->getHeaders()->get('xforwardedproto')->getFieldValue();
 
             Logger::debug(
