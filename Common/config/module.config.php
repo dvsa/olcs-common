@@ -208,6 +208,9 @@ return array(
                 QaService\Custom\EcmtShortTerm\AnnualTripsAbroadIsValidHandler::class,
             'QaDateTimeFactory' => QaService\DateTimeFactory::class,
 
+            'QaRoadworthinessMakeAndModelFieldsetModifier' =>
+                QaService\FieldsetModifier\RoadworthinessMakeAndModelFieldsetModifier::class,
+
             Common\Data\Mapper\DefaultMapper::class => Common\Data\Mapper\DefaultMapper::class,
             SurrenderMapper\OperatorLicence::class => SurrenderMapper\OperatorLicence::class,
             SurrenderMapper\CommunityLicence::class => SurrenderMapper\CommunityLicence::class,
@@ -284,7 +287,9 @@ return array(
                 QaService\Custom\EcmtShortTerm\AnnualTripsAbroadDataHandlerFactory::class,
             'QaCertRoadworthinessMotExpiryDateFieldsetPopulator' =>
                 QaService\Custom\CertRoadworthiness\MotExpiryDateFieldsetPopulatorFactory::class,
-    
+
+            'QaFieldsetModifier' => QaService\FieldsetModifier\FieldsetModifierFactory::class,
+
             PermitsMapper\NoOfPermits::class => PermitsMapper\NoOfPermitsFactory::class,
             PermitsMapper\BilateralNoOfPermits::class => PermitsMapper\BilateralNoOfPermitsFactory::class,
             PermitsMapper\MultilateralNoOfPermits::class => PermitsMapper\MultilateralNoOfPermitsFactory::class,

@@ -2,6 +2,8 @@
 
 namespace Common\Service\Qa;
 
+use Common\Service\Qa\FieldsetModifier\FieldsetModifier;
+
 class FieldsetAdder
 {
     /** @var FieldsetPopulatorProvider */
@@ -10,20 +12,26 @@ class FieldsetAdder
     /** @var FieldsetFactory */
     private $fieldsetFactory;
 
+    /** @var FieldsetModifier */
+    private $fieldsetModifier;
+
     /**
      * Create service instance
      *
      * @param FieldsetPopulatorProvider $fieldsetPopulatorProvider
      * @param FieldsetFactory $fieldsetFactory
+     * @param FieldsetModifier $fieldsetModifier
      *
      * @return FieldsetAdder
      */
     public function __construct(
         FieldsetPopulatorProvider $fieldsetPopulatorProvider,
-        FieldsetFactory $fieldsetFactory
+        FieldsetFactory $fieldsetFactory,
+        FieldsetModifier $fieldsetModifier
     ) {
         $this->fieldsetPopulatorProvider = $fieldsetPopulatorProvider;
         $this->fieldsetFactory = $fieldsetFactory;
+        $this->fieldsetModifier = $fieldsetModifier;
     }
 
     /**
@@ -44,6 +52,7 @@ class FieldsetAdder
         $fieldsetPopulator = $this->fieldsetPopulatorProvider->get($options['type']);
         $fieldsetPopulator->populate($form, $fieldset, $options['element']);
 
+        $this->fieldsetModifier->modify($fieldset);
         $form->get('qa')->add($fieldset);
     }
 }

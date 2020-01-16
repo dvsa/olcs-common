@@ -2,8 +2,9 @@
 
 namespace CommonTest\Service\Qa;
 
-use Common\Service\Qa\FieldsetFactory;
 use Common\Service\Qa\FieldsetAdder;
+use Common\Service\Qa\FieldsetFactory;
+use Common\Service\Qa\FieldsetModifier\FieldsetModifier;
 use Common\Service\Qa\FieldsetPopulatorInterface;
 use Common\Service\Qa\FieldsetPopulatorProvider;
 use Common\Service\Qa\UsageContext;
@@ -68,7 +69,16 @@ class FieldsetAdderTest extends MockeryTestCase
         $fieldsetPopulator = m::mock(FieldsetPopulatorInterface::class);
         $fieldsetPopulator->shouldReceive('populate')
             ->with($this->form, $this->fieldset, $elementOptions)
-            ->once();
+            ->once()
+            ->globally()
+            ->ordered();
+
+        $fieldsetModifier = m::mock(FieldsetModifier::class);
+        $fieldsetModifier->shouldReceive('modify')
+            ->with($this->fieldset)
+            ->once()
+            ->globally()
+            ->ordered();
 
         $fieldsetPopulatorProvider = m::mock(FieldsetPopulatorProvider::class);
         $fieldsetPopulatorProvider->shouldReceive('get')
@@ -76,7 +86,7 @@ class FieldsetAdderTest extends MockeryTestCase
             ->once()
             ->andReturn($fieldsetPopulator);
 
-        $this->sut = new FieldsetAdder($fieldsetPopulatorProvider, $fieldsetFactory);
+        $this->sut = new FieldsetAdder($fieldsetPopulatorProvider, $fieldsetFactory, $fieldsetModifier);
     }
 
     public function testAddSelfserve()
