@@ -978,6 +978,7 @@ return [
     'driver' => 'Driver',
     'driver-and-vehicle-standards-agency' => 'Driver and Vehicle Standards Agency',
     'east-of-england' => 'East of England',
+    'ebsr-link-label' => 'EBSR',
     'ebsr-ensure-format' => 'your EBSR is in .ZIP format',
     'ebsr-new' => 'New application',
     'ebsr-refresh' => 'Data refresh',
