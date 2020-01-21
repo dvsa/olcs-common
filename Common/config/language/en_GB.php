@@ -777,7 +777,7 @@ return [
     'company-registration-form-label-town-city' => 'Town / City',
     'company-registration-form-label-trade-business' => 'Trade/business',
     'company-registration-form-label-trading-name' => 'Trading name',
-    'company_number.length.validation.error' => 'The registered company number must be a maximum of 8 characters',
+    'company_number.length.validation.error' => 'The registered company number must be 8 characters, please enter any preceding zeros',
     'company_number.search_error.error' => 'Sorry, company data could not be retrieved at this time, please try again or enter your details manually below',
     'company_number.search_no_results.error' => 'Sorry, we couldn\'t find any matching companies, please try again or enter your details manually below',
     'companyname' => 'Company Name',
