@@ -886,7 +886,7 @@ return [
     'dashboard-table-variations-submittedDate' => 'Submitted',
     'dashboard-table-permit-application-title' => 'Ongoing applications',
     'dashboard-table-permit-application-ref' => 'Reference number',
-    'dashboard-table-permit-application-num' => 'No of permits',
+    'dashboard-table-permit-application-num' => 'Number of permits',
     'dashboard-table-permit-application-type' => 'Type',
     'dashboard-table-permit-application-status' => 'Status',
     'dashboard-table-permits-title' => 'Issued permits and certificates',
