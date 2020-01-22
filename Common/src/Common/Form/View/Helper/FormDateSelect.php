@@ -123,6 +123,7 @@ class FormDateSelect extends \Common\Form\View\Helper\Extended\FormDateSelect
     {
         $inputHelper = $this->getInputHelper();
         $element->setAttribute('maxlength', $maxLength);
+        $element->setAttribute('class', 'govuk-input govuk-date-input__input govuk-input--width-' . $maxLength);
 
         return $inputHelper->render($element);
     }

@@ -55,6 +55,8 @@ class TextFieldsetPopulator implements FieldsetPopulatorInterface
             );
         }
 
+        $text->setAttribute('class', 'govuk-input govuk-input--width-10');
+
         $fieldset->add($text);
     }
 }

@@ -18,7 +18,8 @@ class FieldsetAdderFactory implements FactoryInterface
     {
         return new FieldsetAdder(
             $serviceLocator->get('QaFieldsetPopulatorProvider'),
-            $serviceLocator->get('QaFieldsetFactory')
+            $serviceLocator->get('QaFieldsetFactory'),
+            $serviceLocator->get('QaFieldsetModifier')
         );
     }
 }

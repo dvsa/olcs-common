@@ -56,6 +56,9 @@ class TextFieldsetPopulatorTest extends MockeryTestCase
         $this->text->shouldReceive('setValue')
             ->with($this->value)
             ->once();
+        $this->text->shouldReceive('setAttribute')
+            ->with('class', 'govuk-input govuk-input--width-10')
+            ->once();
 
         $textFactory = m::mock(TextFactory::class);
         $textFactory->shouldReceive('create')
