@@ -67,6 +67,13 @@ class LicencePermitReference implements FormatterInterface
      */
     public static function format($row, $column = null, $serviceLocator = null)
     {
+        $referenceNumberMarkup = sprintf(
+            '<span class="visually-hidden">%s</span>',
+            Escape::html(
+                $serviceLocator->get('translator')->translate('dashboard-table-permit-application-ref')
+            )
+        );
+
         // find a route for the type and status
         $route = isset(static::$routes[$row['typeId']][$row['statusId']])
             ? static::$routes[$row['typeId']][$row['statusId']] : null;
@@ -88,7 +95,7 @@ class LicencePermitReference implements FormatterInterface
                 $text = $row['licNo'];
             }
 
-            return Escape::html($text);
+            return $referenceNumberMarkup . ' ' . Escape::html($text);
         }
 
         // default to application
@@ -114,12 +121,11 @@ class LicencePermitReference implements FormatterInterface
                 break;
         }
 
-        return vsprintf(
-            '<a class="overview__link" href="%s"><span class="overview__link--underline">%s</span></a>',
-            [
-                $serviceLocator->get('Helper\Url')->fromRoute('permits/' . $route, $params),
-                Escape::html($text)
-            ]
+        return sprintf(
+            '%s <a class="overview__link" href="%s"><span class="overview__link--underline">%s</span></a>',
+            $referenceNumberMarkup,
+            $serviceLocator->get('Helper\Url')->fromRoute('permits/' . $route, $params),
+            Escape::html($text)
         );
     }
 }
