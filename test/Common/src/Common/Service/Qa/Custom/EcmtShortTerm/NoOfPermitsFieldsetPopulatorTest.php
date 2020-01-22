@@ -50,7 +50,7 @@ class NoOfPermitsFieldsetPopulatorTest extends MockeryTestCase
     public function setUp()
     {
         $this->expectedHtml = '<div class="govuk-inset-text"><p>You must choose between Euro 5 and Euro 6.</p></div>' .
-            '<p><strong>Number of permits</strong><br>' .
+            '<p class="number-of-permits"><strong>Number of permits</strong><br>' .
             '<span class="govuk-hint">17 is the maximum you can apply for.</span></p>';
 
         $this->translator = m::mock(TranslationHelperService::class);
@@ -162,7 +162,7 @@ class NoOfPermitsFieldsetPopulatorTest extends MockeryTestCase
                     'name' => 'euro52019Info',
                     'type' => Html::class,
                     'attributes' => [
-                        'value' => '<p><strong>euro5 2019 info</strong></p>'
+                        'value' => '<p class="euro5-2019-info"><strong>euro5 2019 info</strong></p>'
                     ]
                 ]
             )
