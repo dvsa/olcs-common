@@ -3811,9 +3811,6 @@ return [
     'section.name.application/check-answers' => 'Check your answers',
     'section.name.application/declaration' => 'Declaration',
 
-    'permits.page.ecmt.guidance.header.title' => 'ECMT Guidance - ',
-    'permits.page.ecmt.guidance.title' => 'Apply for a European Conference of Ministers of Transport (ECMT) Permit',
-    'permits.page.ecmt.guidance.subtitle' => 'ECMT permits are needed to transport goods across EU and non-EU countries for vehicles weighing above 3.5 tonnes.',
     'permits.form.permits-required.hint' => 'Up to %s permits are authorised for this licence.',
     'permits.form.permits-required.fee.guidance' => '<p>There is a %s non-refundable application fee per permit required.</p><p>If successful, you\'ll pay an additional %s issuing fee per permit granted.</p>',
     'permits.form.trips.warning' => 'You have stated a high intensity of use of these permits. Check the details are correct. We may contact you to verify this information.',
