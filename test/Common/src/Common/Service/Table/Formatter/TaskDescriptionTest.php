@@ -105,15 +105,15 @@ class TaskDescriptionTest extends MockeryTestCase
                 ],
             ],
             [
-                'licence/irhp-processing/tasks',
+                'licence/irhp-application-processing/tasks',
                 [
-                    'permitid' => 201,
+                    'irhpAppId' => 201,
                     'licence' => 202,
                 ],
                 [
                     'task' => 100,
                     'action' => 'edit',
-                    'type' => 'ecmtpermitapplication',
+                    'type' => 'irhpapplication',
                     'typeId' => 201,
                     'licence' => 202,
                 ],

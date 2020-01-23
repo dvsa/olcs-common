@@ -51,10 +51,10 @@ class TaskDescription implements FormatterInterface
                     'licence' => $params['licence']
                 ];
                 break;
-            case 'licence/irhp-processing/tasks':
+            case 'licence/irhp-application-processing/tasks':
                 $routeParams = [
-                    'type'    => 'ecmtpermitapplication',
-                    'typeId'  => $params['permitid'],
+                    'type'    => 'irhpapplication',
+                    'typeId'  => $params['irhpAppId'],
                     'licence' => $params['licence']
                 ];
                 break;

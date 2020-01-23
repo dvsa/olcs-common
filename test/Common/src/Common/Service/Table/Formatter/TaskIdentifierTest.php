@@ -332,11 +332,11 @@ class TaskIdentifierTest extends \PHPUnit\Framework\TestCase
                     'licenceId' => 106,
                 ),
                 array(),
-                'licence/permits/application',
-                'permitid',
+                'licence/irhp-application/application',
+                'irhpAppId',
                 '<a href="correctUrl">OG4569803/6</a>',
                 array(
-                    'permitid' => 6,
+                    'irhpAppId' => 6,
                     'licence' => 106,
                     'action' => 'edit'
                 )

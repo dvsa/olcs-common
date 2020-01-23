@@ -27,10 +27,10 @@ class IssuedPermitLicencePermitReference implements FormatterInterface
      */
     public static function format($row, $column = null, $serviceLocator = null)
     {
-        $route = 'licence/irhp-permits';
+        $route = 'licence/irhp-application/irhp-permits';
         $params = [
             'licence' => $row['licenceId'],
-            'permitid' => $row['id'],
+            'irhpAppId' => $row['id'],
             'permitTypeId' => $row['typeId']
         ];
 

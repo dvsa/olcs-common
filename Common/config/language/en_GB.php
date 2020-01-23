@@ -3551,9 +3551,6 @@ return [
     'permits.page.confirmation.decline.title' => 'Permits declined',
     'permits.page.confirmation.decline.browser.title' => 'Permits declined',
 
-    'permits.page.confirmation.application-submitted.title' => 'Application submitted',
-    'permits.page.confirmation.application-submitted.browser.title' => 'Application submitted',
-
     'permits.page.confirmation.issue-submitted.title' => 'Payment successful',
     'permits.page.confirmation.issue-submitted.browser.title' => 'Payment successful',
 
@@ -4075,6 +4072,17 @@ return [
     'qanda.certificate-of-roadworthiness.mot-expiry-date.error.date-invalid' => 'Enter a valid MOT expiry date and include a day, month and year',
     'qanda.certificate-of-roadworthiness.mot-expiry-date.error.date-in-past' => 'Expiry date must be today or in the future',
     'qanda.certificate-of-roadworthiness.mot-expiry-date.error.date-too-far' => 'Expiry date must be before %dateMustBeBefore%',
+
+    'qanda.ecmt-annual-2018.emissions.question-short' => 'Euro emission standards',
+    'qanda.ecmt-annual-2018.emissions.question' => 'ECMT permits can only be used by vehicles that meet Euro 6 standards',
+    'qanda.ecmt-annual-2018.emissions.additional-guidance' => 'If you intend to transport goods internationally the vehicles you use must meet and comply to all Euro 6 emission standards.<br>This includes any vehicles you currently own or lease, or are intending to buy or least in the future.',
+    'qanda.ecmt-annual-2018.emissions.checkbox.label' => 'I confirm that my ECMT permits will only be used by vehicles that are environmentally compliant with Euro 6 emissions standards.',
+    'qanda.ecmt-annual-2018.emissions.checkbox.not-checked-message' => 'Tick to confirm your vehicles will meet the minimum Euro emission standards that the permit allows.',
+
+    'qanda.ecmt-annual-2018.number-of-permits.question-short' => 'Number of permits required',
+    'qanda.ecmt-annual-2018.number-of-permits.question' => 'How many permits do you require for this licence?',
+    'qanda.ecmt-annual-2018.number-of-permits.guidance' => 'There is a £10 non-refundable application fee per permit required',
+    'qanda.ecmt-annual-2018.number-of-permits.textbox.label' => 'Number of permits',
 
     'qanda.date.error.invalid-date' => 'Enter a valid date',
 

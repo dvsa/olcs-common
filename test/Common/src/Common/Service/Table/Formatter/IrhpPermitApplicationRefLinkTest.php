@@ -24,7 +24,7 @@ class IrhpPermitApplicationRefLinkTest extends MockeryTestCase
         $sm = m::mock(ServiceLocatorInterface::class);
         $sm->shouldReceive('get->fromRoute')
             ->with(
-                'licence/permits',
+                'licence/irhp-application',
                 [
                     'action' => 'index',
                     'licence' => $data['irhpPermitApplication']['relatedApplication']['licence']['id']

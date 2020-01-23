@@ -1746,8 +1746,6 @@ return [
     'permits.page.withdraw.browser.title' => 'Diddymu Cais',
     'waived.paid.permits.page.ecmt.fee-part-successful.payment.due' => 'Acceptance required by',
     'permits.application.fee.submitted.main.paid.waived' => 'Acceptance successful',
-    'permits.page.confirmation.application-submitted.title' => 'Cais wedi\'i gyflwyno',
-    'permits.page.confirmation.application-submitted.browser.title' => 'Cais wedi\'i gyflwyno',
     'permits.page.confirmation.irhp-submitted.bullet.list.title' => 'Beth sy\'n digwydd nesaf ',
     'permits.page.confirmation.irhp-submitted.warning' => 'Rhaid i chi sicrhau bod gennych yr hawlenni cywir yn eich cerbyd wrth gludo nwyddau yn rhyngwladol.',
     'permits.page.confirmation.issue-submitted.title' => 'Taliad yn llwyddiannus',

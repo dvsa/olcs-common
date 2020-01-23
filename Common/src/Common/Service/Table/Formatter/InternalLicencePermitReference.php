@@ -28,39 +28,19 @@ class InternalLicencePermitReference implements FormatterInterface
      */
     public static function format($row, $column = null, $serviceLocator = null)
     {
-        // find a route for the type
-        switch ($row['typeId']) {
-            case RefData::ECMT_PERMIT_TYPE_ID:
-                $route = 'licence/permits/application';
-                $params = [
-                    'licence' => $row['licenceId'],
-                    'action' => 'edit',
-                    'permitid' => $row['id']
-                ];
-                break;
-            case RefData::ECMT_SHORT_TERM_PERMIT_TYPE_ID:
-            case RefData::ECMT_REMOVAL_PERMIT_TYPE_ID:
-            case RefData::IRHP_BILATERAL_PERMIT_TYPE_ID:
-            case RefData::IRHP_MULTILATERAL_PERMIT_TYPE_ID:
-            case RefData::CERT_ROADWORTHINESS_VEHICLE_PERMIT_TYPE_ID:
-            case RefData::CERT_ROADWORTHINESS_TRAILER_PERMIT_TYPE_ID:
-                $route = 'licence/irhp-application/application';
-                $params = [
-                    'licence' => $row['licenceId'],
-                    'action' => 'edit',
-                    'irhpAppId' => $row['id']
-                ];
-                break;
-        }
+        $route = 'licence/irhp-application/application';
+        $params = [
+            'licence' => $row['licenceId'],
+            'action' => 'edit',
+            'irhpAppId' => $row['id']
+        ];
 
-        return isset($route)
-            ? vsprintf(
-                '<a href="%s">%s</a>',
-                [
-                    $serviceLocator->get('Helper\Url')->fromRoute($route, $params),
-                    Escape::html($row['applicationRef'])
-                ]
-            )
-            : Escape::html($row['applicationRef']);
+        return vsprintf(
+            '<a href="%s">%s</a>',
+            [
+                $serviceLocator->get('Helper\Url')->fromRoute($route, $params),
+                Escape::html($row['applicationRef'])
+            ]
+        );
     }
 }
