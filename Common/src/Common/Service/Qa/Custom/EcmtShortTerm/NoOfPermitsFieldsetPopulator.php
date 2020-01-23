@@ -46,7 +46,7 @@ class NoOfPermitsFieldsetPopulator implements FieldsetPopulatorInterface
         );
 
         $html = sprintf(
-            '<div class="govuk-inset-text">%s</div><p><strong>%s</strong><br><span class="govuk-hint">%s</span></p>',
+            '<div class="govuk-inset-text">%s</div><p class="number-of-permits"><strong>%s</strong><br><span class="govuk-hint">%s</span></p>',
             $inset,
             $line1,
             $line2
@@ -104,7 +104,7 @@ class NoOfPermitsFieldsetPopulator implements FieldsetPopulatorInterface
                 $fieldset,
                 'euro52019Info',
                 sprintf(
-                    '<p><strong>%s</strong></p>',
+                    '<p class="euro5-2019-info"><strong>%s</strong></p>',
                     $this->translator->translate('qanda.ecmt-short-term.number-of-permits.euro5-2019-info')
                 )
             );
