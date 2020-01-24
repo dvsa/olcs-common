@@ -1408,6 +1408,7 @@ return [
     'internal-navigation-operator-profile' => 'Operator profile',
     'internal-navigation-operator-responsibilities' => 'Responsibilities',
     'internal-navigation-operator-vehicles' => 'Vehicles',
+    'internal-navigation-operator-users' => 'Users',
     'internal-navigation-transport-manager' => 'Transport Manager',
     'internal-navigation-transport-manager-cases' => 'Cases',
     'internal-navigation-transport-manager-details' => 'TM details',
