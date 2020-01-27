@@ -8,7 +8,7 @@ use Zend\ServiceManager\ServiceManager;
 use Mockery as m;
 use Olcs\Logging\Log\Logger;
 
-error_reporting(-1);
+error_reporting(E_ALL & ~E_USER_DEPRECATED);
 chdir(dirname(__DIR__));
 date_default_timezone_set('Europe/London');
 

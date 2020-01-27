@@ -13,9 +13,13 @@ use Common\Service\Data\Interfaces\BundleAware;
  */
 class PluginManager extends AbstractPluginManager
 {
-    public function __construct()
+    /**
+     * @inheritdoc
+     */
+    public function __construct($configOrContainerInstance = null, array $v3config = [])
     {
-        parent::__construct();
+        parent::__construct($configOrContainerInstance, $v3config);
+
         $this->addInitializer(array($this, 'initializeRestClientInterface'));
         $this->addInitializer(array($this, 'initializeBundle'));
     }
@@ -56,6 +60,7 @@ class PluginManager extends AbstractPluginManager
      * @param  mixed $plugin
      * @return bool
      * @throws Exception\RuntimeException if invalid
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function validatePlugin($plugin)
     {

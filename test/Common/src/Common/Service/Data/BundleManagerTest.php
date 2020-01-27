@@ -1,12 +1,11 @@
 <?php
-
-
 namespace CommonTest\Service\Data;
 
 use Common\Data\Object\Bundle;
 use Common\Service\Data\BundleManager;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Mockery as m;
+use Zend\ServiceManager\Exception\RuntimeException;
 
 /**
  * Class BundleManagerTest
@@ -14,37 +13,44 @@ use Mockery as m;
  */
 class BundleManagerTest extends TestCase
 {
-    public function testValidatePlugin()
+    /** @var BundleManager */
+    private $sut;
+
+    public function setUp()
     {
-        $sut = new BundleManager();
-        $sut->validatePlugin(new Bundle());
+        $this->sut = new BundleManager();
+    }
 
-        $passed = false;
-        try {
-            $sut->validatePlugin(new \StdClass());
-        } catch (\Zend\ServiceManager\Exception\RuntimeException $e) {
-            if ($e->getMessage() == 'Invalid bundle class') {
-                $passed = true;
-            }
-        }
+    public function testValidatePluginFail()
+    {
+        $invalidPlugin = new \stdClass();
 
-        $this->assertTrue($passed, 'Expected exception not thrown');
+        //  expect
+        $this->expectException(RuntimeException::class);
+
+        //  call
+        $this->sut->validatePlugin($invalidPlugin);
+    }
+
+    public function testValidatePluginOk()
+    {
+        $plugin = m::mock(Bundle::class);
+        // make sure no exception is thrown
+        $this->assertNull($this->sut->validatePlugin($plugin));
     }
 
     public function testCanCreateServiceWithName()
     {
         $mockSl = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
 
-        $sut = new BundleManager();
-        $this->assertTrue($sut->canCreateServiceWithName($mockSl, 'name', 'Othername'));
+        $this->assertTrue($this->sut->canCreateServiceWithName($mockSl, 'name', 'Othername'));
     }
 
     public function testCreateServiceWithName()
     {
         $mockSl = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
 
-        $sut = new BundleManager();
-        $service = $sut->createServiceWithName($mockSl, 'name', 'Othername');
+        $service = $this->sut->createServiceWithName($mockSl, 'name', 'Othername');
 
         $this->assertInstanceOf('Common\Data\Object\Bundle', $service);
     }
@@ -52,11 +58,8 @@ class BundleManagerTest extends TestCase
     public function testInitBundle()
     {
         $mockBundle = m::mock('Common\Data\Object\Bundle');
+        $mockBundle->shouldReceive('init')->with($this->sut);
 
-        $sut = new BundleManager();
-
-        $mockBundle->shouldReceive('init')->with($sut);
-
-        $sut->initBundle($mockBundle, $sut);
+        $this->sut->initBundle($mockBundle, $this->sut);
     }
 }

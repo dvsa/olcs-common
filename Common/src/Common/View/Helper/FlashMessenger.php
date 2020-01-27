@@ -2,6 +2,7 @@
 
 namespace Common\View\Helper;
 
+use Common\Service\Helper\FlashMessengerHelperService;
 use Zend\View\Helper\FlashMessenger as ZendFlashMessenger;
 use Zend\Mvc\Controller\Plugin\FlashMessenger as PluginFlashMessenger;
 
@@ -34,6 +35,14 @@ class FlashMessenger extends ZendFlashMessenger
      * @var string
      */
     private $wrapper = '<div class="notice-container">%s</div>';
+
+    /** @var FlashMessengerHelperService */
+    protected $flashMessengerHelperService;
+
+    public function __construct(FlashMessengerHelperService $flashMessengerHelperService)
+    {
+        $this->flashMessengerHelperService = $flashMessengerHelperService;
+    }
 
     /**
      * Invoke
@@ -96,9 +105,9 @@ class FlashMessenger extends ZendFlashMessenger
      * @param bool|null $autoEscape AutoEscape
      *
      * @return string
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function render
-    (
+    public function render(
         $namespace = PluginFlashMessenger::NAMESPACE_DEFAULT,
         array $classes = [],
         $autoEscape = null
@@ -130,8 +139,7 @@ class FlashMessenger extends ZendFlashMessenger
      *
      * @return string
      */
-    protected function renderAllFromNamespace
-    (
+    protected function renderAllFromNamespace(
         $namespace = PluginFlashMessenger::NAMESPACE_DEFAULT,
         array $classes = []
     ) {
@@ -148,19 +156,16 @@ class FlashMessenger extends ZendFlashMessenger
      *
      * @return string
      */
-    public function renderCurrent
-    (
+    public function renderCurrent(
         $namespace = PluginFlashMessenger::NAMESPACE_DEFAULT,
         array $classes = [],
         $autoEscape = null
     ) {
         $content = parent::renderCurrent($namespace, $classes);
 
-        $fmHelper = $this->getServiceLocator()->getServiceLocator()->get('Helper\FlashMessenger');
-
         $content .= $this->renderMessages(
             $namespace,
-            $fmHelper->getCurrentMessages($namespace),
+            $this->flashMessengerHelperService->getCurrentMessages($namespace),
             $classes,
             $autoEscape
         );
@@ -179,6 +184,7 @@ class FlashMessenger extends ZendFlashMessenger
      * @param bool|null $autoEscape AutoEscape
      *
      * @return string
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     protected function renderMessages(
         $namespace = PluginFlashMessenger::NAMESPACE_DEFAULT,
