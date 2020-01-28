@@ -105,7 +105,7 @@ class TransportManagerDateOfBirthTest extends MockeryTestCase
                         'internal' => true,
                     ]
                 ),
-                '01/12/1980 <STATUS HTML>'
+                '<span class="nowrap">01/12/1980 <STATUS HTML></span>'
             ),
             array( // ApplicationExternal
                 array
@@ -123,7 +123,7 @@ class TransportManagerDateOfBirthTest extends MockeryTestCase
                         'internal' => false,
                     ]
                 ),
-                '01/12/1980 <STATUS HTML>'
+                '<span class="nowrap">01/12/1980 <STATUS HTML></span>'
             ),
             array( // VariationInternal
                 array
@@ -141,7 +141,7 @@ class TransportManagerDateOfBirthTest extends MockeryTestCase
                         'internal' => true,
                     ]
                 ),
-                '01/12/1980 <STATUS HTML>'
+                '<span class="nowrap">01/12/1980 <STATUS HTML></span>'
             ),
             array( // VariationExternal
                 array
@@ -159,7 +159,7 @@ class TransportManagerDateOfBirthTest extends MockeryTestCase
                         'internal' => false,
                     ]
                 ),
-                '01/12/1980 <STATUS HTML>'
+                '<span class="nowrap">01/12/1980 <STATUS HTML></span>'
             ),
             array( // LicenceInternal
                 array
