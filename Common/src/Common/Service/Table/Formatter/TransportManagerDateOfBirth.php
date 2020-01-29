@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Common\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\Date;
@@ -8,21 +7,28 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 
 class TransportManagerDateOfBirth extends Date
 {
-
+    /**
+     * {@inheritdoc}
+     */
     public static function format($data, $column = array(), $sm = null)
     {
         $dob = parent::format($data, $column, $sm);
 
         if (self::shouldShowStatus($column)) {
-            $dob = sprintf($dob . " %s", self::getStatusHtml($data, $sm));
+            return sprintf('<span class="nowrap">%s %s</span>', $dob, self::getStatusHtml($data, $sm));
         }
 
         return $dob;
-
     }
 
-
-    protected static function shouldShowStatus($column = array())
+    /**
+     * Whether the status should be displayed after the date of birth
+     *
+     * @param array $column
+     *
+     * @return bool
+     */
+    protected static function shouldShowStatus(array $column)
     {
         if (!isset($column['internal']) || (!isset($column['lva']))) {
             return false;
@@ -35,7 +41,6 @@ class TransportManagerDateOfBirth extends Date
         return false;
     }
 
-
     /**
      * Get the html for the status
      *
@@ -44,7 +49,7 @@ class TransportManagerDateOfBirth extends Date
      *
      * @return string HTML
      */
-    protected static function getStatusHtml($data, $sm)
+    protected static function getStatusHtml(array $data, ServiceLocatorInterface $sm)
     {
         $viewHelper = $sm->get('ViewHelperManager')->get('transportManagerApplicationStatus');
 
