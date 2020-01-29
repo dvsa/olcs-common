@@ -21,10 +21,10 @@ if(isset($argv[2])){
     $ignoreKeys = str_getcsv($argv[2]);
 }
 
-$translations = loadCommonTranslations($path);
-$usages = findTranslationKeyUsages($translations, $path, $ignoreKeys);
-findUnusedTranslationKeys($translations, $usages);
-findMismatchedCommonBackendValues($translations, $path);
+$commonTranslations = loadCommonTranslations($path);
+$usages = findTranslationKeyUsages($commonTranslations, $path, $ignoreKeys);
+findUnusedTranslationKeys($commonTranslations, $usages);
+findMismatchedCommonBackendValues($commonTranslations, $path);
 
 /**
  * Load translations from OLCS-Common language files
@@ -33,12 +33,12 @@ findMismatchedCommonBackendValues($translations, $path);
  * @return array
  */
 function loadCommonTranslations(string $path) {
-    // Load translations arrays into memory
-    $translations['cy_NI'] = include($path.'olcs-common/Common/config/language/cy_NI.php');
-    $translations['cy_GB'] = include($path.'olcs-common/Common/config/language/cy_GB.php');
-    $translations['en_GB'] = include($path.'olcs-common/Common/config/language/en_GB.php');
-    $translations['en_NI'] = include($path.'olcs-common/Common/config/language/en_NI.php');
-    return $translations;
+    $commonLanguages = ['cy_NI','cy_GB', 'en_GB','en_NI'];
+    $commonTranslations = [];
+    foreach($commonLanguages as $language){
+        $commonTranslations[$language] = include($path.'olcs-common/Common/config/language/'.$language.'.php');
+    }
+    return $commonTranslations;
 }
 
 /**
@@ -63,7 +63,7 @@ function findTranslationKeyUsages(array $translations, string $path, array $igno
                     $usages[$langKey][$key] = $allKeys[$key];
                 } else {
                     $allKeys[$key] = [];
-                    progress_bar($i, $totalLangKeys);
+                    progressBar($i, $totalLangKeys);
                     $output = [];
                     $usages[$langKey][$key] = [];
                     exec('grep -rl -m 1 --exclude-dir=vendor --include=\*.php --include \*.phtml "' . $key . '" ' . $path, $output);
@@ -79,7 +79,7 @@ function findTranslationKeyUsages(array $translations, string $path, array $igno
             $i++;
         }
         keyStats($langKey, $usages[$langKey]);
-        file_put_contents("{$langKey}_key_usage_report.json", json_encode_wrap($usages[$langKey]));
+        file_put_contents("reports/{$langKey}_key_usage_report.json", jsonEncodeWrap($usages[$langKey]));
     }
     return $usages;
 }
@@ -98,7 +98,7 @@ function keyStats(string $langKey, array $keyArray) {
     echo "Top 20 used keys for: $langKey\n\n";
     arsort($stats);
     print_r(array_slice($stats, 0, 20));
-    file_put_contents("{$langKey}_key_statistics.json", json_encode_wrap($stats));
+    file_put_contents("reports/{$langKey}_key_statistics.json", jsonEncodeWrap($stats));
 }
 
 /**
@@ -112,8 +112,8 @@ function findUnusedTranslationKeys(array $translations, array $usages) {
         $unusedKeys = array_diff_key($translations[$langKey], $usages[$langKey]);
         if (!empty($unusedKeys)) {
             echo "Unused Keys in $langKey:\n";
-            echo json_encode_wrap($unusedKeys);
-            file_put_contents("{$langKey}_unused_keys.json", json_encode_wrap($unusedKeys));
+            echo jsonEncodeWrap($unusedKeys);
+            file_put_contents("reports/{$langKey}_unused_keys.json", jsonEncodeWrap($unusedKeys));
         }
     }
 }
@@ -156,9 +156,9 @@ function findMismatchedCommonBackendValues(array $translations, string $path) {
         if(!empty($mismatches)){
             echo "Mismatch found between olcs-common and olcs-backend $lang translations.\n";
             echo "The following keys have different values\n";
-            print_r(json_encode_wrap(array_keys($mismatches)));
+            print_r(jsonEncodeWrap(array_keys($mismatches)));
             echo "\n\n";
-            file_put_contents("backend_{$lang}_mismatched_values.json", json_encode_wrap($mismatches));
+            file_put_contents("reports/backend_{$lang}_mismatched_values.json", jsonEncodeWrap($mismatches));
         }
     }
 }
@@ -169,7 +169,7 @@ function findMismatchedCommonBackendValues(array $translations, string $path) {
  * @param array $array
  * @return false|string
  */
-function json_encode_wrap(array $array) {
+function jsonEncodeWrap(array $array) {
     return json_encode($array, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 }
 
@@ -179,7 +179,7 @@ function json_encode_wrap(array $array) {
  * @param $completed
  * @param $total
  */
-function progress_bar($completed, $total)
+function progressBar(int $completed, int $total)
 {
     if ($completed > $total) {
         return;
