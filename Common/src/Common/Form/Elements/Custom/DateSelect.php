@@ -3,6 +3,7 @@
 namespace Common\Form\Elements\Custom;
 
 use Zend\Form\Element as ZendElement;
+use Zend\Validator\Date as DateValidator;
 
 /**
  * DateSelect
@@ -64,5 +65,26 @@ class DateSelect extends ZendElement\DateSelect
                 $this->getValidator(),
             )
         );
+    }
+
+    /**
+     * Get validator
+     *
+     * @return DateValidator
+     */
+    protected function getValidator()
+    {
+        if (null === $this->validator) {
+            $this->validator = new DateValidator(
+                [
+                    'format' => 'Y-m-d',
+                    'messages' => [
+                        DateValidator::FALSEFORMAT => "The input does not fit the date format 'DD MM YYYY'"
+                    ]
+                ]
+            );
+        }
+
+        return $this->validator;
     }
 }
