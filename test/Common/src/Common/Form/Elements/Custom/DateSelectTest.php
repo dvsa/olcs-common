@@ -3,6 +3,7 @@
 namespace CommonTest\Form\Elements\Custom;
 
 use Common\Form\Elements\Custom\DateSelect;
+use Zend\Validator\Date as DateValidator;
 
 /**
  * @covers \Common\Form\Elements\Custom\DateSelect
@@ -27,7 +28,18 @@ class DateSelectTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(null, $spec['required']);
         $this->assertCount(1, $spec['validators']);
         $this->assertCount(1, $spec['filters']);
-        $this->assertInstanceOf('Zend\Validator\Date', $spec['validators'][0]);
+
+        $validator = $spec['validators'][0];
+
+        $this->assertInstanceOf('Zend\Validator\Date', $validator);
+        $this->assertEquals('Y-m-d', $validator->getFormat());
+
+        $validatorMessageTemplates = $validator->getMessageTemplates();
+        $this->assertArrayHasKey(DateValidator::FALSEFORMAT, $validatorMessageTemplates);
+        $this->assertEquals(
+            $validatorMessageTemplates[DateValidator::FALSEFORMAT],
+            "The input does not fit the date format 'DD MM YYYY'"
+        );
 
         // Test the filter
         $this->assertNull($spec['filters'][0]['options']['callback']('foo'));
