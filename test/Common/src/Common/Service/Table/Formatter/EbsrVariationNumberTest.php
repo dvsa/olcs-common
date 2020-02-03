@@ -43,14 +43,20 @@ class EbsrVariationNumberTest extends MockeryTestCase
      */
     public function dpNotShortNoticeProvider()
     {
-        $data = [
+        $notShortNotice = [
             'isShortNotice' => 'N',
             'variationNo' => 1234
         ];
 
+        $shortNoticeNotKnown = [
+            'variationNo' => 1234
+        ];
+
         return [
-            [$data],
-            [['busReg' => $data]]
+            [$notShortNotice],
+            [$shortNoticeNotKnown],
+            [['busReg' => $notShortNotice]],
+            [['busReg' => $shortNoticeNotKnown]],
         ];
     }
 
