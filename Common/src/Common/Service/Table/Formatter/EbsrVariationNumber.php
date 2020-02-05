@@ -43,7 +43,7 @@ class EbsrVariationNumber implements FormatterInterface
         $variationNo = Escape::html($data['variationNo']);
 
         //if the record is short notice, add a short notice status flag
-        if ($data['isShortNotice'] === 'Y') {
+        if (isset($data['isShortNotice']) && $data['isShortNotice'] === 'Y') {
             /** @var \Common\View\Helper\Status $statusHelper */
             $statusHelper = $sm->get('ViewHelperManager')->get('status');
 
