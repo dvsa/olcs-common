@@ -18,7 +18,6 @@ class GuidesController extends ZendAbstractActionController
     const GUIDE_OC_ADV_GB_VAR = 'advertising-your-operating-centre-gb-var';
     const GUIDE_OC_ADV_NI_NEW = 'advertising-your-operating-centre-ni-new';
     const GUIDE_OC_ADV_NI_VAR = 'advertising-your-operating-centre-ni-var';
-    const GUIDE_COOKIES = 'cookies';
     const GUIDE_PRIVACY_NOTICE = 'privacy-notice';
     const GUIDE_TERMS_AND_CONDITIONS = 'terms-and-conditions';
     const GUIDE_FINANCIAL_EVIDENCE = 'financial-evidence';
@@ -31,7 +30,6 @@ class GuidesController extends ZendAbstractActionController
         self::GUIDE_OC_ADV_GB_VAR => 'oc_advert',
         self::GUIDE_OC_ADV_NI_NEW => 'oc_advert',
         self::GUIDE_OC_ADV_NI_VAR => 'oc_advert',
-        self::GUIDE_COOKIES => 'default',
         self::GUIDE_PRIVACY_NOTICE => 'default',
         self::GUIDE_TERMS_AND_CONDITIONS => 'default',
         self::GUIDE_FINANCIAL_EVIDENCE => 'default',

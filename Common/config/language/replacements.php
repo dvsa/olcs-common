@@ -44,5 +44,10 @@ return [
         'https://www.gov.uk/guidance/ecmt-international-road-haulage-permits#fees',
     '{{IRHP_REMOVAL_GUIDANCE_LINK}}' => 'https://www.gov.uk/guidance/international-road-haulage-removal-permits',
     '{{SHORT_TERM_ECMT_EMAIL}}' => 'shorttermecmt@dvsa.gov.uk',
-
+    '{{URL_PAY_360}}' => 'https://www.pay360.com',
+    '{{URL_PAY_360_COOKIE}}' => 'https://www.pay360.com/cookies',
+    '{{URL_SMART_SURVEY}}' => 'https://www.smartsurvey.co.uk',
+    '{{URL_SMART_SURVEY_COOKIE}}' => 'https://www.smartsurvey.co.uk/how-we-use-cookies',
+    '{{URL_VERIFY_COOKIE}}' => 'https://www.signin.service.gov.uk/cookies',
+    '{{URL_INFORMATION_COMMISSIONER_COOKIE}}' => 'https://ico.org.uk/for-the-public/online/cookies',
 ];
