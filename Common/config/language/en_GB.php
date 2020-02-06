@@ -4078,5 +4078,13 @@ return [
 
     'qanda.date.error.invalid-date' => 'Enter a valid date',
 
+    'cookie-banner.tell-us' => 'Tell us whether you accept cookies',
+    'cookie-banner.blurb' => 'We use <a class="govuk-link" href="%s">cookies to collect information</a> about how you use the Vehicle Operator Licensing service. We use this information to make the website work as well as possible and improve our services.',
+    'cookie-banner.accept-all' => 'Accept all cookies',
+
+    'cookie-confirmation.blurb' => 'You\'ve accepted all cookies. You can <a class="govuk-link" href="%s">change your cookie settings</a> at any time.',
+    'cookie-confirmation.hide' => 'Hide',
+    'cookie-banner.set-prefs' => 'Set cookie preferences',
+
     // Potentially unused translations
 ];
