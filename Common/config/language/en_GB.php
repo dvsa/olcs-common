@@ -811,6 +811,8 @@ return [
     'convictions-and-penalties-guidance-gb-title' => 'GV79G: Guidance notes to help you complete your application for a Goods Vehicle Operator’s Licence',
     'convictions-and-penalties-guidance-ni-title' => 'GV(NI)79G: Guidance Notes to Help you Complete your Goods Vehicle Operator’s Licence Application',
     'cookie-banner' => 'Vehicle Operator Licensing uses cookies.',
+    'cookie-detail-heading' => 'Details about cookies',
+    'cookie-detail-summary' => 'Vehicle Operator Licensing puts small files (known as \'cookies\') onto your computer to collect information about how you browse the site. Find out more about the cookies we use, what they’re for and when they expire.',
     'correspondence-address-form-button-find-address' => 'Find address',
     'correspondence-address-form-label-address1' => 'Address line 1',
     'correspondence-address-form-label-address2' => 'Address line 2',
