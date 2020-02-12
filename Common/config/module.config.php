@@ -218,8 +218,6 @@ return array(
         'factories' => array(
             'CommandSender' => \Common\Service\Cqrs\Command\CommandSender::class,
             'QuerySender' => \Common\Service\Cqrs\Query\QuerySender::class,
-            'LanguagePreference' => \Common\Preference\Language::class,
-            'LanguageListener' => \Common\Preference\LanguageListener::class,
             'CqrsRequest' => \Common\Service\Cqrs\RequestFactory::class,
             \Common\Service\Cqrs\Query\CachingQueryService::class
                 => \Common\Service\Cqrs\Query\CachingQueryServiceFactory::class,
@@ -410,6 +408,7 @@ return array(
             'linkBack' => Common\View\Helper\LinkBack::class,
             'translateReplace' => \Common\View\Helper\TranslateReplace::class,
             'flashMessengerAll' => \Common\View\Factory\Helper\FlashMessengerFactory::class,
+
         ),
     ),
     'view_manager' => array(
