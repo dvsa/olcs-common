@@ -51,12 +51,20 @@ class Language implements FactoryInterface
         $cookie = $request->getCookie();
 
         $this->preference = self::OPTION_EN;
+        $this->requestCookie = new SetCookie();
+
+        if ($serviceLocator->has('CookieCookieReader')) {
+            $cookieState = $serviceLocator->get('CookieCookieReader')->getState($cookie);
+
+            if (!$cookieState->isActive('settings')) {
+                return $this;
+            }
+        }
 
         if ($cookie instanceof Cookie && isset($cookie[$this->key])) {
             $this->preference = $cookie[$this->key];
         }
 
-        $this->requestCookie = new SetCookie();
         $this->requestCookie->setName($this->key);
         $this->requestCookie->setValue($this->preference);
         $this->requestCookie->setPath('/');
