@@ -1980,4 +1980,28 @@ return [
     'inter_journey_less_60' => 'Llai na 60%',
     'inter_journey_60_90' => 'O 60% i 90%',
     'inter_journey_more_90' => 'Mwy na 90%',
+
+    'cookie-banner.tell-us' => 'Dywedwch wrthym a ydych yn derbyn cwcis',
+    'cookie-banner.blurb' => 'Defnyddiwn <a class="govuk-link" href="%s">cwcis i gasglu gwybodaeth</a> ynghylch sut rydych yn defnyddio\'r gwasanaeth Trwyddedu Gweithredwyr Cerbydau. Defnyddiwn yr wybodaeth hon i wneud i\'r wefan weithio cystal â phosibl a gwella ein gwasanaethau.',
+    'cookie-banner.accept-all' => 'Derbyn pob cwci',
+
+    'cookie-confirmation.blurb' => 'Rydych chi wedi derbyn pob Cwci. Galla <a class="govuk-link" href="%s">newid eich gosodiadau cwcis</a> ar unrhyw adeg.',
+    'cookie-confirmation.hide' => 'Cuddio',
+    'cookie-banner.set-prefs' => 'Gosod hoffterau cwcis',
+
+    'cookie-detail-heading' => 'Manylion am gwcis',
+    'cookie-detail-summary' => 'Mae Trwyddedu Gweithredwyr Cerbydau yn rhoi ffeiliau bach (a elwir yn \'gwcis\') ar eich cyfrifiadur i gasglu gwybodaeth am sut rydych yn pori\'r safle. Darganfyddwch fwy am y cwcis rydyn ni\'n eu defnyddio, beth yw\'r rheswm am eu cael a phryd maen nhw\'n dod i ben.',
+    'cookie-settings-heading' => 'Cwcis',
+    'cookie-settings-cookie-settings-heading' => 'Gosodiadau cwcis',
+    'cookie-settings-measure-website-use-heading' => 'Cwcis sy\'n mesur defnydd gwefan',
+    'cookie-settings-remember-your-settings-heading' => 'Cwcis sy\'n cofio eich gosodiadau',
+    'cookie-settings-security-heading' => 'Cwcis diogelwch',
+    'cookie-settings-strictly-necessary-heading' => 'Cwcis cwbl angenrheidiol',
+    'cookie-settings-save-changes' => 'Cadw\'r newidiadau',
+    'cookie-settings-third-party-heading' => 'Cwcis trydydd parti',
+    'cookie-settings-government-heading' => 'Gwasanaethau Llywodraeth',
+    'cookie-settings-on' => 'Ymlaen',
+    'cookie-settings-off' => 'Wedi diffodd',
+    'cookie-settings-saved-heading' => 'Wedi cadw eich gosodiadau cwcis',
+    'cookie-settings-saved-content' => 'Gall gwasanaethau\'r Llywodraeth osod cwcis ychwanegol ac, os felly, bydd ganddynt eu polisi cwcis a\'u baner eu hunain.',
 ];
