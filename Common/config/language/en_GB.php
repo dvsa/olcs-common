@@ -808,6 +808,21 @@ return [
     'convictions-and-penalties-guidance-gb-title' => 'GV79G: Guidance notes to help you complete your application for a Goods Vehicle Operator’s Licence',
     'convictions-and-penalties-guidance-ni-title' => 'GV(NI)79G: Guidance Notes to Help you Complete your Goods Vehicle Operator’s Licence Application',
     'cookie-banner' => 'Vehicle Operator Licensing uses cookies.',
+    'cookie-detail-heading' => 'Details about cookies',
+    'cookie-detail-summary' => 'Vehicle Operator Licensing puts small files (known as \'cookies\') onto your computer to collect information about how you browse the site. Find out more about the cookies we use, what they’re for and when they expire.',
+    'cookie-settings-heading' => 'Cookies',
+    'cookie-settings-cookie-settings-heading' => 'Cookie settings',
+    'cookie-settings-measure-website-use-heading' => 'Cookies that measure website use',
+    'cookie-settings-remember-your-settings-heading' => 'Cookies that remember your settings',
+    'cookie-settings-security-heading' => 'Security cookies',
+    'cookie-settings-strictly-necessary-heading' => 'Strictly necessary cookies',
+    'cookie-settings-save-changes' => 'Save changes',
+    'cookie-settings-third-party-heading' => 'Third-party cookies',
+    'cookie-settings-government-heading' => 'Government services',
+    'cookie-settings-on' => 'On',
+    'cookie-settings-off' => 'Off',
+    'cookie-settings-saved-heading' => 'Your cookie settings were saved',
+    'cookie-settings-saved-content' => 'Government services may set additional cookies and, if so, will have their own cookie policy and banner.',
     'correspondence-address-form-button-find-address' => 'Find address',
     'correspondence-address-form-label-address1' => 'Address line 1',
     'correspondence-address-form-label-address2' => 'Address line 2',
@@ -4075,6 +4090,14 @@ return [
     'qanda.ecmt-annual-2018.number-of-permits.textbox.label' => 'Number of permits',
 
     'qanda.date.error.invalid-date' => 'Enter a valid date',
+
+    'cookie-banner.tell-us' => 'Tell us whether you accept cookies',
+    'cookie-banner.blurb' => 'We use <a class="govuk-link" href="%s">cookies to collect information</a> about how you use the Vehicle Operator Licensing service. We use this information to make the website work as well as possible and improve our services.',
+    'cookie-banner.accept-all' => 'Accept all cookies',
+
+    'cookie-confirmation.blurb' => 'You\'ve accepted all cookies. You can <a class="govuk-link" href="%s">change your cookie settings</a> at any time.',
+    'cookie-confirmation.hide' => 'Hide',
+    'cookie-banner.set-prefs' => 'Set cookie preferences',
 
     // Potentially unused translations
 ];
