@@ -28,7 +28,8 @@ class DateSelectNullifierTest extends \PHPUnit\Framework\TestCase
     {
         return [
             [null, null],
-            ['string', null],
+            ['', null],
+            ['string', 'string'],
             [['day'=>'', 'year'=>'', 'month'=>''], null],
             [['day'=>'04', 'year'=>'2012', 'month'=>''], null],
             [['day'=>'04', 'year'=>'2012', 'month'=>'10'], '2012-10-04'],
