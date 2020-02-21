@@ -699,6 +699,7 @@ return [
     'org_t_st' => 'Unig Fasnachwr',
     'other' => 'Arall',
     'page.title.auth/login.index' => 'Mewngofnodi',
+    'page.title.user-forgot-username.index' => 'Wedi anghofio eich enw defnyddiwr?',
     'page.title.lva-licence/type_of_licence.index' => 'Math o drwydded',
     'page.title.your-account.edit' => 'Eich cyfrif',
     'page.title.search-bus.index' => 'Dod o hyd i wasanaethau bws lleol cofrestredig',
