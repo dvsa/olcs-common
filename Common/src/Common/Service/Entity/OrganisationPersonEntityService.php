@@ -7,6 +7,8 @@
  */
 namespace Common\Service\Entity;
 
+use Common\Exception\DataServiceException;
+
 /**
  * Organisation Person Entity Service
  *
@@ -57,7 +59,7 @@ class OrganisationPersonEntityService extends AbstractEntityService
         $result = $this->get($query);
 
         if ($result['Count'] < 1) {
-            throw new Exceptions\UnexpectedResponseException('Expected to get one organisation person record');
+            throw new DataServiceException('Expected to get one organisation person record');
         }
 
         return $result['Results'][0];

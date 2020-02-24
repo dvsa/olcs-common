@@ -7,6 +7,8 @@
  */
 namespace Common\Service\Entity;
 
+use Common\Exception\DataServiceException;
+
 /**
  * Application Entity Service
  *
@@ -600,7 +602,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
         $data = $this->get($id);
 
         if (!isset($data['isVariation'])) {
-            throw new Exceptions\UnexpectedResponseException('Is variation flag not found');
+            throw new DataServiceException('Is variation flag not found');
         }
 
         if ($data['isVariation']) {

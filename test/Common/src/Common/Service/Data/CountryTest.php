@@ -2,11 +2,11 @@
 
 namespace CommonTest\Service\Data;
 
+use Common\Exception\DataServiceException;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Data\Country;
 use Mockery as m;
 use Dvsa\Olcs\Transfer\Query\ContactDetail\CountryList as Qry;
-use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 
 /**
  * Class Country Test
@@ -81,7 +81,7 @@ class CountryTest extends AbstractDataServiceTestCase
 
     public function testFetchListDataWithException()
     {
-        $this->expectException(UnexpectedResponseException::class);
+        $this->expectException(DataServiceException::class);
         $mockTransferAnnotationBuilder = m::mock()
             ->shouldReceive('createQuery')->once()->andReturn('query')->getMock();
 

@@ -5,7 +5,6 @@ namespace Common\Service\Data;
 use Common\Exception\DataServiceException;
 use Common\Service\Data\Interfaces\ListData;
 use Common\Service\Data\AbstractDataService;
-use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 use Dvsa\Olcs\Transfer\Query\BusRegSearchView\BusRegSearchViewContextList;
 
 /**
@@ -60,7 +59,7 @@ class BusRegSearchViewListDataService extends AbstractDataService implements Lis
      * @param string $context Context
      *
      * @return array
-     * @throw UnexpectedResponseException
+     * @throw DataServiceException
      */
     public function fetchListData($context)
     {
@@ -78,7 +77,7 @@ class BusRegSearchViewListDataService extends AbstractDataService implements Lis
             $response = $this->handleQuery($dtoData);
 
             if (!$response->isOk()) {
-                throw new UnexpectedResponseException('unknown-error');
+                throw new DataServiceException('unknown-error');
             }
 
             $this->setData($cacheId, false);
@@ -102,7 +101,7 @@ class BusRegSearchViewListDataService extends AbstractDataService implements Lis
      */
     private function getValueField($context)
     {
-        switch($context) {
+        switch ($context) {
             case 'licence':
                 return 'licNo';
             case 'organisation':
@@ -124,7 +123,7 @@ class BusRegSearchViewListDataService extends AbstractDataService implements Lis
      */
     private function getKeyField($context)
     {
-        switch($context) {
+        switch ($context) {
             case 'licence':
                 return 'licId';
             case 'organisation':

@@ -2,7 +2,7 @@
 
 namespace Common\Service\Data;
 
-use Common\Service\Entity\Exceptions\UnexpectedResponseException;
+use Common\Exception\DataServiceException;
 use Dvsa\Olcs\Transfer\Query\Fee\GetLatestFeeType;
 
 /**
@@ -63,7 +63,7 @@ class FeeTypeDataService extends AbstractDataService
         $response = $this->handleQuery($dtoData);
 
         if ($response->isServerError() || $response->isClientError() || !$response->isOk()) {
-            throw new UnexpectedResponseException('unknown-error');
+            throw new DataServiceException('unknown-error');
         }
 
         return $this->formatResult($response->getResult());

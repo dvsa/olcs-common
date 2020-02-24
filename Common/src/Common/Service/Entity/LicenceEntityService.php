@@ -7,6 +7,8 @@
  */
 namespace Common\Service\Entity;
 
+use Common\Exception\DataServiceException;
+
 /**
  * Licence Entity Service
  *
@@ -538,7 +540,7 @@ class LicenceEntityService extends AbstractLvaEntityService
             $licenceGen = $this->getServiceLocator()->get('Entity\LicenceNoGen')->save(array('licence' => $licenceId));
 
             if (!isset($licenceGen['id'])) {
-                throw new Exceptions\UnexpectedResponseException('Error generating licence');
+                throw new DataServiceException('Error generating licence');
             }
 
             $saveData['licNo'] = sprintf(

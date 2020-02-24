@@ -27,7 +27,7 @@ class ApplicationTrackingEntityServiceTest extends AbstractEntityServiceTestCase
     /**
      * @group entity_services
      *
-     * @expectedException \Common\Service\Entity\Exceptions\UnexpectedResponseException
+     * @expectedException \Common\Exception\DataServiceException
      * @expectedExceptionMessage Tracking status not found
      */
     public function testGetTrackingStatusesWithNoRecord()
@@ -47,7 +47,7 @@ class ApplicationTrackingEntityServiceTest extends AbstractEntityServiceTestCase
     /**
      * @group entity_services
      *
-     * @expectedException \Common\Service\Entity\Exceptions\UnexpectedResponseException
+     * @expectedException \Common\Exception\DataServiceException
      * @expectedExceptionMessage Too many tracking statuses found
      */
     public function testGetTrackingStatusesWithTooManyRecords()

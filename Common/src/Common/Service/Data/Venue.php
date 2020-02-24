@@ -2,9 +2,9 @@
 
 namespace Common\Service\Data;
 
+use Common\Exception\DataServiceException;
 use Common\Service\Data\AbstractDataService;
 use Common\Service\Data\Interfaces\ListData;
-use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 use Dvsa\Olcs\Transfer\Query\Venue\VenueList;
 use Zend\ServiceManager\FactoryInterface;
 
@@ -76,7 +76,7 @@ class Venue extends AbstractDataService implements ListData, FactoryInterface
             $response = $this->handleQuery($dtoData);
 
             if (!$response->isOk()) {
-                throw new UnexpectedResponseException('unknown-error');
+                throw new DataServiceException('unknown-error');
             }
 
             $this->setData('Venue', false);

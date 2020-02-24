@@ -2,9 +2,9 @@
 
 namespace Common\Service\Data;
 
+use Common\Exception\DataServiceException;
 use Common\Service\Data\AbstractDataService;
 use Common\Service\Data\Interfaces\ListData;
-use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 use Dvsa\Olcs\Transfer\Query\Bus\BusRegBrowseContextList;
 
 /**
@@ -56,7 +56,7 @@ class BusRegBrowseListDataService extends AbstractDataService implements ListDat
      * @param string $context Context
      *
      * @return array
-     * @throw UnexpectedResponseException
+     * @throw DataServiceException
      */
     public function fetchListData($context)
     {
@@ -74,7 +74,7 @@ class BusRegBrowseListDataService extends AbstractDataService implements ListDat
             $response = $this->handleQuery($dtoData);
 
             if (!$response->isOk()) {
-                throw new UnexpectedResponseException('unknown-error');
+                throw new DataServiceException('unknown-error');
             }
 
             $this->setData($cacheId, false);

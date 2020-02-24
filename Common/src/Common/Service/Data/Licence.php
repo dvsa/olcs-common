@@ -2,7 +2,7 @@
 
 namespace Common\Service\Data;
 
-use Common\Service\Entity\Exceptions\UnexpectedResponseException;
+use Common\Exception\DataServiceException;
 use Dvsa\Olcs\Transfer\Query\Licence\Licence as LicenceQry;
 use Dvsa\Olcs\Transfer\Query\Licence\OperatingCentres as OcQry;
 
@@ -24,7 +24,7 @@ class Licence extends AbstractDataService
      * @param null $id licence id
      *
      * @return array|mixed|null
-     * @throws UnexpectedResponseException
+     * @throws DataServiceException
      */
     public function fetchLicenceData($id = null)
     {
@@ -39,7 +39,7 @@ class Licence extends AbstractDataService
             $response = $this->handleQuery($dtoData);
 
             if (!$response->isOk()) {
-                throw new UnexpectedResponseException('unknown-error');
+                throw new DataServiceException('unknown-error');
             }
 
             $data = $response->getResult();
@@ -55,7 +55,7 @@ class Licence extends AbstractDataService
      * @param int|null $id Id
      *
      * @return mixed|null
-     * @throws UnexpectedResponseException
+     * @throws DataServiceException
      */
     public function fetchOperatingCentreData($id = null)
     {
@@ -66,7 +66,7 @@ class Licence extends AbstractDataService
             $response = $this->handleQuery($dtoData);
 
             if (!$response->isOk()) {
-                throw new UnexpectedResponseException('unknown-error');
+                throw new DataServiceException('unknown-error');
             }
 
             $data = $response->getResult();

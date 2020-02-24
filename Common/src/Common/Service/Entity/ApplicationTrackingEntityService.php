@@ -7,6 +7,8 @@
  */
 namespace Common\Service\Entity;
 
+use Common\Exception\DataServiceException;
+
 /**
  * Application Tracking Entity Service
  *
@@ -40,11 +42,11 @@ class ApplicationTrackingEntityService extends AbstractEntityService
         $data = $this->get(array('application' => $applicationId));
 
         if ($data['Count'] < 1) {
-            throw new Exceptions\UnexpectedResponseException('Tracking status not found');
+            throw new DataServiceException('Tracking status not found');
         }
 
         if ($data['Count'] > 1) {
-            throw new Exceptions\UnexpectedResponseException('Too many tracking statuses found');
+            throw new DataServiceException('Too many tracking statuses found');
         }
 
         return $data['Results'][0];

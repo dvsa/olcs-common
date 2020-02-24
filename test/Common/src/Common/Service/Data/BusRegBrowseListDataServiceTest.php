@@ -110,7 +110,7 @@ class BusRegBrowseListDataServiceTest extends AbstractDataServiceTestCase
     }
 
     /**
-     * @expectedException \Common\Service\Entity\Exceptions\UnexpectedResponseException
+     * @expectedException \Common\Exception\DataServiceException
      */
     public function testFetchListDataThrowsException()
     {

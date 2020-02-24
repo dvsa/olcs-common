@@ -7,6 +7,7 @@
  */
 namespace Common\Service\Entity;
 
+use Common\Exception\DataServiceException;
 use Common\Service\Data\ListDataInterface;
 
 /**
@@ -43,7 +44,7 @@ class TrafficAreaEntityService extends AbstractEntityService implements ListData
         $results = $trafficArea['Results'];
 
         if (empty($results)) {
-            throw new Exceptions\UnexpectedResponseException('No traffic area value options found');
+            throw new DataServiceException('No traffic area value options found');
         }
 
         foreach ($results as $value) {

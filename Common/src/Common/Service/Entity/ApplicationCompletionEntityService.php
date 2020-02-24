@@ -2,6 +2,7 @@
 
 namespace Common\Service\Entity;
 
+use Common\Exception\DataServiceException;
 use Common\Service\Data\SectionConfig;
 
 /**
@@ -33,11 +34,11 @@ class ApplicationCompletionEntityService extends AbstractEntityService
         $data = $this->get(array('application' => $applicationId));
 
         if ($data['Count'] < 1) {
-            throw new Exceptions\UnexpectedResponseException('Completions status not found');
+            throw new DataServiceException('Completions status not found');
         }
 
         if ($data['Count'] > 1) {
-            throw new Exceptions\UnexpectedResponseException('Too many completion statuses found');
+            throw new DataServiceException('Too many completion statuses found');
         }
 
         return $data['Results'][0];
@@ -183,7 +184,6 @@ class ApplicationCompletionEntityService extends AbstractEntityService
         switch ($orgData['type']['id']) {
             case OrganisationEntityService::ORG_TYPE_REGISTERED_COMPANY:
             case OrganisationEntityService::ORG_TYPE_LLP:
-
                 $registeredAddress = !empty($orgData['contactDetails']);
 
                 $requiredVars = array(
@@ -315,14 +315,11 @@ class ApplicationCompletionEntityService extends AbstractEntityService
         );
 
         if ($applicationData['goodsOrPsv']['id'] === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
-
             unset($requiredVars['totAuthSmallVehicles']);
             unset($requiredVars['totAuthMediumVehicles']);
             unset($requiredVars['totAuthLargeVehicles']);
             unset($requiredVars['totCommunityLicences']);
-
         } else {
-
             unset($requiredVars['totAuthVehicles']);
             unset($requiredVars['totAuthTrailers']);
 
@@ -345,7 +342,6 @@ class ApplicationCompletionEntityService extends AbstractEntityService
             if (!in_array($licType, $allowCommunityLicences)) {
                 unset($requiredVars['totCommunityLicences']);
             }
-
         }
 
         return $this->checkCompletion($requiredVars);
@@ -507,7 +503,6 @@ class ApplicationCompletionEntityService extends AbstractEntityService
             unset($requiredVars['psvSmallVhlNotes']);
             unset($requiredVars['psvSmallVhlConfirmation']);
         } else {
-
             unset($requiredVars['psvNoSmallVhlConfirmation']);
 
             if (empty($applicationData['totAuthMediumVehicles']) && empty($applicationData['totAuthLargeVehicles'])) {
@@ -586,7 +581,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @NOTE This functionality has been replicated in the API [ApplicationCompletion/UpdateFinancialHistoryStatus]
      *
      * @param array $applicationData Application Data
-     * 
+     *
      * @return int
      */
     protected function getFinancialHistoryStatus($applicationData)
@@ -644,18 +639,15 @@ class ApplicationCompletionEntityService extends AbstractEntityService
 
         // We must have values for each radio
         foreach ($sections as $section) {
-
             $licenceType = $filter->camelToUnderscore($section);
 
             $requiredVars[] = $this->isYnValue($applicationData[$section]);
 
             // If the radio is YES, then we must have at least 1 licence of that type
             if ($applicationData[$section] === 'Y') {
-
                 $hasLicences = false;
 
                 foreach ($applicationData['otherLicences'] as $licence) {
-
                     if ($licence['previousLicenceType']['id'] === $licenceType) {
                         $hasLicences = true;
                     }
