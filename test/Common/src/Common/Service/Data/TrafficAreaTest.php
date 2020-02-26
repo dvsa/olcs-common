@@ -2,10 +2,10 @@
 
 namespace CommonTest\Service\Data;
 
+use Common\Exception\DataServiceException;
 use Common\Service\Data\TrafficArea;
 use Mockery as m;
 use Dvsa\Olcs\Transfer\Query\TrafficArea\TrafficAreaList as Qry;
-use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 
 /**
  * Class TrafficArea Test
@@ -80,7 +80,7 @@ class TrafficAreaTest extends AbstractDataServiceTestCase
 
     public function testFetchListDataWithException()
     {
-        $this->expectException(UnexpectedResponseException::class);
+        $this->expectException(DataServiceException::class);
         $mockTransferAnnotationBuilder = m::mock()
             ->shouldReceive('createQuery')->once()->andReturn('query')->getMock();
 

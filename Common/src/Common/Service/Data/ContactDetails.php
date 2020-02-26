@@ -2,7 +2,7 @@
 
 namespace Common\Service\Data;
 
-use Common\Service\Entity\Exceptions\UnexpectedResponseException;
+use Common\Exception\DataServiceException;
 use Dvsa\Olcs\Transfer\Query as TransferQry;
 
 /**
@@ -24,7 +24,7 @@ class ContactDetails extends AbstractListDataService
      * @param string $context Category
      *
      * @return array
-     * @throw UnexpectedResponseException
+     * @throw DataServiceException
      */
     public function fetchListData($context = null)
     {
@@ -45,7 +45,7 @@ class ContactDetails extends AbstractListDataService
         $response = $this->handleQuery($query);
 
         if (!$response->isOk()) {
-            throw new UnexpectedResponseException('unknown-error');
+            throw new DataServiceException('unknown-error');
         }
 
         $result = $response->getResult();

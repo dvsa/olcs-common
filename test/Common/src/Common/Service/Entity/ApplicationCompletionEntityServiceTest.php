@@ -26,7 +26,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
     /**
      * @group entity_services
      *
-     * @expectedException \Common\Service\Entity\Exceptions\UnexpectedResponseException
+     * @expectedException \Common\Exception\DataServiceException
      * @expectedExceptionMessage Completions status not found
      */
     public function testGetCompletionStatusesWithNoRecord()
@@ -46,7 +46,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
     /**
      * @group entity_services
      *
-     * @expectedException \Common\Service\Entity\Exceptions\UnexpectedResponseException
+     * @expectedException \Common\Exception\DataServiceException
      * @expectedExceptionMessage Too many completion statuses found
      */
     public function testGetCompletionStatusesWithTooManyRecords()

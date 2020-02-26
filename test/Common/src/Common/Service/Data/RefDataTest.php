@@ -2,10 +2,10 @@
 
 namespace CommonTest\Service\Data;
 
+use Common\Exception\DataServiceException;
 use Common\Service\Data\RefData;
 use Mockery as m;
 use Dvsa\Olcs\Transfer\Query\ContactDetail\ContactDetailsList as Qry;
-use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 
 /**
  * Class RefDataTest
@@ -168,7 +168,7 @@ class RefDataTest extends AbstractDataServiceTestCase
 
     public function testFetchListDataWithException()
     {
-        $this->expectException(UnexpectedResponseException::class);
+        $this->expectException(DataServiceException::class);
         $mockTransferAnnotationBuilder = m::mock()
             ->shouldReceive('createQuery')->once()->andReturn('query')->getMock();
 

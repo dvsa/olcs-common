@@ -2,9 +2,9 @@
 
 namespace CommonTest\Service\Data;
 
+use Common\Exception\DataServiceException;
 use Common\Service\Data\FeeType;
 use Mockery as m;
-use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 
 /**
  * Class Fee Type Test
@@ -69,7 +69,7 @@ class FeeTypeTest extends AbstractDataServiceTestCase
 
     public function testFetchListDataWithException()
     {
-        $this->expectException(UnexpectedResponseException::class);
+        $this->expectException(DataServiceException::class);
         $mockTransferAnnotationBuilder = m::mock()
             ->shouldReceive('createQuery')->once()->andReturn('query')->getMock();
 

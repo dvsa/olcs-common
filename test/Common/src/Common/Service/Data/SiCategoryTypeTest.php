@@ -2,8 +2,8 @@
 
 namespace CommonTest\Service\Data;
 
+use Common\Exception\DataServiceException;
 use Common\Service\Data\SiCategoryType as Sut;
-use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 use Dvsa\Olcs\Transfer\Query\Si\SiCategoryTypeListData as Qry;
 use Mockery as m;
 
@@ -83,7 +83,7 @@ class SiCategoryTypeTest extends AbstractDataServiceTestCase
 
     public function testFetchListDataWithException()
     {
-        $this->expectException(UnexpectedResponseException::class);
+        $this->expectException(DataServiceException::class);
         $mockTransferAnnotationBuilder = m::mock()
             ->shouldReceive('createQuery')->once()->andReturn('query')->getMock();
 

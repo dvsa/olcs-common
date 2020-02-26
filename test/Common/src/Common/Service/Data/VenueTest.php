@@ -2,9 +2,9 @@
 
 namespace OlcsTest\Service\Data;
 
+use Common\Exception\DataServiceException;
 use Common\Service\Data\Venue;
 use Mockery as m;
-use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 use CommonTest\Service\Data\AbstractDataServiceTestCase;
 
 /**
@@ -103,7 +103,7 @@ class VenueTest extends AbstractDataServiceTestCase
 
     public function testFetchLicenceDataWithException()
     {
-        $this->expectException(UnexpectedResponseException::class);
+        $this->expectException(DataServiceException::class);
         $mockTransferAnnotationBuilder = m::mock()
             ->shouldReceive('createQuery')->once()->andReturn('query')->getMock();
 

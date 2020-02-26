@@ -2,11 +2,11 @@
 
 namespace OlcsTest\Service\Data;
 
+use Common\Exception\DataServiceException;
 use CommonTest\Service\Data\AbstractDataServiceTestCase;
 use Common\Service\Data\Application;
 use Dvsa\Olcs\Transfer\Query\Application\Application as ApplicationQry;
 use Dvsa\Olcs\Transfer\Query\Application\OperatingCentres as OcQry;
-use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 use Common\RefData as CommonRefData;
 use Mockery as m;
 
@@ -106,7 +106,7 @@ class ApplicationTest extends AbstractDataServiceTestCase
 
     public function testFetchOperatingCentreDataWithException()
     {
-        $this->expectException(UnexpectedResponseException::class);
+        $this->expectException(DataServiceException::class);
         $mockTransferAnnotationBuilder = m::mock()
             ->shouldReceive('createQuery')->once()->andReturn('query')->getMock();
 
@@ -197,7 +197,7 @@ class ApplicationTest extends AbstractDataServiceTestCase
 
     public function testFetchApplicationDataWithException()
     {
-        $this->expectException(UnexpectedResponseException::class);
+        $this->expectException(DataServiceException::class);
         $mockTransferAnnotationBuilder = m::mock()
             ->shouldReceive('createQuery')->once()->andReturn('query')->getMock();
 

@@ -2,8 +2,8 @@
 
 namespace Common\Service\Data;
 
+use Common\Exception\DataServiceException;
 use Common\Service\Data\Interfaces\ListData;
-use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 use Dvsa\Olcs\Transfer\Query\LocalAuthority\LocalAuthorityList as LocalAuthorityQry;
 
 /**
@@ -86,7 +86,7 @@ class LocalAuthority extends AbstractDataService implements ListData
      * Fetch list data
      *
      * @return array
-     * @throw UnexpectedResponseException
+     * @throw DataServiceException
      */
     public function fetchListData()
     {
@@ -99,7 +99,7 @@ class LocalAuthority extends AbstractDataService implements ListData
             $response = $this->handleQuery($dtoData);
 
             if (!$response->isOk()) {
-                throw new UnexpectedResponseException('unknown-error');
+                throw new DataServiceException('unknown-error');
             }
 
             $data = $response->getResult()['results'];

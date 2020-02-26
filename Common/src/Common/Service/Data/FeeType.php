@@ -2,8 +2,8 @@
 
 namespace Common\Service\Data;
 
+use Common\Exception\DataServiceException;
 use Common\Service\Data\Interfaces\ListData;
-use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 use Dvsa\Olcs\Transfer\Query\FeeType\GetDistinctList;
 
 /**
@@ -37,7 +37,7 @@ class FeeType extends AbstractDataService implements ListData
      * @param bool $useGroups Use groups
      *
      * @return array
-     * @throws UnexpectedResponseException
+     * @throws DataServiceException
      */
     public function fetchListOptions($category, $useGroups = false)
     {
@@ -54,7 +54,7 @@ class FeeType extends AbstractDataService implements ListData
      * Fetch list data
      *
      * @return array
-     * @throws UnexpectedResponseException
+     * @throws DataServiceException
      */
     public function fetchListData()
     {
@@ -63,7 +63,7 @@ class FeeType extends AbstractDataService implements ListData
             $response = $this->handleQuery($dtoData);
 
             if (!$response->isOk()) {
-                throw new UnexpectedResponseException('unknown-error');
+                throw new DataServiceException('unknown-error');
             }
 
             $this->setData('FeeType', false);

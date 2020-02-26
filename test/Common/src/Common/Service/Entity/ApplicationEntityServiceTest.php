@@ -146,7 +146,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
     /**
      * @group entity_services
      *
-     * @expectedException \Common\Service\Entity\Exceptions\UnexpectedResponseException
+     * @expectedException \Common\Exception\DataServiceException
      * @expectedExceptionMessage Is variation flag not found
      */
     public function testGetApplicationTypeWithoutIsVariationFlag()

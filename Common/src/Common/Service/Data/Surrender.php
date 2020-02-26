@@ -3,7 +3,7 @@
 
 namespace Common\Service\Data;
 
-use Common\Service\Entity\Exceptions\UnexpectedResponseException;
+use Common\Exception\DataServiceException;
 use Dvsa\Olcs\Transfer\Query\Surrender\ByLicence;
 
 class Surrender extends AbstractDataService
@@ -12,7 +12,7 @@ class Surrender extends AbstractDataService
      * @param int $licenceId
      *
      * @return array
-     * @throws UnexpectedResponseException
+     * @throws DataServiceException
      */
     public function fetchSurrenderData(int $licenceId): array
     {
@@ -24,6 +24,6 @@ class Surrender extends AbstractDataService
         if ($response->isOk()) {
             return $response->getResult();
         }
-        throw new UnexpectedResponseException('unknown-error');
+        throw new DataServiceException('unknown-error');
     }
 }

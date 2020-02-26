@@ -2,9 +2,9 @@
 
 namespace Common\Service\Data;
 
+use Common\Exception\DataServiceException;
 use Common\Service\Data\AbstractDataService;
 use Common\Service\Data\Interfaces\ListData;
-use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 use Dvsa\Olcs\Transfer\Query\Si\SiCategoryTypeListData;
 
 /**
@@ -57,7 +57,6 @@ class SiCategoryType extends AbstractDataService implements ListData
     public function fetchListData()
     {
         if (is_null($this->getData('SiCategoryType'))) {
-
             $dtoData = SiCategoryTypeListData::create(
                 [
                     'sort'  => 'description',
@@ -68,7 +67,7 @@ class SiCategoryType extends AbstractDataService implements ListData
             $response = $this->handleQuery($dtoData);
 
             if (!$response->isOk()) {
-                throw new UnexpectedResponseException('unknown-error');
+                throw new DataServiceException('unknown-error');
             }
 
             $this->setData('SiCategoryType', false);

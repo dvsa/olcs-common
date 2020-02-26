@@ -2,8 +2,8 @@
 
 namespace Common\Service\Data;
 
+use Common\Exception\DataServiceException;
 use Common\RefData as CommonRefData;
-use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 use Dvsa\Olcs\Transfer\Query\Application\Application as ApplicationQry;
 use Dvsa\Olcs\Transfer\Query\Application\OperatingCentres as OcQry;
 
@@ -47,7 +47,7 @@ class Application extends AbstractDataService
             $response = $this->handleQuery($dtoData);
 
             if (!$response->isOk()) {
-                throw new UnexpectedResponseException('unknown-error');
+                throw new DataServiceException('unknown-error');
             }
 
             $data = $response->getResult();
@@ -95,7 +95,7 @@ class Application extends AbstractDataService
             $response = $this->handleQuery($dtoData);
 
             if (!$response->isOk()) {
-                throw new UnexpectedResponseException('unknown-error');
+                throw new DataServiceException('unknown-error');
             }
 
             $data = $response->getResult();

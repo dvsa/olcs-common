@@ -2,9 +2,9 @@
 
 namespace Common\Service\Data;
 
+use Common\Exception\DataServiceException;
 use Common\Service\Data\AbstractDataService;
 use Common\Service\Data\Interfaces\ListData;
-use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 use Dvsa\Olcs\Transfer\Query\User\RoleList;
 
 /**
@@ -38,18 +38,17 @@ class Role extends AbstractDataService implements ListData
      * Fetch list data
      *
      * @return array
-     * @throw UnexpectedResponseException
+     * @throw DataServiceException
      */
     public function fetchListData()
     {
         if (is_null($this->getData('Role'))) {
-
             $this->setData('Role', false);
             $dtoData = RoleList::create([]);
             $response = $this->handleQuery($dtoData);
 
             if (!$response->isOk()) {
-                throw new UnexpectedResponseException('unknown-error');
+                throw new DataServiceException('unknown-error');
             }
 
             $this->setData('Role', false);

@@ -3,8 +3,8 @@
 
 namespace CommonTest\Service\Data;
 
+use Common\Exception\DataServiceException;
 use Common\Service\Data\Surrender;
-use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 use Dvsa\Olcs\Transfer\Query\Surrender\ByLicence as SurrenderQry;
 
 class SurrenderTest extends AbstractDataServiceTestCase
@@ -48,7 +48,7 @@ class SurrenderTest extends AbstractDataServiceTestCase
     public function testThrowsExceptionIfNot200Response()
     {
         $params = ['id' => 7];
-        $this->expectException(UnexpectedResponseException::class);
+        $this->expectException(DataServiceException::class);
         $dto = SurrenderQry::create($params);
         $mockTransferAnnotationBuilder = \Mockery::mock()
             ->shouldReceive('createQuery')->once()->andReturnUsing(
