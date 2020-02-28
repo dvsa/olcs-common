@@ -8,6 +8,7 @@
 namespace Common\Service\Entity;
 
 use Common\Exception\DataServiceException;
+use Common\RefData;
 
 /**
  * Licence Entity Service
@@ -16,45 +17,11 @@ use Common\Exception\DataServiceException;
  */
 class LicenceEntityService extends AbstractLvaEntityService
 {
-    /**
-     * Goods or PSV keys
-     */
-    const LICENCE_CATEGORY_GOODS_VEHICLE = 'lcat_gv';
-    const LICENCE_CATEGORY_PSV = 'lcat_psv';
-
-    /**
-     * Licence types keys
-     */
-    const LICENCE_TYPE_RESTRICTED = 'ltyp_r';
-    const LICENCE_TYPE_STANDARD_INTERNATIONAL = 'ltyp_si';
-    const LICENCE_TYPE_STANDARD_NATIONAL = 'ltyp_sn';
-    const LICENCE_TYPE_SPECIAL_RESTRICTED = 'ltyp_sr';
-
-    const LICENCE_STATUS_UNDER_CONSIDERATION = 'lsts_consideration';
-    const LICENCE_STATUS_NOT_SUBMITTED = 'lsts_not_submitted';
-    const LICENCE_STATUS_SUSPENDED = 'lsts_suspended';
-    const LICENCE_STATUS_VALID = 'lsts_valid';
-    const LICENCE_STATUS_CURTAILED = 'lsts_curtailed';
-    const LICENCE_STATUS_GRANTED = 'lsts_granted';
-    const LICENCE_STATUS_SURRENDER_UNDER_CONSIDERATION = 'lsts_surr_consideration';
-    const LICENCE_STATUS_SURRENDERED = 'lsts_surrendered';
-    const LICENCE_STATUS_WITHDRAWN = 'lsts_withdrawn';
-    const LICENCE_STATUS_REFUSED = 'lsts_refused';
-    const LICENCE_STATUS_REVOKED = 'lsts_revoked';
-    const LICENCE_STATUS_NOT_TAKEN_UP = 'lsts_ntu';
-    const LICENCE_STATUS_TERMINATED = 'lsts_terminated';
-    const LICENCE_STATUS_CONTINUATION_NOT_SOUGHT = 'lsts_cns';
-    // 'lsts_unlicenced', 'Unlicenced' is in rollout data but not used
-
-    const LICENCE_TACH_EXTERNAL = 'tach_external';
-    const LICENCE_TACH_INTERNAL = 'tach_internal';
-    const LICENCE_TACH_NA = 'tach_na';
-
     private $typeShortCodeMap =[
-        self::LICENCE_TYPE_RESTRICTED             => 'R',
-        self::LICENCE_TYPE_STANDARD_INTERNATIONAL => 'SI',
-        self::LICENCE_TYPE_STANDARD_NATIONAL      => 'SN',
-        self::LICENCE_TYPE_SPECIAL_RESTRICTED     => 'SR',
+        RefData::LICENCE_TYPE_RESTRICTED             => 'R',
+        RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL => 'SI',
+        RefData::LICENCE_TYPE_STANDARD_NATIONAL      => 'SN',
+        RefData::LICENCE_TYPE_SPECIAL_RESTRICTED     => 'SR',
     ];
 
     /**
@@ -355,7 +322,7 @@ class LicenceEntityService extends AbstractLvaEntityService
                             ),
                             'complaints' => array(
                                 'criteria' => array(
-                                    'status' => ComplaintEntityService::COMPLAIN_STATUS_OPEN
+                                    'status' => RefData::COMPLAIN_STATUS_OPEN
                                 )
                             ),
                             'conditionUndertakings' => array(
@@ -545,7 +512,7 @@ class LicenceEntityService extends AbstractLvaEntityService
 
             $saveData['licNo'] = sprintf(
                 '%s%s%s',
-                $licenceCat === self::LICENCE_CATEGORY_PSV ? 'P' : 'O',
+                $licenceCat === RefData::LICENCE_CATEGORY_PSV ? 'P' : 'O',
                 $licence['trafficArea']['id'],
                 $licenceGen['id']
             );
@@ -696,9 +663,9 @@ class LicenceEntityService extends AbstractLvaEntityService
 
         // modify bundle to filter other licence statuses
         $licenceStatuses = [
-            LicenceEntityService::LICENCE_STATUS_VALID,
-            LicenceEntityService::LICENCE_STATUS_SUSPENDED,
-            LicenceEntityService::LICENCE_STATUS_CURTAILED,
+            RefData::LICENCE_STATUS_VALID,
+            RefData::LICENCE_STATUS_SUSPENDED,
+            RefData::LICENCE_STATUS_CURTAILED,
         ];
         $bundle['children']['organisation']['children']['licences']['criteria'] = [
             'status' => 'IN ' . json_encode($licenceStatuses)
@@ -795,9 +762,9 @@ class LicenceEntityService extends AbstractLvaEntityService
     public function getOtherActiveLicences($licenceId)
     {
         $valid = [
-            self::LICENCE_STATUS_SUSPENDED,
-            self::LICENCE_STATUS_VALID,
-            self::LICENCE_STATUS_CURTAILED
+            RefData::LICENCE_STATUS_SUSPENDED,
+            RefData::LICENCE_STATUS_VALID,
+            RefData::LICENCE_STATUS_CURTAILED
         ];
         $licence = $this->getHeaderParams($licenceId);
         $query = [
@@ -805,8 +772,8 @@ class LicenceEntityService extends AbstractLvaEntityService
             'status' => 'IN ["' . implode('","', $valid) . '"]',
             'goodsOrPsv' => $licence['goodsOrPsv']['id']
         ];
-        if ($licence['goodsOrPsv']['id'] == self::LICENCE_CATEGORY_PSV) {
-            $query['licenceType'] = "!= " . self::LICENCE_TYPE_SPECIAL_RESTRICTED;
+        if ($licence['goodsOrPsv']['id'] == RefData::LICENCE_CATEGORY_PSV) {
+            $query['licenceType'] = "!= " . RefData::LICENCE_TYPE_SPECIAL_RESTRICTED;
         }
 
         $results = $this->getAll($query, $this->overviewBundle);

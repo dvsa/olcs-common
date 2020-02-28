@@ -8,6 +8,7 @@
 namespace Common\Service\Entity;
 
 use Common\Exception\DataServiceException;
+use Common\RefData;
 
 /**
  * Application Entity Service
@@ -16,37 +17,6 @@ use Common\Exception\DataServiceException;
  */
 class ApplicationEntityService extends AbstractLvaEntityService
 {
-    const APPLICATION_TYPE_NEW = 0;
-    const APPLICATION_TYPE_VARIATION = 1;
-
-    const APPLICATION_STATUS_NOT_SUBMITTED = 'apsts_not_submitted';
-    // this status will be displayed everywhere as Awaiting grant fee as per OLCS-12606
-    const APPLICATION_STATUS_GRANTED = 'apsts_granted';
-    const APPLICATION_STATUS_UNDER_CONSIDERATION = 'apsts_consideration';
-    // this status will be displayed everywhere as Granted as per OLCS-12606
-    const APPLICATION_STATUS_VALID = 'apsts_valid';
-    const APPLICATION_STATUS_WITHDRAWN = 'apsts_withdrawn';
-    const APPLICATION_STATUS_REFUSED = 'apsts_refused';
-    const APPLICATION_STATUS_NOT_TAKEN_UP = 'apsts_ntu';
-
-    const CODE_GV_APP             = 'GV79';
-    const CODE_GV_VAR_UPGRADE     = 'GV80A';
-    const CODE_GV_VAR_NO_UPGRADE  = 'GV81';
-
-    const CODE_PSV_APP = 'PSV421';
-    const CODE_PSV_APP_SR = 'PSV356';
-    const CODE_PSV_VAR_UPGRADE    = 'PSV431A';
-    const CODE_PSV_VAR_NO_UPGRADE = 'PSV431';
-
-    const INTERIM_STATUS_REQUESTED = 'int_sts_requested';
-    const INTERIM_STATUS_INFORCE = 'int_sts_in_force';
-    const INTERIM_STATUS_REFUSED = 'int_sts_refused';
-    const INTERIM_STATUS_REVOKED = 'int_sts_revoked';
-    const INTERIM_STATUS_GRANTED = 'int_sts_granted';
-
-    const WITHDRAWN_REASON_WITHDRAWN    = 'withdrawn';
-    const WITHDRAWN_REASON_REG_IN_ERROR = 'reg_in_error';
-
     /**
      * Define entity for default behaviour
      *
@@ -488,7 +458,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
             $licenceData,
             array(
                 'licence' => $licenceId,
-                'status' => self::APPLICATION_STATUS_NOT_SUBMITTED,
+                'status' => RefData::APPLICATION_STATUS_NOT_SUBMITTED,
                 'isVariation' => true
             ),
             // @NOTE The passed in application data has priority, so is last to merge
@@ -606,10 +576,10 @@ class ApplicationEntityService extends AbstractLvaEntityService
         }
 
         if ($data['isVariation']) {
-            return self::APPLICATION_TYPE_VARIATION;
+            return RefData::APPLICATION_TYPE_VARIATION;
         }
 
-        return self::APPLICATION_TYPE_NEW;
+        return RefData::APPLICATION_TYPE_NEW;
     }
 
     /**

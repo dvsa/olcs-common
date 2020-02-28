@@ -7,8 +7,8 @@
  */
 namespace Common\Controller\Lva\Adapters;
 
+use Common\RefData;
 use Zend\Form\Form;
-use Common\Service\Entity\ConditionUndertakingEntityService;
 use Common\Controller\Lva\Interfaces\ConditionsUndertakingsAdapterInterface;
 use Common\Service\Table\Formatter\Address;
 use Common\Service\Table\TableBuilder;
@@ -66,11 +66,11 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
     {
         // prevent PMD errors
         unset($id);
-        if ($data['fields']['attachedTo'] == ConditionUndertakingEntityService::ATTACHED_TO_LICENCE) {
+        if ($data['fields']['attachedTo'] == RefData::ATTACHED_TO_LICENCE) {
             $data['fields']['operatingCentre'] = null;
         } else {
             $data['fields']['operatingCentre'] = $data['fields']['attachedTo'];
-            $data['fields']['attachedTo'] = ConditionUndertakingEntityService::ATTACHED_TO_OPERATING_CENTRE;
+            $data['fields']['attachedTo'] = RefData::ATTACHED_TO_OPERATING_CENTRE;
         }
 
         return $data;
@@ -96,7 +96,7 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
             'Licence' => array(
                 'label' => 'Licence',
                 'options' => array(
-                    ConditionUndertakingEntityService::ATTACHED_TO_LICENCE => 'Licence (' . $licNo . ')'
+                    RefData::ATTACHED_TO_LICENCE => 'Licence (' . $licNo . ')'
                 )
             )
         );

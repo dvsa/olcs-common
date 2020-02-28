@@ -14,8 +14,6 @@ namespace Common\Service\Entity;
  */
 class SystemParameterEntityService extends AbstractEntityService
 {
-    const CNS_EMAIL_LIST = 'CNS_EMAIL_LIST';
-
     /**
      * Define entity for default behaviour
      *

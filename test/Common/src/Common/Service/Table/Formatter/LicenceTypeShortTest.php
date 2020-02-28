@@ -7,8 +7,8 @@
  */
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\RefData;
 use Common\Service\Table\Formatter\LicenceTypeShort;
-use Common\Service\Entity\LicenceEntityService;
 
 /**
  * LicenceTypeShort formatter test
@@ -38,7 +38,7 @@ class LicenceTypeShortTest extends \PHPUnit\Framework\TestCase
                 [
                     'licence' => [
                         'goodsOrPsv' => [
-                            'id' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE
+                            'id' => RefData::LICENCE_CATEGORY_GOODS_VEHICLE
                         ]
                     ]
                 ],
@@ -48,7 +48,7 @@ class LicenceTypeShortTest extends \PHPUnit\Framework\TestCase
                 [
                     'licence' => [
                         'goodsOrPsv' => [
-                            'id' => LicenceEntityService::LICENCE_CATEGORY_PSV
+                            'id' => RefData::LICENCE_CATEGORY_PSV
                         ]
                     ]
                 ],
@@ -58,7 +58,7 @@ class LicenceTypeShortTest extends \PHPUnit\Framework\TestCase
                 [
                     'licence' => [
                         'licenceType' => [
-                            'id' => LicenceEntityService::LICENCE_TYPE_RESTRICTED
+                            'id' => RefData::LICENCE_TYPE_RESTRICTED
                         ]
                     ]
                 ],
@@ -68,7 +68,7 @@ class LicenceTypeShortTest extends \PHPUnit\Framework\TestCase
                 [
                     'licence' => [
                         'licenceType' => [
-                            'id' => LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED
+                            'id' => RefData::LICENCE_TYPE_SPECIAL_RESTRICTED
                         ]
                     ]
                 ],
@@ -78,7 +78,7 @@ class LicenceTypeShortTest extends \PHPUnit\Framework\TestCase
                 [
                     'licence' => [
                         'licenceType' => [
-                            'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
+                            'id' => RefData::LICENCE_TYPE_STANDARD_NATIONAL
                         ]
                     ]
                 ],
@@ -88,7 +88,7 @@ class LicenceTypeShortTest extends \PHPUnit\Framework\TestCase
                 [
                     'licence' => [
                         'licenceType' => [
-                            'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                            'id' => RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
                         ]
                     ]
                 ],
@@ -98,10 +98,10 @@ class LicenceTypeShortTest extends \PHPUnit\Framework\TestCase
                 [
                     'licence' => [
                         'goodsOrPsv' => [
-                            'id' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE
+                            'id' => RefData::LICENCE_CATEGORY_GOODS_VEHICLE
                         ],
                         'licenceType' => [
-                            'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                            'id' => RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
                         ]
                     ]
                 ],
@@ -111,10 +111,10 @@ class LicenceTypeShortTest extends \PHPUnit\Framework\TestCase
                 [
                     'licence' => [
                         'goodsOrPsv' => [
-                            'id' => LicenceEntityService::LICENCE_CATEGORY_PSV
+                            'id' => RefData::LICENCE_CATEGORY_PSV
                         ],
                         'licenceType' => [
-                            'id' => LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED
+                            'id' => RefData::LICENCE_TYPE_SPECIAL_RESTRICTED
                         ]
                     ]
                 ],
@@ -123,10 +123,10 @@ class LicenceTypeShortTest extends \PHPUnit\Framework\TestCase
             'combined: psv sr ON licence' => [
                 [
                     'goodsOrPsv' => [
-                        'id' => LicenceEntityService::LICENCE_CATEGORY_PSV
+                        'id' => RefData::LICENCE_CATEGORY_PSV
                     ],
                     'licenceType' => [
-                        'id' => LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED
+                        'id' => RefData::LICENCE_TYPE_SPECIAL_RESTRICTED
                     ]
                 ],
                 'PSV-SR'

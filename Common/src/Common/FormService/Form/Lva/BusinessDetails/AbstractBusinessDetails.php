@@ -8,7 +8,7 @@
 namespace Common\FormService\Form\Lva\BusinessDetails;
 
 use Common\FormService\Form\AbstractFormService;
-use Common\Service\Entity\OrganisationEntityService;
+use Common\RefData;
 use Common\Service\Helper\FormHelperService;
 
 /**
@@ -35,19 +35,19 @@ abstract class AbstractBusinessDetails extends AbstractFormService
     protected function alterForm($form, $params)
     {
         switch ($params['orgType']) {
-            case OrganisationEntityService::ORG_TYPE_REGISTERED_COMPANY:
-            case OrganisationEntityService::ORG_TYPE_LLP:
+            case RefData::ORG_TYPE_REGISTERED_COMPANY:
+            case RefData::ORG_TYPE_LLP:
                 // no-op; the full form is fine
                 break;
-            case OrganisationEntityService::ORG_TYPE_SOLE_TRADER:
+            case RefData::ORG_TYPE_SOLE_TRADER:
                 $this->alterFormForNonRegisteredCompany($form);
                 $this->getFormHelper()->remove($form, 'data->name');
                 break;
-            case OrganisationEntityService::ORG_TYPE_PARTNERSHIP:
+            case RefData::ORG_TYPE_PARTNERSHIP:
                 $this->alterFormForNonRegisteredCompany($form);
                 $this->appendToLabel($form->get('data')->get('name'), '.partnership');
                 break;
-            case OrganisationEntityService::ORG_TYPE_OTHER:
+            case RefData::ORG_TYPE_OTHER:
                 $this->alterFormForNonRegisteredCompany($form);
                 $this->getFormHelper()->remove($form, 'data->tradingNames');
                 $this->appendToLabel($form->get('data')->get('name'), '.other');

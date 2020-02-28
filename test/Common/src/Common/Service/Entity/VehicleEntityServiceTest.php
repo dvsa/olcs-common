@@ -7,6 +7,7 @@
  */
 namespace CommonTest\Service\Entity;
 
+use Common\RefData;
 use Common\Service\Entity\VehicleEntityService;
 
 /**
@@ -90,9 +91,9 @@ class VehicleEntityServiceTest extends AbstractEntityServiceTestCase
     public function psvTypeFromTypeProvider()
     {
         return [
-            ['small', VehicleEntityService::PSV_TYPE_SMALL],
-            ['medium', VehicleEntityService::PSV_TYPE_MEDIUM],
-            ['large', VehicleEntityService::PSV_TYPE_LARGE],
+            ['small', RefData::PSV_TYPE_SMALL],
+            ['medium', RefData::PSV_TYPE_MEDIUM],
+            ['large', RefData::PSV_TYPE_LARGE],
         ];
     }
 
@@ -109,9 +110,9 @@ class VehicleEntityServiceTest extends AbstractEntityServiceTestCase
     public function typeFromPsvTypeProvider()
     {
         return [
-            [VehicleEntityService::PSV_TYPE_SMALL, 'small'],
-            [VehicleEntityService::PSV_TYPE_MEDIUM, 'medium'],
-            [VehicleEntityService::PSV_TYPE_LARGE, 'large'],
+            [RefData::PSV_TYPE_SMALL, 'small'],
+            [RefData::PSV_TYPE_MEDIUM, 'medium'],
+            [RefData::PSV_TYPE_LARGE, 'large'],
         ];
     }
 }

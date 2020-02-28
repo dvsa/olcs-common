@@ -21,9 +21,6 @@ class TransportManagerEntityService extends AbstractEntityService
      */
     protected $entity = 'TransportManager';
 
-    const TRANSPORT_MANAGER_TYPE_EXTERNAL = 'tm_t_e';
-    const TRANSPORT_MANAGER_TYPE_BOTH = 'tm_t_b';
-
     protected $tmDetailsBundle = [
         'children' => [
             'homeCd' => [

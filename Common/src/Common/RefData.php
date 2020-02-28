@@ -224,6 +224,7 @@ class RefData
     const TRANSPORT_MANAGER_STATUS_REMOVED = 'tm_s_rem';
 
     const CONTACT_TYPE_PARTNER = 'ct_partner';
+    const CONTACT_TYPE_REGISTERED = 'ct_reg';
 
     /**
      * IRFO Stock Control
@@ -435,4 +436,37 @@ class RefData
     const BUSINESS_PROCESS_APG = 'app_business_process_apg';
     const BUSINESS_PROCESS_APGG = 'app_business_process_apgg';
     const BUSINESS_PROCESS_APSG = 'app_business_process_apsg';
+
+    const COMPLAIN_STATUS_OPEN = 'ecst_open';
+    const COMPLAIN_STATUS_CLOSED = 'ecst_closed';
+
+    const LICENCE_STATUS_RULE_CURTAILED = 'lsts_curtailed';
+    const LICENCE_STATUS_RULE_REVOKED = 'lsts_revoked';
+    const LICENCE_STATUS_RULE_SUSPENDED = 'lsts_suspended';
+
+    /**
+     * PSV types
+     */
+    const PSV_TYPE_SMALL  = 'vhl_t_a';
+    const PSV_TYPE_MEDIUM = 'vhl_t_b';
+    const PSV_TYPE_LARGE  = 'vhl_t_c';
+
+    const TASK_ALLOCATION_TYPE_SIMPLE  = 'task_at_simple';
+    const TASK_ALLOCATION_TYPE_MEDIUM  = 'task_at_medium';
+    const TASK_ALLOCATION_TYPE_COMPLEX = 'task_at_complex';
+
+    const INSPECTION_REPORT_TYPE_MAINTENANCE_REQUEST = 'insp_rep_t_maint';
+    const INSPECTION_RESULT_TYPE_NEW = 'insp_res_t_new';
+
+    const APPLICATION_TYPE_NEW = 0;
+    const APPLICATION_TYPE_VARIATION = 1;
+
+    const INTERIM_STATUS_REQUESTED = 'int_sts_requested';
+    const INTERIM_STATUS_INFORCE = 'int_sts_in_force';
+    const INTERIM_STATUS_REFUSED = 'int_sts_refused';
+    const INTERIM_STATUS_REVOKED = 'int_sts_revoked';
+    const INTERIM_STATUS_GRANTED = 'int_sts_granted';
+
+    const WITHDRAWN_REASON_WITHDRAWN    = 'withdrawn';
+    const WITHDRAWN_REASON_REG_IN_ERROR = 'reg_in_error';
 }

@@ -7,10 +7,9 @@
  */
 namespace Common\Service\Processing;
 
+use Common\RefData;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
-use Common\Service\Entity\VariationCompletionEntityService;
-use Common\Service\Entity\LicenceEntityService;
 
 /**
  * Variation Section Processing Service
@@ -20,10 +19,6 @@ use Common\Service\Entity\LicenceEntityService;
 class VariationSectionProcessingService implements ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
-
-    const STATUS_UNCHANGED = VariationCompletionEntityService::STATUS_UNCHANGED;
-    const STATUS_UPDATED = VariationCompletionEntityService::STATUS_UPDATED;
-    const STATUS_REQUIRES_ATTENTION = VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION;
 
     protected $sectionCompletion;
     protected $applicationId;
@@ -143,7 +138,7 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
      */
     public function isUpdated($section)
     {
-        return $this->isStatus($section, self::STATUS_UPDATED);
+        return $this->isStatus($section, RefData::VARIATION_STATUS_UPDATED);
     }
 
     /**
@@ -154,7 +149,7 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
      */
     public function isUnchanged($section)
     {
-        return $this->isStatus($section, self::STATUS_UNCHANGED);
+        return $this->isStatus($section, RefData::VARIATION_STATUS_UNCHANGED);
     }
 
     /**
@@ -416,7 +411,7 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
         $filtered = array_filter(
             $this->getSectionCompletion(),
             function ($status) {
-                return $status === self::STATUS_REQUIRES_ATTENTION;
+                return $status === RefData::VARIATION_STATUS_REQUIRES_ATTENTION;
             }
         );
 
@@ -429,7 +424,7 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
     public function hasChanged()
     {
         foreach ($this->getSectionCompletion() as $section => $status) {
-            if ($status !== self::STATUS_UNCHANGED) {
+            if ($status !== RefData::VARIATION_STATUS_UNCHANGED) {
                 return true;
             }
         }
@@ -445,7 +440,6 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
     protected function updateSectionsRequiringAttention($currentSection)
     {
         foreach ($this->requireAttentionMap as $section => $triggers) {
-
             if ($section === $currentSection || $this->isUpdated($section)) {
                 continue;
             }
@@ -618,7 +612,7 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
         if ($this->isPsv === null) {
             $data = $this->getVariationCompletionStatusData();
 
-            $this->isPsv = $data['goodsOrPsv']['id'] === LicenceEntityService::LICENCE_CATEGORY_PSV;
+            $this->isPsv = $data['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_PSV;
         }
 
         return $this->isPsv;
@@ -631,7 +625,7 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
      */
     protected function markSectionRequired($section)
     {
-        $this->markSectionStatus($section, self::STATUS_REQUIRES_ATTENTION);
+        $this->markSectionStatus($section, RefData::VARIATION_STATUS_REQUIRES_ATTENTION);
     }
 
     /**
@@ -641,7 +635,7 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
      */
     protected function markSectionUnchanged($section)
     {
-        $this->markSectionStatus($section, self::STATUS_UNCHANGED);
+        $this->markSectionStatus($section, RefData::VARIATION_STATUS_UNCHANGED);
     }
 
     /**
@@ -651,7 +645,7 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
      */
     protected function markSectionUpdated($section)
     {
-        $this->markSectionStatus($section, self::STATUS_UPDATED);
+        $this->markSectionStatus($section, RefData::VARIATION_STATUS_UPDATED);
     }
 
     /**
@@ -703,7 +697,6 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
     {
         // If the old licence type was restricted and it is being upgraded
         if ($this->isLicenceUpgrade()) {
-
             $relatedSections = [
                 'addresses',
                 'transport_managers',
@@ -730,12 +723,12 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
         $data = $this->getVariationCompletionStatusData($applicationId);
 
         $restrictedUpgrades = [
-            LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
-            LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+            RefData::LICENCE_TYPE_STANDARD_NATIONAL,
+            RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
         ];
 
         return (
-            $data['licence']['licenceType']['id'] === LicenceEntityService::LICENCE_TYPE_RESTRICTED
+            $data['licence']['licenceType']['id'] === RefData::LICENCE_TYPE_RESTRICTED
             && in_array($data['licenceType']['id'], $restrictedUpgrades)
         );
     }
@@ -750,8 +743,8 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
         $data = $this->getVariationCompletionStatusData($applicationId);
 
         // If we have upgraded from stand nat, to stand inter
-        if ($data['licence']['licenceType']['id'] === LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
-            && $data['licenceType']['id'] === LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL) {
+        if ($data['licence']['licenceType']['id'] === RefData::LICENCE_TYPE_STANDARD_NATIONAL
+            && $data['licenceType']['id'] === RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL) {
             return true;
         }
 

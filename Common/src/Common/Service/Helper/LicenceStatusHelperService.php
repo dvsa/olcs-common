@@ -6,9 +6,7 @@
 
 namespace Common\Service\Helper;
 
-use Common\Service\Entity\LicenceEntityService;
-use Common\Service\Entity\ApplicationEntityService;
-use Common\Service\Entity\LicenceStatusRuleEntityService;
+use Common\RefData;
 
 /**
  * Class LicenceStatusHelperService
@@ -104,7 +102,7 @@ class LicenceStatusHelperService extends AbstractHelperService
         }
 
         foreach ($busRoutes['Results'] as $route) {
-            switch($route['busRegStatus']) {
+            switch ($route['busRegStatus']) {
                 case "New":
                 case "Registered":
                 case "Variation":
@@ -132,7 +130,7 @@ class LicenceStatusHelperService extends AbstractHelperService
 
         foreach ($variantApplications['Results'] as $application) {
             if ($application['isVariation']
-                && $application['status']['id'] == ApplicationEntityService::APPLICATION_STATUS_UNDER_CONSIDERATION
+                && $application['status']['id'] == RefData::APPLICATION_STATUS_UNDER_CONSIDERATION
             ) {
                 return $this->createMessage('There are applications still under consideration');
             }
@@ -167,13 +165,13 @@ class LicenceStatusHelperService extends AbstractHelperService
     {
         $this->removeStatusRulesByLicenceAndType(
             $licenceId,
-            LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_CURTAILED
+            RefData::LICENCE_STATUS_RULE_CURTAILED
         );
 
         $licenceEntityService = $this->getServiceLocator()->get('Entity\Licence');
 
         $saveData = array(
-            'status' => LicenceEntityService::LICENCE_STATUS_CURTAILED,
+            'status' => RefData::LICENCE_STATUS_CURTAILED,
             'curtailedDate' => $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s'),
         );
 
@@ -191,7 +189,7 @@ class LicenceStatusHelperService extends AbstractHelperService
     {
         $this->removeStatusRulesByLicenceAndType(
             $licenceId,
-            LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_REVOKED
+            RefData::LICENCE_STATUS_RULE_REVOKED
         );
 
         $licenceEntityService = $this->getServiceLocator()->get('Entity\Licence');
@@ -202,7 +200,7 @@ class LicenceStatusHelperService extends AbstractHelperService
         $this->removeTransportManagers($revocationData['tmLicences']);
 
         $saveData = array(
-            'status' => LicenceEntityService::LICENCE_STATUS_REVOKED,
+            'status' => RefData::LICENCE_STATUS_REVOKED,
             'revokedDate' => $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s'),
         );
 
@@ -222,11 +220,11 @@ class LicenceStatusHelperService extends AbstractHelperService
 
         $this->removeStatusRulesByLicenceAndType(
             $licenceId,
-            LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_SUSPENDED
+            RefData::LICENCE_STATUS_RULE_SUSPENDED
         );
 
         $saveData = array(
-            'status' => LicenceEntityService::LICENCE_STATUS_SUSPENDED,
+            'status' => RefData::LICENCE_STATUS_SUSPENDED,
             'suspendedDate' => $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s'),
         );
 
@@ -252,7 +250,7 @@ class LicenceStatusHelperService extends AbstractHelperService
         $this->removeTransportManagers($surrenderData['tmLicences']);
 
         $saveData = [
-            'status' => LicenceEntityService::LICENCE_STATUS_SURRENDERED,
+            'status' => RefData::LICENCE_STATUS_SURRENDERED,
             'surrenderedDate' => $surrenderDate,
         ];
         return $licenceEntityService->forceUpdate($licenceId, $saveData);
@@ -279,7 +277,7 @@ class LicenceStatusHelperService extends AbstractHelperService
         $this->removeTransportManagers($terminateData['tmLicences']);
 
         $saveData = [
-            'status' => LicenceEntityService::LICENCE_STATUS_TERMINATED,
+            'status' => RefData::LICENCE_STATUS_TERMINATED,
             'surrenderedDate' => $terminateDate,
         ];
 
@@ -328,7 +326,7 @@ class LicenceStatusHelperService extends AbstractHelperService
     public function ceaseDiscs($licenceData)
     {
         $discs = array();
-        if ($licenceData['goodsOrPsv']['id'] == LicenceEntityService::LICENCE_CATEGORY_PSV) {
+        if ($licenceData['goodsOrPsv']['id'] == RefData::LICENCE_CATEGORY_PSV) {
             array_map(
                 function ($disc) use (&$discs) {
                     if ($disc['ceasedDate'] === null) {
@@ -364,16 +362,16 @@ class LicenceStatusHelperService extends AbstractHelperService
         $this->removeStatusRulesByLicenceAndType(
             $licenceId,
             array(
-                LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_CURTAILED,
-                LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_SUSPENDED,
-                LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_REVOKED
+                RefData::LICENCE_STATUS_RULE_CURTAILED,
+                RefData::LICENCE_STATUS_RULE_SUSPENDED,
+                RefData::LICENCE_STATUS_RULE_REVOKED
             )
         );
 
         $licenceEntityService = $this->getServiceLocator()->get('Entity\Licence');
 
         $saveData = [
-            'status'          => LicenceEntityService::LICENCE_STATUS_VALID,
+            'status'          => RefData::LICENCE_STATUS_VALID,
             'surrenderedDate' => null,
             'curtailedDate' => null,
             'revokedDate' => null,
@@ -449,9 +447,9 @@ class LicenceStatusHelperService extends AbstractHelperService
                     'deletedDate' => 'NULL',
                     'startProcessedDate' => 'NULL',
                     'licenceStatus' => [
-                        LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_CURTAILED,
-                        LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_SUSPENDED,
-                        LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_REVOKED,
+                        RefData::LICENCE_STATUS_RULE_CURTAILED,
+                        RefData::LICENCE_STATUS_RULE_SUSPENDED,
+                        RefData::LICENCE_STATUS_RULE_REVOKED,
                     ],
                 ],
             ]

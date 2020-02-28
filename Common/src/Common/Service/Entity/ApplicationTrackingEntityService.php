@@ -16,13 +16,13 @@ use Common\Exception\DataServiceException;
  */
 class ApplicationTrackingEntityService extends AbstractEntityService
 {
-    const STATUS_NOT_SET        = 0;
+    private const STATUS_NOT_SET        = 0;
 
-    const STATUS_ACCEPTED       = 1;
+    private const STATUS_ACCEPTED       = 1;
 
-    const STATUS_NOT_ACCEPTED   = 2;
+    private const STATUS_NOT_ACCEPTED   = 2;
 
-    const STATUS_NOT_APPLICABLE = 3;
+    private const STATUS_NOT_APPLICABLE = 3;
 
     /**
      * Define entity for default behaviour

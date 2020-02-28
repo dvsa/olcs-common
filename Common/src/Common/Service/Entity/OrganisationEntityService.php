@@ -7,7 +7,7 @@
  */
 namespace Common\Service\Entity;
 
-use Common\Service\Entity\LicenceEntityService as Licence;
+use Common\RefData;
 
 /**
  * Organisation Entity Service
@@ -16,16 +16,6 @@ use Common\Service\Entity\LicenceEntityService as Licence;
  */
 class OrganisationEntityService extends AbstractEntityService
 {
-    /**
-     * Organisation type keys
-     */
-    const ORG_TYPE_PARTNERSHIP = 'org_t_p';
-    const ORG_TYPE_OTHER = 'org_t_pa';
-    const ORG_TYPE_REGISTERED_COMPANY = 'org_t_rc';
-    const ORG_TYPE_LLP = 'org_t_llp';
-    const ORG_TYPE_SOLE_TRADER = 'org_t_st';
-    const ORG_TYPE_IRFO = 'org_t_ir';
-
     /**
      * Define entity for default behaviour
      *
@@ -136,7 +126,7 @@ class OrganisationEntityService extends AbstractEntityService
      */
     public function isMlh($id)
     {
-        $licences = $this->getLicencesByStatus($id, [Licence::LICENCE_STATUS_VALID]);
+        $licences = $this->getLicencesByStatus($id, [RefData::LICENCE_STATUS_VALID]);
         return (bool) count($licences);
     }
 }

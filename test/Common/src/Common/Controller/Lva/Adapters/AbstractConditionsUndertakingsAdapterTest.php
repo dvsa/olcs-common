@@ -7,10 +7,10 @@
  */
 namespace CommonTest\Controller\Lva\Adapters;
 
+use Common\RefData;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use CommonTest\Bootstrap;
-use Common\Service\Entity\ConditionUndertakingEntityService;
 
 /**
  * Abstract Conditions Undertakings Adapter Test
@@ -69,12 +69,12 @@ class AbstractConditionsUndertakingsAdapterTest extends MockeryTestCase
         $id = 123;
         $data = [
             'fields' => [
-                'attachedTo' => ConditionUndertakingEntityService::ATTACHED_TO_LICENCE
+                'attachedTo' => RefData::ATTACHED_TO_LICENCE
             ]
         ];
         $expected = [
             'fields' => [
-                'attachedTo' => ConditionUndertakingEntityService::ATTACHED_TO_LICENCE,
+                'attachedTo' => RefData::ATTACHED_TO_LICENCE,
                 'operatingCentre' => null
             ]
         ];
@@ -94,7 +94,7 @@ class AbstractConditionsUndertakingsAdapterTest extends MockeryTestCase
         ];
         $expected = [
             'fields' => [
-                'attachedTo' => ConditionUndertakingEntityService::ATTACHED_TO_OPERATING_CENTRE,
+                'attachedTo' => RefData::ATTACHED_TO_OPERATING_CENTRE,
                 'operatingCentre' => 'foo'
             ]
         ];

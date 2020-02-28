@@ -7,6 +7,7 @@
  */
 namespace Common\Service\Entity;
 
+use Common\RefData;
 use Common\Exception\DataServiceException;
 use Common\Service\Data\ListDataInterface;
 
@@ -19,16 +20,6 @@ use Common\Service\Data\ListDataInterface;
  */
 class TrafficAreaEntityService extends AbstractEntityService implements ListDataInterface
 {
-    const NORTH_EASTERN_TRAFFIC_AREA_CODE    = 'B';
-    const NORTH_WESTERN_TRAFFIC_AREA_CODE    = 'C';
-    const WEST_MIDLANDS_TRAFFIC_AREA_CODE    = 'D';
-    const EASTERN_TRAFFIC_AREA_CODE          = 'F';
-    const WELSH_TRAFFIC_AREA_CODE            = 'G';
-    const WESTERN_TRAFFIC_AREA_CODE          = 'H';
-    const SE_MET_TRAFFIC_AREA_CODE           = 'K';
-    const SCOTTISH_TRAFFIC_AREA_CODE         = 'M';
-    const NORTHERN_IRELAND_TRAFFIC_AREA_CODE = 'N';
-
     protected $entity = 'TrafficArea';
 
     /**
@@ -49,7 +40,7 @@ class TrafficAreaEntityService extends AbstractEntityService implements ListData
 
         foreach ($results as $value) {
             // Skip Northern Ireland Traffic Area
-            if ($value['id'] == self::NORTHERN_IRELAND_TRAFFIC_AREA_CODE) {
+            if ($value['id'] == RefData::NORTHERN_IRELAND_TRAFFIC_AREA_CODE) {
                 continue;
             }
 

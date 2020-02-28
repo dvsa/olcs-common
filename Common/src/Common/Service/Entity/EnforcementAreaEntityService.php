@@ -14,8 +14,6 @@ namespace Common\Service\Entity;
  */
 class EnforcementAreaEntityService extends AbstractEntityService
 {
-    const NORTHERN_IRELAND_ENFORCEMENT_AREA_CODE = 'NI01';
-
     /**
      * Define entity for default behaviour
      *

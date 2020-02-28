@@ -2,11 +2,10 @@
 
 namespace CommonTest\Service\Helper;
 
+use Common\RefData;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 use Common\Service\Helper\LicenceStatusHelperService;
-use Common\Service\Entity\LicenceEntityService;
-use Common\Service\Entity\ApplicationEntityService;
 use CommonTest\Bootstrap;
 
 /**
@@ -105,11 +104,11 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
                         ['isVariation' => false],
                         [
                             'isVariation' => true,
-                            'status' => ['id' => ApplicationEntityService::APPLICATION_STATUS_UNDER_CONSIDERATION],
+                            'status' => ['id' => RefData::APPLICATION_STATUS_UNDER_CONSIDERATION],
                         ],
                         [
                             'isVariation' => false,
-                            'status' => ['id' => ApplicationEntityService::APPLICATION_STATUS_NOT_SUBMITTED],
+                            'status' => ['id' => RefData::APPLICATION_STATUS_NOT_SUBMITTED],
                         ],
                         ['isVariation' => true],
                     ],
@@ -413,7 +412,7 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             ->with(
                 $licenceId,
                 [
-                    'status' => LicenceEntityService::LICENCE_STATUS_VALID,
+                    'status' => RefData::LICENCE_STATUS_VALID,
                     'surrenderedDate' => null,
                     'curtailedDate' => null,
                     'revokedDate' => null,
@@ -561,9 +560,9 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
                         'deletedDate' => 'NULL',
                         'startProcessedDate' => 'NULL',
                         'licenceStatus' => [
-                            LicenceEntityService::LICENCE_STATUS_CURTAILED,
-                            LicenceEntityService::LICENCE_STATUS_SUSPENDED,
-                            LicenceEntityService::LICENCE_STATUS_REVOKED,
+                            RefData::LICENCE_STATUS_CURTAILED,
+                            RefData::LICENCE_STATUS_SUSPENDED,
+                            RefData::LICENCE_STATUS_REVOKED,
                         ],
                     ],
                 ]
@@ -603,7 +602,7 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             ->with(
                 $licenceId,
                 [
-                    'status' => LicenceEntityService::LICENCE_STATUS_SURRENDERED,
+                    'status' => RefData::LICENCE_STATUS_SURRENDERED,
                     'surrenderedDate' => '2015-03-30',
                 ]
             )
@@ -668,7 +667,7 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             ->with(
                 $licenceId,
                 [
-                    'status' => LicenceEntityService::LICENCE_STATUS_TERMINATED,
+                    'status' => RefData::LICENCE_STATUS_TERMINATED,
                     'surrenderedDate' => '2015-03-30',
                 ]
             )

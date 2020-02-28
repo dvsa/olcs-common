@@ -1,4 +1,4 @@
-<?php use Common\Service\Entity\LicenceEntityService; ?>
+<?php use Common\RefData; ?>
 <?php echo $this->object->renderLayout('default-header'); ?>
 <div class="table__wrapper">
     <table <?php echo $this->object->renderAttributes($this->object->getAttributes()); ?>>
@@ -18,14 +18,14 @@
                 foreach ($this->object->getColumns() as $column) {
                     $attributes = [];
                     if (
-                        $row['status']['id'] === LicenceEntityService::LICENCE_STATUS_SURRENDER_UNDER_CONSIDERATION &&
+                        $row['status']['id'] === RefData::LICENCE_STATUS_SURRENDER_UNDER_CONSIDERATION &&
                         $column['name'] === 'type'
                     ) {
                         continue;
                     }
 
                     if (
-                        $row['status']['id'] === LicenceEntityService::LICENCE_STATUS_SURRENDER_UNDER_CONSIDERATION &&
+                        $row['status']['id'] === RefData::LICENCE_STATUS_SURRENDER_UNDER_CONSIDERATION &&
                         $column['name'] === 'licNo'
                     ) {
                         $attributes['colspan'] = '2';

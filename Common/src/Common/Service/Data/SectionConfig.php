@@ -2,7 +2,7 @@
 
 namespace Common\Service\Data;
 
-use Common\Service\Entity\LicenceEntityService;
+use Common\RefData;
 use Zend\Filter\Word\UnderscoreToDash;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
@@ -50,14 +50,14 @@ class SectionConfig implements ServiceLocatorAwareInterface
         ),
         'taxi_phv' => array(
             'restricted' => array(
-                LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED
+                RefData::LICENCE_TYPE_SPECIAL_RESTRICTED
             )
         ),
         'operating_centres' => array(
             'restricted' => array(
-                LicenceEntityService::LICENCE_TYPE_RESTRICTED,
-                LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
-                LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                RefData::LICENCE_TYPE_RESTRICTED,
+                RefData::LICENCE_TYPE_STANDARD_NATIONAL,
+                RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
             )
         ),
         'financial_evidence' => array(
@@ -70,27 +70,27 @@ class SectionConfig implements ServiceLocatorAwareInterface
                         'application'
                     ),
                     array(
-                        LicenceEntityService::LICENCE_TYPE_RESTRICTED,
-                        LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
-                        LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                        RefData::LICENCE_TYPE_RESTRICTED,
+                        RefData::LICENCE_TYPE_STANDARD_NATIONAL,
+                        RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
                     )
                 )
             )
         ),
         'transport_managers' => array(
             'restricted' => array(
-                LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
-                LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                RefData::LICENCE_TYPE_STANDARD_NATIONAL,
+                RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
             )
         ),
         'vehicles' => array(
             'restricted' => array(
                 array(
-                    LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                    RefData::LICENCE_CATEGORY_GOODS_VEHICLE,
                     array(
-                        LicenceEntityService::LICENCE_TYPE_RESTRICTED,
-                        LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
-                        LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                        RefData::LICENCE_TYPE_RESTRICTED,
+                        RefData::LICENCE_TYPE_STANDARD_NATIONAL,
+                        RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
                     )
                 )
             )
@@ -101,11 +101,11 @@ class SectionConfig implements ServiceLocatorAwareInterface
             ),
             'restricted' => array(
                 array(
-                    LicenceEntityService::LICENCE_CATEGORY_PSV,
+                    RefData::LICENCE_CATEGORY_PSV,
                     array(
-                        LicenceEntityService::LICENCE_TYPE_RESTRICTED,
-                        LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
-                        LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                        RefData::LICENCE_TYPE_RESTRICTED,
+                        RefData::LICENCE_TYPE_STANDARD_NATIONAL,
+                        RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
                     )
                 )
             )
@@ -117,11 +117,11 @@ class SectionConfig implements ServiceLocatorAwareInterface
             'restricted' => array(
                 array(
                     'application',
-                    LicenceEntityService::LICENCE_CATEGORY_PSV,
+                    RefData::LICENCE_CATEGORY_PSV,
                     array(
-                        LicenceEntityService::LICENCE_TYPE_RESTRICTED,
-                        LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
-                        LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                        RefData::LICENCE_TYPE_RESTRICTED,
+                        RefData::LICENCE_TYPE_STANDARD_NATIONAL,
+                        RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
                     )
                 )
             )
@@ -131,7 +131,7 @@ class SectionConfig implements ServiceLocatorAwareInterface
                 array(
                     'external',
                     'licence',
-                    LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE
+                    RefData::LICENCE_CATEGORY_GOODS_VEHICLE
                 )
             )
         ),
@@ -142,11 +142,11 @@ class SectionConfig implements ServiceLocatorAwareInterface
                         'licence',
                         'variation'
                     ),
-                    LicenceEntityService::LICENCE_CATEGORY_PSV,
+                    RefData::LICENCE_CATEGORY_PSV,
                     array(
-                        LicenceEntityService::LICENCE_TYPE_RESTRICTED,
-                        LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
-                        LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                        RefData::LICENCE_TYPE_RESTRICTED,
+                        RefData::LICENCE_TYPE_STANDARD_NATIONAL,
+                        RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
                     )
                 )
             )
@@ -161,13 +161,13 @@ class SectionConfig implements ServiceLocatorAwareInterface
                     // and must be either
                     array(
                         // standard international
-                        LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL,
+                        RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL,
                         // or
                         array(
                             // PSV
-                            LicenceEntityService::LICENCE_CATEGORY_PSV,
+                            RefData::LICENCE_CATEGORY_PSV,
                             // and restricted
-                            LicenceEntityService::LICENCE_TYPE_RESTRICTED
+                            RefData::LICENCE_TYPE_RESTRICTED
                         )
                     )
                 )
@@ -175,9 +175,9 @@ class SectionConfig implements ServiceLocatorAwareInterface
         ),
         'safety' => array(
             'restricted' => array(
-                LicenceEntityService::LICENCE_TYPE_RESTRICTED,
-                LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
-                LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                RefData::LICENCE_TYPE_RESTRICTED,
+                RefData::LICENCE_TYPE_STANDARD_NATIONAL,
+                RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
             )
         ),
         'conditions_undertakings' => array(
@@ -185,9 +185,9 @@ class SectionConfig implements ServiceLocatorAwareInterface
                 array(
                     // Must be one of these licence types
                     array(
-                        LicenceEntityService::LICENCE_TYPE_RESTRICTED,
-                        LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
-                        LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                        RefData::LICENCE_TYPE_RESTRICTED,
+                        RefData::LICENCE_TYPE_STANDARD_NATIONAL,
+                        RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
                     ),
                     // and...
                     array(
@@ -211,9 +211,9 @@ class SectionConfig implements ServiceLocatorAwareInterface
                 array(
                     'application',
                     array(
-                        LicenceEntityService::LICENCE_TYPE_RESTRICTED,
-                        LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
-                        LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                        RefData::LICENCE_TYPE_RESTRICTED,
+                        RefData::LICENCE_TYPE_STANDARD_NATIONAL,
+                        RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
                     )
                 )
             )
@@ -223,9 +223,9 @@ class SectionConfig implements ServiceLocatorAwareInterface
                 array(
                     'application',
                     array(
-                        LicenceEntityService::LICENCE_TYPE_RESTRICTED,
-                        LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
-                        LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                        RefData::LICENCE_TYPE_RESTRICTED,
+                        RefData::LICENCE_TYPE_STANDARD_NATIONAL,
+                        RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
                     )
                 )
             )
@@ -235,9 +235,9 @@ class SectionConfig implements ServiceLocatorAwareInterface
                 array(
                     'application',
                     array(
-                        LicenceEntityService::LICENCE_TYPE_RESTRICTED,
-                        LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
-                        LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                        RefData::LICENCE_TYPE_RESTRICTED,
+                        RefData::LICENCE_TYPE_STANDARD_NATIONAL,
+                        RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
                     )
                 )
             )

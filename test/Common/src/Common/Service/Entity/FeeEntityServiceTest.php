@@ -7,6 +7,7 @@
  */
 namespace CommonTest\Service\Entity;
 
+use Common\RefData;
 use Common\Service\Entity\FeeEntityService;
 use Common\Service\Data\FeeTypeDataService;
 use Mockery as m;
@@ -140,7 +141,7 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
     {
         $id = 3;
         $statuses = array(
-            FeeEntityService::STATUS_OUTSTANDING,
+            RefData::FEE_STATUS_OUTSTANDING,
         );
         $query = array(
             'application' => $id,
@@ -172,12 +173,12 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
         $query = array(
             array(
                 'id' => 1,
-                'feeStatus' => FeeEntityService::STATUS_CANCELLED,
+                'feeStatus' => RefData::FEE_STATUS_CANCELLED,
                 '_OPTIONS_' => array('force' => true)
             ),
             array(
                 'id' => 2,
-                'feeStatus' => FeeEntityService::STATUS_CANCELLED,
+                'feeStatus' => RefData::FEE_STATUS_CANCELLED,
                 '_OPTIONS_' => array('force' => true)
             ),
             '_OPTIONS_' => array('multiple' => true)
@@ -195,7 +196,7 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
     {
         $id = 3;
         $statuses = [
-            FeeEntityService::STATUS_OUTSTANDING,
+            RefData::FEE_STATUS_OUTSTANDING,
         ];
 
         $query = [
@@ -220,7 +221,7 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
     {
         $expectedQuery = [
             'licence' => 1966,
-            'feeStatus' => FeeEntityService::STATUS_OUTSTANDING,
+            'feeStatus' => RefData::FEE_STATUS_OUTSTANDING,
             'limit' => 'all',
         ];
         $expectedBundle = [

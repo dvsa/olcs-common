@@ -7,6 +7,8 @@
  */
 namespace Common\Service\Entity;
 
+use Common\RefData;
+
 /**
  * Abstract Operating Centre Entity Service
  *
@@ -33,7 +35,7 @@ abstract class AbstractOperatingCentreEntityService extends AbstractEntityServic
                     'adDocuments',
                     'complaints' => array(
                         'criteria' => array(
-                            'status' => ComplaintEntityService::COMPLAIN_STATUS_OPEN
+                            'status' => RefData::COMPLAIN_STATUS_OPEN
                         )
                     )
                 )

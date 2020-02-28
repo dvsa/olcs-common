@@ -7,7 +7,7 @@
  */
 namespace Common\Service\Processing;
 
-use Common\Service\Entity\TaskAllocationRuleEntityService;
+use Common\RefData;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use LogicException;
@@ -91,7 +91,7 @@ class TaskProcessingService implements ServiceLocatorAwareInterface
     private function getQueryForRuleType($type, $data)
     {
         switch ($type) {
-            case TaskAllocationRuleEntityService::TYPE_SIMPLE:
+            case RefData::TASK_ALLOCATION_TYPE_SIMPLE:
                 return [
                     'category'    => $data['category'],
                     // These NULLs are important; there will be multiple matches
@@ -101,8 +101,8 @@ class TaskProcessingService implements ServiceLocatorAwareInterface
                 ];
 
             // no other allocation type is yet implemented as of OLCS-3406
-            case TaskAllocationRuleEntityService::TYPE_MEDIUM:
-            case TaskAllocationRuleEntityService::TYPE_COMPLEX:
+            case RefData::TASK_ALLOCATION_TYPE_MEDIUM:
+            case RefData::TASK_ALLOCATION_TYPE_COMPLEX:
             default:
                 throw new LogicException('Querying for rule type "'. $type .'" is not supported');
         }
@@ -120,7 +120,7 @@ class TaskProcessingService implements ServiceLocatorAwareInterface
     private function getDataForRuleAndType($type, $rule)
     {
         switch ($type) {
-            case TaskAllocationRuleEntityService::TYPE_SIMPLE:
+            case RefData::TASK_ALLOCATION_TYPE_SIMPLE:
                 return $this->buildDetails($rule['team']['id'], $rule['user']['id']);
 
             // no other allocation type is yet implemented as of OLCS-3406

@@ -3,6 +3,7 @@
 namespace Common\Service\Entity;
 
 use Common\Exception\DataServiceException;
+use Common\RefData;
 use Common\Service\Data\SectionConfig;
 
 /**
@@ -182,8 +183,8 @@ class ApplicationCompletionEntityService extends AbstractEntityService
          * Selectively add required fields based on the org type
          */
         switch ($orgData['type']['id']) {
-            case OrganisationEntityService::ORG_TYPE_REGISTERED_COMPANY:
-            case OrganisationEntityService::ORG_TYPE_LLP:
+            case RefData::ORG_TYPE_REGISTERED_COMPANY:
+            case RefData::ORG_TYPE_LLP:
                 $registeredAddress = !empty($orgData['contactDetails']);
 
                 $requiredVars = array(
@@ -193,14 +194,14 @@ class ApplicationCompletionEntityService extends AbstractEntityService
                 );
                 break;
 
-            case OrganisationEntityService::ORG_TYPE_PARTNERSHIP:
-            case OrganisationEntityService::ORG_TYPE_OTHER:
+            case RefData::ORG_TYPE_PARTNERSHIP:
+            case RefData::ORG_TYPE_OTHER:
                 $requiredVars = array(
                     'name' => isset($orgData['name'])
                 );
                 break;
 
-            case OrganisationEntityService::ORG_TYPE_SOLE_TRADER:
+            case RefData::ORG_TYPE_SOLE_TRADER:
                 return self::STATUS_COMPLETE;
         }
 
@@ -224,8 +225,8 @@ class ApplicationCompletionEntityService extends AbstractEntityService
         $skipEstablishmentAddress = false;
 
         $allowedLicTypes = array(
-            LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
-            LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+            RefData::LICENCE_TYPE_STANDARD_NATIONAL,
+            RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
         );
 
         if (!in_array($applicationData['licenceType']['id'], $allowedLicTypes)) {
@@ -314,7 +315,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
             'totCommunityLicences' => $applicationData['totCommunityLicences'] !== null,
         );
 
-        if ($applicationData['goodsOrPsv']['id'] === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
+        if ($applicationData['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_GOODS_VEHICLE) {
             unset($requiredVars['totAuthSmallVehicles']);
             unset($requiredVars['totAuthMediumVehicles']);
             unset($requiredVars['totAuthLargeVehicles']);
@@ -324,13 +325,13 @@ class ApplicationCompletionEntityService extends AbstractEntityService
             unset($requiredVars['totAuthTrailers']);
 
             $allowLargeVehicles = array(
-                LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
-                LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                RefData::LICENCE_TYPE_STANDARD_NATIONAL,
+                RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
             );
 
             $allowCommunityLicences = array(
-                LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL,
-                LicenceEntityService::LICENCE_TYPE_RESTRICTED
+                RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL,
+                RefData::LICENCE_TYPE_RESTRICTED
             );
 
             $licType = $applicationData['licenceType']['id'];
@@ -371,8 +372,8 @@ class ApplicationCompletionEntityService extends AbstractEntityService
     protected function getTransportManagersStatus($applicationData)
     {
         $requiredTransportManager = [
-            LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
-            LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+            RefData::LICENCE_TYPE_STANDARD_NATIONAL,
+            RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
         ];
 
         // if licence type requires at least on Transport Manager
@@ -430,12 +431,12 @@ class ApplicationCompletionEntityService extends AbstractEntityService
         }
 
         $psvTypes = [
-            'small'  => VehicleEntityService::PSV_TYPE_SMALL,
-            'medium' => VehicleEntityService::PSV_TYPE_MEDIUM,
-            'large'  => VehicleEntityService::PSV_TYPE_LARGE
+            'small'  => RefData::PSV_TYPE_SMALL,
+            'medium' => RefData::PSV_TYPE_MEDIUM,
+            'large'  => RefData::PSV_TYPE_LARGE
         ];
 
-        if ($applicationData['licenceType']['id'] === LicenceEntityService::LICENCE_TYPE_RESTRICTED) {
+        if ($applicationData['licenceType']['id'] === RefData::LICENCE_TYPE_RESTRICTED) {
             unset($psvTypes['large']);
         }
 
@@ -554,7 +555,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
             $requiredVars[] = !empty($applicationData['licence']['tachographInsName']);
         }
 
-        if ($applicationData['goodsOrPsv']['id'] === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
+        if ($applicationData['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_GOODS_VEHICLE) {
             $requiredVars[] = $applicationData['licence']['safetyInsTrailers'] !== '';
         }
 

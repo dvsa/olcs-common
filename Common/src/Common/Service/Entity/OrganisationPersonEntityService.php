@@ -19,7 +19,7 @@ class OrganisationPersonEntityService extends AbstractEntityService
     /**
      * Set a sane limit when fetching people
      */
-    const ORG_PERSON_LIMIT = 50;
+    private const ORG_PERSON_LIMIT = 50;
 
     /**
      * Define entity for default behaviour

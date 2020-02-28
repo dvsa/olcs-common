@@ -7,7 +7,7 @@
  */
 namespace Common\Service\Table\Formatter;
 
-use Common\Service\Entity\LicenceEntityService;
+use Common\RefData;
 
 /**
  * Licence Type Short formatter
@@ -17,15 +17,15 @@ use Common\Service\Entity\LicenceEntityService;
 class LicenceTypeShort implements FormatterInterface
 {
     protected static $prefixMap = [
-        LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE => 'GV',
-        LicenceEntityService::LICENCE_CATEGORY_PSV => 'PSV'
+        RefData::LICENCE_CATEGORY_GOODS_VEHICLE => 'GV',
+        RefData::LICENCE_CATEGORY_PSV => 'PSV'
     ];
 
     protected static $suffixMap = [
-        LicenceEntityService::LICENCE_TYPE_RESTRICTED => 'R',
-        LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED => 'SR',
-        LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL => 'SN',
-        LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL => 'SI'
+        RefData::LICENCE_TYPE_RESTRICTED => 'R',
+        RefData::LICENCE_TYPE_SPECIAL_RESTRICTED => 'SR',
+        RefData::LICENCE_TYPE_STANDARD_NATIONAL => 'SN',
+        RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL => 'SI'
     ];
 
     /**

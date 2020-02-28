@@ -3,7 +3,7 @@
 namespace Common\FormService\Form\Lva;
 
 use Common\FormService\Form\AbstractFormService;
-use Common\Service\Entity\LicenceEntityService;
+use Common\RefData;
 
 /**
  * Addresses Form
@@ -13,8 +13,8 @@ use Common\Service\Entity\LicenceEntityService;
 class Addresses extends AbstractFormService
 {
     private static $establishmentAllowedLicTypes = [
-        LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
-        LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+        RefData::LICENCE_TYPE_STANDARD_NATIONAL,
+        RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
     ];
 
     /**
@@ -51,8 +51,8 @@ class Addresses extends AbstractFormService
      *
      * @param \Zend\Form\Form $form        Form
      * @param string          $licenceType Licence type
-     *                                       
-     * @return void                                       
+     *
+     * @return void
      */
     protected function removeEstablishment(\Zend\Form\Form $form, $licenceType)
     {

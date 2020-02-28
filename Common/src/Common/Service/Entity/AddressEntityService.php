@@ -14,8 +14,6 @@ namespace Common\Service\Entity;
  */
 class AddressEntityService extends AbstractEntityService
 {
-    const CONTACT_TYPE_REGISTERED_ADDRESS = 'ct_reg';
-
     /**
      * Define entity for default behaviour
      *

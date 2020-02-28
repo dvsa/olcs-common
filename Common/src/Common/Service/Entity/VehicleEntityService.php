@@ -7,6 +7,8 @@
  */
 namespace Common\Service\Entity;
 
+use Common\RefData;
+
 /**
  * Vehicle Entity Service
  *
@@ -14,17 +16,10 @@ namespace Common\Service\Entity;
  */
 class VehicleEntityService extends AbstractEntityService
 {
-    /**
-     * PSV types
-     */
-    const PSV_TYPE_SMALL  = 'vhl_t_a';
-    const PSV_TYPE_MEDIUM = 'vhl_t_b';
-    const PSV_TYPE_LARGE  = 'vhl_t_c';
-
     protected $typeMap = [
-        'small'  => self::PSV_TYPE_SMALL,
-        'medium' => self::PSV_TYPE_MEDIUM,
-        'large'  => self::PSV_TYPE_LARGE
+        'small'  => RefData::PSV_TYPE_SMALL,
+        'medium' => RefData::PSV_TYPE_MEDIUM,
+        'large'  => RefData::PSV_TYPE_LARGE
     ];
 
     /**
@@ -78,7 +73,6 @@ class VehicleEntityService extends AbstractEntityService
         $return = array();
 
         foreach ($results['Results'] as $result) {
-
             foreach ($result['licenceVehicles'] as $licenceVehicle) {
                 if (!empty($licenceVehicle['removalDate'])) {
                     continue;

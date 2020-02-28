@@ -14,14 +14,6 @@ namespace Common\Service\Entity;
  */
 class InspectionRequestEntityService extends AbstractLvaEntityService
 {
-    const REPORT_TYPE_MAINTENANCE_REQUEST = 'insp_rep_t_maint';
-
-    const RESULT_TYPE_NEW = 'insp_res_t_new';
-    const RESULT_TYPE_SATISFACTORY = 'insp_res_t_new_sat';
-    const RESULT_TYPE_UNSATISFACTORY = 'insp_res_t_new_unsat';
-
-    const REQUEST_TYPE_NEW_OP = 'insp_req_t_new_op';
-
     /**
      * Define entity for default behaviour
      *

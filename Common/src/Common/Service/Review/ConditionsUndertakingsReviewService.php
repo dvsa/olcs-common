@@ -7,7 +7,7 @@
  */
 namespace Common\Service\Review;
 
-use Common\Service\Entity\ConditionUndertakingEntityService as Condition;
+use Common\RefData;
 
 /**
  * Conditions Undertakings Review Service
@@ -95,7 +95,6 @@ class ConditionsUndertakingsReviewService extends AbstractReviewService
         $licConds = $licUnds = $ocConds = $ocUnds = [];
 
         foreach ($data['conditionUndertakings'] as $condition) {
-
             if ($filterByAction) {
                 $index = $condition['action'];
             } else {
@@ -123,25 +122,25 @@ class ConditionsUndertakingsReviewService extends AbstractReviewService
 
     protected function isLicenceCondition($condition)
     {
-        return $condition['conditionType']['id'] === Condition::TYPE_CONDITION
-            && $condition['attachedTo']['id'] === Condition::ATTACHED_TO_LICENCE;
+        return $condition['conditionType']['id'] === RefData::TYPE_CONDITION
+            && $condition['attachedTo']['id'] === RefData::ATTACHED_TO_LICENCE;
     }
 
     protected function isLicenceUndertaking($condition)
     {
-        return $condition['conditionType']['id'] === Condition::TYPE_UNDERTAKING
-            && $condition['attachedTo']['id'] === Condition::ATTACHED_TO_LICENCE;
+        return $condition['conditionType']['id'] === RefData::TYPE_UNDERTAKING
+            && $condition['attachedTo']['id'] === RefData::ATTACHED_TO_LICENCE;
     }
 
     protected function isOcCondition($condition)
     {
-        return $condition['conditionType']['id'] === Condition::TYPE_CONDITION
-            && $condition['attachedTo']['id'] === Condition::ATTACHED_TO_OPERATING_CENTRE;
+        return $condition['conditionType']['id'] === RefData::TYPE_CONDITION
+            && $condition['attachedTo']['id'] === RefData::ATTACHED_TO_OPERATING_CENTRE;
     }
 
     protected function isOcUndertaking($condition)
     {
-        return $condition['conditionType']['id'] === Condition::TYPE_UNDERTAKING
-            && $condition['attachedTo']['id'] === Condition::ATTACHED_TO_OPERATING_CENTRE;
+        return $condition['conditionType']['id'] === RefData::TYPE_UNDERTAKING
+            && $condition['attachedTo']['id'] === RefData::ATTACHED_TO_OPERATING_CENTRE;
     }
 }

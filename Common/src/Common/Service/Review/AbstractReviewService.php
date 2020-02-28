@@ -7,7 +7,7 @@
  */
 namespace Common\Service\Review;
 
-use Common\Service\Entity\LicenceEntityService;
+use Common\RefData;
 use Common\Service\Table\Formatter\Address;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
@@ -98,7 +98,7 @@ abstract class AbstractReviewService implements ReviewServiceInterface, ServiceL
 
     protected function isPsv($data)
     {
-        return $data['goodsOrPsv']['id'] === LicenceEntityService::LICENCE_CATEGORY_PSV;
+        return $data['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_PSV;
     }
 
     protected function translate($string)

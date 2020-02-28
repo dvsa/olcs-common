@@ -5,12 +5,11 @@
  */
 namespace CommonTest\Service\Processing;
 
+use Common\RefData;
 use CommonTest\Bootstrap;
 use CommonTest\Traits\MockDateTrait;
 use Common\Service\Processing\BusProcessingService;
 use Common\Service\Data\FeeTypeDataService;
-use Common\Service\Entity\FeeEntityService;
-use Common\Service\Entity\LicenceEntityService;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 
@@ -132,7 +131,7 @@ class BusProcessingServiceTest extends MockeryTestCase
                 ->once()
                 ->with(
                     $expectedFeeType,
-                    LicenceEntityService::LICENCE_CATEGORY_PSV,
+                    RefData::LICENCE_CATEGORY_PSV,
                     $busRegData['licence']['licenceType']['id'],
                     $busRegData['receivedDate'],
                     $expectedTrafficArea
@@ -201,7 +200,7 @@ class BusProcessingServiceTest extends MockeryTestCase
                     'invoicedDate' => 'date',
                     'feeType' => 11,
                     'description' => 'BUSAPP - Scotland regNo Variation 0',
-                    'feeStatus' => FeeEntityService::STATUS_OUTSTANDING
+                    'feeStatus' => RefData::FEE_STATUS_OUTSTANDING
                 ]
             ],
             // BUSAPP - Other
@@ -242,7 +241,7 @@ class BusProcessingServiceTest extends MockeryTestCase
                     'invoicedDate' => 'date',
                     'feeType' => 22,
                     'description' => 'BUSAPP - Other regNo Variation 0',
-                    'feeStatus' => FeeEntityService::STATUS_OUTSTANDING
+                    'feeStatus' => RefData::FEE_STATUS_OUTSTANDING
                 ]
             ],
             // BUSVAR - Scotland
@@ -283,7 +282,7 @@ class BusProcessingServiceTest extends MockeryTestCase
                     'invoicedDate' => 'date',
                     'feeType' => 33,
                     'description' => 'BUSVAR - Scotland regNo Variation 1',
-                    'feeStatus' => FeeEntityService::STATUS_OUTSTANDING
+                    'feeStatus' => RefData::FEE_STATUS_OUTSTANDING
                 ]
             ],
             // BUSVAR - Other
@@ -324,7 +323,7 @@ class BusProcessingServiceTest extends MockeryTestCase
                     'invoicedDate' => 'date',
                     'feeType' => 44,
                     'description' => 'BUSVAR - Other regNo Variation 2',
-                    'feeStatus' => FeeEntityService::STATUS_OUTSTANDING
+                    'feeStatus' => RefData::FEE_STATUS_OUTSTANDING
                 ]
             ],
         ];
