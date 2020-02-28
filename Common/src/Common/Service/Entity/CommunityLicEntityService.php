@@ -8,7 +8,7 @@
  */
 namespace Common\Service\Entity;
 
-use Common\Service\Entity\TrafficAreaEntityService;
+use Common\RefData;
 
 /**
  * Community Lic Entity Service
@@ -229,7 +229,7 @@ class CommunityLicEntityService extends AbstractEntityService
     protected function getSerialNoPrefixFromTrafficArea($licenceId)
     {
         $trafficArea = $this->getServiceLocator()->get('Entity\Licence')->getTrafficArea($licenceId);
-        return ($trafficArea['id'] === TrafficAreaEntityService::NORTHERN_IRELAND_TRAFFIC_AREA_CODE)
+        return ($trafficArea['id'] === RefData::NORTHERN_IRELAND_TRAFFIC_AREA_CODE)
             ? self::PREFIX_NI : self::PREFIX_GB;
     }
 

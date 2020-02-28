@@ -7,9 +7,9 @@
  */
 namespace CommonTest\FormService\Form\Lva\BusinessDetails;
 
+use Common\RefData;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Common\Service\Entity\OrganisationEntityService;
 use Common\Service\Helper\FormHelperService;
 
 /**
@@ -34,7 +34,7 @@ class AbstractBusinessDetailsTest extends MockeryTestCase
     public function testAlterFormRegisteredCompany()
     {
         // Params
-        $orgType = OrganisationEntityService::ORG_TYPE_REGISTERED_COMPANY;
+        $orgType = RefData::ORG_TYPE_REGISTERED_COMPANY;
         $orgId = 111;
 
         // Mocks
@@ -53,7 +53,7 @@ class AbstractBusinessDetailsTest extends MockeryTestCase
     public function testAlterFormLlp()
     {
         // Params
-        $orgType = OrganisationEntityService::ORG_TYPE_LLP;
+        $orgType = RefData::ORG_TYPE_LLP;
         $orgId = 111;
 
         // Mocks
@@ -72,7 +72,7 @@ class AbstractBusinessDetailsTest extends MockeryTestCase
     public function testAlterFormSoleTrader()
     {
         // Params
-        $orgType = OrganisationEntityService::ORG_TYPE_SOLE_TRADER;
+        $orgType = RefData::ORG_TYPE_SOLE_TRADER;
         $orgId = 111;
 
         // Mocks
@@ -103,7 +103,7 @@ class AbstractBusinessDetailsTest extends MockeryTestCase
     public function testAlterFormPartnership()
     {
         // Params
-        $orgType = OrganisationEntityService::ORG_TYPE_PARTNERSHIP;
+        $orgType = RefData::ORG_TYPE_PARTNERSHIP;
         $orgId = 111;
 
         // Mocks
@@ -138,7 +138,7 @@ class AbstractBusinessDetailsTest extends MockeryTestCase
     public function testAlterFormOther()
     {
         // Params
-        $orgType = OrganisationEntityService::ORG_TYPE_OTHER;
+        $orgType = RefData::ORG_TYPE_OTHER;
         $orgId = 111;
 
         // Mocks

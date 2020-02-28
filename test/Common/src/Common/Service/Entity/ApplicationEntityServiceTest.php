@@ -7,6 +7,7 @@
  */
 namespace CommonTest\Service\Entity;
 
+use Common\RefData;
 use Common\Service\Entity\ApplicationEntityService;
 use Mockery as m;
 
@@ -175,7 +176,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
         $this->expectOneRestCall('Application', 'GET', $id)
             ->will($this->returnValue($response));
 
-        $this->assertEquals(ApplicationEntityService::APPLICATION_TYPE_VARIATION, $this->sut->getApplicationType($id));
+        $this->assertEquals(RefData::APPLICATION_TYPE_VARIATION, $this->sut->getApplicationType($id));
     }
 
     /**
@@ -192,7 +193,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
         $this->expectOneRestCall('Application', 'GET', $id)
             ->will($this->returnValue($response));
 
-        $this->assertEquals(ApplicationEntityService::APPLICATION_TYPE_NEW, $this->sut->getApplicationType($id));
+        $this->assertEquals(RefData::APPLICATION_TYPE_NEW, $this->sut->getApplicationType($id));
     }
 
     /**
@@ -430,7 +431,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
         ];
         $expectedData = [
             'licence' => 3,
-            'status' => ApplicationEntityService::APPLICATION_STATUS_NOT_SUBMITTED,
+            'status' => RefData::APPLICATION_STATUS_NOT_SUBMITTED,
             'isVariation' => true,
             'foo' => 'bar',
             'bar' => 'foo'
@@ -582,7 +583,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                         'interimEnd' => '2015/01/01',
                         'interimAuthVehicles' => 10,
                         'interimAuthTrailers' => 20,
-                        'interimCurrentStatus' => ApplicationEntityService::INTERIM_STATUS_REQUESTED,
+                        'interimCurrentStatus' => RefData::INTERIM_STATUS_REQUESTED,
                         'id' => 1,
                         'version' => 2
                     ],
@@ -600,7 +601,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                     'interimEnd' => '2015/01/01',
                     'interimAuthVehicles' => 10,
                     'interimAuthTrailers' => 20,
-                    'interimStatus' => ApplicationEntityService::INTERIM_STATUS_REQUESTED,
+                    'interimStatus' => RefData::INTERIM_STATUS_REQUESTED,
                     'id' => 1,
                     'version' => 2
                 ],
@@ -659,7 +660,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                     'data' => [
                         'id' => 1,
                         'version' => 2,
-                        'interimCurrentStatus' => ApplicationEntityService::INTERIM_STATUS_REQUESTED
+                        'interimCurrentStatus' => RefData::INTERIM_STATUS_REQUESTED
                      ]
                 ],
                 // save application data
@@ -711,7 +712,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                         'interimEnd' => '2015/01/01',
                         'interimAuthVehicles' => 10,
                         'interimAuthTrailers' => 20,
-                        'interimCurrentStatus' => ApplicationEntityService::INTERIM_STATUS_INFORCE,
+                        'interimCurrentStatus' => RefData::INTERIM_STATUS_INFORCE,
                         'id' => 1,
                         'version' => 2
                     ],
@@ -722,7 +723,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                         'id' => [1, 2]
                     ],
                     'interimStatus' => [
-                        'status' => ApplicationEntityService::INTERIM_STATUS_INFORCE
+                        'status' => RefData::INTERIM_STATUS_INFORCE
                     ]
                 ],
                 // save application data
@@ -732,7 +733,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                     'interimEnd' => '2015/01/01',
                     'interimAuthVehicles' => 10,
                     'interimAuthTrailers' => 20,
-                    'interimStatus' => ApplicationEntityService::INTERIM_STATUS_INFORCE,
+                    'interimStatus' => RefData::INTERIM_STATUS_INFORCE,
                     'id' => 1,
                     'version' => 2
                 ],

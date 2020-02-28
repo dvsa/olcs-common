@@ -7,9 +7,9 @@
  */
 namespace Common\Service\Processing;
 
+use Common\RefData;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Common\Service\Entity\LicenceEntityService;
 
 /**
  * Licence Processing Service
@@ -42,7 +42,7 @@ class LicenceProcessingService implements ServiceLocatorAwareInterface
     {
         $licenceData = $this->getServiceLocator()->get('Entity\Licence')->getRevocationDataForLicence($licenceId);
 
-        if ($licenceData['goodsOrPsv']['id'] === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
+        if ($licenceData['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_GOODS_VEHICLE) {
             $this->getServiceLocator()->get('Entity\GoodsDisc')->createForVehicles($licenceData['licenceVehicles']);
         } else {
             $this->getServiceLocator()->get('Entity\PsvDisc')->requestBlankDiscs($licenceId, $numberOfDiscs);

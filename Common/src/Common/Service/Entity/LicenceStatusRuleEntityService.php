@@ -17,10 +17,6 @@ namespace Common\Service\Entity;
  */
 class LicenceStatusRuleEntityService extends AbstractEntityService
 {
-    const LICENCE_STATUS_RULE_CURTAILED = 'lsts_curtailed';
-    const LICENCE_STATUS_RULE_REVOKED = 'lsts_revoked';
-    const LICENCE_STATUS_RULE_SUSPENDED = 'lsts_suspended';
-
     /**
      * The entity reference.
      *

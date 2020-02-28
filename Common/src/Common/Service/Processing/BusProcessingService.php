@@ -5,11 +5,10 @@
  */
 namespace Common\Service\Processing;
 
+use Common\RefData;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Common\Service\Data\FeeTypeDataService;
-use Common\Service\Entity\FeeEntityService;
-use Common\Service\Entity\LicenceEntityService;
 
 /**
  * Bus Processing Service
@@ -64,7 +63,7 @@ class BusProcessingService implements ServiceLocatorAwareInterface
 
         $feeType = $this->getServiceLocator()->get('Data\FeeType')->getLatest(
             $busFeeType,
-            LicenceEntityService::LICENCE_CATEGORY_PSV,
+            RefData::LICENCE_CATEGORY_PSV,
             $busRegData['licence']['licenceType']['id'],
             $busRegData['receivedDate'],
             $trafficArea
@@ -81,7 +80,7 @@ class BusProcessingService implements ServiceLocatorAwareInterface
             'invoicedDate' => $busRegData['receivedDate'],
             'feeType' => $feeType['id'],
             'description' => $feeType['description'].' '.$busRegData['regNo'].' Variation '.$busRegData['variationNo'],
-            'feeStatus' => FeeEntityService::STATUS_OUTSTANDING
+            'feeStatus' => RefData::FEE_STATUS_OUTSTANDING
         );
 
         $this->getServiceLocator()->get('Entity\Fee')->save($feeData);

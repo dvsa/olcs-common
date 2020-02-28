@@ -7,6 +7,8 @@
  */
 namespace Common\Service\Helper;
 
+use Common\RefData;
+
 /**
  * Complaints helper
  *
@@ -27,7 +29,7 @@ class ComplaintsHelperService extends AbstractHelperService
         $openComplaints = array();
         $closedComplaints = array();
         foreach ($cases as $row) {
-            if ($row['status']['id'] === \Common\Service\Entity\ComplaintEntityService::COMPLAIN_STATUS_CLOSED) {
+            if ($row['status']['id'] === RefData::COMPLAIN_STATUS_CLOSED) {
                 $closedComplaints[] = $row;
             } else {
                 $openComplaints[] = $row;

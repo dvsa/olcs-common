@@ -7,13 +7,11 @@
  */
 namespace Common\Service\Processing;
 
+use Common\RefData;
 use Dvsa\Olcs\Transfer\Command\Application\CreateSnapshot;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Common\Service\Data\FeeTypeDataService;
-use Common\Service\Entity\FeeEntityService;
-use Common\Service\Entity\ApplicationEntityService;
-use Common\Service\Entity\TrafficAreaEntityService;
 use Common\Service\Entity\CommunityLicEntityService as CommunityLic;
 
 /**
@@ -40,7 +38,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
             'invoicedDate' => $date,
             'feeType' => $feeType['id'],
             'description' => $feeType['description'] . ' for application ' . $applicationId,
-            'feeStatus' => FeeEntityService::STATUS_OUTSTANDING,
+            'feeStatus' => RefData::FEE_STATUS_OUTSTANDING,
             'task' => $taskId
         );
 
@@ -57,7 +55,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         $applicationType = $this->getServiceLocator()->get('Entity\Application')
             ->getApplicationType($applicationId);
 
-        $feeType =($applicationType == ApplicationEntityService::APPLICATION_TYPE_VARIATION)
+        $feeType =($applicationType == RefData::APPLICATION_TYPE_VARIATION)
             ? FeeTypeDataService::FEE_TYPE_VAR
             : FeeTypeDataService::FEE_TYPE_APP;
 
@@ -134,7 +132,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
             $data['goodsOrPsv'],
             $data['licenceType'],
             $date,
-            ($data['niFlag'] === 'Y') ? TrafficAreaEntityService::NORTHERN_IRELAND_TRAFFIC_AREA_CODE : null
+            ($data['niFlag'] === 'Y') ? RefData::NORTHERN_IRELAND_TRAFFIC_AREA_CODE : null
         );
     }
 
@@ -147,7 +145,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
         return $this->getServiceLocator()->get('Entity\Fee')->getLatestFeeByTypeStatusesAndApplicationId(
             $feeTypeData['id'],
-            [FeeEntityService::STATUS_OUTSTANDING],
+            [RefData::FEE_STATUS_OUTSTANDING],
             $applicationId
         );
     }

@@ -8,7 +8,7 @@
 
 namespace Common\Service\Lva;
 
-use Common\Service\Entity\OrganisationEntityService;
+use Common\RefData;
 use Zend\Form\FieldsetInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
@@ -47,7 +47,7 @@ class PeopleLvaService implements ServiceLocatorAwareInterface
             }
         }
 
-        if ($orgType !== OrganisationEntityService::ORG_TYPE_SOLE_TRADER) {
+        if ($orgType !== RefData::ORG_TYPE_SOLE_TRADER) {
             $formHelper->remove($form, 'form-actions->submit');
         }
 

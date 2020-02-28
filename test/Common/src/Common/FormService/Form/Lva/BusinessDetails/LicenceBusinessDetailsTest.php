@@ -7,9 +7,9 @@
  */
 namespace CommonTest\FormService\Form\Lva\BusinessDetails;
 
+use Common\RefData;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Common\Service\Entity\OrganisationEntityService;
 use Common\FormService\Form\Lva\BusinessDetails\LicenceBusinessDetails;
 
 /**
@@ -38,7 +38,7 @@ class LicenceBusinessDetailsTest extends MockeryTestCase
     public function testAlterForm()
     {
         // Params
-        $orgType = OrganisationEntityService::ORG_TYPE_REGISTERED_COMPANY;
+        $orgType = RefData::ORG_TYPE_REGISTERED_COMPANY;
         $orgId = 111;
 
         // Mocks

@@ -5,7 +5,7 @@
  */
 namespace Common\Service\Table\Formatter;
 
-use Common\Service\Entity\ConditionUndertakingEntityService;
+use Common\RefData;
 
 /**
  * Class OcUndertakings
@@ -35,9 +35,8 @@ class OcUndertakings implements FormatterInterface
 
         if (!is_null($data['undertakings'])) {
             foreach ($data['undertakings'] as $undertaking) {
-                if (
-                    !is_null($undertaking['licence']) &&
-                    $undertaking['conditionType']['id'] === ConditionUndertakingEntityService::TYPE_UNDERTAKING
+                if (!is_null($undertaking['licence']) &&
+                    $undertaking['conditionType']['id'] === RefData::TYPE_UNDERTAKING
                 ) {
                     $count++;
                 }

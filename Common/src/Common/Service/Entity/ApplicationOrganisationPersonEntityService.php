@@ -17,7 +17,7 @@ class ApplicationOrganisationPersonEntityService extends AbstractEntityService
     /**
      * Set a sane limit when fetching people
      */
-    const APP_PERSON_LIMIT = 50;
+    private const APP_PERSON_LIMIT = 50;
 
     /**
      * Define entity for default behaviour

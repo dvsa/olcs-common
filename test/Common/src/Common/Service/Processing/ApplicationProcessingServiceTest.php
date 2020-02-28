@@ -7,13 +7,12 @@
  */
 namespace CommonTest\Service\Processing;
 
+use Common\RefData;
 use CommonTest\Bootstrap;
 use CommonTest\Traits\MockDateTrait;
-use Common\Service\Entity\ApplicationEntityService;
 use Common\Service\Processing\ApplicationProcessingService;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Data\FeeTypeDataService;
-use Common\Service\Entity\FeeEntityService;
 use Mockery as m;
 use Common\Service\Entity\CommunityLicEntityService as CommunityLic;
 use Dvsa\Olcs\Transfer\Command\Application\CreateSnapshot;
@@ -50,7 +49,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
             ->with($id)
             ->will($this->returnValue($licenceId));
 
-        $appStatusData = array('status' => ApplicationEntityService::APPLICATION_STATUS_VALID);
+        $appStatusData = array('status' => RefData::APPLICATION_STATUS_VALID);
 
         $mockApplicationService->expects($this->once())
             ->method('forceUpdate')
@@ -229,7 +228,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
                 ->shouldReceive('getLatestFeeByTypeStatusesAndApplicationId')
                 ->with(
                     99,
-                    [FeeEntityService::STATUS_OUTSTANDING],
+                    [RefData::FEE_STATUS_OUTSTANDING],
                     $applicationId
                 )
                 ->andReturn($fee)
@@ -242,8 +241,8 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
     public function getApplicationFeeProvider()
     {
         return [
-            [ApplicationEntityService::APPLICATION_TYPE_VARIATION, FeeTypeDataService::FEE_TYPE_VAR],
-            [ApplicationEntityService::APPLICATION_TYPE_NEW, FeeTypeDataService::FEE_TYPE_APP],
+            [RefData::APPLICATION_TYPE_VARIATION, FeeTypeDataService::FEE_TYPE_VAR],
+            [RefData::APPLICATION_TYPE_NEW, FeeTypeDataService::FEE_TYPE_APP],
         ];
     }
 
@@ -298,7 +297,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
                 ->shouldReceive('getLatestFeeByTypeStatusesAndApplicationId')
                 ->with(
                     101,
-                    [FeeEntityService::STATUS_OUTSTANDING],
+                    [RefData::FEE_STATUS_OUTSTANDING],
                     $applicationId
                 )
                 ->andReturn($fee)

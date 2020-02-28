@@ -2,10 +2,10 @@
 
 namespace CommonTest\FormService\Form\Lva;
 
+use Common\RefData;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Lva\Addresses;
-use Common\Service\Entity\LicenceEntityService;
 
 /**
  * @covers Common\FormService\Form\Lva\Addresses
@@ -39,7 +39,7 @@ class AddressesTest extends MockeryTestCase
             $this->sut->getForm(
                 [
                     'typeOfLicence' => [
-                        'licenceType' => LicenceEntityService::LICENCE_TYPE_RESTRICTED,
+                        'licenceType' => RefData::LICENCE_TYPE_RESTRICTED,
                     ],
                 ]
             )

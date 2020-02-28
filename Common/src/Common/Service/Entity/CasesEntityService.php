@@ -7,6 +7,8 @@
  */
 namespace Common\Service\Entity;
 
+use Common\RefData;
+
 /**
  * Cases Entity Service
  *
@@ -58,7 +60,7 @@ class CasesEntityService extends AbstractEntityService
             'complaints' => [
                 'criteria' => [
                     'isCompliance' => 0,
-                    'status' => ComplaintEntityService::COMPLAIN_STATUS_OPEN
+                    'status' => RefData::COMPLAIN_STATUS_OPEN
                 ]
             ]
         ]

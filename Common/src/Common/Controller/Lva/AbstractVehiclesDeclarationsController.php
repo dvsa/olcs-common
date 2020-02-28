@@ -7,7 +7,7 @@
  */
 namespace Common\Controller\Lva;
 
-use Common\Service\Entity\LicenceEntityService;
+use Common\RefData;
 
 /**
  * Vehicles Declarations Controller
@@ -52,7 +52,6 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
         $this->getServiceLocator()->get('Script')->loadFile('vehicle-declarations');
 
         if ($request->isPost() && $form->isValid()) {
-
             $this->save($data);
 
             return $this->completeSection('vehicles_declarations');
@@ -77,7 +76,6 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
     protected function loadData()
     {
         if ($this->data === null) {
-
             $response = $this->handleQuery(
                 \Dvsa\Olcs\Transfer\Query\Application\VehicleDeclaration::create(['id' => $this->getApplicationId()])
             );
@@ -192,7 +190,7 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
         }
 
         // Section 10 only visible for Restricted licences
-        if ($data['licenceType']['id'] !== LicenceEntityService::LICENCE_TYPE_RESTRICTED) {
+        if ($data['licenceType']['id'] !== RefData::LICENCE_TYPE_RESTRICTED) {
             $formHelper->remove($form, 'mainOccupation');
             if (isset($validationGroup['mainOccupation'])) {
                 unset($validationGroup['mainOccupation']);

@@ -2,7 +2,7 @@
 
 namespace Common\Controller\Lva\Adapters;
 
-use Common\Service\Entity\LicenceEntityService;
+use Common\RefData;
 
 /**
  * Application Transport Manager Adapter
@@ -44,8 +44,8 @@ class ApplicationTransportManagerAdapter extends AbstractTransportManagerAdapter
         }
 
         $mustHaveTypes = [
-            LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL,
-            LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+            RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL,
+            RefData::LICENCE_TYPE_STANDARD_NATIONAL,
         ];
 
         return in_array($this->applicationData['licenceType']['id'], $mustHaveTypes, true);

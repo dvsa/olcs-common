@@ -7,6 +7,8 @@
  */
 namespace Common\Service\Entity;
 
+use Common\RefData;
+
 /**
  * Fee Payment Entity Service
  *
@@ -20,13 +22,6 @@ class FeePaymentEntityService extends AbstractEntityService
      * @var string
      */
     protected $entity = 'FeePayment';
-
-    const METHOD_CARD_OFFLINE = 'fpm_card_offline';
-    const METHOD_CARD_ONLINE  = 'fpm_card_online';
-    const METHOD_CASH         = 'fpm_cash';
-    const METHOD_CHEQUE       = 'fpm_cheque';
-    const METHOD_POSTAL_ORDER = 'fpm_po';
-    const METHOD_WAIVE        = 'fpm_waive';
 
     protected $feeBundle = [
         'children' => [
@@ -54,12 +49,12 @@ class FeePaymentEntityService extends AbstractEntityService
         return in_array(
             $value,
             [
-                self::METHOD_CARD_OFFLINE,
-                self::METHOD_CARD_ONLINE,
-                self::METHOD_CASH,
-                self::METHOD_CHEQUE,
-                self::METHOD_POSTAL_ORDER,
-                self::METHOD_WAIVE,
+                RefData::FEE_PAYMENT_METHOD_CARD_OFFLINE,
+                RefData::FEE_PAYMENT_METHOD_CARD_ONLINE,
+                RefData::FEE_PAYMENT_METHOD_CASH,
+                RefData::FEE_PAYMENT_METHOD_CHEQUE,
+                RefData::FEE_PAYMENT_METHOD_POSTAL_ORDER,
+                RefData::FEE_PAYMENT_METHOD_WAIVE,
             ]
         );
     }

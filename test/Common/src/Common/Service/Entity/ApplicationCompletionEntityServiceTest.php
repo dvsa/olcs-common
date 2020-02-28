@@ -2,11 +2,8 @@
 
 namespace CommonTest\Service\Entity;
 
+use Common\RefData;
 use Common\Service\Entity\ApplicationCompletionEntityService;
-use Common\Service\Entity\ContactDetailsEntityService;
-use Common\Service\Entity\LicenceEntityService;
-use Common\Service\Entity\OrganisationEntityService;
-use Common\Service\Entity\VehicleEntityService;
 
 /**
  * @covers Common\Service\Entity\ApplicationCompletionEntityService
@@ -381,7 +378,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                             'name' => 'Foo',
                             'companyOrLlpNo' => 12345678,
                             'type' => array(
-                                'id' => OrganisationEntityService::ORG_TYPE_LLP
+                                'id' => RefData::ORG_TYPE_LLP
                             ),
                             'contactDetails' => array(),
                         )
@@ -427,12 +424,12 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                             'name' => 'Foo',
                             'companyOrLlpNo' => 12345678,
                             'type' => array(
-                                'id' => OrganisationEntityService::ORG_TYPE_LLP
+                                'id' => RefData::ORG_TYPE_LLP
                             ),
                             'contactDetails' => array(
                                 array(
                                     'contactType' => array(
-                                        'id' => ContactDetailsEntityService::CONTACT_TYPE_REGISTERED
+                                        'id' => RefData::CONTACT_TYPE_REGISTERED
                                     )
                                 )
                             ),
@@ -477,7 +474,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'licence' => array(
                         'organisation'=> array(
                             'type' => array(
-                                'id' => OrganisationEntityService::ORG_TYPE_PARTNERSHIP
+                                'id' => RefData::ORG_TYPE_PARTNERSHIP
                             )
                         )
                     )
@@ -521,7 +518,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                         'organisation'=> array(
                             'name' => 'Bob',
                             'type' => array(
-                                'id' => OrganisationEntityService::ORG_TYPE_PARTNERSHIP
+                                'id' => RefData::ORG_TYPE_PARTNERSHIP
                             )
                         )
                     )
@@ -564,7 +561,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'licence' => array(
                         'organisation'=> array(
                             'type' => array(
-                                'id' => OrganisationEntityService::ORG_TYPE_SOLE_TRADER
+                                'id' => RefData::ORG_TYPE_SOLE_TRADER
                             )
                         )
                     )
@@ -605,7 +602,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                 // Mocked application data
                 array(
                     'licenceType' => array(
-                        'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
+                        'id' => RefData::LICENCE_TYPE_STANDARD_NATIONAL
                     ),
                     'licence' => array(
                         'correspondenceCd' => array(
@@ -653,7 +650,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                 // Mocked application data
                 array(
                     'licenceType' => array(
-                        'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
+                        'id' => RefData::LICENCE_TYPE_STANDARD_NATIONAL
                     ),
                     'licence' => array(
                         'correspondenceCd' => array(
@@ -704,7 +701,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                 // Mocked application data
                 array(
                     'licenceType' => array(
-                        'id' => LicenceEntityService::LICENCE_TYPE_RESTRICTED
+                        'id' => RefData::LICENCE_TYPE_RESTRICTED
                     ),
                     'licence' => array(
                         'correspondenceCd' => array(
@@ -963,7 +960,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                         'foo'
                     ),
                     'goodsOrPsv' => array(
-                        'id' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE
+                        'id' => RefData::LICENCE_CATEGORY_GOODS_VEHICLE
                     )
                 ),
                 // Expected completion data
@@ -1011,10 +1008,10 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                         'foo'
                     ),
                     'licenceType' => array(
-                        'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
+                        'id' => RefData::LICENCE_TYPE_STANDARD_NATIONAL
                     ),
                     'goodsOrPsv' => array(
-                        'id' => LicenceEntityService::LICENCE_CATEGORY_PSV
+                        'id' => RefData::LICENCE_CATEGORY_PSV
                     )
                 ),
                 // Expected completion data
@@ -1062,10 +1059,10 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                         'foo'
                     ),
                     'licenceType' => array(
-                        'id' => LicenceEntityService::LICENCE_TYPE_RESTRICTED
+                        'id' => RefData::LICENCE_TYPE_RESTRICTED
                     ),
                     'goodsOrPsv' => array(
-                        'id' => LicenceEntityService::LICENCE_CATEGORY_PSV
+                        'id' => RefData::LICENCE_CATEGORY_PSV
                     ),
                 ),
                 // Expected completion data
@@ -1113,7 +1110,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                         'foo'
                     ),
                     'goodsOrPsv' => array(
-                        'id' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE
+                        'id' => RefData::LICENCE_CATEGORY_GOODS_VEHICLE
                     )
                 ),
                 // Expected completion data
@@ -1188,7 +1185,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                 // Mocked application data
                 array(
                     'licenceType' => [
-                        'id' => LicenceEntityService::LICENCE_TYPE_RESTRICTED
+                        'id' => RefData::LICENCE_TYPE_RESTRICTED
                     ],
                     'transportManagers' => [],
                 ),
@@ -1228,7 +1225,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                 // Mocked application data
                 array(
                     'licenceType' => [
-                        'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
+                        'id' => RefData::LICENCE_TYPE_STANDARD_NATIONAL
                     ],
                     'transportManagers' => [],
                 ),
@@ -1268,7 +1265,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                 // Mocked application data
                 array(
                     'licenceType' => [
-                        'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                        'id' => RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
                     ],
                     'transportManagers' => [],
                 ),
@@ -1308,7 +1305,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                 // Mocked application data
                 array(
                     'licenceType' => [
-                        'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
+                        'id' => RefData::LICENCE_TYPE_STANDARD_NATIONAL
                     ],
                     'transportManagers' => [1,2,3],
                 ),
@@ -2027,7 +2024,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                         )
                     ),
                     'goodsOrPsv' => array(
-                        'id' => LicenceEntityService::LICENCE_CATEGORY_PSV
+                        'id' => RefData::LICENCE_CATEGORY_PSV
                     )
                 ),
                 // Expected completion data
@@ -2077,7 +2074,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                         )
                     ),
                     'goodsOrPsv' => array(
-                        'id' => LicenceEntityService::LICENCE_CATEGORY_PSV
+                        'id' => RefData::LICENCE_CATEGORY_PSV
                     )
                 ),
                 // Expected completion data
@@ -2128,7 +2125,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                         )
                     ),
                     'goodsOrPsv' => array(
-                        'id' => LicenceEntityService::LICENCE_CATEGORY_PSV
+                        'id' => RefData::LICENCE_CATEGORY_PSV
                     )
                 ),
                 // Expected completion data
@@ -2179,7 +2176,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                         )
                     ),
                     'goodsOrPsv' => array(
-                        'id' => LicenceEntityService::LICENCE_CATEGORY_PSV
+                        'id' => RefData::LICENCE_CATEGORY_PSV
                     )
                 ),
                 // Expected completion data
@@ -2231,7 +2228,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                         )
                     ),
                     'goodsOrPsv' => array(
-                        'id' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE
+                        'id' => RefData::LICENCE_CATEGORY_GOODS_VEHICLE
                     )
                 ),
                 // Expected completion data
@@ -2283,7 +2280,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                         )
                     ),
                     'goodsOrPsv' => array(
-                        'id' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE
+                        'id' => RefData::LICENCE_CATEGORY_GOODS_VEHICLE
                     )
                 ),
                 // Expected completion data
@@ -3102,7 +3099,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                             array(
                                 'vehicle' => array(
                                     'psvType' => array(
-                                        'id' => VehicleEntityService::PSV_TYPE_SMALL
+                                        'id' => RefData::PSV_TYPE_SMALL
                                     )
                                 )
                             )
@@ -3156,7 +3153,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                             array(
                                 'vehicle' => array(
                                     'psvType' => array(
-                                        'id' => VehicleEntityService::PSV_TYPE_SMALL
+                                        'id' => RefData::PSV_TYPE_SMALL
                                     ),
                                 )
                             )
@@ -3211,7 +3208,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                                 // one small, but that's enough (we don't have to add them all)
                                 'vehicle' => array(
                                     'psvType' => array(
-                                        'id' => VehicleEntityService::PSV_TYPE_SMALL
+                                        'id' => RefData::PSV_TYPE_SMALL
                                     )
                                 )
                             )
@@ -3303,7 +3300,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                             array(
                                 'vehicle' => array(
                                     'psvType' => array(
-                                        'id' => VehicleEntityService::PSV_TYPE_SMALL
+                                        'id' => RefData::PSV_TYPE_SMALL
                                     )
                                 )
                             )
@@ -3357,7 +3354,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                             array(
                                 'vehicle' => array(
                                     'psvType' => array(
-                                        'id' => VehicleEntityService::PSV_TYPE_SMALL
+                                        'id' => RefData::PSV_TYPE_SMALL
                                     )
                                 )
                             )

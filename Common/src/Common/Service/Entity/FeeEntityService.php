@@ -7,6 +7,7 @@
  */
 namespace Common\Service\Entity;
 
+use Common\RefData;
 use Common\Service\Data\FeeTypeDataService;
 use Common\Service\Entity\LicenceEntityService as Licence;
 use Common\Service\Entity\ApplicationEntityService as Application;
@@ -24,10 +25,6 @@ class FeeEntityService extends AbstractLvaEntityService
      * @var string
      */
     protected $entity = 'Fee';
-
-    const STATUS_OUTSTANDING = 'lfs_ot';
-    const STATUS_PAID = 'lfs_pd';
-    const STATUS_CANCELLED = 'lfs_cn';
 
     protected $applicationIdBundle = array(
         'children' => array(
@@ -207,7 +204,7 @@ class FeeEntityService extends AbstractLvaEntityService
      */
     public function getLatestFeeByTypeStatusesAndApplicationId($feeType, $feeStatuses, $applicationId)
     {
-         $query = array(
+        $query = array(
             'application' => $applicationId,
             'feeStatus' => $feeStatuses,
             'feeType' => $feeType,
@@ -231,7 +228,7 @@ class FeeEntityService extends AbstractLvaEntityService
         foreach ($ids as $id) {
             $updates[] = array(
                 'id' => $id,
-                'feeStatus' => self::STATUS_CANCELLED,
+                'feeStatus' => RefData::FEE_STATUS_CANCELLED,
                 '_OPTIONS_' => array('force' => true)
             );
         }
@@ -249,7 +246,7 @@ class FeeEntityService extends AbstractLvaEntityService
     {
         $query = [
             'licence' => $licenceId,
-            'feeStatus' => self::STATUS_OUTSTANDING,
+            'feeStatus' => RefData::FEE_STATUS_OUTSTANDING,
         ];
         $bundle = [
             'children' => [

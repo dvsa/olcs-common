@@ -2,7 +2,7 @@
 
 namespace Common\Controller\Lva;
 
-use Common\Service\Entity\LicenceEntityService;
+use Common\RefData;
 use Dvsa\Olcs\Transfer\Command\Application\Schedule41;
 use Dvsa\Olcs\Transfer\Command\Application\Schedule41Approve;
 use Dvsa\Olcs\Transfer\Command\Application\Schedule41Refuse;
@@ -347,9 +347,9 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
 
         // Licence not valid.
         $allowed = array(
-            LicenceEntityService::LICENCE_STATUS_VALID,
-            LicenceEntityService::LICENCE_STATUS_SUSPENDED,
-            LicenceEntityService::LICENCE_STATUS_CURTAILED
+            RefData::LICENCE_STATUS_VALID,
+            RefData::LICENCE_STATUS_SUSPENDED,
+            RefData::LICENCE_STATUS_CURTAILED
         );
 
         $errors = [];
@@ -358,7 +358,7 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
         }
 
         // Licence is PSV.
-        if ($licence['goodsOrPsv']['id'] === LicenceEntityService::LICENCE_CATEGORY_PSV) {
+        if ($licence['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_PSV) {
             $errors['is-psv'][] = 'application.schedule41.licence-is-psv';
         }
 
@@ -448,7 +448,6 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
         $formMessages = [];
 
         if (isset($errors['number-not-valid'])) {
-
             foreach ($errors['number-not-valid'] as $key => $message) {
                 $formMessages['licence-number']['licenceNumber'][] = $message;
             }
@@ -457,7 +456,6 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
         }
 
         if (isset($errors['not-valid'])) {
-
             foreach ($errors['not-valid'] as $key => $message) {
                 $formMessages['licence-number']['licenceNumber'][] = $message;
             }
@@ -466,7 +464,6 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
         }
 
         if (isset($errors['is-psv'])) {
-
             foreach ($errors['is-psv'] as $key => $message) {
                 $formMessages['licence-number']['licenceNumber'][] = $message;
             }

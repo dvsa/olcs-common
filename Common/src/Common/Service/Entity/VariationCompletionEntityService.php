@@ -14,10 +14,6 @@ namespace Common\Service\Entity;
  */
 class VariationCompletionEntityService extends ApplicationCompletionEntityService
 {
-    const STATUS_UNCHANGED = 0;
-    const STATUS_REQUIRES_ATTENTION = 1;
-    const STATUS_UPDATED = 2;
-
     /**
      * Define entity for default behaviour
      *

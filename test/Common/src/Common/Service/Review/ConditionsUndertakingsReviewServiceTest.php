@@ -7,8 +7,8 @@
  */
 namespace CommonTest\Service\Review;
 
+use Common\RefData;
 use Common\Service\Review\ConditionsUndertakingsReviewService;
-use Common\Service\Entity\ConditionUndertakingEntityService as Condition;
 
 /**
  * Conditions Undertakings Review Service Test
@@ -165,210 +165,210 @@ class ConditionsUndertakingsReviewServiceTest extends \PHPUnit\Framework\TestCas
                 [
                     'action' => 'A',
                     'notes' => 'Added licence condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 [
                     'action' => 'A',
                     'notes' => 'Another added licence condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 // Updated licence conditions
                 [
                     'action' => 'U',
                     'notes' => 'Updated licence condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 [
                     'action' => 'U',
                     'notes' => 'Another updated licence condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 // Deleted licence conditions
                 [
                     'action' => 'D',
                     'notes' => 'Deleted licence condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 [
                     'action' => 'D',
                     'notes' => 'Another deleted licence condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 // Added licence undertakings
                 [
                     'action' => 'A',
                     'notes' => 'Added licence undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 [
                     'action' => 'A',
                     'notes' => 'Another added licence undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 // Updated licence undertakings
                 [
                     'action' => 'U',
                     'notes' => 'Updated licence undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 [
                     'action' => 'U',
                     'notes' => 'Another updated licence undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 // Deleted licence undertakings
                 [
                     'action' => 'D',
                     'notes' => 'Deleted licence undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 [
                     'action' => 'D',
                     'notes' => 'Another deleted licence undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 // Added oc conditions
                 [
                     'action' => 'A',
                     'notes' => 'Added oc condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                     'operatingCentre' => ['id' => 111]
                 ],
                 [
                     'action' => 'A',
                     'notes' => 'Another added oc condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                     'operatingCentre' => ['id' => 111]
                 ],
                 [
                     'action' => 'A',
                     'notes' => 'Another added oc condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                     'operatingCentre' => ['id' => 222]
                 ],
                 // Updated oc conditions
                 [
                     'action' => 'U',
                     'notes' => 'Updated oc condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                     'operatingCentre' => ['id' => 111]
                 ],
                 [
                     'action' => 'U',
                     'notes' => 'Another updated oc condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                     'operatingCentre' => ['id' => 111]
                 ],
                 [
                     'action' => 'U',
                     'notes' => 'Another updated oc condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                     'operatingCentre' => ['id' => 222]
                 ],
                 // Deleted oc conditions
                 [
                     'action' => 'D',
                     'notes' => 'Deleted oc condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                     'operatingCentre' => ['id' => 111]
                 ],
                 [
                     'action' => 'D',
                     'notes' => 'Another deleted oc condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                     'operatingCentre' => ['id' => 111]
                 ],
                 [
                     'action' => 'D',
                     'notes' => 'Another deleted oc condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                     'operatingCentre' => ['id' => 222]
                 ],
                 // Added oc undertakings
                 [
                     'action' => 'A',
                     'notes' => 'Added oc undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                     'operatingCentre' => ['id' => 111]
                 ],
                 [
                     'action' => 'A',
                     'notes' => 'Another added oc undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                     'operatingCentre' => ['id' => 111]
                 ],
                 [
                     'action' => 'A',
                     'notes' => 'Another added oc undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                     'operatingCentre' => ['id' => 222]
                 ],
                 // Updated oc undertakings
                 [
                     'action' => 'U',
                     'notes' => 'Updated oc undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                     'operatingCentre' => ['id' => 111]
                 ],
                 [
                     'action' => 'U',
                     'notes' => 'Another updated oc undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                     'operatingCentre' => ['id' => 111]
                 ],
                 [
                     'action' => 'U',
                     'notes' => 'Another updated oc undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                     'operatingCentre' => ['id' => 222]
                 ],
                 // Deleted oc undertakings
                 [
                     'action' => 'D',
                     'notes' => 'Deleted oc undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                     'operatingCentre' => ['id' => 111]
                 ],
                 [
                     'action' => 'D',
                     'notes' => 'Another deleted oc undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                     'operatingCentre' => ['id' => 111]
                 ],
                 [
                     'action' => 'D',
                     'notes' => 'Another deleted oc undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                     'operatingCentre' => ['id' => 222]
                 ],
             ]
@@ -378,42 +378,42 @@ class ConditionsUndertakingsReviewServiceTest extends \PHPUnit\Framework\TestCas
                 [
                     'action' => 'A',
                     'notes' => 'Added licence condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 [
                     'action' => 'A',
                     'notes' => 'Another added licence condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ]
             ],
             'U' => [
                 [
                     'action' => 'U',
                     'notes' => 'Updated licence condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 [
                     'action' => 'U',
                     'notes' => 'Another updated licence condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ]
             ],
             'D' => [
                 [
                     'action' => 'D',
                     'notes' => 'Deleted licence condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 [
                     'action' => 'D',
                     'notes' => 'Another deleted licence condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ]
             ]
         ];
@@ -422,42 +422,42 @@ class ConditionsUndertakingsReviewServiceTest extends \PHPUnit\Framework\TestCas
                 [
                     'action' => 'A',
                     'notes' => 'Added licence undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 [
                     'action' => 'A',
                     'notes' => 'Another added licence undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ]
             ],
             'U' => [
                 [
                     'action' => 'U',
                     'notes' => 'Updated licence undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 [
                     'action' => 'U',
                     'notes' => 'Another updated licence undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ]
             ],
             'D' => [
                 [
                     'action' => 'D',
                     'notes' => 'Deleted licence undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 [
                     'action' => 'D',
                     'notes' => 'Another deleted licence undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ]
             ]
         ];
@@ -467,15 +467,15 @@ class ConditionsUndertakingsReviewServiceTest extends \PHPUnit\Framework\TestCas
                     [
                         'action' => 'A',
                         'notes' => 'Added oc condition',
-                        'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                        'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                        'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                        'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                         'operatingCentre' => ['id' => 111]
                     ],
                     [
                         'action' => 'A',
                         'notes' => 'Another added oc condition',
-                        'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                        'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                        'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                        'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                         'operatingCentre' => ['id' => 111]
                     ]
                 ],
@@ -483,8 +483,8 @@ class ConditionsUndertakingsReviewServiceTest extends \PHPUnit\Framework\TestCas
                     [
                         'action' => 'A',
                         'notes' => 'Another added oc condition',
-                        'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                        'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                        'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                        'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                         'operatingCentre' => ['id' => 222]
                     ],
                 ]
@@ -494,15 +494,15 @@ class ConditionsUndertakingsReviewServiceTest extends \PHPUnit\Framework\TestCas
                     [
                         'action' => 'U',
                         'notes' => 'Updated oc condition',
-                        'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                        'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                        'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                        'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                         'operatingCentre' => ['id' => 111]
                     ],
                     [
                         'action' => 'U',
                         'notes' => 'Another updated oc condition',
-                        'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                        'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                        'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                        'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                         'operatingCentre' => ['id' => 111]
                     ],
                 ],
@@ -510,8 +510,8 @@ class ConditionsUndertakingsReviewServiceTest extends \PHPUnit\Framework\TestCas
                     [
                         'action' => 'U',
                         'notes' => 'Another updated oc condition',
-                        'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                        'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                        'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                        'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                         'operatingCentre' => ['id' => 222]
                     ],
                 ]
@@ -521,15 +521,15 @@ class ConditionsUndertakingsReviewServiceTest extends \PHPUnit\Framework\TestCas
                     [
                         'action' => 'D',
                         'notes' => 'Deleted oc condition',
-                        'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                        'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                        'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                        'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                         'operatingCentre' => ['id' => 111]
                     ],
                     [
                         'action' => 'D',
                         'notes' => 'Another deleted oc condition',
-                        'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                        'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                        'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                        'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                         'operatingCentre' => ['id' => 111]
                     ],
                 ],
@@ -537,8 +537,8 @@ class ConditionsUndertakingsReviewServiceTest extends \PHPUnit\Framework\TestCas
                     [
                         'action' => 'D',
                         'notes' => 'Another deleted oc condition',
-                        'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                        'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                        'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                        'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                         'operatingCentre' => ['id' => 222]
                     ],
                 ]
@@ -550,15 +550,15 @@ class ConditionsUndertakingsReviewServiceTest extends \PHPUnit\Framework\TestCas
                     [
                         'action' => 'A',
                         'notes' => 'Added oc undertaking',
-                        'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                        'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                        'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                        'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                         'operatingCentre' => ['id' => 111]
                     ],
                     [
                         'action' => 'A',
                         'notes' => 'Another added oc undertaking',
-                        'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                        'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                        'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                        'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                         'operatingCentre' => ['id' => 111]
                     ]
                 ],
@@ -566,8 +566,8 @@ class ConditionsUndertakingsReviewServiceTest extends \PHPUnit\Framework\TestCas
                     [
                         'action' => 'A',
                         'notes' => 'Another added oc undertaking',
-                        'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                        'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                        'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                        'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                         'operatingCentre' => ['id' => 222]
                     ],
                 ]
@@ -577,15 +577,15 @@ class ConditionsUndertakingsReviewServiceTest extends \PHPUnit\Framework\TestCas
                     [
                         'action' => 'U',
                         'notes' => 'Updated oc undertaking',
-                        'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                        'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                        'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                        'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                         'operatingCentre' => ['id' => 111]
                     ],
                     [
                         'action' => 'U',
                         'notes' => 'Another updated oc undertaking',
-                        'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                        'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                        'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                        'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                         'operatingCentre' => ['id' => 111]
                     ],
                 ],
@@ -593,8 +593,8 @@ class ConditionsUndertakingsReviewServiceTest extends \PHPUnit\Framework\TestCas
                     [
                         'action' => 'U',
                         'notes' => 'Another updated oc undertaking',
-                        'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                        'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                        'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                        'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                         'operatingCentre' => ['id' => 222]
                     ],
                 ]
@@ -604,15 +604,15 @@ class ConditionsUndertakingsReviewServiceTest extends \PHPUnit\Framework\TestCas
                     [
                         'action' => 'D',
                         'notes' => 'Deleted oc undertaking',
-                        'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                        'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                        'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                        'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                         'operatingCentre' => ['id' => 111]
                     ],
                     [
                         'action' => 'D',
                         'notes' => 'Another deleted oc undertaking',
-                        'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                        'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                        'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                        'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                         'operatingCentre' => ['id' => 111]
                     ],
                 ],
@@ -620,8 +620,8 @@ class ConditionsUndertakingsReviewServiceTest extends \PHPUnit\Framework\TestCas
                     [
                         'action' => 'D',
                         'notes' => 'Another deleted oc undertaking',
-                        'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                        'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                        'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                        'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                         'operatingCentre' => ['id' => 222]
                     ],
                 ]
@@ -645,210 +645,210 @@ class ConditionsUndertakingsReviewServiceTest extends \PHPUnit\Framework\TestCas
                 [
                     'action' => 'A',
                     'notes' => 'Added licence condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 [
                     'action' => 'A',
                     'notes' => 'Another added licence condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 // Updated licence conditions
                 [
                     'action' => 'U',
                     'notes' => 'Updated licence condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 [
                     'action' => 'U',
                     'notes' => 'Another updated licence condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 // Deleted licence conditions
                 [
                     'action' => 'D',
                     'notes' => 'Deleted licence condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 [
                     'action' => 'D',
                     'notes' => 'Another deleted licence condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 // Added licence undertakings
                 [
                     'action' => 'A',
                     'notes' => 'Added licence undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 [
                     'action' => 'A',
                     'notes' => 'Another added licence undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 // Updated licence undertakings
                 [
                     'action' => 'U',
                     'notes' => 'Updated licence undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 [
                     'action' => 'U',
                     'notes' => 'Another updated licence undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 // Deleted licence undertakings
                 [
                     'action' => 'D',
                     'notes' => 'Deleted licence undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 [
                     'action' => 'D',
                     'notes' => 'Another deleted licence undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 // Added oc conditions
                 [
                     'action' => 'A',
                     'notes' => 'Added oc condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                     'operatingCentre' => ['id' => 111]
                 ],
                 [
                     'action' => 'A',
                     'notes' => 'Another added oc condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                     'operatingCentre' => ['id' => 111]
                 ],
                 [
                     'action' => 'A',
                     'notes' => 'Another added oc condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                     'operatingCentre' => ['id' => 222]
                 ],
                 // Updated oc conditions
                 [
                     'action' => 'U',
                     'notes' => 'Updated oc condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                     'operatingCentre' => ['id' => 111]
                 ],
                 [
                     'action' => 'U',
                     'notes' => 'Another updated oc condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                     'operatingCentre' => ['id' => 111]
                 ],
                 [
                     'action' => 'U',
                     'notes' => 'Another updated oc condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                     'operatingCentre' => ['id' => 222]
                 ],
                 // Deleted oc conditions
                 [
                     'action' => 'D',
                     'notes' => 'Deleted oc condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                     'operatingCentre' => ['id' => 111]
                 ],
                 [
                     'action' => 'D',
                     'notes' => 'Another deleted oc condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                     'operatingCentre' => ['id' => 111]
                 ],
                 [
                     'action' => 'D',
                     'notes' => 'Another deleted oc condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                     'operatingCentre' => ['id' => 222]
                 ],
                 // Added oc undertakings
                 [
                     'action' => 'A',
                     'notes' => 'Added oc undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                     'operatingCentre' => ['id' => 111]
                 ],
                 [
                     'action' => 'A',
                     'notes' => 'Another added oc undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                     'operatingCentre' => ['id' => 111]
                 ],
                 [
                     'action' => 'A',
                     'notes' => 'Another added oc undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                     'operatingCentre' => ['id' => 222]
                 ],
                 // Updated oc undertakings
                 [
                     'action' => 'U',
                     'notes' => 'Updated oc undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                     'operatingCentre' => ['id' => 111]
                 ],
                 [
                     'action' => 'U',
                     'notes' => 'Another updated oc undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                     'operatingCentre' => ['id' => 111]
                 ],
                 [
                     'action' => 'U',
                     'notes' => 'Another updated oc undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                     'operatingCentre' => ['id' => 222]
                 ],
                 // Deleted oc undertakings
                 [
                     'action' => 'D',
                     'notes' => 'Deleted oc undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                     'operatingCentre' => ['id' => 111]
                 ],
                 [
                     'action' => 'D',
                     'notes' => 'Another deleted oc undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                     'operatingCentre' => ['id' => 111]
                 ],
                 [
                     'action' => 'D',
                     'notes' => 'Another deleted oc undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                     'operatingCentre' => ['id' => 222]
                 ],
             ]
@@ -858,38 +858,38 @@ class ConditionsUndertakingsReviewServiceTest extends \PHPUnit\Framework\TestCas
                 [
                     'action' => 'A',
                     'notes' => 'Added licence condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 [
                     'action' => 'A',
                     'notes' => 'Another added licence condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 [
                     'action' => 'U',
                     'notes' => 'Updated licence condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 [
                     'action' => 'U',
                     'notes' => 'Another updated licence condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 [
                     'action' => 'D',
                     'notes' => 'Deleted licence condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 [
                     'action' => 'D',
                     'notes' => 'Another deleted licence condition',
-                    'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ]
             ]
         ];
@@ -898,38 +898,38 @@ class ConditionsUndertakingsReviewServiceTest extends \PHPUnit\Framework\TestCas
                 [
                     'action' => 'A',
                     'notes' => 'Added licence undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 [
                     'action' => 'A',
                     'notes' => 'Another added licence undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 [
                     'action' => 'U',
                     'notes' => 'Updated licence undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 [
                     'action' => 'U',
                     'notes' => 'Another updated licence undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 [
                     'action' => 'D',
                     'notes' => 'Deleted licence undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ],
                 [
                     'action' => 'D',
                     'notes' => 'Another deleted licence undertaking',
-                    'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                    'attachedTo' => ['id' => Condition::ATTACHED_TO_LICENCE]
+                    'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                    'attachedTo' => ['id' => RefData::ATTACHED_TO_LICENCE]
                 ]
             ]
         ];
@@ -939,43 +939,43 @@ class ConditionsUndertakingsReviewServiceTest extends \PHPUnit\Framework\TestCas
                     [
                         'action' => 'A',
                         'notes' => 'Added oc condition',
-                        'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                        'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                        'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                        'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                         'operatingCentre' => ['id' => 111]
                     ],
                     [
                         'action' => 'A',
                         'notes' => 'Another added oc condition',
-                        'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                        'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                        'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                        'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                         'operatingCentre' => ['id' => 111]
                     ],
                     [
                         'action' => 'U',
                         'notes' => 'Updated oc condition',
-                        'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                        'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                        'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                        'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                         'operatingCentre' => ['id' => 111]
                     ],
                     [
                         'action' => 'U',
                         'notes' => 'Another updated oc condition',
-                        'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                        'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                        'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                        'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                         'operatingCentre' => ['id' => 111]
                     ],
                     [
                         'action' => 'D',
                         'notes' => 'Deleted oc condition',
-                        'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                        'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                        'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                        'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                         'operatingCentre' => ['id' => 111]
                     ],
                     [
                         'action' => 'D',
                         'notes' => 'Another deleted oc condition',
-                        'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                        'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                        'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                        'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                         'operatingCentre' => ['id' => 111]
                     ],
                 ],
@@ -983,22 +983,22 @@ class ConditionsUndertakingsReviewServiceTest extends \PHPUnit\Framework\TestCas
                     [
                         'action' => 'A',
                         'notes' => 'Another added oc condition',
-                        'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                        'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                        'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                        'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                         'operatingCentre' => ['id' => 222]
                     ],
                     [
                         'action' => 'U',
                         'notes' => 'Another updated oc condition',
-                        'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                        'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                        'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                        'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                         'operatingCentre' => ['id' => 222]
                     ],
                     [
                         'action' => 'D',
                         'notes' => 'Another deleted oc condition',
-                        'conditionType' => ['id' => Condition::TYPE_CONDITION],
-                        'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                        'conditionType' => ['id' => RefData::TYPE_CONDITION],
+                        'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                         'operatingCentre' => ['id' => 222]
                     ],
                 ]
@@ -1010,43 +1010,43 @@ class ConditionsUndertakingsReviewServiceTest extends \PHPUnit\Framework\TestCas
                     [
                         'action' => 'A',
                         'notes' => 'Added oc undertaking',
-                        'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                        'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                        'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                        'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                         'operatingCentre' => ['id' => 111]
                     ],
                     [
                         'action' => 'A',
                         'notes' => 'Another added oc undertaking',
-                        'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                        'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                        'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                        'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                         'operatingCentre' => ['id' => 111]
                     ],
                     [
                         'action' => 'U',
                         'notes' => 'Updated oc undertaking',
-                        'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                        'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                        'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                        'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                         'operatingCentre' => ['id' => 111]
                     ],
                     [
                         'action' => 'U',
                         'notes' => 'Another updated oc undertaking',
-                        'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                        'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                        'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                        'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                         'operatingCentre' => ['id' => 111]
                     ],
                     [
                         'action' => 'D',
                         'notes' => 'Deleted oc undertaking',
-                        'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                        'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                        'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                        'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                         'operatingCentre' => ['id' => 111]
                     ],
                     [
                         'action' => 'D',
                         'notes' => 'Another deleted oc undertaking',
-                        'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                        'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                        'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                        'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                         'operatingCentre' => ['id' => 111]
                     ],
                 ],
@@ -1054,22 +1054,22 @@ class ConditionsUndertakingsReviewServiceTest extends \PHPUnit\Framework\TestCas
                     [
                         'action' => 'A',
                         'notes' => 'Another added oc undertaking',
-                        'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                        'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                        'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                        'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                         'operatingCentre' => ['id' => 222]
                     ],
                     [
                         'action' => 'U',
                         'notes' => 'Another updated oc undertaking',
-                        'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                        'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                        'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                        'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                         'operatingCentre' => ['id' => 222]
                     ],
                     [
                         'action' => 'D',
                         'notes' => 'Another deleted oc undertaking',
-                        'conditionType' => ['id' => Condition::TYPE_UNDERTAKING],
-                        'attachedTo' => ['id' => Condition::ATTACHED_TO_OPERATING_CENTRE],
+                        'conditionType' => ['id' => RefData::TYPE_UNDERTAKING],
+                        'attachedTo' => ['id' => RefData::ATTACHED_TO_OPERATING_CENTRE],
                         'operatingCentre' => ['id' => 222]
                     ],
                 ]

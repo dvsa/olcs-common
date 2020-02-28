@@ -5,7 +5,7 @@
  */
 namespace Common\Service\Table\Formatter;
 
-use Common\Service\Entity\LicenceEntityService;
+use Common\RefData;
 
 /**
  * Class LicenceNumberLink
@@ -30,9 +30,9 @@ class LicenceNumberLink implements FormatterInterface
         unset($column);
 
         $permittedLicenceStatuses = array(
-            LicenceEntityService::LICENCE_STATUS_VALID,
-            LicenceEntityService::LICENCE_STATUS_CURTAILED,
-            LicenceEntityService::LICENCE_STATUS_SUSPENDED
+            RefData::LICENCE_STATUS_VALID,
+            RefData::LICENCE_STATUS_CURTAILED,
+            RefData::LICENCE_STATUS_SUSPENDED
         );
 
         if (in_array($data['licence']['status'], $permittedLicenceStatuses)) {

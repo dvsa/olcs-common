@@ -15,13 +15,6 @@ namespace Common\Service\Entity;
 class TaskAllocationRuleEntityService extends AbstractEntityService
 {
     /**
-     * Ref data constants
-     */
-    const TYPE_SIMPLE  = 'task_at_simple';
-    const TYPE_MEDIUM  = 'task_at_medium';
-    const TYPE_COMPLEX = 'task_at_complex';
-
-    /**
      * Define entity for default behaviour
      *
      * @var string

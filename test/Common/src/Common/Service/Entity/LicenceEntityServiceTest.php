@@ -7,6 +7,7 @@
  */
 namespace CommonTest\Service\Entity;
 
+use Common\RefData;
 use Common\Service\Entity\LicenceEntityService;
 use Mockery as m;
 
@@ -499,7 +500,7 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
             'applications' => array(
                 array(
                     'goodsOrPsv' => array(
-                        'id' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE
+                        'id' => RefData::LICENCE_CATEGORY_GOODS_VEHICLE
                     )
                 )
             ),
@@ -551,7 +552,7 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
             'version' => 3,
             'licNo' => 'OA13',
             'goodsOrPsv' => array(
-                'id' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE
+                'id' => RefData::LICENCE_CATEGORY_GOODS_VEHICLE
             ),
             'trafficArea' => array(
                 'id' => 'A'
@@ -588,7 +589,7 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
             'applications' => array(
                 array(
                     'goodsOrPsv' => array(
-                        'id' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE
+                        'id' => RefData::LICENCE_CATEGORY_GOODS_VEHICLE
                     ),
                 )
             ),
@@ -966,10 +967,10 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
     public function shortCodeProvider()
     {
         return [
-            ['SI', LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL],
-            ['SN', LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL],
-            ['R', LicenceEntityService::LICENCE_TYPE_RESTRICTED],
-            ['SR', LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED],
+            ['SI', RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL],
+            ['SN', RefData::LICENCE_TYPE_STANDARD_NATIONAL],
+            ['R', RefData::LICENCE_TYPE_RESTRICTED],
+            ['SR', RefData::LICENCE_TYPE_SPECIAL_RESTRICTED],
             [null, 'something_invalid'],
         ];
     }
@@ -1039,19 +1040,19 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
             ]
         ];
         $valid = [
-            LicenceEntityService::LICENCE_STATUS_SUSPENDED,
-            LicenceEntityService::LICENCE_STATUS_VALID,
-            LicenceEntityService::LICENCE_STATUS_CURTAILED
+            RefData::LICENCE_STATUS_SUSPENDED,
+            RefData::LICENCE_STATUS_VALID,
+            RefData::LICENCE_STATUS_CURTAILED
         ];
         $licenceHeader = [
             'organisation' => ['id' => $organisationId],
-            'goodsOrPsv' => ['id' => LicenceEntityService::LICENCE_CATEGORY_PSV]
+            'goodsOrPsv' => ['id' => RefData::LICENCE_CATEGORY_PSV]
         ];
         $query = [
             'organisation' => $organisationId,
             'status' => 'IN ["' . implode('","', $valid) . '"]',
-            'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_PSV,
-            'licenceType' => '!= ' . LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED,
+            'goodsOrPsv' => RefData::LICENCE_CATEGORY_PSV,
+            'licenceType' => '!= ' . RefData::LICENCE_TYPE_SPECIAL_RESTRICTED,
             'limit' => 'all'
         ];
         $results = [

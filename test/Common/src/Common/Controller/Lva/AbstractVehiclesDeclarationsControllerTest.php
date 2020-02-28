@@ -2,9 +2,9 @@
 
 namespace CommonTest\Controller\Lva;
 
+use Common\RefData;
 use Mockery as m;
 use CommonTest\Bootstrap;
-use Common\Service\Entity\LicenceEntityService;
 
 /**
  * Test Abstract Vehicles Declarations Controller
@@ -99,7 +99,7 @@ class AbstractVehiclesDeclarationsControllerTest extends AbstractLvaControllerTe
                     'psvMediumVhlConfirmation' => null,
                     'psvMediumVhlNotes' => null,
                     'licenceType' => [
-                        'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
+                        'id' => RefData::LICENCE_TYPE_STANDARD_NATIONAL
                     ]
                 ]
             )->getMock()

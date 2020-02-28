@@ -2,9 +2,9 @@
 
 namespace Common\Controller\Lva;
 
+use Common\RefData;
 use Common\Data\Mapper\Lva\PsvVehicles;
 use Common\Data\Mapper\Lva\PsvVehiclesVehicle;
-use Common\Service\Entity\LicenceEntityService;
 use Dvsa\Olcs\Transfer\Command as CommandDto;
 use Dvsa\Olcs\Transfer\Query as QueryDto;
 use Dvsa\Olcs\Transfer\Query\Licence\PsvVehiclesExport;
@@ -211,8 +211,8 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         $total = $this->getTotalNumberOfVehicles($resultData);
 
         $acceptedLicenceTypes = [
-            LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
-            LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+            RefData::LICENCE_TYPE_STANDARD_NATIONAL,
+            RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
         ];
 
         if (in_array($resultData['licenceType']['id'], $acceptedLicenceTypes, true)

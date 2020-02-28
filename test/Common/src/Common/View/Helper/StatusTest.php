@@ -10,7 +10,6 @@ namespace CommonTest\View\Helper;
 
 use Common\RefData;
 use Common\View\Helper\Status;
-use Common\Service\Entity\LicenceEntityService;
 
 /**
  * Test Status view helper
@@ -50,7 +49,7 @@ class StatusTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
                 ''
             ],
             [
-                ['id' => LicenceEntityService::LICENCE_STATUS_CONTINUATION_NOT_SOUGHT, 'description' => ''],
+                ['id' => RefData::LICENCE_STATUS_CONTINUATION_NOT_SOUGHT, 'description' => ''],
                 ''
             ],
             [
@@ -58,55 +57,55 @@ class StatusTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
                 'red'
             ],
             [
-                ['id' => LicenceEntityService::LICENCE_STATUS_UNDER_CONSIDERATION, 'description' => 'value'],
+                ['id' => RefData::LICENCE_STATUS_UNDER_CONSIDERATION, 'description' => 'value'],
                 'orange'
             ],
             [
-                ['id' => LicenceEntityService::LICENCE_STATUS_NOT_SUBMITTED, 'description' => 'value'],
+                ['id' => RefData::LICENCE_STATUS_NOT_SUBMITTED, 'description' => 'value'],
                 'grey'
             ],
             [
-                ['id' => LicenceEntityService::LICENCE_STATUS_SUSPENDED, 'description' => 'value'],
+                ['id' => RefData::LICENCE_STATUS_SUSPENDED, 'description' => 'value'],
                 'orange'
             ],
             [
-                ['id' => LicenceEntityService::LICENCE_STATUS_VALID, 'description' => 'value'],
+                ['id' => RefData::LICENCE_STATUS_VALID, 'description' => 'value'],
                 'green'
             ],
             [
-                ['id' => LicenceEntityService::LICENCE_STATUS_CURTAILED, 'description' => 'value'],
+                ['id' => RefData::LICENCE_STATUS_CURTAILED, 'description' => 'value'],
                 'orange'
             ],
             [
-                ['id' => LicenceEntityService::LICENCE_STATUS_GRANTED, 'description' => 'value'],
+                ['id' => RefData::LICENCE_STATUS_GRANTED, 'description' => 'value'],
                 'orange'
             ],
             [
-                ['id' => LicenceEntityService::LICENCE_STATUS_SURRENDERED, 'description' => 'value'],
+                ['id' => RefData::LICENCE_STATUS_SURRENDERED, 'description' => 'value'],
                 'red'
             ],
             [
-                ['id' => LicenceEntityService::LICENCE_STATUS_WITHDRAWN, 'description' => 'value'],
+                ['id' => RefData::LICENCE_STATUS_WITHDRAWN, 'description' => 'value'],
                 'red'
             ],
             [
-                ['id' => LicenceEntityService::LICENCE_STATUS_REFUSED, 'description' => 'value'],
+                ['id' => RefData::LICENCE_STATUS_REFUSED, 'description' => 'value'],
                 'red'
             ],
             [
-                ['id' => LicenceEntityService::LICENCE_STATUS_REVOKED, 'description' => 'value'],
+                ['id' => RefData::LICENCE_STATUS_REVOKED, 'description' => 'value'],
                 'red'
             ],
             [
-                ['id' => LicenceEntityService::LICENCE_STATUS_NOT_TAKEN_UP, 'description' => 'value'],
+                ['id' => RefData::LICENCE_STATUS_NOT_TAKEN_UP, 'description' => 'value'],
                 'red'
             ],
             [
-                ['id' => LicenceEntityService::LICENCE_STATUS_TERMINATED, 'description' => 'value'],
+                ['id' => RefData::LICENCE_STATUS_TERMINATED, 'description' => 'value'],
                 'red'
             ],
             [
-                ['id' => LicenceEntityService::LICENCE_STATUS_CONTINUATION_NOT_SOUGHT, 'description' => 'value'],
+                ['id' => RefData::LICENCE_STATUS_CONTINUATION_NOT_SOUGHT, 'description' => 'value'],
                 'red'
             ],
             [

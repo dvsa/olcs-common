@@ -14,9 +14,6 @@ namespace Common\Service\Entity;
  */
 class ContinuationEntityService extends AbstractEntityService
 {
-    const TYPE_IRFO = 'irfo';
-    const TYPE_OPERATOR = 'operator';
-
     /**
      * Define entity for default behaviour
      *
