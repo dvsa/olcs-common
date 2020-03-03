@@ -327,7 +327,7 @@ class TaskIdentifierTest extends \PHPUnit\Framework\TestCase
             23 => array(
                 array(
                     'linkDisplay' => 'OG4569803/6',
-                    'linkType' => 'ECMT Permit Application',
+                    'linkType' => 'Permit Application',
                     'linkId' => 6,
                     'licenceId' => 106,
                 ),
