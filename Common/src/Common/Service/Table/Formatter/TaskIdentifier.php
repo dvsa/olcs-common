@@ -61,7 +61,7 @@ class TaskIdentifier implements FormatterInterface
                     array('case' => $data['caseId'], 'submission' => $data['linkId'], 'action' => 'details')
                 );
                 break;
-            case 'ECMT Permit Application':
+            case 'Permit Application':
                 $url = $urlHelper->fromRoute(
                     'licence/irhp-application/application',
                     array(
