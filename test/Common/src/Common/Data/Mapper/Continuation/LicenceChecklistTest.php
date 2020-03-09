@@ -75,6 +75,30 @@ class LicenceChecklistTest extends MockeryTestCase
                                 'birthDate' => null
                             ]
                         ]
+                    ],
+                    'organisationUsers' => [
+                        [
+                            'user' => [
+                                'contactDetails' =>
+                                    [
+                                        'emailAddress' => 'test@test.com',
+                                        'person' =>
+                                            [
+                                                'familyName' => 'Test',
+                                                'forename' => 'Test',
+                                            ],
+                                    ],
+                                'id' => 543,
+                                'roles' =>
+                                    [
+                                        [
+                                            'description' => 'Operator',
+                                            'id' => 27,
+                                            'role' => 'operator',
+                                        ],
+                                    ],
+                            ]
+                        ]
                     ]
                 ],
                 'tradingNames' => [
@@ -215,7 +239,7 @@ class LicenceChecklistTest extends MockeryTestCase
             ],
             'ocChanges' => 1,
             'tmChanges' => 1,
-            'id' => 999,
+            'id' => 999
         ];
         $out = [
             'data' => [
@@ -332,6 +356,18 @@ class LicenceChecklistTest extends MockeryTestCase
                     'displaySafetyInspectorsCount' => RefData::CONTINUATIONS_DISPLAY_SAFETY_INSPECTORS_COUNT
                 ],
                 'continuationDetailId' => 999,
+                'users' => [
+                    'users' =>
+                        [
+                            [
+                                'name' => 'Test Test',
+                                'email' => 'test@test.com',
+                                'permission' => 'role.operator_translated'
+                            ]
+                        ],
+                    'header' => 'continuations.users-section-header_translated',
+                    'displayUsersCount' => RefData::CONTINUATIONS_DISPLAY_USERS_COUNT
+                ]
             ],
         ];
 
@@ -435,6 +471,89 @@ class LicenceChecklistTest extends MockeryTestCase
         ];
 
         $this->assertEquals($out, LicenceChecklist::mapVehiclesSectionToView($in, $this->mockTranslator));
+    }
+
+    public function testMapUsersSectionToView()
+    {
+        $in = [
+            'licNo' => '1234',
+            'organisation' =>
+                [
+                    'organisationUsers' =>
+                        [
+                            [
+                                'user' =>
+                                    [
+                                        'contactDetails' =>
+                                            [
+                                                'emailAddress' => 'test1@test.com',
+                                                'person' =>
+                                                    [
+                                                        'familyName' => 'Test1',
+                                                        'forename' => 'Test1',
+                                                    ],
+                                            ],
+                                        'id' => 543,
+                                        'roles' =>
+                                            [
+                                                [
+                                                    'description' => 'Operator',
+                                                    'id' => 27,
+                                                    'role' => 'operator',
+                                                ],
+                                            ],
+                                    ]
+                            ],
+                            [
+                                'user' =>
+                                    [
+                                        'contactDetails' =>
+                                            [
+                                                'emailAddress' => 'test2@test.com',
+                                                'person' =>
+                                                    [
+                                                        'familyName' => 'Test2',
+                                                        'forename' => 'Test2',
+                                                    ],
+                                            ],
+                                        'id' => 544,
+                                        'roles' =>
+                                            [
+                                                [
+                                                    'description' => 'Operator',
+                                                    'id' => 27,
+                                                    'role' => 'operator',
+                                                ],
+                                            ],
+
+                                    ]
+                            ]
+                        ]
+                ]
+        ];
+        $out = [
+            'users' => [
+                [
+                    ['value' => 'continuations.users-section.table.name_translated', 'header' => true],
+                    ['value' => 'continuations.users-section.table.email_translated', 'header' => true],
+                    ['value' => 'continuations.users-section.table.permission_translated', 'header' => true]
+                ],
+                [
+                    ['value' => 'Test1 Test1'],
+                    ['value' => 'test1@test.com'],
+                    ['value' => 'role.operator_translated'],
+                ],
+                [
+                    ['value' => 'Test2 Test2'],
+                    ['value' => 'test2@test.com'],
+                    ['value' => 'role.operator_translated'],
+                ]
+            ],
+            'totalUsersMessage' => 'continuations.users-section-header_translated',
+            'totalCount' => 2
+        ];
+
+        $this->assertEquals($out, LicenceChecklist::mapUsersSectionToView($in, $this->mockTranslator));
     }
 
     public function testMapOperatingCentresSectionToView()

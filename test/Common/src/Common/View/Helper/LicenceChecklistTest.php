@@ -290,6 +290,85 @@ class LicenceChecklistTest extends MockeryTestCase
                 ]
             ],
             [
+                RefData::LICENCE_CHECKLIST_USERS,
+                [
+                    'users' => [
+                        'users' => [
+                            [
+                                'name' => 'Name1',
+                                'email' => 'test1@test.com',
+                                'permission' => 'permission1'
+                            ],
+                            [
+                                'name' => 'Name2',
+                                'email' => 'test2@test.com',
+                                'permission' => 'permission2'
+                            ],
+                        ],
+                        'displayUsersCount' => 2,
+                        'header' => 'foo'
+                    ],
+                ],
+                [
+                    [
+                        [
+                            'value' => 'continuations.users-section.table.name_translated',
+                            'header' => true
+                        ],
+                        [
+                            'value' => 'continuations.users-section.table.email_translated',
+                            'header' => true
+                        ],
+                        [
+                            'value' => 'continuations.users-section.table.permission_translated',
+                            'header' => true
+                        ]
+                    ],
+                    [
+                        ['value' => 'Name1'],
+                        ['value' => 'test1@test.com'],
+                        ['value' => 'permission1'],
+                    ],
+                    [
+                        ['value' => 'Name2'],
+                        ['value' => 'test2@test.com'],
+                        ['value' => 'permission2']
+                    ],
+                ]
+            ],
+            [
+                RefData::LICENCE_CHECKLIST_USERS,
+                [
+                    'users' => [
+                        'users' => [
+                            [
+                                'name' => 'Name1',
+                                'email' => 'test1@test.com',
+                                'permission' => 'permission1'
+                            ],
+                            [
+                                'name' => 'Name2',
+                                'email' => 'test2@test.com',
+                                'permission' => 'permission2'
+                            ],
+                            [
+                                'name' => 'Name3',
+                                'email' => 'test3@test.com',
+                                'permission' => 'permission3'
+                            ]
+                        ],
+                        'displayUsersCount' => 2,
+                        'header' => 'foo'
+                    ],
+                ],
+                [
+                    [
+                        ['value' => 'foo', 'header' => true],
+                        ['value' => 3]
+                    ]
+                ]
+            ],
+            [
                 RefData::LICENCE_CHECKLIST_ADDRESSES,
                 [
                     'addresses' => [
