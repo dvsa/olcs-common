@@ -14,16 +14,6 @@ namespace Common\Service\Entity;
  */
 class TransportManagerApplicationEntityService extends AbstractEntityService
 {
-    const STATUS_INCOMPLETE = 'tmap_st_incomplete';
-    const STATUS_AWAITING_SIGNATURE = 'tmap_st_awaiting_signature';
-    const STATUS_TM_SIGNED = 'tmap_st_tm_signed';
-    const STATUS_OPERATOR_SIGNED = 'tmap_st_operator_signed';
-    const STATUS_POSTAL_APPLICATION = 'tmap_st_postal_application';
-    const STATUS_RECEIVED = 'tmap_st_received';
-    const STATUS_DETAILS_SUBMITTED = 'tmap_st_details_submitted';
-    const STATUS_DETAILS_CHECKED = 'tmap_st_details_checked';
-    const STATUS_OPERATOR_APPROVED = 'tmap_st_operator_approved';
-
     /**
      * Define entity for default behaviour
      *
@@ -322,7 +312,7 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
      * Update the status of a Transport Manager Application
      *
      * @param int    $tmaId  Transport Manager Application ID
-     * @param string $status New status, once of the constants self::STATUS_*
+     * @param string $status New status, once of the constants RefData::TMA_STATUS_*
      * @return void
      */
     public function updateStatus($tmaId, $status)

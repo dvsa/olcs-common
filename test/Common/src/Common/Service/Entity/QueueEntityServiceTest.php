@@ -7,6 +7,7 @@
  */
 namespace CommonTest\Service\Entity;
 
+use Common\RefData;
 use Mockery as m;
 use Common\Service\Entity\QueueEntityService;
 
@@ -28,7 +29,7 @@ class QueueEntityServiceTest extends AbstractEntityServiceTestCase
     {
         $type = null;
         $expectedQuery = [
-            'status' => QueueEntityService::STATUS_QUEUED,
+            'status' => RefData::QUEUE_STATUS_QUEUED,
             'limit' => 1,
             'sort' => 'createdOn',
             'order' => 'ASC',
@@ -61,7 +62,7 @@ class QueueEntityServiceTest extends AbstractEntityServiceTestCase
     {
         $type = 'foo';
         $expectedQuery = [
-            'status' => QueueEntityService::STATUS_QUEUED,
+            'status' => RefData::QUEUE_STATUS_QUEUED,
             'limit' => 1,
             'sort' => 'createdOn',
             'order' => 'ASC',
@@ -95,7 +96,7 @@ class QueueEntityServiceTest extends AbstractEntityServiceTestCase
     {
         $type = null;
         $expectedQuery = [
-            'status' => QueueEntityService::STATUS_QUEUED,
+            'status' => RefData::QUEUE_STATUS_QUEUED,
             'limit' => 1,
             'sort' => 'createdOn',
             'order' => 'ASC',
@@ -107,7 +108,7 @@ class QueueEntityServiceTest extends AbstractEntityServiceTestCase
         $expectedSave = [
             'id' => 111,
             'version' => 1,
-            'status' => QueueEntityService::STATUS_PROCESSING,
+            'status' => RefData::QUEUE_STATUS_PROCESSING,
             'attempts' => 1
         ];
         $results = [
@@ -143,7 +144,7 @@ class QueueEntityServiceTest extends AbstractEntityServiceTestCase
     {
         $type = null;
         $expectedQuery = [
-            'status' => QueueEntityService::STATUS_QUEUED,
+            'status' => RefData::QUEUE_STATUS_QUEUED,
             'limit' => 1,
             'sort' => 'createdOn',
             'order' => 'ASC',
@@ -155,7 +156,7 @@ class QueueEntityServiceTest extends AbstractEntityServiceTestCase
         $expectedSave = [
             'id' => 111,
             'version' => 1,
-            'status' => QueueEntityService::STATUS_PROCESSING,
+            'status' => RefData::QUEUE_STATUS_PROCESSING,
             'attempts' => 1
         ];
         $expected = [

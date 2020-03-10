@@ -13,10 +13,6 @@ use Common\Service\Data\SectionConfig;
  */
 class ApplicationCompletionEntityService extends AbstractEntityService
 {
-    const STATUS_NOT_STARTED = 0;
-    const STATUS_INCOMPLETE = 1;
-    const STATUS_COMPLETE = 2;
-
     /**
      * Define entity for default behaviour
      *
@@ -81,7 +77,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
                 continue;
             }
 
-            if ($section === $currentSection || $completionStatus[$property] != self::STATUS_NOT_STARTED) {
+            if ($section === $currentSection || $completionStatus[$property] != RefData::APPLICATION_COMPLETION_STATUS_NOT_STARTED) {
                 $completionStatus[$property] = $this->$method($applicationData);
             }
         }
@@ -100,10 +96,10 @@ class ApplicationCompletionEntityService extends AbstractEntityService
         }
 
         if ($completeCount === count($properties)) {
-            return self::STATUS_COMPLETE;
+            return RefData::APPLICATION_COMPLETION_STATUS_COMPLETE;
         }
 
-        return self::STATUS_INCOMPLETE;
+        return RefData::APPLICATION_COMPLETION_STATUS_INCOMPLETE;
     }
 
     private function isYnValue($value)
@@ -124,7 +120,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      */
     protected function getCommunityLicencesStatus($applicationData)
     {
-        return self::STATUS_COMPLETE;
+        return RefData::APPLICATION_COMPLETION_STATUS_COMPLETE;
     }
 
     /**
@@ -174,7 +170,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
     protected function getBusinessDetailsStatus($applicationData)
     {
         if (!isset($applicationData['licence']['organisation']['type']['id'])) {
-            return self::STATUS_INCOMPLETE;
+            return RefData::APPLICATION_COMPLETION_STATUS_INCOMPLETE;
         }
 
         $orgData = $applicationData['licence']['organisation'];
@@ -202,7 +198,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
                 break;
 
             case RefData::ORG_TYPE_SOLE_TRADER:
-                return self::STATUS_COMPLETE;
+                return RefData::APPLICATION_COMPLETION_STATUS_COMPLETE;
         }
 
         return $this->checkCompletion($requiredVars);
@@ -303,7 +299,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
     protected function getOperatingCentresStatus($applicationData)
     {
         if (count($applicationData['operatingCentres']) === 0) {
-            return self::STATUS_INCOMPLETE;
+            return RefData::APPLICATION_COMPLETION_STATUS_INCOMPLETE;
         }
 
         $requiredVars = array(
@@ -358,7 +354,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      */
     protected function getFinancialEvidenceStatus($applicationData)
     {
-        return self::STATUS_COMPLETE;
+        return RefData::APPLICATION_COMPLETION_STATUS_COMPLETE;
     }
 
     /**
@@ -380,11 +376,11 @@ class ApplicationCompletionEntityService extends AbstractEntityService
         if (in_array($applicationData['licenceType']['id'], $requiredTransportManager)) {
             // if no Transport Managers
             if (count($applicationData['transportManagers']) === 0) {
-                return self::STATUS_INCOMPLETE;
+                return RefData::APPLICATION_COMPLETION_STATUS_INCOMPLETE;
             }
         }
 
-        return self::STATUS_COMPLETE;
+        return RefData::APPLICATION_COMPLETION_STATUS_COMPLETE;
     }
 
     /**
@@ -398,7 +394,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
     protected function getVehiclesStatus($applicationData)
     {
         if ($applicationData['hasEnteredReg'] === 'N') {
-            return self::STATUS_COMPLETE;
+            return RefData::APPLICATION_COMPLETION_STATUS_COMPLETE;
         }
 
         $totalAuth = $applicationData['totAuthVehicles'];
@@ -423,11 +419,11 @@ class ApplicationCompletionEntityService extends AbstractEntityService
     protected function getVehiclesPsvStatus($applicationData)
     {
         if ($applicationData['hasEnteredReg'] === 'N') {
-            return self::STATUS_COMPLETE;
+            return RefData::APPLICATION_COMPLETION_STATUS_COMPLETE;
         }
 
         if (!isset($applicationData['licence']['licenceVehicles'])) {
-            return self::STATUS_INCOMPLETE;
+            return RefData::APPLICATION_COMPLETION_STATUS_INCOMPLETE;
         }
 
         $psvTypes = [
@@ -450,7 +446,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
             if ($totalAuth === null) {
                 // bail early; a null (as opposed to a zero) means we haven't
                 // answered this question, so how can we be complete?
-                return self::STATUS_INCOMPLETE;
+                return RefData::APPLICATION_COMPLETION_STATUS_INCOMPLETE;
             }
 
             $totalVehicles = 0;
@@ -464,12 +460,12 @@ class ApplicationCompletionEntityService extends AbstractEntityService
             }
 
             if ($totalVehicles > $totalAuth) {
-                return self::STATUS_INCOMPLETE;
+                return RefData::APPLICATION_COMPLETION_STATUS_INCOMPLETE;
             }
         }
 
         // if we made it here, life must be good
-        return self::STATUS_COMPLETE;
+        return RefData::APPLICATION_COMPLETION_STATUS_COMPLETE;
     }
 
     /**
@@ -573,7 +569,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      */
     protected function getConditionsUndertakingsStatus($applicationData)
     {
-        return self::STATUS_COMPLETE;
+        return RefData::APPLICATION_COMPLETION_STATUS_COMPLETE;
     }
 
     /**

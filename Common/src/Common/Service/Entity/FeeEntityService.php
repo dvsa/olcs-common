@@ -9,8 +9,6 @@ namespace Common\Service\Entity;
 
 use Common\RefData;
 use Common\Service\Data\FeeTypeDataService;
-use Common\Service\Entity\LicenceEntityService as Licence;
-use Common\Service\Entity\ApplicationEntityService as Application;
 
 /**
  * Fee Entity Service
