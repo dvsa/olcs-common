@@ -8,6 +8,7 @@
  */
 namespace CommonTest\Service\Entity;
 
+use Common\RefData;
 use Common\Service\Entity\CommunityLicEntityService;
 use Mockery as m;
 
@@ -111,9 +112,9 @@ class CommunityLicEntityServiceTest extends AbstractEntityServiceTestCase
         $licenceId = 1;
         $query = [
             'status' => array(
-                CommunityLicEntityService::STATUS_PENDING,
-                CommunityLicEntityService::STATUS_ACTIVE,
-                CommunityLicEntityService::STATUS_SUSPENDED
+                RefData::COMMUNITY_LICENCE_STATUS_PENDING,
+                RefData::COMMUNITY_LICENCE_STATUS_ACTIVE,
+                RefData::COMMUNITY_LICENCE_STATUS_SUSPENDED
             ),
             'licence' => 1
         ];

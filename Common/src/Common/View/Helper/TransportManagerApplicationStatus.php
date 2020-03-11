@@ -2,7 +2,7 @@
 
 namespace Common\View\Helper;
 
-use Common\Service\Entity\TransportManagerApplicationEntityService;
+use Common\RefData;
 use Zend\View\Helper\AbstractHelper;
 
 /**
@@ -13,15 +13,15 @@ use Zend\View\Helper\AbstractHelper;
 class TransportManagerApplicationStatus extends AbstractHelper
 {
     protected static $statusColors = [
-        TransportManagerApplicationEntityService::STATUS_INCOMPLETE => 'red',
-        TransportManagerApplicationEntityService::STATUS_DETAILS_SUBMITTED => 'red',
-        TransportManagerApplicationEntityService::STATUS_DETAILS_CHECKED => 'red',
-        TransportManagerApplicationEntityService::STATUS_AWAITING_SIGNATURE => 'orange',
-        TransportManagerApplicationEntityService::STATUS_TM_SIGNED => 'orange',
-        TransportManagerApplicationEntityService::STATUS_OPERATOR_APPROVED => 'orange',
-        TransportManagerApplicationEntityService::STATUS_OPERATOR_SIGNED => 'green',
-        TransportManagerApplicationEntityService::STATUS_POSTAL_APPLICATION => 'green',
-        TransportManagerApplicationEntityService::STATUS_RECEIVED => 'green',
+        RefData::TMA_STATUS_INCOMPLETE => 'red',
+        RefData::TMA_STATUS_DETAILS_SUBMITTED => 'red',
+        RefData::TMA_STATUS_DETAILS_CHECKED => 'red',
+        RefData::TMA_STATUS_AWAITING_SIGNATURE => 'orange',
+        RefData::TMA_STATUS_TM_SIGNED => 'orange',
+        RefData::TMA_STATUS_OPERATOR_APPROVED => 'orange',
+        RefData::TMA_STATUS_OPERATOR_SIGNED => 'green',
+        RefData::TMA_STATUS_POSTAL_APPLICATION => 'green',
+        RefData::TMA_STATUS_RECEIVED => 'green',
     ];
 
     /**

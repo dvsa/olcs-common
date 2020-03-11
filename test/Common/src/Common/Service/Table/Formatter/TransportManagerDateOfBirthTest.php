@@ -2,10 +2,10 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\RefData;
 use Common\Service\Table\Formatter\TransportManagerDateOfBirth;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Common\Service\Entity\TransportManagerApplicationEntityService;
 
 class TransportManagerDateOfBirthTest extends MockeryTestCase
 {
@@ -95,7 +95,7 @@ class TransportManagerDateOfBirthTest extends MockeryTestCase
                     'data' => [
                         'dob' => '1980-12-01',
                         'status' => [
-                            'id' => TransportManagerApplicationEntityService::STATUS_POSTAL_APPLICATION,
+                            'id' => RefData::TMA_STATUS_POSTAL_APPLICATION,
                             'description' => 'status description',
                         ]
                     ],
@@ -113,7 +113,7 @@ class TransportManagerDateOfBirthTest extends MockeryTestCase
                     'data' => [
                         'dob' => '1980-12-01',
                         'status' => [
-                            'id' => TransportManagerApplicationEntityService::STATUS_POSTAL_APPLICATION,
+                            'id' => RefData::TMA_STATUS_POSTAL_APPLICATION,
                             'description' => 'status description',
                         ]
                     ],
@@ -131,7 +131,7 @@ class TransportManagerDateOfBirthTest extends MockeryTestCase
                     'data' => [
                         'dob' => '1980-12-01',
                         'status' => [
-                            'id' => TransportManagerApplicationEntityService::STATUS_POSTAL_APPLICATION,
+                            'id' => RefData::TMA_STATUS_POSTAL_APPLICATION,
                             'description' => 'status description',
                         ],
                     ],
@@ -149,7 +149,7 @@ class TransportManagerDateOfBirthTest extends MockeryTestCase
                     'data' => [
                         'dob' => '1980-12-01',
                         'status' => [
-                            'id' => TransportManagerApplicationEntityService::STATUS_POSTAL_APPLICATION,
+                            'id' => RefData::TMA_STATUS_POSTAL_APPLICATION,
                             'description' => 'status description',
                         ],
                     ],

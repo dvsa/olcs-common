@@ -10,7 +10,6 @@ namespace CommonTest\Controller\Lva\Adapters;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use CommonTest\Bootstrap;
-use Common\Service\Entity\ConditionUndertakingEntityService;
 use Common\Controller\Lva\Adapters\VariationConditionsUndertakingsAdapter;
 
 /**

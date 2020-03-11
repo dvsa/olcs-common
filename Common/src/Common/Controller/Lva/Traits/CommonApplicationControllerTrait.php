@@ -2,7 +2,6 @@
 
 namespace Common\Controller\Lva\Traits;
 
-use Common\Service\Entity\ApplicationEntityService;
 use Dvsa\Olcs\Transfer\Query\Application\Application;
 use Zend\Http\Response as HttpResponse;
 

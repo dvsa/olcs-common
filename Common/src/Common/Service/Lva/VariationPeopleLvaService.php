@@ -7,7 +7,6 @@
  */
 namespace Common\Service\Lva;
 
-use Common\Service\Entity\OrganisationEntityService;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 
@@ -124,14 +123,11 @@ class VariationPeopleLvaService implements ServiceLocatorAwareInterface
         $data = array();
 
         foreach ($orgData as $id => $row) {
-
             if (!isset($applicationData[$id])) {
-
                 // E for existing (No updates)
                 $row['action'] = self::ACTION_EXISTING;
                 $data[] = $row;
             } elseif ($applicationData[$id]['action'] === self::ACTION_UPDATED) {
-
                 $row['action'] = self::ACTION_CURRENT;
                 $data[] = $row;
             }

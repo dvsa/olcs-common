@@ -12,7 +12,6 @@ use Dvsa\Olcs\Transfer\Command\Application\CreateSnapshot;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Common\Service\Data\FeeTypeDataService;
-use Common\Service\Entity\CommunityLicEntityService as CommunityLic;
 
 /**
  * Application Processing Service
@@ -68,7 +67,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
             ->getCommunityLicencesByLicenceId($licenceId);
 
         $data = [
-            'status' => CommunityLic::STATUS_VOID,
+            'status' => RefData::COMMUNITY_LICENCE_STATUS_VOID,
             'expiredDate' => $this->getServiceLocator()->get('Helper\Date')->getDate(\DateTime::W3C),
         ];
         $dataToVoid = [];
@@ -93,12 +92,17 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
             ->getCommunityLicencesByLicenceId($licenceId);
 
         $data = [
-            'status' => CommunityLic::STATUS_EXPIRED,
+            'status' => RefData::COMMUNITY_LICENCE_STATUS_EXPIRED,
             'expiredDate' => $this->getServiceLocator()->get('Helper\Date')->getDate(\DateTime::W3C),
         ];
 
         // only expire community licences that have these statuses
-        $statusesToExpire = [CommunityLic::STATUS_PENDING, CommunityLic::STATUS_ACTIVE, CommunityLic::STATUS_SUSPENDED];
+        $statusesToExpire = [
+            RefData::COMMUNITY_LICENCE_STATUS_PENDING,
+            RefData::COMMUNITY_LICENCE_STATUS_ACTIVE,
+            RefData::COMMUNITY_LICENCE_STATUS_SUSPENDED
+        ];
+
         $dataToExpire = [];
         foreach ($communityLicences as $communityLicence) {
             if (in_array($communityLicence['status']['id'], $statusesToExpire)) {
