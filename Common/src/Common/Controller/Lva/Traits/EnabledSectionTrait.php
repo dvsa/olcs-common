@@ -7,7 +7,7 @@
  */
 namespace Common\Controller\Lva\Traits;
 
-use Common\Service\Entity\ApplicationCompletionEntityService;
+use Common\RefData;
 
 /**
  * Enabled Section Trait
@@ -31,7 +31,7 @@ trait EnabledSectionTrait
         $completeSections = array();
 
         foreach ($applicationCompletion as $section => $status) {
-            if ($status === ApplicationCompletionEntityService::STATUS_COMPLETE) {
+            if ($status === RefData::APPLICATION_COMPLETION_STATUS_COMPLETE) {
                 $section = str_replace('Status', '', $section);
                 $completeSections[] = $filter->camelToUnderscore($section);
             }

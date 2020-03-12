@@ -2,7 +2,7 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
-use Common\Service\Entity\TransportManagerApplicationEntityService;
+use Common\RefData;
 use Common\Service\Table\Formatter\DashboardTmActionLink;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -24,27 +24,27 @@ class DashboardTmActionLinkTest extends MockeryTestCase
     {
         return [
             [
-                'statusId' => TransportManagerApplicationEntityService::STATUS_AWAITING_SIGNATURE,
+                'statusId' => RefData::TMA_STATUS_AWAITING_SIGNATURE,
                 'isVariation' => true,
                 'expectTextKey' => 'provide-details',
             ],
             [
-                TransportManagerApplicationEntityService::STATUS_INCOMPLETE,
+                RefData::TMA_STATUS_INCOMPLETE,
                 'isVariation' => false,
                 'provide-details',
             ],
             [
-                TransportManagerApplicationEntityService::STATUS_OPERATOR_SIGNED,
+                RefData::TMA_STATUS_OPERATOR_SIGNED,
                 'isVariation' => false,
                 'view-details',
             ],
             [
-                TransportManagerApplicationEntityService::STATUS_POSTAL_APPLICATION,
+                RefData::TMA_STATUS_POSTAL_APPLICATION,
                 'isVariation' => false,
                 'view-details',
             ],
             [
-                TransportManagerApplicationEntityService::STATUS_TM_SIGNED,
+                RefData::TMA_STATUS_TM_SIGNED,
                 'isVariation' => false,
                 'view-details',
             ],

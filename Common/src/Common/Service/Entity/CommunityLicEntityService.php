@@ -20,15 +20,8 @@ class CommunityLicEntityService extends AbstractEntityService
 {
     protected $entity = 'CommunityLic';
 
-    const STATUS_PENDING = 'cl_sts_pending';
-    const STATUS_ACTIVE = 'cl_sts_active';
-    const STATUS_EXPIRED = 'cl_sts_expired';
-    const STATUS_WITHDRAWN = 'cl_sts_withdrawn';
-    const STATUS_SUSPENDED = 'cl_sts_suspended';
-    const STATUS_VOID = 'cl_sts_annulled';
-    const STATUS_RETURNDED = 'cl_sts_returned';
-    const PREFIX_GB = 'UKGB';
-    const PREFIX_NI = 'UKNI';
+    private const PREFIX_GB = 'UKGB';
+    private const PREFIX_NI = 'UKNI';
 
     protected $listBundle = array(
         'children' => array(
@@ -97,9 +90,9 @@ class CommunityLicEntityService extends AbstractEntityService
     public function getValidLicencesForLicenceStatus($licenceId)
     {
         $valid = array(
-            self::STATUS_PENDING,
-            self::STATUS_ACTIVE,
-            self::STATUS_SUSPENDED
+            RefData::COMMUNITY_LICENCE_STATUS_PENDING,
+            RefData::COMMUNITY_LICENCE_STATUS_ACTIVE,
+            RefData::COMMUNITY_LICENCE_STATUS_SUSPENDED
         );
 
         $query = [
@@ -118,10 +111,10 @@ class CommunityLicEntityService extends AbstractEntityService
     private function getValidStatusesForQuery()
     {
         $valid = [
-            self::STATUS_PENDING,
-            self::STATUS_ACTIVE,
-            self::STATUS_WITHDRAWN,
-            self::STATUS_SUSPENDED
+            RefData::COMMUNITY_LICENCE_STATUS_PENDING,
+            RefData::COMMUNITY_LICENCE_STATUS_ACTIVE,
+            RefData::COMMUNITY_LICENCE_STATUS_WITHDRAWN,
+            RefData::COMMUNITY_LICENCE_STATUS_SUSPENDED
         ];
         return 'IN ["' . implode('","', $valid) . '"]';
     }
@@ -135,7 +128,7 @@ class CommunityLicEntityService extends AbstractEntityService
     public function getActiveLicences($licenceId)
     {
         $query = [
-            'status' => self::STATUS_ACTIVE,
+            'status' => RefData::COMMUNITY_LICENCE_STATUS_ACTIVE,
             'licence' => $licenceId,
             'sort'  => 'issueNo',
             'order' => 'ASC'

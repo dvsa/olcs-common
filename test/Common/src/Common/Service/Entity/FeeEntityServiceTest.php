@@ -11,8 +11,6 @@ use Common\RefData;
 use Common\Service\Entity\FeeEntityService;
 use Common\Service\Data\FeeTypeDataService;
 use Mockery as m;
-use Common\Service\Entity\ApplicationEntityService;
-use Common\Service\Entity\LicenceEntityService;
 
 /**
  * Fee Entity Service Test

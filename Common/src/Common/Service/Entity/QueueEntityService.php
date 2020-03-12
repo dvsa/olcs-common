@@ -8,6 +8,7 @@
 namespace Common\Service\Entity;
 
 use Common\Exception\ResourceConflictException;
+use Common\RefData;
 
 /**
  * Queue Entity Service
@@ -23,12 +24,6 @@ class QueueEntityService extends AbstractEntityService
      */
     protected $entity = 'Queue';
 
-    // Message statuses
-    const STATUS_QUEUED = 'que_sts_queued';
-    const STATUS_PROCESSING = 'que_sts_processing';
-    const STATUS_COMPLETE = 'que_sts_complete';
-    const STATUS_FAILED = 'que_sts_failed';
-
     protected $itemBundle = [
         'children' => [
             'status',
@@ -41,7 +36,7 @@ class QueueEntityService extends AbstractEntityService
         $now = $this->getServiceLocator()->get('Helper\Date')->getDate(\DateTime::W3C);
 
         $query = [
-            'status' => self::STATUS_QUEUED,
+            'status' => RefData::QUEUE_STATUS_QUEUED,
             'limit' => 1,
             'sort' => 'createdOn',
             'order' => 'ASC',
@@ -67,7 +62,7 @@ class QueueEntityService extends AbstractEntityService
         $data = [
             'id' => $result['id'],
             'version' => $result['version'],
-            'status' => self::STATUS_PROCESSING,
+            'status' => RefData::QUEUE_STATUS_PROCESSING,
             'attempts' => $result['attempts']
         ];
 
@@ -83,21 +78,21 @@ class QueueEntityService extends AbstractEntityService
 
     public function retry($item)
     {
-        $item['status'] = self::STATUS_QUEUED;
+        $item['status'] = RefData::QUEUE_STATUS_QUEUED;
 
         $this->save($item);
     }
 
     public function complete($item)
     {
-        $item['status'] = self::STATUS_COMPLETE;
+        $item['status'] = RefData::QUEUE_STATUS_COMPLETE;
 
         $this->save($item);
     }
 
     public function failed($item)
     {
-        $item['status'] = self::STATUS_FAILED;
+        $item['status'] = RefData::QUEUE_STATUS_FAILED;
 
         $this->save($item);
     }

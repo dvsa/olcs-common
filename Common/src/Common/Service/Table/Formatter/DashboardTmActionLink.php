@@ -2,7 +2,7 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Common\Service\Entity\TransportManagerApplicationEntityService;
+use Common\RefData;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
@@ -18,14 +18,14 @@ class DashboardTmActionLink implements FormatterInterface
      * @param array                   $data   Row data
      * @param array                   $column Column parameters
      * @param ServiceLocatorInterface $sm     Service manager
-     * 
+     *
      * @return string HTML
      */
     public static function format($data, array $column = [], ServiceLocatorInterface $sm = null)
     {
         $provideStatuses = [
-            TransportManagerApplicationEntityService::STATUS_INCOMPLETE,
-            TransportManagerApplicationEntityService::STATUS_AWAITING_SIGNATURE,
+            RefData::TMA_STATUS_INCOMPLETE,
+            RefData::TMA_STATUS_AWAITING_SIGNATURE,
         ];
 
         if (in_array($data['transportManagerApplicationStatus']['id'], $provideStatuses, true)) {

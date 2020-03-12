@@ -14,7 +14,6 @@ use Common\Service\Processing\ApplicationProcessingService;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Data\FeeTypeDataService;
 use Mockery as m;
-use Common\Service\Entity\CommunityLicEntityService as CommunityLic;
 use Dvsa\Olcs\Transfer\Command\Application\CreateSnapshot;
 
 /**
@@ -319,12 +318,12 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $this->sm->setService('Helper\Date', $mockDateHelper);
 
         $communityLicences = [
-            ['id' => 1, 'status' => ['id' => CommunityLic::STATUS_PENDING]],
-            ['id' => 2, 'status' => ['id' => CommunityLic::STATUS_EXPIRED]],
-            ['id' => 3, 'status' => ['id' => CommunityLic::STATUS_VOID]],
-            ['id' => 4, 'status' => ['id' => CommunityLic::STATUS_ACTIVE]],
-            ['id' => 5, 'status' => ['id' => CommunityLic::STATUS_WITHDRAWN]],
-            ['id' => 6, 'status' => ['id' => CommunityLic::STATUS_SUSPENDED]],
+            ['id' => 1, 'status' => ['id' => RefData::COMMUNITY_LICENCE_STATUS_PENDING]],
+            ['id' => 2, 'status' => ['id' => RefData::COMMUNITY_LICENCE_STATUS_EXPIRED]],
+            ['id' => 3, 'status' => ['id' => RefData::COMMUNITY_LICENCE_STATUS_VOID]],
+            ['id' => 4, 'status' => ['id' => RefData::COMMUNITY_LICENCE_STATUS_ACTIVE]],
+            ['id' => 5, 'status' => ['id' => RefData::COMMUNITY_LICENCE_STATUS_WITHDRAWN]],
+            ['id' => 6, 'status' => ['id' => RefData::COMMUNITY_LICENCE_STATUS_SUSPENDED]],
         ];
 
         $mockLicenceEntityService->shouldReceive('getCommunityLicencesByLicenceId')->with(1966)->once()
@@ -335,9 +334,9 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $mockCommunityLicEntityService->shouldReceive('multiUpdate')
             ->with(
                 [
-                    ['id' => 1, 'status' => CommunityLic::STATUS_EXPIRED, 'expiredDate' => 'DATETIME'],
-                    ['id' => 4, 'status' => CommunityLic::STATUS_EXPIRED, 'expiredDate' => 'DATETIME'],
-                    ['id' => 6, 'status' => CommunityLic::STATUS_EXPIRED, 'expiredDate' => 'DATETIME'],
+                    ['id' => 1, 'status' => RefData::COMMUNITY_LICENCE_STATUS_EXPIRED, 'expiredDate' => 'DATETIME'],
+                    ['id' => 4, 'status' => RefData::COMMUNITY_LICENCE_STATUS_EXPIRED, 'expiredDate' => 'DATETIME'],
+                    ['id' => 6, 'status' => RefData::COMMUNITY_LICENCE_STATUS_EXPIRED, 'expiredDate' => 'DATETIME'],
                 ]
             )
             ->once();
