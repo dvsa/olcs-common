@@ -3341,7 +3341,6 @@ return [
     'permits.page.number-of-trips.northern-ireland.warning' => 'You must exclude all journeys made from Northern Ireland to the Republic of Ireland.',
     'permits.page.number-of-trips.guidance' => 'If you have not made any international journeys in the last 12 months, you are unlikely to be awarded an ECMT permit. We intend to prioritise applications from hauliers who make the most international journeys.',
     'permits.page.type.title' => 'Select a permit or certificate type',
-    'permits.page.type.hint' => 'Further <a href="{{ECMT_PERMITS_GUIDANCE_LINK}}" target="_blank">guidance on permits</a> is available on GOV.UK.',
     'permits.page.type.question' => 'Select a permit type or certificate to apply for',
     'permits.page.year.browser.title' => 'Select which year you want permits for',
     'permits.page.year.question' => 'Select which year you want permits for',
