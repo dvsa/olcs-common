@@ -15,58 +15,40 @@ echo $this->partial(
         <?php echo $this->translate('continuations.conditions-undertakings.guidance'); ?>
     </div>
 
-    <?php if (count($conditionsUndertakings['licence']) > 0) : ?>
+    <h2 class="heading-large"><?php echo $this->translate('continuations.conditions-undertakings.licence'); ?></h2>
 
-        <h2 class="heading-large"><?php echo $this->translate('continuations.conditions-undertakings.licence'); ?></h2>
+    <div class="field">
+        <p><?php echo $conditionsUndertakings['licence']['comment']; ?></p>
+    </div>
 
-        <?php
-            if (isset($conditionsUndertakings['licence']['psv_restricted'])) :
-        ?>
-            <div class="field">
-                <p><?php echo $conditionsUndertakings['licence']['psv_restricted']['comment']; ?></p>
-            </div>
-        <?php endif; ?>
+    <?php
+        if (
+            isset($conditionsUndertakings['licence']['conditions'])
+            && count($conditionsUndertakings['licence']['conditions'])
+        ) :
+    ?>
 
-        <?php
-            if (
-                isset($conditionsUndertakings['licence']['conditions'])
-                && count($conditionsUndertakings['licence']['conditions'])
-            ) :
-        ?>
+        <h3><?php echo $this->translate('continuations.conditions-undertakings.conditions'); ?></h3>
 
-            <h3><?php echo $this->translate('continuations.conditions-undertakings.conditions'); ?></h3>
-
-            <div class="field">
-                <?php foreach($conditionsUndertakings['licence']['conditions'] as $cu) : ?>
-                    <p><?php echo $this->escapeHtml($cu['notes']); ?></p>
-                <?php endforeach; ?>
-            </div>
-
-        <?php endif; ?>
-
-        <?php
-            if (
-                isset($conditionsUndertakings['licence']['undertakings'])
-                && count($conditionsUndertakings['licence']['undertakings'])
-            ) :
-        ?>
-
-            <h3><?php echo $this->translate('continuations.conditions-undertakings.undertakings'); ?></h3>
-
-            <div class="field">
-                <?php foreach($conditionsUndertakings['licence']['undertakings'] as $cu) : ?>
-                    <p><?php echo $this->escapeHtml($cu['notes']); ?></p>
-                <?php endforeach; ?>
-                <?php if (isset($conditionsUndertakings['licence']['psv_restricted'])) : ?>
-                    <?php echo $conditionsUndertakings['licence']['psv_restricted']['undertakings']; ?>
-                <?php endif; ?>
-            </div>
-
-        <?php endif; ?>
-
-        <hr class="seperator"/>
+        <div class="field">
+            <?php foreach($conditionsUndertakings['licence']['conditions'] as $cu) : ?>
+                <p><?php echo $this->escapeHtml($cu['notes']); ?></p>
+            <?php endforeach; ?>
+        </div>
 
     <?php endif; ?>
+
+    <h3><?php echo $this->translate('continuations.conditions-undertakings.undertakings'); ?></h3>
+
+    <div class="field">
+        <?php foreach($conditionsUndertakings['licence']['undertakings'] as $cu) : ?>
+            <p><?php echo $this->escapeHtml($cu['notes']); ?></p>
+        <?php endforeach; ?>
+
+        <?php echo $conditionsUndertakings['licence']['required_undertakings']; ?>
+    </div>
+
+    <hr class="seperator"/>
 
 
     <?php if (count($conditionsUndertakings['operatingCentres'])): ?>
