@@ -2,6 +2,7 @@
 
 namespace Common\Controller\Continuation;
 
+use Common\Form\Form;
 use Common\RefData;
 use Zend\View\Model\ViewModel;
 use Common\FormService\Form\Continuation\ConditionsUndertakings as ConditionsUndertakingsFormService;
@@ -28,11 +29,13 @@ class ConditionsUndertakingsController extends AbstractContinuationController
     public function indexAction()
     {
         $data = $this->getContinuationDetailData();
+        $form = $this->getForm(ConditionsUndertakingsFormService::class, $data);
 
         if ($this->isPsvRestricted($data['licence'])) {
             $data = $this->addExtraConditionsUndertakings($data);
+        } else {
+            $form->remove('confirmation');
         }
-        $form = $this->getForm(ConditionsUndertakingsFormService::class, $data);
 
         $request = $this->getRequest();
         if ($request->isPost()) {
