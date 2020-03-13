@@ -46,8 +46,10 @@ echo $this->partial(
 
         <?php
             if (
-                isset($conditionsUndertakings['licence']['undertakings'])
+                (isset($conditionsUndertakings['licence']['undertakings'])
                 && count($conditionsUndertakings['licence']['undertakings'])
+                ) ||
+                isset($conditionsUndertakings['licence']['psv_restricted'])
             ) :
         ?>
 
