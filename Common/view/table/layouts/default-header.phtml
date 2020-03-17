@@ -2,14 +2,14 @@
     echo !empty($this->object->getVariable('id')) ?
     ' id="' . $this->object->getVariable('id') .'"' : '' ?>>
     <?php if (!empty($this->getEscaper()->escapeHtml($this->object->getVariable('title')))) { ?>
-    <h3>
+    <h4>
         <?php
         if ($this->object->renderTotal()) {
             echo $this->object->renderTotal();
         }
         ?>
         <?php echo $this->getEscaper()->escapeHtml($this->object->getVariable('title')); ?>
-    </h3>
+    </h4>
     <?php } ?>
     <?php echo $this->object->renderActions(); ?>
 </div>
