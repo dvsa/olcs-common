@@ -86,7 +86,7 @@ class ActionLinks extends Selector
         if ($this->isLinkVisible($data, $column, 'Remove')) {
             $inputName = sprintf($this->getInputName($column, 'deleteInputName'), $data['id']);
 
-            $classes = $this->returnClasses($column);
+            $classes = $this->getClasses($column);
             $content .= sprintf(
                 '<input type="submit" class="%s" name="%s" value="' .$remove . '">',
                 $classes,
@@ -96,7 +96,7 @@ class ActionLinks extends Selector
         return $content;
     }
 
-    private function returnClasses($column): string
+    private function getClasses($column): string
     {
         if (isset($column['actionClasses'])) {
             return $column['actionClasses'];

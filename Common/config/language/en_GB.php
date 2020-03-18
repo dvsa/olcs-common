@@ -1993,7 +1993,7 @@ return [
     'myDetails_emailAddress-error' => 'Email address can\'t be blank',
     'myDetails_emailConfirms-error' => 'Please confirm your email address',
     'maint' => 'Maint',
-    'manage-users.table.title.count' => 'current users',
+    'manage-users.table.title.count' => 'Current users',
     'manage-users.action.add' => 'Add new user',
     'manage-users.table.column.permission.title' => 'Permission',
     'manage-users.create.error' => 'The user could not be created',
