@@ -39,7 +39,7 @@ class ConditionsUndertakingsController extends AbstractContinuationController
 
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $form->setData((array) $request->getPost());
+            $form->setData((array)$request->getPost());
             if ($form->isValid()) {
                 $this->redirect()->toRoute(self::NEXT_STEP, [], [], true);
             }
@@ -59,7 +59,8 @@ class ConditionsUndertakingsController extends AbstractContinuationController
      */
     protected function isPsvRestricted($licence): bool
     {
-        return $licence['goodsOrPsv']['id'] == RefData::LICENCE_CATEGORY_PSV && $licence['licenceType']['id'] == RefData::LICENCE_TYPE_RESTRICTED;
+        return $licence['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_PSV
+            && $licence['licenceType']['id'] === RefData::LICENCE_TYPE_RESTRICTED;
     }
 
     protected function addExtraConditionsUndertakings($data): array
