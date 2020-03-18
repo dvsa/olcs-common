@@ -3437,6 +3437,7 @@ return [
     'continuations.conditions-undertakings.conditions' => 'Conditions',
     'continuations.conditions-undertakings.undertakings' => 'Undertakings',
     'continuations.conditions-undertakings.summary' => '<p class="important">If you have any questions about specific conditions or undertakings please contact <a href="mailto:{{OPERATOR_LICENSING_EMAIL}}">{{OPERATOR_LICENSING_EMAIL}}</a></p>',
+    'continuations.conditions-undertakings.confirmation' => 'I have read the above, and understand that by agreeing to the licence undertakings and continuing the licence I must continue to meet the legal requirements.',
     'community-licences.add.error-message.max' => 'The maximum number is 50',
     'community-licences.add.error-message.min' => 'The minimum number is 1',
     'continuations.people-empty-table-message.org_t_ir' => 'There are no people recorded on your licence',
