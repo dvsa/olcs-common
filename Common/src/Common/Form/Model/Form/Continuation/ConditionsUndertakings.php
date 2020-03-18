@@ -12,7 +12,7 @@ class ConditionsUndertakings
 {
 
     /**
-     * @Form\Attributes({"id":""})
+     * @Form\Attributes({"id":"confirmation"})
      * @Form\Options({
      *     "checked_value": "Y",
      *     "unchecked_value": "N",
