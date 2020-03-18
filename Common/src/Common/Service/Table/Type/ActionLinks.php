@@ -86,14 +86,24 @@ class ActionLinks extends Selector
         if ($this->isLinkVisible($data, $column, 'Remove')) {
             $inputName = sprintf($this->getInputName($column, 'deleteInputName'), $data['id']);
 
-            $modalClass = ($this->useModal($column)) ? ' trigger-modal' :'';
+            $classes = $this->getClasses($column);
             $content .= sprintf(
-                '<input type="submit" class="right-aligned action--secondary%s" name="%s" value="' .$remove . '">',
-                $modalClass,
+                '<input type="submit" class="%s" name="%s" value="' .$remove . '">',
+                $classes,
                 $inputName
             );
         }
         return $content;
+    }
+
+    private function getClasses($column): string
+    {
+        if (isset($column['actionClasses'])) {
+            return $column['actionClasses'];
+        }
+
+        $modalClass = ($this->useModal($column)) ? ' trigger-modal' :'';
+        return 'right-aligned action--secondary' . $modalClass;
     }
 
     /**
