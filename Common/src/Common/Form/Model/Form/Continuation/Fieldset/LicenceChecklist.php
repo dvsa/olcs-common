@@ -181,27 +181,6 @@ class LicenceChecklist
      * @Form\Type("Common\Form\Elements\Types\CheckboxAdvanced")
      * @Form\Required(true)
      * @Form\Attributes({
-     *      "id":"usersCheckbox",
-     *      "data-js-validate":"required",
-     *      "data-show-element":"#usersCheckbox-hidden",
-     *      "class":"checkbox"
-     * })
-     * @Form\Options({
-     *     "label":"continuations.users-checkbox.label",
-     *     "label_attributes": {"class": "form-control form-control--checkbox form-control--confirm"},
-     *     "content":"partials/continuation/licence-checklist-users",
-     *     "checked_value":"Y",
-     *     "unchecked_value":"N",
-     *     "must_be_value": "Y",
-     *     "not_checked_message":"continuations.checklist.section.error.users"
-     * })
-     */
-    public $usersCheckbox = null;
-
-    /**
-     * @Form\Type("Common\Form\Elements\Types\CheckboxAdvanced")
-     * @Form\Required(true)
-     * @Form\Attributes({
      *      "id":"safetyCheckbox",
      *      "data-js-validate":"required",
      *      "data-show-element":"#safetyCheckbox-hidden",
@@ -218,4 +197,25 @@ class LicenceChecklist
      * })
      */
     public $safetyCheckbox = null;
+
+    /**
+     * @Form\Type("Common\Form\Elements\Types\CheckboxAdvanced")
+     * @Form\Required(true)
+     * @Form\Attributes({
+     *      "id":"usersCheckbox",
+     *      "data-js-validate":"required",
+     *      "data-show-element":"#usersCheckbox-hidden",
+     *      "class":"checkbox"
+     * })
+     * @Form\Options({
+     *     "label":"continuations.users-checkbox.label",
+     *     "label_attributes": {"class": "form-control form-control--checkbox form-control--confirm"},
+     *     "content":"partials/continuation/licence-checklist-users",
+     *     "checked_value":"Y",
+     *     "unchecked_value":"N",
+     *     "must_be_value": "Y",
+     *     "not_checked_message":"continuations.checklist.section.error.users"
+     * })
+     */
+    public $usersCheckbox = null;
 }
