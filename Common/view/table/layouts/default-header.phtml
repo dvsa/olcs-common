@@ -3,13 +3,13 @@
     ' id="' . $this->object->getVariable('id') .'"' : '' ?>>
     <?php echo $this->object->renderActions(); ?>
     <?php if (!empty($this->getEscaper()->escapeHtml($this->object->getVariable('title')))) { ?>
-    <h4>
+    <h2>
         <?php
         if ($this->object->renderTotal()) {
             echo $this->object->renderTotal();
         }
         ?>
         <?php echo $this->getEscaper()->escapeHtml($this->object->getVariable('title')); ?>
-    </h4>
+    </h2>
     <?php } ?>
 </div>
