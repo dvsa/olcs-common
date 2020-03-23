@@ -53,16 +53,6 @@ class ConditionsUndertakingsController extends AbstractContinuationController
         return $this->getViewModel($data['licence']['licNo'], $form, $params);
     }
 
-    /**
-     * @param $licence
-     * @return bool
-     */
-    protected function isPsvRestricted($licence): bool
-    {
-        return $licence['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_PSV
-            && $licence['licenceType']['id'] === RefData::LICENCE_TYPE_RESTRICTED;
-    }
-
     protected function addExtraConditionsUndertakings($data): array
     {
         $translator = $this->getServiceLocator()->get('Helper\Translation');
