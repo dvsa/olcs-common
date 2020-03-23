@@ -277,7 +277,7 @@ class ChecklistController extends AbstractContinuationController
         ) {
             return self::DECLARATION_ROUTE;
         }
-        if ($data['hasConditionsUndertakings']) {
+        if ($data['hasConditionsUndertakings'] || $this->isPsvRestricted($licenceData)) {
             return self::CONDITIONS_UNDERTAKINGS_ROUTE;
         }
         return self::FINANCES_ROUTE;
