@@ -1525,6 +1525,7 @@ return [
     'continuations.conditions-undertakings.undertakings' => 'Ymgymeriadau',
     'continuations.conditions-undertakings.conditions' => 'Amodau',
     'continuations.conditions-undertakings.confirmation' => 'I have read the above, and understand that by agreeing to the licence undertakings and continuing the licence I must continue to meet the legal requirements.',
+    'continuations.conditions-undertakings.confirmation.error' => 'Select the tick box to confirm you agree',
     'lva-operating-centre-radio-label' => '<p class="legend">Sut hoffech chi anfon eich hysbyseb?</p>',
     'lva-operating-centre-newspaper-advert' => '<p class="label newspaper-advert">Hysbyseb papur newyddion</p>',
     'permits.irhp-application.overview.title' => 'Trosolwg o’r cais - ',
