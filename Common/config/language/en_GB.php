@@ -3826,6 +3826,12 @@ return [
     'qanda.ecmt-annual-2018.number-of-permits.guidance' => 'There is a £10 non-refundable application fee per permit required',
     'qanda.ecmt-annual-2018.number-of-permits.textbox.label' => 'Number of permits',
 
+    'qanda.bilaterals.permit-usage.question' => 'What do you need to use your permits for?',
+
+    'qanda.bilaterals.cabotage.question' => 'Do you need to carry out cabotage?',
+
+    'qanda.bilaterals.number-of-permits.question' => 'How many permits do you need?',
+
     'qanda.date.error.invalid-date' => 'Enter a valid date',
 
     'cookie-banner.tell-us' => 'Tell us whether you accept cookies',
