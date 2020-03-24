@@ -18,7 +18,8 @@ class ConditionsUndertakings
      *     "unchecked_value": "N",
      *     "label": "continuations.conditions-undertakings.confirmation",
      *     "label_attributes": {"class": "form-control form-control--checkbox form-control--advanced"},
-     *     "must_be_value": "Y"
+     *     "must_be_value": "Y",
+     *     "not_checked_message":"continuations.conditions-undertakings.confirmation.error"
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      */
