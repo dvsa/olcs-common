@@ -206,6 +206,13 @@ return array(
                 QaService\Custom\EcmtShortTerm\InternationalJourneysIsValidHandler::class,
             'QaEcmtShortTermAnnualTripsAbroadIsValidHandler' =>
                 QaService\Custom\EcmtShortTerm\AnnualTripsAbroadIsValidHandler::class,
+            'QaBilateralCabotageOnlyYesNoRadioFactory' =>
+                QaService\Custom\Bilateral\CabotageOnlyYesNoRadioFactory::class,
+            'QaBilateralStandardAndCabotageYesNoRadioFactory' =>
+                QaService\Custom\Bilateral\StandardAndCabotageYesNoRadioFactory::class,
+            'QaBilateralRadioFactory' =>
+                QaService\Custom\Bilateral\RadioFactory::class,
+            'QaBilateralYesNoRadioOptionsApplier' => QaService\Custom\Bilateral\YesNoRadioOptionsApplier::class,
             'QaDateTimeFactory' => QaService\DateTimeFactory::class,
 
             'QaRoadworthinessMakeAndModelFieldsetModifier' =>
@@ -289,6 +296,10 @@ return array(
                 QaService\Custom\EcmtShortTerm\AnnualTripsAbroadDataHandlerFactory::class,
             'QaCertRoadworthinessMotExpiryDateFieldsetPopulator' =>
                 QaService\Custom\CertRoadworthiness\MotExpiryDateFieldsetPopulatorFactory::class,
+            'QaBilateralCabotageOnlyFieldsetPopulator' =>
+                QaService\Custom\Bilateral\CabotageOnlyFieldsetPopulatorFactory::class,
+            'QaBilateralStandardAndCabotageFieldsetPopulator' =>
+                QaService\Custom\Bilateral\StandardAndCabotageFieldsetPopulatorFactory::class,
 
             'QaFieldsetModifier' => QaService\FieldsetModifier\FieldsetModifierFactory::class,
 

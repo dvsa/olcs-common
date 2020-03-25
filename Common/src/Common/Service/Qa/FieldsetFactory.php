@@ -17,7 +17,13 @@ class FieldsetFactory
      */
     public function create($name, $type)
     {
-        if ($type == 'ecmt_st_restricted_countries') {
+        $radioVerticalTypes = [
+            'ecmt_st_restricted_countries',
+            'bilateral_cabotage_only',
+            'bilateral_standard_and_cabotage',
+        ];
+
+        if (in_array($type, $radioVerticalTypes)) {
             return new RadioVertical($name);
         }
 
