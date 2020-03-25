@@ -3440,6 +3440,7 @@ return [
     'permits.page.bilateral.no-of-permits.for-year' => 'for %s',
     'permits.page.bilateral.no-of-permits.all-issued' => 'for %s<br>You cannot request any more permits. All %s have been issued.',
     'permits.page.bilateral.no-of-permits.button.select-other-countries' => 'Select other countries',
+    'permits.page.bilateral.which-period-required' =>'Periods for which you need permits',
 
     'permits.page.multilateral.no-of-permits.browser.title' => 'How many permits do you require for this licence?',
     'permits.page.multilateral.no-of-permits.maximum-authorised.browser.title' => 'You cannot apply for any more permits',
