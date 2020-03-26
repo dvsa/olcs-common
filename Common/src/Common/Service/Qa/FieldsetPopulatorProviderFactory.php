@@ -22,6 +22,7 @@ class FieldsetPopulatorProviderFactory implements FactoryInterface
             'checkbox' => 'QaCheckboxFieldsetPopulator',
             'text' => 'QaTextFieldsetPopulator',
             'radio' => 'QaRadioFieldsetPopulator',
+            'radio_or_html' => 'QaRadioOrHtmlFieldsetPopulator',
             'ecmt_st_no_of_permits' => 'QaEcmtShortTermNoOfPermitsFieldsetPopulator',
             'ecmt_st_permit_usage' => 'QaEcmtShortTermPermitUsageFieldsetPopulator',
             'ecmt_st_restricted_countries' => 'QaEcmtShortTermRestrictedCountriesFieldsetPopulator',

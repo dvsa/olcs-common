@@ -258,6 +258,8 @@ return array(
             'QaCheckboxFieldsetPopulator' => QaService\CheckboxFieldsetPopulatorFactory::class,
             'QaTextFieldsetPopulator' => QaService\TextFieldsetPopulatorFactory::class,
             'QaRadioFieldsetPopulator' => QaService\RadioFieldsetPopulatorFactory::class,
+            'QaRadioOrHtmlFieldsetPopulator' => QaService\RadioOrHtmlFieldsetPopulatorFactory::class,
+            'QaHtmlFieldsetPopulator' => QaService\HtmlFieldsetPopulatorFactory::class,
             'QaFieldsetAdder' => QaService\FieldsetAdderFactory::class,
             'QaFieldsetPopulator' => QaService\FieldsetPopulatorFactory::class,
             'QaFieldsetPopulatorProvider' => QaService\FieldsetPopulatorProviderFactory::class,

@@ -3827,6 +3827,8 @@ return [
     'qanda.ecmt-annual-2018.number-of-permits.textbox.label' => 'Number of permits',
 
     'qanda.bilaterals.permit-usage.question' => 'What do you need to use your permits for?',
+    'qanda.bilaterals.permit-usage.question-short' => 'What do you need to use your permits for?',
+    'qanda.bilaterals.permit-usage.not-selected-message' => 'Please select one option',
 
     'qanda.bilaterals.cabotage.question' => 'Do you need to carry out cabotage?',
 
