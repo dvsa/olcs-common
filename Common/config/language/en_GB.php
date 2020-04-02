@@ -3436,15 +3436,6 @@ return [
     'permits.page.irhp-fee.permit.fee.total' => 'Total fee to be paid',
     'permits.page.irhp-fee.message' => 'If your permit application is successful, you will have to pay an additional <a href="{{ECMT_PERMITS_FURTHER_GUIDANCE_LINK}}#fees" target="_blank">issuing fee per permit</a> required.',
 
-    'permits.page.bilateral.no-of-permits.browser.title' => 'For each country, how many permits do you require?',
-    'permits.page.bilateral.no-of-permits.maximum-authorised.browser.title' => 'You cannot apply for any more permits for these countries',
-    'permits.page.bilateral.no-of-permits.question' => 'For each country, how many permits do you require?',
-    'permits.page.bilateral.no-of-permits.maximum-authorised.question' => 'You cannot apply for any more permits for these countries',
-    'permits.page.bilateral.no-of-permits.guidance' => 'You are authorised up to <strong>%s permits</strong> per country per year. There is a <strong>£%s</strong> fee per permit.',
-    'permits.page.bilateral.no-of-permits.maximum-authorised.guidance' => '<p>You\'ve already been issued with the maximum number of permits authorised for these countries using this licence. You can either:</p><ul><li>Apply for permits for other countries, or</li><li>start a new application and apply for these countries but using another operator licence.</li></ul><p>If you\'ve received the maximum number of permits for all countries, you should no longer proceed with this application.</p>',
-    'permits.page.bilateral.no-of-permits.for-year' => 'for %s',
-    'permits.page.bilateral.no-of-permits.all-issued' => 'for %s<br>You cannot request any more permits. All %s have been issued.',
-    'permits.page.bilateral.no-of-permits.button.select-other-countries' => 'Select other countries',
     'permits.page.bilateral.which-period-required' =>'Periods for which you need permits',
 
     'permits.page.multilateral.no-of-permits.browser.title' => 'How many permits do you require for this licence?',
@@ -3856,6 +3847,17 @@ return [
     'qanda.bilaterals.cabotage.answer.standard-and-cabotage' => 'I need standard and cabotage permits',
 
     'qanda.bilaterals.number-of-permits.question' => 'How many permits do you need?',
+    'qanda.bilaterals.number-of-permits.question-short' => 'How many permits do you need?',
+    'qanda.bilaterals.number-of-permits.label.standard.single' => 'Standard single journey permit',
+    'qanda.bilaterals.number-of-permits.label.cabotage.single' => 'Cabotage single journey permit',
+    'qanda.bilaterals.number-of-permits.label.standard.multiple' => 'Standard multiple journey permit',
+    'qanda.bilaterals.number-of-permits.label.cabotage.multiple' => 'Cabotage multiple journey permit',
+    'qanda.bilaterals.number-of-permits.hint.standard.single' => 'Valid for one outward and return journey and transit.',
+    'qanda.bilaterals.number-of-permits.hint.cabotage.single' => 'Authorises cabotage when used together with a standard permit.',
+    'qanda.bilaterals.number-of-permits.hint.standard.multiple' => 'Allows an unlimited number of journeys to, and transits through, this country.',
+    'qanda.bilaterals.number-of-permits.hint.cabotage.multiple' => 'Authorises cabotage when used together with a standard permit.',
+    'qanda.bilaterals.number-of-permits.hint.cabotage.pre-october-2021' => 'It is only valid if used together with a UK Licence for the Community.',
+    'qanda.bilaterals.number-of-permits.error.enter-permits-required' => 'Enter the number of permits you require',
 
     'permits.bilateral.norway.period.1' => 'Journeys between 1 January 2021 and 30 September 2021',
     'permits.bilateral.norway.period.2' => 'Journeys between 1 October 2021 and 31 January 2022',

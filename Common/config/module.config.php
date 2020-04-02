@@ -213,6 +213,8 @@ return array(
             'QaBilateralRadioFactory' =>
                 QaService\Custom\Bilateral\RadioFactory::class,
             'QaBilateralYesNoRadioOptionsApplier' => QaService\Custom\Bilateral\YesNoRadioOptionsApplier::class,
+            'QaBilateralNoOfPermitsFieldsetPopulator' =>
+                QaService\Custom\Bilateral\NoOfPermitsFieldsetPopulator::class,
             'QaDateTimeFactory' => QaService\DateTimeFactory::class,
 
             'QaRoadworthinessMakeAndModelFieldsetModifier' =>
@@ -304,8 +306,6 @@ return array(
             'QaFieldsetModifier' => QaService\FieldsetModifier\FieldsetModifierFactory::class,
 
             PermitsMapper\NoOfPermits::class => PermitsMapper\NoOfPermitsFactory::class,
-            PermitsMapper\BilateralNoOfPermits::class => PermitsMapper\BilateralNoOfPermitsFactory::class,
-            PermitsMapper\MultilateralNoOfPermits::class => PermitsMapper\MultilateralNoOfPermitsFactory::class,
             Common\Service\User\LastLoginService::class => Common\Service\User\LastLoginServiceFactory::class,
         )
     ),

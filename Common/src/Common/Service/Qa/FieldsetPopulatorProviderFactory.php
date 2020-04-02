@@ -33,6 +33,7 @@ class FieldsetPopulatorProviderFactory implements FactoryInterface
             'cert_road_mot_expiry_date' => 'QaCertRoadworthinessMotExpiryDateFieldsetPopulator',
             'bilateral_cabotage_only' => 'QaBilateralCabotageOnlyFieldsetPopulator',
             'bilateral_standard_and_cabotage' => 'QaBilateralStandardAndCabotageFieldsetPopulator',
+            'bilateral_number_of_permits' => 'QaBilateralNoOfPermitsFieldsetPopulator',
         ];
 
         foreach ($populators as $type => $serviceName) {
