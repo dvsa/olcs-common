@@ -3853,6 +3853,9 @@ return [
 
     'qanda.bilaterals.number-of-permits.question' => 'How many permits do you need?',
 
+    'permits.bilateral.norway.period.1' => 'Journeys between 1 January 2021 and 30 September 2021',
+    'permits.bilateral.norway.period.2' => 'Journeys between 1 October 2021 and 31 January 2022',
+
     'qanda.date.error.invalid-date' => 'Enter a valid date',
 
     'cookie-banner.tell-us' => 'Tell us whether you accept cookies',
