@@ -3515,6 +3515,7 @@ return [
     'permits.form.trips.label' => 'Number of trips',
     'permits.form.permits.required.label' => 'Number of permits',
     'permits.form.declaration.label' => 'I declare that the statements and information provided are true and that my application is correct. I understand that it is an offence to make a false declaration to obtain a permit or certificate.',
+    'permits.form.declaration.label.bilateral' => 'I confirm that I understand the permit conditions and the information I have provided is true and correct to the best of my knowledge.',
     'permits.form.checked.label' => 'Checked',
     'error.messages.licence' => 'Select a licence',
     'error.messages.checkbox' => 'You must tick the box to continue',
