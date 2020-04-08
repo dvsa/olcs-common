@@ -3845,7 +3845,7 @@ return [
     'qanda.bilaterals.standard-and-cabotage.not-selected-message' => 'Please select one option',
     'qanda.bilaterals.cabotage.question-short' => 'Cabotage',
     'qanda.bilaterals.cabotage.question' => 'Do you need to carry out cabotage?',
-    'qanda.bilaterals.cabotage-only.no-blurb' => 'You don\'t need permits for %s. We will remove it from your application when you click on \'Save and continue\'.<br><br>If this is the only country you\'re applying for, you can cancel this application on the next page.',
+    'qanda.bilaterals.cabotage-only.no-blurb' => 'You do not need permits for %s. We will remove it from your application when you click on \'Save and continue\'.<br><br>If this is the only country you are applying for, you can cancel this application on the next page.',
     'qanda.bilaterals.cabotage-only.additional-guidance.no' => '<p>Between 1 January 2021 and 30 September 2021 you can continue transporting goods to Norway using a UK Licence for the Community.</p><p>If you intend to carry out cabotage, you will need a Norway special permit for cabotage. This must be used together with the UK Licence for the Community.</p>',
     'qanda.bilaterals.standard-and-cabotage.additional-guidance.no' => '<p>Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.</p><p>From 1 October 2021, if you intend to carry out cabotage, you will need a Norway special permit for cabotage. To be valid it must be used together with a Standard permit.</p>',
     'qanda.bilaterals.cabotage.answer.cabotage-only' => 'I only need permits for cabotage',
