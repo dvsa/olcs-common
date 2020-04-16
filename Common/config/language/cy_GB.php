@@ -1661,7 +1661,6 @@ return [
     'permits.page.cancel.browser.title' => 'Canslo Cais',
     'permits.page.cancel.bullet.list.title' => 'Drwy ganslo rydych yn cadarnhau bod',
     'permits.page.confirmation.reference' => 'Rhif eich cyfeirnod',
-    'permits.page.confirmation.finish' => 'Gorffen',
     'permits.button.accept-and-continue' => 'Derbyn a pharhau',
     'permits.button.confirm-and-continue' => 'Cadarnhau a pharhau',
     'permits.button.continue' => 'Pharhau',

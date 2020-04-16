@@ -3288,7 +3288,7 @@ return [
     'permits.link.ecmt.terms-and-conditions' => '{{ECMT_PERMITS_TERMS_AND_CONDITIONS}}',
 
     'permits.page.confirmation.reference' => 'Your reference number',
-    'permits.page.confirmation.finish' => 'Finish',
+    'permits.page.confirmation.finish' => 'Go to permits dashboard',
 
     'permits.page.confirmation.cancel.title' => 'Application Cancelled',
     'permits.page.confirmation.cancel.browser.title' => 'Cancellation Successful',
