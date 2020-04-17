@@ -501,4 +501,5 @@ class RefData
     const APPLICATION_COMPLETION_STATUS_COMPLETE = 2;
 
     const BILATERAL_PERMIT_USAGE = 'bi-permit-usage';
+    const BILATERAL_NUMBER_OF_PERMITS = 'bi-number-of-permits';
 }

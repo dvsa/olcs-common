@@ -30,6 +30,7 @@ return [
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
     'confirm-and-continue' => 'Confirm and continue',
+    'confirm-and-return-to-overview' => 'Confirm and return to overview',
     'contact-details' => 'Contact details',
     'correspondence-address' => 'Correspondence address',
     'DATE_ERR_CONTAINS_STRING' => 'The date should be entered in number format',
@@ -3436,7 +3437,7 @@ return [
     'permits.page.irhp-fee.permit.fee.total' => 'Total fee to be paid',
     'permits.page.irhp-fee.message' => 'If your permit application is successful, you will have to pay an additional <a href="{{ECMT_PERMITS_FURTHER_GUIDANCE_LINK}}#fees" target="_blank">issuing fee per permit</a> required.',
 
-    'permits.page.bilateral.which-period-required' =>'Periods for which you need permits',
+    'permits.page.bilateral.which-period-required' =>'Period for which you need permits',
 
     'permits.page.multilateral.no-of-permits.browser.title' => 'How many permits do you require for this licence?',
     'permits.page.multilateral.no-of-permits.maximum-authorised.browser.title' => 'You cannot apply for any more permits',
