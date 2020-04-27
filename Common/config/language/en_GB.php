@@ -2033,7 +2033,7 @@ return [
     'my-details.change-password.label' => 'Change your password',
     'user-details.first-name' => 'First name or names',
     'name-change.locked.guidance.message' => 'To change your first name or last name, email <a href="mailto:notifications@vehicle-operator-licensing.service.gov.uk" aria-label="notifications@vehicle-operator-licensing.service.gov.uk">notifications@vehicle-operator-licensing.service.gov.uk</a> and include an explanation of why you need to make the change.',
-    'name-change.locked.tooltip.message' => 'Cannot change names. Please contact Central Licensing Office for further advice.',
+    'name-change.locked.tooltip.message' => 'Cannot change name. Please contact Central Licensing Office for further advice.',
     'name' => 'Name',
     'name-defendant-type' => 'Name / Defendant type',
     'name-of-licence-holder' => 'Name of licence holder',
