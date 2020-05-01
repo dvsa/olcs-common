@@ -502,4 +502,8 @@ class RefData
 
     const BILATERAL_PERMIT_USAGE = 'bi-permit-usage';
     const BILATERAL_NUMBER_OF_PERMITS = 'bi-number-of-permits';
+
+    // journey
+    const JOURNEY_SINGLE = 'journey_single';
+    const JOURNEY_MULTIPLE = 'journey_multiple';
 }
