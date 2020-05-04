@@ -1681,7 +1681,6 @@ return [
     'error.messages.licence' => 'Dewiswch drwydded',
     'error.messages.checkbox' => 'Rhaid ichi dicio\'r blwch i barhau',
     'error.messages.checkbox.cabotage' => 'Ticiwch i gadarnhau na fydd eich cerbyd yn ymgymryd â siwrnai masnach arforol',
-    'error.messages.permits.countries' => 'Dewiswch o leiaf un wlad',
     'error.messages.restricted.countries' => 'Dewisiwch ie neu na os ydych chi\'n cludo nwyddau i unrhyw un o\'r gwledydd hyn',
     'error.messages.restricted.countries.euro5' => 'Ticiwch i gadarnhau na fyddwch i yn defnyddio’r hawlenni hyn i gludo nwyddau i na thrwy Awstria, Gwlad Groeg, Hwngari, yr Eidal na Rwsia',
     'error.messages.permits.required' => 'Nodwch nifer yr hawlenni sydd eu hangen arnoch. Rhaid i\'r rhif fod o leiaf 1.',
