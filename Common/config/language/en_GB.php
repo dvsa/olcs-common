@@ -3514,6 +3514,7 @@ return [
     'permits.button.continue' => 'Continue',
     'permits.button.save-return-to-permits' => 'Save and return to permits',
     'permits.button.save-return-to-overview' => 'Save and return to overview',
+    'permits.button.return-to-overview' => 'Return to overview',
     'permits.button.submit-and-pay' => 'Submit and pay',
     'permits.button.submit-application' => 'Submit application',
     'permits.button.cancel-return-to-overview' => 'Cancel',
