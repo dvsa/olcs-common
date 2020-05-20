@@ -13,7 +13,7 @@
         {
             "url": "http://nexus.shd.ci.nonprod.dvsa.aws/repository/Packagist-Proxy",
             "type": "composer"
-        },
+        }
     ],
     "require": {
         "php": "^5.5 || ^7.0",
