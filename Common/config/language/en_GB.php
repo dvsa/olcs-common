@@ -3867,8 +3867,13 @@ return [
     'qanda.ecmt-annual-2018.number-of-permits.textbox.label' => 'Number of permits',
 
     'qanda.bilaterals.permit-usage.question' => 'What do you need to use your permits for?',
+    'qanda.bilaterals.permit-usage.question.single-option' => 'Permit usage',
     'qanda.bilaterals.permit-usage.question-short' => 'What do you need to use your permits for?',
     'qanda.bilaterals.permit-usage.not-selected-message' => 'Please select one option',
+    'qanda.bilaterals.permit-usage.single-option.journey-single' => 'Only single journey permits are available for this country.',
+    'qanda.bilaterals.permit-usage.single-option.journey-multiple' => 'Only multiple journey permits are available for this country.',
+    'qanda.bilaterals.permit-usage.multiple-options.journey-single' => 'Single journeys',
+    'qanda.bilaterals.permit-usage.multiple-options.journey-multiple' => 'Multiple journeys',
 
     'qanda.bilaterals.cabotage.not-selected-message' => 'Please select one option',
     'qanda.bilaterals.standard-and-cabotage.not-selected-message' => 'Please select one option',

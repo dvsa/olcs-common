@@ -267,8 +267,6 @@ return array(
             'QaCheckboxFieldsetPopulator' => QaService\CheckboxFieldsetPopulatorFactory::class,
             'QaTextFieldsetPopulator' => QaService\TextFieldsetPopulatorFactory::class,
             'QaRadioFieldsetPopulator' => QaService\RadioFieldsetPopulatorFactory::class,
-            'QaRadioOrHtmlFieldsetPopulator' => QaService\RadioOrHtmlFieldsetPopulatorFactory::class,
-            'QaHtmlFieldsetPopulator' => QaService\HtmlFieldsetPopulatorFactory::class,
             'QaFieldsetAdder' => QaService\FieldsetAdderFactory::class,
             'QaFieldsetPopulator' => QaService\FieldsetPopulatorFactory::class,
             'QaFieldsetPopulatorProvider' => QaService\FieldsetPopulatorProviderFactory::class,
@@ -298,6 +296,8 @@ return array(
                 QaService\Custom\EcmtShortTerm\AnnualTripsAbroadDataHandlerFactory::class,
             'QaCertRoadworthinessMotExpiryDateFieldsetPopulator' =>
                 QaService\Custom\CertRoadworthiness\MotExpiryDateFieldsetPopulatorFactory::class,
+            'QaBilateralPermitUsageFieldsetPopulator' =>
+                QaService\Custom\Bilateral\PermitUsageFieldsetPopulatorFactory::class,
             'QaBilateralCabotageOnlyFieldsetPopulator' =>
                 QaService\Custom\Bilateral\CabotageOnlyFieldsetPopulatorFactory::class,
             'QaBilateralStandardAndCabotageFieldsetPopulator' =>

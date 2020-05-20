@@ -1,22 +1,23 @@
 <?php
 
-namespace Common\Service\Qa;
+namespace Common\Service\Qa\Custom\Bilateral;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class HtmlFieldsetPopulatorFactory implements FactoryInterface
+class PermitUsageFieldsetPopulatorFactory implements FactoryInterface
 {
     /**
      * Create service
      *
      * @param ServiceLocatorInterface $serviceLocator
      *
-     * @return HtmlFieldsetPopulatorFactory
+     * @return PermitUsageFieldsetPopulator
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return new HtmlFieldsetPopulator(
+        return new PermitUsageFieldsetPopulator(
+            $serviceLocator->get('QaRadioFieldsetPopulator'),
             $serviceLocator->get('Helper\Translation')
         );
     }
