@@ -682,7 +682,7 @@ return [
     'manage-users.field.permission.tm.label' => 'Rheolwr Trafnidiaeth',
     'my-details.change-password.label' => 'Newid eich cyfrinair',
     'user-details.first-name' => 'First name or names',
-    'name-change.locked.guidance.message' => 'To change your first name or last name, email <a href="mailto:notifications@vehicle-operator-licensing.service.gov.uk" aria-label="notifications@vehicle-operator-licensing.service.gov.uk">notifications@vehicle-operator-licensing.service.gov.uk</a> and include an explanation of why you need to make the change.',
+    'name-change.locked.guidance.message' => 'To change the first name or last name, email <a href="mailto:notifications@vehicle-operator-licensing.service.gov.uk" aria-label="notifications@vehicle-operator-licensing.service.gov.uk">notifications@vehicle-operator-licensing.service.gov.uk</a> and include an explanation of why you need to make the change.',
     'name-change.locked.tooltip.message' => 'Cannot change name. Please contact Central Licensing Office for further advice.',
     'name' => 'Enw',
     'new-application-licence-type' => 'Math o drwydded',
