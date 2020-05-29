@@ -11,9 +11,11 @@ use Dvsa\Olcs\Transfer\Command\CommandContainer;
 use Dvsa\Olcs\Transfer\Command\CommandContainerInterface;
 use Dvsa\Olcs\Transfer\Command\CommandInterface;
 use Dvsa\Olcs\Transfer\Command\LoggerOmitContentInterface;
+use Dvsa\Olcs\Transfer\Command\User\UpdateUserLastLoginAt;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Http\Client\Exception\RuntimeException;
+use Zend\Http\Header\Cookie;
 use Zend\Http\Headers;
 use Zend\Http\Response as HttpResponse;
 use Zend\Mvc\Router\Exception\RuntimeException as RouterRuntimeException;
@@ -231,6 +233,153 @@ class CommandServiceTest extends MockeryTestCase
         $actual = $this->sut->send($mockCmd);
 
         static::assertEquals(1, $this->mockClient->getRequest()->getHeaders()->count());
+        static::assertInstanceOf(CqrsResponse::class, $actual);
+        static::assertEquals(['key' => 'EXPECTED'], $actual->getResult());
+    }
+
+    public function testWhenCommandHasSecureTokenThenTokenIsApplied()
+    {
+        //  mock command
+        $dtoData = [
+            'secureToken' => 'exampleSecureToken',
+        ];
+        $dto = UpdateUserLastLoginAt::create($dtoData);
+
+        $mockCmd = m::mock(CommandContainer::class)
+            ->shouldReceive('getRouteName')->once()->andReturn(self::ROUTE_NAME)
+            ->shouldReceive('getMethod')->once()->andReturn(self::METHOD)
+            ->shouldReceive('getDto')->times(3)->andReturn($dto)
+            ->shouldReceive('isValid')->once()->andReturn(true)
+            ->getMock();
+
+        //  mock
+        $this->mockRouter
+            ->shouldReceive('assemble')->once()->andReturn('unit_uri');
+
+        $headers = new Headers();
+
+        $this->mockRequest->setHeaders($headers);
+        $this->mockRequest
+            ->shouldReceive('setUri')->once()->with('unit_uri')
+            ->shouldReceive('setMethod')->once()->with(self::METHOD);
+
+        $mockAdapter = m::mock(LoggerOmitContentInterface::class);
+
+        $mockResp = m::mock(HttpResponse::class)->makePartial()
+            ->shouldReceive('getStatusCode')->andReturn(HttpResponse::STATUS_CODE_200)
+            ->shouldReceive('getBody')->once()->andReturn('{"key":"EXPECTED"}')
+            ->getMock();
+
+        $this->mockClient
+            ->shouldReceive('getAdapter')->once()->andReturn($mockAdapter)
+            ->shouldReceive('send')->once()->andReturn($mockResp);
+
+        $actual = $this->sut->send($mockCmd);
+
+        static::assertEquals(3, $this->mockClient->getRequest()->getHeaders()->count());
+        static::assertTrue($this->mockClient->getRequest()->getHeaders()->has('Cookie'));
+        static::assertEquals(
+            'secureToken=exampleSecureToken',
+            $this->mockClient->getRequest()->getCookie()->getFieldValue()
+        );
+        static::assertInstanceOf(CqrsResponse::class, $actual);
+        static::assertEquals(['key' => 'EXPECTED'], $actual->getResult());
+    }
+
+    public function testWhenCommandHasSecureTokenThenTokenIsOverridden()
+    {
+        //  mock command
+        $dtoData = [
+            'secureToken' => 'exampleSecureToken',
+        ];
+        $dto = UpdateUserLastLoginAt::create($dtoData);
+
+        $mockCmd = m::mock(CommandContainer::class)
+            ->shouldReceive('getRouteName')->once()->andReturn(self::ROUTE_NAME)
+            ->shouldReceive('getMethod')->once()->andReturn(self::METHOD)
+            ->shouldReceive('getDto')->times(3)->andReturn($dto)
+            ->shouldReceive('isValid')->once()->andReturn(true)
+            ->getMock();
+
+        //  mock
+        $this->mockRouter
+            ->shouldReceive('assemble')->once()->andReturn('unit_uri');
+
+        $headers = new Headers();
+        $headers->addHeader(new Cookie(['secureToken' => 'someValueToBeOverridden']));
+
+        $this->mockRequest->setHeaders($headers);
+        $this->mockRequest
+            ->shouldReceive('setUri')->once()->with('unit_uri')
+            ->shouldReceive('setMethod')->once()->with(self::METHOD);
+
+        $mockAdapter = m::mock(LoggerOmitContentInterface::class);
+
+        $mockResp = m::mock(HttpResponse::class)->makePartial()
+            ->shouldReceive('getStatusCode')->andReturn(HttpResponse::STATUS_CODE_200)
+            ->shouldReceive('getBody')->once()->andReturn('{"key":"EXPECTED"}')
+            ->getMock();
+
+        $this->mockClient
+            ->shouldReceive('getAdapter')->once()->andReturn($mockAdapter)
+            ->shouldReceive('send')->once()->andReturn($mockResp);
+
+        $actual = $this->sut->send($mockCmd);
+
+        static::assertEquals(3, $this->mockClient->getRequest()->getHeaders()->count());
+        static::assertTrue($this->mockClient->getRequest()->getHeaders()->has('Cookie'));
+        static::assertEquals(
+            'secureToken=exampleSecureToken',
+            $this->mockClient->getRequest()->getCookie()->getFieldValue()
+        );
+        static::assertInstanceOf(CqrsResponse::class, $actual);
+        static::assertEquals(['key' => 'EXPECTED'], $actual->getResult());
+    }
+
+    public function testWhenCommandHasNoSecureTokenThenTokenIsLeftIntact()
+    {
+        //  mock command
+        $dtoData = [];
+        $dto = UpdateUserLastLoginAt::create($dtoData);
+
+        $mockCmd = m::mock(CommandContainer::class)
+            ->shouldReceive('getRouteName')->once()->andReturn(self::ROUTE_NAME)
+            ->shouldReceive('getMethod')->once()->andReturn(self::METHOD)
+            ->shouldReceive('getDto')->times(3)->andReturn($dto)
+            ->shouldReceive('isValid')->once()->andReturn(true)
+            ->getMock();
+
+        //  mock
+        $this->mockRouter
+            ->shouldReceive('assemble')->once()->andReturn('unit_uri');
+
+        $headers = new Headers();
+        $headers->addHeader(new Cookie(['secureToken' => 'theDefaultValue']));
+
+        $this->mockRequest->setHeaders($headers);
+        $this->mockRequest
+            ->shouldReceive('setUri')->once()->with('unit_uri')
+            ->shouldReceive('setMethod')->once()->with(self::METHOD);
+
+        $mockAdapter = m::mock(LoggerOmitContentInterface::class);
+
+        $mockResp = m::mock(HttpResponse::class)->makePartial()
+            ->shouldReceive('getStatusCode')->andReturn(HttpResponse::STATUS_CODE_200)
+            ->shouldReceive('getBody')->once()->andReturn('{"key":"EXPECTED"}')
+            ->getMock();
+
+        $this->mockClient
+            ->shouldReceive('getAdapter')->once()->andReturn($mockAdapter)
+            ->shouldReceive('send')->once()->andReturn($mockResp);
+
+        $actual = $this->sut->send($mockCmd);
+
+        static::assertEquals(1, $this->mockClient->getRequest()->getHeaders()->count());
+        static::assertTrue($this->mockClient->getRequest()->getHeaders()->has('Cookie'));
+        static::assertEquals(
+            'secureToken=theDefaultValue',
+            $this->mockClient->getRequest()->getCookie()->getFieldValue()
+        );
         static::assertInstanceOf(CqrsResponse::class, $actual);
         static::assertEquals(['key' => 'EXPECTED'], $actual->getResult());
     }

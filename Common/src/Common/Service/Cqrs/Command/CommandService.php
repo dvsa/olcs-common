@@ -103,7 +103,7 @@ class CommandService
         /**
          * Check to see if secureToken is defined in the DTO, if so.. override the secureToken in the request.
          */
-        if (array_key_exists('secureToken', $data)) {
+        if (array_key_exists('secureToken', $data) && !empty($data['secureToken'])) {
             $request = $this->replaceOrAddSecureTokenCookieToRequest($request, $data['secureToken']);
         }
 
