@@ -1,25 +1,12 @@
 <?php
 
-/**
- * People LVA Service tests
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
- */
-
 namespace CommonTest\Service\User;
 
 use Common\Service\Cqrs\Command\CommandSender;
-use Common\Service\Helper\FormHelperService;
-use Common\Service\Lva\PeopleLvaService;
 use Common\Service\User\LastLoginService;
 use Dvsa\Olcs\Transfer\Command\User\UpdateUserLastLoginAt;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
-use Zend\Form\Element;
-use Zend\Form\FieldsetInterface;
-use Zend\Form\Form;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Text\Table\Table;
 
 
 /**
