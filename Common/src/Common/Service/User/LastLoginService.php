@@ -21,10 +21,15 @@ final class LastLoginService implements ServiceLocatorAwareInterface
         $this->commandSender = $commandSender;
     }
 
-    public function updateLastLogin($userName)
+    /**
+     * @param string $username
+     * @param string $token
+     */
+    public function updateLastLogin(string $username, string $token)
     {
         $command = UpdateUserLastLoginAt::create([
-            'id' => $userName
+            'id' => $username,
+            'secureToken' => $token
         ]);
 
         $response = $this->commandSender->send($command);
