@@ -2,7 +2,7 @@
 namespace Common\Service\User;
 
 use Common\Service\Cqrs\Command\CommandSender;
-use Common\Service\Cqrs\Exception;
+use Common\Service\Cqrs\Response;
 use Dvsa\Olcs\Transfer\Command\User\UpdateUserLastLoginAt;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
@@ -22,8 +22,8 @@ final class LastLoginService implements ServiceLocatorAwareInterface
     }
 
     /**
-     * @param string $username
      * @param string $token
+     * @return Response
      */
     public function updateLastLogin(string $token)
     {
@@ -31,12 +31,6 @@ final class LastLoginService implements ServiceLocatorAwareInterface
             'secureToken' => $token
         ]);
 
-        $response = $this->commandSender->send($command);
-
-        if (!$response->isOk()) {
-            //TODO: Replace with exception!
-            var_dump($response);
-            die($response);
-        }
+        return $this->commandSender->send($command);
     }
 }
