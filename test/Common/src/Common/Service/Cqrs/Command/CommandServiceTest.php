@@ -276,7 +276,7 @@ class CommandServiceTest extends MockeryTestCase
 
         $actual = $this->sut->send($mockCmd);
 
-        static::assertEquals(3, $this->mockClient->getRequest()->getHeaders()->count());
+        static::assertEquals(1, $this->mockClient->getRequest()->getHeaders()->count());
         static::assertTrue($this->mockClient->getRequest()->getHeaders()->has('Cookie'));
         static::assertEquals(
             'secureToken=exampleSecureToken',
@@ -326,7 +326,7 @@ class CommandServiceTest extends MockeryTestCase
 
         $actual = $this->sut->send($mockCmd);
 
-        static::assertEquals(3, $this->mockClient->getRequest()->getHeaders()->count());
+        static::assertEquals(1, $this->mockClient->getRequest()->getHeaders()->count());
         static::assertTrue($this->mockClient->getRequest()->getHeaders()->has('Cookie'));
         static::assertEquals(
             'secureToken=exampleSecureToken',

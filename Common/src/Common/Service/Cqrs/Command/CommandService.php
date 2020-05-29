@@ -180,7 +180,6 @@ class CommandService
             }
 
             return $response;
-
         } catch (HttpClientExceptionInterface $ex) {
             throw new Exception($ex->getMessage(), HttpResponse::STATUS_CODE_500, $ex);
         }
