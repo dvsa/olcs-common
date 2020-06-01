@@ -293,6 +293,7 @@ return array(
             PermitsMapper\NoOfPermits::class => PermitsMapper\NoOfPermitsFactory::class,
             PermitsMapper\BilateralNoOfPermits::class => PermitsMapper\BilateralNoOfPermitsFactory::class,
             PermitsMapper\MultilateralNoOfPermits::class => PermitsMapper\MultilateralNoOfPermitsFactory::class,
+            Common\Service\User\LastLoginService::class => Common\Service\User\LastLoginServiceFactory::class,
         )
     ),
     /*'search' => [
