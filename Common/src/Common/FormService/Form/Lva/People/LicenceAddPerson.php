@@ -61,7 +61,7 @@ class LicenceAddPerson extends AbstractPeople
         $translator = $this->getTranslator();
 
         $removeLink = new Html('removeLink');
-        $removeLink->setValue('<a href="#">' . $translator->translate('Remove this') . '</a>');
+        $removeLink->setValue('<a role="button" href="#">' . $translator->translate('Remove this <span class="visually-hidden">additional director form that has just been created</span>') . '</a>');
         $removeLink->setAttribute('data-container-class', 'remove-link');
 
         $targetElement->add($removeLink, ['priority' => 1]);
