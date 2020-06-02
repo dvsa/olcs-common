@@ -618,7 +618,7 @@ return [
     'application_your-business_business-type.establishment.label' => 'Establishment address (optional)',
     'application_your-business_business-type.registered-office.label' => 'Registered office address',
     'application_your-business_business-type.transport-consultant.label' => 'Transport consultant',
-    'application_your-business_business-type.written-perm-engage.label' => 'Written permission to engage',
+    'application_your-business_business-type.written-perm-engage.label' => ' I give consent for communications between OTC and my transport consultant about my licence',
     'application_your-business_business_details-subsidiaries-columnCompanyNo' => 'Company number',
     'application_your-business_business_details-subsidiaries-columnName' => 'Company name',
     'application_your-business_business_details-subsidiaries-tableEmptyMessage' => 'If you have any subsidiary companies, add them here',
