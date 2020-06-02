@@ -1105,6 +1105,7 @@ return [
     'first-name' => 'First name(s)',
     'flash-discarded-changes' => 'Your changes have been discarded',
     'form-errors' => 'Please correct the following errors',
+    'form-errors' => 'Please correct the following errors ',
     'form-errors-missing-details' => 'Some details are missing',
     'form.disqualify.is-disqualified' => 'Is disqualified',
     'form.disqualify.is-disqualified.validation' => 'Must be checked',
