@@ -240,23 +240,6 @@ abstract class AbstractController extends AbstractActionController
     }
 
     /**
-     * Add the section updated message
-     *
-     * @param string $section Section
-     *
-     * @return void
-     */
-    protected function addSectionUpdatedMessage($section)
-    {
-        $this->addSuccessMessage(
-            $this->getServiceLocator()->get('Helper\Translation')->formatTranslation(
-                '%s %s',
-                ['section.name.' . $section, 'section-updated-successfully-message-suffix']
-            )
-        );
-    }
-
-    /**
      * Redirect to the next section
      *
      * @param string $currentSection Section
@@ -319,18 +302,6 @@ abstract class AbstractController extends AbstractActionController
     }
 
     /**
-     * A method to be called post save, this can be hi-jacked to do things like update completion status
-     *
-     * @param string $section Section name
-     *
-     * @return void
-     * @deprecated is not used anythere
-     */
-    protected function postSave($section)
-    {
-    }
-
-    /**
      * Reload the current page
      *
      * @return \Zend\Http\Response
@@ -338,20 +309,6 @@ abstract class AbstractController extends AbstractActionController
     protected function reload()
     {
         return $this->redirect()->refreshAjax();
-    }
-
-    /**
-     * Add current message
-     *
-     * @param string $message   Message
-     * @param string $namespace Namespace
-     *
-     * @return void
-     * @deprecated  is not used anythere
-     */
-    protected function addCurrentMessage($message, $namespace = 'default')
-    {
-        $this->currentMessages[$namespace][] = $message;
     }
 
     /**
@@ -367,22 +324,6 @@ abstract class AbstractController extends AbstractActionController
                 $this->addMessage($message, $namespace);
             }
         }
-    }
-
-    /**
-     * Get Lva Entity Service
-     *
-     * @return array|object
-     */
-    protected function getLvaEntityService()
-    {
-        if ($this->lva === self::LVA_VAR) {
-            $service = 'Application';
-        } else {
-            $service = ucwords($this->lva);
-        }
-
-        return $this->getServiceLocator()->get('Entity\\' . $service);
     }
 
     /**

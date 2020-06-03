@@ -26,21 +26,6 @@ trait CommonVariationControllerTrait
     }
 
     /**
-     * Post Save
-     *
-     * @param string $section Section
-     *
-     * @return void
-     */
-    protected function postSave($section)
-    {
-        $this->getServiceLocator()->get('Processing\VariationSection')
-            ->setApplicationId($this->getApplicationId())
-            ->clearCache()
-            ->completeSection($section);
-    }
-
-    /**
      * Redirect to the next section
      *
      * @param string $currentSection Current Section

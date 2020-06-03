@@ -3,6 +3,7 @@
 namespace Common\Controller\Lva\Traits;
 
 use Dvsa\Olcs\Transfer\Query\Application\Application;
+use Dvsa\Olcs\Transfer\Query\Application\Completion;
 use Zend\Http\Response as HttpResponse;
 
 /**
@@ -42,36 +43,6 @@ trait CommonApplicationControllerTrait
         }
 
         return $this->checkForRedirect($this->getApplicationId());
-    }
-
-    /**
-     * Get application status
-     *
-     * @param int $applicationId application id
-     *
-     * @return array
-     */
-    protected function getCompletionStatuses($applicationId)
-    {
-        return $this->getServiceLocator()->get('Entity\ApplicationCompletion')->getCompletionStatuses($applicationId);
-    }
-
-    /**
-     * Update application status
-     *
-     * @param int    $applicationId application id
-     * @param string $section       section
-     *
-     * @return void
-     */
-    protected function updateCompletionStatuses($applicationId, $section)
-    {
-        if ($applicationId === null) {
-            $applicationId = $this->getApplicationId();
-        }
-
-        $this->getServiceLocator()->get('Entity\ApplicationCompletion')
-            ->updateCompletionStatuses($applicationId, $section);
     }
 
     /**
@@ -151,18 +122,6 @@ trait CommonApplicationControllerTrait
     }
 
     /**
-     * post save
-     *
-     * @param string $section section
-     *
-     * @return void
-     */
-    protected function postSave($section)
-    {
-        $this->updateCompletionStatuses($this->getApplicationId(), $section);
-    }
-
-    /**
      * Redirect to the next section
      *
      * @param string $currentSection current section
@@ -171,8 +130,9 @@ trait CommonApplicationControllerTrait
      */
     protected function goToNextSection($currentSection)
     {
-        $data = $this->getServiceLocator()->get('Entity\Application')
-            ->getOverview($this->getApplicationId());
+        $query = Completion::create(['id' => $this->getApplicationId()]);
+        $response = $this->handleQuery($query);
+        $data = $response->getResult();
 
         $sectionStatus = $this->setEnabledAndCompleteFlagOnSections(
             $this->getAccessibleSections(false),
