@@ -21,7 +21,6 @@ class VariationConditionsUndertakingsAdapterTest extends MockeryTestCase
 {
     protected $sut;
     protected $sm;
-    protected $mockService;
 
     public function setUp()
     {
@@ -30,9 +29,6 @@ class VariationConditionsUndertakingsAdapterTest extends MockeryTestCase
         $this->sut = new VariationConditionsUndertakingsAdapter();
 
         $this->sut->setServiceLocator($this->sm);
-
-        $this->mockService = m::mock();
-        $this->sm->setService('Entity\ConditionUndertaking', $this->mockService);
     }
 
     public function testGetTableName()
@@ -150,27 +146,5 @@ class VariationConditionsUndertakingsAdapterTest extends MockeryTestCase
             ['A'],
             ['U']
         ];
-    }
-
-    /**
-     * Helper method to prevent duplicating mock expectations
-     */
-    protected function mockGetConditionForVariation($id, $parentId, $stubbedCondition)
-    {
-        $this->mockService->shouldReceive('getConditionForVariation')
-            ->once()
-            ->with($id, $parentId)
-            ->andReturn($stubbedCondition);
-    }
-
-    /**
-     * Helper method to prevent duplicating mock expectations
-     */
-    protected function mockGetForVariation($id, $stubbedData)
-    {
-        $this->mockService->shouldReceive('getForVariation')
-            ->once()
-            ->with($id)
-            ->andReturn($stubbedData);
     }
 }
