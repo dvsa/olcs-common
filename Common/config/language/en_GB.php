@@ -3500,9 +3500,9 @@ return [
     'permits.page.bilateral.countries-confirmation.additional-guidance' => '<p>By removing a country, all application information for that country will be removed.</p><p>The following countries will be removed from this application:</p>',
     'permits.page.bilateral.countries-confirmation.label' => 'I understand that these countries will be removed.',
     'permits.page.bilateral.countries-confirmation.error' => 'Confirm you understand these countries will be removed from the application',
-    'permits.irhp.bilateral.multi.journey' => 'Multi journey standard permit',
-    'permits.irhp.bilateral.single.journey' => 'Single journey standard permit',
-    'permits.irhp.bilateral.cabotage.journey' => 'Multi journey and single journey cabotage permit',
+    'permits.irhp.bilateral.multi.journey' => 'Standard multiple journey permit (available mid 2021)',
+    'permits.irhp.bilateral.single.journey' => 'Standard single journey permit (available mid 2021)',
+    'permits.irhp.bilateral.cabotage.journey' => 'Cabotage permit (available now)',
 
     'permits.further.guidance' => 'Further guidance on permits is available on',
 
