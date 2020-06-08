@@ -3904,11 +3904,11 @@ return [
     'qanda.bilaterals.number-of-permits.hint.cabotage.single' => 'Authorises cabotage when used together with a standard permit.',
     'qanda.bilaterals.number-of-permits.hint.standard.multiple' => 'Allows an unlimited number of journeys to, and transits through, this country.',
     'qanda.bilaterals.number-of-permits.hint.cabotage.multiple' => 'Authorises cabotage when used together with a standard permit.',
-    'qanda.bilaterals.number-of-permits.hint.cabotage.pre-october-2021' => 'It is only valid if used together with a UK Licence for the Community.',
+    'qanda.bilaterals.number-of-permits.hint.cabotage.pre-october-2021' => 'Authorises cabotage when used together with a UK Licence for the Community.',
     'qanda.bilaterals.number-of-permits.error.enter-permits-required' => 'Enter the number of permits you require',
 
-    'permits.bilateral.norway.period.1' => 'Journeys between 1 January 2021 and 30 September 2021',
-    'permits.bilateral.norway.period.2' => 'Journeys between 1 October 2021 and 31 January 2022',
+    'permits.bilateral.norway.period.1' => '1 January 2021 and 30 September 2021',
+    'permits.bilateral.norway.period.2' => '1 October 2021 and 31 January 2022',
 
     'qanda.date.error.invalid-date' => 'Enter a valid date',
 
