@@ -40,7 +40,6 @@ class OcContextListDataServiceTest extends MockeryTestCase
         $this->assertSame($service, $this->sut);
     }
 
-
     public function testFetchListOptionsApplicationContext()
     {
         $useGroups = false;
