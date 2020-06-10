@@ -338,29 +338,26 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
         $mock->checkForValidResponseBody('{}');
     }
 
-    /**
-     * @expectedException Exception
-     */
     public function testCheckForInvalidResponseBodyString()
     {
+        $this->expectException(\Exception::class);
+
         $mock = $this->getSutMock(null);
         $mock->checkForValidResponseBody(55);
     }
 
-    /**
-     * @expectedException Exception
-     */
     public function testCheckForInvalidResponseBodyJson()
     {
+        $this->expectException(\Exception::class);
+
         $mock = $this->getSutMock(null);
         $mock->checkForValidResponseBody('blah');
     }
 
-    /**
-     * @expectedException Exception
-     */
     public function testCheckForInternalServerError()
     {
+        $this->expectException(\Exception::class);
+
         $mock = $this->getSutMock(null);
         $response = $this->createPartialMock('\stdClass', array('getStatusCode'));
         $response->expects($this->atLeastOnce())
@@ -381,11 +378,10 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
         $mock->checkForInternalServerError('{}');
     }
 
-    /**
-     * @expectedException Exception
-     */
     public function testCheckForUnexpectedResponseCode()
     {
+        $this->expectException(\Exception::class);
+
         $mock = $this->getSutMock(null);
         $response = $this->createPartialMock('\stdClass', array('getStatusCode'));
         $response->expects($this->atLeastOnce())

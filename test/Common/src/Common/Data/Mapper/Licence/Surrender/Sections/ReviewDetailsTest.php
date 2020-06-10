@@ -104,7 +104,6 @@ class ReviewDetailsTest extends TestCase
         ];
     }
 
-
     public function expectedDiscs()
     {
         return
