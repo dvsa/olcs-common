@@ -33,18 +33,6 @@ class TransportManagerHelperService extends AbstractHelperService implements Fac
         return $this;
     }
 
-    public function getCertificateFiles($tmId)
-    {
-        return $this->getServiceLocator()->get('Entity\TransportManager')
-            ->getDocuments(
-                $tmId,
-                null,
-                null,
-                CategoryDataService::CATEGORY_TRANSPORT_MANAGER,
-                CategoryDataService::DOC_SUB_CATEGORY_TRANSPORT_MANAGER_CPC_OR_EXEMPTION
-            );
-    }
-
     public function getCertificateFileData($tmId, $file)
     {
         return [
@@ -191,7 +179,7 @@ class TransportManagerHelperService extends AbstractHelperService implements Fac
     }
 
     /**
-     * This method superseeds prepareOtherEmploymentTable
+     * Prepare Tm other employment table
      *
      * @param \Zend\Form\Element $element
      * @param array              $tm      Transport Manager data
@@ -203,22 +191,6 @@ class TransportManagerHelperService extends AbstractHelperService implements Fac
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
         $formHelper->populateFormTable($element, $table, 'employment');
-    }
-
-    public function prepareOtherEmploymentTable($element, $tmId)
-    {
-        $table = $this->getOtherEmploymentTable($tmId);
-
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
-
-        $formHelper->populateFormTable($element, $table, 'employment');
-    }
-
-    public function getOtherEmploymentTable($tmId)
-    {
-        $results = $this->getServiceLocator()->get('Entity\TmEmployment')->getAllEmploymentsForTm($tmId);
-
-        return $this->getServiceLocator()->get('Table')->prepareTable('tm.employments', $results);
     }
 
     public function getOtherEmploymentData($id)

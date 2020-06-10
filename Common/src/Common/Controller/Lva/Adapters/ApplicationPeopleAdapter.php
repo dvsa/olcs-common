@@ -7,8 +7,6 @@
  */
 namespace Common\Controller\Lva\Adapters;
 
-use Zend\Form\Form;
-
 /**
  * Common (aka Internal) Application People Adapter
  *

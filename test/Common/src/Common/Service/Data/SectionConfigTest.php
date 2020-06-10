@@ -16,27 +16,6 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  */
 class SectionConfigTest extends MockeryTestCase
 {
-    public function testGetAll()
-    {
-        $sut = new SectionConfig();
-
-        /** @var m\Mock|ServiceLocatorInterface $sm */
-        $sm = m::mock(ServiceLocatorInterface::class)
-            ->shouldReceive('get')->with('Processing\VariationSection')
-            ->getMock();
-        $sut->setServiceLocator($sm);
-
-        $all = $sut->getAll();
-
-        $totalSections = count($all);
-
-        // undertakings sections should have all sections bar itself as a prerequisite
-        $this->assertEquals(
-            ($totalSections - 1),
-            count($all['undertakings']['prerequisite'][0])
-        );
-    }
-
     public function testGetAllRoutes()
     {
         $sections = [
