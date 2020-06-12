@@ -24,16 +24,16 @@ class LicencePermitReferenceTest extends MockeryTestCase
     {
         $urlHelper = m::mock(UrlHelper::class);
         $urlHelper->shouldReceive('fromRoute')
-            ->with('permits/application', ['id' => 100])
+            ->with('permits/application', ['id' => 100], ['query' => ['fromDashboard' => 1]])
             ->andReturn('http://selfserve/permits/application/100')
             ->shouldReceive('fromRoute')
-            ->with('permits/application/under-consideration', ['id' => 101])
+            ->with('permits/application/under-consideration', ['id' => 101], ['query' => ['fromDashboard' => 1]])
             ->andReturn('http://selfserve/permits/application/101/under-consideration')
             ->shouldReceive('fromRoute')
-            ->with('permits/application/awaiting-fee', ['id' => 102])
+            ->with('permits/application/awaiting-fee', ['id' => 102], ['query' => ['fromDashboard' => 1]])
             ->andReturn('http://selfserve/permits/application/102/awaiting-fee')
             ->shouldReceive('fromRoute')
-            ->with('permits/valid', ['licence' => 200, 'type' => $row['typeId']])
+            ->with('permits/valid', ['licence' => 200, 'type' => $row['typeId']], ['query' => ['fromDashboard' => 1]])
             ->andReturn('http://selfserve/permits/valid/105');
 
         $translator = m::mock(TranslationHelperService::class);

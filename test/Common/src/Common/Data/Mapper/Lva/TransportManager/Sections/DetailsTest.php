@@ -135,7 +135,6 @@ class DetailsTest extends MockeryTestCase
         ], $this->sut->populate($data)->sectionSerialize());
     }
 
-
     public function testCertificateNotAdded()
     {
         $data = [
@@ -174,7 +173,6 @@ class DetailsTest extends MockeryTestCase
 
         $this->assertContains('No certificates attached', $actual->sectionSerialize());
     }
-
 
     public function testCertificateAdded()
     {
@@ -226,7 +224,6 @@ class DetailsTest extends MockeryTestCase
             $actual->sectionSerialize()['lva-tmverify-details-checkanswer-certificate']
         );
     }
-
 
     public function tearDown()
     {

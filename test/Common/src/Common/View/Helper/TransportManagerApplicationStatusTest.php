@@ -2,7 +2,7 @@
 
 namespace CommonTest\View\Helper;
 
-use Common\Service\Entity\TransportManagerApplicationEntityService;
+use Common\RefData;
 use Common\View\Helper\TransportManagerApplicationStatus;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -32,12 +32,12 @@ class TransportManagerApplicationStatusTest extends MockeryTestCase
     public function dataProviderRender()
     {
         return [
-            [' orange', TransportManagerApplicationEntityService::STATUS_AWAITING_SIGNATURE],
-            [' red', TransportManagerApplicationEntityService::STATUS_INCOMPLETE],
-            [' green', TransportManagerApplicationEntityService::STATUS_OPERATOR_SIGNED],
-            [' green', TransportManagerApplicationEntityService::STATUS_POSTAL_APPLICATION],
-            [' orange', TransportManagerApplicationEntityService::STATUS_TM_SIGNED],
-            [' green', TransportManagerApplicationEntityService::STATUS_RECEIVED],
+            [' orange', RefData::TMA_STATUS_AWAITING_SIGNATURE],
+            [' red', RefData::TMA_STATUS_INCOMPLETE],
+            [' green', RefData::TMA_STATUS_OPERATOR_SIGNED],
+            [' green', RefData::TMA_STATUS_POSTAL_APPLICATION],
+            [' orange', RefData::TMA_STATUS_TM_SIGNED],
+            [' green', RefData::TMA_STATUS_RECEIVED],
             'invalidStatus' => ['', 'foo'],
         ];
     }

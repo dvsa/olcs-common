@@ -22,8 +22,6 @@ abstract class AbstractAdapter implements ServiceLocatorAwareInterface, AdapterI
 
     protected $lva;
     protected $applicationAdapter;
-    protected $licenceAdapter;
-    protected $variationAdapter;
 
     /**
      * Get an instance of application lva adapter
@@ -40,34 +38,6 @@ abstract class AbstractAdapter implements ServiceLocatorAwareInterface, AdapterI
     }
 
     /**
-     * Get an instance of licence lva adapter
-     *
-     * @return \Common\Controller\Lva\Adapters\LicenceLvaAdapter
-     */
-    protected function getLicenceAdapter()
-    {
-        if ($this->licenceAdapter === null) {
-            $this->licenceAdapter = $this->getLvaAdapter('Licence');
-        }
-
-        return $this->licenceAdapter;
-    }
-
-    /**
-     * Get an instance of variation lva adapter
-     *
-     * @return \Common\Controller\Lva\Adapters\VariationLvaAdapter
-     */
-    protected function getVariationAdapter()
-    {
-        if ($this->variationAdapter === null) {
-            $this->variationAdapter = $this->getLvaAdapter('Variation');
-        }
-
-        return $this->variationAdapter;
-    }
-
-    /**
      * Get an instance of an Lva Adapter
      *
      * @param string $lva
@@ -80,21 +50,5 @@ abstract class AbstractAdapter implements ServiceLocatorAwareInterface, AdapterI
         }
 
         return $this->getServiceLocator()->get($lva . 'LvaAdapter');
-    }
-
-    /**
-     * Return an instance of [Application or Licence]EntityService
-     *
-     * @return \Common\Service\Entity\AbstractLvaEntityService
-     */
-    protected function getLvaEntityService()
-    {
-        if ($this->lva === 'variation') {
-            $lva = 'application';
-        } else {
-            $lva = $this->lva;
-        }
-
-        return $this->getServiceLocator()->get('Entity\\' . ucfirst($lva));
     }
 }

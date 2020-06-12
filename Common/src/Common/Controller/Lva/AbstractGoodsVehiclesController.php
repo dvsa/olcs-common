@@ -833,17 +833,6 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         return $translator->translate('vehicle-belongs-to-another-licence-message-external');
     }
 
-    /**
-     * Post save
-     *
-     * @param \Common\View\Model\Section $section Section
-     *
-     * @return void
-     */
-    protected function postSave($section)
-    {
-        // @NOTE Prevents postSave from doing anything as this section has been migrated
-    }
 
     /**
      * Get vehicle section data

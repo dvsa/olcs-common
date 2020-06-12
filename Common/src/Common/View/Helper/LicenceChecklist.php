@@ -58,6 +58,9 @@ class LicenceChecklist extends AbstractHelper implements FactoryInterface
             case RefData::LICENCE_CHECKLIST_VEHICLES:
                 $preparedData = $this->prepareVehicles($data['vehicles']);
                 break;
+            case RefData::LICENCE_CHECKLIST_USERS:
+                $preparedData = $this->prepareUsers($data['users']);
+                break;
             case RefData::LICENCE_CHECKLIST_OPERATING_CENTRES:
                 $preparedData = $this->prepareOperatingCentres($data['operatingCentres']);
                 break;
@@ -200,7 +203,7 @@ class LicenceChecklist extends AbstractHelper implements FactoryInterface
             ]
         ];
         if ($data['showEstablishmentAddress']) {
-            if (isset($data['establishmentAddress'] )&& !empty($data['establishmentAddress'])) {
+            if (isset($data['establishmentAddress']) && !empty($data['establishmentAddress'])) {
                 $addressesData[] = [
                     [
                         'value' =>
@@ -328,6 +331,48 @@ class LicenceChecklist extends AbstractHelper implements FactoryInterface
     }
 
     /**
+     * Prepare vehicles
+     *
+     * @param array $data data
+     *
+     * @return array
+     */
+    private function prepareUsers($data)
+    {
+        $users = $data['users'];
+
+        if (is_array($users) && count($users) <= $data['displayUsersCount']) {
+            $header[] = [
+                'value' => $this->translator->__invoke('continuations.users-section.table.name'),
+                'header' => true
+            ];
+            $header[] = [
+                'value' => $this->translator->__invoke('continuations.users-section.table.email'),
+                'header' => true
+            ];
+            $header[] = [
+                'value' => $this->translator->__invoke('continuations.users-section.table.permission'),
+                'header' => true
+            ];
+            $userData[] = $header;
+            foreach ($users as $user) {
+                $row = [];
+                $row[] = ['value' => $user['name']];
+                $row[] = ['value' => $user['email']];
+                $row[] = ['value' => $user['permission']];
+
+                $userData[] = $row;
+            }
+        } else {
+            $userData[] = [
+                ['value' => $data['header'], 'header' => true],
+                ['value' => count($users)]
+            ];
+        }
+        return $userData;
+    }
+
+    /**
      * Prepare operating centres
      *
      * @param array $data data
@@ -365,7 +410,6 @@ class LicenceChecklist extends AbstractHelper implements FactoryInterface
                 }
                 $ocData[] = $row;
             }
-
         } else {
             $ocData[] = [
                 ['value' => $this->translator->__invoke('continuations.oc-section.table.total-oc'), 'header' => true],
@@ -437,7 +481,6 @@ class LicenceChecklist extends AbstractHelper implements FactoryInterface
                 ];
                 $tmData[] = $row;
             }
-
         } else {
             $tmData[] = [
                 ['value' => $this->translator->__invoke('continuations.tm-section.table.total-tm'), 'header' => true],
@@ -476,7 +519,6 @@ class LicenceChecklist extends AbstractHelper implements FactoryInterface
                 ];
                 $siData[] = $row;
             }
-
         } else {
             $siData[] = [
                 [

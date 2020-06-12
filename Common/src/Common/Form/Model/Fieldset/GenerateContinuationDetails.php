@@ -39,7 +39,7 @@ class GenerateContinuationDetails
      * @Form\Options({
      *     "label": "Traffic area",
      *     "disable_inarray_validator": false,
-     *     "service_name": "Entity\TrafficArea"
+     *     "service_name": "\Common\Service\Data\TrafficArea"
      * })
      * @Form\Type("DynamicSelect")
      */

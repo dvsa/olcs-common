@@ -109,11 +109,10 @@ class BusRegBrowseListDataServiceTest extends AbstractDataServiceTestCase
         ];
     }
 
-    /**
-     * @expectedException \Common\Exception\DataServiceException
-     */
     public function testFetchListDataThrowsException()
     {
+        $this->expectException(\Common\Exception\DataServiceException::class);
+
         $context = 'eventRegistrationStatus';
 
         $mockTransferAnnotationBuilder = m::mock()
