@@ -3459,6 +3459,7 @@ return [
     'permits.page.irhp-fee.message.part-paid' => 'You have already paid part of the fees for these permits. You still have to pay the remaining amount specified below.',
 
     'permits.page.bilateral.which-period-required' =>'Period for which you need permits',
+    'permits.page.bilateral.which-period-required.warning' => 'You have changed your answer. If you continue, all previous answers for this country will be removed and will need to be completed again.',
 
     'permits.page.multilateral.no-of-permits.browser.title' => 'How many permits do you require for this licence?',
     'permits.page.multilateral.no-of-permits.maximum-authorised.browser.title' => 'You cannot apply for any more permits',
