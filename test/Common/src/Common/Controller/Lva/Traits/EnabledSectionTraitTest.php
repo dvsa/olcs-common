@@ -7,6 +7,7 @@
  */
 namespace CommonTest\Controller\Lva\Traits;
 
+use Common\RefData;
 use CommonTest\Bootstrap;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -75,7 +76,7 @@ class EnabledSectionTraitTest extends MockeryTestCase
             ],
         ];
         $completions = [
-            'typeOfLicenceStatus' => 2, // ApplicationCompletionEntityService::STATUS_COMPLETE
+            'typeOfLicenceStatus' => RefData::APPLICATION_COMPLETION_STATUS_COMPLETE,
             'businessTypeStatus' => 2,
         ];
         $expected = [
@@ -92,8 +93,8 @@ class EnabledSectionTraitTest extends MockeryTestCase
                     ],
                 ],
                 [
-                    'typeOfLicenceStatus' => 2, // ApplicationCompletionEntityService::STATUS_COMPLETE
-                    'businessTypeStatus'  => 0, // ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'typeOfLicenceStatus' => RefData::APPLICATION_COMPLETION_STATUS_COMPLETE,
+                    'businessTypeStatus'  => RefData::APPLICATION_COMPLETION_STATUS_NOT_STARTED,
                 ],
                 [
                     'type_of_licence' => ['enabled' => true, 'complete' => true],
@@ -111,7 +112,7 @@ class EnabledSectionTraitTest extends MockeryTestCase
                 [
                     'typeOfLicenceStatus' => 2,
                     'businessTypeStatus'  => 2,
-                    'businessDetails'     => 1, // ApplicationCompletionEntityService::STATUS_INCOMPLETE
+                    'businessDetails'     => RefData::APPLICATION_COMPLETION_STATUS_INCOMPLETE,
                 ],
                 [
                     'type_of_licence'  => ['enabled' => true, 'complete' => true],

@@ -275,64 +275,6 @@ class SectionConfig implements ServiceLocatorAwareInterface
     );
 
     /**
-     * @var bool
-     */
-    protected $init = false;
-
-    /**
-     * Init sections
-     *
-     * @return void
-     */
-    protected function initSections()
-    {
-        if ($this->init === false) {
-            $this->sections['financial_history']['restricted'][] = array(
-                'variation',
-                array($this->getServiceLocator()->get('Processing\VariationSection'), 'isNotUnchanged')
-            );
-
-            $this->sections['convictions_penalties']['restricted'][] = array(
-                'variation',
-                array($this->getServiceLocator()->get('Processing\VariationSection'), 'isNotUnchanged')
-            );
-
-            $this->sections['financial_evidence']['restricted'][] = array(
-                'variation',
-                array($this->getServiceLocator()->get('Processing\VariationSection'), 'isNotUnchanged')
-            );
-
-            $this->sections['vehicles_declarations']['restricted'][] = array(
-                'variation',
-                array($this->getServiceLocator()->get('Processing\VariationSection'), 'isNotUnchanged')
-            );
-
-            $this->sections['vehicles_declarations']['restricted'][] = array(
-                'variation',
-                array($this->getServiceLocator()->get('Processing\VariationSection'), 'isNotUnchanged')
-            );
-
-            // undertakings requires all sections (except itself)
-            $undertakingsPreReqs = $this->getAllReferences();
-            $key = array_search('undertakings', $undertakingsPreReqs);
-            unset($undertakingsPreReqs[$key]);
-            $this->sections['undertakings']['prerequisite'] = array($undertakingsPreReqs);
-        }
-    }
-
-    /**
-     * Return all sections
-     *
-     * @return array
-     */
-    public function getAll()
-    {
-        $this->initSections();
-
-        return $this->sections;
-    }
-
-    /**
      * Return all section references
      *
      * @return array

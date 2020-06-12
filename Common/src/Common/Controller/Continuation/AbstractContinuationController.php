@@ -260,7 +260,7 @@ abstract class AbstractContinuationController extends AbstractController
 
         if ($licenceType === RefData::LICENCE_TYPE_SPECIAL_RESTRICTED) {
             $path = self::PATH_SR;
-        } elseif ($hasConditionsUndertakings) {
+        } elseif ($hasConditionsUndertakings || $this->isPsvRestricted($data['licence'])) {
             $path = self::PATH_CU;
         } else {
             $path = self::PATH_NCU;
@@ -313,5 +313,15 @@ abstract class AbstractContinuationController extends AbstractController
         ];
 
         return isset($steps[$path][$step]) ? $steps[$path][$step] : '';
+    }
+
+    /**
+     * @param $licence
+     * @return bool
+     */
+    protected function isPsvRestricted(array $licence): bool
+    {
+        return $licence['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_PSV
+            && $licence['licenceType']['id'] === RefData::LICENCE_TYPE_RESTRICTED;
     }
 }

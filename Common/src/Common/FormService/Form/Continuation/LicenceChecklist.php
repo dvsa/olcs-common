@@ -25,6 +25,7 @@ class LicenceChecklist extends AbstractFormService
         'transportManagers',
         'vehicles',
         'safety',
+        'users'
     ];
 
     /**
@@ -130,8 +131,7 @@ class LicenceChecklist extends AbstractFormService
     protected function alterContinueButton($form, $data)
     {
         $licenceData = $data['licence'];
-        if (
-            $licenceData['licenceType']['id'] === RefData::LICENCE_TYPE_SPECIAL_RESTRICTED
+        if ($licenceData['licenceType']['id'] === RefData::LICENCE_TYPE_SPECIAL_RESTRICTED
             && $licenceData['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_PSV
         ) {
             $form->get('licenceChecklistConfirmation')

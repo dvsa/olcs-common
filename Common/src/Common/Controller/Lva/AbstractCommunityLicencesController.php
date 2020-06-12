@@ -16,7 +16,6 @@ use Dvsa\Olcs\Transfer\Command\CommunityLic\Stop as StopDto;
 use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 use Dvsa\Olcs\Transfer\Query\CommunityLic\CommunityLicence;
 use Olcs\Mvc\Controller\ParameterProvider\GenericList;
-use Common\Service\Entity\CommunityLicEntityService;
 use Dvsa\Olcs\Transfer\Command as TransferCmd;
 use Common\Service\Table\TableBuilder;
 use Zend\View\Model\ViewModel;
@@ -44,10 +43,10 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
 
     protected $defaultFilters = [
         'status' => [
-            CommunityLicEntityService::STATUS_PENDING,
-            CommunityLicEntityService::STATUS_ACTIVE,
-            CommunityLicEntityService::STATUS_WITHDRAWN,
-            CommunityLicEntityService::STATUS_SUSPENDED
+            RefData::COMMUNITY_LICENCE_STATUS_PENDING,
+            RefData::COMMUNITY_LICENCE_STATUS_ACTIVE,
+            RefData::COMMUNITY_LICENCE_STATUS_WITHDRAWN,
+            RefData::COMMUNITY_LICENCE_STATUS_SUSPENDED
         ]
     ];
 
@@ -252,10 +251,10 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         if (!$this->checkTableForLicences(
             $table,
             [
-                CommunityLicEntityService::STATUS_PENDING,
-                CommunityLicEntityService::STATUS_ACTIVE,
-                CommunityLicEntityService::STATUS_WITHDRAWN,
-                CommunityLicEntityService::STATUS_SUSPENDED
+                RefData::COMMUNITY_LICENCE_STATUS_PENDING,
+                RefData::COMMUNITY_LICENCE_STATUS_ACTIVE,
+                RefData::COMMUNITY_LICENCE_STATUS_WITHDRAWN,
+                RefData::COMMUNITY_LICENCE_STATUS_SUSPENDED
             ]
         )) {
             $table->removeAction('void');
@@ -263,13 +262,13 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         if (!$this->checkTableForLicences(
             $table,
             [
-                CommunityLicEntityService::STATUS_WITHDRAWN,
-                CommunityLicEntityService::STATUS_SUSPENDED
+                RefData::COMMUNITY_LICENCE_STATUS_WITHDRAWN,
+                RefData::COMMUNITY_LICENCE_STATUS_SUSPENDED
             ]
         )) {
             $table->removeAction('restore');
         }
-        if (!$this->checkTableForLicences($table, [CommunityLicEntityService::STATUS_ACTIVE])) {
+        if (!$this->checkTableForLicences($table, [RefData::COMMUNITY_LICENCE_STATUS_ACTIVE])) {
             $table->removeAction('stop');
             $table->removeAction('reprint');
         }
