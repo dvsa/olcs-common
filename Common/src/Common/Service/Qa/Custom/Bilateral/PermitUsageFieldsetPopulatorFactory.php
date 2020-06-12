@@ -1,22 +1,23 @@
 <?php
 
-namespace Common\Data\Mapper\Permits;
+namespace Common\Service\Qa\Custom\Bilateral;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class MultilateralNoOfPermitsFactory implements FactoryInterface
+class PermitUsageFieldsetPopulatorFactory implements FactoryInterface
 {
     /**
      * Create service
      *
      * @param ServiceLocatorInterface $serviceLocator
      *
-     * @return MultilateralNoOfPermits
+     * @return PermitUsageFieldsetPopulator
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return new MultilateralNoOfPermits(
+        return new PermitUsageFieldsetPopulator(
+            $serviceLocator->get('QaRadioFieldsetPopulator'),
             $serviceLocator->get('Helper\Translation')
         );
     }

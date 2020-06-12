@@ -2,7 +2,6 @@
 
 namespace Common\Data\Mapper\Permits;
 
-use Common\RefData;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -17,18 +16,8 @@ class NoOfPermitsFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $noOfPermits = new NoOfPermits();
-
-        $noOfPermits->registerMapper(
-            RefData::IRHP_BILATERAL_PERMIT_TYPE_ID,
-            $serviceLocator->get(BilateralNoOfPermits::class)
+        return new NoOfPermits(
+            $serviceLocator->get('Helper\Translation')
         );
-
-        $noOfPermits->registerMapper(
-            RefData::IRHP_MULTILATERAL_PERMIT_TYPE_ID,
-            $serviceLocator->get(MultilateralNoOfPermits::class)
-        );
-
-        return $noOfPermits;
     }
 }
