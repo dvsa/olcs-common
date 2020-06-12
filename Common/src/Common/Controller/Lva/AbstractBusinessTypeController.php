@@ -11,7 +11,6 @@ use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 use Common\Data\Mapper\Lva\BusinessType;
 use Dvsa\Olcs\Transfer\Command\Organisation\UpdateBusinessType;
 use Dvsa\Olcs\Transfer\Query\Organisation\Organisation;
-use Zend\Http\Response;
 
 /**
  * Shared logic between Business type controllers
@@ -31,7 +30,6 @@ abstract class AbstractBusinessTypeController extends AbstractController impleme
         $response = $this->getBusinessType($orgId);
 
         if (!$response->isOk()) {
-
             if ($response->isClientError() || $response->isServerError()) {
                 $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
             }

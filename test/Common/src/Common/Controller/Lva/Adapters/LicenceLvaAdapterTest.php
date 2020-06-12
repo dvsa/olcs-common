@@ -34,39 +34,6 @@ class LicenceLvaAdapterTest extends MockeryTestCase
         $this->sut->setController($this->controller);
     }
 
-    public function testGetIdentifier()
-    {
-        $this->controller->shouldReceive('params')
-            ->with('licence')
-            ->andReturn(6);
-
-        $this->assertEquals(6, $this->sut->getIdentifier());
-    }
-
-    public function testGetIdentifierWithoutLicenceParam()
-    {
-        $mockApplicationAdapter = m::mock();
-        $this->sm->setService('ApplicationLvaAdapter', $mockApplicationAdapter);
-        $mockApplicationService = m::mock();
-        $this->sm->setService('Entity\Application', $mockApplicationService);
-
-        $this->controller->shouldReceive('params')
-            ->with('licence')
-            ->andReturn(null);
-
-        $mockApplicationAdapter
-            ->shouldReceive('setController')
-            ->with($this->controller)
-            ->shouldReceive('getIdentifier')
-            ->andReturn(87);
-
-        $mockApplicationService->shouldReceive('getLicenceIdForApplication')
-            ->with(87)
-            ->andReturn(6);
-
-        $this->assertEquals(6, $this->sut->getIdentifier());
-    }
-
     public function testAlterForm()
     {
         $mockForm = m::mock('\Zend\Form\Form');

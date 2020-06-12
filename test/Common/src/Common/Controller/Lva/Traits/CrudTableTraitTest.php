@@ -47,8 +47,7 @@ class CrudTableTraitTest extends MockeryTestCase
             ->andReturn('redirect')
             ->getMock();
 
-        $this->sut->shouldReceive('postSave')
-            ->shouldReceive('getIdentifierIndex')
+        $this->sut->shouldReceive('getIdentifierIndex')
             ->andReturn('application')
             ->shouldReceive('getIdentifier')
             ->andReturn(123)
@@ -90,8 +89,7 @@ class CrudTableTraitTest extends MockeryTestCase
 
         $this->sut->shouldReceive('getBaseRoute')->once()->andReturn($route);
 
-        $this->sut->shouldReceive('postSave')
-            ->shouldReceive('getIdentifierIndex')
+        $this->sut->shouldReceive('getIdentifierIndex')
             ->andReturn('application')
             ->shouldReceive('getIdentifier')
             ->andReturn(123)
@@ -186,7 +184,6 @@ class CrudTableTraitTest extends MockeryTestCase
             ->with('action')
             ->andReturn('delete')
             ->shouldReceive('delete')
-            ->shouldReceive('postSave')
             ->shouldReceive('redirect')
             ->andReturn($redirectMock);
 

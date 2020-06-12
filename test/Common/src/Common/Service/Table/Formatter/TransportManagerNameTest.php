@@ -2,7 +2,7 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
-use Common\Service\Entity\TransportManagerApplicationEntityService;
+use Common\RefData;
 use Common\Service\Table\Formatter\TransportManagerName;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -53,7 +53,7 @@ class TransportManagerNameTest extends MockeryTestCase
                 'familyName' => 'Smith',
                 ],
             'status' => [
-                'id' => TransportManagerApplicationEntityService::STATUS_POSTAL_APPLICATION,
+                'id' => RefData::TMA_STATUS_POSTAL_APPLICATION,
                 'description' => 'status description',
             ],
             'transportManager' => [
@@ -83,7 +83,7 @@ class TransportManagerNameTest extends MockeryTestCase
                 'familyName' => 'Smith',
                 ],
             'status' => [
-                'id' => TransportManagerApplicationEntityService::STATUS_POSTAL_APPLICATION,
+                'id' => RefData::TMA_STATUS_POSTAL_APPLICATION,
                 'description' => 'status description',
             ],
             'transportManager' => [
@@ -112,7 +112,7 @@ class TransportManagerNameTest extends MockeryTestCase
                 'familyName' => 'Smith',
                 ],
             'status' => [
-                'id' => TransportManagerApplicationEntityService::STATUS_POSTAL_APPLICATION,
+                'id' => RefData::TMA_STATUS_POSTAL_APPLICATION,
                 'description' => 'status description',
             ],
             'transportManager' => [
@@ -149,7 +149,7 @@ class TransportManagerNameTest extends MockeryTestCase
                 'familyName' => 'Smith',
                 ],
             'status' => [
-                'id' => TransportManagerApplicationEntityService::STATUS_POSTAL_APPLICATION,
+                'id' => RefData::TMA_STATUS_POSTAL_APPLICATION,
                 'description' => 'status description',
             ],
             'transportManager' => [
@@ -179,7 +179,7 @@ class TransportManagerNameTest extends MockeryTestCase
                 'familyName' => 'Smith',
                 ],
             'status' => [
-                'id' => TransportManagerApplicationEntityService::STATUS_POSTAL_APPLICATION,
+                'id' => RefData::TMA_STATUS_POSTAL_APPLICATION,
                 'description' => 'status description',
             ],
             'transportManager' => [
@@ -217,7 +217,7 @@ class TransportManagerNameTest extends MockeryTestCase
                 'familyName' => 'Smith',
                 ],
             'status' => [
-                'id' => TransportManagerApplicationEntityService::STATUS_POSTAL_APPLICATION,
+                'id' => RefData::TMA_STATUS_POSTAL_APPLICATION,
                 'description' => 'status description',
             ],
             'transportManager' => [
