@@ -206,6 +206,15 @@ return array(
                 QaService\Custom\EcmtShortTerm\InternationalJourneysIsValidHandler::class,
             'QaEcmtShortTermAnnualTripsAbroadIsValidHandler' =>
                 QaService\Custom\EcmtShortTerm\AnnualTripsAbroadIsValidHandler::class,
+            'QaBilateralCabotageOnlyYesNoRadioFactory' =>
+                QaService\Custom\Bilateral\CabotageOnlyYesNoRadioFactory::class,
+            'QaBilateralStandardAndCabotageYesNoRadioFactory' =>
+                QaService\Custom\Bilateral\StandardAndCabotageYesNoRadioFactory::class,
+            'QaBilateralRadioFactory' =>
+                QaService\Custom\Bilateral\RadioFactory::class,
+            'QaBilateralYesNoRadioOptionsApplier' => QaService\Custom\Bilateral\YesNoRadioOptionsApplier::class,
+            'QaBilateralNoOfPermitsFieldsetPopulator' =>
+                QaService\Custom\Bilateral\NoOfPermitsFieldsetPopulator::class,
             'QaDateTimeFactory' => QaService\DateTimeFactory::class,
 
             'QaRoadworthinessMakeAndModelFieldsetModifier' =>
@@ -287,35 +296,19 @@ return array(
                 QaService\Custom\EcmtShortTerm\AnnualTripsAbroadDataHandlerFactory::class,
             'QaCertRoadworthinessMotExpiryDateFieldsetPopulator' =>
                 QaService\Custom\CertRoadworthiness\MotExpiryDateFieldsetPopulatorFactory::class,
+            'QaBilateralPermitUsageFieldsetPopulator' =>
+                QaService\Custom\Bilateral\PermitUsageFieldsetPopulatorFactory::class,
+            'QaBilateralCabotageOnlyFieldsetPopulator' =>
+                QaService\Custom\Bilateral\CabotageOnlyFieldsetPopulatorFactory::class,
+            'QaBilateralStandardAndCabotageFieldsetPopulator' =>
+                QaService\Custom\Bilateral\StandardAndCabotageFieldsetPopulatorFactory::class,
 
             'QaFieldsetModifier' => QaService\FieldsetModifier\FieldsetModifierFactory::class,
 
             PermitsMapper\NoOfPermits::class => PermitsMapper\NoOfPermitsFactory::class,
-            PermitsMapper\BilateralNoOfPermits::class => PermitsMapper\BilateralNoOfPermitsFactory::class,
-            PermitsMapper\MultilateralNoOfPermits::class => PermitsMapper\MultilateralNoOfPermitsFactory::class,
+            Common\Service\User\LastLoginService::class => Common\Service\User\LastLoginServiceFactory::class,
         )
     ),
-    /*'search' => [
-        'invokables' => [
-            'operator'    => LicenceSelfserve::class, // Selfserve licence search
-            'licence'     => LicenceSearch::class,
-            'application' => \Common\Data\Object\Search\Application::class,
-            'case'        => \Common\Data\Object\Search\Cases::class,
-            'psv_disc'    => \Common\Data\Object\Search\PsvDisc::class,
-            'vehicle'     => \Common\Data\Object\Search\Vehicle::class,
-            'vehicle-external' => \Common\Data\Object\Search\VehicleSelfServe::class,
-            'address'     => \Common\Data\Object\Search\Address::class,
-            'bus'         => \Common\Data\Object\Search\BusRegSelfServe::class,
-            'bus_reg'     => \Common\Data\Object\Search\BusReg::class,
-            'people'      => \Common\Data\Object\Search\People::class,
-            'person'      => PeopleSelfserveSearchIndex::class,
-            'user'        => \Common\Data\Object\Search\User::class,
-            'publication' => \Common\Data\Object\Search\Publication::class,
-            'organisation'     => \Common\Data\Object\Search\Organisation::class,
-            'operating-centre' => OperatingCentreSearchIndex::class,
-            'traffic-commissioner-publication' => \Common\Data\Object\Search\TrafficCommissionerPublications::class,
-        ]
-    ],*/
     'file_uploader' => array(
         'default' => 'ContentStore',
         'config' => array(

@@ -2,7 +2,7 @@
 
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\Form\Element\Radio;
+use Common\Form\Elements\Types\Radio;
 use Zend\Validator\InArray;
 
 /**

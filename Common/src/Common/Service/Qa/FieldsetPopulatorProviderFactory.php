@@ -30,6 +30,10 @@ class FieldsetPopulatorProviderFactory implements FactoryInterface
             'ecmt_st_earliest_permit_date' => 'QaEcmtShortTermEarliestPermitDateFieldsetPopulator',
             'ecmt_rem_permit_start_date' => 'QaEcmtRemovalPermitStartDateFieldsetPopulator',
             'cert_road_mot_expiry_date' => 'QaCertRoadworthinessMotExpiryDateFieldsetPopulator',
+            'bilateral_permit_usage' => 'QaBilateralPermitUsageFieldsetPopulator',
+            'bilateral_cabotage_only' => 'QaBilateralCabotageOnlyFieldsetPopulator',
+            'bilateral_standard_and_cabotage' => 'QaBilateralStandardAndCabotageFieldsetPopulator',
+            'bilateral_number_of_permits' => 'QaBilateralNoOfPermitsFieldsetPopulator',
         ];
 
         foreach ($populators as $type => $serviceName) {

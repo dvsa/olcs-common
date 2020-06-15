@@ -366,7 +366,6 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         $this->assertEquals(false, $this->sut->process());
     }
 
-
     public function testProcessWithPostFileLengthTooLong()
     {
         $file = 'foo';

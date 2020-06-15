@@ -48,6 +48,16 @@ return [
                         ],
                         'may_terminate' => true,
                     ],
+                    'users' => [
+                        'type' => Http\Segment::class,
+                        'options' => [
+                            'route' => '/users[/]',
+                            'defaults' => [
+                                'action' => 'users',
+                            ]
+                        ],
+                        'may_terminate' => true,
+                    ],
                     'operating-centres' => [
                         'type' => Http\Segment::class,
                         'options' => [

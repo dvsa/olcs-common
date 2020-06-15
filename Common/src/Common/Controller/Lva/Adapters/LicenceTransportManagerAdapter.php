@@ -11,7 +11,6 @@ namespace Common\Controller\Lva\Adapters;
 class LicenceTransportManagerAdapter extends AbstractTransportManagerAdapter
 {
     protected $lva = 'licence';
-    protected $entityService = 'Entity\ApplicationOperatingCentre';
 
     /**
      * get table data

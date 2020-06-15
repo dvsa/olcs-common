@@ -2,6 +2,8 @@
 
 namespace Common\Controller\Continuation;
 
+use Common\Form\Form;
+use Common\RefData;
 use Zend\View\Model\ViewModel;
 use Common\FormService\Form\Continuation\ConditionsUndertakings as ConditionsUndertakingsFormService;
 
@@ -27,12 +29,17 @@ class ConditionsUndertakingsController extends AbstractContinuationController
     public function indexAction()
     {
         $data = $this->getContinuationDetailData();
-
         $form = $this->getForm(ConditionsUndertakingsFormService::class, $data);
+
+        if ($this->isPsvRestricted($data['licence'])) {
+            $data = $this->addExtraConditionsUndertakings($data);
+        } else {
+            $form->remove('confirmation');
+        }
 
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $form->setData((array) $request->getPost());
+            $form->setData((array)$request->getPost());
             if ($form->isValid()) {
                 $this->redirect()->toRoute(self::NEXT_STEP, [], [], true);
             }
@@ -44,5 +51,15 @@ class ConditionsUndertakingsController extends AbstractContinuationController
         ];
         $this->placeholder()->setPlaceholder('pageTitle', 'continuation.conditions-undertakings.page-title');
         return $this->getViewModel($data['licence']['licNo'], $form, $params);
+    }
+
+    protected function addExtraConditionsUndertakings($data): array
+    {
+        $translator = $this->getServiceLocator()->get('Helper\Translation');
+
+        $data['conditionsUndertakings']['licence']['psv_restricted']['comment'] = $translator->translate('markup-continuation-psv-restricted-comment');
+        $data['conditionsUndertakings']['licence']['psv_restricted']['undertakings'] = $translator->translate('markup-continuation-psv-restricted-required-undertaking');
+
+        return $data;
     }
 }

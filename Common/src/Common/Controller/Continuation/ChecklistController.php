@@ -128,6 +128,36 @@ class ChecklistController extends AbstractContinuationController
     }
 
     /**
+     * Users section page
+     *
+     * @return ViewModel
+     */
+    public function usersAction()
+    {
+        $translator = $this->getServiceLocator()->get('Helper\Translation');
+        $data = $this->getData(
+            $this->getContinuationDetailId()
+        );
+
+        $licenceData = $data['licence'];
+
+        $mappedData = LicenceChecklistMapper::mapUsersSectionToView(
+            $licenceData,
+            $translator
+        );
+        $view = new ViewModel(
+            [
+                'licNo' => $licenceData['licNo'],
+                'data' => $mappedData['users'],
+                'totalMessage' => $mappedData['totalUsersMessage'],
+                'totalCount' => $mappedData['totalCount']
+            ]
+        );
+
+        return $this->renderSection($view);
+    }
+
+    /**
      * Operating centres section page
      *
      * @return ViewModel
@@ -242,16 +272,14 @@ class ChecklistController extends AbstractContinuationController
     protected function getNextStepRoute($data)
     {
         $licenceData = $data['licence'];
-        if (
-            $licenceData['licenceType']['id'] === RefData::LICENCE_TYPE_SPECIAL_RESTRICTED
+        if ($licenceData['licenceType']['id'] === RefData::LICENCE_TYPE_SPECIAL_RESTRICTED
             && $licenceData['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_PSV
         ) {
             return self::DECLARATION_ROUTE;
         }
-        if ($data['hasConditionsUndertakings']) {
+        if ($data['hasConditionsUndertakings'] || $this->isPsvRestricted($licenceData)) {
             return self::CONDITIONS_UNDERTAKINGS_ROUTE;
         }
         return self::FINANCES_ROUTE;
-
     }
 }

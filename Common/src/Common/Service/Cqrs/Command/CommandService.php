@@ -14,6 +14,7 @@ use Dvsa\Olcs\Utils\Client\ClientAdapterLoggingWrapper;
 use Zend\Http\Client;
 use Zend\Http\Client\Exception\ExceptionInterface as HttpClientExceptionInterface;
 use Zend\Http\Header\ContentType;
+use Zend\Http\Header\Cookie;
 use Zend\Http\Headers;
 use Zend\Http\Request;
 use Zend\Http\Response as HttpResponse;
@@ -99,6 +100,13 @@ class CommandService
          */
         $request = clone $this->request;
 
+        /**
+         * Check to see if secureToken is defined in the DTO, if so.. override the secureToken in the request.
+         */
+        if (array_key_exists('secureToken', $data) && !empty($data['secureToken'])) {
+            $request = $this->replaceOrAddSecureTokenCookieToRequest($request, $data['secureToken']);
+        }
+
         $this->client->resetParameters(true);
         $this->client->setRequest($request);
 
@@ -172,9 +180,22 @@ class CommandService
             }
 
             return $response;
-
         } catch (HttpClientExceptionInterface $ex) {
             throw new Exception($ex->getMessage(), HttpResponse::STATUS_CODE_500, $ex);
         }
+    }
+
+    /**
+     * @param Request $request
+     * @param string $token
+     * @return Request
+     */
+    private function replaceOrAddSecureTokenCookieToRequest(Request $request, string $token): Request
+    {
+        $requestHeaders = $request->getHeaders();
+        $requestHeaders->addHeader(new Cookie(['secureToken' => $token]));
+        $request->setHeaders($requestHeaders);
+
+        return $request;
     }
 }

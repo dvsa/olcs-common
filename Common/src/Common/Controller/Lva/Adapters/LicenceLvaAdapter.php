@@ -18,15 +18,6 @@ class LicenceLvaAdapter extends AbstractLvaAdapter
 {
     public function getIdentifier()
     {
-        $licence = $this->getController()->params('licence');
-
-        if ($licence !== null) {
-            return $licence;
-        }
-
-        $application = $this->getApplicationAdapter()->getIdentifier();
-
-        return $this->getServiceLocator()->get('Entity\Application')->getLicenceIdForApplication($application);
     }
 
     /**

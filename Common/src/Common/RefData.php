@@ -108,6 +108,16 @@ class RefData
     const TMA_SIGN_AS_OP = 'tma_sign_as_op';
     const TMA_SIGN_AS_TM_OP = 'tma_sign_as_top';
 
+    const TMA_STATUS_INCOMPLETE = 'tmap_st_incomplete';
+    const TMA_STATUS_AWAITING_SIGNATURE = 'tmap_st_awaiting_signature';
+    const TMA_STATUS_TM_SIGNED = 'tmap_st_tm_signed';
+    const TMA_STATUS_OPERATOR_SIGNED = 'tmap_st_operator_signed';
+    const TMA_STATUS_POSTAL_APPLICATION = 'tmap_st_postal_application';
+    const TMA_STATUS_RECEIVED = 'tmap_st_received';
+    const TMA_STATUS_DETAILS_SUBMITTED = 'tmap_st_details_submitted';
+    const TMA_STATUS_DETAILS_CHECKED = 'tmap_st_details_checked';
+    const TMA_STATUS_OPERATOR_APPROVED = 'tmap_st_operator_approved';
+
     /**
      * Condition and Undertakings
      */
@@ -305,6 +315,7 @@ class RefData
 
     const CONTINUATIONS_DISPLAY_PERSON_COUNT = 10;
     const CONTINUATIONS_DISPLAY_VEHICLES_COUNT = 10;
+    const CONTINUATIONS_DISPLAY_USERS_COUNT = 10;
     const CONTINUATIONS_DISPLAY_OPERATING_CENTRES_COUNT = 10;
     const CONTINUATIONS_DISPLAY_SAFETY_INSPECTORS_COUNT = 10;
     const CONTINUATIONS_DISPLAY_TM_COUNT = 10;
@@ -315,6 +326,7 @@ class RefData
     const LICENCE_CHECKLIST_ADDRESSES = 'addresses';
     const LICENCE_CHECKLIST_PEOPLE = 'people';
     const LICENCE_CHECKLIST_VEHICLES = 'vehicles';
+    const LICENCE_CHECKLIST_USERS = 'users';
     const LICENCE_CHECKLIST_OPERATING_CENTRES = 'operating_centres';
     const LICENCE_CHECKLIST_OPERATING_CENTRES_AUTHORITY = 'operating_centres_authority';
     const LICENCE_CHECKLIST_TRANSPORT_MANAGERS = 'transport_managers';
@@ -469,4 +481,29 @@ class RefData
 
     const WITHDRAWN_REASON_WITHDRAWN    = 'withdrawn';
     const WITHDRAWN_REASON_REG_IN_ERROR = 'reg_in_error';
+
+    // Queue message statuses
+    const QUEUE_STATUS_QUEUED = 'que_sts_queued';
+    const QUEUE_STATUS_PROCESSING = 'que_sts_processing';
+    const QUEUE_STATUS_COMPLETE = 'que_sts_complete';
+    const QUEUE_STATUS_FAILED = 'que_sts_failed';
+
+    const CONTINUATION_DETAIL_STATUS_PREPARED = 'con_det_sts_prepared';
+    const CONTINUATION_DETAIL_STATUS_PRINTING = 'con_det_sts_printing';
+    const CONTINUATION_DETAIL_STATUS_PRINTED = 'con_det_sts_printed';
+    const CONTINUATION_DETAIL_STATUS_UNACCEPTABLE = 'con_det_sts_unacceptable';
+    const CONTINUATION_DETAIL_STATUS_ACCEPTABLE = 'con_det_sts_acceptable';
+    const CONTINUATION_DETAIL_STATUS_COMPLETE = 'con_det_sts_complete';
+    const CONTINUATION_DETAIL_STATUS_ERROR = 'con_det_sts_error';
+
+    const APPLICATION_COMPLETION_STATUS_NOT_STARTED = 0;
+    const APPLICATION_COMPLETION_STATUS_INCOMPLETE = 1;
+    const APPLICATION_COMPLETION_STATUS_COMPLETE = 2;
+
+    const BILATERAL_PERMIT_USAGE = 'bi-permit-usage';
+    const BILATERAL_NUMBER_OF_PERMITS = 'bi-number-of-permits';
+
+    // journey
+    const JOURNEY_SINGLE = 'journey_single';
+    const JOURNEY_MULTIPLE = 'journey_multiple';
 }
