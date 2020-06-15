@@ -52,11 +52,10 @@ class DateTimeSelectTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('00', $this->sut->getSecondElement()->getValue());
     }
 
-    /**
-     * @expectedException \Zend\Form\Exception\InvalidArgumentException
-     */
     public function testSetValueStringInvalid()
     {
+        $this->expectException(\Zend\Form\Exception\InvalidArgumentException::class);
+
         $this->sut->setValue('foo');
         $this->assertSame(null, $this->sut->getYearElement()->getValue());
     }

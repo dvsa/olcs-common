@@ -10,7 +10,6 @@ namespace OlcsTest\Controller\Lva\Adapters;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Controller\Lva\Adapters\VariationPeopleAdapter;
-use Common\Service\Entity\OrganisationEntityService;
 
 /**
  * Internal / Common Variation People Adapter Test

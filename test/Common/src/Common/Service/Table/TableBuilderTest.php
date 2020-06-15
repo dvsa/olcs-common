@@ -112,10 +112,11 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test getContentHelper without configured partials
      *
-     * @expectedException \Exception
      */
     public function testGetContentHelperWithoutConfig()
     {
+        $this->expectException(\Exception::class);
+
         $table = new TableBuilder($this->getMockServiceLocator(false));
 
         $table->getContentHelper();
@@ -123,10 +124,11 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test getContentHelper without configured partials for current content type
      *
-     * @expectedException \Exception
      */
     public function testGetContentHelperWithoutConfigForType()
     {
+        $this->expectException(\Exception::class);
+
         $table = new TableBuilder($this->getMockServiceLocator());
 
         $table->setContentType('csv');
@@ -165,10 +167,11 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test getConfigFromFile with missing file
      *
-     * @expectedException \Exception
      */
     public function testGetConfigFromFileWithMissingFile()
     {
+        $this->expectException(\Exception::class);
+
         $table = new TableBuilder($this->getMockServiceLocator());
 
         $table->getConfigFromFile('DoesntExist');
@@ -240,10 +243,11 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test loadConfig without table config set
      *
-     * @expectedException \Exception
      */
     public function testLoadConfigWithoutTableConfig()
     {
+        $this->expectException(\Exception::class);
+
         $table = new TableBuilder($this->getMockServiceLocator(false));
 
         $table->loadConfig('test');

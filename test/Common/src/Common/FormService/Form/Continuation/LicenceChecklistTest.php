@@ -160,6 +160,7 @@ class LicenceChecklistTest extends MockeryTestCase
                 'transportManagers',
                 'vehiclesPsv',
                 'safety',
+                'users'
             ]
         ];
         $this->assertEquals($form, $this->sut->getForm($data));

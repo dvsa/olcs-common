@@ -48,10 +48,11 @@ class ContentHelperTest extends TestCase
     /**
      * Test renderLayout with missing partial
      *
-     * @expectedException \Exception
      */
     public function testRenderLayoutWithMissingPartial()
     {
+        $this->expectException(\Exception::class);
+
         $mock = $this->createMock('\stdClass');
 
         $this->contentHelper = $this->getContentHelper($mock);

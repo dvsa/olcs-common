@@ -114,10 +114,16 @@ class LicencePermitReference implements FormatterInterface
                 break;
         }
 
+        $options = [
+            'query' => [
+                'fromDashboard' => '1'
+            ]
+        ];
+
         return sprintf(
             '%s <a class="overview__link" href="%s"><span class="overview__link--underline">%s</span></a>',
             $referenceNumberMarkup,
-            $serviceLocator->get('Helper\Url')->fromRoute('permits/' . $route, $params),
+            $serviceLocator->get('Helper\Url')->fromRoute('permits/' . $route, $params, $options),
             Escape::html($text)
         );
     }

@@ -48,6 +48,7 @@ return [
     '{{URL_PAY_360_COOKIE}}' => 'https://www.pay360.com/cookies',
     '{{URL_SMART_SURVEY}}' => 'https://www.smartsurvey.co.uk',
     '{{URL_SMART_SURVEY_COOKIE}}' => 'https://www.smartsurvey.co.uk/how-we-use-cookies',
+    '{{URL_SMART_SURVEY_IN_PAGE}}' => 'http://www.smartsurvey.co.uk/s/VOLinpageOct2016/',
     '{{URL_VERIFY_COOKIE}}' => 'https://www.signin.service.gov.uk/cookies',
     '{{URL_INFORMATION_COMMISSIONER_COOKIE}}' => 'https://ico.org.uk/for-the-public/online/cookies',
 ];

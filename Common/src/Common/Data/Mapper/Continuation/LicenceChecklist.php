@@ -44,7 +44,8 @@ class LicenceChecklist
                 'operatingCentres' => self::mapOperatingCentres($data),
                 'transportManagers' => self::mapTransportManagers($data),
                 'safety' => self::mapSafetyDetails($licenceData, $translator),
-                'continuationDetailId' => $data['id']
+                'users' => self::mapUsers($licenceData, $translator),
+                'continuationDetailId' => $data['id'],
             ]
         ];
     }
@@ -313,6 +314,54 @@ class LicenceChecklist
     }
 
     /**
+     * Map people section to view
+     *
+     * @param array $data
+     * @param TranslationHelperService $translator translator
+     *
+     * @return array
+     */
+    public static function mapUsersSectionToView($data, $translator)
+    {
+        $mappedUsers = self::mapUsers($data, $translator);
+        $users = $mappedUsers['users'];
+
+        $header[] = [
+            'value' => $translator->translate('continuations.users-section.table.name'),
+            'header' => true
+        ];
+        $header[] = [
+            'value' => $translator->translate('continuations.users-section.table.email'),
+            'header' => true
+        ];
+        $header[] = [
+            'value' => $translator->translate('continuations.users-section.table.permission'),
+            'header' => true
+        ];
+
+        foreach ($users as $user) {
+            $row = [];
+            $row[] = ['value' => $user['name']];
+            $row[] = ['value' => $user['email']];
+            $row[] = ['value' => $user['permission']];
+
+            $userData[] = $row;
+        }
+
+        usort(
+            $userData,
+            function ($a, $b) {
+                return strcmp($a[0]['value'], $b[0]['value']);
+            }
+        );
+        return [
+            'users' => array_merge([$header], $userData),
+            'totalUsersMessage' => $translator->translate('continuations.users-section-header'),
+            'totalCount' => count($userData)
+        ];
+    }
+
+    /**
      * Map operating centres
      *
      * @param array $fullData data
@@ -505,7 +554,6 @@ class LicenceChecklist
                     . ')',
                 'address' => implode(', ', [$address['addressLine1'], $address['town']])
             ];
-
         }
         usort(
             $safetyInspectors,
@@ -612,5 +660,45 @@ class LicenceChecklist
     private static function formatDate($date)
     {
         return !empty($date) ? date(\DATE_FORMAT, strtotime($date)) : '';
+    }
+
+    private static function mapUsers(array $data, $translator)
+    {
+        $users = [];
+        if (!empty($data['organisation']['organisationUsers'])) {
+            $organisationUsers = $data['organisation']['organisationUsers'];
+            foreach ($organisationUsers as $organisationUser) {
+                $userData = $organisationUser['user'];
+                $user = [];
+                $user['email'] = $userData['contactDetails']['emailAddress'] ?? '';
+                $forename = $userData['contactDetails']['person']['forename'] ?? '';
+                $familyName = $userData['contactDetails']['person']['familyName'] ?? '';
+                $user['name'] = trim($forename . ' ' . $familyName);
+                $user['permission'] = implode(
+                    ',',
+                    array_map(
+                        function ($role) use ($translator) {
+                            return $translator->translate('role.'.$role['role']);
+                        },
+                        $userData['roles']
+                    )
+                );
+
+                $users[] = $user;
+            }
+        }
+
+        usort(
+            $users,
+            function ($a, $b) {
+                return strcmp($a['name'], $b['name']);
+            }
+        );
+
+        return [
+            'users' => $users,
+            'header' => $translator->translate('continuations.users-section-header'),
+            'displayUsersCount' => RefData::CONTINUATIONS_DISPLAY_USERS_COUNT
+        ];
     }
 }
