@@ -3912,8 +3912,8 @@ return [
     'qanda.bilaterals.number-of-permits.hint.cabotage.pre-october-2021' => 'Authorises cabotage when used together with a UK Licence for the Community.',
     'qanda.bilaterals.number-of-permits.error.enter-permits-required' => 'Enter the number of permits you require',
 
-    'permits.bilateral.norway.period.1' => '1 January 2021 and 30 September 2021',
-    'permits.bilateral.norway.period.2' => '1 October 2021 and 31 January 2022',
+    'permits.bilateral.norway.period.1' => '1 January 2021 to 30 September 2021',
+    'permits.bilateral.norway.period.2' => '1 October 2021 to 31 January 2022',
 
     'qanda.date.error.invalid-date' => 'Enter a valid date',
 
