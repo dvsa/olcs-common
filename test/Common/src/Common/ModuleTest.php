@@ -34,7 +34,7 @@ class ModuleTest extends MockeryTestCase
     /** @var  m\MockInterface */
     private $mockApp;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->sut = new Module();
 

@@ -21,7 +21,7 @@ class CqrsTraitTest extends MockeryTestCase
     /** @var  CqrsTraitStub */
     private $sut;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->mockHttpResp = m::mock(HttpResponse::class);
 

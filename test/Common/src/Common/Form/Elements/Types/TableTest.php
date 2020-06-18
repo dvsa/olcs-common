@@ -8,6 +8,7 @@
 namespace CommonTest\Form\Elements\Types;
 
 use Common\Form\Elements\Types\Table;
+use Common\Service\Table\TableBuilder;
 
 /**
  * Test Table Element
@@ -23,7 +24,7 @@ class TableTest extends \PHPUnit\Framework\TestCase
     {
         $fieldset = 'table';
 
-        $mockTable = $this->createPartialMock('\stdClass', array('setFieldset', 'setDisabled'));
+        $mockTable = $this->createPartialMock(TableBuilder::class, array('setFieldset', 'setDisabled'));
 
         $mockTable->expects($this->once())
             ->method('setFieldset')
@@ -41,7 +42,7 @@ class TableTest extends \PHPUnit\Framework\TestCase
     {
         $fieldset = 'table';
 
-        $mockTable = $this->createPartialMock('\stdClass', array('setFieldset', 'setDisabled', 'render'));
+        $mockTable = $this->createPartialMock(TableBuilder::class, array('setFieldset', 'setDisabled', 'render'));
 
         $mockTable->expects($this->once())
             ->method('setFieldset')
@@ -62,7 +63,7 @@ class TableTest extends \PHPUnit\Framework\TestCase
     {
         $fieldset = 'table';
 
-        $mockTable = $this->createPartialMock('\stdClass', array('setFieldset', 'setDisabled', 'render'));
+        $mockTable = $this->createPartialMock(TableBuilder::class, array('setFieldset', 'setDisabled', 'render'));
 
         $mockTable->expects($this->once())
             ->method('setDisabled')

@@ -19,7 +19,7 @@ class FeaturesEnabledTest extends MockeryTestCase
     protected $mvcEvent;
     protected $querySender;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->mvcEvent = m::mock(MvcEvent::class);
         $this->mvcEvent->shouldReceive('getRouteMatch->getParam')->with('action')->andReturn($this->action);

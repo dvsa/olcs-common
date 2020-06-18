@@ -11,7 +11,7 @@ class FeaturesEnabledForMethodTest extends MockeryTestCase
 {
     protected $querySender;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->querySender = m::mock(QuerySender::class);
     }

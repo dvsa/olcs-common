@@ -42,7 +42,7 @@ class QueryServiceTest extends MockeryTestCase
     /** @var  m\MockInterface */
     private $mockQuery;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->mockRouter = m::mock(RouteInterface::class);
         $this->mockCli = m::mock(\Zend\Http\Client::class);

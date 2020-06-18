@@ -5,10 +5,11 @@
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\SumColumns;
+use Zend\I18n\Translator\Translator;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Sum Columns formatter test
@@ -17,7 +18,6 @@ use Common\Service\Table\Formatter\SumColumns;
  */
 class SumColumnsTest extends \PHPUnit\Framework\TestCase
 {
-
     /**
      * Test the format method
      *
@@ -28,9 +28,9 @@ class SumColumnsTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormat($data, $column, $expected)
     {
-        $mockTranslator = $this->createPartialMock('\stdClass', array('translate'));
+        $mockTranslator = $this->createPartialMock(Translator::class, array('translate'));
 
-        $sm = $this->createPartialMock('\stdClass', array('get'));
+        $sm = $this->createMock(ServiceLocatorInterface::class);
         $sm->expects($this->any())
             ->method('get')
             ->with('translator')

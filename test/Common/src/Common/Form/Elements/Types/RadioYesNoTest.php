@@ -3,6 +3,7 @@
 namespace CommonTest\Form\Elements\Types;
 
 use Common\Form\Elements\Types\RadioYesNo;
+use DMS\PHPUnitExtensions\ArraySubset\Assert;
 
 /**
  * RadioYesNoTest
@@ -14,7 +15,7 @@ class RadioYesNoTest extends \PHPUnit\Framework\TestCase
      */
     private $sut;
 
-    public function setup()
+    public function setUp(): void
     {
         $this->sut = new RadioYesNo();
     }
@@ -23,7 +24,7 @@ class RadioYesNoTest extends \PHPUnit\Framework\TestCase
     {
         $this->sut->init();
 
-        $this->assertArraySubset(
+        Assert::assertArraySubset(
             ['Y' => ['label' => 'Yes', 'value' => 'Y'], 'N' => ['label' => 'No', 'value' => 'N']],
             $this->sut->getValueOptions()
         );

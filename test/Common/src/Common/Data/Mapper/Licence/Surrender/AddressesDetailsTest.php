@@ -12,7 +12,7 @@ class AddressesDetailsTest extends MockeryTestCase
     /** @var  array */
     private $formData;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->apiData = [
 

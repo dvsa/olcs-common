@@ -62,7 +62,7 @@ class TransportManagerApplicationTest extends MockeryTestCase
             'translate'
         )->times(22)->andReturn('__TEST__');
         $data = TransportManagerApplication::mapForSections($data, $translationHelper);
-        $this->assertInternalType('array', $data);
+        $this->assertIsArray($data);
     }
 
     public function transportManagerDataProvider()

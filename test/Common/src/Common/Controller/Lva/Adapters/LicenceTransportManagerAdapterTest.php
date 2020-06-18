@@ -31,7 +31,7 @@ class LicenceTransportManagerAdapterTest extends MockeryTestCase
     /** @var CommandService $mockCommandSrv */
     protected $mockCommandSrv;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->sm = m::mock(ServiceManager::class)->makePartial();
         $this->sm->setAllowOverride(true);

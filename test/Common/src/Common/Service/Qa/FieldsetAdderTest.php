@@ -30,7 +30,7 @@ class FieldsetAdderTest extends MockeryTestCase
 
     private $shortName = 'Cabotage';
 
-    public function setUp()
+    public function setUp(): void
     {
         $fieldsetName = 'fields123';
 

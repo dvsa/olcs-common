@@ -20,7 +20,7 @@ class CommandSenderTest extends MockeryTestCase
     protected $commandService;
     protected $annotationBuilder;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->sut = new CommandSender();
 

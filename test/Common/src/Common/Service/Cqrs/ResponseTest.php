@@ -18,7 +18,7 @@ class ResponseTest extends MockeryTestCase
     /** @var  m\MockInterface|HttpResponse */
     private $mockHttpResp;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->mockHttpResp = m::mock(HttpResponse::class);
 

@@ -5,10 +5,11 @@
  *
  * @author Nick payne <nick.payne@valtech.co.uk>
  */
-
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\TaskDate;
+use Zend\I18n\Translator\Translator;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Task date formatter tests
@@ -17,15 +18,14 @@ use Common\Service\Table\Formatter\TaskDate;
  */
 class TaskDateTest extends \PHPUnit\Framework\TestCase
 {
-
     /**
      * @dataProvider provider
      */
     public function testFormat($data, $column, $expected)
     {
-        $mockTranslator = $this->createPartialMock('\stdClass', array('translate'));
+        $mockTranslator = $this->createPartialMock(Translator::class, array('translate'));
 
-        $sm = $this->createPartialMock('\stdClass', array('get'));
+        $sm = $this->createMock(ServiceLocatorInterface::class);
         $sm->expects($this->any())
             ->method('get')
             ->with('translator')

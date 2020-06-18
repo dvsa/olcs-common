@@ -21,7 +21,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
     /** @var  m\MockInterface | \Zend\ServiceManager\ServiceLocatorInterface */
     private $mockSm;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->mockRequest = m::mock(\Zend\Http\Request::class);
         $this->mockForm = m::mock(\Zend\Form\Form::class);

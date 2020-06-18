@@ -14,7 +14,7 @@ class CurrencyFormatterTest extends \PHPUnit\Framework\TestCase
     /**
      * Setup the view helper
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->viewHelper = new CurrencyFormatter();
     }

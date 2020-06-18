@@ -16,7 +16,7 @@ class FieldsetFactoryTest extends MockeryTestCase
 {
     private $fieldsetFactory;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->fieldsetFactory = new FieldsetFactory();
     }

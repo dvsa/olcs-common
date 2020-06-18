@@ -19,7 +19,7 @@ class ComplaintsHelperServiceTest extends \PHPUnit\Framework\TestCase
     /**
      * Setup the helper
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->helper = new ComplaintsHelperService();
     }

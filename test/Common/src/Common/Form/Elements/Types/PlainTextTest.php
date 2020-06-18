@@ -24,7 +24,7 @@ class PlainTextTest extends \PHPUnit\Framework\TestCase
     /** @var FormElement */
     private $helper;
 
-    public function setUp()
+    public function setUp(): void
     {
         $formPlainText = new FormPlainText();
 

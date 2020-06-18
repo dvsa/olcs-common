@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "php": "^5.5 || ^7.0",
+        "php": ">=7.2",
         "zendframework/zend-cache": "^2.5",
         "zendframework/zend-code": "^2.5",
         "zendframework/zend-di": "^2.5",
@@ -49,15 +49,10 @@
     },
     "require-dev": {
         "olcs/olcs-devtools": "~4.206.0",
-        "mikey179/vfsstream": "~1.4.0",
         "olcs/olcs-testhelpers": "~4.206.0",
         "olcs/olcs-transfer": "~4.206.0",
         "olcs/olcs-utils": "~4.206.0",
-        "olcs/olcs-logging": "~4.206.0",
-        "phpstan/phpstan-shim": "^0.10.5",
-        "phpstan/phpstan-mockery": "^0.10.2",
-        "mockery/mockery": "^1.2",
-        "johnkary/phpunit-speedtrap": "^3.0"
+        "olcs/olcs-logging": "~4.206.0"
     },
     "autoload": {
         "psr-0": {
@@ -71,7 +66,7 @@
         "preferred-install": "dist",
         "secure-http": false,
         "platform": {
-            "php": "7.1.16"
+            "php": "7.2.31"
         }
     },
     "scripts": {

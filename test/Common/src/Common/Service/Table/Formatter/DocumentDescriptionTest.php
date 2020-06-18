@@ -17,7 +17,7 @@ class DocumentDescriptionTest extends MockeryTestCase
 
     protected $mockTranslator;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

@@ -18,7 +18,7 @@ class AbstractServiceFactoryTest extends MockeryTestCase
     /** @var  m\MockInterface | \Zend\ServiceManager\ServiceLocatorInterface */
     protected $mockSm;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->sut = m::mock(AbstractServiceFactory::class)
             ->makePartial()

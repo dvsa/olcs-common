@@ -23,7 +23,7 @@ class ApplicationOperatingCentreTest extends MockeryTestCase
     /**
      * Setup the sut
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->serviceManager = Bootstrap::getServiceManager();
         $this->sut = new ApplicationOperatingCentre();

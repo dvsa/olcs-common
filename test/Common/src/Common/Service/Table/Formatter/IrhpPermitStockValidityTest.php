@@ -11,7 +11,7 @@ use Common\Service\Table\Formatter\IrhpPermitStockValidity;
 
 class IrhpPermitStockValidityTest extends \PHPUnit\Framework\TestCase
 {
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
         if (!defined('DATE_FORMAT')) {

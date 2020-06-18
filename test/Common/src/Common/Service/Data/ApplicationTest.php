@@ -26,7 +26,7 @@ class ApplicationTest extends AbstractDataServiceTestCase
     /**
      * Setup the sut
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->sut = new Application();
     }

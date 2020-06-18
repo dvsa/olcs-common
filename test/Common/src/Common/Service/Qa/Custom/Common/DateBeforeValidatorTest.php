@@ -25,7 +25,7 @@ class DateBeforeValidatorTest extends MockeryTestCase
 
     private $dateBeforeValidator;
 
-    public function setUp()
+    public function setUp(): void
     {
         $options = [
             'dateMustBeBefore' => self::DATE_MUST_BE_BEFORE_DATE_STRING

@@ -19,7 +19,7 @@ class IdentityProviderTest extends TestCase
 
     private $queryService;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->queryService = m::mock(QuerySender::class);
 

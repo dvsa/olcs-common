@@ -27,7 +27,7 @@ class ApplicationGoodsVehiclesTest extends MockeryTestCase
 
     protected $sm;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->sm = Bootstrap::getServiceManager();
         $this->formHelper = m::mock('\Common\Service\Helper\FormHelperService');

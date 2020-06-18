@@ -22,7 +22,7 @@ class VariationLvaServiceTest extends MockeryTestCase
     private $sm;
     private $sut;
 
-    public function setup()
+    public function setUp(): void
     {
         $this->sm = Bootstrap::getServiceManager();
         $this->sut = new VariationLvaService();

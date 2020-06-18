@@ -21,7 +21,7 @@ class ValidatorsAdderTest extends MockeryTestCase
 
     private $sut;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->form = m::mock(Form::class);
 

@@ -27,7 +27,7 @@ class LanguageLinkTest extends MockeryTestCase
 
     protected $sm;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->viewHelper = new LanguageLink();
 

@@ -16,7 +16,7 @@ class OperatingCentreActionTest extends MockeryTestCase
     protected $sut;
     protected $table;
 
-    public function setUp()
+    public function setUp(): void
     {
         $mockAuthService = m::mock()
             ->shouldReceive('isGranted')
@@ -43,7 +43,7 @@ class OperatingCentreActionTest extends MockeryTestCase
         $data = ['id' => 1];
         $column = ['action' => 'FOO'];
 
-        $this->assertNotContains('(Schedule 4/1)', $this->sut->render($data, $column));
+        $this->assertStringNotContainsString('(Schedule 4/1)', $this->sut->render($data, $column));
     }
 
     public function testRenderWithS4()
@@ -53,6 +53,6 @@ class OperatingCentreActionTest extends MockeryTestCase
         $data = ['id' => 1, 's4' => 'FOO'];
         $column = ['action' => 'FOO'];
 
-        $this->assertContains('(Schedule 4/1)', $this->sut->render($data, $column));
+        $this->assertStringContainsString('(Schedule 4/1)', $this->sut->render($data, $column));
     }
 }

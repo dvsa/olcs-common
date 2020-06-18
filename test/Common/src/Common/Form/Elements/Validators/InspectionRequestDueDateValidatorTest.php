@@ -19,7 +19,7 @@ class InspectionRequestDueDateValidatorTest extends \PHPUnit\Framework\TestCase
     /**
      * Set up the validator
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->validator = new InspectionRequestDueDate();
     }

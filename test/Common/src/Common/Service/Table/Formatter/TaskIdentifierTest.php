@@ -9,7 +9,9 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Formatter\TaskIdentifier;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Task identifier formatter tests
@@ -34,12 +36,11 @@ class TaskIdentifierTest extends \PHPUnit\Framework\TestCase
         $expected,
         $routeParams = array()
     ) {
-
         $routeParams = array_merge($routeParams, [$param => $data['linkId']]);
 
-        $sm = $this->createPartialMock('\stdClass', array('get'));
+        $sm = $this->createMock(ServiceLocatorInterface::class);
 
-        $mockUrlHelper = $this->createPartialMock('\stdClass', array('fromRoute'));
+        $mockUrlHelper = $this->createPartialMock(UrlHelperService::class, array('fromRoute'));
 
         $mockUrlHelper->expects($this->any())
             ->method('fromRoute')

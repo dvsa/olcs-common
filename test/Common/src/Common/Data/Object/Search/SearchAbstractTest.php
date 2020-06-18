@@ -15,14 +15,14 @@ abstract class SearchAbstractTest extends MockeryTestCase
     /** @var \Common\Data\Object\Search\InternalSearchAbstract */
     protected $sut;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->sut = new $this->class;
     }
 
     public function testGetTableConfig()
     {
-        $this->assertInternalType('array', $this->sut->getTableConfig());
+        $this->assertIsArray($this->sut->getTableConfig());
         $this->assertArrayHasKey('variables', $this->sut->getTableConfig());
         $this->assertArrayHasKey('settings', $this->sut->getTableConfig());
         $this->assertArrayHasKey('attributes', $this->sut->getTableConfig());
@@ -31,7 +31,7 @@ abstract class SearchAbstractTest extends MockeryTestCase
 
     public function testGetNavigation()
     {
-        $this->assertInternalType('array', $this->sut->getNavigation());
+        $this->assertIsArray($this->sut->getNavigation());
         $this->assertArrayHasKey('label', $this->sut->getNavigation());
         $this->assertArrayHasKey('route', $this->sut->getNavigation());
         $this->assertArrayHasKey('params', $this->sut->getNavigation());
@@ -39,26 +39,26 @@ abstract class SearchAbstractTest extends MockeryTestCase
 
     public function testGetTitle()
     {
-        $this->assertInternalType('string', $this->sut->getTitle());
+        $this->assertIsString($this->sut->getTitle());
     }
 
     public function testGetKey()
     {
-        $this->assertInternalType('string', $this->sut->getKey());
+        $this->assertIsString($this->sut->getKey());
     }
 
     public function testGetSearchIndices()
     {
-        $this->assertInternalType('string', $this->sut->getSearchIndices());
+        $this->assertIsString($this->sut->getSearchIndices());
     }
 
     public function testGetDisplayGroup()
     {
-        $this->assertInternalType('string', $this->sut->getDisplayGroup());
+        $this->assertIsString($this->sut->getDisplayGroup());
     }
 
     public function testGetFilters()
     {
-        $this->assertInternalType('array', $this->sut->getFilters());
+        $this->assertIsArray($this->sut->getFilters());
     }
 }

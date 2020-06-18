@@ -47,7 +47,7 @@ class NoOfPermitsFieldsetPopulatorTest extends MockeryTestCase
 
     private $form;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->expectedHtml = '<div class="govuk-inset-text"><p>You must choose between Euro 5 and Euro 6.</p></div>' .
             '<p class="number-of-permits"><strong>Number of permits</strong><br>' .

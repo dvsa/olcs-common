@@ -18,7 +18,7 @@ use Common\Service\Helper\DateHelperService;
  */
 class DateHelperServiceTest extends MockeryTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         $this->sut = new DateHelperService();
     }

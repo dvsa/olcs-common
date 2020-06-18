@@ -22,7 +22,7 @@ class AbstractTransportManagerAdapterTest extends MockeryTestCase
     /** @var  ServiceManager|\Mockery\MockInterface */
     protected $sm;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->sm = m::mock(ServiceManager::class)->makePartial();
         $this->sm->setAllowOverride(true);

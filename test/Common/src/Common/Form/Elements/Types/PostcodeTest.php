@@ -3,6 +3,7 @@
 namespace CommonTest\Form\Elements\Types;
 
 use Common\Form\Elements\Types\PostcodeSearch;
+use DMS\PHPUnitExtensions\ArraySubset\Assert;
 use Zend\Form\Element\Text;
 
 /**
@@ -18,7 +19,7 @@ class PostcodeTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf(Text::class, $postcodeElement);
 
         $attributes = $postcodeElement->getAttributes();
-        $this->assertArraySubset(
+        Assert::assertArraySubset(
             [
                 'class' => 'short js-input',
                 'data-container-class' => 'inline',

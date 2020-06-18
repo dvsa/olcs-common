@@ -7,6 +7,8 @@
  */
 namespace CommonTest\Controller\Util;
 
+use Zend\Http\Response as HttpResponse;
+
 /**
  * Test ResponseHelperTest
  *
@@ -84,7 +86,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
     {
         $mock = $this->getSutMock($this->handleReponseMethods);
 
-        $response = $this->createPartialMock('\stdClass', array('getBody', 'getStatusCode'));
+        $response = $this->createPartialMock(HttpResponse::class, array('getBody', 'getStatusCode'));
         $response->expects($this->atLeastOnce())
             ->method('getBody')
             ->will($this->returnValue('{}'));
@@ -112,7 +114,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
     {
         $mock = $this->getSutMock($this->handleReponseMethods);
 
-        $response = $this->createPartialMock('\stdClass', array('getBody', 'getStatusCode'));
+        $response = $this->createPartialMock(HttpResponse::class, array('getBody', 'getStatusCode'));
         $response->expects($this->atLeastOnce())
             ->method('getBody')
             ->will($this->returnValue('{}'));
@@ -140,7 +142,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
     {
         $mock = $this->getSutMock($this->handleReponseMethods);
 
-        $response = $this->createPartialMock('\stdClass', array('getBody', 'getStatusCode'));
+        $response = $this->createPartialMock(HttpResponse::class, array('getBody', 'getStatusCode'));
         $response->expects($this->atLeastOnce())
             ->method('getBody')
             ->will($this->returnValue('{}'));
@@ -168,7 +170,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
     {
         $mock = $this->getSutMock($this->handleReponseMethods);
 
-        $response = $this->createPartialMock('\stdClass', array('getBody', 'getStatusCode'));
+        $response = $this->createPartialMock(HttpResponse::class, array('getBody', 'getStatusCode'));
         $response->expects($this->atLeastOnce())
             ->method('getBody')
             ->will($this->returnValue('{}'));
@@ -196,7 +198,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
     {
         $mock = $this->getSutMock($this->handleReponseMethods);
 
-        $response = $this->createPartialMock('\stdClass', array('getBody', 'getStatusCode'));
+        $response = $this->createPartialMock(HttpResponse::class, array('getBody', 'getStatusCode'));
         $response->expects($this->atLeastOnce())
             ->method('getBody')
             ->will($this->returnValue('{}'));
@@ -224,7 +226,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
     {
         $mock = $this->getSutMock($this->handleReponseMethods);
 
-        $response = $this->createPartialMock('\stdClass', array('getBody', 'getStatusCode'));
+        $response = $this->createPartialMock(HttpResponse::class, array('getBody', 'getStatusCode'));
         $response->expects($this->atLeastOnce())
             ->method('getBody')
             ->will($this->returnValue('{}'));
@@ -252,7 +254,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
     {
         $mock = $this->getSutMock($this->handleReponseMethods);
 
-        $response = $this->createPartialMock('\stdClass', array('getBody', 'getStatusCode'));
+        $response = $this->createPartialMock(HttpResponse::class, array('getBody', 'getStatusCode'));
         $response->expects($this->atLeastOnce())
             ->method('getBody')
             ->will($this->returnValue('{}'));
@@ -280,7 +282,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
     {
         $mock = $this->getSutMock($this->handleReponseMethods);
 
-        $response = $this->createPartialMock('\stdClass', array('getBody', 'getStatusCode'));
+        $response = $this->createPartialMock(HttpResponse::class, array('getBody', 'getStatusCode'));
         $response->expects($this->atLeastOnce())
             ->method('getBody')
             ->will($this->returnValue('{}'));
@@ -308,7 +310,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
     {
         $mock = $this->getSutMock($this->handleReponseMethods);
 
-        $response = $this->createPartialMock('\stdClass', array('getBody', 'getStatusCode'));
+        $response = $this->createPartialMock(HttpResponse::class, array('getBody', 'getStatusCode'));
         $response->expects($this->atLeastOnce())
             ->method('getBody')
             ->will($this->returnValue('{}'));
@@ -359,7 +361,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
         $this->expectException(\Exception::class);
 
         $mock = $this->getSutMock(null);
-        $response = $this->createPartialMock('\stdClass', array('getStatusCode'));
+        $response = $this->createPartialMock(HttpResponse::class, array('getStatusCode'));
         $response->expects($this->atLeastOnce())
             ->method('getStatusCode')
             ->will($this->returnValue(500));
@@ -370,7 +372,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
     public function testCheckForNoInternalServerError()
     {
         $mock = $this->getSutMock(null);
-        $response = $this->createPartialMock('\stdClass', array('getStatusCode'));
+        $response = $this->createPartialMock(HttpResponse::class, array('getStatusCode'));
         $response->expects($this->atLeastOnce())
             ->method('getStatusCode')
             ->will($this->returnValue(200));
@@ -383,7 +385,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
         $this->expectException(\Exception::class);
 
         $mock = $this->getSutMock(null);
-        $response = $this->createPartialMock('\stdClass', array('getStatusCode'));
+        $response = $this->createPartialMock(HttpResponse::class, array('getStatusCode'));
         $response->expects($this->atLeastOnce())
             ->method('getStatusCode')
             ->will($this->returnValue(500));
@@ -395,7 +397,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
     public function testCheckForExpectedResponseCode()
     {
         $mock = $this->getSutMock(null);
-        $response = $this->createPartialMock('\stdClass', array('getStatusCode'));
+        $response = $this->createPartialMock(HttpResponse::class, array('getStatusCode'));
         $response->expects($this->atLeastOnce())
             ->method('getStatusCode')
             ->will($this->returnValue(200));

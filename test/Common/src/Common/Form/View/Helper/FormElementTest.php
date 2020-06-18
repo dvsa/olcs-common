@@ -2,6 +2,7 @@
 
 namespace CommonTest\Form\View\Helper;
 
+use Mockery as m;
 use Zend\View\HelperPluginManager;
 use Zend\View\Renderer\JsonRenderer;
 use Zend\Form\View\Helper;
@@ -11,7 +12,7 @@ use Zend\Form\View\Helper;
  *
  * @author Jakub Igla <jakub.igla@gmail.com>
  */
-class FormElementTest extends \PHPUnit\Framework\TestCase
+class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
 {
     /**
      * @var \Zend\Form\Element
@@ -303,14 +304,14 @@ class FormElementTest extends \PHPUnit\Framework\TestCase
         $translateHelper->setTranslator($translator);
 
         /** @var \Zend\View\Renderer\PhpRenderer | \PHPUnit_Framework_MockObject_MockObject $view */
-        $view = $this->createPartialMock(\Zend\View\Renderer\PhpRenderer::class, array('url'));
-        $view->expects($this->any())
-            ->method('url')
-            ->will($this->returnValue('url'));
+        $view = $this->createPartialMock(\Zend\View\Renderer\PhpRenderer::class, []);
 
         $plainTextService = new \Common\Form\View\Helper\FormPlainText();
         $plainTextService->setTranslator($translator);
         $plainTextService->setView($view);
+
+        $urlHelper = m::mock(\Zend\View\Helper\Url::class);
+        $urlHelper->shouldReceive('__invoke')->andReturn('url');
 
         $helpers = new HelperPluginManager();
         $helpers->setService('form_text', new Helper\FormText());
@@ -319,6 +320,7 @@ class FormElementTest extends \PHPUnit\Framework\TestCase
         $helpers->setService('translate', $translateHelper);
         $helpers->setService('form_plain_text', $plainTextService);
         $helpers->setService('form', new Helper\Form());
+        $helpers->setService('url', $urlHelper);
 
         $view->setHelperPluginManager($helpers);
 

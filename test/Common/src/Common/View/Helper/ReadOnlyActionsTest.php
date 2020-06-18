@@ -26,7 +26,7 @@ class ReadOnlyActionsTest extends MockeryTestCase
 
     private $mockView;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->mockView = m::mock(RendererInterface::class)
             ->shouldReceive('translate')

@@ -25,7 +25,7 @@ class LastLoginServiceTest extends MockeryTestCase
      */
     private $commandSender;
 
-    public function setup()
+    public function setUp(): void
     {
         $this->commandSender = m::mock(CommandSender::class);
         $this->sut = new LastLoginService($this->commandSender);

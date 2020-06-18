@@ -22,7 +22,7 @@ class PaymentTest extends MockeryTestCase
 
     protected $guidance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->formHelper = m::mock(FormHelperService::class);
         $this->guidance = m::mock();

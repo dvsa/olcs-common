@@ -18,7 +18,7 @@ class CrudTableTraitTest extends MockeryTestCase
     /** @var  \Zend\ServiceManager\ServiceManager */
     protected $sm;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->sm = Bootstrap::getServiceManager();
 

@@ -18,7 +18,7 @@ class IssuedPermitLicencePermitReferenceTest extends MockeryTestCase
 
     private $sm;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->urlHelper = m::mock(UrlHelper::class);
 

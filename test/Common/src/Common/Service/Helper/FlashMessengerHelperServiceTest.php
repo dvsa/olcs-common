@@ -30,7 +30,7 @@ class FlashMessengerHelperServiceTest extends MockeryTestCase
     /**
      * Setup the sut
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->mockFlashMessenger = m::mock('\Zend\Mvc\Controller\Plugin\FlashMessenger');
 

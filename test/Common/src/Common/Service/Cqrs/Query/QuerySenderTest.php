@@ -20,7 +20,7 @@ class QuerySenderTest extends MockeryTestCase
     protected $mockQueryService;
     protected $mockAnnotationBuilder;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->sut = new QuerySender();
 

@@ -27,7 +27,7 @@ class LicenceTypeOfLicenceTest extends MockeryTestCase
 
     protected $fh;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->sut = new LicenceTypeOfLicence();
 

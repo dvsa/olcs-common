@@ -76,26 +76,26 @@ class LicenceOperatingCentreTest extends MockeryTestCase
         $result = $sut->fetchListOptions($licenceId);
 
         $this->assertCount(1, $result);
-        $this->assertContains('a1', $result[1]);
+        $this->assertStringContainsString('a1', $result[1]);
         if ($outputType == LicenceOperatingCentre::OUTPUT_TYPE_FULL) {
-            $this->assertContains('a2', $result[1]);
-            $this->assertContains('a3', $result[1]);
-            $this->assertContains('pc', $result[1]);
+            $this->assertStringContainsString('a2', $result[1]);
+            $this->assertStringContainsString('a3', $result[1]);
+            $this->assertStringContainsString('pc', $result[1]);
         } else {
-            $this->assertContains('town', $result[1]);
+            $this->assertStringContainsString('town', $result[1]);
         }
 
         //test data is cached
         $result = $sut->fetchListOptions($licenceId);
 
         $this->assertCount(1, $result);
-        $this->assertContains('a1', $result[1]);
+        $this->assertStringContainsString('a1', $result[1]);
         if ($outputType == LicenceOperatingCentre::OUTPUT_TYPE_FULL) {
-            $this->assertContains('a2', $result[1]);
-            $this->assertContains('a3', $result[1]);
-            $this->assertContains('pc', $result[1]);
+            $this->assertStringContainsString('a2', $result[1]);
+            $this->assertStringContainsString('a3', $result[1]);
+            $this->assertStringContainsString('pc', $result[1]);
         } else {
-            $this->assertContains('town', $result[1]);
+            $this->assertStringContainsString('town', $result[1]);
         }
     }
 

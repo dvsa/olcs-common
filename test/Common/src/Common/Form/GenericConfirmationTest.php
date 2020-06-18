@@ -20,7 +20,7 @@ class GenericConfirmationTest extends TestCase
      */
     private $sut;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->sut = m::mock(\Common\Form\GenericConfirmation::class)->makePartial();
         parent::setUp();

@@ -17,7 +17,7 @@ class BaseQaFormTest extends MockeryTestCase
 {
     private $form;
 
-    public function setUp()
+    public function setUp(): void
     {
         $qaFieldset12 = new Fieldset('fieldset12');
         $qaFieldset12->add(new Text('qaElement'));

@@ -31,7 +31,7 @@ class PeopleLvaServiceTest extends MockeryTestCase
     /** @var PeopleLvaService */
     private $sut;
 
-    public function setup()
+    public function setUp(): void
     {
         $this->sm = m::mock(ServiceLocatorInterface::class);
         $this->sut = new PeopleLvaService();

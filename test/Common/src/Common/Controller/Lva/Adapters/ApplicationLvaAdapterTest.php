@@ -22,7 +22,7 @@ class ApplicationLvaAdapterTest extends MockeryTestCase
     protected $sm;
     protected $controller;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->sm = m::mock('\Zend\ServiceManager\ServiceManager')->makePartial();
         $this->sm->setAllowOverride(true);

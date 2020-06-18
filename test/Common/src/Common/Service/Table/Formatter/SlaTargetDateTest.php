@@ -31,7 +31,7 @@ class SlaTargetDateTest extends TestCase
      * in the Common\Module::modulesLoaded method which can cause this test to
      * fail :(
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
         if (!defined('DATE_FORMAT')) {
@@ -39,7 +39,7 @@ class SlaTargetDateTest extends TestCase
         }
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

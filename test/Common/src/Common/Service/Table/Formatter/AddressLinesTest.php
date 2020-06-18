@@ -5,10 +5,11 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Service\Helper\DataHelperService;
 use Common\Service\Table\Formatter\AddressLines;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * AddressLines formatter test
@@ -17,7 +18,6 @@ use Common\Service\Table\Formatter\AddressLines;
  */
 class AddressLinesTest extends \PHPUnit\Framework\TestCase
 {
-
     /**
      * Test the format method
      *
@@ -95,14 +95,14 @@ class AddressLinesTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormatWithNestedKeys()
     {
-        $mockHelper = $this->createPartialMock('\stdClass', array('fetchNestedData'));
+        $mockHelper = $this->createPartialMock(DataHelperService::class, array('fetchNestedData'));
 
         $mockHelper->expects($this->once())
             ->method('fetchNestedData')
             ->with(['foo' => 'bar'], 'bar->baz')
             ->willReturn(['addressLine1' => 'address 1']);
 
-        $sm = $this->createPartialMock('\stdClass', array('get'));
+        $sm = $this->createMock(ServiceLocatorInterface::class);
         $sm->expects($this->any())
             ->method('get')
             ->with('Helper\Data')

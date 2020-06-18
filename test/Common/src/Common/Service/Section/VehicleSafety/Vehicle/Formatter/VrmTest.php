@@ -8,6 +8,9 @@
 namespace CommonTest\Service\Section\VehicleSafety\Vehicle\Formatter;
 
 use Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm;
+use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\View\Helper\Url;
+use Zend\View\HelperPluginManager;
 
 /**
  * Vrm Test
@@ -37,7 +40,7 @@ class VrmTest extends \PHPUnit\Framework\TestCase
      */
     private function getMockedServiceManager()
     {
-        $urlMock = $this->createPartialMock('\stdClass', array('__invoke'));
+        $urlMock = $this->createPartialMock(Url::class, array('__invoke'));
         $urlMock->expects($this->once())
             ->method('__invoke')
             ->will(
@@ -48,13 +51,13 @@ class VrmTest extends \PHPUnit\Framework\TestCase
                 )
             );
 
-        $mockViewHelper = $this->createPartialMock('\stdClass', array('get'));
+        $mockViewHelper = $this->createPartialMock(HelperPluginManager::class, array('get'));
         $mockViewHelper->expects($this->once())
             ->method('get')
             ->with('url')
             ->will($this->returnValue($urlMock));
 
-        $sm = $this->createPartialMock('\stdClass', array('get'));
+        $sm = $this->createMock(ServiceLocatorInterface::class);
         $sm->expects($this->once())
             ->method('get')
             ->with('viewhelpermanager')

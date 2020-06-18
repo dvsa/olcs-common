@@ -28,7 +28,7 @@ class DateTest extends MockeryTestCase
     /**
      * Setup the view helper
      */
-    public function setUp()
+    public function setUp(): void
     {
         $mockTranslator = m::mock(Translate::class);
         $mockTranslator->shouldReceive('__invoke')

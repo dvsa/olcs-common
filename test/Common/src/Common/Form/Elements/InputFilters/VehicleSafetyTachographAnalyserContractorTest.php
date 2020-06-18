@@ -25,7 +25,7 @@ class VehicleSafetyTachographAnalyserContractorTest extends \PHPUnit\Framework\T
     /**
      * Setup the element
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->element = new VehicleSafetyTachographAnalyserContractor();
     }

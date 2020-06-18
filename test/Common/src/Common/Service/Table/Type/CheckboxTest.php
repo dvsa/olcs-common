@@ -26,7 +26,7 @@ class CheckboxTest extends MockeryTestCase
     /**
      * Set up
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->table = m::mock();
         $this->sut = new Checkbox($this->table);

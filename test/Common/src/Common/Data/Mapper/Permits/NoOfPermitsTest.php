@@ -24,7 +24,7 @@ class NoOfPermitsTest extends TestCase
 
     private $noOfPermits;
 
-    public function setUp()
+    public function setUp(): void
     {
         $submitButton = new Submit();
         $submitButton->setName('SubmitButton');

@@ -15,7 +15,7 @@ class MethodToggleTraitTest extends MockeryTestCase
 {
     protected $sut;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->sut = m::mock('CommonTest\Controller\Traits\Stubs\MethodToggleTraitStub')
             ->makePartial();

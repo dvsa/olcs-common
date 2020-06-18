@@ -21,7 +21,7 @@ class CasesTest extends \PHPUnit\Framework\TestCase
         $sut = new Cases();
         $result = $sut->createNrCase($data);
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertSame($case, $result['case']);
 
         $this->assertEquals(Cases::NR_CATEGORY_DEFAULT, $result['erruCaseType']);

@@ -21,7 +21,7 @@ class TransportManagerNameTest extends MockeryTestCase
     /* @var \Mockery\MockInterface */
     private $mockUrlHelper;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->sut = new TransportManagerName();
 

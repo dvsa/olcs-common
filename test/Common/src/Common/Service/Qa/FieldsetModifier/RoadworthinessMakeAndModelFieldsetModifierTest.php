@@ -20,7 +20,7 @@ class RoadworthinessMakeAndModelFieldsetModifierTest extends MockeryTestCase
 
     private $roadworthinessMakeAndModelFieldsetModifier;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->fieldset = m::mock(Fieldset::class);
 

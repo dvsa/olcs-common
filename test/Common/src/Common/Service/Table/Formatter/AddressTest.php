@@ -5,10 +5,12 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Service\Helper\DataHelperService;
 use Common\Service\Table\Formatter\Address;
+use Zend\I18n\Translator\Translator;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Address formatter test
@@ -17,7 +19,6 @@ use Common\Service\Table\Formatter\Address;
  */
 class AddressTest extends \PHPUnit\Framework\TestCase
 {
-
     /**
      * Test the format method
      *
@@ -28,9 +29,9 @@ class AddressTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormat($data, $column, $expected)
     {
-        $mockTranslator = $this->createPartialMock('\stdClass', array('translate'));
+        $mockTranslator = $this->createPartialMock(Translator::class, array('translate'));
 
-        $sm = $this->createPartialMock('\stdClass', array('get'));
+        $sm = $this->createMock(ServiceLocatorInterface::class);
         $sm->expects($this->any())
             ->method('get')
             ->with('translator')
@@ -139,14 +140,14 @@ class AddressTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormatWithNestedKeys()
     {
-        $mockHelper = $this->createPartialMock('\stdClass', array('fetchNestedData'));
+        $mockHelper = $this->createPartialMock(DataHelperService::class, array('fetchNestedData'));
 
         $mockHelper->expects($this->once())
             ->method('fetchNestedData')
             ->with(['foo' => 'bar'], 'bar->baz')
             ->willReturn(['addressLine1' => 'address 1']);
 
-        $sm = $this->createPartialMock('\stdClass', array('get'));
+        $sm = $this->createMock(ServiceLocatorInterface::class);
         $sm->expects($this->any())
             ->method('get')
             ->with('Helper\Data')

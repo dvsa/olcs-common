@@ -20,7 +20,7 @@ class TransportManagerName extends Name
      *
      * @return string
      */
-    public static function format($data, array $column = [], ServiceLocatorInterface $sm = null)
+    public static function format($data, $column = array(), $sm = null)
     {
         $name = parent::format($data['name'], $column, $sm);
 

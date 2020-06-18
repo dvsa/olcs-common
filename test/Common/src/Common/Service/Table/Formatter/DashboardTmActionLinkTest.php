@@ -15,7 +15,7 @@ class DashboardTmActionLinkTest extends MockeryTestCase
     /* @var \Mockery\MockInterface */
     private $mockSm;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->mockSm = m::mock(\Zend\ServiceManager\ServiceLocatorInterface::class);
     }

@@ -19,7 +19,7 @@ class DateTimeTest extends MockeryTestCase
     /**
      * Setup the view helper
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->sut = new \Common\View\Helper\DateTime();
     }

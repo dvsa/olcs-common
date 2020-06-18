@@ -114,7 +114,7 @@ class PostcodeSearch extends Fieldset
      *
      * @return array
      */
-    public function getMessages()
+    public function getMessages($elementName = null)
     {
         return $this->messages;
     }

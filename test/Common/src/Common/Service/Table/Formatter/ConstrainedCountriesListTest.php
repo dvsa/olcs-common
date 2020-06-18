@@ -17,7 +17,7 @@ class ConstrainedCountriesListTest extends MockeryTestCase
 {
     private $sm;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->sm = m::mock(ServiceLocatorInterface::class);
         $this->sm->allows('get->translate')

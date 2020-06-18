@@ -21,7 +21,7 @@ class TransportManagerApplicationStatusTest extends MockeryTestCase
     /**
      * Setup the view helper
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->mockView = m::mock(RendererInterface::class);
 
