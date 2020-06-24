@@ -81,11 +81,6 @@ class PageTitle extends AbstractHelper implements FactoryInterface
             }
         }
 
-        if (empty($pageTitle)) {
-            // still no page title defined, use default
-            $pageTitle = 'header-vehicle-operator-licensing';
-        }
-
         return $this->translator->__invoke($pageTitle);
     }
 }
