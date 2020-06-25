@@ -143,7 +143,6 @@ return array(
         'aliases' => array(
             'Cache' => 'Zend\Cache\Storage\StorageInterface',
             'DataServiceManager' => 'Common\Service\Data\PluginManager',
-            'BundleManager' => 'Common\Service\Data\BundleManager',
             'translator' => 'MvcTranslator',
             'Zend\Log' => 'Logger',
             'TableBuilder' => 'Common\Service\Table\TableBuilderFactory',
@@ -257,7 +256,6 @@ return array(
             'category' => '\Common\Service\Data\CategoryDataService',
             'FormAnnotationBuilder' => '\Common\Service\FormAnnotationBuilderFactory',
             'Common\Service\Data\PluginManager' => Common\Service\Data\PluginManagerFactory::class,
-            'Common\Service\Data\BundleManager' => 'Common\Service\Data\BundleManagerFactory',
             'Zend\Cache\Storage\StorageInterface' => 'Zend\Cache\Service\StorageCacheFactory',
             \Common\Rbac\Navigation\IsAllowedListener::class => Common\Rbac\Navigation\IsAllowedListener::class,
             \Common\Service\Data\Search\SearchTypeManager::class =>
