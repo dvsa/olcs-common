@@ -214,6 +214,7 @@ return array(
             'QaBilateralYesNoRadioOptionsApplier' => QaService\Custom\Bilateral\YesNoRadioOptionsApplier::class,
             'QaBilateralNoOfPermitsFieldsetPopulator' =>
                 QaService\Custom\Bilateral\NoOfPermitsFieldsetPopulator::class,
+            'QaBilateralPermitUsageIsValidHandler' => QaService\Custom\Bilateral\PermitUsageIsValidHandler::class,
             'QaDateTimeFactory' => QaService\DateTimeFactory::class,
 
             'QaRoadworthinessMakeAndModelFieldsetModifier' =>
@@ -262,6 +263,7 @@ return array(
                 \Common\Service\Data\Search\SearchTypeManagerFactory::class,
             \Common\Rbac\IdentityProvider::class => \Common\Rbac\IdentityProviderFactory::class,
             \Common\Service\AntiVirus\Scan::class => \Common\Service\AntiVirus\Scan::class,
+            'QaCommonIsValidBasedWarningAdder' => QaService\Custom\Common\IsValidBasedWarningAdderFactory::class,
             'QaCheckboxFieldsetPopulator' => QaService\CheckboxFieldsetPopulatorFactory::class,
             'QaTextFieldsetPopulator' => QaService\TextFieldsetPopulatorFactory::class,
             'QaRadioFieldsetPopulator' => QaService\RadioFieldsetPopulatorFactory::class,
@@ -300,6 +302,7 @@ return array(
                 QaService\Custom\Bilateral\CabotageOnlyFieldsetPopulatorFactory::class,
             'QaBilateralStandardAndCabotageFieldsetPopulator' =>
                 QaService\Custom\Bilateral\StandardAndCabotageFieldsetPopulatorFactory::class,
+            'QaBilateralPermitUsageDataHandler' => QaService\Custom\Bilateral\PermitUsageDataHandlerFactory::class,
 
             'QaFieldsetModifier' => QaService\FieldsetModifier\FieldsetModifierFactory::class,
 

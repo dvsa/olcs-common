@@ -3916,6 +3916,7 @@ return [
     'qanda.bilaterals.permit-usage.single-option.journey-multiple' => 'Only multiple journey permits are available for this country.',
     'qanda.bilaterals.permit-usage.multiple-options.journey-single' => 'Single journeys',
     'qanda.bilaterals.permit-usage.multiple-options.journey-multiple' => 'Multiple journeys',
+    'qanda.bilaterals.permit-usage.warning' => 'You have changed your answer. If you continue, all previous answers for this country will be removed and will need to be completed again.',
 
     'qanda.bilaterals.cabotage.not-selected-message' => 'Please select one option',
     'qanda.bilaterals.standard-and-cabotage.not-selected-message' => 'Please select one option',

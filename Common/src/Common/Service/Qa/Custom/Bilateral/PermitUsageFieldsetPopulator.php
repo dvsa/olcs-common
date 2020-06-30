@@ -48,6 +48,16 @@ class PermitUsageFieldsetPopulator implements FieldsetPopulatorInterface
         } else {
             $this->populateMultipleOptions($form, $fieldset, $options);
         }
+
+        $fieldset->add(
+            [
+                'name' => 'warningVisible',
+                'type' => Hidden::class,
+                'attributes' => [
+                    'value' => 0
+                ]
+            ]
+        );
     }
 
     /**
