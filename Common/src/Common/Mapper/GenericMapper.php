@@ -7,8 +7,6 @@
  */
 namespace Common\Mapper;
 
-use Common\Data\Object\Bundle;
-
 /**
  * Generic mapper
  *

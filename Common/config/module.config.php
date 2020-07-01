@@ -143,7 +143,6 @@ return array(
         'aliases' => array(
             'Cache' => 'Zend\Cache\Storage\StorageInterface',
             'DataServiceManager' => 'Common\Service\Data\PluginManager',
-            'BundleManager' => 'Common\Service\Data\BundleManager',
             'translator' => 'MvcTranslator',
             'Zend\Log' => 'Logger',
             'TableBuilder' => 'Common\Service\Table\TableBuilderFactory',
@@ -206,6 +205,15 @@ return array(
                 QaService\Custom\EcmtShortTerm\InternationalJourneysIsValidHandler::class,
             'QaEcmtShortTermAnnualTripsAbroadIsValidHandler' =>
                 QaService\Custom\EcmtShortTerm\AnnualTripsAbroadIsValidHandler::class,
+            'QaBilateralCabotageOnlyYesNoRadioFactory' =>
+                QaService\Custom\Bilateral\CabotageOnlyYesNoRadioFactory::class,
+            'QaBilateralStandardAndCabotageYesNoRadioFactory' =>
+                QaService\Custom\Bilateral\StandardAndCabotageYesNoRadioFactory::class,
+            'QaBilateralRadioFactory' =>
+                QaService\Custom\Bilateral\RadioFactory::class,
+            'QaBilateralYesNoRadioOptionsApplier' => QaService\Custom\Bilateral\YesNoRadioOptionsApplier::class,
+            'QaBilateralNoOfPermitsFieldsetPopulator' =>
+                QaService\Custom\Bilateral\NoOfPermitsFieldsetPopulator::class,
             'QaDateTimeFactory' => QaService\DateTimeFactory::class,
 
             'QaRoadworthinessMakeAndModelFieldsetModifier' =>
@@ -248,7 +256,6 @@ return array(
             'category' => '\Common\Service\Data\CategoryDataService',
             'FormAnnotationBuilder' => '\Common\Service\FormAnnotationBuilderFactory',
             'Common\Service\Data\PluginManager' => Common\Service\Data\PluginManagerFactory::class,
-            'Common\Service\Data\BundleManager' => 'Common\Service\Data\BundleManagerFactory',
             'Zend\Cache\Storage\StorageInterface' => 'Zend\Cache\Service\StorageCacheFactory',
             \Common\Rbac\Navigation\IsAllowedListener::class => Common\Rbac\Navigation\IsAllowedListener::class,
             \Common\Service\Data\Search\SearchTypeManager::class =>
@@ -287,12 +294,16 @@ return array(
                 QaService\Custom\EcmtShortTerm\AnnualTripsAbroadDataHandlerFactory::class,
             'QaCertRoadworthinessMotExpiryDateFieldsetPopulator' =>
                 QaService\Custom\CertRoadworthiness\MotExpiryDateFieldsetPopulatorFactory::class,
+            'QaBilateralPermitUsageFieldsetPopulator' =>
+                QaService\Custom\Bilateral\PermitUsageFieldsetPopulatorFactory::class,
+            'QaBilateralCabotageOnlyFieldsetPopulator' =>
+                QaService\Custom\Bilateral\CabotageOnlyFieldsetPopulatorFactory::class,
+            'QaBilateralStandardAndCabotageFieldsetPopulator' =>
+                QaService\Custom\Bilateral\StandardAndCabotageFieldsetPopulatorFactory::class,
 
             'QaFieldsetModifier' => QaService\FieldsetModifier\FieldsetModifierFactory::class,
 
             PermitsMapper\NoOfPermits::class => PermitsMapper\NoOfPermitsFactory::class,
-            PermitsMapper\BilateralNoOfPermits::class => PermitsMapper\BilateralNoOfPermitsFactory::class,
-            PermitsMapper\MultilateralNoOfPermits::class => PermitsMapper\MultilateralNoOfPermitsFactory::class,
             Common\Service\User\LastLoginService::class => Common\Service\User\LastLoginServiceFactory::class,
         )
     ),

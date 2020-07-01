@@ -5,7 +5,6 @@ namespace Common\Service\Data;
 use Common\Service\Data\Interfaces\RestClientAware;
 use Zend\ServiceManager\AbstractPluginManager;
 use Zend\ServiceManager\Exception;
-use Common\Service\Data\Interfaces\BundleAware;
 
 /**
  * Class PluginManager
@@ -21,7 +20,6 @@ class PluginManager extends AbstractPluginManager
         parent::__construct($configOrContainerInstance, $v3config);
 
         $this->addInitializer(array($this, 'initializeRestClientInterface'));
-        $this->addInitializer(array($this, 'initializeBundle'));
     }
 
     public function initializeRestClientInterface($instance)
@@ -37,20 +35,6 @@ class PluginManager extends AbstractPluginManager
             $client = $apiResolver->getClient($instance->getServiceName());
             $client->setLanguage($translator->getLocale());
             $instance->setRestClient($client);
-        }
-    }
-
-    /**
-     * Initialize the bundle
-     *
-     * @param $service
-     */
-    public function initializeBundle($service)
-    {
-        if ($service instanceof BundleAware) {
-            $serviceLocator = $this->getServiceLocator();
-            $bundle = $serviceLocator->get('BundleManager')->get($service->getDefaultBundleName());
-            $service->setDefaultBundle($bundle);
         }
     }
 
