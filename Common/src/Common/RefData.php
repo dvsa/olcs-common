@@ -384,7 +384,6 @@ class RefData
     const IRHP_PERMIT_STATUS_PRINTED            = 'irhp_permit_printed';
     const IRHP_PERMIT_STATUS_ERROR              = 'irhp_permit_error';
     const IRHP_PERMIT_STATUS_CEASED             = 'irhp_permit_ceased';
-    const IRHP_PERMIT_STATUS_ISSUED             = 'irhp_permit_issued';
     const IRHP_PERMIT_STATUS_TERMINATED         = 'irhp_permit_terminated';
     const IRHP_PERMIT_STATUS_EXPIRED            = 'irhp_permit_expired';
 
