@@ -217,11 +217,20 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
                     $legendAttributesString = ' ' . $legendAttributesString;
                 }
 
-                $legend = sprintf(
-                    '<legend%s>%s</legend>',
-                    $legendAttributesString,
-                    $label
-                );
+                if ($element instanceof PostcodeSearch){
+                  $legend = sprintf(
+                      '<label%s>%s</label>',
+                      $legendAttributesString,
+                      $label
+                  );
+                }else{
+                  $legend = sprintf(
+                      '<legend%s>%s</legend>',
+                      $legendAttributesString,
+                      $label
+                  );
+                }
+
             }
 
             // it's helpful from a JS perspective to give our containers
