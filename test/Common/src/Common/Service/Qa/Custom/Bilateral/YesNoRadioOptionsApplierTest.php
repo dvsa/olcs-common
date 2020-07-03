@@ -14,41 +14,49 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class YesNoRadioOptionsApplierTest extends MockeryTestCase
 {
+    const STANDARD_ATTRIBUTES = [
+        'radios_wrapper_attributes' => [
+            'class' => 'govuk-radios--conditional',
+            'data-module' => 'radios',
+        ]
+    ];
+
+    const STANDARD_VALUE_OPTIONS = [
+        'yes' => [
+            'label' => 'Yes',
+            'value' => 'Y',
+        ],
+        'no' => [
+            'label' => 'No',
+            'value' => 'N',
+        ]
+    ];
+
+    const NOT_SELECTED_MESSAGE = 'not.selected.message';
+
+    const RADIO_VALUE = 'radioValue';
+
     public function testApplyTo()
     {
-        $standardAttributes = [
-            'radios_wrapper_attributes' => [
-                'class' => 'govuk-radios--conditional',
-                'data-module' => 'radios',
-            ]
-        ];
-
-        $standardValueOptions = [
-            'yes' => [
-                'label' => 'Yes',
-                'value' => 'Y',
-            ],
-            'no' => [
-                'label' => 'No',
-                'value' => 'N',
-            ]
-        ];
-
         $radio = m::mock(Radio::class);
 
+        $radio->shouldReceive('setValue')
+            ->with(self::RADIO_VALUE)
+            ->once();
+
         $radio->shouldReceive('setValueOptions')
-            ->with($standardValueOptions)
+            ->with(self::STANDARD_VALUE_OPTIONS)
             ->once();
 
         $radio->shouldReceive('setAttributes')
-            ->with($standardAttributes)
+            ->with(self::STANDARD_ATTRIBUTES)
             ->once();
 
         $radio->shouldReceive('setOption')
-            ->with('not_selected_message', 'qanda.bilaterals.cabotage.not-selected-message')
+            ->with('not_selected_message', self::NOT_SELECTED_MESSAGE)
             ->once();
 
         $yesNoRadioOptionsApplier = new YesNoRadioOptionsApplier();
-        $yesNoRadioOptionsApplier->applyTo($radio);
+        $yesNoRadioOptionsApplier->applyTo($radio, self::RADIO_VALUE, self::NOT_SELECTED_MESSAGE);
     }
 }

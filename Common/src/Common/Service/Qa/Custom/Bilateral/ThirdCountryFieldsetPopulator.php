@@ -8,7 +8,7 @@ use Common\Service\Qa\FieldsetPopulatorInterface;
 use Common\Service\Qa\RadioFactory;
 use Zend\Form\Fieldset;
 
-class CabotageOnlyFieldsetPopulator implements FieldsetPopulatorInterface
+class ThirdCountryFieldsetPopulator implements FieldsetPopulatorInterface
 {
     /** @var TranslationHelperService */
     private $translator;
@@ -26,7 +26,7 @@ class CabotageOnlyFieldsetPopulator implements FieldsetPopulatorInterface
      * @param RadioFactory $radioFactory
      * @param YesNoRadioOptionsApplier $yesNoRadioOptionsApplier
      *
-     * @return CabotageOnlyFieldsetPopulator
+     * @return ThirdCountryFieldsetPopulator
      */
     public function __construct(
         TranslationHelperService $translator,
@@ -49,15 +49,13 @@ class CabotageOnlyFieldsetPopulator implements FieldsetPopulatorInterface
         $this->yesNoRadioOptionsApplier->applyTo(
             $yesNoRadio,
             $yesNoValue,
-            'qanda.bilaterals.cabotage.not-selected-message'
+            'qanda.bilaterals.third-country.not-selected-message'
         );
 
-        $noCaption = sprintf(
-            $this->translator->translate('qanda.bilaterals.cabotage-only.no-blurb'),
-            $this->translator->translate($options['countryName'])
+        $noMarkup = sprintf(
+            '<div class="govuk-hint">%s</div>',
+            $this->translator->translate('qanda.bilaterals.third-country.no-blurb')
         );
-
-        $noMarkup = sprintf('<div class="govuk-hint">%s</div>', $noCaption);
 
         $fieldset->add($yesNoRadio);
 

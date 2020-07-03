@@ -11,6 +11,11 @@ class StandardAndCabotageFieldsetPopulator implements FieldsetPopulatorInterface
     const ANSWER_STANDARD_AND_CABOTAGE = 'qanda.bilaterals.cabotage.answer.standard-and-cabotage';
     const ANSWER_STANDARD_ONLY = 'qanda.bilaterals.cabotage.answer.standard-only';
 
+    const CABOTAGE_VALUE_OPTIONS = [
+        self::ANSWER_CABOTAGE_ONLY => self::ANSWER_CABOTAGE_ONLY,
+        self::ANSWER_STANDARD_AND_CABOTAGE => self::ANSWER_STANDARD_AND_CABOTAGE
+    ];
+
     /** @var RadioFactory */
     private $radioFactory;
 
@@ -44,19 +49,14 @@ class StandardAndCabotageFieldsetPopulator implements FieldsetPopulatorInterface
      */
     public function populate($form, Fieldset $fieldset, array $options)
     {
-        $cabotageValueOptions = [
-            self::ANSWER_CABOTAGE_ONLY => self::ANSWER_CABOTAGE_ONLY,
-            self::ANSWER_STANDARD_AND_CABOTAGE => self::ANSWER_STANDARD_AND_CABOTAGE
-        ];
+        $cabotageOptions = $this->radioFactory->create('yesContent');
+        $cabotageOptions->setValueOptions(self::CABOTAGE_VALUE_OPTIONS);
 
         $yesNoRadio = $this->standardAndCabotageYesNoRadioFactory->create('qaElement');
-        $this->yesNoRadioOptionsApplier->applyTo($yesNoRadio);
-
-        $cabotageOptions = $this->radioFactory->create('yesContent');
-        $cabotageOptions->setValueOptions($cabotageValueOptions);
         $yesNoRadio->setOption('yesContentElement', $cabotageOptions);
 
         $optionsValue = $options['value'];
+        $yesNoValue = null;
         if (!is_null($optionsValue)) {
             $yesNoValue = 'N';
 
@@ -64,9 +64,13 @@ class StandardAndCabotageFieldsetPopulator implements FieldsetPopulatorInterface
                 $yesNoValue = 'Y';
                 $cabotageOptions->setValue($optionsValue);
             }
-
-            $yesNoRadio->setValue($yesNoValue);
         }
+
+        $this->yesNoRadioOptionsApplier->applyTo(
+            $yesNoRadio,
+            $yesNoValue,
+            'qanda.bilaterals.cabotage.not-selected-message'
+        );
 
         $fieldset->add($yesNoRadio);
         $fieldset->add($cabotageOptions);

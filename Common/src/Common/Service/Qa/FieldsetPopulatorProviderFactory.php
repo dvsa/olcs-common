@@ -34,6 +34,7 @@ class FieldsetPopulatorProviderFactory implements FactoryInterface
             'bilateral_cabotage_only' => 'QaBilateralCabotageOnlyFieldsetPopulator',
             'bilateral_standard_and_cabotage' => 'QaBilateralStandardAndCabotageFieldsetPopulator',
             'bilateral_number_of_permits' => 'QaBilateralNoOfPermitsFieldsetPopulator',
+            'bilateral_third_country' => 'QaBilateralThirdCountryFieldsetPopulator',
         ];
 
         foreach ($populators as $type => $serviceName) {
