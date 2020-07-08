@@ -32,8 +32,10 @@ class AnnualTripsAbroadIsValidHandlerTest extends MockeryTestCase
 
         $qaForm = m::mock(QaForm::class);
         $qaForm->shouldReceive('getApplicationStep')
+            ->withNoArgs()
             ->andReturn($applicationStep);
         $qaForm->shouldReceive('getQuestionFieldsetData')
+            ->withNoArgs()
             ->andReturn($questionFieldsetData);
 
         $annualTripsAbroadIsValidHandler = new AnnualTripsAbroadIsValidHandler();

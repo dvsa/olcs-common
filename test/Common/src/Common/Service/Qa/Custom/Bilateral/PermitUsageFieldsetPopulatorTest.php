@@ -34,7 +34,18 @@ class PermitUsageFieldsetPopulatorTest extends MockeryTestCase
     {
         $this->form = m::mock(Form::class);
 
+        $warningElementAttributes = [
+            'name' => 'warningVisible',
+            'type' => Hidden::class,
+            'attributes' => [
+                'value' => 0
+            ]
+        ];
+
         $this->fieldset = m::mock(Fieldset::class);
+        $this->fieldset->shouldReceive('add')
+            ->with($warningElementAttributes)
+            ->once();
 
         $this->radioFieldsetPopulator = m::mock(RadioFieldsetPopulator::class);
 
