@@ -384,7 +384,6 @@ class RefData
     const IRHP_PERMIT_STATUS_PRINTED            = 'irhp_permit_printed';
     const IRHP_PERMIT_STATUS_ERROR              = 'irhp_permit_error';
     const IRHP_PERMIT_STATUS_CEASED             = 'irhp_permit_ceased';
-    const IRHP_PERMIT_STATUS_ISSUED             = 'irhp_permit_issued';
     const IRHP_PERMIT_STATUS_TERMINATED         = 'irhp_permit_terminated';
     const IRHP_PERMIT_STATUS_EXPIRED            = 'irhp_permit_expired';
 
@@ -499,4 +498,11 @@ class RefData
     const APPLICATION_COMPLETION_STATUS_NOT_STARTED = 0;
     const APPLICATION_COMPLETION_STATUS_INCOMPLETE = 1;
     const APPLICATION_COMPLETION_STATUS_COMPLETE = 2;
+
+    const BILATERAL_PERMIT_USAGE = 'bi-permit-usage';
+    const BILATERAL_NUMBER_OF_PERMITS = 'bi-number-of-permits';
+
+    // journey
+    const JOURNEY_SINGLE = 'journey_single';
+    const JOURNEY_MULTIPLE = 'journey_multiple';
 }

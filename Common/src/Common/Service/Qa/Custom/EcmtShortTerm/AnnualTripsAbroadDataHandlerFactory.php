@@ -17,7 +17,7 @@ class AnnualTripsAbroadDataHandlerFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         return new AnnualTripsAbroadDataHandler(
-            $serviceLocator->get('ViewHelperManager')->get('partial'),
+            $serviceLocator->get('QaCommonIsValidBasedWarningAdder'),
             $serviceLocator->get('QaEcmtShortTermAnnualTripsAbroadIsValidHandler')
         );
     }

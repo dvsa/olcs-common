@@ -27,6 +27,7 @@ class InternationalJourneysIsValidHandlerTest extends MockeryTestCase
 
         $qaForm = m::mock(QaForm::class);
         $qaForm->shouldReceive('getQuestionFieldsetData')
+            ->withNoArgs()
             ->andReturn($questionFieldsetData);
 
         $internationalJourneysIsValidHandler = new InternationalJourneysIsValidHandler();

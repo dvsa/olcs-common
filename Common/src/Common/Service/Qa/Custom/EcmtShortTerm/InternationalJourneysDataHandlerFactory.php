@@ -17,7 +17,7 @@ class InternationalJourneysDataHandlerFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         return new InternationalJourneysDataHandler(
-            $serviceLocator->get('ViewHelperManager')->get('partial'),
+            $serviceLocator->get('QaCommonIsValidBasedWarningAdder'),
             $serviceLocator->get('QaEcmtShortTermInternationalJourneysIsValidHandler')
         );
     }

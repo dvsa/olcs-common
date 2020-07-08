@@ -76,7 +76,7 @@ class PageTitleTest extends MockeryTestCase
             'routingWithoutTranslation' => [
                 null,
                 null,
-                'header-vehicle-operator-licensing',
+                null,
             ],
         ];
     }

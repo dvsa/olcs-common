@@ -132,7 +132,6 @@ class ConvictionsPenaltiesTest extends AbstractLvaFormServiceTestCase
         $this->checkGetFormNi();
     }
 
-
     public function testAlterFormDoesNothingIfParamsNotSet()
     {
         $this->mockedForm->shouldNotReceive('get');
