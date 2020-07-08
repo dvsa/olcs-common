@@ -29,19 +29,44 @@ class CountryTest extends AbstractDataServiceTestCase
      * @param $input
      * @param $expected
      */
-    public function testFetchListOptions($input, $expected)
+    public function testFetchListOptions($input, $category, $expected)
     {
         $sut = new Country();
         $sut->setData('Country', $input);
 
-        $this->assertEquals($expected, $sut->fetchListOptions(''));
+        $this->assertEquals($expected, $sut->fetchListOptions($category));
     }
 
     public function provideFetchListOptions()
     {
         return [
-            [$this->getSingleSource(), $this->getSingleExpected()],
-            [false, []]
+            [$this->getSingleSource(), '', $this->getSingleExpected()],
+            [false, '', []],
+            [
+                $this->getSingleSource(),
+                'isMemberState',
+                [
+                    'val-1' => 'Value 1',
+                    'val-2' => 'Value 2',
+                    'val-3' => 'Value 3',
+                ],
+            ],
+            [
+                $this->getSingleSource(),
+                'ecmtConstraint',
+                [
+                    'val-2' => 'Value 2',
+                    'val-5' => 'Value 5',
+                ],
+            ],
+            [
+                $this->getSingleSource(),
+                'isPermitState',
+                [
+                    'val-3' => 'Value 3',
+                    'val-6' => 'Value 6',
+                ],
+            ],
         ];
     }
 
@@ -105,6 +130,9 @@ class CountryTest extends AbstractDataServiceTestCase
             'val-1' => 'Value 1',
             'val-2' => 'Value 2',
             'val-3' => 'Value 3',
+            'val-4' => 'Value 4',
+            'val-5' => 'Value 5',
+            'val-6' => 'Value 6',
         ];
         return $expected;
     }
@@ -115,9 +143,48 @@ class CountryTest extends AbstractDataServiceTestCase
     protected function getSingleSource()
     {
         $source = [
-            ['id' => 'val-1', 'countryDesc' => 'Value 1'],
-            ['id' => 'val-2', 'countryDesc' => 'Value 2'],
-            ['id' => 'val-3', 'countryDesc' => 'Value 3'],
+            [
+                'id' => 'val-1',
+                'countryDesc' => 'Value 1',
+                'isMemberState' => 'Y',
+                'constraints' => [],
+                'isPermitState' => false,
+            ],
+            [
+                'id' => 'val-2',
+                'countryDesc' => 'Value 2',
+                'isMemberState' => 'Y',
+                'constraints' => ['A'],
+                'isPermitState' => false,
+            ],
+            [
+                'id' => 'val-3',
+                'countryDesc' => 'Value 3',
+                'isMemberState' => 'Y',
+                'constraints' => [],
+                'isPermitState' => true,
+            ],
+            [
+                'id' => 'val-4',
+                'countryDesc' => 'Value 4',
+                'isMemberState' => 'N',
+                'constraints' => [],
+                'isPermitState' => false,
+            ],
+            [
+                'id' => 'val-5',
+                'countryDesc' => 'Value 5',
+                'isMemberState' => 'N',
+                'constraints' => ['A'],
+                'isPermitState' => false,
+            ],
+            [
+                'id' => 'val-6',
+                'countryDesc' => 'Value 6',
+                'isMemberState' => 'N',
+                'constraints' => [],
+                'isPermitState' => true,
+            ],
         ];
         return $source;
     }
