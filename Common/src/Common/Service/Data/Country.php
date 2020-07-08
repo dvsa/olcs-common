@@ -38,6 +38,7 @@ class Country extends AbstractDataService implements ListData
      * @param bool   $useGroups Use groups
      *
      * @return array
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function fetchListOptions($category, $useGroups = false)
     {
@@ -47,55 +48,38 @@ class Country extends AbstractDataService implements ListData
             return [];
         }
 
-        if ('isMemberState' == $category) {
-            $data = $this->removeNonMemberStates($data);
-        }
-
-        if ('ecmtConstraint' === $category) {
-            $data = $this->filterEcmtConstrained($data);
+        if (!empty($category)) {
+            $data = $this->filterByCategory($data, $category);
         }
 
         return $this->formatData($data);
     }
 
-
     /**
-     * Remove non-member states
+     * Filter by category
      *
      * @param array $data Data
+     * @param string $category Category
      *
      * @return array
      */
-    public function removeNonMemberStates($data)
-    {
-        $members = [];
-
-        foreach ($data as $state) {
-            if (trim($state['isMemberState']) == 'Y') {
-                $members[] = $state;
-            }
-        }
-
-        return $members;
-    }
-
-    /**
-     * Remove non-member states
-     * @todo we're having to hard code constraints for now, while we sort what's likely a doctrine relationship problem
-     *
-     * @param array $data Data
-     *
-     * @return array
-     */
-    private function filterEcmtConstrained($data)
+    public function filterByCategory($data, $category)
     {
         $filtered = [];
 
+        $field = ('ecmtConstraint' === $category) ? 'constraints' : $category;
+
         foreach ($data as $state) {
-            if (!empty($state['constraints'])) {
+            if (isset($state[$field])
+                && (
+                    ($category === 'isMemberState' && trim($state[$field]) == 'Y')
+                    || ($category !== 'isMemberState' && !empty($state[$field]))
+                )
+            ) {
                 $filtered[] = $state;
             }
         }
+
         return $filtered;
     }
 
