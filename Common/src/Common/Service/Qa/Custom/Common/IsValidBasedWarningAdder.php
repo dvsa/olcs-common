@@ -2,28 +2,24 @@
 
 namespace Common\Service\Qa\Custom\Common;
 
-use Common\Form\Elements\Types\Html;
 use Common\Form\QaForm;
 use Common\Service\Qa\IsValidHandlerInterface;
-use Zend\View\Helper\Partial;
 
 class IsValidBasedWarningAdder
 {
-    const DEFAULT_PRIORITY = 10;
-
-    /** @var Partial */
-    private $partial;
+    /** @var WarningAdder */
+    private $warningAdder;
 
     /**
      * Create service instance
      *
-     * @param Partial $partial
+     * @param WarningAdder $warningAdder
      *
      * @return IsValidBasedWarningAdder
      */
-    public function __construct(Partial $partial)
+    public function __construct(WarningAdder $warningAdder)
     {
-        $this->partial = $partial;
+        $this->warningAdder = $warningAdder;
     }
 
     /**
@@ -38,7 +34,7 @@ class IsValidBasedWarningAdder
         IsValidHandlerInterface $isValidHandler,
         QaForm $form,
         $warningKey,
-        $priority = self::DEFAULT_PRIORITY
+        $priority = WarningAdder::DEFAULT_PRIORITY
     ) {
         if ($isValidHandler->isValid($form)) {
             return;
@@ -47,22 +43,6 @@ class IsValidBasedWarningAdder
         $questionFieldset = $form->getQuestionFieldset();
         $questionFieldset->get('warningVisible')->setValue(1);
 
-        $markup = $this->partial->__invoke(
-            'partials/warning-component',
-            ['translationKey' => $warningKey]
-        );
-
-        $questionFieldset->add(
-            [
-                'name' => 'warning',
-                'type' => Html::class,
-                'attributes' => [
-                    'value' => $markup
-                ]
-            ],
-            [
-                'priority' => $priority
-            ]
-        );
+        $this->warningAdder->add($questionFieldset, $warningKey, $priority);
     }
 }

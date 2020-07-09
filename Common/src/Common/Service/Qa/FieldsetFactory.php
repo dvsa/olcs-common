@@ -22,6 +22,7 @@ class FieldsetFactory
             'bilateral_cabotage_only',
             'bilateral_standard_and_cabotage',
             'bilateral_third_country',
+            'bilateral_emissions_standards',
         ];
 
         if (in_array($type, $radioVerticalTypes)) {

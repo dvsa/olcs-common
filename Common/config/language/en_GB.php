@@ -3932,6 +3932,13 @@ return [
     'qanda.bilaterals.third-country.no-blurb' => '<p>If you are not continuing to a third-country, you don\'t need permits for Turkey. We will remove it from your application when you click on \'Save and continue\'.</p><p>If this is the only country you are applying for, you can cancel this application on the next page.</p>',
     'qanda.bilaterals.third-country.not-selected-message' => 'Please select one option',
 
+    'qanda.bilaterals.emissions-standards.question' => 'Which vehicle euro emission standard will you use?',
+    'qanda.bilaterals.emissions-standards.no-blurb' => '<p>You do not need permits for Ukraine if you use Euro 5 or a higher emission standard.</p><p>We will remove it from your application when you click on \'Save and continue\'. If this is the only country you are applying for, you can cancel this application on the next page.',
+    'qanda.bilaterals.emissions-standards.euro3-or-euro4' => 'Euro 3 or Euro 4',
+    'qanda.bilaterals.emissions-standards.euro5-euro6-or-higher' => 'Euro5, Euro 6 or higher emission standard',
+    'qanda.bilaterals.emissions-standards.euro2-warning' => 'You cannot travel to or through Ukraine using a Euro 2 vehicle or a lower emission standard.',
+    'qanda.bilaterals.emissions-standards.not-selected-message' => 'Please select one option',
+
     'qanda.bilaterals.number-of-permits.question' => 'How many permits do you need?',
     'qanda.bilaterals.number-of-permits.question-short' => 'How many permits do you need?',
     'qanda.bilaterals.number-of-permits.label.standard.single' => 'Standard single journey permit',

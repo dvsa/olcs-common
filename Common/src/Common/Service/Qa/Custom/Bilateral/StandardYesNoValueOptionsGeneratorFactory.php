@@ -1,23 +1,23 @@
 <?php
 
-namespace Common\Service\Qa\Custom\Common;
+namespace Common\Service\Qa\Custom\Bilateral;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class IsValidBasedWarningAdderFactory implements FactoryInterface
+class StandardYesNoValueOptionsGeneratorFactory implements FactoryInterface
 {
     /**
      * Create service
      *
      * @param ServiceLocatorInterface $serviceLocator
      *
-     * @return IsValidBasedWarningAdder
+     * @return StandardYesNoValueOptionsGenerator
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return new IsValidBasedWarningAdder(
-            $serviceLocator->get('QaCommonWarningAdder')
+        return new StandardYesNoValueOptionsGenerator(
+            $serviceLocator->get('QaBilateralYesNoValueOptionsGenerator')
         );
     }
 }

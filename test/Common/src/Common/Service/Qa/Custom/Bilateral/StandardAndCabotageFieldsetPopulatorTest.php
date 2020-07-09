@@ -7,6 +7,7 @@ use Common\Service\Qa\Custom\Bilateral\RadioFactory;
 use Common\Service\Qa\Custom\Bilateral\StandardAndCabotageFieldsetPopulator;
 use Common\Service\Qa\Custom\Bilateral\StandardAndCabotageYesNoRadio;
 use Common\Service\Qa\Custom\Bilateral\StandardAndCabotageYesNoRadioFactory;
+use Common\Service\Qa\Custom\Bilateral\StandardYesNoValueOptionsGenerator;
 use Common\Service\Qa\Custom\Bilateral\YesNoRadioOptionsApplier;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -20,13 +21,14 @@ use Zend\Form\Form;
  */
 class StandardAndCabotageFieldsetPopulatorTest extends MockeryTestCase
 {
+    const STANDARD_YES_NO_VALUE_OPTIONS = [
+        'key1' => 'value1',
+        'key2' => 'value2'
+    ];
+
     private $yesContentRadio;
 
-    private $radioFactory;
-
     private $yesNoRadio;
-
-    private $standardAndCabotageYesNoRadioFactory;
 
     private $yesNoRadioOptionsApplier;
 
@@ -38,20 +40,20 @@ class StandardAndCabotageFieldsetPopulatorTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $expectedValueOptions = [
+        $expectedValueOptionsForYes = [
             StandardAndCabotageFieldsetPopulator::ANSWER_CABOTAGE_ONLY
                 => StandardAndCabotageFieldsetPopulator::ANSWER_CABOTAGE_ONLY,
-                StandardAndCabotageFieldsetPopulator::ANSWER_STANDARD_AND_CABOTAGE
-                    => StandardAndCabotageFieldsetPopulator::ANSWER_STANDARD_AND_CABOTAGE
+            StandardAndCabotageFieldsetPopulator::ANSWER_STANDARD_AND_CABOTAGE
+                => StandardAndCabotageFieldsetPopulator::ANSWER_STANDARD_AND_CABOTAGE
         ];
 
         $this->yesContentRadio = m::mock(Radio::class);
         $this->yesContentRadio->shouldReceive('setValueOptions')
-            ->with($expectedValueOptions)
+            ->with($expectedValueOptionsForYes)
             ->once();
 
-        $this->radioFactory = m::mock(RadioFactory::class);
-        $this->radioFactory->shouldReceive('create')
+        $radioFactory = m::mock(RadioFactory::class);
+        $radioFactory->shouldReceive('create')
             ->with('yesContent')
             ->once()
             ->andReturn($this->yesContentRadio);
@@ -61,13 +63,18 @@ class StandardAndCabotageFieldsetPopulatorTest extends MockeryTestCase
             ->with('yesContentElement', $this->yesContentRadio)
             ->once();
 
-        $this->standardAndCabotageYesNoRadioFactory = m::mock(StandardAndCabotageYesNoRadioFactory::class);
-        $this->standardAndCabotageYesNoRadioFactory->shouldReceive('create')
+        $standardAndCabotageYesNoRadioFactory = m::mock(StandardAndCabotageYesNoRadioFactory::class);
+        $standardAndCabotageYesNoRadioFactory->shouldReceive('create')
             ->with('qaElement')
             ->once()
             ->andReturn($this->yesNoRadio);
 
         $this->yesNoRadioOptionsApplier = m::mock(YesNoRadioOptionsApplier::class);
+
+        $standardYesNoValueOptionsGenerator = m::mock(StandardYesNoValueOptionsGenerator::class);
+        $standardYesNoValueOptionsGenerator->shouldReceive('generate')
+            ->withNoArgs()
+            ->andReturn(self::STANDARD_YES_NO_VALUE_OPTIONS);
 
         $this->form = m::mock(Form::class);
 
@@ -87,9 +94,10 @@ class StandardAndCabotageFieldsetPopulatorTest extends MockeryTestCase
             ->once();
 
         $this->standardAndCabotageFieldsetPopulator = new StandardAndCabotageFieldsetPopulator(
-            $this->radioFactory,
-            $this->standardAndCabotageYesNoRadioFactory,
-            $this->yesNoRadioOptionsApplier
+            $radioFactory,
+            $standardAndCabotageYesNoRadioFactory,
+            $this->yesNoRadioOptionsApplier,
+            $standardYesNoValueOptionsGenerator
         );
     }
 
@@ -100,7 +108,12 @@ class StandardAndCabotageFieldsetPopulatorTest extends MockeryTestCase
         ];
 
         $this->yesNoRadioOptionsApplier->shouldReceive('applyTo')
-            ->with($this->yesNoRadio, null, 'qanda.bilaterals.cabotage.not-selected-message')
+            ->with(
+                $this->yesNoRadio,
+                self::STANDARD_YES_NO_VALUE_OPTIONS,
+                null,
+                'qanda.bilaterals.cabotage.not-selected-message'
+            )
             ->once();
 
         $this->standardAndCabotageFieldsetPopulator->populate($this->form, $this->fieldset, $options);
@@ -113,7 +126,12 @@ class StandardAndCabotageFieldsetPopulatorTest extends MockeryTestCase
         ];
 
         $this->yesNoRadioOptionsApplier->shouldReceive('applyTo')
-            ->with($this->yesNoRadio, 'N', 'qanda.bilaterals.cabotage.not-selected-message')
+            ->with(
+                $this->yesNoRadio,
+                self::STANDARD_YES_NO_VALUE_OPTIONS,
+                'N',
+                'qanda.bilaterals.cabotage.not-selected-message'
+            )
             ->once();
 
         $this->standardAndCabotageFieldsetPopulator->populate($this->form, $this->fieldset, $options);
@@ -129,7 +147,12 @@ class StandardAndCabotageFieldsetPopulatorTest extends MockeryTestCase
         ];
 
         $this->yesNoRadioOptionsApplier->shouldReceive('applyTo')
-            ->with($this->yesNoRadio, 'Y', 'qanda.bilaterals.cabotage.not-selected-message')
+            ->with(
+                $this->yesNoRadio,
+                self::STANDARD_YES_NO_VALUE_OPTIONS,
+                'Y',
+                'qanda.bilaterals.cabotage.not-selected-message'
+            )
             ->once();
 
         $this->yesContentRadio->shouldReceive('setValue')

@@ -17,7 +17,7 @@ class NiWarningConditionalAdderFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         return new NiWarningConditionalAdder(
-            $serviceLocator->get('ViewHelperManager')->get('partial')
+            $serviceLocator->get('QaCommonWarningAdder')
         );
     }
 }
