@@ -34,7 +34,7 @@ class ConvictionDescription implements FormatterInterface
     public static function format($data, $column = array(), $sm = null)
     {
         if (
-            count($data['convictionCategory']) &&
+            isset($data['convictionCategory']['id']) &&
             $data['convictionCategory']['id'] !== RefData::CONVICTION_CATEGORY_USER_DEFINED
         ) {
             $data['categoryText'] = $data['convictionCategory']['description'];

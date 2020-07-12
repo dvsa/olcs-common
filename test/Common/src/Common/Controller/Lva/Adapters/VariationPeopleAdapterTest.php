@@ -21,7 +21,7 @@ class VariationPeopleAdapterTest extends MockeryTestCase
     protected $sut;
     protected $sm;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->sm = m::mock('\Zend\ServiceManager\ServiceManager')->makePartial();
         $this->sm->setAllowOverride(true);

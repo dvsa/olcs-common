@@ -8,6 +8,8 @@
  */
 namespace CommonTest\Controller\Util;
 
+use Zend\Mvc\Controller\Plugin\FlashMessenger as FlashMessengerPlugin;
+
 /**
  * Test FlashMessengerTrait
  *
@@ -18,7 +20,7 @@ class FlashMessengerTraitTest extends \PHPUnit\Framework\TestCase
 {
     private $sut;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->sut = $this->getMockForTrait(
             '\Common\Util\FlashMessengerTrait',
@@ -51,7 +53,7 @@ class FlashMessengerTraitTest extends \PHPUnit\Framework\TestCase
             )
         );
 
-        $pluginManager = $this->createPartialMock('\stdClass', array('getNamespace'));
+        $pluginManager = $this->createPartialMock(FlashMessengerPlugin::class, array('getNamespace'));
 
         $this->sut->expects($this->once())
             ->method('plugin')
@@ -68,7 +70,7 @@ class FlashMessengerTraitTest extends \PHPUnit\Framework\TestCase
     {
         $message = 'foo';
 
-        $chainMock = $this->createPartialMock('\stdClass', array('addInfoMessage'));
+        $chainMock = $this->createPartialMock(FlashMessengerPlugin::class, array('addInfoMessage'));
         $chainMock->expects($this->once())
             ->method('addInfoMessage')
             ->with($message);
@@ -88,7 +90,7 @@ class FlashMessengerTraitTest extends \PHPUnit\Framework\TestCase
     {
         $message = 'foo';
 
-        $chainMock = $this->createPartialMock('\stdClass', array('addErrorMessage'));
+        $chainMock = $this->createPartialMock(FlashMessengerPlugin::class, array('addErrorMessage'));
         $chainMock->expects($this->once())
             ->method('addErrorMessage')
             ->with($message);
@@ -108,7 +110,7 @@ class FlashMessengerTraitTest extends \PHPUnit\Framework\TestCase
     {
         $message = 'foo';
 
-        $chainMock = $this->createPartialMock('\stdClass', array('addSuccessMessage'));
+        $chainMock = $this->createPartialMock(FlashMessengerPlugin::class, array('addSuccessMessage'));
         $chainMock->expects($this->once())
             ->method('addSuccessMessage')
             ->with($message);
@@ -128,7 +130,7 @@ class FlashMessengerTraitTest extends \PHPUnit\Framework\TestCase
     {
         $message = 'foo';
 
-        $chainMock = $this->createPartialMock('\stdClass', array('addWarningMessage'));
+        $chainMock = $this->createPartialMock(FlashMessengerPlugin::class, array('addWarningMessage'));
         $chainMock->expects($this->once())
             ->method('addWarningMessage')
             ->with($message);
@@ -149,7 +151,7 @@ class FlashMessengerTraitTest extends \PHPUnit\Framework\TestCase
         $message = 'foo';
         $namespace = 'error';
 
-        $chainMock = $this->createPartialMock('\stdClass', array('addMessage', 'setNamespace'));
+        $chainMock = $this->createPartialMock(FlashMessengerPlugin::class, array('addMessage', 'setNamespace'));
         $chainMock->expects($this->at(0))
             ->method('setNamespace')
             ->with($namespace)

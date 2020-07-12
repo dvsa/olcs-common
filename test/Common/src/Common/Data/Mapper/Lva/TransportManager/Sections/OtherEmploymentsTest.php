@@ -15,7 +15,7 @@ class OtherEmploymentsTest extends MockeryTestCase
     private $sut;
 
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->mockTranslator = m::mock(TranslationHelperService::class);
         $this->sut = new OtherEmployment($this->mockTranslator);

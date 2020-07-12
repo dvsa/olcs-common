@@ -4,6 +4,8 @@ namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Helper\DataHelperService;
 use Common\Service\Table\Formatter\Translate;
+use Zend\I18n\Translator\Translator;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * @covers Common\Service\Table\Formatter\Translate
@@ -15,7 +17,7 @@ class TranslateTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormat($data, $column, $expected)
     {
-        $mockTranslator = $this->createPartialMock('\stdClass', ['translate']);
+        $mockTranslator = $this->createPartialMock(Translator::class, ['translate']);
 
         $mockTranslator->expects($this->any())
             ->method('translate')
@@ -29,7 +31,7 @@ class TranslateTest extends \PHPUnit\Framework\TestCase
 
         $hldData = new DataHelperService();
 
-        $sm = $this->createPartialMock('\stdClass', array('get'));
+        $sm = $this->createMock(ServiceLocatorInterface::class);
         $sm->expects($this->any())
             ->method('get')
             ->willReturnMap(

@@ -21,7 +21,7 @@ class FormTest extends TestCase
     /** @var \Zend\Form\Form */
     protected $form;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->form = new \Zend\Form\Form('test');
     }

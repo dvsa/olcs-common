@@ -20,7 +20,7 @@ class NavigationParentPageTest extends MockeryTestCase
     /**
      * Setup the view helper
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->mockBreadcrumbs = m::mock();
 

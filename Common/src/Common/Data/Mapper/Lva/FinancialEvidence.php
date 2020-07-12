@@ -89,7 +89,7 @@ class FinancialEvidence implements MapperInterface
                 'uploadLaterRadio' => $uploadLater,
                 'sendByPostRadio' => $sendByPost,
                 'uploadedFileCount' => isset($data['evidence']['files']['list'])
-                    ? count(isset($data['evidence']['files']['list']))
+                    ? count($data['evidence']['files']['list'])
                     : 0
             ]
         );

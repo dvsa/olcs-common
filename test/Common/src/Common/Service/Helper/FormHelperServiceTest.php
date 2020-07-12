@@ -32,7 +32,7 @@ class FormHelperServiceTest extends MockeryTestCase
     /** @var  \Common\Service\Data\AddressDataService| m\MockInterface */
     private $mockDataAddress;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->mockBuilder = m::mock(\Common\Form\Annotation\CustomAnnotationBuilder::class);
         $this->mockAuthSrv = m::mock(\ZfcRbac\Service\AuthorizationService::class);

@@ -22,7 +22,7 @@ class DateTest extends \PHPUnit\Framework\TestCase
      * in the Common\Module::modulesLoaded method which can cause this test to
      * fail :(
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
         if (!defined('DATE_FORMAT')) {

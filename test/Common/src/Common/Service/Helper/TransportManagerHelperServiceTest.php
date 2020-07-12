@@ -26,7 +26,7 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
     /** @var \Zend\ServiceManager\ServiceManager | m\MockInterface */
     protected $sm;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->sm = Bootstrap::getServiceManager();
 

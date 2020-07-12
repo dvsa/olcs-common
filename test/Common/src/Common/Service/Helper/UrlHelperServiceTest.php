@@ -11,6 +11,7 @@ use Common\Service\Helper\UrlHelperService;
 use CommonTest\Bootstrap;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
+use Zend\View\HelperPluginManager;
 
 /**
  * Url Helper Service Test
@@ -31,7 +32,7 @@ class UrlHelperServiceTest extends MockeryTestCase
     /**
      * Setup the sut
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->serviceManager = Bootstrap::getServiceManager();
 
@@ -149,7 +150,7 @@ class UrlHelperServiceTest extends MockeryTestCase
     {
         $mockUrlViewHelper = $this->createPartialMock('\Zend\View\Helper\Url', array('__invoke'));
 
-        $mockViewHelperManager = $this->createPartialMock('\stdClass', array('get'));
+        $mockViewHelperManager = $this->createPartialMock(HelperPluginManager::class, array('get'));
         $mockViewHelperManager->expects($this->any())
             ->method('get')
             ->will($this->returnValue($mockUrlViewHelper));

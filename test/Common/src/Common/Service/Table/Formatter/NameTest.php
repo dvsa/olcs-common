@@ -8,8 +8,10 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Service\Helper\DataHelperService;
 use Common\Service\Table\Formatter\Name;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Name formatter test
@@ -59,9 +61,6 @@ class NameTest extends MockeryTestCase
         );
     }
 
-    /**
-     *
-     */
     public function testFormatNestedData()
     {
         $data = [
@@ -73,9 +72,6 @@ class NameTest extends MockeryTestCase
         $this->assertEquals('John Smith', Name::format($data, ['name' => 'foo']));
     }
 
-    /**
-     *
-     */
     public function testFormatDeepNestedData()
     {
         $data = [
@@ -87,14 +83,14 @@ class NameTest extends MockeryTestCase
             ]
         ];
 
-        $mockHelper = $this->createPartialMock('\stdClass', array('fetchNestedData'));
+        $mockHelper = $this->createPartialMock(DataHelperService::class, array('fetchNestedData'));
 
         $mockHelper->expects($this->once())
             ->method('fetchNestedData')
             ->with($data, 'foo->name')
             ->willReturn($data['foo']['name']);
 
-        $sm = $this->createPartialMock('\stdClass', array('get'));
+        $sm = $this->createMock(ServiceLocatorInterface::class);
         $sm->expects($this->any())
             ->method('get')
             ->with('Helper\Data')

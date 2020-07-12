@@ -33,7 +33,7 @@ class ElasticSearchTest extends MockeryTestCase
      */
     protected $pluginManagerHelper;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->request = m::mock('\Zend\Http\Request');
 

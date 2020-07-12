@@ -24,7 +24,7 @@ class LinkBackTest extends MockeryTestCase
     /**
      * Setup the view helper
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->mockView = m::mock(\Zend\View\Renderer\RendererInterface::class)
             ->shouldReceive('translate')

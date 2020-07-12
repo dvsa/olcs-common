@@ -20,7 +20,7 @@ class AbstractControllerFactoryTest extends MockeryTestCase
     /** @var  m\MockInterface | \Zend\ServiceManager\ServiceLocatorInterface */
     protected $mockSm;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->sut = new AbstractControllerFactory();
 

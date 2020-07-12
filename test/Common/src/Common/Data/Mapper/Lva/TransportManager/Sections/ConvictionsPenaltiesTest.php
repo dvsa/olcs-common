@@ -13,7 +13,7 @@ class ConvictionsPenaltiesTest extends TestCase
     private $sut;
     private $mockTranslator;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->mockTranslator = m::mock(TranslationHelperService::class);
         $this->sut = new ConvictionsPenalties($this->mockTranslator);

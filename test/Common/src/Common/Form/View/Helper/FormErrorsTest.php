@@ -25,7 +25,7 @@ class FormErrorsTest extends MockeryTestCase
 
     protected $view;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->view = m::mock('\Zend\View\Renderer\RendererInterface');
 

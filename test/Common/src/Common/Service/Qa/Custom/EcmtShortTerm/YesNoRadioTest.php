@@ -3,7 +3,7 @@
 namespace CommonTest\Service\Qa\Custom\EcmtShortTerm;
 
 use Common\Service\Qa\Custom\EcmtShortTerm\YesNoRadio;
-use Mockery as m;
+use DMS\PHPUnitExtensions\ArraySubset\Assert;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
@@ -15,7 +15,7 @@ class YesNoRadioTest extends MockeryTestCase
 {
     private $yesNoRadio;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->yesNoRadio = new YesNoRadio();
     }
@@ -53,7 +53,7 @@ class YesNoRadioTest extends MockeryTestCase
 
         $this->yesNoRadio->setStandardValueOptions();
 
-        $this->assertArraySubset(
+        Assert::assertArraySubset(
             $expectedValueOptions,
             $this->yesNoRadio->getValueOptions()
         );

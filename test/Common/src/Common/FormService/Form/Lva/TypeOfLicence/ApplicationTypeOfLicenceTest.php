@@ -19,7 +19,7 @@ class ApplicationTypeOfLicenceTest extends MockeryTestCase
     /** @var  m\MockInterface|FormHelperService */
     protected $fh;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->sut = new ApplicationTypeOfLicence();
 

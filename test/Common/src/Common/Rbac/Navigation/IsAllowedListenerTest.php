@@ -22,7 +22,7 @@ class IsAllowedListenerTest extends MockeryTestCase
     /** @var  m\MockInterface|AuthorizationService */
     private $mockAuthSrv;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->mockModuleOptions = m::mock(ModuleOptions::class);
         $this->mockAuthSrv = m::mock(AuthorizationService::class);

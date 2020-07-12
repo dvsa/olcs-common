@@ -23,7 +23,7 @@ class EnabledSectionTraitTest extends MockeryTestCase
 
     protected $sm;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->sm = Bootstrap::getServiceManager();
 

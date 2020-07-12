@@ -14,7 +14,7 @@ class AbstractOperatingCentresTest extends MockeryTestCase
     /** @var  AbstractOperatingCentres */
     private $sut;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->sut = m::mock(AbstractOperatingCentres::class);
     }

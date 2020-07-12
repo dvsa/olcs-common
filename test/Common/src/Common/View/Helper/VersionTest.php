@@ -9,6 +9,8 @@
 namespace CommonTest\View\Helper;
 
 use \Common\View\Helper\Version;
+use Zend\View\HelperPluginManager;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Test Version view helper
@@ -22,7 +24,7 @@ class VersionTest extends \PHPUnit\Framework\TestCase
     /**
      * Setup the view helper
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->viewHelper = new Version();
     }
@@ -32,7 +34,7 @@ class VersionTest extends \PHPUnit\Framework\TestCase
      */
     public function testSetServiceLocator()
     {
-        $mockServiceLocator = $this->createMock('\Zend\ServiceManager\ServiceManager');
+        $mockServiceLocator = $this->createMock(HelperPluginManager::class);
 
         $this->viewHelper->setServiceLocator($mockServiceLocator);
 
@@ -46,14 +48,12 @@ class VersionTest extends \PHPUnit\Framework\TestCase
     {
         $config = [];
 
-        $mockServiceLocator = $this->createPartialMock(
-            '\Zend\ServiceManager\ServiceManager',
-            ['get', 'getServiceLocator']
-        );
+        $pluginManager = $this->createMock(HelperPluginManager::class);
+        $mockServiceLocator = $this->createMock(ServiceLocatorInterface::class);
 
-        $this->viewHelper->setServiceLocator($mockServiceLocator);
+        $this->viewHelper->setServiceLocator($pluginManager);
 
-        $mockServiceLocator->expects($this->once())
+        $pluginManager->expects($this->once())
             ->method('getServiceLocator')
             ->will($this->returnValue($mockServiceLocator));
 
@@ -78,14 +78,12 @@ class VersionTest extends \PHPUnit\Framework\TestCase
             ]
         ];
 
-        $mockServiceLocator = $this->createPartialMock(
-            '\Zend\ServiceManager\ServiceManager',
-            ['get', 'getServiceLocator']
-        );
+        $pluginManager = $this->createMock(HelperPluginManager::class);
+        $mockServiceLocator = $this->createMock(ServiceLocatorInterface::class);
 
-        $this->viewHelper->setServiceLocator($mockServiceLocator);
+        $this->viewHelper->setServiceLocator($pluginManager);
 
-        $mockServiceLocator->expects($this->once())
+        $pluginManager->expects($this->once())
             ->method('getServiceLocator')
             ->will($this->returnValue($mockServiceLocator));
 
@@ -117,14 +115,12 @@ class VersionTest extends \PHPUnit\Framework\TestCase
             ]
         ];
 
-        $mockServiceLocator = $this->createPartialMock(
-            '\Zend\ServiceManager\ServiceManager',
-            ['get', 'getServiceLocator']
-        );
+        $pluginManager = $this->createMock(HelperPluginManager::class);
+        $mockServiceLocator = $this->createMock(ServiceLocatorInterface::class);
 
-        $this->viewHelper->setServiceLocator($mockServiceLocator);
+        $this->viewHelper->setServiceLocator($pluginManager);
 
-        $mockServiceLocator->expects($this->once())
+        $pluginManager->expects($this->once())
             ->method('getServiceLocator')
             ->will($this->returnValue($mockServiceLocator));
 

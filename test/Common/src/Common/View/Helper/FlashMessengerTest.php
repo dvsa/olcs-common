@@ -31,7 +31,7 @@ class FlashMessengerTest extends MockeryTestCase
 
     private $mockPluginManager;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->mockPluginManager = m::mock('\Zend\Mvc\Controller\Plugin\FlashMessenger');
         $this->flashMessengerHelperService = m::mock(FlashMessengerHelperService::class);

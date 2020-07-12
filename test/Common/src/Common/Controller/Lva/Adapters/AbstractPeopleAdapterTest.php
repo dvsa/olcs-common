@@ -25,7 +25,7 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
     /** @var  m\MockInterface | AbstractPeopleAdapter */
     private $mockResp;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->mockResp = m::mock(\Zend\Http\Response::class);
         $this->mockResp->shouldReceive('isOk')->andReturn(true);

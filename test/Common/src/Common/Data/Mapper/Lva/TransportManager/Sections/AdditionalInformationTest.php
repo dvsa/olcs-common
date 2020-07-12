@@ -13,7 +13,7 @@ class AdditionalInformationTest extends MockeryTestCase
     private $mockTranslator;
     private $sut;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->mockTranslator = m::mock(TranslationHelperService::class);
         $this->sut = new AdditionalInformation($this->mockTranslator);

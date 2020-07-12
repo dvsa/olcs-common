@@ -26,7 +26,7 @@ class AddressHelperServiceTest extends \PHPUnit\Framework\TestCase
     /**
      * Setup the service
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->service = new AddressHelperService();
     }

@@ -21,7 +21,7 @@ class FormElementErrorsTest extends \PHPUnit\Framework\TestCase
 {
     protected $element;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->element = new \Zend\Form\Element\Text('test');
         $this->element->setMessages(['Message']);

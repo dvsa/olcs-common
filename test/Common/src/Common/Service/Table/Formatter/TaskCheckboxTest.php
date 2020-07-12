@@ -8,7 +8,9 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Service\Table\ContentHelper;
 use Common\Service\Table\Formatter\TaskCheckbox;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Task checkbox formatter tests
@@ -17,7 +19,6 @@ use Common\Service\Table\Formatter\TaskCheckbox;
  */
 class TaskCheckboxTest extends \PHPUnit\Framework\TestCase
 {
-
     /**
      * @dataProvider notClosedProvider
      */
@@ -25,9 +26,9 @@ class TaskCheckboxTest extends \PHPUnit\Framework\TestCase
     {
         $column = [];
 
-        $mockTableService = $this->createPartialMock('\stdClass', array('replaceContent'));
+        $mockTableService = $this->createPartialMock(ContentHelper::class, array('replaceContent'));
 
-        $sm = $this->createPartialMock('\stdClass', array('get'));
+        $sm = $this->createMock(ServiceLocatorInterface::class);
         $sm->expects($this->any())
             ->method('get')
             ->with('TableBuilder')

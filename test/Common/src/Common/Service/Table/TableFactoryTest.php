@@ -8,6 +8,7 @@
 
 namespace CommonTest\Service\Table;
 
+use Common\Service\Table\TableBuilder;
 use Common\Service\Table\TableFactory;
 
 /**
@@ -53,7 +54,7 @@ class TableFactoryTest extends \PHPUnit\Framework\TestCase
         $params = array('cake' => 'bbar');
         $render = true;
 
-        $mockTable = $this->createPartialMock('\stdClass', array('buildTable'));
+        $mockTable = $this->createPartialMock(TableBuilder::class, array('buildTable'));
 
         $mockTable->expects($this->once())
             ->method('buildTable')

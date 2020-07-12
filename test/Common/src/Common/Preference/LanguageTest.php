@@ -49,7 +49,7 @@ class LanguageTest extends MockeryTestCase
      */
     protected $setCookie;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->sut = new Language();
 

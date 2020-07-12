@@ -22,7 +22,7 @@ class StatusTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
     /**
      * Setup the view helper
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->sut = new Status();
 

@@ -58,7 +58,6 @@ class FormElement extends ZendFormElement
      */
     public function render(ZendElementInterface $element)
     {
-
         if (!$element->getAttribute('id')) {
             $element->setAttribute('id', $element->getName());
         }

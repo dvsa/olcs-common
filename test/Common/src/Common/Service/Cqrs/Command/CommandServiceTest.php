@@ -46,7 +46,7 @@ class CommandServiceTest extends MockeryTestCase
     private $mockFlashMsgr;
 
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->mockDto = m::mock(CommandInterface::class);
         $this->mockDto->shouldReceive('getArrayCopy')->atMost(1)->andReturn([]);

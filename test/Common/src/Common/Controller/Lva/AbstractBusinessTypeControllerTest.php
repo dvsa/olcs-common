@@ -11,7 +11,7 @@ use Mockery as m;
  */
 class AbstractBusinessTypeControllerTest extends AbstractLvaControllerTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

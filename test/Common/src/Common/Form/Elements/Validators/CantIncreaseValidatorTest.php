@@ -18,7 +18,7 @@ class CantIncreaseValidatorTest extends \PHPUnit\Framework\TestCase
 {
     protected $validator;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->validator = new CantIncreaseValidator();
     }

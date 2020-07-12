@@ -132,7 +132,6 @@ class ContentHelper
         $partialFile = $this->location . 'layouts/' . $name . '.phtml';
 
         if (!file_exists($partialFile)) {
-
             throw new \Exception('Partial not found: ' . $partialFile);
         }
 
@@ -155,7 +154,6 @@ class ContentHelper
         $attributes = array();
 
         foreach ($attrs as $name => $value) {
-
             $attributes[] = $name .= '="' . $value . '"';
         }
 
@@ -174,9 +172,7 @@ class ContentHelper
         $content = $this->replacePartials($content);
 
         foreach ($vars as $key => $val) {
-
             if (is_string($val) || is_numeric($val)) {
-
                 $content = str_replace('{{' . $key . '}}', (string)$val, $content);
             }
         }
@@ -193,16 +189,13 @@ class ContentHelper
     private function replacePartials($content)
     {
         if (preg_match_all('/(\{\{\[([a-zA-Z\/]+)\]\}\})/', $content, $matches)) {
-
             $partials = array();
 
             foreach ($matches[2] as $match) {
-
                 $partials[$match] = $match;
             }
 
             foreach ($partials as $partial) {
-
                 $content = str_replace('{{[' . $partial . ']}}', $this->getPartial($partial), $content);
             }
         }
@@ -219,13 +212,11 @@ class ContentHelper
     private function getPartial($partial)
     {
         if (!isset($this->partials[$partial])) {
-
             $this->partials[$partial] = '';
 
             $filename = $this->location . $partial . '.phtml';
 
             if (file_exists($this->location . $partial . '.phtml')) {
-
                 $this->partials[$partial] = trim(file_get_contents($filename));
             }
         }

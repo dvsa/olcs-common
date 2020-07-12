@@ -12,7 +12,7 @@ class AddressTest extends SearchAbstractTest
 {
     protected $class = 'Common\Data\Object\Search\Address';
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->sut = new $this->class;
 

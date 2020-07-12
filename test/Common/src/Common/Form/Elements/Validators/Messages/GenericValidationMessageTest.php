@@ -18,7 +18,7 @@ class GenericValidationMessageTest extends \PHPUnit\Framework\TestCase
 {
     protected $message;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->message = new GenericValidationMessage();
     }

@@ -16,7 +16,7 @@ class GenericEditActionTest extends \PHPUnit\Framework\TestCase
 {
     private $sut;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->sut = $this->getMockForTrait(
             '\Common\Controller\Traits\GenericEditAction',

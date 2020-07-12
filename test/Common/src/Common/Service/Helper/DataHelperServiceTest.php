@@ -26,7 +26,7 @@ class DataHelperServiceTest extends \PHPUnit\Framework\TestCase
     /**
      * Setup the sut
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->sut = new DataHelperService();
     }

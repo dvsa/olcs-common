@@ -19,7 +19,7 @@ class VehicleUndertakingsOperateSmallVehiclesValidatorTest extends \PHPUnit\Fram
     /**
      * Set up the validator
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->validator = new VehicleUndertakingsOperateSmallVehiclesValidator();
     }

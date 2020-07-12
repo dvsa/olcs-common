@@ -11,7 +11,7 @@ class VehicleRegistrationMarkTest extends \PHPUnit\Framework\TestCase
     /** @var Mockery\MockInterface */
     private $mockServiceManager;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $mockTranslator = Mockery::mock(TranslatorInterface::class)
             ->shouldReceive('translate')

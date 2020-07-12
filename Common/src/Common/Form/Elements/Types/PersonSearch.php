@@ -130,7 +130,7 @@ class PersonSearch extends Fieldset
         $this->messages = $messages;
     }
 
-    public function getMessages()
+    public function getMessages($elementName = null)
     {
         return $this->messages;
     }

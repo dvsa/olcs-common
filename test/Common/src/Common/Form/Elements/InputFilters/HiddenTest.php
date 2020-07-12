@@ -16,7 +16,7 @@ class HiddenTest extends \PHPUnit\Framework\TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->filter = new InputFilters\Hidden("test");
     }

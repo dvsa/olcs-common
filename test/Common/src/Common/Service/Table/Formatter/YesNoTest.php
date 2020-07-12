@@ -16,7 +16,7 @@ class YesNoTest extends MockeryTestCase
     /** @var  m\MockInterface */
     private $mockTranslator;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->mockTranslator = m::mock(\Zend\I18n\Translator\TranslatorInterface::class);
 

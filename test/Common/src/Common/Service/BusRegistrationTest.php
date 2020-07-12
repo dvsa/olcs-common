@@ -18,7 +18,7 @@ class BusRegistrationTest extends \PHPUnit\Framework\TestCase
         $sut = new BusRegistration();
         $result = $sut->createNew($licence);
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertSame($licence['id'], $result['licence']['id']);
 
         $this->assertEquals(BusRegistration::STATUS_NEW, $result['status']);
@@ -83,7 +83,7 @@ class BusRegistrationTest extends \PHPUnit\Framework\TestCase
         $sut = new BusRegistration();
         $options = $sut->getCascadeOptions();
 
-        $this->assertInternalType('array', $options);
+        $this->assertIsArray($options);
         $this->assertArrayHasKey('cascade', $options);
         $this->assertArrayHasKey('single', $options['cascade']);
         $this->assertNotEmpty($options['cascade']['single']);
@@ -94,7 +94,7 @@ class BusRegistrationTest extends \PHPUnit\Framework\TestCase
         $sut = new BusRegistration();
         $options = $sut->getCascadeOptionsVariation();
 
-        $this->assertInternalType('array', $options);
+        $this->assertIsArray($options);
         $this->assertArrayHasKey('cascade', $options);
         $this->assertArrayHasKey('single', $options['cascade']);
         $this->assertNotEmpty($options['cascade']['single']);

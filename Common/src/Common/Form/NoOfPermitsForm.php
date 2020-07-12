@@ -18,7 +18,7 @@ class NoOfPermitsForm extends Form
      *
      * @return array
      */
-    public function getMessages()
+    public function getMessages($elementName = null)
     {
         $messages = $this->callParentGetMessages();
 

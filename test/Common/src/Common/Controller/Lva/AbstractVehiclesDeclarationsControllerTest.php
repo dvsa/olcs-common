@@ -13,7 +13,7 @@ use CommonTest\Bootstrap;
  */
 class AbstractVehiclesDeclarationsControllerTest extends AbstractLvaControllerTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

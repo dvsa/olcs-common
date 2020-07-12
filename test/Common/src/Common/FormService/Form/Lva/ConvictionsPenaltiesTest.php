@@ -38,7 +38,7 @@ class ConvictionsPenaltiesTest extends AbstractLvaFormServiceTestCase
     /** @var  m\MockInterface|\Zend\Form\Form */
     private $mockedForm;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->mockedForm = m::mock(Form::class);
         parent::setUp();

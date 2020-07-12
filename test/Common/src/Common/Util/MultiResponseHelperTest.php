@@ -59,7 +59,7 @@ class MultiResponseHelperTest extends \PHPUnit\Framework\TestCase
         $sut->setResponse($response);
         $data = $sut->handleResponse();
 
-        $this->assertInternalType('array', $data);
+        $this->assertIsArray($data);
     }
 
     public function testHandleResponseNoneValid2()

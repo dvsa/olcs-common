@@ -2,8 +2,8 @@
 
 namespace CommonTest\Service\Qa\Custom\EcmtShortTerm;
 
+use DMS\PHPUnitExtensions\ArraySubset\Assert;
 use Common\Service\Qa\Custom\EcmtShortTerm\RestrictedCountriesMultiCheckboxFactory;
-use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Form\Element\MultiCheckbox;
 
@@ -38,7 +38,7 @@ class RestrictedCountriesMultiCheckboxFactoryTest extends MockeryTestCase
 
         $this->assertInstanceOf(MultiCheckbox::class, $multiCheckbox);
         $this->assertEquals($name, $multiCheckbox->getName());
-        $this->assertArraySubset($expectedOptions, $multiCheckbox->getOptions());
-        $this->assertArraySubset($expectedAttributes, $multiCheckbox->getAttributes());
+        Assert::assertArraySubset($expectedOptions, $multiCheckbox->getOptions());
+        Assert::assertArraySubset($expectedAttributes, $multiCheckbox->getAttributes());
     }
 }

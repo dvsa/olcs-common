@@ -12,7 +12,7 @@ class PublicationSelfserveTest extends SearchAbstractTest
     /** @var  \Common\Data\Object\Search\PublicationSelfserve */
     protected $sut;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->sut = new $this->class();
 

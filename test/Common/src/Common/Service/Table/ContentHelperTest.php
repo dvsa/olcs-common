@@ -9,8 +9,8 @@
 namespace CommonTest\Service\Table;
 
 use Common\Service\Table\ContentHelper;
-use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
+use Zend\Http\Response;
 
 /**
  * Content Helper Test
@@ -20,7 +20,6 @@ use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
 class ContentHelperTest extends TestCase
 {
-
     /**
      * Setup the content helper
      */
@@ -36,7 +35,7 @@ class ContentHelperTest extends TestCase
     {
         $translatorMock = $this->createMock(\Zend\Mvc\I18n\Translator::class);
 
-        $mock = $this->createPartialMock('\stdClass', array('getTranslator'));
+        $mock = $this->createPartialMock(ContentHelper::class, array('getTranslator'));
 
         $mock->expects($this->once())
             ->method('getTranslator')
@@ -53,9 +52,7 @@ class ContentHelperTest extends TestCase
     {
         $this->expectException(\Exception::class);
 
-        $mock = $this->createMock('\stdClass');
-
-        $this->contentHelper = $this->getContentHelper($mock);
+        $this->contentHelper = $this->getContentHelper(null);
 
         $this->contentHelper->renderLayout('MissinPartial');
     }
@@ -65,7 +62,7 @@ class ContentHelperTest extends TestCase
      */
     public function testRenderLayoutWithPartial()
     {
-        $mock = $this->createPartialMock('\stdClass', array('getContent'));
+        $mock = $this->createMock(Response::class);
 
         $mock->expects($this->once())
             ->method('getContent')
@@ -83,9 +80,7 @@ class ContentHelperTest extends TestCase
      */
     public function testRenderAttributes($attrs, $expected)
     {
-        $mock = $this->createMock('\stdClass', array());
-
-        $this->contentHelper = $this->getContentHelper($mock);
+        $this->contentHelper = $this->getContentHelper(null);
 
         $this->assertEquals($expected, $this->contentHelper->renderAttributes($attrs));
     }
@@ -109,9 +104,7 @@ class ContentHelperTest extends TestCase
      */
     public function testReplaceContent($content, $vars, $expected)
     {
-        $mock = $this->createMock('\stdClass', array());
-
-        $this->contentHelper = $this->getContentHelper($mock);
+        $this->contentHelper = $this->getContentHelper(null);
 
         $this->assertEquals($expected, $this->contentHelper->replaceContent($content, $vars));
     }

@@ -17,7 +17,7 @@ class ScanTest extends MockeryTestCase
      */
     private $sut;
 
-    public function setup()
+    public function setUp(): void
     {
         $this->sut = new Scan();
     }

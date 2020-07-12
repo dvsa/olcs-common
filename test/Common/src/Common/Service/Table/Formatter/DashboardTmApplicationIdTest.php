@@ -21,7 +21,7 @@ class DashboardTmApplicationIdTest extends MockeryTestCase
     /* @var \Mockery\MockInterface */
     private $mockViewHelper;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->sut = new DashboardTmApplicationId();
 

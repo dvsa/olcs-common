@@ -18,7 +18,7 @@ class YesNoRadioValidatorTest extends MockeryTestCase
 
     private $yesNoRadioValidator;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->yesContentElement = m::mock(RestrictedCountriesMultiCheckbox::class);
 

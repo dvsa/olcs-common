@@ -22,7 +22,7 @@ class TransportManagerAdapterFactoryTest extends MockeryTestCase
     /** @var ServiceManager */
     protected $sm;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->sm = $this->createMock(ServiceLocatorInterface::class);
         $this->sm->expects(static::exactly(3))

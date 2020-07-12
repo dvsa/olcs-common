@@ -24,7 +24,7 @@ class GenericUploadTest extends MockeryTestCase
     /** @var  m\MockInterface */
     private $mockResp;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->sm = Bootstrap::getServiceManager();
         $this->mockResp = m::mock(\Zend\Http\Response::class);

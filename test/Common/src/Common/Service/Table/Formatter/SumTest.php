@@ -9,6 +9,8 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\Sum;
+use Zend\I18n\Translator\Translator;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Sum formatter test
@@ -17,7 +19,6 @@ use Common\Service\Table\Formatter\Sum;
  */
 class SumTest extends \PHPUnit\Framework\TestCase
 {
-
     /**
      * Test the format method
      *
@@ -28,9 +29,9 @@ class SumTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormat($data, $column, $expected)
     {
-        $mockTranslator = $this->createPartialMock('\stdClass', array('translate'));
+        $mockTranslator = $this->createPartialMock(Translator::class, array('translate'));
 
-        $sm = $this->createPartialMock('\stdClass', array('get'));
+        $sm = $this->createMock(ServiceLocatorInterface::class);
         $sm->expects($this->any())
             ->method('get')
             ->with('translator')

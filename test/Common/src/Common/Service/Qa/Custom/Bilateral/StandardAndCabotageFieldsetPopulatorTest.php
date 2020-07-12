@@ -36,7 +36,7 @@ class StandardAndCabotageFieldsetPopulatorTest extends MockeryTestCase
 
     private $standardAndCabotageFieldsetPopulator;
 
-    public function setUp()
+    public function setUp(): void
     {
         $expectedValueOptions = [
             StandardAndCabotageFieldsetPopulator::ANSWER_CABOTAGE_ONLY

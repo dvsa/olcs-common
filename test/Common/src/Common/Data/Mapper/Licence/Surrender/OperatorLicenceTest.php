@@ -10,7 +10,7 @@ class OperatorLicenceTest extends MockeryTestCase
 {
     private $operatorLicence;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->operatorLicence = new OperatorLicence();
     }

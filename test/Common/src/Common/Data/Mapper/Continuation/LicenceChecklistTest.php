@@ -17,7 +17,7 @@ class LicenceChecklistTest extends MockeryTestCase
 {
     protected $mockTranslator;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->mockTranslator = m::mock(TranslationHelperService::class)
             ->shouldReceive('translate')

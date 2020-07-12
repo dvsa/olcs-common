@@ -9,6 +9,7 @@ namespace CommonTest\Service\Helper;
 
 use CommonTest\Bootstrap;
 use Common\Service\Helper\TranslationHelperService;
+use Zend\I18n\Translator\Translator;
 
 /**
  * Translation Helper Service Test
@@ -29,9 +30,9 @@ class TranslationHelperServiceTest extends \PHPUnit\Framework\TestCase
     /**
      * Setup the sut
      */
-    protected function setUp()
+    protected function setUp(): void
     {
-        $this->mockTranslator = $this->createPartialMock('\stdClass', array('translate'));
+        $this->mockTranslator = $this->createPartialMock(Translator::class, array('translate'));
         $this->mockTranslator->expects($this->any())
             ->method('translate')
             ->will($this->returnCallback(array($this, 'translate')));

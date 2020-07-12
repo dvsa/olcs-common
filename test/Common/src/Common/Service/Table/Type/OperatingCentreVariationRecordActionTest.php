@@ -16,7 +16,7 @@ class OperatingCentreVariationRecordActionTest extends MockeryTestCase
     /** @var  m\MockInterface */
     protected $table;
 
-    public function setUp()
+    public function setUp(): void
     {
         $mockTranslator = m::mock(\Zend\I18n\Translator\TranslatorInterface::class);
 
@@ -51,7 +51,7 @@ class OperatingCentreVariationRecordActionTest extends MockeryTestCase
         $data = ['id' => 1];
         $column = ['action' => 'FOO'];
 
-        $this->assertNotContains('(Schedule 4/1)', $this->sut->render($data, $column));
+        $this->assertStringNotContainsString('(Schedule 4/1)', $this->sut->render($data, $column));
     }
 
     public function testRenderWithS4()
@@ -61,6 +61,6 @@ class OperatingCentreVariationRecordActionTest extends MockeryTestCase
         $data = ['id' => 1, 's4' => 'FOO'];
         $column = ['action' => 'FOO'];
 
-        $this->assertContains('(Schedule 4/1)', $this->sut->render($data, $column));
+        $this->assertStringContainsString('(Schedule 4/1)', $this->sut->render($data, $column));
     }
 }

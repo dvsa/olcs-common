@@ -9,7 +9,7 @@ class CommunityLicenceTest extends MockeryTestCase
 {
     private $communityLicence;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->communityLicence = new CommunityLicence();
     }

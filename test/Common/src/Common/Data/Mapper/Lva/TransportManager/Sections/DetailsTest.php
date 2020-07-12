@@ -16,7 +16,7 @@ class DetailsTest extends MockeryTestCase
     /**
      * setUp
      */
-    public function setUp()
+    public function setUp(): void
     {
 
         $this->mockTranslator = m::mock(TranslationHelperService::class);
@@ -225,7 +225,7 @@ class DetailsTest extends MockeryTestCase
         );
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->mockTranslator = null;
     }

@@ -25,7 +25,7 @@ class TransactionUrlTest extends MockeryTestCase
 
     protected $mockUrlHelper;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

@@ -21,7 +21,7 @@ class RedirectTest extends MockeryTestCase
     protected $sut;
     protected $redirectPlugin;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->sut = new Redirect();
         $this->redirectPlugin = m::mock();

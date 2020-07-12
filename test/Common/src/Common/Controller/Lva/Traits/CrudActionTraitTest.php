@@ -19,7 +19,7 @@ class CrudActionTraitTest extends MockeryTestCase
     /** @var \Zend\ServiceManager\ServiceManager | m\MockInterface */
     protected $sm;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->sm = Bootstrap::getServiceManager();
 
@@ -30,7 +30,7 @@ class CrudActionTraitTest extends MockeryTestCase
         $this->sut->setServiceLocator($this->sm);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }

@@ -15,7 +15,7 @@ class FormRowTest extends MockeryTestCase
 {
     const STANDARD_RENDER_RESULT = 'STANDARD-RENDER-RESULT';
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         m::close();
         parent::tearDown();

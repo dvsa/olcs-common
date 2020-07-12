@@ -23,7 +23,7 @@ class HtmlTest extends \PHPUnit\Framework\TestCase
     /** @var FormElement */
     private $helper;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->helper = new FormElement();
         /** @var PhpRenderer|Mockery\MockInterface $mockRenderer */

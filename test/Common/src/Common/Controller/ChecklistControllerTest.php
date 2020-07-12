@@ -19,7 +19,7 @@ class ChecklistControllerTest extends MockeryTestCase
         return Bootstrap::getServiceManager();
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

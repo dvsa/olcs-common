@@ -24,7 +24,7 @@ class SystemInfoMessagesTest extends MockeryTestCase
     /**
      * Setup the view helper
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->mockAnnotationBuilder = m::mock(AnnotationBuilder::class);
         $this->mockQuerySrv = m::mock(QueryService::class);

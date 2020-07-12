@@ -16,7 +16,7 @@ class CaseEntityNrStatusTest extends MockeryTestCase
     /** @var  \Common\Service\Helper\UrlHelperService | m\MockInterface */
     private $mockUrlHlp;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->mockUrlHlp = m::mock(\Common\Service\Helper\UrlHelperService::class);
 

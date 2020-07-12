@@ -15,12 +15,12 @@ class VehicleSearchTraitTest extends MockeryTestCase
     /** @var  VehicleSearchTraitStub | m\MockInterface */
     private $sut;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->sut = new VehicleSearchTraitStub();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }

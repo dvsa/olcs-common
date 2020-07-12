@@ -33,7 +33,7 @@ class CommonOperatingCentreTest extends MockeryTestCase
 
     protected $mockFormHelper;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->form = m::mock(Form::class);
 

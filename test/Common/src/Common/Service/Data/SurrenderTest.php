@@ -9,7 +9,7 @@ use Dvsa\Olcs\Transfer\Query\Surrender\ByLicence as SurrenderQry;
 
 class SurrenderTest extends AbstractDataServiceTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         $this->sut = new Surrender();
     }

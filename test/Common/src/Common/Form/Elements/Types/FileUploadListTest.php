@@ -3,6 +3,7 @@
 namespace CommonTest\Form\Elements\Types;
 
 use Common\Form\Elements\Types\FileUploadList;
+use Common\Service\Helper\UrlHelperService;
 
 /**
  * FileUploadListTest
@@ -59,7 +60,7 @@ class FileUploadListTest extends \PHPUnit\Framework\TestCase
             )
         );
 
-        $mockUrl = $this->createPartialMock('\stdClass', array('fromRoute'));
+        $mockUrl = $this->createPartialMock(UrlHelperService::class, array('fromRoute'));
         $mockUrl->expects($this->any())
             ->method('fromRoute')
             ->will($this->returnValue('url'));

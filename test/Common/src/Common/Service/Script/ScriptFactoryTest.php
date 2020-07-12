@@ -23,7 +23,7 @@ class ScriptFactoryTest extends \PHPUnit\Framework\TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->config = [
             'local_scripts_path' => [__DIR__ . '/TestResources/']
