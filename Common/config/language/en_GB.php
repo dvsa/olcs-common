@@ -3293,7 +3293,7 @@ return [
     'permits.application.overview.main-title' => 'Application Overview-',
     'permits.application.ineligible' => 'You are not eligible for permits',
     'permits.application.overview.browser.title' => 'Application overview',
-    'permits.application.overview.application.number' => 'Application number',
+    'permits.application.overview.application.reference' => 'Application reference',
     'permits.application.overview.main' => 'Application overview',
     'permits.application.overview.subtitle' => 'Permits applications',
     'permits.application.overview.complete-all-sections' => 'You must complete all of the sections to apply for a new permit.',
