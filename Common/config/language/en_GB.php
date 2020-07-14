@@ -3928,6 +3928,10 @@ return [
     'qanda.bilaterals.cabotage.answer.cabotage-only' => 'I only need permits for cabotage',
     'qanda.bilaterals.cabotage.answer.standard-and-cabotage' => 'I need standard and cabotage permits',
 
+    'qanda.bilaterals.third-country.question' => 'Are you transporting goods from Turkey to a third-country?',
+    'qanda.bilaterals.third-country.no-blurb' => '<p>If you are not continuing to a third-country, you don\'t need permits for Turkey. We will remove it from your application when you click on \'Save and continue\'.</p><p>If this is the only country you are applying for, you can cancel this application on the next page.</p>',
+    'qanda.bilaterals.third-country.not-selected-message' => 'Please select one option',
+
     'qanda.bilaterals.number-of-permits.question' => 'How many permits do you need?',
     'qanda.bilaterals.number-of-permits.question-short' => 'How many permits do you need?',
     'qanda.bilaterals.number-of-permits.label.standard.single' => 'Standard single journey permit',

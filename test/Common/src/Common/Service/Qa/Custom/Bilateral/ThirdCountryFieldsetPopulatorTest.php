@@ -5,7 +5,7 @@ namespace CommonTest\Service\Qa\Custom\Bilateral;
 use Common\Form\Elements\InputFilters\QaRadio;
 use Common\Form\Elements\Types\Html;
 use Common\Service\Helper\TranslationHelperService;
-use Common\Service\Qa\Custom\Bilateral\CabotageOnlyFieldsetPopulator;
+use Common\Service\Qa\Custom\Bilateral\ThirdCountryFieldsetPopulator;
 use Common\Service\Qa\Custom\Bilateral\YesNoRadioOptionsApplier;
 use Common\Service\Qa\RadioFactory;
 use Mockery as m;
@@ -14,34 +14,25 @@ use Zend\Form\Fieldset;
 use Zend\Form\Form;
 
 /**
- * CabotageOnlyFieldsetPopulatorTest
+ * ThirdCountryFieldsetPopulatorTest
  *
  * @author Jonathan Thomas <jonathan@opalise.co.uk>
  */
-class CabotageOnlyFieldsetPopulatorTest extends MockeryTestCase
+class ThirdCountryFieldsetPopulatorTest extends MockeryTestCase
 {
     /**
      * @dataProvider dpPopulate
      */
     public function testPopulate($yesNo, $expectedRadioValue)
     {
-        $cabotageOnlyNoBlurb = 'Cabotage only no blurb %s';
+        $thirdCountryNoBlurb = 'Third country no blurb';
 
-        $countryName = 'Norway';
-        $countryNameTranslated = 'NorwayTranslated';
-
-        $options = [
-            'yesNo' => $yesNo,
-            'countryName' => $countryName
-        ];
+        $options = ['yesNo' => $yesNo];
 
         $translator = m::mock(TranslationHelperService::class);
         $translator->shouldReceive('translate')
-            ->with('qanda.bilaterals.cabotage-only.no-blurb')
-            ->andReturn($cabotageOnlyNoBlurb);
-        $translator->shouldReceive('translate')
-            ->with($countryName)
-            ->andReturn($countryNameTranslated);
+            ->with('qanda.bilaterals.third-country.no-blurb')
+            ->andReturn($thirdCountryNoBlurb);
 
         $yesNoRadio = m::mock(QaRadio::class);
         $radioFactory = m::mock(RadioFactory::class);
@@ -51,14 +42,14 @@ class CabotageOnlyFieldsetPopulatorTest extends MockeryTestCase
 
         $yesNoRadioOptionsApplier = m::mock(YesNoRadioOptionsApplier::class);
         $yesNoRadioOptionsApplier->shouldReceive('applyTo')
-            ->with($yesNoRadio, $expectedRadioValue, 'qanda.bilaterals.cabotage.not-selected-message')
+            ->with($yesNoRadio, $expectedRadioValue, 'qanda.bilaterals.third-country.not-selected-message')
             ->once();
 
         $expectedHtmlDefinition = [
             'name' => 'noContent',
             'type' => Html::class,
             'attributes' => [
-                'value' => '<div class="govuk-hint">Cabotage only no blurb NorwayTranslated</div>'
+                'value' => '<div class="govuk-hint">Third country no blurb</div>'
             ]
         ];
 
@@ -79,13 +70,13 @@ class CabotageOnlyFieldsetPopulatorTest extends MockeryTestCase
 
         $form = m::mock(Form::class);
 
-        $cabotageOnlyFieldsetPopulator = new CabotageOnlyFieldsetPopulator(
+        $thirdCountryFieldsetPopulator = new ThirdCountryFieldsetPopulator(
             $translator,
             $radioFactory,
             $yesNoRadioOptionsApplier
         );
 
-        $cabotageOnlyFieldsetPopulator->populate($form, $fieldset, $options);
+        $thirdCountryFieldsetPopulator->populate($form, $fieldset, $options);
     }
 
     public function dpPopulate()

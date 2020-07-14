@@ -21,6 +21,7 @@ class FieldsetFactory
             'ecmt_st_restricted_countries',
             'bilateral_cabotage_only',
             'bilateral_standard_and_cabotage',
+            'bilateral_third_country',
         ];
 
         if (in_array($type, $radioVerticalTypes)) {

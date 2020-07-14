@@ -30,11 +30,14 @@ class YesNoRadioOptionsApplier
      * Set the required options and attributes against the specified element
      *
      * @param Radio $radio
+     * @param mixed $value
+     * @param string $notSelectedMessage
      */
-    public function applyTo(Radio $radio)
+    public function applyTo(Radio $radio, $value, $notSelectedMessage)
     {
         $radio->setValueOptions($this->standardValueOptions);
         $radio->setAttributes($this->attributes);
-        $radio->setOption('not_selected_message', 'qanda.bilaterals.cabotage.not-selected-message');
+        $radio->setValue($value);
+        $radio->setOption('not_selected_message', $notSelectedMessage);
     }
 }

@@ -302,6 +302,8 @@ return array(
                 QaService\Custom\Bilateral\CabotageOnlyFieldsetPopulatorFactory::class,
             'QaBilateralStandardAndCabotageFieldsetPopulator' =>
                 QaService\Custom\Bilateral\StandardAndCabotageFieldsetPopulatorFactory::class,
+            'QaBilateralThirdCountryFieldsetPopulator' =>
+                QaService\Custom\Bilateral\ThirdCountryFieldsetPopulatorFactory::class,
             'QaBilateralPermitUsageDataHandler' => QaService\Custom\Bilateral\PermitUsageDataHandlerFactory::class,
 
             'QaFieldsetModifier' => QaService\FieldsetModifier\FieldsetModifierFactory::class,
