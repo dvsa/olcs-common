@@ -112,7 +112,6 @@ class FormErrors extends AbstractHelper
         $flatMessages = [];
 
         foreach ($messages as $field => $message) {
-
             if ($fieldset instanceof Fieldset) {
                 if ($fieldset->has($field)) {
                     $element = $fieldset->get($field);
@@ -147,7 +146,6 @@ class FormErrors extends AbstractHelper
     protected function formatMessage($message, $element)
     {
         if ($message instanceof ValidationMessageInterface) {
-
             $msg = $message->getMessage();
 
             if ($message->shouldTranslate()) {
