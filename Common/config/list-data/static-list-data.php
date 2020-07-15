@@ -305,7 +305,7 @@ return array(
         'QA' => 'Qatar',
         'RE' => 'Reunion',
         'RO' => 'Romania',
-        'RU' => 'Russian Federation',
+        'RU' => 'Russia',
         'RW' => 'Rwanda',
         'BL' => 'Saint Barthelemy',
         'SH' => 'Saint Helena',
