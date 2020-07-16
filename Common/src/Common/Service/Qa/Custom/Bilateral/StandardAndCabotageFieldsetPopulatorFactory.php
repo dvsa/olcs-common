@@ -19,7 +19,8 @@ class StandardAndCabotageFieldsetPopulatorFactory implements FactoryInterface
         return new StandardAndCabotageFieldsetPopulator(
             $serviceLocator->get('QaBilateralRadioFactory'),
             $serviceLocator->get('QaBilateralStandardAndCabotageYesNoRadioFactory'),
-            $serviceLocator->get('QaBilateralYesNoRadioOptionsApplier')
+            $serviceLocator->get('QaBilateralYesNoRadioOptionsApplier'),
+            $serviceLocator->get('QaBilateralStandardYesNoValueOptionsGenerator')
         );
     }
 }

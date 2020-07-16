@@ -205,6 +205,8 @@ return array(
                 QaService\Custom\EcmtShortTerm\InternationalJourneysIsValidHandler::class,
             'QaEcmtShortTermAnnualTripsAbroadIsValidHandler' =>
                 QaService\Custom\EcmtShortTerm\AnnualTripsAbroadIsValidHandler::class,
+            'QaBilateralYesNoValueOptionsGenerator' =>
+                QaService\Custom\Bilateral\YesNoValueOptionsGenerator::class,
             'QaBilateralCabotageOnlyYesNoRadioFactory' =>
                 QaService\Custom\Bilateral\CabotageOnlyYesNoRadioFactory::class,
             'QaBilateralStandardAndCabotageYesNoRadioFactory' =>
@@ -212,6 +214,7 @@ return array(
             'QaBilateralRadioFactory' =>
                 QaService\Custom\Bilateral\RadioFactory::class,
             'QaBilateralYesNoRadioOptionsApplier' => QaService\Custom\Bilateral\YesNoRadioOptionsApplier::class,
+
             'QaBilateralNoOfPermitsFieldsetPopulator' =>
                 QaService\Custom\Bilateral\NoOfPermitsFieldsetPopulator::class,
             'QaBilateralPermitUsageIsValidHandler' => QaService\Custom\Bilateral\PermitUsageIsValidHandler::class,
@@ -263,6 +266,7 @@ return array(
                 \Common\Service\Data\Search\SearchTypeManagerFactory::class,
             \Common\Rbac\IdentityProvider::class => \Common\Rbac\IdentityProviderFactory::class,
             \Common\Service\AntiVirus\Scan::class => \Common\Service\AntiVirus\Scan::class,
+            'QaCommonWarningAdder' => QaService\Custom\Common\WarningAdderFactory::class,
             'QaCommonIsValidBasedWarningAdder' => QaService\Custom\Common\IsValidBasedWarningAdderFactory::class,
             'QaCheckboxFieldsetPopulator' => QaService\CheckboxFieldsetPopulatorFactory::class,
             'QaTextFieldsetPopulator' => QaService\TextFieldsetPopulatorFactory::class,
@@ -296,6 +300,10 @@ return array(
                 QaService\Custom\EcmtShortTerm\AnnualTripsAbroadDataHandlerFactory::class,
             'QaCertRoadworthinessMotExpiryDateFieldsetPopulator' =>
                 QaService\Custom\CertRoadworthiness\MotExpiryDateFieldsetPopulatorFactory::class,
+            'QaBilateralStandardYesNoValueOptionsGenerator' =>
+                QaService\Custom\Bilateral\StandardYesNoValueOptionsGeneratorFactory::class,
+            'QaBilateralYesNoWithMarkupForNoPopulator' =>
+                QaService\Custom\Bilateral\YesNoWithMarkupForNoPopulatorFactory::class,
             'QaBilateralPermitUsageFieldsetPopulator' =>
                 QaService\Custom\Bilateral\PermitUsageFieldsetPopulatorFactory::class,
             'QaBilateralCabotageOnlyFieldsetPopulator' =>
@@ -304,6 +312,8 @@ return array(
                 QaService\Custom\Bilateral\StandardAndCabotageFieldsetPopulatorFactory::class,
             'QaBilateralThirdCountryFieldsetPopulator' =>
                 QaService\Custom\Bilateral\ThirdCountryFieldsetPopulatorFactory::class,
+            'QaBilateralEmissionsStandardsFieldsetPopulator' =>
+                QaService\Custom\Bilateral\EmissionsStandardsFieldsetPopulatorFactory::class,
             'QaBilateralPermitUsageDataHandler' => QaService\Custom\Bilateral\PermitUsageDataHandlerFactory::class,
 
             'QaFieldsetModifier' => QaService\FieldsetModifier\FieldsetModifierFactory::class,

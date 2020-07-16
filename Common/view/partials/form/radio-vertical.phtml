@@ -1,4 +1,9 @@
 <?php
+
+if ($element->has('warning')) {
+    echo $this->formRow($element->get('warning'));
+}
+
 /** @var Common\Form\Elements\Types\RadioHorizontal $element */
 $element = $this->element;
 

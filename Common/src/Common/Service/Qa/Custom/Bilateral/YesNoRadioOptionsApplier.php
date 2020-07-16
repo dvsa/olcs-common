@@ -14,28 +14,17 @@ class YesNoRadioOptionsApplier
         ]
     ];
 
-    /** @var array */
-    protected $standardValueOptions = [
-        'yes' => [
-            'label' => 'Yes',
-            'value' => 'Y',
-        ],
-        'no' => [
-            'label' => 'No',
-            'value' => 'N',
-        ]
-    ];
-
     /**
      * Set the required options and attributes against the specified element
      *
      * @param Radio $radio
+     * @param array $valueOptions
      * @param mixed $value
      * @param string $notSelectedMessage
      */
-    public function applyTo(Radio $radio, $value, $notSelectedMessage)
+    public function applyTo(Radio $radio, array $valueOptions, $value, $notSelectedMessage)
     {
-        $radio->setValueOptions($this->standardValueOptions);
+        $radio->setValueOptions($valueOptions);
         $radio->setAttributes($this->attributes);
         $radio->setValue($value);
         $radio->setOption('not_selected_message', $notSelectedMessage);

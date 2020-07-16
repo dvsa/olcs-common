@@ -18,8 +18,8 @@ class CabotageOnlyFieldsetPopulatorFactory implements FactoryInterface
     {
         return new CabotageOnlyFieldsetPopulator(
             $serviceLocator->get('Helper\Translation'),
-            $serviceLocator->get('QaRadioFactory'),
-            $serviceLocator->get('QaBilateralYesNoRadioOptionsApplier')
+            $serviceLocator->get('QaBilateralYesNoWithMarkupForNoPopulator'),
+            $serviceLocator->get('QaBilateralStandardYesNoValueOptionsGenerator')
         );
     }
 }

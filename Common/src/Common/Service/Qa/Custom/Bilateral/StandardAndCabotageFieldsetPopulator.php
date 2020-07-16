@@ -25,23 +25,29 @@ class StandardAndCabotageFieldsetPopulator implements FieldsetPopulatorInterface
     /** @var YesNoRadioOptionsApplier */
     private $yesNoRadioOptionsApplier;
 
+    /** @var StandardYesNoValueOptionsGenerator */
+    private $standardYesNoValueOptionsGenerator;
+
     /**
      * Create service instance
      *
      * @param RadioFactory $radioFactory
      * @param StandardAndCabotageYesNoRadioFactory $standardAndCabotageYesNoRadioFactory
      * @param YesNoRadioOptionsApplier $yesNoRadioOptionsApplier
+     * @param StandardYesNoValueOptionsGenerator $standardYesNoValueOptionsGenerator
      *
      * @return StandardAndCabotageFieldsetPopulator
      */
     public function __construct(
         RadioFactory $radioFactory,
         StandardAndCabotageYesNoRadioFactory $standardAndCabotageYesNoRadioFactory,
-        YesNoRadioOptionsApplier $yesNoRadioOptionsApplier
+        YesNoRadioOptionsApplier $yesNoRadioOptionsApplier,
+        StandardYesNoValueOptionsGenerator $standardYesNoValueOptionsGenerator
     ) {
         $this->radioFactory = $radioFactory;
         $this->standardAndCabotageYesNoRadioFactory = $standardAndCabotageYesNoRadioFactory;
         $this->yesNoRadioOptionsApplier = $yesNoRadioOptionsApplier;
+        $this->standardYesNoValueOptionsGenerator = $standardYesNoValueOptionsGenerator;
     }
 
     /**
@@ -66,8 +72,11 @@ class StandardAndCabotageFieldsetPopulator implements FieldsetPopulatorInterface
             }
         }
 
+        $valueOptions = $this->standardYesNoValueOptionsGenerator->generate();
+
         $this->yesNoRadioOptionsApplier->applyTo(
             $yesNoRadio,
+            $valueOptions,
             $yesNoValue,
             'qanda.bilaterals.cabotage.not-selected-message'
         );
