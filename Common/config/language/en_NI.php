@@ -20,7 +20,7 @@ $ni = array_merge(
         'selfserve-app-subSection-previous-history-criminal-conviction-hasConv-org_t_pa-dc' => 'Do any of the new directors have a conviction that the Transport Regulator must be told about?',
         'selfserve-app-subSection-previous-history-criminal-conviction-hasConv-org_t_rc' => 'Do any of the new directors have a conviction that the Transport Regulator must be told about?',
         'selfserve-app-subSection-previous-history-criminal-conviction-hasConv-org_t_rc-dc' =>'Do any of the new directors have a conviction that the Transport Regulator must be told about?',
-        'selfserve-app-subSection-previous-history-criminal-conviction-hasConv-hint-director-change' => '<i class="icon exclamation selfservice-icon-important"><span class="visually-hidden">Important</span></i> <p>You must declare any relevant convictions to the Transport Regulator</p>',
+        'selfserve-app-subSection-previous-history-criminal-conviction-hasConv-hint-director-change' => '<i class="icon exclamation selfservice-icon-important"><span class="govuk-visually-hidden">Important</span></i> <p>You must declare any relevant convictions to the Transport Regulator</p>',
         'application_previous-history_licence-history_prevHasLicence' => 'Does anyone you\'ve named already have an operator\'s licence in Great Britain or Northern Ireland?',
         'application_previous-history_licence-history_prevHadLicence' => 'Has anyone you\'ve named ever had or applied for an operator\'s licence in Great Britain or Northern Ireland?',
         'application_previous-history_licence-history_prevBeenDisqualifiedTc' => 'Has anyone you\'ve named ever been disqualified from having an operator\'s licence in Great Britain or Northern Ireland?',
