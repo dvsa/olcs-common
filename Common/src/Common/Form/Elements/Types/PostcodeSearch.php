@@ -59,6 +59,13 @@ class PostcodeSearch extends Fieldset
 
         $this->add($searchButton);
 
+        $selectLabel = new HtmlTranslated('select-label');
+        $selectLabel->setValue(
+            '<label class="visually-hidden" for="correspondence_address[searchPostcode][addresses]">Select an address</label>'
+        );
+
+        $this->add($selectLabel);
+
         $selectAddress = new Select('addresses', array('label' => '', 'empty_option' => 'Please select'));
         $selectAddress->setAttributes(
             array(

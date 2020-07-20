@@ -68,7 +68,7 @@ class LicencePermitReference implements FormatterInterface
     public static function format($row, $column = null, $serviceLocator = null)
     {
         $referenceNumberMarkup = sprintf(
-            '<span class="visually-hidden">%s</span>',
+            '<span class="govuk-visually-hidden">%s</span>',
             Escape::html(
                 $serviceLocator->get('translator')->translate('dashboard-table-permit-application-ref')
             )
