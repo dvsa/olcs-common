@@ -67,5 +67,7 @@ class RestrictedCountriesFieldsetPopulator implements FieldsetPopulatorInterface
         $fieldset->add($yesNoRadio);
         $fieldset->add($restrictedCountries);
         $fieldset->setOption('radio-element', 'restrictedCountries');
+        $fieldset->setLabel($options['questionKey']);
+        $fieldset->setLabelAttributes(['class' => 'govuk-visually-hidden']);
     }
 }

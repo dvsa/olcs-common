@@ -33,6 +33,12 @@ class CabotageOnlyFieldsetPopulatorTest extends MockeryTestCase
         ];
 
         $fieldset = m::mock(Fieldset::class);
+        $fieldset->shouldReceive('setLabel')
+            ->with('qanda.bilaterals.cabotage.question')
+            ->once();
+        $fieldset->shouldReceive('setLabelAttributes')
+            ->with(['class' => 'govuk-visually-hidden'])
+            ->once();
 
         $form = m::mock(Form::class);
 

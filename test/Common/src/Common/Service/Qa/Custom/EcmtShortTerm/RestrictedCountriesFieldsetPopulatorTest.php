@@ -21,8 +21,11 @@ class RestrictedCountriesFieldsetPopulatorTest extends MockeryTestCase
 {
     public function testPopulate()
     {
+        $questionKey = 'question.key';
+ 
         $options = [
             'yesNo' => null,
+            'questionKey' => $questionKey,
             'countries' => [
                 [
                     'code' => 'GR',
@@ -97,6 +100,13 @@ class RestrictedCountriesFieldsetPopulatorTest extends MockeryTestCase
             ->with($restrictedCountriesMultiCheckbox)
             ->once()
             ->ordered();
+
+        $fieldset->shouldReceive('setLabel')
+            ->with($questionKey)
+            ->once();
+        $fieldset->shouldReceive('setLabelAttributes')
+            ->with(['class' => 'govuk-visually-hidden'])
+            ->once();
 
         $yesNoRadioFactory = m::mock(YesNoRadioFactory::class);
         $yesNoRadioFactory->shouldReceive('create')
