@@ -41,7 +41,7 @@ class LicenceAddPerson extends AbstractPeople
         $form = parent::alterForm($form, $params);
 
         $this->addFieldsetHeading($form, $params['organisationType']);
-        $this->addRemoveLink($form);
+        $this->addRemoveLink($form, $params);
         $this->addClass($form);
         $this->changeButtonForOrganisation($form, $params['organisationType']);
         return $form;
@@ -52,16 +52,21 @@ class LicenceAddPerson extends AbstractPeople
      *
      * @param Form $form Form
      *
+     * @param string $params
      * @return void
      */
-    private function addRemoveLink(Form $form)
+    private function addRemoveLink(Form $form, array $params)
     {
         $targetElement = $this->getTargetElementInCollection($form);
 
         $translator = $this->getTranslator();
 
         $removeLink = new Html('removeLink');
-        $removeLink->setValue('<a role="button" href="#">' . $translator->translate('Remove this <span class="visually-hidden">additional director form that has just been created</span>') . '</a>');
+
+        $orgHeading = strip_tags($this->getOrganisationHeading($params['organisationType']));
+
+        $removeLink->setValue('<a role="button" href="#">' . $translator->translate('action_links.remove') . ' ' .
+            $orgHeading . '</a>');
         $removeLink->setAttribute('data-container-class', 'remove-link');
 
         $targetElement->add($removeLink, ['priority' => 1]);
