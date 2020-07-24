@@ -77,6 +77,7 @@ class DateSelectTest extends MockeryTestCase
         $this->dateSelect->setOptions($options);
 
         $expectedSpecification = [
+            'id' => 'qaDateSelect',
             'name' => $name,
             'required' => false,
             'filters' => [

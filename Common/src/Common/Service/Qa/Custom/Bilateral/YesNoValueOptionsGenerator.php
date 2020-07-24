@@ -18,6 +18,9 @@ class YesNoValueOptionsGenerator
             'yes' => [
                 'label' => $yesCaption,
                 'value' => 'Y',
+                'attributes' => [
+                    'id' => 'yesContent',
+                ]
             ],
             'no' => [
                 'label' => $noCaption,

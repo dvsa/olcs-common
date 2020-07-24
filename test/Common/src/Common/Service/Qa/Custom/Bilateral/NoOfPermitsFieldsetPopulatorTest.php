@@ -53,6 +53,7 @@ class NoOfPermitsFieldsetPopulatorTest extends MockeryTestCase
                 'hint' => $text1Hint,
             ],
             'attributes' => [
+                'id' => $text1Name,
                 'value' => $text1Value
             ]
         ];
@@ -65,6 +66,7 @@ class NoOfPermitsFieldsetPopulatorTest extends MockeryTestCase
                 'hint' => $text2Hint,
             ],
             'attributes' => [
+                'id' => $text2Name,
                 'value' => $text2Value
             ]
         ];

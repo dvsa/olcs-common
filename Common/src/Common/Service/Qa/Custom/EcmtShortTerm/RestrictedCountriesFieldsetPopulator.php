@@ -35,6 +35,7 @@ class RestrictedCountriesFieldsetPopulator implements FieldsetPopulatorInterface
      * @param mixed $form
      * @param Fieldset $fieldset
      * @param array $options
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function populate($form, Fieldset $fieldset, array $options)
     {
@@ -50,6 +51,12 @@ class RestrictedCountriesFieldsetPopulator implements FieldsetPopulatorInterface
                 'value' => $country['code'],
                 'label' => $country['labelTranslationKey'],
                 'selected' => $country['checked'],
+            ];
+        }
+
+        if (count($valueOptions)) {
+            $valueOptions[0]['attributes'] = [
+                'id' => 'RestrictedCountriesList'
             ];
         }
 

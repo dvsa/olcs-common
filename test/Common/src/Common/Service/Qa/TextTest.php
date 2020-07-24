@@ -18,6 +18,7 @@ class TextTest extends MockeryTestCase
         $name = 'qaElement';
     
         $expectedInputSpecification = [
+            'id' => 'qaText',
             'name' => $name,
             'required' => false,
             'filters' => [

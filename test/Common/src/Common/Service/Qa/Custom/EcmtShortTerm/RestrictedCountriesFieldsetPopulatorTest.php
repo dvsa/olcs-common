@@ -46,7 +46,10 @@ class RestrictedCountriesFieldsetPopulatorTest extends MockeryTestCase
             [
                 'value' => 'GR',
                 'label' => 'Greece',
-                'selected' => true
+                'selected' => true,
+                'attributes' => [
+                    'id' => 'RestrictedCountriesList',
+                ],
             ],
             [
                 'value' => 'HU',
