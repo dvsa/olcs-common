@@ -1775,7 +1775,6 @@ return [
     'permits.page.confirmation.cancel.browser.title' => 'Cais wedi\'i ganslo',
     'permits.page.confirmation.withdraw.title' => 'Cais wedi ei Dynnu yn ôl',
     'permits.page.confirmation.withdraw.browser.title' => 'Cais wedi ei Dynnu yn ôl',
-    'permits.check-answers.page.question.licence' => 'Y Drwydded wedi’i dewis',
     'permits.page.check-answers.browser.title' => 'Gwiriwch eich atebion',
     'permits.page.check-answers.title' => 'Gwiriwch eich atebion',
     'govuk.warning.component.title' => 'Warning',
