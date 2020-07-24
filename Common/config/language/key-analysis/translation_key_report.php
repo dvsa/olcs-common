@@ -23,7 +23,6 @@ if (isset($argv[2])) {
 
 $commonTranslations = loadCommonTranslations($path);
 $usages = findTranslationKeyUsages($commonTranslations, $path, $ignoreKeys);
-usageLocationReport($usages, $path);
 findUnusedTranslationKeys($commonTranslations, $usages);
 findMismatchedCommonBackendValues($commonTranslations, $path);
 
@@ -165,22 +164,6 @@ function findMismatchedCommonBackendValues(array $translations, string $path)
             echo "\n\n";
             file_put_contents("reports/backend_{$lang}_mismatched_values.json", jsonEncodeWrap($mismatches));
         }
-    }
-}
-
-/**
- * Removes local-prefix from discovered filenames. Outputs JSON report of filenames found with instances of each translation key.
- *
- * @param array $usages
- * @param string $pathPrefix
- */
-function usageLocationReport(array $usages, string $pathPrefix)
-{
-    foreach ($usages as $langKey => $languageUses) {
-        foreach ($languageUses as $transKey => $locations) {
-            $usages[$langKey][$transKey] = str_replace($pathPrefix, '', $locations);
-        }
-        file_put_contents("reports/{$langKey}_key_usage_locations.json", jsonEncodeWrap($usages[$langKey]));
     }
 }
 
