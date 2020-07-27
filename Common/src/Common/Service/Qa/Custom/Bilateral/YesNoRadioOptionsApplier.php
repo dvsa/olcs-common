@@ -8,7 +8,9 @@ class YesNoRadioOptionsApplier
 {
     /** @var array */
     protected $attributes = [
+        'id' => 'yesNoRadio',
         'radios_wrapper_attributes' => [
+            'id' => 'yesNoRadio',
             'class' => 'govuk-radios--conditional',
             'data-module' => 'radios',
         ]

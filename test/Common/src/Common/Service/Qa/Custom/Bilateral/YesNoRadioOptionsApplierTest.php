@@ -15,7 +15,9 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class YesNoRadioOptionsApplierTest extends MockeryTestCase
 {
     const STANDARD_ATTRIBUTES = [
+        'id' => 'yesNoRadio',
         'radios_wrapper_attributes' => [
+            'id' => 'yesNoRadio',
             'class' => 'govuk-radios--conditional',
             'data-module' => 'radios',
         ]

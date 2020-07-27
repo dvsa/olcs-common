@@ -7,12 +7,17 @@ use Zend\InputFilter\InputProviderInterface;
 
 class Text extends ZendText implements InputProviderInterface
 {
+    protected $attributes = [
+        'id' => 'qaText',
+    ];
+
     /**
      * {@inheritdoc}
      */
     public function getInputSpecification()
     {
          return [
+             'id' => 'qaText',
              'name' => $this->getName(),
              'required' => false,
              'filters' => [

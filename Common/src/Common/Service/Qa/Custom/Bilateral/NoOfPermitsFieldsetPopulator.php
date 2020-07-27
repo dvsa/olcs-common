@@ -22,6 +22,7 @@ class NoOfPermitsFieldsetPopulator implements FieldsetPopulatorInterface
                         'hint' => $text['hint'],
                     ],
                     'attributes' => [
+                        'id' => $text['name'],
                         'value' => $text['value']
                     ]
                 ]

@@ -6,6 +6,10 @@ use Zend\Form\Element\DateSelect as ZendDateSelect;
 
 class DateSelect extends ZendDateSelect
 {
+    protected $attributes = [
+        'id' => 'qaDateSelect',
+    ];
+
     /**
      * {@inheritdoc}
      */
@@ -46,6 +50,7 @@ class DateSelect extends ZendDateSelect
     public function getInputSpecification()
     {
         return [
+            'id' => 'qaDateSelect',
             'name' => $this->getName(),
             'required' => false,
             'filters' => [
