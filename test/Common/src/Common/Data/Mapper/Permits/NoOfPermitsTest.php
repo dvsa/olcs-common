@@ -238,6 +238,7 @@ class NoOfPermitsTest extends TestCase
         $this->assertEquals($label2018Html, $element2018->getLabel());
         $this->assertEquals($for2018Hint, $element2018->getOption('hint'));
         $this->assertEquals('govuk-hint', $element2018->getOption('hint-class'));
+        $this->assertEquals('2018', $element2018->getAttribute('id'));
         $this->assertNull($element2018->getValue());
 
         $element2019 = $permitsRequiredElements['2019'];
@@ -245,6 +246,7 @@ class NoOfPermitsTest extends TestCase
         $this->assertEquals($label2019Html, $element2019->getLabel());
         $this->assertEquals($for2019Hint, $element2019->getOption('hint'));
         $this->assertEquals('govuk-hint', $element2019->getOption('hint-class'));
+        $this->assertEquals('2019', $element2019->getAttribute('id'));
         $this->assertEquals(3, $element2019->getValue());
 
         $element2020 = $permitsRequiredElements['2020'];
@@ -252,6 +254,7 @@ class NoOfPermitsTest extends TestCase
         $this->assertEquals($label2020Html, $element2020->getLabel());
         $this->assertEquals($for2020Hint, $element2020->getOption('hint'));
         $this->assertEquals('govuk-hint', $element2020->getOption('hint-class'));
+        $this->assertEquals('2020', $element2020->getAttribute('id'));
         $this->assertEquals(7, $element2020->getValue());
 
         $element2021 = $permitsRequiredElements['2021'];
