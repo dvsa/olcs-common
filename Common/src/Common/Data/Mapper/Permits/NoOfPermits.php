@@ -187,7 +187,7 @@ class NoOfPermits
             ]
         );
         $element->setValue($yearAttributes['permitsRequired']);
-        $element->setAttributes(['max' => $maxPermits]);
+        $element->setAttributes(['id' => $validFromYear, 'max' => $maxPermits]);
 
         return $element;
     }
