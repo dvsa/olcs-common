@@ -433,7 +433,7 @@ return [
     'financialHistoryData_disqualified-error' => 'Wedi\'i anghymwyso: Dewiswch opsiwn',
     'financialHistoryData_insolvencyDetails-error' => 'Ansolfedd: Rhaid nodi’r blwch hwn i barhau',
     'first-name' => 'Enw(au) cyntaf',
-    'form-errors' => 'Cywirwch y gwallau dilynol',
+    'form-errors' => 'Mae problem',
     'form-errors-missing-details' => 'Mae rhai manylion ar goll',
     'form.fee-stored-cards.label' => 'A hoffech ddefnyddio cerdyn wedi\'i gadw?',
     'form.fee-stored-cards.option1' => 'Defnyddio cerdyn newydd',

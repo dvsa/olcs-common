@@ -1041,7 +1041,7 @@ return [
     'financial-standing-rate-element-licenceType' => 'Licence type',
     'first-name' => 'First name(s)',
     'flash-discarded-changes' => 'Your changes have been discarded',
-    'form-errors' => 'Please correct the following errors',
+    'form-errors' => 'There is a problem',
     'form-errors-missing-details' => 'Some details are missing',
     'form.disqualify.is-disqualified' => 'Is disqualified',
     'form.disqualify.is-disqualified.validation' => 'Must be checked',

@@ -73,7 +73,7 @@ class FormErrorsTest extends MockeryTestCase
             ]
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<h2>form-errors-translated<\/h2>(\s+)?'
             . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?Bar-translated(\s+)?<\/li>(\s+)?'
@@ -144,7 +144,7 @@ class FormErrorsTest extends MockeryTestCase
             ]
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<h2>form-errors-translated<\/h2>(\s+)?'
             . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?<a href="#foo-id">Bar-translated<\/a>(\s+)?<\/li>(\s+)?'
@@ -214,7 +214,7 @@ class FormErrorsTest extends MockeryTestCase
             ]
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<h2>form-errors-translated<\/h2>(\s+)?'
             . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?<a href="#foo-id">Bar-translated<\/a>(\s+)?<\/li>(\s+)?'
@@ -281,7 +281,7 @@ class FormErrorsTest extends MockeryTestCase
             ]
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<h2>form-errors-translated<\/h2>(\s+)?'
             . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?<a href="#foo-id">Bar-translated<\/a>(\s+)?<\/li>(\s+)?'
@@ -344,7 +344,7 @@ class FormErrorsTest extends MockeryTestCase
             ]
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<h2>form-errors-translated<\/h2>(\s+)?'
             . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?<a href="#PC_ID">Bar-translated<\/a>(\s+)?<\/li>(\s+)?'
@@ -383,7 +383,7 @@ class FormErrorsTest extends MockeryTestCase
             ]
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<h2>form-errors-translated<\/h2>(\s+)?'
             . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?<a href="#DS_ID_day">Bar-translated<\/a>(\s+)?<\/li>(\s+)?'
@@ -414,7 +414,7 @@ class FormErrorsTest extends MockeryTestCase
             ]
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<h2>form-errors-translated<\/h2>(\s+)?'
             . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?<a href="#NAME">Bar-translated<\/a>(\s+)?<\/li>(\s+)?'
@@ -448,7 +448,7 @@ class FormErrorsTest extends MockeryTestCase
             ]
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<h2>form-errors-translated<\/h2>(\s+)?'
             . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?foo-error-translated(\s+)?<\/li>(\s+)?'
@@ -522,7 +522,7 @@ class FormErrorsTest extends MockeryTestCase
             ]
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<h2>form-errors-translated<\/h2>(\s+)?'
             . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?'
@@ -591,7 +591,7 @@ class FormErrorsTest extends MockeryTestCase
             ]
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<h2>form-errors-translated<\/h2>(\s+)?'
             . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?foo-label-translated\: bar-translated-translated(\s+)?'
@@ -669,7 +669,7 @@ class FormErrorsTest extends MockeryTestCase
             ]
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<h2>form-errors-translated<\/h2>(\s+)?'
             . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?bar-translated(\s+)?'
@@ -739,7 +739,7 @@ class FormErrorsTest extends MockeryTestCase
             ]
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<h2>form-errors-translated<\/h2>(\s+)?'
             . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?Bar-translated(\s+)?<\/li>(\s+)?'
@@ -813,7 +813,7 @@ class FormErrorsTest extends MockeryTestCase
 
         $title = 'error-title';
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>error-title-translated<\/h3>(\s+)?'
+            . '<h2>error-title-translated<\/h2>(\s+)?'
             . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?<a href="#foo-id">Bar-translated<\/a>(\s+)?<\/li>(\s+)?'
@@ -886,7 +886,7 @@ class FormErrorsTest extends MockeryTestCase
         $title = 'error-title';
         $paragraph = 'error-paragraph';
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>error-title-translated<\/h3>(\s+)?'
+            . '<h2>error-title-translated<\/h2>(\s+)?'
             . '<p>error-paragraph-translated<\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?<a href="#foo-id">Bar-translated<\/a>(\s+)?<\/li>(\s+)?'
@@ -958,7 +958,7 @@ class FormErrorsTest extends MockeryTestCase
 
         $paragraph = 'error-paragraph';
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<h2>form-errors-translated<\/h2>(\s+)?'
             . '<p>error-paragraph-translated<\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?<a href="#foo-id">Bar-translated<\/a>(\s+)?<\/li>(\s+)?'
