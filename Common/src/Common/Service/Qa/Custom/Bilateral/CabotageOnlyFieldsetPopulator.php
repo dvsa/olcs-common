@@ -55,5 +55,8 @@ class CabotageOnlyFieldsetPopulator implements FieldsetPopulatorInterface
             $options['yesNo'],
             'qanda.bilaterals.cabotage.not-selected-message'
         );
+
+        $fieldset->setLabel('qanda.bilaterals.cabotage.question');
+        $fieldset->setLabelAttributes(['class' => 'govuk-visually-hidden']);
     }
 }

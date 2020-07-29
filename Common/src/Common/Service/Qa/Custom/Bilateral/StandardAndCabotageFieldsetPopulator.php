@@ -85,5 +85,7 @@ class StandardAndCabotageFieldsetPopulator implements FieldsetPopulatorInterface
         $fieldset->add($cabotageOptions);
 
         $fieldset->setOption('radio-element', 'qaElement');
+        $fieldset->setLabel('qanda.bilaterals.cabotage.question');
+        $fieldset->setLabelAttributes(['class' => 'govuk-visually-hidden']);
     }
 }

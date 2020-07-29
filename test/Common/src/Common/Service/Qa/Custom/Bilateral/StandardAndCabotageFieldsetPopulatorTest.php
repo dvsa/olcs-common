@@ -92,6 +92,12 @@ class StandardAndCabotageFieldsetPopulatorTest extends MockeryTestCase
         $this->fieldset->shouldReceive('setOption')
             ->with('radio-element', 'qaElement')
             ->once();
+        $this->fieldset->shouldReceive('setLabel')
+            ->with('qanda.bilaterals.cabotage.question')
+            ->once();
+        $this->fieldset->shouldReceive('setLabelAttributes')
+            ->with(['class' => 'govuk-visually-hidden'])
+            ->once();
 
         $this->standardAndCabotageFieldsetPopulator = new StandardAndCabotageFieldsetPopulator(
             $radioFactory,
