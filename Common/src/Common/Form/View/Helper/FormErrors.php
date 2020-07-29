@@ -75,7 +75,7 @@ class FormErrors extends AbstractHelper
 
         $messagesOpenFormat = '
 <div class="validation-summary" role="alert" id="validationSummary">
-    <h3>%s</h3>
+    <h2>%s</h2>
     <p>%s</p>
     <ol class="validation-summary__list">
         <li class="validation-summary__item">';
@@ -112,7 +112,6 @@ class FormErrors extends AbstractHelper
         $flatMessages = [];
 
         foreach ($messages as $field => $message) {
-
             if ($fieldset instanceof Fieldset) {
                 if ($fieldset->has($field)) {
                     $element = $fieldset->get($field);
@@ -147,7 +146,6 @@ class FormErrors extends AbstractHelper
     protected function formatMessage($message, $element)
     {
         if ($message instanceof ValidationMessageInterface) {
-
             $msg = $message->getMessage();
 
             if ($message->shouldTranslate()) {
