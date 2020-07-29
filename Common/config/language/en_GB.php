@@ -3375,7 +3375,6 @@ return [
     'permits.form.change_licence.error_message' => 'You must select the checkbox to continue',
 
     'permits.application.window-closed' => 'Sorry, the service is unavailable',
-    'permits.application.window-closed.title' => 'The Permit application window has now closed',
 
     'permits.page.dashboard.browser.title' => 'Permits',
     'permits.page.licence.browser.title' => 'Select a licence you would like your permit to be applied to',

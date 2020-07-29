@@ -28,7 +28,7 @@ class FormRadioTest extends MockeryTestCase
         $sut = new FormRadioStub($idGenerator);
         $translator = m::mock(TranslatorInterface::class);
         $translator->shouldReceive('translate')->andReturnUsing(function ($string, $domain) {
-            return $string;
+            return $domain.'-translated-'.$string;
         });
         $sut->setTranslator($translator);
         if (!is_null($globalAttributes)) {
@@ -107,7 +107,7 @@ class FormRadioTest extends MockeryTestCase
                 ],
                 'globalAttributes' => null,
                 'labelPosition' => FormRadioStub::LABEL_PREPEND,
-                'expected' => '<div class="govuk-radios radios_wrapper_class" data-something="some_data"><div class="govuk-radios__item"><label class="label_class govuk-label govuk-radios__label" for="aaa_id">aaa</label><input id="aaa_id" class="input_class govuk-radios__input" value="A"></div><div class="govuk-radios__item"><label class="govuk-label govuk-radios__label" for="bbb_id">bbb</label><input class="govuk-radios__input" id="bbb_id" value="B"></div></div>'
+                'expected' => '<div class="govuk-radios radios_wrapper_class" data-something="some_data"><div class="govuk-radios__item"><label class="label_class govuk-label govuk-radios__label" for="aaa_id">default-translated-aaa</label><input id="aaa_id" class="input_class govuk-radios__input" value="A"></div><div class="govuk-radios__item"><label class="govuk-label govuk-radios__label" for="bbb_id">default-translated-bbb</label><input class="govuk-radios__input" id="bbb_id" value="B"></div></div>'
             ],
             'options_set_2' => [
                 'options' => [
@@ -137,7 +137,7 @@ class FormRadioTest extends MockeryTestCase
                 ],
                 'globalAttributes' => [],
                 'labelPosition' => null,
-                'expected' => '<div class="govuk-radios"><div class="govuk-radios__item"><input class="input_class govuk-radios__input" value="B" checked="checked" id="generated_id"><label class="label_class govuk-label govuk-radios__label" for="generated_id">bbb</label><div class="hint_class govuk-hint govuk-radios__hint">hint_text</div></div></div>'
+                'expected' => '<div class="govuk-radios"><div class="govuk-radios__item"><input class="input_class govuk-radios__input" value="B" checked="checked" id="generated_id"><label class="label_class govuk-label govuk-radios__label" for="generated_id">default-translated-bbb</label><div class="hint_class govuk-hint govuk-radios__hint">default-translated-hint_text</div></div></div>'
             ],
         ];
     }
