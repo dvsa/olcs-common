@@ -3695,6 +3695,7 @@ return [
     'permits.irhp.application.filter.status' => 'Status',
     'permits.irhp.application.question.countries' => 'Select the country you are transporting goods to',
     'permits.irhp.application.question.no-of-permits' => 'How many permits do you require?',
+    'permits.irhp.application.question.no-of-permits.question-summary' => 'Number of permits',
     'permits.irhp.application.answers.no-of-permits' => '%s permits for %s in %s',
     'permits.irhp.permit.filter.type' => 'Type',
     'permits.irhp.permit.filter.country' => 'Country',
