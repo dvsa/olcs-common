@@ -39,6 +39,7 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
         array $selectedOptions,
         array $attributes
     ) {
+        $translator = $this->getTranslator();
         $escapeHtmlHelper = $this->getEscapeHtmlHelper();
         $labelHelper = $this->getLabelHelper();
         $labelClose = $labelHelper->closeTag();
@@ -93,7 +94,16 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
                 $hintAttributes = $this->createAttributesString($optionSpec['hint_attributes']);
             }
             if (isset($optionSpec['hint'])) {
-                $hint = $this->wrapWithTag($optionSpec['hint'], $hintAttributes);
+                $hintText = $optionSpec['hint'];
+
+                if (null !== $translator) {
+                    $hintText = $translator->translate(
+                        $hintText,
+                        $this->getTranslatorTextDomain()
+                    );
+                }
+
+                $hint = $this->wrapWithTag($hintText, $hintAttributes);
             }
             if (isset($optionSpec['selected'])) {
                 $selected = $optionSpec['selected'];
@@ -130,7 +140,7 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
                 $closingBracket
             );
 
-            if (null !== ($translator = $this->getTranslator())) {
+            if (null !== $translator) {
                 $label = $translator->translate(
                     $label,
                     $this->getTranslatorTextDomain()

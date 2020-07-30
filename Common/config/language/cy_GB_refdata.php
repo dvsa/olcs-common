@@ -341,5 +341,18 @@ return [
     'Less than 60%' => 'Llai na 60%',
     '60% to 90%' => 'O 60% i 90%',
     'More than 90%' => 'Mwy na 90%',
+    // section completion
+    'Completed' => 'Wedi\'l cwblhau',
+    'Not started yet' => 'Heb ddechrau eto',
+    'Can\'t start yet' => 'Methu cychwyn eto',
+    'Not yet submitted' => 'Heb ei gyflwyno eto',
+    //  permit types
+    'Bilateral permits' => 'Trwyddedau dwyochrog',
+    'Annual Multilateral (EU and EEA)' => 'Amlochrog blynyddol (UE a\'r AEE)',
+    'Annual ECMT' => 'ECMT blynyddol',
+    'Short-term ECMT' => 'ECMT tymor byr',
+    'ECMT International Removal' => 'Symud dodrefn rhyngwladol ECMT',
+    'Certificate of Roadworthiness for vehicles' => 'Tystysgrif addasrwydd ffyrdd ar gyfer cerbydau',
+    'Certificate of Roadworthiness for trailers' => 'Tystysgrif addasrwydd y ffyrdd ar gyfer trelars',
     // Potentially unused translations
 ];

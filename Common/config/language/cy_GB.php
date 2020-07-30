@@ -1598,8 +1598,7 @@ return [
     'permits.form.change_licence.label' => 'Rwy\'n cadarnhau fy mod yn dymuno newid y drwydded i %s',
     'permits.form.change_licence.button' => 'Cadarnhau Newid Trwydded',
     'permits.form.change_licence.error_message' => 'Rhaid ichi ddewis y blwch ticio i barhau',
-    'permits.application.window-closed' => 'Sorry, the service is unavailable',
-    'permits.application.window-closed.title' => 'The Permit application window has now closed',
+    'permits.application.window-closed' => 'Mae\'n ddrwg gennym, nid yw\'r gwasanaeth ar gael',
     'permits.form.trips.guidance' => 'Rydych wedi nodi defnydd dwysedd uchel o\'r hawlenni hyn. Gwiriwch fod y manylion yn gywir. Efallai y byddwn yn cysylltu â chi i wirio\'r wybodaeth hon',
     'permits.form.intljourney.guidance' => 'Rydych wedi nodi canran uchel o deithiau rhyngwladol ar gyfer y drwydded hon. Gwiriwch fod y manylion yn gywir. Efallai y byddwn yn cysylltu â chi i wirio\'r wybodaeth hon',
     'permits.form.intljourney.warning' => 'Rydych wedi nodi canran uchel o deithiau rhyngwladol ar gyfer y drwydded hon. Gwiriwch fod y manylion yn gywir. Efallai y byddwn yn cysylltu â chi i wirio\'r wybodaeth hon',
@@ -2024,4 +2023,14 @@ return [
     'cookie-settings-off' => 'Wedi diffodd',
     'cookie-settings-saved-heading' => 'Wedi cadw eich gosodiadau cwcis',
     'cookie-settings-saved-content' => 'Gall gwasanaethau\'r Llywodraeth osod cwcis ychwanegol ac, os felly, bydd ganddynt eu polisi cwcis a\'u baner eu hunain.',
+
+    'selfserve-app-overview-status-cant-start' => 'Methu cychwyn eto',
+
+    'This permit can be used for each country you intend to travel to or transit through. You\'ll need a separate permit for each country.' => 'Gellir defnyddio\'r drwydded hon ar gyfer pob gwlad yr ydych yn bwriadu teithio iddi neu ei chludo drwyddi. Bydd arnoch angen trwydded ar wahân ar gyfer pob gwlad.',
+    'This is an annual permit that allows unlimited journeys to all EU and EEA countries. You will need one permit for each vehicle you use. This permit type can be transferred between vehicles.' => 'Mae hon yn hawlen flynyddol sy\'n caniatáu teithiau diderfyn i holl wledydd yr UE a\'r EEA. Bydd arnoch angen un hawlen ar gyfer pob cerbyd a ddefnyddiwch. Gellir trosglwyddo\'r math hwn o hawlen rhwng cerbydau.',
+    'This permit can be used for international road haulage journeys between ECMT member countries.' => 'Gellir defnyddio\'r hawlen hon ar gyfer teithiau cludo nwyddau rhyngwladol rhwng gwledydd sy\'n aelodau o\'r ECMT.',
+    'This permit can only be used to transit through EU countries to non-EU countries who are ECMT members, including Switzerland, or cross-trade between two EU countries. It is valid for 30 consecutive days from the start date you choose. Short-term permits are not valid for Austria.' => 'Gellir defnyddio\'r hawlen hon i symud trwy wledydd nad ydynt yn rhan o\'r UE, gan gynnwys y Swistir, neu i draws-fasnachu rhwng dwy wlad yn yr UE. Mae\'n ddilys am 30 diwrnod yn olynol o\'r dyddiad dechrau a ddewiswch. Nid yw trwyddedau tymor byr yn ddilys ar gyfer Awstria.',
+    'This permit is for specialist removal companies to move household goods and business possessions between ECMT member countries except Cyprus. It is valid for one year from the date of issue.' => 'Mae\'r hawlen hon ar gyfer cwmnïau symud dodrefn arbenigol i symud nwyddau cartref ac eiddo busnes rhwng gwledydd sy\'n aelodau o\'r ECMT ac eithrio Cyprus. Mae\'n ddilys am flwyddyn o\'r dyddiad cyhoeddi.',
+    'This certificate is required for vehicles transporting goods using any type of ECMT permit. You will need to apply separately for each vehicle you intend to use.' => 'Mae angen y dystysgrif hon ar gyfer cerbydau sy\'n cludo nwyddau gan ddefnyddio unrhyw fath o drwydded ECMT. Bydd angen i chi wneud cais ar wahân am bob cerbyd rydych yn bwriadu ei ddefnyddio.',
+    'This certificate is required for trailers transporting goods using any type of ECMT permit. You will need to apply separately for each trailer you intend to use.' => 'Mae angen y dystysgrif hon ar gyfer trelars sy\'n cludo nwyddau gan ddefnyddio unrhyw fath o drwydded ECMT. Bydd angen i chi wneud cais ar wahân am bob trelar rydych chi\'n bwriadu eu defnyddio.',
 ];
