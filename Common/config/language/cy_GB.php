@@ -2066,9 +2066,9 @@ return [
     
     // Cert roadworthiness vehicle description
 
-    'Vehicles transporting goods using an ECMT or removals permit need these certificates. You will need to apply separately for each vehicle you intend to use. They are valid until the end of the vehicle’s MOT.' => 'Mae angen y tystysgrifau hyn ar gerbydau sy\'n cludo nwyddau gan ddefnyddio ECMT neu hawlen symud. Bydd angen i chi wneud cais ar wahân am bob cerbyd rydych chi\'n bwriadu ei ddefnyddio. Maent yn ddilys tan ddiwedd MOT y cerbyd.',
+    'Vehicles transporting goods using an ECMT or removals permit need these certificates. You will need to apply separately for each vehicle you intend to use. They are valid until the end of the vehicle\'s MOT.' => 'Mae angen y tystysgrifau hyn ar gerbydau sy\'n cludo nwyddau gan ddefnyddio ECMT neu hawlen symud. Bydd angen i chi wneud cais ar wahân am bob cerbyd rydych chi\'n bwriadu ei ddefnyddio. Maent yn ddilys tan ddiwedd MOT y cerbyd.',
     
     // Cert roadworthiness trailer description
 
-    'Trailers transporting goods using any type of ECMT permit need these certificates. You will need to apply separately for each trailer you intend to use. They are valid until the end of the vehicle’s MOT.' => 'Mae angen y tystysgrifau hyn ar ôl-gerbydau sy\'n cludo nwyddau gan ddefnyddio unrhyw fath o drwydded ECMT. Bydd angen i chi wneud cais ar wahân am bob trelar rydych chi\'n bwriadu ei ddefnyddio. Maent yn ddilys tan ddiwedd MOT y cerbyd.',
+    'Trailers transporting goods using any type of ECMT permit need these certificates. You will need to apply separately for each trailer you intend to use. They are valid until the end of the vehicle\'s MOT.' => 'Mae angen y tystysgrifau hyn ar ôl-gerbydau sy\'n cludo nwyddau gan ddefnyddio unrhyw fath o drwydded ECMT. Bydd angen i chi wneud cais ar wahân am bob trelar rydych chi\'n bwriadu ei ddefnyddio. Maent yn ddilys tan ddiwedd MOT y cerbyd.',
 ];
