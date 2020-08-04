@@ -3367,13 +3367,6 @@ return [
     'permits.page.confirmation.bullet.list.title' => 'What happens next',
     'permits.page.confirmation.submitted.warning' => 'You must ensure that you have the correct permits in your vehicle when transporting goods internationally.',
 
-    'permits.page.change-licence.question' => 'Change Licence',
-    'permits.page.change-licence.browser.title' => 'Change Licence',
-    'permits.page.change-licence.bullet.list.title' => 'When changing the Licence for this application be aware that',
-    'permits.form.change_licence.label' => 'I confirm that I would like to change the licence to %s',
-    'permits.form.change_licence.button' => 'Confirm Licence Change',
-    'permits.form.change_licence.error_message' => 'You must select the checkbox to continue',
-
     'permits.application.window-closed' => 'Sorry, the service is unavailable',
 
     'permits.page.dashboard.browser.title' => 'Permits',
