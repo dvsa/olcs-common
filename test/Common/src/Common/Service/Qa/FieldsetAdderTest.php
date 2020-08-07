@@ -98,7 +98,15 @@ class FieldsetAdderTest extends MockeryTestCase
     {
         $this->fieldset->shouldReceive('setLabel')
             ->with($this->shortName)
-            ->once();
+            ->once()
+            ->globally()
+            ->ordered();
+
+        $this->fieldset->shouldReceive('setLabelAttributes')
+            ->with([])
+            ->once()
+            ->globally()
+            ->ordered();
 
         $this->sut->add($this->form, $this->options, UsageContext::CONTEXT_INTERNAL);
     }
