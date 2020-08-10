@@ -35,15 +35,26 @@ class PostcodeSearch extends Fieldset
 
         self::$count++;
 
+        $postcodeSearchId = 'postcodeInput' . self::$count;
+
         $postcodeSearch = new Text('postcode');
         $postcodeSearch->setAttributes(
             array(
                 'class' => 'short js-input',
                 'data-container-class' => 'inline',
-                'id' => 'postcodeInput'. self::$count,
+                'id' => $postcodeSearchId,
             )
         );
-        $postcodeSearch->setOption('remove_if_readonly', true);
+        $postcodeSearch->setOptions(
+            [
+                'remove_if_readonly' => true,
+                'label' => 'Postcode search',
+                'label_attributes' => [
+                    'class' => 'govuk-visually-hidden',
+                    'for' => $postcodeSearchId,
+                ],
+            ]
+        );
 
         $this->add($postcodeSearch);
 
