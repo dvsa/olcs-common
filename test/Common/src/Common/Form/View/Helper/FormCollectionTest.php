@@ -130,7 +130,10 @@ class FormCollectionTest extends MockeryTestCase
 
         echo $viewHelper($this->element, 'formCollection');
 
-        $this->expectOutputRegex('/^<fieldset data-group="postcode"><\/fieldset>$/');
+        $this->expectOutputRegex(
+            '/^<fieldset data-group="postcode"><label class=\"govuk-visually-hidden\" for=\"postcodeInput([0-9]+)\">'
+            . 'Postcode search<\/label><\/fieldset>$/'
+        );
     }
 
     /**
@@ -147,7 +150,8 @@ class FormCollectionTest extends MockeryTestCase
 
         $this->expectOutputRegex(
             '/^<div class="validation-wrapper"><ul><li>(.*)<\/li><\/ul>'
-            . '<fieldset data-group="postcode"><\/fieldset><\/div>$/'
+            . '<fieldset data-group="postcode"><label class=\"govuk-visually-hidden\" for=\"postcodeInput([0-9]+)\">'
+            . 'Postcode search<\/label><\/fieldset><\/div>$/'
         );
     }
 
