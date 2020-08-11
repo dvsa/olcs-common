@@ -25,6 +25,7 @@ $commonTranslations = loadCommonTranslations($path);
 $usages = findTranslationKeyUsages($commonTranslations, $path, $ignoreKeys);
 findUnusedTranslationKeys($commonTranslations, $usages);
 findMismatchedCommonBackendValues($commonTranslations, $path);
+getMarkupUsage($path);
 
 /**
  * Load translations from OLCS-Common language files
@@ -83,6 +84,40 @@ function findTranslationKeyUsages(array $translations, string $path, array $igno
         file_put_contents("reports/{$langKey}_key_usage_report.json", jsonEncodeWrap($usages[$langKey]));
     }
     return $usages;
+}
+
+/**
+ * Finds markup partial filenames in PHP and Template files
+ *
+ * @param string $path
+ */
+function getMarkupUsage(string $path)
+{
+    echo "Generating markup partial report\n";
+    $dirContents = array_diff(scandir("$path/olcs-common/Common/config/language/partials/"), ['..', '.']);
+    $markups = [];
+    foreach($dirContents as $item) {
+        if(is_dir($path.'/olcs-common/Common/config/language/partials/'.$item)){
+            $markups[$item] = str_replace('.phtml', '', array_diff(scandir($path.'/olcs-common/Common/config/language/partials/'.$item), ['..', '.']));
+        }
+    }
+
+    $usages = [];
+
+    foreach ($markups as $langKey => $langKeyFiles) {
+        foreach($langKeyFiles as $markupFilename) {
+            $output = [];
+            $usages[$markupFilename] = [];
+            exec('grep -rl -m 1 --exclude-dir=vendor --include=\*.php --include \*.phtml "' . $markupFilename . '" ' . $path, $output);
+            if (count($output) > 1) {
+                $usages[$markupFilename] = array_merge($usages[$markupFilename], $output);
+            } else {
+                unset($usages[$markupFilename]);
+            }
+        }
+    }
+    file_put_contents("reports/markup-partial_statistics.json", jsonEncodeWrap($usages));
+    echo "Markup partial report complete\n";
 }
 
 /**
