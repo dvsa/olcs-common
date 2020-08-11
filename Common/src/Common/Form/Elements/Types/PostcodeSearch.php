@@ -70,16 +70,22 @@ class PostcodeSearch extends Fieldset
 
         $this->add($searchButton);
 
-        $selectLabel = new HtmlTranslated('select-label');
-        $selectLabel->setValue(
-            '<label class="visually-hidden" for="correspondence_address[searchPostcode][addresses]">Select an address</label>'
+        $selectAddressId = 'selectAddress' . self::$count;
+
+        $selectAddress = new Select(
+            'addresses',
+            array(
+                'label' => 'postcode.select_address.label',
+                'label_attributes' => array(
+                    'class' => 'govuk-visually-hidden',
+                    'for' => $selectAddressId,
+                ),
+                'empty_option' => 'Please select'
+            )
         );
-
-        $this->add($selectLabel);
-
-        $selectAddress = new Select('addresses', array('label' => '', 'empty_option' => 'Please select'));
         $selectAddress->setAttributes(
             array(
+                'id' => $selectAddressId,
                 'data-container-class' => 'compound address__select'
             )
         );
