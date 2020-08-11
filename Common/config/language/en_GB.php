@@ -2108,6 +2108,7 @@ return [
     'select-at-least-one-row' => 'You must select at least one row',
     'points' => 'Points',
     'position' => 'Position',
+    'postcode.select_address.label' => 'Select an address',
     'postcode.address.manual_entry' => 'Enter the address yourself',
     'postcode.error.no-addresses-found' => 'No addresses found for postcode',
     'postcode.error.not-available' => 'Address search unavailable. Please enter your address manually',
