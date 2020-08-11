@@ -2062,5 +2062,5 @@ return [
     
     // Cert roadworthiness trailer description
 
-    'Trailers transporting goods using any type of ECMT permit need these certificates. You will need to apply separately for each trailer you intend to use. They are valid until the end of the vehicle\'s MOT.' => 'Mae angen y tystysgrifau hyn ar ôl-gerbydau sy\'n cludo nwyddau gan ddefnyddio unrhyw fath o drwydded ECMT. Bydd angen i chi wneud cais ar wahân am bob trelar rydych chi\'n bwriadu ei ddefnyddio. Maent yn ddilys tan ddiwedd MOT y cerbyd.',
+    'Trailers transporting goods using any type of ECMT permit need these certificates. You will need to apply separately for each trailer you intend to use. They are valid until the end of the trailer\'s MOT.' => 'Mae angen y tystysgrifau hyn ar ôl-gerbydau sy\'n cludo nwyddau gan ddefnyddio unrhyw fath o drwydded ECMT. Bydd angen i chi wneud cais ar wahân am bob trelar rydych chi\'n bwriadu ei ddefnyddio. Maent yn ddilys tan ddiwedd MOT y trelar.',
 ];
