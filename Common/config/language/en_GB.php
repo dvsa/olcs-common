@@ -2778,6 +2778,8 @@ return [
     'tc_r_htru' => 'Head of Traffic Regulation Unit',
     'tc_r_tc' => 'Traffic Commissioner',
     'terms-and-conditions-title' => 'Terms and conditions',
+    'accessibility-statement-title' => 'Accessibility statement for Vehicle Operator Licensing',
+    'accessibility-statement-footer-title' => 'Accessibility Statement',
     'testPropertyPlaceHolder' => 'test @placeHolder is @here',
     'tic' => 'TIC',
     'tm-add-user-birthDate' => 'Date of birth',
