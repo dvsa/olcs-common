@@ -198,13 +198,13 @@ return array(
             'QaRadioFactory' => QaService\RadioFactory::class,
             'QaFieldsetFactory' => QaService\FieldsetFactory::class,
             'QaValidatorsAdder' => QaService\ValidatorsAdder::class,
-            'QaEcmtShortTermYesNoRadioFactory' => QaService\Custom\EcmtShortTerm\YesNoRadioFactory::class,
-            'QaEcmtShortTermRestrictedCountriesMultiCheckboxFactory'
-                => QaService\Custom\EcmtShortTerm\RestrictedCountriesMultiCheckboxFactory::class,
-            'QaEcmtShortTermInternationalJourneysIsValidHandler' =>
-                QaService\Custom\EcmtShortTerm\InternationalJourneysIsValidHandler::class,
-            'QaEcmtShortTermAnnualTripsAbroadIsValidHandler' =>
-                QaService\Custom\EcmtShortTerm\AnnualTripsAbroadIsValidHandler::class,
+            'QaEcmtYesNoRadioFactory' => QaService\Custom\Ecmt\YesNoRadioFactory::class,
+            'QaEcmtRestrictedCountriesMultiCheckboxFactory'
+                => QaService\Custom\Ecmt\RestrictedCountriesMultiCheckboxFactory::class,
+            'QaEcmtInternationalJourneysIsValidHandler' =>
+                QaService\Custom\Ecmt\InternationalJourneysIsValidHandler::class,
+            'QaEcmtAnnualTripsAbroadIsValidHandler' =>
+                QaService\Custom\Ecmt\AnnualTripsAbroadIsValidHandler::class,
             'QaBilateralYesNoValueOptionsGenerator' =>
                 QaService\Custom\Bilateral\YesNoValueOptionsGenerator::class,
             'QaBilateralCabotageOnlyYesNoRadioFactory' =>
@@ -278,26 +278,26 @@ return array(
             'QaTranslateableTextParameterHandler' => QaService\TranslateableTextParameterHandlerFactory::class,
             'QaFormattedTranslateableTextParametersGenerator' =>
                 QaService\FormattedTranslateableTextParametersGeneratorFactory::class,
-            'QaEcmtShortTermNoOfPermitsFieldsetPopulator' =>
-                QaService\Custom\EcmtShortTerm\NoOfPermitsFieldsetPopulatorFactory::class,
-            'QaEcmtShortTermPermitUsageFieldsetPopulator' =>
-                QaService\Custom\EcmtShortTerm\PermitUsageFieldsetPopulatorFactory::class,
-            'QaEcmtShortTermRestrictedCountriesFieldsetPopulator' =>
-                QaService\Custom\EcmtShortTerm\RestrictedCountriesFieldsetPopulatorFactory::class,
-            'QaEcmtShortTermAnnualTripsAbroadFieldsetPopulator' =>
-                QaService\Custom\EcmtShortTerm\AnnualTripsAbroadFieldsetPopulatorFactory::class,
-            'QaEcmtShortTermInternationalJourneysFieldsetPopulator' =>
-                QaService\Custom\EcmtShortTerm\InternationalJourneysFieldsetPopulatorFactory::class,
+            'QaEcmtNoOfPermitsFieldsetPopulator' =>
+                QaService\Custom\Ecmt\NoOfPermitsFieldsetPopulatorFactory::class,
+            'QaEcmtPermitUsageFieldsetPopulator' =>
+                QaService\Custom\Ecmt\PermitUsageFieldsetPopulatorFactory::class,
+            'QaEcmtRestrictedCountriesFieldsetPopulator' =>
+                QaService\Custom\Ecmt\RestrictedCountriesFieldsetPopulatorFactory::class,
+            'QaEcmtAnnualTripsAbroadFieldsetPopulator' =>
+                QaService\Custom\Ecmt\AnnualTripsAbroadFieldsetPopulatorFactory::class,
+            'QaEcmtInternationalJourneysFieldsetPopulator' =>
+                QaService\Custom\Ecmt\InternationalJourneysFieldsetPopulatorFactory::class,
             'QaEcmtShortTermEarliestPermitDateFieldsetPopulator' =>
                 QaService\Custom\EcmtShortTerm\EarliestPermitDateFieldsetPopulatorFactory::class,
             'QaEcmtRemovalPermitStartDateFieldsetPopulator' =>
                 QaService\Custom\EcmtRemoval\PermitStartDateFieldsetPopulatorFactory::class,
-            'QaEcmtShortTermNiWarningConditionalAdder' =>
-                QaService\Custom\EcmtShortTerm\NiWarningConditionalAdderFactory::class,
-            'QaEcmtShortTermInternationalJourneysDataHandler' =>
-                QaService\Custom\EcmtShortTerm\InternationalJourneysDataHandlerFactory::class,
-            'QaEcmtShortTermAnnualTripsAbroadDataHandler' =>
-                QaService\Custom\EcmtShortTerm\AnnualTripsAbroadDataHandlerFactory::class,
+            'QaEcmtNiWarningConditionalAdder' =>
+                QaService\Custom\Ecmt\NiWarningConditionalAdderFactory::class,
+            'QaEcmtInternationalJourneysDataHandler' =>
+                QaService\Custom\Ecmt\InternationalJourneysDataHandlerFactory::class,
+            'QaEcmtAnnualTripsAbroadDataHandler' =>
+                QaService\Custom\Ecmt\AnnualTripsAbroadDataHandlerFactory::class,
             'QaCertRoadworthinessMotExpiryDateFieldsetPopulator' =>
                 QaService\Custom\CertRoadworthiness\MotExpiryDateFieldsetPopulatorFactory::class,
             'QaBilateralStandardYesNoValueOptionsGenerator' =>
