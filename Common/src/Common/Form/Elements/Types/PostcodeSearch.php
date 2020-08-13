@@ -77,7 +77,6 @@ class PostcodeSearch extends Fieldset
             array(
                 'label' => 'postcode.select_address.label',
                 'label_attributes' => array(
-                    'class' => 'govuk-visually-hidden',
                     'for' => $selectAddressId,
                 ),
                 'empty_option' => 'Please select'
