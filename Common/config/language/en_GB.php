@@ -3786,6 +3786,7 @@ return [
     'permits.irhp.unpaid.permits.table.permit' => 'Permit',
     'permits.irhp.unpaid.permits.table.min-emission' => 'Minimum emission standard',
     'permits.irhp.unpaid.permits.table.countries' => 'Not valid to travel to',
+    'permits.irhp.unpaid.ecmt-short-term.inset' => 'These permits are not valid for transiting to or through Austria.',
     'no.constrained.countries' => 'No exclusions',
 
     'permits.irhp.under-consideration.browser.title' => 'Application details',
