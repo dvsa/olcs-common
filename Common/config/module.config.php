@@ -298,6 +298,8 @@ return array(
                 QaService\Custom\Ecmt\InternationalJourneysDataHandlerFactory::class,
             'QaEcmtAnnualTripsAbroadDataHandler' =>
                 QaService\Custom\Ecmt\AnnualTripsAbroadDataHandlerFactory::class,
+            'QaEcmtSectorsFieldsetPopulator' =>
+                QaService\Custom\Ecmt\SectorsFieldsetPopulatorFactory::class,
             'QaCertRoadworthinessMotExpiryDateFieldsetPopulator' =>
                 QaService\Custom\CertRoadworthiness\MotExpiryDateFieldsetPopulatorFactory::class,
             'QaBilateralStandardYesNoValueOptionsGenerator' =>

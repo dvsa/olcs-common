@@ -165,7 +165,13 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
                     break;
             }
 
-            $combinedMarkup[] = $this->wrapWithTag($markup, $itemWrapperAttributes);
+            $markup = $this->wrapWithTag($markup, $itemWrapperAttributes);
+
+            if (isset($optionSpec['markup_before'])) {
+                $markup = $optionSpec['markup_before'] . $markup;
+            }
+
+            $combinedMarkup[] = $markup;
         }
 
         $outputMarkup = implode($this->getSeparator(), $combinedMarkup);
