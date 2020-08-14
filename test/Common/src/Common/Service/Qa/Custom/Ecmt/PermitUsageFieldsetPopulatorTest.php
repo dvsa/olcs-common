@@ -45,7 +45,7 @@ class PermitUsageFieldsetPopulatorTest extends MockeryTestCase
             'name' => 'footerAnnotation',
             'type' => Html::class,
             'attributes' => [
-                'value' => '<p><br><strong>We may contact you to verify your application.</strong></p>'
+                'value' => '<p class="govuk-!-padding-top-7"><strong>We may contact you to verify your application.</strong></p>'
             ]
         ];
 
@@ -54,7 +54,6 @@ class PermitUsageFieldsetPopulatorTest extends MockeryTestCase
             ->once()
             ->ordered()
             ->globally();
-
 
         $permitUsageFieldsetPopulator = new PermitUsageFieldsetPopulator($radioFieldsetPopulator, $translator);
         $permitUsageFieldsetPopulator->populate($form, $fieldset, $options);
