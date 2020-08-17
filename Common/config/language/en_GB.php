@@ -3918,6 +3918,7 @@ return [
     'qanda.ecmt.sectors.question' => 'Select one sector you mainly transport goods in using this licence',
     'qanda.ecmt.sectors.question-summary' => 'Sector you mainly transport goods in',
     'qanda.ecmt.sectors.not-selected-message' => 'Select one main sector only',
+    'qanda.ecmt.sectors.divider.or' => 'or',
 
     'qanda.ecmt-short-term.earliest-permit-date.question-short' => 'Date you need a permit',
     'qanda.ecmt-short-term.earliest-permit-date.question' => 'How soon do you need a permit?',
