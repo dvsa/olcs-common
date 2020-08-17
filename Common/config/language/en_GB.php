@@ -3868,10 +3868,10 @@ return [
     'qanda.common.certificates.checkbox.not-checked-message' => 'Tick to confirm you understand that each vehicle and trailer must have the matching certificates.',
 
     'qanda.ecmt.emissions.question-short' => 'Euro emission standards',
-    'qanda.ecmt.emissions.question' => 'You must only use the appropriate Euro emission standards vehicles that the permit allows',
+    'qanda.ecmt.emissions.question' => 'You must only use the Euro emission standard vehicles that the permit allows',
     'qanda.ecmt.emissions.question-summary' => 'Euro emission standard',
-    'qanda.ecmt.emissions.additional-guidance' => '<p>If you transport goods using an ECMT permit, the vehicles you intend to use must meet and comply with the minimum Euro emission standards that the permit allocated to you allows.</p><p>This includes any vehicles you currently own or lease, or are intending to buy or lease in the future.</p>',
-    'qanda.ecmt.emissions.checkbox.label' => 'I confirm that I will only use my ECMT permits with vehicles that are environmentally compliant with the minimum Euro emissions standards that the permit allows.',
+    'qanda.ecmt.emissions.additional-guidance' => 'If you transport goods using an ECMT permit, the vehicles you intend to use must meet and comply with the minimum Euro emission standards that the permit allocated to you allows.</p><p class="govuk-body">This includes any vehicles you currently own or lease, or are intending to buy or lease in the future.',
+    'qanda.ecmt.emissions.checkbox.label' => 'I confirm that I will only use my ECMT permits with vehicles that meet the minimum euro emissions standards allowed.',
     'qanda.ecmt.emissions.checkbox.not-checked-message' => 'Tick to confirm your vehicles will meet the minimum Euro emission standards that the permit allows.',
 
     'qanda.ecmt.number-of-permits.question-short' => 'Number of permits required',
