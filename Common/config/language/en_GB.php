@@ -1863,6 +1863,7 @@ return [
     'lva-tmverify-details-checkanswer-employments' => 'Employment added',
     'lva-tmverify-details-checkanswer-Revocations' => 'Revoked, curtailed or suspended Licences',
     'lva-tmverify-details-checkanswer-revokedLicences'=>'Licences added',
+    'lva-tmverify-details-checkanswer-resend-tm-link' => 'Resend link to Transport Manager',
     'myDetails_loginId-error' => 'Username can\'t be blank',
     'myDetails_emailAddress-error' => 'Email address can\'t be blank',
     'myDetails_emailConfirms-error' => 'Please confirm your email address',

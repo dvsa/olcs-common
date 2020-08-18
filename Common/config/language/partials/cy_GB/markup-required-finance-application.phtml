@@ -22,18 +22,20 @@
         </ul>
 
         <p>
-            <details class="help">
-                <summary class="help__summary">
-                    Sut wnaethom amcangyfrif hwn?
+            <details class="govuk-details" data-module="govuk-details">
+                <summary class="govuk-details__summary">
+                    <span class="govuk-details__summary-text">
+                        Sut wnaethom amcangyfrif hwn?
+                    </span>
                 </summary>
-                <div class="help__text">
+                <div class="govuk-details__text">
                     <p>For standard national and international licences you must have:</p>
-                    <ul>
+                    <ul class="govuk-list govuk-list--bullet">
                         <li>&pound;<?php echo number_format($standardFirst); ?> for the first vehicle</li>
                         <li>&pound;<?php echo number_format($standardAdditional); ?> for each additional vehicle</li>
                     </ul>
                     <p>For restricted licences you must have:</p>
-                    <ul>
+                    <ul class="govuk-list govuk-list--bullet">
                         <li>&pound;<?php echo number_format($restrictedFirst); ?> for the first vehicle</li>
                         <li>&pound;<?php echo number_format($restrictedAdditional); ?> for each additional vehicle</li>
                     </ul>

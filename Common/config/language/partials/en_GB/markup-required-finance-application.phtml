@@ -1,8 +1,8 @@
 <div class="article">
-    
+
     <div class="guidance">
         <p>To be granted a licence you need to prove you have enough money to keep your vehicles and run your business.</p>
-        
+
         <p>Read more about <a href="<?php echo $this->url('guides/guide', ['guide' => 'financial-evidence']) ?>" target="_blank">how to provide financial evidence</a>.</p>
     </div>
 
@@ -12,7 +12,7 @@
         <h2 style="margin-top: 0;">&pound; <?php echo number_format($requiredFinance); ?></h2>
 
         <p>This figure is based on:</p>
-        
+
         <ul>
             <li>this application for <?php echo $applicationVehicles; ?> vehicle<?php echo $applicationVehicles != 1 ? 's' : ''; ?></li>
             <?php if ((int) $otherLicenceVehicles > 0): ?>
@@ -24,18 +24,20 @@
         </ul>
 
         <p>
-            <details class="help">
-              <summary class="help__summary">
-                How did we calculate this?
-              </summary>
-              <div class="help__text">
+            <details class="govuk-details" data-module="govuk-details">
+                <summary class="govuk-details__summary">
+                    <span class="govuk-details__summary-text">
+                        How did we calculate this?
+                    </span>
+                </summary>
+              <div class="govuk-details__text">
                 <p>For standard national and international licences you must have:</p>
-                <ul>
+                <ul class="govuk-list govuk-list--bullet">
                     <li>&pound;<?php echo number_format($standardFirst); ?> for the first vehicle</li>
                     <li>&pound;<?php echo number_format($standardAdditional); ?> for each additional vehicle</li>
                 </ul>
                 <p>For restricted licences you must have:</p>
-                <ul>
+                <ul class="govuk-list govuk-list--bullet">
                     <li>&pound;<?php echo number_format($restrictedFirst); ?> for the first vehicle</li>
                     <li>&pound;<?php echo number_format($restrictedAdditional); ?> for each additional vehicle</li>
                 </ul>
