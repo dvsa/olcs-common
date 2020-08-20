@@ -1544,8 +1544,6 @@ return [
     'lva-operating-centre-newspaper-advert' => '<p class="label newspaper-advert">Hysbyseb papur newyddion</p>',
     'permits.irhp-application.overview.title' => 'Trosolwg o’r cais',
     'permits.irhp-application.overview.main' => 'Ceisio am hawlen',
-    'permits.irhp-application.overview.complete-all-sections' => 'Rhaid ichi gwblhau pob adran i geisio am hawlen newydd',
-    'permits.irhp-application.overview.further-guidance' => 'Ceir arweiniad pellach <a href="{{IRHP_GUIDANCE_LINK}}" target="_blank"> ar hawlenni</a> ar GOV.UK.',
     'permits.irhp-application.status.question' => 'Statws cais',
     'permits.irhp-application.cancel.question' => 'Canslo Cais',
     'permits.application.ineligible' => 'Nid ydych yn gymwys am hawlenni (testun i\'w gadarnhau)',
