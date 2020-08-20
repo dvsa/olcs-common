@@ -3101,6 +3101,7 @@ return [
     'common.file-upload.browse.hint' => 'PDF, DOC, JPG, PNG or GIF',
     'common.file-upload.table.col.FileName' => 'File name',
     'common.link.back.label' => 'Back',
+    'common.link.back-to-permits.label' => 'Back to permits dashboard',
     'common.link.change.label' => 'Change',
     'submitandpay.button' => 'Pay and submit',
     'submitapplication.button' => 'Submit application',
@@ -3369,8 +3370,6 @@ return [
     // Permits application
     'permits.irhp-application.overview.title' => 'Application overview',
     'permits.irhp-application.overview.main' => 'Apply for a permit',
-    'permits.irhp-application.overview.complete-all-sections' => 'You must complete all of the sections to apply for a new permit.',
-    'permits.irhp-application.overview.further-guidance' => 'Further <a href="{{IRHP_GUIDANCE_LINK}}" target="_blank">guidance on permits</a> is available on GOV.UK.',
     'permits.irhp-application.status.question' => 'Application status',
     'permits.irhp-application.cancel.question' => 'Cancel application',
 
