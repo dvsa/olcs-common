@@ -47,7 +47,7 @@ class LanguageLinkTest extends MockeryTestCase
         $helper = $this->viewHelper;
 
         $this->viewHelper->createService($this->sm);
-        $this->assertEquals('<a href="?lang=en">English</a>', $helper());
+        $this->assertEquals('<a class="govuk-footer__link" href="?lang=en">English</a>', $helper());
     }
 
     public function testInvokeEnglish()
@@ -61,6 +61,6 @@ class LanguageLinkTest extends MockeryTestCase
         $helper = $this->viewHelper;
 
         $this->viewHelper->createService($this->sm);
-        $this->assertEquals('<a href="?lang=cy">Cymraeg</a>', $helper());
+        $this->assertEquals('<a class="govuk-footer__link" href="?lang=cy">Cymraeg</a>', $helper());
     }
 }

@@ -7,8 +7,9 @@ return [
     '{{SIC_CODES}}' => 'https://www.gov.uk/government/publications/standard-industrial-classification-of'
         . '-economic-activities-sic',
     '{{CROWN_COPYRIGHT}}' => 'http://www.nationalarchives.gov.uk/information-management/re-using-public-'
-        . 'sector-information/copyright-and-re-use/crown-copyright/',
+        . 'sector-information/uk-government-licensing-framework/crown-copyright/',
     '{{DVSA_LINK}}' => 'https://www.gov.uk/government/organisations/driver-and-vehicle-standards-agency',
+    '{{OPEN_GOVT_LINK}}' => 'https://www.gov.uk/government/organisations/driver-and-vehicle-standards-agency',
     '{{BEING_AN_OPERATOR}}' => 'http://gov.uk/being-a-goods-vehicle-operator',
     '{{PUBLIC_SERVICES_LICENCE}}' => 'https://www.gov.uk/psv-operator-licences',
     '{{VEHICLE_SAFETY_GUIDE}}' => 'https://gov.uk/government/collections/vehicle-safety-and-maintenance-guides',

@@ -35,6 +35,7 @@ return [
     'name-of-licence-holder' => 'Enw deiliad y drwydded',
     'trading-name' => 'Enw masnachu',
     'trading-names' => 'Enwau masnachu',
+    'open-government-link' => 'Mae’r holl gynnwys ar gael dan <a class="govuk-footer__link" href="{{OPEN_GOVT_LINK}}" rel="license">Drwydded y Llywodraeth Agored v3.0</a>, ac eithrio lle nodir yn wahanol',
     'Date' => 'Dyddiad',
     'ERR_OC_PERMISSION' => 'Rhaid nodi’r blwch hwn i barhau',
     'ERR_OC_T_1' => 'Os ydych yn gwneud cais am un ganolfan weithredu yn unig, rhaid i gyfanswm yr ôl-gerbydau awdurdodedig fod yr un peth ag yn eich canolfan weithredu',
