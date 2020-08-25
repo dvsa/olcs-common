@@ -3874,7 +3874,7 @@ return [
     'qanda.ecmt.permit-usage.question-summary' => 'Permit usage',
     'qanda.ecmt.permit-usage.additional-guidance' => '<p class="govuk-body">You should only apply for this type of permit if:</p><ul class="govuk-list govuk-list--bullet"><li>from 1 January 2021 you are transiting through EU or EEA countries to reach non-EU or non-EEA countries that are ECMT member countries including Switzerland </li><li>during 2021, your journey includes more than two cross-trade trips between 2 EU or EEA countries, within 7 days of leaving the UK</li></ul>',
     'qanda.ecmt.permit-usage.not-selected-message' => 'You must select an option',
-    'qanda.ecmt.permit-usage.footer-annotation' => 'We may contact you to by email or phone call to verify your application.',
+    'qanda.ecmt.permit-usage.footer-annotation' => 'We may contact you by email or phone call to verify your application.',
     'qanda.ecmt.permit-usage.option.transit-only.label' => 'Transit only',
     'qanda.ecmt.permit-usage.option.transit-only.hint' => 'Transiting through EU and EEA countries to reach non-EU countries who are ECMT members',
     'qanda.ecmt.permit-usage.option.cross-trade-only.label' => 'Cross-trade only',
