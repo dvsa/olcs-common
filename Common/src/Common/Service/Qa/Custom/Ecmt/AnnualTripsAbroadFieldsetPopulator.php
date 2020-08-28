@@ -2,8 +2,8 @@
 
 namespace Common\Service\Qa\Custom\Ecmt;
 
-use Common\Form\Elements\Types\Html;
 use Common\Service\Helper\TranslationHelperService;
+use Common\Service\Qa\Custom\Common\HtmlAdder;
 use Common\Service\Qa\FieldsetPopulatorInterface;
 use Common\Service\Qa\TextFieldsetPopulator;
 use Zend\Form\Element\Hidden;
@@ -20,23 +20,29 @@ class AnnualTripsAbroadFieldsetPopulator implements FieldsetPopulatorInterface
     /** @var NiWarningConditionalAdder */
     private $niWarningConditionalAdder;
 
+    /** @var HtmlAdder */
+    private $htmlAdder;
+
     /**
      * Create service instance
      *
      * @param TextFieldsetPopulator $textFieldsetPopulator
      * @param TranslationHelperService $translator
      * @param NiWarningConditionalAdder $niWarningConditionalAdder
+     * @param HtmlAdder $htmlAdder
      *
      * @return AnnualTripsAbroadFieldsetPopulator
      */
     public function __construct(
         TextFieldsetPopulator $textFieldsetPopulator,
         TranslationHelperService $translator,
-        NiWarningConditionalAdder $niWarningConditionalAdder
+        NiWarningConditionalAdder $niWarningConditionalAdder,
+        HtmlAdder $htmlAdder
     ) {
         $this->textFieldsetPopulator = $textFieldsetPopulator;
         $this->translator = $translator;
         $this->niWarningConditionalAdder = $niWarningConditionalAdder;
+        $this->htmlAdder = $htmlAdder;
     }
 
     /**
@@ -57,15 +63,7 @@ class AnnualTripsAbroadFieldsetPopulator implements FieldsetPopulatorInterface
 
         $ecmtTripsHintMarkup = $this->translator->translate('markup-ecmt-trips-hint');
 
-        $fieldset->add(
-            [
-                'name' => 'hint',
-                'type' => Html::class,
-                'attributes' => [
-                    'value' => $guidanceBlueMarkup . $ecmtTripsHintMarkup
-                ]
-            ]
-        );
+        $this->htmlAdder->add($fieldset, 'hint', $guidanceBlueMarkup . $ecmtTripsHintMarkup);
 
         $fieldset->add(
             [

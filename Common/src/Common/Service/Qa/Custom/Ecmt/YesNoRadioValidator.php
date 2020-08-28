@@ -26,7 +26,7 @@ class YesNoRadioValidator extends AbstractValidator
      */
     public function isValid($value, $context = null)
     {
-        if ($value == 1 && is_null($context['yesContent'])) {
+        if ($value == 1 && empty($context['yesContent'])) {
             $this->yesContentElement->setMessages(
                 ['qanda.ecmt.restricted-countries.error.select-countries']
             );

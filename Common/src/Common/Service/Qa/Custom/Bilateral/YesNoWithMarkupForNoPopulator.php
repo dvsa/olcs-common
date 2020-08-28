@@ -2,7 +2,7 @@
 
 namespace Common\Service\Qa\Custom\Bilateral;
 
-use Common\Form\Elements\Types\Html;
+use Common\Service\Qa\Custom\Common\HtmlAdder;
 use Common\Service\Qa\RadioFactory;
 use Zend\Form\Fieldset;
 
@@ -14,18 +14,26 @@ class YesNoWithMarkupForNoPopulator
     /** @var YesNoRadioOptionsApplier */
     private $yesNoRadioOptionsApplier;
 
+    /** @var HtmlAdder */
+    private $htmlAdder;
+
     /**
      * Create service instance
      *
      * @param RadioFactory $radioFactory
      * @param YesNoRadioOptionsApplier $yesNoRadioOptionsApplier
+     * @param HtmlAdder $htmlAdder
      *
      * @return YesNoWithMarkupForNoPopulator
      */
-    public function __construct(RadioFactory $radioFactory, YesNoRadioOptionsApplier $yesNoRadioOptionsApplier)
-    {
+    public function __construct(
+        RadioFactory $radioFactory,
+        YesNoRadioOptionsApplier $yesNoRadioOptionsApplier,
+        HtmlAdder $htmlAdder
+    ) {
         $this->radioFactory = $radioFactory;
         $this->yesNoRadioOptionsApplier = $yesNoRadioOptionsApplier;
+        $this->htmlAdder = $htmlAdder;
     }
 
     /**
@@ -48,14 +56,10 @@ class YesNoWithMarkupForNoPopulator
 
         $fieldset->add($yesNoRadio);
 
-        $fieldset->add(
-            [
-                'name' => 'noContent',
-                'type' => Html::class,
-                'attributes' => [
-                    'value' => sprintf('<div class="govuk-hint">%s</div>', $noMarkup)
-                ]
-            ]
+        $this->htmlAdder->add(
+            $fieldset,
+            'noContent',
+            sprintf('<div class="govuk-hint">%s</div>', $noMarkup)
         );
 
         $fieldset->setOption('radio-element', 'qaElement');

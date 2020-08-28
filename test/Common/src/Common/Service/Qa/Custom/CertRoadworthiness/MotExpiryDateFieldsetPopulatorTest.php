@@ -2,9 +2,9 @@
 
 namespace CommonTest\Service\Qa\Custom\CertRoadworthiness;
 
-use Common\Form\Elements\Types\Html;
 use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Qa\Custom\Common\DateSelectMustBeBefore;
+use Common\Service\Qa\Custom\Common\HtmlAdder;
 use Common\Service\Qa\Custom\CertRoadworthiness\MotExpiryDateFieldsetPopulator;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -28,21 +28,16 @@ class MotExpiryDateFieldsetPopulatorTest extends MockeryTestCase
             ->with('qanda.certificate-of-roadworthiness.mot-expiry-date.hint')
             ->andReturn('For example, 10 12 2019.');
 
-        $expectedMarkup = '<div class="govuk-hint">For example, 10 12 2019.</div>';
-
-        $expectedHtmlSpecification = [
-            'name' => 'hint',
-            'type' => Html::class,
-            'attributes' => [
-                'value' => $expectedMarkup
-            ]
-        ];
 
         $form = m::mock(Form::class);
 
         $fieldset = m::mock(Fieldset::class);
-        $fieldset->shouldReceive('add')
-            ->with($expectedHtmlSpecification)
+
+        $expectedMarkup = '<div class="govuk-hint">For example, 10 12 2019.</div>';
+
+        $htmlAdder = m::mock(HtmlAdder::class);
+        $htmlAdder->shouldReceive('add')
+            ->with($fieldset, 'hint', $expectedMarkup)
             ->once()
             ->globally()
             ->ordered();
@@ -67,7 +62,7 @@ class MotExpiryDateFieldsetPopulatorTest extends MockeryTestCase
             ->globally()
             ->ordered();
 
-        $motExpiryDateFieldsetPopulator = new MotExpiryDateFieldsetPopulator($translator);
+        $motExpiryDateFieldsetPopulator = new MotExpiryDateFieldsetPopulator($translator, $htmlAdder);
 
         $options = [
             'dateThreshold' => $dateMustBeBefore,

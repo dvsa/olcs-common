@@ -2,9 +2,9 @@
 
 namespace CommonTest\Service\Qa\Custom\Bilateral;
 
-use Common\Form\Elements\Types\Html;
 use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Qa\Custom\Bilateral\PermitUsageFieldsetPopulator;
+use Common\Service\Qa\Custom\Common\HtmlAdder;
 use Common\Service\Qa\RadioFieldsetPopulator;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -27,6 +27,8 @@ class PermitUsageFieldsetPopulatorTest extends MockeryTestCase
     private $radioFieldsetPopulator;
 
     private $translator;
+
+    private $htmlAdder;
 
     private $permitUsageFieldsetPopulator;
 
@@ -51,9 +53,12 @@ class PermitUsageFieldsetPopulatorTest extends MockeryTestCase
 
         $this->translator = m::mock(TranslationHelperService::class);
 
+        $this->htmlAdder = m::mock(HtmlAdder::class);
+
         $this->permitUsageFieldsetPopulator = new PermitUsageFieldsetPopulator(
             $this->radioFieldsetPopulator,
-            $this->translator
+            $this->translator,
+            $this->htmlAdder
         );
     }
 
@@ -74,13 +79,9 @@ class PermitUsageFieldsetPopulatorTest extends MockeryTestCase
             ->with($expectedTranslationKey)
             ->andReturn('Translated option caption');
 
-        $expectedHtmlParams = [
-            'name' => 'qaHtml',
-            'type' => Html::class,
-            'attributes' => [
-                'value' => '<p class="govuk-body-l">Translated option caption</p>',
-            ]
-        ];
+        $this->htmlAdder->shouldReceive('add')
+            ->with($this->fieldset, 'qaHtml', '<p class="govuk-body-l">Translated option caption</p>')
+            ->once();
 
         $expectedHiddenParams = [
             'name' => 'qaElement',
@@ -105,13 +106,8 @@ class PermitUsageFieldsetPopulatorTest extends MockeryTestCase
             ->andReturn($submitFieldset);
 
         $this->fieldset->shouldReceive('add')
-            ->with($expectedHtmlParams)
-            ->once()
-            ->ordered();
-        $this->fieldset->shouldReceive('add')
             ->with($expectedHiddenParams)
-            ->once()
-            ->ordered();
+            ->once();
 
         $this->permitUsageFieldsetPopulator->populate($this->form, $this->fieldset, $options);
     }

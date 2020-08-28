@@ -2,8 +2,8 @@
 
 namespace CommonTest\Service\Qa\Custom\Ecmt;
 
-use Common\Form\Elements\Types\Html;
 use Common\Service\Helper\TranslationHelperService;
+use Common\Service\Qa\Custom\Common\HtmlAdder;
 use Common\Service\Qa\Custom\Ecmt\AnnualTripsAbroadFieldsetPopulator;
 use Common\Service\Qa\Custom\Ecmt\NiWarningConditionalAdder;
 use Common\Service\Qa\TextFieldsetPopulator;
@@ -37,14 +37,6 @@ class AnnualTripsAbroadFieldsetPopulatorTest extends MockeryTestCase
             'text' => $textOptions
         ];
 
-        $expectedAnnotationDefinition = [
-            'name' => 'hint',
-            'type' => Html::class,
-            'attributes' => [
-                'value' => $markup
-            ]
-        ];
-
         $expectedWarningVisibleParameters = [
             'name' => 'warningVisible',
             'type' => Hidden::class,
@@ -67,8 +59,9 @@ class AnnualTripsAbroadFieldsetPopulatorTest extends MockeryTestCase
             ->globally()
             ->ordered();
 
-        $fieldset->shouldReceive('add')
-            ->with($expectedAnnotationDefinition)
+        $htmlAdder = m::mock(HtmlAdder::class);
+        $htmlAdder->shouldReceive('add')
+            ->with($fieldset, 'hint', $markup)
             ->once()
             ->globally()
             ->ordered();
@@ -91,7 +84,8 @@ class AnnualTripsAbroadFieldsetPopulatorTest extends MockeryTestCase
         $annualTripsAbroadFieldsetPopulator = new AnnualTripsAbroadFieldsetPopulator(
             $textFieldsetPopulator,
             $translator,
-            $niWarningConditionalAdder
+            $niWarningConditionalAdder,
+            $htmlAdder
         );
 
         $annualTripsAbroadFieldsetPopulator->populate($form, $fieldset, $options);

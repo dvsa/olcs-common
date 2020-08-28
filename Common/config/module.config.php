@@ -199,6 +199,7 @@ return array(
             'QaRadioFactory' => QaService\RadioFactory::class,
             'QaFieldsetFactory' => QaService\FieldsetFactory::class,
             'QaValidatorsAdder' => QaService\ValidatorsAdder::class,
+            'QaCommonHtmlAdder' => QaService\Custom\Common\HtmlAdder::class,
             'QaEcmtYesNoRadioFactory' => QaService\Custom\Ecmt\YesNoRadioFactory::class,
             'QaEcmtRestrictedCountriesMultiCheckboxFactory'
                 => QaService\Custom\Ecmt\RestrictedCountriesMultiCheckboxFactory::class,
@@ -223,6 +224,9 @@ return array(
 
             'QaRoadworthinessMakeAndModelFieldsetModifier' =>
                 QaService\FieldsetModifier\RoadworthinessMakeAndModelFieldsetModifier::class,
+
+            'QaEcmtNoOfPermitsSingleDataTransformer' =>
+                QaService\DataTransformer\EcmtNoOfPermitsSingleDataTransformer::class,
 
             Common\Data\Mapper\DefaultMapper::class => Common\Data\Mapper\DefaultMapper::class,
             SurrenderMapper\OperatorLicence::class => SurrenderMapper\OperatorLicence::class,
@@ -279,8 +283,18 @@ return array(
             'QaTranslateableTextParameterHandler' => QaService\TranslateableTextParameterHandlerFactory::class,
             'QaFormattedTranslateableTextParametersGenerator' =>
                 QaService\FormattedTranslateableTextParametersGeneratorFactory::class,
-            'QaEcmtNoOfPermitsFieldsetPopulator' =>
-                QaService\Custom\Ecmt\NoOfPermitsFieldsetPopulatorFactory::class,
+            'QaEcmtNoOfPermitsEitherStrategySelectingFieldsetPopulator' =>
+                QaService\Custom\Ecmt\NoOfPermitsEitherStrategySelectingFieldsetPopulatorFactory::class,
+            'QaEcmtNoOfPermitsBothStrategySelectingFieldsetPopulator' =>
+                QaService\Custom\Ecmt\NoOfPermitsBothStrategySelectingFieldsetPopulatorFactory::class,
+            'QaEcmtNoOfPermitsSingleFieldsetPopulator' =>
+                QaService\Custom\Ecmt\NoOfPermitsSingleFieldsetPopulatorFactory::class,
+            'QaEcmtNoOfPermitsEitherFieldsetPopulator' =>
+                QaService\Custom\Ecmt\NoOfPermitsEitherFieldsetPopulatorFactory::class,
+            'QaEcmtNoOfPermitsBothFieldsetPopulator' =>
+                QaService\Custom\Ecmt\NoOfPermitsBothFieldsetPopulatorFactory::class,
+            'QaEcmtNoOfPermitsBaseInsetTextGenerator' =>
+                QaService\Custom\Ecmt\NoOfPermitsBaseInsetTextGeneratorFactory::class,
             'QaEcmtPermitUsageFieldsetPopulator' =>
                 QaService\Custom\Ecmt\PermitUsageFieldsetPopulatorFactory::class,
             'QaEcmtRestrictedCountriesFieldsetPopulator' =>
@@ -320,6 +334,10 @@ return array(
             'QaBilateralPermitUsageDataHandler' => QaService\Custom\Bilateral\PermitUsageDataHandlerFactory::class,
 
             'QaFieldsetModifier' => QaService\FieldsetModifier\FieldsetModifierFactory::class,
+
+            'QaApplicationStepsPostDataTransformer' =>
+                QaService\DataTransformer\ApplicationStepsPostDataTransformerFactory::class,
+            'QaDataTransformerProvider' => QaService\DataTransformer\DataTransformerProviderFactory::class,
 
             PermitsMapper\NoOfPermits::class => PermitsMapper\NoOfPermitsFactory::class,
             Common\Service\User\LastLoginService::class => Common\Service\User\LastLoginServiceFactory::class,

@@ -1,0 +1,139 @@
+<?php
+
+namespace CommonTest\Service\Qa\Custom\Ecmt;
+
+use Common\Form\Elements\Custom\EcmtNoOfPermitsEmissionsCategoryHiddenElement;
+use Common\Form\Elements\Custom\EcmtNoOfPermitsSingleElement;
+use Common\Service\Helper\TranslationHelperService;
+use Common\Service\Qa\Custom\Common\HtmlAdder;
+use Common\Service\Qa\Custom\Ecmt\NoOfPermitsBaseInsetTextGenerator;
+use Common\Service\Qa\Custom\Ecmt\NoOfPermitsSingleFieldsetPopulator;
+use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Zend\Form\Fieldset;
+use Zend\Form\Form;
+
+/**
+ * NoOfPermitsSingleFieldsetPopulatorTest
+ *
+ * @author Jonathan Thomas <jonathan@opalise.co.uk>
+ */
+class NoOfPermitsSingleFieldsetPopulatorTest extends MockeryTestCase
+{
+    /**
+     * @dataProvider dpPopulate
+     */
+    public function testPopulate($emissionsCategoryType, $expectedTextboxLabelKey, $expectedInsetSupplementKey)
+    {
+        $maxCanApplyFor = 21;
+        $maxPermitted = 25;
+        $translatedHint = 'translated hint, maxPermitted = %s';
+        $translatedInsetSupplement = 'translated inset supplement';
+        $translatedCaption = 'translated caption';
+        $baseInsetText = 'base inset text';
+
+        $permitsRemaining = 40;
+        $value = 20;
+
+        $expectedInsetAndBlurbMarkup = '<div class="govuk-inset-text">base inset text<br><br>' .
+            'translated inset supplement</div>' .
+            '<p class="govuk-body"><strong>translated caption</strong><br>' .
+            '<span class="hint">translated hint, maxPermitted = 21</span></p>';
+
+        $options = [
+            'maxCanApplyFor' => $maxCanApplyFor,
+            'maxPermitted' => $maxPermitted,
+            'emissionsCategories' => [
+                [
+                    'type' => $emissionsCategoryType,
+                    'permitsRemaining' => $permitsRemaining,
+                    'value' => $value
+                ],
+            ]
+        ];
+
+        $form = m::mock(Form::class);
+
+        $expectedSingleElementParams = [
+            'type' => EcmtNoOfPermitsSingleElement::class,
+            'name' => 'permitsRequired',
+            'options' => [
+                'label' => $expectedTextboxLabelKey,
+                'maxPermitted' => $maxPermitted,
+                'permitsRemaining' => $permitsRemaining,
+                'emissionsCategory' => $emissionsCategoryType,
+            ],
+            'attributes' => [
+                'value' => $value
+            ]
+        ];
+
+        $expectedHiddenElementParams = [
+            'type' => EcmtNoOfPermitsEmissionsCategoryHiddenElement::class,
+            'name' => 'emissionsCategory',
+            'options' => [
+                'expectedValue' => $emissionsCategoryType
+            ],
+            'attributes' => [
+                'value' => $emissionsCategoryType
+            ]
+        ];
+
+        $fieldset = m::mock(Fieldset::class);
+
+        $htmlAdder = m::mock(HtmlAdder::class);
+        $htmlAdder->shouldReceive('add')
+            ->with($fieldset, 'insetAndBlurb', $expectedInsetAndBlurbMarkup)
+            ->once()
+            ->globally()
+            ->ordered();
+        $fieldset->shouldReceive('add')
+            ->with($expectedSingleElementParams)
+            ->once()
+            ->globally()
+            ->ordered();
+        $fieldset->shouldReceive('add')
+            ->with($expectedHiddenElementParams)
+            ->once();
+
+        $translator = m::mock(TranslationHelperService::class);
+        $translator->shouldReceive('translate')
+            ->with('qanda.ecmt.number-of-permits.hint')
+            ->andReturn($translatedHint);
+        $translator->shouldReceive('translate')
+            ->with($expectedInsetSupplementKey)
+            ->andReturn($translatedInsetSupplement);
+        $translator->shouldReceive('translate')
+            ->with('qanda.ecmt.number-of-permits.caption')
+            ->andReturn($translatedCaption);
+
+        $noOfPermitsBaseInsetTextGenerator = m::mock(NoOfPermitsBaseInsetTextGenerator::class);
+        $noOfPermitsBaseInsetTextGenerator->shouldReceive('generate')
+            ->with($options)
+            ->andReturn($baseInsetText);
+
+        $noOfPermitsSingleFieldsetPopulator = new NoOfPermitsSingleFieldsetPopulator(
+            $translator,
+            $noOfPermitsBaseInsetTextGenerator,
+            $htmlAdder
+        );
+
+        $noOfPermitsSingleFieldsetPopulator->populate($form, $fieldset, $options);
+    }
+
+    public function dpPopulate()
+    {
+        return [
+            [
+                'euro5',
+                'qanda.ecmt.number-of-permits.textbox.label.euro5',
+                'qanda.ecmt.number-of-permits.single.inset.supplement.euro5'
+            ],
+            [
+                'euro6',
+                'qanda.ecmt.number-of-permits.textbox.label.euro6',
+                'qanda.ecmt.number-of-permits.single.inset.supplement.euro6'
+            ]
+        ];
+    }
+}

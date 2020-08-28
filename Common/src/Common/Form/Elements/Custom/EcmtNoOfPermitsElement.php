@@ -6,11 +6,12 @@ use Zend\Filter\StringTrim;
 use Zend\Form\Element\Text;
 use Zend\InputFilter\InputProviderInterface;
 use Zend\Validator\Digits;
-use Zend\Validator\LessThan;
+use Zend\Validator\NotEmpty;
 use Zend\Validator\StringLength;
 
 class EcmtNoOfPermitsElement extends Text implements InputProviderInterface
 {
+    const GENERIC_ERROR_KEY = 'qanda.ecmt.number-of-permits.error.enter-permits-needed';
     const MAX_LENGTH = 4;
 
     protected $attributes = [
@@ -25,6 +26,7 @@ class EcmtNoOfPermitsElement extends Text implements InputProviderInterface
         return [
             'name' => $this->getName(),
             'required' => false,
+            'continue_if_empty' => true,
             'filters' => [
                 [
                     'name' => StringTrim::class
@@ -32,11 +34,23 @@ class EcmtNoOfPermitsElement extends Text implements InputProviderInterface
             ],
             'validators' => [
                 [
+                    'name' => NotEmpty::class,
+                    'options' => [
+                        'break_chain_on_failure' => true,
+                        'messages' => [
+                            NotEmpty::IS_EMPTY => self::GENERIC_ERROR_KEY
+                        ]
+                    ]
+                ],
+                [
                     'name' => StringLength::class,
                     'options' => [
-                        'min' => 1,
                         'max' => self::MAX_LENGTH,
                         'break_chain_on_failure' => true,
+                        'messages' => [
+                            StringLength::INVALID => self::GENERIC_ERROR_KEY,
+                            StringLength::TOO_LONG => self::GENERIC_ERROR_KEY
+                        ]
                     ]
                 ],
                 [
@@ -44,21 +58,11 @@ class EcmtNoOfPermitsElement extends Text implements InputProviderInterface
                     'options' => [
                         'break_chain_on_failure' => true,
                         'messages' => [
-                            Digits::NOT_DIGITS => 'permits.page.no-of-permits.error.not-whole-number'
-                        ]
-                    ]
-                ],
-                [
-                    'name' => LessThan::class,
-                    'options' => [
-                        'max' => $this->options['max'],
-                        'inclusive' => true,
-                        'messages' => [
-                            LessThan::NOT_LESS_INCLUSIVE => $this->options['maxExceededErrorMessage']
+                            Digits::NOT_DIGITS => self::GENERIC_ERROR_KEY
                         ]
                     ]
                 ]
-            ],
+            ]
         ];
     }
 }

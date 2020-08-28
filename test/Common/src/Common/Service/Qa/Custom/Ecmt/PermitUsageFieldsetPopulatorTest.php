@@ -2,8 +2,8 @@
 
 namespace CommonTest\Service\Qa\Custom\Ecmt;
 
-use Common\Form\Elements\Types\Html;
 use Common\Service\Helper\TranslationHelperService;
+use Common\Service\Qa\Custom\Common\HtmlAdder;
 use Common\Service\Qa\Custom\Ecmt\PermitUsageFieldsetPopulator;
 use Common\Service\Qa\RadioFieldsetPopulator;
 use Mockery as m;
@@ -41,21 +41,21 @@ class PermitUsageFieldsetPopulatorTest extends MockeryTestCase
             ->with('qanda.ecmt.permit-usage.footer-annotation')
             ->andReturn('We may contact you to verify your application.');
 
-        $expectedAnnotationDefinition = [
-            'name' => 'footerAnnotation',
-            'type' => Html::class,
-            'attributes' => [
-                'value' => '<p class="govuk-!-padding-top-7"><strong>We may contact you to verify your application.</strong></p>'
-            ]
-        ];
+        $expectedMarkup = '<p class="govuk-!-padding-top-7"><strong>We may contact you to verify your application.</strong></p>';
 
-        $fieldset->shouldReceive('add')
-            ->with($expectedAnnotationDefinition)
+        $htmlAdder = m::mock(HtmlAdder::class);
+        $htmlAdder->shouldReceive('add')
+            ->with($fieldset, 'footerAnnotation', $expectedMarkup)
             ->once()
             ->ordered()
             ->globally();
 
-        $permitUsageFieldsetPopulator = new PermitUsageFieldsetPopulator($radioFieldsetPopulator, $translator);
+        $permitUsageFieldsetPopulator = new PermitUsageFieldsetPopulator(
+            $radioFieldsetPopulator,
+            $translator,
+            $htmlAdder
+        );
+
         $permitUsageFieldsetPopulator->populate($form, $fieldset, $options);
     }
 }

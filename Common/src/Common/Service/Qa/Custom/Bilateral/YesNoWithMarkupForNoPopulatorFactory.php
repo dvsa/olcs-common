@@ -18,7 +18,8 @@ class YesNoWithMarkupForNoPopulatorFactory implements FactoryInterface
     {
         return new YesNoWithMarkupForNoPopulator(
             $serviceLocator->get('QaRadioFactory'),
-            $serviceLocator->get('QaBilateralYesNoRadioOptionsApplier')
+            $serviceLocator->get('QaBilateralYesNoRadioOptionsApplier'),
+            $serviceLocator->get('QaCommonHtmlAdder')
         );
     }
 }

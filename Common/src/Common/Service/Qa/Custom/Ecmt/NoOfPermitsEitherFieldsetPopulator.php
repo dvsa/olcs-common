@@ -1,0 +1,126 @@
+<?php
+
+namespace Common\Service\Qa\Custom\Ecmt;
+
+use Common\Form\Elements\Custom\EcmtNoOfPermitsEitherElement;
+use Common\Form\Elements\InputFilters\QaRadio;
+use Common\Service\Helper\TranslationHelperService;
+use Common\Service\Qa\Custom\Common\HtmlAdder;
+use Common\Service\Qa\FieldsetPopulatorInterface;
+use Zend\Form\Fieldset;
+
+class NoOfPermitsEitherFieldsetPopulator implements FieldsetPopulatorInterface
+{
+    /** @var TranslationHelperService */
+    private $translator;
+
+    /** @var NoOfPermitsBaseInsetTextGenerator */
+    private $noOfPermitsBaseInsetTextGenerator;
+
+    /** @var HtmlAdder */
+    private $htmlAdder;
+
+    /**
+     * Create service instance
+     *
+     * @param TranslationHelperService $translator
+     * @param NoOfPermitsBaseInsetTextGenerator $noOfPermitsBaseInsetTextGenerator
+     * @param HtmlAdder $htmlAdder
+     *
+     * @return NoOfPermitsEitherFieldsetPopulator
+     */
+    public function __construct(
+        TranslationHelperService $translator,
+        NoOfPermitsBaseInsetTextGenerator $noOfPermitsBaseInsetTextGenerator,
+        HtmlAdder $htmlAdder
+    ) {
+        $this->translator = $translator;
+        $this->noOfPermitsBaseInsetTextGenerator = $noOfPermitsBaseInsetTextGenerator;
+        $this->htmlAdder = $htmlAdder;
+    }
+
+    /**
+     * Populate the fieldset with elements based on the supplied options array
+     *
+     * @param mixed $form
+     * @param Fieldset $fieldset
+     * @param array $options
+     */
+    public function populate($form, Fieldset $fieldset, array $options)
+    {
+        $insetAndSection1Header = sprintf(
+            '<div class="govuk-inset-text">%s</div><p class="govuk-body"><strong>1. %s</strong></p><p class="govuk-body">%s</p>',
+            $this->noOfPermitsBaseInsetTextGenerator->generate($options),
+            $this->translator->translate('qanda.ecmt.number-of-permits.either.section-1.heading'),
+            $this->translator->translate('qanda.ecmt.number-of-permits.either.section-1.blurb')
+        );
+
+        $this->htmlAdder->add($fieldset, 'insetAndSection1Header', $insetAndSection1Header);
+
+        $valueOptions = [];
+        $textboxValue = null;
+        $radioValue = null;
+        $emissionsCategoryPermitsRemaining = [];
+        foreach ($options['emissionsCategories'] as $emissionsCategory) {
+            $emissionsCategoryType = $emissionsCategory['type'];
+
+            $label = sprintf(
+                'qanda.ecmt.number-of-permits.either.radio-label.%s',
+                $emissionsCategoryType
+            );
+
+            $emissionsCategoryPermitsRemaining[$emissionsCategoryType] = $emissionsCategory['permitsRemaining'];
+            $valueOptions[$emissionsCategoryType] = $label;
+
+            if ($emissionsCategory['value']) {
+                $textboxValue = $emissionsCategory['value'];
+                $radioValue = $emissionsCategory['type'];
+            }
+        }
+
+        $fieldset->add(
+            [
+                'name' => 'emissionsCategory',
+                'type' => QaRadio::class,
+                'options' => [
+                    'value_options' => $valueOptions,
+                    'not_selected_message' => 'qanda.ecmt.number-of-permits.either.error.select-emissions-category'
+                ],
+                'attributes' => [
+                    'value' => $radioValue
+                ],
+            ]
+        );
+
+        $section2Header = sprintf(
+            '<p class="govuk-body govuk-!-margin-top-6"><strong>2. %s</strong></p>',
+            $this->translator->translate('qanda.ecmt.number-of-permits.either.section-2.heading')
+        );
+
+        $this->htmlAdder->add($fieldset, 'section2Header', $section2Header);
+
+        $maxCanApplyFor = $options['maxCanApplyFor'];
+        $maxPermitted = $options['maxPermitted'];
+
+        $textboxHint = sprintf(
+            $this->translator->translate('qanda.ecmt.number-of-permits.hint'),
+            $maxCanApplyFor
+        );
+
+        $fieldset->add(
+            [
+                'type' => EcmtNoOfPermitsEitherElement::class,
+                'name' => 'permitsRequired',
+                'options' => [
+                    'label' => 'qanda.ecmt.number-of-permits.caption',
+                    'hint' => $textboxHint,
+                    'maxPermitted' => $maxPermitted,
+                    'emissionsCategoryPermitsRemaining' => $emissionsCategoryPermitsRemaining
+                ],
+                'attributes' => [
+                    'value' => $textboxValue
+                ]
+            ]
+        );
+    }
+}

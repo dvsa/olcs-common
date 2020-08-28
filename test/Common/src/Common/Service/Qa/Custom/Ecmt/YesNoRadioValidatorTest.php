@@ -47,7 +47,7 @@ class YesNoRadioValidatorTest extends MockeryTestCase
             [
                 'value' => 0,
                 'context' => [
-                    'yesContent' => null
+                    'yesContent' => ''
                 ]
             ]
         ];
@@ -56,7 +56,7 @@ class YesNoRadioValidatorTest extends MockeryTestCase
     public function testIsValidFalseSetMessages()
     {
         $value = 1;
-        $context = ['yesContent' => null];
+        $context = ['yesContent' => ''];
 
         $this->yesContentElement->shouldReceive('setMessages')
             ->with(['qanda.ecmt.restricted-countries.error.select-countries'])
