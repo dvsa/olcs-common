@@ -10,4 +10,5 @@ class FeatureToggle
     const INTERNAL_SURRENDER = 'internal_surrender';
     const SELFSERVE_SURRENDER = 'ss_surrender';
     const BACKEND_SURRENDER = 'back_surrender';
+    const DVLA_INTEGRATION = 'dvla_integration';
 }
