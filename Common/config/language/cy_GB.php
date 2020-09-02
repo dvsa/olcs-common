@@ -1609,6 +1609,8 @@ return [
     'permits.page.cabotage.browser.title' => 'Cabotage',
     'permits.page.cabotage.question' => 'Nid yw hawlenni ECMT yn caniatáu i chi gynnal masnach arforol',
     'permits.page.cabotage.guidance' => 'Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.',
+    'permits.page.roadworthiness.guidance' => 'Os yw\'ch cais am drwydded yn llwyddiannus, mae\'n ofynnol i chi gael y priodol <strong>Tystysgrif Cydymffurfio</strong> a <strong>Tystysgrif y Ffordd</strong> ar gyfer pob cerbyd a threlar rydych chi\'n bwriadu ei ddefnyddio.<br/><br/>Rhaid i chi gario\'r tystysgrifau sy\'n cyfateb i\'ch cerbyd a\'ch trelar, ar gyfer eich taith gyfan.<br/><br/>Os nad oes gennych chi\'r peth yn barod, <a href="{{ECMT_RULES_FOR_USING_PERMITS_GUIDANCE_LINK}}" target="_blank">ddarganfod sut i gael y tystysgrifau (agor mewn ffenestr newydd)<span class="govuk-visually-hidden">(link opens in a new window)</span></a>.',
+    'permits.page.roadworthiness.question' => 'Tystysgrifau gorfodol ar gyfer cerbydau a threlars rydych chi\'n bwriadu eu defnyddio',
     'permits.page.stock.select.option.1' => 'Trwyddedau ar gyfer teithiau sy\'n cychwyn rhwng 1 Chwefror a 31 Mawrth 2020',
     'permits.page.stock.select.option.2' => 'Trwyddedau ar gyfer teithiau sy\'n cychwyn rhwng 1 Ebrill a 31 Mai 2020',
     'permits.page.stock.select.option.3' => 'Trwyddedau ar gyfer teithiau sy\'n cychwyn rhwng 1 Mehefin a 31 Gorffennaf 2020',
@@ -1670,6 +1672,7 @@ return [
     'permit_nys' => 'Heb gyflwyno hyd yma',
 
     'permits.form.restricted.countries.euro5.label' => 'Rwyf yn cadarnhau na fyddaf yn cludo nwyddau i, trwy ac o Awstria, Gwlad Groeg, Hwngari, yr Eidal na Rwsia gan ddefnyddio’r hawlen hon.',
+    'permits.form.roadworthiness.label' => 'Deallaf fod yn rhaid i mi gael a chario\'r Dystysgrif Cydymffurfio a Thystysgrif Ffyrdd briodol ar gyfer pob cerbyd a threlar rwy\'n bwriadu ei defnyddio gyda\'r drwydded hon.',
     'permits.form.cabotage.label' => 'Rwy\'n cadarnhau na fyddaf yn ymgymryd â siwrnai masnach arforol gyda hawlen ECMT',
     'permits.form.trips.label' => 'Nifer o deithiau',
     'permits.form.permits.required.label' => 'Nifer yr hawlenni',
@@ -1801,6 +1804,7 @@ return [
     'qanda.certificate-of-roadworthiness.mot-expiry-date.question-short' => 'Dyddiad dod i ben y MOT',
     'qanda.certificate-of-roadworthiness.vehicle.mot-expiry-date.question-summary' => 'Dyddiad dod i ben y MOT',
     'qanda.certificate-of-roadworthiness.trailer.mot-expiry-date.question-summary' => 'Dyddiad dod i ben y MOT',
+    'qanda.common.certificates.checkbox.label' => 'Deallaf fod yn rhaid i mi gael a chario\'r Dystysgrif Cydymffurfio a Thystysgrif Ffyrdd briodol ar gyfer pob cerbyd a threlar rwy\'n bwriadu ei defnyddio gyda\'r drwydded hon.',
 
     'message.file-upload-error.lengthtoolong' => 'Ni all enw’r ffeil fod yn fwy na 200 o nodau o ran hyd.',
     'lva.section.title.delete-oc' => 'Ydych chi\'n siŵr eich bod am gael gwared â\'r ganolfan weithredu hon?',
