@@ -418,6 +418,7 @@ return array(
             'linkBack' => Common\View\Helper\LinkBack::class,
             'translateReplace' => \Common\View\Helper\TranslateReplace::class,
             'flashMessengerAll' => \Common\View\Factory\Helper\FlashMessengerFactory::class,
+            'partialSandbox' => \Common\View\Helper\PartialSandbox::class,
         ),
     ),
     'view_manager' => array(
