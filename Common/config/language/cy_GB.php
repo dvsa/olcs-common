@@ -1644,7 +1644,6 @@ return [
     'permits.page.declaration.title' => 'Datganiad',
     'permits.page.declaration.browser.title' => 'Datganiad',
     'permits.page.declaration.question' => 'Datganiad',
-    'permits.page.declaration.bullet.list.title' => 'Trwy barhau, rydych chi\'n cadarnhau',
     'permits.page.fee.main' => 'Ffi cais ar gyfer hawlen ECMT',
     'permits.page.fee.application.reference' => 'Cyfeirnod y cais',
     'permits.page.fee.application.date' => 'Dyddiad y cais',
