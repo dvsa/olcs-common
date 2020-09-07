@@ -3430,19 +3430,16 @@ return [
 
     'permits.page.confirmation.irhp-submitted.browser.title' => 'Application submitted',
     'permits.page.confirmation.irhp-submitted.title' => 'Application submitted',
-    'permits.page.confirmation.irhp-submitted.warning' => 'You must ensure that you have the correct permits in your vehicle when transporting goods internationally.',
-    'permits.page.confirmation.irhp-submitted.certificate.warning' => 'Make sure your email, address and contact details are up-to-date on your operator\'s licence records.',
+    'permits.page.confirmation.irhp-submitted.warning' => 'Make sure your email, address and contact details are up-to-date on your operator\'s licence records.',
     'permits.page.confirmation.irhp-submitted.certificate.information' => 'We will now post your certificate within the next 10 working days.',
     'permits.page.confirmation.irhp-submitted.bullet.list.title' => 'What happens next',
     'permits.page.confirmation.irhp-submitted.what-happens-next' => 'Your valid permits will be grouped together under the same licence number that you applied with.<p>We will now post your paper permit and corresponding logbook within the next 3 working days.</p>',
     'permits.page.confirmation.irhp-submitted.ecmt-removal.what-happens-next' => 'Your valid permits will be grouped together under the same licence number that you applied with.<p>We will now post your paper permit within the next 3 working days.</p>',
-    'permits.page.confirmation.irhp-submitted.under-consideration.what-happens-next.app_business_process_apgg' => 'Your permit application is under consideration and will now be processed. We will get back to you 10 working days after the application submission date.<p>In the meantime, check if you have the <a href="{{ECMT_RULES_FOR_USING_PERMITS_GUIDANCE_LINK}}" target="_blank">certificates of compliance and roadworthiness<span class="govuk-visually-hidden">(link opens in a new window)</span></a> for each vehicle and trailer you intend to use.</p><p>You can check your application status on the next page.</p>',
-    'permits.page.confirmation.irhp-submitted.under-consideration.what-happens-next.app_business_process_apsg' => 'Your permit application is under consideration and will now be processed. We will get back to you after the application period has closed and your application has been processed.<p>In the meantime, check if you have the <a href="{{ECMT_RULES_FOR_USING_PERMITS_GUIDANCE_LINK}}" target="_blank">certificates of compliance and roadworthiness<span class="govuk-visually-hidden">(link opens in a new window)</span></a> for each vehicle and trailer you intend to use.</p><p>You can check your application status on the next page.</p>',
     'permits.page.confirmation.irhp-payment-successful.browser.title' => 'Payment successful',
     'permits.page.confirmation.irhp-payment-successful.title' => 'Payment successful',
 
     'permits.page.confirmation.bullet.list.title' => 'What happens next',
-    'permits.page.confirmation.submitted.warning' => 'You must ensure that you have the correct permits in your vehicle when transporting goods internationally.',
+    'permits.page.confirmation.submitted.warning' => 'Make sure your email, address and contact details are up-to-date on your operator\'s licence records.',
 
     'permits.application.window-closed' => 'Sorry, the service is unavailable',
 
