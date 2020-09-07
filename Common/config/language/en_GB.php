@@ -3419,8 +3419,8 @@ return [
     'permits.page.confirmation.cancel.title' => 'Application Cancelled',
     'permits.page.confirmation.cancel.browser.title' => 'Application Cancelled',
 
-    'permits.page.confirmation.withdraw.title' => 'Application Withdrawn',
-    'permits.page.confirmation.withdraw.browser.title' => 'Application Withdrawn',
+    'permits.page.confirmation.withdraw.title' => 'Application withdrawn',
+    'permits.page.confirmation.withdraw.browser.title' => 'Application withdrawn',
 
     'permits.page.confirmation.decline.title' => 'Permits declined',
     'permits.page.confirmation.decline.browser.title' => 'Permits declined',
@@ -3439,6 +3439,7 @@ return [
     'permits.page.confirmation.irhp-payment-successful.title' => 'Payment successful',
 
     'permits.page.confirmation.bullet.list.title' => 'What happens next',
+    'permits.page.confirmation.bullet.list.title.now' => 'What happens now',
     'permits.page.confirmation.submitted.warning' => 'Make sure your email, address and contact details are up-to-date on your operator\'s licence records.',
 
     'permits.application.window-closed' => 'Sorry, the service is unavailable',
@@ -3509,8 +3510,8 @@ return [
     'permits.page.cancel.browser.title' => 'Cancel Application',
     'permits.page.cancel.question' => 'Cancel Application',
     'permits.page.cancel.bullet.list.title' => 'By cancelling you confirm that',
-    'permits.page.withdraw.browser.title' => 'Withdraw Application',
-    'permits.page.withdraw.question' => 'Withdraw Application',
+    'permits.page.withdraw.browser.title' => 'Withdraw application',
+    'permits.page.withdraw.question' => 'Withdraw application',
     'permits.page.withdraw.bullet.list.title' => 'By withdrawing you confirm that',
     'permits.page.decline.browser.title' => 'Decline awarded permits',
     'permits.page.decline.question' => 'Decline awarded permits',
