@@ -36,6 +36,7 @@ return [
     'DATE_ERR_CONTAINS_STRING' => 'The date should be entered in number format',
     'DATE_ERR_YEAR_LENGTH' => 'Please enter all 4 digits of the year',
     'DVSA-link' => '{{DVSA_LINK}}',
+    'open-government-link' => 'All content is available under the <a class="govuk-footer__link" href="{{OPEN_GOVT_LINK}}" rel="license">Open Government Licence v3.0</a>, except where otherwise stated',
     'Date' => 'Date',
     'ERR_ADDRESS_NOT_FOUND' => 'A correspondence address has not been found',
     'ERR_ADMIN_EXISTS' => 'This operator has already been registered. Please contact your administrator to add you as a user.',
@@ -3832,6 +3833,12 @@ return [
     'permits.ecmt.sectors.textiles.description' => 'Textile products, leather and leather products',
     'permits.ecmt.sectors.unrefined-fuels.description' => 'Lignite, crude petroleum and natural gas',
     'permits.ecmt.sectors.none.description' => 'Only select this category if the main area of your haulage business either fits into several or none of the listed sectors.',
+
+    'go.to.dashboard' => 'Go to dashboard',
+    'top.level.navigation' => 'Top Level Navigation',
+    'show.or.hide.top.level.navigation' => 'Show or hide Top Level Navigation',
+    'menu' => 'Menu',
+    'support.links' => 'Support links',
 
     'qanda.ecmt-removal.removal-eligibility.question-short' => 'Removals eligibility',
     'qanda.ecmt-removal.removal-eligibility.question' => 'Removal permits can only be used for removal operations using specialised equipment and staff',
