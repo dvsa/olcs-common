@@ -35,6 +35,7 @@ return [
     'name-of-licence-holder' => 'Enw deiliad y drwydded',
     'trading-name' => 'Enw masnachu',
     'trading-names' => 'Enwau masnachu',
+    'open-government-link' => 'Mae’r holl gynnwys ar gael dan <a class="govuk-footer__link" href="{{OPEN_GOVT_LINK}}" rel="license">Drwydded y Llywodraeth Agored v3.0</a>, ac eithrio lle nodir yn wahanol',
     'Date' => 'Dyddiad',
     'ERR_OC_PERMISSION' => 'Rhaid nodi’r blwch hwn i barhau',
     'ERR_OC_T_1' => 'Os ydych yn gwneud cais am un ganolfan weithredu yn unig, rhaid i gyfanswm yr ôl-gerbydau awdurdodedig fod yr un peth ag yn eich canolfan weithredu',
@@ -2031,6 +2032,12 @@ return [
     'cookie-settings-saved-content' => 'Gall gwasanaethau\'r Llywodraeth osod cwcis ychwanegol ac, os felly, bydd ganddynt eu polisi cwcis a\'u baner eu hunain.',
 
     'selfserve-app-overview-status-cant-start' => 'Methu cychwyn eto',
+    
+    'go.to.dashboard' => 'Ewch i\'r dangosfwrdd',
+    'top.level.navigation' => 'Llywio Lefel Uchaf',
+    'show.or.hide.top.level.navigation' => 'Dangos neu guddio Llywio Lefel Uchaf',
+    'menu' => 'Ddewislen',
+    'support.links' => 'Dolenni cymorth',
     
     // Annual Bilateral description
 
