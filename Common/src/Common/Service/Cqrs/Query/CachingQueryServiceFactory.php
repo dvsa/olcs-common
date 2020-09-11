@@ -18,9 +18,16 @@ class CachingQueryServiceFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
+        $config = $serviceLocator->get('Config');
+
+        if (!isset($config['query_cache'])) {
+            throw new \Exception('Query cache config key missing');
+        }
+
         $service = new CachingQueryService(
             $serviceLocator->get(QueryService::class),
-            $serviceLocator->get(CacheEncryptionService::class)
+            $serviceLocator->get(CacheEncryptionService::class),
+            $config['query_cache']['ttl']
         );
 
         $service->setLogger($serviceLocator->get('Logger'));

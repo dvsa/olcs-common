@@ -18,10 +18,33 @@ class CachingQueryServiceFactoryTest extends MockeryTestCase
 {
     public function testCreateService()
     {
+        $config = [
+            'query_cache' => [
+                'ttl' => [
+                    'query type' => 300
+                ],
+            ],
+        ];
+
         $mockSl = m::mock(ServiceLocatorInterface::class);
+        $mockSl->shouldReceive('get')->with('Config')->andReturn($config);
         $mockSl->shouldReceive('get')->with('Logger')->andReturn(m::mock(\Zend\Log\LoggerInterface::class));
         $mockSl->shouldReceive('get')->with(QueryService::class)->andReturn(m::mock(QueryService::class));
         $mockSl->shouldReceive('get')->with(CacheEncryption::class)->andReturn(m::mock(CacheEncryption::class));
+
+        $sut = new CachingQueryServiceFactory();
+        $service = $sut->createService($mockSl);
+
+        $this->assertInstanceOf(CachingQueryService::class, $service);
+    }
+
+    public function testCreateServiceMissingConfig()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Query cache config key missing');
+
+        $mockSl = m::mock(ServiceLocatorInterface::class);
+        $mockSl->shouldReceive('get')->with('Config')->andReturn([]);
 
         $sut = new CachingQueryServiceFactory();
         $service = $sut->createService($mockSl);
