@@ -31,6 +31,7 @@ $ni = array_merge(
         'lva-transport-manager-licence-table-empty-message' => '<p class="article"><p class="important"><strong>You don’t have a Transport Manager specified. If you haven’t yet made an application to appoint a replacement you must contact us on {{OPERATOR_LICENSING_PHONE_NI}} or at <a href="mailto:{{OPERATOR_LICENSING_EMAIL_NI}}">{{OPERATOR_LICENSING_EMAIL_NI}}</a></strong></p>',
         'delete.final-tm.confirmation.text' => 'You are removing your last Transport Manager. If you haven\'t yet made an application to appoint a replacement, you must contact us on {{OPERATOR_LICENSING_PHONE_NI}} or at <a href="mailto:{{OPERATOR_LICENSING_EMAIL_NI}}">{{OPERATOR_LICENSING_EMAIL_NI}}</a>',
         'convictions-and-penalties-guidance-route-param' => 'convictions-and-penalties-guidance-ni',
+        'tm-review-return-address' => 'Department for Infrastructure, The Central Licensing Office, PO Box 180 Leeds, LS9 1BU',
     ]
 );
 
