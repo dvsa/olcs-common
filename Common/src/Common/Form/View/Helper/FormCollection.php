@@ -7,13 +7,15 @@
  */
 namespace Common\Form\View\Helper;
 
+use Common\Form\Elements\Types\AbstractInputSearch;
+use Common\Form\Elements\Types\CheckboxAdvanced;
 use Common\Form\Elements\Types\CompanyNumber;
 use Common\Form\Elements\Types\FileUploadList;
 use Common\Form\Elements\Types\FileUploadListItem;
 use Common\Form\Elements\Types\HoursPerWeek;
+use Common\Form\Elements\Types\InputSearch;
 use Common\Form\Elements\Types\PostcodeSearch;
 use Common\Form\Elements\Types\RadioHorizontal;
-use Common\Form\Elements\Types\CheckboxAdvanced;
 use Common\Form\Elements\Types\RadioVertical;
 use Common\Form\View\Helper\Readonly\FormFieldset;
 use Zend\Form\Element\Collection as CollectionElement;
@@ -37,6 +39,7 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
         RadioHorizontal::class => 'formRadioHorizontal',
         CheckboxAdvanced::class => 'formCheckboxAdvanced',
         RadioVertical::class => 'formRadioVertical',
+        AbstractInputSearch::class => FormInputSearch::class,
     );
 
     private static $htmlFileUploadCntr =
@@ -101,9 +104,7 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
         $messages = $element->getMessages();
 
         if ($element instanceof HoursPerWeek) {
-
             if (isset($messages['hoursPerWeekContent'])) {
-
                 $tmpMessages = [];
                 foreach ($messages['hoursPerWeekContent'] as $field => $fieldMessages) {
                     foreach ($fieldMessages as $fieldMessage) {
@@ -198,7 +199,6 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
             $legend = '';
 
             if (!empty($label)) {
-
                 if (null !== ($translator = $this->getTranslator())) {
                     $label = $translator->translate(
                         $label,
@@ -248,12 +248,9 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
                 } else {
                     $markup = '';
                 }
-
             } elseif ($element instanceof FileUploadListItem) {
-
                 $markup = sprintf('<li%s>%s%s</li>', $attributesString, $hint, $markup);
             } else {
-
                 if ($element->getOption('hint-position') === 'below') {
                     $markup = sprintf('<fieldset%s>%s%s%s</fieldset>', $attributesString, $legend, $markup, $hint);
                 } else {
@@ -274,6 +271,8 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
 
         $elementErrors = $this->view->plugin('form_element_errors')->render($element);
 
-        return sprintf('<div class="validation-wrapper">%s%s</div>', $elementErrors, $markup);
+        $markup = sprintf('<div class="validation-wrapper">%s%s</div>', $elementErrors, $markup);
+
+        return $markup;
     }
 }

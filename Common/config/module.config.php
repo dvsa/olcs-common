@@ -1,5 +1,6 @@
 <?php
 
+use Common\Form\View\Helper\FormInputSearch;
 use Common\Service\Data\Search\SearchType;
 use Common\FormService\Form\Lva as LvaFormService;
 use Common\FormService\Form\Continuation as ContinuationFormService;
@@ -349,6 +350,7 @@ return array(
             'formErrors' => 'Common\Form\View\Helper\FormErrors',
             'formDateTimeSelect' => 'Common\Form\View\Helper\FormDateTimeSelect',
             'formDateSelect' => \Common\Form\View\Helper\FormDateSelect::class,
+            FormInputSearch::class => FormInputSearch::class,
             'version' => 'Common\View\Helper\Version',
             'applicationName' => 'Common\View\Helper\ApplicationName',
             'formPlainText' => 'Common\Form\View\Helper\FormPlainText',
