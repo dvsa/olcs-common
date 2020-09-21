@@ -38,6 +38,7 @@ return [
     'DVSA-link' => '{{DVSA_LINK}}',
     'open-government-link' => 'All content is available under the <a class="govuk-footer__link" href="{{OPEN_GOVT_LINK}}" rel="license">Open Government Licence v3.0</a>, except where otherwise stated',
     'Date' => 'Date',
+    'Error' => 'Error',
     'ERR_ADDRESS_NOT_FOUND' => 'A correspondence address has not been found',
     'ERR_ADMIN_EXISTS' => 'This operator has already been registered. Please contact your administrator to add you as a user.',
     'ERR_EMAIL_REQUIRED' => 'Email address is required',
@@ -4096,6 +4097,25 @@ return [
     'cookie-confirmation.blurb' => 'You\'ve accepted all cookies. You can <a class="govuk-link" href="%s">change your cookie settings</a> at any time.',
     'cookie-confirmation.hide' => 'Hide',
     'cookie-banner.set-prefs' => 'Set cookie preferences',
+
+    'licence.vehicle.add.bottom-text' => 'Clear search',
+    'licence.vehicle.add.result.header' => 'A vehicle has been found with registration %s',
+    'licence.vehicle.add.result.information' => 'Vehicle information',
+    'licence.vehicle.add.result.make' => 'Make',
+    'licence.vehicle.add.result.note' => 'If you believe these vehicle details are incorrect contact DVLA',
+    'licence.vehicle.add.result.result' => 'Result',
+    'licence.vehicle.add.result.summary' => 'Vehicle summary',
+    'licence.vehicle.add.result.title' => 'Add a vehicle search results',
+    'licence.vehicle.add.result.vrm' => 'Vehicle Registration Mark',
+    'licence.vehicle.add.result.weight' => 'Gross plated weight in kg',
+    'licence.vehicle.add.search.button' =>  'Find a vehicle',
+    'licence.vehicle.add.search.hint' => 'Enter a Vehicle Registration Mark to search DVLA records for the vehicle you wish to add.',
+    'licence.vehicle.add.search.query-error' => 'We cannot connect to the vehicle database at this time. Try again later',
+    'licence.vehicle.add.search.title' => 'Add a vehicle',
+    'licence.vehicle.add.search.vrm-incorrect' => 'Enter a correct Vehicle Registration Mark',
+    'licence.vehicle.add.search.vrm-missing' => 'Enter a Vehicle Registration Mark',
+    'licence.vehicle.add.search.vrm-not-found' => 'No vehicle could be found with that Vehicle Registration mark </br>Contact DVLA if you believe this Vehicle Registration Mark is correct',
+    'licence.vehicle.add.success' => 'Vehicle %s has been added',
 
     // Potentially unused translations
 ];
