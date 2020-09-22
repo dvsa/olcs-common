@@ -21,3 +21,4 @@ test/coverage/
 .scannerwork/
 composer.lock
 Common/config/language/key-analysis/reports
+Common/config/language/import/translationKeyImport.sql
