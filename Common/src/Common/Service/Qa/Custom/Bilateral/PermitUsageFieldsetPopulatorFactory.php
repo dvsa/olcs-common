@@ -18,7 +18,8 @@ class PermitUsageFieldsetPopulatorFactory implements FactoryInterface
     {
         return new PermitUsageFieldsetPopulator(
             $serviceLocator->get('QaRadioFieldsetPopulator'),
-            $serviceLocator->get('Helper\Translation')
+            $serviceLocator->get('Helper\Translation'),
+            $serviceLocator->get('QaCommonHtmlAdder')
         );
     }
 }

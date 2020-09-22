@@ -2,8 +2,8 @@
 
 namespace Common\Service\Qa\Custom\Ecmt;
 
-use Common\Form\Elements\Types\Html;
 use Common\Service\Helper\TranslationHelperService;
+use Common\Service\Qa\Custom\Common\HtmlAdder;
 use Common\Service\Qa\FieldsetPopulatorInterface;
 use Common\Service\Qa\RadioFieldsetPopulator;
 use Zend\Form\Fieldset;
@@ -16,20 +16,26 @@ class PermitUsageFieldsetPopulator implements FieldsetPopulatorInterface
     /** @var TranslationHelperService */
     private $translator;
 
+    /** @var HtmlAdder */
+    private $htmlAdder;
+
     /**
      * Create service instance
      *
      * @param RadioFieldsetPopulator $radioFieldsetPopulator
      * @param TranslationHelperService $translator
+     * @param HtmlAdder $htmlAdder
      *
      * @return PermitUsageFieldsetPopulator
      */
     public function __construct(
         RadioFieldsetPopulator $radioFieldsetPopulator,
-        TranslationHelperService $translator
+        TranslationHelperService $translator,
+        HtmlAdder $htmlAdder
     ) {
         $this->radioFieldsetPopulator = $radioFieldsetPopulator;
         $this->translator = $translator;
+        $this->htmlAdder = $htmlAdder;
     }
 
     /**
@@ -48,14 +54,6 @@ class PermitUsageFieldsetPopulator implements FieldsetPopulatorInterface
             $this->translator->translate('qanda.ecmt.permit-usage.footer-annotation')
         );
 
-        $fieldset->add(
-            [
-                'name' => 'footerAnnotation',
-                'type' => Html::class,
-                'attributes' => [
-                    'value' => $markup
-                ]
-            ]
-        );
+        $this->htmlAdder->add($fieldset, 'footerAnnotation', $markup);
     }
 }

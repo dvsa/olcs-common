@@ -2,9 +2,9 @@
 
 namespace CommonTest\Service\Qa\Custom\EcmtRemoval;
 
-use Common\Form\Elements\Types\Html;
 use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Qa\Custom\Common\DateSelectMustBeBefore;
+use Common\Service\Qa\Custom\Common\HtmlAdder;
 use Common\Service\Qa\Custom\EcmtRemoval\PermitStartDateFieldsetPopulator;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -31,22 +31,16 @@ class PermitStartDateFieldsetPopulatorTest extends MockeryTestCase
             ->with('qanda.ecmt-removal.permit-start-date.hint.line-2')
             ->andReturn('For example, 10 12 2019.');
 
-        $expectedMarkup = '<div class="govuk-hint">Choose any date up to 60 days ahead.<br>' .
-            'For example, 10 12 2019.</div>';
-
-        $expectedHtmlSpecification = [
-            'name' => 'hint',
-            'type' => Html::class,
-            'attributes' => [
-                'value' => $expectedMarkup
-            ]
-        ];
-
         $form = m::mock(Form::class);
 
         $fieldset = m::mock(Fieldset::class);
-        $fieldset->shouldReceive('add')
-            ->with($expectedHtmlSpecification)
+
+        $expectedMarkup = '<div class="govuk-hint">Choose any date up to 60 days ahead.<br>' .
+            'For example, 10 12 2019.</div>';
+
+        $htmlAdder = m::mock(HtmlAdder::class);
+        $htmlAdder->shouldReceive('add')
+            ->with($fieldset, 'hint', $expectedMarkup)
             ->once()
             ->globally()
             ->ordered();
@@ -71,7 +65,7 @@ class PermitStartDateFieldsetPopulatorTest extends MockeryTestCase
             ->globally()
             ->ordered();
 
-        $permitStartDateFieldsetPopulator = new PermitStartDateFieldsetPopulator($translator);
+        $permitStartDateFieldsetPopulator = new PermitStartDateFieldsetPopulator($translator, $htmlAdder);
 
         $options = [
             'dateThreshold' => $dateMustBeBefore,

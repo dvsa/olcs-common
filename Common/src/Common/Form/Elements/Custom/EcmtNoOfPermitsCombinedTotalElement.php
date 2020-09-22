@@ -23,10 +23,11 @@ class EcmtNoOfPermitsCombinedTotalElement extends Hidden implements InputProvide
                     'options' => [
                         'callback' => [
                             EcmtNoOfPermitsCombinedTotalValidator::class,
-                            'validateNonZeroValuePresent'
+                            'validateMax'
                         ],
+                        'callbackOptions' => [$this->options['maxPermitted']],
                         'messages' => [
-                            Callback::INVALID_VALUE => 'permits.page.no-of-permits.error.no-fields-populated'
+                            Callback::INVALID_VALUE => 'qanda.ecmt.number-of-permits.error.total-max-exceeded'
                         ]
                     ],
                     'break_chain_on_failure' => true
@@ -36,10 +37,10 @@ class EcmtNoOfPermitsCombinedTotalElement extends Hidden implements InputProvide
                     'options' => [
                         'callback' => [
                             EcmtNoOfPermitsCombinedTotalValidator::class,
-                            'validateMultipleNonZeroValuesNotPresent'
+                            'validateMin'
                         ],
                         'messages' => [
-                            Callback::INVALID_VALUE => 'permits.page.no-of-permits.error.two-or-more-fields-populated'
+                            Callback::INVALID_VALUE => 'qanda.ecmt.number-of-permits.error.total-min-exceeded'
                         ]
                     ]
                 ],

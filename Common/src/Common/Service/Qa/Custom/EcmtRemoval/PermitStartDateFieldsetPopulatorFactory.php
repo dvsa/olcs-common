@@ -17,7 +17,8 @@ class PermitStartDateFieldsetPopulatorFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         return new PermitStartDateFieldsetPopulator(
-            $serviceLocator->get('Helper\Translation')
+            $serviceLocator->get('Helper\Translation'),
+            $serviceLocator->get('QaCommonHtmlAdder')
         );
     }
 }

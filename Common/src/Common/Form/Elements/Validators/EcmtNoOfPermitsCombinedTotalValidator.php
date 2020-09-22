@@ -5,33 +5,31 @@ namespace Common\Form\Elements\Validators;
 class EcmtNoOfPermitsCombinedTotalValidator
 {
     /**
-     * Verify that the number of non-zero values found is greater than 0
+     * Verify that the total requested number of permits across all emission types is greater than zero
      *
      * @param mixed $value
      * @param array $context
      *
      * @return bool
      */
-    public static function validateNonZeroValuePresent($value, $context)
+    public static function validateMin($value, $context)
     {
-        $nonZeroValuesFound = self::getNonZeroValuesFound($context);
-
-        return $nonZeroValuesFound > 0;
+        return (self::getTotal($context) >= 1);
     }
 
     /**
-     * Verify that the number of non-zero values found is less than 2
+     * Verify that the total requested number of permits across all emission types is less than or equal to the
+     * provided maxValue
      *
      * @param mixed $value
      * @param array $context
+     * @param int $maxValue
      *
      * @return bool
      */
-    public static function validateMultipleNonZeroValuesNotPresent($value, $context)
+    public static function validateMax($value, $context, $maxValue)
     {
-        $nonZeroValuesFound = self::getNonZeroValuesFound($context);
-
-        return $nonZeroValuesFound <= 1;
+        return (self::getTotal($context) <= $maxValue);
     }
 
     /**
@@ -42,21 +40,18 @@ class EcmtNoOfPermitsCombinedTotalValidator
      *
      * @return int
      */
-    private static function getNonZeroValuesFound($context)
+    private static function getTotal($context)
     {
-        $nonZeroValuesFound = 0;
-
+        $total = 0;
         foreach ($context as $name => $value) {
-            if ((substr($name, 0, 8) == 'required') && is_string($value)) {
+            if ((substr($name, 0, 4) == 'euro') && is_string($value)) {
                 $trimmedValue = trim($value);
                 if (ctype_digit($trimmedValue)) {
-                    if (intval($trimmedValue) > 0) {
-                        $nonZeroValuesFound++;
-                    }
+                    $total += intval($value);
                 }
             }
         }
 
-        return $nonZeroValuesFound;
+        return $total;
     }
 }

@@ -1,0 +1,105 @@
+<?php
+
+namespace CommonTest\Form\Elements\Custom;
+
+use Common\Form\Elements\Custom\EcmtNoOfPermitsEitherElement;
+use Common\Form\Elements\Custom\EcmtNoOfPermitsElement;
+use Common\Service\Qa\Custom\Ecmt\NoOfPermitsEitherValidator;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Mockery as m;
+use Zend\Validator\GreaterThan;
+
+/**
+ * EcmtNoOfPermitsEitherElementTest
+ *
+ * @author Jonathan Thomas <jonathan@opalise.co.uk>
+ */
+class EcmtNoOfPermitsEitherElementTest extends MockeryTestCase
+{
+    public function testGetInputSpecification()
+    {
+        $maxPermitted = 60;
+        $emissionsCategoryPermitsRemaining = [
+            'euro5' => 16,
+            'euro6' => 10
+        ];
+
+        $ecmtNoOfPermitsEitherElement = m::mock(EcmtNoOfPermitsEitherElement::class)->makePartial()
+            ->shouldAllowMockingProtectedMethods();
+
+        $parentInputSpecification = [
+            'key1' => [
+                'foo1' => 'bar1',
+                'foo2' => 'bar2',
+            ],
+            'validators' => [
+                [
+                    'validator1key1' => 'validator1value1',
+                    'validator1key2' => 'validator1value2',
+                ],
+                [
+                    'validator2key1' => 'validator2value1',
+                    'validator2key2' => 'validator2value2',
+                ]
+            ],
+            'key3' => [
+                'foo1' => 'bar1',
+                'foo2' => 'bar2',
+            ]
+        ];
+
+        $ecmtNoOfPermitsEitherElement->shouldReceive('callParentGetInputSpecification')
+            ->withNoArgs()
+            ->andReturn($parentInputSpecification);
+
+        $expectedInputSpecification = [
+            'key1' => [
+                'foo1' => 'bar1',
+                'foo2' => 'bar2',
+            ],
+            'validators' => [
+                [
+                    'validator1key1' => 'validator1value1',
+                    'validator1key2' => 'validator1value2',
+                ],
+                [
+                    'validator2key1' => 'validator2value1',
+                    'validator2key2' => 'validator2value2',
+                ],
+                [
+                    'name' => GreaterThan::class,
+                    'options' => [
+                        'min' => 0,
+                        'messages' => [
+                            GreaterThan::NOT_GREATER => EcmtNoOfPermitsEitherElement::GENERIC_ERROR_KEY
+                        ]
+                    ]
+                ],
+                [
+                    'name' => NoOfPermitsEitherValidator::class,
+                    'options' => [
+                        'maxPermitted' => $maxPermitted,
+                        'emissionsCategoryPermitsRemaining' => $emissionsCategoryPermitsRemaining
+                    ]
+                ]
+            ],
+            'key3' => [
+                'foo1' => 'bar1',
+                'foo2' => 'bar2',
+            ]
+        ];
+
+        $ecmtNoOfPermitsEitherElement->setOption('maxPermitted', $maxPermitted);
+        $ecmtNoOfPermitsEitherElement->setOption(
+            'emissionsCategoryPermitsRemaining',
+            $emissionsCategoryPermitsRemaining
+        );
+
+        $this->assertInstanceOf(EcmtNoOfPermitsElement::class, $ecmtNoOfPermitsEitherElement);
+
+        $this->assertEquals(
+            $expectedInputSpecification,
+            $ecmtNoOfPermitsEitherElement->getInputSpecification()
+        );
+    }
+}

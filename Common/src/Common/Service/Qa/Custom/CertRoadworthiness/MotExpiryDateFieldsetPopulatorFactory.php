@@ -17,7 +17,8 @@ class MotExpiryDateFieldsetPopulatorFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         return new MotExpiryDateFieldsetPopulator(
-            $serviceLocator->get('Helper\Translation')
+            $serviceLocator->get('Helper\Translation'),
+            $serviceLocator->get('QaCommonHtmlAdder')
         );
     }
 }

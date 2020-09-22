@@ -3,9 +3,9 @@
 namespace CommonTest\Service\Qa\Custom\Bilateral;
 
 use Common\Form\Elements\InputFilters\QaRadio;
-use Common\Form\Elements\Types\Html;
 use Common\Service\Qa\Custom\Bilateral\YesNoRadioOptionsApplier;
 use Common\Service\Qa\Custom\Bilateral\YesNoWithMarkupForNoPopulator;
+use Common\Service\Qa\Custom\Common\HtmlAdder;
 use Common\Service\Qa\RadioFactory;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -37,20 +37,9 @@ class YesNoWithMarkupForNoPopulatorTest extends MockeryTestCase
             ->with('qaElement')
             ->andReturn($yesNoRadio);
 
-        $expectedHtmlElementOptions = [
-            'name' => 'noContent',
-            'type' => Html::class,
-            'attributes' => [
-                'value' => '<div class="govuk-hint"><p>No markup</p></div>'
-            ]
-        ];
-
         $fieldset = m::mock(Fieldset::class);
         $fieldset->shouldReceive('add')
             ->with($yesNoRadio)
-            ->once();
-        $fieldset->shouldReceive('add')
-            ->with($expectedHtmlElementOptions)
             ->once();
         $fieldset->shouldReceive('setOption')
             ->with('radio-element', 'qaElement')
@@ -66,7 +55,16 @@ class YesNoWithMarkupForNoPopulatorTest extends MockeryTestCase
             ->with($yesNoRadio, $valueOptions, $expectedYesNoValue, $notSelectedMessage)
             ->once();
 
-        $yesNoWithMarkupForNoPopulator = new YesNoWithMarkupForNoPopulator($radioFactory, $yesNoRadioOptionsApplier);
+        $htmlAdder = m::mock(HtmlAdder::class);
+        $htmlAdder->shouldReceive('add')
+            ->with($fieldset, 'noContent', '<div class="govuk-hint"><p>No markup</p></div>')
+            ->once();
+
+        $yesNoWithMarkupForNoPopulator = new YesNoWithMarkupForNoPopulator(
+            $radioFactory,
+            $yesNoRadioOptionsApplier,
+            $htmlAdder
+        );
 
         $yesNoWithMarkupForNoPopulator->populate(
             $fieldset,

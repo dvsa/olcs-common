@@ -19,7 +19,8 @@ class AnnualTripsAbroadFieldsetPopulatorFactory implements FactoryInterface
         return new AnnualTripsAbroadFieldsetPopulator(
             $serviceLocator->get('QaTextFieldsetPopulator'),
             $serviceLocator->get('Helper\Translation'),
-            $serviceLocator->get('QaEcmtNiWarningConditionalAdder')
+            $serviceLocator->get('QaEcmtNiWarningConditionalAdder'),
+            $serviceLocator->get('QaCommonHtmlAdder')
         );
     }
 }

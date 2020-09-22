@@ -16,7 +16,8 @@ class EcmtNoOfPermitsCombinedTotalElementTest extends MockeryTestCase
 {
     public function testGetInputSpecification()
     {
-        $name = 'euro5Required';
+        $name = 'combinedTotalChecker';
+        $maxPermitted = 55;
 
         $expectedInputSpecification = [
             'name' => $name,
@@ -27,10 +28,11 @@ class EcmtNoOfPermitsCombinedTotalElementTest extends MockeryTestCase
                     'options' => [
                         'callback' => [
                             EcmtNoOfPermitsCombinedTotalValidator::class,
-                            'validateNonZeroValuePresent'
+                            'validateMax'
                         ],
+                        'callbackOptions' => [$maxPermitted],
                         'messages' => [
-                            Callback::INVALID_VALUE => 'permits.page.no-of-permits.error.no-fields-populated'
+                            Callback::INVALID_VALUE => 'qanda.ecmt.number-of-permits.error.total-max-exceeded'
                         ]
                     ],
                     'break_chain_on_failure' => true
@@ -40,10 +42,10 @@ class EcmtNoOfPermitsCombinedTotalElementTest extends MockeryTestCase
                     'options' => [
                         'callback' => [
                             EcmtNoOfPermitsCombinedTotalValidator::class,
-                            'validateMultipleNonZeroValuesNotPresent'
+                            'validateMin'
                         ],
                         'messages' => [
-                            Callback::INVALID_VALUE => 'permits.page.no-of-permits.error.two-or-more-fields-populated'
+                            Callback::INVALID_VALUE => 'qanda.ecmt.number-of-permits.error.total-min-exceeded'
                         ]
                     ]
                 ],
@@ -51,6 +53,7 @@ class EcmtNoOfPermitsCombinedTotalElementTest extends MockeryTestCase
         ];
 
         $ecmtNoOfPermitsCombinedTotalElement = new EcmtNoOfPermitsCombinedTotalElement($name);
+        $ecmtNoOfPermitsCombinedTotalElement->setOption('maxPermitted', $maxPermitted);
 
         $this->assertEquals(
             $expectedInputSpecification,

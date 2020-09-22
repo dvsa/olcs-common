@@ -5,19 +5,20 @@ namespace Common\Service\Qa\Custom\Ecmt;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class NoOfPermitsFieldsetPopulatorFactory implements FactoryInterface
+class NoOfPermitsBaseInsetTextGeneratorFactory implements FactoryInterface
 {
     /**
      * Create service
      *
      * @param ServiceLocatorInterface $serviceLocator
      *
-     * @return NoOfPermitsFieldsetPopulator
+     * @return NoOfPermitsBaseInsetTextGenerator
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return new NoOfPermitsFieldsetPopulator(
-            $serviceLocator->get('Helper\Translation')
+        return new NoOfPermitsBaseInsetTextGenerator(
+            $serviceLocator->get('Helper\Translation'),
+            $serviceLocator->get('ViewHelperManager')->get('currencyFormatter')
         );
     }
 }
