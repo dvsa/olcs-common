@@ -261,7 +261,7 @@ class Module
      */
     protected function setUpTranslator(ServiceLocatorInterface $sm, $eventManager)
     {
-        /** @var \\Zend\I18n\Translator\TranslatorInterface $translator */
+        /** @var \Zend\I18n\Translator\TranslatorInterface $translator */
         $translator = $sm->get('translator');
 
         $translator->setLocale('en_GB')->setFallbackLocale('en_GB');
