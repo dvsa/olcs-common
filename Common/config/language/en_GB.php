@@ -3428,8 +3428,8 @@ return [
     'permits.page.confirmation.reference' => 'Your reference number',
     'permits.page.confirmation.finish' => 'Go to permits dashboard',
 
-    'permits.page.confirmation.cancel.title' => 'Application Cancelled',
-    'permits.page.confirmation.cancel.browser.title' => 'Application Cancelled',
+    'permits.page.confirmation.cancel.title' => 'Application cancelled',
+    'permits.page.confirmation.cancel.browser.title' => 'Application cancelled',
 
     'permits.page.confirmation.withdraw.title' => 'Application withdrawn',
     'permits.page.confirmation.withdraw.browser.title' => 'Application withdrawn',
