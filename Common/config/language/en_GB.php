@@ -3425,6 +3425,13 @@ return [
     'permits.link.ecmt.guidance' => '{{ECMT_PERMITS_GUIDANCE_LINK}}',
     'permits.link.ecmt.terms-and-conditions' => '{{ECMT_PERMITS_TERMS_AND_CONDITIONS}}',
 
+    'permits.page.max-permitted-reached.browser.title' => 'You cannot request any more permits for this permit type, using this licence',
+    'permits.page.max-permitted-reached.title' => 'You cannot request any more permits for this permit type, using this licence',
+    'permits.page.max-permitted-reached.body.top' => '<p class="govuk-body">You\'ve already applied for all permits you are authorised for using this licence. You can only apply for permits up to the maximum number of vehicles authorised on your operator licence.</p><p class="govuk-body">Alternatively, you can:</p>',
+    'permits.page.max-permitted-reached.bullets.use-other-licence' => 'use another <a href="%s">operator licence</a> to apply',
+    'permits.page.max-permitted-reached.bullets.different-permit-type' => '<a href="%s">start a new application</a> for a different permit type',
+    'permits.page.max-permitted-reached.body.bottom' => '<p class="govuk-body">You can also track your ongoing applications and view any permits granted to your business on the <a href="%s">permits dashboard</a>.</p>',
+
     'permits.page.confirmation.reference' => 'Your reference number',
     'permits.page.confirmation.finish' => 'Go to permits dashboard',
 
