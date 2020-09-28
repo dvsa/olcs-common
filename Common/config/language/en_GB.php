@@ -3535,7 +3535,7 @@ return [
     'permits.page.fee.application.date' => 'Application date',
     'permits.page.fee.application.fee.per.permit' => 'Application fee per permit',
     'permits.page.fee.grant.fee.per.permit' => 'Grant fee (per permit)',
-    'permits.page.fee.issue.fee.per.permit' => 'Issuing fee (per permit)',
+    'permits.page.fee.issue.fee.per.permit' => 'Issuing fee per permit',
     'permits.page.fee.total.fee.per.permit' => 'Fee per permit',
     'permits.page.fee.permit.status' => 'Application status',
     'permits.page.fee.permit.type' => 'Permit type',
@@ -3786,6 +3786,7 @@ return [
     'permits.page.irhp.awaiting-fee.browser.title' => 'Permit fee',
     'permits.page.irhp.awaiting-fee.title' => 'Permit fee',
     'permits.page.irhp.awaiting-fee.fee-summary' => 'Fee summary',
+    'permits.page.irhp.awaiting-fee.before-continuing-candidate-warning' => 'Before continuing, check the <a href="%s">granted permits restrictions</a>',
 
     'permits.irhp.fee-breakdown.year' => 'Year',
     'permits.irhp.fee-breakdown.validity-period' => 'Validity period',
