@@ -27,7 +27,7 @@ $error = array_values($fieldsetElement->getMessages(AbstractInputSearch::ELEMENT
             <?php echo $this->escapeHtml($this->translate($hintElement->getOption('value'))); ?>
         </div>
         <?php if (!empty($error)) : ?>
-            <span class="govuk-error-message"><span class="govuk-visually-hidden"><?php echo $this->translate('Error'); ?>:</span><?php echo $error ?></span>
+            <span class="govuk-error-message"><span class="govuk-visually-hidden"><?php echo $this->translate('Error'); ?>:</span><?php echo $this->translate($error) ?></span>
         <?php endif; ?>
         <div class="field inline">
             <input name="<?php echo $inputName; ?>" data-container-class="inline" id="<?php echo $inputName; ?>" type="text" value="<?php echo $this->escapeHtml($inputElement->getValue()); ?>">

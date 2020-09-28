@@ -4187,6 +4187,16 @@ return [
     'cookie-confirmation.hide' => 'Hide',
     'cookie-banner.set-prefs' => 'Set cookie preferences',
 
+    'licence.vehicle.switchboard.header' => 'Manage your vehicles',
+    'licence.vehicle.switchboard.header.after-journey' => 'Do you want to',
+    'licence.vehicle.switchboard.form.add.label' => 'Add a vehicle',
+    'licence.vehicle.switchboard.form.remove.label' => 'Remove a vehicle',
+    'licence.vehicle.switchboard.form.reprint.label' => 'Reprint vehicle discs',
+    'licence.vehicle.switchboard.form.transfer.label' => 'Transfer Vehicles',
+    'licence.vehicle.switchboard.form.view.label' => 'View the vehicles on your licence',
+    'licence.vehicle.switchboard.form.submit.value' => 'Next',
+    'licence.vehicle.switchboard.form.error.select-option' => 'Select an option to manage your vehicles',
+
     'licence.vehicle.add.bottom-text' => 'Clear search',
     'licence.vehicle.add.result.header' => 'A vehicle has been found with registration %s',
     'licence.vehicle.add.result.information' => 'Vehicle information',

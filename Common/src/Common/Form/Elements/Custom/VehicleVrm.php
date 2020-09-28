@@ -2,13 +2,14 @@
 
 namespace Common\Form\Elements\Custom;
 
+use Common\Filter\Vrm;
+use Dvsa\Olcs\Transfer\Validators\Vrm as VrmValidator;
 use Zend\Form\Element as ZendElement;
 use Zend\InputFilter\InputProviderInterface;
+use Zend\Validator\NotEmpty;
 
 /**
  * Vrm field for UK vehicles
- *
- * @author Dmitry Golubev <dmitrij.golubev@valtech.com>
  */
 class VehicleVrm extends ZendElement implements InputProviderInterface
 {
@@ -23,10 +24,21 @@ class VehicleVrm extends ZendElement implements InputProviderInterface
             'name' => $this->getName(),
             'required' => true,
             'filters' => [
-                new \Common\Filter\Vrm(),
+                new Vrm(),
             ],
             'validators' => [
-                new \Dvsa\Olcs\Transfer\Validators\Vrm(),
+                [
+                    'name' => NotEmpty::class,
+                    'break_chain_on_failure' => true,
+                    'options' => [
+                        'messages' => [
+                            NotEmpty::IS_EMPTY => 'licence.vehicle.add.search.vrm-missing'
+                        ]
+                    ],
+                ],
+                [
+                    'name' => VrmValidator::class
+                ],
             ],
         ];
 
