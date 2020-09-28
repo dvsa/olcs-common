@@ -8,6 +8,7 @@ use Common\Form\View\Helper\Readonly as ReadonlyFormHelper;
 use Common\Service\Qa as QaService;
 use Common\Data\Mapper\Permits as PermitsMapper;
 use Common\Data\Mapper\Licence\Surrender as SurrenderMapper;
+use Common\View\Helper\Panel;
 
 $release = json_decode(file_get_contents(__DIR__ . '/release.json'), true);
 
@@ -381,6 +382,7 @@ return array(
             'returnToAddress' => Common\View\Helper\ReturnToAddress::class,
             'config' => Common\View\Helper\Config::class,
             'navigationParentPage' => Common\View\Helper\NavigationParentPage::class,
+            'panel' => Panel::class,
 
             //  read only elements helpers
             ReadonlyFormHelper\FormFieldset::class => ReadonlyFormHelper\FormFieldset::class,

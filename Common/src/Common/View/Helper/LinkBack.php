@@ -58,7 +58,7 @@ class LinkBack extends AbstractHelper implements FactoryInterface
         $label = $this->view->translate($label);
 
         return
-            '<a href="' . $url . '" class="back-link">' .
+            '<a href="' . $url . '" class="govuk-back-link">' .
                 ($isNeedEscape ? $this->view->escapeHtml($label) : $label) .
             '</a>';
     }

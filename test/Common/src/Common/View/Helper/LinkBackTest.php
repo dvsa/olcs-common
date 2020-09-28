@@ -86,7 +86,7 @@ class LinkBackTest extends MockeryTestCase
             [
                 'params' => null,
                 'referer' => $mockHeader,
-                'expect' => '<a href="unit_URL" class="back-link">_ESCAPED__TRLTD_common.link.back.label</a>',
+                'expect' => '<a href="unit_URL" class="govuk-back-link">_ESCAPED__TRLTD_common.link.back.label</a>',
             ],
             //  parameter not set, has referer page
             [
@@ -96,7 +96,7 @@ class LinkBackTest extends MockeryTestCase
                     'escape' => false,
                 ],
                 'referer' => null,
-                'expect' => '<a href="unit_PrmUrl2" class="back-link">_TRLTD_unit_PrmLbl</a>',
+                'expect' => '<a href="unit_PrmUrl2" class="govuk-back-link">_TRLTD_unit_PrmLbl</a>',
             ],
         ];
     }
