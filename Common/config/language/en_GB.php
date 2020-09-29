@@ -4213,7 +4213,7 @@ return [
     'licence.vehicle.add.search.title' => 'Add a vehicle',
     'licence.vehicle.add.search.vrm-incorrect' => 'Enter a correct Vehicle Registration Mark',
     'licence.vehicle.add.search.vrm-missing' => 'Enter a Vehicle Registration Mark',
-    'licence.vehicle.add.search.vrm-not-found' => 'No vehicle could be found with that Vehicle Registration Mark </br>Contact DVLA if you believe this Vehicle Registration Mark is correct',
+    'licence.vehicle.add.search.vrm-not-found' => 'No vehicle could be found with that Vehicle Registration Mark<br>Contact DVLA if you believe this Vehicle Registration Mark is correct',
     'licence.vehicle.add.success' => 'Vehicle %s has been added',
 
     // Potentially unused translations
