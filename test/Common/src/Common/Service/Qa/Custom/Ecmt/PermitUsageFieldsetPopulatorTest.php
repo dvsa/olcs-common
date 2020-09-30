@@ -41,7 +41,8 @@ class PermitUsageFieldsetPopulatorTest extends MockeryTestCase
             ->with('qanda.ecmt.permit-usage.footer-annotation')
             ->andReturn('We may contact you to verify your application.');
 
-        $expectedMarkup = '<p class="govuk-!-padding-top-7"><strong>We may contact you to verify your application.</strong></p>';
+        $expectedMarkup = '<p class="govuk-!-margin-top-7 info-box__icon-wrapper info-box__text">' .
+            '<i class="info-box__icon selfserve-important"></i>We may contact you to verify your application.</p>';
 
         $htmlAdder = m::mock(HtmlAdder::class);
         $htmlAdder->shouldReceive('add')

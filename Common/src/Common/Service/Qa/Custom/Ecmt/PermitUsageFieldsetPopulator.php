@@ -50,7 +50,8 @@ class PermitUsageFieldsetPopulator implements FieldsetPopulatorInterface
         $this->radioFieldsetPopulator->populate($form, $fieldset, $options);
 
         $markup = sprintf(
-            '<p class="govuk-!-padding-top-7"><strong>%s</strong></p>',
+            '<p class="govuk-!-margin-top-7 info-box__icon-wrapper info-box__text">' .
+            '<i class="info-box__icon selfserve-important"></i>%s</p>',
             $this->translator->translate('qanda.ecmt.permit-usage.footer-annotation')
         );
 
