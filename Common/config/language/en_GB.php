@@ -3841,7 +3841,7 @@ return [
     'permits.ecmt.sectors.textiles.description' => 'Textile products, leather and leather products',
     'permits.ecmt.sectors.unrefined-fuels.description' => 'Lignite, crude petroleum and natural gas',
     'permits.ecmt.sectors.none.description' => 'Only select this category if the main area of your haulage business either fits into several or none of the listed sectors.',
-    
+
     'go.to.dashboard' => 'Go to dashboard',
     'top.level.navigation' => 'Top Level Navigation',
     'show.or.hide.top.level.navigation' => 'Show or hide Top Level Navigation',
@@ -4082,85 +4082,85 @@ return [
     'qanda.bilaterals.standard-and-cabotage.additional-guidance.no' => '<p class="govuk-body">Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.</p><p class="govuk-body">From 1 October 2021, if you intend to carry out cabotage, you will need a Norway special permit for cabotage. To be valid it must be used together with a Standard permit.</p>',
     'qanda.bilaterals.cabotage.answer.cabotage-only' => 'I only need permits for cabotage',
     'qanda.bilaterals.cabotage.answer.standard-and-cabotage' => 'I need standard and cabotage permits',
-    
+
     'qanda.bilaterals.cabotage-only.additional-guidance.nl' => '<p class="govuk-body">Between 1 January 2021 and 30 September 2021 you can continue transporting goods to Netherlands using a UK Licence for the Community.</p><p class="govuk-body">If you intend to carry out cabotage, you will need a Netherlands special permit for cabotage. This must be used together with the UK Licence for the Community.</p>',
     'qanda.bilaterals.standard-and-cabotage.additional-guidance.nl' => '<p class="govuk-body">Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.</p><p class="govuk-body">From 1 October 2021, if you intend to carry out cabotage, you will need a Netherlands special permit for cabotage. To be valid it must be used together with a Standard permit.</p>',
-    
+
     'qanda.bilaterals.cabotage-only.additional-guidance.mt' => '<p class="govuk-body">Between 1 January 2021 and 30 September 2021 you can continue transporting goods to Malta using a UK Licence for the Community.</p><p class="govuk-body">If you intend to carry out cabotage, you will need a Malta special permit for cabotage. This must be used together with the UK Licence for the Community.</p>',
     'qanda.bilaterals.standard-and-cabotage.additional-guidance.mt' => '<p class="govuk-body">Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.</p><p class="govuk-body">From 1 October 2021, if you intend to carry out cabotage, you will need a Malta special permit for cabotage. To be valid it must be used together with a Standard permit.</p>',
-    
+
     'qanda.bilaterals.cabotage-only.additional-guidance.lv' => '<p class="govuk-body">Between 1 January 2021 and 30 September 2021 you can continue transporting goods to Latvia using a UK Licence for the Community.</p><p class="govuk-body">If you intend to carry out cabotage, you will need a Latvia special permit for cabotage. This must be used together with the UK Licence for the Community.</p>',
     'qanda.bilaterals.standard-and-cabotage.additional-guidance.lv' => '<p class="govuk-body">Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.</p><p class="govuk-body">From 1 October 2021, if you intend to carry out cabotage, you will need a Latvia special permit for cabotage. To be valid it must be used together with a Standard permit.</p>',
-    
+
     'qanda.bilaterals.cabotage-only.additional-guidance.lu' => '<p class="govuk-body">Between 1 January 2021 and 30 September 2021 you can continue transporting goods to Luxembourg using a UK Licence for the Community.</p><p class="govuk-body">If you intend to carry out cabotage, you will need a Luxembourg special permit for cabotage. This must be used together with the UK Licence for the Community.</p>',
     'qanda.bilaterals.standard-and-cabotage.additional-guidance.lu' => '<p class="govuk-body">Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.</p><p class="govuk-body">From 1 October 2021, if you intend to carry out cabotage, you will need a Luxembourg special permit for cabotage. To be valid it must be used together with a Standard permit.</p>',
-    
+
     'qanda.bilaterals.cabotage-only.additional-guidance.lt' => '<p class="govuk-body">Between 1 January 2021 and 30 September 2021 you can continue transporting goods to Lithuania using a UK Licence for the Community.</p><p class="govuk-body">If you intend to carry out cabotage, you will need a Lithuania special permit for cabotage. This must be used together with the UK Licence for the Community.</p>',
     'qanda.bilaterals.standard-and-cabotage.additional-guidance.lt' => '<p class="govuk-body">Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.</p><p class="govuk-body">From 1 October 2021, if you intend to carry out cabotage, you will need a Lithuania special permit for cabotage. To be valid it must be used together with a Standard permit.</p>',
-    
+
     'qanda.bilaterals.cabotage-only.additional-guidance.it' => '<p class="govuk-body">Between 1 January 2021 and 30 September 2021 you can continue transporting goods to Italy using a UK Licence for the Community.</p><p class="govuk-body">If you intend to carry out cabotage, you will need a Italy special permit for cabotage. This must be used together with the UK Licence for the Community.</p>',
     'qanda.bilaterals.standard-and-cabotage.additional-guidance.it' => '<p class="govuk-body">Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.</p><p class="govuk-body">From 1 October 2021, if you intend to carry out cabotage, you will need a Italy special permit for cabotage. To be valid it must be used together with a Standard permit.</p>',
-    
+
     'qanda.bilaterals.cabotage-only.additional-guidance.ie' => '<p class="govuk-body">Between 1 January 2021 and 30 September 2021 you can continue transporting goods to Ireland using a UK Licence for the Community.</p><p class="govuk-body">If you intend to carry out cabotage, you will need a Ireland special permit for cabotage. This must be used together with the UK Licence for the Community.</p>',
     'qanda.bilaterals.standard-and-cabotage.additional-guidance.ie' => '<p class="govuk-body">Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.</p><p class="govuk-body">From 1 October 2021, if you intend to carry out cabotage, you will need a Ireland special permit for cabotage. To be valid it must be used together with a Standard permit.</p>',
-    
+
     'qanda.bilaterals.cabotage-only.additional-guidance.hu' => '<p class="govuk-body">Between 1 January 2021 and 30 September 2021 you can continue transporting goods to Hungary using a UK Licence for the Community.</p><p class="govuk-body">If you intend to carry out cabotage, you will need a Hungary special permit for cabotage. This must be used together with the UK Licence for the Community.</p>',
     'qanda.bilaterals.standard-and-cabotage.additional-guidance.hu' => '<p class="govuk-body">Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.</p><p class="govuk-body">From 1 October 2021, if you intend to carry out cabotage, you will need a Hungary special permit for cabotage. To be valid it must be used together with a Standard permit.</p>',
-    
+
     'qanda.bilaterals.cabotage-only.additional-guidance.gr' => '<p class="govuk-body">Between 1 January 2021 and 30 September 2021 you can continue transporting goods to Greece using a UK Licence for the Community.</p><p class="govuk-body">If you intend to carry out cabotage, you will need a Greece special permit for cabotage. This must be used together with the UK Licence for the Community.</p>',
     'qanda.bilaterals.standard-and-cabotage.additional-guidance.gr' => '<p class="govuk-body">Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.</p><p class="govuk-body">From 1 October 2021, if you intend to carry out cabotage, you will need a Greece special permit for cabotage. To be valid it must be used together with a Standard permit.</p>',
-    
+
     'qanda.bilaterals.cabotage-only.additional-guidance.fr' => '<p class="govuk-body">Between 1 January 2021 and 30 September 2021 you can continue transporting goods to France using a UK Licence for the Community.</p><p class="govuk-body">If you intend to carry out cabotage, you will need a France special permit for cabotage. This must be used together with the UK Licence for the Community.</p>',
     'qanda.bilaterals.standard-and-cabotage.additional-guidance.fr' => '<p class="govuk-body">Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.</p><p class="govuk-body">From 1 October 2021, if you intend to carry out cabotage, you will need a France special permit for cabotage. To be valid it must be used together with a Standard permit.</p>',
-    
+
     'qanda.bilaterals.cabotage-only.additional-guidance.fi' => '<p class="govuk-body">Between 1 January 2021 and 30 September 2021 you can continue transporting goods to Finland using a UK Licence for the Community.</p><p class="govuk-body">If you intend to carry out cabotage, you will need a Finland special permit for cabotage. This must be used together with the UK Licence for the Community.</p>',
     'qanda.bilaterals.standard-and-cabotage.additional-guidance.fi' => '<p class="govuk-body">Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.</p><p class="govuk-body">From 1 October 2021, if you intend to carry out cabotage, you will need a Finland special permit for cabotage. To be valid it must be used together with a Standard permit.</p>',
-    
+
     'qanda.bilaterals.cabotage-only.additional-guidance.es' => '<p class="govuk-body">Between 1 January 2021 and 30 September 2021 you can continue transporting goods to Spain using a UK Licence for the Community.</p><p class="govuk-body">If you intend to carry out cabotage, you will need a Spain special permit for cabotage. This must be used together with the UK Licence for the Community.</p>',
     'qanda.bilaterals.standard-and-cabotage.additional-guidance.es' => '<p class="govuk-body">Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.</p><p class="govuk-body">From 1 October 2021, if you intend to carry out cabotage, you will need a Spain special permit for cabotage. To be valid it must be used together with a Standard permit.</p>',
-    
+
     'qanda.bilaterals.cabotage-only.additional-guidance.ee' => '<p class="govuk-body">Between 1 January 2021 and 30 September 2021 you can continue transporting goods to Estonia using a UK Licence for the Community.</p><p class="govuk-body">If you intend to carry out cabotage, you will need a Estonia special permit for cabotage. This must be used together with the UK Licence for the Community.</p>',
     'qanda.bilaterals.standard-and-cabotage.additional-guidance.ee' => '<p class="govuk-body">Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.</p><p class="govuk-body">From 1 October 2021, if you intend to carry out cabotage, you will need a Estonia special permit for cabotage. To be valid it must be used together with a Standard permit.</p>',
-    
+
     'qanda.bilaterals.cabotage-only.additional-guidance.dk' => '<p class="govuk-body">Between 1 January 2021 and 30 September 2021 you can continue transporting goods to Denmark using a UK Licence for the Community.</p><p class="govuk-body">If you intend to carry out cabotage, you will need a Denmark special permit for cabotage. This must be used together with the UK Licence for the Community.</p>',
     'qanda.bilaterals.standard-and-cabotage.additional-guidance.dk' => '<p class="govuk-body">Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.</p><p class="govuk-body">From 1 October 2021, if you intend to carry out cabotage, you will need a Denmark special permit for cabotage. To be valid it must be used together with a Standard permit.</p>',
-    
+
     'qanda.bilaterals.cabotage-only.additional-guidance.de' => '<p class="govuk-body">Between 1 January 2021 and 30 September 2021 you can continue transporting goods to Germany using a UK Licence for the Community.</p><p class="govuk-body">If you intend to carry out cabotage, you will need a Germany special permit for cabotage. This must be used together with the UK Licence for the Community.</p>',
     'qanda.bilaterals.standard-and-cabotage.additional-guidance.de' => '<p class="govuk-body">Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.</p><p class="govuk-body">From 1 October 2021, if you intend to carry out cabotage, you will need a Germany special permit for cabotage. To be valid it must be used together with a Standard permit.</p>',
-    
+
     'qanda.bilaterals.cabotage-only.additional-guidance.cz' => '<p class="govuk-body">Between 1 January 2021 and 30 September 2021 you can continue transporting goods to Czech Republic using a UK Licence for the Community.</p><p class="govuk-body">If you intend to carry out cabotage, you will need a Czech Republic special permit for cabotage. This must be used together with the UK Licence for the Community.</p>',
     'qanda.bilaterals.standard-and-cabotage.additional-guidance.cz' => '<p class="govuk-body">Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.</p><p class="govuk-body">From 1 October 2021, if you intend to carry out cabotage, you will need a Czech Republic special permit for cabotage. To be valid it must be used together with a Standard permit.</p>',
-    
+
     'qanda.bilaterals.cabotage-only.additional-guidance.hr' => '<p class="govuk-body">Between 1 January 2021 and 30 September 2021 you can continue transporting goods to Croatia using a UK Licence for the Community.</p><p class="govuk-body">If you intend to carry out cabotage, you will need a Croatia special permit for cabotage. This must be used together with the UK Licence for the Community.</p>',
     'qanda.bilaterals.standard-and-cabotage.additional-guidance.hr' => '<p class="govuk-body">Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.</p><p class="govuk-body">From 1 October 2021, if you intend to carry out cabotage, you will need a Croatia special permit for cabotage. To be valid it must be used together with a Standard permit.</p>',
-    
+
     'qanda.bilaterals.cabotage-only.additional-guidance.cy' => '<p class="govuk-body">Between 1 January 2021 and 30 September 2021 you can continue transporting goods to Cyprus using a UK Licence for the Community.</p><p class="govuk-body">If you intend to carry out cabotage, you will need a Cyprus special permit for cabotage. This must be used together with the UK Licence for the Community.</p>',
     'qanda.bilaterals.standard-and-cabotage.additional-guidance.cy' => '<p class="govuk-body">Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.</p><p class="govuk-body">From 1 October 2021, if you intend to carry out cabotage, you will need a Cyprus special permit for cabotage. To be valid it must be used together with a Standard permit.</p>',
-    
+
     'qanda.bilaterals.cabotage-only.additional-guidance.at' => '<p class="govuk-body">Between 1 January 2021 and 30 September 2021 you can continue transporting goods to Austria using a UK Licence for the Community.</p><p class="govuk-body">If you intend to carry out cabotage, you will need a Austria special permit for cabotage. This must be used together with the UK Licence for the Community.</p>',
     'qanda.bilaterals.standard-and-cabotage.additional-guidance.at' => '<p class="govuk-body">Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.</p><p class="govuk-body">From 1 October 2021, if you intend to carry out cabotage, you will need a Austria special permit for cabotage. To be valid it must be used together with a Standard permit.</p>',
-    
+
     'qanda.bilaterals.cabotage-only.additional-guidance.bg' => '<p class="govuk-body">Between 1 January 2021 and 30 September 2021 you can continue transporting goods to Bulgaria using a UK Licence for the Community.</p><p class="govuk-body">If you intend to carry out cabotage, you will need a Bulgaria special permit for cabotage. This must be used together with the UK Licence for the Community.</p>',
     'qanda.bilaterals.standard-and-cabotage.additional-guidance.bg' => '<p class="govuk-body">Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.</p><p class="govuk-body">From 1 October 2021, if you intend to carry out cabotage, you will need a Bulgaria special permit for cabotage. To be valid it must be used together with a Standard permit.</p>',
-    
+
     'qanda.bilaterals.cabotage-only.additional-guidance.sk' => '<p class="govuk-body">Between 1 January 2021 and 30 September 2021 you can continue transporting goods to Slovakia using a UK Licence for the Community.</p><p class="govuk-body">If you intend to carry out cabotage, you will need a Slovakia special permit for cabotage. This must be used together with the UK Licence for the Community.</p>',
     'qanda.bilaterals.standard-and-cabotage.additional-guidance.sk' => '<p class="govuk-body">Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.</p><p class="govuk-body">From 1 October 2021, if you intend to carry out cabotage, you will need a Slovakia special permit for cabotage. To be valid it must be used together with a Standard permit.</p>',
-    
+
     'qanda.bilaterals.cabotage-only.additional-guidance.si' => '<p class="govuk-body">Between 1 January 2021 and 30 September 2021 you can continue transporting goods to Slovenia using a UK Licence for the Community.</p><p class="govuk-body">If you intend to carry out cabotage, you will need a Slovenia special permit for cabotage. This must be used together with the UK Licence for the Community.</p>',
     'qanda.bilaterals.standard-and-cabotage.additional-guidance.si' => '<p class="govuk-body">Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.</p><p class="govuk-body">From 1 October 2021, if you intend to carry out cabotage, you will need a Slovenia special permit for cabotage. To be valid it must be used together with a Standard permit.</p>',
-    
+
     'qanda.bilaterals.cabotage-only.additional-guidance.se' => '<p class="govuk-body">Between 1 January 2021 and 30 September 2021 you can continue transporting goods to Sweden using a UK Licence for the Community.</p><p class="govuk-body">If you intend to carry out cabotage, you will need a Sweden special permit for cabotage. This must be used together with the UK Licence for the Community.</p>',
     'qanda.bilaterals.standard-and-cabotage.additional-guidance.se' => '<p class="govuk-body">Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.</p><p class="govuk-body">From 1 October 2021, if you intend to carry out cabotage, you will need a Sweden special permit for cabotage. To be valid it must be used together with a Standard permit.</p>',
-    
+
     'qanda.bilaterals.cabotage-only.additional-guidance.ro' => '<p class="govuk-body">Between 1 January 2021 and 30 September 2021 you can continue transporting goods to Romania using a UK Licence for the Community.</p><p class="govuk-body">If you intend to carry out cabotage, you will need a Romania special permit for cabotage. This must be used together with the UK Licence for the Community.</p>',
     'qanda.bilaterals.standard-and-cabotage.additional-guidance.ro' => '<p class="govuk-body">Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.</p><p class="govuk-body">From 1 October 2021, if you intend to carry out cabotage, you will need a Romania special permit for cabotage. To be valid it must be used together with a Standard permit.</p>',
-    
+
     'qanda.bilaterals.cabotage-only.additional-guidance.pt' => '<p class="govuk-body">Between 1 January 2021 and 30 September 2021 you can continue transporting goods to Portugal using a UK Licence for the Community.</p><p class="govuk-body">If you intend to carry out cabotage, you will need a Portugal special permit for cabotage. This must be used together with the UK Licence for the Community.</p>',
     'qanda.bilaterals.standard-and-cabotage.additional-guidance.pt' => '<p class="govuk-body">Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.</p><p class="govuk-body">From 1 October 2021, if you intend to carry out cabotage, you will need a Portugal special permit for cabotage. To be valid it must be used together with a Standard permit.</p>',
-    
+
     'qanda.bilaterals.cabotage-only.additional-guidance.pl' => '<p class="govuk-body">Between 1 January 2021 and 30 September 2021 you can continue transporting goods to Poland using a UK Licence for the Community.</p><p class="govuk-body">If you intend to carry out cabotage, you will need a Poland special permit for cabotage. This must be used together with the UK Licence for the Community.</p>',
     'qanda.bilaterals.standard-and-cabotage.additional-guidance.pl' => '<p class="govuk-body">Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.</p><p class="govuk-body">From 1 October 2021, if you intend to carry out cabotage, you will need a Poland special permit for cabotage. To be valid it must be used together with a Standard permit.</p>',
-    
+
     'qanda.bilaterals.cabotage-only.additional-guidance.be' => '<p class="govuk-body">Between 1 January 2021 and 30 September 2021 you can continue transporting goods to Belgium using a UK Licence for the Community.</p><p class="govuk-body">If you intend to carry out cabotage, you will need a Belgium special permit for cabotage. This must be used together with the UK Licence for the Community.</p>',
     'qanda.bilaterals.standard-and-cabotage.additional-guidance.be' => '<p class="govuk-body">Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.</p><p class="govuk-body">From 1 October 2021, if you intend to carry out cabotage, you will need a Belgium special permit for cabotage. To be valid it must be used together with a Standard permit.</p>',
 
@@ -4230,7 +4230,7 @@ return [
     'licence.vehicle.add.search.title' => 'Add a vehicle',
     'licence.vehicle.add.search.vrm-incorrect' => 'Enter a correct Vehicle Registration Mark',
     'licence.vehicle.add.search.vrm-missing' => 'Enter a Vehicle Registration Mark',
-    'licence.vehicle.add.search.vrm-not-found' => 'No vehicle could be found with that Vehicle Registration mark </br>Contact DVLA if you believe this Vehicle Registration Mark is correct',
+    'licence.vehicle.add.search.vrm-not-found' => 'No vehicle could be found with that Vehicle Registration Mark<br>Contact DVLA if you believe this Vehicle Registration Mark is correct',
     'licence.vehicle.add.success' => 'Vehicle %s has been added',
 
     // Potentially unused translations
