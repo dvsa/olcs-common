@@ -21,6 +21,7 @@ class CategoryDataService
     const CATEGORY_IRFO = 8;
     const CATEGORY_APPLICATION = 9;
     const CATEGORY_SUBMISSION = 10;
+    const CATEGORY_REPORT = 12;
 
     // @NOTE create constants for all sub categories as required. Only a subset
     // will ever be needed programatically so this list should be manageable
@@ -49,4 +50,6 @@ class CategoryDataService
     const DOC_SUB_CATEGORY_OTHER_DOCUMENTS = 79;
     const DOC_SUB_CATEGORY_FEE_REQUEST = 110;
     const DOC_SUB_CATEGORY_CONTINUATIONS_AND_RENEWALS_LICENCE = 74;
+
+    const DOC_SUB_CATEGORY_LETTER = 203;
 }
