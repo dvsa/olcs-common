@@ -2012,6 +2012,7 @@ return [
     'overview.fieldset.check.override-opposition-date' => 'Override opposition dates',
     'overview.fieldset.check.welsh' => 'Welsh language',
     'owner' => 'Owner',
+    'page.title.prompt.generic' => 'What service do you need?',
     'page.title.create_application.createApplication' => 'Type of licence',
     'page.title.lva-application/type_of_licence.index' => 'Type of licence',
     'page.title.lva-application/business_type.index' => 'Business type',
