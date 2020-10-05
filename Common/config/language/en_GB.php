@@ -874,6 +874,7 @@ return [
     'documents.filter.format.title' => 'Format',
     'documents.filter.option.all-tasks' => 'All tasks',
     'documents.filter.option.all-docs' => 'All documents',
+    'documents.filter.option.exclude-irhp' => 'Excludes IRHP documents',
     'documents.filter.option.this-app-only' => 'This application only',
     'documents.filter.option.this-reg-only' => 'This registration only',
     'documents.filter.option.this-case-only' => 'This case only',
