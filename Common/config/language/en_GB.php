@@ -4213,7 +4213,7 @@ return [
     'licence.vehicle.switchboard.form.add.label' => 'Add a vehicle',
     'licence.vehicle.switchboard.form.remove.label' => 'Remove a vehicle',
     'licence.vehicle.switchboard.form.reprint.label' => 'Reprint vehicle disc',
-    'licence.vehicle.switchboard.form.transfer.label' => 'Transfer Vehicles',
+    'licence.vehicle.switchboard.form.transfer.label' => 'Transfer vehicles',
     'licence.vehicle.switchboard.form.view.label' => 'View the vehicles on your licence',
     'licence.vehicle.switchboard.form.submit.value' => 'Next',
     'licence.vehicle.switchboard.form.error.select-option' => 'Select an option to manage your vehicles.',
