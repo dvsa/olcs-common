@@ -34,6 +34,18 @@ class UploadEvidence
      */
     public $operatingCentres = null;
 
+    /**
+     * @Form\ComposedObject({
+     *      "target_object":"Common\Form\Model\Form\Lva\Fieldset\UploadEvidenceSupportingEvidence",
+     *      "options":{
+     *          "count": 1,
+     *          "label":"lva.section.title.upload-evidence.supporting-evidence",
+     *      }
+     * })
+     * @Form\Name("supportingEvidence")
+     */
+    public $supportingEvidence = null;
+
 
     /**
      * @Form\Attributes({"type":"submit","class":"action--primary large"})
