@@ -19,54 +19,11 @@ use Zend\Form\Form;
  */
 class RestrictedCountriesFieldsetPopulatorTest extends MockeryTestCase
 {
-    public function testPopulate()
+    /**
+     * @dataProvider dpTestPopulate
+     */
+    public function testPopulate($options, $expectedValueOptions, $expectedSetValue)
     {
-        $questionKey = 'question.key';
- 
-        $options = [
-            'yesNo' => null,
-            'questionKey' => $questionKey,
-            'countries' => [
-                [
-                    'code' => 'GR',
-                    'labelTranslationKey' => 'Greece',
-                    'checked' => true
-                ],
-                [
-                    'code' => 'HU',
-                    'labelTranslationKey' => 'Hungary',
-                    'checked' => false
-                ],
-                [
-                    'code' => 'IT',
-                    'labelTranslationKey' => 'Italy',
-                    'checked' => true
-                ],
-            ]
-        ];
-
-        $expectedValueOptions = [
-            [
-                'value' => 'GR',
-                'label' => 'Greece',
-                'selected' => true,
-                'attributes' => [
-                    'id' => 'RestrictedCountriesList',
-                ],
-            ],
-            [
-                'value' => 'HU',
-                'label' => 'Hungary',
-                'selected' => false
-            ],
-            [
-                'value' => 'IT',
-                'label' => 'Italy',
-                'selected' => true
-            ],
-        ];
-
-
         $fieldsetName = 'fieldset12';
         $yesNoRadioName = 'restrictedCountries';
         $multiCheckboxName = 'yesContent';
@@ -78,7 +35,7 @@ class RestrictedCountriesFieldsetPopulatorTest extends MockeryTestCase
             ->withNoArgs()
             ->once();
         $yesNoRadio->shouldReceive('setValue')
-            ->with(null)
+            ->with($expectedSetValue)
             ->once();
 
         $restrictedCountriesMultiCheckbox = m::mock(RestrictedCountriesMultiCheckbox::class);
@@ -102,7 +59,7 @@ class RestrictedCountriesFieldsetPopulatorTest extends MockeryTestCase
             ->ordered();
 
         $fieldset->shouldReceive('setLabel')
-            ->with($questionKey)
+            ->with('question.key')
             ->once();
         $fieldset->shouldReceive('setLabelAttributes')
             ->with(['class' => 'govuk-visually-hidden'])
@@ -130,5 +87,73 @@ class RestrictedCountriesFieldsetPopulatorTest extends MockeryTestCase
         );
 
         $restrictedCountriesFieldsetPopulator->populate($form, $fieldset, $options);
+    }
+
+    public function dpTestPopulate()
+    {
+        return [
+            [
+                'options' => [
+                    'yesNo' => null,
+                    'questionKey' => 'question.key',
+                    'countries' => [],
+                ],
+                'expectedValueOptions' => [],
+                'expectedSetValue' => null,
+            ],
+            [
+                'options' => [
+                    'yesNo' => false,
+                    'questionKey' => 'question.key',
+                    'countries' => [],
+                ],
+                'expectedValueOptions' => [],
+                'expectedSetValue' => 'N',
+            ],
+            [
+                'options' => [
+                    'yesNo' => true,
+                    'questionKey' => 'question.key',
+                    'countries' => [
+                        [
+                            'code' => 'GR',
+                            'labelTranslationKey' => 'Greece',
+                            'checked' => true
+                        ],
+                        [
+                            'code' => 'HU',
+                            'labelTranslationKey' => 'Hungary',
+                            'checked' => false
+                        ],
+                        [
+                            'code' => 'IT',
+                            'labelTranslationKey' => 'Italy',
+                            'checked' => true
+                        ],
+                    ],
+                ],
+                'expectedValueOptions' => [
+                    [
+                        'value' => 'GR',
+                        'label' => 'Greece',
+                        'selected' => true,
+                        'attributes' => [
+                            'id' => 'RestrictedCountriesList',
+                        ],
+                    ],
+                    [
+                        'value' => 'HU',
+                        'label' => 'Hungary',
+                        'selected' => false
+                    ],
+                    [
+                        'value' => 'IT',
+                        'label' => 'Italy',
+                        'selected' => true
+                    ],
+                ],
+                'expectedSetValue' => 'Y',
+            ],
+        ];
     }
 }

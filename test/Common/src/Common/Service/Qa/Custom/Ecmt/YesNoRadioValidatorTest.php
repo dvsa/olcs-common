@@ -39,13 +39,13 @@ class YesNoRadioValidatorTest extends MockeryTestCase
     {
         return [
             [
-                'value' => 1,
+                'value' => 'Y',
                 'context' => [
                     'yesContent' => ['RU', 'IT']
                 ]
             ],
             [
-                'value' => 0,
+                'value' => 'N',
                 'context' => [
                     'yesContent' => ''
                 ]
@@ -55,7 +55,7 @@ class YesNoRadioValidatorTest extends MockeryTestCase
 
     public function testIsValidFalseSetMessages()
     {
-        $value = 1;
+        $value = 'Y';
         $context = ['yesContent' => ''];
 
         $this->yesContentElement->shouldReceive('setMessages')
