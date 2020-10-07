@@ -725,6 +725,7 @@ return [
     'org_t_pa' => 'Awdurdod Cyhoeddus',
     'org_t_st' => 'Unig Fasnachwr',
     'other' => 'Arall',
+    'page.title.prompt.generic' => 'Pa wasanaeth sydd ei angen arnoch?',
     'page.title.auth/login.index' => 'Mewngofnodi',
     'page.title.user-forgot-username.index' => 'Wedi anghofio eich enw defnyddiwr?',
     'page.title.lva-licence/type_of_licence.index' => 'Math o drwydded',
