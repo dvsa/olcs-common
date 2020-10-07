@@ -20,14 +20,14 @@ class YesNoRadio extends Radio
     protected $standardValueOptions = [
         'yes' => [
             'label' => 'Yes',
-            'value' => 1,
+            'value' => 'Y',
             'attributes' => [
                 'data-aria-controls' => 'RestrictedCountriesList',
             ],
         ],
         'no' => [
             'label' => 'No',
-            'value' => 0,
+            'value' => 'N',
         ]
     ];
 

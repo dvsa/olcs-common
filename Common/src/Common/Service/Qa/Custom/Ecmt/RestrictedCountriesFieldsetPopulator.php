@@ -43,7 +43,7 @@ class RestrictedCountriesFieldsetPopulator implements FieldsetPopulatorInterface
         $yesNoRadio->setStandardValueOptions();
 
         $optionsYesNo = $options['yesNo'];
-        $yesNoRadio->setValue(is_null($optionsYesNo) ? null : $optionsYesNo === true);
+        $yesNoRadio->setValue(is_null($optionsYesNo) ? null : ($optionsYesNo === true ? 'Y' : 'N'));
 
         $valueOptions = [];
         foreach ($options['countries'] as $country) {
