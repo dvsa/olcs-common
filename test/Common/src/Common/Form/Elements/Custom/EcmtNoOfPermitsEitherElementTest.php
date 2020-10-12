@@ -16,7 +16,10 @@ use Zend\Validator\GreaterThan;
  */
 class EcmtNoOfPermitsEitherElementTest extends MockeryTestCase
 {
-    public function testGetInputSpecification()
+    /**
+     * @dataProvider dpGetInputSpecification
+     */
+    public function testGetInputSpecification($skipAvailabilityValidation, $expectAvailabilityValidator)
     {
         $maxPermitted = 60;
         $emissionsCategoryPermitsRemaining = [
@@ -75,13 +78,6 @@ class EcmtNoOfPermitsEitherElementTest extends MockeryTestCase
                         ]
                     ]
                 ],
-                [
-                    'name' => NoOfPermitsEitherValidator::class,
-                    'options' => [
-                        'maxPermitted' => $maxPermitted,
-                        'emissionsCategoryPermitsRemaining' => $emissionsCategoryPermitsRemaining
-                    ]
-                ]
             ],
             'key3' => [
                 'foo1' => 'bar1',
@@ -89,11 +85,22 @@ class EcmtNoOfPermitsEitherElementTest extends MockeryTestCase
             ]
         ];
 
+        if ($expectAvailabilityValidator) {
+            $expectedInputSpecification['validators'][] = [
+                'name' => NoOfPermitsEitherValidator::class,
+                'options' => [
+                    'maxPermitted' => $maxPermitted,
+                    'emissionsCategoryPermitsRemaining' => $emissionsCategoryPermitsRemaining
+                ]
+            ];
+        }
+
         $ecmtNoOfPermitsEitherElement->setOption('maxPermitted', $maxPermitted);
         $ecmtNoOfPermitsEitherElement->setOption(
             'emissionsCategoryPermitsRemaining',
             $emissionsCategoryPermitsRemaining
         );
+        $ecmtNoOfPermitsEitherElement->setOption('skipAvailabilityValidation', $skipAvailabilityValidation);
 
         $this->assertInstanceOf(EcmtNoOfPermitsElement::class, $ecmtNoOfPermitsEitherElement);
 
@@ -101,5 +108,13 @@ class EcmtNoOfPermitsEitherElementTest extends MockeryTestCase
             $expectedInputSpecification,
             $ecmtNoOfPermitsEitherElement->getInputSpecification()
         );
+    }
+
+    public function dpGetInputSpecification()
+    {
+        return [
+            [false, true],
+            [true, false],
+        ];
     }
 }

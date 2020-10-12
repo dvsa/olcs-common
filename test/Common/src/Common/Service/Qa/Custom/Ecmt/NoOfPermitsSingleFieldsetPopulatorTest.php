@@ -27,6 +27,7 @@ class NoOfPermitsSingleFieldsetPopulatorTest extends MockeryTestCase
     {
         $maxCanApplyFor = 21;
         $maxPermitted = 25;
+        $skipAvailabilityValidation = true;
         $translatedHint = 'translated hint, maxPermitted = %s';
         $translatedInsetSupplement = 'translated inset supplement';
         $translatedCaption = 'translated caption';
@@ -43,6 +44,7 @@ class NoOfPermitsSingleFieldsetPopulatorTest extends MockeryTestCase
         $options = [
             'maxCanApplyFor' => $maxCanApplyFor,
             'maxPermitted' => $maxPermitted,
+            'skipAvailabilityValidation' => $skipAvailabilityValidation,
             'emissionsCategories' => [
                 [
                     'type' => $emissionsCategoryType,
@@ -61,6 +63,7 @@ class NoOfPermitsSingleFieldsetPopulatorTest extends MockeryTestCase
                 'label' => $expectedTextboxLabelKey,
                 'maxPermitted' => $maxPermitted,
                 'permitsRemaining' => $permitsRemaining,
+                'skipAvailabilityValidation' => $skipAvailabilityValidation,
                 'emissionsCategory' => $emissionsCategoryType,
             ],
             'attributes' => [

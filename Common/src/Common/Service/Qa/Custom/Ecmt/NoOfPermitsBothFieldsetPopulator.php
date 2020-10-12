@@ -45,11 +45,13 @@ class NoOfPermitsBothFieldsetPopulator implements FieldsetPopulatorInterface
      * @param mixed $form
      * @param Fieldset $fieldset
      * @param array $options
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function populate($form, Fieldset $fieldset, array $options)
     {
         $maxCanApplyFor = $options['maxCanApplyFor'];
         $maxPermitted = $options['maxPermitted'];
+        $skipAvailabilityValidation = $options['skipAvailabilityValidation'];
 
         $insetAndBlurbTemplate = '<div class="govuk-inset-text">%s<br><br>%s</div>' .
             '<p class="govuk-body"><strong>%s</strong><br><span class="hint">%s</span></p>';
@@ -94,6 +96,7 @@ class NoOfPermitsBothFieldsetPopulator implements FieldsetPopulatorInterface
                     'options' => [
                         'label' => $textboxLabel,
                         'permitsRemaining' => $emissionsCategory['permitsRemaining'],
+                        'skipAvailabilityValidation' => $skipAvailabilityValidation,
                         'emissionsCategory' => $emissionsCategoryType
                     ],
                     'attributes' => [

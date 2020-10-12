@@ -18,13 +18,15 @@ class EcmtNoOfPermitsBothElement extends EcmtNoOfPermitsElement
             'name' => NotPopulatedStringToZero::class
         ];
 
-        $inputSpecification['validators'][] = [
-            'name' => NoOfPermitsBothValidator::class,
-            'options' => [
-                'permitsRemaining' => $this->options['permitsRemaining'],
-                'emissionsCategory' => $this->options['emissionsCategory']
-            ]
-        ];
+        if (!$this->options['skipAvailabilityValidation']) {
+            $inputSpecification['validators'][] = [
+                'name' => NoOfPermitsBothValidator::class,
+                'options' => [
+                    'permitsRemaining' => $this->options['permitsRemaining'],
+                    'emissionsCategory' => $this->options['emissionsCategory']
+                ]
+            ];
+        }
 
         return $inputSpecification;
     }

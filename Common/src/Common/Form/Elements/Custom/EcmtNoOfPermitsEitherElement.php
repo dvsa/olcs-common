@@ -24,13 +24,15 @@ class EcmtNoOfPermitsEitherElement extends EcmtNoOfPermitsElement
             ]
         ];
 
-        $inputSpecification['validators'][] = [
-            'name' => NoOfPermitsEitherValidator::class,
-            'options' => [
-                'maxPermitted' => $this->options['maxPermitted'],
-                'emissionsCategoryPermitsRemaining' => $this->options['emissionsCategoryPermitsRemaining']
-            ]
-        ];
+        if (!$this->options['skipAvailabilityValidation']) {
+            $inputSpecification['validators'][] = [
+                'name' => NoOfPermitsEitherValidator::class,
+                'options' => [
+                    'maxPermitted' => $this->options['maxPermitted'],
+                    'emissionsCategoryPermitsRemaining' => $this->options['emissionsCategoryPermitsRemaining']
+                ]
+            ];
+        }
 
         return $inputSpecification;
     }
