@@ -220,6 +220,8 @@ return array(
 
             'QaBilateralNoOfPermitsFieldsetPopulator' =>
                 QaService\Custom\Bilateral\NoOfPermitsFieldsetPopulator::class,
+            'QaBilateralNoOfPermitsMoroccoFieldsetPopulator' =>
+                QaService\Custom\Bilateral\NoOfPermitsMoroccoFieldsetPopulator::class,
             'QaBilateralPermitUsageIsValidHandler' => QaService\Custom\Bilateral\PermitUsageIsValidHandler::class,
             'QaDateTimeFactory' => QaService\DateTimeFactory::class,
 
