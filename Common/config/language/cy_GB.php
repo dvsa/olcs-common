@@ -2058,7 +2058,7 @@ return [
     
     // ECMT Annual description
  
-    'These permits are valid for one calendar year. They are for transiting through EU or EEA countries to non-EU countries who are ECMT members (including Switzerland), or for cross-trade between two EU or EEA countries.' => 'Mae\'r trwyddedau hyn yn ddilys am un flwyddyn galendr. Maent ar gyfer trosglwyddo drwy wledydd yr UE neu\'r AEE i wledydd y tu allan i\'r UE sy\'n aelodau ECMT (gan gynnwys y Swistir), neu ar gyfer traws-fasnach rhwng dwy o wledydd yr UE neu AEE.',
+    'These permits can be used for international road haulage journeys between ECMT member countries including the EU (except Cyprus) and are valid for one calendar year. It cannot be used for cabotage. Euro 5 permits are not valid for Austria.' => 'Gellir defnyddio\'r trwyddedau hyn ar gyfer teithiau cludo ffyrdd rhyngwladol rhwng aelod-wledydd ECMT gan gynnwys yr UE (ac eithrio Cyprus) ac maent yn ddilys am un flwyddyn galendr. Ni ellir ei ddefnyddio ar gyfer cabotage. Nid yw trwyddedau Ewro 5 yn ddilys ar gyfer Awstria.',
     
     // ECMT short term description
 
@@ -2070,9 +2070,9 @@ return [
     
     // Cert roadworthiness vehicle description
 
-    'Vehicles transporting goods using an ECMT or removals permit need these certificates. You will need to apply separately for each vehicle you intend to use. They are valid until the end of the vehicle\'s MOT.' => 'Mae angen y tystysgrifau hyn ar gerbydau sy\'n cludo nwyddau gan ddefnyddio ECMT neu hawlen symud. Bydd angen i chi wneud cais ar wahân am bob cerbyd rydych chi\'n bwriadu ei ddefnyddio. Maent yn ddilys tan ddiwedd MOT y cerbyd.',
+    'Vehicles transporting goods using an Annual or Short-term ECMT or ECMT International Removal permit need these certificates. You will need to apply separately for each vehicle you intend to use. They are valid until the end of the vehicle\'s MOT.' => 'Mae angen y tystysgrifau hyn ar gerbydau sy\'n cludo nwyddau gan ddefnyddio trwydded Tynnu Rhyngwladol ECMT Blynyddol neu dymor byr neu ECMT. Bydd angen i chi wneud cais ar wahân am bob cerbyd rydych chi\'n bwriadu ei ddefnyddio. Maent yn ddilys tan ddiwedd MOT y cerbyd.',
     
     // Cert roadworthiness trailer description
 
-    'Trailers transporting goods using any type of ECMT permit need these certificates. You will need to apply separately for each trailer you intend to use. They are valid until the end of the trailer\'s MOT.' => 'Mae angen y tystysgrifau hyn ar ôl-gerbydau sy\'n cludo nwyddau gan ddefnyddio unrhyw fath o drwydded ECMT. Bydd angen i chi wneud cais ar wahân am bob trelar rydych chi\'n bwriadu ei ddefnyddio. Maent yn ddilys tan ddiwedd MOT y trelar.',
+    'Trailers transporting goods using an Annual or Short-term ECMT or ECMT International Removal permit need these certificates. You will need to apply separately for each trailer you intend to use. They are valid until the end of the trailer\'s MOT.' => 'Mae angen y tystysgrifau hyn ar ôl-gerbydau sy\'n cludo nwyddau gan ddefnyddio trwydded Tynnu Rhyngwladol ECMT Blynyddol neu dymor byr neu ECMT. Bydd angen i chi wneud cais ar wahân am bob trelar rydych chi\'n bwriadu ei ddefnyddio. Maent yn ddilys tan ddiwedd MOT y trelar.',
 ];
