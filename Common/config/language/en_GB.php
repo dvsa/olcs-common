@@ -171,6 +171,7 @@ return [
     'What happens next?' => 'What happens next?',
     'Yes' => 'Yes',
     'No' => 'No',
+    'Next' => 'Next',
     'action_links.add' => 'Add',
     'action_links.remove' => 'Remove',
     'action_links.replace' => 'Replace',
@@ -3077,6 +3078,7 @@ return [
     'version-conflict-message' => 'The data you were trying to update has expired, please try again',
     'view-full-application' => 'View application',
     'vrm' => 'VRM',
+    'vrm.full' => 'Vehicle Registration Mark (VRM)',
     'wales' => 'Wales',
     'warning-letter' => 'Warning letter',
     'west-midlands' => 'West Midlands',
@@ -4226,6 +4228,8 @@ return [
     'cookie-confirmation.hide' => 'Hide',
     'cookie-banner.set-prefs' => 'Set cookie preferences',
 
+    'licence.vehicle.generic.choose-different-action' => '<p>Click here to choose a different action <a href="%s" target="_blank">manage your vehicles</a>.</p>',
+
     'licence.vehicle.switchboard.header' => 'Manage your vehicles',
     'licence.vehicle.switchboard.header.after-journey' => 'Do you want to',
     'licence.vehicle.switchboard.form.add.label' => 'Add a vehicle',
@@ -4233,7 +4237,6 @@ return [
     'licence.vehicle.switchboard.form.reprint.label' => 'Reprint vehicle disc',
     'licence.vehicle.switchboard.form.transfer.label' => 'Transfer vehicles',
     'licence.vehicle.switchboard.form.view.label' => 'View the vehicles on your licence',
-    'licence.vehicle.switchboard.form.submit.value' => 'Next',
     'licence.vehicle.switchboard.form.error.select-option' => 'Select an option to manage your vehicles.',
 
     'licence.vehicle.add.bottom-text' => 'Clear search',
@@ -4254,6 +4257,9 @@ return [
     'licence.vehicle.add.search.vrm-missing' => 'Enter a Vehicle Registration Mark',
     'licence.vehicle.add.search.vrm-not-found' => 'No vehicle could be found with that Vehicle Registration Mark<br>Contact DVLA if you believe this Vehicle Registration Mark is correct',
     'licence.vehicle.add.success' => 'Vehicle %s has been added',
+
+    'licence.vehicle.add.duplicate.header' => 'Are you sure you want to add this vehicle to your licence?',
+    'licence.vehicle.add.duplicate.note' => '%s is specified on another licence.',
 
     // Potentially unused translations
 ];
