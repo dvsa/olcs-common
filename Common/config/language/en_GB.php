@@ -4261,8 +4261,16 @@ return [
     'licence.vehicle.add.success' => 'Vehicle %s has been added',
 
     'licence.vehicle.remove.header' => 'Remove a vehicle',
+    'licence.vehicle.remove.button' => 'Remove vehicles',
     'licence.vehicle.remove.error.none-selected' => 'Select one or more vehicles to remove',
     'licence.vehicle.remove.error.too-many-selected' => 'Select up to a maximum of 20 vehicles to remove',
+
+    'licence.vehicle.table.title.singular' => 'Current vehicle list - %s vehicle',
+    'licence.vehicle.table.title.plural' => 'Current vehicle list - %s vehicles',
+    'licence.vehicle.table.vrm' => 'Vehicle Registration Mark',
+    'licence.vehicle.table.weight' => 'Gross plated weight (kg)',
+    'licence.vehicle.table.specified' => 'Date added',
+    'licence.vehicle.table.disc-no' => 'Disc number',
 
     // Potentially unused translations
 ];
