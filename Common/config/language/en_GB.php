@@ -4219,31 +4219,31 @@ return [
     'permits.bilateral.norway.period.2' => '1 October 2021 to 31 January 2022',
 
     'qanda.date.error.invalid-date' => 'Enter a valid date',
-    
+
     // Annual Bilateral description
 
     'These permits are for travelling to or transiting through individual countries. A separate permit is needed for each country you intend to travel to or transit through. Each country will have a specific validity period for these permits.' => 'These permits are for travelling to or transiting through individual countries. A separate permit is needed for each country you intend to travel to or transit through. Each country will have a specific validity period for these permits.',
-    
+
     // Annual multilateral description
 
     'This is an annual permit that allows unlimited journeys to all EU and EEA countries. You will need one permit for each vehicle you use. This permit type can be transferred between vehicles.' => 'This is an annual permit that allows unlimited journeys to all EU and EEA countries. You will need one permit for each vehicle you use. This permit type can be transferred between vehicles.',
-    
+
     // ECMT Annual description
- 
+
     'These permits can be used for international road haulage journeys between ECMT member countries including the EU (except Cyprus) and are valid for one calendar year. It cannot be used for cabotage. Euro 5 permits are not valid for Austria.' => 'These permits can be used for international road haulage journeys between ECMT member countries including the EU (except Cyprus) and are valid for one calendar year. It cannot be used for cabotage. Euro 5 permits are not valid for Austria.',
-    
+
     // ECMT short term description
 
     'These permits are valid for 30 consecutive days from the start date you choose. They are for transiting through EU or EEA countries to non-EU countries who are ECMT members (including Switzerland), or for cross-trade between two EU or EEA countries. Short-term permits are not valid for Austria.' => 'These permits are valid for 30 consecutive days from the start date you choose. They are for transiting through EU or EEA countries to non-EU countries who are ECMT members (including Switzerland), or for cross-trade between two EU or EEA countries. Short-term permits are not valid for Austria.',
-    
+
     // ECMT removal description
 
     'Specialist removal companies can use these to move household goods and business possessions between ECMT member countries, except Cyprus. They require the use of the specialised equipment and staff. They are valid for one year from the date of issue.' => 'Specialist removal companies can use these to move household goods and business possessions between ECMT member countries, except Cyprus. They require the use of the specialised equipment and staff. They are valid for one year from the date of issue.',
-    
+
     // Cert roadworthiness vehicle description
 
     'Vehicles transporting goods using an Annual or Short-term ECMT or ECMT International Removal permit need these certificates. You will need to apply separately for each vehicle you intend to use. They are valid until the end of the vehicle\'s MOT.' => 'Vehicles transporting goods using an Annual or Short-term ECMT or ECMT International Removal permit need these certificates. You will need to apply separately for each vehicle you intend to use. They are valid until the end of the vehicle\'s MOT.',
-    
+
     // Cert roadworthiness trailer description
 
     'Trailers transporting goods using an Annual or Short-term ECMT or ECMT International Removal permit need these certificates. You will need to apply separately for each trailer you intend to use. They are valid until the end of the trailer\'s MOT.' => 'Trailers transporting goods using an Annual or Short-term ECMT or ECMT International Removal permit need these certificates. You will need to apply separately for each trailer you intend to use. They are valid until the end of the trailer\'s MOT.',
@@ -4256,7 +4256,7 @@ return [
     'cookie-confirmation.hide' => 'Hide',
     'cookie-banner.set-prefs' => 'Set cookie preferences',
 
-    'licence.vehicle.generic.choose-different-action' => '<p>Click here to choose a different action <a href="%s" target="_blank">manage your vehicles</a>.</p>',
+    'licence.vehicle.generic.choose-different-action' => '<p>Click here to choose a different action <a href="%s">manage your vehicles</a>.</p>',
 
     'licence.vehicle.switchboard.header' => 'Manage your vehicles',
     'licence.vehicle.switchboard.header.after-journey' => 'Do you want to',
