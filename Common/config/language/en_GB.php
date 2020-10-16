@@ -144,6 +144,7 @@ return [
     'country-lt' => 'Lithuania',
     'country-lu' => 'Luxembourg',
     'country-lv' => 'Latvia',
+    'country-ma' => 'Morocco',
     'country-mt' => 'Malta',
     'country-nl' => 'Netherlands',
     'country-no' => 'Norway',
