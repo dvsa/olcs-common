@@ -1470,7 +1470,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             $column['width'] = $this->widths[$column['width']];
         }
 
-        if (isset($column['type']) && $column['type'] == 'Checkbox') {
+        if (isset($column['type']) && $column['type'] == 'Checkbox' && ($column['selectAll'] ?? true)) {
             $column['title'] = $this->replaceContent('{{[elements/checkall]}}');
         }
 
