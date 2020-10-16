@@ -3726,7 +3726,7 @@ return [
     'permits.form.intljourney.warning' => 'You have stated a high percentage of international journeys for this licence. Check the details are correct. We may contact you to verify this information.',
     'permits.form.trips.hint' => 'One trip includes the outward and return journey, even if you pick up and drop off goods at different points or places along your journey.',
     'permits.link.return.to.dashboard' => 'Return to permits dashboard',
-    'permits.link.return.to.fee.overview' => 'Return to fee overview',
+    'permits.link.return.to.fee.overview' => 'Return to fee summary',
     'no-organisation-error' => 'User is not associated with an organisation.',
     'help-sign-in' => 'Help signing in',
     'auth.login.termsAgreed' => 'By using the site you agree to the <a href="%s">terms and conditions</a>.',
@@ -3802,6 +3802,9 @@ return [
     'permits.irhp.valid.permits.apply-filter' => 'Apply filter',
     'permits.irhp.valid.permits.all' => 'All',
 
+    'permits.irhp.unpaid.permits.browser.title' => 'Granted permits restrictions',
+    'permits.irhp.unpaid.permits.title' => 'Granted permits restrictions',
+    'permits.irhp.unpaid.permits.summary' => 'Below is the information about your %s permits for %s.',
     'permits.irhp.unpaid.permits.table.permit' => 'Permit',
     'permits.irhp.unpaid.permits.table.min-emission' => 'Minimum emission standard',
     'permits.irhp.unpaid.permits.table.countries' => 'Not valid to travel to',
