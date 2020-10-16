@@ -19,7 +19,7 @@ class EcmtNoOfPermitsSingleElementTest extends MockeryTestCase
     /**
      * @dataProvider dpGetInputSpecification
      */
-    public function testGetInputSpecification($emissionsCategory)
+    public function testGetInputSpecification($emissionsCategory, $skipAvailabilityValidation, $expectAvailabilityValidator)
     {
         $maxPermitted = 77;
         $permitsRemaining = 22;
@@ -75,14 +75,6 @@ class EcmtNoOfPermitsSingleElementTest extends MockeryTestCase
                         ]
                     ]
                 ],
-                [
-                    'name' => NoOfPermitsSingleValidator::class,
-                    'options' => [
-                        'maxPermitted' => $maxPermitted,
-                        'permitsRemaining' => $permitsRemaining,
-                        'emissionsCategory' => $emissionsCategory,
-                    ]
-                ]
             ],
             'key3' => [
                 'foo1' => 'bar1',
@@ -90,9 +82,21 @@ class EcmtNoOfPermitsSingleElementTest extends MockeryTestCase
             ]
         ];
 
+        if ($expectAvailabilityValidator) {
+            $expectedInputSpecification['validators'][] = [
+                'name' => NoOfPermitsSingleValidator::class,
+                'options' => [
+                    'maxPermitted' => $maxPermitted,
+                    'permitsRemaining' => $permitsRemaining,
+                    'emissionsCategory' => $emissionsCategory,
+                ]
+            ];
+        }
+
         $ecmtNoOfPermitsSingleElement->setOption('maxPermitted', $maxPermitted);
         $ecmtNoOfPermitsSingleElement->setOption('permitsRemaining', $permitsRemaining);
         $ecmtNoOfPermitsSingleElement->setOption('emissionsCategory', $emissionsCategory);
+        $ecmtNoOfPermitsSingleElement->setOption('skipAvailabilityValidation', $skipAvailabilityValidation);
 
         $this->assertInstanceOf(EcmtNoOfPermitsElement::class, $ecmtNoOfPermitsSingleElement);
 
@@ -105,8 +109,10 @@ class EcmtNoOfPermitsSingleElementTest extends MockeryTestCase
     public function dpGetInputSpecification()
     {
         return [
-            ['euro5'],
-            ['euro6'],
+            ['euro5', false, true],
+            ['euro5', true, false],
+            ['euro6', false, true],
+            ['euro6', true, false],
         ];
     }
 }

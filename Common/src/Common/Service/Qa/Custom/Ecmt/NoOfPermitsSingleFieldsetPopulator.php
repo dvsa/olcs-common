@@ -45,6 +45,7 @@ class NoOfPermitsSingleFieldsetPopulator implements FieldsetPopulatorInterface
      * @param mixed $form
      * @param Fieldset $fieldset
      * @param array $options
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function populate($form, Fieldset $fieldset, array $options)
     {
@@ -52,6 +53,7 @@ class NoOfPermitsSingleFieldsetPopulator implements FieldsetPopulatorInterface
         $emissionsCategoryType = $emissionsCategory['type'];
         $maxCanApplyFor = $options['maxCanApplyFor'];
         $maxPermitted = $options['maxPermitted'];
+        $skipAvailabilityValidation = $options['skipAvailabilityValidation'];
 
         $insetSupplementTranslationKey = sprintf(
             'qanda.ecmt.number-of-permits.single.inset.supplement.%s',
@@ -102,6 +104,7 @@ class NoOfPermitsSingleFieldsetPopulator implements FieldsetPopulatorInterface
                     'label' => $textboxLabel,
                     'maxPermitted' => $maxPermitted,
                     'permitsRemaining' => $emissionsCategory['permitsRemaining'],
+                    'skipAvailabilityValidation' => $skipAvailabilityValidation,
                     'emissionsCategory' => $emissionsCategoryType
                 ],
                 'attributes' => [

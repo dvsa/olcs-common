@@ -29,6 +29,7 @@ class NoOfPermitsEitherFieldsetPopulatorTest extends MockeryTestCase
         $maxPermitted = 50;
         $euro5PermitsRemaining = 40;
         $euro6PermitsRemaining = 10;
+        $skipAvailabilityValidation = true;
 
         $translatedSection1Heading = 'translated section 1 heading';
         $translatedSection1Blurb = 'translated section 1 blurb';
@@ -46,6 +47,7 @@ class NoOfPermitsEitherFieldsetPopulatorTest extends MockeryTestCase
         $options = [
             'maxCanApplyFor' => $maxCanApplyFor,
             'maxPermitted' => $maxPermitted,
+            'skipAvailabilityValidation' => $skipAvailabilityValidation,
             'emissionsCategories' => [
                 [
                     'type' => 'euro5',
@@ -105,6 +107,7 @@ class NoOfPermitsEitherFieldsetPopulatorTest extends MockeryTestCase
                 'label' => 'qanda.ecmt.number-of-permits.caption',
                 'hint' => 'translated hint, maxPermitted = 30',
                 'maxPermitted' => 50,
+                'skipAvailabilityValidation' => $skipAvailabilityValidation,
                 'emissionsCategoryPermitsRemaining' => [
                     'euro5' => 40,
                     'euro6' => 10

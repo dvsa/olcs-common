@@ -19,7 +19,7 @@ class EcmtNoOfPermitsBothElementTest extends MockeryTestCase
     /**
      * @dataProvider dpGetInputSpecification
      */
-    public function testGetInputSpecification($emissionsCategory)
+    public function testGetInputSpecification($emissionsCategory, $skipAvailabilityValidation, $expectAvailabilityValidator)
     {
         $permitsRemaining = 55;
 
@@ -80,13 +80,6 @@ class EcmtNoOfPermitsBothElementTest extends MockeryTestCase
                     'validator2key1' => 'validator2value1',
                     'validator2key2' => 'validator2value2',
                 ],
-                [
-                    'name' => NoOfPermitsBothValidator::class,
-                    'options' => [
-                        'permitsRemaining' => $permitsRemaining,
-                        'emissionsCategory' => $emissionsCategory
-                    ]
-                ]
             ],
             'key3' => [
                 'foo1' => 'bar1',
@@ -94,8 +87,19 @@ class EcmtNoOfPermitsBothElementTest extends MockeryTestCase
             ]
         ];
 
+        if ($expectAvailabilityValidator) {
+            $expectedInputSpecification['validators'][] = [
+                'name' => NoOfPermitsBothValidator::class,
+                'options' => [
+                    'permitsRemaining' => $permitsRemaining,
+                    'emissionsCategory' => $emissionsCategory
+                ]
+            ];
+        }
+
         $ecmtNoOfPermitsBothElement->setOption('permitsRemaining', $permitsRemaining);
         $ecmtNoOfPermitsBothElement->setOption('emissionsCategory', $emissionsCategory);
+        $ecmtNoOfPermitsBothElement->setOption('skipAvailabilityValidation', $skipAvailabilityValidation);
 
         $this->assertInstanceOf(EcmtNoOfPermitsElement::class, $ecmtNoOfPermitsBothElement);
 
@@ -108,8 +112,10 @@ class EcmtNoOfPermitsBothElementTest extends MockeryTestCase
     public function dpGetInputSpecification()
     {
         return [
-            ['euro5'],
-            ['euro6'],
+            ['euro5', false, true],
+            ['euro5', true, false],
+            ['euro6', false, true],
+            ['euro6', true, false],
         ];
     }
 }
