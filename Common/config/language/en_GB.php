@@ -4264,11 +4264,12 @@ return [
     'licence.vehicle.remove.button' => 'Remove vehicles',
     'licence.vehicle.remove.error.none-selected' => 'Select one or more vehicles to remove',
     'licence.vehicle.remove.error.too-many-selected' => 'Select up to a maximum of 20 vehicles to remove',
+    'licence.vehicle.remove.note' => 'Select up to 20 vehicles to remove. You can remove more vehicles later.',
 
     'licence.vehicle.table.title.singular' => 'Current vehicle list - %s vehicle',
     'licence.vehicle.table.title.plural' => 'Current vehicle list - %s vehicles',
     'licence.vehicle.table.vrm' => 'Vehicle Registration Mark',
-    'licence.vehicle.table.weight' => 'Gross plated weight (kg)',
+    'licence.vehicle.table.weight' => 'Gross plated weight in kg',
     'licence.vehicle.table.specified' => 'Date added',
     'licence.vehicle.table.disc-no' => 'Disc number',
 
