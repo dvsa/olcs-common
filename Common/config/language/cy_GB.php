@@ -1734,7 +1734,6 @@ return [
     'no-organisation-error' => 'Nid yw\'r defnyddiwr yn gysylltiedig â sefydliad.',
     'permits.form.permits-required.hint' => 'Mae hyd at %s o hawlenni wedi eu hawdurdodi ar gyfer y drwydded hon.',
     'permits.link.return.to.dashboard' => 'Dychwelyd i\'r dangosfwrdd hawlenni',
-    'permits.link.return.to.fee.overview' => 'Dychwelyd i drosolwg ffioedd',
     'permits.page.irhp-fee.permit.fee' => 'Ffi hawlen',
     'permits.page.irhp-fee.permit.fee.total' => 'Cyfanswm y ffi i’w thalu',
     'permits.page.bilateral.no-of-permits.browser.title' => 'Ar gyfer pob gwlad, faint o hawlenni sydd eu hangen arnoch?',
