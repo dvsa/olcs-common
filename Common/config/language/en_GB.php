@@ -4257,6 +4257,8 @@ return [
     'cookie-banner.set-prefs' => 'Set cookie preferences',
 
     'licence.vehicle.generic.choose-different-action' => '<p>Click here to choose a different action <a href="%s">manage your vehicles</a>.</p>',
+    'licence.vehicle.generic.button.next.title' => 'Click next to submit your choice',
+
 
     'licence.vehicle.switchboard.header' => 'Manage your vehicles',
     'licence.vehicle.switchboard.header.after-journey' => 'Do you want to',
@@ -4264,6 +4266,7 @@ return [
     'licence.vehicle.switchboard.form.remove.label' => 'Remove a vehicle',
     'licence.vehicle.switchboard.form.reprint.label' => 'Reprint vehicle disc',
     'licence.vehicle.switchboard.form.transfer.label' => 'Transfer vehicles',
+    'licence.vehicle.switchboard.form.next.title' => 'Click next to continue with your choice',
     'licence.vehicle.switchboard.form.view.label' => 'View the vehicles on your licence',
     'licence.vehicle.switchboard.form.error.select-option' => 'Select an option to manage your vehicles.',
 
