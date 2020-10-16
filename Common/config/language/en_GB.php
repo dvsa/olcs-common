@@ -4256,7 +4256,7 @@ return [
     'cookie-confirmation.hide' => 'Hide',
     'cookie-banner.set-prefs' => 'Set cookie preferences',
 
-    'licence.vehicle.generic.choose-different-action' => '<p>Click here to choose a different action <a href="%s">manage your vehicles</a>.</p>',
+    'licence.vehicle.generic.choose-different-action' => '<p>Click here to choose a different action <a href="%s" title="link to manage your vehicles page">manage your vehicles</a>.</p>',
     'licence.vehicle.generic.button.next.title' => 'Click next to submit your choice',
 
 
