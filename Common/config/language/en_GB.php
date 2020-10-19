@@ -4301,6 +4301,11 @@ return [
     'licence.vehicle.remove.error.too-many-selected' => 'Select up to a maximum of 20 vehicles to remove',
     'licence.vehicle.remove.note' => 'Select up to 20 vehicles to remove. You can remove more vehicles later.',
 
+    'licence.vehicle.remove.confirm.header' => 'Are you sure you want to remove the vehicles from your licence?',
+    'licence.vehicle.remove.confirm.selected-vehicles' => 'Selected vehicles:',
+    'licence.vehicle.remove.confirm.selected-vehicles.list.item.aria' => 'Vehicle %s selected for removal: %s',
+    'licence.vehicle.remove.confirm.success' => '%s vehicles have been removed',
+
     'licence.vehicle.table.title.singular' => 'Current vehicle list - %s vehicle',
     'licence.vehicle.table.title.plural' => 'Current vehicle list - %s vehicles',
     'licence.vehicle.table.vrm' => 'Vehicle Registration Mark',
