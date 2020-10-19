@@ -4275,6 +4275,8 @@ return [
     'licence.vehicle.switchboard.form.error.select-option' => 'Select an option to manage your vehicles.',
 
     'licence.vehicle.add.bottom-text' => 'Clear search',
+    'licence.vehicle.add.duplicate.header' => 'Are you sure you want to add this vehicle to your licence?',
+    'licence.vehicle.add.duplicate.note' => '%s is specified on another licence.',
     'licence.vehicle.add.result.header' => 'A vehicle has been found with registration %s',
     'licence.vehicle.add.result.information' => 'Vehicle information',
     'licence.vehicle.add.result.make' => 'Make',
@@ -4293,8 +4295,18 @@ return [
     'licence.vehicle.add.search.vrm-not-found' => 'No vehicle could be found with that Vehicle Registration Mark<br>Contact DVLA if you believe this Vehicle Registration Mark is correct',
     'licence.vehicle.add.success' => 'Vehicle %s has been added',
 
-    'licence.vehicle.add.duplicate.header' => 'Are you sure you want to add this vehicle to your licence?',
-    'licence.vehicle.add.duplicate.note' => '%s is specified on another licence.',
+    'licence.vehicle.remove.header' => 'Remove a vehicle',
+    'licence.vehicle.remove.button' => 'Remove vehicles',
+    'licence.vehicle.remove.error.none-selected' => 'Select one or more vehicles to remove',
+    'licence.vehicle.remove.error.too-many-selected' => 'Select up to a maximum of 20 vehicles to remove',
+    'licence.vehicle.remove.note' => 'Select up to 20 vehicles to remove. You can remove more vehicles later.',
+
+    'licence.vehicle.table.title.singular' => 'Current vehicle list - %s vehicle',
+    'licence.vehicle.table.title.plural' => 'Current vehicle list - %s vehicles',
+    'licence.vehicle.table.vrm' => 'Vehicle Registration Mark',
+    'licence.vehicle.table.weight' => 'Gross plated weight in kg',
+    'licence.vehicle.table.specified' => 'Date added',
+    'licence.vehicle.table.disc-no' => 'Disc number',
 
     // Potentially unused translations
 ];
