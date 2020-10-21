@@ -1,10 +1,5 @@
 <?php
 
-/**
- * StackValue formatter test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\NumberStackValue;

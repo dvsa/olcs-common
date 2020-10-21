@@ -1057,7 +1057,6 @@ class TableBuilderTest extends MockeryTestCase
         $this->assertEquals($expectedTotal, $table->renderTotal());
     }
 
-
     /**
      * Test renderActions With Pagination
      */
