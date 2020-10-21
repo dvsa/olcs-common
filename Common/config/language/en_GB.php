@@ -3616,7 +3616,7 @@ return [
     'bilateral.permit.category.label.empty-entry' => 'Empty Entry single journey permit',
     'bilateral.permit.category.hint.empty-entry' => 'Allows you to enter Morocco empty to collect a load. It is valid for one outward and one return journey within 3 months from the date of issue.',
     'bilateral.permit.category.label.hors-contigent' => 'Hors Contingent single journey permit',
-    'bilateral.permit.category.hint.hors-contigent' => 'Required for taking in film equipment for film or TV productions, or equipment for exhibitions. It is valid for one outward and one return journey within 3 months from the date of issue.',
+    'bilateral.permit.category.hint.hors-contigent' => 'Required for taking in filming equipment for film or TV productions, or equipment for exhibitions. It is valid for one outward and one return journey within 3 months from the date of issue.',
 
     'permits.page.multilateral.no-of-permits.browser.title' => 'How many permits do you require for this licence?',
     'permits.page.multilateral.no-of-permits.maximum-authorised.browser.title' => 'You cannot apply for any more permits',
