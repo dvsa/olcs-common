@@ -1,19 +1,16 @@
 <?php
 
-/**
- * Case Link
- */
 namespace Common\Service\Table\Formatter;
 
 /**
- * Case Link
+ * Vehicle Link
  *
  * @package Common\Service\Table\Formatter
  */
 class VehicleLink implements FormatterInterface
 {
     /**
-     * Return a the case URL in a link format for a table.
+     * Return a vehicle URL in a link format for a table.
      *
      * @param array $data
      * @param array $column

@@ -1012,7 +1012,7 @@ class TableBuilderTest extends MockeryTestCase
             ->with(' {{[elements/total]}}', array('total' => $expectedTotal))
             ->will($this->returnValue($expectedTotal));
 
-        $table = $this->getMockTableBuilder(array('getContentHelper', 'shouldPaginate', 'getSetting'));
+        $table = $this->getMockTableBuilder(['getContentHelper', 'shouldPaginate', 'getSetting']);
 
         $table->expects($this->once())
             ->method('getContentHelper')
@@ -1022,9 +1022,34 @@ class TableBuilderTest extends MockeryTestCase
             ->method('shouldPaginate')
             ->will($this->returnValue(false));
 
-        $table->expects($this->once())
+        $table->expects($this->at(0))
+            ->method('getSetting')
+            ->with('overrideTotal', false)
+            ->will($this->returnValue(false));
+
+        $table->expects($this->at(2))
             ->method('getSetting')
             ->with('showTotal', false)
+            ->will($this->returnValue(true));
+
+        $table->setTotal($total);
+
+        $this->assertEquals($expectedTotal, $table->renderTotal());
+    }
+
+    /**
+     * Test renderTotal override
+     */
+    public function testRenderTotalWithOverride()
+    {
+        $total = 10;
+        $expectedTotal = '';
+
+        $table = $this->getMockTableBuilder(['getSetting']);
+
+        $table->expects($this->once())
+            ->method('getSetting')
+            ->with('overrideTotal', false)
             ->will($this->returnValue(true));
 
         $table->setTotal($total);
