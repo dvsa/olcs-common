@@ -4304,6 +4304,7 @@ return [
     'licence.vehicle.remove.confirm.header' => 'Are you sure you want to remove the vehicles from your licence?',
     'licence.vehicle.remove.confirm.selected-vehicles' => 'Selected vehicles:',
     'licence.vehicle.remove.confirm.selected-vehicles.list.item.aria' => 'Vehicle %s selected for removal: %s',
+    'licence.vehicle.remove.confirm.validation.select-an-option' => 'Confirm that you want to remove these vehicles from your licence',
     'licence.vehicle.remove.confirm.success' => '%s vehicles have been removed',
 
     'licence.vehicle.table.title.singular' => 'Current vehicle list - %s vehicle',
