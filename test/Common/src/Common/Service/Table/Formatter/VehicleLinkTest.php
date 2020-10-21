@@ -3,16 +3,16 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Helper\UrlHelperService;
-use Common\Service\Table\Formatter\TransactionUrl;
 use Common\Service\Table\Formatter\VehicleLink;
 use CommonTest\Bootstrap;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Zend\Mvc\Router\RouteMatch;
+use Zend\Mvc\Router\RouteStackInterface;
+use Zend\Stdlib\RequestInterface;
 
 /**
- * Fee Id Url formatter test
- *
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
+ * Vehicle Url formatter test
  */
 class VehicleLinkTest extends MockeryTestCase
 {
@@ -28,12 +28,11 @@ class VehicleLinkTest extends MockeryTestCase
 
         $this->sm = Bootstrap::getServiceManager();
 
-        $this->mockRouteMatch = m::mock('\Zend\Mvc\Router\RouteMatch');
+        $this->mockRouteMatch = m::mock(RouteMatch::class);
         $this->mockUrlHelper = m::mock(UrlHelperService::class);
 
-
-        $mockRequest = m::mock('\Zend\Stdlib\RequestInterface');
-        $mockRouter = m::mock()
+        $mockRequest = m::mock(RequestInterface::class);
+        $mockRouter = m::mock(RouteStackInterface::class)
             ->shouldReceive('match')
             ->with($mockRequest)
             ->andReturn($this->mockRouteMatch)
@@ -50,6 +49,7 @@ class VehicleLinkTest extends MockeryTestCase
     {
         $this->mockRouteMatch
             ->shouldReceive('getMatchedRouteName')
+            ->withNoArgs()
             ->andReturn('licence/vehicle/view');
 
         $this->mockUrlHelper
