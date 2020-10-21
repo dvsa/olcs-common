@@ -13,9 +13,7 @@ use CommonTest\Bootstrap;
 use Common\Service\Helper\StackHelperService;
 
 /**
- * StackValue formatter test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * NumberStackValue formatter test
  */
 class NumberStackValueTest extends \PHPUnit\Framework\TestCase
 {

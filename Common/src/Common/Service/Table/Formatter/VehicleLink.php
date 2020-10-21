@@ -1,12 +1,9 @@
 <?php
 
-/**
- * Case Link
- */
 namespace Common\Service\Table\Formatter;
 
 /**
- * Case Link
+ * Vehicle Link
  *
  * @package Common\Service\Table\Formatter
  */
