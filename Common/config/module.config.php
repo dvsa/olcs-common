@@ -6,6 +6,8 @@ use Common\FormService\Form\Lva as LvaFormService;
 use Common\FormService\Form\Continuation as ContinuationFormService;
 use Common\Form\View\Helper\Readonly as ReadonlyFormHelper;
 use Common\Service\Qa as QaService;
+use Common\Service\Translator\TranslationLoader;
+use Common\Service\Translator\TranslationLoaderFactory;
 use Common\Data\Mapper\Permits as PermitsMapper;
 use Common\Data\Mapper\Licence\Surrender as SurrenderMapper;
 use Common\View\Helper\Panel;
@@ -723,7 +725,21 @@ return array(
                 ContinuationFormService\ConditionsUndertakings::class,
         ]
     ],
+    'translator_plugins' => [
+        'factories' => [
+            TranslationLoader::class => TranslationLoaderFactory::class
+        ],
+    ],
     'translator' => [
         'replacements' => include(__DIR__ . '/language/replacements.php'),
+        'locale' => [
+            'en_GB', //default locale
+            'en_GB', //fallback locale
+        ],
+        'remote_translation' => [
+            [
+                'type' => TranslationLoader::class,
+            ]
+        ],
     ],
 );
