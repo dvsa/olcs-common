@@ -265,7 +265,8 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
 
         if (!($element instanceof PostcodeSearch)
             && !($element instanceof CompanyNumber)
-            && !($element instanceof HoursPerWeek)) {
+            && !($element instanceof HoursPerWeek)
+            && !$element->getOption('showErrors')) {
             return $markup;
         }
 
