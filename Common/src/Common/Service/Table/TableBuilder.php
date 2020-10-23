@@ -1167,8 +1167,10 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      */
     public function renderTotal()
     {
-        $showTotal = $this->getSetting('showTotal', false);
-        if (!$this->shouldPaginate() && !$showTotal) {
+        if ($this->getSetting('overrideTotal', false)
+            || !$this->shouldPaginate()
+            && !$this->getSetting('showTotal', false)
+        ) {
             return '';
         }
 
@@ -1468,7 +1470,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             $column['width'] = $this->widths[$column['width']];
         }
 
-        if (isset($column['type']) && $column['type'] == 'Checkbox') {
+        if (isset($column['type']) && $column['type'] == 'Checkbox' && ($column['selectAll'] ?? true)) {
             $column['title'] = $this->replaceContent('{{[elements/checkall]}}');
         }
 
