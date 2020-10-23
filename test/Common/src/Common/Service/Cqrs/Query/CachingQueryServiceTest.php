@@ -46,6 +46,16 @@ class CachingQueryServiceTest extends MockeryTestCase
         $this->sut = new CachingQueryService($this->mockQS, $this->mockCache, $this->ttlValues());
     }
 
+    public function testHandleCustomCache()
+    {
+        $identifier = 'identifier';
+        $uniqueId = 'unique id';
+        $cacheResult = 'result';
+
+        $this->mockCache->expects('getCustomItem')->with($identifier, $uniqueId)->andReturn($cacheResult);
+        self::assertEquals($cacheResult, $this->sut->handleCustomCache($identifier, $uniqueId));
+    }
+
     public function testSendWithNoCache()
     {
         $this->mockQuery

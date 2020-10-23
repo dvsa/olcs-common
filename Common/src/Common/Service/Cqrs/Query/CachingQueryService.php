@@ -85,6 +85,20 @@ class CachingQueryService implements QueryServiceInterface, \Zend\Log\LoggerAwar
     }
 
     /**
+     * Retrieve data that is not found in the usual CQRS cache
+     *
+     * @param string $identifier
+     * @param string $uniqueId
+     *
+     * @return mixed|null
+     * @throws \Exception
+     */
+    public function handleCustomCache(string $identifier, string $uniqueId = '')
+    {
+        return $this->cacheService->getCustomItem($identifier, $uniqueId);
+    }
+
+    /**
      * Handle a query using a local cache, cache is a class property, therefore cache is valid only for current request
      *
      * @param QueryContainerInterface $query Query continer

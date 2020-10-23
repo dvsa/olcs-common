@@ -9,8 +9,10 @@ use Common\Service\Cqrs\Exception\NotFoundException;
 use Common\Service\Helper\TranslationHelperService;
 use Dvsa\Olcs\Utils\Translation\MissingTranslationProcessor;
 use Olcs\Logging\Log\Logger;
+use Zend\Cache\Storage\Adapter\Redis;
 use Zend\EventManager\EventManager;
 use Zend\Http\Request;
+use Zend\I18n\Translator\Translator;
 use Zend\ModuleManager\ModuleEvent;
 use Zend\Mvc\Application;
 use Zend\Mvc\MvcEvent;
@@ -261,12 +263,13 @@ class Module
      */
     protected function setUpTranslator(ServiceLocatorInterface $sm, $eventManager)
     {
-        /** @var \Zend\I18n\Translator\TranslatorInterface $translator */
+        /**
+         * @var Translator $translator
+         * @var Redis      $cache
+         */
+        $cache = $sm->get(Redis::class);
         $translator = $sm->get('translator');
-
-        $translator->setLocale('en_GB')->setFallbackLocale('en_GB');
-        $translator->addTranslationFilePattern('phparray', __DIR__ . '/config/language/', '%s.php');
-        $translator->addTranslationFile('phparray', __DIR__ . '/config/language/cy_GB_refdata.php', 'default', 'cy_GB');
+        $translator->setCache($cache);
 
         /** @var LanguageListener $languagePrefListener */
         $languagePrefListener = $sm->get('LanguageListener');
