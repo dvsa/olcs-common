@@ -28,11 +28,16 @@ class IrhpPermitRangeType implements FormatterInterface
             return 'N/A';
         }
 
-        $key = sprintf(
-            'permits.irhp.range.type.%s.%s',
-            $data['cabotage'] ? 'cabotage' : 'standard',
-            $data['journey']['id'] == RefData::JOURNEY_SINGLE ? 'single' : 'multiple'
-        );
+        if (!empty($data['irhpPermitStock']['permitCategory'])) {
+            // use permit category if set
+            $key = $data['irhpPermitStock']['permitCategory']['description'];
+        } else {
+            $key = sprintf(
+                'permits.irhp.range.type.%s.%s',
+                $data['cabotage'] ? 'cabotage' : 'standard',
+                $data['journey']['id'] == RefData::JOURNEY_SINGLE ? 'single' : 'multiple'
+            );
+        }
 
         return $sm->get('translator')->translate($key);
     }

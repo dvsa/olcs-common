@@ -97,6 +97,19 @@ class IrhpPermitRangeTypeTest extends MockeryTestCase
                 ],
                 '_TRNSLT_permits.irhp.range.type.cabotage.multiple',
             ],
+            [
+                [
+                    'irhpPermitStock' => [
+                        'irhpPermitType' => [
+                            'isBilateral' => true,
+                        ],
+                        'permitCategory' => [
+                            'description' => 'category',
+                        ],
+                    ],
+                ],
+                '_TRNSLT_category',
+            ],
         ];
     }
 }
