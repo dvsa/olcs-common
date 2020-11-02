@@ -1,11 +1,12 @@
 <?php
+declare(strict_types=1);
 
 namespace Common\Form\Elements\Types;
 
 use Common\Form\Elements\Custom\VehicleVrm;
 use Zend\Form\Element\Button;
 
-class VrmSearch extends AbstractInputSearch
+class VehicleTableSearch extends AbstractInputSearch
 {
 
     protected function addHint()
@@ -18,7 +19,7 @@ class VrmSearch extends AbstractInputSearch
                     'data-container-class' => 'hint',
                 ],
                 'options' => [
-                    'value' => 'licence.vehicle.add.search.hint'
+                    'value' => ''
                 ]
             ]
         );
@@ -33,6 +34,9 @@ class VrmSearch extends AbstractInputSearch
                 'attributes' => [
                     'data-container-class' => 'inline',
                 ],
+                'options' => [
+                    'validateVrm' => false
+                ]
             ]
         );
     }
@@ -44,7 +48,7 @@ class VrmSearch extends AbstractInputSearch
                 'type' => Button::class,
                 'name' => static::ELEMENT_SUBMIT_NAME,
                 'options' => [
-                    'label' => 'licence.vehicle.add.search.button',
+                    'label' => 'licence.vehicle.table.search.button',
                 ],
                 'attributes' => [
                     'class' => 'action--primary',

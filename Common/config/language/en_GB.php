@@ -4276,54 +4276,6 @@ return [
     'cookie-confirmation.blurb' => 'You\'ve accepted all cookies. You can <a class="govuk-link" href="%s">change your cookie settings</a> at any time.',
     'cookie-confirmation.hide' => 'Hide',
     'cookie-banner.set-prefs' => 'Set cookie preferences',
-
-    'licence.vehicle.generic.choose-different-action' => '<p>Click here to choose a different action <a href="%s" title="link to manage your vehicles page">manage your vehicles</a>.</p>',
-    'licence.vehicle.generic.button.next.title' => 'Click next to submit your choice',
-
-
-    'licence.vehicle.switchboard.header' => 'Manage your vehicles',
-    'licence.vehicle.switchboard.header.after-journey' => 'Do you want to',
-    'licence.vehicle.switchboard.form.add.label' => 'Add a vehicle',
-    'licence.vehicle.switchboard.form.remove.label' => 'Remove a vehicle',
-    'licence.vehicle.switchboard.form.reprint.label' => 'Reprint vehicle disc',
-    'licence.vehicle.switchboard.form.transfer.label' => 'Transfer vehicles',
-    'licence.vehicle.switchboard.form.next.title' => 'Click next to continue with your choice',
-    'licence.vehicle.switchboard.form.view.label' => 'View the vehicles on your licence',
-    'licence.vehicle.switchboard.form.error.select-option' => 'Select an option to manage your vehicles.',
-
-    'licence.vehicle.add.bottom-text' => 'Clear search',
-    'licence.vehicle.add.duplicate.header' => 'Are you sure you want to add this vehicle to your licence?',
-    'licence.vehicle.add.duplicate.note' => '%s is specified on another licence.',
-    'licence.vehicle.add.result.header' => 'A vehicle has been found with registration %s',
-    'licence.vehicle.add.result.information' => 'Vehicle information',
-    'licence.vehicle.add.result.make' => 'Make',
-    'licence.vehicle.add.result.note' => 'If you believe these vehicle details are incorrect contact DVLA',
-    'licence.vehicle.add.result.result' => 'Result',
-    'licence.vehicle.add.result.summary' => 'Vehicle summary',
-    'licence.vehicle.add.result.title' => 'Add a vehicle search results',
-    'licence.vehicle.add.result.vrm' => 'Vehicle Registration Mark',
-    'licence.vehicle.add.result.weight' => 'Gross plated weight in kg',
-    'licence.vehicle.add.search.button' =>  'Find a vehicle',
-    'licence.vehicle.add.search.hint' => 'Enter a Vehicle Registration Mark to search DVLA records for the vehicle you wish to add.',
-    'licence.vehicle.add.search.query-error' => 'We cannot connect to the vehicle database at this time. Try again later',
-    'licence.vehicle.add.search.title' => 'Add a vehicle',
-    'licence.vehicle.add.search.vrm-incorrect' => 'Enter a correct Vehicle Registration Mark',
-    'licence.vehicle.add.search.vrm-missing' => 'Enter a Vehicle Registration Mark',
-    'licence.vehicle.add.search.vrm-not-found' => 'No vehicle could be found with that Vehicle Registration Mark<br>Contact DVLA if you believe this Vehicle Registration Mark is correct',
-    'licence.vehicle.add.success' => 'Vehicle %s has been added',
-
-    'licence.vehicle.remove.header' => 'Remove a vehicle',
-    'licence.vehicle.remove.button' => 'Remove vehicles',
-    'licence.vehicle.remove.error.none-selected' => 'Select one or more vehicles to remove',
-    'licence.vehicle.remove.error.too-many-selected' => 'Select up to a maximum of 20 vehicles to remove',
-    'licence.vehicle.remove.note' => 'Select up to 20 vehicles to remove. You can remove more vehicles later.',
-
-    'licence.vehicle.table.title.singular' => 'Current vehicle list - %s vehicle',
-    'licence.vehicle.table.title.plural' => 'Current vehicle list - %s vehicles',
-    'licence.vehicle.table.vrm' => 'Vehicle Registration Mark',
-    'licence.vehicle.table.weight' => 'Gross plated weight in kg',
-    'licence.vehicle.table.specified' => 'Date added',
-    'licence.vehicle.table.disc-no' => 'Disc number',
-
+    
     // Potentially unused translations
 ];
