@@ -17,12 +17,23 @@ $fieldSetName = $this->escapeHtmlAttr($fieldsetElement->getName());
 $inputName = $this->escapeHtmlAttr($inputElement->getAttribute('name'));
 $submitName = $this->escapeHtmlAttr($submitElement->getAttribute('name'));
 $error = array_values($fieldsetElement->getMessages(AbstractInputSearch::ELEMENT_INPUT_NAME))[0];
+$label = $fieldsetElement->getOption('label');
+$legend = $fieldsetElement->getOption('legend');
 
 ?>
 
 <div class="<?php echo !empty($error) ? "validation-wrapper" : ""; ?>">
     <fieldset class="lookup" data-group="<?php echo $fieldSetName; ?>">
-        <label class="govuk-label" for="<?php echo $inputName ?>"><?php echo $this->escapeHtml($this->translate($fieldsetElement->getOption('label'))); ?></label>
+        <?php if (!empty($legend)) : ?>
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h2 class="govuk-fieldset__heading">
+                <?php echo $this->escapeHtml($this->translate($legend)); ?>
+            </h2>
+        </legend>
+        <?php endif; ?>
+        <?php if (!empty($label)) : ?>
+        <label class="govuk-label" for="<?php echo $inputName ?>"><?php echo $this->escapeHtml($this->translate($label)); ?></label>
+        <?php endif; ?>
         <div class="field hint">
             <?php echo $this->escapeHtml($this->translate($hintElement->getOption('value'))); ?>
         </div>

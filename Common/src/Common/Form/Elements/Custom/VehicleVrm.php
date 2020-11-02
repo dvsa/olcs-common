@@ -26,22 +26,32 @@ class VehicleVrm extends ZendElement implements InputProviderInterface
             'filters' => [
                 new Vrm(),
             ],
-            'validators' => [
-                [
-                    'name' => NotEmpty::class,
-                    'break_chain_on_failure' => true,
-                    'options' => [
-                        'messages' => [
-                            NotEmpty::IS_EMPTY => 'licence.vehicle.add.search.vrm-missing'
-                        ]
-                    ],
-                ],
-                [
-                    'name' => VrmValidator::class
-                ],
-            ],
+            'validators' => $this->getValidators(),
         ];
 
         return $specification;
+    }
+
+    protected function getValidators()
+    {
+        $validators = [
+            [
+                'name' => NotEmpty::class,
+                'break_chain_on_failure' => true,
+                'options' => [
+                    'messages' => [
+                        NotEmpty::IS_EMPTY => 'licence.vehicle.add.search.vrm-missing'
+                    ]
+                ],
+            ]
+        ];
+
+        if ($this->getOption('validateVrm') ?? true) {
+            $validators[] = [
+                'name' => VrmValidator::class
+            ];
+        }
+
+        return $validators;
     }
 }
