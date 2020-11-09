@@ -2,9 +2,9 @@
 
 namespace Common\View\Helper;
 
-use Common\View\Helper\Traits\Utils;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\View\Helper\AbstractHelper;
-use Zend\View\Helper\EscapeHtml;
 
 /**
  * PersonName view helper
@@ -13,8 +13,6 @@ use Zend\View\Helper\EscapeHtml;
  */
 class PersonName extends AbstractHelper
 {
-    use Utils;
-
     /**
      * Get the HTML to render a persons name
      *
@@ -36,7 +34,7 @@ class PersonName extends AbstractHelper
 
         foreach ($fields as $item) {
             if (isset($person[$item]) && !empty($person[$item])) {
-                $parts[] = $this->escapeHtml($person[$item]);
+                $parts[] = htmlspecialchars($person[$item]);
             }
         }
 

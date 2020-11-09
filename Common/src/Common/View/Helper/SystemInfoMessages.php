@@ -3,11 +3,9 @@
 namespace Common\View\Helper;
 
 use Common\Service\Cqrs\Query\CachingQueryService as QueryService;
-use Common\View\Helper\Traits\Utils;
 use Dvsa\Olcs\Transfer\Query\System\InfoMessage\GetListActive;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
 use Zend\View\Helper\AbstractHelper;
-use Zend\View\Helper\EscapeHtml;
 
 /**
  * View helper to print system info messages
@@ -16,8 +14,6 @@ use Zend\View\Helper\EscapeHtml;
  */
 class SystemInfoMessages extends AbstractHelper
 {
-    use Utils;
-
     const HTML_BLOCK = '<div class="system-messages">%s</div>';
     const HTML_ITEM = '<div class="system-messages__wrapper"><p>%s</p></div>';
 
@@ -57,7 +53,7 @@ class SystemInfoMessages extends AbstractHelper
 
         $items = [];
         foreach ($this->mssgs['results'] as $msg) {
-            $items[] = sprintf(self::HTML_ITEM, $this->escapeHtml($msg['description']));
+            $items[] = sprintf(self::HTML_ITEM, htmlspecialchars($msg['description']));
         }
 
         return sprintf(self::HTML_BLOCK, implode('', $items));

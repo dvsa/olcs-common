@@ -34,13 +34,6 @@ class LinkBackTest extends MockeryTestCase
                     return '_TRLTD_' . $arg;
                 }
             )
-            ->shouldReceive('escapeHtml')
-            ->zeroOrMoreTimes()
-            ->andReturnUsing(
-                function ($arg) {
-                    return '_ESCAPED_' . $arg;
-                }
-            )
             ->getMock();
 
         $this->mockRequest = m::mock(\Zend\Http\Request::class);
@@ -86,7 +79,7 @@ class LinkBackTest extends MockeryTestCase
             [
                 'params' => null,
                 'referer' => $mockHeader,
-                'expect' => '<a href="unit_URL" class="govuk-back-link">_ESCAPED__TRLTD_common.link.back.label</a>',
+                'expect' => '<a href="unit_URL" class="govuk-back-link">_TRLTD_common.link.back.label</a>',
             ],
             //  parameter not set, has referer page
             [

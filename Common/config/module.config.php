@@ -346,6 +346,7 @@ return array(
 
             PermitsMapper\NoOfPermits::class => PermitsMapper\NoOfPermitsFactory::class,
             Common\Service\User\LastLoginService::class => Common\Service\User\LastLoginServiceFactory::class,
+            'HtmlPurifier' => \Common\Service\Utility\HtmlPurifierFactory::class,
         )
     ),
     'file_uploader' => array(
@@ -444,6 +445,7 @@ return array(
             'linkBack' => Common\View\Helper\LinkBack::class,
             'translateReplace' => \Common\View\Helper\TranslateReplace::class,
             'flashMessengerAll' => \Common\View\Factory\Helper\FlashMessengerFactory::class,
+            'escapeHtml' => \Common\View\Factory\Helper\EscapeHtmlFactory::class,
         ),
     ),
     'view_manager' => array(
