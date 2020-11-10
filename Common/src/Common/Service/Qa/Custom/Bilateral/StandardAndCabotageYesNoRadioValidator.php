@@ -26,7 +26,7 @@ class StandardAndCabotageYesNoRadioValidator extends AbstractValidator
      */
     public function isValid($value, $context = null)
     {
-        if ($value == 'Y' && is_null($context['yesContent'])) {
+        if ($value == 'Y' && $context['yesContent'] == '') {
             $this->yesContentElement->setMessages(
                 ['qanda.bilaterals.standard-and-cabotage.not-selected-message']
             );
