@@ -2,7 +2,6 @@
 
 namespace CommonTest\Service\Cqrs\Query;
 
-use Common\Service\Cqrs\Exception\CacheTtlException;
 use Common\Service\Cqrs\Query\CachingQueryService;
 use Common\Service\Cqrs\Query\QueryServiceInterface;
 use Dvsa\Olcs\Transfer\Query\CacheableLongTermQueryInterface;
@@ -17,16 +16,16 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class CachingQueryServiceTest extends MockeryTestCase
 {
-    /** @var  CachingQueryService */
-    private $sut;
-
-    /** @var  QueryContainerInterface | m\MockInterface */
+    /** @var QueryContainerInterface | m\MockInterface */
     private $mockQuery;
-    /** @var  QueryServiceInterface | m\MockInterface */
+
+    /** @var QueryServiceInterface | m\MockInterface */
     private $mockQS;
-    /** @var  CacheEncryptionService | m\MockInterface */
+
+    /** @var CacheEncryptionService | m\MockInterface */
     private $mockCache;
-    /** @var  m\MockInterface */
+
+    /** @var m\MockInterface */
     private $mockResult;
 
     public function setUp(): void
@@ -42,8 +41,13 @@ class CachingQueryServiceTest extends MockeryTestCase
             ->shouldReceive('send')
             ->with($this->mockQuery)
             ->andReturn($this->mockResult);
+    }
 
-        $this->sut = new CachingQueryService($this->mockQS, $this->mockCache, $this->ttlValues());
+    public function testHandleCacheDisabled()
+    {
+        $sut = new CachingQueryService($this->mockQS, $this->mockCache, false, $this->ttlValues());
+
+        static::assertSame($this->mockResult, $sut->send($this->mockQuery));
     }
 
     public function testHandleCustomCache()
@@ -53,7 +57,9 @@ class CachingQueryServiceTest extends MockeryTestCase
         $cacheResult = 'result';
 
         $this->mockCache->expects('getCustomItem')->with($identifier, $uniqueId)->andReturn($cacheResult);
-        self::assertEquals($cacheResult, $this->sut->handleCustomCache($identifier, $uniqueId));
+
+        $sut = new CachingQueryService($this->mockQS, $this->mockCache, true, $this->ttlValues());
+        self::assertEquals($cacheResult, $sut->handleCustomCache($identifier, $uniqueId));
     }
 
     public function testSendWithNoCache()
@@ -62,7 +68,8 @@ class CachingQueryServiceTest extends MockeryTestCase
             ->shouldReceive('isPersistentCacheable')->once()->andReturnFalse()
             ->shouldReceive('isShortTermCacheable')->once()->andReturnFalse();
 
-        static::assertSame($this->mockResult, $this->sut->send($this->mockQuery));
+        $sut = new CachingQueryService($this->mockQS, $this->mockCache, true, $this->ttlValues());
+        static::assertSame($this->mockResult, $sut->send($this->mockQuery));
     }
 
     public function testSendWithShortCacheNull()
@@ -75,7 +82,8 @@ class CachingQueryServiceTest extends MockeryTestCase
 
         $this->mockResult->shouldReceive('isOk')->with()->once()->andReturn(false);
 
-        static::assertSame($this->mockResult, $this->sut->send($this->mockQuery));
+        $sut = new CachingQueryService($this->mockQS, $this->mockCache, true, $this->ttlValues());
+        static::assertSame($this->mockResult, $sut->send($this->mockQuery));
     }
 
     public function testSendWithShortCache()
@@ -88,8 +96,9 @@ class CachingQueryServiceTest extends MockeryTestCase
 
         $this->mockResult->shouldReceive('isOk')->with()->once()->andReturn(true);
 
-        $this->sut->send($this->mockQuery);
-        $this->sut->send($this->mockQuery);
+        $sut = new CachingQueryService($this->mockQS, $this->mockCache, true, $this->ttlValues());
+        $sut->send($this->mockQuery);
+        $sut->send($this->mockQuery);
     }
 
     /**
@@ -119,7 +128,7 @@ class CachingQueryServiceTest extends MockeryTestCase
         $mockLogger->expects('debug')->with('Storing in local cache: dto_class_name')->ordered();
         $mockLogger->expects('err')->with('Cache failure: No TTL value found for this query')->ordered();
 
-        $sut = new CachingQueryService($mockQS, $mockCache, $this->ttlValues());
+        $sut = new CachingQueryService($mockQS, $mockCache, true, $this->ttlValues());
         $sut->setLogger($mockLogger);
 
         self::assertSame($this->mockResult, $sut->send($mockQuery));
@@ -159,7 +168,7 @@ class CachingQueryServiceTest extends MockeryTestCase
         $mockLogger->expects('debug')->with('Storing in local cache: dto_class_name')->ordered();
         $mockLogger->expects('debug')->with('Storing in persistent cache with TTL of ' . $cacheTtl . ' seconds: dto_class_name')->ordered();
 
-        $sut = new CachingQueryService($mockQS, $mockCache, $this->ttlValues());
+        $sut = new CachingQueryService($mockQS, $mockCache, true, $this->ttlValues());
         $sut->setLogger($mockLogger);
 
         self::assertSame($this->mockResult, $sut->send($mockQuery));
@@ -208,7 +217,7 @@ class CachingQueryServiceTest extends MockeryTestCase
         $mockLogger->expects('debug')->with('Storing in local cache: dto_class_name')->ordered();
         $mockLogger->expects('debug')->with('Fetching from local cache: dto_class_name')->ordered();
 
-        $sut = new CachingQueryService($mockQS, $mockCache, $this->ttlValues());
+        $sut = new CachingQueryService($mockQS, $mockCache, true, $this->ttlValues());
         $sut->setLogger($mockLogger);
 
         /**
@@ -243,7 +252,7 @@ class CachingQueryServiceTest extends MockeryTestCase
         $mockLogger->expects('debug')->with('Fetching from persistent cache: dto_class_name')->ordered();
         $mockLogger->expects('err')->with('Cache failure: exception_msg')->ordered();
 
-        $sut = new CachingQueryService($mockQS, $mockCache, $this->ttlValues());
+        $sut = new CachingQueryService($mockQS, $mockCache, true, $this->ttlValues());
         $sut->setLogger($mockLogger);
 
         self::assertSame($this->mockResult, $sut->send($mockQuery));

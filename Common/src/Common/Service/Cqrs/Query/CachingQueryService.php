@@ -26,20 +26,17 @@ class CachingQueryService implements QueryServiceInterface, \Zend\Log\LoggerAwar
     const CACHE_ENCRYPTION_MODE_MSG = 'Using encryption mode: %s';
     const MISSING_TTL_INTERFACE_TYPE = 'No TTL value found for this query';
 
-    /**
-     * @var QueryServiceInterface
-     */
+    /** @var QueryServiceInterface */
     private $queryService;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     private $localCache;
 
-    /**
-     * @var CacheEncryptionService
-     */
+    /** @var CacheEncryptionService */
     private $cacheService;
+
+    /** @var bool */
+    private $enabled;
 
     /** @var array */
     private $ttl;
@@ -49,12 +46,18 @@ class CachingQueryService implements QueryServiceInterface, \Zend\Log\LoggerAwar
      *
      * @param QueryServiceInterface  $queryService Query service
      * @param CacheEncryptionService $cacheService Cache storage with automatic encryption built in
+     * @param bool                   $enabled      Whether the cache is enabled
      * @param array                  $ttl          Ttl of the various cache types
      */
-    public function __construct(QueryServiceInterface $queryService, CacheEncryptionService $cache, array $ttl)
-    {
+    public function __construct(
+        QueryServiceInterface $queryService,
+        CacheEncryptionService $cache,
+        $enabled,
+        array $ttl
+    ) {
         $this->queryService = $queryService;
         $this->cacheService = $cache;
+        $this->enabled = $enabled;
         $this->ttl = $ttl;
     }
 
@@ -68,6 +71,11 @@ class CachingQueryService implements QueryServiceInterface, \Zend\Log\LoggerAwar
     public function send(QueryContainerInterface $query)
     {
         $this->queryService->setRecoverHttpClientException($this->getRecoverHttpClientException());
+
+        if (!$this->enabled) {
+            return $this->queryService->send($query);
+        }
+
         if ($query->isPersistentCacheable()) {
             try {
                 return $this->handlePersistentCache($query);

@@ -20,6 +20,7 @@ class CachingQueryServiceFactoryTest extends MockeryTestCase
     {
         $config = [
             'query_cache' => [
+                'enabled' => true,
                 'ttl' => [
                     'query type' => 300
                 ],
@@ -38,7 +39,7 @@ class CachingQueryServiceFactoryTest extends MockeryTestCase
         $this->assertInstanceOf(CachingQueryService::class, $service);
     }
 
-    public function testCreateServiceMissingConfig()
+    public function testCreateServiceMissingQueryCacheConfig()
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Query cache config key missing');
@@ -47,8 +48,26 @@ class CachingQueryServiceFactoryTest extends MockeryTestCase
         $mockSl->shouldReceive('get')->with('Config')->andReturn([]);
 
         $sut = new CachingQueryServiceFactory();
-        $service = $sut->createService($mockSl);
+        $sut->createService($mockSl);
+    }
 
-        $this->assertInstanceOf(CachingQueryService::class, $service);
+    public function testCreateServiceMissingQueryCacheEnabledConfig()
+    {
+        $config = [
+            'query_cache' => [
+                'ttl' => [
+                    'query type' => 300
+                ],
+            ],
+        ];
+
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Query cache enabled/disabled config key missing');
+
+        $mockSl = m::mock(ServiceLocatorInterface::class);
+        $mockSl->shouldReceive('get')->with('Config')->andReturn($config);
+
+        $sut = new CachingQueryServiceFactory();
+        $sut->createService($mockSl);
     }
 }
