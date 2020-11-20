@@ -2,23 +2,24 @@
 
 namespace Common\Service\Qa\Custom\Common;
 
+use Zend\Form\Factory as FormFactory;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class WarningAdderFactory implements FactoryInterface
+class FileUploadFieldsetGeneratorFactory implements FactoryInterface
 {
     /**
      * Create service
      *
      * @param ServiceLocatorInterface $serviceLocator
      *
-     * @return WarningAdder
+     * @return FileUploadFieldsetGenerator
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return new WarningAdder(
-            $serviceLocator->get('ViewHelperManager')->get('partial'),
-            $serviceLocator->get('QaCommonHtmlAdder')
+        return new FileUploadFieldsetGenerator(
+            new FormFactory(),
+            $serviceLocator->get('FormAnnotationBuilder')
         );
     }
 }

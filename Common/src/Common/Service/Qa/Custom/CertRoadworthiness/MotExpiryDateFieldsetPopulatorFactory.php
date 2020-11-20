@@ -18,7 +18,8 @@ class MotExpiryDateFieldsetPopulatorFactory implements FactoryInterface
     {
         return new MotExpiryDateFieldsetPopulator(
             $serviceLocator->get('Helper\Translation'),
-            $serviceLocator->get('QaCommonHtmlAdder')
+            $serviceLocator->get('QaCommonHtmlAdder'),
+            $serviceLocator->get('QaCommonFileUploadFieldsetGenerator')
         );
     }
 }
