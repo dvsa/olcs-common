@@ -61,31 +61,6 @@ class FinancialEvidenceEvidence
 
     /**
      * @Form\Required(false)
-     * @Form\Attributes({"id":"sendByPost","allowWrap":true,"data-container-class":"form-control__container"})
-     * @Form\Options({
-     *     "label": "lva-financial-evidence-upload-now.label",
-     *     "label_attributes": {"class": "form-control form-control--radio"},
-     *     "value_options": {\Common\RefData::AD_POST:"lva-financial-evidence-upload-now.no"},
-     *     "error-message": "financialEvidence_uploadNow-error",
-     *     "single-radio": true
-     * })
-     * @Form\Type("\Zend\Form\Element\Radio")
-     */
-    public $sendByPostRadio = null;
-
-    /**
-     * @Form\Attributes({
-     *     "id":"sendByPost",
-     *     "data-container-class": "send-by-post",
-     *     "value": "markup-financial-evidence-send-by-post",
-     *     "class": "send-by-post"
-     * })
-     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
-     */
-    public $sendByPost = null;
-
-    /**
-     * @Form\Required(false)
      * @Form\Attributes({"id":"uploadLaterRadio","allowWrap":true,"data-container-class":"form-control__container"})
      * @Form\Options({
      *     "label": "lva-financial-evidence-upload-now.label",
@@ -109,4 +84,29 @@ class FinancialEvidenceEvidence
      * @Form\Name("uploadLaterMessage")
      */
     public $uploadLater = null;
+
+    /**
+     * @Form\Required(false)
+     * @Form\Attributes({"id":"sendByPost","allowWrap":true,"data-container-class":"form-control__container"})
+     * @Form\Options({
+     *     "label": "lva-financial-evidence-upload-now.label",
+     *     "label_attributes": {"class": "form-control form-control--radio"},
+     *     "value_options": {\Common\RefData::AD_POST:"lva-financial-evidence-upload-now.no"},
+     *     "error-message": "financialEvidence_uploadNow-error",
+     *     "single-radio": true
+     * })
+     * @Form\Type("\Zend\Form\Element\Radio")
+     */
+    public $sendByPostRadio = null;
+
+    /**
+     * @Form\Attributes({
+     *     "id":"sendByPost",
+     *     "data-container-class": "send-by-post",
+     *     "value": "markup-financial-evidence-send-by-post",
+     *     "class": "send-by-post"
+     * })
+     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
+     */
+    public $sendByPost = null;
 }
