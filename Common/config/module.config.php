@@ -225,6 +225,8 @@ return array(
             'QaBilateralNoOfPermitsMoroccoFieldsetPopulator' =>
                 QaService\Custom\Bilateral\NoOfPermitsMoroccoFieldsetPopulator::class,
             'QaBilateralPermitUsageIsValidHandler' => QaService\Custom\Bilateral\PermitUsageIsValidHandler::class,
+            'QaBilateralStandardAndCabotageSubmittedAnswerGenerator' =>
+                QaService\Custom\Bilateral\StandardAndCabotageSubmittedAnswerGenerator::class,
             'QaDateTimeFactory' => QaService\DateTimeFactory::class,
 
             'QaRoadworthinessMakeAndModelFieldsetModifier' =>
@@ -337,6 +339,10 @@ return array(
             'QaBilateralEmissionsStandardsFieldsetPopulator' =>
                 QaService\Custom\Bilateral\EmissionsStandardsFieldsetPopulatorFactory::class,
             'QaBilateralPermitUsageDataHandler' => QaService\Custom\Bilateral\PermitUsageDataHandlerFactory::class,
+            'QaBilateralStandardAndCabotageDataHandler' =>
+                QaService\Custom\Bilateral\StandardAndCabotageDataHandlerFactory::class,
+            'QaBilateralStandardAndCabotageIsValidHandler' =>
+                QaService\Custom\Bilateral\StandardAndCabotageIsValidHandlerFactory::class,
 
             'QaFieldsetModifier' => QaService\FieldsetModifier\FieldsetModifierFactory::class,
 

@@ -3,7 +3,6 @@
 namespace CommonTest\Service\Qa\Custom\Bilateral;
 
 use Common\Form\QaForm;
-use Common\RefData;
 use Common\Service\Qa\Custom\Bilateral\PermitUsageIsValidHandler;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -39,11 +38,11 @@ class PermitUsageIsValidHandlerTest extends MockeryTestCase
             ->withNoArgs()
             ->andReturn($applicationStep);
 
-        $internationalJourneysIsValidHandler = new PermitUsageIsValidHandler();
+        $permitUsageIsValidHandler = new PermitUsageIsValidHandler();
 
         $this->assertEquals(
             $expectedIsValid,
-            $internationalJourneysIsValidHandler->isValid($qaForm)
+            $permitUsageIsValidHandler->isValid($qaForm)
         );
     }
 
