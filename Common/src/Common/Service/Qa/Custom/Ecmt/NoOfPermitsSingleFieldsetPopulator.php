@@ -60,7 +60,7 @@ class NoOfPermitsSingleFieldsetPopulator implements FieldsetPopulatorInterface
             $emissionsCategoryType
         );
 
-        $insetAndBlurbTemplate = '<div class="govuk-inset-text">%s<br><br>%s</div>' .
+        $insetAndBlurbTemplate = '<div class="govuk-inset-text">%s%s</div>' .
             '<p class="govuk-body"><strong>%s</strong><br><span class="hint">%s</span></p>';
 
         $maxPermittedHint = sprintf(
@@ -70,7 +70,7 @@ class NoOfPermitsSingleFieldsetPopulator implements FieldsetPopulatorInterface
 
         $insetAndBlurb = sprintf(
             $insetAndBlurbTemplate,
-            $this->noOfPermitsBaseInsetTextGenerator->generate($options),
+            $this->noOfPermitsBaseInsetTextGenerator->generate($options, '%s<br><br>'),
             $this->translator->translate($insetSupplementTranslationKey),
             $this->translator->translate('qanda.ecmt.number-of-permits.caption'),
             $maxPermittedHint

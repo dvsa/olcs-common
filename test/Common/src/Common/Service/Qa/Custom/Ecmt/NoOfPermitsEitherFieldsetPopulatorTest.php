@@ -33,7 +33,7 @@ class NoOfPermitsEitherFieldsetPopulatorTest extends MockeryTestCase
 
         $translatedSection1Heading = 'translated section 1 heading';
         $translatedSection1Blurb = 'translated section 1 blurb';
-        $baseInsetText = 'base inset text';
+        $baseInsetText = '<div class="govuk-inset-text">base inset text</div>';
         $translatedHint = 'translated hint, maxPermitted = %s';
         $translatedSection2Heading = 'translated section 2 heading';
 
@@ -140,7 +140,7 @@ class NoOfPermitsEitherFieldsetPopulatorTest extends MockeryTestCase
 
         $noOfPermitsBaseInsetTextGenerator = m::mock(NoOfPermitsBaseInsetTextGenerator::class);
         $noOfPermitsBaseInsetTextGenerator->shouldReceive('generate')
-            ->with($options)
+            ->with($options, '<div class="govuk-inset-text">%s</div>')
             ->andReturn($baseInsetText);
 
         $noOfPermitsEitherFieldsetPopulator = new NoOfPermitsEitherFieldsetPopulator(
