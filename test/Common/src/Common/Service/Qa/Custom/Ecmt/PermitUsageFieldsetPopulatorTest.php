@@ -33,8 +33,8 @@ class PermitUsageFieldsetPopulatorTest extends MockeryTestCase
         $radioFieldsetPopulator->shouldReceive('populate')
             ->with($form, $fieldset, $options)
             ->once()
-            ->ordered()
-            ->globally();
+            ->globally()
+            ->ordered();
 
         $translator = m::mock(TranslationHelperService::class);
         $translator->shouldReceive('translate')
@@ -48,8 +48,8 @@ class PermitUsageFieldsetPopulatorTest extends MockeryTestCase
         $htmlAdder->shouldReceive('add')
             ->with($fieldset, 'footerAnnotation', $expectedMarkup)
             ->once()
-            ->ordered()
-            ->globally();
+            ->globally()
+            ->ordered();
 
         $permitUsageFieldsetPopulator = new PermitUsageFieldsetPopulator(
             $radioFieldsetPopulator,
