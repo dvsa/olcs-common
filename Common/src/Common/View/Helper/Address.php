@@ -2,9 +2,7 @@
 
 namespace Common\View\Helper;
 
-use Common\View\Helper\Traits\Utils;
 use Zend\View\Helper\AbstractHelper;
-use Zend\View\Helper\EscapeHtml;
 
 /**
  * Address view helper
@@ -13,8 +11,6 @@ use Zend\View\Helper\EscapeHtml;
  */
 class Address extends AbstractHelper
 {
-    use Utils;
-
     /**
      * Get the HTML to render an address array
      *
@@ -45,7 +41,7 @@ class Address extends AbstractHelper
 
         foreach ($fields as $item) {
             if (isset($address[$item]) && !empty($address[$item])) {
-                $parts[] = $this->escapeHtml($address[$item]);
+                $parts[] = htmlspecialchars($address[$item]);
             }
         }
 

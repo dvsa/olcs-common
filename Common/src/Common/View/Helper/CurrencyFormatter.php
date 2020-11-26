@@ -2,7 +2,6 @@
 
 namespace Common\View\Helper;
 
-use Common\View\Helper\Traits\Utils;
 use Zend\View\Helper\AbstractHelper;
 
 /**
@@ -13,8 +12,6 @@ use Zend\View\Helper\AbstractHelper;
 class CurrencyFormatter extends AbstractHelper
 {
     const PREFIX = '£';
-
-    use Utils;
 
     /**
      * Return a formatted Monetary Value
@@ -42,6 +39,6 @@ class CurrencyFormatter extends AbstractHelper
             $formatted .= '.' . $pence;
         }
 
-        return $this->escapeHtml($formatted);
+        return htmlspecialchars($formatted);
     }
 }
