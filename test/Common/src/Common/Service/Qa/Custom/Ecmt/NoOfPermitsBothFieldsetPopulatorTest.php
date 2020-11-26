@@ -29,7 +29,7 @@ class NoOfPermitsBothFieldsetPopulatorTest extends MockeryTestCase
         $translatedHint = 'translated hint, maxPermitted = %s';
         $translatedInsetSupplement = 'translated inset supplement';
         $translatedCaption = 'translated caption';
-        $baseInsetText = 'base inset text';
+        $baseInsetText = 'base inset text<br><br>';
 
         $euro5PermitsRemaining = 40;
         $euro5Value = 20;
@@ -134,7 +134,7 @@ class NoOfPermitsBothFieldsetPopulatorTest extends MockeryTestCase
 
         $noOfPermitsBaseInsetTextGenerator = m::mock(NoOfPermitsBaseInsetTextGenerator::class);
         $noOfPermitsBaseInsetTextGenerator->shouldReceive('generate')
-            ->with($options)
+            ->with($options, '%s<br><br>')
             ->andReturn($baseInsetText);
 
         $noOfPermitsBothFieldsetPopulator = new NoOfPermitsBothFieldsetPopulator(

@@ -28,18 +28,26 @@ class NoOfPermitsBaseInsetTextGenerator
     }
 
     /**
-     * Generate the base inset text for use on the number of permits page
+     * Generate the base inset text wrapped in the specified format for use on the number of permits page, or return an
+     * empty string if the issue fee is 'N/A'
      *
      * @param array $options
+     * @param string $format
      *
      * @return string
      */
-    public function generate(array $options)
+    public function generate(array $options, $format)
     {
-        return sprintf(
+        if ($options['issueFee'] == 'N/A') {
+            return '';
+        }
+
+        $insetText = sprintf(
             $this->translator->translate('qanda.ecmt.number-of-permits.inset.base'),
             $this->currencyFormatter->__invoke($options['applicationFee']),
             $this->currencyFormatter->__invoke($options['issueFee'])
         );
+
+        return sprintf($format, $insetText);
     }
 }

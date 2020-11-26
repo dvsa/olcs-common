@@ -50,8 +50,8 @@ class NoOfPermitsEitherFieldsetPopulator implements FieldsetPopulatorInterface
     public function populate($form, Fieldset $fieldset, array $options)
     {
         $insetAndSection1Header = sprintf(
-            '<div class="govuk-inset-text">%s</div><p class="govuk-body"><strong>1. %s</strong></p><p class="govuk-body">%s</p>',
-            $this->noOfPermitsBaseInsetTextGenerator->generate($options),
+            '%s<p class="govuk-body"><strong>1. %s</strong></p><p class="govuk-body">%s</p>',
+            $this->noOfPermitsBaseInsetTextGenerator->generate($options, '<div class="govuk-inset-text">%s</div>'),
             $this->translator->translate('qanda.ecmt.number-of-permits.either.section-1.heading'),
             $this->translator->translate('qanda.ecmt.number-of-permits.either.section-1.blurb')
         );

@@ -15,38 +15,67 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class NoOfPermitsBaseInsetTextGeneratorTest extends MockeryTestCase
 {
+    const FORMAT = '<div class="container">%s</div>';
+
+    private $translator;
+
+    private $currencyFormatter;
+
+    private $noOfPermitsBaseInsetTextGenerator;
+
+    public function setUp(): void
+    {
+        $this->translator = m::mock(TranslationHelperService::class);
+
+        $this->currencyFormatter = m::mock(CurrencyFormatter::class);
+
+        $this->noOfPermitsBaseInsetTextGenerator = new NoOfPermitsBaseInsetTextGenerator(
+            $this->translator,
+            $this->currencyFormatter
+        );
+    }
+
     public function testGenerate()
     {
         $applicationFee = '10.00';
-        $formattedApplicationFee = '£10';
         $issueFee = '17.00';
-        $formattedIssueFee = '£17';
 
         $options = [
             'applicationFee' => $applicationFee,
             'issueFee' => $issueFee
         ];
 
-        $translator = m::mock(TranslationHelperService::class);
-        $translator->shouldReceive('translate')
+        $this->translator->shouldReceive('translate')
             ->with('qanda.ecmt.number-of-permits.inset.base')
             ->andReturn('Formatted base text. Application fee %s, issue fee %s');
 
-        $currencyFormatter = m::mock(CurrencyFormatter::class);
-        $currencyFormatter->shouldReceive('__invoke')
+        $this->currencyFormatter->shouldReceive('__invoke')
             ->with($applicationFee)
-            ->andReturn($formattedApplicationFee);
-        $currencyFormatter->shouldReceive('__invoke')
+            ->andReturn('£10');
+        $this->currencyFormatter->shouldReceive('__invoke')
             ->with($issueFee)
-            ->andReturn($formattedIssueFee);
+            ->andReturn('£17');
 
-        $noOfPermitsBaseInsetTextGenerator = new NoOfPermitsBaseInsetTextGenerator($translator, $currencyFormatter);
-
-        $expected = 'Formatted base text. Application fee £10, issue fee £17';
+        $expected = '<div class="container">Formatted base text. Application fee £10, issue fee £17</div>';
 
         $this->assertEquals(
             $expected,
-            $noOfPermitsBaseInsetTextGenerator->generate($options)
+            $this->noOfPermitsBaseInsetTextGenerator->generate($options, self::FORMAT)
+        );
+    }
+
+    public function testGenerateIssueFeeNotApplicable()
+    {
+        $options = [
+            'applicationFee' => '10.00',
+            'issueFee' => 'N/A'
+        ];
+
+        $expected = '';
+
+        $this->assertEquals(
+            $expected,
+            $this->noOfPermitsBaseInsetTextGenerator->generate($options, self::FORMAT)
         );
     }
 }
