@@ -81,6 +81,13 @@ class LicenceChecklistTest extends AbstractFormValidationTestCase
         $this->assertFormElementNotValid($element, 'N', [Identical::NOT_SAME]);
     }
 
+    public function testUsersCheckbox()
+    {
+        $element = ['data', 'usersCheckbox'];
+        $this->assertFormElementValid($element, 'Y');
+        $this->assertFormElementNotValid($element, 'N', [Identical::NOT_SAME]);
+    }
+
     public function testLicenceChecklistConfirmation()
     {
         $element = ['licenceChecklistConfirmation', 'yesNo'];
