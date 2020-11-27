@@ -102,6 +102,13 @@ class RefData
     const VARIATION_TYPE_DIRECTOR_CHANGE = 'vtyp_director_change';
 
     /**
+     * Grant authorities
+     */
+    CONST GRANT_AUTHORITY_DELEGATED = 'grant_authority_dl';
+    CONST GRANT_AUTHORITY_TC = 'grant_authority_tc';
+    CONST GRANT_AUTHORITY_TR = 'grant_authority_tr';
+
+    /**
      * Transport Manager Application
      */
     const TMA_SIGN_AS_TM = 'tma_sign_as_tm';
