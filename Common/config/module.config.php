@@ -278,6 +278,7 @@ return array(
             \Common\Service\AntiVirus\Scan::class => \Common\Service\AntiVirus\Scan::class,
             'QaCommonWarningAdder' => QaService\Custom\Common\WarningAdderFactory::class,
             'QaCommonIsValidBasedWarningAdder' => QaService\Custom\Common\IsValidBasedWarningAdderFactory::class,
+            'QaCommonFileUploadFieldsetGenerator' => QaService\Custom\Common\FileUploadFieldsetGeneratorFactory::class,
             'QaCheckboxFieldsetPopulator' => QaService\CheckboxFieldsetPopulatorFactory::class,
             'QaTextFieldsetPopulator' => QaService\TextFieldsetPopulatorFactory::class,
             'QaRadioFieldsetPopulator' => QaService\RadioFieldsetPopulatorFactory::class,

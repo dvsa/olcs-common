@@ -2,7 +2,6 @@
 
 namespace Common\Service\Qa\Custom\Common;
 
-use Common\Form\Elements\Types\Html;
 use Zend\Form\Fieldset;
 use Zend\View\Helper\Partial;
 
@@ -13,16 +12,21 @@ class WarningAdder
     /** @var Partial */
     private $partial;
 
+    /** @var HtmlAdder */
+    private $htmlAdder;
+
     /**
      * Create service instance
      *
      * @param Partial $partial
+     * @param HtmlAdder $htmlAdder
      *
      * @return WarningAdder
      */
-    public function __construct(Partial $partial)
+    public function __construct(Partial $partial, HtmlAdder $htmlAdder)
     {
         $this->partial = $partial;
+        $this->htmlAdder = $htmlAdder;
     }
 
     /**
@@ -44,17 +48,6 @@ class WarningAdder
             ['translationKey' => $translationKey]
         );
 
-        $fieldset->add(
-            [
-                'name' => $elementName,
-                'type' => Html::class,
-                'attributes' => [
-                    'value' => $markup
-                ]
-            ],
-            [
-                'priority' => $priority
-            ]
-        );
+        $this->htmlAdder->add($fieldset, $elementName, $markup, $priority);
     }
 }

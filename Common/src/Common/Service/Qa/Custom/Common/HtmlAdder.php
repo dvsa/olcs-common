@@ -13,9 +13,15 @@ class HtmlAdder
      * @param Fieldset $fieldset
      * @param string $name
      * @param string $markup
+     * @param int $priority (optional)
      */
-    public function add(Fieldset $fieldset, $name, $markup)
+    public function add(Fieldset $fieldset, $name, $markup, $priority = null)
     {
+        $flags = [];
+        if ($priority) {
+            $flags['priority'] = $priority;
+        }
+
         $fieldset->add(
             [
                 'name' => $name,
@@ -23,7 +29,8 @@ class HtmlAdder
                 'attributes' => [
                     'value' => $markup
                 ]
-            ]
+            ],
+            $flags
         );
     }
 }
