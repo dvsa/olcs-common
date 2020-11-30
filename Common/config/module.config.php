@@ -130,11 +130,6 @@ return array(
     ),
     'version' => (isset($release['version']) ? $release['version'] : ''),
     'service_manager' => array(
-        'delegators' => [
-            'MvcTranslator' => [
-                \Common\Util\TranslatorDelegatorFactory::class,
-            ]
-        ],
         'shared' => array(
             'Helper\FileUpload' => false,
             'CantIncreaseValidator' => false,
@@ -740,7 +735,6 @@ return array(
         ],
     ],
     'translator' => [
-        'replacements' => include(__DIR__ . '/language/replacements.php'),
         'locale' => [
             'en_GB', //default locale
             'en_GB', //fallback locale
