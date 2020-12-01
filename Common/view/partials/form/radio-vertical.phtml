@@ -4,6 +4,10 @@ if ($element->has('warning')) {
     echo $this->formRow($element->get('warning'));
 }
 
+if ($element->has('warningVisible')) {
+    echo $this->formRow($element->get('warningVisible'));
+}
+
 /** @var Common\Form\Elements\Types\RadioHorizontal $element */
 $element = $this->element;
 
