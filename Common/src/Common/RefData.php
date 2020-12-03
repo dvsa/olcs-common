@@ -104,9 +104,9 @@ class RefData
     /**
      * Grant authorities
      */
-    CONST GRANT_AUTHORITY_DELEGATED = 'grant_authority_dl';
-    CONST GRANT_AUTHORITY_TC = 'grant_authority_tc';
-    CONST GRANT_AUTHORITY_TR = 'grant_authority_tr';
+    const GRANT_AUTHORITY_DELEGATED = 'grant_authority_dl';
+    const GRANT_AUTHORITY_TC = 'grant_authority_tc';
+    const GRANT_AUTHORITY_TR = 'grant_authority_tr';
 
     /**
      * Transport Manager Application
