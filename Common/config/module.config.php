@@ -225,6 +225,8 @@ return array(
             'QaBilateralNoOfPermitsMoroccoFieldsetPopulator' =>
                 QaService\Custom\Bilateral\NoOfPermitsMoroccoFieldsetPopulator::class,
             'QaBilateralPermitUsageIsValidHandler' => QaService\Custom\Bilateral\PermitUsageIsValidHandler::class,
+            'QaBilateralStandardAndCabotageSubmittedAnswerGenerator' =>
+                QaService\Custom\Bilateral\StandardAndCabotageSubmittedAnswerGenerator::class,
             'QaDateTimeFactory' => QaService\DateTimeFactory::class,
 
             'QaRoadworthinessMakeAndModelFieldsetModifier' =>
@@ -278,6 +280,7 @@ return array(
             \Common\Service\AntiVirus\Scan::class => \Common\Service\AntiVirus\Scan::class,
             'QaCommonWarningAdder' => QaService\Custom\Common\WarningAdderFactory::class,
             'QaCommonIsValidBasedWarningAdder' => QaService\Custom\Common\IsValidBasedWarningAdderFactory::class,
+            'QaCommonFileUploadFieldsetGenerator' => QaService\Custom\Common\FileUploadFieldsetGeneratorFactory::class,
             'QaCheckboxFieldsetPopulator' => QaService\CheckboxFieldsetPopulatorFactory::class,
             'QaTextFieldsetPopulator' => QaService\TextFieldsetPopulatorFactory::class,
             'QaRadioFieldsetPopulator' => QaService\RadioFieldsetPopulatorFactory::class,
@@ -337,6 +340,10 @@ return array(
             'QaBilateralEmissionsStandardsFieldsetPopulator' =>
                 QaService\Custom\Bilateral\EmissionsStandardsFieldsetPopulatorFactory::class,
             'QaBilateralPermitUsageDataHandler' => QaService\Custom\Bilateral\PermitUsageDataHandlerFactory::class,
+            'QaBilateralStandardAndCabotageDataHandler' =>
+                QaService\Custom\Bilateral\StandardAndCabotageDataHandlerFactory::class,
+            'QaBilateralStandardAndCabotageIsValidHandler' =>
+                QaService\Custom\Bilateral\StandardAndCabotageIsValidHandlerFactory::class,
 
             'QaFieldsetModifier' => QaService\FieldsetModifier\FieldsetModifierFactory::class,
 

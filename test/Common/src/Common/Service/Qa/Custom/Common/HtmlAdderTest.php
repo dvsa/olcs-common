@@ -15,26 +15,52 @@ use Zend\Form\Fieldset;
  */
 class HtmlAdderTest extends MockeryTestCase
 {
-    public function testAdd()
+    const ELEMENT_NAME = 'elementName';
+
+    const MARKUP = '<h1>markup</h1>';
+
+    const EXPECTED_PARAMS = [
+        'name' => self::ELEMENT_NAME,
+        'type' => Html::class,
+        'attributes' => [
+            'value' => self::MARKUP
+        ]
+    ];
+
+    private $fieldset;
+
+    private $htmlAdder;
+
+    public function setUp(): void
     {
-        $elementName = 'elementName';
+        $this->fieldset = m::mock(Fieldset::class);
 
-        $markup = '<h1>markup</h1>';
+        $this->htmlAdder = new HtmlAdder();
+    }
 
-        $expectedParams = [
-            'name' => $elementName,
-            'type' => Html::class,
-            'attributes' => [
-                'value' => $markup
-            ]
-        ];
+    public function testAddWithoutPriority()
+    {
+        $expectedFlags = [];
 
-        $fieldset = m::mock(Fieldset::class);
-        $fieldset->shouldReceive('add')
-            ->with($expectedParams)
+        $this->fieldset->shouldReceive('add')
+            ->with(self::EXPECTED_PARAMS, $expectedFlags)
             ->once();
 
         $htmlAdder = new HtmlAdder();
-        $htmlAdder->add($fieldset, $elementName, $markup);
+        $htmlAdder->add($this->fieldset, self::ELEMENT_NAME, self::MARKUP);
+    }
+
+    public function testAddWithPriority()
+    {
+        $priority = -100;
+
+        $expectedFlags = ['priority' => $priority];
+
+        $this->fieldset->shouldReceive('add')
+            ->with(self::EXPECTED_PARAMS, $expectedFlags)
+            ->once();
+
+        $htmlAdder = new HtmlAdder();
+        $htmlAdder->add($this->fieldset, self::ELEMENT_NAME, self::MARKUP, $priority);
     }
 }

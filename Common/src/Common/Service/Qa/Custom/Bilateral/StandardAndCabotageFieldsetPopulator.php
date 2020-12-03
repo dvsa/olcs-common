@@ -3,6 +3,7 @@
 namespace Common\Service\Qa\Custom\Bilateral;
 
 use Common\Service\Qa\FieldsetPopulatorInterface;
+use Zend\Form\Element\Hidden;
 use Zend\Form\Fieldset;
 
 class StandardAndCabotageFieldsetPopulator implements FieldsetPopulatorInterface
@@ -55,6 +56,16 @@ class StandardAndCabotageFieldsetPopulator implements FieldsetPopulatorInterface
      */
     public function populate($form, Fieldset $fieldset, array $options)
     {
+        $fieldset->add(
+            [
+                'name' => 'warningVisible',
+                'type' => Hidden::class,
+                'attributes' => [
+                    'value' => 'none'
+                ]
+            ]
+        );
+
         $cabotageOptions = $this->radioFactory->create('yesContent');
         $cabotageOptions->setValueOptions(self::CABOTAGE_VALUE_OPTIONS);
 

@@ -3,13 +3,15 @@
 namespace CommonTest\Service\Qa\Custom\CertRoadworthiness;
 
 use Common\Service\Helper\TranslationHelperService;
-use Common\Service\Qa\Custom\Common\DateSelectMustBeBefore;
-use Common\Service\Qa\Custom\Common\HtmlAdder;
 use Common\Service\Qa\Custom\CertRoadworthiness\MotExpiryDateFieldsetPopulator;
+use Common\Service\Qa\Custom\Common\DateSelectMustBeBefore;
+use Common\Service\Qa\Custom\Common\FileUploadFieldsetGenerator;
+use Common\Service\Qa\Custom\Common\HtmlAdder;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Form\Fieldset;
 use Zend\Form\Form;
+use Zend\Form\InputFilterProviderFieldset;
 
 /**
  * MotExpiryDateFieldsetPopulatorTest
@@ -18,59 +20,131 @@ use Zend\Form\Form;
  */
 class MotExpiryDateFieldsetPopulatorTest extends MockeryTestCase
 {
-    public function testPopulate()
-    {
-        $requestedDate = '2020-03-15';
-        $dateMustBeBefore = '2020-05-01';
+    const REQUESTED_DATE = '2020-03-15';
+    const DATE_MUST_BE_BEFORE = '2020-05-01';
 
-        $translator = m::mock(TranslationHelperService::class);
-        $translator->shouldReceive('translate')
+    private $translator;
+
+    private $form;
+
+    private $fieldset;
+
+    private $htmlAdder;
+
+    private $fileUploadFieldsetGenerator;
+
+    private $motExpiryDateFieldsetPopulator;
+
+    public function setUp(): void
+    {
+        $this->translator = m::mock(TranslationHelperService::class);
+        $this->translator->shouldReceive('translate')
+            ->with('qanda.certificate-of-roadworthiness.mot-expiry-date.legend')
+            ->andReturn('MOT expiry date');
+        $this->translator->shouldReceive('translate')
             ->with('qanda.certificate-of-roadworthiness.mot-expiry-date.hint')
             ->andReturn('For example, 10 12 2019.');
 
+        $this->form = m::mock(Form::class);
 
-        $form = m::mock(Form::class);
+        $this->fieldset = m::mock(Fieldset::class);
 
-        $fieldset = m::mock(Fieldset::class);
+        $expectedMarkup = '<legend class="govuk-heading-m">MOT expiry date</legend>' .
+            '<div class="govuk-hint">For example, 10 12 2019.</div>';
 
-        $expectedMarkup = '<div class="govuk-hint">For example, 10 12 2019.</div>';
-
-        $htmlAdder = m::mock(HtmlAdder::class);
-        $htmlAdder->shouldReceive('add')
-            ->with($fieldset, 'hint', $expectedMarkup)
+        $this->htmlAdder = m::mock(HtmlAdder::class);
+        $this->htmlAdder->shouldReceive('add')
+            ->with($this->fieldset, 'hint', $expectedMarkup)
             ->once()
             ->globally()
             ->ordered();
+
+        $this->fileUploadFieldsetGenerator = m::mock(FileUploadFieldsetGenerator::class);
 
         $expectedElementSpecification = [
             'name' => 'qaElement',
             'type' => DateSelectMustBeBefore::class,
             'options' => [
-                'dateMustBeBefore' => $dateMustBeBefore,
+                'dateMustBeBefore' => self::DATE_MUST_BE_BEFORE,
                 'invalidDateKey' => 'qanda.certificate-of-roadworthiness.mot-expiry-date.error.date-invalid',
                 'dateInPastKey' => 'qanda.certificate-of-roadworthiness.mot-expiry-date.error.date-in-past',
                 'dateNotBeforeKey' => 'qanda.certificate-of-roadworthiness.mot-expiry-date.error.date-too-far'
             ],
             'attributes' => [
-                'value' => $requestedDate
+                'value' => self::REQUESTED_DATE
             ]
         ];
 
-        $fieldset->shouldReceive('add')
+        $this->fieldset->shouldReceive('add')
             ->with($expectedElementSpecification)
             ->once()
             ->globally()
             ->ordered();
 
-        $motExpiryDateFieldsetPopulator = new MotExpiryDateFieldsetPopulator($translator, $htmlAdder);
+        $this->motExpiryDateFieldsetPopulator = new MotExpiryDateFieldsetPopulator(
+            $this->translator,
+            $this->htmlAdder,
+            $this->fileUploadFieldsetGenerator
+        );
+    }
 
+    public function testPopulateEnableFileUploadsFalse()
+    {
         $options = [
-            'dateThreshold' => $dateMustBeBefore,
-            'date' => [
-                'value' => $requestedDate
+            'enableFileUploads' => false,
+            'dateWithThreshold' => [
+                'dateThreshold' => self::DATE_MUST_BE_BEFORE,
+                'date' => [
+                    'value' => self::REQUESTED_DATE
+                ]
             ]
         ];
 
-        $motExpiryDateFieldsetPopulator->populate($form, $fieldset, $options);
+        $this->motExpiryDateFieldsetPopulator->populate($this->form, $this->fieldset, $options);
+    }
+
+    public function testPopulateEnableFileUploadsTrue()
+    {
+        $this->translator->shouldReceive('translate')
+            ->with('qanda.certificate-of-roadworthiness.mot-expiry-date.upload.legend')
+            ->andReturn('Upload a copy of your MOT certificate');
+        $this->translator->shouldReceive('translate')
+            ->with('qanda.certificate-of-roadworthiness.mot-expiry-date.upload.hint')
+            ->andReturn('You need to upload a scanned copy or clear photo of your latest MOT certificate.');
+
+        $fileUploadFieldset = m::mock(InputFilterProviderFieldset::class);
+
+        $this->fileUploadFieldsetGenerator->shouldReceive('generate')
+            ->withNoArgs()
+            ->andReturn($fileUploadFieldset);
+
+        $expectedMarkup = '<legend class="govuk-heading-m">Upload a copy of your MOT certificate</legend>' .
+            '<div class="govuk-hint">' .
+            'You need to upload a scanned copy or clear photo of your latest MOT certificate.' .
+            '</div>';
+
+        $this->htmlAdder->shouldReceive('add')
+            ->with($fileUploadFieldset, 'uploadHint', $expectedMarkup, 100)
+            ->once()
+            ->globally()
+            ->ordered();
+
+        $this->form->shouldReceive('add')
+            ->with($fileUploadFieldset)
+            ->once()
+            ->globally()
+            ->ordered();
+
+        $options = [
+            'enableFileUploads' => true,
+            'dateWithThreshold' => [
+                'dateThreshold' => self::DATE_MUST_BE_BEFORE,
+                'date' => [
+                    'value' => self::REQUESTED_DATE
+                ]
+            ]
+        ];
+
+        $this->motExpiryDateFieldsetPopulator->populate($this->form, $this->fieldset, $options);
     }
 }

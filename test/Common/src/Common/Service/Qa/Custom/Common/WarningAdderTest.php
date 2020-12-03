@@ -2,7 +2,7 @@
 
 namespace CommonTest\Service\Qa\Custom\Common;
 
-use Common\Form\Elements\Types\Html;
+use Common\Service\Qa\Custom\Common\HtmlAdder;
 use Common\Service\Qa\Custom\Common\WarningAdder;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -35,23 +35,14 @@ class WarningAdderTest extends MockeryTestCase
             ->once()
             ->andReturn($warningMarkup);
 
-        $warningElementParams = [
-            'name' => self::ELEMENT_NAME,
-            'type' => Html::class,
-            'attributes' => [
-                'value' => $warningMarkup
-            ]
-        ];
-
-        $warningFlagsParams = ['priority' => self::PRIORITY];
-
         $fieldset = m::mock(Fieldset::class);
-        $fieldset->shouldReceive('add')
-            ->with($warningElementParams, $warningFlagsParams)
+
+        $htmlAdder = m::mock(HtmlAdder::class);
+        $htmlAdder->shouldReceive('add')
+            ->with($fieldset, self::ELEMENT_NAME, $warningMarkup, self::PRIORITY)
             ->once();
 
-
-        $warningAdder = new WarningAdder($partial);
+        $warningAdder = new WarningAdder($partial, $htmlAdder);
         $warningAdder->add($fieldset, self::WARNING_KEY, self::PRIORITY, self::ELEMENT_NAME);
     }
 }

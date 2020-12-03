@@ -166,6 +166,25 @@ class QaFormTest extends MockeryTestCase
         $this->assertTrue($qaForm->isValid());
     }
 
+    public function testIsValidParentReturnsTrueValidationPreventedWithoutHandler()
+    {
+        $formControlType = 'form_control_type';
+
+        $applicationStep = [
+            'type' => $formControlType
+        ];
+
+        $qaForm = m::mock(QaForm::class)->makePartial()
+            ->shouldAllowMockingProtectedMethods();
+        $qaForm->preventSuccessfulValidation();
+        $qaForm->shouldReceive('callParentIsValid')
+            ->andReturn(true);
+
+        $qaForm->setApplicationStep($applicationStep);
+
+        $this->assertFalse($qaForm->isValid());
+    }
+
     public function testSetGetApplicationStep()
     {
         $applicationStep = [

@@ -11,6 +11,7 @@ use Common\Service\Qa\Custom\Bilateral\StandardYesNoValueOptionsGenerator;
 use Common\Service\Qa\Custom\Bilateral\YesNoRadioOptionsApplier;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Zend\Form\Element\Hidden;
 use Zend\Form\Fieldset;
 use Zend\Form\Form;
 
@@ -78,7 +79,18 @@ class StandardAndCabotageFieldsetPopulatorTest extends MockeryTestCase
 
         $this->form = m::mock(Form::class);
 
+        $warningVisibleParams = [
+            'name' => 'warningVisible',
+            'type' => Hidden::class,
+            'attributes' => [
+                'value' => 'none'
+            ]
+        ];
+
         $this->fieldset = m::mock(Fieldset::class);
+        $this->fieldset->shouldReceive('add')
+            ->with($warningVisibleParams)
+            ->once();
         $this->fieldset->shouldReceive('add')
             ->with($this->yesNoRadio)
             ->once()
