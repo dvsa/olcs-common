@@ -1,18 +1,18 @@
 <?php
 
-/**
- * Test EscapeHtml view helper
- *
- * @author Andy Newton <andy@vitri.ltd>
- */
-
 namespace CommonTest\View\Helper;
 
 use Common\View\Helper\EscapeHtml;
 use HTMLPurifier;
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 
-class EscapeHtmlTest extends \PHPUnit\Framework\TestCase
+/**
+ * Test EscapeHtml view helper
+ *
+ * @author Andy Newton <andy@vitri.ltd>
+ */
+class EscapeHtmlTest extends TestCase
 {
     /**
      * Test Escape HTML helper
@@ -24,9 +24,21 @@ class EscapeHtmlTest extends \PHPUnit\Framework\TestCase
             ->once()
             ->with('<badtag>foo</badtag>')
             ->andReturn('foo');
-
         $viewHelper = new EscapeHtml($mockHtmlPurifier);
-
         $this->assertEquals('foo', $viewHelper->__invoke('<badtag>foo</badtag>'));
+    }
+
+    public function testInvokeReturnsAnEmptyStringWhenPassedNull()
+    {
+        $htmlPurifier = new HtmlPurifier();
+        $viewHelper = new EscapeHtml($htmlPurifier);
+        $this->assertEquals('', $viewHelper->__invoke(null));
+    }
+
+    public function testInvokeReturnsANumericStringWhenANumericString()
+    {
+        $htmlPurifier = new HtmlPurifier();
+        $viewHelper = new EscapeHtml($htmlPurifier);
+        $this->assertEquals('123', $viewHelper->__invoke('123'));
     }
 }
