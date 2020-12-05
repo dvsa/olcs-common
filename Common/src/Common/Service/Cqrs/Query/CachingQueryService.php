@@ -4,10 +4,12 @@ namespace Common\Service\Cqrs\Query;
 
 use Common\Service\Cqrs\Exception\CacheTtlException;
 use Common\Service\Cqrs\RecoverHttpClientExceptionTrait;
+use Dvsa\Olcs\Transfer\Query\Cache\ById;
 use Dvsa\Olcs\Transfer\Query\CacheableLongTermQueryInterface;
 use Dvsa\Olcs\Transfer\Query\CacheableMediumTermQueryInterface;
 use Dvsa\Olcs\Transfer\Query\QueryContainerInterface;
 use Dvsa\Olcs\Transfer\Service\CacheEncryption as CacheEncryptionService;
+use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
 
 /**
  * Class CachingQueryService
@@ -18,6 +20,7 @@ class CachingQueryService implements QueryServiceInterface, \Zend\Log\LoggerAwar
     use \Zend\Log\LoggerAwareTrait;
     use RecoverHttpClientExceptionTrait;
 
+    const BACKEND_FAIL_MSG = 'Backend DB failure HTTP code: %s';
     const CACHE_FAIL_MSG = 'Cache failure: %s';
     const CACHE_LOCAL_SAVE_MSG = 'Storing in local cache: %s';
     const CACHE_LOCAL_RETRIEVE_MSG = 'Fetching from local cache: %s';
@@ -34,6 +37,9 @@ class CachingQueryService implements QueryServiceInterface, \Zend\Log\LoggerAwar
 
     /** @var CacheEncryptionService */
     private $cacheService;
+
+    /** @var AnnotationBuilder */
+    private $annotationBuilder;
 
     /** @var bool */
     private $enabled;
@@ -52,11 +58,13 @@ class CachingQueryService implements QueryServiceInterface, \Zend\Log\LoggerAwar
     public function __construct(
         QueryServiceInterface $queryService,
         CacheEncryptionService $cache,
+        AnnotationBuilder $annotationBuilder,
         $enabled,
         array $ttl
     ) {
         $this->queryService = $queryService;
         $this->cacheService = $cache;
+        $this->annotationBuilder = $annotationBuilder;
         $this->enabled = $enabled;
         $this->ttl = $ttl;
     }
@@ -102,6 +110,42 @@ class CachingQueryService implements QueryServiceInterface, \Zend\Log\LoggerAwar
      * @throws \Exception
      */
     public function handleCustomCache(string $identifier, string $uniqueId = '')
+    {
+        try {
+            if ($this->cacheService->hasCustomItem($identifier, $uniqueId)) {
+                return $this->getCustomCache($identifier, $uniqueId);
+            }
+        } catch (\Exception $e) {
+            //error has occurred with the cache - log the error and retrieve fresh from the backend
+            $this->logError(sprintf(self::CACHE_FAIL_MSG, $e->getMessage()));
+        }
+
+        $queryParams = [
+            'id' => $identifier,
+            'uniqueId' => $uniqueId
+        ];
+
+        $dto = ById::create($queryParams);
+        $query = $this->annotationBuilder->createQuery($dto);
+        $response = $this->send($query);
+
+        if ($response->isOk()) {
+            return $response->getResult();
+        }
+
+        throw new \Exception(sprintf(self::BACKEND_FAIL_MSG, $response->getStatusCode()));
+    }
+
+    /**
+     * Retrieve data that is not found in the usual CQRS cache
+     *
+     * @param string $identifier
+     * @param string $uniqueId
+     *
+     * @return mixed|null
+     * @throws \Exception
+     */
+    public function getCustomCache(string $identifier, string $uniqueId = '')
     {
         return $this->cacheService->getCustomItem($identifier, $uniqueId);
     }

@@ -36,9 +36,6 @@ class TranslationLoaderFactory implements FactoryInterface
     {
         $parentLocator = $container->getServiceLocator();
 
-        return new TranslationLoader(
-            $parentLocator->get('QueryService'),
-            $parentLocator->get('TransferAnnotationBuilder')
-        );
+        return new TranslationLoader($parentLocator->get('QueryService'));
     }
 }

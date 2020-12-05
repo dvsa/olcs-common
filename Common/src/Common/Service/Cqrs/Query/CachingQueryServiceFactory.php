@@ -32,6 +32,7 @@ class CachingQueryServiceFactory implements FactoryInterface
         $service = new CachingQueryService(
             $serviceLocator->get(QueryService::class),
             $serviceLocator->get(CacheEncryptionService::class),
+            $serviceLocator->get('TransferAnnotationBuilder'),
             $config['query_cache']['enabled'],
             $config['query_cache']['ttl']
         );
