@@ -5,8 +5,8 @@ namespace CommonTest\Form\View\Helper;
 use Common\Form\View\Helper\FormInputSearch;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
-use Zend\Form\ElementInterface;
-use Zend\View\Renderer\RendererInterface;
+use Laminas\Form\ElementInterface;
+use Laminas\View\Renderer\RendererInterface;
 
 class FormInputSearchTest extends TestCase
 {

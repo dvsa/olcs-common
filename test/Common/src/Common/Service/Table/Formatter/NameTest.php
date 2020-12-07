@@ -11,7 +11,7 @@ namespace CommonTest\Service\Table\Formatter;
 use Common\Service\Helper\DataHelperService;
 use Common\Service\Table\Formatter\Name;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Name formatter test

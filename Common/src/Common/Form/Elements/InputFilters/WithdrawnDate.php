@@ -7,8 +7,8 @@
 
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
-use Zend\Form\Element\DateSelect as ZendDateSelect;
+use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\Form\Element\DateSelect as ZendDateSelect;
 
 /**
  * Checks that if a withdrawn checkbox is ticked then the corresponding date is also filled in

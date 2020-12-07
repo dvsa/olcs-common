@@ -20,14 +20,13 @@ class InterimOcCheckbox implements FormatterInterface
      *
      * @param array $data
      * @param array $column
-     * @param \Zend\ServiceManager\ServiceManager $sm
+     * @param \Laminas\ServiceManager\ServiceManager $sm
      * @return string
      */
     public static function format($data, $column = array(), $sm = null)
     {
         $format = '<input type="checkbox" value="' . $data['id'] . '" name="operatingCentres[id][]" %s>';
-        if (
-            isset($data['isInterim']) &&
+        if (isset($data['isInterim']) &&
             $data['isInterim'] == 'Y') {
             $result = sprintf($format, 'checked');
         } else {

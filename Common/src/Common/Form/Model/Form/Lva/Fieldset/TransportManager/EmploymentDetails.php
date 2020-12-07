@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Lva\Fieldset\TransportManager;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Attributes({"class":""})
@@ -32,7 +32,7 @@ class EmploymentDetails
      * @Form\Type("Text")
      * @Form\Required(true)
      * @Form\Validator({
-     *     "name":"Zend\Validator\StringLength",
+     *     "name":"Laminas\Validator\StringLength",
      *     "options":{
      *          "max":45,
      *     },
@@ -53,7 +53,7 @@ class EmploymentDetails
      * @Form\Type("Textarea")
      * @Form\Required(true)
      * @Form\Validator({
-     *     "name":"Zend\Validator\StringLength",
+     *     "name":"Laminas\Validator\StringLength",
      *     "options":{
      *          "max":300,
      *     },

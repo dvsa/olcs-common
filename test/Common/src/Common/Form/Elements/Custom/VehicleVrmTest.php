@@ -6,7 +6,7 @@ use Common\Form\Elements\Custom\VehicleVrm;
 use Dvsa\Olcs\Transfer\Validators\Vrm;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Validator\NotEmpty;
+use Laminas\Validator\NotEmpty;
 
 /**
  * @covers \Common\Form\Elements\Custom\VehicleVrm

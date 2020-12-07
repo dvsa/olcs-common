@@ -6,7 +6,7 @@ use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Helper\UrlHelperService as UrlHelper;
 use Common\View\Helper\Status as StatusHelper;
-use Zend\View\HelperPluginManager as ViewPluginManager;
+use Laminas\View\HelperPluginManager as ViewPluginManager;
 use Common\Service\Table\Formatter\LicenceApplication;
 use CommonTest\Bootstrap;
 

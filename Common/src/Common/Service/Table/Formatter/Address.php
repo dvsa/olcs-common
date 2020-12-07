@@ -8,7 +8,7 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Address formatter
@@ -64,9 +64,7 @@ class Address implements FormatterInterface
         }
 
         foreach ($fields as $item) {
-
             if (isset($data[$item]) && !empty($data[$item])) {
-
                 $parts[] = $data[$item];
             }
         }

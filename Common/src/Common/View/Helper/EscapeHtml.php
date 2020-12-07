@@ -3,7 +3,7 @@
 namespace Common\View\Helper;
 
 use HTMLPurifier;
-use Zend\View\Helper\AbstractHelper;
+use Laminas\View\Helper\AbstractHelper;
 
 /**
  * EscapeHtml with whitelisted tags

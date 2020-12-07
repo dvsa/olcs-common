@@ -3,7 +3,7 @@
 namespace Common\Service\Table\Formatter;
 
 use Common\RefData;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Dashboard Transport Manager Action Link

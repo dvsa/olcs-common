@@ -36,7 +36,7 @@ class FeeWaiveNoteTest extends \PHPUnit\Framework\TestCase
     public function testValidators()
     {
         $spec = $this->element->getInputSpecification();
-        $this->assertEquals($spec['validators'][0]['name'], '\Zend\Validator\StringLength');
-        $this->assertEquals($spec['validators'][1]['name'], '\Zend\Validator\NotEmpty');
+        $this->assertEquals($spec['validators'][0]['name'], '\Laminas\Validator\StringLength');
+        $this->assertEquals($spec['validators'][1]['name'], '\Laminas\Validator\NotEmpty');
     }
 }

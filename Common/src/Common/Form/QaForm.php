@@ -5,7 +5,7 @@ namespace Common\Form;
 use Common\Service\Qa\IsValidHandlerInterface;
 use Common\Service\Qa\DataHandlerInterface;
 use RuntimeException;
-use Zend\Form\Fieldset;
+use Laminas\Form\Fieldset;
 
 class QaForm extends BaseQaForm
 {

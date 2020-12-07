@@ -8,8 +8,8 @@ use Common\Service\Qa\Custom\Common\WarningAdder;
 use Common\Service\Qa\IsValidHandlerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Element\Hidden;
-use Zend\Form\Fieldset;
+use Laminas\Form\Element\Hidden;
+use Laminas\Form\Fieldset;
 
 /**
  * IsValidBasedWarningAdderTest

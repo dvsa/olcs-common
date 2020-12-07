@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Continuation\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Type("\Common\Form\Elements\Types\RadioVertical")
@@ -41,7 +41,7 @@ class FinancialEvidenceRequired
     /**
      * @Form\Attributes({"type":"submit","class":"action--primary large"})
      * @Form\Options({"label":"Continue"})
-     * @Form\Type("\Zend\Form\Element\Button")
+     * @Form\Type("\Laminas\Form\Element\Button")
      */
     public $submit = null;
 }

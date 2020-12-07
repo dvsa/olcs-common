@@ -2,10 +2,10 @@
 
 namespace Common\Service\Qa;
 
-use Zend\Form\Element\Text as ZendText;
-use Zend\InputFilter\InputProviderInterface;
+use Laminas\Form\Element\Text as LaminasText;
+use Laminas\InputFilter\InputProviderInterface;
 
-class Text extends ZendText implements InputProviderInterface
+class Text extends LaminasText implements InputProviderInterface
 {
     protected $attributes = [
         'id' => 'qaText',

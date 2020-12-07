@@ -9,7 +9,7 @@ namespace Common\Data\Mapper\Lva;
 
 use Common\Data\Mapper\MapperInterface;
 use Common\Service\Helper\FlashMessengerHelperService;
-use Zend\Form\Form;
+use Laminas\Form\Form;
 
 /**
  * Psv Vehicles
@@ -40,7 +40,6 @@ class PsvVehicles implements MapperInterface
         $formMessages = [];
 
         if (isset($errors['hasEnteredReg'])) {
-
             foreach ($errors['hasEnteredReg'] as $key => $message) {
                 $formMessages['data']['hasEnteredReg'][] = $message;
             }

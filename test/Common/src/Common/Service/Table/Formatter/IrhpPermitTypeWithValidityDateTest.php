@@ -6,7 +6,7 @@ use Common\RefData;
 use Common\Service\Table\Formatter\IrhpPermitTypeWithValidityDate;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Irhp Permit Type With Validity Date test

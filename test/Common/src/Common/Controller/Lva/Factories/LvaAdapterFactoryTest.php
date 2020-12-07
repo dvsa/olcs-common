@@ -24,7 +24,7 @@ class LvaAdapterFactoryTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->sm = m::mock('\Zend\ServiceManager\ServiceManager')->makePartial();
+        $this->sm = m::mock('\Laminas\ServiceManager\ServiceManager')->makePartial();
         $this->sm->setAllowOverride(true);
     }
 

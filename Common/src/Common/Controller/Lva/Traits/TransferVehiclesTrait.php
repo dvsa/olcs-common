@@ -15,7 +15,7 @@ trait TransferVehiclesTrait
     /**
      * Transfer vehicles
      *
-     * @return \Common\View\Model\Section | \Zend\Http\Response
+     * @return \Common\View\Model\Section | \Laminas\Http\Response
      */
     protected function transferVehicles()
     {
@@ -30,7 +30,7 @@ trait TransferVehiclesTrait
 
         $form = $this->getVehicleTransferForm($options);
 
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -141,7 +141,7 @@ trait TransferVehiclesTrait
      *
      * @param array $options Options
      *
-     * @return \Zend\Form\Form
+     * @return \Laminas\Form\Form
      */
     protected function getVehicleTransferForm($options)
     {

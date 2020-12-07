@@ -3,7 +3,7 @@
 namespace Common\Service\Qa\Custom\Ecmt;
 
 use Common\Service\Qa\FieldsetPopulatorInterface;
-use Zend\Form\Fieldset;
+use Laminas\Form\Fieldset;
 
 class NoOfPermitsStrategySelectingFieldsetPopulator implements FieldsetPopulatorInterface
 {

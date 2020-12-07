@@ -3,7 +3,7 @@
 namespace CommonTest\Form\Model\Form\Lva;
 
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
-use Zend\Form\Element\Textarea;
+use Laminas\Form\Element\Textarea;
 
 /**
  * Class PreviousConvictionTest

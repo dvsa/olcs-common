@@ -15,9 +15,9 @@ use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
  * Class CachingQueryService
  * @package Common\Service\Cqrs\Query
  */
-class CachingQueryService implements QueryServiceInterface, \Zend\Log\LoggerAwareInterface
+class CachingQueryService implements QueryServiceInterface, \Laminas\Log\LoggerAwareInterface
 {
-    use \Zend\Log\LoggerAwareTrait;
+    use \Laminas\Log\LoggerAwareTrait;
     use RecoverHttpClientExceptionTrait;
 
     const BACKEND_FAIL_MSG = 'Backend DB failure HTTP code: %s';

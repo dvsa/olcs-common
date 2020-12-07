@@ -17,7 +17,7 @@ interface FormatterInterface
      *
      * @param array $data
      * @param array $column [OPTIONAL]
-     * @param \Zend\ServiceManager\ServiceManager $sm [OPTIONAL]
+     * @param \Laminas\ServiceManager\ServiceManager $sm [OPTIONAL]
      */
     public static function format($data/*, $column = array(), $sm = null*/);
 }

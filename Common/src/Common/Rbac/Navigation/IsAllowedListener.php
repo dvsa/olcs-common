@@ -2,14 +2,14 @@
 
 namespace Common\Rbac\Navigation;
 
-use Zend\Navigation\Page\Mvc;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\Navigation\Page\Mvc;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use ZfcRbac\Exception;
 use ZfcRbac\Guard\GuardInterface;
 use ZfcRbac\Service\AuthorizationServiceInterface;
 use ZfcRbac\Guard\ProtectionPolicyTrait;
-use Zend\EventManager\Event;
+use Laminas\EventManager\Event;
 
 /**
  * Class IsAllowedListener

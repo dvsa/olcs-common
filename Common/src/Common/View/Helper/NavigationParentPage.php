@@ -2,9 +2,9 @@
 
 namespace Common\View\Helper;
 
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\View\Helper\AbstractHelper;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\View\Helper\AbstractHelper;
 
 /**
  * Return Parent page of active page based on hierachy (breadcrumbs)
@@ -16,11 +16,11 @@ class NavigationParentPage extends AbstractHelper
     /**
      * Return a url to navigation Parent
      *
-     * @return \Zend\Navigation\Page\Mvc
+     * @return \Laminas\Navigation\Page\Mvc
      */
     public function __invoke()
     {
-        /** @var \Zend\View\Helper\Navigation\Breadcrumbs $breadcrumbs */
+        /** @var \Laminas\View\Helper\Navigation\Breadcrumbs $breadcrumbs */
         $breadcrumbs = $this->view->navigation('navigation')->breadcrumbs();
         $active = $breadcrumbs->findActive($breadcrumbs->getContainer());
 
@@ -28,7 +28,7 @@ class NavigationParentPage extends AbstractHelper
             return null;
         }
 
-        /** @var \Zend\Navigation\Page\Mvc $page */
+        /** @var \Laminas\Navigation\Page\Mvc $page */
         $page = $active['page'];
 
         return $page->getParent();

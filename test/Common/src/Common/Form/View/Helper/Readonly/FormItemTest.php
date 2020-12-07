@@ -30,12 +30,12 @@ class FormItemTest extends \PHPUnit\Framework\TestCase
     {
         return [
             'common' => [
-                'element' => (new \Zend\Form\Element())
+                'element' => (new \Laminas\Form\Element())
                     ->setValue('foo<br />'),
                 'expect' => 'foo&lt;br /&gt;',
             ],
             'common;htmlEscapeOff' => [
-                'element' => (new \Zend\Form\Element())
+                'element' => (new \Laminas\Form\Element())
                     ->setValue('foo<br />')
                     ->setOption('disable_html_escape', true),
                 'expect' => 'foo<br />',
@@ -49,15 +49,15 @@ class FormItemTest extends \PHPUnit\Framework\TestCase
                 'expect' => '',
             ],
             'Button' => [
-                'element' => (new \Zend\Form\Element\Button()),
+                'element' => (new \Laminas\Form\Element\Button()),
                 'expect' => '',
             ],
             'input:submit' => [
-                'element' => (new \Zend\Form\Element\Submit()),
+                'element' => (new \Laminas\Form\Element\Submit()),
                 'expect' => '',
             ],
             'input:hidden' => [
-                'element' => (new \Zend\Form\Element\Hidden()),
+                'element' => (new \Laminas\Form\Element\Hidden()),
                 'expect' => '',
             ],
         ];

@@ -4,7 +4,7 @@ namespace Common\Service\Qa\Custom\Bilateral;
 
 use Common\Service\Qa\Custom\Common\HtmlAdder;
 use Common\Service\Qa\RadioFactory;
-use Zend\Form\Fieldset;
+use Laminas\Form\Fieldset;
 
 class YesNoWithMarkupForNoPopulator
 {

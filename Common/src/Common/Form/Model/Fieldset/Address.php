@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Name("address")
@@ -49,8 +49,8 @@ class Address
      *     "short-label":"address_addressLine1"
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
-     * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":0,"max":90}})
+     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
+     * @Form\Validator({"name":"Laminas\Validator\StringLength","options":{"min":0,"max":90}})
      */
     public $addressLine1 = null;
 
@@ -63,7 +63,7 @@ class Address
      * @Form\Options({"label":"address_addressLine2","label_attributes":{"class":"visually-hidden"}})
      * @Form\Required(false)
      * @Form\Type("Text")
-     * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":0,"max":90}})
+     * @Form\Validator({"name":"Laminas\Validator\StringLength","options":{"min":0,"max":90}})
      */
     public $addressLine2 = null;
 
@@ -76,7 +76,7 @@ class Address
      * @Form\Options({"label":"address_addressLine3","label_attributes":{"class":"visually-hidden"}})
      * @Form\Required(false)
      * @Form\Type("Text")
-     * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":0,"max":100}})
+     * @Form\Validator({"name":"Laminas\Validator\StringLength","options":{"min":0,"max":100}})
      */
     public $addressLine3 = null;
 
@@ -85,7 +85,7 @@ class Address
      * @Form\Options({"label":"address_addressLine4","label_attributes":{"class":"visually-hidden"}})
      * @Form\Required(false)
      * @Form\Type("Text")
-     * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":0,"max":35}})
+     * @Form\Validator({"name":"Laminas\Validator\StringLength","options":{"min":0,"max":35}})
      */
     public $addressLine4 = null;
 
@@ -100,8 +100,8 @@ class Address
      *     "error-message" : "address_town-error",
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
-     * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":0,"max":30}})
+     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
+     * @Form\Validator({"name":"Laminas\Validator\StringLength","options":{"min":0,"max":30}})
      */
     public $town = null;
 
@@ -115,7 +115,7 @@ class Address
      * @Form\Type("Text")
      * @Form\Required(true)
      * @Form\Attributes({"id":"postcode", "required":false})
-     * @Form\Validator({"name":"Zend\Validator\NotEmpty","options":{"null"}})
+     * @Form\Validator({"name":"Laminas\Validator\NotEmpty","options":{"null"}})
      * @Form\Validator({"name":"Dvsa\Olcs\Transfer\Validators\Postcode"})
      * @Flags({"priority": 1000})
      */

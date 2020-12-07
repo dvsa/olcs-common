@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Common\Form\Elements\Types;
 
-use Zend\Form\Fieldset;
+use Laminas\Form\Fieldset;
 
 abstract class AbstractInputSearch extends Fieldset
 {

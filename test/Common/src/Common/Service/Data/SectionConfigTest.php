@@ -6,8 +6,8 @@ use Common\Service\Data\SectionConfig;
 use Common\Util\LvaRoute;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Mvc\Router\Http\Segment;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\Mvc\Router\Http\Segment;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Section Config Test

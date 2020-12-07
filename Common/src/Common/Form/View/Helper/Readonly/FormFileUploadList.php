@@ -4,8 +4,8 @@ namespace Common\Form\View\Helper\Readonly;
 
 use Common\Form\Elements\Types\FileUploadList;
 use Common\Form\Elements\Types\FileUploadListItem;
-use Zend\Form\FieldsetInterface;
-use Zend\Form\View\Helper\AbstractHelper;
+use Laminas\Form\FieldsetInterface;
+use Laminas\Form\View\Helper\AbstractHelper;
 
 /**
  * @author Dmitry Golubev <dmitrij.golubev@valtech.com>
@@ -54,7 +54,7 @@ class FormFileUploadList extends AbstractHelper
             }
 
             $elmHtml = [];
-            /** @var \Zend\Form\ElementInterface $elm */
+            /** @var \Laminas\Form\ElementInterface $elm */
             foreach ($fieldset->getIterator() as $elm) {
                 $elm->setOption('disable_html_escape', true);
 

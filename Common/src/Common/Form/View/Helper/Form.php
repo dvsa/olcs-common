@@ -2,14 +2,14 @@
 
 namespace Common\Form\View\Helper;
 
-use Zend\Form\FormInterface as ZendFormInterface;
-use Zend\Form\FieldsetInterface;
-use Zend\Form\Element\Hidden;
+use Laminas\Form\FormInterface as LaminasFormInterface;
+use Laminas\Form\FieldsetInterface;
+use Laminas\Form\Element\Hidden;
 
 /**
  * Form element view helper
  */
-class Form extends \Zend\Form\View\Helper\Form
+class Form extends \Laminas\Form\View\Helper\Form
 {
     /**
      * Render a form from the provided $form
@@ -17,12 +17,12 @@ class Form extends \Zend\Form\View\Helper\Form
      *   a. Add logging
      *   b. Ensure fieldsets come before elements
      *
-     * @param ZendFormInterface $form            Form
+     * @param LaminasFormInterface $form            Form
      * @param bool              $includeFormTags Is include form tags
      *
      * @return string
      */
-    public function render(ZendFormInterface $form, $includeFormTags = true)
+    public function render(LaminasFormInterface $form, $includeFormTags = true)
     {
         if (method_exists($form, 'prepare')) {
             $form->prepare();
@@ -31,7 +31,7 @@ class Form extends \Zend\Form\View\Helper\Form
         $fieldsets = $elements = array();
         $hiddenSubmitElement = '';
 
-        /** @var \Zend\View\Renderer\PhpRenderer $view */
+        /** @var \Laminas\View\Renderer\PhpRenderer $view */
         $view = $this->getView();
 
         if ($form->getAttribute('action') === null) {
@@ -48,7 +48,7 @@ class Form extends \Zend\Form\View\Helper\Form
             $view->plugin('formrow')
         );
 
-        /** @var \Zend\Form\ElementInterface|FieldsetInterface $element */
+        /** @var \Laminas\Form\ElementInterface|FieldsetInterface $element */
         foreach ($form as $element) {
             if ($element instanceof FieldsetInterface) {
                 $canKeepEmptyFieldset = $element->hasAttribute('keepEmptyFieldset')
@@ -103,10 +103,10 @@ class Form extends \Zend\Form\View\Helper\Form
      *
      * @return bool
      */
-    private function isAllChildsHidden(\Zend\Form\FieldsetInterface $fieldset)
+    private function isAllChildsHidden(\Laminas\Form\FieldsetInterface $fieldset)
     {
         //  iterate by elements
-        /** @var \Zend\Form\Element $element */
+        /** @var \Laminas\Form\Element $element */
         foreach ($fieldset->getElements() as $element) {
             if (!$element instanceof Hidden) {
                 return false;
@@ -114,7 +114,7 @@ class Form extends \Zend\Form\View\Helper\Form
         }
 
         //  iterate by child fieldsets
-        /** @var \Zend\Form\FieldsetInterface $child */
+        /** @var \Laminas\Form\FieldsetInterface $child */
         foreach ($fieldset->getFieldsets() as $child) {
             if ($this->isAllChildsHidden($child) === false) {
                 return false;

@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Continuation\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Name("licenceChecklistConfirmationYes")
@@ -18,7 +18,7 @@ class LicenceChecklistConfirmationYes
     /**
      * @Form\Attributes({"type":"submit","class":"action--primary large"})
      * @Form\Options({"label":"continuations.checklist.confirmation.yes-button"})
-     * @Form\Type("\Zend\Form\Element\Button")
+     * @Form\Type("\Laminas\Form\Element\Button")
      */
     public $submit = null;
 }

@@ -7,9 +7,9 @@
  */
 namespace Common\Controller;
 
-use Zend\Http\Response;
-use Zend\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
-use Zend\View\Model\ViewModel;
+use Laminas\Http\Response;
+use Laminas\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
+use Laminas\View\Model\ViewModel;
 
 /**
  * Error Controller

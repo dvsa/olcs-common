@@ -6,7 +6,7 @@ use Common\Exception\BailOutException;
 use Common\Exception\ResourceConflictException;
 use Common\Service\Cqrs\Command\CommandSender;
 use Common\Service\Helper\FlashMessengerHelperService;
-use Zend\Mvc\Controller\Plugin\AbstractPlugin;
+use Laminas\Mvc\Controller\Plugin\AbstractPlugin;
 use Dvsa\Olcs\Transfer\Command\CommandInterface;
 
 /**

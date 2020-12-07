@@ -9,8 +9,8 @@ namespace Common\FormService\Form\Lva\OperatingCentre;
 
 use Common\FormService\Form\AbstractFormService;
 use Common\Service\Helper\FormHelperService;
-use Zend\Form\Form;
-use Zend\Http\Request;
+use Laminas\Form\Form;
+use Laminas\Http\Request;
 
 /**
  * Common Operating Centre
@@ -25,7 +25,7 @@ class CommonOperatingCentre extends AbstractFormService
      * @param array   $params  Parameters for form
      * @param Request $request HTTP Request parameters
      *
-     * @return \Zend\Form\FormInterface
+     * @return \Laminas\Form\FormInterface
      */
     public function getForm(array $params, Request $request)
     {
@@ -67,7 +67,6 @@ class CommonOperatingCentre extends AbstractFormService
         }
 
         if ($params['wouldIncreaseRequireAdditionalAdvertisement']) {
-
             $form->get('data')->get('noOfVehiclesRequired')
                 ->setAttribute('data-current', $params['currentVehiclesRequired']);
 
@@ -108,7 +107,7 @@ class CommonOperatingCentre extends AbstractFormService
     /**
      * Disable and lock address fields
      *
-     * @param \Zend\Form\Form $form Form model
+     * @param \Laminas\Form\Form $form Form model
      *
      * @return void
      */

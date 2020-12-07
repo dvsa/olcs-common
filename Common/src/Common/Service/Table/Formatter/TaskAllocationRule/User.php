@@ -14,7 +14,7 @@ class User extends \Common\Service\Table\Formatter\Name
      *
      * @param array $data
      * @param array $column
-     * @param \Zend\ServiceManager\ServiceManager $sm
+     * @param \Laminas\ServiceManager\ServiceManager $sm
      *
      * @return string
      */

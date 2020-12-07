@@ -4,8 +4,8 @@ namespace CommonTest\Form\Model\Form\Lva;
 
 use Common\Form\Elements\Validators\SumContext;
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
-use Zend\I18n\Validator\IsFloat;
-use Zend\Validator\Between;
+use Laminas\I18n\Validator\IsFloat;
+use Laminas\Validator\Between;
 
 /**
  * Class TransportManagerDetailsTest

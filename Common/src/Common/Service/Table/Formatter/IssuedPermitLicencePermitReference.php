@@ -9,7 +9,7 @@ namespace Common\Service\Table\Formatter;
 
 use Common\Util\Escape;
 use Common\RefData;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\ServiceManager;
 
 /**
  * Issued permit licence permit reference formatter

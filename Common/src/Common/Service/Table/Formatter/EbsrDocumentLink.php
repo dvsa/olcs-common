@@ -3,7 +3,7 @@
 namespace Common\Service\Table\Formatter;
 
 use Common\RefData;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * EBSR document link
@@ -44,7 +44,7 @@ class EbsrDocumentLink implements FormatterInterface
          * Once the EBSR status data has been cleansed, this can be simplified and moved to the
          * Common\View\Helper\Status helper
          */
-        switch($data['ebsrSubmissionStatus']['id']) {
+        switch ($data['ebsrSubmissionStatus']['id']) {
             case RefData::EBSR_STATUS_PROCESSING:
             case RefData::EBSR_STATUS_VALIDATING:
             case RefData::EBSR_STATUS_SUBMITTED:
@@ -69,6 +69,6 @@ class EbsrDocumentLink implements FormatterInterface
         /** @var \Common\View\Helper\Status $statusHelper */
         $statusHelper = $sm->get('ViewHelperManager')->get('status');
 
-        return sprintf(self::LINK_PATTERN, $url, $data['document']['description'], $statusHelper->__invoke($status)); 
+        return sprintf(self::LINK_PATTERN, $url, $data['document']['description'], $statusHelper->__invoke($status));
     }
 }

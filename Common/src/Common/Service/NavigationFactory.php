@@ -2,9 +2,9 @@
 
 namespace Common\Service;
 
-use Zend\Navigation\Service\ConstructedNavigationFactory;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
+use Laminas\Navigation\Service\ConstructedNavigationFactory;
+use Laminas\ServiceManager\ServiceLocatorAwareInterface;
+use Laminas\ServiceManager\ServiceLocatorAwareTrait;
 
 /**
  * Class NavigationFactory
@@ -24,7 +24,7 @@ class NavigationFactory extends ConstructedNavigationFactory implements ServiceL
 
     /**
      * @param $nav
-     * @return \Zend\Navigation\Navigation
+     * @return \Laminas\Navigation\Navigation
      */
     public function getNavigation($nav)
     {

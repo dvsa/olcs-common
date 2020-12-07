@@ -5,12 +5,12 @@ namespace CommonTest\View\Helper;
 use Common\View\Helper\PageTitle;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\I18n\View\Helper\Translate;
-use Zend\Mvc\Router\Http\RouteMatch;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\View\Helper\Placeholder;
-use Zend\View\Helper\ViewModel;
-use Zend\View\HelperPluginManager;
+use Laminas\I18n\View\Helper\Translate;
+use Laminas\Mvc\Router\Http\RouteMatch;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\View\Helper\Placeholder;
+use Laminas\View\Helper\ViewModel;
+use Laminas\View\HelperPluginManager;
 
 /**
  * @covers Common\View\Helper\PageTitle

@@ -6,7 +6,7 @@ use Common\Form\Elements\Types\Html;
 use Common\Service\Qa\Custom\Common\HtmlAdder;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Fieldset;
+use Laminas\Form\Fieldset;
 
 /**
  * HtmlAdderTest

@@ -9,7 +9,7 @@
 namespace Common\View\Helper;
 
 use Common\Util\Escape;
-use Zend\View\Helper\AbstractHelper;
+use Laminas\View\Helper\AbstractHelper;
 use Common\RefData;
 
 /**

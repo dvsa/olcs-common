@@ -7,7 +7,7 @@
 namespace Common\Service\Table\Formatter;
 
 use Common\Util\Escape;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\ServiceManager;
 
 /**
  * Name Action And Status formatter

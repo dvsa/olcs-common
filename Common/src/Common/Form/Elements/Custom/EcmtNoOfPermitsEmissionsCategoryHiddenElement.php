@@ -2,9 +2,9 @@
 
 namespace Common\Form\Elements\Custom;
 
-use Zend\Form\Element\Hidden;
-use Zend\InputFilter\InputProviderInterface;
-use Zend\Validator\Identical;
+use Laminas\Form\Element\Hidden;
+use Laminas\InputFilter\InputProviderInterface;
+use Laminas\Validator\Identical;
 
 class EcmtNoOfPermitsEmissionsCategoryHiddenElement extends Hidden implements InputProviderInterface
 {

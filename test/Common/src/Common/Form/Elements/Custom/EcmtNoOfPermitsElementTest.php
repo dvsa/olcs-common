@@ -4,10 +4,10 @@ namespace CommonTest\Form\Elements\Custom;
 
 use Common\Form\Elements\Custom\EcmtNoOfPermitsElement;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Filter\StringTrim;
-use Zend\Validator\Digits;
-use Zend\Validator\NotEmpty;
-use Zend\Validator\StringLength;
+use Laminas\Filter\StringTrim;
+use Laminas\Validator\Digits;
+use Laminas\Validator\NotEmpty;
+use Laminas\Validator\StringLength;
 
 /**
  * EcmtNoOfPermitsElementTest

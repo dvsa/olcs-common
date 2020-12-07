@@ -7,9 +7,9 @@ use CommonTest\Bootstrap;
 use IntlDateFormatter;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\I18n\Translator\TranslatorInterface;
-use Zend\I18n\View\Helper\DateFormat;
-use Zend\View\HelperPluginManager;
+use Laminas\I18n\Translator\TranslatorInterface;
+use Laminas\I18n\View\Helper\DateFormat;
+use Laminas\View\HelperPluginManager;
 
 /**
  * Validity period formatter test

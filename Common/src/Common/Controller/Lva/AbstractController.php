@@ -8,10 +8,10 @@ use Common\RefData;
 use Common\Util;
 use Dvsa\Olcs\Transfer\Query\Application\Application;
 use Dvsa\Olcs\Transfer\Query\Licence\Licence;
-use Zend\Form\Form;
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\Mvc\Exception;
-use Zend\Mvc\MvcEvent;
+use Laminas\Form\Form;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\Exception;
+use Laminas\Mvc\MvcEvent;
 use Common\Service\Table\TableBuilder;
 
 /**
@@ -22,11 +22,11 @@ use Common\Service\Table\TableBuilder;
  * @method \Common\Service\Cqrs\Response handleQuery(\Dvsa\Olcs\Transfer\Query\QueryInterface $query)
  * @method \Common\Service\Cqrs\Response handleCommand(\Dvsa\Olcs\Transfer\Command\CommandInterface $query)
  * @method \Common\Service\Cqrs\Response handleCancelRedirect($lvaId)
- * @method \Zend\Http\Response handlePostSave($prefix = null)
+ * @method \Laminas\Http\Response handlePostSave($prefix = null)
  * @method \Common\Controller\Plugin\Redirect redirect()
  * @method boolean isGranted(string $permission)
  * @method \Common\Controller\Plugin\CurrentUser currentUser()
- * @method \Zend\Http\Response completeSection($section, $prg = [])
+ * @method \Laminas\Http\Response completeSection($section, $prg = [])
  * @method TableBuilder table()
  *
  * @see   \Olcs\Controller\Lva\Traits\ApplicationControllerTrait::render
@@ -87,7 +87,7 @@ abstract class AbstractController extends AbstractActionController
      *
      * @param MvcEvent $e Event
      *
-     * @return null|\Zend\Http\Response
+     * @return null|\Laminas\Http\Response
      */
     public function onDispatch(MvcEvent $e)
     {
@@ -130,7 +130,7 @@ abstract class AbstractController extends AbstractActionController
     /**
      * Hook into the dispatch before the controller action is executed
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     protected function preDispatch()
     {
@@ -146,7 +146,7 @@ abstract class AbstractController extends AbstractActionController
      */
     protected function isButtonPressed($button, $data = [])
     {
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -216,7 +216,7 @@ abstract class AbstractController extends AbstractActionController
      *
      * @param int $lvaId LVA identifier
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     protected function goToOverviewAfterSave($lvaId = null)
     {
@@ -228,7 +228,7 @@ abstract class AbstractController extends AbstractActionController
      *
      * @param int $lvaId LVA identifier
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     protected function goToOverview($lvaId = null)
     {
@@ -244,7 +244,7 @@ abstract class AbstractController extends AbstractActionController
      *
      * @param string $currentSection Section
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     protected function goToNextSection($currentSection)
     {
@@ -269,7 +269,7 @@ abstract class AbstractController extends AbstractActionController
      *
      * @param int $lvaId LVA Identifier
      *
-     * @return \Common\Service\Cqrs\Response|null|\Zend\Http\Response
+     * @return \Common\Service\Cqrs\Response|null|\Laminas\Http\Response
      */
     protected function checkForRedirect($lvaId)
     {
@@ -304,7 +304,7 @@ abstract class AbstractController extends AbstractActionController
     /**
      * Reload the current page
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     protected function reload()
     {
@@ -329,7 +329,7 @@ abstract class AbstractController extends AbstractActionController
     /**
      * Get Identifier
      *
-     * @return mixed|\Zend\Mvc\Controller\Plugin\Params
+     * @return mixed|\Laminas\Mvc\Controller\Plugin\Params
      */
     protected function getIdentifier()
     {

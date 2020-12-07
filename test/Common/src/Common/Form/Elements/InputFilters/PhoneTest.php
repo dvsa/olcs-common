@@ -34,9 +34,9 @@ class PhoneTest extends MockeryTestCase
         static::assertFalse($actual['required']);
         static::assertEquals(
             [
-                \Zend\Validator\NotEmpty::class,
-                \Zend\Validator\Regex::class,
-                \Zend\Validator\StringLength::class,
+                \Laminas\Validator\NotEmpty::class,
+                \Laminas\Validator\Regex::class,
+                \Laminas\Validator\StringLength::class,
             ],
             array_map(
                 function ($item) {

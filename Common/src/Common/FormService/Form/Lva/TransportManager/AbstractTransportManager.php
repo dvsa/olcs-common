@@ -28,8 +28,8 @@ abstract class AbstractTransportManager extends AbstractLvaFormService
     /**
      * Make form alterations
      *
-     * @param \Zend\Form\Form $form
-     * @return \Zend\Form\Form
+     * @param \Laminas\Form\Form $form
+     * @return \Laminas\Form\Form
      */
     protected function alterForm($form)
     {

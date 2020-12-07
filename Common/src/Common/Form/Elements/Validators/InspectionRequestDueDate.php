@@ -7,7 +7,7 @@
  */
 namespace Common\Form\Elements\Validators;
 
-use Zend\Validator\AbstractValidator as AbstractValidator;
+use Laminas\Validator\AbstractValidator as AbstractValidator;
 
 /**
  * Inspection Request Due Date Validator

@@ -7,7 +7,7 @@ use Common\Form\Elements\Custom\EcmtNoOfPermitsSingleElement;
 use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Qa\Custom\Common\HtmlAdder;
 use Common\Service\Qa\FieldsetPopulatorInterface;
-use Zend\Form\Fieldset;
+use Laminas\Form\Fieldset;
 
 class NoOfPermitsSingleFieldsetPopulator implements FieldsetPopulatorInterface
 {

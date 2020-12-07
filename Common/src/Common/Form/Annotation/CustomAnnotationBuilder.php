@@ -7,10 +7,10 @@
  */
 namespace Common\Form\Annotation;
 
-use Zend\Form\Annotation\AnnotationBuilder;
+use Laminas\Form\Annotation\AnnotationBuilder;
 use ArrayObject;
-use Zend\Code\Annotation\AnnotationCollection;
-use Zend\EventManager\Event;
+use Laminas\Code\Annotation\AnnotationCollection;
+use Laminas\EventManager\Event;
 
 /**
  * OLCS custom form annotation builder
@@ -23,7 +23,7 @@ class CustomAnnotationBuilder extends AnnotationBuilder
      * Configure an element from annotations
      *
      * @param  AnnotationCollection $annotations
-     * @param  \Zend\Code\Reflection\PropertyReflection $reflection
+     * @param  \Laminas\Code\Reflection\PropertyReflection $reflection
      * @param  ArrayObject $formSpec
      * @param  ArrayObject $filterSpec
      * @return void

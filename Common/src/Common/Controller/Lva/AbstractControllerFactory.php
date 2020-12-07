@@ -2,9 +2,9 @@
 
 namespace Common\Controller\Lva;
 
-use Zend\ServiceManager\AbstractFactoryInterface;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\AbstractFactoryInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Abstract Controller Factory
@@ -16,7 +16,7 @@ class AbstractControllerFactory implements AbstractFactoryInterface
     /**
      * Determine if we can create a service with name
      *
-     * @param \Zend\Mvc\Controller\ControllerManager $serviceLocator Controller service manager
+     * @param \Laminas\Mvc\Controller\ControllerManager $serviceLocator Controller service manager
      * @param string                                 $name           Name
      * @param string                                 $requestedName  Class Name
      *
@@ -32,15 +32,15 @@ class AbstractControllerFactory implements AbstractFactoryInterface
     /**
      * Create service with name
      *
-     * @param \Zend\Mvc\Controller\ControllerManager $serviceLocator Controller service manager
+     * @param \Laminas\Mvc\Controller\ControllerManager $serviceLocator Controller service manager
      * @param string                                 $name           Name
      * @param string                                 $requestedName  Class Name
      *
-     * @return \Zend\Mvc\Controller\AbstractActionController
+     * @return \Laminas\Mvc\Controller\AbstractActionController
      */
     public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
-        /** @var \Zend\ServiceManager\ServiceLocatorInterface $sm */
+        /** @var \Laminas\ServiceManager\ServiceLocatorInterface $sm */
         $sm = $serviceLocator->getServiceLocator();
 
         $config = $sm->get('Config');

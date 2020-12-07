@@ -2,7 +2,7 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\ServiceManager;
 use Common\Service\Table\Formatter\Date as DateFormatter;
 use Common\Util\Escape;
 

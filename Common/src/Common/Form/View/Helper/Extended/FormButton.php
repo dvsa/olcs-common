@@ -12,7 +12,7 @@ namespace Common\Form\View\Helper\Extended;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormButton extends \Zend\Form\View\Helper\FormButton
+class FormButton extends \Laminas\Form\View\Helper\FormButton
 {
     use PrepareAttributesTrait;
 }

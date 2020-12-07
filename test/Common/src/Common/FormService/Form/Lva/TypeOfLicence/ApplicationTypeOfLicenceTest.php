@@ -7,7 +7,7 @@ use Common\FormService\FormServiceManager;
 use Common\Service\Helper\FormHelperService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Form;
+use Laminas\Form\Form;
 
 class ApplicationTypeOfLicenceTest extends MockeryTestCase
 {
@@ -61,7 +61,7 @@ class ApplicationTypeOfLicenceTest extends MockeryTestCase
      */
     public function testSetAndLockOperatorLocation($message, $location, $locationValue)
     {
-        $mockOperatorLocation = m::mock(\Zend\Form\Element::class)
+        $mockOperatorLocation = m::mock(\Laminas\Form\Element::class)
             ->shouldReceive('setValue')
             ->with($locationValue)
             ->once()
@@ -105,7 +105,7 @@ class ApplicationTypeOfLicenceTest extends MockeryTestCase
 
     public function testMaybeAlterFormForNi()
     {
-        $mockOperatorLocation = m::mock(\Zend\Form\Element::class)
+        $mockOperatorLocation = m::mock(\Laminas\Form\Element::class)
             ->shouldReceive('getValue')
             ->andReturn('Y')
             ->once()

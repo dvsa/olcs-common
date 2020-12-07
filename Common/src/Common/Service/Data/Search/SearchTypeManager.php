@@ -3,8 +3,8 @@
 namespace Common\Service\Data\Search;
 
 use Common\Data\Object\Search\SearchAbstract;
-use Zend\ServiceManager\AbstractPluginManager;
-use Zend\ServiceManager\Exception;
+use Laminas\ServiceManager\AbstractPluginManager;
+use Laminas\ServiceManager\Exception;
 
 /**
  * Plugin manager for search data objects

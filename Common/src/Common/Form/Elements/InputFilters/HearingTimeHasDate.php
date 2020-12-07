@@ -7,11 +7,11 @@
 
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\Form\Element\Time as ZendTimeSelect;
-use Zend\Validator as ZendValidator;
-use Zend\Validator\Date as DateValidator;
+use Laminas\Form\Element\Time as ZendTimeSelect;
+use Laminas\Validator as LaminasValidator;
+use Laminas\Validator\Date as DateValidator;
 use Common\Form\Elements\Validators\Time as TimeValidator;
-use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
 
 /**
  * Checks if the hearing time is entered then the date is also entered

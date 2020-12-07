@@ -9,8 +9,8 @@ use Common\Service\Qa\Custom\Ecmt\RestrictedCountriesMultiCheckbox;
 use Common\Service\Qa\Custom\Ecmt\RestrictedCountriesMultiCheckboxFactory;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Fieldset;
-use Zend\Form\Form;
+use Laminas\Form\Fieldset;
+use Laminas\Form\Form;
 
 /**
  * RestrictedCountriesFieldsetPopulatorTest

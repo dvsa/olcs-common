@@ -2,11 +2,11 @@
 
 namespace Common\Form\Model\Form\Lva\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Name("registered-address")
- * @Form\Type("\Zend\Form\Fieldset")
+ * @Form\Type("\Laminas\Form\Fieldset")
  * @Form\Options({"label":"Registered address"})
  * @Form\Attributes({
  *      "class": "address",
@@ -30,7 +30,7 @@ class RegisteredAddress
 
     /**
      * @Form\Attributes({
-     *   "class" : "long", 
+     *   "class" : "long",
      *   "id" : "addressLine1",
      *   "data-container-class" : "compound"
      * })
@@ -39,11 +39,11 @@ class RegisteredAddress
      *     "label_attributes": {
      *         "aria-label": "Enter address manually. Business address line one"
      *     },
-     *     "error-message" : "registeredAddress_addressLine1-error", 
+     *     "error-message" : "registeredAddress_addressLine1-error",
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
-     * @Form\Validator({"name":"Zend\Validator\StringLength", "options":{
+     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
+     * @Form\Validator({"name":"Laminas\Validator\StringLength", "options":{
      *     "min": 0, "max": 200
      * }})
      */
@@ -51,7 +51,7 @@ class RegisteredAddress
 
     /**
      * @Form\Attributes({
-     *   "class" : "long", 
+     *   "class" : "long",
      *   "id" : "",
      *   "data-container-class" : "compound"
      * })
@@ -61,7 +61,7 @@ class RegisteredAddress
      * })
      * @Form\Required(false)
      * @Form\Type("Text")
-     * @Form\Validator({"name":"Zend\Validator\StringLength", "options":{
+     * @Form\Validator({"name":"Laminas\Validator\StringLength", "options":{
      *     "min": 0, "max": 200
      * }})
      */
@@ -69,7 +69,7 @@ class RegisteredAddress
 
     /**
      * @Form\Attributes({
-     *   "class" : "long", 
+     *   "class" : "long",
      *   "id" : "",
      *   "data-container-class" : "compound"
      * })
@@ -79,7 +79,7 @@ class RegisteredAddress
      * })
      * @Form\Required(false)
      * @Form\Type("Text")
-     * @Form\Validator({"name":"Zend\Validator\StringLength", "options":{
+     * @Form\Validator({"name":"Laminas\Validator\StringLength", "options":{
      *     "min": 0, "max": 200
      * }})
      */
@@ -87,7 +87,7 @@ class RegisteredAddress
 
     /**
      * @Form\Attributes({
-     *   "class" : "long", 
+     *   "class" : "long",
      *   "id" : "",
      *   "data-container-class" : "compound"
      * })
@@ -97,7 +97,7 @@ class RegisteredAddress
      * })
      * @Form\Required(false)
      * @Form\Type("Text")
-     * @Form\Validator({"name":"Zend\Validator\StringLength", "options":{
+     * @Form\Validator({"name":"Laminas\Validator\StringLength", "options":{
      *     "min": 0, "max": 200
      * }})
      */
@@ -105,7 +105,7 @@ class RegisteredAddress
 
     /**
      * @Form\Attributes({
-     *   "class" : "long", 
+     *   "class" : "long",
      *   "id" : ""
      * })
      * @Form\Options({
@@ -117,7 +117,7 @@ class RegisteredAddress
      * })
      * @Form\Required(false)
      * @Form\Type("Text")
-     * @Form\Validator({"name":"Zend\Validator\StringLength", "options":{
+     * @Form\Validator({"name":"Laminas\Validator\StringLength", "options":{
      *     "min": 0, "max": 200
      * }})
      */

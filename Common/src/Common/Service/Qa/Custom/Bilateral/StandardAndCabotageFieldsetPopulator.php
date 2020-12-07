@@ -3,8 +3,8 @@
 namespace Common\Service\Qa\Custom\Bilateral;
 
 use Common\Service\Qa\FieldsetPopulatorInterface;
-use Zend\Form\Element\Hidden;
-use Zend\Form\Fieldset;
+use Laminas\Form\Element\Hidden;
+use Laminas\Form\Fieldset;
 
 class StandardAndCabotageFieldsetPopulator implements FieldsetPopulatorInterface
 {

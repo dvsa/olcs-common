@@ -8,7 +8,7 @@
 namespace Common\FormService\Form\Lva\BusinessType;
 
 use Common\FormService\Form\Lva\AbstractLvaFormService;
-use Zend\Form\Form;
+use Laminas\Form\Form;
 
 /**
  * Abstract Business Type Form

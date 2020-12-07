@@ -3,7 +3,7 @@
 namespace Common\Form;
 
 use Common\Form\Elements\Custom\NoOfPermits as NoOfPermitsElement;
-use Zend\Form\Fieldset;
+use Laminas\Form\Fieldset;
 
 /**
  * Class NoOfPermitsForm

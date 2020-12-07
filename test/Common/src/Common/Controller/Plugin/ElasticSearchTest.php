@@ -7,12 +7,12 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Controller\Plugin\ElasticSearch;
 use Olcs\TestHelpers\ControllerPluginManagerHelper;
 use CommonTest\Bootstrap;
-use Zend\Mvc\MvcEvent;
-use Zend\Mvc\Router\Http\Segment;
-use Zend\Mvc\Router\RouteMatch;
-use Zend\Mvc\Router\SimpleRouteStack;
-use Zend\View\Helper\Placeholder;
-use Zend\View\Model\ViewModel;
+use Laminas\Mvc\MvcEvent;
+use Laminas\Mvc\Router\Http\Segment;
+use Laminas\Mvc\Router\RouteMatch;
+use Laminas\Mvc\Router\SimpleRouteStack;
+use Laminas\View\Helper\Placeholder;
+use Laminas\View\Model\ViewModel;
 
 /**
  * Class ElasticSearchPluginTest
@@ -35,7 +35,7 @@ class ElasticSearchTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->request = m::mock('\Zend\Http\Request');
+        $this->request = m::mock('\Laminas\Http\Request');
 
         $this->routeMatch = new RouteMatch(['controller' => 'index', 'action' => 'index', 'index' => 'SEARCHINDEX']);
         $this->routeMatch->setMatchedRouteName('testindex');
@@ -53,7 +53,7 @@ class ElasticSearchTest extends MockeryTestCase
         $this->event->setRequest($this->request);
         $this->sm = Bootstrap::getServiceManager();
 
-        $this->pm = m::mock('\Zend\Mvc\Controller\PluginManager[setInvokableClass]')->makePartial();
+        $this->pm = m::mock('\Laminas\Mvc\Controller\PluginManager[setInvokableClass]')->makePartial();
         $this->pm->setInvokableClass('ElasticSearch', 'Common\Controller\Plugin\ElasticSearch');
 
         $this->sut = new ControllerStub();
@@ -85,7 +85,7 @@ class ElasticSearchTest extends MockeryTestCase
 
     public function testProcessSearchData()
     {
-        $mockForm = m::mock('Zend\Form\Form');
+        $mockForm = m::mock('Laminas\Form\Form');
         $mockForm->shouldReceive('setAttribute')->with(
             'action',
             m::type('string')
@@ -95,13 +95,13 @@ class ElasticSearchTest extends MockeryTestCase
         $mockForm->shouldReceive('isValid')->andReturn(true);
         $mockForm->shouldReceive('getData')->andReturn(['index' => 'SEARCHINDEX']);
 
-        $mockContainer = m::mock('Zend\View\Helper\Placeholder\Container');
+        $mockContainer = m::mock('Laminas\View\Helper\Placeholder\Container');
         $mockContainer->shouldReceive('getValue')->andReturn($mockForm);
 
-        $mockPlaceholder = m::mock('Zend\View\Helper\Placeholder');
+        $mockPlaceholder = m::mock('Laminas\View\Helper\Placeholder');
         $mockPlaceholder->shouldReceive('getContainer')->with('headerSearch')->andReturn($mockContainer);
 
-        $mockViewHelperManager = m::mock('Zend\Mvc\Service\ViewHelperManagerFactory');
+        $mockViewHelperManager = m::mock('Laminas\Mvc\Service\ViewHelperManagerFactory');
         $mockViewHelperManager->shouldReceive('get')->with('placeholder')->andReturn($mockPlaceholder);
 
         $this->sm->setService('ViewHelperManager', $mockViewHelperManager);
@@ -113,20 +113,20 @@ class ElasticSearchTest extends MockeryTestCase
 
     public function testGetSearchForm()
     {
-        $mockForm = m::mock('Zend\Form\Form');
+        $mockForm = m::mock('Laminas\Form\Form');
         $mockForm->shouldReceive('setAttribute')->with(
             'action',
             m::type('string')
         );
         $mockForm->shouldReceive('setData');
 
-        $mockContainer = m::mock('Zend\View\Helper\Placeholder\Container');
+        $mockContainer = m::mock('Laminas\View\Helper\Placeholder\Container');
         $mockContainer->shouldReceive('getValue')->andReturn($mockForm);
 
-        $mockPlaceholder = m::mock('Zend\View\Helper\Placeholder');
+        $mockPlaceholder = m::mock('Laminas\View\Helper\Placeholder');
         $mockPlaceholder->shouldReceive('getContainer')->with('headerSearch')->andReturn($mockContainer);
 
-        $mockViewHelperManager = m::mock('Zend\Mvc\Service\ViewHelperManagerFactory');
+        $mockViewHelperManager = m::mock('Laminas\Mvc\Service\ViewHelperManagerFactory');
         $mockViewHelperManager->shouldReceive('get')->with('placeholder')->andReturn($mockPlaceholder);
 
         $this->sm->setService('ViewHelperManager', $mockViewHelperManager);
@@ -140,20 +140,20 @@ class ElasticSearchTest extends MockeryTestCase
 
     public function testGetFiltersForm()
     {
-        $mockForm = m::mock('Zend\Form\Form');
+        $mockForm = m::mock('Laminas\Form\Form');
         $mockForm->shouldReceive('setAttribute')->with(
             'action',
             m::type('string')
         );
         $mockForm->shouldReceive('setData');
 
-        $mockContainer = m::mock('Zend\View\Helper\Placeholder\Container');
+        $mockContainer = m::mock('Laminas\View\Helper\Placeholder\Container');
         $mockContainer->shouldReceive('getValue')->andReturn($mockForm);
 
-        $mockPlaceholder = m::mock('Zend\View\Helper\Placeholder');
+        $mockPlaceholder = m::mock('Laminas\View\Helper\Placeholder');
         $mockPlaceholder->shouldReceive('getContainer')->with('searchFilter')->andReturn($mockContainer);
 
-        $mockViewHelperManager = m::mock('Zend\Mvc\Service\ViewHelperManagerFactory');
+        $mockViewHelperManager = m::mock('Laminas\Mvc\Service\ViewHelperManagerFactory');
         $mockViewHelperManager->shouldReceive('get')->with('placeholder')->andReturn($mockPlaceholder);
 
         $this->sm->setService('ViewHelperManager', $mockViewHelperManager);
@@ -167,7 +167,7 @@ class ElasticSearchTest extends MockeryTestCase
 
     public function testSearchAction()
     {
-        $mockForm = m::mock('Zend\Form\Form');
+        $mockForm = m::mock('Laminas\Form\Form');
         $mockForm->shouldReceive('getObject')->andReturn($this->getMockSearchObjectArray());
         $mockForm->shouldReceive('setAttribute')->with(
             'action',
@@ -198,13 +198,13 @@ class ElasticSearchTest extends MockeryTestCase
         $mockSearchService->shouldReceive('setQuery')->with(m::type('object'))->andReturn($mockQuery);
         $mockSearchService->shouldReceive('fetchResultsTable')->andReturn($results);
 
-        $mockContainer = m::mock('Zend\View\Helper\Placeholder\Container');
+        $mockContainer = m::mock('Laminas\View\Helper\Placeholder\Container');
         $mockContainer->shouldReceive('getValue')->andReturn($mockForm);
 
-        $mockPlaceholder = m::mock('Zend\View\Helper\Placeholder');
+        $mockPlaceholder = m::mock('Laminas\View\Helper\Placeholder');
         $mockPlaceholder->shouldReceive('getContainer')->with(m::type('string'))->andReturn($mockContainer);
 
-        $mockViewHelperManager = m::mock('Zend\Mvc\Service\ViewHelperManagerFactory');
+        $mockViewHelperManager = m::mock('Laminas\Mvc\Service\ViewHelperManagerFactory');
         $mockViewHelperManager->shouldReceive('get')->with('placeholder')->andReturn($mockPlaceholder);
 
         $this->sm->setService('ViewHelperManager', $mockViewHelperManager);
@@ -248,7 +248,7 @@ class ElasticSearchTest extends MockeryTestCase
         $mockSearchTypeService = m::mock('Olcs\Service\Data\Search\SearchType');
         $mockSearchService = m::mock('Common\Service\Data\Search\Search');
 
-        $mi = m::mock('Zend\Navigation\Navigation');
+        $mi = m::mock('Laminas\Navigation\Navigation');
         $mi->shouldReceive('findOneBy')->with('id', 'search-da')->andReturnSelf();
         $mi->shouldReceive('setActive')->with(true)->andReturnNull();
 
@@ -258,12 +258,12 @@ class ElasticSearchTest extends MockeryTestCase
             ['search' => 'foo']
         )->andReturn($mi);
 
-        $mockPlaceholder = m::mock('Zend\View\Helper\Placeholder');
+        $mockPlaceholder = m::mock('Laminas\View\Helper\Placeholder');
         $mockPlaceholder->shouldReceive('getContainer')
             ->with('horizontalNavigationContainer')
             ->andReturn(m::mock()->shouldReceive('set')->once()->with($mi)->getMock());
 
-        $mockViewHelperManager = m::mock('Zend\Mvc\Service\ViewHelperManagerFactory');
+        $mockViewHelperManager = m::mock('Laminas\Mvc\Service\ViewHelperManagerFactory');
         $mockViewHelperManager->shouldReceive('get')->with('placeholder')->andReturn($mockPlaceholder);
 
         $this->sm->setService('ViewHelperManager', $mockViewHelperManager);
@@ -287,16 +287,16 @@ class ElasticSearchTest extends MockeryTestCase
 
     public function testGenerateResults()
     {
-        $mockForm = m::mock('Zend\Form\Form');
+        $mockForm = m::mock('Laminas\Form\Form');
         $mockForm->shouldReceive('getObject')->andReturn($this->getMockSearchObjectArray());
 
-        $mockContainer = m::mock('Zend\View\Helper\Placeholder\Container');
+        $mockContainer = m::mock('Laminas\View\Helper\Placeholder\Container');
         $mockContainer->shouldReceive('getValue')->andReturn($mockForm);
 
-        $mockPlaceholder = m::mock('Zend\View\Helper\Placeholder');
+        $mockPlaceholder = m::mock('Laminas\View\Helper\Placeholder');
         $mockPlaceholder->shouldReceive('getContainer')->with('headerSearch')->andReturn($mockContainer);
 
-        $mockViewHelperManager = m::mock('Zend\Mvc\Service\ViewHelperManagerFactory');
+        $mockViewHelperManager = m::mock('Laminas\Mvc\Service\ViewHelperManagerFactory');
         $mockViewHelperManager->shouldReceive('get')->with('placeholder')->andReturn($mockPlaceholder);
 
         $this->sm->setService('ViewHelperManager', $mockViewHelperManager);

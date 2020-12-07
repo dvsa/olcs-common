@@ -24,10 +24,10 @@ class ApplicationLvaAdapterTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->sm = m::mock('\Zend\ServiceManager\ServiceManager')->makePartial();
+        $this->sm = m::mock('\Laminas\ServiceManager\ServiceManager')->makePartial();
         $this->sm->setAllowOverride(true);
 
-        $this->controller = m::mock('\Zend\Mvc\Controller\AbstractController');
+        $this->controller = m::mock('\Laminas\Mvc\Controller\AbstractController');
 
         $this->sut = new ApplicationLvaAdapter();
         $this->sut->setServiceLocator($this->sm);
@@ -38,7 +38,7 @@ class ApplicationLvaAdapterTest extends MockeryTestCase
     {
         // This method should do nothing
         // So we don't really need expectations or assertions
-        $mockForm = m::mock('\Zend\Form\Form');
+        $mockForm = m::mock('\Laminas\Form\Form');
         $this->assertNull($this->sut->alterForm($mockForm));
     }
 

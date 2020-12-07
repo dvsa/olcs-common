@@ -4,7 +4,7 @@ namespace CommonTest\Form\Elements\Types;
 
 use Common\Form\Elements\Types\PostcodeSearch;
 use DMS\PHPUnitExtensions\ArraySubset\Assert;
-use Zend\Form\Element\Text;
+use Laminas\Form\Element\Text;
 
 /**
  * PostcodeTest

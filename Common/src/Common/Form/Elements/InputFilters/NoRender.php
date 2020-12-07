@@ -8,7 +8,7 @@
 
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\Form\Element\Hidden as ZendElement;
+use Laminas\Form\Element\Hidden as ZendElement;
 
 /**
  * NoRender

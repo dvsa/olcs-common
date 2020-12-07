@@ -17,11 +17,11 @@ class FormAnnotationBuilderFactoryTest extends MockeryTestCase
      */
     public function testCreateService()
     {
-        $mockFormFactory = m::mock('Zend\Form\FormElementManager');
-        $mockValidatorManager = m::mock('Zend\Validator\ValidatorPluginManager');
-        $mockFilterManager = m::mock('Zend\Filter\FilterPluginManager');
+        $mockFormFactory = m::mock('Laminas\Form\FormElementManager');
+        $mockValidatorManager = m::mock('Laminas\Validator\ValidatorPluginManager');
+        $mockFilterManager = m::mock('Laminas\Filter\FilterPluginManager');
 
-        $mockServiceLocator = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
+        $mockServiceLocator = m::mock('Laminas\ServiceManager\ServiceLocatorInterface');
         $mockServiceLocator->shouldReceive('get')->with('FormElementManager')->andReturn($mockFormFactory);
         $mockServiceLocator->shouldReceive('get')->with('ValidatorManager')->andReturn($mockValidatorManager);
         $mockServiceLocator->shouldReceive('get')->with('FilterManager')->andReturn($mockFilterManager);

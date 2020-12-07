@@ -7,7 +7,7 @@ use Common\Service\Qa\Custom\Common\DateSelectMustBeBefore;
 use Common\Service\Qa\Custom\Common\HtmlAdder;
 use Common\Service\Qa\Custom\Common\FileUploadFieldsetGenerator;
 use Common\Service\Qa\FieldsetPopulatorInterface;
-use Zend\Form\Fieldset;
+use Laminas\Form\Fieldset;
 
 class MotExpiryDateFieldsetPopulator implements FieldsetPopulatorInterface
 {

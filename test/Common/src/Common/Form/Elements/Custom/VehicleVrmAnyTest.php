@@ -22,11 +22,11 @@ class VehicleVrmAnyTest extends MockeryTestCase
 
         static::assertEquals('unit_Name', $actual['name']);
         static::assertTrue($actual['required']);
-        static::assertInstanceOf(\Zend\Filter\StringTrim::class, current($actual['filters']));
+        static::assertInstanceOf(\Laminas\Filter\StringTrim::class, current($actual['filters']));
 
         static::assertEquals(
             [
-                \Zend\Validator\StringLength::class,
+                \Laminas\Validator\StringLength::class,
             ],
             array_map(
                 function ($item) {

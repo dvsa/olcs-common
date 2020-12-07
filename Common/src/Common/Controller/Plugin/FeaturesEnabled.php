@@ -2,9 +2,9 @@
 
 namespace Common\Controller\Plugin;
 
-use Zend\Mvc\Controller\Plugin\AbstractPlugin;
+use Laminas\Mvc\Controller\Plugin\AbstractPlugin;
 use Common\Service\Cqrs\Query\QuerySender;
-use Zend\Mvc\MvcEvent;
+use Laminas\Mvc\MvcEvent;
 
 /**
  * Class FeaturesEnabled

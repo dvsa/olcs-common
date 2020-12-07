@@ -3,13 +3,13 @@
 namespace Common\Service\Api;
 
 use Common\Util\RestClient;
-use Zend\Filter\Word\CamelCaseToDash;
-use Zend\Http\Header\Cookie;
-use Zend\Http\Request;
-use Zend\ServiceManager\AbstractFactoryInterface;
-use Zend\ServiceManager\Exception\InvalidServiceNameException;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Uri\Http;
+use Laminas\Filter\Word\CamelCaseToDash;
+use Laminas\Http\Header\Cookie;
+use Laminas\Http\Request;
+use Laminas\ServiceManager\AbstractFactoryInterface;
+use Laminas\ServiceManager\Exception\InvalidServiceNameException;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\Uri\Http;
 
 /**
  * Class AbstractFactory
@@ -36,7 +36,7 @@ class AbstractFactory implements AbstractFactoryInterface
      * @param ServiceLocatorInterface $serviceLocator
      * @param $name
      * @param $requestedName
-     * @throws \Zend\ServiceManager\Exception\InvalidServiceNameException
+     * @throws \Laminas\ServiceManager\Exception\InvalidServiceNameException
      * @return mixed
      */
     public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
@@ -55,7 +55,7 @@ class AbstractFactory implements AbstractFactoryInterface
             throw new InvalidServiceNameException('No endpoint defined for: ' . $endpoint);
         }
 
-        /** @var \Zend\Mvc\I18n\Translator $translator */
+        /** @var \Laminas\Mvc\I18n\Translator $translator */
         $translator = $serviceLocator->getServiceLocator()->get('translator');
 
         $filter = new CamelCaseToDash();

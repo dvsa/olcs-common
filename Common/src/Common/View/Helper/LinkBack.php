@@ -2,9 +2,9 @@
 
 namespace Common\View\Helper;
 
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\View\Helper\AbstractHelper;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\View\Helper\AbstractHelper;
 
 /**
  * Create a link '< Back'
@@ -13,13 +13,13 @@ use Zend\View\Helper\AbstractHelper;
  */
 class LinkBack extends AbstractHelper implements FactoryInterface
 {
-    /** @var  \Zend\Http\PhpEnvironment\Request */
+    /** @var  \Laminas\Http\PhpEnvironment\Request */
     private $request;
 
     /**
      * Factory
      *
-     * @param \Zend\View\HelperPluginManager $sl Service Manager
+     * @param \Laminas\View\HelperPluginManager $sl Service Manager
      *
      * @return $this;
      */
@@ -40,7 +40,7 @@ class LinkBack extends AbstractHelper implements FactoryInterface
     public function __invoke(array $params = null)
     {
         if (empty($params['url'])) {
-            /** @var \Zend\Http\Header\Referer $header */
+            /** @var \Laminas\Http\Header\Referer $header */
             $header = $this->request->getHeader('referer');
 
             if ($header === false) {

@@ -77,7 +77,7 @@ class TranslationHelperService extends AbstractHelperService
     /**
      * Get translator
      *
-     * @return \Zend\I18n\Translator\Translator
+     * @return \Laminas\I18n\Translator\Translator
      */
     public function getTranslator()
     {

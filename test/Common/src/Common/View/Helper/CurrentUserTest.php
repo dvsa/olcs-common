@@ -12,7 +12,7 @@ use Common\Rbac\User;
 use \Common\View\Helper\CurrentUser;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
-use Zend\View\Renderer\RendererInterface;
+use Laminas\View\Renderer\RendererInterface;
 use ZfcRbac\Service\AuthorizationService;
 
 /**

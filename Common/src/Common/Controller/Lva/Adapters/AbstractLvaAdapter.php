@@ -7,7 +7,7 @@
  */
 namespace Common\Controller\Lva\Adapters;
 
-use Zend\Form\Form;
+use Laminas\Form\Form;
 use Common\Controller\Lva\Interfaces\LvaAdapterInterface;
 
 /**
@@ -20,7 +20,7 @@ abstract class AbstractLvaAdapter extends AbstractControllerAwareAdapter impleme
     /**
      * Alter the form based on the LVA rules
      *
-     * @param \Zend\Form\Form $form
+     * @param \Laminas\Form\Form $form
      */
     public function alterForm(Form $form)
     {

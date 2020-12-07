@@ -1,11 +1,11 @@
 <?php
-/** @var \Zend\Form\Element $element */
+/** @var \Laminas\Form\Element $element */
 $element = $this->element;
 $id = $this->id;
 ?>
 <div class="govuk-radios__conditional govuk-body" id="<?php echo $id ?>">
     <?php
-    if ($element instanceof \Zend\Form\Fieldset) {
+    if ($element instanceof \Laminas\Form\Fieldset) {
         echo $this->formCollection($element);
     } else {
         echo $this->formRow($element);

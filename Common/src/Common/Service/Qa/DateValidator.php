@@ -2,7 +2,7 @@
 
 namespace Common\Service\Qa;
 
-use Zend\Validator\Date as ZendDateValidator;
+use Laminas\Validator\Date as ZendDateValidator;
 
 class DateValidator extends ZendDateValidator
 {

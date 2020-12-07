@@ -15,7 +15,7 @@ class GenericMethodsTest extends MockeryTestCase
     /** @var  GenericMethods | m\MockInterface */
     private $sut;
 
-    /** @var  m\MockInterface | \Zend\ServiceManager\ServiceLocatorInterface */
+    /** @var  m\MockInterface | \Laminas\ServiceManager\ServiceLocatorInterface */
     private $mockSm;
     /** @var  m\MockInterface | \Common\Service\Helper\FormHelperService */
     private $mockHlpForm;
@@ -24,7 +24,7 @@ class GenericMethodsTest extends MockeryTestCase
     {
         $this->mockHlpForm = m::mock(\Common\Service\Helper\FormHelperService::class);
 
-        $this->mockSm = m::mock(\Zend\ServiceManager\ServiceLocatorInterface::class);
+        $this->mockSm = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class);
         $this->mockSm
             ->shouldReceive('get')->with('Helper\Form')->andReturn($this->mockHlpForm);
 
@@ -36,8 +36,8 @@ class GenericMethodsTest extends MockeryTestCase
     {
         $class = 'unit_path_to_class';
 
-        $mockReq = m::mock(\Zend\Http\Request::class);
-        $mockForm = m::mock(\Zend\Form\Form::class);
+        $mockReq = m::mock(\Laminas\Http\Request::class);
+        $mockForm = m::mock(\Laminas\Form\Form::class);
 
         $this->sut
             ->shouldReceive('getRequest')->twice()->andReturn($mockReq);
@@ -58,10 +58,10 @@ class GenericMethodsTest extends MockeryTestCase
         $data = ['unit_data'];
         $fieldVals = ['unit_fieldValues'];
 
-        $mockReq = m::mock(\Zend\Http\Request::class);
+        $mockReq = m::mock(\Laminas\Http\Request::class);
         $mockReq->shouldReceive('isPost')->once()->andReturn(false);
 
-        $mockForm = m::mock(\Zend\Form\Form::class);
+        $mockForm = m::mock(\Laminas\Form\Form::class);
         $mockForm->shouldReceive('setData')->once()->with($data);
 
         $this->sut

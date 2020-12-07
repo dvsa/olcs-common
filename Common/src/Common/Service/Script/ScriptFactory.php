@@ -8,8 +8,8 @@
 
 namespace Common\Service\Script;
 
-use Zend\ServiceManager\FactoryInterface;
-use \Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use \Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Inline JavaScript loading service
@@ -102,7 +102,6 @@ class ScriptFactory implements FactoryInterface
 
         if (is_array($paths)) {
             foreach ($this->getFilePaths() as $path) {
-
                 $fullPath = $path . $file . '.js';
 
                 if ($this->exists($fullPath)) {
@@ -189,7 +188,7 @@ class ScriptFactory implements FactoryInterface
         return $this->viewHelperManager;
     }
 
-    public function setViewHelperManager(\Zend\View\HelperPluginManager $viewHelperManager)
+    public function setViewHelperManager(\Laminas\View\HelperPluginManager $viewHelperManager)
     {
         $this->viewHelperManager = $viewHelperManager;
         return $this;

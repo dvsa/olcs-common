@@ -5,11 +5,11 @@ namespace CommonTest\View\Helper;
 use Common\View\Helper\LicenceChecklist;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\I18n\View\Helper\Translate;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\View\Helper\Placeholder;
-use Zend\View\Helper\ViewModel;
-use Zend\View\HelperPluginManager;
+use Laminas\I18n\View\Helper\Translate;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\View\Helper\Placeholder;
+use Laminas\View\Helper\ViewModel;
+use Laminas\View\HelperPluginManager;
 use Common\RefData;
 
 /**

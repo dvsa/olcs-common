@@ -24,10 +24,10 @@ class LicenceLvaAdapterTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->sm = m::mock('\Zend\ServiceManager\ServiceManager')->makePartial();
+        $this->sm = m::mock('\Laminas\ServiceManager\ServiceManager')->makePartial();
         $this->sm->setAllowOverride(true);
 
-        $this->controller = m::mock('\Zend\Mvc\Controller\AbstractController');
+        $this->controller = m::mock('\Laminas\Mvc\Controller\AbstractController');
 
         $this->sut = new LicenceLvaAdapter();
         $this->sut->setServiceLocator($this->sm);
@@ -36,7 +36,7 @@ class LicenceLvaAdapterTest extends MockeryTestCase
 
     public function testAlterForm()
     {
-        $mockForm = m::mock('\Zend\Form\Form');
+        $mockForm = m::mock('\Laminas\Form\Form');
 
         $mockForm->shouldReceive('get')
             ->with('form-actions')

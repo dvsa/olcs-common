@@ -8,7 +8,7 @@ use Common\Service\Helper\TranslationHelperService;
 use CommonTest\Data\Mapper\Licence\Surrender\ReviewContactDetailsMocksAndExpectationsTrait;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
-use Zend\Mvc\Controller\Plugin\Url;
+use Laminas\Mvc\Controller\Plugin\Url;
 
 class LicenceDetailsTest extends MockeryTestCase
 {

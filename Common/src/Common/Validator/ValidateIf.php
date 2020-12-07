@@ -1,10 +1,10 @@
 <?php
 namespace Common\Validator;
 
-use Zend\Validator\AbstractValidator;
-use Zend\Validator\ValidatorChain;
-use Zend\Validator\ValidatorPluginManagerAwareInterface;
-use Zend\Validator\ValidatorPluginManager;
+use Laminas\Validator\AbstractValidator;
+use Laminas\Validator\ValidatorChain;
+use Laminas\Validator\ValidatorPluginManagerAwareInterface;
+use Laminas\Validator\ValidatorPluginManager;
 
 /**
  * Class ValidateIf
@@ -151,7 +151,7 @@ class ValidateIf extends AbstractValidator implements ValidatorPluginManagerAwar
     }
 
     /**
-     * @param \Zend\Validator\ValidatorChain $validatorChain
+     * @param \Laminas\Validator\ValidatorChain $validatorChain
      * @return $this
      */
     public function setValidatorChain($validatorChain)
@@ -177,7 +177,7 @@ class ValidateIf extends AbstractValidator implements ValidatorPluginManagerAwar
     }
 
     /**
-     * @return \Zend\Validator\ValidatorChain
+     * @return \Laminas\Validator\ValidatorChain
      */
     public function getValidatorChain()
     {

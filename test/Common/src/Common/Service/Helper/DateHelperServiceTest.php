@@ -58,7 +58,7 @@ class DateHelperServiceTest extends MockeryTestCase
 
     public function testCalculateDate()
     {
-        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
+        $sm = m::mock('Laminas\ServiceManager\ServiceLocatorInterface')
             ->shouldReceive('get')
             ->with('Common\Util\DateTimeProcessor')
             ->andReturn(

@@ -2,7 +2,7 @@
 
 namespace Common\Service\Data;
 
-use Zend\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\FactoryInterface;
 
 /**
  * Class ApplicationOperatingCentre

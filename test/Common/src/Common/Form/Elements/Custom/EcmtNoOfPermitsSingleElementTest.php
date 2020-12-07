@@ -7,7 +7,7 @@ use Common\Form\Elements\Custom\EcmtNoOfPermitsSingleElement;
 use Common\Service\Qa\Custom\Ecmt\NoOfPermitsSingleValidator;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
-use Zend\Validator\GreaterThan;
+use Laminas\Validator\GreaterThan;
 
 /**
  * EcmtNoOfPermitsSingleElementTest

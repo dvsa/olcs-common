@@ -1,6 +1,6 @@
 <?php
 
-use Zend\Mvc\Router\Http;
+use Laminas\Mvc\Router\Http;
 
 return [
     'continuation' => [

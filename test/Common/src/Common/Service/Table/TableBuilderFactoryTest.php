@@ -23,7 +23,7 @@ class TableBuilderFactoryTest extends MockeryTestCase
      */
     public function testCreateService()
     {
-        $serviceLocator = m::mock(\Zend\ServiceManager\ServiceManager::class);
+        $serviceLocator = m::mock(\Laminas\ServiceManager\ServiceManager::class);
 
         $serviceLocator->shouldReceive('get')
             ->with('Config')

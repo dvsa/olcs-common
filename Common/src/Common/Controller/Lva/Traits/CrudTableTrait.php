@@ -3,7 +3,7 @@
 namespace Common\Controller\Lva\Traits;
 
 use Olcs\View\Model\ViewModel;
-use Zend\Http\Response;
+use Laminas\Http\Response;
 
 /**
  * Crud table trait
@@ -21,7 +21,7 @@ trait CrudTableTrait
      * @param string $prefix  if our actions aren't just 'add', 'edit', provide a prefix
      * @param array  $options options to pass to assemble the route, eg ['fragment' => 'hash-ref']
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     protected function handlePostSave($prefix = null, $options = [])
     {
@@ -52,11 +52,11 @@ trait CrudTableTrait
      * Generic delete functionality; usually does the trick but
      * can be overridden if not
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     public function deleteAction()
     {
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {

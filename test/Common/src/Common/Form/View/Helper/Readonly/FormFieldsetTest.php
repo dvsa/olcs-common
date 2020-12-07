@@ -24,7 +24,7 @@ class FormFieldsetTest extends MockeryTestCase
         $mockFileUploadList = m::mock(Helper\Readonly\FormFileUploadList::class);
         $mockFileUploadList->shouldReceive('render')->andReturn('FORM_FILE_UPLOAD_LIST_RENDER_RESULT');
 
-        $mockView = m::mock(\Zend\View\Renderer\PhpRenderer::class);
+        $mockView = m::mock(\Laminas\View\Renderer\PhpRenderer::class);
         $mockView
             ->shouldReceive('plugin')->with('FormCollection')->andReturn($mockFormCollection)
             ->shouldReceive('plugin')
@@ -41,7 +41,7 @@ class FormFieldsetTest extends MockeryTestCase
     {
         return [
             [
-                'element' => m::mock(\Zend\Form\FieldsetInterface::class),
+                'element' => m::mock(\Laminas\Form\FieldsetInterface::class),
                 'expect' => 'FORM_COLLECTION_RENDER_RESULT',
             ],
             [

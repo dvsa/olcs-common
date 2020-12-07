@@ -2,8 +2,8 @@
 
 namespace Common\Form\View\Helper\Readonly;
 
-use Zend\Form\ElementInterface;
-use Zend\Form\View\Helper\AbstractHelper;
+use Laminas\Form\ElementInterface;
+use Laminas\Form\View\Helper\AbstractHelper;
 use Common\Form\Elements;
 
 /**
@@ -39,12 +39,11 @@ class FormItem extends AbstractHelper
      */
     public function render(ElementInterface $element)
     {
-        if (
-            $element instanceof Elements\InputFilters\ActionButton
+        if ($element instanceof Elements\InputFilters\ActionButton
             || $element instanceof Elements\Types\AttachFilesButton
-            || $element instanceof \Zend\Form\Element\Submit
-            || $element instanceof \Zend\Form\Element\Hidden
-            || $element instanceof \Zend\Form\Element\Button
+            || $element instanceof \Laminas\Form\Element\Submit
+            || $element instanceof \Laminas\Form\Element\Hidden
+            || $element instanceof \Laminas\Form\Element\Button
         ) {
             return '';
         }

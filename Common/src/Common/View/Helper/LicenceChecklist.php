@@ -2,10 +2,10 @@
 
 namespace Common\View\Helper;
 
-use Zend\I18n\View\Helper\Translate;
-use Zend\View\Helper\AbstractHelper;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\I18n\View\Helper\Translate;
+use Laminas\View\Helper\AbstractHelper;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use Common\RefData;
 
 /**

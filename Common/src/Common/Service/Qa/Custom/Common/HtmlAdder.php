@@ -3,7 +3,7 @@
 namespace Common\Service\Qa\Custom\Common;
 
 use Common\Form\Elements\Types\Html;
-use Zend\Form\Fieldset;
+use Laminas\Form\Fieldset;
 
 class HtmlAdder
 {

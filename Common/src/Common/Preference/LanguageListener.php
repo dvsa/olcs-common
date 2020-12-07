@@ -2,18 +2,18 @@
 
 namespace Common\Preference;
 
-use Zend\EventManager\EventManagerInterface;
-use Zend\EventManager\ListenerAggregateInterface;
-use Zend\EventManager\ListenerAggregateTrait;
-use Zend\Mvc\MvcEvent;
-use Zend\Mvc\Router;
+use Laminas\EventManager\EventManagerInterface;
+use Laminas\EventManager\ListenerAggregateInterface;
+use Laminas\EventManager\ListenerAggregateTrait;
+use Laminas\Mvc\MvcEvent;
+use Laminas\Mvc\Router;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
-use Zend\Http\Request as HttpRequest;
-use Zend\Http\Response;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\Http\Request as HttpRequest;
+use Laminas\Http\Response;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use Common\Service\Helper\FlashMessengerHelperService;
-use Zend\I18n\Translator\Translator;
+use Laminas\I18n\Translator\Translator;
 
 /**
  * Language Listener
@@ -65,7 +65,6 @@ class LanguageListener implements ListenerAggregateInterface, FactoryInterface
         if ($lang !== null) {
             try {
                 $this->languagePref->setPreference($lang);
-
             } catch (\Exception $ex) {
                 $this->flashMessenger->addCurrentErrorMessage('Only English and Welsh languages are supported');
             }

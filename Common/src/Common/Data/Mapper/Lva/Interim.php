@@ -9,7 +9,7 @@ namespace Common\Data\Mapper\Lva;
 
 use Common\Data\Mapper\MapperInterface;
 use Common\Service\Helper\FlashMessengerHelperService;
-use Zend\Form\Form;
+use Laminas\Form\Form;
 
 /**
  * Interim
@@ -92,7 +92,6 @@ class Interim implements MapperInterface
         $formMessages = [];
 
         if (isset($errors['reason'])) {
-
             foreach ($errors['reason'] as $key => $message) {
                 $formMessages['data']['interimReason'][] = $message;
             }
@@ -101,7 +100,6 @@ class Interim implements MapperInterface
         }
 
         if (isset($errors['startDate'])) {
-
             foreach ($errors['startDate'] as $key => $message) {
                 $formMessages['data']['interimStart'][] = $message;
             }
@@ -110,7 +108,6 @@ class Interim implements MapperInterface
         }
 
         if (isset($errors['endDate'])) {
-
             foreach ($errors['endDate'] as $key => $message) {
                 $formMessages['data']['interimEnd'][] = $message;
             }
@@ -119,7 +116,6 @@ class Interim implements MapperInterface
         }
 
         if (isset($errors['authVehicles'])) {
-
             foreach ($errors['authVehicles'] as $key => $message) {
                 $formMessages['data']['interimAuthVehicles'][] = $message;
             }
@@ -128,7 +124,6 @@ class Interim implements MapperInterface
         }
 
         if (isset($errors['authTrailers'])) {
-
             foreach ($errors['authTrailers'] as $key => $message) {
                 $formMessages['data']['interimAuthTrailers'][] = $message;
             }

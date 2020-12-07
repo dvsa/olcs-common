@@ -52,8 +52,8 @@ class ResponseHelperServiceTest extends MockeryTestCase
             ->shouldReceive('addHeaderLine')->with('Content-Length', 9)->andReturnSelf()
             ->getMock();
 
-        /** @var \Zend\Http\Response|m\MockInterface $response */
-        $response = m::mock(\Zend\Http\Response::class)
+        /** @var \Laminas\Http\Response|m\MockInterface $response */
+        $response = m::mock(\Laminas\Http\Response::class)
             ->shouldReceive('getHeaders')->once()->andReturn($mockHeaders)
             ->shouldReceive('setContent')->with($body)
             ->getMock();

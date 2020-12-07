@@ -6,7 +6,7 @@ use Common\Exception\DataServiceException;
 use Common\Service\Data\AbstractDataService;
 use Common\Service\Data\Interfaces\ListData;
 use Dvsa\Olcs\Transfer\Query\Venue\VenueList;
-use Zend\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\FactoryInterface;
 
 /**
  * Class Venue

@@ -5,9 +5,9 @@ namespace Common\Service\Translator;
 use Common\Service\Cqrs\Query\CachingQueryService;
 use Dvsa\Olcs\Transfer\Service\CacheEncryption;
 use Olcs\Logging\Log\Logger;
-use Zend\I18n\Translator\Loader\PhpMemoryArray;
-use Zend\I18n\Translator\Loader\RemoteLoaderInterface;
-use Zend\I18n\Translator\TextDomain;
+use Laminas\I18n\Translator\Loader\PhpMemoryArray;
+use Laminas\I18n\Translator\Loader\RemoteLoaderInterface;
+use Laminas\I18n\Translator\TextDomain;
 
 /**
  * Loads translations from the Redis cache, if cache unavailable this will fallback to the database

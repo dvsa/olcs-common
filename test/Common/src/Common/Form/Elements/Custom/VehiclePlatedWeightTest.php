@@ -23,8 +23,8 @@ class VehiclePlatedWeightTest extends MockeryTestCase
         static::assertEquals('unit_Name', $actual['name']);
         static::assertEquals(
             [
-                \Zend\Validator\Digits::class,
-                \Zend\Validator\Between::class,
+                \Laminas\Validator\Digits::class,
+                \Laminas\Validator\Between::class,
             ],
             array_map(
                 function ($item) {

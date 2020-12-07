@@ -2,7 +2,7 @@
 
 namespace Common\Service\Data;
 
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Application Service Trait

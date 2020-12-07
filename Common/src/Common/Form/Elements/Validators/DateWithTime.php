@@ -8,10 +8,10 @@
  */
 namespace Common\Form\Elements\Validators;
 
-use Zend\Validator\AbstractValidator as AbstractValidator;
+use Laminas\Validator\AbstractValidator as AbstractValidator;
 use Traversable;
-use Zend\Stdlib\ArrayUtils;
-use Zend\Validator\Date as DateValidator;
+use Laminas\Stdlib\ArrayUtils;
+use Laminas\Validator\Date as DateValidator;
 
 /**
  * Checks that if a time is entered then the corresponding date is also set
@@ -63,7 +63,6 @@ class DateWithTime extends AbstractValidator
         }
 
         if (is_array($token) && array_key_exists('token', $token)) {
-
             $this->setToken($token['token']);
         } elseif (null !== $token) {
             $this->setToken($token);

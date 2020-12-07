@@ -3,7 +3,7 @@
 namespace Common\View\Helper;
 
 use Common\RefData;
-use Zend\View\Helper\AbstractHelper;
+use Laminas\View\Helper\AbstractHelper;
 
 /**
  * Transport Manager Application Status view helper

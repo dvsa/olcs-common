@@ -3,7 +3,7 @@
 namespace Common\Service\Qa;
 
 use Common\Form\Elements\Types\RadioVertical;
-use Zend\Form\Fieldset;
+use Laminas\Form\Fieldset;
 
 class FieldsetFactory
 {

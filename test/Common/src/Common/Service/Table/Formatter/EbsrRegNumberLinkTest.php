@@ -5,7 +5,7 @@ namespace CommonTest\Service\Table\Formatter;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Table\Formatter\EbsrRegNumberLink;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * @covers \Common\Service\Table\Formatter\EbsrRegNumberLink

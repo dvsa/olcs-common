@@ -2,8 +2,8 @@
 
 namespace CommonTest\Form\View\Helper;
 
-use Zend\Form\Fieldset;
-use Zend\InputFilter\InputFilter;
+use Laminas\Form\Fieldset;
+use Laminas\InputFilter\InputFilter;
 use Common\Form\InsufficientFinancesForm;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;

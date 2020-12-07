@@ -40,7 +40,7 @@ trait DynamicTrait
     protected $dataService;
 
     /**
-     * @var \Zend\ServiceManager\ServiceLocatorInterface
+     * @var \Laminas\ServiceManager\ServiceLocatorInterface
      */
     protected $serviceLocator;
 
@@ -164,7 +164,7 @@ trait DynamicTrait
     }
 
     /**
-     * @param \Zend\ServiceManager\ServiceLocatorInterface $serviceLocator
+     * @param \Laminas\ServiceManager\ServiceLocatorInterface $serviceLocator
      * @return $this
      */
     public function setServiceLocator($serviceLocator)
@@ -174,7 +174,7 @@ trait DynamicTrait
     }
 
     /**
-     * @return \Zend\ServiceManager\ServiceLocatorInterface
+     * @return \Laminas\ServiceManager\ServiceLocatorInterface
      */
     public function getServiceLocator()
     {
@@ -204,7 +204,7 @@ trait DynamicTrait
      *
      * @return mixed
      */
-    function getExtraOption()
+    public function getExtraOption()
     {
         return $this->extraOption;
     }
@@ -214,7 +214,7 @@ trait DynamicTrait
      *
      * @param array $extraOption
      */
-    function setExtraOption($extraOption)
+    public function setExtraOption($extraOption)
     {
         $this->extraOption = $extraOption;
     }
@@ -289,7 +289,7 @@ trait DynamicTrait
      * to be equal to the id
      *
      * @param mixed $value
-     * @return \Zend\Form\Element
+     * @return \Laminas\Form\Element
      */
     public function setValue($value)
     {

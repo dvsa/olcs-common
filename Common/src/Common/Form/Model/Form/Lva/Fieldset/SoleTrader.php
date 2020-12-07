@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Lva\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Name("data")
@@ -39,7 +39,7 @@ class SoleTrader
      *     "label": "application_your-business_people-sub-action-formFirstName",
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
      */
     public $forename = null;
 
@@ -49,7 +49,7 @@ class SoleTrader
      *     "label": "application_your-business_people-sub-action-formSurname",
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
      */
     public $familyName = null;
 

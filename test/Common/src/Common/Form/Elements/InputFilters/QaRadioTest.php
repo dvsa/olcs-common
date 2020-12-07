@@ -4,7 +4,7 @@ namespace CommonTest\Form\Elements\InputFilters;
 
 use Common\Form\Elements\InputFilters\QaRadio;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Validator\InArray;
+use Laminas\Validator\InArray;
 
 /**
  * @covers \Common\Form\Elements\InputFilters\QaRadio

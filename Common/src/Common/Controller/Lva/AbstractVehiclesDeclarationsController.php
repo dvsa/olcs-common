@@ -126,10 +126,10 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
      * Add customisation to the form dependent on which of five scenarios
      * is in play for OLCS-2855
      *
-     * @param Zend\Form\Form $form
-     * @return Zend\Form\Form
+     * @param Laminas\Form\Form $form
+     * @return Laminas\Form\Form
      */
-    protected function alterForm(\Zend\Form\Form $form, $formData)
+    protected function alterForm(\Laminas\Form\Form $form, $formData)
     {
         $this->alterFormForLva($form);
 

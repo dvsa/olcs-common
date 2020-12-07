@@ -12,7 +12,7 @@ namespace Common\Form\View\Helper\Extended;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormImage extends \Zend\Form\View\Helper\FormImage
+class FormImage extends \Laminas\Form\View\Helper\FormImage
 {
     use PrepareAttributesTrait;
 }

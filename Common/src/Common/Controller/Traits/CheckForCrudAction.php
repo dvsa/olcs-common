@@ -7,8 +7,8 @@
  */
 namespace Common\Controller\Traits;
 
-use Zend\Http\Response;
-use Zend\View\Model\ViewModel;
+use Laminas\Http\Response;
+use Laminas\View\Model\ViewModel;
 
 /**
  * CheckForCrudAction trait
@@ -40,7 +40,7 @@ trait CheckForCrudAction
 
         $response = $this->checkForAlternativeCrudAction($action);
 
-        if ($response instanceof \Zend\Http\Response) {
+        if ($response instanceof \Laminas\Http\Response) {
             return $response;
         }
 
@@ -51,7 +51,6 @@ trait CheckForCrudAction
         $action = $this->getActionFromFullActionName($action);
 
         if (!in_array($action, $this->getNoActionIdentifierRequired())) {
-
             $post = (array)$this->getRequest()->getPost();
 
             if (isset($post['table']['id'])) {
@@ -61,7 +60,6 @@ trait CheckForCrudAction
             }
 
             if (empty($id)) {
-
                 $this->crudActionMissingId();
                 return false;
             }
@@ -114,7 +112,6 @@ trait CheckForCrudAction
      */
     protected function checkForAlternativeCrudAction($action)
     {
-
     }
 
     /**

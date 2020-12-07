@@ -14,7 +14,7 @@ trait CrudActionTrait
      * Check if we have a crud action in the form table data, if so return the table data, if not return null
      *
      * @param array $formTables Tables
-     *                          
+     *
      * @return array
      */
     protected function getCrudAction(array $formTables = array())
@@ -52,7 +52,7 @@ trait CrudActionTrait
      * @param string $childIdParamName Child route identifier
      * @param string $route            Route
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     protected function handleCrudAction(
         $data,

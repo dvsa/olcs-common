@@ -2,8 +2,8 @@
 
 namespace Common\Controller\Lva\Factories\Adapter;
 
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Abstract Factory to create Transport Manager Adapters

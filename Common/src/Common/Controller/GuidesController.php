@@ -2,8 +2,8 @@
 
 namespace Common\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
-use Zend\View\Model\ViewModel;
+use Laminas\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
+use Laminas\View\Model\ViewModel;
 
 /**
  * Guides Controller

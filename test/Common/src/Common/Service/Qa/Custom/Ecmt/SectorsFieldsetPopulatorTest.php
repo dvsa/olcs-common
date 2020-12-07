@@ -7,9 +7,9 @@ use Common\Service\Qa\Custom\Ecmt\SectorsFieldsetPopulator;
 use Common\Service\Qa\RadioFieldsetPopulator;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Element\Radio;
-use Zend\Form\Fieldset;
-use Zend\Form\Form;
+use Laminas\Form\Element\Radio;
+use Laminas\Form\Fieldset;
+use Laminas\Form\Form;
 
 /**
  * SectorsFieldsetPopulatorTest

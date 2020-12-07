@@ -12,7 +12,7 @@ namespace Common\Form\View\Helper\Extended;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormReset extends \Zend\Form\View\Helper\FormReset
+class FormReset extends \Laminas\Form\View\Helper\FormReset
 {
     use PrepareAttributesTrait;
 }

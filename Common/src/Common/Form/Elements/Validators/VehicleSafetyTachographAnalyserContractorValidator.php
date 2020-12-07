@@ -7,7 +7,7 @@
  */
 namespace Common\Form\Elements\Validators;
 
-use Zend\Validator\AbstractValidator;
+use Laminas\Validator\AbstractValidator;
 
 /**
  * VehicleSafetyTachographAnalyserContractorValidator
@@ -37,8 +37,8 @@ class VehicleSafetyTachographAnalyserContractorValidator extends AbstractValidat
 
         // @todo Maybe need a better place to store these ref data keys
         if ($context['tachographIns'] === 'tach_external'
-            && trim($context['tachographInsName']) === '') {
-
+            && trim($context['tachographInsName']) === ''
+        ) {
             $this->error('required');
 
             return false;

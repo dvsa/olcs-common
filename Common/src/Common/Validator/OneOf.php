@@ -2,8 +2,8 @@
 
 namespace Common\Validator;
 
-use Zend\Validator\AbstractValidator;
-use Zend\Validator\Exception;
+use Laminas\Validator\AbstractValidator;
+use Laminas\Validator\Exception;
 
 /**
  * Class OneOf
@@ -73,7 +73,7 @@ class OneOf extends AbstractValidator
 
     /**
      * @param array $options
-     * @return \Zend\Validator\AbstractValidator
+     * @return \Laminas\Validator\AbstractValidator
      */
     public function setOptions($options = [])
     {

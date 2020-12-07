@@ -6,7 +6,7 @@ use Common\Rbac\Role\RoleProviderFactory;
 use Common\Service\Cqrs\Query\QuerySender;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Mockery as m;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use ZfcRbac\Role\RoleProviderInterface;
 
 /**

@@ -30,7 +30,7 @@ class CompanySearchTest extends MockeryTestCase
 
 
         $this->sm = Bootstrap::getServiceManager();
-        $this->mockResp = m::mock(\Zend\Http\Response::class);
+        $this->mockResp = m::mock(\Laminas\Http\Response::class);
 
         $this->sut->stubResponse = $this->mockResp;
     }
@@ -50,8 +50,11 @@ class CompanySearchTest extends MockeryTestCase
         $this->mockResp->shouldReceive('getResult')->andReturn($data);
 
         $actual = $this->sut->populateCompanyDetails(
-            $mockHelperService, $form, $data['detailsFieldset'],
-            $data['addressFieldset'], $data['companyNumber']
+            $mockHelperService,
+            $form,
+            $data['detailsFieldset'],
+            $data['addressFieldset'],
+            $data['companyNumber']
         );
         $dto = $this->sut->stubResponse->dto;
         $this->assertInstanceOf(ByNumber::class, $dto);
@@ -73,8 +76,13 @@ class CompanySearchTest extends MockeryTestCase
 
         $this->mockResp->shouldReceive('isOk')->andReturn(false);
         $mockHelperService->shouldReceive('setCompanyNotFoundError')->once()->with($form, $data['detailsFieldset']);
-        $actual = $this->sut->populateCompanyDetails($mockHelperService, $form, $data['detailsFieldset'],
-            $data['addressFieldset'], $data['companyNumber']);
+        $actual = $this->sut->populateCompanyDetails(
+            $mockHelperService,
+            $form,
+            $data['detailsFieldset'],
+            $data['addressFieldset'],
+            $data['companyNumber']
+        );
         $this->assertSame($actual, $form);
     }
 
@@ -95,8 +103,13 @@ class CompanySearchTest extends MockeryTestCase
         $this->sut->shouldReceive('handleQuery')->andThrow(NotFoundException::class);
 
         $mockHelperService->shouldReceive('setCompanyNotFoundError')->once()->with($form, $data['detailsFieldset']);
-        $actual = $this->sut->populateCompanyDetails($mockHelperService, $form, $data['detailsFieldset'],
-            $data['addressFieldset'], $data['companyNumber']);
+        $actual = $this->sut->populateCompanyDetails(
+            $mockHelperService,
+            $form,
+            $data['detailsFieldset'],
+            $data['addressFieldset'],
+            $data['companyNumber']
+        );
         $this->assertSame($actual, $form);
     }
 

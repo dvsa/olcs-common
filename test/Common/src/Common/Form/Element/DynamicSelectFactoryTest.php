@@ -13,7 +13,7 @@ class DynamicSelectFactoryTest extends \PHPUnit\Framework\TestCase
     public function testCreateService()
     {
 
-        $mockSl = $this->createMock('\Zend\Form\FormElementManager');
+        $mockSl = $this->createMock('\Laminas\Form\FormElementManager');
         $mockSl->expects($this->any())->method('getServiceLocator')->willReturnSelf();
         $mockSl->expects($this->any())->method('get')->willReturnSelf();
 

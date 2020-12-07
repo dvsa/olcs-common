@@ -7,8 +7,8 @@
  */
 namespace Common\Controller\Lva\Adapters;
 
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
+use Laminas\ServiceManager\ServiceLocatorAwareInterface;
+use Laminas\ServiceManager\ServiceLocatorAwareTrait;
 use Common\Controller\Lva\Interfaces\AdapterInterface;
 
 /**

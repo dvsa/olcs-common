@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Lva\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Name("lva-safety-licence")
@@ -31,7 +31,7 @@ class SafetyLicence
      *     "error-message": "safetyLicence_safetyInsVehicles-error"
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
      * @Form\Validator({"name": "Between", "options": {
      *     "min":1, "max":13,
      *     "messages": {"notBetween": "safetyLicence_safetyInsBetween-error"}
@@ -46,7 +46,7 @@ class SafetyLicence
      *     "error-message": "safetyLicence_safetyInsTrailers-error"
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
      * @Form\Validator({"name": "Between", "options": {
      *     "min":1, "max":13,
      *     "messages": {"notBetween": "safetyLicence_safetyInsBetween-error"}
@@ -62,7 +62,7 @@ class SafetyLicence
      *     "value_options": {"Y": "Yes", "N": "No"},
      *     "hint": "application_vehicle-safety_safety.licence.moreFrequentInspectionsHint"
      * })
-     * @Form\Type("\Zend\Form\Element\Radio")
+     * @Form\Type("\Laminas\Form\Element\Radio")
      */
     public $safetyInsVaries = null;
 

@@ -9,7 +9,7 @@ use Dvsa\Olcs\Transfer\Command\Trailer\DeleteTrailer;
 use Dvsa\Olcs\Transfer\Command\Trailer\UpdateTrailer;
 use Dvsa\Olcs\Transfer\Query\Licence\Trailers;
 use Dvsa\Olcs\Transfer\Query\Trailer\Trailer;
-use Zend\Stdlib\RequestInterface;
+use Laminas\Stdlib\RequestInterface;
 
 /**
  * Abstract Trailers Controller
@@ -34,11 +34,11 @@ abstract class AbstractTrailersController extends AbstractController
     /**
      * Process Action - Index
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     public function indexAction()
     {
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         $response = $this->handleQuery(Trailers::create(['id' => $this->getIdentifier()]));
@@ -111,10 +111,10 @@ abstract class AbstractTrailersController extends AbstractController
      */
     public function addAction()
     {
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
-        /** @var \Zend\Form\FormInterface $form */
+        /** @var \Laminas\Form\FormInterface $form */
         $form = $this->getServiceLocator()->get('Helper\Form')
             ->createFormWithRequest('Lva\Trailer', $request);
 
@@ -147,10 +147,10 @@ abstract class AbstractTrailersController extends AbstractController
      */
     public function editAction()
     {
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
-        /** @var \Zend\Form\FormInterface $form */
+        /** @var \Laminas\Form\FormInterface $form */
         $form = $this->getServiceLocator()->get('Helper\Form')
             ->createFormWithRequest('Lva\Trailer', $request);
 
@@ -233,7 +233,7 @@ abstract class AbstractTrailersController extends AbstractController
      * @param RequestInterface $request The request
      * @param Table            $table   The table to add to the form.
      *
-     * @return \Zend\Form\Form $form The form
+     * @return \Laminas\Form\Form $form The form
      */
     protected function getForm(RequestInterface $request, $table)
     {

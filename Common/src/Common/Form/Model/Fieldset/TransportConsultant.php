@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Name("transport-consultant")
@@ -20,7 +20,7 @@ class TransportConsultant
      *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
      * })
      * @Form\Attributes({"value":"N"})
-     * @Form\Type("\Zend\Form\Element\Radio")
+     * @Form\Type("\Laminas\Form\Element\Radio")
      */
     public $addTransportConsultant = null;
 
@@ -40,7 +40,7 @@ class TransportConsultant
      * @Form\Type("Text")
      * @Form\Attributes({"class":"long"})
      * @Form\Options({"label":"application_your-business_business-type.consultant-name.label"})
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
      */
     public $transportConsultantName = null;
 }

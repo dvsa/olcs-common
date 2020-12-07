@@ -16,7 +16,7 @@ class CrudActionTraitTest extends MockeryTestCase
 
     /** @var Stubs\CrudActionTraitStub | m\MockInterface */
     protected $sut;
-    /** @var \Zend\ServiceManager\ServiceManager | m\MockInterface */
+    /** @var \Laminas\ServiceManager\ServiceManager | m\MockInterface */
     protected $sm;
 
     protected function setUp(): void

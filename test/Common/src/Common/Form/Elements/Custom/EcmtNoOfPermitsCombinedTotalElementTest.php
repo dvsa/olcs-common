@@ -5,7 +5,7 @@ namespace CommonTest\Form\Elements\Custom;
 use Common\Form\Elements\Custom\EcmtNoOfPermitsCombinedTotalElement;
 use Common\Form\Elements\Validators\EcmtNoOfPermitsCombinedTotalValidator;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Validator\Callback;
+use Laminas\Validator\Callback;
 
 /**
  * EcmtNoOfPermitsCombinedTotalElementTest

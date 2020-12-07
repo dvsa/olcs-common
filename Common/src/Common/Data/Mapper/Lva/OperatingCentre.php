@@ -6,7 +6,7 @@ use Common\Data\Mapper\MapperInterface;
 use Common\Form\Elements\Custom\OlcsCheckbox;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\TranslationHelperService;
-use Zend\Form\Form;
+use Laminas\Form\Form;
 use Common\RefData;
 
 /**

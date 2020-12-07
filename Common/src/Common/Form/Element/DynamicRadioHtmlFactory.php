@@ -2,8 +2,8 @@
 
 namespace Common\Form\Element;
 
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Class DynamicRadioFactory
@@ -19,7 +19,7 @@ class DynamicRadioHtmlFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $formElementManager)
     {
-        /** @var \Zend\Form\FormElementManager $formElementManager */
+        /** @var \Laminas\Form\FormElementManager $formElementManager */
         $serviceLocator = $formElementManager->getServiceLocator();
 
         $service = new DynamicRadioHtml();

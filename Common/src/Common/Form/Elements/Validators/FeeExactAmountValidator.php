@@ -7,7 +7,7 @@
  */
 namespace Common\Form\Elements\Validators;
 
-use Zend\Validator\Identical;
+use Laminas\Validator\Identical;
 
 /**
  * Fee Exact Amount Validator

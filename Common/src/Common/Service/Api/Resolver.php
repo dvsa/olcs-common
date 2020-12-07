@@ -2,8 +2,8 @@
 
 namespace Common\Service\Api;
 
-use Zend\ServiceManager\AbstractPluginManager;
-use Zend\ServiceManager\Exception;
+use Laminas\ServiceManager\AbstractPluginManager;
+use Laminas\ServiceManager\Exception;
 
 /**
  * Class Resolver

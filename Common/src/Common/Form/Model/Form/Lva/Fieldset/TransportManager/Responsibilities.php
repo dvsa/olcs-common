@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Lva\Fieldset\TransportManager;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Attributes({"class":"table__form","id":"responsibilities"})
@@ -30,7 +30,7 @@ class Responsibilities
      * })
      * @Form\Type("DynamicRadio")
      * @Form\Validator({
-     *      "name":"Zend\Validator\NotEmpty"
+     *      "name":"Laminas\Validator\NotEmpty"
      * })
      */
     public $tmType = null;
@@ -88,9 +88,9 @@ class Responsibilities
      *     "label_attributes": {"id":"additionalInformation"}
      * })
      * @Form\Required(false)
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
      * @Form\Validator({
-     *      "name":"Zend\Validator\StringLength",
+     *      "name":"Laminas\Validator\StringLength",
      *      "options":{
      *          "max":4000
      *      }

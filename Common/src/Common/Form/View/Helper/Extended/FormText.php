@@ -12,7 +12,7 @@ namespace Common\Form\View\Helper\Extended;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormText extends \Zend\Form\View\Helper\FormText
+class FormText extends \Laminas\Form\View\Helper\FormText
 {
     use PrepareAttributesTrait;
 }

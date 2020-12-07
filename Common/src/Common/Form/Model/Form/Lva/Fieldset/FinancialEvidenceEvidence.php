@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Lva\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Name("evidence")
@@ -49,7 +49,7 @@ class FinancialEvidenceEvidence
      *     "error-message": "financialEvidence_uploadNow-error",
      *     "single-radio": true
      * })
-     * @Form\Type("\Zend\Form\Element\Radio")
+     * @Form\Type("\Laminas\Form\Element\Radio")
      */
     public $uploadNowRadio = null;
 
@@ -69,7 +69,7 @@ class FinancialEvidenceEvidence
      *     "error-message": "financialEvidence_uploadNow-error",
      *     "single-radio": true
      * })
-     * @Form\Type("\Zend\Form\Element\Radio")
+     * @Form\Type("\Laminas\Form\Element\Radio")
      */
     public $uploadLaterRadio = null;
 
@@ -95,7 +95,7 @@ class FinancialEvidenceEvidence
      *     "error-message": "financialEvidence_uploadNow-error",
      *     "single-radio": true
      * })
-     * @Form\Type("\Zend\Form\Element\Radio")
+     * @Form\Type("\Laminas\Form\Element\Radio")
      */
     public $sendByPostRadio = null;
 

@@ -61,14 +61,14 @@ class RedirectTest extends MockeryTestCase
         $params = array('foo' => 'bar');
         $options = ['fragment' => 'frag'];
 
-        $mockResponse = m::mock('\Zend\Http\Response');
+        $mockResponse = m::mock('\Laminas\Http\Response');
         $mockResponse->shouldReceive('getHeaders->addHeaders')
             ->with(['Content-Type' => 'application/json']);
 
         $mockResponse->shouldReceive('setContent')
             ->with('{"status":302,"location":"URI"}');
 
-        $mockController = m::mock('\Zend\Mvc\Controller\AbstractActionController');
+        $mockController = m::mock('\Laminas\Mvc\Controller\AbstractActionController');
         $mockController->shouldReceive('getRequest->isXmlHttpRequest')
             ->andReturn(true);
 
@@ -81,7 +81,7 @@ class RedirectTest extends MockeryTestCase
                 }
             );
 
-        $mockEvent = m::mock('\Zend\Mvc\MvcEvent');
+        $mockEvent = m::mock('\Laminas\Mvc\MvcEvent');
         $mockEvent->shouldReceive('getResponse')
             ->andReturn($mockResponse);
 

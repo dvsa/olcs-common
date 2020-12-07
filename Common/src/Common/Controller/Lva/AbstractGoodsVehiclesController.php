@@ -18,8 +18,8 @@ use Dvsa\Olcs\Transfer\Command\Vehicle\ReprintDisc;
 use Dvsa\Olcs\Transfer\Command\Vehicle\UpdateGoodsVehicle as LicenceUpdateGoodsVehicle;
 use Dvsa\Olcs\Transfer\Query as TransferQry;
 use Dvsa\Olcs\Transfer\Query\LicenceVehicle\LicenceVehicle;
-use Zend\Form\Element\Checkbox;
-use Zend\Form\FormInterface;
+use Laminas\Form\Element\Checkbox;
+use Laminas\Form\FormInterface;
 
 /**
  * Goods Vehicles
@@ -77,7 +77,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
      *
      * @param string $action Action
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     protected function checkForAlternativeCrudAction($action)
     {
@@ -87,11 +87,11 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
     /**
      * Process Index action
      *
-     * @return \Common\View\Model\Section|null|\Zend\Http\Response
+     * @return \Common\View\Model\Section|null|\Laminas\Http\Response
      */
     public function indexAction()
     {
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         $headerData = $this->getHeaderData();
@@ -142,7 +142,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
      *
      * @param array $crudActionData Action data
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     protected function handleCrudAction(array $crudActionData)
     {
@@ -242,11 +242,11 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
     /**
      * Process Add action
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     public function addAction()
     {
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         $result = $this->getVehicleSectionData();
@@ -300,7 +300,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         $params = [];
         $params['spacesRemaining'] = $result['spacesRemaining'];
 
-        /** @var \Zend\Form\FormInterface $form */
+        /** @var \Laminas\Form\FormInterface $form */
         $form = $this->getServiceLocator()
             ->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-goods-vehicles-add-vehicle')
@@ -355,11 +355,11 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
     /**
      * Process Edit Action
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     public function editAction()
     {
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
         $id = $this->params('child_id');
 
@@ -377,7 +377,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             'isRemoved' => !is_null($vehicleData['removalDate'])
         ];
 
-        /** @var \Zend\Form\FormInterface $form */
+        /** @var \Laminas\Form\FormInterface $form */
         $form = $this->getServiceLocator()
             ->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-goods-vehicles-edit-vehicle')
@@ -509,11 +509,11 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
     /**
      * Process Reprint action
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     public function reprintAction()
     {
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -677,11 +677,11 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
     /**
      * Show confirmation
      *
-     * @param \Zend\Http\Request $request Htt Request
+     * @param \Laminas\Http\Request $request Htt Request
      *
      * @return mixed
      */
-    protected function getConfirmationForm(\Zend\Http\Request $request)
+    protected function getConfirmationForm(\Laminas\Http\Request $request)
     {
         return $this->getServiceLocator()->get('Helper\Form')
             ->createFormWithRequest('GenericConfirmation', $request);
@@ -694,7 +694,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
      */
     protected function getFilters()
     {
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -764,7 +764,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
      *
      * @return void
      */
-    protected function mapErrors(\Zend\Form\FormInterface $form, array $errors)
+    protected function mapErrors(\Laminas\Form\FormInterface $form, array $errors)
     {
         $formMessages = [];
 
@@ -795,7 +795,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
      *
      * @return void
      */
-    protected function mapVehicleErrors(\Zend\Form\FormInterface $form, array $errors)
+    protected function mapVehicleErrors(\Laminas\Form\FormInterface $form, array $errors)
     {
         $errors = Mapper\Lva\GoodsVehiclesVehicle::mapFromErrors($errors, $form);
 

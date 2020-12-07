@@ -2,12 +2,12 @@
 
 namespace Common\Form\Elements\Custom;
 
-use Zend\Filter\StringTrim;
-use Zend\Form\Element\Text;
-use Zend\InputFilter\InputProviderInterface;
-use Zend\Validator\Digits;
-use Zend\Validator\NotEmpty;
-use Zend\Validator\StringLength;
+use Laminas\Filter\StringTrim;
+use Laminas\Form\Element\Text;
+use Laminas\InputFilter\InputProviderInterface;
+use Laminas\Validator\Digits;
+use Laminas\Validator\NotEmpty;
+use Laminas\Validator\StringLength;
 
 class EcmtNoOfPermitsElement extends Text implements InputProviderInterface
 {

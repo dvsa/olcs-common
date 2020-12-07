@@ -14,7 +14,7 @@ class Translate implements FormatterInterface
      *
      * @param array                               $data   Data
      * @param array                               $column Column parameters
-     * @param \Zend\ServiceManager\ServiceManager $sm     Service manager
+     * @param \Laminas\ServiceManager\ServiceManager $sm     Service manager
      *
      * @return string
      */

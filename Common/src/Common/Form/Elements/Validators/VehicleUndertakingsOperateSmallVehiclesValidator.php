@@ -7,7 +7,7 @@
  */
 namespace Common\Form\Elements\Validators;
 
-use Zend\Validator\AbstractValidator;
+use Laminas\Validator\AbstractValidator;
 
 /**
  * VehiclesUndertakingsOperateSmallVehiclesValidator
@@ -36,7 +36,7 @@ class VehicleUndertakingsOperateSmallVehiclesValidator extends AbstractValidator
         unset($value);
 
         // This only gets used if psvOperateSmallVehicles is shown
-        if ( isset($context['psvOperateSmallVhl']) ) {
+        if (isset($context['psvOperateSmallVhl'])) {
             if ($context['psvOperateSmallVhl'] === 'Y'
                 && trim($context['psvSmallVhlNotes']) === '') {
                 $this->error('required');

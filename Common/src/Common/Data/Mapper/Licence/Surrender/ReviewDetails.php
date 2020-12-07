@@ -5,7 +5,7 @@ namespace Common\Data\Mapper\Licence\Surrender;
 use Common\Data\Mapper\Licence\Surrender\Sections\LicenceDetails;
 use Common\Data\Mapper\Licence\Surrender\Sections\SurrenderSection;
 use Common\Service\Helper\TranslationHelperService;
-use Zend\Mvc\Controller\Plugin\Url;
+use Laminas\Mvc\Controller\Plugin\Url;
 
 class ReviewDetails
 {

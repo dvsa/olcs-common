@@ -29,19 +29,19 @@ class FormDateSelectTest extends TestCase
      */
     public function provideTestInvoke()
     {
-        $mockDs = m::mock('Zend\Form\Element\DateSelect');
+        $mockDs = m::mock('Laminas\Form\Element\DateSelect');
         $mockDs->shouldReceive('getYearElement->getValue')->andReturn('2014');
         $mockDs->shouldReceive('getMonthElement->getValue')->andReturn('11');
         $mockDs->shouldReceive('getDayElement->getValue')->andReturn('28');
 
-        $mockDsEmpty = m::mock('Zend\Form\Element\DateSelect');
+        $mockDsEmpty = m::mock('Laminas\Form\Element\DateSelect');
         $mockDsEmpty->shouldReceive('getYearElement->getValue')->andReturn(null);
 
         return [
             [$mockDs, '28/11/2014'],
             [$mockDsEmpty, ''],
             [null, null],
-            [m::mock('Zend\Form\ElementInterface'), '']
+            [m::mock('Laminas\Form\ElementInterface'), '']
         ];
     }
 }

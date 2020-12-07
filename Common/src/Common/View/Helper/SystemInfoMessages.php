@@ -5,7 +5,7 @@ namespace Common\View\Helper;
 use Common\Service\Cqrs\Query\CachingQueryService as QueryService;
 use Dvsa\Olcs\Transfer\Query\System\InfoMessage\GetListActive;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
-use Zend\View\Helper\AbstractHelper;
+use Laminas\View\Helper\AbstractHelper;
 
 /**
  * View helper to print system info messages

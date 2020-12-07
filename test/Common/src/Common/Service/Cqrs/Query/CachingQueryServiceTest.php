@@ -12,7 +12,7 @@ use Dvsa\Olcs\Transfer\Query\QueryContainerInterface;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Http\Response;
+use Laminas\Http\Response;
 
 /**
  * @covers Common\Service\Cqrs\Query\CachingQueryService
@@ -193,7 +193,7 @@ class CachingQueryServiceTest extends MockeryTestCase
         $mockCache = m::mock(CacheEncryptionService::class);
         $mockCache->expects('hasItem')->with('cache_key', 'encryption_mode')->andReturnFalse();
 
-        $mockLogger = m::mock(\Zend\Log\LoggerInterface::class);
+        $mockLogger = m::mock(\Laminas\Log\LoggerInterface::class);
         $mockLogger->expects('debug')->with('Using encryption mode: encryption_mode')->ordered();
         $mockLogger->expects('debug')->with('Storing in local cache: dto_class_name')->ordered();
         $mockLogger->expects('err')->with('Cache failure: No TTL value found for this query')->ordered();
@@ -233,7 +233,7 @@ class CachingQueryServiceTest extends MockeryTestCase
         $mockCache->expects('hasItem')->with('cache_key', 'encryption_mode')->andReturnFalse();
         $mockCache->expects('setItem')->with('cache_key', 'encryption_mode', $this->mockResult, $cacheTtl)->andReturn();
 
-        $mockLogger = m::mock(\Zend\Log\LoggerInterface::class);
+        $mockLogger = m::mock(\Laminas\Log\LoggerInterface::class);
         $mockLogger->expects('debug')->with('Using encryption mode: encryption_mode')->ordered();
         $mockLogger->expects('debug')->with('Storing in local cache: dto_class_name')->ordered();
         $mockLogger->expects('debug')->with('Storing in persistent cache with TTL of ' . $cacheTtl . ' seconds: dto_class_name')->ordered();
@@ -281,7 +281,7 @@ class CachingQueryServiceTest extends MockeryTestCase
         $mockCache->expects('hasItem')->with('cache_key', 'encryption_mode')->andReturnTrue();
         $mockCache->expects('getItem')->with('cache_key', true)->andReturn($this->mockResult);
 
-        $mockLogger = m::mock(\Zend\Log\LoggerInterface::class);
+        $mockLogger = m::mock(\Laminas\Log\LoggerInterface::class);
         $mockLogger->expects('debug')->with('Using encryption mode: encryption_mode')->ordered();
         $mockLogger->expects('debug')->with('Fetching from persistent cache: dto_class_name')->ordered();
         $mockLogger->expects('debug')->with('Storing in local cache: dto_class_name')->ordered();
@@ -317,7 +317,7 @@ class CachingQueryServiceTest extends MockeryTestCase
         $mockCache->expects('hasItem')->with('cache_key', 'encryption_mode')->andReturnTrue();
         $mockCache->expects('getItem')->with('cache_key', true)->andThrow(new \Exception('exception_msg'));
 
-        $mockLogger = m::mock(\Zend\Log\LoggerInterface::class);
+        $mockLogger = m::mock(\Laminas\Log\LoggerInterface::class);
         $mockLogger->expects('debug')->with('Using encryption mode: encryption_mode')->ordered();
         $mockLogger->expects('debug')->with('Fetching from persistent cache: dto_class_name')->ordered();
         $mockLogger->expects('err')->with('Cache failure: exception_msg')->ordered();

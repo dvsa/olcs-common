@@ -3,7 +3,7 @@
 namespace Common\Form\Elements\Custom;
 
 use Common\Service\Qa\Custom\Ecmt\NoOfPermitsSingleValidator;
-use Zend\Validator\GreaterThan;
+use Laminas\Validator\GreaterThan;
 
 class EcmtNoOfPermitsSingleElement extends EcmtNoOfPermitsElement
 {

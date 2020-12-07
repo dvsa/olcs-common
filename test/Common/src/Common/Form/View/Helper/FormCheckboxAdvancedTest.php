@@ -5,9 +5,9 @@ namespace CommonTest\Form\View\Helper;
 use Common\Form\View\Helper\FormCheckboxAdvanced;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\ElementInterface;
-use Zend\View\Renderer\RendererInterface;
-use Zend\View\Model\ViewModel;
+use Laminas\Form\ElementInterface;
+use Laminas\View\Renderer\RendererInterface;
+use Laminas\View\Model\ViewModel;
 
 class FormCheckboxAdvancedTest extends MockeryTestCase
 {

@@ -2,12 +2,12 @@
 
 namespace Common\View\Helper;
 
-use Zend\I18n\View\Helper\Translate;
-use Zend\Mvc\Router\Http\RouteMatch;
-use Zend\View\Helper\AbstractHelper;
-use Zend\View\Helper\Placeholder;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\I18n\View\Helper\Translate;
+use Laminas\Mvc\Router\Http\RouteMatch;
+use Laminas\View\Helper\AbstractHelper;
+use Laminas\View\Helper\Placeholder;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use Olcs\Logging\Log\Logger;
 
 /**

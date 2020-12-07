@@ -5,7 +5,7 @@
  */
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
 
 /**
  * Text Max 255 Min 5

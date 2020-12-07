@@ -4,8 +4,8 @@ namespace Common\Service\Validation;
 
 use Common\Service\Validation\Result\ValidationFailed;
 use Common\Service\Validation\Result\ValidationSuccessful;
-use Zend\Filter\Exception\RuntimeException;
-use Zend\InputFilter\InputInterface;
+use Laminas\Filter\Exception\RuntimeException;
+use Laminas\InputFilter\InputInterface;
 
 /**
  * Class ChainedValidator

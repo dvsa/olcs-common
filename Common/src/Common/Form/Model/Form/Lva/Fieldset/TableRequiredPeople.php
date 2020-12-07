@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Lva\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 use Common\Form\Model\Fieldset\TableRequired;
 
 /**
@@ -17,7 +17,7 @@ class TableRequiredPeople extends TableRequired
      *     "name":"Common\Form\Elements\Validators\TableRequiredValidator",
      *     "options":{"label":"person", "rowsRequired":1}
      * })
-     * @Form\Validator({"name":"Zend\Validator\NotEmpty","options":{"array"}})
+     * @Form\Validator({"name":"Laminas\Validator\NotEmpty","options":{"array"}})
      */
     public $rows;
 

@@ -14,11 +14,11 @@ use Dvsa\Olcs\Transfer\Command\LoggerOmitContentInterface;
 use Dvsa\Olcs\Transfer\Command\User\UpdateUserLastLoginAt;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Http\Client\Exception\RuntimeException;
-use Zend\Http\Header\Cookie;
-use Zend\Http\Headers;
-use Zend\Http\Response as HttpResponse;
-use Zend\Mvc\Router\Exception\RuntimeException as RouterRuntimeException;
+use Laminas\Http\Client\Exception\RuntimeException;
+use Laminas\Http\Header\Cookie;
+use Laminas\Http\Headers;
+use Laminas\Http\Response as HttpResponse;
+use Laminas\Mvc\Router\Exception\RuntimeException as RouterRuntimeException;
 
 /**
  * @covers \Common\Service\Cqrs\Command\CommandService
@@ -36,11 +36,11 @@ class CommandServiceTest extends MockeryTestCase
     /** @var  m\MockInterface | CommandContainerInterface */
     private $mockCmd;
 
-    /** @var  m\MockInterface | \Zend\Mvc\Router\RouteInterface */
+    /** @var  m\MockInterface | \Laminas\Mvc\Router\RouteInterface */
     private $mockRouter;
-    /** @var  m\MockInterface | \Zend\Http\Client */
+    /** @var  m\MockInterface | \Laminas\Http\Client */
     private $mockClient;
-    /** @var  m\MockInterface | \Zend\Http\Request */
+    /** @var  m\MockInterface | \Laminas\Http\Request */
     private $mockRequest;
     /** @var  m\MockInterface | \Common\Service\Helper\FlashMessengerHelperService */
     private $mockFlashMsgr;
@@ -57,9 +57,9 @@ class CommandServiceTest extends MockeryTestCase
             ->shouldReceive('getMethod')->atMost(1)->andReturn(self::METHOD)
             ->shouldReceive('getDto')->atMost(1)->andReturn($this->mockDto);
 
-        $this->mockRouter = m::mock(\Zend\Mvc\Router\RouteInterface::class)->makePartial();
-        $this->mockClient = m::mock(\Zend\Http\Client::class)->makePartial();
-        $this->mockRequest = m::mock(\Zend\Http\Request::class)->makePartial();
+        $this->mockRouter = m::mock(\Laminas\Mvc\Router\RouteInterface::class)->makePartial();
+        $this->mockClient = m::mock(\Laminas\Http\Client::class)->makePartial();
+        $this->mockRequest = m::mock(\Laminas\Http\Request::class)->makePartial();
         $this->mockFlashMsgr = m::mock(\Common\Service\Helper\FlashMessengerHelperService::class);
 
         $this->sut = new CommandService(

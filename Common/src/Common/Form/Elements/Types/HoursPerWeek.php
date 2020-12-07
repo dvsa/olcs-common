@@ -8,7 +8,7 @@
  */
 namespace Common\Form\Elements\Types;
 
-use Zend\Form\Fieldset;
+use Laminas\Form\Fieldset;
 
 /**
  * Hours per week fieldset

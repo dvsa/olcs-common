@@ -38,9 +38,9 @@ class ValidateIfTest extends MockeryTestCase
      */
     public function testGetValidatorChain()
     {
-        $mockValidator = m::mock('Zend\Validator\NotEmpty');
+        $mockValidator = m::mock('Laminas\Validator\NotEmpty');
 
-        $mockValidatorPluginManager = m::mock('Zend\Validator\ValidatorPluginManager');
+        $mockValidatorPluginManager = m::mock('Laminas\Validator\ValidatorPluginManager');
         $mockValidatorPluginManager->shouldReceive('get')->with('NotEmpty', [])->andReturn($mockValidator);
 
         $sut = new ValidateIf();
@@ -48,7 +48,7 @@ class ValidateIfTest extends MockeryTestCase
         $sut->setValidators([['name'=>'NotEmpty']]);
 
         $validatorChain = $sut->getValidatorChain();
-        $this->assertInstanceOf('Zend\Validator\ValidatorChain', $validatorChain);
+        $this->assertInstanceOf('Laminas\Validator\ValidatorChain', $validatorChain);
         $this->assertSame($validatorChain, $sut->getValidatorChain());
 
         $this->assertCount(1, $validatorChain->getValidators());
@@ -67,7 +67,7 @@ class ValidateIfTest extends MockeryTestCase
     {
         $errorMessages = empty($errorMessages) ? ['error' => 'message'] : $errorMessages;
 
-        $mockValidatorChain = m::mock('Zend\Validator\ValidatorChain');
+        $mockValidatorChain = m::mock('Laminas\Validator\ValidatorChain');
         $mockValidatorChain->shouldReceive('isValid')->with($value, $context)->andReturn($chainValid);
         $mockValidatorChain->shouldReceive('getMessages')->andReturn($errorMessages);
 
@@ -116,7 +116,7 @@ class ValidateIfTest extends MockeryTestCase
 
     public function testIsValidInjecttPost()
     {
-        $mockValidatorChain = m::mock('Zend\Validator\ValidatorChain');
+        $mockValidatorChain = m::mock('Laminas\Validator\ValidatorChain');
         $mockValidatorChain->shouldReceive('isValid')->with('XXX', ['bar' => 'VALUE'])->andReturn(true);
 
         $_POST = ['foo' => ['bar' => 'VALUE']];

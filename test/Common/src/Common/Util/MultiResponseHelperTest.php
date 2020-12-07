@@ -4,7 +4,7 @@
 namespace CommonTest\Controller\Util;
 
 use Common\Util\MultiResponseHelper;
-use Zend\Http\Response;
+use Laminas\Http\Response;
 
 /**
  * Class MultiResponseHelperTest

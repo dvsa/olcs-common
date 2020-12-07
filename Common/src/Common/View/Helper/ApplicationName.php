@@ -8,10 +8,10 @@
 
 namespace Common\View\Helper;
 
-use Zend\View\Helper\HelperInterface;
-use Zend\View\Helper\AbstractHelper;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\View\Helper\HelperInterface;
+use Laminas\View\Helper\AbstractHelper;
+use Laminas\ServiceManager\ServiceLocatorAwareInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * ApplicationName view helper

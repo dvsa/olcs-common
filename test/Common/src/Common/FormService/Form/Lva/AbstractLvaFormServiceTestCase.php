@@ -9,7 +9,7 @@ namespace CommonTest\FormService\Form\Lva;
 
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Form;
+use Laminas\Form\Form;
 
 /**
  * Abstract LVA Form Service Test Case

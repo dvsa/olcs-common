@@ -7,9 +7,9 @@
  */
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\Form\Element as ZendElement;
-use Zend\Validator as ZendValidator;
-use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\Form\Element as ZendElement;
+use Laminas\Validator as LaminasValidator;
+use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
 
 /**
  * Name Filter
@@ -29,10 +29,10 @@ class Name extends ZendElement implements InputProviderInterface
             'name' => $this->getName(),
             'required' => false,
             'filters' => [
-                ['name' => 'Zend\Filter\StringTrim'],
+                ['name' => 'Laminas\Filter\StringTrim'],
             ],
             'validators' => [
-                ['name' => 'Zend\Validator\StringLength', 'options' => ['min' => 2, 'max' => 35]]
+                ['name' => 'Laminas\Validator\StringLength', 'options' => ['min' => 2, 'max' => 35]]
             ]
         ];
 

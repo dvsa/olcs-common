@@ -3,9 +3,9 @@
 namespace Common\Form\Elements\Custom;
 
 use Common\Form\Elements\Validators\EcmtCandidatePermitSelectionValidator;
-use Zend\Form\Element\Hidden;
-use Zend\InputFilter\InputProviderInterface;
-use Zend\Validator\Callback;
+use Laminas\Form\Element\Hidden;
+use Laminas\InputFilter\InputProviderInterface;
+use Laminas\Validator\Callback;
 
 class EcmtCandidatePermitSelectionValidatingElement extends Hidden implements InputProviderInterface
 {

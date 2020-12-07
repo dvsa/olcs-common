@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Lva\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 use Common\Form\Model\Form\Traits\VersionTrait;
 
 /**
@@ -26,7 +26,7 @@ class SubsidiaryCompany
      *     "error-message": "subsidiary-company-name-error"
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
      */
     public $name = null;
 

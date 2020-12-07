@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Attributes({
@@ -14,7 +14,7 @@ class MultipleFileUpload
     /**
      * @Form\Required(false)
      * @Form\Type("Hidden")
-     * @Form\Validator({"name": "Zend\Validator\NotEmpty", "options": {"null"}})
+     * @Form\Validator({"name": "Laminas\Validator\NotEmpty", "options": {"null"}})
      * @Form\Validator({"name": "Common\Validator\FileUploadCountV2", "options": {"min": 1}})
      */
     public $fileCount = null;

@@ -3,7 +3,7 @@
 namespace CommonTest\Form\View\Helper\Extended\Stub;
 
 use Common\Form\View\Helper\Extended\FormRadio;
-use Zend\Form\Element\MultiCheckbox;
+use Laminas\Form\Element\MultiCheckbox;
 
 class FormRadioStub extends FormRadio
 {

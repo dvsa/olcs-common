@@ -8,8 +8,8 @@
  */
 namespace CommonTest\Form\View\Helper;
 
-use Zend\View\HelperPluginManager;
-use Zend\View\Renderer\PhpRenderer;
+use Laminas\View\HelperPluginManager;
+use Laminas\View\Renderer\PhpRenderer;
 
 /**
  * FormElementErrors Test
@@ -23,7 +23,7 @@ class FormElementErrorsTest extends \PHPUnit\Framework\TestCase
 
     public function setUp(): void
     {
-        $this->element = new \Zend\Form\Element\Text('test');
+        $this->element = new \Laminas\Form\Element\Text('test');
         $this->element->setMessages(['Message']);
     }
 
@@ -32,8 +32,8 @@ class FormElementErrorsTest extends \PHPUnit\Framework\TestCase
      */
     public function testRender()
     {
-        $translator = new \Zend\I18n\Translator\Translator();
-        $translateHelper = new \Zend\I18n\View\Helper\Translate();
+        $translator = new \Laminas\I18n\Translator\Translator();
+        $translateHelper = new \Laminas\I18n\View\Helper\Translate();
         $translateHelper->setTranslator($translator);
 
         $helpers = new HelperPluginManager();

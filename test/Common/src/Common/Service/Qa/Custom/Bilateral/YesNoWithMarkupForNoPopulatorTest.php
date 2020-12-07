@@ -9,7 +9,7 @@ use Common\Service\Qa\Custom\Common\HtmlAdder;
 use Common\Service\Qa\RadioFactory;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Fieldset;
+use Laminas\Form\Fieldset;
 
 /**
  * YesNoWithMarkupForNoPopulatorTest

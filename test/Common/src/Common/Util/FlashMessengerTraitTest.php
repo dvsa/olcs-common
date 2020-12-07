@@ -8,7 +8,7 @@
  */
 namespace CommonTest\Controller\Util;
 
-use Zend\Mvc\Controller\Plugin\FlashMessenger as FlashMessengerPlugin;
+use Laminas\Mvc\Controller\Plugin\FlashMessenger as FlashMessengerPlugin;
 
 /**
  * Test FlashMessengerTrait

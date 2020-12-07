@@ -15,7 +15,7 @@ class CrudTableTraitTest extends MockeryTestCase
 {
     /** @var  Stubs\CrudTableTraitStub|m\MockInterface */
     protected $sut;
-    /** @var  \Zend\ServiceManager\ServiceManager */
+    /** @var  \Laminas\ServiceManager\ServiceManager */
     protected $sm;
 
     protected function setUp(): void
@@ -169,7 +169,7 @@ class CrudTableTraitTest extends MockeryTestCase
             ->andReturn('redirect')
             ->getMock();
 
-        $mockRequest = m::mock(\Zend\Http\Request::class);
+        $mockRequest = m::mock(\Laminas\Http\Request::class);
         $mockRequest->shouldReceive('isPost')->andReturn(true);
         $mockRequest->shouldReceive('getQuery->toArray')->andReturn($queryParams);
 

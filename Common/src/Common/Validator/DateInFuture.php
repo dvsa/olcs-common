@@ -5,7 +5,7 @@ namespace Common\Validator;
 /**
  * @package Common\Validator
  */
-class DateInFuture extends \Zend\Validator\AbstractValidator
+class DateInFuture extends \Laminas\Validator\AbstractValidator
 {
     const NOT_IN_FUTURE = 'notInFuture';
 
@@ -32,7 +32,6 @@ class DateInFuture extends \Zend\Validator\AbstractValidator
         if ($interval->invert !== 1) {
             $this->error(self::NOT_IN_FUTURE);
             return false;
-
         }
         return true;
     }

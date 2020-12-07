@@ -7,8 +7,8 @@ use Common\Controller\Lva\Adapters\AbstractPeopleAdapter;
 use Common\Service\Table\TableBuilder;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Form;
-use Zend\Mvc\Controller\Plugin\FlashMessenger;
+use Laminas\Form\Form;
+use Laminas\Mvc\Controller\Plugin\FlashMessenger;
 
 /**
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
@@ -27,7 +27,7 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->mockResp = m::mock(\Zend\Http\Response::class);
+        $this->mockResp = m::mock(\Laminas\Http\Response::class);
         $this->mockResp->shouldReceive('isOk')->andReturn(true);
 
         $this->sut = m::mock(AbstractPeopleAdapter::class)
@@ -247,7 +247,7 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
         $mockTableBuilder
             ->shouldReceive('prepareTable')
             ->andReturnUsing(
-                function($tableConfig, $tableData) use ($expected) {
+                function ($tableConfig, $tableData) use ($expected) {
                     $this->assertSame($expected, $tableData);
                 }
             );

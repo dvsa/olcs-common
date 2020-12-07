@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Lva\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Options({"label":""})
@@ -18,9 +18,9 @@ class VehiclesTransferDetails
      * })
      * @Form\Type("Select")
      * @Form\Validator({
-     *      "name": "Zend\Validator\NotEmpty",
+     *      "name": "Laminas\Validator\NotEmpty",
      *      "options": {
-     *          "messages":{Zend\Validator\NotEmpty::IS_EMPTY:"licence.vehicles_transfer.form.message_empty"}
+     *          "messages":{Laminas\Validator\NotEmpty::IS_EMPTY:"licence.vehicles_transfer.form.message_empty"}
      *      }
      * })
      */

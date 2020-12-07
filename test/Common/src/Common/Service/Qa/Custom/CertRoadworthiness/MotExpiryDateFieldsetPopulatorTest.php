@@ -9,9 +9,9 @@ use Common\Service\Qa\Custom\Common\FileUploadFieldsetGenerator;
 use Common\Service\Qa\Custom\Common\HtmlAdder;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Fieldset;
-use Zend\Form\Form;
-use Zend\Form\InputFilterProviderFieldset;
+use Laminas\Form\Fieldset;
+use Laminas\Form\Form;
+use Laminas\Form\InputFilterProviderFieldset;
 
 /**
  * MotExpiryDateFieldsetPopulatorTest

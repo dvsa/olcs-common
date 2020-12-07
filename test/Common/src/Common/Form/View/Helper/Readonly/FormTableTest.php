@@ -21,7 +21,7 @@ class FormTableTest extends TestCase
     public function testInvoke($element, $expected)
     {
 
-        $mockView = new \Zend\View\Renderer\PhpRenderer();
+        $mockView = new \Laminas\View\Renderer\PhpRenderer();
 
         $sut = new FormTable();
 
@@ -35,20 +35,20 @@ class FormTableTest extends TestCase
     {
         //need tests for Select, TextArea
 
-        $mockHidden = m::mock('Zend\Form\ElementInterface');
+        $mockHidden = m::mock('Laminas\Form\ElementInterface');
         $mockHidden->shouldReceive('getAttribute')->with('type')->andReturn('hidden');
 
-        $mockRemoveIfReadOnly = m::mock('Zend\Form\ElementInterface');
+        $mockRemoveIfReadOnly = m::mock('Laminas\Form\ElementInterface');
         $mockRemoveIfReadOnly->shouldReceive('getAttribute')->with('type')->andReturnNull();
         $mockRemoveIfReadOnly->shouldReceive('getOption')->with('remove_if_readonly')->andReturn(true);
 
-        $mockText = m::mock('Zend\Form\ElementInterface');
+        $mockText = m::mock('Laminas\Form\ElementInterface');
         $mockText->shouldReceive('getAttribute')->with('type')->andReturn('textarea');
         $mockText->shouldReceive('getLabel')->andReturn('Label');
         $mockText->shouldReceive('getValue')->andReturn('Value');
         $mockText->shouldReceive('getOption')->with('remove_if_readonly')->andReturnNull();
 
-        $mockSelect = m::mock('Zend\Form\Element\Select');
+        $mockSelect = m::mock('Laminas\Form\Element\Select');
         $mockSelect->shouldReceive('getAttribute')->with('type')->andReturn('select');
         $mockSelect->shouldReceive('getLabel')->andReturn('Label');
         $mockSelect->shouldReceive('getValue')->andReturn('Value');

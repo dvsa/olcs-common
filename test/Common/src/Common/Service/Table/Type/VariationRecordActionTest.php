@@ -20,9 +20,9 @@ class VariationRecordActionTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->mockTranslator = m::mock(\Zend\I18n\Translator\TranslatorInterface::class);
+        $this->mockTranslator = m::mock(\Laminas\I18n\Translator\TranslatorInterface::class);
 
-        $mockSm = m::mock(\Zend\ServiceManager\ServiceLocatorInterface::class);
+        $mockSm = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class);
         $mockSm->shouldReceive('get')->once()->with('translator')->andReturn($this->mockTranslator);
 
         $mockAuthService = m::mock()

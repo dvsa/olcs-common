@@ -12,7 +12,7 @@ namespace Common\Form\View\Helper\Extended;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormRange extends \Zend\Form\View\Helper\FormRange
+class FormRange extends \Laminas\Form\View\Helper\FormRange
 {
     use PrepareAttributesTrait;
 }

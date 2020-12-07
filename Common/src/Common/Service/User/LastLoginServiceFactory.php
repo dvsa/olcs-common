@@ -2,11 +2,11 @@
 namespace Common\Service\User;
 
 use Common\Service\Cqrs\Command\CommandSender;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorAwareInterface;
+use Laminas\ServiceManager\ServiceLocatorAwareTrait;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
-final class LastLoginServiceFactory implements ServiceLocatorAwareInterface, \Zend\ServiceManager\FactoryInterface
+final class LastLoginServiceFactory implements ServiceLocatorAwareInterface, \Laminas\ServiceManager\FactoryInterface
 {
     use ServiceLocatorAwareTrait;
 

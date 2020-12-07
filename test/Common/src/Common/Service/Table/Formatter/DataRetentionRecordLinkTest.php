@@ -5,8 +5,8 @@ namespace CommonTest\Service\Table\Formatter;
 use Common\Service\Table\Formatter\DataRetentionRecordLink;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
-use Zend\Mvc\Controller\Plugin\Url;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\Mvc\Controller\Plugin\Url;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use Common\View\Helper\Status as StatusHelper;
 
 /**

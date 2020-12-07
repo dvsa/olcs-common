@@ -7,7 +7,7 @@ use Common\Data\Mapper\Continuation\InsufficientFinances;
 use Common\Form\Form;
 use Common\Service\Helper\TranslationHelperService;
 use Dvsa\Olcs\Transfer\Command\ContinuationDetail\UpdateInsufficientFinances;
-use Zend\View\Model\ViewModel;
+use Laminas\View\Model\ViewModel;
 
 /**
  * InsufficientFinancesController

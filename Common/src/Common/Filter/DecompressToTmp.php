@@ -2,8 +2,8 @@
 
 namespace Common\Filter;
 
-use Zend\Filter\AbstractFilter;
-use Zend\Filter\Exception;
+use Laminas\Filter\AbstractFilter;
+use Laminas\Filter\Exception;
 use Common\Filesystem\Filesystem;
 
 /**
@@ -13,7 +13,7 @@ use Common\Filesystem\Filesystem;
 class DecompressToTmp extends AbstractFilter
 {
     /**
-     * @var \Zend\Filter\Decompress
+     * @var \Laminas\Filter\Decompress
      */
     protected $decompressFilter;
 
@@ -28,7 +28,7 @@ class DecompressToTmp extends AbstractFilter
     protected $fileSystem;
 
     /**
-     * @param \Zend\Filter\Decompress $decompressFilter
+     * @param \Laminas\Filter\Decompress $decompressFilter
      * @return $this
      */
     public function setDecompressFilter($decompressFilter)
@@ -38,7 +38,7 @@ class DecompressToTmp extends AbstractFilter
     }
 
     /**
-     * @return \Zend\Filter\Decompress
+     * @return \Laminas\Filter\Decompress
      */
     public function getDecompressFilter()
     {

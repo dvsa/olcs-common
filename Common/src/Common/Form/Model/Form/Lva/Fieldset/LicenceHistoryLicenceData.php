@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Lva\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Name("data")
@@ -29,7 +29,7 @@ class LicenceHistoryLicenceData
      *     "error-message": "licenceHistoryLicenceData_licNo-error"
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
      */
     public $licNo = null;
 
@@ -41,7 +41,7 @@ class LicenceHistoryLicenceData
      *     "error-message": "licenceHistoryLicenceData_holderName-error"
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
      */
     public $holderName = null;
 
@@ -53,7 +53,7 @@ class LicenceHistoryLicenceData
      *     "value_options": {"Y": "Yes", "N": "No"},
      *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"}
      * })
-     * @Form\Type("\Zend\Form\Element\Radio")
+     * @Form\Type("\Laminas\Form\Element\Radio")
      */
     public $willSurrender = null;
 

@@ -2,7 +2,7 @@
 
 namespace Common\Util;
 
-use Zend\View\Helper\EscapeHtml;
+use Laminas\View\Helper\EscapeHtml;
 
 /**
  * Contains escape functions

@@ -12,7 +12,7 @@ namespace Common\Form\View\Helper\Extended;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormLabel extends \Zend\Form\View\Helper\FormLabel
+class FormLabel extends \Laminas\Form\View\Helper\FormLabel
 {
     use PrepareAttributesTrait;
 }

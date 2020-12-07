@@ -2,7 +2,7 @@
 
 namespace Common\Service\Cqrs;
 
-use Zend\Http\Response as HttpResponse;
+use Laminas\Http\Response as HttpResponse;
 
 /**
  * Response
@@ -29,7 +29,7 @@ class Response
 
     /**
      * Is response has client error
-     * 
+     *
      * @return bool
      */
     public function isClientError()
@@ -44,12 +44,12 @@ class Response
      */
     public function isForbidden()
     {
-        return $this->getStatusCode() === \Zend\Http\Response::STATUS_CODE_403;
+        return $this->getStatusCode() === \Laminas\Http\Response::STATUS_CODE_403;
     }
 
     /**
      * Is not found
-     * 
+     *
      * @return bool
      */
     public function isNotFound()
@@ -59,7 +59,7 @@ class Response
 
     /**
      * Is Success
-     * 
+     *
      * @return bool
      */
     public function isOk()
@@ -69,7 +69,7 @@ class Response
 
     /**
      * Is response has server error
-     * 
+     *
      * @return bool
      */
     public function isServerError()
@@ -79,7 +79,7 @@ class Response
 
     /**
      * Set result
-     * 
+     *
      * @param mixed $result Result
      *
      * @return $this
@@ -133,7 +133,7 @@ class Response
 
     /**
      * Return navite http response object
-     * 
+     *
      * @return HttpResponse
      */
     public function getHttpResponse()

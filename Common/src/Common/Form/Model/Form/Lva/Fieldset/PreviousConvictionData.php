@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Lva\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Name("data")
@@ -36,7 +36,7 @@ class PreviousConvictionData
      *     "error-message": "previousConvictionData_forename-error"
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
      */
     public $forename = null;
 
@@ -48,7 +48,7 @@ class PreviousConvictionData
      *     "error-message": "previousConvictionData_familyName-error"
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
      */
     public $familyName = null;
 
@@ -91,7 +91,7 @@ class PreviousConvictionData
      *     "hint-position": "above"
      * })
      * @Form\Type("TextArea")
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
      */
     public $notes = null;
 
@@ -103,7 +103,7 @@ class PreviousConvictionData
      *     "error-message": "previousConvictionData_courtFpn-error"
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
      */
     public $courtFpn = null;
 
@@ -115,7 +115,7 @@ class PreviousConvictionData
      *     "error-message": "previousConvictionData_penalty-error"
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
      */
     public $penalty = null;
 }

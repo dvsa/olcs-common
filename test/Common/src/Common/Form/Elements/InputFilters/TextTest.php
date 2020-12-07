@@ -62,7 +62,7 @@ class TextTest extends \PHPUnit\Framework\TestCase
     public function testStringTrimFilterIsUsed()
     {
         $this->assertEquals(
-            [['name' => 'Zend\Filter\StringTrim']],
+            [['name' => 'Laminas\Filter\StringTrim']],
             $this->getSpecificationElement('filters')
         );
     }
@@ -101,9 +101,9 @@ class TextTest extends \PHPUnit\Framework\TestCase
 
         static::assertEquals(
             [
-                'name' => \Zend\Validator\NotEmpty::class,
+                'name' => \Laminas\Validator\NotEmpty::class,
                 'options' => [
-                    'type' => \Zend\Validator\NotEmpty::PHP,
+                    'type' => \Laminas\Validator\NotEmpty::PHP,
                 ],
             ],
             current($validators)

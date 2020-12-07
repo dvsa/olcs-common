@@ -3,8 +3,8 @@
 namespace Common\Service\Data;
 
 use Common\Service\Data\Interfaces\RestClientAware;
-use Zend\ServiceManager\AbstractPluginManager;
-use Zend\ServiceManager\Exception;
+use Laminas\ServiceManager\AbstractPluginManager;
+use Laminas\ServiceManager\Exception;
 
 /**
  * Class PluginManager
@@ -29,7 +29,7 @@ class PluginManager extends AbstractPluginManager
 
             /** @var \Common\Util\ResolveApi $apiResolver */
             $apiResolver = $serviceLocator->get('ServiceApiResolver');
-            /** @var \Zend\Mvc\I18n\Translator $translator */
+            /** @var \Laminas\Mvc\I18n\Translator $translator */
             $translator = $serviceLocator->get('translator');
 
             $client = $apiResolver->getClient($instance->getServiceName());

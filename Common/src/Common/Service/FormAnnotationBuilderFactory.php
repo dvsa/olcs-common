@@ -3,9 +3,9 @@
 namespace Common\Service;
 
 use Common\Form\Annotation\CustomAnnotationBuilder;
-use Zend\Form\Factory;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\Form\Factory;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Class FormAnnotationBuilderFactory

@@ -5,7 +5,7 @@ namespace CommonTest\Service\Cqrs;
 use Common\Service\Cqrs\Response;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
-use Zend\Http\Response as HttpResponse;
+use Laminas\Http\Response as HttpResponse;
 
 /**
  * @covers \Common\Service\Cqrs\Response

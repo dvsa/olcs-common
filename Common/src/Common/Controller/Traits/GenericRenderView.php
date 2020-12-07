@@ -7,7 +7,7 @@
  */
 namespace Common\Controller\Traits;
 
-use Zend\View\Model\ViewModel;
+use Laminas\View\Model\ViewModel;
 
 /**
  * Generic Render View

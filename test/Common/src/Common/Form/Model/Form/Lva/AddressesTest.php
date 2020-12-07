@@ -253,7 +253,7 @@ class AddressesTest extends AbstractFormValidationTestCase
         $this->assertFormElementAllowEmpty($element, false);
         $this->assertFormElementValid($element, 'N');
         $this->assertFormElementValid($element, 'Y');
-        $this->assertFormElementNotValid($element, 'X', \Zend\Validator\InArray::NOT_IN_ARRAY);
+        $this->assertFormElementNotValid($element, 'X', \Laminas\Validator\InArray::NOT_IN_ARRAY);
     }
 
     public function testConsultantWrittenPermissionToEngage()

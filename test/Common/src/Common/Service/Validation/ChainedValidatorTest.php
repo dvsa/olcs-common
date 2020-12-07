@@ -9,7 +9,7 @@ use Common\Service\Validation\Result\ValidationFailed;
 use Common\Service\Validation\Result\ValidationSuccessful;
 use Common\Service\Validation\ChainedValidator;
 use Common\Service\Validation\CommandInterface;
-use Zend\InputFilter\InputInterface;
+use Laminas\InputFilter\InputInterface;
 
 /**
  * Class ChainedValidatorTest
@@ -45,7 +45,7 @@ class ChainedValidatorTest extends TestCase
         $validator->shouldReceive('getName')->andReturn('validator');
 
         $exceptionValidator = clone $validator;
-        $exceptionValidator->shouldReceive('isValid')->andThrow(new \Zend\Filter\Exception\RuntimeException('failed'));
+        $exceptionValidator->shouldReceive('isValid')->andThrow(new \Laminas\Filter\Exception\RuntimeException('failed'));
         $exceptionResult = new ValidationFailed($command, ['failed']);
 
         $failedValidator = clone $validator;

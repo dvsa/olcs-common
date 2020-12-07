@@ -7,7 +7,7 @@
  */
 namespace Common\Controller\Lva\Interfaces;
 
-use Zend\Form\Form;
+use Laminas\Form\Form;
 
 /**
  * Conditions Undertakings Adapter Interface

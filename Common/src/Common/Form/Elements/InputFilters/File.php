@@ -7,8 +7,8 @@
  */
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\Form\Element\File as ZendFile;
-use Zend\Validator\File\FilesSize;
+use Laminas\Form\Element\File as ZendFile;
+use Laminas\Validator\File\FilesSize;
 
 /**
  * Add a filesize validator to the file

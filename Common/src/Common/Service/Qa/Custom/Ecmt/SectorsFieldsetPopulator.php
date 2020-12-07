@@ -5,7 +5,7 @@ namespace Common\Service\Qa\Custom\Ecmt;
 use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Qa\FieldsetPopulatorInterface;
 use Common\Service\Qa\RadioFieldsetPopulator;
-use Zend\Form\Fieldset;
+use Laminas\Form\Fieldset;
 
 class SectorsFieldsetPopulator implements FieldsetPopulatorInterface
 {

@@ -5,7 +5,7 @@ namespace CommonTest\Service\Table\Formatter;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Table\Formatter\EbsrVariationNumber;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Class EbsrVariationNumberTest

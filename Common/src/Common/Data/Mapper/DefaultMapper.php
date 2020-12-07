@@ -2,7 +2,7 @@
 
 namespace Common\Data\Mapper;
 
-use Zend\Form\FormInterface;
+use Laminas\Form\FormInterface;
 
 /**
  * Default data mapper

@@ -5,10 +5,10 @@ namespace CommonTest\Service\Qa\Custom\Bilateral;
 use Common\Service\Qa\Custom\Bilateral\NoOfPermitsElement;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Filter\StringTrim;
-use Zend\Validator\Digits;
-use Zend\Validator\GreaterThan;
-use Zend\Validator\StringLength;
+use Laminas\Filter\StringTrim;
+use Laminas\Validator\Digits;
+use Laminas\Validator\GreaterThan;
+use Laminas\Validator\StringLength;
 
 /**
  * NoOfPermitsElementTest

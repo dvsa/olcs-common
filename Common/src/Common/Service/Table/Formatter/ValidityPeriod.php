@@ -9,8 +9,8 @@
 namespace Common\Service\Table\Formatter;
 
 use IntlDateFormatter;
-use Zend\I18n\View\Helper\DateFormat;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\I18n\View\Helper\DateFormat;
+use Laminas\ServiceManager\ServiceManager;
 
 /**
  * Validity period formatter

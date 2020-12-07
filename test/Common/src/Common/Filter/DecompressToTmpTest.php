@@ -28,7 +28,7 @@ class DecompressToTmpTest extends MockeryTestCase
             eval('namespace Common\Filter; function register_shutdown_function ($callback) { $callback(); }');
         }
 
-        $mockFilter = m::mock('\Zend\Filter\Decompress');
+        $mockFilter = m::mock('\Laminas\Filter\Decompress');
         $mockFilter->shouldReceive('filter')->with($filename)->andReturn($filePath);
         $mockFilter->shouldReceive('setTarget')->with($extractDir);
 

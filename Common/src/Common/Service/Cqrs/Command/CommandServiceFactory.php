@@ -8,9 +8,9 @@
 namespace Common\Service\Cqrs\Command;
 
 use Dvsa\Olcs\Utils\Client\ClientAdapterLoggingWrapper;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Http\Client;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\Http\Client;
 
 /**
  * Command Service Factory

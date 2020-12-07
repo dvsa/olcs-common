@@ -19,7 +19,10 @@ trait VehicleSearchTrait
     public function showRemovedVehiclesAction()
     {
         return $this->redirect()->toRouteAjax(
-            null, ['action' => 'index'], ['query' => ['includeRemoved' => 1]], true
+            null,
+            ['action' => 'index'],
+            ['query' => ['includeRemoved' => 1]],
+            true
         );
     }
 
@@ -31,7 +34,10 @@ trait VehicleSearchTrait
     public function hideRemovedVehiclesAction()
     {
         return $this->redirect()->toRouteAjax(
-            null, ['action' => 'index'], ['query' => []], true
+            null,
+            ['action' => 'index'],
+            ['query' => []],
+            true
         );
     }
 
@@ -40,13 +46,13 @@ trait VehicleSearchTrait
      *
      * @param array $headerData Data from Api
      *
-     * @return \Zend\Form\FormInterface|null
+     * @return \Laminas\Form\FormInterface|null
      */
     protected function getVehcileSearchForm($headerData)
     {
         $searchForm = null;
         if (($headerData['allVehicleCount'] > self::SEARCH_VEHICLES_COUNT) && ($this->lva !== 'application')) {
-            /** @var \Zend\Form\FormInterface $searchForm */
+            /** @var \Laminas\Form\FormInterface $searchForm */
             $searchForm = $this->getServiceLocator()->get('FormServiceManager')
                 ->get('lva-vehicles-search')
                 ->getForm();

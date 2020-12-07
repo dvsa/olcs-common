@@ -17,7 +17,7 @@ class CaseEntityNrStatus implements FormatterInterface
      *
      * @param array                               $data   Data
      * @param array                               $column Column data
-     * @param \Zend\ServiceManager\ServiceManager $sm     Service manager
+     * @param \Laminas\ServiceManager\ServiceManager $sm     Service manager
      *
      * @return string
      */
@@ -49,8 +49,7 @@ class CaseEntityNrStatus implements FormatterInterface
 
         $licStatus = $lic['status']['description'];
 
-        if (
-            $typeId === \Common\RefData::CASE_TYPE_LICENCE
+        if ($typeId === \Common\RefData::CASE_TYPE_LICENCE
             || $typeId === \Common\RefData::CASE_TYPE_IMPOUNDING
         ) {
             return sprintf(self::TEMPLATE_LIC, $licLink, $licStatus);

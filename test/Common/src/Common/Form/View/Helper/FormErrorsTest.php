@@ -11,8 +11,8 @@ use Common\Form\Elements\Types\PostcodeSearch;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Form\View\Helper\FormErrors;
-use Zend\Form\Element;
-use Zend\Form\Element\DateSelect;
+use Laminas\Form\Element;
+use Laminas\Form\Element\DateSelect;
 
 /**
  * Form Errors Test
@@ -27,7 +27,7 @@ class FormErrorsTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->view = m::mock('\Zend\View\Renderer\RendererInterface');
+        $this->view = m::mock('\Laminas\View\Renderer\RendererInterface');
 
         $this->sut = new FormErrors();
         $this->sut->setView($this->view);
@@ -44,7 +44,7 @@ class FormErrorsTest extends MockeryTestCase
 
     public function testInvokeRenderWithoutMessages()
     {
-        $form = m::mock('\Zend\Form\Form');
+        $form = m::mock('\Laminas\Form\Form');
         $messages = [];
         $expected = '';
 
@@ -84,8 +84,8 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Zend\Form\Form');
-        $mockFoo = m::mock('\Zend\Form\Element');
+        $form = m::mock('\Laminas\Form\Form');
+        $mockFoo = m::mock('\Laminas\Form\Element');
 
         // Expectations
         $this->view->shouldReceive('translate')
@@ -155,8 +155,8 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Zend\Form\Form');
-        $mockFoo = m::mock('\Zend\Form\Element');
+        $form = m::mock('\Laminas\Form\Form');
+        $mockFoo = m::mock('\Laminas\Form\Element');
 
         // Expectations
         $this->view->shouldReceive('translate')
@@ -225,8 +225,8 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Zend\Form\Form');
-        $mockFoo = m::mock('\Zend\Form\Element');
+        $form = m::mock('\Laminas\Form\Form');
+        $mockFoo = m::mock('\Laminas\Form\Element');
 
         // Expectations
         $this->view->shouldReceive('translate')
@@ -292,8 +292,8 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Zend\Form\Form');
-        $mockFoo = m::mock('\Zend\Form\Element');
+        $form = m::mock('\Laminas\Form\Form');
+        $mockFoo = m::mock('\Laminas\Form\Element');
 
         // Expectations
         $this->view->shouldReceive('translate')
@@ -354,7 +354,7 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Zend\Form\Form')->makePartial();
+        $form = m::mock('\Laminas\Form\Form')->makePartial();
         $mockFoo = m::mock(PostcodeSearch::class)->makePartial();
 
         // Expectations
@@ -393,7 +393,7 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Zend\Form\Form')->makePartial();
+        $form = m::mock('\Laminas\Form\Form')->makePartial();
         $element = (new DateSelect())->setAttribute('id', 'DS_ID');
 
         // Expectations
@@ -424,7 +424,7 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Zend\Form\Form')->makePartial();
+        $form = m::mock('\Laminas\Form\Form')->makePartial();
         $element = new Element('NAME');
 
         // Expectations
@@ -458,8 +458,8 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Zend\Form\Form');
-        $mockFoo = m::mock('\Zend\Form\Element');
+        $form = m::mock('\Laminas\Form\Form');
+        $mockFoo = m::mock('\Laminas\Form\Element');
 
         // Expectations
         $this->view->shouldReceive('translate')
@@ -537,8 +537,8 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Zend\Form\Form');
-        $mockFoo = m::mock('\Zend\Form\Element');
+        $form = m::mock('\Laminas\Form\Form');
+        $mockFoo = m::mock('\Laminas\Form\Element');
 
         // Expectations
         $this->view->shouldReceive('translate')
@@ -604,8 +604,8 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Zend\Form\Form');
-        $mockFoo = m::mock('\Zend\Form\Element');
+        $form = m::mock('\Laminas\Form\Form');
+        $mockFoo = m::mock('\Laminas\Form\Element');
 
         // Expectations
         $this->view->shouldReceive('translate')
@@ -680,8 +680,8 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Zend\Form\Form');
-        $mockFoo = m::mock('\Zend\Form\Element');
+        $form = m::mock('\Laminas\Form\Form');
+        $mockFoo = m::mock('\Laminas\Form\Element');
 
         // Expectations
         $this->view->shouldReceive('translate')
@@ -750,8 +750,8 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Zend\Form\Form');
-        $mockFoo = m::mock('\Zend\Form\Element');
+        $form = m::mock('\Laminas\Form\Form');
+        $mockFoo = m::mock('\Laminas\Form\Element');
 
         // Expectations
         $this->view->shouldReceive('translate')
@@ -824,8 +824,8 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Zend\Form\Form');
-        $mockFoo = m::mock('\Zend\Form\Element');
+        $form = m::mock('\Laminas\Form\Form');
+        $mockFoo = m::mock('\Laminas\Form\Element');
 
         // Expectations
         $this->view->shouldReceive('translate')
@@ -897,8 +897,8 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Zend\Form\Form');
-        $mockFoo = m::mock('\Zend\Form\Element');
+        $form = m::mock('\Laminas\Form\Form');
+        $mockFoo = m::mock('\Laminas\Form\Element');
 
         // Expectations
         $this->view->shouldReceive('translate')
@@ -969,8 +969,8 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Zend\Form\Form');
-        $mockFoo = m::mock('\Zend\Form\Element');
+        $form = m::mock('\Laminas\Form\Form');
+        $mockFoo = m::mock('\Laminas\Form\Element');
 
         // Expectations
         $this->view->shouldReceive('translate')

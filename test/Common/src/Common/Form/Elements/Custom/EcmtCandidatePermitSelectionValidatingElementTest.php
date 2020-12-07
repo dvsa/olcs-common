@@ -6,8 +6,8 @@ use Common\Form\Elements\Custom\EcmtCandidatePermitSelectionValidatingElement;
 use Common\Form\Elements\Validators\EcmtCandidatePermitSelectionValidator;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
-use Zend\Form\Element\Hidden;
-use Zend\Validator\Callback;
+use Laminas\Form\Element\Hidden;
+use Laminas\Validator\Callback;
 
 /**
  * EcmtCandidatePermitSelectionValidatingElementTest

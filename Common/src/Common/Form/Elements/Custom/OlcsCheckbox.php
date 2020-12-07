@@ -2,10 +2,10 @@
 
 namespace Common\Form\Elements\Custom;
 
-use Zend\Form\Element as ZendElement;
-use Zend\Validator as ZendValidator;
-use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
-use Zend\Form\LabelAwareInterface;
+use Laminas\Form\Element as ZendElement;
+use Laminas\Validator as LaminasValidator;
+use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\Form\LabelAwareInterface;
 
 /**
  * OlcsCheckbox element
@@ -18,7 +18,7 @@ class OlcsCheckbox extends ZendElement\Checkbox implements LabelAwareInterface
     {
         $labelPosition = $this->getLabelOption('label_position');
         if (empty($labelPosition)) {
-            $this->setLabelOption('label_position', \Zend\Form\View\Helper\FormRow::LABEL_APPEND);
+            $this->setLabelOption('label_position', \Laminas\Form\View\Helper\FormRow::LABEL_APPEND);
         }
 
         $alwaysWrap = $this->getLabelOption('always_wrap');

@@ -21,7 +21,7 @@ class DecompressToTmpDelegatorFactoryTest extends MockeryTestCase
 
         $mockFileSystem = m::mock('Common\Filesystem\Filesystem');
 
-        $mockSl = m::mock('\Zend\ServiceManager\ServiceManager');
+        $mockSl = m::mock('\Laminas\ServiceManager\ServiceManager');
         $mockSl->shouldReceive('getServiceLocator->get')->with('Config')->andReturn(['tmpDirectory' => '/tmp/']);
         $mockSl->shouldReceive('getServiceLocator->get')
                ->with('Common\Filesystem\Filesystem')
@@ -34,7 +34,7 @@ class DecompressToTmpDelegatorFactoryTest extends MockeryTestCase
 
         $this->assertInstanceOf('Common\Filter\DecompressUploadToTmp', $service);
         $this->assertEquals('/tmp/', $service->getTempRootDir());
-        $this->assertInstanceOf('Zend\Filter\Decompress', $service->getDecompressFilter());
+        $this->assertInstanceOf('Laminas\Filter\Decompress', $service->getDecompressFilter());
         $this->assertSame($mockFileSystem, $service->getFileSystem());
     }
 }

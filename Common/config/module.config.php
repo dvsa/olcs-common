@@ -140,10 +140,10 @@ return array(
             'Common\Util\AbstractServiceFactory'
         ),
         'aliases' => array(
-            'Cache' => 'Zend\Cache\Storage\StorageInterface',
+            'Cache' => 'Laminas\Cache\Storage\StorageInterface',
             'DataServiceManager' => 'Common\Service\Data\PluginManager',
             'translator' => 'MvcTranslator',
-            'Zend\Log' => 'Logger',
+            'Laminas\Log' => 'Logger',
             'TableBuilder' => 'Common\Service\Table\TableBuilderFactory',
             'NavigationFactory' => 'Common\Service\NavigationFactory',
             'QueryService' => \Common\Service\Cqrs\Query\CachingQueryService::class,
@@ -262,12 +262,12 @@ return array(
             // Added in a true Zend Framework V2 compatible factory for TableBuilder, eventually to replace Table above.
             'Common\Service\Table\TableBuilderFactory' => 'Common\Service\Table\TableBuilderFactory',
             'ServiceApiResolver' => 'Common\Service\Api\ResolverFactory',
-            'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
+            'navigation' => 'Laminas\Navigation\Service\DefaultNavigationFactory',
             'SectionService' => '\Common\Controller\Service\SectionServiceFactory',
             'category' => '\Common\Service\Data\CategoryDataService',
             'FormAnnotationBuilder' => '\Common\Service\FormAnnotationBuilderFactory',
             'Common\Service\Data\PluginManager' => Common\Service\Data\PluginManagerFactory::class,
-            'Zend\Cache\Storage\StorageInterface' => 'Zend\Cache\Service\StorageCacheFactory',
+            'Laminas\Cache\Storage\StorageInterface' => 'Laminas\Cache\Service\StorageCacheFactory',
             \Common\Rbac\Navigation\IsAllowedListener::class => Common\Rbac\Navigation\IsAllowedListener::class,
             \Common\Service\Data\Search\SearchTypeManager::class =>
                 \Common\Service\Data\Search\SearchTypeManagerFactory::class,

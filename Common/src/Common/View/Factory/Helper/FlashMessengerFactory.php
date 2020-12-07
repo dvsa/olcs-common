@@ -4,9 +4,9 @@ namespace Common\View\Factory\Helper;
 
 use Common\View\Helper\FlashMessenger;
 use Common\Service\Helper\FlashMessengerHelperService;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceManager;
 
 /**
  * Factory for @see Common\View\Helper\FlashMessenger

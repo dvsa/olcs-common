@@ -7,7 +7,7 @@
  */
 namespace Common\Form\Elements\Validators;
 
-use Zend\Validator\AbstractValidator;
+use Laminas\Validator\AbstractValidator;
 
 /**
  * VehiclesNumber Validator
@@ -64,7 +64,6 @@ class VehiclesNumber extends AbstractValidator
         $total += (isset($context['noOfTrailersRequired']) ? $context['noOfTrailersRequired'] : 0);
 
         if ($total < 1) {
-
             if (!isset($context['noOfTrailersRequired'])) {
                 $this->error($this->name . '-psv');
                 return false;

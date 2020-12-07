@@ -129,7 +129,7 @@ class InterimTest extends MockeryTestCase
             ]
         ];
 
-        $form = m::mock(\Zend\Form\Form::class);
+        $form = m::mock(\Laminas\Form\Form::class);
         $form->shouldReceive('setMessages')
             ->once()
             ->with($expected);

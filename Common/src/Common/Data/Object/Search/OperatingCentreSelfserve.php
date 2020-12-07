@@ -58,7 +58,6 @@ class OperatingCentreSelfserve extends InternalSearchAbstract
     public function getFilters()
     {
         if (empty($this->filters)) {
-
             $this->filters = [
                 new Filter\LicenceStatus(),
                 new Filter\GoodsOrPsv(),
@@ -80,7 +79,7 @@ class OperatingCentreSelfserve extends InternalSearchAbstract
                 'title' => 'Licence number',
                 'name'=> 'licNo',
                 'formatter' => function ($data, $col, $sl) {
-                    /** @var \Zend\I18n\Translator\TranslatorInterface $translator */
+                    /** @var \Laminas\I18n\Translator\TranslatorInterface $translator */
                     $translator = $sl->get('translator');
 
                     return sprintf(

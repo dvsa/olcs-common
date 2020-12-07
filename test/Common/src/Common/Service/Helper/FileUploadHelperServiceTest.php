@@ -16,17 +16,17 @@ class FileUploadHelperServiceTest extends MockeryTestCase
     private $sut;
     /** @var  m\MockInterface */
     private $mockRequest;
-    /** @var  \Zend\Form\FormInterface | m\MockInterface */
+    /** @var  \Laminas\Form\FormInterface | m\MockInterface */
     private $mockForm;
-    /** @var  m\MockInterface | \Zend\ServiceManager\ServiceLocatorInterface */
+    /** @var  m\MockInterface | \Laminas\ServiceManager\ServiceLocatorInterface */
     private $mockSm;
 
     public function setUp(): void
     {
-        $this->mockRequest = m::mock(\Zend\Http\Request::class);
-        $this->mockForm = m::mock(\Zend\Form\Form::class);
+        $this->mockRequest = m::mock(\Laminas\Http\Request::class);
+        $this->mockForm = m::mock(\Laminas\Form\Form::class);
 
-        $this->mockSm = m::mock(\Zend\ServiceManager\ServiceLocatorInterface::class);
+        $this->mockSm = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class);
 
         $this->sut = new FileUploadHelperService();
         $this->sut->setRequest($this->mockRequest);
@@ -100,7 +100,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
 
     public function testGetElementFromFormAndSelector()
     {
-        $fieldset = m::mock('Zend\Form\Fieldset');
+        $fieldset = m::mock('Laminas\Form\Fieldset');
 
         $this->mockForm->shouldReceive('get')
             ->with('foo')
@@ -137,7 +137,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
 
         $mockUrlHelper = m::mock();
         $this->sut->setServiceLocator(
-            m::mock('Zend\ServiceManager\ServiceLocatorInterface')
+            m::mock('Laminas\ServiceManager\ServiceLocatorInterface')
                 ->shouldReceive('get')
                     ->with('Helper\Url')
                     ->andReturn($mockUrlHelper)
@@ -566,7 +566,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         $this->mockRequest->shouldReceive('getPost')
             ->andReturn($postData);
 
-        $fieldset = m::mock('Zend\Form\Fieldset');
+        $fieldset = m::mock('Laminas\Form\Fieldset');
         $fieldset->shouldReceive('getName')
             ->andReturn('file1');
 

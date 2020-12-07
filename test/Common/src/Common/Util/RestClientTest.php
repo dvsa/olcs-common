@@ -7,13 +7,13 @@
  */
 namespace CommonTest\Util;
 
-use Zend\Http\Client as HttpClient;
-use Zend\Http\Header\Accept;
-use Zend\Http\Header\AcceptLanguage;
-use Zend\Http\Request;
-use Zend\Http\Response;
-use Zend\Stdlib\ParametersInterface;
-use Zend\Uri\Http as HttpUri;
+use Laminas\Http\Client as HttpClient;
+use Laminas\Http\Header\Accept;
+use Laminas\Http\Header\AcceptLanguage;
+use Laminas\Http\Request;
+use Laminas\Http\Response;
+use Laminas\Stdlib\ParametersInterface;
+use Laminas\Uri\Http as HttpUri;
 use Common\Util\ResponseHelper;
 use Common\Util\RestClient;
 use Mockery as m;
@@ -365,7 +365,7 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
         $sut = new RestClient(new HttpUri());
         $acceptLanguage = $sut->getAcceptLanguage();
 
-        $this->assertInstanceOf('\Zend\Http\Header\AcceptLanguage', $acceptLanguage);
+        $this->assertInstanceOf('\Laminas\Http\Header\AcceptLanguage', $acceptLanguage);
     }
 
     public function testConstructorWithParams()

@@ -3,7 +3,7 @@
 namespace Common\Form\Elements\InputFilters;
 
 use Common\Form\Elements\Types\Table;
-use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
 use Common\Form\Elements\Validators\TableRequiredValidator;
 use Common\Service\Table\TableBuilder;
 

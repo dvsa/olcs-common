@@ -27,7 +27,7 @@ class VariationTest extends MockeryTestCase
 
     public function testAlterForm()
     {
-        $form = m::mock('\Zend\Form\Form');
+        $form = m::mock('\Laminas\Form\Form');
 
         $form->shouldReceive('has')
             ->with('form-actions')

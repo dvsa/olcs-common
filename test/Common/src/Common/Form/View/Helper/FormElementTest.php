@@ -3,9 +3,9 @@
 namespace CommonTest\Form\View\Helper;
 
 use Mockery as m;
-use Zend\View\HelperPluginManager;
-use Zend\View\Renderer\JsonRenderer;
-use Zend\Form\View\Helper;
+use Laminas\View\HelperPluginManager;
+use Laminas\View\Renderer\JsonRenderer;
+use Laminas\Form\View\Helper;
 
 /**
  * FormElement Test
@@ -15,14 +15,14 @@ use Zend\Form\View\Helper;
 class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
 {
     /**
-     * @var \Zend\Form\Element
+     * @var \Laminas\Form\Element
      */
     protected $element;
 
     private function prepareElement($type = 'Text', $options = array())
     {
         if (strpos($type, '\\') === false) {
-            $type = '\Zend\Form\Element\\' . ucfirst($type);
+            $type = '\Laminas\Form\Element\\' . ucfirst($type);
         }
 
         $options = array_merge(
@@ -300,17 +300,17 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
             $translator->setMap($translateMap);
         }
 
-        $translateHelper = new \Zend\I18n\View\Helper\Translate();
+        $translateHelper = new \Laminas\I18n\View\Helper\Translate();
         $translateHelper->setTranslator($translator);
 
-        /** @var \Zend\View\Renderer\PhpRenderer | \PHPUnit_Framework_MockObject_MockObject $view */
-        $view = $this->createPartialMock(\Zend\View\Renderer\PhpRenderer::class, []);
+        /** @var \Laminas\View\Renderer\PhpRenderer | \PHPUnit_Framework_MockObject_MockObject $view */
+        $view = $this->createPartialMock(\Laminas\View\Renderer\PhpRenderer::class, []);
 
         $plainTextService = new \Common\Form\View\Helper\FormPlainText();
         $plainTextService->setTranslator($translator);
         $plainTextService->setView($view);
 
-        $urlHelper = m::mock(\Zend\View\Helper\Url::class);
+        $urlHelper = m::mock(\Laminas\View\Helper\Url::class);
         $urlHelper->shouldReceive('__invoke')->andReturn('url');
 
         $helpers = new HelperPluginManager();

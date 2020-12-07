@@ -3,7 +3,7 @@
 namespace Common\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\Date;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class TransportManagerDateOfBirth extends Date
 {

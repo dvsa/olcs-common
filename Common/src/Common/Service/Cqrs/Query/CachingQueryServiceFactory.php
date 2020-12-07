@@ -4,8 +4,8 @@ namespace Common\Service\Cqrs\Query;
 
 use Dvsa\Olcs\Transfer\Service\CacheEncryption as CacheEncryptionService;
 use Exception;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Class CachingQueryServiceFactory

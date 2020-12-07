@@ -3,8 +3,8 @@
 namespace Common\Form\View\Helper\Readonly;
 
 use Common\Form\Elements\Types\Table;
-use Zend\Form\ElementInterface;
-use Zend\Form\View\Helper\AbstractHelper;
+use Laminas\Form\ElementInterface;
+use Laminas\Form\View\Helper\AbstractHelper;
 
 /**
  * Class FormTable

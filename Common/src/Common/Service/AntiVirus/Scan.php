@@ -3,14 +3,14 @@
 namespace Common\Service\AntiVirus;
 
 use Olcs\Logging\Log\Logger;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorAwareTrait;
+use Laminas\ServiceManager\ServiceLocatorAwareInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * AntiVirus Scan a file
  */
-class Scan implements ServiceLocatorAwareInterface, \Zend\ServiceManager\FactoryInterface
+class Scan implements ServiceLocatorAwareInterface, \Laminas\ServiceManager\FactoryInterface
 {
     use ServiceLocatorAwareTrait;
 
@@ -68,7 +68,6 @@ class Scan implements ServiceLocatorAwareInterface, \Zend\ServiceManager\Factory
             $this->shell->chmod($file, 0660);
 
             $result = $this->shell->execute($this->getCliCommandFile($file));
-
         } catch (\Exception $ex) {
             $result = -1;
 
@@ -84,7 +83,6 @@ class Scan implements ServiceLocatorAwareInterface, \Zend\ServiceManager\Factory
         try {
             // revert back the file's permissions
             $this->shell->chmod($file, $existingFilePerms);
-
         } catch (\Exception $ex) {
             Logger::warn(
                 sprintf(

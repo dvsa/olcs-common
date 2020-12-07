@@ -34,7 +34,7 @@ class FormServiceManagerTest extends MockeryTestCase
 
     public function testConstructWithConfig()
     {
-        $config = m::mock('\Zend\ServiceManager\ConfigInterface');
+        $config = m::mock('\Laminas\ServiceManager\ConfigInterface');
 
         $config->shouldReceive('configureServiceManager')
             ->with(m::type('\Common\FormService\FormServiceManager'));
@@ -55,7 +55,7 @@ class FormServiceManagerTest extends MockeryTestCase
 
     public function testInitializeWithInterface()
     {
-        $instance = m::mock('\Zend\ServiceManager\ServiceLocatorAwareInterface');
+        $instance = m::mock('\Laminas\ServiceManager\ServiceLocatorAwareInterface');
         $instance->shouldReceive('setServiceLocator')
             ->once()
             ->with($this->sm)
@@ -82,7 +82,7 @@ class FormServiceManagerTest extends MockeryTestCase
 
     public function testValidatePluginInvalid()
     {
-        $this->expectException('\Zend\ServiceManager\Exception\RuntimeException');
+        $this->expectException('\Laminas\ServiceManager\Exception\RuntimeException');
 
         $plugin = m::mock();
 

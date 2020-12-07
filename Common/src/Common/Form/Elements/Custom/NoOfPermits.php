@@ -2,9 +2,9 @@
 
 namespace Common\Form\Elements\Custom;
 
-use Zend\Form\Element as ZendElement;
-use Zend\InputFilter\InputProviderInterface;
-use Zend\Validator\Regex as RegexValidator;
+use Laminas\Form\Element as ZendElement;
+use Laminas\InputFilter\InputProviderInterface;
+use Laminas\Validator\Regex as RegexValidator;
 use Common\Form\Elements\Validators\NoOfPermitsMin as NoOfPermitsMinValidator;
 use Common\Form\Elements\Validators\NoOfPermitsMax as NoOfPermitsMaxValidator;
 use Common\Form\Elements\Validators\NoOfPermitsNotEmpty as NoOfPermitsNotEmptyValidator;
@@ -24,10 +24,10 @@ class NoOfPermits extends ZendElement implements InputProviderInterface
     public function getInputSpecification()
     {
         return [
-            'type' => \Zend\InputFilter\Input::class,
+            'type' => \Laminas\InputFilter\Input::class,
             'name' => $this->getName(),
             'filters' => [
-                ['name' => 'Zend\Filter\StringTrim']
+                ['name' => 'Laminas\Filter\StringTrim']
             ],
             'required' => true,
             'validators' => [

@@ -8,7 +8,7 @@ use Common\Service\Cqrs\Query\CachingQueryService;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder as TransferAnnotationBuilder;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\ServiceManager;
 
 /**
  * Abstract Transport Manager Adapter Test
@@ -35,7 +35,9 @@ class AbstractTransportManagerAdapterTest extends MockeryTestCase
         $mockCommandSrv = m::mock(CommandService::class);
 
         $this->sut = new StubAbstractTransportManagerAdapter(
-            $mockAnnotationBuilder, $mockQuerySrv, $mockCommandSrv
+            $mockAnnotationBuilder,
+            $mockQuerySrv,
+            $mockCommandSrv
         );
         $this->sut->setServiceLocator($this->sm);
     }

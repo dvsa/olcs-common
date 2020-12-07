@@ -11,15 +11,15 @@ use Common\Util\FileContent;
 use Dvsa\Olcs\Transfer\Command\CommandContainerInterface;
 use Dvsa\Olcs\Transfer\Command\LoggerOmitContentInterface;
 use Dvsa\Olcs\Utils\Client\ClientAdapterLoggingWrapper;
-use Zend\Http\Client;
-use Zend\Http\Client\Exception\ExceptionInterface as HttpClientExceptionInterface;
-use Zend\Http\Header\ContentType;
-use Zend\Http\Header\Cookie;
-use Zend\Http\Headers;
-use Zend\Http\Request;
-use Zend\Http\Response as HttpResponse;
-use Zend\Mvc\Router\Exception\ExceptionInterface;
-use Zend\Mvc\Router\RouteInterface;
+use Laminas\Http\Client;
+use Laminas\Http\Client\Exception\ExceptionInterface as HttpClientExceptionInterface;
+use Laminas\Http\Header\ContentType;
+use Laminas\Http\Header\Cookie;
+use Laminas\Http\Headers;
+use Laminas\Http\Request;
+use Laminas\Http\Response as HttpResponse;
+use Laminas\Mvc\Router\Exception\ExceptionInterface;
+use Laminas\Mvc\Router\RouteInterface;
 
 /**
  * Command

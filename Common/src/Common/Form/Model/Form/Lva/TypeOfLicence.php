@@ -7,7 +7,7 @@
  */
 namespace Common\Form\Model\Form\Lva;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 use Common\Form\Model\Form\Traits\VersionTrait;
 
 /**

@@ -4,8 +4,8 @@ namespace Common\Controller;
 
 use Dvsa\Olcs\Transfer\Query\Document\Download;
 use Dvsa\Olcs\Transfer\Query\Document\DownloadGuide;
-use Zend\Http\Response;
-use Zend\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
+use Laminas\Http\Response;
+use Laminas\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
 
 /**
  * File controller
@@ -19,7 +19,7 @@ class FileController extends ZendAbstractActionController
     /**
      * Download a file
      *
-     * @return Response\Stream|\Zend\View\Model\ViewModel
+     * @return Response\Stream|\Laminas\View\Model\ViewModel
      */
     public function downloadAction()
     {
@@ -57,7 +57,7 @@ class FileController extends ZendAbstractActionController
         $response = $downloadResponse->getHttpResponse();
 
         //  keep only allowed headers
-        $headers = new \Zend\Http\Headers();
+        $headers = new \Laminas\Http\Headers();
         foreach ($response->getHeaders() as $header) {
             if (in_array($header->getFieldName(), self::$allowedHeaders, true)) {
                 $headers->addHeader($header);

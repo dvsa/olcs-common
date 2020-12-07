@@ -6,7 +6,7 @@ use Common\Service\Qa\Custom\Common\WarningAdder;
 use Common\Service\Qa\Custom\Ecmt\NiWarningConditionalAdder;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Fieldset;
+use Laminas\Form\Fieldset;
 
 /**
  * NiWarningConditionalAdderTest

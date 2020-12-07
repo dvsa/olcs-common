@@ -10,8 +10,8 @@ use Common\Service\Helper\TranslationHelperService;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Mockery as m;
 use RuntimeException;
-use Zend\Form\Element\Submit;
-use Zend\Form\Fieldset;
+use Laminas\Form\Element\Submit;
+use Laminas\Form\Fieldset;
 
 /**
  * NoOfPermitsTest

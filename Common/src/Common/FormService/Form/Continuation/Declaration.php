@@ -116,7 +116,7 @@ class Declaration extends AbstractFormService
         $this->form->get('content')->get('declaration')->setValue($this->continuationDetailData['declarations']);
 
         // set the Print/download link
-        /** @var \Zend\Mvc\Controller\Plugin\Url $urlControllerPlugin */
+        /** @var \Laminas\Mvc\Controller\Plugin\Url $urlControllerPlugin */
         $urlControllerPlugin = $this->getServiceLocator()->get('ControllerPluginManager')->get('url');
         $translator = $this->getServiceLocator()->get('Helper\Translation');
         $declarationDownload = $translator->translateReplace(

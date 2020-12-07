@@ -22,7 +22,7 @@ class TaskDescriptionTest extends MockeryTestCase
         ];
         $query = ['q1' => 1];
 
-        $sm = m::mock(\Zend\ServiceManager\ServiceLocatorInterface::class);
+        $sm = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class);
         $sm->shouldReceive('get->match->getMatchedRouteName')
             ->withNoArgs()
             ->andReturn($matchedRouteName);

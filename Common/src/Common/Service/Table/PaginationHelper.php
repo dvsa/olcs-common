@@ -47,7 +47,7 @@ class PaginationHelper
      */
     private $options = array();
 
-    /** @var  \Zend\Mvc\I18n\Translator */
+    /** @var  \Laminas\Mvc\I18n\Translator */
     private $translator;
 
     /**
@@ -79,7 +79,6 @@ class PaginationHelper
 
         if ($totalPages <= $totalPagesToDisplay) {
             $this->addRangeOfOptions(1, $totalPages);
-
         } else {
             $this->addRangeOptions($totalPages);
         }
@@ -235,11 +234,11 @@ class PaginationHelper
     /**
      * Set translator
      *
-     * @param \Zend\Mvc\I18n\Translator $translator
+     * @param \Laminas\Mvc\I18n\Translator $translator
      *
      * @return $this
      */
-    public function setTranslator(\Zend\Mvc\I18n\Translator $translator)
+    public function setTranslator(\Laminas\Mvc\I18n\Translator $translator)
     {
         $this->translator = $translator;
         return $this;

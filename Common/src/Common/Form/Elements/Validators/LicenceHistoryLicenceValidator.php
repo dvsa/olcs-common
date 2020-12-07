@@ -7,7 +7,7 @@
  */
 namespace Common\Form\Elements\Validators;
 
-use Zend\Validator\AbstractValidator;
+use Laminas\Validator\AbstractValidator;
 
 /**
  * PreviousHistoryLicenceHistoryLicenceValidator
@@ -48,7 +48,6 @@ class LicenceHistoryLicenceValidator extends AbstractValidator
     public function isValid($value, $context = array())
     {
         if ($context[$this->table]['rows'] < 1 && $value == 'Y') {
-
             $this->error($this->name);
             return false;
         }

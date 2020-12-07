@@ -2,10 +2,10 @@
 
 namespace Common\View\Helper;
 
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\View\Helper\AbstractHelper;
+use Laminas\ServiceManager\ServiceLocatorAwareInterface;
+use Laminas\ServiceManager\ServiceLocatorAwareTrait;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\View\Helper\AbstractHelper;
 
 /**
  * Class return Config to view
@@ -21,7 +21,7 @@ class Config extends AbstractHelper implements ServiceLocatorAwareInterface
      */
     public function __invoke()
     {
-        /** @var  \Zend\View\HelperPluginManager $sm */
+        /** @var  \Laminas\View\HelperPluginManager $sm */
         $sm = $this->getServiceLocator();
 
         return (array) $sm->getServiceLocator()->get('Config');

@@ -6,24 +6,24 @@ use Common\Form\View\Helper;
 use Common\Form\View\Helper\Form as FormViewHelper;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
-use Zend\Form\Element;
-use Zend\Form\ElementInterface;
-use Zend\Form\FieldsetInterface;
-use Zend\Stdlib\PriorityQueue;
-use Zend\View\HelperPluginManager;
-use Zend\View\Renderer\PhpRenderer;
+use Laminas\Form\Element;
+use Laminas\Form\ElementInterface;
+use Laminas\Form\FieldsetInterface;
+use Laminas\Stdlib\PriorityQueue;
+use Laminas\View\HelperPluginManager;
+use Laminas\View\Renderer\PhpRenderer;
 
 /**
  * @covers \Common\Form\View\Helper\Form
  */
 class FormTest extends TestCase
 {
-    /** @var \Zend\Form\Form */
+    /** @var \Laminas\Form\Form */
     protected $form;
 
     public function setUp(): void
     {
-        $this->form = new \Zend\Form\Form('test');
+        $this->form = new \Laminas\Form\Form('test');
     }
 
     /**
@@ -32,7 +32,7 @@ class FormTest extends TestCase
     public function testRenderFormWithoutAction()
     {
         $_SERVER['REQUEST_URI'] = 'bar';
-        $this->form->add(new \Zend\Form\Element\Text('test'));
+        $this->form->add(new \Laminas\Form\Element\Text('test'));
 
         $helpers = new HelperPluginManager();
         $helpers->setService('formRow', new Helper\FormRow());
@@ -56,7 +56,7 @@ class FormTest extends TestCase
      */
     public function testRenderFormWithElement()
     {
-        $this->form->add(new \Zend\Form\Element\Text('test'));
+        $this->form->add(new \Laminas\Form\Element\Text('test'));
         $this->form->setAttribute('action', 'foo');
 
         $helpers = new HelperPluginManager();
@@ -81,7 +81,7 @@ class FormTest extends TestCase
      */
     public function testRenderFormWithFieldset()
     {
-        $this->form->add(new \Zend\Form\Fieldset('test'));
+        $this->form->add(new \Laminas\Form\Fieldset('test'));
         $this->form->setAttribute('action', 'foo');
 
         $helpers = new HelperPluginManager();
@@ -100,7 +100,7 @@ class FormTest extends TestCase
 
     public function testReadonly()
     {
-        $mockElement = m::mock('Zend\Form\ElementInterface');
+        $mockElement = m::mock('Laminas\Form\ElementInterface');
         $mockElement->shouldReceive('getName')->andReturn('name');
 
         $mockHelper = m::mock('Common\Form\View\Helper\FormCollection');
@@ -110,14 +110,14 @@ class FormTest extends TestCase
         $iterator = new PriorityQueue();
         $iterator->insert($mockElement);
 
-        $mockForm = m::mock('Zend\Form\Form');
+        $mockForm = m::mock('Laminas\Form\Form');
         $mockForm->shouldReceive('prepare');
         $mockForm->shouldReceive('getIterator')->andReturn($iterator);
         $mockForm->shouldReceive('getOption')->with('readonly')->andReturn(true);
         $mockForm->shouldReceive('getAttributes')->andReturn([]);
         $mockForm->shouldReceive('getAttribute')->with('action')->once()->andReturn('foo');
 
-        $mockView = m::mock('Zend\View\Renderer\RendererInterface');
+        $mockView = m::mock('Laminas\View\Renderer\RendererInterface');
         $mockView->shouldReceive('formCollection')->andReturn($mockHelper);
         $mockView->shouldReceive('plugin')->with('readonlyformrow')->andReturn($mockHelper);
 
@@ -142,7 +142,7 @@ class FormTest extends TestCase
         $iterator = new PriorityQueue();
         $iterator->insert($mockFieldsetKeepEmpty);
 
-        $mockForm = m::mock(\Zend\Form\Form::class)
+        $mockForm = m::mock(\Laminas\Form\Form::class)
             ->shouldReceive('prepare')->once()->andReturnNull()
             ->shouldReceive('getIterator')->once()->andReturn($iterator)
             ->shouldReceive('getOption')->twice()->with('readonly')->andReturn(false)
@@ -150,8 +150,8 @@ class FormTest extends TestCase
             ->shouldReceive('getAttribute')->with('action')->once()->andReturn('foo')
             ->getMock();
 
-        /** @var \Zend\View\Renderer\RendererInterface|m\MockInterface $mockView */
-        $mockView = m::mock(\Zend\View\Renderer\RendererInterface::class)
+        /** @var \Laminas\View\Renderer\RendererInterface|m\MockInterface $mockView */
+        $mockView = m::mock(\Laminas\View\Renderer\RendererInterface::class)
             ->shouldReceive('formCollection')->once()->andReturn($mockHelper)
             ->shouldReceive('plugin')->once()->with('formrow')->andReturn($mockHelper)
             ->shouldReceive('addTags')->never()
@@ -210,7 +210,7 @@ class FormTest extends TestCase
         $iterator->insert($mockFsWithSubFs);
         $iterator->insert($mockFsWithHiddenElement);
 
-        $mockForm = m::mock(\Zend\Form\Form::class)
+        $mockForm = m::mock(\Laminas\Form\Form::class)
             ->shouldReceive('prepare')->once()->andReturnNull()
             ->shouldReceive('getIterator')->once()->andReturn($iterator)
             ->shouldReceive('getOption')->twice()->with('readonly')->andReturn(false)
@@ -218,8 +218,8 @@ class FormTest extends TestCase
             ->shouldReceive('getAttribute')->with('action')->once()->andReturn('foo')
             ->getMock();
 
-        /** @var \Zend\View\Renderer\RendererInterface|m\MockInterface $mockView */
-        $mockView = m::mock(\Zend\View\Renderer\RendererInterface::class)
+        /** @var \Laminas\View\Renderer\RendererInterface|m\MockInterface $mockView */
+        $mockView = m::mock(\Laminas\View\Renderer\RendererInterface::class)
             ->shouldReceive('formCollection')->times(4)->andReturn($mockHelper)
             ->shouldReceive('plugin')->once()->with('formrow')->andReturn($mockHelper)
             ->shouldReceive('addTags')->times(3)
@@ -262,7 +262,7 @@ class FormTest extends TestCase
         $iterator = new PriorityQueue();
         $iterator->insert($mockFsWithTableElement);
 
-        $mockForm = m::mock(\Zend\Form\Form::class)
+        $mockForm = m::mock(\Laminas\Form\Form::class)
             ->shouldReceive('prepare')->once()->andReturnNull()
             ->shouldReceive('getIterator')->once()->andReturn($iterator)
             ->shouldReceive('getOption')->twice()->with('readonly')->andReturn(false)
@@ -270,8 +270,8 @@ class FormTest extends TestCase
             ->shouldReceive('getAttribute')->with('action')->once()->andReturn('foo')
             ->getMock();
 
-        /** @var \Zend\View\Renderer\RendererInterface|m\MockInterface $mockView */
-        $mockView = m::mock(\Zend\View\Renderer\RendererInterface::class)
+        /** @var \Laminas\View\Renderer\RendererInterface|m\MockInterface $mockView */
+        $mockView = m::mock(\Laminas\View\Renderer\RendererInterface::class)
             ->shouldReceive('formCollection')->times(2)->andReturn($mockHelper)
             ->shouldReceive('plugin')->once()->with('formrow')->andReturn($mockHelper)
             ->shouldReceive('addTags')->times(1)

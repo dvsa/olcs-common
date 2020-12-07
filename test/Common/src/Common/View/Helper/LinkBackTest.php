@@ -11,14 +11,14 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class LinkBackTest extends MockeryTestCase
 {
-    /** @var  \Zend\ServiceManager\ServiceManager | m\MockInterface */
+    /** @var  \Laminas\ServiceManager\ServiceManager | m\MockInterface */
     private $mockSm;
     /** @var  m\MockInterface */
     private $mockSl;
     /** @var  m\MockInterface */
     private $mockRequest;
 
-    /** @var  \Zend\View\Renderer\RendererInterface */
+    /** @var  \Laminas\View\Renderer\RendererInterface */
     private $mockView;
 
     /**
@@ -26,7 +26,7 @@ class LinkBackTest extends MockeryTestCase
      */
     public function setUp(): void
     {
-        $this->mockView = m::mock(\Zend\View\Renderer\RendererInterface::class)
+        $this->mockView = m::mock(\Laminas\View\Renderer\RendererInterface::class)
             ->shouldReceive('translate')
             ->zeroOrMoreTimes()
             ->andReturnUsing(
@@ -36,13 +36,13 @@ class LinkBackTest extends MockeryTestCase
             )
             ->getMock();
 
-        $this->mockRequest = m::mock(\Zend\Http\Request::class);
+        $this->mockRequest = m::mock(\Laminas\Http\Request::class);
 
-        $this->mockSl = m::mock(\Zend\ServiceManager\ServiceManager::class)
+        $this->mockSl = m::mock(\Laminas\ServiceManager\ServiceManager::class)
             ->shouldReceive('get')->once()->with('Request')->andReturn($this->mockRequest)
             ->getMock();
 
-        $this->mockSm = m::mock(\Zend\View\HelperPluginManager::class)
+        $this->mockSm = m::mock(\Laminas\View\HelperPluginManager::class)
             ->shouldReceive('getServiceLocator')->once()->andReturn($this->mockSl)
             ->getMock();
     }
@@ -65,7 +65,7 @@ class LinkBackTest extends MockeryTestCase
 
     public function dpTestInvoke()
     {
-        $mockHeader = m::mock(\Zend\Http\Header\HeaderInterface::class);
+        $mockHeader = m::mock(\Laminas\Http\Header\HeaderInterface::class);
         $mockHeader->shouldReceive('uri->getPath')->atMost(1)->andReturn('unit_URL');
 
         return [

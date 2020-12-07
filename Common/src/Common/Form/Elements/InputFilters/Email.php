@@ -7,9 +7,9 @@
  */
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\Form\Element as ZendElement;
-use Zend\Validator as ZendValidator;
-use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\Form\Element as ZendElement;
+use Laminas\Validator as LaminasValidator;
+use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
 
 /**
  * Email Filter
@@ -29,12 +29,12 @@ class Email extends ZendElement implements InputProviderInterface
             'name' => $this->getName(),
             'required' => false,
             'filters' => [
-                ['name' => 'Zend\Filter\StringTrim'],
+                ['name' => 'Laminas\Filter\StringTrim'],
             ],
             'validators' => [
                 // @NOTE don't know if this is still used but I'll update it anyway
                 ['name' => 'Dvsa\Olcs\Transfer\Validators\EmailAddress'],
-                ['name' => 'Zend\Validator\StringLength', 'options'=> ['min' => 5, 'max' => 255]],
+                ['name' => 'Laminas\Validator\StringLength', 'options'=> ['min' => 5, 'max' => 255]],
             ]
         ];
 

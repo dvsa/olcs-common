@@ -27,6 +27,6 @@ class GenericBusinessTypeAdapterTest extends MockeryTestCase
 
     public function testAlterFormIsNoOp()
     {
-        $this->assertNull($this->sut->alterFormForOrganisation(m::mock('Zend\Form\Form'), 123));
+        $this->assertNull($this->sut->alterFormForOrganisation(m::mock('Laminas\Form\Form'), 123));
     }
 }

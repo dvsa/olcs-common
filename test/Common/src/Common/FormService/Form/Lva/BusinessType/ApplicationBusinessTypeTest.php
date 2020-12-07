@@ -12,8 +12,8 @@ use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Lva\BusinessType\ApplicationBusinessType;
 use Common\FormService\FormServiceInterface;
-use Zend\Form\Form;
-use Zend\Form\Element;
+use Laminas\Form\Form;
+use Laminas\Form\Element;
 
 /**
  * Application Business Type Form Test

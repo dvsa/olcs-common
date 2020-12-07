@@ -7,7 +7,7 @@
  */
 namespace Common\Form\Elements\Validators;
 
-use Zend\Validator\Identical;
+use Laminas\Validator\Identical;
 
 /**
  * Custom validator for confirming an email address

@@ -9,8 +9,8 @@ use Common\Service\Qa\Custom\Bilateral\YesNoWithMarkupForNoPopulator;
 use Common\Service\Qa\Custom\Common\WarningAdder;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Fieldset;
-use Zend\Form\Form;
+use Laminas\Form\Fieldset;
+use Laminas\Form\Form;
 
 /**
  * EmissionsStandardsFieldsetPopulatorTest

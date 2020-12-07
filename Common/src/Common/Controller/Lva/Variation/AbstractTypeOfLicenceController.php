@@ -10,7 +10,7 @@ namespace Common\Controller\Lva\Variation;
 use Dvsa\Olcs\Transfer\Command\Variation\UpdateTypeOfLicence;
 use Dvsa\Olcs\Transfer\Query\Variation\TypeOfLicence;
 use Common\Controller\Lva;
-use Zend\Http\Response;
+use Laminas\Http\Response;
 use Common\Data\Mapper\Lva\TypeOfLicence as TypeOfLicenceMapper;
 
 /**
@@ -55,7 +55,6 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
 
         // If we have no data (not posted)
         if ($prg === false) {
-
             $form->setData(TypeOfLicenceMapper::mapFromResult($data));
 
             return $this->renderIndex($form);

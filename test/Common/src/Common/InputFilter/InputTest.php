@@ -19,7 +19,7 @@ class InputTest extends TestCase
 
         $sut = new Input();
 
-        $mockFilterChain = m::mock('Zend\Filter\FilterChain');
+        $mockFilterChain = m::mock('Laminas\Filter\FilterChain');
         $mockFilterChain->shouldReceive('filter')->once()->with($value)->andReturn($filtered);
         $sut->setFilterChain($mockFilterChain);
 
@@ -39,7 +39,7 @@ class InputTest extends TestCase
 
         $sut = new Input();
 
-        $mockFilterChain = m::mock('Zend\Filter\FilterChain');
+        $mockFilterChain = m::mock('Laminas\Filter\FilterChain');
         $mockFilterChain->shouldReceive('filter')->once()->with($value)->andReturn($filtered);
         $mockFilterChain->shouldReceive('filter')->once()->with($value2)->andReturn($filtered2);
         $sut->setFilterChain($mockFilterChain);

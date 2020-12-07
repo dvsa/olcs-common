@@ -21,7 +21,7 @@ class OrganisationLink implements FormatterInterface
      *
      * @param array $data The row data.
      * @param array $column The column
-     * @param \Zend\ServiceManager\ServiceManager $sm
+     * @param \Laminas\ServiceManager\ServiceManager $sm
      * @inheritdoc
      *
      * @return string

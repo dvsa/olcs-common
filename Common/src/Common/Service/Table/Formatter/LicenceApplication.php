@@ -5,7 +5,7 @@ namespace Common\Service\Table\Formatter;
 use Common\Util\Escape;
 use Common\Service\Helper\UrlHelperService as UrlHelper;
 use Common\View\Helper\Status as StatusHelper;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\ServiceManager;
 
 /**
  * LicenceApplication formatter

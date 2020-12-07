@@ -5,7 +5,7 @@ namespace CommonTest\Data\Mapper\Lva;
 use Common\Data\Mapper\Lva\OperatingCentre;
 use Common\Form\Elements\Custom\OlcsCheckbox;
 use Hamcrest\Core\AnyOf;
-use Zend\Form\Form;
+use Laminas\Form\Form;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\TranslationHelperService;
 use Mockery as m;
@@ -196,7 +196,7 @@ class OperatingCentreTest extends MockeryTestCase
     public function testMapFormErrors()
     {
         $location = OperatingCentre::LOC_EXTERNAL;
-        $form = m::mock(\Zend\Form\Form::class);
+        $form = m::mock(\Laminas\Form\Form::class);
         $fm = m::mock(FlashMessengerHelperService::class);
         $th = m::mock(TranslationHelperService::class);
         $th->shouldReceive('translateReplace')

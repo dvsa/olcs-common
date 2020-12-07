@@ -6,8 +6,8 @@ use Common\Service\Qa\Custom\Ecmt\NoOfPermitsStrategySelectingFieldsetPopulator;
 use Common\Service\Qa\FieldsetPopulatorInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Fieldset;
-use Zend\Form\Form;
+use Laminas\Form\Fieldset;
+use Laminas\Form\Form;
 
 /**
  * NoOfPermitsStrategySelectingFieldsetPopulatorTest
