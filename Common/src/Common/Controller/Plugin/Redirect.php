@@ -7,9 +7,9 @@
  */
 namespace Common\Controller\Plugin;
 
-use Zend\Json\Json;
-use Zend\Mvc\Controller\Plugin\Redirect as ZendRedirect;
-use Zend\Stdlib\ArrayUtils;
+use Laminas\Json\Json;
+use Laminas\Mvc\Controller\Plugin\Redirect as ZendRedirect;
+use Laminas\Stdlib\ArrayUtils;
 
 /**
  * Redirect
@@ -21,7 +21,7 @@ class Redirect extends ZendRedirect
     /**
      * Refresh ajax
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     public function refreshAjax()
     {
@@ -36,7 +36,7 @@ class Redirect extends ZendRedirect
      * @param array  $options            Options
      * @param bool   $reuseMatchedParams Reuse matched params
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     public function toRouteAjax($route = null, $params = array(), $options = array(), $reuseMatchedParams = false)
     {
@@ -62,7 +62,6 @@ class Redirect extends ZendRedirect
             $this->getResponse()->getHeaders()->addHeaders(['Content-Type' => 'application/json']);
             $this->getResponse()->setContent(Json::encode($data));
             return $this->getResponse();
-
         } else {
             return $this->toRoute($route, $params, $options, $reuseMatchedParams);
         }

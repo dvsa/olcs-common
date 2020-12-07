@@ -42,12 +42,12 @@ class ContentHelper
     private $partials = array();
 
     /**
-     * @var \Zend\Mvc\I18n\Translator
+     * @var \Laminas\Mvc\I18n\Translator
      */
     private $translator;
 
     /**
-     * @var \Zend\Escaper\Escaper
+     * @var \Laminas\Escaper\Escaper
      */
     private $escaper;
 
@@ -67,14 +67,14 @@ class ContentHelper
             $this->setTranslator($object->getTranslator());
         }
 
-        $escaper = new \Zend\Escaper\Escaper('utf-8');
+        $escaper = new \Laminas\Escaper\Escaper('utf-8');
         $this->setEscaper($escaper);
     }
 
     /**
      * Get the escaper
      *
-     * @return \Zend\Escaper\Escaper
+     * @return \Laminas\Escaper\Escaper
      */
     public function getEscaper()
     {
@@ -84,7 +84,7 @@ class ContentHelper
     /**
      * Set the escaper
      *
-     * @param \Zend\Escaper\Escaper $escaper
+     * @param \Laminas\Escaper\Escaper $escaper
      */
     public function setEscaper($escaper)
     {
@@ -93,7 +93,7 @@ class ContentHelper
     }
 
     /**
-     * @return \Zend\Mvc\I18n\Translator
+     * @return \Laminas\Mvc\I18n\Translator
      */
     public function getTranslator()
     {
@@ -101,7 +101,7 @@ class ContentHelper
     }
 
     /**
-     * @param \Zend\Mvc\I18n\Translator $translator
+     * @param \Laminas\Mvc\I18n\Translator $translator
      */
     public function setTranslator($translator)
     {

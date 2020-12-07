@@ -9,9 +9,9 @@ namespace Common\Controller\Plugin;
 
 use Common\Service\Data\Search\Search;
 use Common\Service\Data\Search\SearchType;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Mvc\Controller\Plugin\PluginInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\Mvc\Controller\Plugin\PluginInterface;
 
 /**
  * ElasticSearch Factory

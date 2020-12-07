@@ -6,8 +6,8 @@
 
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
-use Zend\Validator\Date as DateValidator;
+use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\Validator\Date as DateValidator;
 
 /**
  * Checks statement request date is not before the stop date

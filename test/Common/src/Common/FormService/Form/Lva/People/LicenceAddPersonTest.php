@@ -9,9 +9,9 @@ use Common\Service\Helper\FormHelperService;
 use Common\Service\Helper\TranslationHelperService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Di\ServiceLocator;
-use Zend\Form\Element;
-use Zend\Form\Fieldset;
+use Laminas\Di\ServiceLocator;
+use Laminas\Form\Element;
+use Laminas\Form\Fieldset;
 
 class LicenceAddPersonTest extends MockeryTestCase
 {

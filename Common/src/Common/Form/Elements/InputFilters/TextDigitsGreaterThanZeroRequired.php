@@ -7,9 +7,9 @@
  */
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\Form\Element as ZendElement;
-use Zend\Validator as ZendValidator;
-use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\Form\Element as ZendElement;
+use Laminas\Validator as LaminasValidator;
+use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
 
 /**
  * TextDigitsGreaterThanZeroRequired
@@ -29,8 +29,8 @@ class TextDigitsGreaterThanZeroRequired extends ZendElement implements InputProv
             'name' => $this->getName(),
             'required' => true,
             'validators' => [
-                ['name' => 'Zend\Validator\Digits'],
-                ['name' => 'Zend\Validator\GreaterThan', 'options'=>['min' => 0]]
+                ['name' => 'Laminas\Validator\Digits'],
+                ['name' => 'Laminas\Validator\GreaterThan', 'options'=>['min' => 0]]
             ]
         ];
 

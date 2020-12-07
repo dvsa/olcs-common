@@ -35,10 +35,10 @@ abstract class AbstractSoleTrader extends AbstractLvaFormService
     /**
      * Make form alterations
      *
-     * @param \Zend\Form\Form $form   Form
+     * @param \Laminas\Form\Form $form   Form
      * @param array           $params Parameters for form
      *
-     * @return \Zend\Form\Form
+     * @return \Laminas\Form\Form
      */
     protected function alterForm($form, array $params)
     {

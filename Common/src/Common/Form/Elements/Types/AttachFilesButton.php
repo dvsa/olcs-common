@@ -7,7 +7,7 @@
  */
 namespace Common\Form\Elements\Types;
 
-use Zend\Form\Element\File;
+use Laminas\Form\Element\File;
 
 /**
  * Attach Files Button

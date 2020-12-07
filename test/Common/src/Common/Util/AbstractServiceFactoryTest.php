@@ -6,7 +6,7 @@ use Common\Util\AbstractServiceFactory;
 use CommonTest\Util\Stub\ServiceWithFactoryStub;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\FactoryInterface;
 
 /**
  * @covers \Common\Util\AbstractServiceFactory
@@ -15,7 +15,7 @@ class AbstractServiceFactoryTest extends MockeryTestCase
 {
     /** @var  AbstractServiceFactory | m\MockInterface */
     protected $sut;
-    /** @var  m\MockInterface | \Zend\ServiceManager\ServiceLocatorInterface */
+    /** @var  m\MockInterface | \Laminas\ServiceManager\ServiceLocatorInterface */
     protected $mockSm;
 
     public function setUp(): void
@@ -24,7 +24,7 @@ class AbstractServiceFactoryTest extends MockeryTestCase
             ->makePartial()
             ->shouldAllowMockingProtectedMethods();
 
-        $this->mockSm = m::mock(\Zend\ServiceManager\ServiceLocatorInterface::class);
+        $this->mockSm = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class);
     }
 
     /**

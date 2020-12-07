@@ -2,7 +2,7 @@
 
 namespace Common\Controller\Continuation;
 
-use Zend\View\Model\ViewModel;
+use Laminas\View\Model\ViewModel;
 use Dvsa\Olcs\Transfer\Query\ContinuationDetail\LicenceChecklist as LicenceChecklistQuery;
 use Common\Data\Mapper\Continuation\LicenceChecklist as LicenceChecklistMapper;
 use Common\RefData;

@@ -7,7 +7,7 @@
  */
 namespace Common\Form\Elements\Validators;
 
-use Zend\Validator\Date as DateValidator;
+use Laminas\Validator\Date as DateValidator;
 
 /**
  * Checks a time hh:mm is valid

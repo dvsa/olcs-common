@@ -18,7 +18,7 @@ class PaginationHelperTest extends MockeryTestCase
      */
     public function testPaginationHelper($page, $total, $limit, $isSetTranslator, $expected)
     {
-        $mockTranslator = m::mock(\Zend\Mvc\I18n\Translator::class);
+        $mockTranslator = m::mock(\Laminas\Mvc\I18n\Translator::class);
         $mockTranslator
             ->shouldReceive('translate')->with('pagination.next')->andReturn('TRNSLT_NEXT')
             ->shouldReceive('translate')->with('pagination.previous')->andReturn('TRNSLT_PREV');

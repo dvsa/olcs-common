@@ -12,7 +12,7 @@ class CaseEntityName implements FormatterInterface
      *
      * @param array                               $data   Data
      * @param array                               $column Column data
-     * @param \Zend\ServiceManager\ServiceManager $sm     Service manager
+     * @param \Laminas\ServiceManager\ServiceManager $sm     Service manager
      *
      * @return string
      */

@@ -4,9 +4,9 @@ namespace CommonTest\Form\Elements\Custom;
 
 use Common\Form\Elements\Custom\EcmtNoOfPermitsEmissionsCategoryHiddenElement;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Element\Hidden;
-use Zend\InputFilter\InputProviderInterface;
-use Zend\Validator\Identical;
+use Laminas\Form\Element\Hidden;
+use Laminas\InputFilter\InputProviderInterface;
+use Laminas\Validator\Identical;
 
 /**
  * EcmtNoOfPermitsEmissionsCategoryHiddenElementTest

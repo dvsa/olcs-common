@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Lva\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Name("lva-safety-application")
@@ -25,7 +25,7 @@ class SafetyApplication
      *         "class": "inline"
      *     }
      * })
-     * @Form\Type("\Zend\Form\Element\Radio")
+     * @Form\Type("\Laminas\Form\Element\Radio")
      */
     public $isMaintenanceSuitable = null;
 

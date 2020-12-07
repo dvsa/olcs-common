@@ -18,10 +18,10 @@ use Common\Form\Elements\Types\PostcodeSearch;
 use Common\Form\Elements\Types\RadioHorizontal;
 use Common\Form\Elements\Types\RadioVertical;
 use Common\Form\View\Helper\Readonly\FormFieldset;
-use Zend\Form\Element\Collection as CollectionElement;
-use Zend\Form\ElementInterface;
-use Zend\Form\FieldsetInterface;
-use Zend\Form\LabelAwareInterface;
+use Laminas\Form\Element\Collection as CollectionElement;
+use Laminas\Form\ElementInterface;
+use Laminas\Form\FieldsetInterface;
+use Laminas\Form\LabelAwareInterface;
 
 /**
  * Form Collection wrapper

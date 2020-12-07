@@ -45,9 +45,9 @@ class SlaTargetDateTest extends TestCase
 
         $this->sm = Bootstrap::getServiceManager();
 
-        $this->mockRouteMatch = m::mock('\Zend\Mvc\Router\RouteMatch');
+        $this->mockRouteMatch = m::mock('\Laminas\Mvc\Router\RouteMatch');
         $this->mockUrlHelper = m::mock();
-        $mockRequest = m::mock('\Zend\Stdlib\RequestInterface');
+        $mockRequest = m::mock('\Laminas\Stdlib\RequestInterface');
         $mockRouter = m::mock()
             ->shouldReceive('match')
             ->with($mockRequest)

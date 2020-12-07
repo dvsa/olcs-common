@@ -3,7 +3,7 @@
 namespace Common\Service\Qa\Custom\Bilateral;
 
 use Common\Service\Qa\FieldsetPopulatorInterface;
-use Zend\Form\Fieldset;
+use Laminas\Form\Fieldset;
 
 class NoOfPermitsFieldsetPopulator implements FieldsetPopulatorInterface
 {

@@ -2,8 +2,8 @@
 
 namespace Common\Service\Qa\Custom\Common;
 
-use Zend\Form\Fieldset;
-use Zend\View\Helper\Partial;
+use Laminas\Form\Fieldset;
+use Laminas\View\Helper\Partial;
 
 class WarningAdder
 {

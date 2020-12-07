@@ -7,7 +7,7 @@ use Common\Service\Qa\IsValidHandlerInterface;
 use Common\Service\Qa\DataHandlerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Fieldset;
+use Laminas\Form\Fieldset;
 
 /**
  * QaFormTest

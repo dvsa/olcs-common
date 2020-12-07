@@ -20,7 +20,7 @@ class CommunityLicenceStatus implements FormatterInterface
      *
      * @param array                               $data   data
      * @param array                               $column column
-     * @param \Zend\ServiceManager\ServiceManager $sm     service manager
+     * @param \Laminas\ServiceManager\ServiceManager $sm     service manager
      *
      * @return string
      */

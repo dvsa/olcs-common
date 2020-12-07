@@ -6,7 +6,7 @@ use Common\RefData;
 use Common\Service\Table\TableBuilder;
 use Dvsa\Olcs\Transfer\Command\AbstractCommand;
 use Dvsa\Olcs\Transfer\Query\Licence\PsvDiscs;
-use Zend\Form\Form;
+use Laminas\Form\Form;
 
 /**
  * Abstract Discs Controller
@@ -55,11 +55,11 @@ abstract class AbstractDiscsController extends AbstractController
     /**
      * Process action Index
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     public function indexAction()
     {
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         $data = [];
@@ -99,11 +99,11 @@ abstract class AbstractDiscsController extends AbstractController
     /**
      * Process action Add
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     public function addAction()
     {
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
@@ -127,7 +127,8 @@ abstract class AbstractDiscsController extends AbstractController
                 $flashMssgrHelper->addSuccessMessage('psv-discs-' . self::CMD_REQUEST_DISCS . '-successfully');
 
                 return $this->redirect()->toRouteAjax(
-                    $this->getBaseRoute(), [$this->getIdentifierIndex() => $this->getIdentifier()]
+                    $this->getBaseRoute(),
+                    [$this->getIdentifierIndex() => $this->getIdentifier()]
                 );
             }
 
@@ -165,7 +166,7 @@ abstract class AbstractDiscsController extends AbstractController
     /**
      * Process action Replace
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     public function replaceAction()
     {
@@ -175,7 +176,7 @@ abstract class AbstractDiscsController extends AbstractController
     /**
      * Process action Void
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     public function voidAction()
     {
@@ -185,7 +186,7 @@ abstract class AbstractDiscsController extends AbstractController
     /**
      * Hidden action. Used to change status of visibility of ceased discs in table
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     public function ceasedShowHideAction()
     {
@@ -355,11 +356,11 @@ abstract class AbstractDiscsController extends AbstractController
      *
      * @param string $commandKey Name of command
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     protected function commonConfirmCommand($commandKey)
     {
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {

@@ -6,7 +6,7 @@ use Common\Form\Elements\Types\Html;
 use Common\Form\Form;
 use Common\Form\View\Helper\FormElement;
 use Mockery;
-use Zend\View\Renderer\PhpRenderer;
+use Laminas\View\Renderer\PhpRenderer;
 
 class HtmlTest extends \PHPUnit\Framework\TestCase
 {

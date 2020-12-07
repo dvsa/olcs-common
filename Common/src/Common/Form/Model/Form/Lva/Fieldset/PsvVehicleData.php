@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Lva\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Name("data")
@@ -39,9 +39,9 @@ class PsvVehicleData
      * })
      * @Form\Type("Text")
      * @Form\Required(false)
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
      * @Form\Validator({
-     *     "name":"Zend\Validator\StringLength",
+     *     "name":"Laminas\Validator\StringLength",
      *     "options":{
      *          "min":2,
      *          "max":100,

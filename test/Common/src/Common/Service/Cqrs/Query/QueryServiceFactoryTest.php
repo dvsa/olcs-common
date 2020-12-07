@@ -6,9 +6,9 @@ use Common\Service\Cqrs\Query\QueryService;
 use Common\Service\Cqrs\Query\QueryServiceFactory;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Http\Client\Adapter\Curl;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\Http\Client\Adapter\Curl;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceManager;
 
 /**
  * Query Service Factory Test
@@ -40,8 +40,8 @@ class QueryServiceFactoryTest extends MockeryTestCase
             ]
         ];
 
-        $router = m::mock(\Zend\Mvc\Router\RouteInterface::class);
-        $request = m::mock(\Zend\Http\Request::class);
+        $router = m::mock(\Laminas\Mvc\Router\RouteInterface::class);
+        $request = m::mock(\Laminas\Http\Request::class);
         $flashMessenger = m::mock(\Common\Service\Helper\FlashMessengerHelperService::class);
 
         /** @var ServiceManager|m\MockInterface $sm */

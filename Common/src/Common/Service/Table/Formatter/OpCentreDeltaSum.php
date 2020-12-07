@@ -22,7 +22,7 @@ class OpCentreDeltaSum implements FormatterInterface
      *
      * @param array $data The data from the table.
      * @param array $column The column data.
-     * @param \Zend\ServiceManager\ServiceManager|null $sm Service manager.
+     * @param \Laminas\ServiceManager\ServiceManager|null $sm Service manager.
      *
      * @return string The total count.
      */

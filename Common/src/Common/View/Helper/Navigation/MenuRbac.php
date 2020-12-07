@@ -2,9 +2,9 @@
 
 namespace Common\View\Helper\Navigation;
 
-use Zend\Navigation\AbstractContainer;
-use Zend\Navigation\Page\AbstractPage;
-use Zend\View\Helper\Navigation\Menu;
+use Laminas\Navigation\AbstractContainer;
+use Laminas\Navigation\Page\AbstractPage;
+use Laminas\View\Helper\Navigation\Menu;
 
 /**
  * Navigation Menu with RBAC functions

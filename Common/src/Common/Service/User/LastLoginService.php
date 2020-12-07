@@ -5,10 +5,10 @@ namespace Common\Service\User;
 use Common\Service\Cqrs\Command\CommandSender;
 use Common\Service\Cqrs\Response;
 use Dvsa\Olcs\Transfer\Command\User\UpdateUserLastLoginAt;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
+use Laminas\ServiceManager\ServiceLocatorAwareInterface;
+use Laminas\ServiceManager\ServiceLocatorAwareTrait;
 
-final class LastLoginService implements ServiceLocatorAwareInterface
+class LastLoginService implements ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
 

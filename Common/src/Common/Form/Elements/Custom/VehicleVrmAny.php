@@ -2,8 +2,8 @@
 
 namespace Common\Form\Elements\Custom;
 
-use Zend\Form\Element as ZendElement;
-use Zend\InputFilter\InputProviderInterface;
+use Laminas\Form\Element as ZendElement;
+use Laminas\InputFilter\InputProviderInterface;
 
 /**
  * Vrm field for vehicles from any country
@@ -23,11 +23,11 @@ class VehicleVrmAny extends ZendElement implements InputProviderInterface
             'name' => $this->getName(),
             'required' => true,
             'filters' => [
-                new \Zend\Filter\StringTrim(),
+                new \Laminas\Filter\StringTrim(),
             ],
             'validators' => [
                 [
-                    'name' => \Zend\Validator\StringLength::class,
+                    'name' => \Laminas\Validator\StringLength::class,
                     'options' => [
                         'min' => 1,
                         'max' => 20,

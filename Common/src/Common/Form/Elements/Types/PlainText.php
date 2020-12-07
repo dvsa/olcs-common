@@ -10,8 +10,8 @@ namespace Common\Form\Elements\Types;
 
 use Common\Form\Form;
 use Traversable;
-use Zend\Form\Element;
-use Zend\Form\ElementInterface;
+use Laminas\Form\Element;
+use Laminas\Form\ElementInterface;
 
 /**
  * Plain Text Element

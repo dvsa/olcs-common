@@ -8,7 +8,7 @@ use DateTime;
 use IntlDateFormatter;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\I18n\View\Helper\DateFormat;
+use Laminas\I18n\View\Helper\DateFormat;
 
 /**
  * DateBeforeValidatorTest

@@ -5,7 +5,7 @@ namespace Common\Controller\Lva\Licence;
 use Dvsa\Olcs\Transfer\Command\Licence\UpdateTypeOfLicence;
 use Common\Controller\Lva;
 use Dvsa\Olcs\Transfer\Query\Licence\TypeOfLicence;
-use Zend\Http\Response;
+use Laminas\Http\Response;
 use Common\Data\Mapper\Lva\TypeOfLicence as TypeOfLicenceMapper;
 
 /**
@@ -50,7 +50,7 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
             'canUpdateLicenceType' => $data['canUpdateLicenceType']
         ];
 
-        /** @var \Zend\Form\FormInterface $form */
+        /** @var \Laminas\Form\FormInterface $form */
         $form = $this->getServiceLocator()->get('FormServiceManager')
             ->get('lva-licence-type-of-licence')
             ->getForm($params);
@@ -88,7 +88,6 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         if ($response->isClientError()) {
             // This means we need confirmation
             if (isset($response->getResult()['messages']['LIC-REQ-VAR'])) {
-
                 return $this->redirect()->toRoute(
                     null,
                     ['action' => 'confirmation'],
@@ -117,10 +116,10 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         // @NOTE The behaviour of this service differs internally to externally
         $processingService = $this->getServiceLocator()->get('Processing\CreateVariation');
 
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
-        /** @var \Zend\Form\FormInterface $form */
+        /** @var \Laminas\Form\FormInterface $form */
         $form = $processingService->getForm($request);
 
         if ($request->isPost() && $form->isValid()) {

@@ -6,8 +6,8 @@ use Common\Controller\Lva\AbstractController;
 use Common\Controller\Lva\Interfaces\PeopleAdapterInterface;
 use Common\RefData;
 use Common\Service\Table\TableBuilder;
-use Zend\Form\Form;
-use Zend\Mvc\Controller\Plugin\FlashMessenger;
+use Laminas\Form\Form;
+use Laminas\Mvc\Controller\Plugin\FlashMessenger;
 
 /**
  * Abstract people adapter

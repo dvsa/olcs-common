@@ -9,7 +9,7 @@ namespace CommonTest\Service\Helper;
 
 use CommonTest\Bootstrap;
 use Common\Service\Helper\TranslationHelperService;
-use Zend\I18n\Translator\Translator;
+use Laminas\I18n\Translator\Translator;
 
 /**
  * Translation Helper Service Test

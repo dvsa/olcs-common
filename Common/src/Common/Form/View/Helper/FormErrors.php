@@ -9,11 +9,11 @@
 namespace Common\Form\View\Helper;
 
 use Common\Form\Elements\Types\PostcodeSearch;
-use Zend\Form\Element;
-use \Zend\Form\Element\DateSelect;
-use Zend\Form\View\Helper\AbstractHelper;
-use Zend\Form\FormInterface;
-use Zend\Form\Fieldset;
+use Laminas\Form\Element;
+use \Laminas\Form\Element\DateSelect;
+use Laminas\Form\View\Helper\AbstractHelper;
+use Laminas\Form\FormInterface;
+use Laminas\Form\Fieldset;
 use Common\Form\Elements\Validators\Messages\ValidationMessageInterface;
 
 /**

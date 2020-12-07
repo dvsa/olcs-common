@@ -8,7 +8,7 @@
 namespace CommonTest\Controller\Lva\Traits\Stubs;
 
 use Common\Controller\Lva\Traits\EnabledSectionTrait;
-use Zend\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\Controller\AbstractActionController;
 
 /**
  * Enabled Section Trait Stub

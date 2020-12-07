@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Lva;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Name("lva-add-transport-manager")

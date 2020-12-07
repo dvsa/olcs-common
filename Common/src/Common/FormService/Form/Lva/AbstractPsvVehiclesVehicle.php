@@ -28,9 +28,9 @@ abstract class AbstractPsvVehiclesVehicle extends AbstractFormService
     /**
      * Generic form alterations
      *
-     * @param \Zend\Form\Form $form
+     * @param \Laminas\Form\Form $form
      * @param array $params
-     * @return \Zend\Form\Form
+     * @return \Laminas\Form\Form
      */
     protected function alterForm($form, $params)
     {

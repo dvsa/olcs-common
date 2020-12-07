@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Lva\Fieldset\TransportManager;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 class ApplicationDeclaration
 {
@@ -22,7 +22,7 @@ class ApplicationDeclaration
      *         "disable_html_escape": "true"
      *     },
      * })
-     * @Form\Type("\Zend\Form\Element\Radio")
+     * @Form\Type("\Laminas\Form\Element\Radio")
      */
     public $isDigitallySigned = null;
 

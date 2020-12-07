@@ -12,7 +12,7 @@ namespace Common\Form\View\Helper\Extended;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormInput extends \Zend\Form\View\Helper\FormInput
+class FormInput extends \Laminas\Form\View\Helper\FormInput
 {
     use PrepareAttributesTrait;
 }

@@ -4,8 +4,8 @@ namespace Common\Service\Data;
 
 use Common\Service\Data\Interfaces\RestClientAware;
 use Common\Util\RestClient;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\FactoryInterface;
 
 /**
  * Class AbstractData
@@ -88,7 +88,7 @@ abstract class AbstractData implements FactoryInterface, RestClientAware
     {
         /** @var \Common\Util\ResolveApi $apiResolver */
         $apiResolver = $serviceLocator->get('ServiceApiResolver');
-        /** @var \Zend\Mvc\I18n\Translator $translator */
+        /** @var \Laminas\Mvc\I18n\Translator $translator */
         $translator = $serviceLocator->get('translator');
 
         $client = $apiResolver->getClient($this->getServiceName());

@@ -3,8 +3,8 @@
 namespace CommonTest\Form\Elements\InputFilters;
 
 use Common\Form\Elements\InputFilters\CompanyNumber;
-use Zend\I18n\Validator\Alnum;
-use Zend\Validator\StringLength;
+use Laminas\I18n\Validator\Alnum;
+use Laminas\Validator\StringLength;
 
 /**
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
@@ -27,11 +27,11 @@ class CompanyNumberTest extends \PHPUnit\Framework\TestCase
             'name' => null,
             'required' => true,
             'filters' => [
-                ['name' => 'Zend\Filter\StringTrim'],
+                ['name' => 'Laminas\Filter\StringTrim'],
             ],
             'validators' => [
                 [
-                    'name' => 'Zend\Validator\StringLength',
+                    'name' => 'Laminas\Validator\StringLength',
                     'options'=> [
                         'min' => 1,
                         'max' => 8,

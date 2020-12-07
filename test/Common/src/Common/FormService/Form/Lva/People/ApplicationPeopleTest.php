@@ -10,7 +10,7 @@ namespace CommonTest\FormService\Form\Lva\People;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Lva\People\ApplicationPeople as Sut;
-use Zend\Form\Form;
+use Laminas\Form\Form;
 
 /**
  * Application People Test

@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Lva\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * Vehicle Search
@@ -14,7 +14,7 @@ class VehicleSearch
 {
     /**
      * @Form\Attributes({"id":"vrm","placeholder":"","class":"inline-search__input"})
-     * @Form\Type("\Zend\Form\Element\Text")
+     * @Form\Type("\Laminas\Form\Element\Text")
      * @Form\Required(true)
      */
     public $vrm = null;
@@ -24,7 +24,7 @@ class VehicleSearch
      * @Form\Options({
      *     "label": "vehicle-search-search",
      * })
-     * @Form\Type("\Zend\Form\Element\Button")
+     * @Form\Type("\Laminas\Form\Element\Button")
      */
     public $filter = null;
 

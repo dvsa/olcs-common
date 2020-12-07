@@ -7,8 +7,8 @@
 
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\Form\Element\Textarea as ZendElement;
-use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\Form\Element\Textarea as ZendElement;
+use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
 
 /**
  * Input Specification for Convition additional info

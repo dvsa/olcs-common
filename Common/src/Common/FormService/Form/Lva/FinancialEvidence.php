@@ -12,11 +12,11 @@ class FinancialEvidence extends AbstractLvaFormService
     /**
      * Get Form
      *
-     * @param \Zend\Http\Request $request Request
+     * @param \Laminas\Http\Request $request Request
      *
-     * @return \Zend\Form\Form
+     * @return \Laminas\Form\Form
      */
-    public function getForm(\Zend\Http\Request $request)
+    public function getForm(\Laminas\Http\Request $request)
     {
         $form = $this->getFormHelper()->createFormWithRequest('Lva\FinancialEvidence', $request);
 
@@ -28,7 +28,7 @@ class FinancialEvidence extends AbstractLvaFormService
     /**
      * Make form alterations
      *
-     * @param \Zend\Form\Form $form Form
+     * @param \Laminas\Form\Form $form Form
      *
      * @return void
      */
@@ -41,7 +41,7 @@ class FinancialEvidence extends AbstractLvaFormService
         $this->getFormHelper()->remove($form, 'evidence->uploadNow');
 
         $sl = $this->getServiceLocator();
-        /** @var \Zend\Mvc\Controller\Plugin\Url $urlControllerPlugin */
+        /** @var \Laminas\Mvc\Controller\Plugin\Url $urlControllerPlugin */
         $urlHelper = $sl->get('Helper\Url');
 
         /** @var \Common\Service\Helper\TranslationHelperService $translator */

@@ -9,8 +9,8 @@
 namespace CommonTest\View\Helper;
 
 use \Common\View\Helper\Version;
-use Zend\View\HelperPluginManager;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\View\HelperPluginManager;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Test Version view helper

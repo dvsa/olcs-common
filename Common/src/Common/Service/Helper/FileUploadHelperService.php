@@ -6,10 +6,10 @@ use Common\Exception\ConfigurationException;
 use Common\Exception\File\InvalidMimeException;
 use Common\Service\Table\Type\Selector;
 use Olcs\Logging\Log\Logger;
-use Zend\Form\ElementInterface;
-use Zend\Form\FormInterface;
-use Zend\Http\Request;
-use Zend\Stdlib\RequestInterface;
+use Laminas\Form\ElementInterface;
+use Laminas\Form\FormInterface;
+use Laminas\Http\Request;
+use Laminas\Stdlib\RequestInterface;
 
 /**
  * File Upload Helper Service
@@ -23,7 +23,7 @@ class FileUploadHelperService extends AbstractHelperService
     const FILE_NAME_MAX_LENGTH = 200;
 
     /**
-     * @var \Zend\Form\FormInterface
+     * @var \Laminas\Form\FormInterface
      */
     private $form;
 
@@ -53,7 +53,7 @@ class FileUploadHelperService extends AbstractHelperService
     private $loadCallback;
 
     /**
-     * @var \Zend\Http\Request
+     * @var \Laminas\Http\Request
      */
     private $request;
 
@@ -65,7 +65,7 @@ class FileUploadHelperService extends AbstractHelperService
     /**
      * Get Form
      *
-     * @return \Zend\Form\FormInterface
+     * @return \Laminas\Form\FormInterface
      */
     public function getForm()
     {
@@ -75,7 +75,7 @@ class FileUploadHelperService extends AbstractHelperService
     /**
      * Set Form
      *
-     * @param \Zend\Form\FormInterface $form Form
+     * @param \Laminas\Form\FormInterface $form Form
      *
      * @return $this
      */
@@ -203,7 +203,7 @@ class FileUploadHelperService extends AbstractHelperService
     /**
      * Get request service
      *
-     * @return \Zend\Http\Request
+     * @return \Laminas\Http\Request
      */
     public function getRequest()
     {
@@ -551,7 +551,7 @@ class FileUploadHelperService extends AbstractHelperService
      * @param FormInterface $form     Form
      * @param string        $selector Selector
      *
-     * @return \Zend\Form\ElementInterface
+     * @return \Laminas\Form\ElementInterface
      */
     private function findElement($form, $selector)
     {

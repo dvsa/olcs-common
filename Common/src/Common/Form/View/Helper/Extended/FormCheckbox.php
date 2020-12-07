@@ -12,7 +12,7 @@ namespace Common\Form\View\Helper\Extended;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormCheckbox extends \Zend\Form\View\Helper\FormCheckbox
+class FormCheckbox extends \Laminas\Form\View\Helper\FormCheckbox
 {
     use PrepareAttributesTrait;
 }

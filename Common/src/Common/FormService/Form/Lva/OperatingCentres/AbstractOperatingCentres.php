@@ -3,7 +3,7 @@
 namespace Common\FormService\Form\Lva\OperatingCentres;
 
 use Common\FormService\Form\Lva\AbstractLvaFormService;
-use Zend\Form\Form;
+use Laminas\Form\Form;
 
 /**
  * Abstract Operating Centres

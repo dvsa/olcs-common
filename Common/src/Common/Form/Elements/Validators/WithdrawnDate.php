@@ -8,7 +8,7 @@
  */
 namespace Common\Form\Elements\Validators;
 
-use Zend\Validator as ZendValidator;
+use Laminas\Validator as LaminasValidator;
 
 /**
  * Custom validator for isWithdrawn.
@@ -16,7 +16,7 @@ use Zend\Validator as ZendValidator;
  *
  * @author Ian Lindsay <ian@hemera-business-services.co.uk>
  */
-class WithdrawnDate extends ZendValidator\AbstractValidator
+class WithdrawnDate extends LaminasValidator\AbstractValidator
 {
     const DATE_NOT_VALID = 'dateNotValid';
     const DATE_IN_FUTURE = 'dateInFuture';

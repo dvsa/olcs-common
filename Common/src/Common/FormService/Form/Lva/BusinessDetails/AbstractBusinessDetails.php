@@ -63,7 +63,7 @@ abstract class AbstractBusinessDetails extends AbstractFormService
     /**
      * Make generic form alterations for non limited (or LLP) companies
      *
-     * @param \Zend\Form\Form $form
+     * @param \Laminas\Form\Form $form
      */
     protected function alterFormForNonRegisteredCompany($form)
     {

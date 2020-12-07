@@ -2,9 +2,9 @@
 
 namespace CommonTest;
 
-use Zend\Mvc\I18n\Translator;
-use Zend\Mvc\Service\ServiceManagerConfig;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\Mvc\I18n\Translator;
+use Laminas\Mvc\Service\ServiceManagerConfig;
+use Laminas\ServiceManager\ServiceManager;
 use Mockery as m;
 use Olcs\Logging\Log\Logger;
 
@@ -54,11 +54,11 @@ class Bootstrap
     /**
      * Changed this method to return a mock
      *
-     * @return \Zend\ServiceManager\ServiceManager
+     * @return \Laminas\ServiceManager\ServiceManager
      */
     public static function getServiceManager()
     {
-        $sm = m::mock('\Zend\ServiceManager\ServiceManager')
+        $sm = m::mock('\Laminas\ServiceManager\ServiceManager')
             ->makePartial()
             ->setAllowOverride(true);
 
@@ -71,13 +71,13 @@ class Bootstrap
     /**
      * Added this method for backwards compatibility
      *
-     * @return \Zend\ServiceManager\ServiceManager
+     * @return \Laminas\ServiceManager\ServiceManager
      */
     public static function getRealServiceManager()
     {
         // When we fix our unit tests to mock all dependencies
         // we need to put this line back in to speed up our tests
-        //return m::mock('\Zend\ServiceManager\ServiceManager')->makePartial();
+        //return m::mock('\Laminas\ServiceManager\ServiceManager')->makePartial();
 
         $serviceManager = new ServiceManager(new ServiceManagerConfig());
         $serviceManager->setService('ApplicationConfig', self::$config);
@@ -88,7 +88,7 @@ class Bootstrap
         $config['service_api_mapping']['endpoints']['backend'] = 'http://some-fake-backend/';
         $serviceManager->setService('Config', $config);
 
-        $translator = m::mock(\Zend\I18n\Translator\Translator::class)->makePartial();
+        $translator = m::mock(\Laminas\I18n\Translator\Translator::class)->makePartial();
         /** @var Translator $mvcTranslator */
         $mvcTranslator = m::mock(Translator::class, [$translator])->makePartial();
         $serviceManager->setService('MvcTranslator', $mvcTranslator);
@@ -114,7 +114,7 @@ class Bootstrap
             m::mock()
             ->shouldReceive('getClient')
             ->andReturn(
-                m::mock('\Common\Util\RestClient[request]', [new \Zend\Uri\Http])
+                m::mock('\Common\Util\RestClient[request]', [new \Laminas\Uri\Http])
                 ->shouldReceive('request')
                 ->andReturnUsing($closure)
                 ->getMock()
@@ -133,8 +133,8 @@ class Bootstrap
 
     public static function setupLogger()
     {
-        $logWriter = new \Zend\Log\Writer\Mock();
-        $logger = new \Zend\Log\Logger();
+        $logWriter = new \Laminas\Log\Writer\Mock();
+        $logger = new \Laminas\Log\Logger();
         $logger->addWriter($logWriter);
 
         Logger::setLogger($logger);

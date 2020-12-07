@@ -7,8 +7,8 @@
  */
 namespace Common\Controller\Crud;
 
-use Zend\ServiceManager\InitializerInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\InitializerInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use Common\Controller\Interfaces\CrudControllerInterface;
 
 /**

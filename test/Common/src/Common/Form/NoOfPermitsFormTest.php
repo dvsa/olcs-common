@@ -6,9 +6,9 @@ use Common\Form\NoOfPermitsForm;
 use Common\Form\Elements\Custom\NoOfPermits as NoOfPermitsElement;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
-use Zend\Form\Element\Text;
-use Zend\Form\Element\Number;
-use Zend\Form\Fieldset;
+use Laminas\Form\Element\Text;
+use Laminas\Form\Element\Number;
+use Laminas\Form\Fieldset;
 
 /**
  * NoOfPermitsFormTest

@@ -5,8 +5,8 @@ namespace CommonTest;
 use Common\Module;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Mvc\Application;
-use Zend\Validator\Csrf;
+use Laminas\Mvc\Application;
+use Laminas\Validator\Csrf;
 
 /**
  * @covers \Common\Module
@@ -27,9 +27,9 @@ class ModuleTest extends MockeryTestCase
 
     /** @var  m\MockInterface */
     private $mockReq;
-    /** @var  \Zend\Mvc\MvcEvent | m\MockInterface */
+    /** @var  \Laminas\Mvc\MvcEvent | m\MockInterface */
     private $mockEvent;
-    /** @var  \Zend\ServiceManager\ServiceLocatorInterface | m\MockInterface */
+    /** @var  \Laminas\ServiceManager\ServiceLocatorInterface | m\MockInterface */
     private $mockSm;
     /** @var  m\MockInterface */
     private $mockApp;
@@ -38,15 +38,15 @@ class ModuleTest extends MockeryTestCase
     {
         $this->sut = new Module();
 
-        $this->mockReq = m::mock(\Zend\Http\Request::class);
+        $this->mockReq = m::mock(\Laminas\Http\Request::class);
 
-        $this->mockSm = m::mock(\Zend\ServiceManager\ServiceLocatorInterface::class);
+        $this->mockSm = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class);
         $this->mockSm->shouldReceive('get')->with('config')->andReturn(self::$cfg);
 
         $this->mockApp = m::mock(Application::class);
         $this->mockApp->shouldReceive('getServiceManager')->andReturn($this->mockSm);
 
-        $this->mockEvent = m::mock(\Zend\Mvc\MvcEvent::class);
+        $this->mockEvent = m::mock(\Laminas\Mvc\MvcEvent::class);
         $this->mockEvent
             ->shouldReceive('getRequest')->andReturn($this->mockReq);
     }
@@ -87,7 +87,7 @@ class ModuleTest extends MockeryTestCase
         $validator = new Csrf(['name' => 'security']);
         $hash = $validator->getHash();
 
-        $mockParams = m::mock(\Zend\Stdlib\Parameters::class)
+        $mockParams = m::mock(\Laminas\Stdlib\Parameters::class)
             ->shouldReceive('count')->andReturn(1)
             ->getMock();
 
@@ -108,7 +108,7 @@ class ModuleTest extends MockeryTestCase
         $mockFlashHlp->shouldReceive('addErrorMessage')->once()->with('csrf-message');
         $this->mockSm->shouldReceive('get')->with('Helper\FlashMessenger')->andReturn($mockFlashHlp);
 
-        $mockParams = m::mock(\Zend\Stdlib\Parameters::class)
+        $mockParams = m::mock(\Laminas\Stdlib\Parameters::class)
             ->shouldReceive('count')->andReturn(1)
             ->getMock();
 
@@ -117,7 +117,7 @@ class ModuleTest extends MockeryTestCase
             ->shouldReceive('isPost')->once()->andReturn(true)
             ->shouldReceive('getPost')->once()->withNoArgs()->andReturn($mockParams)
             ->shouldReceive('getPost')->once()->with('security')->andReturn('NOT VALID HASH')
-            ->shouldReceive('setMethod')->once()->with(\Zend\Http\Request::METHOD_GET);
+            ->shouldReceive('setMethod')->once()->with(\Laminas\Http\Request::METHOD_GET);
 
         $this->mockEvent->shouldReceive('getApplication')->once()->andReturn($this->mockApp);
         $this->mockEvent

@@ -22,7 +22,7 @@ class SearchTypeManagerFactoryTest extends TestCase
 
         $sut = new SearchTypeManagerFactory();
 
-        $mockSl = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
+        $mockSl = m::mock('Laminas\ServiceManager\ServiceLocatorInterface');
         $mockSl->shouldReceive('get')->with('Config')->andReturn($serviceConfig);
 
         $service = $sut->createService($mockSl);

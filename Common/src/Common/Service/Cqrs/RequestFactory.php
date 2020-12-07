@@ -2,14 +2,14 @@
 
 namespace Common\Service\Cqrs;
 
-use Zend\Http\Header\Authorization;
-use Zend\Http\Header\Cookie;
-use Zend\Http\Headers;
-use Zend\Http\Header\Accept;
-use Zend\Http\Header\ContentType;
-use Zend\Http\Request;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\Http\Header\Authorization;
+use Laminas\Http\Header\Cookie;
+use Laminas\Http\Headers;
+use Laminas\Http\Header\Accept;
+use Laminas\Http\Header\ContentType;
+use Laminas\Http\Request;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Request Factory
@@ -33,7 +33,7 @@ class RequestFactory implements FactoryInterface
 
         $identifier = $serviceLocator->get('LogProcessorManager')->get(\Olcs\Logging\Log\Processor\RequestId::class)
             ->getIdentifier();
-        $correlationHeader = new \Zend\Http\Header\GenericHeader('X-Correlation-Id', $identifier);
+        $correlationHeader = new \Laminas\Http\Header\GenericHeader('X-Correlation-Id', $identifier);
 
         $headers = new Headers();
         $headers->addHeaders([$accept, $contentType, $correlationHeader]);

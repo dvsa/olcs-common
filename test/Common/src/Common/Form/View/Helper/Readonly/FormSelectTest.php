@@ -37,12 +37,12 @@ class FormSelectTest extends TestCase
             'val2' => 'Val 2'
         ];
 
-        $mockMultiple = m::mock('Zend\Form\Element\Select');
+        $mockMultiple = m::mock('Laminas\Form\Element\Select');
         $mockMultiple->shouldReceive('getAttribute')->with('multiple')->andReturn(true);
         $mockMultiple->shouldReceive('getValueOptions')->andReturn($valueOptions);
         $mockMultiple->shouldReceive('getValue')->andReturn(['val1', 'val2']);
 
-        $mockSingle = m::mock('Zend\Form\Element\Select');
+        $mockSingle = m::mock('Laminas\Form\Element\Select');
         $mockSingle->shouldReceive('getAttribute')->with('multiple')->andReturn(false);
         $mockSingle->shouldReceive('getValueOptions')->andReturn($valueOptions);
         $mockSingle->shouldReceive('getValue')->andReturn('val3');
@@ -50,7 +50,7 @@ class FormSelectTest extends TestCase
         return [
             [$mockMultiple, 'Val 1, Val 2'],
             [$mockSingle, 'Val 3'],
-            [m::mock('Zend\Form\ElementInterface'), ''],
+            [m::mock('Laminas\Form\ElementInterface'), ''],
             [null, null]
         ];
     }

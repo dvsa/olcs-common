@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Common\View\Helper;
 
-use Zend\View\Helper\AbstractHelper;
+use Laminas\View\Helper\AbstractHelper;
 
 class Panel extends AbstractHelper
 {

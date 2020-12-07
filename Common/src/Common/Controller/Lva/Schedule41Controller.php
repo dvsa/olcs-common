@@ -8,8 +8,8 @@ use Dvsa\Olcs\Transfer\Command\Application\Schedule41Approve;
 use Dvsa\Olcs\Transfer\Command\Application\Schedule41Refuse;
 use Dvsa\Olcs\Transfer\Command\Application\Schedule41Reset;
 use Dvsa\Olcs\Transfer\Query\Licence\LicenceByNumber;
-use Zend\Form\Form;
-use Zend\View\Model\ViewModel;
+use Laminas\Form\Form;
+use Laminas\View\Model\ViewModel;
 
 /**
  * Review Controller
@@ -23,7 +23,7 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
     /**
      * Search for a licence by licence number.
      *
-     * @return string|\Zend\Http\Response|ViewModel
+     * @return string|\Laminas\Http\Response|ViewModel
      */
     public function licenceSearchAction()
     {
@@ -145,7 +145,7 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
     /**
      * Approve the registered schedule 4/1 request for the application.
      *
-     * @return \Zend\Http\Response|ViewModel
+     * @return \Laminas\Http\Response|ViewModel
      */
     public function approveSchedule41Action()
     {
@@ -211,7 +211,7 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
      *
      * @param array $errors Errors
      *
-     * @return \Zend\View\Helper\ViewModel
+     * @return \Laminas\View\Helper\ViewModel
      */
     private function cannotPublish($errors)
     {
@@ -229,7 +229,7 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
     /**
      * Reset the registered schedule 4/1 request for the application.
      *
-     * @return \Zend\Http\Response|ViewModel
+     * @return \Laminas\Http\Response|ViewModel
      */
     public function resetSchedule41Action()
     {
@@ -276,7 +276,7 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
     /**
      * Refuse the registered schedule 4/1 request for the application.
      *
-     * @return \Zend\Http\Response|ViewModel
+     * @return \Laminas\Http\Response|ViewModel
      */
     public function refuseSchedule41Action()
     {
@@ -374,7 +374,7 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
      *
      * @param string $message Message
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     protected function redirectWithError($message)
     {

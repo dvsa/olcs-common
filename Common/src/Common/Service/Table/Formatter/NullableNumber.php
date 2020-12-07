@@ -22,7 +22,7 @@ class NullableNumber implements FormatterInterface
      *
      * @param array $data
      * @param array $column
-     * @param \Zend\ServiceManager\ServiceManager $sm
+     * @param \Laminas\ServiceManager\ServiceManager $sm
      * @return int either the input number or 0 for null values
      */
     public static function format($data, $column = array(), $sm = null)

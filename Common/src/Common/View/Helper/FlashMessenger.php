@@ -3,8 +3,8 @@
 namespace Common\View\Helper;
 
 use Common\Service\Helper\FlashMessengerHelperService;
-use Zend\View\Helper\FlashMessenger as ZendFlashMessenger;
-use Zend\Mvc\Controller\Plugin\FlashMessenger as PluginFlashMessenger;
+use Laminas\View\Helper\FlashMessenger as ZendFlashMessenger;
+use Laminas\Mvc\Controller\Plugin\FlashMessenger as PluginFlashMessenger;
 
 /**
  * Flash messenger view helper (Extends zends flash messenger)

@@ -10,7 +10,7 @@
 
 namespace Common\Util;
 
-use Zend\Http\Response;
+use Laminas\Http\Response;
 
 /**
  * Response Helper
@@ -106,7 +106,6 @@ class ResponseHelper
         $data = json_decode($body, true);
 
         if (json_last_error() !== JSON_ERROR_NONE) {
-
             throw new \Exception('Invalid response body, expected json: ' . $body);
         }
 
@@ -116,7 +115,6 @@ class ResponseHelper
     public function checkForInternalServerError($body)
     {
         if ($this->response->getStatusCode() == Response::STATUS_CODE_500) {
-
             $data = json_decode($body, true);
 
             if (json_last_error() == JSON_ERROR_NONE) {
@@ -130,7 +128,6 @@ class ResponseHelper
     public function checkForUnexpectedResponseCode($body)
     {
         if (!in_array($this->response->getStatusCode(), $this->expectedCodes[$this->method])) {
-
             $data = json_decode($body, true);
 
             if (json_last_error() == JSON_ERROR_NONE) {
@@ -149,20 +146,15 @@ class ResponseHelper
     {
         switch ($this->method) {
             case 'GET':
-
                 if ($this->response->getStatusCode() === Response::STATUS_CODE_200) {
-
                     return isset($this->responseData['Data']) ? $this->responseData['Data'] : $this->responseData;
                 }
 
                 return false;
             case 'POST':
-
-                if (
-                    $this->response->getStatusCode() === Response::STATUS_CODE_201 ||
+                if ($this->response->getStatusCode() === Response::STATUS_CODE_201 ||
                     $this->response->getStatusCode() === Response::STATUS_CODE_202
                 ) {
-
                     return $this->responseData['Data'];
                 }
 
@@ -170,17 +162,13 @@ class ResponseHelper
             // These currently do the same thing
             case 'PUT':
             case 'PATCH':
-
                 if ($this->response->getStatusCode() === Response::STATUS_CODE_200) {
-
                     return $this->responseData['Data'];
                 }
 
                 return $this->response->getStatusCode();
             case 'DELETE':
-
                 if ($this->response->getStatusCode() === Response::STATUS_CODE_200) {
-
                     return $this->responseData['Data'];
                 }
 

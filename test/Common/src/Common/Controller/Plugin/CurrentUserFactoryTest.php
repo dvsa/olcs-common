@@ -6,7 +6,7 @@ use Common\Controller\Plugin\CurrentUserFactory;
 use Common\Controller\Plugin\CurrentUserInterface;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Mockery as m;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use ZfcRbac\Service\AuthorizationService;
 
 /**

@@ -2,7 +2,7 @@
 
 namespace Common\Service\Qa\Custom\Bilateral;
 
-use Zend\Validator\AbstractValidator;
+use Laminas\Validator\AbstractValidator;
 
 class StandardAndCabotageYesNoRadioValidator extends AbstractValidator
 {

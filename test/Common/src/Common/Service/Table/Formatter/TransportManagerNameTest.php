@@ -27,7 +27,7 @@ class TransportManagerNameTest extends MockeryTestCase
 
         $this->mockUrlHelper = m::mock();
 
-        $this->sm = m::mock(\Zend\ServiceManager\ServiceLocatorInterface::class);
+        $this->sm = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class);
         $this->sm->shouldReceive('get')->with('Helper\Url')->andReturn($this->mockUrlHelper);
     }
 

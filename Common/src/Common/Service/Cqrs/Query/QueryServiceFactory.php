@@ -8,10 +8,10 @@
 namespace Common\Service\Cqrs\Query;
 
 use Dvsa\Olcs\Utils\Client\ClientAdapterLoggingWrapper;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Http\Client;
-use Zend\Http\Request;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\Http\Client;
+use Laminas\Http\Request;
 
 /**
  * Query Service Factory

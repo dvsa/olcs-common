@@ -23,7 +23,7 @@ class ResolverFactoryTest extends MockeryTestCase
             ]
         ];
 
-        $mockSl = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
+        $mockSl = m::mock('Laminas\ServiceManager\ServiceLocatorInterface');
         $mockSl->shouldReceive('get')->with('Config')->andReturn($config);
 
         $sut = new ResolverFactory();

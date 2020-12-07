@@ -11,7 +11,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class PanelTest extends MockeryTestCase
 {
-    /** @var  \Zend\View\Renderer\RendererInterface */
+    /** @var  \Laminas\View\Renderer\RendererInterface */
     private $mockView;
 
     /**
@@ -19,7 +19,7 @@ class PanelTest extends MockeryTestCase
      */
     public function testInvoke($params, $expect, $expected_css_class)
     {
-        $this->mockView = m::mock(\Zend\View\Renderer\RendererInterface::class)
+        $this->mockView = m::mock(\Laminas\View\Renderer\RendererInterface::class)
             ->shouldReceive('render')
             ->withArgs([
                 'partials/panel',

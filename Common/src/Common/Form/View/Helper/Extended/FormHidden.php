@@ -12,7 +12,7 @@ namespace Common\Form\View\Helper\Extended;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormHidden extends \Zend\Form\View\Helper\FormHidden
+class FormHidden extends \Laminas\Form\View\Helper\FormHidden
 {
     use PrepareAttributesTrait;
 }

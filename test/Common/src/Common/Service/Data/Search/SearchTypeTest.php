@@ -9,7 +9,7 @@ use Common\Data\Object\Search\Application;
 use Common\Data\Object\Search\Licence;
 use Common\Service\Data\Search\SearchType;
 use Common\Service\NavigationFactory;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Class SearchTypeTest
@@ -28,7 +28,7 @@ class SearchTypeTest extends TestCase
             ]
         ];
 
-        $mockStm = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
+        $mockStm = m::mock('Laminas\ServiceManager\ServiceLocatorInterface');
         $mockStm->shouldReceive('getRegisteredServices')->andReturn($servicesArray);
         $mockStm->shouldReceive('get')->with('application')->andReturn(new Application());
         $mockStm->shouldReceive('get')->with('licence')->andReturn(new Licence());

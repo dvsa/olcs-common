@@ -3,7 +3,7 @@
 namespace CommonTest\Form\Elements\InputFilters;
 
 use Common\Form\Elements\InputFilters;
-use \Zend\Validator\StringLength;
+use \Laminas\Validator\StringLength;
 
 /**
  * Test SelectEmpty InputFilter

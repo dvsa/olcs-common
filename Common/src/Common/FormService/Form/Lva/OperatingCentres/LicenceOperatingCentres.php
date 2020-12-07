@@ -7,7 +7,7 @@
  */
 namespace Common\FormService\Form\Lva\OperatingCentres;
 
-use Zend\Form\Form;
+use Laminas\Form\Form;
 
 /**
  * Licence Operating Centres

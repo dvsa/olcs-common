@@ -6,8 +6,8 @@ use Common\Service\Qa\FieldsetModifier\Fieldsets;
 use Common\Service\Qa\FieldsetModifier\RoadworthinessMakeAndModelFieldsetModifier;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Element\Text;
-use Zend\Form\Fieldset;
+use Laminas\Form\Element\Text;
+use Laminas\Form\Fieldset;
 
 /**
  * RoadworthinessMakeAndModelFieldsetModifierTest

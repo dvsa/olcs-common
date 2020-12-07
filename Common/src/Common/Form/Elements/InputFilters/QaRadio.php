@@ -3,7 +3,7 @@
 namespace Common\Form\Elements\InputFilters;
 
 use Common\Form\Elements\Types\Radio;
-use Zend\Validator\InArray;
+use Laminas\Validator\InArray;
 
 /**
  * QaRadio element

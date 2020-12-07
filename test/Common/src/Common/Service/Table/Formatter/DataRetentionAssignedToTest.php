@@ -6,8 +6,8 @@ use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Table\Formatter\DataRetentionAssignedTo;
 use Common\View\Helper\PersonName;
-use Zend\View\HelperPluginManager;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\View\HelperPluginManager;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * @covers \Common\Service\Table\Formatter\DataRetentionAssignedTo

@@ -2,9 +2,9 @@
 
 namespace Common\Service\Qa\Custom\Common;
 
-use Zend\Form\Factory as FormFactory;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\Form\Factory as FormFactory;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class FileUploadFieldsetGeneratorFactory implements FactoryInterface
 {

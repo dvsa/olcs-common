@@ -8,8 +8,8 @@
 
 namespace Common\Form\View\Helper;
 
-use Zend\Form\View\Helper\AbstractHelper;
-use Zend\Form\ElementInterface;
+use Laminas\Form\View\Helper\AbstractHelper;
+use Laminas\Form\ElementInterface;
 
 /**
  *  PlainText Form View Helper

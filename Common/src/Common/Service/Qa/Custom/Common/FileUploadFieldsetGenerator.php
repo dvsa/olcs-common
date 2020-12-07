@@ -4,8 +4,8 @@ namespace Common\Service\Qa\Custom\Common;
 
 use Common\Form\Annotation\CustomAnnotationBuilder;
 use Common\Form\Model\Fieldset\MultipleFileUpload;
-use Zend\Form\Factory as FormFactory;
-use Zend\Form\InputFilterProviderFieldset;
+use Laminas\Form\Factory as FormFactory;
+use Laminas\Form\InputFilterProviderFieldset;
 
 class FileUploadFieldsetGenerator
 {

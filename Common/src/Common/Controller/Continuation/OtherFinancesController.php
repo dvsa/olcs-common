@@ -6,7 +6,7 @@ use Common\Data\Mapper\Continuation\OtherFinances;
 use Common\Form\Form;
 use Common\Service\Helper\TranslationHelperService;
 use Dvsa\Olcs\Transfer\Command\ContinuationDetail\UpdateFinances;
-use Zend\View\Model\ViewModel;
+use Laminas\View\Model\ViewModel;
 
 /**
  * OtherFinancesController
@@ -33,14 +33,12 @@ class OtherFinancesController extends AbstractContinuationController
         if ($this->getRequest()->isPost()) {
             $form->setData($this->getRequest()->getPost());
             if ($form->isValid()) {
-
                 $dtoData = array_merge(
                     OtherFinances::mapFromForm($form->getData()),
                     ['id' => $continuationDetail['id']]
                 );
                 $response = $this->handleCommand(UpdateFinances::create($dtoData));
                 if ($response->isOk()) {
-
                     $totalFunds = (float)$continuationDetail['averageBalanceAmount']
                         + (float)$continuationDetail['overdraftAmount']
                         + (float)$continuationDetail['factoringAmount']

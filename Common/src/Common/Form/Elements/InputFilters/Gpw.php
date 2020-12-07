@@ -8,11 +8,11 @@
 
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\Form\Element as ZendElement;
-use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
-use Zend\Validator\Digits;
-use Zend\Validator\GreaterThan;
-use Zend\I18n\Validator\Alnum;
+use Laminas\Form\Element as ZendElement;
+use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\Validator\Digits;
+use Laminas\Validator\GreaterThan;
+use Laminas\I18n\Validator\Alnum;
 
 /**
  * Gpw Element
@@ -38,8 +38,8 @@ class Gpw extends ZendElement implements InputProviderInterface
             'name' => $this->getName(),
             'required' => true,
             'validators' => [
-                ['name' => 'Zend\Validator\Digits'],
-                ['name' => 'Zend\Validator\GreaterThan', 'options' =>['min' => 0]],
+                ['name' => 'Laminas\Validator\Digits'],
+                ['name' => 'Laminas\Validator\GreaterThan', 'options' =>['min' => 0]],
             ]
         ];
 

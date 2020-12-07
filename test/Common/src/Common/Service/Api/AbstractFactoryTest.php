@@ -6,8 +6,8 @@ namespace CommonTest\Service\Api;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Api\AbstractFactory;
 use Mockery as m;
-use Zend\Http\Header\Cookie;
-use Zend\Http\Request;
+use Laminas\Http\Header\Cookie;
+use Laminas\Http\Request;
 
 /**
  * Class AbstractFactoryTest
@@ -17,7 +17,7 @@ class AbstractFactoryTest extends MockeryTestCase
 {
     public function testCanCreateServiceWithName()
     {
-        $mockSl = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
+        $mockSl = m::mock('Laminas\ServiceManager\ServiceLocatorInterface');
 
         $sut = new AbstractFactory();
         $this->assertTrue($sut->canCreateServiceWithName($mockSl, '', 'Olcs\\RestService\\Backend\\Task'));
@@ -33,7 +33,7 @@ class AbstractFactoryTest extends MockeryTestCase
         $mockRequest = m::mock(Request::class);
         $mockRequest->shouldReceive('getCookie')->andReturn(new Cookie(['secureToken' => 'abad1dea']));
 
-        $mockSl = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
+        $mockSl = m::mock('Laminas\ServiceManager\ServiceLocatorInterface');
         $mockSl->shouldReceive('getServiceLocator->get')->with('Config')->andReturn($config);
         $mockSl->shouldReceive('getServiceLocator->get')->with('translator')->andReturn($translator);
         $mockSl->shouldReceive('getServiceLocator->get')->with('Request')->andReturn($mockRequest);
@@ -44,14 +44,13 @@ class AbstractFactoryTest extends MockeryTestCase
         $this->assertEquals('/task-type', $client->url->getPath());
 
         $this->assertEquals('en-ts', $client->getLanguage());
-
     }
 
     public function testCreateServiceInvalidMapping()
     {
         $config['service_api_mapping']['endpoints']['backend'] = 'http://olcs-backend';
 
-        $mockSl = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
+        $mockSl = m::mock('Laminas\ServiceManager\ServiceLocatorInterface');
         $mockSl->shouldReceive('getServiceLocator->get')->with('Config')->andReturn($config);
 
         $sut = new AbstractFactory();
@@ -88,7 +87,7 @@ class AbstractFactoryTest extends MockeryTestCase
         $mockRequest = m::mock(Request::class);
         $mockRequest->shouldReceive('getCookie')->andReturn(new Cookie(['secureToken' => 'abad1dea']));
 
-        $mockSl = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
+        $mockSl = m::mock('Laminas\ServiceManager\ServiceLocatorInterface');
         $mockSl->shouldReceive('getServiceLocator->get')->with('Config')->andReturn($config);
         $mockSl->shouldReceive('getServiceLocator->get')->with('translator')->andReturn($translator);
         $mockSl->shouldReceive('getServiceLocator->get')->with('Request')->andReturn($mockRequest);

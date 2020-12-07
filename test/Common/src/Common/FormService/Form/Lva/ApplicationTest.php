@@ -30,7 +30,7 @@ class ApplicationTest extends MockeryTestCase
      */
     public function testAlterForm()
     {
-        $form = m::mock('\Zend\Form\Form');
+        $form = m::mock('\Laminas\Form\Form');
 
         $this->assertNull($this->sut->alterForm($form));
     }

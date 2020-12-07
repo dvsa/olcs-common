@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Lva\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Name("dataTrafficArea")
@@ -23,7 +23,7 @@ class TrafficArea
      *     "empty_option": "Please Select",
      *     "disable_inarray_validator": false,
      * })
-     * @Form\Type("\Zend\Form\Element\Select")
+     * @Form\Type("\Laminas\Form\Element\Select")
      */
     public $trafficArea = null;
 
@@ -52,7 +52,7 @@ class TrafficArea
      *     "empty_option": "Please Select",
      *     "disable_inarray_validator": false,
      * })
-     * @Form\Type("\Zend\Form\Element\Select")
+     * @Form\Type("\Laminas\Form\Element\Select")
      */
     public $enforcementArea = null;
 }

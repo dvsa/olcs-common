@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Lva\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Name("interim")
@@ -17,7 +17,7 @@ class Interim
      *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"}
      * })
      * @Form\Attributes({"value": "N"})
-     * @Form\Type("\Zend\Form\Element\Radio")
+     * @Form\Type("\Laminas\Form\Element\Radio")
      */
     public $goodsApplicationInterim = null;
 
@@ -43,14 +43,14 @@ class Interim
      *         "id": "application-interim-reason"
      *     }
      * })
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
      * @Form\Validator({"name": "ValidateIf",
      *      "options":{
      *          "context_field": "goodsApplicationInterim",
      *          "context_values": {"Y"},
      *          "validators": {
      *              {
-     *                  "name": "\Zend\Validator\NotEmpty",
+     *                  "name": "\Laminas\Validator\NotEmpty",
      *                  "options": {
      *                      "message": "interim.application.undertakings.form.textarea.error.message.empty"
      *                  }

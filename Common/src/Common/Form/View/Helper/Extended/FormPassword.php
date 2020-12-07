@@ -12,7 +12,7 @@ namespace Common\Form\View\Helper\Extended;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormPassword extends \Zend\Form\View\Helper\FormPassword
+class FormPassword extends \Laminas\Form\View\Helper\FormPassword
 {
     use PrepareAttributesTrait;
 }

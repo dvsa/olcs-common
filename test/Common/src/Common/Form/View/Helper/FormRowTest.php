@@ -3,9 +3,9 @@
 namespace CommonTest\Form\View\Helper;
 
 use Common\Form\Elements\Types\AttachFilesButton;
-use Zend\Form\Element\DateSelect;
-use Zend\View\HelperPluginManager;
-use Zend\Form\View\Helper as ZendHelper;
+use Laminas\Form\Element\DateSelect;
+use Laminas\View\HelperPluginManager;
+use Laminas\Form\View\Helper as ZendHelper;
 use Common\Form\View\Helper as CommonHelper;
 
 /**
@@ -20,7 +20,7 @@ class FormRowTest extends \PHPUnit\Framework\TestCase
      * @param string $type    Element type
      * @param array  $options Options for element
      *
-     * @return \Zend\Form\Element
+     * @return \Laminas\Form\Element
      */
     private function prepareElement(
         $type = 'Text',
@@ -28,7 +28,7 @@ class FormRowTest extends \PHPUnit\Framework\TestCase
         $attributes = array('class' => 'class')
     ) {
         if (strpos($type, '\\') === false) {
-            $type = '\Zend\Form\Element\\' . ucfirst($type);
+            $type = '\Laminas\Form\Element\\' . ucfirst($type);
         }
 
         $options = array_merge(
@@ -340,8 +340,8 @@ class FormRowTest extends \PHPUnit\Framework\TestCase
 
     private function prepareHelper()
     {
-        $translator = new \Zend\I18n\Translator\Translator();
-        $translateHelper = new \Zend\I18n\View\Helper\Translate();
+        $translator = new \Laminas\I18n\Translator\Translator();
+        $translateHelper = new \Laminas\I18n\View\Helper\Translate();
         $translateHelper->setTranslator($translator);
 
         $helpers = new HelperPluginManager();
@@ -351,7 +351,7 @@ class FormRowTest extends \PHPUnit\Framework\TestCase
         $helpers->setService('form_text', new ZendHelper\FormText());
 
         $view = $this->createPartialMock(
-            'Zend\View\Renderer\PhpRenderer',
+            'Laminas\View\Renderer\PhpRenderer',
             array('render')
         );
 

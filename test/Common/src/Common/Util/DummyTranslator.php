@@ -8,7 +8,7 @@ namespace CommonTest\Util;
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class DummyTranslator implements \Zend\I18n\Translator\TranslatorInterface
+class DummyTranslator implements \Laminas\I18n\Translator\TranslatorInterface
 {
     protected $map = [];
 

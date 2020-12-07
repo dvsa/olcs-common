@@ -2,9 +2,9 @@
 
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\Validator\NotEmpty;
-use Zend\Form\Element\MultiCheckbox;
-use Zend\InputFilter\InputProviderInterface;
+use Laminas\Validator\NotEmpty;
+use Laminas\Form\Element\MultiCheckbox;
+use Laminas\InputFilter\InputProviderInterface;
 
 /**
  * @deprecated This only gets used once in \Olcs\Controller\Document\DocumentGenerationController

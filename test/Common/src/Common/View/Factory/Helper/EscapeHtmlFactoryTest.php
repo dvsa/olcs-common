@@ -7,7 +7,7 @@ use Common\View\Helper\EscapeHtml;
 use HTMLPurifier;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class EscapeHtmlFactoryTest extends TestCase
 {

@@ -7,9 +7,9 @@
  */
 namespace Common\Util;
 
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorAwareInterface;
 
 /**
  * Abstract Factory
@@ -28,7 +28,7 @@ abstract class AbstractFactory implements FactoryInterface
     /**
      * Holds the service manager
      *
-     * @var \Zend\ServiceManager\ServiceLocatorInterface
+     * @var \Laminas\ServiceManager\ServiceLocatorInterface
      */
     protected $serviceManager;
 
@@ -42,7 +42,7 @@ abstract class AbstractFactory implements FactoryInterface
     /**
      * Setup the factory, with a service locator
      *
-     * @param \Zend\ServiceManager\ServiceLocatorInterface $serviceLocator
+     * @param \Laminas\ServiceManager\ServiceLocatorInterface $serviceLocator
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
@@ -78,7 +78,6 @@ abstract class AbstractFactory implements FactoryInterface
         $className = $this->namespace . '\\' . $service;
 
         if (!class_exists($className)) {
-
             $className .= 'Service';
 
             if (!class_exists($className)) {

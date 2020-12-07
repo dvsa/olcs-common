@@ -7,10 +7,10 @@
  */
 namespace Common\Service\Helper;
 
-use Zend\Filter\Word\DashToCamelCase;
-use Zend\Filter\Word\CamelCaseToDash;
-use Zend\Filter\Word\UnderscoreToCamelCase;
-use Zend\Filter\Word\CamelCaseToUnderscore;
+use Laminas\Filter\Word\DashToCamelCase;
+use Laminas\Filter\Word\CamelCaseToDash;
+use Laminas\Filter\Word\UnderscoreToCamelCase;
+use Laminas\Filter\Word\CamelCaseToUnderscore;
 
 /**
  * String Helper Service

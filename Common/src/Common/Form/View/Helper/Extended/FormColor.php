@@ -12,7 +12,7 @@ namespace Common\Form\View\Helper\Extended;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormColor extends \Zend\Form\View\Helper\FormColor
+class FormColor extends \Laminas\Form\View\Helper\FormColor
 {
     use PrepareAttributesTrait;
 }

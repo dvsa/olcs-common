@@ -7,7 +7,7 @@ use Common\Service\Table\Formatter\InternalLicencePermitReference;
 use Common\Service\Helper\UrlHelperService as UrlHelper;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * InternalLicencePermitReference test

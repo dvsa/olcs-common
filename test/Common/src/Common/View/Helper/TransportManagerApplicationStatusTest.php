@@ -6,7 +6,7 @@ use Common\RefData;
 use Common\View\Helper\TransportManagerApplicationStatus;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\View\Renderer\RendererInterface;
+use Laminas\View\Renderer\RendererInterface;
 
 /**
  * @covers \Common\View\Helper\TransportManagerApplicationStatus

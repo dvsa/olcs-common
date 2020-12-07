@@ -2,8 +2,8 @@
 
 namespace Common\Service\Qa\Custom\EcmtRemoval;
 
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class PermitStartDateFieldsetPopulatorFactory implements FactoryInterface
 {

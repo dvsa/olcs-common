@@ -2,7 +2,7 @@
 
 namespace Common\Service\Qa;
 
-use Zend\Form\Element\DateSelect as ZendDateSelect;
+use Laminas\Form\Element\DateSelect as ZendDateSelect;
 
 class DateSelect extends ZendDateSelect
 {

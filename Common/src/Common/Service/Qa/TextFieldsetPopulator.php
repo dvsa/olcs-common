@@ -2,7 +2,7 @@
 
 namespace Common\Service\Qa;
 
-use Zend\Form\Fieldset;
+use Laminas\Form\Fieldset;
 
 class TextFieldsetPopulator implements FieldsetPopulatorInterface
 {

@@ -9,9 +9,9 @@ use Common\RefData;
 use Common\Service\Helper\FormHelperService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Element;
-use Zend\Form\Fieldset;
-use Zend\Form\Form;
+use Laminas\Form\Element;
+use Laminas\Form\Fieldset;
+use Laminas\Form\Form;
 
 /**
  * Licence Type Of Licence Test

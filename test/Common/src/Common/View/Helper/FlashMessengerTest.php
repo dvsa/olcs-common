@@ -33,10 +33,10 @@ class FlashMessengerTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->mockPluginManager = m::mock('\Zend\Mvc\Controller\Plugin\FlashMessenger');
+        $this->mockPluginManager = m::mock('\Laminas\Mvc\Controller\Plugin\FlashMessenger');
         $this->flashMessengerHelperService = m::mock(FlashMessengerHelperService::class);
 
-        $mockTranslator = m::mock('\Zend\I18n\Translator\Translator');
+        $mockTranslator = m::mock('\Laminas\I18n\Translator\Translator');
         $mockTranslator->shouldReceive('translate')
             ->andReturnUsing(array($this, 'translate'));
 

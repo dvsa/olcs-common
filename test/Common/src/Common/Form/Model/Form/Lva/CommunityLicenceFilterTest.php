@@ -3,7 +3,7 @@
 namespace CommonTest\Form\Model\Form\Lva;
 
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
-use Zend\Validator\Identical;
+use Laminas\Validator\Identical;
 
 /**
  * Class CommunityLicenceFilterTest

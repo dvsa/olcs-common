@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Lva\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * Business details fieldset
@@ -26,8 +26,8 @@ class BusinessDetails
      *     "label_attributes": {"class": "form-element__question"}
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
-     * @Form\Validator({"name":"Zend\Validator\StringLength", "options":{
+     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
+     * @Form\Validator({"name":"Laminas\Validator\StringLength", "options":{
      *     "min": 0, "max": 200
      * }})
      */
@@ -58,7 +58,7 @@ class BusinessDetails
      *         "class": "form-element__question"
      *     }
      * })
-     * @Form\Validator({"name":"Zend\Validator\StringLength", "options":{
+     * @Form\Validator({"name":"Laminas\Validator\StringLength", "options":{
      *     "min": 0, "max": 200
      * }})
      */

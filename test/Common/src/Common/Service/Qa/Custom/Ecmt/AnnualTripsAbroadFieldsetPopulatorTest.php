@@ -9,9 +9,9 @@ use Common\Service\Qa\Custom\Ecmt\NiWarningConditionalAdder;
 use Common\Service\Qa\TextFieldsetPopulator;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Element\Hidden;
-use Zend\Form\Fieldset;
-use Zend\Form\Form;
+use Laminas\Form\Element\Hidden;
+use Laminas\Form\Fieldset;
+use Laminas\Form\Form;
 
 /**
  * AnnualTripsAbroadFieldsetPopulatorTest

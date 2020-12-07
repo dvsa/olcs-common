@@ -2,10 +2,10 @@
 
 namespace Common\Form\View\Helper\Readonly;
 
-use Zend\Form\Element\Select;
-use Zend\Form\ElementInterface;
-use Zend\View\Helper\AbstractHelper;
-use Zend\View\Helper\EscapeHtml;
+use Laminas\Form\Element\Select;
+use Laminas\Form\ElementInterface;
+use Laminas\View\Helper\AbstractHelper;
+use Laminas\View\Helper\EscapeHtml;
 
 /**
  * Class FormSelect
@@ -93,7 +93,7 @@ class FormSelect extends AbstractHelper
      */
     public function render(ElementInterface $element)
     {
-        if (!($element instanceof Select) && !($element instanceof \Zend\Form\Element\Radio)) {
+        if (!($element instanceof Select) && !($element instanceof \Laminas\Form\Element\Radio)) {
             return '';
         }
 

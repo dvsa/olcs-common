@@ -2,7 +2,7 @@
 
 namespace Common\Controller\Lva\Traits;
 
-use Zend\Form\Form;
+use Laminas\Form\Form;
 
 /**
  * Variation Controller Trait
@@ -14,7 +14,7 @@ trait CommonVariationControllerTrait
     /**
      * Hook into the dispatch before the controller action is executed
      *
-     * @return \Zend\View\Model\ViewModel|null|\Zend\Http\Response
+     * @return \Laminas\View\Model\ViewModel|null|\Laminas\Http\Response
      */
     protected function preDispatch()
     {
@@ -30,7 +30,7 @@ trait CommonVariationControllerTrait
      *
      * @param string $currentSection Current Section
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     protected function goToNextSection($currentSection)
     {

@@ -4,9 +4,9 @@ namespace Common\Service\Data\Search;
 
 use Common\Service\Data\Interfaces\ListData as ListDataInterface;
 use Common\Service\Data\Search\SearchTypeManager;
-use Zend\Navigation\Service\AbstractNavigationFactory;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\Navigation\Service\AbstractNavigationFactory;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Class SearchType
@@ -97,7 +97,7 @@ class SearchType implements ListDataInterface, FactoryInterface
     }
 
     /**
-     * @return \Zend\Navigation\Navigation
+     * @return \Laminas\Navigation\Navigation
      */
     public function getNavigation($context = null, array $queryParams = [])
     {

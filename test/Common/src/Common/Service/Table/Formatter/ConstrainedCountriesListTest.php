@@ -11,7 +11,7 @@ namespace CommonTest\Service\Table\Formatter;
 use Common\Service\Table\Formatter\ConstrainedCountriesList;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class ConstrainedCountriesListTest extends MockeryTestCase
 {

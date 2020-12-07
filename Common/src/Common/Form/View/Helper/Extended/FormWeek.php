@@ -12,7 +12,7 @@ namespace Common\Form\View\Helper\Extended;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormWeek extends \Zend\Form\View\Helper\FormWeek
+class FormWeek extends \Laminas\Form\View\Helper\FormWeek
 {
     use PrepareAttributesTrait;
 }

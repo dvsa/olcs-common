@@ -33,7 +33,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
     /**
      * Index action
      *
-     * @return array|\Common\View\Model\Section|\Zend\Http\Response
+     * @return array|\Common\View\Model\Section|\Laminas\Http\Response
      */
     public function indexAction()
     {
@@ -43,7 +43,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
             return $this->notFoundAction();
         }
 
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -57,7 +57,6 @@ abstract class AbstractTaxiPhvController extends AbstractController
         $this->alterFormForLva($form);
 
         if ($request->isPost()) {
-
             $crudAction = $this->getCrudAction(array($data['table']));
 
             if ($crudAction !== null) {
@@ -94,7 +93,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
      *
      * @param array $data data
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     protected function handleCrudAction($data)
     {
@@ -110,7 +109,6 @@ abstract class AbstractTaxiPhvController extends AbstractController
                 ? $dataTrafficArea['trafficArea'] : '';
 
             if ($action == 'add' && empty($trafficArea) && $this->getPrivateHireLicencesCount() > 0) {
-
                 $this->getServiceLocator()->get('Helper\FlashMessenger')
                     ->addErrorMessage('Please select a traffic area');
 
@@ -212,12 +210,10 @@ abstract class AbstractTaxiPhvController extends AbstractController
     protected function getTableData()
     {
         if ($this->tableData === null) {
-
             $data = $this->getPrivateHireLicences();
 
             $newData = array();
             foreach ($data as $row) {
-
                 $newRow = array(
                     'id' => $row['id'],
                     'privateHireLicenceNo' => $row['privateHireLicenceNo'],
@@ -277,7 +273,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
     /**
      * add action
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     public function addAction()
     {
@@ -287,7 +283,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
     /**
      * edit action
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     public function editAction()
     {
@@ -299,13 +295,13 @@ abstract class AbstractTaxiPhvController extends AbstractController
      *
      * @param string $mode option to add or edit
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     protected function addOrEdit($mode)
     {
         $this->loadData();
 
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         $data = array();
@@ -414,7 +410,6 @@ abstract class AbstractTaxiPhvController extends AbstractController
     protected function getPrivateHireLicencesCount()
     {
         return count($this->getPrivateHireLicences());
-
     }
 
     /**

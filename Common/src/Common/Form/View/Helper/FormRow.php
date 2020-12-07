@@ -8,13 +8,13 @@ use Common\Form\Elements\InputFilters\NoRender;
 use Common\Form\Elements\InputFilters\SingleCheckbox;
 use Common\Form\Elements\Types\Readonly;
 use Common\Form\Elements\Types\Table;
-use Zend\Form\Element\Button;
-use Zend\Form\Element\DateSelect;
-use Zend\Form\Element\Hidden;
-use Zend\Form\ElementInterface;
-use Zend\Form\LabelAwareInterface;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\Form\Element\Button;
+use Laminas\Form\Element\DateSelect;
+use Laminas\Form\Element\Hidden;
+use Laminas\Form\ElementInterface;
+use Laminas\Form\LabelAwareInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use Common\Form\Elements\Types\AttachFilesButton;
 
 /**
@@ -43,7 +43,7 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
     /**
      * Create service
      *
-     * @param \Zend\View\HelperPluginManager $serviceLocator Service locator
+     * @param \Laminas\View\HelperPluginManager $serviceLocator Service locator
      *
      * @return FormRow
      */
@@ -64,7 +64,7 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
      * @param ElementInterface $element       Element
      * @param null|string      $labelPosition Label Position
      *
-     * @throws \Zend\Form\Exception\DomainException
+     * @throws \Laminas\Form\Exception\DomainException
      * @return string
      */
     public function render(ElementInterface $element, $labelPosition = null)
@@ -91,8 +91,7 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
 
         if ($element instanceof Table) {
             $markup = $element->render();
-
-        } elseif ($element instanceof DateSelect ) {
+        } elseif ($element instanceof DateSelect) {
             $element->setOption('hint-position', 'start');
 
             if ($element->getOption('fieldsetClass') === null) {
@@ -132,7 +131,6 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
         }
 
         if (! ($element instanceof Hidden) && $wrap) {
-
             if ($elementErrors != '') {
                 $class = '';
             } else {
@@ -142,7 +140,6 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
             if (strpos($element->getAttribute('class'), 'visually-hidden') === 0) {
                 $markup = sprintf(self::$format, 'visually-hidden', $markup);
             } elseif ($element->getOption('render-container') !== false) {
-
                 $renderAsFieldset = $element->getOption('render_as_fieldset');
 
                 if (!$renderAsFieldset) {
@@ -194,7 +191,6 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
         }
 
         if (!empty($label)) {
-
             $translator = $this->getTranslator();
 
             if ($translator !== null) {
@@ -254,7 +250,8 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
             // Translate the label
             if (null !== ($translator = $this->getTranslator())) {
                 $label = $translator->translate(
-                    $label, $this->getTranslatorTextDomain()
+                    $label,
+                    $this->getTranslatorTextDomain()
                 );
             }
         }
@@ -282,7 +279,6 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
         $elementString = $elementHelper->render($element);
 
         if (isset($label) && '' !== $label) {
-
             // @NOTE commented this out, we need to be able to add HTML to a label, can't see that commenting this out
             // will affect anything
             //$label = $escapeHtmlHelper($label);
@@ -358,7 +354,6 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
                         $markup = $labelOpen . $elementString . $label . $labelClose;
                 }
             }
-
         } else {
             $markup = $elementString;
         }

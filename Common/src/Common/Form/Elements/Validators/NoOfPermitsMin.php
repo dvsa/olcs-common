@@ -7,7 +7,7 @@
  */
 namespace Common\Form\Elements\Validators;
 
-use Zend\Validator\GreaterThan;
+use Laminas\Validator\GreaterThan;
 
 /**
  * Number of permits minimum validator

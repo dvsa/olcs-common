@@ -5,7 +5,7 @@ namespace CommonTest\Service\Qa\Custom\Ecmt;
 use DMS\PHPUnitExtensions\ArraySubset\Assert;
 use Common\Service\Qa\Custom\Ecmt\RestrictedCountriesMultiCheckboxFactory;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Element\MultiCheckbox;
+use Laminas\Form\Element\MultiCheckbox;
 
 /**
  * RestrictedCountriesMultiCheckboxFactoryTest

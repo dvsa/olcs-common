@@ -3,8 +3,8 @@
 namespace Common\Service\Table\Formatter;
 
 use Mockery;
-use Zend\I18n\Translator\TranslatorInterface;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\I18n\Translator\TranslatorInterface;
+use Laminas\ServiceManager\ServiceManager;
 
 class VehicleRegistrationMarkTest extends \PHPUnit\Framework\TestCase
 {

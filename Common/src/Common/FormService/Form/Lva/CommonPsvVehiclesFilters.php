@@ -14,7 +14,7 @@ class CommonPsvVehiclesFilters extends AbstractFormService
     /**
      * Get Form
      *
-     * @return \Zend\Form\FormInterface
+     * @return \Laminas\Form\FormInterface
      */
     public function getForm()
     {
@@ -24,9 +24,9 @@ class CommonPsvVehiclesFilters extends AbstractFormService
     /**
      * Form
      *
-     * @param \Zend\Form\FormInterface $form Form
+     * @param \Laminas\Form\FormInterface $form Form
      *
-     * @return \Zend\Form\FormInterface
+     * @return \Laminas\Form\FormInterface
      */
     protected function alterForm($form)
     {

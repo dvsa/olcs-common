@@ -10,12 +10,12 @@ use Common\Service\Cqrs\RecoverHttpClientExceptionTrait;
 use Dvsa\Olcs\Transfer\Query\LoggerOmitResponseInterface;
 use Dvsa\Olcs\Transfer\Query\QueryContainerInterface;
 use Dvsa\Olcs\Transfer\Query\QueryInterface;
-use Zend\Http\Client;
-use Zend\Http\Client\Exception\ExceptionInterface as HttpClientExceptionInterface;
-use Zend\Http\Request;
-use Zend\Http\Response as HttpResponse;
-use Zend\Mvc\Router\Exception\ExceptionInterface;
-use Zend\Mvc\Router\RouteInterface;
+use Laminas\Http\Client;
+use Laminas\Http\Client\Exception\ExceptionInterface as HttpClientExceptionInterface;
+use Laminas\Http\Request;
+use Laminas\Http\Response as HttpResponse;
+use Laminas\Mvc\Router\Exception\ExceptionInterface;
+use Laminas\Mvc\Router\RouteInterface;
 
 /**
  * Query
@@ -131,7 +131,6 @@ class QueryService implements QueryServiceInterface
             }
 
             return $response;
-
         } catch (HttpClientExceptionInterface $ex) {
             if ($this->getRecoverHttpClientException()) {
                 return new Response((new HttpResponse())->setStatusCode(HttpResponse::STATUS_CODE_500));

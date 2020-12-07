@@ -16,7 +16,7 @@ abstract class AbstractSection
 
     public function __construct(
         array $licence,
-        \Zend\Mvc\Controller\Plugin\Url $urlHelper,
+        \Laminas\Mvc\Controller\Plugin\Url $urlHelper,
         TranslationHelperService $translator
     ) {
         $this->licence = $licence;

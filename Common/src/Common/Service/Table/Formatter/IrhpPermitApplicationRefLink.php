@@ -3,7 +3,7 @@
 namespace Common\Service\Table\Formatter;
 
 use Common\Util\Escape;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * IRHP Permit Application Ref Link formatter

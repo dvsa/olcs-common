@@ -7,9 +7,9 @@ use Common\Service\Table\Formatter\VehicleLink;
 use CommonTest\Bootstrap;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Mvc\Router\RouteMatch;
-use Zend\Mvc\Router\RouteStackInterface;
-use Zend\Stdlib\RequestInterface;
+use Laminas\Mvc\Router\RouteMatch;
+use Laminas\Mvc\Router\RouteStackInterface;
+use Laminas\Stdlib\RequestInterface;
 
 /**
  * Vehicle Url formatter test
@@ -62,7 +62,8 @@ class VehicleLinkTest extends MockeryTestCase
             )
             ->andReturn('the_url');
 
-        $this->assertEquals('<a href="the_url">VRM</a>',
+        $this->assertEquals(
+            '<a href="the_url">VRM</a>',
             VehicleLink::format(
                 [
                     'vehicle' =>
@@ -70,8 +71,7 @@ class VehicleLinkTest extends MockeryTestCase
                             'id' => 1,
                             'vrm' => 'VRM'
                         ]
-                ]
-                ,
+                ],
                 [],
                 $this->sm
             )

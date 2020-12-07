@@ -2,7 +2,7 @@
 
 namespace Common\Controller\Lva;
 
-use Zend\View\Model\ViewModel;
+use Laminas\View\Model\ViewModel;
 use Dvsa\Olcs\Transfer\Query\Application\Review;
 
 /**

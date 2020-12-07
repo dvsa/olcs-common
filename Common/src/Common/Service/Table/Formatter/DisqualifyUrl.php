@@ -14,7 +14,7 @@ class DisqualifyUrl implements FormatterInterface
      *
      * @param array                               $row            row
      * @param array                               $column         column
-     * @param \Zend\ServiceManager\ServiceManager $serviceLocator service locator
+     * @param \Laminas\ServiceManager\ServiceManager $serviceLocator service locator
      *
      * @return string
      */

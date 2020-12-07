@@ -5,8 +5,8 @@ namespace Common\Service\Qa\Custom\Ecmt;
 use Common\Form\Elements\Types\Html;
 use Common\Service\Qa\FieldsetPopulatorInterface;
 use Common\Service\Qa\RadioFieldsetPopulator;
-use Zend\Form\Element\Hidden;
-use Zend\Form\Fieldset;
+use Laminas\Form\Element\Hidden;
+use Laminas\Form\Fieldset;
 
 class InternationalJourneysFieldsetPopulator implements FieldsetPopulatorInterface
 {

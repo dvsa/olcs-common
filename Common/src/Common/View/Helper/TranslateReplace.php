@@ -2,9 +2,9 @@
 
 namespace Common\View\Helper;
 
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\View\Helper\AbstractHelper;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\View\Helper\AbstractHelper;
 
 /**
  * Class return translateReplace to view
@@ -17,7 +17,7 @@ class TranslateReplace extends AbstractHelper implements FactoryInterface
     /**
      * Factory
      *
-     * @param \Zend\View\HelperPluginManager $sl Service Manager
+     * @param \Laminas\View\HelperPluginManager $sl Service Manager
      *
      * @return $this;
      */

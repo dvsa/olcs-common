@@ -3,7 +3,7 @@
 namespace CommonTest\Controller\Traits\Stubs;
 
 use Common\Controller\Traits\GenericUpload;
-use Zend\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\Controller\AbstractActionController;
 
 /**
  * Generic Upload Stub

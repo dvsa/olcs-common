@@ -11,10 +11,10 @@ use Dvsa\Olcs\Transfer\Query\QueryContainerInterface;
 use Dvsa\Olcs\Utils\Client\ClientAdapterLoggingWrapper;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Http\Request;
-use Zend\Http\Response;
-use Zend\Http\Response as HttpResponse;
-use Zend\Mvc\Router\RouteInterface;
+use Laminas\Http\Request;
+use Laminas\Http\Response;
+use Laminas\Http\Response as HttpResponse;
+use Laminas\Mvc\Router\RouteInterface;
 
 /**
  * @covers \Common\Service\Cqrs\Query\QueryService
@@ -27,9 +27,9 @@ class QueryServiceTest extends MockeryTestCase
 
     /** @var  m\MockInterface|RouteInterface */
     private $mockRouter;
-    /** @var  m\MockInterface|\Zend\Http\Client */
+    /** @var  m\MockInterface|\Laminas\Http\Client */
     private $mockCli;
-    /** @var  m\MockInterface|\Zend\Http\Request */
+    /** @var  m\MockInterface|\Laminas\Http\Request */
     private $mockRequest;
     /** @var  m\MockInterface|FlashMessengerHelperService */
     private $mockFlashMsgr;
@@ -45,8 +45,8 @@ class QueryServiceTest extends MockeryTestCase
     public function setUp(): void
     {
         $this->mockRouter = m::mock(RouteInterface::class);
-        $this->mockCli = m::mock(\Zend\Http\Client::class);
-        $this->mockRequest = m::mock(\Zend\Http\Request::class);
+        $this->mockCli = m::mock(\Laminas\Http\Client::class);
+        $this->mockRequest = m::mock(\Laminas\Http\Request::class);
         $this->mockFlashMsgr = m::mock(FlashMessengerHelperService::class);
 
         $this->sut = m::mock(
@@ -94,7 +94,7 @@ class QueryServiceTest extends MockeryTestCase
         $this->mockRouter
             ->shouldReceive('assemble')
             ->once()
-            ->andThrow(new \Zend\Mvc\Router\Exception\RuntimeException('unit_ExcMsg'));
+            ->andThrow(new \Laminas\Mvc\Router\Exception\RuntimeException('unit_ExcMsg'));
 
         $this->expectException(Exception::class, 'unit_ExcMsg', HttpResponse::STATUS_CODE_404);
         $this->sut->send($this->mockQueryCntr);
@@ -116,7 +116,7 @@ class QueryServiceTest extends MockeryTestCase
             ->shouldReceive('getAdapter')->once()->andReturn()
             ->shouldReceive('resetParameters')
             ->once()
-            ->andThrow(new \Zend\Http\Client\Exception\RuntimeException('unit_ExcMsg'));
+            ->andThrow(new \Laminas\Http\Client\Exception\RuntimeException('unit_ExcMsg'));
 
         $this->expectException(Exception::class, 'unit_ExcMsg', HttpResponse::STATUS_CODE_500);
         $this->sut->send($this->mockQueryCntr);
@@ -140,7 +140,7 @@ class QueryServiceTest extends MockeryTestCase
             ->shouldReceive('getAdapter')->once()->andReturn()
             ->shouldReceive('resetParameters')
             ->once()
-            ->andThrow(new \Zend\Http\Client\Exception\RuntimeException('unit_ExcMsg'));
+            ->andThrow(new \Laminas\Http\Client\Exception\RuntimeException('unit_ExcMsg'));
 
         $expectedResponse = new CqrsResponse((new HttpResponse())->setStatusCode(HttpResponse::STATUS_CODE_500));
         $response = $this->sut->send($this->mockQueryCntr);

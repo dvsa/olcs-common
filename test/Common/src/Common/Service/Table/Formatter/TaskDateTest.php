@@ -8,8 +8,8 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\TaskDate;
-use Zend\I18n\Translator\Translator;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\I18n\Translator\Translator;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Task date formatter tests

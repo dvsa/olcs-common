@@ -20,7 +20,7 @@ class TmApplicationManagerType implements FormatterInterface
      *
      * @param array $row
      * @param array $column
-     * @param \Zend\ServiceManager\ServiceManager $sm
+     * @param \Laminas\ServiceManager\ServiceManager $sm
      * @return string
      */
     public static function format($row, $column = [], $sm = null)

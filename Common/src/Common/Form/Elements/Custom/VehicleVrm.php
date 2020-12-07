@@ -4,9 +4,9 @@ namespace Common\Form\Elements\Custom;
 
 use Common\Filter\Vrm;
 use Dvsa\Olcs\Transfer\Validators\Vrm as VrmValidator;
-use Zend\Form\Element as ZendElement;
-use Zend\InputFilter\InputProviderInterface;
-use Zend\Validator\NotEmpty;
+use Laminas\Form\Element as ZendElement;
+use Laminas\InputFilter\InputProviderInterface;
+use Laminas\Validator\NotEmpty;
 
 /**
  * Vrm field for UK vehicles

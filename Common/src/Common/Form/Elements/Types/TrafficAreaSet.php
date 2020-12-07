@@ -7,7 +7,7 @@
  */
 namespace Common\Form\Elements\Types;
 
-use Zend\Form\Element;
+use Laminas\Form\Element;
 
 /**
  * Traffic Area Set

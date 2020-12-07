@@ -11,7 +11,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class CaseEntityNrStatusTest extends MockeryTestCase
 {
-    /** @var  \Common\Service\Helper\UrlHelperService | \Zend\ServiceManager\ServiceLocatorInterface */
+    /** @var  \Common\Service\Helper\UrlHelperService | \Laminas\ServiceManager\ServiceLocatorInterface */
     private $mockSm;
     /** @var  \Common\Service\Helper\UrlHelperService | m\MockInterface */
     private $mockUrlHlp;
@@ -20,7 +20,7 @@ class CaseEntityNrStatusTest extends MockeryTestCase
     {
         $this->mockUrlHlp = m::mock(\Common\Service\Helper\UrlHelperService::class);
 
-        $this->mockSm = m::mock(\Zend\ServiceManager\ServiceLocatorInterface::class);
+        $this->mockSm = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class);
         $this->mockSm->shouldReceive('get')->with('Helper\Url')->andReturn($this->mockUrlHlp);
     }
 

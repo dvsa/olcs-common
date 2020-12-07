@@ -3,7 +3,7 @@
 namespace Common\Util;
 
 use InvalidArgumentException;
-use Zend\Stdlib\ArrayUtils;
+use Laminas\Stdlib\ArrayUtils;
 use Traversable;
 
 /**

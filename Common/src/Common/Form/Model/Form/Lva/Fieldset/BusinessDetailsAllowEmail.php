@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Lva\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * Business details allowEmail fieldset
@@ -19,7 +19,7 @@ class BusinessDetailsAllowEmail
      *     "value_options": {"N": "Post", "Y": "Email"},
      *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
      * })
-     * @Form\Type("\Zend\Form\Element\Radio")
+     * @Form\Type("\Laminas\Form\Element\Radio")
      */
     public $allowEmail;
 }

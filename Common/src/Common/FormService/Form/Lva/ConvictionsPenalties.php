@@ -25,7 +25,7 @@ class ConvictionsPenalties extends AbstractFormService
      *
      * @param array $params parameters used for switching/configuring form
      *
-     * @return \Common\Form\Form|\Zend\Form\Form
+     * @return \Common\Form\Form|\Laminas\Form\Form
      */
     public function getForm(array $params = [])
     {
@@ -50,10 +50,10 @@ class ConvictionsPenalties extends AbstractFormService
     /**
      * Make form alterations
      *
-     * @param \Zend\Form\Form $form   form
+     * @param \Laminas\Form\Form $form   form
      * @param array           $params parameters used for switching/configuring form
      *
-     * @return \Zend\Form\Form form
+     * @return \Laminas\Form\Form form
      *
      */
     protected function alterForm($form, array $params)
@@ -74,7 +74,7 @@ class ConvictionsPenalties extends AbstractFormService
     /**
      * Alter the form standard buttons
      *
-     * @param \Zend\Form\Form $form form
+     * @param \Laminas\Form\Form $form form
      *
      * @return void
      *
@@ -88,7 +88,7 @@ class ConvictionsPenalties extends AbstractFormService
     /**
      * Alter the confirmation message
      *
-     * @param \Zend\Form\Form $form form
+     * @param \Laminas\Form\Form $form form
      *
      * @return void
      */
@@ -100,7 +100,7 @@ class ConvictionsPenalties extends AbstractFormService
     /**
      * Set dynamic label based on organisation type
      *
-     * @param \Zend\Form\Fieldset $dataTable fieldset for table
+     * @param \Laminas\Form\Fieldset $dataTable fieldset for table
      * @param array               $params    parameters
      *
      * @return void
@@ -116,7 +116,7 @@ class ConvictionsPenalties extends AbstractFormService
     /**
      * remove form question text
      *
-     * @param \Zend\Form\Fieldset $dataTable data table
+     * @param \Laminas\Form\Fieldset $dataTable data table
      *
      * @return void
      */
@@ -129,7 +129,7 @@ class ConvictionsPenalties extends AbstractFormService
     /**
      * Change the form for director variation
      *
-     * @param \Zend\Form\Form $form   form
+     * @param \Laminas\Form\Form $form   form
      * @param array           $params params
      *
      * @return void

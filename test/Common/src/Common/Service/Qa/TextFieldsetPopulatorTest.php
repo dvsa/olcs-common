@@ -7,9 +7,9 @@ use Common\Service\Qa\TextFieldsetPopulator;
 use Common\Service\Qa\TranslateableTextHandler;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Element\Text;
-use Zend\Form\Fieldset;
-use Zend\Form\Form;
+use Laminas\Form\Element\Text;
+use Laminas\Form\Fieldset;
+use Laminas\Form\Form;
 
 /**
  * TextFieldsetPopulatorTest

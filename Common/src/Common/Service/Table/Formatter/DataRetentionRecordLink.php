@@ -3,8 +3,8 @@
 namespace Common\Service\Table\Formatter;
 
 use Common\Util\Escape;
-use Zend\Mvc\Controller\Plugin\Url;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\Mvc\Controller\Plugin\Url;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use Common\View\Helper\Status as StatusHelper;
 
 /**
@@ -60,7 +60,7 @@ class DataRetentionRecordLink implements FormatterInterface
         $urlHelper = $sm->get('Helper\Url');
         $statusHelper = $sm->get('ViewHelperManager')->get('status');
 
-        switch($data['entityName']) {
+        switch ($data['entityName']) {
             case self::ENTITY_LICENCE:
                 $url = $urlHelper->fromRoute('licence', ['licence' => $data['entityPk']], [], true);
                 break;
@@ -208,7 +208,9 @@ class DataRetentionRecordLink implements FormatterInterface
             );
 
             return sprintf(
-                '<a href="%s" target="_self">%s</a>', $url, $licenceNumber
+                '<a href="%s" target="_self">%s</a>',
+                $url,
+                $licenceNumber
             ) . ' / ';
         }
 

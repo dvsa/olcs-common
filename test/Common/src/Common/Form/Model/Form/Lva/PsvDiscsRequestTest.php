@@ -3,8 +3,8 @@
 namespace CommonTest\Form\Model\Form\Lva;
 
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
-use Zend\Validator\Digits;
-use Zend\Validator\GreaterThan;
+use Laminas\Validator\Digits;
+use Laminas\Validator\GreaterThan;
 
 /**
  * Class PsvDiscsRequestTest

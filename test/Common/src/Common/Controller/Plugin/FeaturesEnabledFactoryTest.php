@@ -7,7 +7,7 @@ use Common\Controller\Plugin\FeaturesEnabledFactory;
 use Common\Service\Cqrs\Query\QuerySender;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Class FeaturesEnabledFactory

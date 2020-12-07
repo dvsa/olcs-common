@@ -7,7 +7,7 @@ use Common\Form\Elements\Types\Html;
 use Common\RefData;
 use Common\Service\Helper\TranslationHelperService;
 use RuntimeException;
-use Zend\Form\Fieldset;
+use Laminas\Form\Fieldset;
 
 /**
  * No of permits mapper

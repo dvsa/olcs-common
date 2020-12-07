@@ -7,7 +7,7 @@
  */
 namespace Common\Controller\Lva\Interfaces;
 
-use Zend\Mvc\Controller\AbstractController;
+use Laminas\Mvc\Controller\AbstractController;
 
 /**
  * Controller Aware Interface

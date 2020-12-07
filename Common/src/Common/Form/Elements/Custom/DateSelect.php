@@ -2,8 +2,8 @@
 
 namespace Common\Form\Elements\Custom;
 
-use Zend\Form\Element as ZendElement;
-use Zend\Validator\Date as DateValidator;
+use Laminas\Form\Element as ZendElement;
+use Laminas\Validator\Date as DateValidator;
 
 /**
  * DateSelect

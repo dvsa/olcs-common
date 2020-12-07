@@ -79,7 +79,7 @@ class TmOtherLicenceTest extends AbstractFormValidationTestCase
             $element,
             true,
             [
-                \Zend\Validator\NotEmpty::IS_EMPTY,
+                \Laminas\Validator\NotEmpty::IS_EMPTY,
             ]
         );
         $this->assertFormElementAllowEmpty(
@@ -87,7 +87,7 @@ class TmOtherLicenceTest extends AbstractFormValidationTestCase
             false,
             [],
             [
-                \Zend\Validator\NotEmpty::IS_EMPTY,
+                \Laminas\Validator\NotEmpty::IS_EMPTY,
             ]
         );
 
@@ -95,7 +95,7 @@ class TmOtherLicenceTest extends AbstractFormValidationTestCase
             $element,
             'askrjkj_iehf0001.01',
             [
-                \Zend\I18n\Validator\IsFloat::NOT_FLOAT
+                \Laminas\I18n\Validator\IsFloat::NOT_FLOAT
             ]
         );
 

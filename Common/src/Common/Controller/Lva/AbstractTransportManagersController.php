@@ -11,8 +11,8 @@ use Common\Data\Mapper\Lva\TransportManagerApplication;
 use Dvsa\Olcs\Transfer\Command;
 use Dvsa\Olcs\Transfer\Query\TransportManagerApplication\GetDetails;
 use Dvsa\Olcs\Transfer\Query\User\UserSelfserve;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Abstract Transport Managers Controller
@@ -78,13 +78,13 @@ abstract class AbstractTransportManagersController extends AbstractController im
     /**
      * Transport Managers section
      *
-     * @return array|\Common\View\Model\Section|\Zend\Http\Response
+     * @return array|\Common\View\Model\Section|\Laminas\Http\Response
      */
     public function indexAction()
     {
         $this->getAdapter()->addMessages($this->getLicenceId());
 
-        /** @var \Zend\Form\FormInterface $form */
+        /** @var \Laminas\Form\FormInterface $form */
         $form = $this->getServiceLocator()
             ->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-transport_managers')
@@ -103,7 +103,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
             ->get('Lva\\' . ucfirst($this->lva))
             ->alterForm($form);
 
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         if (!$request->isPost()) {
@@ -138,7 +138,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
     /**
      * Render Form
      *
-     * @param \Zend\Form\FormInterface $form Form
+     * @param \Laminas\Form\FormInterface $form Form
      *
      * @return \Common\View\Model\Section
      */
@@ -152,14 +152,14 @@ abstract class AbstractTransportManagersController extends AbstractController im
     /**
      * Process action - add
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     public function addAction()
     {
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
-        /** @var \Zend\Form\FormInterface $form */
+        /** @var \Laminas\Form\FormInterface $form */
         $form = $this->getAddForm();
 
         if ($request->isPost()) {
@@ -188,7 +188,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
     /**
      * Process Action - addTm
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     public function addTmAction()
     {
@@ -244,7 +244,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
             );
         }
 
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         $query = $this->getServiceLocator()->get('TransferAnnotationBuilder')
@@ -254,7 +254,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
         $response = $this->getServiceLocator()->get('QueryService')->send($query);
         $userDetails = $response->getResult();
 
-        /** @var \Zend\Form\FormInterface $form */
+        /** @var \Laminas\Form\FormInterface $form */
         $form = $this->getTmDetailsForm($userDetails['contactDetails']['emailAddress']);
         $formData = [
             'data' => [
@@ -321,11 +321,11 @@ abstract class AbstractTransportManagersController extends AbstractController im
     /**
      * Process action - addNewUser
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     public function addNewUserAction()
     {
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
@@ -389,11 +389,11 @@ abstract class AbstractTransportManagersController extends AbstractController im
      *
      * @param string $email E-mail
      *
-     * @return \Zend\Form\FormInterface
+     * @return \Laminas\Form\FormInterface
      */
     protected function getTmDetailsForm($email)
     {
-        /** @var \Zend\Form\FormInterface $form */
+        /** @var \Laminas\Form\FormInterface $form */
         $form = $this->getServiceLocator()->get('Helper\Form')
             ->createFormWithRequest('Lva\AddTransportManagerDetails', $this->getRequest());
 
@@ -405,11 +405,11 @@ abstract class AbstractTransportManagersController extends AbstractController im
     /**
      * Get Add Form
      *
-     * @return \Zend\Form\FormInterface
+     * @return \Laminas\Form\FormInterface
      */
     protected function getAddForm()
     {
-        /** @var \Zend\Form\FormInterface $form */
+        /** @var \Laminas\Form\FormInterface $form */
         $form = $this->getServiceLocator()->get('Helper\Form')
             ->createFormWithRequest('Lva\AddTransportManager', $this->getRequest());
 
@@ -504,7 +504,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
     /**
      * Restore Transport Managers
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     public function restoreAction()
     {

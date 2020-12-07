@@ -2,11 +2,11 @@
 
 namespace Common\Form\Model\Form\Lva\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Name("registered-address")
- * @Form\Type("\Zend\Form\Fieldset")
+ * @Form\Type("\Laminas\Form\Fieldset")
  * @Form\Options({"label":"Registered address"})
  * @Form\Attributes({
  *      "class": "address",
@@ -34,7 +34,7 @@ class OperatorRegisteredAddress
      * })
      * @Form\Options({"label":"address_addressLines"})
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
      */
     public $addressLine1 = null;
 
@@ -52,7 +52,7 @@ class OperatorRegisteredAddress
 
     /**
      * @Form\Attributes({
-     *   "class" : "long", 
+     *   "class" : "long",
      *   "id" : "",
      *   "data-container-class" : "compound"
      * })
@@ -64,7 +64,7 @@ class OperatorRegisteredAddress
 
     /**
      * @Form\Attributes({
-     *   "class" : "long", 
+     *   "class" : "long",
      *   "id" : "",
      *   "data-container-class" : "compound"
      * })

@@ -18,7 +18,7 @@ use Dvsa\Olcs\Transfer\Query\CommunityLic\CommunityLicence;
 use Olcs\Mvc\Controller\ParameterProvider\GenericList;
 use Dvsa\Olcs\Transfer\Command as TransferCmd;
 use Common\Service\Table\TableBuilder;
-use Zend\View\Model\ViewModel;
+use Laminas\View\Model\ViewModel;
 use Common\RefData;
 
 /**
@@ -55,11 +55,11 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     /**
      * Community Licences section
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     public function indexAction()
     {
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -99,7 +99,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     /**
      * Get filter form
      *
-     * @return \Zend\Form\Form
+     * @return \Laminas\Form\Form
      */
     private function getFilterForm()
     {
@@ -123,13 +123,13 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     /**
      * Get form
      *
-     * @return \Zend\Form\FormInterface
+     * @return \Laminas\Form\FormInterface
      */
     private function getForm()
     {
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
-        /** @var \Zend\Form\FormInterface $form */
+        /** @var \Laminas\Form\FormInterface $form */
         $form = $this->getServiceLocator()
             ->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-' . $this->section)
@@ -298,7 +298,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     /**
      * Office licence add acion
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     public function addOfficeLicenceAction()
     {
@@ -320,7 +320,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     /**
      * Redirect to index
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     protected function redirectToIndex()
     {
@@ -334,11 +334,11 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     /**
      * Add action
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     public function addAction()
     {
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         if ($this->isButtonPressed('cancel')) {
@@ -383,11 +383,11 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     /**
      * Annul action
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     public function annulAction()
     {
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         $ids = explode(',', $this->params('child_id'));
@@ -424,11 +424,11 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     /**
      * Restore action
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     public function restoreAction()
     {
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         if (!$request->isPost()) {
@@ -452,14 +452,14 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     /**
      * Stop action
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     public function stopAction()
     {
         if ($this->isButtonPressed('cancel')) {
             return $this->redirectToIndex();
         }
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         $form = $this->getStopForm();
@@ -512,7 +512,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
             return $this->redirectToIndex();
         }
 
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         $form = $this->getEditSuspensionForm();
@@ -554,7 +554,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
      *
      * @see \Common\Form\Model\Form\Lva\CommunityLicencesStop
      *
-     * @return \Zend\Form\FormInterface
+     * @return \Laminas\Form\FormInterface
      */
     protected function getEditSuspensionForm()
     {
@@ -567,7 +567,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     /**
      * Alter edit suspension form
      *
-     * @param \Zend\Form\FormInterface $form form
+     * @param \Laminas\Form\FormInterface $form form
      *
      * @return void
      */
@@ -613,7 +613,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     /**
      * Get stop form @see \Common\Form\Model\Form\Lva\CommunityLicencesStop
      *
-     * @return \Zend\Form\FormInterface
+     * @return \Laminas\Form\FormInterface
      */
     protected function getStopForm()
     {
@@ -626,7 +626,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     /**
      * Alter stop form
      *
-     * @param \Zend\Form\FormInterface $form form
+     * @param \Laminas\Form\FormInterface $form form
      *
      * @return void
      */
@@ -643,7 +643,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     /**
      * Action: Reprint
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     public function reprintAction()
     {
@@ -693,7 +693,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
      * @param \Dvsa\Olcs\Transfer\Command\AbstractCommand $dto            dto
      * @param string                                      $successMessage success message
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     protected function processDto($dto, $successMessage)
     {

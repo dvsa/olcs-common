@@ -7,7 +7,7 @@ use Common\Form\Elements\Custom\VehicleVrm;
 use Common\Form\Elements\Types\PlainText;
 use Common\Form\Elements\Types\VehicleTableSearch;
 use PHPUnit\Framework\TestCase;
-use Zend\Form\Element\Button;
+use Laminas\Form\Element\Button;
 
 class VehicleTableSearchTest extends TestCase
 {

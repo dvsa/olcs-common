@@ -2,11 +2,11 @@
 
 namespace Common\Form\Elements\Types;
 
-use Zend\Form\Fieldset;
+use Laminas\Form\Fieldset;
 use Common\Form\Elements\Types\FileUploadListItem;
 use Common\Form\Elements\Types\Html;
-use Zend\Form\Element\Hidden;
-use Zend\Form\Element\Submit;
+use Laminas\Form\Element\Hidden;
+use Laminas\Form\Element\Submit;
 
 /**
  * File Upload List
@@ -38,7 +38,6 @@ class FileUploadList extends Fieldset
         $units = array('B', 'KB', 'MB', 'GB', 'TB');
 
         foreach ($fileData as $file) {
-
             $file['url'] = $url->fromRoute(
                 'getfile',
                 array('identifier' => $file['id'])
@@ -81,7 +80,6 @@ class FileUploadList extends Fieldset
             $fileItem->add($version);
 
             if ($this->getOption('preview_images') === true) {
-
                 // show image previews if permitted
                 if ($this->isPreviewableImage($file)) {
                     $imagePreview = new Html('preview', array('render-container' => false));
@@ -95,10 +93,8 @@ class FileUploadList extends Fieldset
                     $noPreview->setValue('Preview is not available');
                     $fileItem->add($noPreview);
                 }
-
             }
             $this->add($fileItem);
-
         }
     }
 
@@ -111,12 +107,10 @@ class FileUploadList extends Fieldset
      */
     private function isPreviewableImage($file)
     {
-        if (
-            in_array(
-                strtolower(pathinfo($file['filename'], PATHINFO_EXTENSION)),
-                $this->getPreviewableExtensions()
-            )
-        ) {
+        if (in_array(
+            strtolower(pathinfo($file['filename'], PATHINFO_EXTENSION)),
+            $this->getPreviewableExtensions()
+        )) {
             return true;
         }
         return false;
@@ -124,7 +118,7 @@ class FileUploadList extends Fieldset
 
     /**
      * Return list of image extensions we can preview
-     * 
+     *
      * @return mixed
      */
     public function getPreviewableExtensions()

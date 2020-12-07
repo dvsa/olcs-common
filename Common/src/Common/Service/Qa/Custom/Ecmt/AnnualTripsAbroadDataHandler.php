@@ -5,7 +5,7 @@ namespace Common\Service\Qa\Custom\Ecmt;
 use Common\Form\QaForm;
 use Common\Service\Qa\Custom\Common\IsValidBasedWarningAdder;
 use Common\Service\Qa\DataHandlerInterface;
-use Zend\View\Helper\Partial;
+use Laminas\View\Helper\Partial;
 
 class AnnualTripsAbroadDataHandler implements DataHandlerInterface
 {

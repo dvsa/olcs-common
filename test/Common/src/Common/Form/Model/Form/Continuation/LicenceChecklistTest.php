@@ -4,7 +4,7 @@ namespace CommonTest\Form\Model\Form\Continuation;
 
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
 use Common\Form\Model\Form\Continuation\LicenceChecklist;
-use Zend\Validator\Identical;
+use Laminas\Validator\Identical;
 
 /**
  * Class LicenceChecklist

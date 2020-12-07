@@ -6,8 +6,8 @@ use Common\Service\Qa\Custom\Common\HtmlAdder;
 use Common\Service\Qa\Custom\Common\WarningAdder;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Fieldset;
-use Zend\View\Helper\Partial;
+use Laminas\Form\Fieldset;
+use Laminas\View\Helper\Partial;
 
 /**
  * WarningAdderTest

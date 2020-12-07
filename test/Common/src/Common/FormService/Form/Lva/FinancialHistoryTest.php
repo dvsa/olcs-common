@@ -17,9 +17,9 @@ use Common\RefData;
 use Common\Service\Helper\FormHelperService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\ElementInterface;
-use Zend\Form\Fieldset;
-use Zend\Http\Request;
+use Laminas\Form\ElementInterface;
+use Laminas\Form\Fieldset;
+use Laminas\Http\Request;
 
 /**
  * Financial History Form Service Test

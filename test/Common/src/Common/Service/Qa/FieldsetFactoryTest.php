@@ -5,7 +5,7 @@ namespace CommonTest\Service\Qa;
 use Common\Form\Elements\Types\RadioVertical;
 use Common\Service\Qa\FieldsetFactory;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Fieldset;
+use Laminas\Form\Fieldset;
 
 /**
  * FieldsetFactoryTest

@@ -18,9 +18,9 @@ class YesNoTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->mockTranslator = m::mock(\Zend\I18n\Translator\TranslatorInterface::class);
+        $this->mockTranslator = m::mock(\Laminas\I18n\Translator\TranslatorInterface::class);
 
-        $this->mockSm = m::mock(\Zend\ServiceManager\ServiceLocatorInterface::class);
+        $this->mockSm = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class);
         $this->mockSm->shouldReceive('get')->once()->with('translator')->andReturn($this->mockTranslator);
     }
 

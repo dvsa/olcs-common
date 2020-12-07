@@ -11,7 +11,7 @@ use Common\Service\Helper\FlashMessengerHelperService;
 use Mockery as m;
 use Common\Data\Mapper\Lva\NewTmUser;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Form;
+use Laminas\Form\Form;
 
 /**
  * New Tm User Test
@@ -64,7 +64,6 @@ class NewTmUserTest extends MockeryTestCase
         $formMessages = [];
 
         if (isset($errors['username'])) {
-
             foreach ($errors['username'] as $key => $message) {
                 $formMessages['data']['username'][] = $message;
             }
@@ -73,7 +72,6 @@ class NewTmUserTest extends MockeryTestCase
         }
 
         if (isset($errors['emailAddress'])) {
-
             foreach ($errors['emailAddress'] as $key => $message) {
                 $formMessages['data']['emailAddress'][] = $message;
             }

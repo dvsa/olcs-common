@@ -7,8 +7,8 @@ use Common\Form\Model\Fieldset\MultipleFileUpload;
 use Common\Service\Qa\Custom\Common\FileUploadFieldsetGenerator;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Factory as FormFactory;
-use Zend\Form\InputFilterProviderFieldset;
+use Laminas\Form\Factory as FormFactory;
+use Laminas\Form\InputFilterProviderFieldset;
 
 /**
  * FileUploadFieldsetGeneratorTest

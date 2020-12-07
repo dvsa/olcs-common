@@ -3,7 +3,7 @@
 namespace Common\Service\Qa\Custom\Ecmt;
 
 use Common\Service\Qa\Custom\Common\WarningAdder;
-use Zend\Form\Fieldset;
+use Laminas\Form\Fieldset;
 
 class NiWarningConditionalAdder
 {

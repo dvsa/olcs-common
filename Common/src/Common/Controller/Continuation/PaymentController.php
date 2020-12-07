@@ -2,7 +2,7 @@
 
 namespace Common\Controller\Continuation;
 
-use Zend\View\Model\ViewModel;
+use Laminas\View\Model\ViewModel;
 use Common\Controller\Traits\StoredCardsTrait;
 use Dvsa\Olcs\Transfer\Command\Transaction\PayOutstandingFees;
 use Dvsa\Olcs\Transfer\Query\Transaction\Transaction as PaymentById;
@@ -39,7 +39,9 @@ class PaymentController extends AbstractContinuationController
                 : false;
 
             return $this->payFees(
-                array_column($fees, 'id'), $data['licence']['organisation']['id'], $storedCardReference
+                array_column($fees, 'id'),
+                $data['licence']['organisation']['id'],
+                $storedCardReference
             );
         }
 
@@ -114,7 +116,7 @@ class PaymentController extends AbstractContinuationController
      *
      * @param \Common\Service\Cqrs\Response $response response
      *
-     * @return null|\Zend\Http\Response
+     * @return null|\Laminas\Http\Response
      */
     protected function handleResponse($response)
     {
@@ -147,7 +149,7 @@ class PaymentController extends AbstractContinuationController
     /**
      * Handle payment result
      *
-     * @return null|\Zend\Http\Response
+     * @return null|\Laminas\Http\Response
      */
     public function resultAction()
     {

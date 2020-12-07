@@ -3,8 +3,8 @@
 namespace CommonTest\Form\Model\Form\Lva;
 
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
-use Zend\Form\Element\Radio;
-use Zend\Form\Element\Checkbox;
+use Laminas\Form\Element\Radio;
+use Laminas\Form\Element\Checkbox;
 
 /**
  * Class PsvVehiclesTest

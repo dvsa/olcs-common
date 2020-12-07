@@ -47,7 +47,7 @@ class AbstractDataServiceTestCase extends MockeryTestCase
     public function setupQuerySender($sut, $mockTransferAnnotationBuilder)
     {
         $this->mockQuerySender = m::mock();
-        $this->mockServiceLocator = m::mock('\Zend\ServiceManager\ServiceLocatorInterface')
+        $this->mockServiceLocator = m::mock('\Laminas\ServiceManager\ServiceLocatorInterface')
             ->shouldReceive('get')
             ->with('TransferAnnotationBuilder')
             ->andReturn($mockTransferAnnotationBuilder)

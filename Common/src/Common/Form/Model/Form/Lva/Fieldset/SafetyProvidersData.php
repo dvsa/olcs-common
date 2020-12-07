@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Lva\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Name("lva-safety-providers-data")
@@ -25,7 +25,7 @@ class SafetyProvidersData
      *         "Y": "application_vehicle-safety_safety-sub-action.data.isExternal.option.yes"
      *     }
      * })
-     * @Form\Type("\Zend\Form\Element\Radio")
+     * @Form\Type("\Laminas\Form\Element\Radio")
      */
     public $isExternal = null;
 }

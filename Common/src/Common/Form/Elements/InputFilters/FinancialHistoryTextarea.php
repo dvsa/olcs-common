@@ -2,9 +2,9 @@
 
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\Form\Element\Textarea as ZendElement;
-use Zend\InputFilter\InputProviderInterface;
-use Zend\Validator;
+use Laminas\Form\Element\Textarea as ZendElement;
+use Laminas\InputFilter\InputProviderInterface;
+use Laminas\Validator;
 
 /**
  * Input Specification for Finacial History additional info

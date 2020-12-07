@@ -18,9 +18,9 @@ class OperatingCentreVariationRecordActionTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $mockTranslator = m::mock(\Zend\I18n\Translator\TranslatorInterface::class);
+        $mockTranslator = m::mock(\Laminas\I18n\Translator\TranslatorInterface::class);
 
-        $mockSm = m::mock(\Zend\ServiceManager\ServiceLocatorInterface::class);
+        $mockSm = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class);
         $mockSm->shouldReceive('get')->once()->with('translator')->andReturn($mockTranslator);
 
         $mockAuthService = m::mock()

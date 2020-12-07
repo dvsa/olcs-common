@@ -8,7 +8,7 @@
 namespace CommonTest\Form\Elements\Validators;
 
 use Common\Form\Elements\Validators\NoOfPermitsNotEmpty;
-use Zend\Validator\NotEmpty;
+use Laminas\Validator\NotEmpty;
 
 /**
  * Test No of permits not empty validator

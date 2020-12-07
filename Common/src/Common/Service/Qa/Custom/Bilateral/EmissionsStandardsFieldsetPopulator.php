@@ -5,7 +5,7 @@ namespace Common\Service\Qa\Custom\Bilateral;
 use Common\Service\Qa\Custom\Common\WarningAdder;
 use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Qa\FieldsetPopulatorInterface;
-use Zend\Form\Fieldset;
+use Laminas\Form\Fieldset;
 
 class EmissionsStandardsFieldsetPopulator implements FieldsetPopulatorInterface
 {

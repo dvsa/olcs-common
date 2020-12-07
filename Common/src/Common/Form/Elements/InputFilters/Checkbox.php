@@ -2,8 +2,8 @@
 
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\Form\Element as ZendElement;
-use Zend\Validator as ZendValidator;
+use Laminas\Form\Element as ZendElement;
+use Laminas\Validator as LaminasValidator;
 
 /**
  * Checkbox element
@@ -41,7 +41,7 @@ class Checkbox extends ZendElement\Checkbox
                     'options' => array(
                         'token' => $options['must_be_value'],
                         'messages' => array(
-                            ZendValidator\Identical::NOT_SAME =>
+                            LaminasValidator\Identical::NOT_SAME =>
                                 isset($this->getOptions()['not_checked_message'])
                                     ? $this->getOptions()['not_checked_message']
                                     : 'common.form.validation.checkbox.not_same',

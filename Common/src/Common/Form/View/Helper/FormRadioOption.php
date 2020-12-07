@@ -2,7 +2,7 @@
 
 namespace Common\Form\View\Helper;
 
-use Zend\Form\ElementInterface;
+use Laminas\Form\ElementInterface;
 
 /**
  * Class FormRadioOption

@@ -4,8 +4,8 @@ namespace CommonTest\Form\Model\Form\Lva;
 
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
 use Common\Form\Elements\InputFilters\SingleCheckbox;
-use Zend\Form\Element\Radio;
-use Zend\Form\Element\Textarea;
+use Laminas\Form\Element\Radio;
+use Laminas\Form\Element\Textarea;
 use Common\Form\Elements\Types\GuidanceTranslated;
 
 /**

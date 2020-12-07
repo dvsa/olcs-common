@@ -3,7 +3,7 @@
 namespace CommonTest\Form\Elements\Custom;
 
 use Common\Form\Elements\Custom\DateSelect;
-use Zend\Validator\Date as DateValidator;
+use Laminas\Validator\Date as DateValidator;
 
 /**
  * @covers \Common\Form\Elements\Custom\DateSelect
@@ -31,7 +31,7 @@ class DateSelectTest extends \PHPUnit\Framework\TestCase
 
         $validator = $spec['validators'][0];
 
-        $this->assertInstanceOf('Zend\Validator\Date', $validator);
+        $this->assertInstanceOf('Laminas\Validator\Date', $validator);
         $this->assertEquals('Y-m-d', $validator->getFormat());
 
         $validatorMessageTemplates = $validator->getMessageTemplates();

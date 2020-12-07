@@ -9,15 +9,15 @@
 namespace Common\Form\View\Helper\Extended;
 
 use Common\View\Helper\UniqidGenerator;
-use Zend\Form\LabelAwareInterface;
-use Zend\Form\Element\MultiCheckbox as MultiCheckboxElement;
+use Laminas\Form\LabelAwareInterface;
+use Laminas\Form\Element\MultiCheckbox as MultiCheckboxElement;
 
 /**
  * Here we extend the View helper to allow us to add attributes that aren't in ZF2's whitelist
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormRadio extends \Zend\Form\View\Helper\FormRadio
+class FormRadio extends \Laminas\Form\View\Helper\FormRadio
 {
     use PrepareAttributesTrait;
 

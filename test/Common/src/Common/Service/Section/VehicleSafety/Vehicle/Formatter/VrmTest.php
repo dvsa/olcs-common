@@ -8,9 +8,9 @@
 namespace CommonTest\Service\Section\VehicleSafety\Vehicle\Formatter;
 
 use Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\View\Helper\Url;
-use Zend\View\HelperPluginManager;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\View\Helper\Url;
+use Laminas\View\HelperPluginManager;
 
 /**
  * Vrm Test

@@ -5,7 +5,7 @@
  */
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
 
 /**
  * Fee waive note
@@ -23,24 +23,24 @@ class FeeWaiveNote extends TexareatMax255Min5 implements InputProviderInterface
             'name' => $this->getName(),
             'required' => true,
             'filters' => [
-                ['name' => 'Zend\Filter\StringTrim'],
+                ['name' => 'Laminas\Filter\StringTrim'],
             ],
             'validators' => [
                 [
-                    'name' => '\Zend\Validator\StringLength',
+                    'name' => '\Laminas\Validator\StringLength',
                     'options'=> [
                         'min' => 5,
                         'max' => 255,
                         'messages' => [
-                             \Zend\Validator\StringLength::TOO_SHORT =>
+                             \Laminas\Validator\StringLength::TOO_SHORT =>
                                 'You must enter reason for the waiver. Please enter a minimum of 5 characters'
                         ],
                     ]
                 ],
                 [
-                    'name' => '\Zend\Validator\NotEmpty',
+                    'name' => '\Laminas\Validator\NotEmpty',
                     'options'=> [
-                        'type' => \Zend\Validator\NotEmpty::NULL
+                        'type' => \Laminas\Validator\NotEmpty::NULL
                     ]
                 ]
             ]

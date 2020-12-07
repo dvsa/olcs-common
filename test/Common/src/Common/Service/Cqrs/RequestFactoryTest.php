@@ -5,8 +5,8 @@ namespace CommonTest\Service\Cqrs;
 use Common\Service\Cqrs\RequestFactory;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Mockery as m;
-use Zend\Http\Request;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\Http\Request;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Class RequestFactoryTest

@@ -7,7 +7,7 @@
  */
 namespace Common\Form\Elements\Validators;
 
-use Zend\Validator\AbstractValidator as AbstractValidator;
+use Laminas\Validator\AbstractValidator as AbstractValidator;
 
 /**
  * Checks a date for a cheque payment is valid

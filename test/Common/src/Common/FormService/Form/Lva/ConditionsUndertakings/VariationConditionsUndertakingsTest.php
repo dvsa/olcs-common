@@ -10,7 +10,7 @@ namespace CommonTest\FormService\Form\Lva\ConditionsUndertakings;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Lva\ConditionsUndertakings\VariationConditionsUndertakings as Sut;
-use Zend\Form\Form;
+use Laminas\Form\Form;
 
 /**
  * Variation Conditions Undertakings Test

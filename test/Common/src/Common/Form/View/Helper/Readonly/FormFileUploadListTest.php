@@ -9,8 +9,8 @@ use Common\Form\View\Helper;
 use Common\Form\View\Helper\Readonly\FormFileUploadList;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Element;
-use Zend\Form\FieldsetInterface;
+use Laminas\Form\Element;
+use Laminas\Form\FieldsetInterface;
 
 /**
  * @covers \Common\Form\View\Helper\Readonly\FormFileUploadList
@@ -61,8 +61,8 @@ class FormFileUploadListTest extends MockeryTestCase
         $mockFormItem = m::mock(Helper\Readonly\FormItem::class);
         $mockFormItem->shouldReceive('render')->andReturn('_FORM_ITEM_RENDER_RESULT_');
 
-        /** @var \Zend\View\Renderer\PhpRenderer | m\MockInterface $mockView */
-        $mockView = m::mock(\Zend\View\Renderer\PhpRenderer::class);
+        /** @var \Laminas\View\Renderer\PhpRenderer | m\MockInterface $mockView */
+        $mockView = m::mock(\Laminas\View\Renderer\PhpRenderer::class);
         $mockView
             ->shouldReceive('plugin')->with('readonlyformitem')->andReturn($mockFormItem)
             ->shouldReceive('translate')->andReturnUsing(

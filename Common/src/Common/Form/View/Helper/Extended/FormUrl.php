@@ -12,7 +12,7 @@ namespace Common\Form\View\Helper\Extended;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormUrl extends \Zend\Form\View\Helper\FormUrl
+class FormUrl extends \Laminas\Form\View\Helper\FormUrl
 {
     use PrepareAttributesTrait;
 }

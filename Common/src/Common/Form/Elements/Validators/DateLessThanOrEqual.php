@@ -1,9 +1,9 @@
 <?php
 namespace Common\Form\Elements\Validators;
 
-use Zend\Validator\AbstractValidator as AbstractValidator;
+use Laminas\Validator\AbstractValidator as AbstractValidator;
 use Traversable;
-use Zend\Stdlib\ArrayUtils;
+use Laminas\Stdlib\ArrayUtils;
 
 /**
  * Checks a date is not after another date
@@ -52,7 +52,6 @@ class DateLessThanOrEqual extends AbstractValidator
         }
 
         if (is_array($token) && array_key_exists('token', $token)) {
-
             $this->setToken($token['token']);
         } elseif (null !== $token) {
             $this->setToken($token);

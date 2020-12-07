@@ -10,7 +10,7 @@ use Dvsa\Olcs\Transfer\Command\OtherLicence\DeleteOtherLicence;
 use Dvsa\Olcs\Transfer\Command\OtherLicence\UpdateOtherLicence;
 use Dvsa\Olcs\Transfer\Query\Application\LicenceHistory;
 use Dvsa\Olcs\Transfer\Query\OtherLicence\OtherLicence;
-use Zend\Filter\Word\CamelCaseToDash;
+use Laminas\Filter\Word\CamelCaseToDash;
 
 /**
  * Licence History Trait
@@ -48,7 +48,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
     public function indexAction()
     {
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -416,7 +416,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     /**
      * Edit prevBeenDisqualifiedTc licence
      *
-     * @return array|\Common\View\Model\Section|\Zend\Http\Response
+     * @return array|\Common\View\Model\Section|\Laminas\Http\Response
      */
     public function prevBeenDisqualifiedTcEditAction()
     {
@@ -426,7 +426,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     /**
      * Delete prevBeenDisqualifiedTc licence
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     public function prevBeenDisqualifiedTcDeleteAction()
     {
@@ -436,7 +436,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     /**
      * Add prevPurchasedAssets licence
      *
-     * @return array|\Common\View\Model\Section|\Zend\Http\Response
+     * @return array|\Common\View\Model\Section|\Laminas\Http\Response
      */
     public function prevPurchasedAssetsAddAction()
     {
@@ -446,7 +446,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     /**
      * Edit prevPurchasedAssets licence
      *
-     * @return array|\Common\View\Model\Section|\Zend\Http\Response
+     * @return array|\Common\View\Model\Section|\Laminas\Http\Response
      */
     public function prevPurchasedAssetsEditAction()
     {
@@ -456,7 +456,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     /**
      * Delete prevPurchasedAssets licence
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     public function prevPurchasedAssetsDeleteAction()
     {
@@ -466,7 +466,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     /**
      * Add prevBeenAtPi licence
      *
-     * @return array|\Common\View\Model\Section|\Zend\Http\Response
+     * @return array|\Common\View\Model\Section|\Laminas\Http\Response
      */
     public function prevBeenAtPiAddAction()
     {
@@ -476,7 +476,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     /**
      * Edit prevBeenAtPi licence
      *
-     * @return array|\Common\View\Model\Section|\Zend\Http\Response
+     * @return array|\Common\View\Model\Section|\Laminas\Http\Response
      */
     public function publicInquiryEditAction()
     {
@@ -486,7 +486,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     /**
      * Delete prevBeenAtPi licence
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     public function prevBeenAtPiDeleteAction()
     {
@@ -499,11 +499,11 @@ abstract class AbstractLicenceHistoryController extends AbstractController
      * @param string $mode  Operation
      * @param string $which Which part to operate
      *
-     * @return array|\Common\View\Model\Section|\Zend\Http\Response
+     * @return array|\Common\View\Model\Section|\Laminas\Http\Response
      */
     protected function addOrEdit($mode, $which)
     {
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         $data = [];
@@ -580,7 +580,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     /**
      * Get the altered licence form
      *
-     * @return \Zend\Form\Form
+     * @return \Laminas\Form\Form
      */
     protected function getLicenceForm()
     {
@@ -595,7 +595,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
      * @param \Common\Form\Form $form  Form
      * @param string            $which Which part to operate
      *
-     * @return \Zend\Form\FormInterface
+     * @return \Laminas\Form\FormInterface
      */
     protected function alterActionForm($form, $which)
     {

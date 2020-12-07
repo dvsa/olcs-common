@@ -48,7 +48,7 @@ class AbstractVariationControllerTest extends MockeryTestCase
         $this->sm->setService('Helper\Translation', $mockTranslator);
 
         $mockRequest = m::mock();
-        $mockForm = m::mock('\Zend\Form\Form');
+        $mockForm = m::mock('\Laminas\Form\Form');
 
         // Expectations
         $this->sut->shouldReceive('getRequest')
@@ -85,7 +85,7 @@ class AbstractVariationControllerTest extends MockeryTestCase
         $mockProcessingService = m::mock();
         $this->sm->setService('Processing\CreateVariation', $mockProcessingService);
         $mockRequest = m::mock();
-        $mockForm = m::mock('\Zend\Form\Form');
+        $mockForm = m::mock('\Laminas\Form\Form');
 
         // Expectations
         $this->sut->shouldReceive('getRequest')

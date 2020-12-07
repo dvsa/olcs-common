@@ -2,7 +2,7 @@
 
 namespace Common\InputFilter;
 
-use Zend\InputFilter\Input as ZendInput;
+use Laminas\InputFilter\Input as ZendInput;
 
 /**
  * Class Input

@@ -1,8 +1,8 @@
 <?php
 namespace Common\Service\Table;
 
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Table Factory
@@ -22,7 +22,7 @@ class TableFactory implements FactoryInterface
     /**
      * Create the table factory service
      *
-     * @param \Zend\ServiceManager\ServiceLocatorInterface $serviceLocator
+     * @param \Laminas\ServiceManager\ServiceLocatorInterface $serviceLocator
      * @return \Common\Service\Table\TableFactory
      */
     public function createService(ServiceLocatorInterface $serviceLocator)

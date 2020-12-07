@@ -5,8 +5,8 @@ namespace Common\Controller\Lva;
 use Common\Data\Mapper;
 use Dvsa\Olcs\Transfer\Command as TransferCmd;
 use Dvsa\Olcs\Transfer\Query as TransferQry;
-use Zend\Form\Form;
-use Zend\Mvc\MvcEvent;
+use Laminas\Form\Form;
+use Laminas\Mvc\MvcEvent;
 
 /**
  * Shared logic between Addresses controllers
@@ -52,7 +52,7 @@ abstract class AbstractAddressesController extends AbstractController
      */
     public function indexAction()
     {
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         //  prepare form data

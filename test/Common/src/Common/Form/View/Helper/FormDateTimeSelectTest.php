@@ -5,14 +5,14 @@ namespace CommonTest\Form\View\Helper;
 use Common\Form\View\Helper\FormDateTimeSelect;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Element\DateTimeSelect;
-use Zend\Form\Element\Text;
-use Zend\Form\View\Helper\FormInput;
-use Zend\Form\View\Helper\FormSelect;
-use Zend\I18n\Translator\Translator;
-use Zend\Mvc\Service\ViewHelperManagerFactory;
-use Zend\View\HelperPluginManager;
-use Zend\View\Renderer\PhpRenderer;
+use Laminas\Form\Element\DateTimeSelect;
+use Laminas\Form\Element\Text;
+use Laminas\Form\View\Helper\FormInput;
+use Laminas\Form\View\Helper\FormSelect;
+use Laminas\I18n\Translator\Translator;
+use Laminas\Mvc\Service\ViewHelperManagerFactory;
+use Laminas\View\HelperPluginManager;
+use Laminas\View\Renderer\PhpRenderer;
 
 /**
  * Form Date Select Test
@@ -284,7 +284,7 @@ class FormDateTimeSelectTest extends MockeryTestCase
 
     public function testRenderWrongElement()
     {
-        $this->expectException(\Zend\Form\Exception\InvalidArgumentException::class);
+        $this->expectException(\Laminas\Form\Exception\InvalidArgumentException::class);
 
         $element = new Text('date');
 
@@ -293,7 +293,7 @@ class FormDateTimeSelectTest extends MockeryTestCase
 
     public function testRenderElementWithNoName()
     {
-        $this->expectException(\Zend\Form\Exception\DomainException::class);
+        $this->expectException(\Laminas\Form\Exception\DomainException::class);
 
         $element = new DateTimeSelect(null);
 

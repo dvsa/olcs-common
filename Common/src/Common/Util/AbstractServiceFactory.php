@@ -2,9 +2,9 @@
 
 namespace Common\Util;
 
-use Zend\ServiceManager\AbstractFactoryInterface;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\AbstractFactoryInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Abstract Service Factory
@@ -16,7 +16,7 @@ class AbstractServiceFactory implements AbstractFactoryInterface
     /**
      * Determine if we can create a service with name
      *
-     * @param \Zend\ServiceManager\ServiceLocatorInterface $serviceLocator Service manager
+     * @param \Laminas\ServiceManager\ServiceLocatorInterface $serviceLocator Service manager
      * @param string                                       $name           Name
      * @param string                                       $requestedName  Class Name
      *
@@ -30,7 +30,7 @@ class AbstractServiceFactory implements AbstractFactoryInterface
     /**
      * Create service with name
      *
-     * @param \Zend\ServiceManager\ServiceLocatorInterface $serviceLocator Service manager
+     * @param \Laminas\ServiceManager\ServiceLocatorInterface $serviceLocator Service manager
      * @param string                                       $name           Name
      * @param string                                       $requestedName  Class Name
      *

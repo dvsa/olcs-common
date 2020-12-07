@@ -4,12 +4,12 @@ namespace Common\Form;
 
 use Common\Form\Elements\Types\Html;
 use ReflectionClass;
-use Zend\Form as ZendForm;
+use Laminas\Form as LaminasForm;
 
 /**
  * Form
  */
-class Form extends ZendForm\Form
+class Form extends LaminasForm\Form
 {
     /**
      * Form constructor. Prevents browser HTML5 form validations

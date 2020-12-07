@@ -3,7 +3,7 @@
 namespace Common\Controller\Lva;
 
 use Common\Controller\Lva\Traits\CrudActionTrait;
-use Zend\Form\Form;
+use Laminas\Form\Form;
 
 /**
  * Common Lva Abstract Type Of Licence Controller
@@ -20,7 +20,7 @@ abstract class AbstractTypeOfLicenceController extends AbstractController
     /**
      * Render for Index action
      *
-     * @param \Zend\Form\FormInterface $form Form
+     * @param \Laminas\Form\FormInterface $form Form
      *
      * @return \Common\View\Model\Section
      */
@@ -34,7 +34,7 @@ abstract class AbstractTypeOfLicenceController extends AbstractController
     /**
      * Process error messages from API
      *
-     * @param \Zend\Form\FormInterface $form   Form
+     * @param \Laminas\Form\FormInterface $form   Form
      * @param array                    $errors Errors
      *
      * @return void
@@ -44,7 +44,6 @@ abstract class AbstractTypeOfLicenceController extends AbstractController
         $formMessages = [];
 
         if (isset($errors['licenceType'])) {
-
             foreach ($errors['licenceType'][0] as $key => $message) {
                 $formMessages['type-of-licence']['licence-type'][] = $key;
             }
@@ -53,7 +52,6 @@ abstract class AbstractTypeOfLicenceController extends AbstractController
         }
 
         if (isset($errors['goodsOrPsv'])) {
-
             foreach ($errors['goodsOrPsv'][0] as $key => $message) {
                 $formMessages['type-of-licence']['operator-type'][] = $key;
             }

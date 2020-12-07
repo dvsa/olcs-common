@@ -12,7 +12,7 @@ namespace Common\Form\View\Helper\Extended;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormSelect extends \Zend\Form\View\Helper\FormSelect
+class FormSelect extends \Laminas\Form\View\Helper\FormSelect
 {
     use PrepareAttributesTrait;
 }

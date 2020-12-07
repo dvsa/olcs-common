@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Lva\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Name("share-info")
@@ -15,7 +15,7 @@ class ShareInfo
      *     "unchecked_value": "N",
      *     "label": "licence.vehicles-trailers.share-info",
      *     "label_attributes": {
-     *         "class": "form-control form-control--checkbox form-control--advanced", 
+     *         "class": "form-control form-control--checkbox form-control--advanced",
      *         "id": "label-shareInfo"
      *     },
      * })

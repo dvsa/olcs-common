@@ -10,8 +10,8 @@ use Common\Service\Qa\Custom\Ecmt\NoOfPermitsBaseInsetTextGenerator;
 use Common\Service\Qa\Custom\Ecmt\NoOfPermitsSingleFieldsetPopulator;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Fieldset;
-use Zend\Form\Form;
+use Laminas\Form\Fieldset;
+use Laminas\Form\Form;
 
 /**
  * NoOfPermitsSingleFieldsetPopulatorTest

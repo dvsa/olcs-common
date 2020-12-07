@@ -7,7 +7,7 @@ use Common\Form\Elements\InputFilters\QaRadio;
 use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Qa\Custom\Common\HtmlAdder;
 use Common\Service\Qa\FieldsetPopulatorInterface;
-use Zend\Form\Fieldset;
+use Laminas\Form\Fieldset;
 
 class NoOfPermitsEitherFieldsetPopulator implements FieldsetPopulatorInterface
 {

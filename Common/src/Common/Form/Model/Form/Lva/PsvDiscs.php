@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Lva;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Options({"prefer_form_input_filter":true})
@@ -20,7 +20,7 @@ class PsvDiscs
 
     /**
      * @Form\Name("form-actions")
-     * @Form\Type("Zend\Form\Fieldset")
+     * @Form\Type("Laminas\Form\Fieldset")
      * @Form\Attributes({"class":"actions-container"})
      */
     public $formActions = null;

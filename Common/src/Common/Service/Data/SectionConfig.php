@@ -3,10 +3,10 @@
 namespace Common\Service\Data;
 
 use Common\RefData;
-use Zend\Filter\Word\UnderscoreToDash;
-use Zend\Filter\Word\UnderscoreToCamelCase;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
+use Laminas\Filter\Word\UnderscoreToDash;
+use Laminas\Filter\Word\UnderscoreToCamelCase;
+use Laminas\ServiceManager\ServiceLocatorAwareInterface;
+use Laminas\ServiceManager\ServiceLocatorAwareTrait;
 
 /**
  * Section Config
@@ -350,7 +350,7 @@ class SectionConfig implements ServiceLocatorAwareInterface
                     'may_terminate' => true,
                     'child_routes' => [
                         'action' => [
-                            'type' => \Zend\Mvc\Router\Http\Segment::class,
+                            'type' => \Laminas\Mvc\Router\Http\Segment::class,
                             'options' => [
                                 'route' => ':action[/:child_id][/]',
                             ],

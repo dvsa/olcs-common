@@ -11,7 +11,7 @@ use Common\Data\Mapper\Lva\PsvVehicles;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Form;
+use Laminas\Form\Form;
 
 /**
  * Psv Vehicles Test

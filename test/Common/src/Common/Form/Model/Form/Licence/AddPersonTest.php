@@ -2,7 +2,7 @@
 namespace CommonTest\Form\Model\Form\Licence;
 
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
-use Zend\Form\Element\Collection;
+use Laminas\Form\Element\Collection;
 
 class AddPersonTest extends AbstractFormValidationTestCase
 {

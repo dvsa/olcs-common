@@ -7,10 +7,10 @@ use Common\View\Helper\UniqidGenerator;
 use CommonTest\Form\View\Helper\Extended\Stub\FormRadioChildContentStub;
 use CommonTest\Form\View\Helper\Extended\Stub\FormRadioStub;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Element\MultiCheckbox;
+use Laminas\Form\Element\MultiCheckbox;
 use Mockery as m;
-use Zend\Form\View\Helper\FormCollection;
-use Zend\I18n\Translator\TranslatorInterface;
+use Laminas\Form\View\Helper\FormCollection;
+use Laminas\I18n\Translator\TranslatorInterface;
 
 class FormRadioTest extends MockeryTestCase
 {
@@ -37,7 +37,7 @@ class FormRadioTest extends MockeryTestCase
         if (!is_null($labelPosition)) {
             $sut->setLabelPosition($labelPosition);
         }
-        $renderer = m::mock(\Zend\View\Renderer\RendererInterface::class);
+        $renderer = m::mock(\Laminas\View\Renderer\RendererInterface::class);
         $formCollection = m::mock(FormCollection::class);
         $formCollection->shouldReceive('setReadOnly');
         $renderer->shouldReceive('formCollection')->andReturn($formCollection);

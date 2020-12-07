@@ -12,8 +12,8 @@ use Common\Service\Data\CategoryDataService;
 use Common\Data\Mapper\Lva\FinancialHistory as FinancialHistoryMapper;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateFinancialHistory;
 use Dvsa\Olcs\Transfer\Query\Application\FinancialHistory;
-use Zend\Form\Form;
-use Zend\Form\FormInterface;
+use Laminas\Form\Form;
+use Laminas\Form\FormInterface;
 
 /**
  * Financial History Controller
@@ -41,11 +41,11 @@ abstract class AbstractFinancialHistoryController extends AbstractController
     /**
      * Process Action - Index
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     public function indexAction()
     {
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -74,7 +74,6 @@ abstract class AbstractFinancialHistoryController extends AbstractController
         );
 
         if (!$hasProcessedFiles && $request->isPost() && $form->isValid()) {
-
             $data = $this->getServiceLocator()->get('Helper\Data')->processDataMap($data, $this->dataMap);
 
             if ($this->saveFinancialHistory($form, $data)) {

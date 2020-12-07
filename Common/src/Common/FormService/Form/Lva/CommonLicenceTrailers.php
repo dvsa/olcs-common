@@ -21,7 +21,7 @@ class CommonLicenceTrailers extends AbstractFormService
      *
      * @param Request $request
      * @param TableBuilder $table
-     * @return \Zend\Form\Form
+     * @return \Laminas\Form\Form
      */
     public function getForm($request, $table)
     {
@@ -34,9 +34,9 @@ class CommonLicenceTrailers extends AbstractFormService
     /**
      * Generic form alterations
      *
-     * @param \Zend\Form\Form $form
+     * @param \Laminas\Form\Form $form
      * @param TableBuilder $table
-     * @return \Zend\Form\Form
+     * @return \Laminas\Form\Form
      */
     protected function alterForm($form, $table)
     {

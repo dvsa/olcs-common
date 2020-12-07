@@ -20,7 +20,7 @@ class Date implements FormatterInterface
      *
      * @param array $data
      * @param array $column
-     * @param \Zend\ServiceManager\ServiceManager $sm
+     * @param \Laminas\ServiceManager\ServiceManager $sm
      * @return string
      */
     public static function format($data, $column = array(), $sm = null)
@@ -30,13 +30,10 @@ class Date implements FormatterInterface
         }
 
         if (isset($data[$column['name']]) && !is_null($data[$column['name']])) {
-
             $date = $data[$column['name']];
 
             if (is_array($date) && isset($date['date'])) {
-
                 $date = $date['date'];
-
             }
 
             return date($column['dateformat'], strtotime($date));

@@ -3,7 +3,7 @@
 namespace CommonTest\Controller\Plugin;
 
 use Common\Controller\Traits\ViewHelperManagerAware;
-use Zend\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
+use Laminas\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
 
 /**
  * Class TestController

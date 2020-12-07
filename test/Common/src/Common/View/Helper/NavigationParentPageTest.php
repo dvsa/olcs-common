@@ -14,7 +14,7 @@ class NavigationParentPageTest extends MockeryTestCase
     /** @var  m\MockInterface */
     private $mockBreadcrumbs;
 
-    /** @var  \Zend\View\Renderer\RendererInterface */
+    /** @var  \Laminas\View\Renderer\RendererInterface */
     private $mockView;
 
     /**
@@ -24,7 +24,7 @@ class NavigationParentPageTest extends MockeryTestCase
     {
         $this->mockBreadcrumbs = m::mock();
 
-        $this->mockView = m::mock(\Zend\View\Renderer\RendererInterface::class);
+        $this->mockView = m::mock(\Laminas\View\Renderer\RendererInterface::class);
         $this->mockView->shouldReceive('navigation->breadcrumbs')->once()->andReturn($this->mockBreadcrumbs);
     }
 
@@ -54,7 +54,7 @@ class NavigationParentPageTest extends MockeryTestCase
             ],
             [
                 'activePage' => [
-                    'page' => m::mock(\Zend\Navigation\Page\Mvc::class)
+                    'page' => m::mock(\Laminas\Navigation\Page\Mvc::class)
                         ->shouldReceive('getParent')->atMost(1)->andReturn('EXPECT')
                         ->getMock(),
                 ],

@@ -26,9 +26,9 @@ class DisqualifyUrlTest extends MockeryTestCase
 
         $this->sm = Bootstrap::getServiceManager();
 
-        $this->mockRouteMatch = m::mock(\Zend\Mvc\Router\RouteMatch::class);
+        $this->mockRouteMatch = m::mock(\Laminas\Mvc\Router\RouteMatch::class);
         $this->mockUrlHelper = m::mock();
-        $mockRequest = m::mock(\Zend\Stdlib\RequestInterface::class)
+        $mockRequest = m::mock(\Laminas\Stdlib\RequestInterface::class)
             ->shouldReceive('getQuery')
             ->andReturn(
                 m::mock()

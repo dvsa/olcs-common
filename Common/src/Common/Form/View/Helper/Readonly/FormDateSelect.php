@@ -2,9 +2,9 @@
 
 namespace Common\Form\View\Helper\Readonly;
 
-use Zend\Form\Element\DateSelect;
-use Zend\Form\ElementInterface;
-use Zend\View\Helper\AbstractHelper;
+use Laminas\Form\Element\DateSelect;
+use Laminas\Form\ElementInterface;
+use Laminas\View\Helper\AbstractHelper;
 
 /**
  * Class FormDateSelect

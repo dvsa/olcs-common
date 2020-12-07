@@ -12,17 +12,17 @@ use Common\Form\Elements\InputFilters\ActionLink;
 use Common\Form\Model\Form\Lva\Fieldset\ConvictionsPenaltiesData;
 use Common\FormService\Form\Lva\ConvictionsPenalties;
 use Common\RefData;
-use Zend\Form\Element;
-use Zend\Form\Element\Radio;
-use Zend\Form\Fieldset;
-use Zend\Form\Form;
+use Laminas\Form\Element;
+use Laminas\Form\Element\Radio;
+use Laminas\Form\Fieldset;
+use Laminas\Form\Form;
 use Mockery as m;
 use Common\Service\Helper\TranslationHelperService;
-use Zend\Di\ServiceLocator;
+use Laminas\Di\ServiceLocator;
 use Common\Service\Helper\FormHelperService;
 use Common\FormService\FormServiceManager;
 use Common\Form\Model\Form\Lva\Fieldset\ConvictionsPenaltiesReadMoreLink;
-use Zend\Mvc\Controller\Plugin\Url;
+use Laminas\Mvc\Controller\Plugin\Url;
 
 /**
  * Convictions & Penalties Form Service Test
@@ -35,7 +35,7 @@ class ConvictionsPenaltiesTest extends AbstractLvaFormServiceTestCase
 
     protected $formName = 'Lva\ConvictionsPenalties';
 
-    /** @var  m\MockInterface|\Zend\Form\Form */
+    /** @var  m\MockInterface|\Laminas\Form\Form */
     private $mockedForm;
 
     public function setUp(): void

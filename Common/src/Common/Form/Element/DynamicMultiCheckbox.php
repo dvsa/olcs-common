@@ -2,7 +2,7 @@
 
 namespace Common\Form\Element;
 
-use Zend\Form\Element\MultiCheckbox;
+use Laminas\Form\Element\MultiCheckbox;
 
 /**
  * Class DynamicMultiCheckbox

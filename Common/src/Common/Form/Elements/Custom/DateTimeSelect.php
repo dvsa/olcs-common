@@ -7,8 +7,8 @@
  */
 namespace Common\Form\Elements\Custom;
 
-use Zend\Form\Element as ZendElement;
-use Zend\Form\Exception\InvalidArgumentException;
+use Laminas\Form\Element as ZendElement;
+use Laminas\Form\Exception\InvalidArgumentException;
 
 /**
  * DateTimeSelect
@@ -21,7 +21,7 @@ class DateTimeSelect extends ZendElement\DateTimeSelect
 
     /**
      * Should return an array specification compatible with
-     * {@link Zend\InputFilter\Factory::createInput()}.
+     * {@link Laminas\InputFilter\Factory::createInput()}.
      *
      * @return array
      */
@@ -64,8 +64,12 @@ class DateTimeSelect extends ZendElement\DateTimeSelect
                                 }
                                 $date = sprintf(
                                     '%s-%s-%s %s:%s:%s',
-                                    $date['year'], $date['month'], $date['day'],
-                                    $date['hour'], $date['minute'], $date['second']
+                                    $date['year'],
+                                    $date['month'],
+                                    $date['day'],
+                                    $date['hour'],
+                                    $date['minute'],
+                                    $date['second']
                                 );
                             }
 
@@ -85,7 +89,7 @@ class DateTimeSelect extends ZendElement\DateTimeSelect
      *
      * @param mixed $value Date time value to set
      *
-     * @return void|\Zend\Form\Element
+     * @return void|\Laminas\Form\Element
      */
     public function setValue($value)
     {

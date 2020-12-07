@@ -3,7 +3,7 @@
 namespace Common\Form\Elements\Types;
 
 use Common\Form\Elements\Custom\VehicleVrm;
-use Zend\Form\Element\Button;
+use Laminas\Form\Element\Button;
 
 class DvlaVrmSearch extends AbstractInputSearch
 {

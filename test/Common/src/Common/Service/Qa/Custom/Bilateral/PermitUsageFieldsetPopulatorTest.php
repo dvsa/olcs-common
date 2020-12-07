@@ -8,10 +8,10 @@ use Common\Service\Qa\Custom\Common\HtmlAdder;
 use Common\Service\Qa\RadioFieldsetPopulator;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Element\Hidden;
-use Zend\Form\Element\Submit;
-use Zend\Form\Fieldset;
-use Zend\Form\Form;
+use Laminas\Form\Element\Hidden;
+use Laminas\Form\Element\Submit;
+use Laminas\Form\Fieldset;
+use Laminas\Form\Form;
 
 /**
  * PermitUsageFieldsetPopulatorTest

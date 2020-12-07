@@ -21,7 +21,7 @@ class CommunityLicencesAddTest extends AbstractFormValidationTestCase
         $element = ['data', 'total'];
         $this->assertFormElementRequired($element, true);
         $this->assertFormElementAllowEmpty($element, false);
-        $this->assertFormElementNumber($element, 1, null, \Zend\Validator\GreaterThan::NOT_GREATER);
+        $this->assertFormElementNumber($element, 1, null, \Laminas\Validator\GreaterThan::NOT_GREATER);
     }
 
     public function testSubmit()

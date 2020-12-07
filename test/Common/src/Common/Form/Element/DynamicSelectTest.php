@@ -108,7 +108,7 @@ class DynamicSelectTest extends TestCase
         $this->assertEquals(['key'=>'value'], $sut->getValueOptions());
 
         // empty option does not get returned from getValueOptions,
-        // it's appended in the view helper - @see Zend\Form\View\Helper\FormSelect::render
+        // it's appended in the view helper - @see Laminas\Form\View\Helper\FormSelect::render
         $this->assertEquals('choose one', $sut->getEmptyOption());
     }
 
@@ -144,7 +144,7 @@ class DynamicSelectTest extends TestCase
 
         $mockService = $this->createMock('\Common\Service\Data\ListDataInterface');
 
-        $mockSl = $this->createMock('\Zend\ServiceManager\ServiceLocatorInterface');
+        $mockSl = $this->createMock('\Laminas\ServiceManager\ServiceLocatorInterface');
         $mockSl->expects($this->once())->method('get')->with($this->equalTo($serviceName))->willReturn($mockService);
 
         $sut = new DynamicSelect();
@@ -159,7 +159,7 @@ class DynamicSelectTest extends TestCase
 
         $mockService = $this->createMock('\StdClass');
 
-        $mockSl = $this->createMock('\Zend\ServiceManager\ServiceLocatorInterface');
+        $mockSl = $this->createMock('\Laminas\ServiceManager\ServiceLocatorInterface');
         $mockSl->expects($this->once())->method('get')->with($this->equalTo($serviceName))->willReturn($mockService);
 
         $sut = new DynamicSelect();

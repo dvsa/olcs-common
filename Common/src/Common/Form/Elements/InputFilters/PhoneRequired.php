@@ -2,7 +2,7 @@
 
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\Validator\NotEmpty;
+use Laminas\Validator\NotEmpty;
 
 /**
  * Phone Required Filter

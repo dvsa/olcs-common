@@ -8,7 +8,7 @@ use Common\View\Helper\SystemInfoMessages;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use ZfcRbac\Service\AuthorizationService;
 
 /**

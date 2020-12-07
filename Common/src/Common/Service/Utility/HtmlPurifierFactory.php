@@ -5,8 +5,8 @@ namespace Common\Service\Utility;
 use HTMLPurifier;
 use HTMLPurifier_Config;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Html Purifier Factory

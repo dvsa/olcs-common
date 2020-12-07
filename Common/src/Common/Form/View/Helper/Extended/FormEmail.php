@@ -12,7 +12,7 @@ namespace Common\Form\View\Helper\Extended;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormEmail extends \Zend\Form\View\Helper\FormEmail
+class FormEmail extends \Laminas\Form\View\Helper\FormEmail
 {
     use PrepareAttributesTrait;
 }

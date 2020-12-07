@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Attributes({"class":""})
@@ -39,9 +39,9 @@ class TmOtherLicenceDetails
      * @Form\Options({"label":"transport-manager.other-licence.form.lic-no"})
      * @Form\Required(true)
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
      * @Form\Validator({
-     *     "name":"Zend\Validator\StringLength",
+     *     "name":"Laminas\Validator\StringLength",
      *     "options":{
      *          "max":18,
      *     },
@@ -67,9 +67,9 @@ class TmOtherLicenceDetails
      * @Form\Options({"label":"transport-manager.other-licence.form.operating-centres"})
      * @Form\Required(true)
      * @Form\Type("Textarea")
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
      * @Form\Validator({
-     *     "name":"Zend\Validator\StringLength",
+     *     "name":"Laminas\Validator\StringLength",
      *     "options":{
      *          "max":255,
      *     },
@@ -97,9 +97,9 @@ class TmOtherLicenceDetails
      *     "id":"hoursPerWeek"
      * })
      * @Form\Options({"label":"transport-manager.other-licence.form.hours-per-week"})
-     * @Form\Validator({"name":"Zend\Validator\LessThan", "options": {"max": 99.9,"inclusive":true}})
+     * @Form\Validator({"name":"Laminas\Validator\LessThan", "options": {"max": 99.9,"inclusive":true}})
      * @Form\Validator({
-     *     "name": "Zend\I18n\Validator\IsFloat",
+     *     "name": "Laminas\I18n\Validator\IsFloat",
      *     "options": {
      *         "allow_empty" : false,
      *         "messages": {

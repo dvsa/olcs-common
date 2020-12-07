@@ -8,8 +8,8 @@
 namespace Common\Controller;
 
 use Dvsa\Olcs\Transfer\Query\TransportManagerApplication\Review;
-use Zend\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
-use Zend\View\Model\ViewModel;
+use Laminas\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
+use Laminas\View\Model\ViewModel;
 
 /**
  * Transport Manager Review Controller

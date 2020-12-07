@@ -16,7 +16,7 @@ class FeeUrlExternal extends FeeUrl
      *
      * @param array                               $row    row
      * @param array                               $column column
-     * @param \Zend\ServiceManager\ServiceManager $sm     service locator
+     * @param \Laminas\ServiceManager\ServiceManager $sm     service locator
      *
      * @return string
      */

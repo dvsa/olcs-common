@@ -7,7 +7,7 @@ use Common\Service\Helper\FlashMessengerHelperService;
 use CommonTest\Service\Cqrs\Stub\CqrsTraitStub;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
-use Zend\Http\Response as HttpResponse;
+use Laminas\Http\Response as HttpResponse;
 
 class CqrsTraitTest extends MockeryTestCase
 {

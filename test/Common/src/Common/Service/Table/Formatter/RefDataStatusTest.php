@@ -39,7 +39,7 @@ class RefDataStatusTest extends MockeryTestCase
             'description' => $description
         ];
 
-        $mockSm = m::mock(\Zend\ServiceManager\ServiceLocatorInterface::class);
+        $mockSm = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class);
 
         $statusHelper = m::mock(StatusHelper::class);
         $statusHelper->shouldReceive('__invoke')

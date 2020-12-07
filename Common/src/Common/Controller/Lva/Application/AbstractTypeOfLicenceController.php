@@ -6,7 +6,7 @@ use Common\Controller\Lva;
 use Common\Data\Mapper\Lva\TypeOfLicence as TypeOfLicenceMapper;
 use Common\FormService\Form\Lva\TypeOfLicence\AbstractTypeOfLicence as TypeOfLicenceFormService;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateTypeOfLicence;
-use Zend\Http\Response;
+use Laminas\Http\Response;
 
 /**
  * Common Lva Abstract Type Of Licence Controller
@@ -30,7 +30,7 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         }
         /** @var TypeOfLicenceFormService $tolFormService */
         $tolFormService = $this->getServiceLocator()->get('FormServiceManager')->get('lva-application-type-of-licence');
-        /** @var \Zend\Form\FormInterface $form */
+        /** @var \Laminas\Form\FormInterface $form */
         $form = $tolFormService->getForm();
 
         // always fetch Application data to check operator location
@@ -134,7 +134,6 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-
             $query = (array)$this->params()->fromQuery();
 
             $dto = UpdateTypeOfLicence::create(

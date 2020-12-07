@@ -12,7 +12,7 @@ namespace Common\Form\View\Helper\Extended;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormSubmit extends \Zend\Form\View\Helper\FormSubmit
+class FormSubmit extends \Laminas\Form\View\Helper\FormSubmit
 {
     use PrepareAttributesTrait;
 }

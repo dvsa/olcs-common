@@ -2,8 +2,8 @@
 
 namespace Common\Form\Input;
 
-use Zend\InputFilter\Input;
-use Zend\Validator\NotEmpty;
+use Laminas\InputFilter\Input;
+use Laminas\Validator\NotEmpty;
 
 class RequiredValidationInput extends Input
 {

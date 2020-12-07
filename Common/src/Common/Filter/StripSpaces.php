@@ -2,7 +2,7 @@
 
 namespace Common\Filter;
 
-use Zend\Filter\AbstractFilter;
+use Laminas\Filter\AbstractFilter;
 
 /**
  * Class StripSpaces

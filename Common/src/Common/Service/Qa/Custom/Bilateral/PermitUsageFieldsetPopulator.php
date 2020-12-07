@@ -6,8 +6,8 @@ use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Qa\Custom\Common\HtmlAdder;
 use Common\Service\Qa\FieldsetPopulatorInterface;
 use Common\Service\Qa\RadioFieldsetPopulator;
-use Zend\Form\Element\Hidden;
-use Zend\Form\Fieldset;
+use Laminas\Form\Element\Hidden;
+use Laminas\Form\Fieldset;
 
 class PermitUsageFieldsetPopulator implements FieldsetPopulatorInterface
 {

@@ -3,7 +3,7 @@
 namespace Common\Controller\Plugin;
 
 use Common\Service\Cqrs\Query\QueryServiceInterface;
-use Zend\Mvc\Controller\Plugin\AbstractPlugin;
+use Laminas\Mvc\Controller\Plugin\AbstractPlugin;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder as TransferAnnotationBuilder;
 use Dvsa\Olcs\Transfer\Query\QueryInterface;
 

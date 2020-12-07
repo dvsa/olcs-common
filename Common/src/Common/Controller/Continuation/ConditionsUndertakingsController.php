@@ -4,7 +4,7 @@ namespace Common\Controller\Continuation;
 
 use Common\Form\Form;
 use Common\RefData;
-use Zend\View\Model\ViewModel;
+use Laminas\View\Model\ViewModel;
 use Common\FormService\Form\Continuation\ConditionsUndertakings as ConditionsUndertakingsFormService;
 
 /**

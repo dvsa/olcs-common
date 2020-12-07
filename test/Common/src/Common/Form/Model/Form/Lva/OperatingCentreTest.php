@@ -126,7 +126,7 @@ class OperatingCentreTest extends AbstractFormValidationTestCase
     public function testAdvertisementsAdPlaced()
     {
         $element = [ 'advertisements', 'radio' ];
-        $this->assertFormElementType($element, \Zend\Form\Element\Radio::class);
+        $this->assertFormElementType($element, \Laminas\Form\Element\Radio::class);
         $this->assertFormElementIsRequired($element, true, [0 => 0]);
         $this->assertFormElementValid($element, 'adPlaced');
         $this->assertFormElementValid($element, 'adSendByPost');
@@ -151,7 +151,7 @@ class OperatingCentreTest extends AbstractFormValidationTestCase
             [
                 Date::DATE_ERR_CONTAINS_STRING,
                 Date::DATE_ERR_YEAR_LENGTH,
-                \Zend\Validator\Date::INVALID_DATE,
+                \Laminas\Validator\Date::INVALID_DATE,
             ]
         );
     }

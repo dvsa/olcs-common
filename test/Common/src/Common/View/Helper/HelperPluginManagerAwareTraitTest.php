@@ -11,7 +11,7 @@ class HelperPluginManagerAwareTraitTest extends \PHPUnit\Framework\TestCase
     {
         $trait = $this->getMockForTrait('Common\View\Helper\PluginManagerAwareTrait');
 
-        $viewHelperManager = new \Zend\View\HelperPluginManager;
+        $viewHelperManager = new \Laminas\View\HelperPluginManager;
 
         $this->assertSame($viewHelperManager, $trait->setViewHelperManager($viewHelperManager)->getViewHelperManager());
     }

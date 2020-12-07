@@ -7,10 +7,10 @@
 
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\Form\Element\DateSelect as ZendDateSelect;
-use Zend\Validator as ZendValidator;
-use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
-use Zend\Validator\Date as DateValidator;
+use Laminas\Form\Element\DateSelect as ZendDateSelect;
+use Laminas\Validator as LaminasValidator;
+use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\Validator\Date as DateValidator;
 
 /**
  * Checks conviction offence date is before the conviction date

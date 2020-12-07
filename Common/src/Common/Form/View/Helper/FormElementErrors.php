@@ -8,10 +8,10 @@
  */
 namespace Common\Form\View\Helper;
 
-use Zend\Form\View\Helper\FormElementErrors as ZendFormElementErrors;
+use Laminas\Form\View\Helper\FormElementErrors as LaminasFormElementErrors;
 use Traversable;
-use Zend\Form\ElementInterface;
-use Zend\Form\Exception;
+use Laminas\Form\ElementInterface;
+use Laminas\Form\Exception;
 use Common\Form\Elements\Validators\Messages\ValidationMessageInterface;
 
 /**
@@ -20,7 +20,7 @@ use Common\Form\Elements\Validators\Messages\ValidationMessageInterface;
  * @author Michael Cooper <michael.cooper@valtech.co.uk>
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormElementErrors extends ZendFormElementErrors
+class FormElementErrors extends LaminasFormElementErrors
 {
     protected $attributes = [
         'class' => 'error__text',
@@ -75,7 +75,6 @@ class FormElementErrors extends ZendFormElementErrors
                 $shouldEscape = true;
 
                 if ($item instanceof ValidationMessageInterface) {
-
                     $shouldTranslate = $item->shouldTranslate();
                     $shouldEscape = $item->shouldEscape();
                     $item = $item->getMessage();

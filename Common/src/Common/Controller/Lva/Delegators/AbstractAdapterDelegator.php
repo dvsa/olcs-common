@@ -7,8 +7,8 @@
  */
 namespace Common\Controller\Lva\Delegators;
 
-use Zend\ServiceManager\DelegatorFactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\DelegatorFactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use Common\Controller\Lva\Interfaces\ControllerAwareInterface;
 
 /**

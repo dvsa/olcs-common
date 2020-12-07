@@ -23,7 +23,7 @@ class TableFactoryTest extends \PHPUnit\Framework\TestCase
      */
     public function testCreateService()
     {
-        $serviceLocator = $this->createPartialMock('\Zend\ServiceManager\ServiceManager', array('get'));
+        $serviceLocator = $this->createPartialMock('\Laminas\ServiceManager\ServiceManager', array('get'));
 
         $serviceLocator->expects($this->at(0))
             ->method('get')

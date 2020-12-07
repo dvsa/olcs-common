@@ -2,7 +2,7 @@
 
 namespace Common\Service\Qa\Custom\Ecmt;
 
-use Zend\Form\Element\MultiCheckbox;
+use Laminas\Form\Element\MultiCheckbox;
 
 class RestrictedCountriesMultiCheckbox extends MultiCheckbox
 {

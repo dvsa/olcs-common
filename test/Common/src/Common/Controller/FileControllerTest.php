@@ -7,7 +7,7 @@ use Common\Service\Cqrs\Response;
 use Dvsa\Olcs\Transfer\Query as TransferQry;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
-use Zend\Mvc\Controller\Plugin;
+use Laminas\Mvc\Controller\Plugin;
 
 /**
  * @covers Common\Controller\FileController
@@ -37,7 +37,7 @@ class FileControllerTest extends TestCase
             ->shouldReceive('fromQuery')->once()->with('inline')->andReturn(1)
             ->shouldReceive('fromQuery')->once()->with('slug')->andReturn(0);
 
-        $origResponse = new \Zend\Http\Response();
+        $origResponse = new \Laminas\Http\Response();
         $origResponse->getHeaders()->addHeaderLine('should', 'not-appear');
         $origResponse->getHeaders()->addHeaderLine('Content-Length', 'CONTENT_LENGTH');
         $origResponse->getHeaders()->addHeaderLine('Content-Disposition', 'CONTENT_DISPOSITION');
@@ -65,7 +65,7 @@ class FileControllerTest extends TestCase
                 }
             );
 
-        /** @var \Zend\Http\Response $response */
+        /** @var \Laminas\Http\Response $response */
         $response = $this->sut->downloadAction();
 
         static::assertCount(3, $response->getHeaders());
@@ -84,7 +84,7 @@ class FileControllerTest extends TestCase
             ->shouldReceive('fromQuery')->once()->with('inline')->andReturn(0)
             ->shouldReceive('fromQuery')->once()->with('slug')->andReturn(1);
 
-        $origResponse = new \Zend\Http\Response();
+        $origResponse = new \Laminas\Http\Response();
         $origResponse->getHeaders()->addHeaderLine('should', 'not-appear');
         $origResponse->getHeaders()->addHeaderLine('Content-Length', 'CONTENT_LENGTH');
         $origResponse->getHeaders()->addHeaderLine('Content-Disposition', 'CONTENT_DISPOSITION');
@@ -113,7 +113,7 @@ class FileControllerTest extends TestCase
                 }
             );
 
-        /** @var \Zend\Http\Response $response */
+        /** @var \Laminas\Http\Response $response */
         $response = $this->sut->downloadAction();
 
         static::assertCount(3, $response->getHeaders());
