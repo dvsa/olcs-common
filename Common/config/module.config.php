@@ -565,14 +565,6 @@ return array(
             'postcode' => 'http://postcode.cit.olcs.mgt.mtpdvsa/',
         )
     ),
-    'caches'=> array(
-        'array'=> array(
-            'adapter' => array(
-                'name' => 'memory',
-                'lifetime' => 0,
-            ),
-        )
-    ),
     'zfc_rbac' => [
         'identity_provider' => \Common\Rbac\IdentityProvider::class,
         'role_provider' => [\Common\Rbac\Role\RoleProvider::class => []],
@@ -582,14 +574,6 @@ return array(
             ]
         ],
         'protection_policy' => \ZfcRbac\Guard\GuardInterface::POLICY_DENY,
-    ],
-    'cache' => [
-        'adapter' => [
-            'name' => 'apc',
-            'options' => [
-                'ttl' => 3600,
-            ],
-        ]
     ],
     'form_service_manager' => [
         'invokables' => [
