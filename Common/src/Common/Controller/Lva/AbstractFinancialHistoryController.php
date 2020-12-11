@@ -188,12 +188,13 @@ abstract class AbstractFinancialHistoryController extends AbstractController
         $this->uploadFile(
             $file,
             array(
-                'application' => $this->getApplicationId(),
-                'description' => $file['name'],
-                'category'    => CategoryDataService::CATEGORY_LICENSING,
-                'subCategory' => CategoryDataService::DOC_SUB_CATEGORY_LICENCE_INSOLVENCY_DOCUMENT_DIGITAL,
-                'licence'     => $this->getLicenceId(),
-                'isExternal'  => $this->isExternal()
+                'application'              => $this->getApplicationId(),
+                'description'              => $file['name'],
+                'allowSpacesInDescription' => true,
+                'category'                 => CategoryDataService::CATEGORY_LICENSING,
+                'subCategory'              => CategoryDataService::DOC_SUB_CATEGORY_LICENCE_INSOLVENCY_DOCUMENT_DIGITAL,
+                'licence'                  => $this->getLicenceId(),
+                'isExternal'               => $this->isExternal()
             )
         );
     }

@@ -38,6 +38,7 @@ class TransportManagerHelperService extends AbstractHelperService implements Fac
         return [
             'transportManager' => $tmId,
             'description' => $file['name'],
+            'allowSpacesInDescription' => true,
             'issuedDate' => $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s'),
             'category'    => CategoryDataService::CATEGORY_TRANSPORT_MANAGER,
             'subCategory' => CategoryDataService::DOC_SUB_CATEGORY_TRANSPORT_MANAGER_CPC_OR_EXEMPTION

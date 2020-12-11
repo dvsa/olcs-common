@@ -536,11 +536,12 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $this->documents = null;
 
         $data = [
-            'description' => $file['name'],
-            'category' => Category::CATEGORY_APPLICATION,
-            'subCategory' => Category::DOC_SUB_CATEGORY_APPLICATION_ADVERT_DIGITAL,
-            'isExternal'  => $this->isExternal(),
-            'licence' => $this->getLicenceId(),
+            'description'              => $file['name'],
+            'allowSpacesInDescription' => true,
+            'category'                 => Category::CATEGORY_APPLICATION,
+            'subCategory'              => Category::DOC_SUB_CATEGORY_APPLICATION_ADVERT_DIGITAL,
+            'isExternal'               => $this->isExternal(),
+            'licence'                  => $this->getLicenceId(),
         ];
 
         if ($this->lva !== 'licence') {

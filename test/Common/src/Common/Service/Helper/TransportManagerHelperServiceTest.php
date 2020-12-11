@@ -51,11 +51,12 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
         $file = ['name' => 'foo.txt'];
 
         $expected = [
-            'transportManager' => 111,
-            'description' => 'foo.txt',
-            'issuedDate' => '2015-01-01 10:10:10',
-            'category' => CategoryDataService::CATEGORY_TRANSPORT_MANAGER,
-            'subCategory' => CategoryDataService::DOC_SUB_CATEGORY_TRANSPORT_MANAGER_CPC_OR_EXEMPTION
+            'transportManager'         => 111,
+            'description'              => 'foo.txt',
+            'allowSpacesInDescription' => true,
+            'issuedDate'               => '2015-01-01 10:10:10',
+            'category'                 => CategoryDataService::CATEGORY_TRANSPORT_MANAGER,
+            'subCategory'              => CategoryDataService::DOC_SUB_CATEGORY_TRANSPORT_MANAGER_CPC_OR_EXEMPTION
         ];
 
         $this->sm->setService(

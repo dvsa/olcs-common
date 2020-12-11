@@ -46,11 +46,12 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
         $licenceId = $this->getData($applicationId)['licence']['id'];
 
         return [
-            'application' => $applicationId,
-            'description' => $file['name'],
-            'category'    => Category::CATEGORY_APPLICATION,
-            'subCategory' => Category::DOC_SUB_CATEGORY_FINANCIAL_EVIDENCE_DIGITAL,
-            'licence'     => $licenceId,
+            'application'              => $applicationId,
+            'description'              => $file['name'],
+            'allowSpacesInDescription' => true,
+            'category'                 => Category::CATEGORY_APPLICATION,
+            'subCategory'              => Category::DOC_SUB_CATEGORY_FINANCIAL_EVIDENCE_DIGITAL,
+            'licence'                  => $licenceId,
         ];
     }
 
