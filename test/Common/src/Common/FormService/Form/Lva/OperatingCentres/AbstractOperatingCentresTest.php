@@ -5,6 +5,8 @@ namespace CommonTest\FormService\Form\Lva\OperatingCentres;
 use Common\FormService\Form\Lva\OperatingCentres\AbstractOperatingCentres;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Zend\Form\Element\Text;
+use Zend\Form\Fieldset;
 
 /**
  * @covers \Common\FormService\Form\Lva\OperatingCentres\AbstractOperatingCentres
@@ -131,20 +133,62 @@ class AbstractOperatingCentresTest extends MockeryTestCase
     {
         $dataOptions = ['hint' => 'foo'];
         $dataOptionsModified = ['hint' => 'foo.psv'];
-        $mockForm = m::mock(\Common\Form\Form::class)
-            ->shouldReceive('get')
+
+        $dataFieldset = m::mock(Fieldset::class);
+        $dataFieldset->shouldReceive('getOptions')
+            ->andReturn($dataOptions);
+        $dataFieldset->shouldReceive('setOptions')
+            ->with($dataOptionsModified)
+            ->once();
+        $dataFieldset->shouldReceive('has')
+            ->with('totCommunityLicences')
+            ->andReturn(false);
+
+        $mockForm = m::mock(\Common\Form\Form::class);
+        $mockForm->shouldReceive('get')
             ->with('data')
-            ->andReturn(
-                m::mock()
-                    ->shouldReceive('getOptions')
-                    ->andReturn($dataOptions)
-                    ->once()
-                    ->shouldReceive('setOptions')
-                    ->with($dataOptionsModified)
-                    ->once()
-                    ->getMock()
-            )
+            ->andReturn($dataFieldset);
+
+        $mockFormHelper = m::mock()
+            ->shouldReceive('removeFieldList')
+            ->with($mockForm, 'data', ['totAuthTrailers'])
+            ->once()
             ->getMock();
+
+        $this->sut->shouldReceive('getFormHelper')->andReturn($mockFormHelper);
+
+        $this->sut->alterFormForPsvLicences($mockForm, []);
+    }
+
+    public function testAlterFormForPsvLicencesWithCommunityLicenceField()
+    {
+        $dataOptions = ['hint' => 'foo'];
+        $dataOptionsModified = ['hint' => 'foo.psv'];
+
+        $totCommunityLicencesElement = m::mock(Text::class);
+        $totCommunityLicencesElement->shouldReceive('getLabel')
+            ->andReturn('label.value');
+        $totCommunityLicencesElement->shouldReceive('setLabel')
+            ->with('label.value.psv')
+            ->once();
+
+        $dataFieldset = m::mock(Fieldset::class);
+        $dataFieldset->shouldReceive('getOptions')
+            ->andReturn($dataOptions);
+        $dataFieldset->shouldReceive('setOptions')
+            ->with($dataOptionsModified)
+            ->once();
+        $dataFieldset->shouldReceive('has')
+            ->with('totCommunityLicences')
+            ->andReturn(true);
+        $dataFieldset->shouldReceive('get')
+            ->with('totCommunityLicences')
+            ->andReturn($totCommunityLicencesElement);
+
+        $mockForm = m::mock(\Common\Form\Form::class);
+        $mockForm->shouldReceive('get')
+            ->with('data')
+            ->andReturn($dataFieldset);
 
         $mockFormHelper = m::mock()
             ->shouldReceive('removeFieldList')
