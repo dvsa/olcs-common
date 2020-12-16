@@ -5,17 +5,14 @@
         </span>
     </summary>
     <div class="govuk-details__text" id="details-content-trips">
-        <p class="govuk-body-l">You need to tell us all return journeys that:</p>
-        <h4 class="govuk-heading-s">Start and finish inside the UK and go to or pass through any EU country and or Iceland, Liechtenstein plus Norway</h4>
-        <p class="govuk-body">For example: Your truck leaves the UK, drives through France, Germany and Poland to reach Ukraine and returns
-            via Hungary, Austria, Switzerland and France. This is counted as one international journey.</p>
+        <p class="govuk-body-l"><?php echo $this->escapeHtml($this->translate('permits.page.ecmt.trips.hint.heading')); ?></p>
+        <h4 class="govuk-heading-s"><?php echo $this->escapeHtml($this->translate('permits.page.ecmt.trips.hint1')); ?></h4>
+        <p class="govuk-body"><?php echo $this->escapeHtml($this->translate('permits.page.ecmt.trips.hint2')); ?></p>
         <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
-        <h4 class="govuk-heading-s">Start and finish outside of the UK but inside any EU country, Iceland, Liechtenstein or Norway</h4>
-        <p class="govuk-body">For example: Your truck leaves the UK, drives through France, Belgium and Switzerland to reach Liechtenstein and returns
-            via Austria, Germany, Switzerland, Italy and France. This is also counted as one international journey.</p>
+        <h4 class="govuk-heading-s"><?php echo $this->escapeHtml($this->translate('permits.page.ecmt.trips.hint3')); ?></h4>
+        <p class="govuk-body"><?php echo $this->escapeHtml($this->translate('permits.page.ecmt.trips.hint4')); ?></p>
         <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
-        <h4 class="govuk-heading-s">Start and finish outside any of the countries listed above but your journey passes through any of these countries</h4>
-        <p class="govuk-body">For example: Your truck drives to Ireland to pick up goods, drives through the UK and France to reach Spain
-            and returns through France to the UK. This is counted as one international journey.</p>
+        <h4 class="govuk-heading-s"><?php echo $this->escapeHtml($this->translate('permits.page.ecmt.trips.hint5')); ?></h4>
+        <p class="govuk-body"><?php echo $this->escapeHtml($this->translate('permits.page.ecmt.trips.hint6')); ?></p>
     </div>
 </details>
