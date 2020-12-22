@@ -20,7 +20,7 @@ class RedirectTest extends MockeryTestCase
     protected $sut;
 
     /**
-     * @NOTE I am creating a mock of the SUT here, as this class wraps Zends Redirect plugin, and I want to mock it's
+     * @NOTE I am creating a mock of the SUT here, as this class wraps Laminas Redirect plugin, and I want to mock it's
      *  default toRoute method
      */
     protected function setUp(): void

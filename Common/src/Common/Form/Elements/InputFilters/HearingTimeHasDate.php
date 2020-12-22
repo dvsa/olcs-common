@@ -7,7 +7,7 @@
 
 namespace Common\Form\Elements\InputFilters;
 
-use Laminas\Form\Element\Time as ZendTimeSelect;
+use Laminas\Form\Element\Time as LaminasTimeSelect;
 use Laminas\Validator as LaminasValidator;
 use Laminas\Validator\Date as DateValidator;
 use Common\Form\Elements\Validators\Time as TimeValidator;
@@ -16,7 +16,7 @@ use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
 /**
  * Checks if the hearing time is entered then the date is also entered
  */
-class HearingTimeHasDate extends ZendTimeSelect implements InputProviderInterface
+class HearingTimeHasDate extends LaminasTimeSelect implements InputProviderInterface
 {
     /**
      * Provide default input rules for this element.

@@ -7,7 +7,7 @@ use Laminas\Form\ElementInterface;
 /**
  * Class FormRadioOption
  *
- * The decision to implement like this was to minimize the amout of code that would need to be copied from Zend Helpers
+ * The decision to implement like this was to minimize the amout of code that would need to be copied from Laminas Helpers
  *
  * @package Common\Form\View\Helper
  */

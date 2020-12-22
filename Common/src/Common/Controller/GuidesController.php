@@ -2,7 +2,7 @@
 
 namespace Common\Controller;
 
-use Laminas\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
+use Laminas\Mvc\Controller\AbstractActionController as LaminasAbstractActionController;
 use Laminas\View\Model\ViewModel;
 
 /**
@@ -12,7 +12,7 @@ use Laminas\View\Model\ViewModel;
  *
  * @method \Olcs\Mvc\Controller\Plugin\Placeholder placeholder()
  */
-class GuidesController extends ZendAbstractActionController
+class GuidesController extends LaminasAbstractActionController
 {
     const GUIDE_OC_ADV_GB_NEW = 'advertising-your-operating-centre-gb-new';
     const GUIDE_OC_ADV_GB_VAR = 'advertising-your-operating-centre-gb-var';

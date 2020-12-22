@@ -7,7 +7,7 @@
  */
 namespace Common\Form\Elements\InputFilters;
 
-use Laminas\Form\Element as ZendElement;
+use Laminas\Form\Element as LaminasElement;
 use Laminas\Validator as LaminasValidator;
 use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
 
@@ -16,7 +16,7 @@ use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
  *
  * @author Jakub Igla <jakub.igla@valtech.co.uk>
  */
-class Email extends ZendElement implements InputProviderInterface
+class Email extends LaminasElement implements InputProviderInterface
 {
     /**
      * Provide default input rules for this element.

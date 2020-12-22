@@ -5,7 +5,7 @@ use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Zend Framework Compatible Table Builder Factory. Creates an instance of
+ * Laminas Framework Compatible Table Builder Factory. Creates an instance of
  * TableBuilder and passes in the main service locator
  *
  * @author Craig Reasbeck <craig.reasbeck@valtech.co.uk>
@@ -14,7 +14,7 @@ class TableBuilderFactory implements FactoryInterface
 {
     /**
      * Create the table factory service, and returns TableBuilder. A
-     * true Zend Framework Compatible Table Builder Factory.
+     * true Laminas Framework Compatible Table Builder Factory.
      *
      * @param \Laminas\ServiceManager\ServiceLocatorInterface $serviceLocator
      *

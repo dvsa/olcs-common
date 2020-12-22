@@ -7,7 +7,7 @@
  */
 namespace Common\Form\Elements\InputFilters;
 
-use Laminas\Form\Element\File as ZendFile;
+use Laminas\Form\Element\File as LaminasFile;
 use Laminas\Validator\File\FilesSize;
 
 /**
@@ -15,7 +15,7 @@ use Laminas\Validator\File\FilesSize;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class File extends ZendFile
+class File extends LaminasFile
 {
     const SIZE_KB = 1024;
 

@@ -7,7 +7,7 @@ use Laminas\Filter\Word\DashToCamelCase;
 use Laminas\InputFilter\InputProviderInterface;
 use Laminas\Log\Logger;
 use Laminas\Log\Writer\Stream;
-use Laminas\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
+use Laminas\Mvc\Controller\AbstractActionController as LaminasAbstractActionController;
 use Laminas\Code\Generator\ClassGenerator;
 use Laminas\Code\Generator\DocBlockGenerator;
 use Laminas\Code\Generator\FileGenerator;
@@ -18,7 +18,7 @@ use Laminas\Code\Generator\FileGenerator;
  *
  * @deprecated Need to remove.  See story: OLCS-16488 in comments.
  */
-class FormRewriteController extends ZendAbstractActionController
+class FormRewriteController extends LaminasAbstractActionController
 {
     protected $log;
     protected $basePath;

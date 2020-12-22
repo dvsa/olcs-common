@@ -7,14 +7,14 @@
  */
 namespace Common\Form\Elements\Validators;
 
-use Laminas\Validator\Date as ZendDate;
+use Laminas\Validator\Date as LaminasDate;
 
 /**
  * Override ZFs date validation messages (As they are a bit rubbish)
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class Date extends ZendDate
+class Date extends LaminasDate
 {
 
     /**

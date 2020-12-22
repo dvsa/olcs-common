@@ -3,7 +3,7 @@
 namespace CommonTest\Controller\Plugin;
 
 use Common\Controller\Traits\ViewHelperManagerAware;
-use Laminas\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
+use Laminas\Mvc\Controller\AbstractActionController as LaminasAbstractActionController;
 
 /**
  * Class TestController
@@ -11,7 +11,7 @@ use Laminas\Mvc\Controller\AbstractActionController as ZendAbstractActionControl
  *
  * @package OlcsTest\Controller\Plugin
  */
-class ControllerStub extends ZendAbstractActionController
+class ControllerStub extends LaminasAbstractActionController
 {
     use ViewHelperManagerAware;
 

@@ -7,7 +7,7 @@
  */
 namespace Common\Form\Elements\Custom;
 
-use Laminas\Form\Element as ZendElement;
+use Laminas\Form\Element as LaminasElement;
 use Laminas\Form\Exception\InvalidArgumentException;
 
 /**
@@ -15,7 +15,7 @@ use Laminas\Form\Exception\InvalidArgumentException;
  *
  * @author Ian Lindsay <ian@hemera-business-services.co.uk>
  */
-class DateTimeSelect extends ZendElement\DateTimeSelect
+class DateTimeSelect extends LaminasElement\DateTimeSelect
 {
     use Traits\YearDelta;
 
@@ -85,7 +85,7 @@ class DateTimeSelect extends ZendElement\DateTimeSelect
     }
 
     /**
-     * Overrides the default zend behaviour if the value is null
+     * Overrides the default Laminas behaviour if the value is null
      *
      * @param mixed $value Date time value to set
      *

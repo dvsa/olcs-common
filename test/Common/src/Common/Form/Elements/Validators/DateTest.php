@@ -64,7 +64,7 @@ class DateTest extends \PHPUnit\Framework\TestCase
                 'invalidinputstring',
                 [Date::INVALID_DATE => 'The input does not appear to be a valid value']
             ],
-            // the existing behaviour from ZendDate is 'invalid date' for other data types
+            // the existing behaviour from LaminasDate is 'invalid date' for other data types
             'invalid object' => [
                 false,
                 new \StdClass(),

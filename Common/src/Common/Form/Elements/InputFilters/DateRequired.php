@@ -7,7 +7,7 @@
 
 namespace Common\Form\Elements\InputFilters;
 
-use Laminas\Form\Element\DateSelect as ZendDateSelect;
+use Laminas\Form\Element\DateSelect as LaminasDateSelect;
 use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
 use Laminas\Validator\Date as DateValidator;
 
@@ -16,7 +16,7 @@ use Laminas\Validator\Date as DateValidator;
  * @author Ian Lindsay <ian@hemera-business-services.co.uk>
  *
  */
-class DateRequired extends ZendDateSelect implements InputProviderInterface
+class DateRequired extends LaminasDateSelect implements InputProviderInterface
 {
     protected $required = true;
 

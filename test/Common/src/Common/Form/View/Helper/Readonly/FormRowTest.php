@@ -6,7 +6,7 @@ use Common\Form\Elements;
 use Common\Form\View\Helper\Readonly\FormRow;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Laminas\Form\Element as ZendElement;
+use Laminas\Form\Element as LaminasElement;
 
 /**
  * @covers \Common\Form\View\Helper\Readonly\FormRow
@@ -94,7 +94,7 @@ class FormRowTest extends MockeryTestCase
             ->shouldReceive('getValue')->andReturn('Value')
             ->shouldReceive('getOption')->with('remove_if_readonly')->andReturnNull();
 
-        $mockSelect = m::mock(ZendElement\Select::class);
+        $mockSelect = m::mock(LaminasElement\Select::class);
         $mockSelect
             ->shouldReceive('getAttribute')->with('type')->andReturn('select')
             ->shouldReceive('getLabel')->andReturn('Label')
@@ -171,7 +171,7 @@ class FormRowTest extends MockeryTestCase
                 'expect' => '<li class="definition-list__item readonly">STANDARD-RENDER-RESULT</li>',
             ],
             [
-                'element' => m::mock(ZendElement\Csrf::class),
+                'element' => m::mock(LaminasElement\Csrf::class),
                 'expected' => self::STANDARD_RENDER_RESULT,
             ],
             [

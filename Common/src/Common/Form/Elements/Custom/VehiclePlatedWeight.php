@@ -2,13 +2,13 @@
 
 namespace Common\Form\Elements\Custom;
 
-use Laminas\Form\Element as ZendElement;
+use Laminas\Form\Element as LaminasElement;
 use Laminas\InputFilter\InputProviderInterface;
 
 /**
  * @author Dmitry Golubev <dmitrij.golubev@valtech.com>
  */
-class VehiclePlatedWeight extends ZendElement implements InputProviderInterface
+class VehiclePlatedWeight extends LaminasElement implements InputProviderInterface
 {
     /**
      * Get Input Specification

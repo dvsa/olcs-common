@@ -110,7 +110,7 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
      * Even though we use the same Fieldset, we come to
      * an agreement that we will test on a per-form basis
      * as part of a roadmap to centralise/simplify
-     * zend forms.
+     * laminas forms.
      */
     public function testWorkAddress()
     {

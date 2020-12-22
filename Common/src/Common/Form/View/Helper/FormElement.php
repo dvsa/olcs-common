@@ -14,7 +14,7 @@ use Common\Form\Elements\Types\TermsBox;
 use Common\Form\Elements\Types\TrafficAreaSet;
 use Common\Form\Element\DynamicRadioHtml;
 use Laminas\Form\ElementInterface;
-use Laminas\Form\ElementInterface as ZendElementInterface;
+use Laminas\Form\ElementInterface as LaminasElementInterface;
 use Laminas\Form\View\Helper\FormElement as LaminasFormElement;
 
 /**
@@ -52,11 +52,11 @@ class FormElement extends LaminasFormElement
      * Introspects the element type and attributes to determine which
      * helper to utilize when rendering.
      *
-     * @param ZendElementInterface $element Form Element
+     * @param LaminasElementInterface $element Form Element
      *
      * @return string
      */
-    public function render(ZendElementInterface $element)
+    public function render(LaminasElementInterface $element)
     {
         if (!$element->getAttribute('id')) {
             $element->setAttribute('id', $element->getName());

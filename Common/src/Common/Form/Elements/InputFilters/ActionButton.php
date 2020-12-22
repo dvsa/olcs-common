@@ -8,14 +8,14 @@
 
 namespace Common\Form\Elements\InputFilters;
 
-use Laminas\Form\Element\Button as ZendElement;
+use Laminas\Form\Element\Button as LaminasElement;
 
 /**
  * ActionButton
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class ActionButton extends ZendElement
+class ActionButton extends LaminasElement
 {
 
 }
