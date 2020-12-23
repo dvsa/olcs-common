@@ -2,7 +2,7 @@
 
 namespace Common\Form\Elements\InputFilters;
 
-use Laminas\Form\Element as ZendElement;
+use Laminas\Form\Element as LaminasElement;
 use Laminas\InputFilter\InputProviderInterface;
 
 /**
@@ -10,9 +10,9 @@ use Laminas\InputFilter\InputProviderInterface;
  *
  * @deprecated This should not be used and must be removed as part of OLCS-15198
  *             Replace other elements with the normal Text element provided by
- *             Zend.
+ *             Laminas.
  */
-class Text extends ZendElement\Text implements InputProviderInterface
+class Text extends LaminasElement\Text implements InputProviderInterface
 {
     protected $isRequired = false;
     protected $isAllowEmpty = true;

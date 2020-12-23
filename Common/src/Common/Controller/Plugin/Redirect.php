@@ -8,7 +8,7 @@
 namespace Common\Controller\Plugin;
 
 use Laminas\Json\Json;
-use Laminas\Mvc\Controller\Plugin\Redirect as ZendRedirect;
+use Laminas\Mvc\Controller\Plugin\Redirect as LaminasRedirect;
 use Laminas\Stdlib\ArrayUtils;
 
 /**
@@ -16,7 +16,7 @@ use Laminas\Stdlib\ArrayUtils;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class Redirect extends ZendRedirect
+class Redirect extends LaminasRedirect
 {
     /**
      * Refresh ajax

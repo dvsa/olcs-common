@@ -52,8 +52,8 @@ class TranslationLoader implements RemoteLoaderInterface
             throw new \Exception($message);
         }
 
-        $zendMemoryArray = new PhpMemoryArray($messages);
-        return $zendMemoryArray->load($locale, $textDomain);
+        $phpMemoryArray = new PhpMemoryArray($messages);
+        return $phpMemoryArray->load($locale, $textDomain);
     }
 
     /**

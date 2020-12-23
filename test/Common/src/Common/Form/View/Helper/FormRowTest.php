@@ -5,7 +5,7 @@ namespace CommonTest\Form\View\Helper;
 use Common\Form\Elements\Types\AttachFilesButton;
 use Laminas\Form\Element\DateSelect;
 use Laminas\View\HelperPluginManager;
-use Laminas\Form\View\Helper as ZendHelper;
+use Laminas\Form\View\Helper as LaminasHelper;
 use Common\Form\View\Helper as CommonHelper;
 
 /**
@@ -346,9 +346,9 @@ class FormRowTest extends \PHPUnit\Framework\TestCase
 
         $helpers = new HelperPluginManager();
         $helpers->setService('translate', $translateHelper);
-        $helpers->setService('form_label', new ZendHelper\FormLabel());
+        $helpers->setService('form_label', new LaminasHelper\FormLabel());
         $helpers->setService('form_element', new CommonHelper\FormElement());
-        $helpers->setService('form_text', new ZendHelper\FormText());
+        $helpers->setService('form_text', new LaminasHelper\FormText());
 
         $view = $this->createPartialMock(
             'Laminas\View\Renderer\PhpRenderer',

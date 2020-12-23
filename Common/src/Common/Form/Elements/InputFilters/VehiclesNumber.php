@@ -7,7 +7,7 @@
  */
 namespace Common\Form\Elements\InputFilters;
 
-use Laminas\Form\Element as ZendElement;
+use Laminas\Form\Element as LaminasElement;
 use Laminas\Validator as LaminasValidator;
 use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
 use Common\Form\Elements\Validators\VehiclesNumber as VehiclesNumberValidator;
@@ -17,7 +17,7 @@ use Common\Form\Elements\Validators\VehiclesNumber as VehiclesNumberValidator;
  *
  * @author Jakub Igla <jakub.igla@valtech.co.uk>
  */
-class VehiclesNumber extends ZendElement implements InputProviderInterface
+class VehiclesNumber extends LaminasElement implements InputProviderInterface
 {
 
     /**

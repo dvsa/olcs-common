@@ -6,7 +6,7 @@ use Common\Form\Elements;
 use Common\Form\Elements\Types\Html;
 use Common\Form\Elements\Types\HtmlTranslated;
 use Common\Form\Elements\Types\Table;
-use Laminas\Form\Element as ZendElement;
+use Laminas\Form\Element as LaminasElement;
 use Laminas\Form\ElementInterface;
 use Laminas\Form\LabelAwareInterface;
 use Laminas\Form\View\Helper\AbstractHelper;
@@ -86,7 +86,7 @@ class FormRow extends AbstractHelper
         /** @var \Common\Form\View\Helper\FormElement $defElmHlpr */
         $defElmHlpr = $this->getView()->plugin('FormElement');
 
-        if ($element instanceof ZendElement\Csrf
+        if ($element instanceof LaminasElement\Csrf
             || (
                 $element instanceof Elements\InputFilters\ActionButton
                 && $element->getOption('keepForReadonly') === true
@@ -102,7 +102,7 @@ class FormRow extends AbstractHelper
         }
 
         if (in_array($element->getAttribute('type'), ['hidden', 'submit']) ||
-            $element instanceof ZendElement\Button ||
+            $element instanceof LaminasElement\Button ||
             $element->getOption('remove_if_readonly')
         ) {
             //bail early if we don't want to display this type of element

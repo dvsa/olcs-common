@@ -259,7 +259,7 @@ return array(
             'Common\Service\Data\UserTypesListDataService' => 'Common\Service\Data\UserTypesListDataService',
             'Script' => '\Common\Service\Script\ScriptFactory',
             'Table' => '\Common\Service\Table\TableFactory',
-            // Added in a true Zend Framework V2 compatible factory for TableBuilder, eventually to replace Table above.
+            // Added in a true Laminas Framework V2 compatible factory for TableBuilder, eventually to replace Table above.
             'Common\Service\Table\TableBuilderFactory' => 'Common\Service\Table\TableBuilderFactory',
             'ServiceApiResolver' => 'Common\Service\Api\ResolverFactory',
             'navigation' => 'Laminas\Navigation\Service\DefaultNavigationFactory',

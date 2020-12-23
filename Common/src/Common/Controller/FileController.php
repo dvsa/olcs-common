@@ -5,14 +5,14 @@ namespace Common\Controller;
 use Dvsa\Olcs\Transfer\Query\Document\Download;
 use Dvsa\Olcs\Transfer\Query\Document\DownloadGuide;
 use Laminas\Http\Response;
-use Laminas\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
+use Laminas\Mvc\Controller\AbstractActionController as LaminasAbstractActionController;
 
 /**
  * File controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FileController extends ZendAbstractActionController
+class FileController extends LaminasAbstractActionController
 {
     private static $allowedHeaders = ['Content-Disposition', 'Content-Encoding', 'Content-Type', 'Content-Length'];
 

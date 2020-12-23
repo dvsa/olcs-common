@@ -2,7 +2,7 @@
 
 namespace Common\Form\Elements\InputFilters;
 
-use Laminas\Form\Element as ZendElement;
+use Laminas\Form\Element as LaminasElement;
 use Laminas\Validator as LaminasValidator;
 
 /**
@@ -10,7 +10,7 @@ use Laminas\Validator as LaminasValidator;
  *
  * @author Someone <someone@valtech.co.uk>
  */
-class Checkbox extends ZendElement\Checkbox
+class Checkbox extends LaminasElement\Checkbox
 {
     public function __construct($name = null, $options = array())
     {

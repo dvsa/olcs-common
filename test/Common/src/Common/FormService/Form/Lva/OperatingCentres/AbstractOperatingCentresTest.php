@@ -5,8 +5,8 @@ namespace CommonTest\FormService\Form\Lva\OperatingCentres;
 use Common\FormService\Form\Lva\OperatingCentres\AbstractOperatingCentres;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Element\Text;
-use Zend\Form\Fieldset;
+use Laminas\Form\Element\Text;
+use Laminas\Form\Fieldset;
 
 /**
  * @covers \Common\FormService\Form\Lva\OperatingCentres\AbstractOperatingCentres

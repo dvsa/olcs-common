@@ -2,7 +2,7 @@
 
 namespace Common\Form\Elements\Custom;
 
-use Laminas\Form\Element as ZendElement;
+use Laminas\Form\Element as LaminasElement;
 use Laminas\InputFilter\InputProviderInterface;
 use Laminas\Validator\Regex as RegexValidator;
 use Common\Form\Elements\Validators\NoOfPermitsMin as NoOfPermitsMinValidator;
@@ -12,7 +12,7 @@ use Common\Form\Elements\Validators\NoOfPermitsNotEmpty as NoOfPermitsNotEmptyVa
 /**
  * @author Jonathan Thomas <jonathan@opalise.co.uk>
  */
-class NoOfPermits extends ZendElement implements InputProviderInterface
+class NoOfPermits extends LaminasElement implements InputProviderInterface
 {
     protected $attributes = [
         'type' => 'number',

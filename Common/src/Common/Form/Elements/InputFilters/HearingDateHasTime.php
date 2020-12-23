@@ -7,7 +7,7 @@
 
 namespace Common\Form\Elements\InputFilters;
 
-use Laminas\Form\Element\DateSelect as ZendDateSelect;
+use Laminas\Form\Element\DateSelect as LaminasDateSelect;
 use Laminas\Validator as LaminasValidator;
 use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
 use Laminas\Validator\Date as DateValidator;
@@ -15,7 +15,7 @@ use Laminas\Validator\Date as DateValidator;
 /**
  * Checks conviction offence date is before the conviction date
  */
-class HearingDateHasTime extends ZendDateSelect implements InputProviderInterface
+class HearingDateHasTime extends LaminasDateSelect implements InputProviderInterface
 {
     /**
      * Provide default input rules for this element.

@@ -2,7 +2,7 @@
 
 namespace Common\Form\Elements\Custom;
 
-use Laminas\Form\Element as ZendElement;
+use Laminas\Form\Element as LaminasElement;
 use Laminas\InputFilter\InputProviderInterface;
 
 /**
@@ -10,7 +10,7 @@ use Laminas\InputFilter\InputProviderInterface;
  *
  * @author Dmitry Golubev <dmitrij.golubev@valtech.com>
  */
-class VehicleVrmAny extends ZendElement implements InputProviderInterface
+class VehicleVrmAny extends LaminasElement implements InputProviderInterface
 {
     /**
      * Provide default input rules for this element.

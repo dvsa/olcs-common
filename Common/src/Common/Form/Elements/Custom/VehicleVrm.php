@@ -4,14 +4,14 @@ namespace Common\Form\Elements\Custom;
 
 use Common\Filter\Vrm;
 use Dvsa\Olcs\Transfer\Validators\Vrm as VrmValidator;
-use Laminas\Form\Element as ZendElement;
+use Laminas\Form\Element as LaminasElement;
 use Laminas\InputFilter\InputProviderInterface;
 use Laminas\Validator\NotEmpty;
 
 /**
  * Vrm field for UK vehicles
  */
-class VehicleVrm extends ZendElement implements InputProviderInterface
+class VehicleVrm extends LaminasElement implements InputProviderInterface
 {
     /**
      * Provide default input rules for this element.

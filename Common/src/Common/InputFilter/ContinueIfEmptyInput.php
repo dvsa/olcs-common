@@ -2,13 +2,13 @@
 
 namespace Common\InputFilter;
 
-use Laminas\InputFilter\Input as ZendInput;
+use Laminas\InputFilter\Input as LaminasInput;
 
 /**
  * Class ContinueIfEmptyInput
  * @package Common\InputFilter
  */
-class ContinueIfEmptyInput extends ZendInput
+class ContinueIfEmptyInput extends LaminasInput
 {
     /**
      * @var bool

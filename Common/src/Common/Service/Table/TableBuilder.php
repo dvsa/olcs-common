@@ -54,7 +54,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     private $contentType = self::CONTENT_TYPE_HTML;
 
     /**
-     * Inject the application config from Zend
+     * Inject the application config from Laminas
      *
      * @var array
      */

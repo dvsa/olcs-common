@@ -7,14 +7,14 @@
  */
 namespace Common\Form\Elements\Custom;
 
-use Laminas\Form\Element as ZendElement;
+use Laminas\Form\Element as LaminasElement;
 
 /**
  * Month Select
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class MonthSelect extends ZendElement\MonthSelect
+class MonthSelect extends LaminasElement\MonthSelect
 {
     use Traits\YearDelta;
 

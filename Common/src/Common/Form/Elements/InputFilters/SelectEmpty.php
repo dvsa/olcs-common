@@ -2,7 +2,7 @@
 
 namespace Common\Form\Elements\InputFilters;
 
-use Laminas\Form\Element\Select as ZendElement;
+use Laminas\Form\Element\Select as LaminasElement;
 use Laminas\Validator as LaminasValidator;
 use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
 
@@ -11,7 +11,7 @@ use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
  *
  * Select with empty allowed
  */
-class SelectEmpty extends ZendElement implements InputProviderInterface
+class SelectEmpty extends LaminasElement implements InputProviderInterface
 {
     protected $required = false;
 

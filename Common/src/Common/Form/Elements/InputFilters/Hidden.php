@@ -2,18 +2,18 @@
 
 namespace Common\Form\Elements\InputFilters;
 
-use Laminas\Form\Element\Hidden as ZendElement;
+use Laminas\Form\Element\Hidden as LaminasElement;
 use Laminas\Validator as LaminasValidator;
 use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
 
 /**
  * @deprecated This should not be used and must be removed as part of OLCS-15198
  *             Replace other elements with the normal Text element provided by
- *             Zend.
+ *             Laminas.
  *
  * Custom Hidden Element
  */
-class Hidden extends ZendElement implements InputProviderInterface
+class Hidden extends LaminasElement implements InputProviderInterface
 {
     protected $required = false;
     protected $max = null;

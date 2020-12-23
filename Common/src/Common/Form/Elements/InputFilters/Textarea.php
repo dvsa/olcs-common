@@ -1,7 +1,7 @@
 <?php
 namespace Common\Form\Elements\InputFilters;
 
-use Laminas\Form\Element\Textarea as ZendElement;
+use Laminas\Form\Element\Textarea as LaminasElement;
 use Laminas\Validator as LaminasValidator;
 use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
 
@@ -12,7 +12,7 @@ use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
  *
  * Textarea
  */
-class Textarea extends ZendElement implements InputProviderInterface
+class Textarea extends LaminasElement implements InputProviderInterface
 {
     protected $continueIfEmpty = false;
     protected $allowEmpty = false;
