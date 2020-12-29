@@ -43,12 +43,17 @@ class CheckboxFieldsetPopulator implements FieldsetPopulatorInterface
         $checkbox = $this->checkboxFactory->create('qaElement');
         $checkbox->setAttributes(
             [
-                'class' => 'input--qasinglecheckbox',
+                'class' => 'govuk-checkboxes__input',
                 'id' => 'qaElement'
             ]
         );
         $checkbox->setLabel($label);
-        $checkbox->setLabelAttributes(['class' => 'form-control form-control--checkbox form-control--advanced']);
+        $checkbox->setLabelAttributes(
+            [
+                'class' => 'govuk-label govuk-checkboxes__label',
+                'for' => 'qaElement'
+            ]
+        );
 
         $checkbox->setOptions(
             [

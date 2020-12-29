@@ -9,6 +9,7 @@ use Common\Form\Elements\InputFilters\SingleCheckbox;
 use Common\Form\Elements\Types\Readonly;
 use Common\Form\Elements\Types\Table;
 use Laminas\Form\Element\Button;
+use Laminas\Form\Element\Checkbox;
 use Laminas\Form\Element\DateSelect;
 use Laminas\Form\Element\Hidden;
 use Laminas\Form\ElementInterface;
@@ -347,11 +348,23 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
 
                 switch ($labelPosition) {
                     case self::LABEL_PREPEND:
-                        $markup = $labelOpen . $label . $elementString . $labelClose;
+                        if ($element instanceof Checkbox) {
+                            $markup = '<div class="govuk-checkboxes__item">' .
+                                $labelOpen . $label . $labelClose . $elementString .
+                                '</div>';
+                        } else {
+                            $markup = $labelOpen . $label . $elementString . $labelClose;
+                        }
                         break;
                     case self::LABEL_APPEND:
                     default:
-                        $markup = $labelOpen . $elementString . $label . $labelClose;
+                        if ($element instanceof Checkbox) {
+                            $markup = '<div class="govuk-checkboxes__item">' .
+                                $elementString . $labelOpen . $label . $labelClose .
+                                '</div>';
+                        } else {
+                            $markup = $labelOpen . $elementString . $label . $labelClose;
+                        }
                 }
             }
         } else {

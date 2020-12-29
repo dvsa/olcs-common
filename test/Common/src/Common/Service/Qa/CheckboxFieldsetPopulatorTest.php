@@ -50,7 +50,7 @@ class CheckboxFieldsetPopulatorTest extends MockeryTestCase
         ];
 
         $expectedCheckboxAttributes = [
-            'class' => 'input--qasinglecheckbox',
+            'class' => 'govuk-checkboxes__input',
             'id' => 'qaElement',
         ];
 
@@ -68,7 +68,7 @@ class CheckboxFieldsetPopulatorTest extends MockeryTestCase
             ->with($translatedLabel)
             ->once();
         $checkbox->shouldReceive('setLabelAttributes')
-            ->with(['class' => 'form-control form-control--checkbox form-control--advanced'])
+            ->with(['class' => 'govuk-label govuk-checkboxes__label', 'for' => 'qaElement'])
             ->once();
         $checkbox->shouldReceive('setOptions')
             ->with($expectedCheckboxOptions)

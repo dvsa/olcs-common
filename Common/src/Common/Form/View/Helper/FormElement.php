@@ -13,6 +13,7 @@ use Common\Form\Elements\Types\Table;
 use Common\Form\Elements\Types\TermsBox;
 use Common\Form\Elements\Types\TrafficAreaSet;
 use Common\Form\Element\DynamicRadioHtml;
+use Laminas\Form\Element\Checkbox;
 use Laminas\Form\ElementInterface;
 use Laminas\Form\ElementInterface as LaminasElementInterface;
 use Laminas\Form\View\Helper\FormElement as LaminasFormElement;
@@ -217,6 +218,23 @@ class FormElement extends LaminasFormElement
                 'attach-action__hint',
                 $hint
             );
+        }
+
+        if ($element instanceof Checkbox) {
+            $attributes = $element->getAttributes();
+            if (isset($attributes['id'])) {
+                $elementId = $attributes['id'];
+            } else {
+                $elementId = preg_replace("/[^A-Za-z0-9 ]/", '', $element->getName());
+                $attributes['id'] = $cleanElementName;
+                $element->setAttributes($attributes);
+            }
+
+            $labelAttributes = $element->getLabelAttributes();
+            if (!isset($labelAttributes['for'])) {
+                $labelAttributes['for'] = $elementId;
+                $element->setLabelAttributes($labelAttributes);
+            }
         }
 
         // If the element has errors, then add a class to the elements HTML

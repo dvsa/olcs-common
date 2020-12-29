@@ -170,7 +170,9 @@ class FormRowTest extends \PHPUnit\Framework\TestCase
         $viewHelper = $this->prepareHelper();
         echo $viewHelper($element);
 
-        $this->expectOutputRegex('/^<div class="field "><label>(.*)<\/label>(.*)<\/div>$/');
+        $this->expectOutputRegex(
+            '/^<div class="field "><div class="govuk-checkboxes__item"><label>(.*)<\/label>(.*)<\/div><\/div>$/'
+        );
     }
 
     /**
@@ -190,7 +192,9 @@ class FormRowTest extends \PHPUnit\Framework\TestCase
         $viewHelper = $this->prepareHelper();
         echo $viewHelper($element);
 
-        $this->expectOutputRegex('/^<div class="field "><label for="test">(.*)<\/label>(.*)<\/div>$/');
+        $this->expectOutputRegex(
+            '/^<div class="field "><div class="govuk-checkboxes__item"><label for="test">(.*)<\/label>(.*)<\/div><\/div>$/'
+        );
     }
 
     /**
