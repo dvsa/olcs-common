@@ -45,7 +45,7 @@
         "doctrine/annotations": "^1.8",
         "symfony/filesystem": "^5",
         "symfony/lock": "^5",
-        "zf-commons/zfc-rbac": "~2.5.0",
+        "lm-commons/lmc-rbac-mvc": "^2.6",
         "elendev/nexus-composer-push": "^0.1",
         "laminas/laminas-dependency-plugin": "^2.0"
     },
