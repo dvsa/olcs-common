@@ -3,6 +3,7 @@
 namespace Common\Service\Api;
 
 use Common\Util\RestClient;
+use Interop\Container\ContainerInterface;
 use Laminas\Filter\Word\CamelCaseToDash;
 use Laminas\Http\Header\Cookie;
 use Laminas\Http\Request;
@@ -18,28 +19,17 @@ use Laminas\Uri\Http;
 class AbstractFactory implements AbstractFactoryInterface
 {
     /**
-     * Determine if we can create a service with name
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     * @param $name
-     * @param $requestedName
-     * @return bool
+     * {@inheritdoc}
      */
-    public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
+    public function canCreate(ContainerInterface $container, $requestedName)
     {
         return strpos($requestedName, 'Olcs\\RestService\\') !== false;
     }
 
     /**
-     * Create service with name
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     * @param $name
-     * @param $requestedName
-     * @throws \Laminas\ServiceManager\Exception\InvalidServiceNameException
-     * @return mixed
+     * {@inheritdoc}
      */
-    public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $api = str_replace('Olcs\\RestService\\', '', $requestedName);
 
@@ -50,13 +40,13 @@ class AbstractFactory implements AbstractFactoryInterface
 
         list($endpoint, $uri) = $api;
 
-        $config = $serviceLocator->getServiceLocator()->get('Config');
+        $config = $container->getServiceLocator()->get('Config');
         if (!isset($config['service_api_mapping']['endpoints'][$endpoint])) {
             throw new InvalidServiceNameException('No endpoint defined for: ' . $endpoint);
         }
 
         /** @var \Laminas\Mvc\I18n\Translator $translator */
-        $translator = $serviceLocator->getServiceLocator()->get('translator');
+        $translator = $container->getServiceLocator()->get('translator');
 
         $filter = new CamelCaseToDash();
         $uri = strtolower($filter->filter($uri));
@@ -73,7 +63,7 @@ class AbstractFactory implements AbstractFactoryInterface
             $url =  $url->resolve($endpointConfig);
         }
 
-        $userRequest = $serviceLocator->getServiceLocator()->get('Request');
+        $userRequest = $container->getServiceLocator()->get('Request');
         $secureToken = new Cookie();
         if ($userRequest instanceof Request) {
             $cookies = $userRequest->getCookie();
@@ -87,5 +77,23 @@ class AbstractFactory implements AbstractFactoryInterface
         $rest->setLanguage($translator->getLocale());
 
         return $rest;
+    }
+
+    /**
+     * {@inheritdoc}
+     * @todo OLCS-28149
+     */
+    public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
+    {
+        return $this->canCreate($serviceLocator, $requestedName);
+    }
+
+    /**
+     * {@inheritdoc}
+     * @todo OLCS-28149
+     */
+    public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
+    {
+        return $this($serviceLocator, $requestedName);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Common\Util;
 
+use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\AbstractFactoryInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
@@ -14,39 +15,45 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
 class AbstractServiceFactory implements AbstractFactoryInterface
 {
     /**
-     * Determine if we can create a service with name
-     *
-     * @param \Laminas\ServiceManager\ServiceLocatorInterface $serviceLocator Service manager
-     * @param string                                       $name           Name
-     * @param string                                       $requestedName  Class Name
-     *
-     * @return bool
+     * {@inheritdoc}
      */
-    public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
+    public function canCreate(ContainerInterface $container, $requestedName)
     {
         return ($this->getClassName($requestedName) !== false);
     }
 
     /**
-     * Create service with name
-     *
-     * @param \Laminas\ServiceManager\ServiceLocatorInterface $serviceLocator Service manager
-     * @param string                                       $name           Name
-     * @param string                                       $requestedName  Class Name
-     *
-     * @return object
+     * {@inheritdoc}
      */
-    public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $serviceClassName = $this->getClassName($requestedName);
 
         $service = new $serviceClassName();
 
         if ($service instanceof FactoryInterface) {
-            return $service->createService($serviceLocator);
+            return $service->createService($container);
         }
 
         return $service;
+    }
+
+    /**
+     * {@inheritdoc}
+     * @todo OLCS-28149
+     */
+    public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
+    {
+        return $this->canCreate($serviceLocator, $requestedName);
+    }
+
+    /**
+     * {@inheritdoc}
+     * @todo OLCS-28149
+     */
+    public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
+    {
+        return $this($serviceLocator, $requestedName);
     }
 
     /**
