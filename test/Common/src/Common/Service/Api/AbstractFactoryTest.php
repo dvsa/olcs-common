@@ -1,13 +1,14 @@
 <?php
 
-
 namespace CommonTest\Service\Api;
 
-use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Api\AbstractFactory;
-use Mockery as m;
 use Laminas\Http\Header\Cookie;
 use Laminas\Http\Request;
+use Laminas\I18n\Translator\Translator;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
  * Class AbstractFactoryTest
@@ -15,34 +16,81 @@ use Laminas\Http\Request;
  */
 class AbstractFactoryTest extends MockeryTestCase
 {
-    public function testCanCreateServiceWithName()
-    {
-        $mockSl = m::mock('Laminas\ServiceManager\ServiceLocatorInterface');
+    /** @var AbstractFactory | m\MockInterface */
+    protected $sut;
 
-        $sut = new AbstractFactory();
-        $this->assertTrue($sut->canCreateServiceWithName($mockSl, '', 'Olcs\\RestService\\Backend\\Task'));
-        $this->assertFalse($sut->canCreateServiceWithName($mockSl, '', 'Data\\Service\\Backend\\Task'));
+    /** @var m\MockInterface | ServiceLocatorInterface */
+    protected $mockSl;
+
+    /** @var m\MockInterface | Request */
+    protected $mockRequest;
+
+    /** @var m\MockInterface | Translator */
+    protected $mockTranslator;
+
+    public function setUp(): void
+    {
+        $this->sut = new AbstractFactory();
+
+        $this->mockSl = m::mock(ServiceLocatorInterface::class);
+
+        $this->mockRequest = m::mock(Request::class);
+
+        $this->mockTranslator = m::mock(Translator::class);
+    }
+
+    /**
+     * @dataProvider dpTestCanCreate
+     */
+    public function testCanCreate($requestedName, $expect)
+    {
+        static::assertEquals($expect, $this->sut->canCreate($this->mockSl, $requestedName));
+    }
+
+    public function dpTestCanCreate()
+    {
+        return [
+            [
+                'requestedName' => 'Olcs\\RestService\\Backend\\Task',
+                'expect' => true,
+            ],
+            [
+                'requestedName' => 'Data\\Service\\Backend\\Task',
+                'expect' => false,
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider dpTestCanCreate
+     * @todo OLCS-28149
+     */
+    public function testCanCreateServiceWithName($requestedName, $expect)
+    {
+        static::assertEquals($expect, $this->sut->canCreateServiceWithName($this->mockSl, '', $requestedName));
     }
 
     public function testCreateService()
     {
         $config['service_api_mapping']['endpoints']['backend'] = 'http://olcs-backend';
 
-        $translator = m::mock('stdClass');
-        $translator->shouldReceive('getLocale')->withNoArgs()->andReturn('en-ts');
-        $mockRequest = m::mock(Request::class);
-        $mockRequest->shouldReceive('getCookie')->andReturn(new Cookie(['secureToken' => 'abad1dea']));
+        $this->mockTranslator->shouldReceive('getLocale')->withNoArgs()->andReturn('en-ts');
 
-        $mockSl = m::mock('Laminas\ServiceManager\ServiceLocatorInterface');
-        $mockSl->shouldReceive('getServiceLocator->get')->with('Config')->andReturn($config);
-        $mockSl->shouldReceive('getServiceLocator->get')->with('translator')->andReturn($translator);
-        $mockSl->shouldReceive('getServiceLocator->get')->with('Request')->andReturn($mockRequest);
+        $this->mockRequest->shouldReceive('getCookie')->andReturn(new Cookie(['secureToken' => 'abad1dea']));
 
-        $sut = new AbstractFactory();
-        $client = $sut->createServiceWithName($mockSl, '', 'Olcs\RestService\TaskType');
+        $this->mockSl->shouldReceive('getServiceLocator->get')->with('Config')->andReturn($config);
+        $this->mockSl->shouldReceive('getServiceLocator->get')->with('translator')->andReturn($this->mockTranslator);
+        $this->mockSl->shouldReceive('getServiceLocator->get')->with('Request')->andReturn($this->mockRequest);
+
+        $client = ($this->sut)($this->mockSl, 'Olcs\RestService\TaskType');
         $this->assertEquals('olcs-backend', $client->url->getHost());
         $this->assertEquals('/task-type', $client->url->getPath());
+        $this->assertEquals('en-ts', $client->getLanguage());
 
+        // TODO OLCS-28149
+        $client = $this->sut->createServiceWithName($this->mockSl, '', 'Olcs\RestService\TaskType');
+        $this->assertEquals('olcs-backend', $client->url->getHost());
+        $this->assertEquals('/task-type', $client->url->getPath());
         $this->assertEquals('en-ts', $client->getLanguage());
     }
 
@@ -50,20 +98,27 @@ class AbstractFactoryTest extends MockeryTestCase
     {
         $config['service_api_mapping']['endpoints']['backend'] = 'http://olcs-backend';
 
-        $mockSl = m::mock('Laminas\ServiceManager\ServiceLocatorInterface');
-        $mockSl->shouldReceive('getServiceLocator->get')->with('Config')->andReturn($config);
-
-        $sut = new AbstractFactory();
+        $this->mockSl->shouldReceive('getServiceLocator->get')->with('Config')->andReturn($config);
 
         $passed = false;
         try {
-            $sut->createServiceWithName($mockSl, '', 'Olcs\RestService\NoService\TaskType');
+            ($this->sut)($this->mockSl, 'Olcs\RestService\NoService\TaskType');
         } catch (\Exception $e) {
             if ($e->getMessage() == 'No endpoint defined for: NoService') {
                 $passed = true;
             }
         }
+        $this->assertTrue($passed, 'Expected exception not thrown');
 
+        // TODO OLCS-28149
+        $passed = false;
+        try {
+            $this->sut->createServiceWithName($this->mockSl, '', 'Olcs\RestService\NoService\TaskType');
+        } catch (\Exception $e) {
+            if ($e->getMessage() == 'No endpoint defined for: NoService') {
+                $passed = true;
+            }
+        }
         $this->assertTrue($passed, 'Expected exception not thrown');
     }
 
@@ -81,22 +136,23 @@ class AbstractFactoryTest extends MockeryTestCase
                 ],
         ];
 
-        $translator = m::mock('stdClass');
-        $translator->shouldReceive('getLocale')->withNoArgs()->andReturn('en-ts');
+        $this->mockTranslator->shouldReceive('getLocale')->withNoArgs()->andReturn('en-ts');
 
-        $mockRequest = m::mock(Request::class);
-        $mockRequest->shouldReceive('getCookie')->andReturn(new Cookie(['secureToken' => 'abad1dea']));
+        $this->mockRequest->shouldReceive('getCookie')->andReturn(new Cookie(['secureToken' => 'abad1dea']));
 
-        $mockSl = m::mock('Laminas\ServiceManager\ServiceLocatorInterface');
-        $mockSl->shouldReceive('getServiceLocator->get')->with('Config')->andReturn($config);
-        $mockSl->shouldReceive('getServiceLocator->get')->with('translator')->andReturn($translator);
-        $mockSl->shouldReceive('getServiceLocator->get')->with('Request')->andReturn($mockRequest);
+        $this->mockSl->shouldReceive('getServiceLocator->get')->with('Config')->andReturn($config);
+        $this->mockSl->shouldReceive('getServiceLocator->get')->with('translator')->andReturn($this->mockTranslator);
+        $this->mockSl->shouldReceive('getServiceLocator->get')->with('Request')->andReturn($this->mockRequest);
 
-        $sut = new AbstractFactory();
-        $client = $sut->createServiceWithName($mockSl, '', 'myapi\\some-resource');
+        $client = ($this->sut)($this->mockSl, 'myapi\\some-resource');
         $this->assertEquals('external-api', $client->url->getHost());
         $this->assertEquals('/some-resource', $client->url->getPath());
+        $this->assertEquals('en-ts', $client->getLanguage());
 
+        // TODO OLCS-28149
+        $client = $this->sut->createServiceWithName($this->mockSl, '', 'myapi\\some-resource');
+        $this->assertEquals('external-api', $client->url->getHost());
+        $this->assertEquals('/some-resource', $client->url->getPath());
         $this->assertEquals('en-ts', $client->getLanguage());
     }
 }

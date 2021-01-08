@@ -4,9 +4,11 @@ namespace CommonTest\Controller\Lva;
 
 use Common\Controller\Lva\AbstractControllerFactory;
 use CommonTest\Controller\Lva\Stubs\ControllerWithFactoryStub;
+use Laminas\Mvc\Controller\ControllerManager;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Laminas\ServiceManager\FactoryInterface;
 
 /**
  * @covers \Common\Controller\Lva\AbstractControllerFactory
@@ -15,25 +17,27 @@ class AbstractControllerFactoryTest extends MockeryTestCase
 {
     /** @var  AbstractControllerFactory */
     protected $sut;
-    /** @var  m\MockInterface | \Laminas\Mvc\Controller\ControllerManager */
+
+    /** @var  m\MockInterface | ControllerManager */
     protected $mockScm;
-    /** @var  m\MockInterface | \Laminas\ServiceManager\ServiceLocatorInterface */
+
+    /** @var  m\MockInterface | ServiceLocatorInterface */
     protected $mockSm;
 
     protected function setUp(): void
     {
         $this->sut = new AbstractControllerFactory();
 
-        $this->mockSm = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class);
+        $this->mockSm = m::mock(ServiceLocatorInterface::class);
 
-        $this->mockScm = m::mock(\Laminas\Mvc\Controller\ControllerManager::class);
+        $this->mockScm = m::mock(ControllerManager::class);
         $this->mockScm->shouldReceive('getServiceLocator')->andReturn($this->mockSm);
     }
 
     /**
      * @group lva_abstract_factory
      */
-    public function testCanCreateServiceWithName()
+    public function testCanCreate()
     {
         $name = 'bar';
         $requestedName = 'foo';
@@ -48,13 +52,16 @@ class AbstractControllerFactoryTest extends MockeryTestCase
 
         $this->mockSm->shouldReceive('get')->with('Config')->andReturn($config);
 
+        $this->assertTrue($this->sut->canCreate($this->mockScm, $requestedName));
+
+        // TODO OLCS-28149
         $this->assertTrue($this->sut->canCreateServiceWithName($this->mockScm, $name, $requestedName));
     }
 
     /**
      * @group lva_abstract_factory
      */
-    public function testCanCreateServiceWithNameWithoutConfigMatch()
+    public function testCanCreateWithoutConfigMatch()
     {
         $name = 'foo';
         $requestedName = 'bar';
@@ -69,13 +76,16 @@ class AbstractControllerFactoryTest extends MockeryTestCase
 
         $this->mockSm->shouldReceive('get')->with('Config')->andReturn($config);
 
+        $this->assertFalse($this->sut->canCreate($this->mockScm, $requestedName));
+
+        // TODO OLCS-28149
         $this->assertFalse($this->sut->canCreateServiceWithName($this->mockScm, $name, $requestedName));
     }
 
     /**
      * @group lva_abstract_factory
      */
-    public function testCreateServiceWithName()
+    public function testInvoke()
     {
         $name = 'bar';
         $requestedName = 'foo';
@@ -90,10 +100,13 @@ class AbstractControllerFactoryTest extends MockeryTestCase
 
         $this->mockSm->shouldReceive('get')->with('Config')->andReturn($config);
 
+        $this->assertInstanceOf('\stdClass', ($this->sut)($this->mockScm, $requestedName));
+
+        // TODO OLCS-28149
         $this->assertInstanceOf('\stdClass', $this->sut->createServiceWithName($this->mockScm, $name, $requestedName));
     }
 
-    public function testCreateServiceWithNameUsingFactory()
+    public function testInvokeUsingFactory()
     {
         $name = 'unit_Name';
         $requestedName = 'unit_reqName';
@@ -108,8 +121,12 @@ class AbstractControllerFactoryTest extends MockeryTestCase
 
         $this->mockSm->shouldReceive('get')->with('Config')->andReturn($config);
 
-        $actual = $this->sut->createServiceWithName($this->mockScm, $name, $requestedName);
+        $actual = ($this->sut)($this->mockScm, $requestedName);
+        static::assertInstanceOf(FactoryInterface::class, $actual);
+        static::assertInstanceOf(ControllerWithFactoryStub::class, $actual);
 
+        // TODO OLCS-28149
+        $actual = $this->sut->createServiceWithName($this->mockScm, $name, $requestedName);
         static::assertInstanceOf(FactoryInterface::class, $actual);
         static::assertInstanceOf(ControllerWithFactoryStub::class, $actual);
     }
