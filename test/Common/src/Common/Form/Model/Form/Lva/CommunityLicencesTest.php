@@ -18,7 +18,7 @@ class CommunityLicencesTest extends AbstractFormValidationTestCase
 
     public function testTotalCommunityLicences()
     {
-        $element = [ 'data', 'totalCommunityLicences' ];
+        $element = [ 'data', 'totalActiveCommunityLicences' ];
         $this->assertFormElementText($element);
         $this->assertFormElementAllowEmpty($element, true);
     }

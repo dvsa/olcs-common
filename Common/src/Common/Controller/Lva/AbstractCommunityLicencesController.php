@@ -40,7 +40,10 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
 
     protected $officeCopy = null;
 
-    protected $totCommunityLicences = null;
+    /**
+     * @var int|null
+     */
+    protected $totalActiveCommunityLicences = null;
 
     protected $defaultFilters = [
         'status' => [
@@ -109,7 +112,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         $licence = $response->getResult();
 
         if ($licence['goodsOrPsv']['id'] == RefData::LICENCE_CATEGORY_PSV) {
-            $activeLicencesElement = $form->get('data')->get('totalCommunityLicences');
+            $activeLicencesElement = $form->get('data')->get('totalActiveCommunityLicences');
             $activeLicencesElement->setLabel(
                 $activeLicencesElement->getLabel() . '.psv'
             );
@@ -223,7 +226,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         if ($response->isOk()) {
             $results = $response->getResult();
             $this->officeCopy = $results['extra']['officeCopy'];
-            $this->totCommunityLicences = $results['extra']['totCommunityLicences'];
+            $this->totActiveCommunityLicences = $results['extra']['totActiveCommunityLicences'];
         }
 
         return $results;
@@ -236,7 +239,9 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
      */
     private function getFormData()
     {
-        return ['totCommunityLicences' => $this->totCommunityLicences];
+        return [
+            'totActiveCommunityLicences' => $this->totActiveCommunityLicences,
+        ];
     }
 
     /**
@@ -250,8 +255,8 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     {
         return [
             'data' => [
-                'totalCommunityLicences' => $data['totCommunityLicences']
-            ]
+                'totalActiveCommunityLicences' => $data['totActiveCommunityLicences'],
+            ],
         ];
     }
 
