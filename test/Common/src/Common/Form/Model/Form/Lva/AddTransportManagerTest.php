@@ -21,7 +21,7 @@ class AddTransportManagerTest extends AbstractFormValidationTestCase
         $element = ['data', 'registeredUser'];
         $this->assertFormElementRequired($element, true);
         $this->assertFormElementAllowEmpty($element, false);
-        $this->assertFormElementNotValid($element, 'X', [\Zend\Validator\InArray::NOT_IN_ARRAY]);
+        $this->assertFormElementNotValid($element, 'X', [\Laminas\Validator\InArray::NOT_IN_ARRAY]);
     }
 
     public function testAddUser()

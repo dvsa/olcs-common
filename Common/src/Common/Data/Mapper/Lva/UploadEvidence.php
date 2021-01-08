@@ -49,7 +49,7 @@ class UploadEvidence implements MapperInterface
         $form->setData(self::mapFromResult($data));
 
         for ($i = 0; $i < count($data['operatingCentres']); $i++) {
-            /** @var \Zend\Form\InputFilterProviderFieldset $fieldset */
+            /** @var \Laminas\Form\InputFilterProviderFieldset $fieldset */
             $fieldset = $form->get('operatingCentres')->getFieldsets()[$i];
 
             // Set the label of each operating centre fieldset

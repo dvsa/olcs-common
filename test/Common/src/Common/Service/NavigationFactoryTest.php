@@ -6,9 +6,9 @@ use Common\Service\NavigationFactory;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
-use Zend\Mvc\Router\RouteMatch;
-use Zend\Mvc\Service\ServiceManagerConfig;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\Mvc\Router\RouteMatch;
+use Laminas\Mvc\Service\ServiceManagerConfig;
+use Laminas\ServiceManager\ServiceManager;
 
 /**
  * Class NavigationFactoryTest
@@ -17,7 +17,7 @@ use Zend\ServiceManager\ServiceManager;
 class NavigationFactoryTest extends TestCase
 {
     /**
-     * @var \Zend\ServiceManager\ServiceManager
+     * @var \Laminas\ServiceManager\ServiceManager
      */
     protected $serviceManager;
 
@@ -90,6 +90,6 @@ class NavigationFactoryTest extends TestCase
         $sut = new NavigationFactory();
         $sut->setServiceLocator($this->serviceManager);
 
-        $this->assertInstanceOf('Zend\Navigation\Navigation', $sut->getNavigation([]));
+        $this->assertInstanceOf('Laminas\Navigation\Navigation', $sut->getNavigation([]));
     }
 }

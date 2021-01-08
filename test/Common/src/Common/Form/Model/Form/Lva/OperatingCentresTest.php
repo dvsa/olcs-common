@@ -4,7 +4,7 @@ namespace CommonTest\Form\Model\Form\Lva;
 
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
 use Common\Form\Elements\Types\TrafficAreaSet;
-use Zend\Validator\Digits;
+use Laminas\Validator\Digits;
 
 /**
  * Class OperatingCentresTest
@@ -32,7 +32,7 @@ class OperatingCentresTest extends AbstractFormValidationTestCase
     public function testTrafficAreaSelect()
     {
         $element = [ 'dataTrafficArea', 'trafficArea' ];
-        $this->assertFormElementType($element, \Zend\Form\Element\Select::class);
+        $this->assertFormElementType($element, \Laminas\Form\Element\Select::class);
         $this->assertFormElementIsRequired($element, true);
     }
 
@@ -46,7 +46,7 @@ class OperatingCentresTest extends AbstractFormValidationTestCase
     public function testTrafficAreaEnforcementAreaSelect()
     {
         $element = [ 'dataTrafficArea', 'enforcementArea' ];
-        $this->assertFormElementType($element, \Zend\Form\Element\Select::class);
+        $this->assertFormElementType($element, \Laminas\Form\Element\Select::class);
         $this->assertFormElementIsRequired($element, false);
     }
 
@@ -63,7 +63,7 @@ class OperatingCentresTest extends AbstractFormValidationTestCase
             $element,
             1,
             1000000,
-            [ \Zend\Validator\Between::NOT_BETWEEN ]
+            [ \Laminas\Validator\Between::NOT_BETWEEN ]
         );
     }
 
@@ -75,14 +75,14 @@ class OperatingCentresTest extends AbstractFormValidationTestCase
             $element,
             0,
             1000000,
-            [ \Zend\Validator\Between::NOT_BETWEEN ]
+            [ \Laminas\Validator\Between::NOT_BETWEEN ]
         );
     }
 
     public function testTotalCommunityLicences()
     {
         $element = [ 'data', 'totCommunityLicences' ];
-        $this->assertFormElementNumber($element, 0, 1000000, [ \Zend\Validator\Between::NOT_BETWEEN ]);
+        $this->assertFormElementNumber($element, 0, 1000000, [ \Laminas\Validator\Between::NOT_BETWEEN ]);
     }
 
     public function testSaveAndContinue()

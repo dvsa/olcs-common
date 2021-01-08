@@ -5,8 +5,8 @@ namespace CommonTest\View\Helper;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\View\Helper\ReadOnlyActions;
-use Zend\I18n\View\Helper\Translate;
-use Zend\View\Renderer\RendererInterface;
+use Laminas\I18n\View\Helper\Translate;
+use Laminas\View\Renderer\RendererInterface;
 
 /**
  * ReadOnlyActions Test

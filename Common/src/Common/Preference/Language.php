@@ -7,12 +7,12 @@
  */
 namespace Common\Preference;
 
-use Zend\Http\Request;
-use Zend\Http\Response;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Http\Header\Cookie;
-use Zend\Http\Header\SetCookie;
+use Laminas\Http\Request;
+use Laminas\Http\Response;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\Http\Header\Cookie;
+use Laminas\Http\Header\SetCookie;
 
 /**
  * Language Preference

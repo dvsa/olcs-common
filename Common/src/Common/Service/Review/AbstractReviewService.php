@@ -9,8 +9,8 @@ namespace Common\Service\Review;
 
 use Common\RefData;
 use Common\Service\Table\Formatter\Address;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
+use Laminas\ServiceManager\ServiceLocatorAwareInterface;
+use Laminas\ServiceManager\ServiceLocatorAwareTrait;
 
 /**
  * Abstract Review Service

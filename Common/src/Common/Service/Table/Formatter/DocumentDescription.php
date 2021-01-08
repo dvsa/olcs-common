@@ -14,7 +14,7 @@ class DocumentDescription implements FormatterInterface
      *
      * @param array                               $data   Row data
      * @param array                               $column Column data
-     * @param \Zend\ServiceManager\ServiceManager $sm     Service manager
+     * @param \Laminas\ServiceManager\ServiceManager $sm     Service manager
      *
      * @return string
      */
@@ -47,7 +47,7 @@ class DocumentDescription implements FormatterInterface
      * Get anchor
      *
      * @param array                            $data       Data
-     * @param \Zend\I18n\Translator\Translator $translator Translator service
+     * @param \Laminas\I18n\Translator\Translator $translator Translator service
      *
      * @return string
      */

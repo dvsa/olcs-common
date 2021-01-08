@@ -2,16 +2,16 @@
 
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\Form\Element\Textarea as ZendElement;
-use Zend\InputFilter\InputProviderInterface;
-use Zend\Validator;
+use Laminas\Form\Element\Textarea as LaminasElement;
+use Laminas\InputFilter\InputProviderInterface;
+use Laminas\Validator;
 
 /**
  * Input Specification for Finacial History additional info
  *
  * @author Jakub Igla <jakub.igla@valtech.co.uk>
  */
-class FinancialHistoryTextarea extends ZendElement implements InputProviderInterface
+class FinancialHistoryTextarea extends LaminasElement implements InputProviderInterface
 {
     /**
      * Provide default input rules for this element.

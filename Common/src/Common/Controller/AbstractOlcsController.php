@@ -7,8 +7,8 @@ use Common\Service\Cqrs\Response;
 use Dvsa\Olcs\Transfer\Command\CommandInterface;
 use Dvsa\Olcs\Transfer\Query\QueryInterface;
 use Common\Controller\Plugin\FeaturesEnabled as FeaturesEnabledPlugin;
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\Mvc\MvcEvent;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\MvcEvent;
 
 /**
  * Abstract controller

@@ -2,15 +2,16 @@
 
 namespace Common\Form\Elements\Custom;
 
-use Zend\Form\Element as ZendElement;
-use Zend\InputFilter\InputProviderInterface;
+use Common\Filter\Vrm;
+use Dvsa\Olcs\Transfer\Validators\Vrm as VrmValidator;
+use Laminas\Form\Element as LaminasElement;
+use Laminas\InputFilter\InputProviderInterface;
+use Laminas\Validator\NotEmpty;
 
 /**
  * Vrm field for UK vehicles
- *
- * @author Dmitry Golubev <dmitrij.golubev@valtech.com>
  */
-class VehicleVrm extends ZendElement implements InputProviderInterface
+class VehicleVrm extends LaminasElement implements InputProviderInterface
 {
     /**
      * Provide default input rules for this element.
@@ -23,13 +24,34 @@ class VehicleVrm extends ZendElement implements InputProviderInterface
             'name' => $this->getName(),
             'required' => true,
             'filters' => [
-                new \Common\Filter\Vrm(),
+                new Vrm(),
             ],
-            'validators' => [
-                new \Dvsa\Olcs\Transfer\Validators\Vrm(),
-            ],
+            'validators' => $this->getValidators(),
         ];
 
         return $specification;
+    }
+
+    protected function getValidators()
+    {
+        $validators = [
+            [
+                'name' => NotEmpty::class,
+                'break_chain_on_failure' => true,
+                'options' => [
+                    'messages' => [
+                        NotEmpty::IS_EMPTY => 'licence.vehicle.add.search.vrm-missing'
+                    ]
+                ],
+            ]
+        ];
+
+        if ($this->getOption('validateVrm') ?? true) {
+            $validators[] = [
+                'name' => VrmValidator::class
+            ];
+        }
+
+        return $validators;
     }
 }

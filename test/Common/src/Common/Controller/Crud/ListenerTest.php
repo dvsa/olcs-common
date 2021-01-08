@@ -35,7 +35,7 @@ class ListenerTest extends MockeryTestCase
     public function testAttach()
     {
         // Parmas
-        $events = m::mock('\Zend\EventManager\EventManagerInterface');
+        $events = m::mock('\Laminas\EventManager\EventManagerInterface');
 
         // Expectations
         $events->shouldReceive('attach')
@@ -47,7 +47,7 @@ class ListenerTest extends MockeryTestCase
     public function testOnDispatchWithoutPost()
     {
         // Params
-        $mockEvent = m::mock('\Zend\Mvc\MvcEvent');
+        $mockEvent = m::mock('\Laminas\Mvc\MvcEvent');
         $mockController = m::mock();
 
         // Mocks
@@ -65,7 +65,7 @@ class ListenerTest extends MockeryTestCase
     public function testOnDispatchWithCancel()
     {
         // Params
-        $mockEvent = m::mock('\Zend\Mvc\MvcEvent');
+        $mockEvent = m::mock('\Laminas\Mvc\MvcEvent');
         $mockController = m::mock();
         $postData = ['form-actions' => ['cancel' => 1]];
 
@@ -101,7 +101,7 @@ class ListenerTest extends MockeryTestCase
     public function testOnDispatchWithoutCrudAction($postData)
     {
         // Params
-        $mockEvent = m::mock('\Zend\Mvc\MvcEvent');
+        $mockEvent = m::mock('\Laminas\Mvc\MvcEvent');
         $mockController = m::mock();
 
         // Mocks
@@ -124,7 +124,7 @@ class ListenerTest extends MockeryTestCase
     public function testOnDispatchWithUnexpectedAction($action)
     {
         // Params
-        $mockEvent = m::mock('\Zend\Mvc\MvcEvent');
+        $mockEvent = m::mock('\Laminas\Mvc\MvcEvent');
         $mockController = m::mock();
         $postData = [
             'table' => 'foo',
@@ -160,7 +160,7 @@ class ListenerTest extends MockeryTestCase
     public function testOnDispatchWithoutId()
     {
         // Params
-        $mockEvent = m::mock('\Zend\Mvc\MvcEvent');
+        $mockEvent = m::mock('\Laminas\Mvc\MvcEvent');
         $mockController = m::mock();
         $routeName = 'foo/bar';
         $postData = [
@@ -210,7 +210,7 @@ class ListenerTest extends MockeryTestCase
     public function testOnDispatch($postData)
     {
         // Params
-        $mockEvent = m::mock('\Zend\Mvc\MvcEvent');
+        $mockEvent = m::mock('\Laminas\Mvc\MvcEvent');
         $mockController = m::mock();
         $routeName = 'foo/bar';
         $mockConfig = [
@@ -249,7 +249,7 @@ class ListenerTest extends MockeryTestCase
     public function testOnDispatchWithDefaultConfig()
     {
         // Params
-        $mockEvent = m::mock('\Zend\Mvc\MvcEvent');
+        $mockEvent = m::mock('\Laminas\Mvc\MvcEvent');
         $mockController = m::mock();
         $routeName = 'foo/bar';
         $postData = [

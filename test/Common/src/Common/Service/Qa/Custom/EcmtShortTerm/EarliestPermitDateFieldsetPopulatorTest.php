@@ -2,14 +2,14 @@
 
 namespace CommonTest\Service\Qa\Custom\EcmtShortTerm;
 
-use Common\Form\Elements\Types\Html;
 use Common\Service\Helper\TranslationHelperService;
+use Common\Service\Qa\Custom\Common\HtmlAdder;
 use Common\Service\Qa\Custom\EcmtShortTerm\EarliestPermitDateFieldsetPopulator;
 use Common\Service\Qa\DateSelect;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Fieldset;
-use Zend\Form\Form;
+use Laminas\Form\Fieldset;
+use Laminas\Form\Form;
 
 /**
  * EarliestPermitDateFieldsetPopulatorTest
@@ -36,19 +36,13 @@ class EarliestPermitDateFieldsetPopulatorTest extends MockeryTestCase
         $expectedMarkup = '<div class="govuk-inset-text">Earliest permit date inset</div>' .
             '<div class="govuk-hint">Earliest permit date hint line 1<br>Earliest permit date hint line 2</div>';
 
-        $expectedHtmlSpecification = [
-            'name' => 'insetAndHint',
-            'type' => Html::class,
-            'attributes' => [
-                'value' => $expectedMarkup
-            ]
-        ];
-
         $form = m::mock(Form::class);
 
         $fieldset = m::mock(Fieldset::class);
-        $fieldset->shouldReceive('add')
-            ->with($expectedHtmlSpecification)
+
+        $htmlAdder = m::mock(HtmlAdder::class);
+        $htmlAdder->shouldReceive('add')
+            ->with($fieldset, 'insetAndHint', $expectedMarkup)
             ->once()
             ->globally()
             ->ordered();
@@ -71,7 +65,7 @@ class EarliestPermitDateFieldsetPopulatorTest extends MockeryTestCase
             ->globally()
             ->ordered();
 
-        $earliestPermitDateFieldsetPopulator = new EarliestPermitDateFieldsetPopulator($translator);
+        $earliestPermitDateFieldsetPopulator = new EarliestPermitDateFieldsetPopulator($translator, $htmlAdder);
 
         $options = [
             'value' => $requestedDate

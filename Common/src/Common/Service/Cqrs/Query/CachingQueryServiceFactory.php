@@ -3,8 +3,9 @@
 namespace Common\Service\Cqrs\Query;
 
 use Dvsa\Olcs\Transfer\Service\CacheEncryption as CacheEncryptionService;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Exception;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Class CachingQueryServiceFactory
@@ -18,9 +19,22 @@ class CachingQueryServiceFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
+        $config = $serviceLocator->get('Config');
+
+        if (!isset($config['query_cache'])) {
+            throw new Exception('Query cache config key missing');
+        }
+
+        if (!isset($config['query_cache']['enabled'])) {
+            throw new Exception('Query cache enabled/disabled config key missing');
+        }
+
         $service = new CachingQueryService(
             $serviceLocator->get(QueryService::class),
-            $serviceLocator->get(CacheEncryptionService::class)
+            $serviceLocator->get(CacheEncryptionService::class),
+            $serviceLocator->get('TransferAnnotationBuilder'),
+            $config['query_cache']['enabled'],
+            $config['query_cache']['ttl']
         );
 
         $service->setLogger($serviceLocator->get('Logger'));

@@ -10,7 +10,7 @@ namespace CommonTest\FormService\Form\Lva\CommunityLicences;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Lva\CommunityLicences\LicenceCommunityLicences as Sut;
-use Zend\Form\Form;
+use Laminas\Form\Form;
 
 /**
  * Licence Community Licences Test

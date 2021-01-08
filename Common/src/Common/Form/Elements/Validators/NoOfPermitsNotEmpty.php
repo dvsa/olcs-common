@@ -7,7 +7,7 @@
  */
 namespace Common\Form\Elements\Validators;
 
-use Zend\Validator\NotEmpty;
+use Laminas\Validator\NotEmpty;
 
 class NoOfPermitsNotEmpty extends NotEmpty
 {

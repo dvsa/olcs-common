@@ -21,7 +21,7 @@ class Name implements FormatterInterface
      *
      * @param array $data   data row
      * @param array $column column specification
-     * @param \Zend\ServiceManager\ServiceManager $sm
+     * @param \Laminas\ServiceManager\ServiceManager $sm
      * @return string
      */
     public static function format($data, $column = array(), $sm = null)

@@ -20,7 +20,7 @@ class CommunityLicenceIssueNo implements FormatterInterface
      *
      * @param array $data
      * @param array $column
-     * @param \Zend\ServiceManager\ServiceManager $sm
+     * @param \Laminas\ServiceManager\ServiceManager $sm
      * @return string
      */
     public static function format($data, $column = array(), $sm = null)

@@ -2,15 +2,15 @@
 
 namespace Common\Form\Elements\Custom;
 
-use Zend\Form\Element as ZendElement;
-use Zend\Validator\Date as DateValidator;
+use Laminas\Form\Element as LaminasElement;
+use Laminas\Validator\Date as DateValidator;
 
 /**
  * DateSelect
  *
  * @author Someone <someone@valtech.co.uk>
  */
-class DateSelect extends ZendElement\DateSelect
+class DateSelect extends LaminasElement\DateSelect
 {
     use Traits\YearDelta {
         setOptions as trait_setOptions;

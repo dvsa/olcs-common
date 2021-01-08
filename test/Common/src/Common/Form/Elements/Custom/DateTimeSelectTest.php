@@ -54,7 +54,7 @@ class DateTimeSelectTest extends \PHPUnit\Framework\TestCase
 
     public function testSetValueStringInvalid()
     {
-        $this->expectException(\Zend\Form\Exception\InvalidArgumentException::class);
+        $this->expectException(\Laminas\Form\Exception\InvalidArgumentException::class);
 
         $this->sut->setValue('foo');
         $this->assertSame(null, $this->sut->getYearElement()->getValue());

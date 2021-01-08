@@ -10,8 +10,8 @@ namespace CommonTest\View\Helper;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\View\Helper\Date;
-use Zend\I18n\View\Helper\Translate;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\I18n\View\Helper\Translate;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Date Test

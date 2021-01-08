@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Name("address")
@@ -48,13 +48,13 @@ class AddressOptional
      * })
      * @Form\Required(false)
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
      */
     public $addressLine1 = null;
 
     /**
      * @Form\Attributes({
-     *   "class" : "long", 
+     *   "class" : "long",
      *   "id" : "",
      *   "data-container-class" : "compound"
      * })
@@ -66,7 +66,7 @@ class AddressOptional
 
     /**
      * @Form\Attributes({
-     *   "class" : "long", 
+     *   "class" : "long",
      *   "id" : "",
      *   "data-container-class" : "compound"
      * })
@@ -94,7 +94,7 @@ class AddressOptional
      * })
      * @Form\Required(false)
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
      */
     public $town = null;
 

@@ -2,11 +2,11 @@
 
 namespace Common\Form\Model\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Name("hoursOfWeekContent")
- * @Form\Type("Zend\Form\Fieldset")
+ * @Form\Type("Laminas\Form\Fieldset")
  */
 class HoursOfWeekContentRequired
 {
@@ -24,7 +24,7 @@ class HoursOfWeekContentRequired
      *         "aria-label": "Enter your working hours, Monday"
      *     }
      * })
-     * @Form\Validator({"name":"Zend\I18n\Validator\IsFloat", "options": {
+     * @Form\Validator({"name":"Laminas\I18n\Validator\IsFloat", "options": {
      *     "messages": {
      *          "notFloat": "Only numbers are allowed"
      *     }
@@ -58,7 +58,7 @@ class HoursOfWeekContentRequired
      *         "aria-label": "Tuesday"
      *     }
      * })
-     * @Form\Validator({"name":"Zend\I18n\Validator\IsFloat", "options": {
+     * @Form\Validator({"name":"Laminas\I18n\Validator\IsFloat", "options": {
      *     "messages": {
      *          "notFloat": "Only numbers are allowed"
      *     }
@@ -86,7 +86,7 @@ class HoursOfWeekContentRequired
      *         "aria-label": "Wednesday"
      *     }
      * })
-     * @Form\Validator({"name":"Zend\I18n\Validator\IsFloat", "options": {
+     * @Form\Validator({"name":"Laminas\I18n\Validator\IsFloat", "options": {
      *     "messages": {
      *          "notFloat": "Only numbers are allowed"
      *     }
@@ -114,7 +114,7 @@ class HoursOfWeekContentRequired
      *         "aria-label": "Thursday"
      *     }
      * })
-     * @Form\Validator({"name":"Zend\I18n\Validator\IsFloat", "options": {
+     * @Form\Validator({"name":"Laminas\I18n\Validator\IsFloat", "options": {
      *     "messages": {
      *          "notFloat": "Only numbers are allowed"
      *     }
@@ -142,7 +142,7 @@ class HoursOfWeekContentRequired
      *         "aria-label": "Friday"
      *     }
      * })
-     * @Form\Validator({"name":"Zend\I18n\Validator\IsFloat", "options": {
+     * @Form\Validator({"name":"Laminas\I18n\Validator\IsFloat", "options": {
      *     "messages": {
      *          "notFloat": "Only numbers are allowed"
      *     }
@@ -170,7 +170,7 @@ class HoursOfWeekContentRequired
      *         "aria-label": "Saturday"
      *     }
      * })
-     * @Form\Validator({"name":"Zend\I18n\Validator\IsFloat", "options": {
+     * @Form\Validator({"name":"Laminas\I18n\Validator\IsFloat", "options": {
      *     "messages": {
      *          "notFloat": "Only numbers are allowed"
      *     }
@@ -198,7 +198,7 @@ class HoursOfWeekContentRequired
      *         "aria-label": "Sunday"
      *     }
      * })
-     * @Form\Validator({"name":"Zend\I18n\Validator\IsFloat", "options": {
+     * @Form\Validator({"name":"Laminas\I18n\Validator\IsFloat", "options": {
      *     "messages": {
      *          "notFloat": "Only numbers are allowed"
      *     }

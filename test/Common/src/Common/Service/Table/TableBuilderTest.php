@@ -9,9 +9,9 @@ use Common\Service\Table\PaginationHelper;
 use CommonTest\Bootstrap;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\I18n\Translator\Translator;
-use Zend\Mvc\Controller\Plugin\Url;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\I18n\Translator\Translator;
+use Laminas\Mvc\Controller\Plugin\Url;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use ZfcRbac\Service\AuthorizationService;
 
 /**
@@ -54,7 +54,7 @@ class TableBuilderTest extends MockeryTestCase
 
     private function getMockServiceLocator($config = true)
     {
-        $mockTranslator = $this->createPartialMock(\Zend\Mvc\I18n\Translator::class, ['translate']);
+        $mockTranslator = $this->createPartialMock(\Laminas\Mvc\I18n\Translator::class, ['translate']);
         $mockTranslator->expects(static::any())
             ->method('translate')
             ->willReturnCallback(
@@ -67,8 +67,8 @@ class TableBuilderTest extends MockeryTestCase
                 }
             );
 
-        $mockSm = $this->createPartialMock('\Zend\ServiceManager\ServiceManager', array('get'));
-        $mockControllerPluginManager = $this->createPartialMock('\Zend\Mvc\Controller\PluginManager', array('get'));
+        $mockSm = $this->createPartialMock('\Laminas\ServiceManager\ServiceManager', array('get'));
+        $mockControllerPluginManager = $this->createPartialMock('\Laminas\Mvc\Controller\PluginManager', array('get'));
         $mockAuthService = $this->createPartialMock(AuthorizationService::class, array('isGranted'));
 
         $servicesMap = [
@@ -1012,7 +1012,7 @@ class TableBuilderTest extends MockeryTestCase
             ->with(' {{[elements/total]}}', array('total' => $expectedTotal))
             ->will($this->returnValue($expectedTotal));
 
-        $table = $this->getMockTableBuilder(array('getContentHelper', 'shouldPaginate', 'getSetting'));
+        $table = $this->getMockTableBuilder(['getContentHelper', 'shouldPaginate', 'getSetting']);
 
         $table->expects($this->once())
             ->method('getContentHelper')
@@ -1022,9 +1022,34 @@ class TableBuilderTest extends MockeryTestCase
             ->method('shouldPaginate')
             ->will($this->returnValue(false));
 
-        $table->expects($this->once())
+        $table->expects($this->at(0))
+            ->method('getSetting')
+            ->with('overrideTotal', false)
+            ->will($this->returnValue(false));
+
+        $table->expects($this->at(2))
             ->method('getSetting')
             ->with('showTotal', false)
+            ->will($this->returnValue(true));
+
+        $table->setTotal($total);
+
+        $this->assertEquals($expectedTotal, $table->renderTotal());
+    }
+
+    /**
+     * Test renderTotal override
+     */
+    public function testRenderTotalWithOverride()
+    {
+        $total = 10;
+        $expectedTotal = '';
+
+        $table = $this->getMockTableBuilder(['getSetting']);
+
+        $table->expects($this->once())
+            ->method('getSetting')
+            ->with('overrideTotal', false)
             ->will($this->returnValue(true));
 
         $table->setTotal($total);
@@ -2881,12 +2906,12 @@ class TableBuilderTest extends MockeryTestCase
     public function testGetServiceLocator()
     {
         $tableFactory = new TableFactory();
-        $serviceLocator = $this->createPartialMock('\Zend\ServiceManager\ServiceManager', array('get'));
+        $serviceLocator = $this->createPartialMock('\Laminas\ServiceManager\ServiceManager', array('get'));
         $tableBuilder = $tableFactory->createService($serviceLocator)->getTableBuilder();
 
         $newServiceLocator = $tableBuilder->getServiceLocator();
 
-        $this->assertTrue($newServiceLocator instanceof \Zend\ServiceManager\ServiceManager);
+        $this->assertTrue($newServiceLocator instanceof \Laminas\ServiceManager\ServiceManager);
         $this->assertTrue($newServiceLocator === $serviceLocator);
     }
 
@@ -3004,11 +3029,11 @@ class TableBuilderTest extends MockeryTestCase
         $mockAuthService->shouldReceive('isGranted')
             ->with(m::type('string'))
             ->andReturn(true);
-        $mockTranslatorService = m::mock(\Zend\Mvc\I18n\Translator::class);
+        $mockTranslatorService = m::mock(\Laminas\Mvc\I18n\Translator::class);
 
         // Setup
-        /** @var \Zend\ServiceManager\ServiceManager $sm */
-        $sm = m::mock(\Zend\ServiceManager\ServiceManager::class)->makePartial();
+        /** @var \Laminas\ServiceManager\ServiceManager $sm */
+        $sm = m::mock(\Laminas\ServiceManager\ServiceManager::class)->makePartial();
         $sm->setAllowOverride(true);
         $sm->setService('Config', array());
         $sm->setService('ZfcRbac\Service\AuthorizationService', $mockAuthService);
@@ -3040,11 +3065,11 @@ class TableBuilderTest extends MockeryTestCase
         $mockAuthService->shouldReceive('isGranted')
             ->with(m::type('string'))
             ->andReturn(true);
-        $mockTranslatorService = m::mock(\Zend\Mvc\I18n\Translator::class);
+        $mockTranslatorService = m::mock(\Laminas\Mvc\I18n\Translator::class);
 
         // Setup
-        /** @var \Zend\ServiceManager\ServiceManager $sm */
-        $sm = m::mock('\Zend\ServiceManager\ServiceManager')->makePartial();
+        /** @var \Laminas\ServiceManager\ServiceManager $sm */
+        $sm = m::mock('\Laminas\ServiceManager\ServiceManager')->makePartial();
         $sm->setAllowOverride(true);
         $sm->setService('Config', array());
         $sm->setService('ZfcRbac\Service\AuthorizationService', $mockAuthService);

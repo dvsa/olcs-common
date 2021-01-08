@@ -2,9 +2,9 @@
 
 namespace Common\Service\Qa;
 
-use Zend\Validator\Date as ZendDateValidator;
+use Laminas\Validator\Date as LaminasDateValidator;
 
-class DateValidator extends ZendDateValidator
+class DateValidator extends LaminasDateValidator
 {
     /**
      * {@inheritdoc}
@@ -14,7 +14,7 @@ class DateValidator extends ZendDateValidator
         // suppress the creation of the FALSEFORMAT error message to prevent an invalid date from generating two
         // error messages
 
-        if ($messageKey == ZendDateValidator::FALSEFORMAT) {
+        if ($messageKey == LaminasDateValidator::FALSEFORMAT) {
             return;
         }
 

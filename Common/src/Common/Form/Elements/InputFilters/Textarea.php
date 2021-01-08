@@ -1,9 +1,9 @@
 <?php
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\Form\Element\Textarea as ZendElement;
-use Zend\Validator as ZendValidator;
-use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\Form\Element\Textarea as LaminasElement;
+use Laminas\Validator as LaminasValidator;
+use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
 
 /**
  * @deprecated This only gets used once in \Olcs\Form\Model\Fieldset\ReverseTransactionDetails
@@ -12,7 +12,7 @@ use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
  *
  * Textarea
  */
-class Textarea extends ZendElement implements InputProviderInterface
+class Textarea extends LaminasElement implements InputProviderInterface
 {
     protected $continueIfEmpty = false;
     protected $allowEmpty = false;
@@ -37,13 +37,13 @@ class Textarea extends ZendElement implements InputProviderInterface
             'continue_if_empty' => $this->continueIfEmpty,
             'allow_empty' => $this->allowEmpty,
             'filters' => [
-                ['name' => 'Zend\Filter\StringTrim']
+                ['name' => 'Laminas\Filter\StringTrim']
             ],
         ];
 
         if (!empty($this->max)) {
             $specification['validators'][] = [
-                'name' => 'Zend\Validator\StringLength',
+                'name' => 'Laminas\Validator\StringLength',
                 'options' => ['min' => 5, 'max' => $this->max]
             ];
         }

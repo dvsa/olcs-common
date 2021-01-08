@@ -7,7 +7,7 @@
  */
 namespace CommonTest\Controller\Util;
 
-use Zend\Http\Response as HttpResponse;
+use Laminas\Http\Response as HttpResponse;
 
 /**
  * Test ResponseHelperTest
@@ -41,7 +41,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
     public function testSetResponse()
     {
         $mock = $this->createMock('\Common\Util\ResponseHelper', null);
-        $response = new \Zend\Http\Response;
+        $response = new \Laminas\Http\Response;
         $mock->setResponse($response);
     }
 
@@ -51,7 +51,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
     public function testGetResponse()
     {
         $mock = $this->createMock('\Common\Util\ResponseHelper', null);
-        $mock->response = new \Zend\Http\Response;
+        $mock->response = new \Laminas\Http\Response;
         $mock->getResponse();
     }
 

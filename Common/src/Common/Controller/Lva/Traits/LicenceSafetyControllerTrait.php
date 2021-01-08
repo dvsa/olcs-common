@@ -5,7 +5,7 @@ namespace Common\Controller\Lva\Traits;
 use Dvsa\Olcs\Transfer\Command\Licence\UpdateSafety;
 use Dvsa\Olcs\Transfer\Command\Workshop\DeleteWorkshop;
 use Dvsa\Olcs\Transfer\Query\Licence\Safety;
-use Zend\Form\Form;
+use Laminas\Form\Form;
 use Common\Controller\Lva\AbstractSafetyController;
 
 /**
@@ -60,7 +60,6 @@ trait LicenceSafetyControllerTrait
     protected function getSafetyData($noCache = false)
     {
         if (is_null($this->safetyData) || $noCache) {
-
             $request = $this->getRequest();
             $query = $request->isPost() ? $request->getPost('query') : $request->getQuery();
             $params = [
@@ -98,7 +97,7 @@ trait LicenceSafetyControllerTrait
     /**
      * Alter the form depending on the LVA type
      *
-     * @param \Zend\Form\FormInterface $form Form
+     * @param \Laminas\Form\FormInterface $form Form
      * @param array                    $data Api/Form data
      *
      * @return void

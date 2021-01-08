@@ -6,8 +6,8 @@ use Common\Service\Qa\Custom\Bilateral\NoOfPermitsElement;
 use Common\Service\Qa\Custom\Bilateral\NoOfPermitsFieldsetPopulator;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Fieldset;
-use Zend\Form\Form;
+use Laminas\Form\Fieldset;
+use Laminas\Form\Form;
 
 /**
  * NoOfPermitsFieldsetPopulatorTest
@@ -53,6 +53,7 @@ class NoOfPermitsFieldsetPopulatorTest extends MockeryTestCase
                 'hint' => $text1Hint,
             ],
             'attributes' => [
+                'id' => $text1Name,
                 'value' => $text1Value
             ]
         ];
@@ -65,6 +66,7 @@ class NoOfPermitsFieldsetPopulatorTest extends MockeryTestCase
                 'hint' => $text2Hint,
             ],
             'attributes' => [
+                'id' => $text2Name,
                 'value' => $text2Value
             ]
         ];

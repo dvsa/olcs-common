@@ -9,14 +9,16 @@ use Common\Service\Cqrs\Exception\NotFoundException;
 use Common\Service\Helper\TranslationHelperService;
 use Dvsa\Olcs\Utils\Translation\MissingTranslationProcessor;
 use Olcs\Logging\Log\Logger;
-use Zend\EventManager\EventManager;
-use Zend\Http\Request;
-use Zend\ModuleManager\ModuleEvent;
-use Zend\Mvc\Application;
-use Zend\Mvc\MvcEvent;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Http\PhpEnvironment\Response;
-use Zend\View\Model\ViewModel;
+use Laminas\Cache\Storage\Adapter\Redis;
+use Laminas\EventManager\EventManager;
+use Laminas\Http\Request;
+use Laminas\I18n\Translator\Translator;
+use Laminas\ModuleManager\ModuleEvent;
+use Laminas\Mvc\Application;
+use Laminas\Mvc\MvcEvent;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\Http\PhpEnvironment\Response;
+use Laminas\View\Model\ViewModel;
 
 /**
  * ZF2 Module
@@ -26,7 +28,7 @@ class Module
     /**
      * Initialize module
      *
-     * @param \Zend\ModuleManager\ModuleManager $moduleManager Module manager
+     * @param \Laminas\ModuleManager\ModuleManager $moduleManager Module manager
      *
      * @return void
      */
@@ -98,7 +100,7 @@ class Module
         $listener = $sm->get(\Common\Rbac\Navigation\IsAllowedListener::class);
 
         $events->getSharedManager()->attach(
-            \Zend\View\Helper\Navigation\AbstractHelper::class,
+            \Laminas\View\Helper\Navigation\AbstractHelper::class,
             'isAllowed',
             [$listener, 'accept']
         );
@@ -203,7 +205,7 @@ class Module
      */
     public function validateCsrfToken(MvcEvent $e)
     {
-        /** @var \Zend\Http\PhpEnvironment\Request $request */
+        /** @var \Laminas\Http\PhpEnvironment\Request $request */
         $request = $e->getRequest();
         if ($request->isPost() === false) {
             return;
@@ -225,7 +227,7 @@ class Module
         $name = 'security';
         $token = $request->getPost($name);
 
-        $validator = new \Zend\Validator\Csrf(['name' => $name]);
+        $validator = new \Laminas\Validator\Csrf(['name' => $name]);
         if ($validator->isValid($token)) {
             return;
         }
@@ -234,7 +236,7 @@ class Module
         $hlpFlashMsgr = $sm->get('Helper\FlashMessenger');
         $hlpFlashMsgr->addErrorMessage('csrf-message');
 
-        /** @var \Zend\Http\Response $resp */
+        /** @var \Laminas\Http\Response $resp */
         $resp = $e->getResponse();
         $resp->getHeaders()->addHeaderLine('X-CSRF-error', '1');
 
@@ -255,18 +257,19 @@ class Module
      * Setup the translator service
      *
      * @param ServiceLocatorInterface         $sm           Service manager
-     * @param \Zend\EventManager\EventManager $eventManager Event manager
+     * @param \Laminas\EventManager\EventManager $eventManager Event manager
      *
      * @return void
      */
     protected function setUpTranslator(ServiceLocatorInterface $sm, $eventManager)
     {
-        /** @var \\Zend\I18n\Translator\TranslatorInterface $translator */
+        /**
+         * @var Translator $translator
+         * @var Redis      $cache
+         */
+        $cache = $sm->get(Redis::class);
         $translator = $sm->get('translator');
-
-        $translator->setLocale('en_GB')->setFallbackLocale('en_GB');
-        $translator->addTranslationFilePattern('phparray', __DIR__ . '/config/language/', '%s.php');
-        $translator->addTranslationFile('phparray', __DIR__ . '/config/language/cy_GB_refdata.php', 'default', 'cy_GB');
+        $translator->setCache($cache);
 
         /** @var LanguageListener $languagePrefListener */
         $languagePrefListener = $sm->get('LanguageListener');
@@ -283,18 +286,18 @@ class Module
     /**
      * If the request is coming through a proxy then update the host name on the request
      *
-     * @param \Zend\Stdlib\RequestInterface $request Request
+     * @param \Laminas\Stdlib\RequestInterface $request Request
      *
      * @return void
      */
-    private function setupRequestForProxyHost(\Zend\Stdlib\RequestInterface $request)
+    private function setupRequestForProxyHost(\Laminas\Stdlib\RequestInterface $request)
     {
-        if (!$request instanceof \Zend\Http\PhpEnvironment\Request) {
-            // if request is not \Zend\Http\PhpEnvironment\Request we must be running from CLI so do nothing
+        if (!$request instanceof \Laminas\Http\PhpEnvironment\Request) {
+            // if request is not \Laminas\Http\PhpEnvironment\Request we must be running from CLI so do nothing
             return;
         }
 
-        /* @var $request \Zend\Http\PhpEnvironment\Request */
+        /* @var $request \Laminas\Http\PhpEnvironment\Request */
         if ($request->getHeaders()->get('x-forwarded-host')) {
             $host = $request->getHeaders()->get('x-forwarded-host')->getFieldValue();
 

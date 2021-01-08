@@ -3,10 +3,10 @@
 namespace Common\Service\Listener;
 
 use Common\Exception\BailOutException;
-use Zend\EventManager\EventManagerInterface;
-use Zend\EventManager\ListenerAggregateInterface;
-use Zend\EventManager\ListenerAggregateTrait;
-use Zend\Mvc\MvcEvent;
+use Laminas\EventManager\EventManagerInterface;
+use Laminas\EventManager\ListenerAggregateInterface;
+use Laminas\EventManager\ListenerAggregateTrait;
+use Laminas\Mvc\MvcEvent;
 
 /**
  * Bail Out Listener

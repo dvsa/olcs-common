@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Continuation\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Name("licenceChecklistConfirmationNo")

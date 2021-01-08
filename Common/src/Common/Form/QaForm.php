@@ -5,7 +5,7 @@ namespace Common\Form;
 use Common\Service\Qa\IsValidHandlerInterface;
 use Common\Service\Qa\DataHandlerInterface;
 use RuntimeException;
-use Zend\Form\Fieldset;
+use Laminas\Form\Fieldset;
 
 class QaForm extends BaseQaForm
 {
@@ -19,6 +19,9 @@ class QaForm extends BaseQaForm
 
     /** @var array */
     private $isValidHandlers = [];
+
+    /** @var bool */
+    private $successfulValidationAllowed = true;
 
     /**
      * Allow validators to run by filling in missing keys in input data
@@ -58,7 +61,7 @@ class QaForm extends BaseQaForm
     {
         $isValid = $this->callParentIsValid();
 
-        if (!$isValid) {
+        if (!$isValid || !$this->successfulValidationAllowed) {
             return false;
         }
 
@@ -69,6 +72,14 @@ class QaForm extends BaseQaForm
 
         $isValidHandler = $this->isValidHandlers[$applicationStepType];
         return $isValidHandler->isValid($this);
+    }
+
+    /**
+     * Prevent form from successfully validating (i.e. returning true from isValid) even when all fields are valid
+     */
+    public function preventSuccessfulValidation()
+    {
+        $this->successfulValidationAllowed = false;
     }
 
     /**

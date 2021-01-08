@@ -2,7 +2,7 @@
 
 namespace Common\Validator;
 
-use Zend\Validator\AbstractValidator;
+use Laminas\Validator\AbstractValidator;
 
 /**
  * An abstract Compare Validator class

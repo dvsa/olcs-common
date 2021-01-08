@@ -11,14 +11,14 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class LinkBackTest extends MockeryTestCase
 {
-    /** @var  \Zend\ServiceManager\ServiceManager | m\MockInterface */
+    /** @var  \Laminas\ServiceManager\ServiceManager | m\MockInterface */
     private $mockSm;
     /** @var  m\MockInterface */
     private $mockSl;
     /** @var  m\MockInterface */
     private $mockRequest;
 
-    /** @var  \Zend\View\Renderer\RendererInterface */
+    /** @var  \Laminas\View\Renderer\RendererInterface */
     private $mockView;
 
     /**
@@ -26,7 +26,7 @@ class LinkBackTest extends MockeryTestCase
      */
     public function setUp(): void
     {
-        $this->mockView = m::mock(\Zend\View\Renderer\RendererInterface::class)
+        $this->mockView = m::mock(\Laminas\View\Renderer\RendererInterface::class)
             ->shouldReceive('translate')
             ->zeroOrMoreTimes()
             ->andReturnUsing(
@@ -34,22 +34,15 @@ class LinkBackTest extends MockeryTestCase
                     return '_TRLTD_' . $arg;
                 }
             )
-            ->shouldReceive('escapeHtml')
-            ->zeroOrMoreTimes()
-            ->andReturnUsing(
-                function ($arg) {
-                    return '_ESCAPED_' . $arg;
-                }
-            )
             ->getMock();
 
-        $this->mockRequest = m::mock(\Zend\Http\Request::class);
+        $this->mockRequest = m::mock(\Laminas\Http\Request::class);
 
-        $this->mockSl = m::mock(\Zend\ServiceManager\ServiceManager::class)
+        $this->mockSl = m::mock(\Laminas\ServiceManager\ServiceManager::class)
             ->shouldReceive('get')->once()->with('Request')->andReturn($this->mockRequest)
             ->getMock();
 
-        $this->mockSm = m::mock(\Zend\View\HelperPluginManager::class)
+        $this->mockSm = m::mock(\Laminas\View\HelperPluginManager::class)
             ->shouldReceive('getServiceLocator')->once()->andReturn($this->mockSl)
             ->getMock();
     }
@@ -72,7 +65,7 @@ class LinkBackTest extends MockeryTestCase
 
     public function dpTestInvoke()
     {
-        $mockHeader = m::mock(\Zend\Http\Header\HeaderInterface::class);
+        $mockHeader = m::mock(\Laminas\Http\Header\HeaderInterface::class);
         $mockHeader->shouldReceive('uri->getPath')->atMost(1)->andReturn('unit_URL');
 
         return [
@@ -86,7 +79,7 @@ class LinkBackTest extends MockeryTestCase
             [
                 'params' => null,
                 'referer' => $mockHeader,
-                'expect' => '<a href="unit_URL" class="back-link">_ESCAPED__TRLTD_common.link.back.label</a>',
+                'expect' => '<a href="unit_URL" class="govuk-back-link">_TRLTD_common.link.back.label</a>',
             ],
             //  parameter not set, has referer page
             [
@@ -96,7 +89,7 @@ class LinkBackTest extends MockeryTestCase
                     'escape' => false,
                 ],
                 'referer' => null,
-                'expect' => '<a href="unit_PrmUrl2" class="back-link">_TRLTD_unit_PrmLbl</a>',
+                'expect' => '<a href="unit_PrmUrl2" class="govuk-back-link">_TRLTD_unit_PrmLbl</a>',
             ],
         ];
     }

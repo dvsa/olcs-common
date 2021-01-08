@@ -3,9 +3,9 @@
 namespace Common\Form\Elements\Custom;
 
 use Common\Form\Elements\Validators\EcmtNoOfPermitsCombinedTotalValidator;
-use Zend\Form\Element\Hidden;
-use Zend\InputFilter\InputProviderInterface;
-use Zend\Validator\Callback;
+use Laminas\Form\Element\Hidden;
+use Laminas\InputFilter\InputProviderInterface;
+use Laminas\Validator\Callback;
 
 class EcmtNoOfPermitsCombinedTotalElement extends Hidden implements InputProviderInterface
 {
@@ -23,10 +23,11 @@ class EcmtNoOfPermitsCombinedTotalElement extends Hidden implements InputProvide
                     'options' => [
                         'callback' => [
                             EcmtNoOfPermitsCombinedTotalValidator::class,
-                            'validateNonZeroValuePresent'
+                            'validateMax'
                         ],
+                        'callbackOptions' => [$this->options['maxPermitted']],
                         'messages' => [
-                            Callback::INVALID_VALUE => 'permits.page.no-of-permits.error.no-fields-populated'
+                            Callback::INVALID_VALUE => 'qanda.ecmt.number-of-permits.error.total-max-exceeded'
                         ]
                     ],
                     'break_chain_on_failure' => true
@@ -36,10 +37,10 @@ class EcmtNoOfPermitsCombinedTotalElement extends Hidden implements InputProvide
                     'options' => [
                         'callback' => [
                             EcmtNoOfPermitsCombinedTotalValidator::class,
-                            'validateMultipleNonZeroValuesNotPresent'
+                            'validateMin'
                         ],
                         'messages' => [
-                            Callback::INVALID_VALUE => 'permits.page.no-of-permits.error.two-or-more-fields-populated'
+                            Callback::INVALID_VALUE => 'qanda.ecmt.number-of-permits.error.total-min-exceeded'
                         ]
                     ]
                 ],

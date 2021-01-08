@@ -2,27 +2,32 @@
 
 namespace Common\Service\Qa\Custom\EcmtShortTerm;
 
-use Common\Form\Elements\Types\Html;
 use Common\Service\Helper\TranslationHelperService;
+use Common\Service\Qa\Custom\Common\HtmlAdder;
 use Common\Service\Qa\DateSelect;
 use Common\Service\Qa\FieldsetPopulatorInterface;
-use Zend\Form\Fieldset;
+use Laminas\Form\Fieldset;
 
 class EarliestPermitDateFieldsetPopulator implements FieldsetPopulatorInterface
 {
     /** @var TranslationHelperService */
     private $translator;
 
+    /** @var HtmlAdder */
+    private $htmlAdder;
+
     /**
      * Create service instance
      *
      * @param TranslationHelperService $translator
+     * @param HtmlAdder $htmlAdder
      *
      * @return EarliestPermitDateFieldsetPopulator
      */
-    public function __construct(TranslationHelperService $translator)
+    public function __construct(TranslationHelperService $translator, HtmlAdder $htmlAdder)
     {
         $this->translator = $translator;
+        $this->htmlAdder = $htmlAdder;
     }
 
     /**
@@ -41,15 +46,7 @@ class EarliestPermitDateFieldsetPopulator implements FieldsetPopulatorInterface
             $this->translator->translate('qanda.ecmt-short-term.earliest-permit-date.hint.line-2')
         );
 
-        $fieldset->add(
-            [
-                'name' => 'insetAndHint',
-                'type' => Html::class,
-                'attributes' => [
-                    'value' => $markup
-                ]
-            ]
-        );
+        $this->htmlAdder->add($fieldset, 'insetAndHint', $markup);
 
         $fieldset->add(
             [

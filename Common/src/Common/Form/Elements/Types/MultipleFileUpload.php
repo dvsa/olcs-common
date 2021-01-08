@@ -7,8 +7,8 @@
  */
 namespace Common\Form\Elements\Types;
 
-use Zend\Form\Fieldset;
-use Zend\Form\Element;
+use Laminas\Form\Fieldset;
+use Laminas\Form\Element;
 use Common\Form\Elements\InputFilters\File;
 
 /**

@@ -2,17 +2,17 @@
 
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\Form\Element as ZendElement;
-use Zend\InputFilter\InputProviderInterface;
+use Laminas\Form\Element as LaminasElement;
+use Laminas\InputFilter\InputProviderInterface;
 
 /**
  * @author Rob Caiger <rob@clocal.co.uk>
  *
  * @deprecated This should not be used and must be removed as part of OLCS-15198
  *             Replace other elements with the normal Text element provided by
- *             Zend.
+ *             Laminas.
  */
-class Text extends ZendElement\Text implements InputProviderInterface
+class Text extends LaminasElement\Text implements InputProviderInterface
 {
     protected $isRequired = false;
     protected $isAllowEmpty = true;
@@ -42,7 +42,7 @@ class Text extends ZendElement\Text implements InputProviderInterface
 
         if (!empty($this->max) || !empty($this->min)) {
             $validators[] = [
-                'name' => \Zend\Validator\StringLength::class,
+                'name' => \Laminas\Validator\StringLength::class,
                 'options' => array_filter(
                     [
                         'min' => $this->min,
@@ -54,9 +54,9 @@ class Text extends ZendElement\Text implements InputProviderInterface
 
         if ($this->isAllowEmpty === true) {
             $validators[] = [
-                'name' => \Zend\Validator\NotEmpty::class,
+                'name' => \Laminas\Validator\NotEmpty::class,
                 'options' => [
-                    'type' => \Zend\Validator\NotEmpty::PHP,
+                    'type' => \Laminas\Validator\NotEmpty::PHP,
                 ],
             ];
         }
@@ -115,7 +115,7 @@ class Text extends ZendElement\Text implements InputProviderInterface
             'required' => $this->isRequired,
             'filters' => [
                 [
-                    'name' => \Zend\Filter\StringTrim::class,
+                    'name' => \Laminas\Filter\StringTrim::class,
                 ],
             ],
             'validators' => $this->getValidators(),

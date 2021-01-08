@@ -7,9 +7,9 @@ use Common\Service\Table\Formatter\BusRegNumberLink;
 use Common\View\Helper\Status;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Mvc\I18n\Translator;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\View\HelperPluginManager;
+use Laminas\Mvc\I18n\Translator;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\View\HelperPluginManager;
 
 /**
  * @covers \Common\Service\Table\Formatter\BusRegNumberLink

@@ -1,7 +1,7 @@
 <?php
 namespace Common\View\Helper;
 
-use Zend\View\HelperPluginManager as ViewHelperManager;
+use Laminas\View\HelperPluginManager as ViewHelperManager;
 
 /**
  * @author Craig Reasbeck <craig.reasbeck@valtech.co.uk>

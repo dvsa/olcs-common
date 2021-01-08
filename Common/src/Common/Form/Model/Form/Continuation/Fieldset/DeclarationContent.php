@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Continuation\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * DeclarationContent
@@ -34,7 +34,7 @@ class DeclarationContent
      *         "disable_html_escape": "true"
      *     }
      * })
-     * @Form\Type("\Zend\Form\Element\Radio")
+     * @Form\Type("\Laminas\Form\Element\Radio")
      */
     public $signatureOptions = null;
 

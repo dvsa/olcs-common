@@ -4,7 +4,7 @@
     <?php
     echo $this->object->renderLayout('default');
 
-    /** @var  \Zend\Form\Element\Csrf $emlCsrf */
+    /** @var  \Laminas\Form\Element\Csrf $emlCsrf */
     $emlCsrf = $this->object->getCsrfElement();
     ?>
     <input type="hidden" class="js-csrf-token" value="<?= $emlCsrf->getValue() ?>" name="<?= $emlCsrf->getName() ?>">

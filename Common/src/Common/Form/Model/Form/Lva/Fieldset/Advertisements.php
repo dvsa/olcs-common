@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Lva\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Type("\Common\Form\Elements\Types\RadioVertical")
@@ -17,8 +17,8 @@ class Advertisements
      *     "label_attributes": {"class": "form-control form-control--radio"},
      *     "value_options": {
      *          "adPlaced": "Yes",
+     *          "adPlacedLater": "No (operator to upload)",
      *          "adSendByPost": "No (operator to post)",
-     *          "adPlacedLater": "No (operator to upload)"
      *      },
      * })
      * @Form\ErrorMessage("advertisements_adPlaced-error")

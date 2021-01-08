@@ -9,8 +9,8 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\Sum;
-use Zend\I18n\Translator\Translator;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\I18n\Translator\Translator;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Sum formatter test

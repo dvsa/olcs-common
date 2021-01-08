@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Lva\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * Vehicle Declarations - main occupation (PSV Restricted and > 0 medium vehicles only)
@@ -30,7 +30,7 @@ class VehiclesDeclarationsMainOccupation
      *     "label": "application_vehicle-safety_undertakings.mainOccupation.notes",
      * })
      * @Form\Type("Textarea")
-     * @Form\Validator({"name": "Zend\Validator\StringLength", "options": {"min": 10, "max": 1000}})
+     * @Form\Validator({"name": "Laminas\Validator\StringLength", "options": {"min": 10, "max": 1000}})
      */
     public $psvMediumVhlNotes = null;
 }

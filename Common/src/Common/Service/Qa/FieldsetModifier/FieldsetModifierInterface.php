@@ -2,7 +2,7 @@
 
 namespace Common\Service\Qa\FieldsetModifier;
 
-use Zend\Form\Fieldset;
+use Laminas\Form\Fieldset;
 
 interface FieldsetModifierInterface
 {

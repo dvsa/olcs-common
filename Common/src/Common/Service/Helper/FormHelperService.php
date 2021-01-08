@@ -6,20 +6,20 @@ use Common\Form\Elements\Types\Address;
 use Common\Service\Table\TableBuilder;
 use Dvsa\Olcs\CompaniesHouse\Service\Exception\ServiceException;
 use Dvsa\Olcs\Transfer\Query\CompaniesHouse\ByNumber;
-use Zend\Form\Element;
-use Zend\Form\Element\Checkbox;
-use Zend\Form\Element\DateSelect;
-use Zend\Form\Fieldset;
-use Zend\Form\Form;
-use Zend\Form\FormInterface;
-use Zend\Http\Request;
-use Zend\I18n\Validator\PostCode as PostcodeValidator;
-use Zend\InputFilter\Input;
-use Zend\InputFilter\InputFilter;
-use Zend\InputFilter\InputFilterInterface;
-use Zend\Validator\ValidatorChain;
-use Zend\View\Model\ViewModel;
-use Zend\Validator\ValidatorInterface;
+use Laminas\Form\Element;
+use Laminas\Form\Element\Checkbox;
+use Laminas\Form\Element\DateSelect;
+use Laminas\Form\Fieldset;
+use Laminas\Form\Form;
+use Laminas\Form\FormInterface;
+use Laminas\Http\Request;
+use Laminas\I18n\Validator\PostCode as PostcodeValidator;
+use Laminas\InputFilter\Input;
+use Laminas\InputFilter\InputFilter;
+use Laminas\InputFilter\InputFilterInterface;
+use Laminas\Validator\ValidatorChain;
+use Laminas\View\Model\ViewModel;
+use Laminas\Validator\ValidatorInterface;
 
 /**
  * @internal All validations to do with empty fields must be done as a validator
@@ -62,7 +62,7 @@ class FormHelperService extends AbstractHelperService
         //  add CSRF element
         if ($addCsrf) {
             $config = [
-                'type' => \Zend\Form\Element\Csrf::class,
+                'type' => \Laminas\Form\Element\Csrf::class,
                 'name' => 'security',
                 'attributes' => [
                     'class' => 'js-csrf-token',
@@ -82,7 +82,7 @@ class FormHelperService extends AbstractHelperService
         //  add button "Continue" element
         if ($addContinue) {
             $config = array(
-                'type' => \Zend\Form\Element\Button::class,
+                'type' => \Laminas\Form\Element\Button::class,
                 'name' => 'form-actions[continue]',
                 'options' => array(
                     'label' => 'Continue',
@@ -111,8 +111,8 @@ class FormHelperService extends AbstractHelperService
     /**
      * Set Form Action From Request
      *
-     * @param \Zend\Form\FormInterface $form    Form
-     * @param \Zend\Http\Request       $request Request
+     * @param \Laminas\Form\FormInterface $form    Form
+     * @param \Laminas\Http\Request       $request Request
      *
      * @return void
      */
@@ -147,7 +147,7 @@ class FormHelperService extends AbstractHelperService
      * Create Form With Request
      *
      * @param string             $formName Form name
-     * @param \Zend\Http\Request $request  Request
+     * @param \Laminas\Http\Request $request  Request
      *
      * @return FormInterface
      */
@@ -184,8 +184,8 @@ class FormHelperService extends AbstractHelperService
      * Check for address lookups
      *  Returns true if an address search is present, false otherwise
      *
-     * @param \Zend\Form\FormInterface $form    Form
-     * @param \Zend\Http\Request       $request Request
+     * @param \Laminas\Form\FormInterface $form    Form
+     * @param \Laminas\Http\Request       $request Request
      *
      * @return boolean
      */
@@ -223,9 +223,9 @@ class FormHelperService extends AbstractHelperService
     /**
      * Process an address lookup fieldset
      *
-     * @param \Zend\Form\Fieldset      $fieldset Fieldset
+     * @param \Laminas\Form\Fieldset      $fieldset Fieldset
      * @param array                    $post     Post data
-     * @param \Zend\Form\FormInterface $form     Form
+     * @param \Laminas\Form\FormInterface $form     Form
      *
      * @return bool|array
      */
@@ -280,7 +280,7 @@ class FormHelperService extends AbstractHelperService
     /**
      * Process postcode lookup
      *
-     * @param \Zend\Form\Fieldset $fieldset Fieldset
+     * @param \Laminas\Form\Fieldset $fieldset Fieldset
      * @param array               $post     Post data
      * @param string              $name     Field Name
      *
@@ -343,7 +343,7 @@ class FormHelperService extends AbstractHelperService
     /**
      * Remove address select fields
      *
-     * @param \Zend\Form\Fieldset $fieldset Fieldset
+     * @param \Laminas\Form\Fieldset $fieldset Fieldset
      *
      * @return void
      */
@@ -356,7 +356,7 @@ class FormHelperService extends AbstractHelperService
     /**
      * Alter an elements label
      *
-     * @param \Zend\Form\Element $element Element
+     * @param \Laminas\Form\Element $element Element
      * @param string             $label   Label text
      * @param int                $type    Alter type
      *
@@ -381,7 +381,7 @@ class FormHelperService extends AbstractHelperService
      * When passed something like
      * $form, 'data->registeredAddress', this method will remove the element from the form and input filter
      *
-     * @param \Zend\Form\FormInterface $form             Form
+     * @param \Laminas\Form\FormInterface $form             Form
      * @param string                   $elementReference Element ref
      *
      * @return $this
@@ -398,7 +398,7 @@ class FormHelperService extends AbstractHelperService
     /**
      * Remove element
      *
-     * @param \Zend\Form\FormInterface $form             Form
+     * @param \Laminas\Form\FormInterface $form             Form
      * @param InputFilterInterface     $filter           Filter
      * @param string                   $elementReference Element ref
      *
@@ -416,7 +416,7 @@ class FormHelperService extends AbstractHelperService
      * Grab the parent input filter and fieldset from the top level form and input filter using the -> notation
      * i.e. data->field would return the data fieldset, data input filter and the string field
      *
-     * @param \Zend\Form\FormInterface $form             Form
+     * @param \Laminas\Form\FormInterface $form             Form
      * @param InputFilterInterface     $filter           Filter
      * @param string                   $elementReference Element ref
      *
@@ -440,7 +440,7 @@ class FormHelperService extends AbstractHelperService
     /**
      * Disable empty validation
      *
-     * @param \Zend\Form\Fieldset|\Zend\Form\FormInterface $form   Form fieldset
+     * @param \Laminas\Form\Fieldset|\Laminas\Form\FormInterface $form   Form fieldset
      * @param InputFilter                                  $filter Filter
      *
      * @return void
@@ -451,7 +451,7 @@ class FormHelperService extends AbstractHelperService
             $filter = $form->getInputFilter();
         }
 
-        /** @var \Zend\Form\ElementInterface $element */
+        /** @var \Laminas\Form\ElementInterface $element */
         foreach ($form->getElements() as $key => $element) {
             $value = $element->getValue();
 
@@ -476,7 +476,7 @@ class FormHelperService extends AbstractHelperService
     /**
      * Disable empty validation on a single element
      *
-     * @param \Zend\Form\FormInterface $form      Form
+     * @param \Laminas\Form\FormInterface $form      Form
      * @param string                   $reference Element Ref
      *
      * @return void
@@ -491,7 +491,7 @@ class FormHelperService extends AbstractHelperService
     /**
      * Populate form table
      *
-     * @param \Zend\Form\Fieldset                $fieldset          Fieldset
+     * @param \Laminas\Form\Fieldset                $fieldset          Fieldset
      * @param \Common\Service\Table\TableBuilder $table             Table
      * @param string|null                        $tableFieldsetName Fieldset name
      *
@@ -506,9 +506,9 @@ class FormHelperService extends AbstractHelperService
     /**
      * Recurse through the form and the input filter to disable the final result
      *
-     * @param \Zend\Form\FormInterface      $form      Form
+     * @param \Laminas\Form\FormInterface      $form      Form
      * @param string                        $reference Ref
-     * @param \Zend\InputFilter\InputFilter $filter    Filter
+     * @param \Laminas\InputFilter\InputFilter $filter    Filter
      *
      * @return null
      */
@@ -540,7 +540,7 @@ class FormHelperService extends AbstractHelperService
     /**
      * Disable date element
      *
-     * @param \Zend\Form\Element\DateSelect $element Element
+     * @param \Laminas\Form\Element\DateSelect $element Element
      *
      * @return void
      */
@@ -554,7 +554,7 @@ class FormHelperService extends AbstractHelperService
     /**
      * Enable date element
      *
-     * @param \Zend\Form\Element\DateSelect $element Element
+     * @param \Laminas\Form\Element\DateSelect $element Element
      *
      * @return void
      */
@@ -568,7 +568,7 @@ class FormHelperService extends AbstractHelperService
     /**
      * Enable DateTime element
      *
-     * @param \Zend\Form\Element\DateTimeSelect $element Element
+     * @param \Laminas\Form\Element\DateTimeSelect $element Element
      *
      * @return void
      */
@@ -584,7 +584,7 @@ class FormHelperService extends AbstractHelperService
     /**
      * Disable all elements recursively
      *
-     * @param \Zend\Form\Fieldset $elements Elements
+     * @param \Laminas\Form\Fieldset $elements Elements
      *
      * @return void
      */
@@ -614,7 +614,7 @@ class FormHelperService extends AbstractHelperService
     /**
      * Enable all elements recursively
      *
-     * @param \Zend\Form\Fieldset $elements Elements
+     * @param \Laminas\Form\Fieldset $elements Elements
      *
      * @return void
      */
@@ -644,7 +644,7 @@ class FormHelperService extends AbstractHelperService
     /**
      * Disable field validation
      *
-     * @param \Zend\InputFilter\InputFilter $inputFilter Input Filter
+     * @param \Laminas\InputFilter\InputFilter $inputFilter Input Filter
      *
      * @return void
      */
@@ -666,7 +666,7 @@ class FormHelperService extends AbstractHelperService
     /**
      * Lock the element
      *
-     * @param \Zend\Form\Element $element Element
+     * @param \Laminas\Form\Element $element Element
      * @param string             $message Message
      *
      * @return void
@@ -699,7 +699,7 @@ class FormHelperService extends AbstractHelperService
     /**
      * Remove a list of form fields
      *
-     * @param \Zend\Form\FormInterface $form     Form
+     * @param \Laminas\Form\FormInterface $form     Form
      * @param string                   $fieldset Name of Fieldset
      * @param array                    $fields   Names of Fields
      *
@@ -715,7 +715,7 @@ class FormHelperService extends AbstractHelperService
     /**
      * Check for company number lookups
      *
-     * @param \Zend\Form\FormInterface $form            Form
+     * @param \Laminas\Form\FormInterface $form            Form
      * @param array                    $data            Data
      * @param string                   $detailsFieldset Name of Details fieldset
      * @param string                   $addressFieldset Name of Address fieldset
@@ -759,7 +759,7 @@ class FormHelperService extends AbstractHelperService
     /**
      * Remove a value option from an element
      *
-     * @param \Zend\Form\Element\(Select|Radio) $element Select element or a Radio group
+     * @param \Laminas\Form\Element\(Select|Radio) $element Select element or a Radio group
      * @param string $index Index
      *
      * @return void
@@ -777,7 +777,7 @@ class FormHelperService extends AbstractHelperService
     /**
      * Set current option of element
      *
-     * @param \Zend\Form\Element\(Select|Radio) $element Select element or a Radio group
+     * @param \Laminas\Form\Element\(Select|Radio) $element Select element or a Radio group
      * @param string $index Index
      *
      * @return void
@@ -804,7 +804,7 @@ class FormHelperService extends AbstractHelperService
     /**
      * Remove Validator
      *
-     * @param \Zend\Form\FormInterface $form           Form
+     * @param \Laminas\Form\FormInterface $form           Form
      * @param string                   $reference      Field Ref
      * @param string                   $validatorClass Validator Class
      *
@@ -831,9 +831,9 @@ class FormHelperService extends AbstractHelperService
     /**
      * Attach Validator
      *
-     * @param \Zend\Form\FormInterface           $form      Form
+     * @param \Laminas\Form\FormInterface           $form      Form
      * @param string                             $reference Field Ref
-     * @param \Zend\Validator\ValidatorInterface $validator Validator Class
+     * @param \Laminas\Validator\ValidatorInterface $validator Validator Class
      *
      * @return void
      */
@@ -851,7 +851,7 @@ class FormHelperService extends AbstractHelperService
     /**
      * Get Validator
      *
-     * @param \Zend\Form\FormInterface $form           Form
+     * @param \Laminas\Form\FormInterface $form           Form
      * @param string                   $reference      Field Ref
      * @param string                   $validatorClass Validator Class
      *
@@ -877,9 +877,9 @@ class FormHelperService extends AbstractHelperService
     /**
      * Set appropriate default values on date fields
      *
-     * @param \Zend\Form\Element $field Field
+     * @param \Laminas\Form\Element $field Field
      *
-     * @return \Zend\Form\Element
+     * @return \Laminas\Form\Element
      */
     public function setDefaultDate($field)
     {
@@ -897,10 +897,10 @@ class FormHelperService extends AbstractHelperService
     /**
      * Populate an address fieldset using Companies House address data
      *
-     * @param \Zend\Form\Fieldset $fieldset address fieldset
+     * @param \Laminas\Form\Fieldset $fieldset address fieldset
      * @param array               $data     Companies House 'AddressLine' data
      *
-     * @return \Zend\Form\Fieldset
+     * @return \Laminas\Form\Fieldset
      */
     protected function populateRegisteredAddressFieldset($fieldset, $data)
     {
@@ -929,27 +929,27 @@ class FormHelperService extends AbstractHelperService
     /**
      * Save form state data
      *
-     * @param \Zend\Form\FormInterface $form Form
+     * @param \Laminas\Form\FormInterface $form Form
      * @param array                    $data The form data to save
      *
      * @return void
      */
     public function saveFormState(Form $form, $data)
     {
-        $sessionContainer = new \Zend\Session\Container('form_state');
+        $sessionContainer = new \Laminas\Session\Container('form_state');
         $sessionContainer->offsetSet($form->getName(), $data);
     }
 
     /**
      * Restore form state
      *
-     * @param \Zend\Form\FormInterface $form Form
+     * @param \Laminas\Form\FormInterface $form Form
      *
      * @return void
      */
     public function restoreFormState(Form $form)
     {
-        $sessionContainer = new \Zend\Session\Container('form_state');
+        $sessionContainer = new \Laminas\Session\Container('form_state');
         if ($sessionContainer->offsetExists($form->getName())) {
             $form->setData($sessionContainer->offsetGet($form->getName()));
         }
@@ -958,7 +958,7 @@ class FormHelperService extends AbstractHelperService
     /**
      * Remove Value Option
      *
-     * @param \Zend\Form\Element\(Select|Radio) $element Element (Select|Radio)
+     * @param \Laminas\Form\Element\(Select|Radio) $element Element (Select|Radio)
      * @param string $key Key
      *
      * @return void

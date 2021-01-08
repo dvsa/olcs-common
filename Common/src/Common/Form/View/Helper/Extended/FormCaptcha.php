@@ -12,7 +12,7 @@ namespace Common\Form\View\Helper\Extended;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormCaptcha extends \Zend\Form\View\Helper\FormCaptcha
+class FormCaptcha extends \Laminas\Form\View\Helper\FormCaptcha
 {
     use PrepareAttributesTrait;
 }

@@ -12,7 +12,7 @@ namespace Common\Form\View\Helper\Extended;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormMonth extends \Zend\Form\View\Helper\FormMonth
+class FormMonth extends \Laminas\Form\View\Helper\FormMonth
 {
     use PrepareAttributesTrait;
 }

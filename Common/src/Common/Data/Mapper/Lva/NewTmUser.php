@@ -9,7 +9,7 @@ namespace Common\Data\Mapper\Lva;
 
 use Common\Data\Mapper\MapperInterface;
 use Common\Service\Helper\FlashMessengerHelperService;
-use Zend\Form\Form;
+use Laminas\Form\Form;
 
 /**
  * New Tm User
@@ -28,7 +28,6 @@ class NewTmUser implements MapperInterface
         $formMessages = [];
 
         if (isset($errors['username'])) {
-
             foreach ($errors['username'] as $key => $message) {
                 $formMessages['data']['username'][] = $message;
             }
@@ -37,7 +36,6 @@ class NewTmUser implements MapperInterface
         }
 
         if (isset($errors['emailAddress'])) {
-
             foreach ($errors['emailAddress'] as $key => $message) {
                 $formMessages['data']['emailAddress'][] = $message;
             }

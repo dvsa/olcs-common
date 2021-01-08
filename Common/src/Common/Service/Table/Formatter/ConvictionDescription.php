@@ -28,13 +28,12 @@ class ConvictionDescription implements FormatterInterface
      *
      * @param array $data
      * @param array $column
-     * @param \Zend\ServiceManager\ServiceManager $sm
+     * @param \Laminas\ServiceManager\ServiceManager $sm
      * @return string
      */
     public static function format($data, $column = array(), $sm = null)
     {
-        if (
-            isset($data['convictionCategory']['id']) &&
+        if (isset($data['convictionCategory']['id']) &&
             $data['convictionCategory']['id'] !== RefData::CONVICTION_CATEGORY_USER_DEFINED
         ) {
             $data['categoryText'] = $data['convictionCategory']['description'];

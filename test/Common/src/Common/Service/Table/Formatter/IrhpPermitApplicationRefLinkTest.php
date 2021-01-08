@@ -8,7 +8,7 @@ namespace CommonTest\Service\Table\Formatter;
 use Common\Service\Table\Formatter\IrhpPermitApplicationRefLink;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class IrhpPermitApplicationRefLinkTest extends MockeryTestCase
 {

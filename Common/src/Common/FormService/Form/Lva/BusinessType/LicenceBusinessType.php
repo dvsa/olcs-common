@@ -7,7 +7,7 @@
  */
 namespace Common\FormService\Form\Lva\BusinessType;
 
-use Zend\Form\Form;
+use Laminas\Form\Form;
 
 /**
  * Licence Business Type Form

@@ -102,6 +102,13 @@ class RefData
     const VARIATION_TYPE_DIRECTOR_CHANGE = 'vtyp_director_change';
 
     /**
+     * Grant authorities
+     */
+    const GRANT_AUTHORITY_DELEGATED = 'grant_authority_dl';
+    const GRANT_AUTHORITY_TC = 'grant_authority_tc';
+    const GRANT_AUTHORITY_TR = 'grant_authority_tr';
+
+    /**
      * Transport Manager Application
      */
     const TMA_SIGN_AS_TM = 'tma_sign_as_tm';
@@ -414,7 +421,6 @@ class RefData
     const SURRENDER_DOC_STATUS_STOLEN='doc_sts_stolen';
 
     //IRHP Permit Type
-    const PERMIT_TYPE_ECMT = 'permit_ecmt';
     const ECMT_PERMIT_TYPE_ID = 1;
     const ECMT_SHORT_TERM_PERMIT_TYPE_ID = 2;
     const ECMT_REMOVAL_PERMIT_TYPE_ID = 3;

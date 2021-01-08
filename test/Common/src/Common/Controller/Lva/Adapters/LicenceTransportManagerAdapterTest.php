@@ -9,8 +9,8 @@ use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder as TransferAnnotationBu
 use Dvsa\Olcs\Transfer\Command\CommandContainer;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\ServiceManager\ServiceManager;
-use Zend\Http\Response as HttpResponse;
+use Laminas\ServiceManager\ServiceManager;
+use Laminas\Http\Response as HttpResponse;
 use Dvsa\Olcs\Transfer\Command\TransportManagerLicence\Delete;
 
 /**
@@ -41,7 +41,9 @@ class LicenceTransportManagerAdapterTest extends MockeryTestCase
         $this->mockCommandSrv = m::mock(CommandService::class);
 
         $this->sut = new LicenceTransportManagerAdapter(
-            $this->mockAnnotationBuilder, $this->mockQuerySrv, $this->mockCommandSrv
+            $this->mockAnnotationBuilder,
+            $this->mockQuerySrv,
+            $this->mockCommandSrv
         );
 
         $this->sut->setServiceLocator($this->sm);

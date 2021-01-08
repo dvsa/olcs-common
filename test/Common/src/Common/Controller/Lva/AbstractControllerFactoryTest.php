@@ -6,7 +6,7 @@ use Common\Controller\Lva\AbstractControllerFactory;
 use CommonTest\Controller\Lva\Stubs\ControllerWithFactoryStub;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\FactoryInterface;
 
 /**
  * @covers \Common\Controller\Lva\AbstractControllerFactory
@@ -15,18 +15,18 @@ class AbstractControllerFactoryTest extends MockeryTestCase
 {
     /** @var  AbstractControllerFactory */
     protected $sut;
-    /** @var  m\MockInterface | \Zend\Mvc\Controller\ControllerManager */
+    /** @var  m\MockInterface | \Laminas\Mvc\Controller\ControllerManager */
     protected $mockScm;
-    /** @var  m\MockInterface | \Zend\ServiceManager\ServiceLocatorInterface */
+    /** @var  m\MockInterface | \Laminas\ServiceManager\ServiceLocatorInterface */
     protected $mockSm;
 
     protected function setUp(): void
     {
         $this->sut = new AbstractControllerFactory();
 
-        $this->mockSm = m::mock(\Zend\ServiceManager\ServiceLocatorInterface::class);
+        $this->mockSm = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class);
 
-        $this->mockScm = m::mock(\Zend\Mvc\Controller\ControllerManager::class);
+        $this->mockScm = m::mock(\Laminas\Mvc\Controller\ControllerManager::class);
         $this->mockScm->shouldReceive('getServiceLocator')->andReturn($this->mockSm);
     }
 

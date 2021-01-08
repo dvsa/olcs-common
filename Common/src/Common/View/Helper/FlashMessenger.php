@@ -3,15 +3,15 @@
 namespace Common\View\Helper;
 
 use Common\Service\Helper\FlashMessengerHelperService;
-use Zend\View\Helper\FlashMessenger as ZendFlashMessenger;
-use Zend\Mvc\Controller\Plugin\FlashMessenger as PluginFlashMessenger;
+use Laminas\View\Helper\FlashMessenger as LaminasFlashMessenger;
+use Laminas\Mvc\Controller\Plugin\FlashMessenger as PluginFlashMessenger;
 
 /**
- * Flash messenger view helper (Extends zends flash messenger)
+ * Flash messenger view helper (Extends laminas flash messenger)
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FlashMessenger extends ZendFlashMessenger
+class FlashMessenger extends LaminasFlashMessenger
 {
     /**
      * Templates for the open/close/separators for message tags
@@ -174,7 +174,7 @@ class FlashMessenger extends ZendFlashMessenger
     }
 
     /**
-     * Majority of this is copied from Zend's however I have removed the code to escape html, as we need to display HTML
+     * Majority of this is copied from Laminas however I have removed the code to escape html, as we need to display HTML
      * in our flash messengers, and we shouldn't ever need to escape it as our messages will never contain user entered
      * info
      *

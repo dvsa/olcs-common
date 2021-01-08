@@ -5,10 +5,10 @@ namespace CommonTest\Service\Data\Search;
 use Common\Service\Data\Search\Search;
 use Common\Service\Data\Search\SearchTypeManager;
 use CommonTest\Service\Data\Search\Asset\SearchType;
-use Zend\Stdlib\ArrayObject;
+use Laminas\Stdlib\ArrayObject;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Http\Request as HttpRequest;
+use Laminas\Http\Request as HttpRequest;
 
 /**
  * Class SearchTest
@@ -77,7 +77,7 @@ class SearchTest extends MockeryTestCase
             ]
         ];
 
-        $mockStm = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
+        $mockStm = m::mock('Laminas\ServiceManager\ServiceLocatorInterface');
         $mockStm->shouldReceive('getRegisteredServices')->andReturn($servicesArray);
         $mockStm->shouldReceive('get')->with('application')->andReturn(new SearchType());
         $mockStm->shouldReceive('get')->with('licence')->andReturn(new SearchType());
@@ -90,7 +90,7 @@ class SearchTest extends MockeryTestCase
         $mockTableBuilder = m::mock('Common\Service\Table\TableBuilder');
         $mockTableBuilder->shouldReceive('buildTable')->andReturn('table');
 
-        $mockSl = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
+        $mockSl = m::mock('Laminas\ServiceManager\ServiceLocatorInterface');
         $mockSl->shouldReceive('get')
             ->with(SearchTypeManager::class)
             ->andReturn($this->getMockSearchTypeManager());
@@ -114,7 +114,7 @@ class SearchTest extends MockeryTestCase
         $mockTableBuilder = m::mock('Common\Service\Table\TableBuilder');
         $mockTableBuilder->shouldReceive('buildTable')->andReturn('table');
 
-        $mockSl = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
+        $mockSl = m::mock('Laminas\ServiceManager\ServiceLocatorInterface');
         $mockSl->shouldReceive('get')
             ->with(SearchTypeManager::class)
             ->andReturn($this->getMockSearchTypeManager());
@@ -157,7 +157,7 @@ class SearchTest extends MockeryTestCase
         $mockViewHelperManager = m::mock();
         $mockViewHelperManager->shouldReceive('get->getContainer->getValue')->andReturn('FORM');
 
-        $mockSl = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
+        $mockSl = m::mock('Laminas\ServiceManager\ServiceLocatorInterface');
         $mockSl->shouldReceive('get')->with(SearchTypeManager::class)->andReturn($mockSearchManager);
         $mockSl->shouldReceive('get')->with('ViewHelperManager')->andReturn($mockViewHelperManager);
 
@@ -200,7 +200,7 @@ class SearchTest extends MockeryTestCase
         $mockViewHelperManager = m::mock();
         $mockViewHelperManager->shouldReceive('get->getContainer->getValue')->andReturn('FORM');
 
-        $mockSl = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
+        $mockSl = m::mock('Laminas\ServiceManager\ServiceLocatorInterface');
         $mockSl->shouldReceive('get')->with(SearchTypeManager::class)->andReturn($mockSearchManager);
         $mockSl->shouldReceive('get')->with('ViewHelperManager')->andReturn($mockViewHelperManager);
 

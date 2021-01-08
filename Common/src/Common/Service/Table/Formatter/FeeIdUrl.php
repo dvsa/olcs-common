@@ -20,7 +20,7 @@ class FeeIdUrl implements FormatterInterface
      *
      * @param array $row
      * @param array $column
-     * @param \Zend\ServiceManager\ServiceManager $serviceLocator
+     * @param \Laminas\ServiceManager\ServiceManager $serviceLocator
      * @return string
      * @inheritdoc
      */

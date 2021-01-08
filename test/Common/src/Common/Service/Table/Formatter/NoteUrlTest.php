@@ -41,7 +41,7 @@ class NoteUrlTest extends MockeryTestCase
             ->andReturn('the_url')
             ->getMock();
 
-        $mockRequest = m::mock('\Zend\Stdlib\RequestInterface')
+        $mockRequest = m::mock('\Laminas\Stdlib\RequestInterface')
             ->shouldReceive('getQuery')
             ->andReturn(
                 m::mock()

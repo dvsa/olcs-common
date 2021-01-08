@@ -3,9 +3,9 @@
 namespace Common\Service\Data\Search;
 
 use Common\Service\Data\AbstractData;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
-use Zend\Http\Request as HttpRequest;
+use Laminas\ServiceManager\ServiceLocatorAwareInterface;
+use Laminas\ServiceManager\ServiceLocatorAwareTrait;
+use Laminas\Http\Request as HttpRequest;
 
 /**
  * Class Search
@@ -170,7 +170,6 @@ class Search extends AbstractData implements ServiceLocatorAwareInterface
     public function fetchResults()
     {
         if (is_null($this->getData('results'))) {
-
             // Update selected values of filters FIRST.
             $this->updateFilterValuesFromForm();
             $this->updateDateRangeValuesFromPost();
@@ -243,7 +242,6 @@ class Search extends AbstractData implements ServiceLocatorAwareInterface
 
         /** @var \Common\Data\Object\Search\Aggregations\Terms\TermsAbstract $filterClass */
         foreach ($this->getFilters() as $filterClass) {
-
             $options = array_combine(
                 $filterClass->getOptionsKvp(),
                 $filterClass->getOptionsKvp()
@@ -258,7 +256,7 @@ class Search extends AbstractData implements ServiceLocatorAwareInterface
         foreach ($this->getDateRanges() as $dateRangeClass) {
             $field = $form->get('dateRanges')->get($dateRangeClass->getKey());
 
-            // set to null for empty string as '' sets Zend\Form\Element\DateSelect to today's date
+            // set to null for empty string as '' sets Laminas\Form\Element\DateSelect to today's date
             $value = ($dateRangeClass->getValue() !== '') ? $dateRangeClass->getValue() : null;
 
             $field->setValue($value);
@@ -292,8 +290,8 @@ class Search extends AbstractData implements ServiceLocatorAwareInterface
 
             /** @var \Common\Data\Object\Search\Aggregations\DateRange\DateRangeAbstract $filterClass */
             if (isset($post['dateRanges'][$filterClass->getKey()]) &&
-                !empty($post['dateRanges'][$filterClass->getKey()])) {
-
+                !empty($post['dateRanges'][$filterClass->getKey()])
+            ) {
                 $filterClass->setValue($post['dateRanges'][$filterClass->getKey()]);
             }
         }
@@ -307,7 +305,6 @@ class Search extends AbstractData implements ServiceLocatorAwareInterface
         $output = [];
 
         foreach ($this->getDateRanges() as $filterClass) {
-
             $output[$filterClass->getKey()] = $filterClass->getValue();
         }
 
@@ -330,7 +327,6 @@ class Search extends AbstractData implements ServiceLocatorAwareInterface
 
             /** @var \Common\Data\Object\Search\Aggregations\Terms\TermsAbstract $filterClass */
             if (isset($post['filter'][$filterClass->getKey()]) && !empty($post['filter'][$filterClass->getKey()])) {
-
                 $filterClass->setValue($post['filter'][$filterClass->getKey()]);
             }
         }
@@ -344,7 +340,6 @@ class Search extends AbstractData implements ServiceLocatorAwareInterface
         $output = [];
 
         foreach ($this->getFilters() as $filterClass) {
-
             $output[$filterClass->getKey()] = $filterClass->getValue();
         }
 
@@ -389,13 +384,10 @@ class Search extends AbstractData implements ServiceLocatorAwareInterface
     public function setFilterOptionValues(array $filterValues)
     {
         foreach ($this->getFilters() as $filterClass) {
-
             /** @var $filterClass \Common\Data\Object\Search\Aggregations\Terms\TermsAbstract */
             if (isset($filterValues[$filterClass->getKey()])) {
-
                 $filterClass->setOptions($filterValues[$filterClass->getKey()]);
             }
-
         }
     }
 }

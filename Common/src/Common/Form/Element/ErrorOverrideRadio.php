@@ -2,7 +2,7 @@
 
 namespace Common\Form\Element;
 
-use Zend\Form\Element\Radio;
+use Laminas\Form\Element\Radio;
 
 /**
  * Class ErrorOverrideRadio

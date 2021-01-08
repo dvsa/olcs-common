@@ -9,10 +9,10 @@
 namespace Common\Service\Lva;
 
 use Common\RefData;
-use Zend\Form\FieldsetInterface;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\Form\Form;
+use Laminas\Form\FieldsetInterface;
+use Laminas\ServiceManager\ServiceLocatorAwareTrait;
+use Laminas\ServiceManager\ServiceLocatorAwareInterface;
+use Laminas\Form\Form;
 
 /**
  * People LVA service

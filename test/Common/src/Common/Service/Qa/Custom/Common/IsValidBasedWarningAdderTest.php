@@ -2,14 +2,14 @@
 
 namespace CommonTest\Service\Qa\Custom\Common;
 
-use Common\Form\Elements\Types\Html;
 use Common\Form\QaForm;
 use Common\Service\Qa\Custom\Common\IsValidBasedWarningAdder;
+use Common\Service\Qa\Custom\Common\WarningAdder;
 use Common\Service\Qa\IsValidHandlerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\View\Helper\Partial;
-use Zend\Form\Element\Hidden;
+use Laminas\Form\Element\Hidden;
+use Laminas\Form\Fieldset;
 
 /**
  * IsValidBasedWarningAdderTest
@@ -24,7 +24,7 @@ class IsValidBasedWarningAdderTest extends MockeryTestCase
 
     private $qaForm;
 
-    private $partial;
+    private $warningAdder;
 
     private $isValidHandler;
 
@@ -34,14 +34,11 @@ class IsValidBasedWarningAdderTest extends MockeryTestCase
     {
         $this->qaForm = m::mock(QaForm::class);
 
-        $this->partial = m::mock(Partial::class);
+        $this->warningAdder = m::mock(WarningAdder::class);
 
         $this->isValidHandler = m::mock(IsValidHandlerInterface::class);
 
-        $this->isValidBasedWarningAdder = new IsValidBasedWarningAdder(
-            $this->partial,
-            $this->isValidHandler
-        );
+        $this->isValidBasedWarningAdder = new IsValidBasedWarningAdder($this->warningAdder);
     }
 
     public function testSetDataWrongDataValues()
@@ -57,28 +54,6 @@ class IsValidBasedWarningAdderTest extends MockeryTestCase
         $this->isValidHandler->shouldReceive('isValid')
             ->andReturn(false);
 
-        $warningMarkup = '<h1>warning markup</h1>';
-
-        $this->partial->shouldReceive('__invoke')
-            ->with(
-                'partials/warning-component',
-                ['translationKey' => self::WARNING_KEY]
-            )
-            ->once()
-            ->andReturn($warningMarkup);
-
-        $warningElementParams = [
-            'name' => 'warning',
-            'type' => Html::class,
-            'attributes' => [
-                'value' => $warningMarkup
-            ]
-        ];
-
-        $warningFlagsParams = [
-            'priority' => self::PRIORITY
-        ];
-
         $warningVisibleElement = m::mock(Hidden::class);
         $warningVisibleElement->shouldReceive('setValue')
             ->with(1)
@@ -88,8 +63,9 @@ class IsValidBasedWarningAdderTest extends MockeryTestCase
         $questionFieldset->shouldReceive('get')
             ->with('warningVisible')
             ->andReturn($warningVisibleElement);
-        $questionFieldset->shouldReceive('add')
-            ->with($warningElementParams, $warningFlagsParams)
+
+        $this->warningAdder->shouldReceive('add')
+            ->with($questionFieldset, self::WARNING_KEY, self::PRIORITY)
             ->once();
 
         $this->qaForm->shouldReceive('getQuestionFieldset')

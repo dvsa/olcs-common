@@ -7,7 +7,7 @@ use Common\Data\Mapper\Licence\Surrender\CommunityLicence;
 use Common\Data\Mapper\Licence\Surrender\CurrentDiscs;
 use Common\Data\Mapper\Licence\Surrender\OperatorLicence;
 use Common\Service\Helper\TranslationHelperService;
-use Zend\Mvc\Controller\Plugin\Url;
+use Laminas\Mvc\Controller\Plugin\Url;
 
 /**
  * Class SurrenderSection

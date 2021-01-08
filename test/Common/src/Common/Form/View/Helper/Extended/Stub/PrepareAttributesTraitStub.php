@@ -3,7 +3,7 @@
 namespace CommonTest\Form\View\Helper\Extended\Stub;
 
 use Common\Form\View\Helper\Extended\PrepareAttributesTrait;
-use Zend\Form\View\Helper\AbstractHelper;
+use Laminas\Form\View\Helper\AbstractHelper;
 
 /**
  * Stub class for testingn PrepareAttributesTrait trait

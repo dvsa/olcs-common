@@ -12,7 +12,7 @@ namespace Common\Form\Elements\Validators;
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class ReceivedAmount extends \Zend\Validator\GreaterThan
+class ReceivedAmount extends \Laminas\Validator\GreaterThan
 {
     /**
      * Validation failure message template definitions

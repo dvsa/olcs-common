@@ -15,7 +15,7 @@ trait VariationOperatingCentresControllerTrait
     /**
      * Action Restore Operation Center
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     public function restoreAction()
     {

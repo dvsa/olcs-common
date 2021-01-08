@@ -3,7 +3,7 @@
 namespace Common\Service\Helper;
 
 use Common\Service\Table\TableBuilder;
-use Zend\Http\Response;
+use Laminas\Http\Response;
 
 /**
  * Miscellaneous response helper service

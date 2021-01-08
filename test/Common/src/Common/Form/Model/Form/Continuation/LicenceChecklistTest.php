@@ -4,7 +4,7 @@ namespace CommonTest\Form\Model\Form\Continuation;
 
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
 use Common\Form\Model\Form\Continuation\LicenceChecklist;
-use Zend\Validator\Identical;
+use Laminas\Validator\Identical;
 
 /**
  * Class LicenceChecklist
@@ -77,6 +77,13 @@ class LicenceChecklistTest extends AbstractFormValidationTestCase
     public function testSafetyCheckbox()
     {
         $element = ['data', 'safetyCheckbox'];
+        $this->assertFormElementValid($element, 'Y');
+        $this->assertFormElementNotValid($element, 'N', [Identical::NOT_SAME]);
+    }
+
+    public function testUsersCheckbox()
+    {
+        $element = ['data', 'usersCheckbox'];
         $this->assertFormElementValid($element, 'Y');
         $this->assertFormElementNotValid($element, 'N', [Identical::NOT_SAME]);
     }

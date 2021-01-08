@@ -9,15 +9,15 @@
 namespace Common\Form\View\Helper\Extended;
 
 use Common\View\Helper\UniqidGenerator;
-use Zend\Form\LabelAwareInterface;
-use Zend\Form\Element\MultiCheckbox as MultiCheckboxElement;
+use Laminas\Form\LabelAwareInterface;
+use Laminas\Form\Element\MultiCheckbox as MultiCheckboxElement;
 
 /**
  * Here we extend the View helper to allow us to add attributes that aren't in ZF2's whitelist
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormRadio extends \Zend\Form\View\Helper\FormRadio
+class FormRadio extends \Laminas\Form\View\Helper\FormRadio
 {
     use PrepareAttributesTrait;
 
@@ -39,6 +39,7 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
         array $selectedOptions,
         array $attributes
     ) {
+        $translator = $this->getTranslator();
         $escapeHtmlHelper = $this->getEscapeHtmlHelper();
         $labelHelper = $this->getLabelHelper();
         $labelClose = $labelHelper->closeTag();
@@ -93,7 +94,16 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
                 $hintAttributes = $this->createAttributesString($optionSpec['hint_attributes']);
             }
             if (isset($optionSpec['hint'])) {
-                $hint = $this->wrapWithTag($optionSpec['hint'], $hintAttributes);
+                $hintText = $optionSpec['hint'];
+
+                if (null !== $translator) {
+                    $hintText = $translator->translate(
+                        $hintText,
+                        $this->getTranslatorTextDomain()
+                    );
+                }
+
+                $hint = $this->wrapWithTag($hintText, $hintAttributes);
             }
             if (isset($optionSpec['selected'])) {
                 $selected = $optionSpec['selected'];
@@ -130,7 +140,7 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
                 $closingBracket
             );
 
-            if (null !== ($translator = $this->getTranslator())) {
+            if (null !== $translator) {
                 $label = $translator->translate(
                     $label,
                     $this->getTranslatorTextDomain()
@@ -155,7 +165,13 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
                     break;
             }
 
-            $combinedMarkup[] = $this->wrapWithTag($markup, $itemWrapperAttributes);
+            $markup = $this->wrapWithTag($markup, $itemWrapperAttributes);
+
+            if (isset($optionSpec['markup_before'])) {
+                $markup = $optionSpec['markup_before'] . $markup;
+            }
+
+            $combinedMarkup[] = $markup;
         }
 
         $outputMarkup = implode($this->getSeparator(), $combinedMarkup);

@@ -12,7 +12,7 @@ namespace Common\Form\View\Helper\Extended;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormSearch extends \Zend\Form\View\Helper\FormSearch
+class FormSearch extends \Laminas\Form\View\Helper\FormSearch
 {
     use PrepareAttributesTrait;
 }

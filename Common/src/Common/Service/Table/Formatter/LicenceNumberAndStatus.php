@@ -22,7 +22,7 @@ class LicenceNumberAndStatus implements FormatterInterface
      *
      * @param array                               $row            Row data
      * @param array                               $column         Column data
-     * @param \Zend\ServiceManager\ServiceManager $serviceLocator Service locator
+     * @param \Laminas\ServiceManager\ServiceManager $serviceLocator Service locator
      *
      * @return string
      * @inheritdoc

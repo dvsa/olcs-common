@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Lva;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Attributes({"method":"post"})
@@ -33,6 +33,18 @@ class UploadEvidence
      * @Form\Name("operatingCentres")
      */
     public $operatingCentres = null;
+
+    /**
+     * @Form\ComposedObject({
+     *      "target_object":"Common\Form\Model\Form\Lva\Fieldset\UploadEvidenceSupportingEvidence",
+     *      "options":{
+     *          "count": 1,
+     *          "label":"lva.section.title.upload-evidence.supporting-evidence",
+     *      }
+     * })
+     * @Form\Name("supportingEvidence")
+     */
+    public $supportingEvidence = null;
 
 
     /**

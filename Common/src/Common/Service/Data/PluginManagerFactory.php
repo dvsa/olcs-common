@@ -2,9 +2,9 @@
 
 namespace Common\Service\Data;
 
-use Zend\Mvc\Service\AbstractPluginManagerFactory;
-use Zend\Mvc\Service\ServiceManagerConfig;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\Mvc\Service\AbstractPluginManagerFactory;
+use Laminas\Mvc\Service\ServiceManagerConfig;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * PluginManagerFactory

@@ -7,16 +7,16 @@
  */
 namespace Common\Controller;
 
-use Zend\Http\Response;
-use Zend\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
-use Zend\View\Model\ViewModel;
+use Laminas\Http\Response;
+use Laminas\Mvc\Controller\AbstractActionController as LaminasAbstractActionController;
+use Laminas\View\Model\ViewModel;
 
 /**
  * Error Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class ErrorController extends ZendAbstractActionController
+class ErrorController extends LaminasAbstractActionController
 {
     public function notFoundAction()
     {

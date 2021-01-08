@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Lva\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Options({"label":"application_your-business_business-type.correspondence.label"})
@@ -32,7 +32,7 @@ class Correspondence
      * @Form\Required(false)
      * @Form\Type("Text")
      * @Form\Validator({
-     *     "name":"Zend\Validator\StringLength",
+     *     "name":"Laminas\Validator\StringLength",
      *     "options":{
      *         "min": 0,
      *         "max": 90,

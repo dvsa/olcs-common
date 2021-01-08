@@ -10,7 +10,7 @@ namespace Common\Validator;
  *
  * @package Common\Validator
  */
-class FileUploadCount extends \Zend\Validator\AbstractValidator
+class FileUploadCount extends \Laminas\Validator\AbstractValidator
 {
     const TOO_FEW = 'fileCountTooFew';
 
@@ -37,12 +37,12 @@ class FileUploadCount extends \Zend\Validator\AbstractValidator
      * @param int $min Min number required
      *
      * @return void
-     * @throws \Zend\Validator\Exception\InvalidArgumentException
+     * @throws \Laminas\Validator\Exception\InvalidArgumentException
      */
     public function setMin($min)
     {
         if (!is_numeric($min)) {
-            throw new \Zend\Validator\Exception\InvalidArgumentException('Invalid options to validator provided');
+            throw new \Laminas\Validator\Exception\InvalidArgumentException('Invalid options to validator provided');
         }
 
         $this->options['min'] = $min;

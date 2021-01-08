@@ -23,7 +23,7 @@ class IrhpPermitRangePermitNumberTest extends MockeryTestCase
      */
     public function testFormat($data, $expected)
     {
-        $sm = m::mock(\Zend\ServiceManager\ServiceLocatorInterface::class);
+        $sm = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class);
         $sm->shouldReceive('get->fromRoute')
             ->with(
                 'admin-dashboard/admin-permits/ranges',

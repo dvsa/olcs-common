@@ -4,11 +4,11 @@ namespace Common\Controller\Continuation;
 
 use Common\Controller\Lva\AbstractController;
 use Common\Form\Form;
-use Zend\View\Model\ViewModel;
+use Laminas\View\Model\ViewModel;
 use Dvsa\Olcs\Transfer\Query\ContinuationDetail\Get as GetContinuationDetail;
 use Common\RefData;
-use Zend\Mvc\MvcEvent;
-use Zend\Mvc\Exception;
+use Laminas\Mvc\MvcEvent;
+use Laminas\Mvc\Exception;
 use Common\Service\Helper\TranslationHelperService;
 
 /**
@@ -141,7 +141,7 @@ abstract class AbstractContinuationController extends AbstractController
     /**
      * Redirect to success page
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     protected function redirectToSuccessPage()
     {
@@ -151,7 +151,7 @@ abstract class AbstractContinuationController extends AbstractController
     /**
      * Redirect to payment page
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     protected function redirectToPaymentPage()
     {
@@ -163,7 +163,7 @@ abstract class AbstractContinuationController extends AbstractController
      *
      * @param int $licenceId licence Id
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     protected function redirectToLicenceOverviewPage($licenceId)
     {
@@ -175,7 +175,7 @@ abstract class AbstractContinuationController extends AbstractController
      *
      * @param MvcEvent $e Event
      *
-     * @return null|\Zend\Http\Response
+     * @return null|\Laminas\Http\Response
      */
     public function onDispatch(MvcEvent $e)
     {
@@ -272,7 +272,9 @@ abstract class AbstractContinuationController extends AbstractController
         $translatorHelper = $this->getServiceLocator()->get('Helper\Translation');
 
         return $translatorHelper->translateReplace(
-            'continuations.step.header', [$stepDetails['current'], $stepDetails['total']]
+            'continuations.step.header',
+            [$stepDetails['current'],
+            $stepDetails['total']]
         );
     }
 

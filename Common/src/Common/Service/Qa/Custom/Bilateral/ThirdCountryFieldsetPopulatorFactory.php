@@ -2,8 +2,8 @@
 
 namespace Common\Service\Qa\Custom\Bilateral;
 
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class ThirdCountryFieldsetPopulatorFactory implements FactoryInterface
 {
@@ -18,8 +18,8 @@ class ThirdCountryFieldsetPopulatorFactory implements FactoryInterface
     {
         return new ThirdCountryFieldsetPopulator(
             $serviceLocator->get('Helper\Translation'),
-            $serviceLocator->get('QaRadioFactory'),
-            $serviceLocator->get('QaBilateralYesNoRadioOptionsApplier')
+            $serviceLocator->get('QaBilateralYesNoWithMarkupForNoPopulator'),
+            $serviceLocator->get('QaBilateralStandardYesNoValueOptionsGenerator')
         );
     }
 }

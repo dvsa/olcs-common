@@ -1,7 +1,7 @@
 <?php
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
 
 /**
  * @deprecated This does not get used and must be removed as in: OLCS-15198

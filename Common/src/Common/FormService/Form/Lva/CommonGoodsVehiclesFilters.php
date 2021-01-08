@@ -14,7 +14,7 @@ class CommonGoodsVehiclesFilters extends AbstractFormService
     /**
      * Get Form
      *
-     * @return \Zend\Form\FormInterface
+     * @return \Laminas\Form\FormInterface
      */
     public function getForm()
     {

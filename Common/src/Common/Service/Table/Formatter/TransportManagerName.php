@@ -2,7 +2,7 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * TransportManagerName Formatter
@@ -123,7 +123,10 @@ class TransportManagerName extends Name
         $transportManagerId = $data['transportManager']['id'];
         $urlHelper = $sm->get('Helper\Url');
         $url = $urlHelper->fromRoute(
-            'transport-manager/details', ['transportManager' => $transportManagerId], [], true
+            'transport-manager/details',
+            ['transportManager' => $transportManagerId],
+            [],
+            true
         );
 
         return $url;

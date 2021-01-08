@@ -60,7 +60,7 @@ class LicencePermitReference implements FormatterInterface
      *
      * @param array                               $row            Row data
      * @param array                               $column         Column data
-     * @param \Zend\ServiceManager\ServiceManager $serviceLocator Service locator
+     * @param \Laminas\ServiceManager\ServiceManager $serviceLocator Service locator
      *
      * @return string
      * @inheritdoc
@@ -68,7 +68,7 @@ class LicencePermitReference implements FormatterInterface
     public static function format($row, $column = null, $serviceLocator = null)
     {
         $referenceNumberMarkup = sprintf(
-            '<span class="visually-hidden">%s</span>',
+            '<span class="govuk-visually-hidden">%s</span>',
             Escape::html(
                 $serviceLocator->get('translator')->translate('dashboard-table-permit-application-ref')
             )
@@ -114,16 +114,10 @@ class LicencePermitReference implements FormatterInterface
                 break;
         }
 
-        $options = [
-            'query' => [
-                'fromDashboard' => '1'
-            ]
-        ];
-
         return sprintf(
             '%s <a class="overview__link" href="%s"><span class="overview__link--underline">%s</span></a>',
             $referenceNumberMarkup,
-            $serviceLocator->get('Helper\Url')->fromRoute('permits/' . $route, $params, $options),
+            $serviceLocator->get('Helper\Url')->fromRoute('permits/' . $route, $params),
             Escape::html($text)
         );
     }

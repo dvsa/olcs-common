@@ -15,13 +15,15 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class YesNoRadioOptionsApplierTest extends MockeryTestCase
 {
     const STANDARD_ATTRIBUTES = [
+        'id' => 'yesNoRadio',
         'radios_wrapper_attributes' => [
+            'id' => 'yesNoRadio',
             'class' => 'govuk-radios--conditional',
             'data-module' => 'radios',
         ]
     ];
 
-    const STANDARD_VALUE_OPTIONS = [
+    const VALUE_OPTIONS = [
         'yes' => [
             'label' => 'Yes',
             'value' => 'Y',
@@ -45,7 +47,7 @@ class YesNoRadioOptionsApplierTest extends MockeryTestCase
             ->once();
 
         $radio->shouldReceive('setValueOptions')
-            ->with(self::STANDARD_VALUE_OPTIONS)
+            ->with(self::VALUE_OPTIONS)
             ->once();
 
         $radio->shouldReceive('setAttributes')
@@ -57,6 +59,6 @@ class YesNoRadioOptionsApplierTest extends MockeryTestCase
             ->once();
 
         $yesNoRadioOptionsApplier = new YesNoRadioOptionsApplier();
-        $yesNoRadioOptionsApplier->applyTo($radio, self::RADIO_VALUE, self::NOT_SELECTED_MESSAGE);
+        $yesNoRadioOptionsApplier->applyTo($radio, self::VALUE_OPTIONS, self::RADIO_VALUE, self::NOT_SELECTED_MESSAGE);
     }
 }

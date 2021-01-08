@@ -13,7 +13,7 @@ use Common\Service\Qa\UsageContext;
 use Common\Service\Qa\ValidatorsAdder;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Fieldset;
+use Laminas\Form\Fieldset;
 
 /**
  * Fieldset Populator Test

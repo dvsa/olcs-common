@@ -7,7 +7,7 @@
  */
 namespace Common\Form\Elements\Validators;
 
-use Zend\Validator\AbstractValidator;
+use Laminas\Validator\AbstractValidator;
 
 /**
  * TableRequiredValidator

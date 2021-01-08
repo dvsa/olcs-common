@@ -12,7 +12,7 @@ namespace Common\Form\View\Helper\Extended;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormTel extends \Zend\Form\View\Helper\FormTel
+class FormTel extends \Laminas\Form\View\Helper\FormTel
 {
     use PrepareAttributesTrait;
 }

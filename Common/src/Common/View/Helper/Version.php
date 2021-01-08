@@ -7,11 +7,11 @@
  */
 namespace Common\View\Helper;
 
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
-use Zend\View\Helper\HelperInterface;
-use Zend\View\Helper\AbstractHelper;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorAwareTrait;
+use Laminas\View\Helper\HelperInterface;
+use Laminas\View\Helper\AbstractHelper;
+use Laminas\ServiceManager\ServiceLocatorAwareInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Version view helper

@@ -19,7 +19,7 @@ class OperatingCentreSelfserveTest extends SearchAbstractTest
             'licStatusDesc' => 'unit_LicStatusDesc',
         ];
 
-        $mockTranslator = m::mock(\Zend\I18n\Translator\Translator::class)
+        $mockTranslator = m::mock(\Laminas\I18n\Translator\Translator::class)
             ->shouldReceive('translate')
             ->once()
             ->andReturnUsing(
@@ -29,7 +29,7 @@ class OperatingCentreSelfserveTest extends SearchAbstractTest
             )
             ->getMock();
 
-        $mockSm = m::mock(\Zend\Di\ServiceLocatorInterface::class)
+        $mockSm = m::mock(\Laminas\Di\ServiceLocatorInterface::class)
             ->shouldReceive('get')->with('translator')->andReturn($mockTranslator)
             ->getMock();
 

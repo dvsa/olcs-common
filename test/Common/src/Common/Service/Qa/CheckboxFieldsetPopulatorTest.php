@@ -8,8 +8,8 @@ use Common\Service\Qa\CheckboxFieldsetPopulator;
 use Common\Service\Qa\TranslateableTextHandler;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Fieldset;
-use Zend\Form\Form;
+use Laminas\Form\Fieldset;
+use Laminas\Form\Form;
 
 /**
  * CheckboxFieldsetPopulatorTest

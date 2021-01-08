@@ -7,7 +7,7 @@
  */
 namespace Common\Controller\Lva;
 
-use Zend\Form\Form;
+use Laminas\Form\Form;
 
 /**
  * Abstract Variation Controller

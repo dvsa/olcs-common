@@ -8,12 +8,12 @@
 namespace Common\Util;
 
 use Dvsa\Olcs\Utils\Client\ClientAdapterLoggingWrapper;
-use Zend\Http\Client as HttpClient;
-use Zend\Http\Header\AcceptLanguage;
-use Zend\Http\Header\Cookie;
-use Zend\Http\Request;
-use Zend\Uri\Http as HttpUri;
-use Zend\Http\Header\Accept;
+use Laminas\Http\Client as HttpClient;
+use Laminas\Http\Header\AcceptLanguage;
+use Laminas\Http\Header\Cookie;
+use Laminas\Http\Request;
+use Laminas\Uri\Http as HttpUri;
+use Laminas\Http\Header\Accept;
 use Common\Util\RestClient\Exception;
 use Common\Util\ResponseHelper;
 
@@ -52,7 +52,7 @@ class RestClient
     private $cookie;
 
     /**
-     * @param \Zend\Uri\Http $url
+     * @param \Laminas\Uri\Http $url
      * @param array $options options passed to HttpClient
      * @param array $auth authentication username/password
      * @internal param \Common\Util\The $HttpUri URL of the resource that this client is meant to act on

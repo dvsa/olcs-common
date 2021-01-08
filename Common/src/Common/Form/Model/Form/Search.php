@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Options({"prefer_form_input_filter":true})
@@ -15,7 +15,7 @@ class Search
     /**
      * @Form\Attributes({"type":"submit","class":"action--primary large"})
      * @Form\Options({"label":"Search"})
-     * @Form\Type("\Zend\Form\Element\Button")
+     * @Form\Type("\Laminas\Form\Element\Button")
      */
     public $submit = null;
 

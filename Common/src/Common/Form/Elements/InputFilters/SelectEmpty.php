@@ -2,16 +2,16 @@
 
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\Form\Element\Select as ZendElement;
-use Zend\Validator as ZendValidator;
-use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\Form\Element\Select as LaminasElement;
+use Laminas\Validator as LaminasValidator;
+use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
 
 /**
  * @deprecated Unused Custom InputFilter.  Need to remove in OLCS-15198
  *
  * Select with empty allowed
  */
-class SelectEmpty extends ZendElement implements InputProviderInterface
+class SelectEmpty extends LaminasElement implements InputProviderInterface
 {
     protected $required = false;
 
@@ -31,9 +31,9 @@ class SelectEmpty extends ZendElement implements InputProviderInterface
             'required' => $this->required,
             'validators' => [
                 [
-                    'name' => ZendValidator\NotEmpty::class,
+                    'name' => LaminasValidator\NotEmpty::class,
                     'options' => [
-                        'type' => ZendValidator\NotEmpty::EMPTY_ARRAY,
+                        'type' => LaminasValidator\NotEmpty::EMPTY_ARRAY,
                     ],
                 ],
             ]

@@ -2,7 +2,7 @@
 
 namespace Common\Util;
 
-use Zend\Http\Response;
+use Laminas\Http\Response;
 
 /**
  * Class MultiResponseHelper

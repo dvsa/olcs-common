@@ -2,13 +2,13 @@
 
 namespace Common\Form\Elements\Custom;
 
-use Zend\Form\Element as ZendElement;
-use Zend\InputFilter\InputProviderInterface;
+use Laminas\Form\Element as LaminasElement;
+use Laminas\InputFilter\InputProviderInterface;
 
 /**
  * @author Dmitry Golubev <dmitrij.golubev@valtech.com>
  */
-class VehiclePlatedWeight extends ZendElement implements InputProviderInterface
+class VehiclePlatedWeight extends LaminasElement implements InputProviderInterface
 {
     /**
      * Get Input Specification
@@ -19,17 +19,17 @@ class VehiclePlatedWeight extends ZendElement implements InputProviderInterface
     {
         return array_filter(
             [
-                'type' => \Zend\InputFilter\Input::class,
+                'type' => \Laminas\InputFilter\Input::class,
                 'name' => $this->getName(),
                 'required' => $this->getOption('required'),
                 'allow_empty' => $this->getOption('allow_empty'),
                 'validators' => [
                     [
-                        'name' => \Zend\Validator\Digits::class,
+                        'name' => \Laminas\Validator\Digits::class,
                         'options' => [],
                     ],
                     [
-                        'name' => \Zend\Validator\Between::class,
+                        'name' => \Laminas\Validator\Between::class,
                         'options' => [
                             'min' => 0,
                             'max' => 999999,

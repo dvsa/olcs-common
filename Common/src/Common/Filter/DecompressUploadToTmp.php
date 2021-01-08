@@ -2,8 +2,8 @@
 
 namespace Common\Filter;
 
-use Zend\Filter\AbstractFilter;
-use Zend\Filter\Exception;
+use Laminas\Filter\AbstractFilter;
+use Laminas\Filter\Exception;
 
 /**
  * Class DecompressUploadToTmp

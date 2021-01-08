@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Lva;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Name("vehicle-filter")
@@ -21,7 +21,7 @@ class VehicleFilter
      *     },
      *     "disable_inarray_validator": false
      * })
-     * @Form\Type("\Zend\Form\Element\Select")
+     * @Form\Type("\Laminas\Form\Element\Select")
      */
     public $vrm = null;
 
@@ -32,7 +32,7 @@ class VehicleFilter
      *     "value_options": {"A":"All", "Y":"Yes", "N":"No"},
      *     "disable_inarray_validator": false
      * })
-     * @Form\Type("\Zend\Form\Element\Select")
+     * @Form\Type("\Laminas\Form\Element\Select")
      */
     public $specified = null;
 
@@ -43,7 +43,7 @@ class VehicleFilter
      *     "value_options": {"A":"All", "Y":"Yes", "N":"No"},
      *     "disable_inarray_validator": false
      * })
-     * @Form\Type("\Zend\Form\Element\Select")
+     * @Form\Type("\Laminas\Form\Element\Select")
      */
     public $disc = null;
 
@@ -63,7 +63,7 @@ class VehicleFilter
     /**
      * @Form\Attributes({"type":"submit","class":"action--primary","data-container-class":"js-hidden"})
      * @Form\Options({"label": "internal-vehicle-filter-filter"})
-     * @Form\Type("\Zend\Form\Element\Button")
+     * @Form\Type("\Laminas\Form\Element\Button")
      */
     public $filter = null;
 

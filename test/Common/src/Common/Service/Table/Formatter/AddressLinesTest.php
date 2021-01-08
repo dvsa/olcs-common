@@ -9,7 +9,7 @@ namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Helper\DataHelperService;
 use Common\Service\Table\Formatter\AddressLines;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * AddressLines formatter test

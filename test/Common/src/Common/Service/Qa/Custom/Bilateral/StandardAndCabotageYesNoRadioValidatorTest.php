@@ -56,7 +56,7 @@ class StandardAndCabotageYesNoRadioValidatorTest extends MockeryTestCase
     public function testIsValidFalseSetMessages()
     {
         $value = 'Y';
-        $context = ['yesContent' => null];
+        $context = ['yesContent' => ''];
 
         $this->yesContentElement->shouldReceive('setMessages')
             ->with(['qanda.bilaterals.standard-and-cabotage.not-selected-message'])

@@ -3,11 +3,11 @@
 namespace CommonTest\Form\Model\Form\Lva;
 
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
-use Zend\Form\Element\Radio;
-use Zend\Form\Element\Textarea;
+use Laminas\Form\Element\Radio;
+use Laminas\Form\Element\Textarea;
 use Common\Form\Elements\Types\TermsBox;
 use Common\Form\Elements\InputFilters\SingleCheckbox;
-use Zend\Validator\Identical;
+use Laminas\Validator\Identical;
 
 /**
  * Class VehiclesDeclarationsTest

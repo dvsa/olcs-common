@@ -10,7 +10,7 @@ namespace CommonTest\Service\Table;
 
 use Common\Service\Table\ContentHelper;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
-use Zend\Http\Response;
+use Laminas\Http\Response;
 
 /**
  * Content Helper Test
@@ -33,7 +33,7 @@ class ContentHelperTest extends TestCase
      */
     public function testTranslatorSet()
     {
-        $translatorMock = $this->createMock(\Zend\Mvc\I18n\Translator::class);
+        $translatorMock = $this->createMock(\Laminas\Mvc\I18n\Translator::class);
 
         $mock = $this->createPartialMock(ContentHelper::class, array('getTranslator'));
 

@@ -7,15 +7,15 @@
 
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\Form\Element\Textarea as ZendElement;
-use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\Form\Element\Textarea as LaminasElement;
+use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
 
 /**
  * Input Specification for Convition additional info
  *
  * @author Jakub Igla <jakub.igla@valtech.co.uk>
  */
-class ConvictionTextarea extends ZendElement implements InputProviderInterface
+class ConvictionTextarea extends LaminasElement implements InputProviderInterface
 {
 
     public function __construct($name = null, $options = array())

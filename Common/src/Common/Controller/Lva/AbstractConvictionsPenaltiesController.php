@@ -24,7 +24,7 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
     /**
      * Index Action
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     public function indexAction()
     {
@@ -148,7 +148,7 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
     /**
      * Add a conviction
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     public function addAction()
     {
@@ -158,7 +158,7 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
     /**
      * Edit a conviction
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     public function editAction()
     {
@@ -170,7 +170,7 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
      *
      * @param string $mode mode
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     protected function addOrEdit($mode)
     {

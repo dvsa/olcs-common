@@ -6,7 +6,7 @@ use Common\Service\Qa\FieldsetModifier\FieldsetModifier;
 use Common\Service\Qa\FieldsetModifier\FieldsetModifierInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Fieldset;
+use Laminas\Form\Fieldset;
 
 /**
  * FieldsetModifierTest

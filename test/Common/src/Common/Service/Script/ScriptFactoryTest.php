@@ -29,9 +29,9 @@ class ScriptFactoryTest extends \PHPUnit\Framework\TestCase
             'local_scripts_path' => [__DIR__ . '/TestResources/']
         ];
 
-        $this->inlineScript = new \Zend\View\Helper\InlineScript();
+        $this->inlineScript = new \Laminas\View\Helper\InlineScript();
 
-        $vhm = $this->createMock('\Zend\View\HelperPluginManager', ['get']);
+        $vhm = $this->createMock('\Laminas\View\HelperPluginManager', ['get']);
         $vhm->expects($this->any())
             ->method('get')
             ->with('inlineScript')
@@ -42,7 +42,7 @@ class ScriptFactoryTest extends \PHPUnit\Framework\TestCase
             array('Config', $this->config),
         );
 
-        $sl = $this->createMock('\Zend\ServiceManager\ServiceLocatorInterface', ['get', 'has']);
+        $sl = $this->createMock('\Laminas\ServiceManager\ServiceLocatorInterface', ['get', 'has']);
         $sl->expects($this->any())
            ->method('get')
            ->will($this->returnValueMap($valueMap));

@@ -23,7 +23,7 @@ class TransactionFeeStatus implements FormatterInterface
      *
      * @param array $row
      * @param array $column
-     * @param \Zend\ServiceManager\ServiceManager $sm
+     * @param \Laminas\ServiceManager\ServiceManager $sm
      * @return string
      * @inheritdoc
      */

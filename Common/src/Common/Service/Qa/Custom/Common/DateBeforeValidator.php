@@ -5,8 +5,8 @@ namespace Common\Service\Qa\Custom\Common;
 use Common\Service\Qa\DateTimeFactory;
 use DateTime;
 use IntlDateFormatter;
-use Zend\I18n\View\Helper\DateFormat;
-use Zend\Validator\AbstractValidator;
+use Laminas\I18n\View\Helper\DateFormat;
+use Laminas\Validator\AbstractValidator;
 
 class DateBeforeValidator extends AbstractValidator
 {

@@ -3,8 +3,8 @@
 namespace Common\Service\Table\Formatter;
 
 use Common\Util\Escape;
-use Zend\I18n\Translator\Translator;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\I18n\Translator\Translator;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use Common\Service\Helper\UrlHelperService;
 use Common\View\Helper\Status as StatusHelper;
 

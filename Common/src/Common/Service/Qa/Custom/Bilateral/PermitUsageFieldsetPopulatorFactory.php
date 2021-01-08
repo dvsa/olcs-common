@@ -2,8 +2,8 @@
 
 namespace Common\Service\Qa\Custom\Bilateral;
 
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class PermitUsageFieldsetPopulatorFactory implements FactoryInterface
 {
@@ -18,7 +18,8 @@ class PermitUsageFieldsetPopulatorFactory implements FactoryInterface
     {
         return new PermitUsageFieldsetPopulator(
             $serviceLocator->get('QaRadioFieldsetPopulator'),
-            $serviceLocator->get('Helper\Translation')
+            $serviceLocator->get('Helper\Translation'),
+            $serviceLocator->get('QaCommonHtmlAdder')
         );
     }
 }

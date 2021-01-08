@@ -3,7 +3,7 @@
 namespace Common\Service\Qa;
 
 use DateTime;
-use Zend\Validator\AbstractValidator;
+use Laminas\Validator\AbstractValidator;
 
 class DateNotInPastValidator extends AbstractValidator
 {

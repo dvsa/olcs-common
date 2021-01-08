@@ -13,9 +13,9 @@ use Common\Form\Elements\Types\Table;
 use Common\Form\Elements\Types\TermsBox;
 use Common\Form\Elements\Types\TrafficAreaSet;
 use Common\Form\Element\DynamicRadioHtml;
-use Zend\Form\ElementInterface;
-use Zend\Form\ElementInterface as ZendElementInterface;
-use Zend\Form\View\Helper\FormElement as ZendFormElement;
+use Laminas\Form\ElementInterface;
+use Laminas\Form\ElementInterface as LaminasElementInterface;
+use Laminas\Form\View\Helper\FormElement as LaminasFormElement;
 
 /**
  * Render form
@@ -23,7 +23,7 @@ use Zend\Form\View\Helper\FormElement as ZendFormElement;
  * @author Michael Cooper <michael.cooper@valtech.co.uk>
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormElement extends ZendFormElement
+class FormElement extends LaminasFormElement
 {
     const GUIDANCE_WRAPPER = '<div class="article">%s</div>';
     const TERMS_BOX_WRAPPER = '<div %s>%s</div>';
@@ -52,17 +52,17 @@ class FormElement extends ZendFormElement
      * Introspects the element type and attributes to determine which
      * helper to utilize when rendering.
      *
-     * @param ZendElementInterface $element Form Element
+     * @param LaminasElementInterface $element Form Element
      *
      * @return string
      */
-    public function render(ZendElementInterface $element)
+    public function render(LaminasElementInterface $element)
     {
         if (!$element->getAttribute('id')) {
             $element->setAttribute('id', $element->getName());
         }
 
-        /** @var \Zend\View\Renderer\PhpRenderer $renderer */
+        /** @var \Laminas\View\Renderer\PhpRenderer $renderer */
         $renderer = $this->getView();
         if (!method_exists($renderer, 'plugin')) {
             return '';

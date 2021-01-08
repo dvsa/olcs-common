@@ -2,8 +2,8 @@
 
 namespace Common\Service\Qa\Custom\EcmtShortTerm;
 
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class EarliestPermitDateFieldsetPopulatorFactory implements FactoryInterface
 {
@@ -17,7 +17,8 @@ class EarliestPermitDateFieldsetPopulatorFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         return new EarliestPermitDateFieldsetPopulator(
-            $serviceLocator->get('Helper\Translation')
+            $serviceLocator->get('Helper\Translation'),
+            $serviceLocator->get('QaCommonHtmlAdder')
         );
     }
 }

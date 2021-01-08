@@ -26,13 +26,13 @@ class CommunityLicenceStatusTest extends MockeryTestCase
 
         $this->sm = Bootstrap::getServiceManager();
 
-        $this->mockRouteMatch = m::mock('\Zend\Mvc\Router\RouteMatch')
+        $this->mockRouteMatch = m::mock('\Laminas\Mvc\Router\RouteMatch')
             ->shouldReceive('getMatchedRouteName')
             ->andReturn('route')
             ->getMock();
 
         $this->mockUrlHelper = m::mock();
-        $mockRequest = m::mock('\Zend\Stdlib\RequestInterface')
+        $mockRequest = m::mock('\Laminas\Stdlib\RequestInterface')
             ->shouldReceive('getQuery')
             ->andReturn(
                 m::mock()

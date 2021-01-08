@@ -4,7 +4,7 @@ namespace CommonTest\Form\Model\Form\Lva;
 
 use Common\Form\Elements\InputFilters\SingleCheckbox;
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
-use Zend\Form\Element\Radio;
+use Laminas\Form\Element\Radio;
 
 /**
  * Class SafetyTest

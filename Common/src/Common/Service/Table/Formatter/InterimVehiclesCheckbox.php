@@ -20,14 +20,13 @@ class InterimVehiclesCheckbox implements FormatterInterface
      *
      * @param array $data
      * @param array $column
-     * @param \Zend\ServiceManager\ServiceManager $sm
+     * @param \Laminas\ServiceManager\ServiceManager $sm
      * @return string
      */
     public static function format($data, $column = array(), $sm = null)
     {
         $format = '<input type="checkbox" value="' . $data['id'] . '" name="vehicles[id][]" %s>';
-        if (
-            isset($data['interimApplication']) &&
+        if (isset($data['interimApplication']) &&
             isset($data['interimApplication']['id'])
             ) {
             $result = sprintf($format, 'checked');

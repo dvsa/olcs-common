@@ -41,7 +41,7 @@ abstract class AbstractBusinessTypeController extends AbstractController impleme
 
         $hasInForceLicences = $result['hasInforceLicences'];
 
-        /** @var \Zend\Form\Form $form */
+        /** @var \Laminas\Form\Form $form */
         $form = $this->getServiceLocator()->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-business_type')
             ->getForm($hasInForceLicences);

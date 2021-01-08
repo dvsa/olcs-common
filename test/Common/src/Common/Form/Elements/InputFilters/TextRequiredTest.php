@@ -66,7 +66,7 @@ class TextRequiredTest extends \PHPUnit\Framework\TestCase
     public function testStringTrimFilterIsUsed()
     {
         $this->assertEquals(
-            [['name' => 'Zend\Filter\StringTrim']],
+            [['name' => 'Laminas\Filter\StringTrim']],
             $this->getSpecificationElement('filters')
         );
     }

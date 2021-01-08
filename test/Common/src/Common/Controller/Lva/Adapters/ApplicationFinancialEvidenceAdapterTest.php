@@ -4,7 +4,7 @@ namespace CommonTest\Controller\Lva\Adapters;
 
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Form;
+use Laminas\Form\Form;
 use Common\Controller\Lva\Adapters\ApplicationFinancialEvidenceAdapter;
 use Common\Service\Data\CategoryDataService as Category;
 

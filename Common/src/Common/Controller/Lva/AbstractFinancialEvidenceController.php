@@ -19,11 +19,11 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
     /**
      * Application create : Financial evidence section
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     public function indexAction()
     {
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
         $id      = $this->getIdentifier();
         /** @var \Common\Controller\Lva\Adapters\AbstractFinancialEvidenceAdapter $adapter */

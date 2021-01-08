@@ -7,9 +7,9 @@
  */
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\Form\Element as ZendElement;
-use Zend\Validator as ZendValidator;
-use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\Form\Element as LaminasElement;
+use Laminas\Validator as LaminasValidator;
+use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
 use Common\Form\Elements\Validators\VehiclesNumber as VehiclesNumberValidator;
 
 /**
@@ -17,7 +17,7 @@ use Common\Form\Elements\Validators\VehiclesNumber as VehiclesNumberValidator;
  *
  * @author Jakub Igla <jakub.igla@valtech.co.uk>
  */
-class VehiclesNumber extends ZendElement implements InputProviderInterface
+class VehiclesNumber extends LaminasElement implements InputProviderInterface
 {
 
     /**
@@ -31,7 +31,7 @@ class VehiclesNumber extends ZendElement implements InputProviderInterface
             'name' => $this->getName(),
             'required' => true,
             'validators' => [
-                new ZendValidator\Digits(),
+                new LaminasValidator\Digits(),
                 new VehiclesNumberValidator($this->getName())
             ]
         ];

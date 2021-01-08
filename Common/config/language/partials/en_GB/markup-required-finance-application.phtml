@@ -1,10 +1,16 @@
 <div class="article">
-    
     <div class="guidance">
         <p>To be granted a licence you need to prove you have enough money to keep your vehicles and run your business.</p>
-        
-        <p>Read more about <a href="<?php echo $this->url('guides/guide', ['guide' => 'financial-evidence']) ?>" target="_blank">how to provide financial evidence</a>.</p>
     </div>
+    <p class="govuk-body">If you have received a loan under the government’s bounce-back loan scheme, you must upload evidence of your annual turnover and the loan amount approved by the lender.</p>
+    <p class="govuk-body">If you submit bank statements they must:</p>
+    <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-5">
+        <li>be in the name of the person/organisation applying for this licence</li>
+        <li>cover the 28 day period immediately before the date you submit this application</li>
+        <li>show itemised transactions as well as the opening and closing balance</li>
+    </ul>
+    <p class="govuk-body">You must be able to explain any large or unusual deposits to the account during the 28 day period</p>
+    <p class="govuk-body">Find out about <a href="<?php echo $this->url('guides/guide', ['guide' => 'financial-evidence']) ?>" target="_blank">other ways to provide financial evidence</a>.</p>
 
     <div class="info-box info-box--grey info-box--large-padding">
         <h3>How much will you need?</h3>
@@ -12,7 +18,7 @@
         <h2 style="margin-top: 0;">&pound; <?php echo number_format($requiredFinance); ?></h2>
 
         <p>This figure is based on:</p>
-        
+
         <ul>
             <li>this application for <?php echo $applicationVehicles; ?> vehicle<?php echo $applicationVehicles != 1 ? 's' : ''; ?></li>
             <?php if ((int) $otherLicenceVehicles > 0): ?>
@@ -24,18 +30,20 @@
         </ul>
 
         <p>
-            <details class="help">
-              <summary class="help__summary">
-                How did we calculate this?
-              </summary>
-              <div class="help__text">
+            <details class="govuk-details" data-module="govuk-details">
+                <summary class="govuk-details__summary" aria-controls="details-content-how-calculated">
+                    <span class="govuk-details__summary-text">
+                        How did we calculate this?
+                    </span>
+                </summary>
+              <div class="govuk-details__text" id="details-content-how-calculated">
                 <p>For standard national and international licences you must have:</p>
-                <ul>
+                <ul class="govuk-list govuk-list--bullet">
                     <li>&pound;<?php echo number_format($standardFirst); ?> for the first vehicle</li>
                     <li>&pound;<?php echo number_format($standardAdditional); ?> for each additional vehicle</li>
                 </ul>
                 <p>For restricted licences you must have:</p>
-                <ul>
+                <ul class="govuk-list govuk-list--bullet">
                     <li>&pound;<?php echo number_format($restrictedFirst); ?> for the first vehicle</li>
                     <li>&pound;<?php echo number_format($restrictedAdditional); ?> for each additional vehicle</li>
                 </ul>

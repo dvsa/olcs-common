@@ -7,7 +7,7 @@ use Common\Service\User\LastLoginService;
 use Common\Service\User\LastLoginServiceFactory;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Class LastLoginServiceFactoryTest

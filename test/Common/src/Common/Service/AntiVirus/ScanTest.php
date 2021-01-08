@@ -29,7 +29,7 @@ class ScanTest extends MockeryTestCase
                 'cliCommand' => 'scanfile %s'
             ]
         ];
-        $mockServiceManager = m::mock(\Zend\ServiceManager\ServiceLocatorInterface::class);
+        $mockServiceManager = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class);
         $mockServiceManager->shouldReceive('get')->with('config')->once()->andReturn($config);
 
         $object = $this->sut->createService($mockServiceManager);
@@ -39,7 +39,7 @@ class ScanTest extends MockeryTestCase
 
     public function testCreateServiceNoConfig()
     {
-        $mockServiceManager = m::mock(\Zend\ServiceManager\ServiceLocatorInterface::class);
+        $mockServiceManager = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class);
         $mockServiceManager->shouldReceive('get')->with('config')->once()->andReturn([]);
 
         $object = $this->sut->createService($mockServiceManager);

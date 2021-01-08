@@ -7,10 +7,10 @@
  */
 namespace Common\FormService;
 
-use Zend\ServiceManager\AbstractPluginManager;
-use Zend\ServiceManager\Exception\RuntimeException;
-use Zend\ServiceManager\ConfigInterface;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Laminas\ServiceManager\AbstractPluginManager;
+use Laminas\ServiceManager\Exception\RuntimeException;
+use Laminas\ServiceManager\ConfigInterface;
+use Laminas\ServiceManager\ServiceLocatorAwareInterface;
 
 /**
  * Form Service Manager

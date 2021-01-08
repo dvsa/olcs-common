@@ -11,7 +11,7 @@ namespace CommonTest\Data\Mapper\Lva;
 use Common\Data\Mapper\Lva\GoodsVehiclesVehicle;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
-use Zend\Form\FormInterface;
+use Laminas\Form\FormInterface;
 
 /**
  * Goods Vehicles Vehicle

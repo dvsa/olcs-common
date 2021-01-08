@@ -2,12 +2,12 @@
 
 namespace Common\Service\Qa\Custom\Bilateral;
 
-use Zend\Filter\StringTrim;
-use Zend\Form\Element\Text;
-use Zend\InputFilter\InputProviderInterface;
-use Zend\Validator\Digits;
-use Zend\Validator\GreaterThan;
-use Zend\Validator\StringLength;
+use Laminas\Filter\StringTrim;
+use Laminas\Form\Element\Text;
+use Laminas\InputFilter\InputProviderInterface;
+use Laminas\Validator\Digits;
+use Laminas\Validator\GreaterThan;
+use Laminas\Validator\StringLength;
 
 class NoOfPermitsElement extends Text implements InputProviderInterface
 {

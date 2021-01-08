@@ -2,8 +2,8 @@
 
 namespace Common\Service\Qa\Custom\Bilateral;
 
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class StandardAndCabotageFieldsetPopulatorFactory implements FactoryInterface
 {
@@ -19,7 +19,8 @@ class StandardAndCabotageFieldsetPopulatorFactory implements FactoryInterface
         return new StandardAndCabotageFieldsetPopulator(
             $serviceLocator->get('QaBilateralRadioFactory'),
             $serviceLocator->get('QaBilateralStandardAndCabotageYesNoRadioFactory'),
-            $serviceLocator->get('QaBilateralYesNoRadioOptionsApplier')
+            $serviceLocator->get('QaBilateralYesNoRadioOptionsApplier'),
+            $serviceLocator->get('QaBilateralStandardYesNoValueOptionsGenerator')
         );
     }
 }

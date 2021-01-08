@@ -3,7 +3,7 @@
 namespace CommonTest\Form\Model\Form\Lva;
 
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
-use Zend\I18n\Validator\IsFloat;
+use Laminas\I18n\Validator\IsFloat;
 
 /**
  * Class TmOtherLicenceTest

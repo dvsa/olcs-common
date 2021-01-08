@@ -27,7 +27,7 @@ class GenericUploadTest extends MockeryTestCase
     public function setUp(): void
     {
         $this->sm = Bootstrap::getServiceManager();
-        $this->mockResp = m::mock(\Zend\Http\Response::class);
+        $this->mockResp = m::mock(\Laminas\Http\Response::class);
 
         $this->sut = new GenericUploadStub();
         $this->sut->setServiceLocator($this->sm);

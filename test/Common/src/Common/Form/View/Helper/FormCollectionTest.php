@@ -13,24 +13,24 @@ use Common\Form\View\Helper\FormCollection;
 use Common\Form\View\Helper\Readonly\FormFieldset;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Element\Collection;
-use Zend\Form\Element\Radio;
-use Zend\Form\Fieldset;
-use Zend\Form\Form;
-use Zend\Form\View\Helper;
-use Zend\I18n\Translator\Translator;
-use Zend\I18n\View\Helper\Translate;
-use Zend\Stdlib\PriorityQueue;
-use Zend\View\HelperPluginManager;
-use Zend\View\Renderer\JsonRenderer;
-use Zend\View\Renderer\PhpRenderer;
+use Laminas\Form\Element\Collection;
+use Laminas\Form\Element\Radio;
+use Laminas\Form\Fieldset;
+use Laminas\Form\Form;
+use Laminas\Form\View\Helper;
+use Laminas\I18n\Translator\Translator;
+use Laminas\I18n\View\Helper\Translate;
+use Laminas\Stdlib\PriorityQueue;
+use Laminas\View\HelperPluginManager;
+use Laminas\View\Renderer\JsonRenderer;
+use Laminas\View\Renderer\PhpRenderer;
 
 /**
  * @covers \Common\Form\View\Helper\FormCollection
  */
 class FormCollectionTest extends MockeryTestCase
 {
-    /** @var  \Zend\Form\FieldsetInterface | \Zend\Form\ElementInterface */
+    /** @var  \Laminas\Form\FieldsetInterface | \Laminas\Form\ElementInterface */
     protected $element;
 
     private function prepareElement($targetElement = 'Text')
@@ -130,7 +130,12 @@ class FormCollectionTest extends MockeryTestCase
 
         echo $viewHelper($this->element, 'formCollection');
 
-        $this->expectOutputRegex('/^<fieldset data-group="postcode"><\/fieldset>$/');
+        $this->expectOutputRegex(
+            '/^<fieldset data-group="postcode">'
+            . '<label class=\"govuk-visually-hidden\" for=\"postcodeInput([0-9]+)\">Postcode search<\/label>'
+            . '<label for=\"selectAddress([0-9]+)\">postcode.select_address.label<\/label>'
+            . '<\/fieldset>$/'
+        );
     }
 
     /**
@@ -147,7 +152,10 @@ class FormCollectionTest extends MockeryTestCase
 
         $this->expectOutputRegex(
             '/^<div class="validation-wrapper"><ul><li>(.*)<\/li><\/ul>'
-            . '<fieldset data-group="postcode"><\/fieldset><\/div>$/'
+            . '<fieldset data-group="postcode">'
+            . '<label class=\"govuk-visually-hidden\" for=\"postcodeInput([0-9]+)\">Postcode search<\/label>'
+            . '<label for=\"selectAddress([0-9]+)\">postcode.select_address.label<\/label>'
+            . '<\/fieldset><\/div>$/'
         );
     }
 
@@ -178,7 +186,7 @@ class FormCollectionTest extends MockeryTestCase
 
     public function testReadOnly()
     {
-        $mockElement = m::mock('Zend\Form\ElementInterface');
+        $mockElement = m::mock('Laminas\Form\ElementInterface');
         $mockElement->shouldReceive('getOption')->with('hint')->andReturnNull();
         $mockElement->shouldReceive('getOption')->with('remove_if_readonly')->andReturnNull();
 
@@ -190,7 +198,7 @@ class FormCollectionTest extends MockeryTestCase
         $iterator = new PriorityQueue();
         $iterator->insert($mockElement);
 
-        $mockFieldset = m::mock('Zend\Form\FieldsetInterface');
+        $mockFieldset = m::mock('Laminas\Form\FieldsetInterface');
         $mockFieldset->shouldReceive('getMessages')->andReturn([]);
         $mockFieldset->shouldReceive('getAttribute')->with('class')->andReturn('unit_CssClass');
         $mockFieldset->shouldReceive('getAttributes')->andReturn([]);
@@ -201,8 +209,8 @@ class FormCollectionTest extends MockeryTestCase
         $mockFieldset->shouldReceive('getOption')->with('hintFormat')->andReturnNull();
         $mockFieldset->shouldReceive('getOption')->with('remove_if_readonly')->andReturnNull();
 
-        /** @var \Zend\View\Renderer\PhpRenderer | m\MockInterface $mockView */
-        $mockView = m::mock(\Zend\View\Renderer\PhpRenderer::class);
+        /** @var \Laminas\View\Renderer\PhpRenderer | m\MockInterface $mockView */
+        $mockView = m::mock(\Laminas\View\Renderer\PhpRenderer::class);
         $mockView->shouldReceive('formCollection')->andReturn($mockHelper);
         $mockView->shouldReceive('plugin')->with('readonlyformrow')->andReturn($mockHelper);
         $mockView->shouldReceive('plugin')->with(FormFieldset::class)->andReturn($mockFieldsetHlpr);
@@ -240,7 +248,7 @@ class FormCollectionTest extends MockeryTestCase
 
         $viewHelper = $this->prepareViewHelper();
 
-        /** @var \Zend\View\Renderer\PhpRenderer | m\MockInterface $mockView */
+        /** @var \Laminas\View\Renderer\PhpRenderer | m\MockInterface $mockView */
         $mockView = m::mock($viewHelper->getView())->makePartial();
         $mockView
             ->shouldReceive('translate')->andReturnUsing(

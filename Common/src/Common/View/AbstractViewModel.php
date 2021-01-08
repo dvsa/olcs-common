@@ -7,9 +7,9 @@
  */
 namespace Common\View;
 
-use Zend\View\Model\ViewModel;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Laminas\View\Model\ViewModel;
+use Laminas\ServiceManager\ServiceLocatorAwareTrait;
+use Laminas\ServiceManager\ServiceLocatorAwareInterface;
 
 /**
  * Abstract View Model

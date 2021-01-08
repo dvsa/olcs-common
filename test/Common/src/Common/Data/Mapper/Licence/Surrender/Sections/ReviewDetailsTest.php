@@ -7,7 +7,7 @@ use Common\Data\Mapper\Licence\Surrender\ReviewDetails;
 use Common\Service\Helper\TranslationHelperService;
 use CommonTest\Data\Mapper\Licence\Surrender\ReviewContactDetailsMocksAndExpectationsTrait;
 use PHPUnit\Framework\TestCase;
-use Zend\Mvc\Controller\Plugin\Url;
+use Laminas\Mvc\Controller\Plugin\Url;
 
 class ReviewDetailsTest extends TestCase
 {

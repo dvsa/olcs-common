@@ -2,8 +2,8 @@
 
 namespace Common\Form\View\Helper;
 
-use Zend\Form\ElementInterface;
-use Zend\View\Renderer\PhpRenderer;
+use Laminas\Form\ElementInterface;
+use Laminas\View\Renderer\PhpRenderer;
 
 /**
  * Helper to render the advanced checkbox control for continuation

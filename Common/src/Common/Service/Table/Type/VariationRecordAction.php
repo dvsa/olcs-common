@@ -22,7 +22,7 @@ class VariationRecordAction extends Action
     {
         $prefix = null;
 
-        /** @var \Zend\I18n\Translator\Translator $translator */
+        /** @var \Laminas\I18n\Translator\Translator $translator */
         $translator = $this->getTable()->getServiceLocator()->get('translator');
 
         if (isset($data['action'])) {

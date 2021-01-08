@@ -8,7 +8,7 @@
 namespace CommonTest\Form\Elements\Validators;
 
 use Common\Form\Elements\Validators\NoOfPermitsMin;
-use Zend\Validator\GreaterThan;
+use Laminas\Validator\GreaterThan;
 
 /**
  * Test No of permits min validator

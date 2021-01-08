@@ -7,7 +7,7 @@ use Common\Form\Form;
 use Common\Form\View\Helper\FormElement;
 use Common\Form\View\Helper\FormPlainText;
 use Mockery;
-use Zend\View\Renderer\PhpRenderer;
+use Laminas\View\Renderer\PhpRenderer;
 
 class PlainTextTest extends \PHPUnit\Framework\TestCase
 {

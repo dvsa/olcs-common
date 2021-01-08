@@ -177,7 +177,7 @@ class OperatingCentresTest extends MockeryTestCase
             'detach_error' => 'unit_ERR_MSG',
         ];
 
-        $form = m::mock(\Zend\Form\Form::class);
+        $form = m::mock(\Laminas\Form\Form::class);
         $form->shouldReceive('setMessages')->once()->with($expectedMessages);
 
         $this->mockFlashMsg->shouldReceive('addCurrentErrorMessage')->once()->with('unit_ERR_MSG');

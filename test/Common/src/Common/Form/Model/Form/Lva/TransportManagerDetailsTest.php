@@ -4,8 +4,8 @@ namespace CommonTest\Form\Model\Form\Lva;
 
 use Common\Form\Elements\Validators\SumContext;
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
-use Zend\I18n\Validator\IsFloat;
-use Zend\Validator\Between;
+use Laminas\I18n\Validator\IsFloat;
+use Laminas\Validator\Between;
 
 /**
  * Class TransportManagerDetailsTest
@@ -110,7 +110,7 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
      * Even though we use the same Fieldset, we come to
      * an agreement that we will test on a per-form basis
      * as part of a roadmap to centralise/simplify
-     * zend forms.
+     * laminas forms.
      */
     public function testWorkAddress()
     {

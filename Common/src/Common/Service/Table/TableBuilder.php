@@ -2,7 +2,7 @@
 
 namespace Common\Service\Table;
 
-use Zend\ServiceManager;
+use Laminas\ServiceManager;
 
 /**
  * Table Builder
@@ -54,7 +54,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     private $contentType = self::CONTENT_TYPE_HTML;
 
     /**
-     * Inject the application config from Zend
+     * Inject the application config from Laminas
      *
      * @var array
      */
@@ -147,7 +147,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     /**
      * Url plugin
      *
-     * @var \Zend\Mvc\Controller\Plugin\Url
+     * @var \Laminas\Mvc\Controller\Plugin\Url
      */
     private $url;
 
@@ -200,15 +200,15 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     private $authService;
 
     /**
-     * @var \Zend\Mvc\I18n\Translator
+     * @var \Laminas\Mvc\I18n\Translator
      */
     private $translator;
 
-    /** @var  \Zend\Form\Element\Csrf */
+    /** @var  \Laminas\Form\Element\Csrf */
     private $elmCsrf;
 
     /**
-     * @return \Zend\Mvc\I18n\Translator
+     * @return \Laminas\Mvc\I18n\Translator
      */
     public function getTranslator()
     {
@@ -216,7 +216,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     }
 
     /**
-     * @param \Zend\Mvc\I18n\Translator $translator
+     * @param \Laminas\Mvc\I18n\Translator $translator
      */
     public function setTranslator($translator)
     {
@@ -242,7 +242,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     /**
      * Inject the service locator and auth service
      *
-     * @param \Zend\ServiceManager\ServiceManager $sm ServiceManager
+     * @param \Laminas\ServiceManager\ServiceManager $sm ServiceManager
      */
     public function __construct($sm)
     {
@@ -250,7 +250,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         $this->applicationConfig = $sm->get('Config');
         $this->setAuthService($sm->get('ZfcRbac\Service\AuthorizationService'));
 
-        /** @var \Zend\Mvc\I18n\Translator $translator */
+        /** @var \Laminas\Mvc\I18n\Translator $translator */
         $translator  = $sm->get('translator');
         $this->setTranslator($translator);
     }
@@ -667,7 +667,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     /**
      * Getter for url
      *
-     * @return \Zend\Mvc\Controller\Plugin\Url
+     * @return \Laminas\Mvc\Controller\Plugin\Url
      */
     public function getUrl()
     {
@@ -1094,7 +1094,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     {
         $this->setType($this->whichType());
 
-        $this->elmCsrf = new \Zend\Form\Element\Csrf(
+        $this->elmCsrf = new \Laminas\Form\Element\Csrf(
             'security',
             [
                 'csrf_options' => [
@@ -1167,8 +1167,10 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      */
     public function renderTotal()
     {
-        $showTotal = $this->getSetting('showTotal', false);
-        if (!$this->shouldPaginate() && !$showTotal) {
+        if ($this->getSetting('overrideTotal', false)
+            || !$this->shouldPaginate()
+            && !$this->getSetting('showTotal', false)
+        ) {
             return '';
         }
 
@@ -1468,7 +1470,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             $column['width'] = $this->widths[$column['width']];
         }
 
-        if (isset($column['type']) && $column['type'] == 'Checkbox') {
+        if (isset($column['type']) && $column['type'] == 'Checkbox' && ($column['selectAll'] ?? true)) {
             $column['title'] = $this->replaceContent('{{[elements/checkall]}}');
         }
 
@@ -1702,7 +1704,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     private function generatePaginationUrl($data = array(), $route = null, $extendParams = true)
     {
 
-        /** @var \Zend\Mvc\Controller\Plugin\Url $url */
+        /** @var \Laminas\Mvc\Controller\Plugin\Url $url */
         $url = $this->getUrl();
 
         /**
@@ -2047,7 +2049,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     /**
      * Get Csrf Element
      *
-     * @return \Zend\Form\Element\Csrf
+     * @return \Laminas\Form\Element\Csrf
      */
     public function getCsrfElement()
     {

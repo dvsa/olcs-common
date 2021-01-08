@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Lva\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Name("data")
@@ -20,7 +20,7 @@ class TaxiPhvLicenceData
      * @Form\Attributes({"class":"","id":""})
      * @Form\Options({"label":"application_taxi-phv_licence-sub-action.data.licNo"})
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
      */
     public $privateHireLicenceNo = null;
 }

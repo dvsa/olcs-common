@@ -2,16 +2,16 @@
 
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\Form\Element as ZendElement;
-use Zend\InputFilter\InputProviderInterface;
-use Zend\Validator\NotEmpty;
+use Laminas\Form\Element as LaminasElement;
+use Laminas\InputFilter\InputProviderInterface;
+use Laminas\Validator\NotEmpty;
 
 /**
  * Phone Filter
  *
  * @author Jakub Igla <jakub.igla@valtech.co.uk>
  */
-class Phone extends ZendElement implements InputProviderInterface
+class Phone extends LaminasElement implements InputProviderInterface
 {
     protected $required = false;
 
@@ -38,7 +38,7 @@ class Phone extends ZendElement implements InputProviderInterface
             'name' => $this->getName(),
             'required' => $this->required,
             'filters' => [
-                ['name' => \Zend\Filter\StringTrim::class],
+                ['name' => \Laminas\Filter\StringTrim::class],
             ],
             'validators' => [
                 [
@@ -51,7 +51,7 @@ class Phone extends ZendElement implements InputProviderInterface
                     'break_chain_on_failure' => true,
                 ],
                 [
-                    'name'=> \Zend\Validator\Regex::class,
+                    'name'=> \Laminas\Validator\Regex::class,
                     'options' => [
                         'pattern' => '/^[0-9 \(\)\-\+]+$/',
                         'messages' => [
@@ -60,7 +60,7 @@ class Phone extends ZendElement implements InputProviderInterface
                     ],
                 ],
                 [
-                    'name' => \Zend\Validator\StringLength::class,
+                    'name' => \Laminas\Validator\StringLength::class,
                     'options' => [
                         'min' => 5,
                         'max' => 45,

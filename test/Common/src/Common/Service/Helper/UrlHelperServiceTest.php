@@ -11,7 +11,7 @@ use Common\Service\Helper\UrlHelperService;
 use CommonTest\Bootstrap;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
-use Zend\View\HelperPluginManager;
+use Laminas\View\HelperPluginManager;
 
 /**
  * Url Helper Service Test
@@ -81,7 +81,7 @@ class UrlHelperServiceTest extends MockeryTestCase
 
     public function testFromRouteWithHostWithNoMatchingKey()
     {
-        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
+        $sm = m::mock('Laminas\ServiceManager\ServiceLocatorInterface')
             ->shouldReceive('get')
             ->with('config')
             ->andReturn(
@@ -117,7 +117,7 @@ class UrlHelperServiceTest extends MockeryTestCase
             return '/a/url';
         };
 
-        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
+        $sm = m::mock('Laminas\ServiceManager\ServiceLocatorInterface')
             ->shouldReceive('get')
             ->with('config')
             ->andReturn(
@@ -148,7 +148,7 @@ class UrlHelperServiceTest extends MockeryTestCase
 
     protected function attachMockUrlBuilder()
     {
-        $mockUrlViewHelper = $this->createPartialMock('\Zend\View\Helper\Url', array('__invoke'));
+        $mockUrlViewHelper = $this->createPartialMock('\Laminas\View\Helper\Url', array('__invoke'));
 
         $mockViewHelperManager = $this->createPartialMock(HelperPluginManager::class, array('get'));
         $mockViewHelperManager->expects($this->any())

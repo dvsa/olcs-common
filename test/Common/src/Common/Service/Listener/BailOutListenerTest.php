@@ -11,8 +11,8 @@ use Common\Exception\BailOutException;
 use Common\Service\Listener\BailOutListener;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\EventManager\EventManagerInterface;
-use Zend\Mvc\MvcEvent;
+use Laminas\EventManager\EventManagerInterface;
+use Laminas\Mvc\MvcEvent;
 
 /**
  * Bail Out Listener Test

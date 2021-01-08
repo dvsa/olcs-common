@@ -8,15 +8,15 @@
 namespace Common\Form;
 
 use Traversable;
-use Zend\Stdlib\ArrayUtils;
-use Zend\InputFilter\InputFilter as ZendInputFilter;
+use Laminas\Stdlib\ArrayUtils;
+use Laminas\InputFilter\InputFilter as LaminasInputFilter;
 
 /**
  * InputFilter
  *
  * @author Someone <someone@valtech.co.uk>
  */
-class InputFilter extends ZendInputFilter
+class InputFilter extends LaminasInputFilter
 {
     /**
      * Set data to use when validating and filtering

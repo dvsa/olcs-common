@@ -2,8 +2,8 @@
 
 namespace Common\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
-use Zend\View\Model\ViewModel;
+use Laminas\Mvc\Controller\AbstractActionController as LaminasAbstractActionController;
+use Laminas\View\Model\ViewModel;
 
 /**
  * Guides Controller
@@ -12,7 +12,7 @@ use Zend\View\Model\ViewModel;
  *
  * @method \Olcs\Mvc\Controller\Plugin\Placeholder placeholder()
  */
-class GuidesController extends ZendAbstractActionController
+class GuidesController extends LaminasAbstractActionController
 {
     const GUIDE_OC_ADV_GB_NEW = 'advertising-your-operating-centre-gb-new';
     const GUIDE_OC_ADV_GB_VAR = 'advertising-your-operating-centre-gb-var';
@@ -21,6 +21,7 @@ class GuidesController extends ZendAbstractActionController
     const GUIDE_PRIVACY_NOTICE = 'privacy-notice';
     const GUIDE_TERMS_AND_CONDITIONS = 'terms-and-conditions';
     const GUIDE_FINANCIAL_EVIDENCE = 'financial-evidence';
+    const GUIDE_ACCESSIBILITY_STATEMENT = 'accessibility-statement';
     const GUIDE_TRAFFIC_AREA = 'traffic-area';
     const GUIDE_CONVICTIONS_AND_PENALTIES_GUIDANCE_GB = 'convictions-and-penalties-guidance-gb';
     const GUIDE_CONVICTIONS_AND_PENALTIES_GUIDANCE_NI = 'convictions-and-penalties-guidance-ni';
@@ -32,6 +33,7 @@ class GuidesController extends ZendAbstractActionController
         self::GUIDE_OC_ADV_NI_VAR => 'oc_advert',
         self::GUIDE_PRIVACY_NOTICE => 'default',
         self::GUIDE_TERMS_AND_CONDITIONS => 'default',
+        self::GUIDE_ACCESSIBILITY_STATEMENT => 'default-two-thirds-blank-sidebar',
         self::GUIDE_FINANCIAL_EVIDENCE => 'default',
         self::GUIDE_TRAFFIC_AREA => 'default',
         self::GUIDE_CONVICTIONS_AND_PENALTIES_GUIDANCE_GB => 'default',

@@ -12,7 +12,7 @@ namespace Common\Form\View\Helper\Extended;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormRow extends \Zend\Form\View\Helper\FormRow
+class FormRow extends \Laminas\Form\View\Helper\FormRow
 {
     use PrepareAttributesTrait;
 }

@@ -61,7 +61,7 @@ trait GenericMethods
             $form = $this->alterFormBeforeValidation($form);
         }
 
-        /* @var \Zend\Http\Request $request */
+        /* @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -134,7 +134,7 @@ trait GenericMethods
      * @param array  $options RouteInterface-specific options to use in url generation, if any
      * @param bool   $reuse   Whether to reuse matched parameters
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     public function redirectToRoute($route = null, $params = array(), $options = array(), $reuse = false)
     {
@@ -149,7 +149,7 @@ trait GenericMethods
      * @param array  $options RouteInterface-specific options to use in url generation, if any
      * @param bool   $reuse   Whether to reuse matched parameters
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     public function redirectToRouteAjax($route = null, $params = array(), $options = array(), $reuse = false)
     {
@@ -184,7 +184,7 @@ trait GenericMethods
      */
     public function isButtonPressed($button, $data = null)
     {
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         if (is_null($data)) {

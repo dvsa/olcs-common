@@ -7,7 +7,7 @@
  */
 namespace Common\Form\Elements\Validators;
 
-use Zend\Validator\LessThan;
+use Laminas\Validator\LessThan;
 
 /**
  * Fee Amount Validator

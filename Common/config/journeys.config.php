@@ -13,16 +13,14 @@ $journeyArray = array_map(
     glob($journeysDirectory)
 );
 
-$filter = new \Zend\Filter\Word\CamelCaseToDash();
+$filter = new \Laminas\Filter\Word\CamelCaseToDash();
 
 $controllers = array();
 
 $journeys = array();
 
 foreach ($journeyArray as $journey) {
-
     foreach ($journey as $name => $details) {
-
         $journeys[$name] = $details;
 
         $journeyNamespace = $details['namespace'];
@@ -48,7 +46,6 @@ foreach ($journeyArray as $journey) {
         );
 
         foreach ($details['sections'] as $sectionName => $sectionDetails) {
-
             $namespace = $journeyNamespace . '\\' . $sectionName;
 
             $controller = $namespace . '\\' . $sectionName . 'Controller';
@@ -68,7 +65,6 @@ foreach ($journeyArray as $journey) {
             );
 
             foreach ($sectionDetails['subSections'] as $subSectionName => $subSectionDetails) {
-
                 $controller = $namespace . '\\' . $subSectionName . 'Controller';
                 $controllers[$controller] = $controller;
 

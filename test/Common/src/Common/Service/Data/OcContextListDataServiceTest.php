@@ -54,7 +54,7 @@ class OcContextListDataServiceTest extends MockeryTestCase
         $mockApplicationOperatingCentre = m::mock('Common\Service\Data\ApplicationOperatingCentre');
         $mockApplicationOperatingCentre->shouldReceive('fetchListOptions')->andReturn($applicationOperatingCentres);
 
-        $mockSl = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
+        $mockSl = m::mock('Laminas\ServiceManager\ServiceLocatorInterface');
         $mockSl->shouldReceive('get')->with('DataServiceManager')->andReturnSelf();
         $mockSl->shouldReceive('get')->with('Common\Service\Data\ApplicationOperatingCentre')->andReturn($mockApplicationOperatingCentre);
 
@@ -62,7 +62,6 @@ class OcContextListDataServiceTest extends MockeryTestCase
         $appOptions = $this->sut->fetchListOptions('application', $useGroups);
 
         $this->assertEquals($applicationOperatingCentres, $appOptions);
-
     }
 
     public function testFetchListOptionsLicenceContext()
@@ -78,7 +77,7 @@ class OcContextListDataServiceTest extends MockeryTestCase
         $mockLicenceOperatingCentre = m::mock('Common\Service\Data\LicenceOperatingCentre');
         $mockLicenceOperatingCentre->shouldReceive('fetchListOptions')->andReturn($licenceOperatingCentres);
 
-        $mockSl = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
+        $mockSl = m::mock('Laminas\ServiceManager\ServiceLocatorInterface');
         $mockSl->shouldReceive('get')->with('DataServiceManager')->andReturnSelf();
         $mockSl->shouldReceive('get')->with('Common\Service\Data\LicenceOperatingCentre')->andReturn($mockLicenceOperatingCentre);
 
@@ -87,7 +86,6 @@ class OcContextListDataServiceTest extends MockeryTestCase
         $lOptions = $this->sut->fetchListOptions('licence', $useGroups);
 
         $this->assertEquals($licenceOperatingCentres, $lOptions);
-
     }
 
     public function testFetchListOptionsNullContext()
@@ -99,4 +97,3 @@ class OcContextListDataServiceTest extends MockeryTestCase
         $this->assertEmpty($options);
     }
 }
-

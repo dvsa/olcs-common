@@ -7,7 +7,7 @@
  */
 namespace Common\Controller\Lva\Interfaces;
 
-use Zend\Form\Form;
+use Laminas\Form\Form;
 
 /**
  * Lva Adapter Interface
@@ -21,7 +21,7 @@ interface LvaAdapterInterface
     /**
      * Alter the form based on the LVA rules
      *
-     * @param \Zend\Form\Form $form
+     * @param \Laminas\Form\Form $form
      */
     public function alterForm(Form $form);
 }

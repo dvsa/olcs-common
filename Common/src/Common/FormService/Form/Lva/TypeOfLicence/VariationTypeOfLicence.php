@@ -2,7 +2,7 @@
 
 namespace Common\FormService\Form\Lva\TypeOfLicence;
 
-use Zend\Form\Form;
+use Laminas\Form\Form;
 
 /**
  * Variation Type Of Licence

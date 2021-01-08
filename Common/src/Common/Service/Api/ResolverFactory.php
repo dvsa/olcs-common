@@ -2,10 +2,10 @@
 
 namespace Common\Service\Api;
 
-use Zend\Mvc\Service\AbstractPluginManagerFactory;
-use Zend\Mvc\Service\ServiceManagerConfig;
-use Zend\ServiceManager\AbstractPluginManager;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\Mvc\Service\AbstractPluginManagerFactory;
+use Laminas\Mvc\Service\ServiceManagerConfig;
+use Laminas\ServiceManager\AbstractPluginManager;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Class ResolverFactory

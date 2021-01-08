@@ -58,7 +58,7 @@ trait GenericReceipt
             throw new ResourceNotFoundException('Payment not found');
         }
 
-        /** @var \Zend\ServiceManager\ServiceLocatorInterface $sl */
+        /** @var \Laminas\ServiceManager\ServiceLocatorInterface $sl */
         $sl = $this->getServiceLocator();
 
         /** @var \Common\Service\Table\TableBuilder $table */

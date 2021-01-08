@@ -16,7 +16,7 @@ class RefDataTest extends MockeryTestCase
      */
     public function testFormat($data, $expect)
     {
-        $mockSm = m::mock(\Zend\ServiceManager\ServiceLocatorInterface::class);
+        $mockSm = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class);
         $mockSm
             ->shouldReceive('get->translate')
             ->andReturnUsing(

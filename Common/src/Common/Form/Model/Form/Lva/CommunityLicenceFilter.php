@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Lva;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Options({"prefer_form_input_filter":true,"bypass_auth":true})
@@ -33,7 +33,7 @@ class CommunityLicenceFilter
      * @Form\Options({
      *     "label": "lva-community-licence-filter-button"
      * })
-     * @Form\Type("\Zend\Form\Element\Button")
+     * @Form\Type("\Laminas\Form\Element\Button")
      */
     public $filter = null;
 }

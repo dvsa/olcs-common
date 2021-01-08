@@ -6,7 +6,7 @@ use Common\Form\Elements;
 use Common\Form\View\Helper\Readonly\FormRow;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Element as ZendElement;
+use Laminas\Form\Element as LaminasElement;
 
 /**
  * @covers \Common\Form\View\Helper\Readonly\FormRow
@@ -26,7 +26,7 @@ class FormRowTest extends MockeryTestCase
      */
     public function testInvoke($element, $expected)
     {
-        $mockHtmlHelper = m::mock(\Zend\View\Helper\EscapeHtml::class);
+        $mockHtmlHelper = m::mock(\Laminas\View\Helper\EscapeHtml::class);
         $mockHtmlHelper
             ->shouldReceive('__invoke')
             ->andReturnUsing(
@@ -45,7 +45,7 @@ class FormRowTest extends MockeryTestCase
         $mockTableHelper = m::mock(\Common\Form\View\Helper\Readonly\FormTable::class);
         $mockTableHelper->shouldReceive('__invoke')->andReturn('<table></table>');
 
-        $mockTranslater = m::mock(\Zend\I18n\Translator\TranslatorInterface::class);
+        $mockTranslater = m::mock(\Laminas\I18n\Translator\TranslatorInterface::class);
         $mockTranslater
             ->shouldReceive('translate')
             ->andReturnUsing(
@@ -54,10 +54,10 @@ class FormRowTest extends MockeryTestCase
                 }
             );
 
-        $mockFormElm = m::mock(\Zend\Form\ElementInterface::class);
+        $mockFormElm = m::mock(\Laminas\Form\ElementInterface::class);
         $mockFormElm->shouldReceive('render')->andReturn(self::STANDARD_RENDER_RESULT);
 
-        $mockView = m::mock('Zend\View\Renderer\PhpRenderer');
+        $mockView = m::mock('Laminas\View\Renderer\PhpRenderer');
         $mockView->shouldReceive('plugin')->with('FormElement')->andReturn($mockFormElm);
         $mockView->shouldReceive('plugin')->with('escapehtml')->andReturn($mockHtmlHelper);
         $mockView->shouldReceive('plugin')->with('readonlyformitem')->andReturn($mockElementHelper);
@@ -76,17 +76,17 @@ class FormRowTest extends MockeryTestCase
     public function provideTestInvoke()
     {
         //need tests for Select, TextArea
-        $mockHidden = m::mock(\Zend\Form\ElementInterface::class);
+        $mockHidden = m::mock(\Laminas\Form\ElementInterface::class);
         $mockHidden->shouldReceive('getAttribute')->with('type')->andReturn('hidden');
 
         /** @var m\MockInterface $mockRemoveIfReadOnly */
-        $mockRemoveIfReadOnly = m::mock(\Zend\Form\ElementInterface::class);
+        $mockRemoveIfReadOnly = m::mock(\Laminas\Form\ElementInterface::class);
         $mockRemoveIfReadOnly
             ->shouldReceive('getAttribute')->with('type')->andReturnNull()
             ->shouldReceive('getAttribute')->with('class')->andReturnNull('unit_CssClass')
             ->shouldReceive('getOption')->with('remove_if_readonly')->andReturn(true);
 
-        $mockText = m::mock(\Zend\Form\ElementInterface::class);
+        $mockText = m::mock(\Laminas\Form\ElementInterface::class);
         $mockText
             ->shouldReceive('getAttribute')->with('type')->andReturn('textarea')
             ->shouldReceive('getAttribute')->with('class')->andReturnNull()
@@ -94,7 +94,7 @@ class FormRowTest extends MockeryTestCase
             ->shouldReceive('getValue')->andReturn('Value')
             ->shouldReceive('getOption')->with('remove_if_readonly')->andReturnNull();
 
-        $mockSelect = m::mock(ZendElement\Select::class);
+        $mockSelect = m::mock(LaminasElement\Select::class);
         $mockSelect
             ->shouldReceive('getAttribute')->with('type')->andReturn('select')
             ->shouldReceive('getLabel')->andReturn('Label')
@@ -171,7 +171,7 @@ class FormRowTest extends MockeryTestCase
                 'expect' => '<li class="definition-list__item readonly">STANDARD-RENDER-RESULT</li>',
             ],
             [
-                'element' => m::mock(ZendElement\Csrf::class),
+                'element' => m::mock(LaminasElement\Csrf::class),
                 'expected' => self::STANDARD_RENDER_RESULT,
             ],
             [

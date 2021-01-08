@@ -22,7 +22,7 @@ class Addresses extends AbstractFormService
      *
      * @param array $params Parameters
      *
-     * @return \Zend\Form\Form
+     * @return \Laminas\Form\Form
      */
     public function getForm(array $params)
     {
@@ -36,12 +36,12 @@ class Addresses extends AbstractFormService
     /**
      * Make form alterations
      *
-     * @param \Zend\Form\Form $form   Form
+     * @param \Laminas\Form\Form $form   Form
      * @param array           $params Parameters
      *
      * @return void
      */
-    protected function alterForm(\Zend\Form\Form $form, array $params)
+    protected function alterForm(\Laminas\Form\Form $form, array $params)
     {
         $this->removeEstablishment($form, $params['typeOfLicence']['licenceType']);
     }
@@ -49,12 +49,12 @@ class Addresses extends AbstractFormService
     /**
      * Remove Establishment Fields
      *
-     * @param \Zend\Form\Form $form        Form
+     * @param \Laminas\Form\Form $form        Form
      * @param string          $licenceType Licence type
      *
      * @return void
      */
-    protected function removeEstablishment(\Zend\Form\Form $form, $licenceType)
+    protected function removeEstablishment(\Laminas\Form\Form $form, $licenceType)
     {
         if (!in_array($licenceType, self::$establishmentAllowedLicTypes, true)) {
             $this->getFormHelper()

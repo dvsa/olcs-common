@@ -3,7 +3,7 @@
 namespace Common\FormService\Form\Lva\OperatingCentres;
 
 use Common\FormService\Form\Lva\AbstractLvaFormService;
-use Zend\Form\Form;
+use Laminas\Form\Form;
 
 /**
  * Abstract Operating Centres
@@ -138,11 +138,20 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
      */
     protected function alterFormForPsvLicences(Form $form, array $params)
     {
-        $dataOptions = $form->get('data')->getOptions();
+        $dataFieldset = $form->get('data');
+        if ($dataFieldset->has('totCommunityLicences')) {
+            $totCommunityLicencesElement = $dataFieldset->get('totCommunityLicences');
+
+            $totCommunityLicencesElement->setLabel(
+                $totCommunityLicencesElement->getLabel() . '.psv'
+            );
+        }
+
+        $dataOptions = $dataFieldset->getOptions();
         if (isset($dataOptions['hint'])) {
             $dataOptions['hint'] .= isset($dataOptions['hint']) ? '.psv' : '';
         }
-        $form->get('data')->setOptions($dataOptions);
+        $dataFieldset->setOptions($dataOptions);
 
         $removeFields = [
             'totAuthTrailers'

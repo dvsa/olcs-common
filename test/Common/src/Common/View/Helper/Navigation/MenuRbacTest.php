@@ -5,8 +5,8 @@ namespace CommonTest\View\Helper\Navigation;
 use Common\View\Helper\Navigation\MenuRbac;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Navigation\AbstractContainer;
-use Zend\Navigation\Page\AbstractPage;
+use Laminas\Navigation\AbstractContainer;
+use Laminas\Navigation\Page\AbstractPage;
 
 /**
  * @covers \Common\View\Helper\Navigation\MenuRbac

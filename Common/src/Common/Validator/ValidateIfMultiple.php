@@ -2,10 +2,10 @@
 
 namespace Common\Validator;
 
-use Zend\Validator\AbstractValidator;
-use Zend\Validator\ValidatorChain;
-use Zend\Validator\ValidatorPluginManagerAwareInterface;
-use Zend\Validator\ValidatorPluginManager;
+use Laminas\Validator\AbstractValidator;
+use Laminas\Validator\ValidatorChain;
+use Laminas\Validator\ValidatorPluginManagerAwareInterface;
+use Laminas\Validator\ValidatorPluginManager;
 
 /**
  * Class ValidateIf
@@ -47,7 +47,6 @@ class ValidateIfMultiple extends ValidateIf
             }
 
             return true;
-
         }
 
         $this->error(self::NO_CONTEXT);

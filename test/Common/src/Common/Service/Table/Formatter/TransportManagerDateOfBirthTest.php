@@ -22,7 +22,7 @@ class TransportManagerDateOfBirthTest extends MockeryTestCase
     {
         $this->sut = new TransportManagerDateOfBirth();
 
-        $this->sm = m::mock(\Zend\ServiceManager\ServiceLocatorInterface::class);
+        $this->sm = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class);
         $this->sm->shouldReceive('get')->with('Helper\Url')->andReturn($this->mockUrlHelper);
     }
 

@@ -11,8 +11,8 @@ use Common\Form\Elements\Types\PostcodeSearch;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Form\View\Helper\FormErrors;
-use Zend\Form\Element;
-use Zend\Form\Element\DateSelect;
+use Laminas\Form\Element;
+use Laminas\Form\Element\DateSelect;
 
 /**
  * Form Errors Test
@@ -27,7 +27,7 @@ class FormErrorsTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->view = m::mock('\Zend\View\Renderer\RendererInterface');
+        $this->view = m::mock('\Laminas\View\Renderer\RendererInterface');
 
         $this->sut = new FormErrors();
         $this->sut->setView($this->view);
@@ -44,7 +44,7 @@ class FormErrorsTest extends MockeryTestCase
 
     public function testInvokeRenderWithoutMessages()
     {
-        $form = m::mock('\Zend\Form\Form');
+        $form = m::mock('\Laminas\Form\Form');
         $messages = [];
         $expected = '';
 
@@ -73,7 +73,7 @@ class FormErrorsTest extends MockeryTestCase
             ]
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<h2 class="govuk-heading-m">form-errors-translated<\/h2>(\s+)?'
             . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?Bar-translated(\s+)?<\/li>(\s+)?'
@@ -84,8 +84,8 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Zend\Form\Form');
-        $mockFoo = m::mock('\Zend\Form\Element');
+        $form = m::mock('\Laminas\Form\Form');
+        $mockFoo = m::mock('\Laminas\Form\Element');
 
         // Expectations
         $this->view->shouldReceive('translate')
@@ -144,7 +144,7 @@ class FormErrorsTest extends MockeryTestCase
             ]
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<h2 class="govuk-heading-m">form-errors-translated<\/h2>(\s+)?'
             . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?<a href="#foo-id">Bar-translated<\/a>(\s+)?<\/li>(\s+)?'
@@ -155,8 +155,8 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Zend\Form\Form');
-        $mockFoo = m::mock('\Zend\Form\Element');
+        $form = m::mock('\Laminas\Form\Form');
+        $mockFoo = m::mock('\Laminas\Form\Element');
 
         // Expectations
         $this->view->shouldReceive('translate')
@@ -214,7 +214,7 @@ class FormErrorsTest extends MockeryTestCase
             ]
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<h2 class="govuk-heading-m">form-errors-translated<\/h2>(\s+)?'
             . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?<a href="#foo-id">Bar-translated<\/a>(\s+)?<\/li>(\s+)?'
@@ -225,8 +225,8 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Zend\Form\Form');
-        $mockFoo = m::mock('\Zend\Form\Element');
+        $form = m::mock('\Laminas\Form\Form');
+        $mockFoo = m::mock('\Laminas\Form\Element');
 
         // Expectations
         $this->view->shouldReceive('translate')
@@ -281,7 +281,7 @@ class FormErrorsTest extends MockeryTestCase
             ]
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<h2 class="govuk-heading-m">form-errors-translated<\/h2>(\s+)?'
             . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?<a href="#foo-id">Bar-translated<\/a>(\s+)?<\/li>(\s+)?'
@@ -292,8 +292,8 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Zend\Form\Form');
-        $mockFoo = m::mock('\Zend\Form\Element');
+        $form = m::mock('\Laminas\Form\Form');
+        $mockFoo = m::mock('\Laminas\Form\Element');
 
         // Expectations
         $this->view->shouldReceive('translate')
@@ -344,7 +344,7 @@ class FormErrorsTest extends MockeryTestCase
             ]
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<h2 class="govuk-heading-m">form-errors-translated<\/h2>(\s+)?'
             . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?<a href="#PC_ID">Bar-translated<\/a>(\s+)?<\/li>(\s+)?'
@@ -354,7 +354,7 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Zend\Form\Form')->makePartial();
+        $form = m::mock('\Laminas\Form\Form')->makePartial();
         $mockFoo = m::mock(PostcodeSearch::class)->makePartial();
 
         // Expectations
@@ -383,7 +383,7 @@ class FormErrorsTest extends MockeryTestCase
             ]
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<h2 class="govuk-heading-m">form-errors-translated<\/h2>(\s+)?'
             . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?<a href="#DS_ID_day">Bar-translated<\/a>(\s+)?<\/li>(\s+)?'
@@ -393,7 +393,7 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Zend\Form\Form')->makePartial();
+        $form = m::mock('\Laminas\Form\Form')->makePartial();
         $element = (new DateSelect())->setAttribute('id', 'DS_ID');
 
         // Expectations
@@ -414,7 +414,7 @@ class FormErrorsTest extends MockeryTestCase
             ]
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<h2 class="govuk-heading-m">form-errors-translated<\/h2>(\s+)?'
             . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?<a href="#NAME">Bar-translated<\/a>(\s+)?<\/li>(\s+)?'
@@ -424,7 +424,7 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Zend\Form\Form')->makePartial();
+        $form = m::mock('\Laminas\Form\Form')->makePartial();
         $element = new Element('NAME');
 
         // Expectations
@@ -448,7 +448,7 @@ class FormErrorsTest extends MockeryTestCase
             ]
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<h2 class="govuk-heading-m">form-errors-translated<\/h2>(\s+)?'
             . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?foo-error-translated(\s+)?<\/li>(\s+)?'
@@ -458,8 +458,8 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Zend\Form\Form');
-        $mockFoo = m::mock('\Zend\Form\Element');
+        $form = m::mock('\Laminas\Form\Form');
+        $mockFoo = m::mock('\Laminas\Form\Element');
 
         // Expectations
         $this->view->shouldReceive('translate')
@@ -522,7 +522,7 @@ class FormErrorsTest extends MockeryTestCase
             ]
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<h2 class="govuk-heading-m">form-errors-translated<\/h2>(\s+)?'
             . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?'
@@ -537,8 +537,8 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Zend\Form\Form');
-        $mockFoo = m::mock('\Zend\Form\Element');
+        $form = m::mock('\Laminas\Form\Form');
+        $mockFoo = m::mock('\Laminas\Form\Element');
 
         // Expectations
         $this->view->shouldReceive('translate')
@@ -591,7 +591,7 @@ class FormErrorsTest extends MockeryTestCase
             ]
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<h2 class="govuk-heading-m">form-errors-translated<\/h2>(\s+)?'
             . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?foo-label-translated\: bar-translated-translated(\s+)?'
@@ -604,8 +604,8 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Zend\Form\Form');
-        $mockFoo = m::mock('\Zend\Form\Element');
+        $form = m::mock('\Laminas\Form\Form');
+        $mockFoo = m::mock('\Laminas\Form\Element');
 
         // Expectations
         $this->view->shouldReceive('translate')
@@ -669,7 +669,7 @@ class FormErrorsTest extends MockeryTestCase
             ]
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<h2 class="govuk-heading-m">form-errors-translated<\/h2>(\s+)?'
             . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?bar-translated(\s+)?'
@@ -680,8 +680,8 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Zend\Form\Form');
-        $mockFoo = m::mock('\Zend\Form\Element');
+        $form = m::mock('\Laminas\Form\Form');
+        $mockFoo = m::mock('\Laminas\Form\Element');
 
         // Expectations
         $this->view->shouldReceive('translate')
@@ -739,7 +739,7 @@ class FormErrorsTest extends MockeryTestCase
             ]
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<h2 class="govuk-heading-m">form-errors-translated<\/h2>(\s+)?'
             . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?Bar-translated(\s+)?<\/li>(\s+)?'
@@ -750,8 +750,8 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Zend\Form\Form');
-        $mockFoo = m::mock('\Zend\Form\Element');
+        $form = m::mock('\Laminas\Form\Form');
+        $mockFoo = m::mock('\Laminas\Form\Element');
 
         // Expectations
         $this->view->shouldReceive('translate')
@@ -813,7 +813,7 @@ class FormErrorsTest extends MockeryTestCase
 
         $title = 'error-title';
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>error-title-translated<\/h3>(\s+)?'
+            . '<h2 class="govuk-heading-m">error-title-translated<\/h2>(\s+)?'
             . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?<a href="#foo-id">Bar-translated<\/a>(\s+)?<\/li>(\s+)?'
@@ -824,8 +824,8 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Zend\Form\Form');
-        $mockFoo = m::mock('\Zend\Form\Element');
+        $form = m::mock('\Laminas\Form\Form');
+        $mockFoo = m::mock('\Laminas\Form\Element');
 
         // Expectations
         $this->view->shouldReceive('translate')
@@ -886,7 +886,7 @@ class FormErrorsTest extends MockeryTestCase
         $title = 'error-title';
         $paragraph = 'error-paragraph';
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>error-title-translated<\/h3>(\s+)?'
+            . '<h2 class="govuk-heading-m">error-title-translated<\/h2>(\s+)?'
             . '<p>error-paragraph-translated<\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?<a href="#foo-id">Bar-translated<\/a>(\s+)?<\/li>(\s+)?'
@@ -897,8 +897,8 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Zend\Form\Form');
-        $mockFoo = m::mock('\Zend\Form\Element');
+        $form = m::mock('\Laminas\Form\Form');
+        $mockFoo = m::mock('\Laminas\Form\Element');
 
         // Expectations
         $this->view->shouldReceive('translate')
@@ -958,7 +958,7 @@ class FormErrorsTest extends MockeryTestCase
 
         $paragraph = 'error-paragraph';
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<h2 class="govuk-heading-m">form-errors-translated<\/h2>(\s+)?'
             . '<p>error-paragraph-translated<\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?<a href="#foo-id">Bar-translated<\/a>(\s+)?<\/li>(\s+)?'
@@ -969,8 +969,8 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Zend\Form\Form');
-        $mockFoo = m::mock('\Zend\Form\Element');
+        $form = m::mock('\Laminas\Form\Form');
+        $mockFoo = m::mock('\Laminas\Form\Element');
 
         // Expectations
         $this->view->shouldReceive('translate')

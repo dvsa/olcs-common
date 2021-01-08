@@ -7,10 +7,10 @@
  */
 namespace Common\Form\Elements\Types;
 
-use Zend\Form\Fieldset;
-use Zend\Form\Element\Text;
-use Zend\Form\Element\Button;
-use Zend\Form\Element\Select;
+use Laminas\Form\Fieldset;
+use Laminas\Form\Element\Text;
+use Laminas\Form\Element\Button;
+use Laminas\Form\Element\Select;
 
 /**
  * Defendant fieldset

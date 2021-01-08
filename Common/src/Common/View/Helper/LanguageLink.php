@@ -7,9 +7,9 @@
  */
 namespace Common\View\Helper;
 
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\View\Helper\AbstractHelper;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\View\Helper\AbstractHelper;
 use Common\Preference\Language;
 
 /**
@@ -34,9 +34,9 @@ class LanguageLink extends AbstractHelper implements FactoryInterface
     public function __invoke()
     {
         if ($this->languagePref->getPreference() === Language::OPTION_CY) {
-            return '<a href="?lang=en">English</a>';
+            return '<a class="govuk-footer__link" href="?lang=en">English</a>';
         } else {
-            return '<a href="?lang=cy">Cymraeg</a>';
+            return '<a class="govuk-footer__link" href="?lang=cy">Cymraeg</a>';
         }
     }
 }

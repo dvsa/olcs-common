@@ -9,7 +9,7 @@
  */
 namespace Common\Controller\Lva\Adapters;
 
-use Zend\Form\Form;
+use Laminas\Form\Form;
 use Common\Controller\Lva\Interfaces\BusinessTypeAdapterInterface;
 
 /**

@@ -2,13 +2,13 @@
 
 namespace Common\InputFilter;
 
-use Zend\InputFilter\Input as ZendInput;
+use Laminas\InputFilter\Input as LaminasInput;
 
 /**
  * Class Input
  * @package Common\InputFilter
  */
-class Input extends ZendInput
+class Input extends LaminasInput
 {
     /**
      * @var mixed

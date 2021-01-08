@@ -27,7 +27,7 @@ class AddressesTest extends MockeryTestCase
 
     public function testAlterForm()
     {
-        $form = m::mock(\Zend\Form\Form::class);
+        $form = m::mock(\Laminas\Form\Form::class);
 
         $this->formHelper
             ->shouldReceive('createForm')->once()->with('Lva\Addresses')->andReturn($form)

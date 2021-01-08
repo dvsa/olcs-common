@@ -5,10 +5,10 @@ namespace CommonTest\Service\Qa;
 use Common\Service\Qa\ValidatorsAdder;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Form;
-use Zend\InputFilter\InputFilterInterface;
-use Zend\InputFilter\InputInterface;
-use Zend\Validator\ValidatorChain;
+use Laminas\Form\Form;
+use Laminas\InputFilter\InputFilterInterface;
+use Laminas\InputFilter\InputInterface;
+use Laminas\Validator\ValidatorChain;
 
 /**
  * ValidatorsAdderTest

@@ -2,16 +2,16 @@
 
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\I18n\Validator\Alnum;
-use Zend\InputFilter\InputProviderInterface;
-use Zend\Validator\StringLength;
+use Laminas\I18n\Validator\Alnum;
+use Laminas\InputFilter\InputProviderInterface;
+use Laminas\Validator\StringLength;
 
 /**
  * Company Number
  *
  * @author Someone <someone@valtech.co.uk>
  */
-class CompanyNumber extends \Zend\Form\Element implements InputProviderInterface
+class CompanyNumber extends \Laminas\Form\Element implements InputProviderInterface
 {
     /**
      * Provide default input rules for this element.
@@ -24,11 +24,11 @@ class CompanyNumber extends \Zend\Form\Element implements InputProviderInterface
             'name' => $this->getName(),
             'required' => true,
             'filters' => [
-                ['name' => 'Zend\Filter\StringTrim'],
+                ['name' => 'Laminas\Filter\StringTrim'],
             ],
             'validators' => [
                 [
-                    'name' => 'Zend\Validator\StringLength',
+                    'name' => 'Laminas\Validator\StringLength',
                     'options'=> [
                         'min' => 1,
                         'max' => 8,

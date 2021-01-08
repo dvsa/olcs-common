@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Lva\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Name("data")
@@ -138,7 +138,7 @@ class FinancialHistoryData
      *     }
      * })
      * @Form\Type("TextArea")
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
      * @Form\Validator({"name": "Dvsa\Olcs\Transfer\Validators\FhAdditionalInfo"})
      */
     public $insolvencyDetails = null;

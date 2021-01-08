@@ -11,9 +11,9 @@ use Common\Preference\LanguageListener;
 use CommonTest\Bootstrap;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\EventManager\EventManagerInterface;
-use Zend\Http\Request;
-use Zend\Mvc\MvcEvent;
+use Laminas\EventManager\EventManagerInterface;
+use Laminas\Http\Request;
+use Laminas\Mvc\MvcEvent;
 
 /**
  * Language Listener Test

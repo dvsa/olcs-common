@@ -2,7 +2,7 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Data Retention Assigned To
@@ -22,7 +22,7 @@ class DataRetentionAssignedTo implements FormatterInterface
     {
         if (isset($data['assignedTo']['contactDetails']['person'])) {
             /**
-             * @var \Zend\View\HelperPluginManager $viewHelperManager
+             * @var \Laminas\View\HelperPluginManager $viewHelperManager
              * @var \Common\View\Helper\PersonName $personName
              */
             $viewHelperManager = $sm->get('ViewHelperManager');

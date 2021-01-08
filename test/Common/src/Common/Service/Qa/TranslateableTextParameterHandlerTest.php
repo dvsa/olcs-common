@@ -6,7 +6,7 @@ use Common\Service\Qa\TranslateableTextParameterHandler;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use RuntimeException;
-use Zend\View\Helper\AbstractHelper;
+use Laminas\View\Helper\AbstractHelper;
 
 /**
  * TranslateableTextParameterHandlerTest

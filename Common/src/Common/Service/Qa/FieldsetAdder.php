@@ -45,14 +45,16 @@ class FieldsetAdder
     {
         $fieldset = $this->fieldsetFactory->create($options['fieldsetName'], $options['type']);
 
-        if ($usageContext == UsageContext::CONTEXT_INTERNAL) {
-            $fieldset->setLabel($options['shortName']);
-        }
-
         $fieldsetPopulator = $this->fieldsetPopulatorProvider->get($options['type']);
         $fieldsetPopulator->populate($form, $fieldset, $options['element']);
 
         $this->fieldsetModifier->modify($fieldset);
+
+        if ($usageContext == UsageContext::CONTEXT_INTERNAL) {
+            $fieldset->setLabel($options['shortName']);
+            $fieldset->setLabelAttributes([]);
+        }
+
         $form->get('qa')->add($fieldset);
     }
 }

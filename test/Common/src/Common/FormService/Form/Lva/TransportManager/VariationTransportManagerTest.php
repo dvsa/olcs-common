@@ -10,7 +10,7 @@ namespace CommonTest\FormService\Form\Lva\TransportManager;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Lva\TransportManager\VariationTransportManager as Sut;
-use Zend\Form\Form;
+use Laminas\Form\Form;
 
 /**
  * Variation TransportManager Test

@@ -12,7 +12,7 @@ namespace Common\Form\View\Helper\Extended;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormCollection extends \Zend\Form\View\Helper\FormCollection
+class FormCollection extends \Laminas\Form\View\Helper\FormCollection
 {
     use PrepareAttributesTrait;
 }

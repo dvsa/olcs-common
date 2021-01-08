@@ -7,7 +7,7 @@
  */
 namespace Common\Form\Elements\Validators;
 
-use Zend\Validator\AbstractValidator;
+use Laminas\Validator\AbstractValidator;
 
 /**
  * Equal Sum
@@ -41,7 +41,6 @@ class EqualSum extends AbstractValidator
         $message .= implode('-', $fields);
 
         if ((int)$value != $sum) {
-
             $this->setMessage($message, 'error');
 
             $this->error('error');

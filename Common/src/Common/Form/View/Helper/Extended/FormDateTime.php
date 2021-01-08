@@ -12,7 +12,7 @@ namespace Common\Form\View\Helper\Extended;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormDateTime extends \Zend\Form\View\Helper\FormDateTime
+class FormDateTime extends \Laminas\Form\View\Helper\FormDateTime
 {
     use PrepareAttributesTrait;
 }

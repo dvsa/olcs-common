@@ -2,51 +2,71 @@
 
 namespace Common\Service\Cqrs\Query;
 
+use Common\Service\Cqrs\Exception\CacheTtlException;
 use Common\Service\Cqrs\RecoverHttpClientExceptionTrait;
+use Dvsa\Olcs\Transfer\Query\Cache\ById;
+use Dvsa\Olcs\Transfer\Query\CacheableLongTermQueryInterface;
+use Dvsa\Olcs\Transfer\Query\CacheableMediumTermQueryInterface;
 use Dvsa\Olcs\Transfer\Query\QueryContainerInterface;
 use Dvsa\Olcs\Transfer\Service\CacheEncryption as CacheEncryptionService;
+use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
 
 /**
  * Class CachingQueryService
  * @package Common\Service\Cqrs\Query
  */
-class CachingQueryService implements QueryServiceInterface, \Zend\Log\LoggerAwareInterface
+class CachingQueryService implements QueryServiceInterface, \Laminas\Log\LoggerAwareInterface
 {
-    use \Zend\Log\LoggerAwareTrait;
+    use \Laminas\Log\LoggerAwareTrait;
     use RecoverHttpClientExceptionTrait;
 
+    const BACKEND_FAIL_MSG = 'Backend DB failure HTTP code: %s';
     const CACHE_FAIL_MSG = 'Cache failure: %s';
     const CACHE_LOCAL_SAVE_MSG = 'Storing in local cache: %s';
     const CACHE_LOCAL_RETRIEVE_MSG = 'Fetching from local cache: %s';
-    const CACHE_PERSISTENT_SAVE_MSG = 'Storing in persistent cache: %s';
+    const CACHE_PERSISTENT_SAVE_MSG = 'Storing in persistent cache with TTL of %u seconds: %s';
     const CACHE_PERSISTENT_RETRIEVE_MSG = 'Fetching from persistent cache: %s';
     const CACHE_ENCRYPTION_MODE_MSG = 'Using encryption mode: %s';
+    const MISSING_TTL_INTERFACE_TYPE = 'No TTL value found for this query';
 
-    /**
-     * @var QueryServiceInterface
-     */
+    /** @var QueryServiceInterface */
     private $queryService;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     private $localCache;
 
-    /**
-     * @var CacheEncryptionService
-     */
+    /** @var CacheEncryptionService */
     private $cacheService;
+
+    /** @var AnnotationBuilder */
+    private $annotationBuilder;
+
+    /** @var bool */
+    private $enabled;
+
+    /** @var array */
+    private $ttl;
 
     /**
      * Constructor
      *
      * @param QueryServiceInterface  $queryService Query service
      * @param CacheEncryptionService $cacheService Cache storage with automatic encryption built in
+     * @param bool                   $enabled      Whether the cache is enabled
+     * @param array                  $ttl          Ttl of the various cache types
      */
-    public function __construct(QueryServiceInterface $queryService, CacheEncryptionService $cache)
-    {
+    public function __construct(
+        QueryServiceInterface $queryService,
+        CacheEncryptionService $cache,
+        AnnotationBuilder $annotationBuilder,
+        $enabled,
+        array $ttl
+    ) {
         $this->queryService = $queryService;
         $this->cacheService = $cache;
+        $this->annotationBuilder = $annotationBuilder;
+        $this->enabled = $enabled;
+        $this->ttl = $ttl;
     }
 
     /**
@@ -59,7 +79,12 @@ class CachingQueryService implements QueryServiceInterface, \Zend\Log\LoggerAwar
     public function send(QueryContainerInterface $query)
     {
         $this->queryService->setRecoverHttpClientException($this->getRecoverHttpClientException());
-        if ($query->isMediumTermCachable()) {
+
+        if (!$this->enabled) {
+            return $this->queryService->send($query);
+        }
+
+        if ($query->isPersistentCacheable()) {
             try {
                 return $this->handlePersistentCache($query);
             } catch (\Exception $e) {
@@ -68,11 +93,61 @@ class CachingQueryService implements QueryServiceInterface, \Zend\Log\LoggerAwar
             }
         }
 
-        if ($query->isShortTermCachable()) {
+        if ($query->isShortTermCacheable()) {
             return $this->handleLocalCache($query);
         }
 
         return $this->queryService->send($query);
+    }
+
+    /**
+     * Retrieve data that is not found in the usual CQRS cache
+     *
+     * @param string $identifier
+     * @param string $uniqueId
+     *
+     * @return mixed|null
+     * @throws \Exception
+     */
+    public function handleCustomCache(string $identifier, string $uniqueId = '')
+    {
+        try {
+            if ($this->cacheService->hasCustomItem($identifier, $uniqueId)) {
+                return $this->getCustomCache($identifier, $uniqueId);
+            }
+        } catch (\Exception $e) {
+            //error has occurred with the cache - log the error and retrieve fresh from the backend
+            $this->logError(sprintf(self::CACHE_FAIL_MSG, $e->getMessage()));
+        }
+
+        $queryParams = [
+            'id' => $identifier,
+            'uniqueId' => $uniqueId
+        ];
+
+        $dto = ById::create($queryParams);
+        $query = $this->annotationBuilder->createQuery($dto);
+        $response = $this->send($query);
+
+        if ($response->isOk()) {
+            return $response->getResult();
+        }
+
+        throw new \Exception(sprintf(self::BACKEND_FAIL_MSG, $response->getStatusCode()));
+    }
+
+    /**
+     * Retrieve data that is not found in the usual CQRS cache
+     *
+     * @param string $identifier
+     * @param string $uniqueId
+     *
+     * @return mixed|null
+     * @throws \Exception
+     */
+    public function getCustomCache(string $identifier, string $uniqueId = '')
+    {
+        return $this->cacheService->getCustomItem($identifier, $uniqueId);
     }
 
     /**
@@ -171,9 +246,17 @@ class CachingQueryService implements QueryServiceInterface, \Zend\Log\LoggerAwar
             if ($result->isOk()) {
                 //add the result to the local cache to avoid future trips on the same request
                 $this->storeLocalCache($cacheIdentifier, $dtoClassName, $result);
-                $this->logMessage(sprintf(self::CACHE_PERSISTENT_SAVE_MSG, $dtoClassName));
 
-                $this->cacheService->setItem($cacheIdentifier, $encryptionMode, $result);
+                try {
+                    $ttl = $this->getCacheTtl($query);
+                } catch (CacheTtlException $e) {
+                    $this->logError(sprintf(self::CACHE_FAIL_MSG, $e->getMessage()));
+                    return $result;
+                }
+
+                $this->logMessage(sprintf(self::CACHE_PERSISTENT_SAVE_MSG, $ttl, $dtoClassName));
+
+                $this->cacheService->setItem($cacheIdentifier, $encryptionMode, $result, $ttl);
             }
         } else {
             $this->logMessage(sprintf(self::CACHE_PERSISTENT_RETRIEVE_MSG, $dtoClassName));
@@ -184,6 +267,27 @@ class CachingQueryService implements QueryServiceInterface, \Zend\Log\LoggerAwar
         }
 
         return $result;
+    }
+
+    /**
+     * Get the cache ttl depending on the query type
+     *
+     * @param QueryContainerInterface $query
+     *
+     * @throws CacheTtlException
+     * @return int
+     */
+    private function getCacheTtl(QueryContainerInterface $query): int
+    {
+        if ($query->isMediumTermCacheable() && isset($this->ttl[CacheableMediumTermQueryInterface::class])) {
+            return $this->ttl[CacheableMediumTermQueryInterface::class];
+        }
+
+        if ($query->isLongTermCacheable() && isset($this->ttl[CacheableLongTermQueryInterface::class])) {
+            return $this->ttl[CacheableLongTermQueryInterface::class];
+        }
+
+        throw new CacheTtlException(self::MISSING_TTL_INTERFACE_TYPE);
     }
 
     /**

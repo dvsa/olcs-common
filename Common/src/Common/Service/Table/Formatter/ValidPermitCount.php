@@ -8,7 +8,7 @@
 namespace Common\Service\Table\Formatter;
 
 use Common\RefData;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\ServiceManager;
 
 /**
  * Valid permit count formatter

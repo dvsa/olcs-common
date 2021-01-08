@@ -8,15 +8,15 @@
 namespace Common\Controller;
 
 use Dvsa\Olcs\Transfer\Query\TransportManagerApplication\Review;
-use Zend\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
-use Zend\View\Model\ViewModel;
+use Laminas\Mvc\Controller\AbstractActionController as LaminasAbstractActionController;
+use Laminas\View\Model\ViewModel;
 
 /**
  * Transport Manager Review Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class TransportManagerReviewController extends ZendAbstractActionController
+class TransportManagerReviewController extends LaminasAbstractActionController
 {
     public function indexAction()
     {

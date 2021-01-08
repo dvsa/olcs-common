@@ -7,10 +7,10 @@
  */
 namespace Common\Form\Elements\Types;
 
-use Zend\Form\Fieldset;
-use Zend\Form\Element\Text;
-use Zend\Form\Element\Button;
-use Zend\Form\Element\Select;
+use Laminas\Form\Fieldset;
+use Laminas\Form\Element\Text;
+use Laminas\Form\Element\Button;
+use Laminas\Form\Element\Select;
 use Common\Form\Elements\Types\HtmlTranslated;
 
 /**
@@ -35,15 +35,26 @@ class PostcodeSearch extends Fieldset
 
         self::$count++;
 
+        $postcodeSearchId = 'postcodeInput' . self::$count;
+
         $postcodeSearch = new Text('postcode');
         $postcodeSearch->setAttributes(
             array(
                 'class' => 'short js-input',
                 'data-container-class' => 'inline',
-                'id' => 'postcodeInput'. self::$count,
+                'id' => $postcodeSearchId,
             )
         );
-        $postcodeSearch->setOption('remove_if_readonly', true);
+        $postcodeSearch->setOptions(
+            [
+                'remove_if_readonly' => true,
+                'label' => 'Postcode search',
+                'label_attributes' => [
+                    'class' => 'govuk-visually-hidden',
+                    'for' => $postcodeSearchId,
+                ],
+            ]
+        );
 
         $this->add($postcodeSearch);
 
@@ -59,9 +70,21 @@ class PostcodeSearch extends Fieldset
 
         $this->add($searchButton);
 
-        $selectAddress = new Select('addresses', array('label' => '', 'empty_option' => 'Please select'));
+        $selectAddressId = 'selectAddress' . self::$count;
+
+        $selectAddress = new Select(
+            'addresses',
+            array(
+                'label' => 'postcode.select_address.label',
+                'label_attributes' => array(
+                    'for' => $selectAddressId,
+                ),
+                'empty_option' => 'Please select'
+            )
+        );
         $selectAddress->setAttributes(
             array(
+                'id' => $selectAddressId,
                 'data-container-class' => 'compound address__select'
             )
         );

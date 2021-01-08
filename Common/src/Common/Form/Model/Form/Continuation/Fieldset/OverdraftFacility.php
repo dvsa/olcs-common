@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Continuation\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Type("\Common\Form\Elements\Types\RadioHorizontal")
@@ -26,7 +26,7 @@ class OverdraftFacility
      * @Form\Options({
      *     "label": "continuations.finances.overdraftFacility.amount.label",
      * })
-     * @Form\Validator({"name": "Zend\Validator\NotEmpty", "options": {"null"}})
+     * @Form\Validator({"name": "Laminas\Validator\NotEmpty", "options": {"null"}})
      * @Form\Validator({"name": "ValidateIf",
      *      "options":{
      *          "context_field": "yesNo",

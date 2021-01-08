@@ -75,7 +75,7 @@ class DynamicMultiCheckboxTest extends \PHPUnit\Framework\TestCase
 
         $mockService = $this->createMock('\Common\Service\Data\ListDataInterface');
 
-        $mockSl = $this->createMock('\Zend\ServiceManager\ServiceLocatorInterface');
+        $mockSl = $this->createMock('\Laminas\ServiceManager\ServiceLocatorInterface');
         $mockSl->expects($this->once())->method('get')->with($this->equalTo($serviceName))->willReturn($mockService);
 
         $sut = new DynamicMultiCheckbox();
@@ -90,7 +90,7 @@ class DynamicMultiCheckboxTest extends \PHPUnit\Framework\TestCase
 
         $mockService = $this->createMock('\StdClass');
 
-        $mockSl = $this->createMock('\Zend\ServiceManager\ServiceLocatorInterface');
+        $mockSl = $this->createMock('\Laminas\ServiceManager\ServiceLocatorInterface');
         $mockSl->expects($this->once())->method('get')->with($this->equalTo($serviceName))->willReturn($mockService);
 
         $sut = new DynamicMultiCheckbox();

@@ -7,7 +7,7 @@ use Common\Service\Helper\UrlHelperService as UrlHelper;
 use Common\Service\Table\Formatter\IrhpPermitNumberInternal;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * IrhpPermitNumberInternal test

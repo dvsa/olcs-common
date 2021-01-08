@@ -24,8 +24,11 @@ class BaseQaForm extends Form
             if (!array_key_exists($fieldsetName, $data[self::QA_FIELDSET_NAME])) {
                 $data[self::QA_FIELDSET_NAME][$fieldsetName] = [];
             }
-            if (!array_key_exists('qaElement', $data[self::QA_FIELDSET_NAME][$fieldsetName])) {
-                $data[self::QA_FIELDSET_NAME][$fieldsetName]['qaElement'] = '';
+            foreach ($fieldset->getElements() as $element) {
+                $elementName = $element->getName();
+                if (!array_key_exists($elementName, $data[self::QA_FIELDSET_NAME][$fieldsetName])) {
+                    $data[self::QA_FIELDSET_NAME][$fieldsetName][$elementName] = '';
+                }
             }
         }
 

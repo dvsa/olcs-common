@@ -12,11 +12,11 @@ use Common\Service\Helper\FormHelperService;
 use Common\Service\Lva\PeopleLvaService;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
-use Zend\Form\Element;
-use Zend\Form\FieldsetInterface;
-use Zend\Form\Form;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Text\Table\Table;
+use Laminas\Form\Element;
+use Laminas\Form\FieldsetInterface;
+use Laminas\Form\Form;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\Text\Table\Table;
 
 /**
  * People LVA Service tests

@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Lva\Fieldset\TransportManager;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Name("lva-transport-manager-details")
@@ -40,7 +40,7 @@ class Details
      *     "short-label": "lva-tm-details-details-email"
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
      * @Form\Validator({"name":"Dvsa\Olcs\Transfer\Validators\EmailAddress"})
      */
     public $emailAddress = null;
@@ -55,7 +55,7 @@ class Details
      *     }
      * })
      * @Form\Type("Text")
-     * @Form\Validator({"name": "\Zend\Validator\NotEmpty"})
+     * @Form\Validator({"name": "\Laminas\Validator\NotEmpty"})
      */
     public $birthPlace = null;
 

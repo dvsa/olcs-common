@@ -20,7 +20,7 @@ class PluginManagerTest extends MockeryTestCase
 
     public function testGetChecksMainSlFirst()
     {
-        $mockSL = m::mock('\Zend\ServiceManager\ServiceLocatorInterface');
+        $mockSL = m::mock('\Laminas\ServiceManager\ServiceLocatorInterface');
         $mockSL->shouldReceive('has')->with('testService')->andReturn(true);
         $mockSL->shouldReceive('get')->with('testService')->andReturn('service');
 
@@ -33,7 +33,7 @@ class PluginManagerTest extends MockeryTestCase
 
     public function testGet()
     {
-        $mockSL = m::mock('\Zend\ServiceManager\ServiceLocatorInterface');
+        $mockSL = m::mock('\Laminas\ServiceManager\ServiceLocatorInterface');
         $mockSL->shouldReceive('has')->with('testService')->andReturn(false);
 
         $sut = new PluginManager();
@@ -67,7 +67,7 @@ class PluginManagerTest extends MockeryTestCase
         $mockTranslator = m::mock('stdClass');
         $mockTranslator->shouldReceive('getLocale')->andReturn($lang);
 
-        $mockSl = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
+        $mockSl = m::mock('Laminas\ServiceManager\ServiceLocatorInterface');
         $mockSl->shouldReceive('get')->with('ServiceApiResolver')->andReturn($mockServiceApiResolver);
         $mockSl->shouldReceive('get')->with('translator')->andReturn($mockTranslator);
 
@@ -78,6 +78,5 @@ class PluginManagerTest extends MockeryTestCase
         $sut = new PluginManager();
         $sut->setServiceLocator($mockSl);
         $sut->initializeRestClientInterface($mockPlugin);
-
     }
 }

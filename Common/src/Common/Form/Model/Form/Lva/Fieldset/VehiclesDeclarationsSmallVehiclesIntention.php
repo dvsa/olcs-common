@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Lva\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Name("smallVehiclesIntention")
@@ -23,7 +23,7 @@ class VehiclesDeclarationsSmallVehiclesIntention
      *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
      *     "value_options": {"Y": "Yes", "N": "No"}
      * })
-     * @Form\Type("\Zend\Form\Element\Radio")
+     * @Form\Type("\Laminas\Form\Element\Radio")
      */
     public $psvOperateSmallVhl = null;
 

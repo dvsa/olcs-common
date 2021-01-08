@@ -22,7 +22,7 @@ class PublicationNumber implements FormatterInterface
      *
      * @param array                               $data   The row data
      * @param array                               $column [OPTIONAL]
-     * @param \Zend\ServiceManager\ServiceManager $sm     [OPTIONAL]
+     * @param \Laminas\ServiceManager\ServiceManager $sm     [OPTIONAL]
      *
      * @return string
      */

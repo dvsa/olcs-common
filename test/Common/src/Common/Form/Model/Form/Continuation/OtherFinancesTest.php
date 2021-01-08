@@ -4,8 +4,8 @@ namespace CommonTest\Form\Model\Form\Continuation;
 
 use Dvsa\Olcs\Transfer\Validators\Money;
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
-use Zend\Validator\GreaterThan;
-use Zend\Validator\LessThan;
+use Laminas\Validator\GreaterThan;
+use Laminas\Validator\LessThan;
 
 /**
  * Class OtherFinancesTest

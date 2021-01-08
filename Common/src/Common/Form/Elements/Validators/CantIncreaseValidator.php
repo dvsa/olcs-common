@@ -7,7 +7,7 @@
  */
 namespace Common\Form\Elements\Validators;
 
-use Zend\Validator\AbstractValidator;
+use Laminas\Validator\AbstractValidator;
 use Common\Form\Elements\Validators\Messages\GenericValidationMessage;
 
 /**
@@ -89,7 +89,6 @@ class CantIncreaseValidator extends AbstractValidator
     public function isValid($value)
     {
         if (is_numeric($value) && $value > $this->previousValue) {
-
             $this->error(self::CANT_INCREASE);
 
             return false;

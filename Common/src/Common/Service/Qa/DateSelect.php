@@ -2,17 +2,21 @@
 
 namespace Common\Service\Qa;
 
-use Zend\Form\Element\DateSelect as ZendDateSelect;
+use Laminas\Form\Element\DateSelect as LaminasDateSelect;
 
-class DateSelect extends ZendDateSelect
+class DateSelect extends LaminasDateSelect
 {
+    protected $attributes = [
+        'id' => 'qaDateSelect',
+    ];
+
     /**
      * {@inheritdoc}
      */
     public function setValue($value)
     {
         // in order to redisplay an invalid date value back to the user, we have to convert it back to an array
-        // otherwise, zend will throw an exception when trying to parse the string into a DateTime object
+        // otherwise, Laminas will throw an exception when trying to parse the string into a DateTime object
         if (is_string($value)) {
             $valueElements = explode('-', $value);
 
@@ -46,6 +50,7 @@ class DateSelect extends ZendDateSelect
     public function getInputSpecification()
     {
         return [
+            'id' => 'qaDateSelect',
             'name' => $this->getName(),
             'required' => false,
             'filters' => [

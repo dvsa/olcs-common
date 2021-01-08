@@ -2,18 +2,18 @@
 
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\Form\Element\Hidden as ZendElement;
-use Zend\Validator as ZendValidator;
-use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\Form\Element\Hidden as LaminasElement;
+use Laminas\Validator as LaminasValidator;
+use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
 
 /**
  * @deprecated This should not be used and must be removed as part of OLCS-15198
  *             Replace other elements with the normal Text element provided by
- *             Zend.
+ *             Laminas.
  *
  * Custom Hidden Element
  */
-class Hidden extends ZendElement implements InputProviderInterface
+class Hidden extends LaminasElement implements InputProviderInterface
 {
     protected $required = false;
     protected $max = null;
@@ -45,13 +45,13 @@ class Hidden extends ZendElement implements InputProviderInterface
             'name' => $this->getName(),
             'required' => $this->required,
             'filters' => [
-                ['name' => 'Zend\Filter\StringTrim']
+                ['name' => 'Laminas\Filter\StringTrim']
             ],
             'validators' => [
                 [
-                    'name' => ZendValidator\NotEmpty::class,
+                    'name' => LaminasValidator\NotEmpty::class,
                     'options' => [
-                        'type' => ZendValidator\NotEmpty::NULL,
+                        'type' => LaminasValidator\NotEmpty::NULL,
                     ],
                 ],
             ],
@@ -59,7 +59,7 @@ class Hidden extends ZendElement implements InputProviderInterface
 
         if (!empty($this->max)) {
             $specification['validators'][] = [
-                'name' => 'Zend\Validator\StringLength',
+                'name' => 'Laminas\Validator\StringLength',
                 'options' => ['min' => 2, 'max' => $this->max]
             ];
         }

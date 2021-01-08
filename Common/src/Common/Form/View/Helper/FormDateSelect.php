@@ -7,11 +7,11 @@
  */
 namespace Common\Form\View\Helper;
 
-use Zend\Form\View\Helper\FormDateSelect as ZendFormDateSelect;
-use Zend\Form\ElementInterface;
-use Zend\Form\Element\DateSelect as DateSelectElement;
-use Zend\Form\Exception;
-use Zend\Form\View\Helper\FormMonthSelect as FormMonthSelectHelper;
+use Laminas\Form\View\Helper\FormDateSelect as LaminasFormDateSelect;
+use Laminas\Form\ElementInterface;
+use Laminas\Form\Element\DateSelect as DateSelectElement;
+use Laminas\Form\Exception;
+use Laminas\Form\View\Helper\FormMonthSelect as FormMonthSelectHelper;
 
 /**
  * Form Date Select
@@ -28,8 +28,8 @@ class FormDateSelect extends \Common\Form\View\Helper\Extended\FormDateSelect
      * Render a date element that is composed of three selects
      *
      * @param  ElementInterface $element
-     * @throws \Zend\Form\Exception\InvalidArgumentException
-     * @throws \Zend\Form\Exception\DomainException
+     * @throws \Laminas\Form\Exception\InvalidArgumentException
+     * @throws \Laminas\Form\Exception\DomainException
      * @return string
      */
     public function render(ElementInterface $element)
@@ -37,7 +37,7 @@ class FormDateSelect extends \Common\Form\View\Helper\Extended\FormDateSelect
         if (!$element instanceof DateSelectElement) {
             throw new Exception\InvalidArgumentException(
                 sprintf(
-                    '%s requires that the element is of type Zend\Form\Element\DateSelect',
+                    '%s requires that the element is of type Laminas\Form\Element\DateSelect',
                     __METHOD__
                 )
             );

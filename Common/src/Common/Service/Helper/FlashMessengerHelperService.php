@@ -58,7 +58,7 @@ class FlashMessengerHelperService extends AbstractHelperService
      * Add a success message
      *
      * @param string $message
-     * @return \Zend\Mvc\Controller\Plugin\FlashMessenger
+     * @return \Laminas\Mvc\Controller\Plugin\FlashMessenger
      */
     public function addSuccessMessage($message)
     {
@@ -69,7 +69,7 @@ class FlashMessengerHelperService extends AbstractHelperService
      * Add a error message
      *
      * @param string $message
-     * @return \Zend\Mvc\Controller\Plugin\FlashMessenger
+     * @return \Laminas\Mvc\Controller\Plugin\FlashMessenger
      */
     public function addErrorMessage($message)
     {
@@ -92,7 +92,7 @@ class FlashMessengerHelperService extends AbstractHelperService
      * Add a warning message
      *
      * @param string $message
-     * @return \Zend\Mvc\Controller\Plugin\FlashMessenger
+     * @return \Laminas\Mvc\Controller\Plugin\FlashMessenger
      */
     public function addWarningMessage($message)
     {
@@ -104,7 +104,7 @@ class FlashMessengerHelperService extends AbstractHelperService
      * Add a info message
      *
      * @param string $message
-     * @return \Zend\Mvc\Controller\Plugin\FlashMessenger
+     * @return \Laminas\Mvc\Controller\Plugin\FlashMessenger
      */
     public function addInfoMessage($message)
     {
@@ -114,7 +114,7 @@ class FlashMessengerHelperService extends AbstractHelperService
     /**
      * Get the flash messenger
      *
-     * @return \Zend\Mvc\Controller\Plugin\FlashMessenger
+     * @return \Laminas\Mvc\Controller\Plugin\FlashMessenger
      */
     protected function getFlashMessenger()
     {

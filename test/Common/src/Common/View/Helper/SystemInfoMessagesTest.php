@@ -9,7 +9,7 @@ use Dvsa\Olcs\Transfer\Query\System\InfoMessage\GetListActive;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Stdlib\ResponseInterface;
+use Laminas\Stdlib\ResponseInterface;
 
 /**
  * @covers Common\View\Helper\SystemInfoMessages
@@ -82,14 +82,14 @@ class SystemInfoMessagesTest extends MockeryTestCase
                             'description' => 'unit_Desc1',
                         ],
                         [
-                            'description' => 'unit_Desc2 &amp;',
+                            'description' => 'unit_Desc2 &',
                         ],
                     ],
                 ],
                 'expect' =>
                     '<div class="system-messages">' .
                     '<div class="system-messages__wrapper"><p>unit_Desc1</p></div>' .
-                    '<div class="system-messages__wrapper"><p>unit_Desc2 &amp;amp;</p></div>' .
+                    '<div class="system-messages__wrapper"><p>unit_Desc2 &amp;</p></div>' .
                     '</div>',
             ],
             // no data alt

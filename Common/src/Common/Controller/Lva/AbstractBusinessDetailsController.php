@@ -10,7 +10,7 @@ use Dvsa\Olcs\Transfer\Command as TransferCmd;
 use Dvsa\Olcs\Transfer\Query\CompanySubsidiary\CompanySubsidiary;
 use Dvsa\Olcs\Transfer\Query\Licence\BusinessDetails;
 use Dvsa\Olcs\Transfer\Query\QueryInterface;
-use Zend\Form\Form;
+use Laminas\Form\Form;
 
 /**
  * Shared logic between Business Details Controller
@@ -29,11 +29,11 @@ abstract class AbstractBusinessDetailsController extends AbstractController
     /**
      * Business details section
      *
-     * @return \Zend\Http\Response|\Zend\View\Model\ViewModel
+     * @return \Laminas\Http\Response|\Laminas\View\Model\ViewModel
      */
     public function indexAction()
     {
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         $response = $this->handleQuery(BusinessDetails::create(['id' => $this->getLicenceId()]));
@@ -208,9 +208,9 @@ abstract class AbstractBusinessDetailsController extends AbstractController
     /**
      * Method used to render the indexAction form
      *
-     * @param \Zend\Form\Form $form Form
+     * @param \Laminas\Form\Form $form Form
      *
-     * @return \Zend\View\Model\ViewModel
+     * @return \Laminas\View\Model\ViewModel
      */
     protected function renderForm($form)
     {
@@ -269,7 +269,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
      */
     protected function addOrEdit($mode)
     {
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         $id = $this->params('child_id');

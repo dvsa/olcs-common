@@ -8,8 +8,8 @@
  */
 namespace Common\Service\Listener;
 
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
+use Laminas\ServiceManager\ServiceLocatorAwareInterface;
+use Laminas\ServiceManager\ServiceLocatorAwareTrait;
 use Common\Service\Data\FeeTypeDataService;
 
 /**

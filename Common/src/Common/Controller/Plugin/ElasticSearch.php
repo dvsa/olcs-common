@@ -2,9 +2,9 @@
 
 namespace Common\Controller\Plugin;
 
-use Zend\Mvc\Controller\Plugin\AbstractPlugin;
-use Zend\View\Model\ViewModel;
-use Zend\Session\Container;
+use Laminas\Mvc\Controller\Plugin\AbstractPlugin;
+use Laminas\View\Model\ViewModel;
+use Laminas\Session\Container;
 
 /**
  * Class ElasticSearch - Generates and processes calls to Elastic Search
@@ -45,7 +45,7 @@ class ElasticSearch extends AbstractPlugin
 
     /**
      * Navigation service
-     * @var \Zend\Navigation\Navigation
+     * @var \Laminas\Navigation\Navigation
      */
     protected $navigationService;
 
@@ -181,7 +181,7 @@ class ElasticSearch extends AbstractPlugin
      */
     public function getFiltersForm()
     {
-        /** @var \Zend\Form\Form $form */
+        /** @var \Laminas\Form\Form $form */
         $form = $this->getController()->getViewHelperManager()
             ->get('placeholder')
             ->getContainer('searchFilter')
@@ -421,7 +421,7 @@ class ElasticSearch extends AbstractPlugin
     }
 
     /**
-     * @param \Zend\Navigation\Navigation $navigationService
+     * @param \Laminas\Navigation\Navigation $navigationService
      */
     public function setNavigationService($navigationService)
     {
@@ -429,7 +429,7 @@ class ElasticSearch extends AbstractPlugin
     }
 
     /**
-     * @return \Zend\Navigation\Navigation
+     * @return \Laminas\Navigation\Navigation
      */
     public function getNavigationService()
     {

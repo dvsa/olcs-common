@@ -2,8 +2,8 @@
 
 namespace Common\Service\Qa\Custom\Common;
 
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class IsValidBasedWarningAdderFactory implements FactoryInterface
 {
@@ -17,7 +17,7 @@ class IsValidBasedWarningAdderFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         return new IsValidBasedWarningAdder(
-            $serviceLocator->get('ViewHelperManager')->get('partial')
+            $serviceLocator->get('QaCommonWarningAdder')
         );
     }
 }

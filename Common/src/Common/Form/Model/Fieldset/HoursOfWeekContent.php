@@ -2,17 +2,17 @@
 
 namespace Common\Form\Model\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Name("hoursOfWeekContent")
- * @Form\Type("Zend\Form\Fieldset")
+ * @Form\Type("Laminas\Form\Fieldset")
  */
 class HoursOfWeekContent
 {
     /**
      * @Form\Required(false)
-     * @Form\Filter({"name":"\Zend\Filter\StringTrim"})
+     * @Form\Filter({"name":"\Laminas\Filter\StringTrim"})
      * @Form\Attributes({
      *     "class": "short",
      *     "data-container-class": "inline-text",
@@ -21,7 +21,7 @@ class HoursOfWeekContent
      * @Form\Options({
      *     "label": "days-of-week-short-mon"
      * })
-     * @Form\Validator({"name":"Zend\I18n\Validator\IsFloat", "options": {
+     * @Form\Validator({"name":"Laminas\I18n\Validator\IsFloat", "options": {
      *     "messages": {
      *          "notFloat": "Only numbers are allowed"
      *     }
@@ -38,7 +38,7 @@ class HoursOfWeekContent
 
     /**
      * @Form\Required(false)
-     * @Form\Filter({"name":"\Zend\Filter\StringTrim"})
+     * @Form\Filter({"name":"\Laminas\Filter\StringTrim"})
      * @Form\Attributes({
      *     "class": "short",
      *     "data-container-class": "inline-text"
@@ -46,7 +46,7 @@ class HoursOfWeekContent
      * @Form\Options({
      *     "label": "days-of-week-short-tue"
      * })
-     * @Form\Validator({"name":"Zend\I18n\Validator\IsFloat", "options": {
+     * @Form\Validator({"name":"Laminas\I18n\Validator\IsFloat", "options": {
      *     "messages": {
      *          "notFloat": "Only numbers are allowed"
      *     }
@@ -63,7 +63,7 @@ class HoursOfWeekContent
 
     /**
      * @Form\Required(false)
-     * @Form\Filter({"name":"\Zend\Filter\StringTrim"})
+     * @Form\Filter({"name":"\Laminas\Filter\StringTrim"})
      * @Form\Attributes({
      *     "class": "short",
      *     "data-container-class": "inline-text"
@@ -71,7 +71,7 @@ class HoursOfWeekContent
      * @Form\Options({
      *     "label": "days-of-week-short-wed"
      * })
-     * @Form\Validator({"name":"Zend\I18n\Validator\IsFloat", "options": {
+     * @Form\Validator({"name":"Laminas\I18n\Validator\IsFloat", "options": {
      *     "messages": {
      *          "notFloat": "Only numbers are allowed"
      *     }
@@ -88,7 +88,7 @@ class HoursOfWeekContent
 
     /**
      * @Form\Required(false)
-     * @Form\Filter({"name":"\Zend\Filter\StringTrim"})
+     * @Form\Filter({"name":"\Laminas\Filter\StringTrim"})
      * @Form\Attributes({
      *     "class": "short",
      *     "data-container-class": "inline-text"
@@ -96,7 +96,7 @@ class HoursOfWeekContent
      * @Form\Options({
      *     "label": "days-of-week-short-thu"
      * })
-     * @Form\Validator({"name":"Zend\I18n\Validator\IsFloat", "options": {
+     * @Form\Validator({"name":"Laminas\I18n\Validator\IsFloat", "options": {
      *     "messages": {
      *          "notFloat": "Only numbers are allowed"
      *     }
@@ -113,7 +113,7 @@ class HoursOfWeekContent
 
     /**
      * @Form\Required(false)
-     * @Form\Filter({"name":"\Zend\Filter\StringTrim"})
+     * @Form\Filter({"name":"\Laminas\Filter\StringTrim"})
      * @Form\Attributes({
      *     "class": "short",
      *     "data-container-class": "inline-text"
@@ -121,7 +121,7 @@ class HoursOfWeekContent
      * @Form\Options({
      *     "label": "days-of-week-short-fri"
      * })
-     * @Form\Validator({"name":"Zend\I18n\Validator\IsFloat", "options": {
+     * @Form\Validator({"name":"Laminas\I18n\Validator\IsFloat", "options": {
      *     "messages": {
      *          "notFloat": "Only numbers are allowed"
      *     }
@@ -138,7 +138,7 @@ class HoursOfWeekContent
 
     /**
      * @Form\Required(false)
-     * @Form\Filter({"name":"\Zend\Filter\StringTrim"})
+     * @Form\Filter({"name":"\Laminas\Filter\StringTrim"})
      * @Form\Attributes({
      *     "class": "short",
      *     "data-container-class": "inline-text"
@@ -146,7 +146,7 @@ class HoursOfWeekContent
      * @Form\Options({
      *     "label": "days-of-week-short-sat"
      * })
-     * @Form\Validator({"name":"Zend\I18n\Validator\IsFloat", "options": {
+     * @Form\Validator({"name":"Laminas\I18n\Validator\IsFloat", "options": {
      *     "messages": {
      *          "notFloat": "Only numbers are allowed"
      *     }
@@ -163,7 +163,7 @@ class HoursOfWeekContent
 
     /**
      * @Form\Required(false)
-     * @Form\Filter({"name":"\Zend\Filter\StringTrim"})
+     * @Form\Filter({"name":"\Laminas\Filter\StringTrim"})
      * @Form\Attributes({
      *     "class": "short",
      *     "data-container-class": "inline-text"
@@ -171,7 +171,7 @@ class HoursOfWeekContent
      * @Form\Options({
      *     "label": "days-of-week-short-sun"
      * })
-     * @Form\Validator({"name":"Zend\I18n\Validator\IsFloat", "options": {
+     * @Form\Validator({"name":"Laminas\I18n\Validator\IsFloat", "options": {
      *     "messages": {
      *          "notFloat": "Only numbers are allowed"
      *     }

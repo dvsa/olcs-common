@@ -23,7 +23,7 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
     protected $tab;
     protected $qs;
 
-    /** @var \Zend\ServiceManager\ServiceManager | m\MockInterface */
+    /** @var \Laminas\ServiceManager\ServiceManager | m\MockInterface */
     protected $sm;
 
     public function setUp(): void
@@ -73,8 +73,8 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
 
     public function testRemoveTmTypeBothOption()
     {
-        /** @var \Zend\Form\Element $mockTmTypeField */
-        $mockTmTypeField = m::mock(\Zend\Form\Element::class);
+        /** @var \Laminas\Form\Element $mockTmTypeField */
+        $mockTmTypeField = m::mock(\Laminas\Form\Element::class);
 
         $this->mockFormHlp
             ->shouldReceive('removeOption')->once()->with($mockTmTypeField, 'tm_t_b');
@@ -86,8 +86,8 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
     {
         /** @var TableBuilder $otherLicencesTable */
         $otherLicencesTable = m::mock(TableBuilder::class);
-        /** @var \Zend\Form\Fieldset $mockOtherLicenceField */
-        $mockOtherLicenceField = m::mock(\Zend\Form\Fieldset::class);
+        /** @var \Laminas\Form\Fieldset $mockOtherLicenceField */
+        $mockOtherLicenceField = m::mock(\Laminas\Form\Fieldset::class);
 
         $this->mockFormHlp
             ->shouldReceive('populateFormTable')->once()->with($mockOtherLicenceField, $otherLicencesTable);
@@ -151,17 +151,17 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
 
     public function testAlterPreviousHistoryFieldsetTm()
     {
-        $fieldset = m::mock(\Zend\Form\Fieldset::class);
-        $hasConvictions = m::mock(\Zend\Form\Fieldset::class);
+        $fieldset = m::mock(\Laminas\Form\Fieldset::class);
+        $hasConvictions = m::mock(\Laminas\Form\Fieldset::class);
         $hasConvictions->shouldReceive('unsetValueOption')->with('Y');
         $hasConvictions->shouldReceive('unsetValueOption')->with('N');
         $hasConvictions->shouldReceive('setOption')->with('hint', 'string');
-        $convictions = m::mock(\Zend\Form\Fieldset::class);
+        $convictions = m::mock(\Laminas\Form\Fieldset::class);
         $convictions->shouldReceive('removeAttribute')->with('class');
-        $hasPreviousLicences = m::mock(\Zend\Form\Fieldset::class);
+        $hasPreviousLicences = m::mock(\Laminas\Form\Fieldset::class);
         $hasPreviousLicences->shouldReceive('unsetValueOption')->with('Y');
         $hasPreviousLicences->shouldReceive('unsetValueOption')->with('N');
-        $previousLicences = m::mock(\Zend\Form\Fieldset::class);
+        $previousLicences = m::mock(\Laminas\Form\Fieldset::class);
         $previousLicences->shouldReceive('removeAttribute')->with('class');
         $fieldset->shouldReceive('get')->with('hasConvictions')->andReturn($hasConvictions);
         $fieldset->shouldReceive('get')->with('convictions')->andReturn($convictions);
@@ -209,7 +209,7 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
         $mockTranslator->shouldReceive('translateReplace')->andReturn('string');
         $this->sm->setService('Helper\Translation', $mockTranslator);
 
-        $mockUrl = m::mock(\Zend\View\Helper\Url::class);
+        $mockUrl = m::mock(\Laminas\View\Helper\Url::class);
         $mockUrl->shouldReceive('fromRoute')->andReturn('string');
         $this->sm->setService('Helper\Url', $mockUrl);
 
@@ -218,17 +218,17 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
 
     public function testAlterPreviousHistoryFieldset()
     {
-        $fieldset = m::mock(\Zend\Form\Fieldset::class);
-        $hasConvictions = m::mock(\Zend\Form\Fieldset::class);
+        $fieldset = m::mock(\Laminas\Form\Fieldset::class);
+        $hasConvictions = m::mock(\Laminas\Form\Fieldset::class);
         $hasConvictions->shouldReceive('unsetValueOption')->with('Y');
         $hasConvictions->shouldReceive('unsetValueOption')->with('N');
         $hasConvictions->shouldReceive('setOption')->with('hint', 'string');
-        $convictions = m::mock(\Zend\Form\Fieldset::class);
+        $convictions = m::mock(\Laminas\Form\Fieldset::class);
         $convictions->shouldReceive('removeAttribute')->with('class');
-        $hasPreviousLicences = m::mock(\Zend\Form\Fieldset::class);
+        $hasPreviousLicences = m::mock(\Laminas\Form\Fieldset::class);
         $hasPreviousLicences->shouldReceive('unsetValueOption')->with('Y');
         $hasPreviousLicences->shouldReceive('unsetValueOption')->with('N');
-        $previousLicences = m::mock(\Zend\Form\Fieldset::class);
+        $previousLicences = m::mock(\Laminas\Form\Fieldset::class);
         $previousLicences->shouldReceive('removeAttribute')->with('class');
         $fieldset->shouldReceive('get')->with('hasConvictions')->andReturn($hasConvictions);
         $fieldset->shouldReceive('get')->with('convictions')->andReturn($convictions);
@@ -280,7 +280,7 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
         $mockTranslator->shouldReceive('translateReplace')->andReturn('string');
         $this->sm->setService('Helper\Translation', $mockTranslator);
 
-        $mockUrl = m::mock(\Zend\View\Helper\Url::class);
+        $mockUrl = m::mock(\Laminas\View\Helper\Url::class);
         $mockUrl->shouldReceive('fromRoute')->andReturn('string');
         $this->sm->setService('Helper\Url', $mockUrl);
 

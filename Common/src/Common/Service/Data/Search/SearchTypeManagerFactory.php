@@ -2,9 +2,9 @@
 
 namespace Common\Service\Data\Search;
 
-use Zend\ServiceManager\Config as ServiceManagerConfig;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Config as ServiceManagerConfig;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Class SearchTypeManagerFactory

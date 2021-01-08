@@ -4,10 +4,10 @@ namespace CommonTest\Form\Model\Form\Continuation;
 
 use Dvsa\Olcs\Transfer\Validators\Money;
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
-use Zend\Validator\Between;
-use Zend\Validator\GreaterThan;
-use Zend\Validator\LessThan;
-use Zend\Validator\NotEmpty;
+use Laminas\Validator\Between;
+use Laminas\Validator\GreaterThan;
+use Laminas\Validator\LessThan;
+use Laminas\Validator\NotEmpty;
 
 /**
  * Class FinancesTest

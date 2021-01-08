@@ -20,7 +20,7 @@ use Dvsa\Olcs\Transfer\Query\ApplicationOperatingCentre\ApplicationOperatingCent
 use Dvsa\Olcs\Transfer\Query\Licence\OperatingCentres as LicOperatingCentres;
 use Dvsa\Olcs\Transfer\Query\LicenceOperatingCentre\LicenceOperatingCentre;
 use Dvsa\Olcs\Transfer\Query\VariationOperatingCentre\VariationOperatingCentre;
-use Zend\Mvc\MvcEvent;
+use Laminas\Mvc\MvcEvent;
 
 /**
  * Shared logic between Operating Centres controllers
@@ -106,7 +106,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
     /**
      * Operating centre list action
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     public function indexAction()
     {
@@ -120,7 +120,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
                 ->addVariationMessage($this->getIdentifier(), $this->section);
         }
 
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -133,7 +133,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $params = array_merge((array)$query, ['query' => $query]);
         $resultData['query'] = $params;
 
-        /** @var \Zend\Form\FormInterface $form */
+        /** @var \Laminas\Form\FormInterface $form */
         $form = $this->getServiceLocator()->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-operating_centres')
             ->getForm($resultData)
@@ -179,10 +179,10 @@ abstract class AbstractOperatingCentresController extends AbstractController
     /**
      * Process Update Operation Center
      *
-     * @param \Zend\Form\FormInterface $form       Form
+     * @param \Laminas\Form\FormInterface $form       Form
      * @param array                    $crudAction Table parameters
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     protected function processUpdateOc($form, $crudAction)
     {
@@ -243,11 +243,11 @@ abstract class AbstractOperatingCentresController extends AbstractController
     /**
      * Create Operating centre action
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     public function addAction()
     {
-        /** @var \Zend\Http\PhpEnvironment\Request $request */
+        /** @var \Laminas\Http\PhpEnvironment\Request $request */
         $request = $this->getRequest();
 
         $data = [];
@@ -273,7 +273,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
             $resultData['applicationId'] = $this->getIdentifier();
         }
 
-        /** @var \Zend\Form\FormInterface $form */
+        /** @var \Laminas\Form\FormInterface $form */
         $form = $this->getServiceLocator()->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-operating_centre')
             ->getForm($resultData, $request)
@@ -336,14 +336,14 @@ abstract class AbstractOperatingCentresController extends AbstractController
     /**
      * Update Operating centre action
      *
-     * @return \Common\View\Model\Section | \Zend\Http\Response
+     * @return \Common\View\Model\Section | \Laminas\Http\Response
      */
     public function editAction()
     {
         //normally we validate adverts have been uploaded, but not for variations where authorisation hasn't increased
         $validateAdverts = true;
 
-        /** @var \Zend\Http\PhpEnvironment\Request $request */
+        /** @var \Laminas\Http\PhpEnvironment\Request $request */
         $request = $this->getRequest();
 
         $resultData = $this->fetchOcItemData();
@@ -384,7 +384,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
             $resultData['applicationId'] = $this->getIdentifier();
         }
 
-        /** @var \Zend\Form\FormInterface $form */
+        /** @var \Laminas\Form\FormInterface $form */
         $form = $this->getServiceLocator()->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-operating_centre')
             ->getForm($resultData, $request)
@@ -571,7 +571,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
      * @param string $childIdParamName Child route identifier
      * @param string $route            Route
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      * @overridden
      */
     protected function handleCrudAction(

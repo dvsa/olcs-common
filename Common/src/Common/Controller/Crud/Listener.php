@@ -7,14 +7,14 @@
  */
 namespace Common\Controller\Crud;
 
-use Zend\Mvc\MvcEvent;
-use Zend\EventManager\EventManagerInterface;
-use Zend\EventManager\EventManagerAwareTrait;
-use Zend\EventManager\ListenerAggregateTrait;
-use Zend\EventManager\EventManagerAwareInterface;
-use Zend\EventManager\ListenerAggregateInterface;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
+use Laminas\Mvc\MvcEvent;
+use Laminas\EventManager\EventManagerInterface;
+use Laminas\EventManager\EventManagerAwareTrait;
+use Laminas\EventManager\ListenerAggregateTrait;
+use Laminas\EventManager\EventManagerAwareInterface;
+use Laminas\EventManager\ListenerAggregateInterface;
+use Laminas\ServiceManager\ServiceLocatorAwareInterface;
+use Laminas\ServiceManager\ServiceLocatorAwareTrait;
 
 /**
  * Listener
@@ -49,7 +49,7 @@ class Listener implements EventManagerAwareInterface, ListenerAggregateInterface
     /**
      * Pass the controller in
      *
-     * @param \Zend\Mvc\Controller\AbstractActionController $controller
+     * @param \Laminas\Mvc\Controller\AbstractActionController $controller
      */
     public function setController($controller)
     {

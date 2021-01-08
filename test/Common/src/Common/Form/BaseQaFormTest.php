@@ -5,8 +5,8 @@ namespace CommonTest\Form\View\Helper;
 use Common\Form\BaseQaForm;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Fieldset;
-use Zend\Form\Element\Text;
+use Laminas\Form\Fieldset;
+use Laminas\Form\Element\Text;
 
 /**
  * BaseQaFormTest

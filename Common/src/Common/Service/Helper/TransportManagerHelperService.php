@@ -4,10 +4,10 @@ namespace Common\Service\Helper;
 
 use Common\Service\Data\CategoryDataService;
 use Common\Service\Table\TableBuilder;
-use Zend\Form\Element;
-use Zend\Form\Fieldset;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\Form\Element;
+use Laminas\Form\Fieldset;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Transport Manager Helper Service
@@ -117,7 +117,7 @@ class TransportManagerHelperService extends AbstractHelperService implements Fac
     /**
      * This method superseeds alterPreviousHistoryFieldset
      *
-     * @param \Zend\Form\Fieldset $fieldset
+     * @param \Laminas\Form\Fieldset $fieldset
      * @param array               $tm
      */
     public function alterPreviousHistoryFieldsetTm($fieldset, $tm)
@@ -136,7 +136,7 @@ class TransportManagerHelperService extends AbstractHelperService implements Fac
         $this->setConvictionsReadMoreLink($fieldset);
     }
 
-    public function alterPreviousHistoryFieldset(\Zend\Form\Fieldset $fieldset, $tmId)
+    public function alterPreviousHistoryFieldset(\Laminas\Form\Fieldset $fieldset, $tmId)
     {
         $transportManager = $this->getTransportManager($tmId);
         $convictionsAndPenaltiesTable = $this->getConvictionsAndPenaltiesTable($transportManager['id']);
@@ -181,7 +181,7 @@ class TransportManagerHelperService extends AbstractHelperService implements Fac
     /**
      * Prepare Tm other employment table
      *
-     * @param \Zend\Form\Element $element
+     * @param \Laminas\Form\Element $element
      * @param array              $tm      Transport Manager data
      */
     public function prepareOtherEmploymentTableTm($element, $tm)
@@ -222,7 +222,7 @@ class TransportManagerHelperService extends AbstractHelperService implements Fac
         return $data;
     }
 
-    private function setConvictionsReadMoreLink(\Zend\Form\Fieldset $fieldset): void
+    private function setConvictionsReadMoreLink(\Laminas\Form\Fieldset $fieldset): void
     {
         $translator = $this->getServiceLocator()->get('Helper\Translation');
         $hasConvictions = $fieldset->get('hasConvictions');
@@ -238,7 +238,7 @@ class TransportManagerHelperService extends AbstractHelperService implements Fac
         $hasConvictions->setOption('hint', $hint);
     }
 
-    private function populatePreviousHistoryTables(\Zend\Form\Fieldset $fieldset, $convictionsAndPenaltiesTable, $previousLicencesTable): void
+    private function populatePreviousHistoryTables(\Laminas\Form\Fieldset $fieldset, $convictionsAndPenaltiesTable, $previousLicencesTable): void
     {
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 

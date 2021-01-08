@@ -7,7 +7,7 @@
  */
 namespace Common\Util;
 
-use Zend\Mvc\Router\Http\Segment;
+use Laminas\Mvc\Router\Http\Segment;
 
 /**
  * Lva Route

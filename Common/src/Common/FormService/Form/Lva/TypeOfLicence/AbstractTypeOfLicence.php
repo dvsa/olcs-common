@@ -4,7 +4,7 @@ namespace Common\FormService\Form\Lva\TypeOfLicence;
 
 use Common\FormService\Form\Lva\AbstractLvaFormService;
 use Common\RefData;
-use Zend\Form\Form;
+use Laminas\Form\Form;
 
 /**
  * Abstract Type Of Licence Form
@@ -33,7 +33,7 @@ abstract class AbstractTypeOfLicence extends AbstractLvaFormService
     }
 
     /**
-     * Make changed in form 
+     * Make changed in form
      *
      * @param Form  $form   Form
      * @param array $params parameters
@@ -67,7 +67,7 @@ abstract class AbstractTypeOfLicence extends AbstractLvaFormService
      */
     protected function lockElements(Form $form, $params = [])
     {
-        /** @var \Zend\Form\Fieldset $typeOfLicenceFieldset */
+        /** @var \Laminas\Form\Fieldset $typeOfLicenceFieldset */
         $typeOfLicenceFieldset = $form->get('type-of-licence');
 
         // Change labels
@@ -119,7 +119,7 @@ abstract class AbstractTypeOfLicence extends AbstractLvaFormService
      */
     public function setAndLockOperatorLocation($form, $location)
     {
-        /** @var \Zend\Form\Fieldset $typeOfLicenceFieldset */
+        /** @var \Laminas\Form\Fieldset $typeOfLicenceFieldset */
         $typeOfLicenceFieldset = $form->get('type-of-licence');
 
         $elmOperLoc = $typeOfLicenceFieldset->get('operator-location');
@@ -128,7 +128,6 @@ abstract class AbstractTypeOfLicence extends AbstractLvaFormService
         if ($location === self::ALLOWED_OPERATOR_LOCATION_NI) {
             $elmOperLoc->setValue('Y');
             $message = 'alternative-operator-location-lock-message-ni';
-
         } elseif ($location === self::ALLOWED_OPERATOR_LOCATION_GB) {
             $elmOperLoc->setValue('N');
             $message = 'alternative-operator-location-lock-message-gb';

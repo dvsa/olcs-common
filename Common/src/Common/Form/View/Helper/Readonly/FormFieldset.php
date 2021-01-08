@@ -3,8 +3,8 @@
 namespace Common\Form\View\Helper\Readonly;
 
 use Common\Form\Elements;
-use Zend\Form\FieldsetInterface;
-use Zend\Form\View\Helper\AbstractHelper;
+use Laminas\Form\FieldsetInterface;
+use Laminas\Form\View\Helper\AbstractHelper;
 
 /**
  * @author Dmitry Golubev <dmitrij.golubev@valtech.com>

@@ -7,7 +7,7 @@
  */
 namespace Common\Form\Fieldsets\Custom;
 
-use Zend\Form\Fieldset;
+use Laminas\Form\Fieldset;
 use Common\Form\Elements\InputFilters\ActionButton;
 
 /**

@@ -10,7 +10,7 @@ namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\ContentHelper;
 use Common\Service\Table\Formatter\TaskCheckbox;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Task checkbox formatter tests

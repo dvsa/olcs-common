@@ -9,7 +9,7 @@
 namespace Common\View\Helper;
 
 use Common\Rbac\User;
-use Zend\View\Helper\AbstractHelper;
+use Laminas\View\Helper\AbstractHelper;
 use ZfcRbac\Service\AuthorizationService;
 
 /**

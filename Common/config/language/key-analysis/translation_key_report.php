@@ -8,7 +8,7 @@ if ($argc === 1) {
     exit(1);
 }
 
-if (!is_dir($argv[1]))  {
+if (!is_dir($argv[1])) {
     echo "First argument must be a valid path to a directory!\n\n";
     exit(1);
 } else {
@@ -17,7 +17,7 @@ if (!is_dir($argv[1]))  {
 }
 
 $ignoreKeys = [];
-if(isset($argv[2])){
+if (isset($argv[2])) {
     $ignoreKeys = str_getcsv($argv[2]);
 }
 
@@ -25,6 +25,7 @@ $commonTranslations = loadCommonTranslations($path);
 $usages = findTranslationKeyUsages($commonTranslations, $path, $ignoreKeys);
 findUnusedTranslationKeys($commonTranslations, $usages);
 findMismatchedCommonBackendValues($commonTranslations, $path);
+getMarkupUsage($path);
 
 /**
  * Load translations from OLCS-Common language files
@@ -32,11 +33,12 @@ findMismatchedCommonBackendValues($commonTranslations, $path);
  * @param string $path
  * @return array
  */
-function loadCommonTranslations(string $path) {
-    $commonLanguages = ['cy_NI','cy_GB', 'en_GB','en_NI'];
+function loadCommonTranslations(string $path)
+{
+    $commonLanguages = ['cy_NI', 'cy_GB', 'en_GB', 'en_NI'];
     $commonTranslations = [];
-    foreach($commonLanguages as $language){
-        $commonTranslations[$language] = include($path.'olcs-common/Common/config/language/'.$language.'.php');
+    foreach ($commonLanguages as $language) {
+        $commonTranslations[$language] = include($path . 'olcs-common/Common/config/language/' . $language . '.php');
     }
     return $commonTranslations;
 }
@@ -49,17 +51,18 @@ function loadCommonTranslations(string $path) {
  * @param array $ignoreKeys
  * @return array
  */
-function findTranslationKeyUsages(array $translations, string $path, array $ignoreKeys) {
+function findTranslationKeyUsages(array $translations, string $path, array $ignoreKeys)
+{
     $usages = [];
     $allKeys = [];
     foreach ($translations as $langKey => $language) {
-        $totalLangKeys = count($language)-count($ignoreKeys);
+        $totalLangKeys = count($language) - count($ignoreKeys);
         echo "Processing $totalLangKeys keys in $langKey ...\n";
         $usages[$langKey] = [];
         $i = 1;
         foreach ($language as $key => $translated) {
-            if(!in_array($key, $ignoreKeys)){
-                if(in_array($key, $allKeys)){
+            if (!in_array($key, $ignoreKeys)) {
+                if (in_array($key, $allKeys)) {
                     $usages[$langKey][$key] = $allKeys[$key];
                 } else {
                     $allKeys[$key] = [];
@@ -67,13 +70,12 @@ function findTranslationKeyUsages(array $translations, string $path, array $igno
                     $output = [];
                     $usages[$langKey][$key] = [];
                     exec('grep -rl -m 1 --exclude-dir=vendor --include=\*.php --include \*.phtml "' . $key . '" ' . $path, $output);
-                    if(count($output) > 1){
+                    if (count($output) > 1) {
                         $usages[$langKey][$key] = array_merge($usages[$langKey][$key], $output);
                         $allKeys[$key] = array_merge($allKeys[$key], $output);
                     } else {
                         unset($usages[$langKey][$key]);
                     }
-
                 }
             }
             $i++;
@@ -85,12 +87,47 @@ function findTranslationKeyUsages(array $translations, string $path, array $igno
 }
 
 /**
+ * Finds markup partial filenames in PHP and Template files
+ *
+ * @param string $path
+ */
+function getMarkupUsage(string $path)
+{
+    echo "Generating markup partial report\n";
+    $dirContents = array_diff(scandir("$path/olcs-common/Common/config/language/partials/"), ['..', '.']);
+    $markups = [];
+    foreach($dirContents as $item) {
+        if(is_dir($path.'/olcs-common/Common/config/language/partials/'.$item)){
+            $markups[$item] = str_replace('.phtml', '', array_diff(scandir($path.'/olcs-common/Common/config/language/partials/'.$item), ['..', '.']));
+        }
+    }
+
+    $usages = [];
+
+    foreach ($markups as $langKey => $langKeyFiles) {
+        foreach($langKeyFiles as $markupFilename) {
+            $output = [];
+            $usages[$markupFilename] = [];
+            exec('grep -rl -m 1 --exclude-dir=vendor --include=\*.php --include \*.phtml "' . $markupFilename . '" ' . $path, $output);
+            if (count($output) > 1) {
+                $usages[$markupFilename] = array_merge($usages[$markupFilename], $output);
+            } else {
+                unset($usages[$markupFilename]);
+            }
+        }
+    }
+    file_put_contents("reports/markup-partial_statistics.json", jsonEncodeWrap($usages));
+    echo "Markup partial report complete\n";
+}
+
+/**
  * Outputs and saves aggregate stats on key uses. Might be useful source for choosing ignore keys cmdline parameter
  *
  * @param string $langKey
  * @param array $keyArray
  */
-function keyStats(string $langKey, array $keyArray) {
+function keyStats(string $langKey, array $keyArray)
+{
     $stats = [];
     foreach ($keyArray as $key => $keyUses) {
         $stats[$key] = count($keyUses);
@@ -107,7 +144,8 @@ function keyStats(string $langKey, array $keyArray) {
  * @param array $translations
  * @param array $usages
  */
-function findUnusedTranslationKeys(array $translations, array $usages) {
+function findUnusedTranslationKeys(array $translations, array $usages)
+{
     foreach ($translations as $langKey => $language) {
         $unusedKeys = array_diff_key($translations[$langKey], $usages[$langKey]);
         if (!empty($unusedKeys)) {
@@ -124,7 +162,8 @@ function findUnusedTranslationKeys(array $translations, array $usages) {
  * @param array $translations
  * @param string $path
  */
-function findMismatchedCommonBackendValues(array $translations, string $path) {
+function findMismatchedCommonBackendValues(array $translations, string $path)
+{
 
     $moduleLanguages = [
         'Email' => ['cy_GB', 'en_GB'],
@@ -134,7 +173,7 @@ function findMismatchedCommonBackendValues(array $translations, string $path) {
     // Load translations into array
     foreach ($moduleLanguages as $module => $languages) {
         foreach ($languages as $language) {
-            $backendTranslations[$module][$language] = include($path.'olcs-backend/module/'.$module.'/config/language/'.$language.'.php');
+            $backendTranslations[$module][$language] = include($path . 'olcs-backend/module/' . $module . '/config/language/' . $language . '.php');
         }
     }
 
@@ -142,18 +181,18 @@ function findMismatchedCommonBackendValues(array $translations, string $path) {
     // another which holds all full key/value pair matches
     foreach ($backendTranslations as $module => $languages) {
         foreach ($languages as $langCode => $language) {
-            $commonAndBackendMatchingKeys[$module.'-'.$langCode] = array_intersect_key($backendTranslations[$module][$langCode], $translations[$langCode]);
-            $commonAndBackendIdenticalKeyValues[$module.'-'.$langCode] = array_intersect_assoc($backendTranslations[$module][$langCode], $translations[$langCode]);
+            $commonAndBackendMatchingKeys[$module . '-' . $langCode] = array_intersect_key($backendTranslations[$module][$langCode], $translations[$langCode]);
+            $commonAndBackendIdenticalKeyValues[$module . '-' . $langCode] = array_intersect_assoc($backendTranslations[$module][$langCode], $translations[$langCode]);
         }
     }
 
     // Use the two lists above to derive which keys are duplicated, with different values in olcs-backend.
-    foreach($commonAndBackendMatchingKeys as $modLang => $matchingKeys){
+    foreach ($commonAndBackendMatchingKeys as $modLang => $matchingKeys) {
         $mismatched[$modLang] = array_diff_assoc($commonAndBackendMatchingKeys[$modLang], $commonAndBackendIdenticalKeyValues[$modLang]);
     }
 
-    foreach($mismatched as $lang => $mismatches ){
-        if(!empty($mismatches)){
+    foreach ($mismatched as $lang => $mismatches) {
+        if (!empty($mismatches)) {
             echo "Mismatch found between olcs-common and olcs-backend $lang translations.\n";
             echo "The following keys have different values\n";
             print_r(jsonEncodeWrap(array_keys($mismatches)));
@@ -169,7 +208,8 @@ function findMismatchedCommonBackendValues(array $translations, string $path) {
  * @param array $array
  * @return false|string
  */
-function jsonEncodeWrap(array $array) {
+function jsonEncodeWrap(array $array)
+{
     return json_encode($array, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 }
 
@@ -205,4 +245,3 @@ function progressBar(int $completed, int $total)
         echo "\n\n";
     }
 }
-

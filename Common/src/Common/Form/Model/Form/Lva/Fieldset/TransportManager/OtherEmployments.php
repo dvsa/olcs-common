@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Lva\Fieldset\TransportManager;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Attributes({"class":"table__form","id":"hasOtherEmployments"})

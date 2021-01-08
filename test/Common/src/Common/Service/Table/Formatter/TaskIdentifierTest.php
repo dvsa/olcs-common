@@ -11,7 +11,7 @@ namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Formatter\TaskIdentifier;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Task identifier formatter tests

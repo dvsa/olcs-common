@@ -2,9 +2,9 @@
 
 namespace Common\Filter;
 
-use Zend\Filter\Decompress;
-use Zend\ServiceManager\DelegatorFactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\Filter\Decompress;
+use Laminas\ServiceManager\DelegatorFactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Class DecompressUploadToTmpFactory

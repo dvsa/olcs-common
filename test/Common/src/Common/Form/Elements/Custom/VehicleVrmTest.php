@@ -3,8 +3,10 @@
 namespace CommonTest\Form\Elements\Custom;
 
 use Common\Form\Elements\Custom\VehicleVrm;
+use Dvsa\Olcs\Transfer\Validators\Vrm;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Laminas\Validator\NotEmpty;
 
 /**
  * @covers \Common\Form\Elements\Custom\VehicleVrm
@@ -22,7 +24,20 @@ class VehicleVrmTest extends MockeryTestCase
 
         static::assertEquals('unit_Name', $actual['name']);
         static::assertTrue($actual['required']);
-        static::assertInstanceOf(\Common\Filter\Vrm::class, current($actual['filters']));
-        static::assertInstanceOf(\Dvsa\Olcs\Transfer\Validators\Vrm::class, current($actual['validators']));
+
+        $notEmptyValidator = current($actual['validators']);
+        static::assertSame(NotEmpty::class, $notEmptyValidator['name']);
+        static::assertTrue($notEmptyValidator['break_chain_on_failure']);
+        static::assertSame(
+            [
+                'messages' => [
+                    NotEmpty::IS_EMPTY => 'licence.vehicle.add.search.vrm-missing'
+                ]
+            ],
+            $notEmptyValidator['options']
+        );
+
+        $vrmValidator = next($actual['validators']);
+        static::assertSame(Vrm::class, $vrmValidator['name']);
     }
 }

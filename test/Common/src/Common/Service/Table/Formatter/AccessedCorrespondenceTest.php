@@ -16,7 +16,7 @@ class AccessedCorrespondenceTest extends MockeryTestCase
      */
     public function testFormat($data, $isNew, $expected)
     {
-        $sm = m::mock(\Zend\ServiceManager\ServiceLocatorInterface::class);
+        $sm = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class);
         $sm->shouldReceive('get->fromRoute')
             ->with(
                 'correspondence/access',

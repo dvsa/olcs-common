@@ -2,7 +2,7 @@
 
 namespace Common\Form\Model\Form\Lva\Fieldset;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Options({
@@ -62,7 +62,7 @@ class UploadEvidenceOperatingCentre
      * @Form\Required(true)
      * @Form\Type("Hidden")
      * @Form\Validator({"name": "Dvsa\Olcs\Transfer\Validators\UploadEvidence"})
-     * @Form\Validator({"name":"Zend\Validator\NotEmpty","options":{"null"}})
+     * @Form\Validator({"name":"Laminas\Validator\NotEmpty","options":{"null"}})
      */
     public $uploadFileValidator = '';
 }

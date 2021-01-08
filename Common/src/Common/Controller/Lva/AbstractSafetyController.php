@@ -8,10 +8,10 @@ use Dvsa\Olcs\Transfer\Command\Application\UpdateWorkshop as ApplicationUpdateWo
 use Dvsa\Olcs\Transfer\Command\Workshop\CreateWorkshop as LicenceCreateWorkshop;
 use Dvsa\Olcs\Transfer\Command\Workshop\UpdateWorkshop as LicenceUpdateWorkshop;
 use Dvsa\Olcs\Transfer\Query\Workshop\Workshop;
-use Zend\Form\Form;
-use Zend\Form\FormInterface;
-use Zend\Http\Response;
-use Zend\View\Model\ViewModel;
+use Laminas\Form\Form;
+use Laminas\Form\FormInterface;
+use Laminas\Http\Response;
+use Laminas\View\Model\ViewModel;
 
 /**
  * Safety Trait
@@ -113,7 +113,7 @@ abstract class AbstractSafetyController extends AbstractController
      */
     public function indexAction()
     {
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         // We always want to get the result
@@ -261,7 +261,7 @@ abstract class AbstractSafetyController extends AbstractController
      */
     protected function addOrEdit($mode)
     {
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
         $safetyProviderData = array();
         $data = array();
@@ -370,7 +370,7 @@ abstract class AbstractSafetyController extends AbstractController
             );
 
             // Add a hint to the external radio
-            /** @var \Zend\Form\Element\Radio $externalElement */
+            /** @var \Laminas\Form\Element\Radio $externalElement */
             $externalElement = $form->get('data')->get('isExternal');
             $externalElement->setOption('hint', $hint);
         }
@@ -406,7 +406,7 @@ abstract class AbstractSafetyController extends AbstractController
     /**
      * Get safety provider form
      *
-     * @return \Zend\Form\Form
+     * @return \Laminas\Form\Form
      */
     protected function getSafetyProviderForm()
     {
@@ -417,9 +417,9 @@ abstract class AbstractSafetyController extends AbstractController
     /**
      * Alter form
      *
-     * @param \Zend\Form\FormInterface $form Form
+     * @param \Laminas\Form\FormInterface $form Form
      *
-     * @return \Zend\Form\FormInterface
+     * @return \Laminas\Form\FormInterface
      */
     protected function alterForm($form)
     {
@@ -479,7 +479,7 @@ abstract class AbstractSafetyController extends AbstractController
     /**
      * Get safety form
      *
-     * @return \Zend\Form\FormInterface
+     * @return \Laminas\Form\FormInterface
      */
     protected function getSafetyForm()
     {
@@ -492,7 +492,7 @@ abstract class AbstractSafetyController extends AbstractController
             $table->removeColumn('isExternal');
         }
 
-        /** @var \Zend\Form\Form $form */
+        /** @var \Laminas\Form\Form $form */
         $form = $this->getServiceLocator()
             ->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-' . $this->section)

@@ -8,7 +8,7 @@
 namespace CommonTest\Form\Elements\Custom;
 
 use Common\Form\Elements\Custom\OlcsCheckbox;
-use Zend\Validator as ZendValidator;
+use Laminas\Validator as LaminasValidator;
 
 /**
  * Test OlcsCheckbox Element
@@ -39,7 +39,7 @@ class OlcsCheckboxTest extends \PHPUnit\Framework\TestCase
         $alwaysWrap = $this->element->getLabelOption('always_wrap');
 
         $this->assertEquals(
-            \Zend\Form\View\Helper\FormRow::LABEL_APPEND,
+            \Laminas\Form\View\Helper\FormRow::LABEL_APPEND,
             $this->element->getLabelOption('label_position')
         );
         $this->assertTrue($this->element->getLabelOption('always_wrap'));

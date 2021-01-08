@@ -2,9 +2,9 @@
 
 namespace Common\View\Helper;
 
-use Zend\View\Helper\AbstractHelper;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Form\Element\Button;
+use Laminas\View\Helper\AbstractHelper;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\Form\Element\Button;
 
 /**
  * ReadOnly Actions view helper
@@ -29,7 +29,6 @@ class ReadOnlyActions extends AbstractHelper
         foreach ($actions as $action) {
             $class = (isset($action['class']) ? $action['class'] : self::SECONDARY_CLASS);
             if (isset($action['url'])) {
-
                 $attributeString = ' ';
 
                 if (isset($action['attributes']) && is_array($action['attributes'])) {
@@ -47,9 +46,7 @@ class ReadOnlyActions extends AbstractHelper
                     $attributeString,
                     $this->view->translate($action['label'])
                 );
-
             } else {
-
                 $lowerLabel = strtolower($action['label']);
                 $element = new Button(str_replace(' ', '-', $lowerLabel));
                 $element->setAttributes(
@@ -63,7 +60,6 @@ class ReadOnlyActions extends AbstractHelper
                 );
 
                 $markup .= $this->view->formInput($element);
-
             }
         }
 

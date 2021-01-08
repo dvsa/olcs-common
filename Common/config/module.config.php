@@ -1,12 +1,16 @@
 <?php
 
+use Common\Form\View\Helper\FormInputSearch;
 use Common\Service\Data\Search\SearchType;
 use Common\FormService\Form\Lva as LvaFormService;
 use Common\FormService\Form\Continuation as ContinuationFormService;
 use Common\Form\View\Helper\Readonly as ReadonlyFormHelper;
 use Common\Service\Qa as QaService;
+use Common\Service\Translator\TranslationLoader;
+use Common\Service\Translator\TranslationLoaderFactory;
 use Common\Data\Mapper\Permits as PermitsMapper;
 use Common\Data\Mapper\Licence\Surrender as SurrenderMapper;
+use Common\View\Helper\Panel;
 
 $release = json_decode(file_get_contents(__DIR__ . '/release.json'), true);
 
@@ -126,11 +130,6 @@ return array(
     ),
     'version' => (isset($release['version']) ? $release['version'] : ''),
     'service_manager' => array(
-        'delegators' => [
-            'MvcTranslator' => [
-                \Common\Util\TranslatorDelegatorFactory::class,
-            ]
-        ],
         'shared' => array(
             'Helper\FileUpload' => false,
             'CantIncreaseValidator' => false,
@@ -141,10 +140,10 @@ return array(
             'Common\Util\AbstractServiceFactory'
         ),
         'aliases' => array(
-            'Cache' => 'Zend\Cache\Storage\StorageInterface',
+            'Cache' => 'Laminas\Cache\Storage\StorageInterface',
             'DataServiceManager' => 'Common\Service\Data\PluginManager',
             'translator' => 'MvcTranslator',
-            'Zend\Log' => 'Logger',
+            'Laminas\Log' => 'Logger',
             'TableBuilder' => 'Common\Service\Table\TableBuilderFactory',
             'NavigationFactory' => 'Common\Service\NavigationFactory',
             'QueryService' => \Common\Service\Cqrs\Query\CachingQueryService::class,
@@ -198,13 +197,16 @@ return array(
             'QaRadioFactory' => QaService\RadioFactory::class,
             'QaFieldsetFactory' => QaService\FieldsetFactory::class,
             'QaValidatorsAdder' => QaService\ValidatorsAdder::class,
-            'QaEcmtShortTermYesNoRadioFactory' => QaService\Custom\EcmtShortTerm\YesNoRadioFactory::class,
-            'QaEcmtShortTermRestrictedCountriesMultiCheckboxFactory'
-                => QaService\Custom\EcmtShortTerm\RestrictedCountriesMultiCheckboxFactory::class,
-            'QaEcmtShortTermInternationalJourneysIsValidHandler' =>
-                QaService\Custom\EcmtShortTerm\InternationalJourneysIsValidHandler::class,
-            'QaEcmtShortTermAnnualTripsAbroadIsValidHandler' =>
-                QaService\Custom\EcmtShortTerm\AnnualTripsAbroadIsValidHandler::class,
+            'QaCommonHtmlAdder' => QaService\Custom\Common\HtmlAdder::class,
+            'QaEcmtYesNoRadioFactory' => QaService\Custom\Ecmt\YesNoRadioFactory::class,
+            'QaEcmtRestrictedCountriesMultiCheckboxFactory'
+                => QaService\Custom\Ecmt\RestrictedCountriesMultiCheckboxFactory::class,
+            'QaEcmtInternationalJourneysIsValidHandler' =>
+                QaService\Custom\Ecmt\InternationalJourneysIsValidHandler::class,
+            'QaEcmtAnnualTripsAbroadIsValidHandler' =>
+                QaService\Custom\Ecmt\AnnualTripsAbroadIsValidHandler::class,
+            'QaBilateralYesNoValueOptionsGenerator' =>
+                QaService\Custom\Bilateral\YesNoValueOptionsGenerator::class,
             'QaBilateralCabotageOnlyYesNoRadioFactory' =>
                 QaService\Custom\Bilateral\CabotageOnlyYesNoRadioFactory::class,
             'QaBilateralStandardAndCabotageYesNoRadioFactory' =>
@@ -212,13 +214,21 @@ return array(
             'QaBilateralRadioFactory' =>
                 QaService\Custom\Bilateral\RadioFactory::class,
             'QaBilateralYesNoRadioOptionsApplier' => QaService\Custom\Bilateral\YesNoRadioOptionsApplier::class,
+
             'QaBilateralNoOfPermitsFieldsetPopulator' =>
                 QaService\Custom\Bilateral\NoOfPermitsFieldsetPopulator::class,
+            'QaBilateralNoOfPermitsMoroccoFieldsetPopulator' =>
+                QaService\Custom\Bilateral\NoOfPermitsMoroccoFieldsetPopulator::class,
             'QaBilateralPermitUsageIsValidHandler' => QaService\Custom\Bilateral\PermitUsageIsValidHandler::class,
+            'QaBilateralStandardAndCabotageSubmittedAnswerGenerator' =>
+                QaService\Custom\Bilateral\StandardAndCabotageSubmittedAnswerGenerator::class,
             'QaDateTimeFactory' => QaService\DateTimeFactory::class,
 
             'QaRoadworthinessMakeAndModelFieldsetModifier' =>
                 QaService\FieldsetModifier\RoadworthinessMakeAndModelFieldsetModifier::class,
+
+            'QaEcmtNoOfPermitsSingleDataTransformer' =>
+                QaService\DataTransformer\EcmtNoOfPermitsSingleDataTransformer::class,
 
             Common\Data\Mapper\DefaultMapper::class => Common\Data\Mapper\DefaultMapper::class,
             SurrenderMapper\OperatorLicence::class => SurrenderMapper\OperatorLicence::class,
@@ -249,21 +259,23 @@ return array(
             'Common\Service\Data\UserTypesListDataService' => 'Common\Service\Data\UserTypesListDataService',
             'Script' => '\Common\Service\Script\ScriptFactory',
             'Table' => '\Common\Service\Table\TableFactory',
-            // Added in a true Zend Framework V2 compatible factory for TableBuilder, eventually to replace Table above.
+            // Added in a true Laminas Framework V2 compatible factory for TableBuilder, eventually to replace Table above.
             'Common\Service\Table\TableBuilderFactory' => 'Common\Service\Table\TableBuilderFactory',
             'ServiceApiResolver' => 'Common\Service\Api\ResolverFactory',
-            'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
+            'navigation' => 'Laminas\Navigation\Service\DefaultNavigationFactory',
             'SectionService' => '\Common\Controller\Service\SectionServiceFactory',
             'category' => '\Common\Service\Data\CategoryDataService',
             'FormAnnotationBuilder' => '\Common\Service\FormAnnotationBuilderFactory',
             'Common\Service\Data\PluginManager' => Common\Service\Data\PluginManagerFactory::class,
-            'Zend\Cache\Storage\StorageInterface' => 'Zend\Cache\Service\StorageCacheFactory',
+            'Laminas\Cache\Storage\StorageInterface' => 'Laminas\Cache\Service\StorageCacheFactory',
             \Common\Rbac\Navigation\IsAllowedListener::class => Common\Rbac\Navigation\IsAllowedListener::class,
             \Common\Service\Data\Search\SearchTypeManager::class =>
                 \Common\Service\Data\Search\SearchTypeManagerFactory::class,
             \Common\Rbac\IdentityProvider::class => \Common\Rbac\IdentityProviderFactory::class,
             \Common\Service\AntiVirus\Scan::class => \Common\Service\AntiVirus\Scan::class,
+            'QaCommonWarningAdder' => QaService\Custom\Common\WarningAdderFactory::class,
             'QaCommonIsValidBasedWarningAdder' => QaService\Custom\Common\IsValidBasedWarningAdderFactory::class,
+            'QaCommonFileUploadFieldsetGenerator' => QaService\Custom\Common\FileUploadFieldsetGeneratorFactory::class,
             'QaCheckboxFieldsetPopulator' => QaService\CheckboxFieldsetPopulatorFactory::class,
             'QaTextFieldsetPopulator' => QaService\TextFieldsetPopulatorFactory::class,
             'QaRadioFieldsetPopulator' => QaService\RadioFieldsetPopulatorFactory::class,
@@ -274,28 +286,44 @@ return array(
             'QaTranslateableTextParameterHandler' => QaService\TranslateableTextParameterHandlerFactory::class,
             'QaFormattedTranslateableTextParametersGenerator' =>
                 QaService\FormattedTranslateableTextParametersGeneratorFactory::class,
-            'QaEcmtShortTermNoOfPermitsFieldsetPopulator' =>
-                QaService\Custom\EcmtShortTerm\NoOfPermitsFieldsetPopulatorFactory::class,
-            'QaEcmtShortTermPermitUsageFieldsetPopulator' =>
-                QaService\Custom\EcmtShortTerm\PermitUsageFieldsetPopulatorFactory::class,
-            'QaEcmtShortTermRestrictedCountriesFieldsetPopulator' =>
-                QaService\Custom\EcmtShortTerm\RestrictedCountriesFieldsetPopulatorFactory::class,
-            'QaEcmtShortTermAnnualTripsAbroadFieldsetPopulator' =>
-                QaService\Custom\EcmtShortTerm\AnnualTripsAbroadFieldsetPopulatorFactory::class,
-            'QaEcmtShortTermInternationalJourneysFieldsetPopulator' =>
-                QaService\Custom\EcmtShortTerm\InternationalJourneysFieldsetPopulatorFactory::class,
+            'QaEcmtNoOfPermitsEitherStrategySelectingFieldsetPopulator' =>
+                QaService\Custom\Ecmt\NoOfPermitsEitherStrategySelectingFieldsetPopulatorFactory::class,
+            'QaEcmtNoOfPermitsBothStrategySelectingFieldsetPopulator' =>
+                QaService\Custom\Ecmt\NoOfPermitsBothStrategySelectingFieldsetPopulatorFactory::class,
+            'QaEcmtNoOfPermitsSingleFieldsetPopulator' =>
+                QaService\Custom\Ecmt\NoOfPermitsSingleFieldsetPopulatorFactory::class,
+            'QaEcmtNoOfPermitsEitherFieldsetPopulator' =>
+                QaService\Custom\Ecmt\NoOfPermitsEitherFieldsetPopulatorFactory::class,
+            'QaEcmtNoOfPermitsBothFieldsetPopulator' =>
+                QaService\Custom\Ecmt\NoOfPermitsBothFieldsetPopulatorFactory::class,
+            'QaEcmtNoOfPermitsBaseInsetTextGenerator' =>
+                QaService\Custom\Ecmt\NoOfPermitsBaseInsetTextGeneratorFactory::class,
+            'QaEcmtPermitUsageFieldsetPopulator' =>
+                QaService\Custom\Ecmt\PermitUsageFieldsetPopulatorFactory::class,
+            'QaEcmtRestrictedCountriesFieldsetPopulator' =>
+                QaService\Custom\Ecmt\RestrictedCountriesFieldsetPopulatorFactory::class,
+            'QaEcmtAnnualTripsAbroadFieldsetPopulator' =>
+                QaService\Custom\Ecmt\AnnualTripsAbroadFieldsetPopulatorFactory::class,
+            'QaEcmtInternationalJourneysFieldsetPopulator' =>
+                QaService\Custom\Ecmt\InternationalJourneysFieldsetPopulatorFactory::class,
             'QaEcmtShortTermEarliestPermitDateFieldsetPopulator' =>
                 QaService\Custom\EcmtShortTerm\EarliestPermitDateFieldsetPopulatorFactory::class,
             'QaEcmtRemovalPermitStartDateFieldsetPopulator' =>
                 QaService\Custom\EcmtRemoval\PermitStartDateFieldsetPopulatorFactory::class,
-            'QaEcmtShortTermNiWarningConditionalAdder' =>
-                QaService\Custom\EcmtShortTerm\NiWarningConditionalAdderFactory::class,
-            'QaEcmtShortTermInternationalJourneysDataHandler' =>
-                QaService\Custom\EcmtShortTerm\InternationalJourneysDataHandlerFactory::class,
-            'QaEcmtShortTermAnnualTripsAbroadDataHandler' =>
-                QaService\Custom\EcmtShortTerm\AnnualTripsAbroadDataHandlerFactory::class,
+            'QaEcmtNiWarningConditionalAdder' =>
+                QaService\Custom\Ecmt\NiWarningConditionalAdderFactory::class,
+            'QaEcmtInternationalJourneysDataHandler' =>
+                QaService\Custom\Ecmt\InternationalJourneysDataHandlerFactory::class,
+            'QaEcmtAnnualTripsAbroadDataHandler' =>
+                QaService\Custom\Ecmt\AnnualTripsAbroadDataHandlerFactory::class,
+            'QaEcmtSectorsFieldsetPopulator' =>
+                QaService\Custom\Ecmt\SectorsFieldsetPopulatorFactory::class,
             'QaCertRoadworthinessMotExpiryDateFieldsetPopulator' =>
                 QaService\Custom\CertRoadworthiness\MotExpiryDateFieldsetPopulatorFactory::class,
+            'QaBilateralStandardYesNoValueOptionsGenerator' =>
+                QaService\Custom\Bilateral\StandardYesNoValueOptionsGeneratorFactory::class,
+            'QaBilateralYesNoWithMarkupForNoPopulator' =>
+                QaService\Custom\Bilateral\YesNoWithMarkupForNoPopulatorFactory::class,
             'QaBilateralPermitUsageFieldsetPopulator' =>
                 QaService\Custom\Bilateral\PermitUsageFieldsetPopulatorFactory::class,
             'QaBilateralCabotageOnlyFieldsetPopulator' =>
@@ -304,12 +332,23 @@ return array(
                 QaService\Custom\Bilateral\StandardAndCabotageFieldsetPopulatorFactory::class,
             'QaBilateralThirdCountryFieldsetPopulator' =>
                 QaService\Custom\Bilateral\ThirdCountryFieldsetPopulatorFactory::class,
+            'QaBilateralEmissionsStandardsFieldsetPopulator' =>
+                QaService\Custom\Bilateral\EmissionsStandardsFieldsetPopulatorFactory::class,
             'QaBilateralPermitUsageDataHandler' => QaService\Custom\Bilateral\PermitUsageDataHandlerFactory::class,
+            'QaBilateralStandardAndCabotageDataHandler' =>
+                QaService\Custom\Bilateral\StandardAndCabotageDataHandlerFactory::class,
+            'QaBilateralStandardAndCabotageIsValidHandler' =>
+                QaService\Custom\Bilateral\StandardAndCabotageIsValidHandlerFactory::class,
 
             'QaFieldsetModifier' => QaService\FieldsetModifier\FieldsetModifierFactory::class,
 
+            'QaApplicationStepsPostDataTransformer' =>
+                QaService\DataTransformer\ApplicationStepsPostDataTransformerFactory::class,
+            'QaDataTransformerProvider' => QaService\DataTransformer\DataTransformerProviderFactory::class,
+
             PermitsMapper\NoOfPermits::class => PermitsMapper\NoOfPermitsFactory::class,
             Common\Service\User\LastLoginService::class => Common\Service\User\LastLoginServiceFactory::class,
+            'HtmlPurifier' => \Common\Service\Utility\HtmlPurifierFactory::class,
         )
     ),
     'file_uploader' => array(
@@ -337,6 +376,7 @@ return array(
             'formErrors' => 'Common\Form\View\Helper\FormErrors',
             'formDateTimeSelect' => 'Common\Form\View\Helper\FormDateTimeSelect',
             'formDateSelect' => \Common\Form\View\Helper\FormDateSelect::class,
+            FormInputSearch::class => FormInputSearch::class,
             'version' => 'Common\View\Helper\Version',
             'applicationName' => 'Common\View\Helper\ApplicationName',
             'formPlainText' => 'Common\Form\View\Helper\FormPlainText',
@@ -349,6 +389,7 @@ return array(
             'returnToAddress' => Common\View\Helper\ReturnToAddress::class,
             'config' => Common\View\Helper\Config::class,
             'navigationParentPage' => Common\View\Helper\NavigationParentPage::class,
+            'panel' => Panel::class,
 
             //  read only elements helpers
             ReadonlyFormHelper\FormFieldset::class => ReadonlyFormHelper\FormFieldset::class,
@@ -406,6 +447,7 @@ return array(
             'linkBack' => Common\View\Helper\LinkBack::class,
             'translateReplace' => \Common\View\Helper\TranslateReplace::class,
             'flashMessengerAll' => \Common\View\Factory\Helper\FlashMessengerFactory::class,
+            'escapeHtml' => \Common\View\Factory\Helper\EscapeHtmlFactory::class,
         ),
     ),
     'view_manager' => array(
@@ -523,14 +565,6 @@ return array(
             'postcode' => 'http://postcode.cit.olcs.mgt.mtpdvsa/',
         )
     ),
-    'caches'=> array(
-        'array'=> array(
-            'adapter' => array(
-                'name' => 'memory',
-                'lifetime' => 0,
-            ),
-        )
-    ),
     'zfc_rbac' => [
         'identity_provider' => \Common\Rbac\IdentityProvider::class,
         'role_provider' => [\Common\Rbac\Role\RoleProvider::class => []],
@@ -540,14 +574,6 @@ return array(
             ]
         ],
         'protection_policy' => \ZfcRbac\Guard\GuardInterface::POLICY_DENY,
-    ],
-    'cache' => [
-        'adapter' => [
-            'name' => 'apc',
-            'options' => [
-                'ttl' => 3600,
-            ],
-        ]
     ],
     'form_service_manager' => [
         'invokables' => [
@@ -687,7 +713,20 @@ return array(
                 ContinuationFormService\ConditionsUndertakings::class,
         ]
     ],
+    'translator_plugins' => [
+        'factories' => [
+            TranslationLoader::class => TranslationLoaderFactory::class
+        ],
+    ],
     'translator' => [
-        'replacements' => include(__DIR__ . '/language/replacements.php'),
+        'locale' => [
+            'en_GB', //default locale
+            'en_GB', //fallback locale
+        ],
+        'remote_translation' => [
+            [
+                'type' => TranslationLoader::class,
+            ]
+        ],
     ],
 );

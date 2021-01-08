@@ -2,7 +2,7 @@
 
 namespace Common\Service\Cqrs;
 
-use Zend\Http\Response as HttpResponse;
+use Laminas\Http\Response as HttpResponse;
 
 /**
  * Cqrs Trait

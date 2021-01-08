@@ -2,7 +2,7 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * EBSR registration number link

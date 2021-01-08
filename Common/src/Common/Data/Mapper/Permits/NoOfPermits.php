@@ -7,7 +7,7 @@ use Common\Form\Elements\Types\Html;
 use Common\RefData;
 use Common\Service\Helper\TranslationHelperService;
 use RuntimeException;
-use Zend\Form\Fieldset;
+use Laminas\Form\Fieldset;
 
 /**
  * No of permits mapper
@@ -187,7 +187,7 @@ class NoOfPermits
             ]
         );
         $element->setValue($yearAttributes['permitsRequired']);
-        $element->setAttributes(['max' => $maxPermits]);
+        $element->setAttributes(['id' => $validFromYear, 'max' => $maxPermits]);
 
         return $element;
     }

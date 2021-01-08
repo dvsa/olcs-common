@@ -5,12 +5,12 @@
  */
 namespace Common\Form\Elements\Custom;
 
-use Zend\Form\Element as ZendElement;
+use Laminas\Form\Element as LaminasElement;
 
 /**
  * Year Select
  */
-class YearSelect extends ZendElement\Select
+class YearSelect extends LaminasElement\Select
 {
     use Traits\YearDelta;
 

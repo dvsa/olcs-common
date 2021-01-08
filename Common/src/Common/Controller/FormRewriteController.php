@@ -2,15 +2,15 @@
 
 namespace Common\Controller;
 
-use Zend\Code\Generator\PropertyGenerator;
-use Zend\Filter\Word\DashToCamelCase;
-use Zend\InputFilter\InputProviderInterface;
-use Zend\Log\Logger;
-use Zend\Log\Writer\Stream;
-use Zend\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
-use Zend\Code\Generator\ClassGenerator;
-use Zend\Code\Generator\DocBlockGenerator;
-use Zend\Code\Generator\FileGenerator;
+use Laminas\Code\Generator\PropertyGenerator;
+use Laminas\Filter\Word\DashToCamelCase;
+use Laminas\InputFilter\InputProviderInterface;
+use Laminas\Log\Logger;
+use Laminas\Log\Writer\Stream;
+use Laminas\Mvc\Controller\AbstractActionController as LaminasAbstractActionController;
+use Laminas\Code\Generator\ClassGenerator;
+use Laminas\Code\Generator\DocBlockGenerator;
+use Laminas\Code\Generator\FileGenerator;
 
 /**
  * Class FormRewriteController
@@ -18,7 +18,7 @@ use Zend\Code\Generator\FileGenerator;
  *
  * @deprecated Need to remove.  See story: OLCS-16488 in comments.
  */
-class FormRewriteController extends ZendAbstractActionController
+class FormRewriteController extends LaminasAbstractActionController
 {
     protected $log;
     protected $basePath;
@@ -63,7 +63,8 @@ class FormRewriteController extends ZendAbstractActionController
         foreach (glob($glob. '*.form.php') as $formFile) {
             $formName =  substr(
                 $formFile,
-                strpos($formFile, '/Forms/')+7, strpos($formFile, '.form')- (strpos($formFile, '/Forms/')+7)
+                strpos($formFile, '/Forms/')+7,
+                strpos($formFile, '.form')- (strpos($formFile, '/Forms/')+7)
             );
 
             $this->getLog()->info('Processing: ' . $this->normaliseName($formName) . '(' . $formFile . ')');
@@ -84,7 +85,6 @@ class FormRewriteController extends ZendAbstractActionController
             foreach ($data['fieldsets'] as $fieldset) {
                 $fieldsets[] = $this->buildFieldsetClassAndReturnProperty($fieldset, $formName);
             }
-
         }
 
         $classGenerator = new ClassGenerator();
@@ -132,7 +132,7 @@ class FormRewriteController extends ZendAbstractActionController
         $fileGenerator = new FileGenerator();
         $fileGenerator->setClass($classGenerator);
         $fileGenerator->setNamespace($this->namespace . '\Form\Model\Form');
-        $fileGenerator->setUse('Zend\Form\Annotation', 'Form');
+        $fileGenerator->setUse('Laminas\Form\Annotation', 'Form');
 
         $fileGenerator->setFilename($this->basePath . 'Form/Model/Form/' . $classGenerator->getName() . '.php');
 
@@ -327,7 +327,7 @@ class FormRewriteController extends ZendAbstractActionController
         $fileGenerator = new FileGenerator();
         $fileGenerator->setClass($classGenerator);
         $fileGenerator->setNamespace($this->namespace . '\Form\Model\Fieldset');
-        $fileGenerator->setUse('Zend\Form\Annotation', 'Form');
+        $fileGenerator->setUse('Laminas\Form\Annotation', 'Form');
         $fileGenerator->setFilename($this->basePath . 'Form/Model/Fieldset/' . $classGenerator->getName() . '.php');
 
         try {
@@ -345,7 +345,6 @@ class FormRewriteController extends ZendAbstractActionController
             ['name'=>sprintf('Form\ComposedObject("%s")', $this->namespace . $fieldsetFqcn)];
 
         return $propertyTags;
-
     }
 
     protected function normaliseName($name, $ucFirst = false)
@@ -380,7 +379,7 @@ class FormRewriteController extends ZendAbstractActionController
             $this->log = new Logger();
 
             $format = '%timestamp% %priorityName% (%priority%): %message%';
-            $formatter = new \Zend\Log\Formatter\Simple($format);
+            $formatter = new \Laminas\Log\Formatter\Simple($format);
 
             $writer = new Stream('php://stdout');
             $writer->setFormatter($formatter);
@@ -388,7 +387,6 @@ class FormRewriteController extends ZendAbstractActionController
         }
 
         return $this->log;
-
     }
 
     /**
@@ -487,8 +485,7 @@ class FormRewriteController extends ZendAbstractActionController
                     if ($class instanceof TextArea) {
                         $data['type'] = 'TextArea';
                     }
-                } elseif (
-                    strpos($data['type'], 'Vrm') !== false ||
+                } elseif (strpos($data['type'], 'Vrm') !== false ||
                     strpos($data['type'], 'Name') !== false ||
                     strpos($data['type'], 'Phone') !== false ||
                     strpos($data['type'], 'CompanyNumber') !== false ||
@@ -498,8 +495,7 @@ class FormRewriteController extends ZendAbstractActionController
                     $data['type'] = 'Text';
                 } elseif (strpos($data['type'], 'Hidden') !== false) {
                     $data['type'] = 'Hidden';
-                } elseif (
-                    strpos($data['type'], 'DateRequired') !== false ||
+                } elseif (strpos($data['type'], 'DateRequired') !== false ||
                     strpos($data['type'], 'DateNot') !== false
                 ) {
                     $data['type'] = 'DateSelect';

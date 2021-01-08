@@ -2,7 +2,7 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\ServiceManager;
 
 /**
  * Data Retention Rule admin link formatter
@@ -27,6 +27,5 @@ class DataRetentionRuleAdminLink implements FormatterInterface
         );
 
         return '<a href="' . htmlspecialchars($url) . '" class="js-modal-ajax">' . htmlspecialchars(ucwords($data['description'])) . '</a>';
-
     }
 }

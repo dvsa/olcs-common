@@ -4,7 +4,7 @@ namespace Common\Controller\Lva\Traits;
 
 use Dvsa\Olcs\Transfer\Query\Application\Application;
 use Dvsa\Olcs\Transfer\Query\Application\Completion;
-use Zend\Http\Response as HttpResponse;
+use Laminas\Http\Response as HttpResponse;
 
 /**
  * Application Controller Trait

@@ -6,7 +6,7 @@ use Common\Controller\Plugin\FeaturesEnabled;
 use Common\Service\Cqrs\Query\QuerySender;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
-use Zend\Mvc\MvcEvent;
+use Laminas\Mvc\MvcEvent;
 
 /**
  * FeaturesEnabled Test

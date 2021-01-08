@@ -2,7 +2,7 @@
 
 namespace Common\Controller\Plugin;
 
-use Zend\Mvc\Controller\Plugin\AbstractPlugin;
+use Laminas\Mvc\Controller\Plugin\AbstractPlugin;
 use ZfcRbac\Service\AuthorizationServiceInterface;
 
 /**
@@ -28,7 +28,7 @@ final class CurrentUser extends AbstractPlugin implements CurrentUserInterface
 
     /**
      * Get zf identity
-     * 
+     *
      * @return \Common\Rbac\User
      */
     public function getIdentity()

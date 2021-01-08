@@ -7,7 +7,7 @@ use Common\Service\Qa\IsValidHandlerInterface;
 use Common\Service\Qa\DataHandlerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Fieldset;
+use Laminas\Form\Fieldset;
 
 /**
  * QaFormTest
@@ -164,6 +164,25 @@ class QaFormTest extends MockeryTestCase
         $qaForm->setApplicationStep($applicationStep);
 
         $this->assertTrue($qaForm->isValid());
+    }
+
+    public function testIsValidParentReturnsTrueValidationPreventedWithoutHandler()
+    {
+        $formControlType = 'form_control_type';
+
+        $applicationStep = [
+            'type' => $formControlType
+        ];
+
+        $qaForm = m::mock(QaForm::class)->makePartial()
+            ->shouldAllowMockingProtectedMethods();
+        $qaForm->preventSuccessfulValidation();
+        $qaForm->shouldReceive('callParentIsValid')
+            ->andReturn(true);
+
+        $qaForm->setApplicationStep($applicationStep);
+
+        $this->assertFalse($qaForm->isValid());
     }
 
     public function testSetGetApplicationStep()

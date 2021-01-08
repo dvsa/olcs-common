@@ -14,7 +14,7 @@ class Safety extends AbstractFormService
     /**
      * Returns form
      *
-     * @return \Zend\Form\Form
+     * @return \Laminas\Form\Form
      */
     public function getForm()
     {

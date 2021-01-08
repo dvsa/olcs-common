@@ -10,8 +10,8 @@ use Common\Service\Qa\FieldsetPopulatorProvider;
 use Common\Service\Qa\UsageContext;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Fieldset;
-use Zend\Form\Form;
+use Laminas\Form\Fieldset;
+use Laminas\Form\Form;
 
 /**
  * FieldsetAdderTest
@@ -98,7 +98,15 @@ class FieldsetAdderTest extends MockeryTestCase
     {
         $this->fieldset->shouldReceive('setLabel')
             ->with($this->shortName)
-            ->once();
+            ->once()
+            ->globally()
+            ->ordered();
+
+        $this->fieldset->shouldReceive('setLabelAttributes')
+            ->with([])
+            ->once()
+            ->globally()
+            ->ordered();
 
         $this->sut->add($this->form, $this->options, UsageContext::CONTEXT_INTERNAL);
     }

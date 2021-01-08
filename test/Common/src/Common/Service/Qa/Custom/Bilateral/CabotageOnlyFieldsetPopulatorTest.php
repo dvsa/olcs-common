@@ -2,16 +2,14 @@
 
 namespace CommonTest\Service\Qa\Custom\Bilateral;
 
-use Common\Form\Elements\InputFilters\QaRadio;
-use Common\Form\Elements\Types\Html;
 use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Qa\Custom\Bilateral\CabotageOnlyFieldsetPopulator;
-use Common\Service\Qa\Custom\Bilateral\YesNoRadioOptionsApplier;
-use Common\Service\Qa\RadioFactory;
+use Common\Service\Qa\Custom\Bilateral\StandardYesNoValueOptionsGenerator;
+use Common\Service\Qa\Custom\Bilateral\YesNoWithMarkupForNoPopulator;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Fieldset;
-use Zend\Form\Form;
+use Laminas\Form\Fieldset;
+use Laminas\Form\Form;
 
 /**
  * CabotageOnlyFieldsetPopulatorTest
@@ -20,12 +18,11 @@ use Zend\Form\Form;
  */
 class CabotageOnlyFieldsetPopulatorTest extends MockeryTestCase
 {
-    /**
-     * @dataProvider dpPopulate
-     */
-    public function testPopulate($yesNo, $expectedRadioValue)
+    public function testPopulate()
     {
         $cabotageOnlyNoBlurb = 'Cabotage only no blurb %s';
+
+        $yesNo = 'yesNo';
 
         $countryName = 'Norway';
         $countryNameTranslated = 'NorwayTranslated';
@@ -35,6 +32,16 @@ class CabotageOnlyFieldsetPopulatorTest extends MockeryTestCase
             'countryName' => $countryName
         ];
 
+        $fieldset = m::mock(Fieldset::class);
+        $fieldset->shouldReceive('setLabel')
+            ->with('qanda.bilaterals.cabotage.question')
+            ->once();
+        $fieldset->shouldReceive('setLabelAttributes')
+            ->with(['class' => 'govuk-visually-hidden'])
+            ->once();
+
+        $form = m::mock(Form::class);
+
         $translator = m::mock(TranslationHelperService::class);
         $translator->shouldReceive('translate')
             ->with('qanda.bilaterals.cabotage-only.no-blurb')
@@ -43,56 +50,33 @@ class CabotageOnlyFieldsetPopulatorTest extends MockeryTestCase
             ->with($countryName)
             ->andReturn($countryNameTranslated);
 
-        $yesNoRadio = m::mock(QaRadio::class);
-        $radioFactory = m::mock(RadioFactory::class);
-        $radioFactory->shouldReceive('create')
-            ->with('qaElement')
-            ->andReturn($yesNoRadio);
-
-        $yesNoRadioOptionsApplier = m::mock(YesNoRadioOptionsApplier::class);
-        $yesNoRadioOptionsApplier->shouldReceive('applyTo')
-            ->with($yesNoRadio, $expectedRadioValue, 'qanda.bilaterals.cabotage.not-selected-message')
-            ->once();
-
-        $expectedHtmlDefinition = [
-            'name' => 'noContent',
-            'type' => Html::class,
-            'attributes' => [
-                'value' => '<div class="govuk-hint">Cabotage only no blurb NorwayTranslated</div>'
-            ]
+        $standardYesNoValueOptions = [
+            'key1' => 'value1',
+            'key2' => 'value2'
         ];
 
-        $fieldset = m::mock(Fieldset::class);
-        $fieldset->shouldReceive('add')
-            ->with($yesNoRadio)
-            ->once()
-            ->globally()
-            ->ordered();
-        $fieldset->shouldReceive('add')
-            ->with($expectedHtmlDefinition)
-            ->once()
-            ->globally()
-            ->ordered();
-        $fieldset->shouldReceive('setOption')
-            ->with('radio-element', 'qaElement')
-            ->once();
+        $standardYesNoValueOptionsGenerator = m::mock(StandardYesNoValueOptionsGenerator::class);
+        $standardYesNoValueOptionsGenerator->shouldReceive('generate')
+            ->withNoArgs()
+            ->andReturn($standardYesNoValueOptions);
 
-        $form = m::mock(Form::class);
+        $yesNoWithMarkupForNoPopulator = m::mock(YesNoWithMarkupForNoPopulator::class);
+        $yesNoWithMarkupForNoPopulator->shouldReceive('populate')
+            ->with(
+                $fieldset,
+                $standardYesNoValueOptions,
+                'Cabotage only no blurb NorwayTranslated',
+                $yesNo,
+                'qanda.bilaterals.cabotage.not-selected-message'
+            )
+            ->once();
 
         $cabotageOnlyFieldsetPopulator = new CabotageOnlyFieldsetPopulator(
             $translator,
-            $radioFactory,
-            $yesNoRadioOptionsApplier
+            $yesNoWithMarkupForNoPopulator,
+            $standardYesNoValueOptionsGenerator
         );
 
         $cabotageOnlyFieldsetPopulator->populate($form, $fieldset, $options);
-    }
-
-    public function dpPopulate()
-    {
-        return [
-            [null, null],
-            ['non_null_string', true],
-        ];
     }
 }

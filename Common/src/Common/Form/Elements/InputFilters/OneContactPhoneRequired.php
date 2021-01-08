@@ -7,16 +7,16 @@
  */
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\Form\Element as ZendElement;
-use Zend\Validator as ZendValidator;
-use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\Form\Element as LaminasElement;
+use Laminas\Validator as LaminasValidator;
+use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
 
 /**
  * One contact phone required
  *
  * @author Jakub Igla <jakub.igla@valtech.co.uk>
  */
-class OneContactPhoneRequired extends ZendElement\Hidden implements InputProviderInterface
+class OneContactPhoneRequired extends LaminasElement\Hidden implements InputProviderInterface
 {
 
     /**
@@ -41,11 +41,11 @@ class OneContactPhoneRequired extends ZendElement\Hidden implements InputProvide
     /**
      * Returns callback validator, which checks if at least one value is greater than zero
      *
-     * @return \Zend\Validator\Callback
+     * @return \Laminas\Validator\Callback
      */
     protected function getCallbackValidator()
     {
-        $validator = new ZendValidator\Callback(
+        $validator = new LaminasValidator\Callback(
             function ($value, $context) {
 
                 unset($value);

@@ -12,7 +12,7 @@ trait ViewHelperManagerAware
     /**
      * Returns the view helper plugin manager.
      *
-     * @return \Zend\View\HelperPluginManager
+     * @return \Laminas\View\HelperPluginManager
      */
     public function getViewHelperManager()
     {

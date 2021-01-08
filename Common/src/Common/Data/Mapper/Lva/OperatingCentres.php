@@ -5,7 +5,7 @@ namespace Common\Data\Mapper\Lva;
 use Common\Data\Mapper\MapperInterface;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\TranslationHelperService;
-use Zend\Form\FormInterface;
+use Laminas\Form\FormInterface;
 
 /**
  * Operating Centres

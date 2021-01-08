@@ -7,18 +7,18 @@
  */
 namespace Common\Form\Elements\Custom;
 
-use Zend\Form\Element as ZendElement;
+use Laminas\Form\Element as LaminasElement;
 
 /**
  * Time
  *
  * @author Someone <someone@valtech.co.uk>
  */
-class Time extends ZendElement\Time
+class Time extends LaminasElement\Time
 {
     /**
      * Should return an array specification compatible with
-     * {@link Zend\InputFilter\Factory::createInput()}.
+     * {@link Laminas\InputFilter\Factory::createInput()}.
      *
      * @return array
      */

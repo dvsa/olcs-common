@@ -20,13 +20,12 @@ class UserTypesListDataServiceTest extends MockeryTestCase
 
         $mockRefDataService = m::mock('\Common\Service\Data\RefData');
 
-        $mockSl = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
+        $mockSl = m::mock('Laminas\ServiceManager\ServiceLocatorInterface');
         $mockSl->shouldReceive('get')->with('\Common\Service\Data\RefData')->andReturn($mockRefDataService);
 
         $service = $sut->createService($mockSl);
 
         $this->assertInstanceOf('Common\Service\Data\UserTypesListDataService', $service);
-
     }
 
     public function testFetchListOptions()

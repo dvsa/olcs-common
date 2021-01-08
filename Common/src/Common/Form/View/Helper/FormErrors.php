@@ -9,11 +9,11 @@
 namespace Common\Form\View\Helper;
 
 use Common\Form\Elements\Types\PostcodeSearch;
-use Zend\Form\Element;
-use \Zend\Form\Element\DateSelect;
-use Zend\Form\View\Helper\AbstractHelper;
-use Zend\Form\FormInterface;
-use Zend\Form\Fieldset;
+use Laminas\Form\Element;
+use \Laminas\Form\Element\DateSelect;
+use Laminas\Form\View\Helper\AbstractHelper;
+use Laminas\Form\FormInterface;
+use Laminas\Form\Fieldset;
 use Common\Form\Elements\Validators\Messages\ValidationMessageInterface;
 
 /**
@@ -75,7 +75,7 @@ class FormErrors extends AbstractHelper
 
         $messagesOpenFormat = '
 <div class="validation-summary" role="alert" id="validationSummary">
-    <h3>%s</h3>
+    <h2 class="govuk-heading-m">%s</h2>
     <p>%s</p>
     <ol class="validation-summary__list">
         <li class="validation-summary__item">';
@@ -112,7 +112,6 @@ class FormErrors extends AbstractHelper
         $flatMessages = [];
 
         foreach ($messages as $field => $message) {
-
             if ($fieldset instanceof Fieldset) {
                 if ($fieldset->has($field)) {
                     $element = $fieldset->get($field);
@@ -147,7 +146,6 @@ class FormErrors extends AbstractHelper
     protected function formatMessage($message, $element)
     {
         if ($message instanceof ValidationMessageInterface) {
-
             $msg = $message->getMessage();
 
             if ($message->shouldTranslate()) {

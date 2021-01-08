@@ -2,12 +2,12 @@
 
 namespace Common\Service\Qa\Custom\Bilateral;
 
-use Common\Form\Elements\Types\Html;
 use Common\Service\Helper\TranslationHelperService;
+use Common\Service\Qa\Custom\Common\HtmlAdder;
 use Common\Service\Qa\FieldsetPopulatorInterface;
 use Common\Service\Qa\RadioFieldsetPopulator;
-use Zend\Form\Element\Hidden;
-use Zend\Form\Fieldset;
+use Laminas\Form\Element\Hidden;
+use Laminas\Form\Fieldset;
 
 class PermitUsageFieldsetPopulator implements FieldsetPopulatorInterface
 {
@@ -17,20 +17,26 @@ class PermitUsageFieldsetPopulator implements FieldsetPopulatorInterface
     /** @var TranslationHelperService */
     private $translator;
 
+    /** @var HtmlAdder */
+    private $htmlAdder;
+
     /**
      * Create service instance
      *
      * @param RadioFieldsetPopulator $radioFieldsetPopulator
      * @param TranslationHelperService $translator
+     * @param HtmlAdder $htmlAdder
      *
      * @return PermitUsageFieldsetPopulator
      */
     public function __construct(
         RadioFieldsetPopulator $radioFieldsetPopulator,
-        TranslationHelperService $translator
+        TranslationHelperService $translator,
+        HtmlAdder $htmlAdder
     ) {
         $this->radioFieldsetPopulator = $radioFieldsetPopulator;
         $this->translator = $translator;
+        $this->htmlAdder = $htmlAdder;
     }
 
     /**
@@ -75,15 +81,7 @@ class PermitUsageFieldsetPopulator implements FieldsetPopulatorInterface
             $this->translator->translate($translationKey)
         );
 
-        $fieldset->add(
-            [
-                'name' => 'qaHtml',
-                'type' => Html::class,
-                'attributes' => [
-                    'value' => $markup,
-                ]
-            ]
-        );
+        $this->htmlAdder->add($fieldset, 'qaHtml', $markup);
 
         $fieldset->add(
             [

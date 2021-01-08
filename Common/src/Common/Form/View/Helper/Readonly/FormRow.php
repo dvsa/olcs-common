@@ -6,10 +6,10 @@ use Common\Form\Elements;
 use Common\Form\Elements\Types\Html;
 use Common\Form\Elements\Types\HtmlTranslated;
 use Common\Form\Elements\Types\Table;
-use Zend\Form\Element as ZendElement;
-use Zend\Form\ElementInterface;
-use Zend\Form\LabelAwareInterface;
-use Zend\Form\View\Helper\AbstractHelper;
+use Laminas\Form\Element as LaminasElement;
+use Laminas\Form\ElementInterface;
+use Laminas\Form\LabelAwareInterface;
+use Laminas\Form\View\Helper\AbstractHelper;
 
 /**
  * Class FormRow
@@ -26,9 +26,9 @@ class FormRow extends AbstractHelper
      * @var array
      */
     protected $classMap = [
-        'Zend\Form\Element\Radio' => 'readonlyformselect',
-        'Zend\Form\Element\Select' => 'readonlyformselect',
-        'Zend\Form\Element\DateSelect' => 'readonlyformdateselect',
+        'Laminas\Form\Element\Radio' => 'readonlyformselect',
+        'Laminas\Form\Element\Select' => 'readonlyformselect',
+        'Laminas\Form\Element\DateSelect' => 'readonlyformdateselect',
         'Common\Form\Elements\Types\Table' => 'readonlyformtable',
     ];
 
@@ -86,8 +86,7 @@ class FormRow extends AbstractHelper
         /** @var \Common\Form\View\Helper\FormElement $defElmHlpr */
         $defElmHlpr = $this->getView()->plugin('FormElement');
 
-        if (
-            $element instanceof ZendElement\Csrf
+        if ($element instanceof LaminasElement\Csrf
             || (
                 $element instanceof Elements\InputFilters\ActionButton
                 && $element->getOption('keepForReadonly') === true
@@ -96,15 +95,14 @@ class FormRow extends AbstractHelper
             return $defElmHlpr->render($element);
         }
 
-        if (
-            $element instanceof Elements\InputFilters\ActionButton
+        if ($element instanceof Elements\InputFilters\ActionButton
             || $element instanceof Elements\Types\AttachFilesButton
         ) {
             return '';
         }
 
         if (in_array($element->getAttribute('type'), ['hidden', 'submit']) ||
-            $element instanceof ZendElement\Button ||
+            $element instanceof LaminasElement\Button ||
             $element->getOption('remove_if_readonly')
         ) {
             //bail early if we don't want to display this type of element

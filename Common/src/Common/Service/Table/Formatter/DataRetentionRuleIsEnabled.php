@@ -2,7 +2,7 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\ServiceManager;
 
 /**
  * Data Retention Boolean formatter

@@ -1,8 +1,17 @@
 <?php
+
+if ($element->has('warning')) {
+    echo $this->formRow($element->get('warning'));
+}
+
+if ($element->has('warningVisible')) {
+    echo $this->formRow($element->get('warningVisible'));
+}
+
 /** @var Common\Form\Elements\Types\RadioHorizontal $element */
 $element = $this->element;
 
-/** @var \Zend\Form\Element\Radio $radioElement */
+/** @var \Laminas\Form\Element\Radio $radioElement */
 $radioElementName = $element->getOption('radio-element') ?? 'radio';
 $radioElement = $element->get($radioElementName);
 $errors = $this->formElementErrors()->render($radioElement);

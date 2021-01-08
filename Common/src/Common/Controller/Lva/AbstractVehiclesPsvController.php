@@ -8,8 +8,8 @@ use Common\Data\Mapper\Lva\PsvVehiclesVehicle;
 use Dvsa\Olcs\Transfer\Command as CommandDto;
 use Dvsa\Olcs\Transfer\Query as QueryDto;
 use Dvsa\Olcs\Transfer\Query\Licence\PsvVehiclesExport;
-use Zend\Form\Form;
-use Zend\Form\FormInterface;
+use Laminas\Form\Form;
+use Laminas\Form\FormInterface;
 
 /**
  * Vehicles PSV Controller
@@ -50,11 +50,11 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     /**
      * Process action - Index
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     public function indexAction()
     {
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         $resultData = $this->fetchResultData();
@@ -112,7 +112,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
      *
      * @param array $crudActionData Action data
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     protected function handleCrudAction(array $crudActionData)
     {
@@ -227,7 +227,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     /**
      * Transfer vehicles
      *
-     * @return \Common\View\Model\Section | \Zend\Http\Response
+     * @return \Common\View\Model\Section | \Laminas\Http\Response
      */
     public function transferAction()
     {
@@ -238,11 +238,11 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     /**
      * Add a vehicle action
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     public function addAction()
     {
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         $data = [];
@@ -296,11 +296,11 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     /**
      * Edit action
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     public function editAction()
     {
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         $id = $this->params('child_id');
@@ -377,7 +377,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
      *
      * @param string $action Action
      *
-     * @return null|\Zend\Http\Response
+     * @return null|\Laminas\Http\Response
      */
     protected function checkForAlternativeCrudAction($action)
     {
@@ -619,7 +619,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
      */
     protected function getFilters()
     {
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {

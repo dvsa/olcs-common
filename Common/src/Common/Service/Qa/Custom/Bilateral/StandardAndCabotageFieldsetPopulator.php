@@ -3,7 +3,8 @@
 namespace Common\Service\Qa\Custom\Bilateral;
 
 use Common\Service\Qa\FieldsetPopulatorInterface;
-use Zend\Form\Fieldset;
+use Laminas\Form\Element\Hidden;
+use Laminas\Form\Fieldset;
 
 class StandardAndCabotageFieldsetPopulator implements FieldsetPopulatorInterface
 {
@@ -25,23 +26,29 @@ class StandardAndCabotageFieldsetPopulator implements FieldsetPopulatorInterface
     /** @var YesNoRadioOptionsApplier */
     private $yesNoRadioOptionsApplier;
 
+    /** @var StandardYesNoValueOptionsGenerator */
+    private $standardYesNoValueOptionsGenerator;
+
     /**
      * Create service instance
      *
      * @param RadioFactory $radioFactory
      * @param StandardAndCabotageYesNoRadioFactory $standardAndCabotageYesNoRadioFactory
      * @param YesNoRadioOptionsApplier $yesNoRadioOptionsApplier
+     * @param StandardYesNoValueOptionsGenerator $standardYesNoValueOptionsGenerator
      *
      * @return StandardAndCabotageFieldsetPopulator
      */
     public function __construct(
         RadioFactory $radioFactory,
         StandardAndCabotageYesNoRadioFactory $standardAndCabotageYesNoRadioFactory,
-        YesNoRadioOptionsApplier $yesNoRadioOptionsApplier
+        YesNoRadioOptionsApplier $yesNoRadioOptionsApplier,
+        StandardYesNoValueOptionsGenerator $standardYesNoValueOptionsGenerator
     ) {
         $this->radioFactory = $radioFactory;
         $this->standardAndCabotageYesNoRadioFactory = $standardAndCabotageYesNoRadioFactory;
         $this->yesNoRadioOptionsApplier = $yesNoRadioOptionsApplier;
+        $this->standardYesNoValueOptionsGenerator = $standardYesNoValueOptionsGenerator;
     }
 
     /**
@@ -49,6 +56,16 @@ class StandardAndCabotageFieldsetPopulator implements FieldsetPopulatorInterface
      */
     public function populate($form, Fieldset $fieldset, array $options)
     {
+        $fieldset->add(
+            [
+                'name' => 'warningVisible',
+                'type' => Hidden::class,
+                'attributes' => [
+                    'value' => 'none'
+                ]
+            ]
+        );
+
         $cabotageOptions = $this->radioFactory->create('yesContent');
         $cabotageOptions->setValueOptions(self::CABOTAGE_VALUE_OPTIONS);
 
@@ -66,8 +83,11 @@ class StandardAndCabotageFieldsetPopulator implements FieldsetPopulatorInterface
             }
         }
 
+        $valueOptions = $this->standardYesNoValueOptionsGenerator->generate();
+
         $this->yesNoRadioOptionsApplier->applyTo(
             $yesNoRadio,
+            $valueOptions,
             $yesNoValue,
             'qanda.bilaterals.cabotage.not-selected-message'
         );
@@ -76,5 +96,7 @@ class StandardAndCabotageFieldsetPopulator implements FieldsetPopulatorInterface
         $fieldset->add($cabotageOptions);
 
         $fieldset->setOption('radio-element', 'qaElement');
+        $fieldset->setLabel('qanda.bilaterals.cabotage.question');
+        $fieldset->setLabelAttributes(['class' => 'govuk-visually-hidden']);
     }
 }

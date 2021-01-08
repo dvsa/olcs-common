@@ -17,7 +17,7 @@ trait GenericUpload
     /**
      * Process files
      *
-     * @param \Zend\Form\Form $form           Form
+     * @param \Laminas\Form\Form $form           Form
      * @param string          $selector       selector identifying the MultipleFileUpload element
      * @param callable        $uploadCallback method name for upload
      * @param callable        $deleteCallback method name for delete

@@ -12,7 +12,7 @@ namespace Common\Form\View\Helper\Extended;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormMultiCheckbox extends \Zend\Form\View\Helper\FormMultiCheckbox
+class FormMultiCheckbox extends \Laminas\Form\View\Helper\FormMultiCheckbox
 {
     use PrepareAttributesTrait;
 }

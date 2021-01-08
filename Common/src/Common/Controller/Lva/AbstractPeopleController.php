@@ -6,7 +6,7 @@ use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 use Common\Form\Form;
 use Common\RefData;
 use Dvsa\Olcs\Transfer\Command as TransferCmd;
-use Zend\Mvc\MvcEvent;
+use Laminas\Mvc\MvcEvent;
 
 /**
  * Shared logic between People controllers
@@ -46,7 +46,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
     /**
      * Index action
      *
-     * @return array|\Common\View\Model\Section|\Zend\Http\Response
+     * @return array|\Common\View\Model\Section|\Laminas\Http\Response
      */
     public function indexAction()
     {
@@ -71,11 +71,11 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
     /**
      * Handle all except sole trader
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     private function handleNonSoleTrader()
     {
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         $adapter = $this->getAdapter();
@@ -127,7 +127,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
     /**
      * Handle indexAction if a sole trader
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     private function handleSoleTrader()
     {
@@ -139,7 +139,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
         $orgId = $adapter->getOrganisationId();
 
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
         if ($request->isPost()) {
             $data = (array) $request->getPost();
@@ -169,7 +169,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             $params['personId'] = $personId;
         }
 
-        /** @var \Zend\Form\FormInterface $form */
+        /** @var \Laminas\Form\FormInterface $form */
         $form = $this->getServiceLocator()
             ->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-sole_trader')
@@ -337,8 +337,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         }
 
         $additionalGuidanceLabel = null;
-        if (
-            $this->lva === self::LVA_VAR
+        if ($this->lva === self::LVA_VAR
             && $this->getAdapter()->hasMoreThanOneValidCurtailedOrSuspendedLicences()
         ) {
             $additionalGuidanceLabel = 'selfserve-app-subSection-your-business-people-guidanceAdditional';
@@ -390,11 +389,11 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
         //  allow for internal user do not specify DoB
         if ($this->location === self::LOC_INTERNAL) {
-            /** @var \Zend\Form\Element $elm */
+            /** @var \Laminas\Form\Element $elm */
             $elm = $form->get('data')->get('birthDate');
             $elm->setOption('label-suffix', '(optional)');
 
-            /** @var \Zend\InputFilter\Input $birthDateInputFltr */
+            /** @var \Laminas\InputFilter\Input $birthDateInputFltr */
             $birthDateInputFltr = $form->getInputFilter()->get('data')->get('birthDate');
 
             $birthDateInputFltr
@@ -427,7 +426,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
     /**
      * Add person action
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     public function addAction()
     {
@@ -444,7 +443,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
     /**
      * Edit person action
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     public function editAction()
     {
@@ -460,13 +459,13 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
      *
      * @param string $mode mode
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
     private function addOrEdit($mode)
     {
         /* @var $adapter Adapters\AbstractPeopleAdapter */
         $adapter = $this->getAdapter();
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         $data = array();
@@ -522,7 +521,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
      * Mechanism to *actually* delete a person, invoked by the
      * underlying delete action
      *
-     * @return null|\Zend\Http\Response
+     * @return null|\Laminas\Http\Response
      */
     protected function delete()
     {
@@ -556,7 +555,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
     /**
      * Redirect users who don't have permission
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     private function redirectWithoutPermission()
     {
@@ -570,7 +569,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
     /**
      * Restore action
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     public function restoreAction()
     {
