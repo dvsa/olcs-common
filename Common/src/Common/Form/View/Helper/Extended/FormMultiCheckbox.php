@@ -7,17 +7,40 @@
  */
 namespace Common\Form\View\Helper\Extended;
 
+use Common\Form\View\Helper\ApplicationContext;
 use Laminas\Form\Element\MultiCheckbox as MultiCheckboxElement;
 use Laminas\Form\LabelAwareInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Here we extend the View helper to allow us to add attributes that aren't in ZF2's whitelist
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormMultiCheckbox extends \Laminas\Form\View\Helper\FormMultiCheckbox
+class FormMultiCheckbox extends \Laminas\Form\View\Helper\FormMultiCheckbox implements FactoryInterface
 {
     use PrepareAttributesTrait;
+
+    /** @var string */
+    private $applicationContext;
+
+    /**
+     * Create service
+     *
+     * @param ServiceLocatorInterface $serviceLocator Service locator
+     *
+     * @return self
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator)
+    {
+        $sm = $serviceLocator->getServiceLocator();
+
+        $mainConfig = $sm->get('Config');
+        $this->applicationContext = $mainConfig['application_context'];
+
+        return $this;
+    }
 
     /**
      * Render options
@@ -131,7 +154,13 @@ class FormMultiCheckbox extends \Laminas\Form\View\Helper\FormMultiCheckbox
             }
 
             $labelOpen = $labelHelper->openTag($labelAttributes);
-            $template  = '<div class="govuk-checkboxes__item">%s' . $labelOpen . '%s' . $labelClose . '</div>';
+
+            if ($this->applicationContext == ApplicationContext::APPLICATION_CONTEXT_SELFSERVE) {
+                $template  = '<div class="govuk-checkboxes__item">%s' . $labelOpen . '%s' . $labelClose . '</div>';
+            } else {
+                $template  = $labelOpen . '%s%s' . $labelClose;
+            }
+
             switch ($labelPosition) {
                 case self::LABEL_PREPEND:
                     $markup = sprintf($template, $label, $input);

@@ -105,6 +105,8 @@ class FormHelperService extends AbstractHelperService
             }
         }
 
+        $this->updateForGds($form);
+
         return $form;
     }
 
@@ -986,5 +988,17 @@ class FormHelperService extends AbstractHelperService
                 'company_number' => array($translator->translate($message)),
             )
         );
+    }
+
+    /**
+     * Update form to be GDS compliant when in a selfserve context
+     *
+     * @param Form $form
+     */
+    public function updateForGds(Form $form)
+    {
+        $gdsFormUpdater = $this->getServiceLocator()->get('GdsFormUpdater');
+
+        $gdsFormUpdater->update($form);
     }
 }

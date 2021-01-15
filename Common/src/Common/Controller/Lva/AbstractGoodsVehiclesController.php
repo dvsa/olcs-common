@@ -343,6 +343,9 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
                     $confirm->setMessages([$this->formatConfirmationMessage($messages['VE-VRM-2'])]);
 
                     $form->get('licence-vehicle')->add($confirm);
+
+                    // update the newly added checkbox to be gds compliant in selfserve
+                    $this->getServiceLocator()->get('Helper\Form')->updateForGds($form);
                 } else {
                     $this->mapVehicleErrors($form, $messages);
                 }

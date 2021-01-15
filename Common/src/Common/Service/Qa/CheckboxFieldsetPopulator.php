@@ -40,18 +40,20 @@ class CheckboxFieldsetPopulator implements FieldsetPopulatorInterface
         $label = $this->translateableTextHandler->translate($options['label']);
         $notCheckedMessage = $this->translateableTextHandler->translate($options['notCheckedMessage']);
 
+        $id = $fieldset->getName() . '-qaElement';
+
         $checkbox = $this->checkboxFactory->create('qaElement');
         $checkbox->setAttributes(
             [
-                'class' => 'govuk-checkboxes__input',
-                'id' => 'qaElement'
+                'class' => 'input--qasinglecheckbox',
+                'id' => $id
             ]
         );
         $checkbox->setLabel($label);
         $checkbox->setLabelAttributes(
             [
-                'class' => 'govuk-label govuk-checkboxes__label',
-                'for' => 'qaElement'
+                'class' => 'form-control form-control--checkbox form-control--advanced',
+                'for' => $id
             ]
         );
 

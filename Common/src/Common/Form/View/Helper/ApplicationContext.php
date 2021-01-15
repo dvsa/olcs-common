@@ -1,0 +1,10 @@
+<?php
+
+namespace Common\Form\View\Helper;
+
+class ApplicationContext
+{
+    const APPLICATION_CONTEXT_SELFSERVE = 'APPLICATION_CONTEXT_SELFSERVE';
+    const APPLICATION_CONTEXT_INTERNAL = 'APPLICATION_CONTEXT_INTERNAL';
+}
+

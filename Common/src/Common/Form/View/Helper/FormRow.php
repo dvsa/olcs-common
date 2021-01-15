@@ -17,6 +17,7 @@ use Laminas\Form\LabelAwareInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Common\Form\Elements\Types\AttachFilesButton;
+use Common\Form\View\Helper\ApplicationContext;
 
 /**
  * Render form row
@@ -26,7 +27,14 @@ use Common\Form\Elements\Types\AttachFilesButton;
  */
 class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements FactoryInterface
 {
+    const SELFSERVE_CHECKBOX_PREFIX = '<div class="govuk-checkboxes__item">';
+    const SELFSERVE_CHECKBOX_POSTFIX = '</div>';
+
+    /** @var array */
     private $config;
+
+    /** @var string */
+    private $applicationContext;
 
     /**
      * The form row output format.
@@ -55,6 +63,8 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
         $mainConfig = $sm->get('Config');
 
         $this->config = isset($mainConfig['form_row']) ? $mainConfig['form_row'] : [];
+
+        $this->applicationContext = $mainConfig['application_context'];
 
         return $this;
     }
@@ -346,22 +356,25 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
                     $labelPosition = $element->getLabelOption('label_position');
                 }
 
+                $isSelfserveCheckbox = $element instanceof Checkbox
+                    && $this->applicationContext == ApplicationContext::APPLICATION_CONTEXT_SELFSERVE;
+
                 switch ($labelPosition) {
                     case self::LABEL_PREPEND:
-                        if ($element instanceof Checkbox) {
-                            $markup = '<div class="govuk-checkboxes__item">' .
+                        if ($isSelfserveCheckbox) {
+                            $markup = self::SELFSERVE_CHECKBOX_PREFIX .
                                 $labelOpen . $label . $labelClose . $elementString .
-                                '</div>';
+                                self::SELFSERVE_CHECKBOX_POSTFIX;
                         } else {
                             $markup = $labelOpen . $label . $elementString . $labelClose;
                         }
                         break;
                     case self::LABEL_APPEND:
                     default:
-                        if ($element instanceof Checkbox) {
-                            $markup = '<div class="govuk-checkboxes__item">' .
+                        if ($isSelfserveCheckbox) {
+                            $markup = self::SELFSERVE_CHECKBOX_PREFIX .
                                 $elementString . $labelOpen . $label . $labelClose .
-                                '</div>';
+                                self::SELFSERVE_CHECKBOX_POSTFIX;
                         } else {
                             $markup = $labelOpen . $elementString . $label . $labelClose;
                         }

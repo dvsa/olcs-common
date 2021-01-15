@@ -21,12 +21,12 @@ class RestrictedCountriesMultiCheckboxFactoryTest extends MockeryTestCase
         $expectedOptions = [
             'label' => 'markup-ecmt-restricted-countries-list-label',
             'label_attributes' => [
-                'class' => 'govuk-label govuk-checkboxes__label'
+                'class' => 'form-control form-control--checkbox'
             ]
         ];
 
         $expectedAttributes = [
-            'class' => 'input--trips govuk-checkboxes__input',
+            'class' => 'input--trips',
             'id' => 'RestrictedCountriesList',
             'allowWrap' => true,
             'data-container-class' => 'form-control__container',

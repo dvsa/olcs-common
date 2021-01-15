@@ -19,14 +19,14 @@ class RestrictedCountriesMultiCheckboxFactory
             [
                 'label' => 'markup-ecmt-restricted-countries-list-label',
                 'label_attributes' => [
-                    'class' => 'govuk-label govuk-checkboxes__label'
+                    'class' => 'form-control form-control--checkbox'
                 ]
             ]
         );
 
         $restrictedCountries->setAttributes(
             [
-                'class' => 'input--trips govuk-checkboxes__input',
+                'class' => 'input--trips',
                 'id' => 'RestrictedCountriesList',
                 'allowWrap' => true,
                 'data-container-class' => 'form-control__container',

@@ -199,8 +199,6 @@ return array(
             'QaValidatorsAdder' => QaService\ValidatorsAdder::class,
             'QaCommonHtmlAdder' => QaService\Custom\Common\HtmlAdder::class,
             'QaEcmtYesNoRadioFactory' => QaService\Custom\Ecmt\YesNoRadioFactory::class,
-            'QaEcmtRestrictedCountriesMultiCheckboxFactory'
-                => QaService\Custom\Ecmt\RestrictedCountriesMultiCheckboxFactory::class,
             'QaEcmtInternationalJourneysIsValidHandler' =>
                 QaService\Custom\Ecmt\InternationalJourneysIsValidHandler::class,
             'QaEcmtAnnualTripsAbroadIsValidHandler' =>
@@ -318,6 +316,8 @@ return array(
                 QaService\Custom\Ecmt\AnnualTripsAbroadDataHandlerFactory::class,
             'QaEcmtSectorsFieldsetPopulator' =>
                 QaService\Custom\Ecmt\SectorsFieldsetPopulatorFactory::class,
+            'QaEcmtRestrictedCountriesMultiCheckboxFactory'
+                => QaService\Custom\Ecmt\RestrictedCountriesMultiCheckboxFactoryFactory::class,
             'QaCertRoadworthinessMotExpiryDateFieldsetPopulator' =>
                 QaService\Custom\CertRoadworthiness\MotExpiryDateFieldsetPopulatorFactory::class,
             'QaBilateralStandardYesNoValueOptionsGenerator' =>
@@ -349,6 +349,8 @@ return array(
             PermitsMapper\NoOfPermits::class => PermitsMapper\NoOfPermitsFactory::class,
             Common\Service\User\LastLoginService::class => Common\Service\User\LastLoginServiceFactory::class,
             'HtmlPurifier' => \Common\Service\Utility\HtmlPurifierFactory::class,
+
+            'GdsFormUpdater' => \Common\Service\Gds\FormUpdaterFactory::class,
         )
     ),
     'file_uploader' => array(
@@ -419,7 +421,6 @@ return array(
             'formlabel'               => \Common\Form\View\Helper\Extended\FormLabel::class,
             'formmonth'               => \Common\Form\View\Helper\Extended\FormMonth::class,
             'formmonthselect'         => \Common\Form\View\Helper\Extended\FormMonthSelect::class,
-            'formmulticheckbox'       => \Common\Form\View\Helper\Extended\FormMultiCheckbox::class,
             'formnumber'              => \Common\Form\View\Helper\Extended\FormNumber::class,
             'formpassword'            => \Common\Form\View\Helper\Extended\FormPassword::class,
             'formradio'               => \Common\Form\View\Helper\Extended\FormRadio::class,
@@ -436,18 +437,19 @@ return array(
             'formweek'                => \Common\Form\View\Helper\Extended\FormWeek::class,
         ),
         'factories' => array(
-            'pageId' => \Common\View\Helper\PageId::class,
-            'pageTitle' => \Common\View\Helper\PageTitle::class,
-            'LicenceChecklist' => \Common\View\Helper\LicenceChecklist::class,
-            'date' => \Common\View\Helper\Date::class,
-            'formRow' => 'Common\Form\View\Helper\FormRow',
-            'languageLink' => \Common\View\Helper\LanguageLink::class,
-            'currentUser' => \Common\View\Helper\CurrentUserFactory::class,
-            'systemInfoMessages' => \Common\View\Factory\Helper\SystemInfoMessagesFactory::class,
-            'linkBack' => Common\View\Helper\LinkBack::class,
-            'translateReplace' => \Common\View\Helper\TranslateReplace::class,
-            'flashMessengerAll' => \Common\View\Factory\Helper\FlashMessengerFactory::class,
-            'escapeHtml' => \Common\View\Factory\Helper\EscapeHtmlFactory::class,
+            'formRow'                 => 'Common\Form\View\Helper\FormRow',
+            'formmulticheckbox'       => \Common\Form\View\Helper\Extended\FormMultiCheckbox::class,
+            'pageId'                  => \Common\View\Helper\PageId::class,
+            'pageTitle'               => \Common\View\Helper\PageTitle::class,
+            'LicenceChecklist'        => \Common\View\Helper\LicenceChecklist::class,
+            'date'                    => \Common\View\Helper\Date::class,
+            'languageLink'            => \Common\View\Helper\LanguageLink::class,
+            'currentUser'             => \Common\View\Helper\CurrentUserFactory::class,
+            'systemInfoMessages'      => \Common\View\Factory\Helper\SystemInfoMessagesFactory::class,
+            'linkBack'                => Common\View\Helper\LinkBack::class,
+            'translateReplace'        => \Common\View\Helper\TranslateReplace::class,
+            'flashMessengerAll'       => \Common\View\Factory\Helper\FlashMessengerFactory::class,
+            'escapeHtml'              => \Common\View\Factory\Helper\EscapeHtmlFactory::class,
         ),
     ),
     'view_manager' => array(
