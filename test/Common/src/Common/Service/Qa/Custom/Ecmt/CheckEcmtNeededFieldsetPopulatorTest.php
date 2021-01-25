@@ -3,19 +3,19 @@
 namespace CommonTest\Service\Qa\Custom\Ecmt;
 
 use Common\Service\Qa\Custom\Ecmt\InfoIconAdder;
-use Common\Service\Qa\Custom\Ecmt\PermitUsageFieldsetPopulator;
-use Common\Service\Qa\RadioFieldsetPopulator;
+use Common\Service\Qa\Custom\Ecmt\CheckEcmtNeededFieldsetPopulator;
+use Common\Service\Qa\CheckboxFieldsetPopulator;
 use Laminas\Form\Fieldset;
 use Laminas\Form\Form;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
- * PermitUsageFieldsetPopulatorTest
+ * CheckEcmtNeededFieldsetPopulatorTest
  *
  * @author Jonathan Thomas <jonathan@opalise.co.uk>
  */
-class PermitUsageFieldsetPopulatorTest extends MockeryTestCase
+class CheckEcmtNeededFieldsetPopulatorTest extends MockeryTestCase
 {
     public function testPopulate()
     {
@@ -28,8 +28,8 @@ class PermitUsageFieldsetPopulatorTest extends MockeryTestCase
 
         $fieldset = m::mock(Fieldset::class);
 
-        $radioFieldsetPopulator = m::mock(RadioFieldsetPopulator::class);
-        $radioFieldsetPopulator->shouldReceive('populate')
+        $checkboxFieldsetPopulator = m::mock(CheckboxFieldsetPopulator::class);
+        $checkboxFieldsetPopulator->shouldReceive('populate')
             ->with($form, $fieldset, $options)
             ->once()
             ->globally()
@@ -37,13 +37,16 @@ class PermitUsageFieldsetPopulatorTest extends MockeryTestCase
 
         $infoIconAdder = m::mock(InfoIconAdder::class);
         $infoIconAdder->shouldReceive('add')
-            ->with($fieldset, 'qanda.ecmt.permit-usage.footer-annotation')
+            ->with($fieldset, 'qanda.ecmt.check-ecmt-needed.footer-annotation')
             ->once()
             ->globally()
             ->ordered();
 
-        $permitUsageFieldsetPopulator = new PermitUsageFieldsetPopulator($radioFieldsetPopulator, $infoIconAdder);
+        $checkEcmtNeededFieldsetPopulator = new CheckEcmtNeededFieldsetPopulator(
+            $checkboxFieldsetPopulator,
+            $infoIconAdder
+        );
 
-        $permitUsageFieldsetPopulator->populate($form, $fieldset, $options);
+        $checkEcmtNeededFieldsetPopulator->populate($form, $fieldset, $options);
     }
 }
