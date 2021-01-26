@@ -7,9 +7,10 @@
  */
 namespace Common\Controller\Lva\Delegators;
 
+use Common\Controller\Lva\Interfaces\ControllerAwareInterface;
+use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\DelegatorFactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
-use Common\Controller\Lva\Interfaces\ControllerAwareInterface;
 
 /**
  * Abstract Adapter Delegator
@@ -21,20 +22,13 @@ abstract class AbstractAdapterDelegator implements DelegatorFactoryInterface
     protected $adapter;
 
     /**
-     * A factory that creates delegates of a given service
-     *
-     * @param ServiceLocatorInterface $serviceLocator the service locator which requested the service
-     * @param string                  $name           the normalized service name
-     * @param string                  $requestedName  the requested service name
-     * @param callable                $callback       the callback that is responsible for creating the service
-     *
-     * @return mixed
+     * {@inheritdoc}
      */
-    public function createDelegatorWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName, $callback)
+    public function __invoke(ContainerInterface $container, $requestedName, callable $callback, array $options = null)
     {
         $controller = $callback();
 
-        $adapter = $serviceLocator->getServiceLocator()->get($this->adapter);
+        $adapter = $container->getServiceLocator()->get($this->adapter);
 
         if ($adapter instanceof ControllerAwareInterface) {
             $adapter->setController($controller);
@@ -43,5 +37,14 @@ abstract class AbstractAdapterDelegator implements DelegatorFactoryInterface
         $controller->setAdapter($adapter);
 
         return $controller;
+    }
+
+    /**
+     * {@inheritdoc}
+     * @todo OLCS-28149
+     */
+    public function createDelegatorWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName, $callback)
+    {
+        return $this($serviceLocator, $requestedName, $callback);
     }
 }

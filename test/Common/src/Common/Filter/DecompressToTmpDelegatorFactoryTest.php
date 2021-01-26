@@ -2,10 +2,13 @@
 
 namespace CommonTest\Filter;
 
-use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Common\Filesystem\Filesystem;
 use Common\Filter\DecompressToTmpDelegatorFactory;
-use Mockery as m;
 use Common\Filter\DecompressUploadToTmp;
+use Laminas\Filter\Decompress;
+use Laminas\ServiceManager\ServiceManager;
+use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
  * Class DecompressToTmpDelegatorFactoryTest
@@ -13,28 +16,58 @@ use Common\Filter\DecompressUploadToTmp;
  */
 class DecompressToTmpDelegatorFactoryTest extends MockeryTestCase
 {
-    public function testCreateDelegatorWithName()
+    public function testInvoke()
     {
+        $tmpDir = '/tmp/';
         $callback = function () {
             return new DecompressUploadToTmp();
         };
 
-        $mockFileSystem = m::mock('Common\Filesystem\Filesystem');
+        $mockFileSystem = m::mock(Filesystem::class);
 
-        $mockSl = m::mock('\Laminas\ServiceManager\ServiceManager');
-        $mockSl->shouldReceive('getServiceLocator->get')->with('Config')->andReturn(['tmpDirectory' => '/tmp/']);
+        $mockSl = m::mock(ServiceManager::class);
+        $mockSl->shouldReceive('getServiceLocator->get')->with('Config')->andReturn(['tmpDirectory' => $tmpDir]);
         $mockSl->shouldReceive('getServiceLocator->get')
                ->with('Common\Filesystem\Filesystem')
                ->andReturn($mockFileSystem);
 
         $sut = new DecompressToTmpDelegatorFactory();
 
-        /** @var \Common\Filter\DecompressUploadToTmp $service */
+        /** @var DecompressUploadToTmp $service */
+        $service = $sut($mockSl, '', $callback);
+
+        $this->assertInstanceOf(DecompressUploadToTmp::class, $service);
+        $this->assertEquals($tmpDir, $service->getTempRootDir());
+        $this->assertInstanceOf(Decompress::class, $service->getDecompressFilter());
+        $this->assertSame($mockFileSystem, $service->getFileSystem());
+    }
+
+    /**
+     * @todo OLCS-28149
+     */
+    public function testCreateDelegatorWithName()
+    {
+        $tmpDir = '/tmp/';
+        $callback = function () {
+            return new DecompressUploadToTmp();
+        };
+
+        $mockFileSystem = m::mock(Filesystem::class);
+
+        $mockSl = m::mock(ServiceManager::class);
+        $mockSl->shouldReceive('getServiceLocator->get')->with('Config')->andReturn(['tmpDirectory' => $tmpDir]);
+        $mockSl->shouldReceive('getServiceLocator->get')
+               ->with('Common\Filesystem\Filesystem')
+               ->andReturn($mockFileSystem);
+
+        $sut = new DecompressToTmpDelegatorFactory();
+
+        /** @var DecompressUploadToTmp $service */
         $service = $sut->createDelegatorWithName($mockSl, '', '', $callback);
 
-        $this->assertInstanceOf('Common\Filter\DecompressUploadToTmp', $service);
-        $this->assertEquals('/tmp/', $service->getTempRootDir());
-        $this->assertInstanceOf('Laminas\Filter\Decompress', $service->getDecompressFilter());
+        $this->assertInstanceOf(DecompressUploadToTmp::class, $service);
+        $this->assertEquals($tmpDir, $service->getTempRootDir());
+        $this->assertInstanceOf(Decompress::class, $service->getDecompressFilter());
         $this->assertSame($mockFileSystem, $service->getFileSystem());
     }
 }

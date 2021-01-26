@@ -2,6 +2,7 @@
 
 namespace Common\Filter;
 
+use Interop\Container\ContainerInterface;
 use Laminas\Filter\Decompress;
 use Laminas\ServiceManager\DelegatorFactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
@@ -13,25 +14,28 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
 class DecompressToTmpDelegatorFactory implements DelegatorFactoryInterface
 {
     /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     * @param string $name
-     * @param string $requestedName
-     * @param callable $callback
-     * @return mixed
+     * {@inheritdoc}
      */
-    public function createDelegatorWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName, $callback)
+    public function __invoke(ContainerInterface $container, $requestedName, callable $callback, array $options = null)
     {
-        $config = $serviceLocator->getServiceLocator()->get('Config');
+        $config = $container->getServiceLocator()->get('Config');
         $tmpRoot = (isset($config['tmpDirectory']) ? $config['tmpDirectory'] : sys_get_temp_dir());
         $filter = new Decompress('zip');
 
         $service = $callback();
         $service->setDecompressFilter($filter);
         $service->setTempRootDir($tmpRoot);
-        $service->setFileSystem($serviceLocator->getServiceLocator()->get('Common\Filesystem\Filesystem'));
+        $service->setFileSystem($container->getServiceLocator()->get('Common\Filesystem\Filesystem'));
 
         return $service;
+    }
+
+    /**
+     * {@inheritdoc}
+     * @todo OLCS-28149
+     */
+    public function createDelegatorWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName, $callback)
+    {
+        return $this($serviceLocator, $requestedName, $callback);
     }
 }
