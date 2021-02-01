@@ -7,10 +7,10 @@
  */
 namespace CommonTest\FormService;
 
-use Mockery as m;
-use Mockery\Adapter\Phpunit\MockeryTestCase;
 use CommonTest\Bootstrap;
 use Common\FormService\FormServiceManager;
+use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
  * Form Service Manager Test
@@ -40,44 +40,6 @@ class FormServiceManagerTest extends MockeryTestCase
             ->with(m::type('\Common\FormService\FormServiceManager'));
 
         new FormServiceManager($config);
-    }
-
-    public function testInitializeWithoutInterface()
-    {
-        $instance = m::mock();
-        $instance->shouldReceive('setServiceLocator')
-            ->never()
-            ->shouldReceive('setFormServiceLocator')
-            ->with($this->sut);
-
-        $this->sut->initialize($instance);
-    }
-
-    public function testInitializeWithInterface()
-    {
-        $instance = m::mock('\Laminas\ServiceManager\ServiceLocatorAwareInterface');
-        $instance->shouldReceive('setServiceLocator')
-            ->once()
-            ->with($this->sm)
-            ->shouldReceive('setFormServiceLocator')
-            ->with($this->sut);
-
-        $this->sut->initialize($instance);
-    }
-
-    public function testInitializeWithFormHelperInterface()
-    {
-        $helper = m::mock('\Common\Service\Helper\FormHelperService');
-        $this->sm->setService('Helper\Form', $helper);
-
-        $instance = m::mock('\Common\FormService\FormHelperAwareInterface');
-        $instance->shouldReceive('setFormHelper')
-            ->once()
-            ->with($helper)
-            ->shouldReceive('setFormServiceLocator')
-            ->with($this->sut);
-
-        $this->sut->initialize($instance);
     }
 
     public function testValidatePluginInvalid()

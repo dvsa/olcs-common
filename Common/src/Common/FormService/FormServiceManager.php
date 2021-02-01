@@ -10,7 +10,6 @@ namespace Common\FormService;
 use Laminas\ServiceManager\AbstractPluginManager;
 use Laminas\ServiceManager\Exception\RuntimeException;
 use Laminas\ServiceManager\ConfigInterface;
-use Laminas\ServiceManager\ServiceLocatorAwareInterface;
 
 /**
  * Form Service Manager
@@ -25,20 +24,9 @@ class FormServiceManager extends AbstractPluginManager
             $config->configureServiceManager($this);
         }
 
-        $this->addInitializer(array($this, 'initialize'));
-    }
-
-    public function initialize($instance)
-    {
-        $instance->setFormServiceLocator($this);
-
-        if ($instance instanceof ServiceLocatorAwareInterface) {
-            $instance->setServiceLocator($this->getServiceLocator());
-        }
-
-        if ($instance instanceof FormHelperAwareInterface) {
-            $instance->setFormHelper($this->getServiceLocator()->get('Helper\Form'));
-        }
+        $this->addInitializer(
+            new FormServiceManagerInitializer()
+        );
     }
 
     public function validatePlugin($plugin)

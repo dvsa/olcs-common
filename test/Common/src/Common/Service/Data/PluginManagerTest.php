@@ -2,8 +2,8 @@
 
 namespace CommonTest\Service\Data;
 
-use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Data\PluginManager;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 
 /**
@@ -41,42 +41,5 @@ class PluginManagerTest extends MockeryTestCase
         $sut->setService('testService', 'service');
 
         $this->assertEquals('service', $sut->get('testService'));
-    }
-
-    /**
-     * @doesNotPerformAssertions
-     */
-    public function testInitializeRestClientInterface()
-    {
-        $mockPlugin = m::mock('stdClass');
-
-        $sut = new PluginManager();
-        $sut->initializeRestClientInterface($mockPlugin);
-    }
-
-    public function testInitializeRestClientInterfaceWithInitializableClass()
-    {
-        $lang = 'EN_GB';
-
-        $mockClient = m::mock('\Common\Util\RestClient');
-        $mockClient->shouldReceive('setLanguage')->with($lang);
-
-        $mockServiceApiResolver = m::mock('stdClass');
-        $mockServiceApiResolver->shouldReceive('getClient')->with('serviceName')->andReturn($mockClient);
-
-        $mockTranslator = m::mock('stdClass');
-        $mockTranslator->shouldReceive('getLocale')->andReturn($lang);
-
-        $mockSl = m::mock('Laminas\ServiceManager\ServiceLocatorInterface');
-        $mockSl->shouldReceive('get')->with('ServiceApiResolver')->andReturn($mockServiceApiResolver);
-        $mockSl->shouldReceive('get')->with('translator')->andReturn($mockTranslator);
-
-        $mockPlugin = m::mock('\Common\Service\Data\RestClientAwareInterface');
-        $mockPlugin->shouldReceive('setRestClient')->with($mockClient);
-        $mockPlugin->shouldReceive('getServiceName')->andReturn('serviceName');
-
-        $sut = new PluginManager();
-        $sut->setServiceLocator($mockSl);
-        $sut->initializeRestClientInterface($mockPlugin);
     }
 }
