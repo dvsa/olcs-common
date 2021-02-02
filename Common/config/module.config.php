@@ -296,6 +296,8 @@ return array(
                 QaService\Custom\Ecmt\NoOfPermitsBaseInsetTextGeneratorFactory::class,
             'QaEcmtPermitUsageFieldsetPopulator' =>
                 QaService\Custom\Ecmt\PermitUsageFieldsetPopulatorFactory::class,
+            'QaEcmtCheckEcmtNeededFieldsetPopulator' =>
+                QaService\Custom\Ecmt\CheckEcmtNeededFieldsetPopulatorFactory::class,
             'QaEcmtRestrictedCountriesFieldsetPopulator' =>
                 QaService\Custom\Ecmt\RestrictedCountriesFieldsetPopulatorFactory::class,
             'QaEcmtAnnualTripsAbroadFieldsetPopulator' =>
@@ -314,6 +316,8 @@ return array(
                 QaService\Custom\Ecmt\AnnualTripsAbroadDataHandlerFactory::class,
             'QaEcmtSectorsFieldsetPopulator' =>
                 QaService\Custom\Ecmt\SectorsFieldsetPopulatorFactory::class,
+            'QaEcmtInfoIconAdder' =>
+                QaService\Custom\Ecmt\InfoIconAdderFactory::class,
             'QaCertRoadworthinessMotExpiryDateFieldsetPopulator' =>
                 QaService\Custom\CertRoadworthiness\MotExpiryDateFieldsetPopulatorFactory::class,
             'QaBilateralStandardYesNoValueOptionsGenerator' =>

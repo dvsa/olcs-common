@@ -5,19 +5,19 @@ namespace Common\Service\Qa\Custom\Ecmt;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
-class PermitUsageFieldsetPopulatorFactory implements FactoryInterface
+class CheckEcmtNeededFieldsetPopulatorFactory implements FactoryInterface
 {
     /**
      * Create service
      *
      * @param ServiceLocatorInterface $serviceLocator
      *
-     * @return PermitUsageFieldsetPopulator
+     * @return CheckEcmtNeededFieldsetPopulator
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return new PermitUsageFieldsetPopulator(
-            $serviceLocator->get('QaRadioFieldsetPopulator'),
+        return new CheckEcmtNeededFieldsetPopulator(
+            $serviceLocator->get('QaCheckboxFieldsetPopulator'),
             $serviceLocator->get('QaEcmtInfoIconAdder')
         );
     }

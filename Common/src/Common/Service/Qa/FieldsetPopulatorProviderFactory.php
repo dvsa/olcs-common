@@ -24,6 +24,7 @@ class FieldsetPopulatorProviderFactory implements FactoryInterface
             'radio' => 'QaRadioFieldsetPopulator',
             'ecmt_no_of_permits_either' => 'QaEcmtNoOfPermitsEitherStrategySelectingFieldsetPopulator',
             'ecmt_no_of_permits_both' => 'QaEcmtNoOfPermitsBothStrategySelectingFieldsetPopulator',
+            'ecmt_check_ecmt_needed' => 'QaEcmtCheckEcmtNeededFieldsetPopulator',
             'ecmt_st_permit_usage' => 'QaEcmtPermitUsageFieldsetPopulator',
             'ecmt_st_restricted_countries' => 'QaEcmtRestrictedCountriesFieldsetPopulator',
             'ecmt_st_annual_trips_abroad' => 'QaEcmtAnnualTripsAbroadFieldsetPopulator',
