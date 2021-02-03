@@ -2,9 +2,7 @@
 
 namespace Common\Service\Data;
 
-use Common\Service\Data\Interfaces\RestClientAware;
 use Laminas\ServiceManager\AbstractPluginManager;
-use Laminas\ServiceManager\Exception;
 
 /**
  * Class PluginManager
@@ -19,31 +17,18 @@ class PluginManager extends AbstractPluginManager
     {
         parent::__construct($configOrContainerInstance, $v3config);
 
-        $this->addInitializer(array($this, 'initializeRestClientInterface'));
-    }
-
-    public function initializeRestClientInterface($instance)
-    {
-        if ($instance instanceof RestClientAware) {
-            $serviceLocator = $this->getServiceLocator();
-
-            /** @var \Common\Util\ResolveApi $apiResolver */
-            $apiResolver = $serviceLocator->get('ServiceApiResolver');
-            /** @var \Laminas\Mvc\I18n\Translator $translator */
-            $translator = $serviceLocator->get('translator');
-
-            $client = $apiResolver->getClient($instance->getServiceName());
-            $client->setLanguage($translator->getLocale());
-            $instance->setRestClient($client);
-        }
+        $this->addInitializer(
+            new RestClientAwareInitializer()
+        );
     }
 
     /**
      * Validate the plugin
      *
-     * @param  mixed $plugin
+     * @param mixed $plugin
+     *
      * @return bool
-     * @throws Exception\RuntimeException if invalid
+     *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function validatePlugin($plugin)
