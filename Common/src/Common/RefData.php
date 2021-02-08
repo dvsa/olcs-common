@@ -193,6 +193,8 @@ class RefData
     const PERMISSION_INTERNAL_USER = 'internal-user';
     const PERMISSION_INTERNAL_DOCUMENTS = 'internal-documents';
     const PERMISSION_INTERNAL_NOTES = 'internal-notes';
+    const PERMISSION_INTERNAL_PERMITS = 'internal-permits';
+    const PERMISSION_INTERNAL_PUBLICATIONS = 'internal-publications';
     const PERMISSION_INTERNAL_LIMITED_READ_ONLY = 'internal-limited-read-only';
     const PERMISSION_CAN_MANAGE_USER_INTERNAL = 'can-manage-user-internal';
     const PERMISSION_SELFSERVE_EBSR_UPLOAD = 'selfserve-ebsr-upload';
