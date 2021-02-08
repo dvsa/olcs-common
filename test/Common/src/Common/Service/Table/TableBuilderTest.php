@@ -7,6 +7,9 @@ use Common\Service\Table\TableBuilder;
 use Common\Service\Table\TableFactory;
 use Common\Service\Table\PaginationHelper;
 use CommonTest\Bootstrap;
+use Hamcrest\Arrays\IsArrayContainingKey;
+use Hamcrest\Arrays\IsArrayContainingKeyValuePair;
+use Hamcrest\Core\IsAnything;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\I18n\Translator\Translator;
@@ -1642,8 +1645,10 @@ class TableBuilderTest extends MockeryTestCase
 
     /**
      * Test renderLimitOptions Without limit options
+     *
+     * @depends renderLimitOptions_IsDefined
      */
-    public function testRenderLimitOptionsWithoutLimitOptions()
+    public function renderLimitOptions_WithoutLimitOptions()
     {
         $settings = array(
             'paginate' => array(
@@ -1662,8 +1667,10 @@ class TableBuilderTest extends MockeryTestCase
 
     /**
      * Test renderLimitOptions
+     *
+     * @depends renderLimitOptions_IsDefined
      */
-    public function testRenderLimitOptions()
+    public function renderLimitOptions()
     {
         $settings = array(
             'paginate' => array(
@@ -1720,8 +1727,10 @@ class TableBuilderTest extends MockeryTestCase
 
     /**
      * Test renderLimitOptions with query enabled
+     *
+     * @depends renderLimitOptions_IsDefined
      */
-    public function testRenderLimitOptionsWithQueryEnabled()
+    public function renderLimitOptions_WithQueryEnabled()
     {
         $settings = array(
             'paginate' => array(
@@ -1790,9 +1799,9 @@ class TableBuilderTest extends MockeryTestCase
     }
 
     /**
-     * Test renderPageOptions without options
+     * @depends renderPageOptions_IsDefined
      */
-    public function testRenderPageOptionsWithoutOptions()
+    public function renderPageOptions_WithoutOptions()
     {
         $options = array(
 
@@ -1814,9 +1823,9 @@ class TableBuilderTest extends MockeryTestCase
     }
 
     /**
-     * Test renderPageOptions
+     * @depends renderPageOptions_IsDefined
      */
-    public function testRenderPageOptions()
+    public function renderPageOptions()
     {
         $options = array(
             array(
@@ -1881,7 +1890,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn Without options
      */
-    public function testRenderHeaderColumnWithoutOptions()
+    public function renderHeaderColumn_WithoutOptions()
     {
         $column = array(
 
@@ -1905,7 +1914,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn With custom content
      */
-    public function testRenderHeaderColumnWithCustomContent()
+    public function renderHeaderColumn_WithCustomContent()
     {
         $column = array(
 
@@ -1929,7 +1938,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn With sort current order asc
      */
-    public function testRenderHeaderColumnWithSortCurrentOrderAsc()
+    public function renderHeaderColumn_WithSortCurrentOrderAsc()
     {
         $column = array(
             'sort' => 'foo'
@@ -1977,7 +1986,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn With sort current order desc
      */
-    public function testRenderHeaderColumnWithSortCurrentOrderDesc()
+    public function renderHeaderColumn_WithSortCurrentOrderDesc()
     {
         $column = array(
             'sort' => 'foo'
@@ -2025,7 +2034,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn With sort
      */
-    public function testRenderHeaderColumnWithSort()
+    public function renderHeaderColumn_WithSort()
     {
         $column = array(
             'sort' => 'foo'
@@ -2073,7 +2082,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn With pre-set width
      */
-    public function testRenderHeaderColumnWithWidthAndTitle()
+    public function renderHeaderColumn_WithWidthAndTitle()
     {
         $column = array(
             'width' => 'checkbox',
@@ -2103,7 +2112,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn when disabled
      */
-    public function testRenderHeaderColumnWhenDisabled()
+    public function renderHeaderColumn_WhenDisabled()
     {
         $column = array(
             'hideWhenDisabled' => true
@@ -2121,7 +2130,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn with alignment
      */
-    public function testRenderHeaderColumnWithAlign()
+    public function renderHeaderColumn_WithAlign()
     {
         $column = array(
             'align' => 'right',
@@ -2150,7 +2159,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn with sort and alignment
      */
-    public function testRenderHeaderColumnWithSortAndAlign()
+    public function renderHeaderColumn_WithSortAndAlign()
     {
         $column = [
             'sort' => 'foo',
@@ -2213,7 +2222,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn when incorrect permission set
      */
-    public function testRenderHeaderColumnWhenPermissionWontAllow()
+    public function renderHeaderColumn_WhenPermissionWontAllow()
     {
         $column = array(
             'permissionRequisites' => ['incorrectPermission']
@@ -2245,7 +2254,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn when correct permission set
      */
-    public function testRenderHeaderColumnWhenPermissionWillAllow()
+    public function renderHeaderColumn_WhenPermissionWillAllow()
     {
         $column = array(
             'permissionRequisites' => ['correctPermission']
@@ -3305,5 +3314,320 @@ class TableBuilderTest extends MockeryTestCase
         $action = ['foo', 'bar'];
         $table->addAction('add', $action);
         $this->assertEquals($table->getAction('add'), $action);
+    }
+
+    /**
+     * @test
+     */
+    public function getUrlParameterNameMap_IsDefined()
+    {
+        // Set Up
+        $table = $this->setUpSut();
+
+        // Assert
+        $this->assertIsCallable([$table, 'getUrlParameterNameMap']);
+    }
+
+    /**
+     * @depends getUrlParameterNameMap_IsDefined
+     * @test
+     */
+    public function getUrlParameterNameMap_ReturnsAnArray()
+    {
+        // Set Up
+        $table = $this->setUpSut();
+
+        // Execute
+        $map = $table->getUrlParameterNameMap();
+
+        // Assert
+        $this->assertIsArray($map);
+
+        return $map;
+    }
+
+    /**
+     * @depends getUrlParameterNameMap_ReturnsAnArray
+     * @test
+     */
+    public function getUrlParameterNameMap_ReturnsAnEmptyArrayByDefault($map)
+    {
+        // Assert
+        $this->assertEmpty($map);
+    }
+
+    /**
+     * @test
+     */
+    public function setUrlParameterNameMap_IsDefined()
+    {
+        // Set Up
+        $table = $this->setUpSut();
+
+        // Assert
+        $this->assertIsCallable([$table, 'setUrlParameterNameMap']);
+    }
+
+    /**
+     * @depends setUrlParameterNameMap_IsDefined
+     * @test
+     */
+    public function setUrlParameterNameMap_ReturnsSelf()
+    {
+        // Set Up
+        $table = $this->setUpSut();
+
+        // Execute
+        $result = $table->setUrlParameterNameMap([]);
+
+        // Assert
+        $this->assertSame($result, $table);
+    }
+
+    /**
+     * @depends setUrlParameterNameMap_IsDefined
+     * @depends getUrlParameterNameMap_IsDefined
+     * @test
+     */
+    public function setUrlParameterNameMap_SetsMappings()
+    {
+        // Set Up
+        $table = $this->setUpSut();
+        $expectedMappings = ['foo' => 'bar'];
+
+        // Execute
+        $table->setUrlParameterNameMap($expectedMappings);
+
+        // Assert
+        $this->assertEquals($expectedMappings, $table->getUrlParameterNameMap());
+    }
+
+    /**
+     * @test
+     */
+    public function renderLimitOptions_IsDefined()
+    {
+        // Set Up
+        $table = new TableBuilder($this->getMockServiceLocator());
+
+        // Assert
+        $this->assertIsCallable([$table, 'renderLimitOptions']);
+    }
+
+    /**
+     * @return string[][]
+     */
+    public function pageAndLimitUrlParameterNamesDataProvider(): array
+    {
+        return [
+            'default query parameter name name used for limiting query results' => ['limit'],
+            'default query parameter name name used for selecting a page' => ['page'],
+        ];
+    }
+
+    /**
+     * @depends renderLimitOptions_IsDefined
+     * @dataProvider pageAndLimitUrlParameterNamesDataProvider
+     * @test
+     */
+    public function renderLimitOptions_DefaultUrlParameterNames(string $urlParameterName)
+    {
+        // Set Up
+        $table = $this->setUpSut();
+        $table->setSetting('paginate', ['limit' => ['options' => ['1']]]);
+
+        // Define Expectations
+        $queryWithLimitMatcher = IsArrayContainingKey::hasKeyInArray($urlParameterName);
+        $optionsMatcher = IsArrayContainingKeyValuePair::hasKeyValuePair('query', $queryWithLimitMatcher);
+        $any = IsAnything::anything();
+        $table->getUrl()->shouldReceive('fromRoute')->once()->with($any, $any, $optionsMatcher, $any);
+
+        // Execute
+        $table->renderLimitOptions();
+    }
+
+    /**
+     * @return string[][]
+     */
+    public function mappedPageAndLimitUrlParameterNamesDataProvider(): array
+    {
+        return [
+            'mapped limit url parameter' => ['limit', 'foo'],
+            'mapped page url parameter' => ['page', 'bar'],
+        ];
+    }
+
+    /**
+     * @param string $originalName
+     * @param string $mappedName
+     * @depends renderLimitOptions_DefaultUrlParameterNames
+     * @dataProvider mappedPageAndLimitUrlParameterNamesDataProvider
+     * @test
+     */
+    public function renderLimitOptions_MapsUrlParameterNames(string $originalName, string $mappedName)
+    {
+        // Set Up
+        $table = $this->setUpSut();
+        $table->setUrlParameterNameMap([$originalName => $mappedName]);
+        $table->loadParams(['url' => $table->getUrl()]);
+        $table->setSetting('paginate', ['limit' => ['options' => ['1']]]);
+        $queryWithLimitMatcher = IsArrayContainingKey::hasKeyInArray($mappedName);
+        $optionsMatcher = IsArrayContainingKeyValuePair::hasKeyValuePair('query', $queryWithLimitMatcher);
+        $any = IsAnything::anything();
+
+        // Define Expectations
+        $table->getUrl()->shouldReceive('fromRoute')->once()->with($any, $any, $optionsMatcher, $any);
+
+        // Execute
+        $table->renderLimitOptions();
+    }
+
+    /**
+     * @test
+     */
+    public function renderPageOptions_IsDefined()
+    {
+        // Set Up
+        $table = new TableBuilder($this->getMockServiceLocator());
+
+        // Assert
+        $this->assertIsCallable([$table, 'renderPageOptions']);
+    }
+
+    /**
+     * @param string $urlParameterName
+     * @depends renderPageOptions_IsDefined
+     * @dataProvider pageAndLimitUrlParameterNamesDataProvider
+     * @test
+     */
+    public function renderPageOptions_DefaultUrlParameterNames(string $urlParameterName)
+    {
+        // Set Up
+        $table = $this->setUpSut();
+        $table->setTotal(100);
+        $queryWithLimitMatcher = IsArrayContainingKey::hasKeyInArray($urlParameterName);
+        $optionsMatcher = IsArrayContainingKeyValuePair::hasKeyValuePair('query', $queryWithLimitMatcher);
+        $any = IsAnything::anything();
+
+        // Define Expectations
+        $table->getUrl()->shouldReceive('fromRoute')->atLeast()->once()->with($any, $any, $optionsMatcher, $any);
+
+        // Execute
+        $table->renderPageOptions();
+    }
+
+    /**
+     * @param string $originalName
+     * @param string $mappedName
+     * @depends renderPageOptions_DefaultUrlParameterNames
+     * @dataProvider mappedPageAndLimitUrlParameterNamesDataProvider
+     * @test
+     */
+    public function renderPageOptions_MapsUrlParameterNames(string $originalName, string $mappedName)
+    {
+        // Set Up
+        $table = $this->setUpSut();
+        $table->setUrlParameterNameMap([$originalName => $mappedName]);
+        $table->setTotal(100);
+        $queryWithLimitMatcher = IsArrayContainingKey::hasKeyInArray($mappedName);
+        $optionsMatcher = IsArrayContainingKeyValuePair::hasKeyValuePair('query', $queryWithLimitMatcher);
+        $any = IsAnything::anything();
+
+        // Define Expectations
+        $table->getUrl()->shouldReceive('fromRoute')->atLeast()->once()->with($any, $any, $optionsMatcher, $any);
+
+        // Execute
+        $table->renderPageOptions();
+    }
+
+    /**
+     * @test
+     */
+    public function renderHeaderColumn_IsDefined()
+    {
+        // Set Up
+        $table = new TableBuilder($this->getMockServiceLocator());
+
+        // Assert
+        $this->assertIsCallable([$table, 'renderHeaderColumn']);
+    }
+
+    /**
+     * @return string[][]
+     */
+    public function sortAndOrderUrlParameterNamesDataProvider(): array
+    {
+        return [
+            'default query parameter name name used for sorting query results' => ['sort'],
+            'default query parameter name name used for ordering query results' => ['order'],
+        ];
+    }
+
+    /**
+     * @param string $urlParameterName
+     * @depends renderHeaderColumn_IsDefined
+     * @dataProvider sortAndOrderUrlParameterNamesDataProvider
+     * @test
+     */
+    public function renderHeaderColumn_DefaultUrlParameterNames(string $urlParameterName)
+    {
+        // Set Up
+        $table = $this->setUpSut();
+        $queryWithLimitMatcher = IsArrayContainingKey::hasKeyInArray($urlParameterName);
+        $optionsMatcher = IsArrayContainingKeyValuePair::hasKeyValuePair('query', $queryWithLimitMatcher);
+        $any = IsAnything::anything();
+
+        // Define Expectations
+        $table->getUrl()->shouldReceive('fromRoute')->atLeast()->once()->with($any, $any, $optionsMatcher, $any);
+
+        // Execute
+        $table->renderHeaderColumn(['sort' => 'foo']);
+    }
+
+    /**
+     * @return string[][]
+     */
+    public function mappedSortAndOrderUrlParameterNamesDataProvider(): array
+    {
+        return [
+            'mapped sort url parameter' => ['sort', 'foo'],
+            'mapped order url parameter' => ['order', 'bar'],
+        ];
+    }
+
+    /**
+     * @param string $originalName
+     * @param string $mappedName
+     * @depends renderHeaderColumn_DefaultUrlParameterNames
+     * @dataProvider mappedSortAndOrderUrlParameterNamesDataProvider
+     * @test
+     */
+    public function renderHeaderColumn_MapsUrlParameterNames(string $originalName, string $mappedName)
+    {
+        // Set Up
+        $table = $this->setUpSut();
+        $table->setUrlParameterNameMap([$originalName => $mappedName]);
+        $table->setTotal(100);
+        $queryWithLimitMatcher = IsArrayContainingKey::hasKeyInArray($mappedName);
+        $optionsMatcher = IsArrayContainingKeyValuePair::hasKeyValuePair('query', $queryWithLimitMatcher);
+        $any = IsAnything::anything();
+
+        // Define Expectations
+        $table->getUrl()->shouldReceive('fromRoute')->atLeast()->once()->with($any, $any, $optionsMatcher, $any);
+
+        // Execute
+        $table->renderHeaderColumn(['sort' => 'foo']);
+    }
+
+    /**
+     * @return TableBuilder
+     */
+    protected function setUpSut(): TableBuilder
+    {
+        $sut = new TableBuilder($this->getMockServiceLocator());
+        $urlPlugin = m::mock(Url::class);
+        $urlPlugin->shouldIgnoreMissing('');
+        $sut->loadParams(['url' => $urlPlugin]);
+        return $sut;
     }
 }

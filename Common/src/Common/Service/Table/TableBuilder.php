@@ -208,6 +208,41 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     private $elmCsrf;
 
     /**
+     * @var array<string,string>
+     */
+    private $urlParameterNameMap = [];
+
+    /**
+     * @return array<string,string>
+     */
+    public function getUrlParameterNameMap(): array
+    {
+        return $this->urlParameterNameMap;
+    }
+
+    /**
+     * @param array<string,string> $urlParamNameMap
+     * @return $this
+     */
+    public function setUrlParameterNameMap(array $urlParamNameMap): self
+    {
+        assert(array_reduce($urlParamNameMap, function ($carry, $mappedValue) {
+            return $carry && is_string($mappedValue);
+        }, true), 'Expected all mapped values to be strings');
+        $this->urlParameterNameMap = $urlParamNameMap;
+        return $this;
+    }
+
+    /**
+     * @param string $urlParam
+     * @return string
+     */
+    protected function mapUrlParameterName(string $urlParam): string
+    {
+        return $this->getUrlParameterNameMap()[$urlParam] ?? $urlParam;
+    }
+
+    /**
      * @return \Laminas\Mvc\I18n\Translator
      */
     public function getTranslator()
@@ -1370,7 +1405,10 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             } else {
                 $details = array(
                     'option' => $option,
-                    'link' => $this->generatePaginationUrl(array('page' => 1, 'limit' => $option))
+                    'link' => $this->generatePaginationUrl([
+                        $this->mapUrlParameterName('page') => 1,
+                        $this->mapUrlParameterName('limit') => $option
+                    ]),
                 );
                 $option = $this->replaceContent('{{[elements/limitLink]}}', $details);
             }
@@ -1400,8 +1438,8 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             } else {
                 $details['link'] = $this->generatePaginationUrl(
                     array(
-                        'page' => $details['page'],
-                        'limit' => $this->getLimit()
+                        $this->mapUrlParameterName('page') => $details['page'],
+                        $this->mapUrlParameterName('limit') => $this->getLimit()
                     )
                 );
                 $details['option'] = $this->replaceContent('{{[elements/paginationLink]}}', $details);
@@ -1458,8 +1496,8 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
 
             $column['link'] = $this->generatePaginationUrl(
                 array(
-                    'sort' => $column['sort'],
-                    'order' => $column['order']
+                    $this->mapUrlParameterName('sort') => $column['sort'],
+                    $this->mapUrlParameterName('order') => $column['order']
                 )
             );
 
