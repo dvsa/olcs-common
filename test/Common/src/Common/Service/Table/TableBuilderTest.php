@@ -10,12 +10,14 @@ use CommonTest\Bootstrap;
 use Hamcrest\Arrays\IsArrayContainingKey;
 use Hamcrest\Arrays\IsArrayContainingKeyValuePair;
 use Hamcrest\Core\IsAnything;
+use Hamcrest\Core\IsNot;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\I18n\Translator\Translator;
 use Laminas\Mvc\Controller\Plugin\Url;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use ZfcRbac\Service\AuthorizationService;
+use Mockery\MockInterface;
 
 /**
  * @covers \Common\Service\Table\TableBuilder
@@ -3614,6 +3616,91 @@ class TableBuilderTest extends MockeryTestCase
 
         // Define Expectations
         $table->getUrl()->shouldReceive('fromRoute')->atLeast()->once()->with($any, $any, $optionsMatcher, $any);
+
+        // Execute
+        $table->renderHeaderColumn(['sort' => 'foo']);
+    }
+
+    /**
+     * @return array<string,array<string>>
+     */
+    public function omittedQueryParamsDataProvider(): array
+    {
+        return [
+            'controller query param' => ['controller'],
+            'action query param' => ['action'],
+        ];
+    }
+
+    /**
+     * @param string $queryParameterName
+     * @depends renderHeaderColumn_IsDefined
+     * @dataProvider omittedQueryParamsDataProvider
+     * @test
+     */
+    public function renderPageOptions_OmitsQueryParams_ByDefault(string $queryParameterName)
+    {
+        // Set Up
+        $table = $this->setUpSut();
+        $urlHelper = $table->getUrl();
+        assert($urlHelper instanceof MockInterface, 'Expected instance of MockInterface');
+        $table->loadParams(['query' => [$queryParameterName => 'bar'], 'url' => $urlHelper]);
+        $table->setTotal(100);
+
+        // Define Expectations
+        $queryMatcher = IsNot::not(IsArrayContainingKey::hasKeyInArray($queryParameterName));
+        $optionsMatcher = IsArrayContainingKeyValuePair::hasKeyValuePair('query', $queryMatcher);
+        $any = IsAnything::anything();
+        $urlHelper->shouldReceive('fromRoute')->atLeast()->once()->with($any, $any, $optionsMatcher, $any);
+
+        // Execute
+        $table->renderPageOptions();
+    }
+
+    /**
+     * @param string $queryParameterName
+     * @depends renderHeaderColumn_IsDefined
+     * @dataProvider omittedQueryParamsDataProvider
+     * @test
+     */
+    public function renderLimitOptions_OmitsQueryParams_ByDefault(string $queryParameterName)
+    {
+        // Set Up
+        $table = $this->setUpSut();
+        $urlHelper = $table->getUrl();
+        assert($urlHelper instanceof MockInterface, 'Expected instance of MockInterface');
+        $table->loadParams(['query' => [$queryParameterName => 'bar'], 'url' => $urlHelper]);
+        $table->setSetting('paginate', ['limit' => ['options' => ['1']]]);
+
+        // Define Expectations
+        $queryMatcher = IsNot::not(IsArrayContainingKey::hasKeyInArray($queryParameterName));
+        $optionsMatcher = IsArrayContainingKeyValuePair::hasKeyValuePair('query', $queryMatcher);
+        $any = IsAnything::anything();
+        $urlHelper->shouldReceive('fromRoute')->atLeast()->once()->with($any, $any, $optionsMatcher, $any);
+
+        // Execute
+        $table->renderLimitOptions();
+    }
+
+    /**
+     * @param string $queryParameterName
+     * @depends renderHeaderColumn_IsDefined
+     * @dataProvider omittedQueryParamsDataProvider
+     * @test
+     */
+    public function renderHeaderColumn_OmitsQueryParams_ByDefault(string $queryParameterName)
+    {
+        // Set Up
+        $table = $this->setUpSut();
+        $urlHelper = $table->getUrl();
+        assert($urlHelper instanceof MockInterface, 'Expected instance of MockInterface');
+        $table->loadParams(['query' => [$queryParameterName => 'bar'], 'url' => $urlHelper]);
+
+        // Define Expectations
+        $queryMatcher = IsNot::not(IsArrayContainingKey::hasKeyInArray($queryParameterName));
+        $optionsMatcher = IsArrayContainingKeyValuePair::hasKeyValuePair('query', $queryMatcher);
+        $any = IsAnything::anything();
+        $urlHelper->shouldReceive('fromRoute')->atLeast()->once()->with($any, $any, $optionsMatcher, $any);
 
         // Execute
         $table->renderHeaderColumn(['sort' => 'foo']);
