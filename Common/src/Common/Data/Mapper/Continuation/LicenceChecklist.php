@@ -129,6 +129,10 @@ class LicenceChecklist
             $licenceData['licenceType']['id'],
             [RefData::LICENCE_TYPE_STANDARD_NATIONAL, RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL]
         );
+
+        if (isset($licenceData['correspondenceCd']['emailAddress'])) {
+            $addresses['correspondenceEmail'] = $licenceData['correspondenceCd']['emailAddress'];
+        }
         return $addresses;
     }
 

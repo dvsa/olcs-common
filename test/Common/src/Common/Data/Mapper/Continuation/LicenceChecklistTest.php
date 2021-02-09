@@ -143,7 +143,8 @@ class LicenceChecklistTest extends MockeryTestCase
                             ],
                             'phoneNumber' => '456'
                         ],
-                    ]
+                    ],
+                    'emailAddress' => 'test@example.com'
                 ],
                 'establishmentCd' => [
                     'address' => [
@@ -298,6 +299,7 @@ class LicenceChecklistTest extends MockeryTestCase
                     'primaryNumber' => '123',
                     'secondaryNumber' => '456',
                     'showEstablishmentAddress' => true,
+                    'correspondenceEmail' => 'test@example.com'
                 ],
                 'operatingCentres' => [
                     'operatingCentres' => [

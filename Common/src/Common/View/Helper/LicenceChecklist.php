@@ -250,6 +250,18 @@ class LicenceChecklist extends AbstractHelper implements FactoryInterface
             ];
         }
 
+        if (isset($data['correspondenceEmail'])) {
+            $addressesData[] = [
+                [
+                    'value' => $this->translator->__invoke('continuations.addresses.correspondence-email-address.table.name'),
+                    'header' => true
+                ],
+                [
+                    'value' => $data['correspondenceEmail']
+                ]
+            ];
+        }
+
         return $addressesData;
     }
 
