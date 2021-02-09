@@ -21,6 +21,7 @@ use Dvsa\Olcs\Transfer\Command as TransferCmd;
 use Common\Service\Table\TableBuilder;
 use Laminas\View\Model\ViewModel;
 use Common\RefData;
+use RuntimeException;
 
 /**
  * Shared logic between Community Licences controllers
@@ -39,6 +40,8 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     protected $baseRoute = 'lva-%s/community_licences';
 
     protected $officeCopy = null;
+
+    private $licenceData;
 
     /**
      * @var int|null
@@ -98,7 +101,12 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
 
         $this->getServiceLocator()->get('Script')->loadFiles(['forms/filter', 'community-licence']);
 
-        return $this->render('community_licences', $form, ['filterForm' => $filterForm]);
+        $title = 'lva.section.title.community_licences';
+        if ($this->getGoodsOrPsv() == RefData::LICENCE_CATEGORY_PSV) {
+            $title .= '.psv';
+        }
+
+        return $this->render('community_licences', $form, ['filterForm' => $filterForm, 'title' => $title]);
     }
 
     /**
@@ -106,17 +114,55 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
      */
     private function alterFormForGoodsOrPsv(Form $form)
     {
-        $response = $this->handleQuery(
-            Licence::create(['id' => $this->getLicenceId()])
-        );
-        $licence = $response->getResult();
-
-        if ($licence['goodsOrPsv']['id'] == RefData::LICENCE_CATEGORY_PSV) {
+        if ($this->getGoodsOrPsv() == RefData::LICENCE_CATEGORY_PSV) {
             $activeLicencesElement = $form->get('data')->get('totalActiveCommunityLicences');
             $activeLicencesElement->setLabel(
                 $activeLicencesElement->getLabel() . '.psv'
             );
         }
+    }
+
+    /**
+     * Whether the current action is in a goods or psv context
+     *
+     * @return string
+     */
+    private function getGoodsOrPsv()
+    {
+        if (is_null($this->licenceData)) {
+            $response = $this->handleQuery(
+                Licence::create(['id' => $this->getLicenceId()])
+            );
+            $this->licenceData = $response->getResult();
+        }
+
+        if ($this->lva == self::LVA_APP || $this->lva == self::LVA_VAR) {
+            $goodsOrPsvSource = $this->deriveCurrentApplicationData($this->licenceData);
+        } else {
+            $goodsOrPsvSource = $this->licenceData;
+        }
+
+        return $goodsOrPsvSource['goodsOrPsv']['id'];
+    }
+
+    /**
+     * Return the data associated with the current application from the array returned by the call to the Licence query
+     *
+     * @param array $licence
+     *
+     * @return array
+     */
+    private function deriveCurrentApplicationData(array $licence)
+    {
+        $applicationId = $this->getApplicationId();
+
+        foreach ($licence['applications'] as $application) {
+            if ($application['id'] == $applicationId) {
+                return $application;
+            }
+        }
+
+        throw new RuntimeException('Unable to find application ' . $applicationId . ' in licence data');
     }
 
     /**
