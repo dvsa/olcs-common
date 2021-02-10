@@ -499,7 +499,7 @@ class TableBuilderTest extends MockeryTestCase
             'limit' => 10
         );
 
-        $expected = array_merge(array('page' => 1, 'sort' => '', 'order' => 'ASC'), $params);
+        $expected = array_merge(array('page' => 1, 'sort' => '', 'order' => TableBuilder::ORDER_ASC), $params);
 
         $table = new TableBuilder($this->getMockServiceLocator());
 
@@ -509,7 +509,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $this->assertEquals(10, $table->getLimit());
         $this->assertEquals('', $table->getSort());
-        $this->assertEquals('ASC', $table->getOrder());
+        $this->assertEquals(TableBuilder::ORDER_ASC, $table->getOrder());
         $this->assertEquals($expected, $table->getVariables());
     }
 
@@ -543,7 +543,7 @@ class TableBuilderTest extends MockeryTestCase
         $expectedVariables['limit'] = 10;
         $expectedVariables['page'] = 1;
         $expectedVariables['sort'] = '';
-        $expectedVariables['order'] = 'ASC';
+        $expectedVariables['order'] = TableBuilder::ORDER_ASC;
 
         $table = $this->getMockTableBuilder(array('getConfigFromFile'));
 
@@ -559,7 +559,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $this->assertEquals(10, $table->getLimit());
         $this->assertEquals('', $table->getSort());
-        $this->assertEquals('ASC', $table->getOrder());
+        $this->assertEquals(TableBuilder::ORDER_ASC, $table->getOrder());
         $this->assertEquals($expectedVariables, $table->getVariables());
     }
 
@@ -1949,7 +1949,7 @@ class TableBuilderTest extends MockeryTestCase
         $expectedColumn = array(
             'sort' => 'foo',
             'class' => 'sortable ascending',
-            'order' => 'DESC',
+            'order' => TableBuilder::ORDER_DESC,
             'link' => 'LINK'
         );
 
@@ -1980,7 +1980,7 @@ class TableBuilderTest extends MockeryTestCase
             ->will($this->returnValue($mockContentHelper));
 
         $table->setSort('foo');
-        $table->setOrder('ASC');
+        $table->setOrder(TableBuilder::ORDER_ASC);
 
         $table->renderHeaderColumn($column, '{{[elements/foo]}}');
     }
@@ -1997,7 +1997,7 @@ class TableBuilderTest extends MockeryTestCase
         $expectedColumn = array(
             'sort' => 'foo',
             'class' => 'sortable descending',
-            'order' => 'ASC',
+            'order' => TableBuilder::ORDER_ASC,
             'link' => 'LINK'
         );
 
@@ -2028,7 +2028,7 @@ class TableBuilderTest extends MockeryTestCase
             ->will($this->returnValue($mockContentHelper));
 
         $table->setSort('foo');
-        $table->setOrder('DESC');
+        $table->setOrder(TableBuilder::ORDER_DESC);
 
         $table->renderHeaderColumn($column, '{{[elements/foo]}}');
     }
@@ -2045,7 +2045,7 @@ class TableBuilderTest extends MockeryTestCase
         $expectedColumn = array(
             'sort' => 'foo',
             'class' => 'sortable',
-            'order' => 'ASC',
+            'order' => TableBuilder::ORDER_ASC,
             'link' => 'LINK'
         );
 
@@ -2076,7 +2076,7 @@ class TableBuilderTest extends MockeryTestCase
             ->will($this->returnValue($mockContentHelper));
 
         $table->setSort('bar');
-        $table->setOrder('DESC');
+        $table->setOrder(TableBuilder::ORDER_DESC);
 
         $table->renderHeaderColumn($column, '{{[elements/foo]}}');
     }
@@ -2171,7 +2171,7 @@ class TableBuilderTest extends MockeryTestCase
         $expectedColumn = [
             'class' => 'right sortable',
             'sort' => 'foo',
-            'order' => 'ASC',
+            'order' => TableBuilder::ORDER_ASC,
             'link' => 'LINK',
         ];
 
@@ -3704,6 +3704,235 @@ class TableBuilderTest extends MockeryTestCase
 
         // Execute
         $table->renderHeaderColumn(['sort' => 'foo']);
+    }
+
+    /**
+     * @test
+     * @depends renderHeaderColumn_IsDefined
+     */
+    public function renderHeaderColumn_SetsOrderAscendingOnUrls_WhenBuilderHasNoSort()
+    {
+        // Set Up
+        $table = $this->setUpSut();
+        $urlHelper = $table->getUrl();
+
+        // Define Expectations
+        $queryMatcher = IsArrayContainingKeyValuePair::hasKeyValuePair('order', TableBuilder::ORDER_ASC);
+        $optionsMatcher = IsArrayContainingKeyValuePair::hasKeyValuePair('query', $queryMatcher);
+        $any = IsAnything::anything();
+        $urlHelper->shouldReceive('fromRoute')->atLeast()->once()->with($any, $any, $optionsMatcher, $any);
+
+        // Execute
+        $table->renderHeaderColumn(['sort' => 'foo']);
+    }
+
+    /**
+     * @test
+     * @depends renderHeaderColumn_IsDefined
+     */
+    public function renderHeaderColumn_SetsSortToNewColumnOnUrls_WhenBuilderDoesNotSort()
+    {
+        // Set Up
+        $table = $this->setUpSut();
+        $urlHelper = $table->getUrl();
+        $expectedColumn = 'foo';
+
+        // Define Expectations
+        $queryMatcher = IsArrayContainingKeyValuePair::hasKeyValuePair('sort', $expectedColumn);
+        $optionsMatcher = IsArrayContainingKeyValuePair::hasKeyValuePair('query', $queryMatcher);
+        $any = IsAnything::anything();
+        $urlHelper->shouldReceive('fromRoute')->atLeast()->once()->with($any, $any, $optionsMatcher, $any);
+
+        // Execute
+        $table->renderHeaderColumn(['sort' => $expectedColumn]);
+    }
+
+    /**
+     * @test
+     * @depends renderHeaderColumn_IsDefined
+     */
+    public function renderHeaderColumn_SetsSortToNewColumnOnUrls_WhenBuilderSortsOnDifferentColumn_AndBuilderHasNoOrder()
+    {
+        // Set Up
+        $table = $this->setUpSut();
+        $table->setSort('foo');
+
+        // Define Expectations
+        $queryMatcher = IsArrayContainingKeyValuePair::hasKeyValuePair('sort', $expectedSort = 'bar');
+        $optionsMatcher = IsArrayContainingKeyValuePair::hasKeyValuePair('query', $queryMatcher);
+        $any = IsAnything::anything();
+        $table->getUrl()->shouldReceive('fromRoute')->atLeast()->once()->with($any, $any, $optionsMatcher, $any);
+
+        // Execute
+        $table->renderHeaderColumn(['sort' => $expectedSort]);
+    }
+
+    /**
+     * @test
+     * @depends renderHeaderColumn_IsDefined
+     */
+    public function renderHeaderColumn_SetsSortToNewColumnOnUrls_WhenBuilderSortsOnDifferentColumn_AndBuilderOrdersAscending()
+    {
+        // Set Up
+        $table = $this->setUpSut();
+        $table->setSort('foo');
+        $table->setOrder(TableBuilder::ORDER_ASC);
+
+        // Define Expectations
+        $queryMatcher = IsArrayContainingKeyValuePair::hasKeyValuePair('sort', $expectedSort = 'bar');
+        $optionsMatcher = IsArrayContainingKeyValuePair::hasKeyValuePair('query', $queryMatcher);
+        $any = IsAnything::anything();
+        $table->getUrl()->shouldReceive('fromRoute')->atLeast()->once()->with($any, $any, $optionsMatcher, $any);
+
+        // Execute
+        $table->renderHeaderColumn(['sort' => $expectedSort]);
+    }
+
+    /**
+     * @test
+     * @depends renderHeaderColumn_IsDefined
+     */
+    public function renderHeaderColumn_SetsSortToNewColumnOnUrls_WhenBuilderSortsOnDifferentColumn_AndBuilderOrdersDescending()
+    {
+        // Set Up
+        $table = $this->setUpSut();
+        $table->setSort('foo');
+        $table->setOrder(TableBuilder::ORDER_DESC);
+
+        // Define Expectations
+        $queryMatcher = IsArrayContainingKeyValuePair::hasKeyValuePair('sort', $expectedSort = 'bar');
+        $optionsMatcher = IsArrayContainingKeyValuePair::hasKeyValuePair('query', $queryMatcher);
+        $any = IsAnything::anything();
+        $table->getUrl()->shouldReceive('fromRoute')->atLeast()->once()->with($any, $any, $optionsMatcher, $any);
+
+        // Execute
+        $table->renderHeaderColumn(['sort' => $expectedSort]);
+    }
+
+    /**
+     * @test
+     * @depends renderHeaderColumn_IsDefined
+     */
+    public function renderHeaderColumn_SetsOrderAscendingOnUrls_WhenBuilderSortsOnDifferentColumn_AndBuildDoesNotOrder()
+    {
+        // Set Up
+        $table = $this->setUpSut();
+        $table->setSort('foo');
+        $table->setOrder(TableBuilder::ORDER_ASC);
+
+        // Define Expectations
+        $queryMatcher = IsArrayContainingKeyValuePair::hasKeyValuePair('order', TableBuilder::ORDER_ASC);
+        $optionsMatcher = IsArrayContainingKeyValuePair::hasKeyValuePair('query', $queryMatcher);
+        $any = IsAnything::anything();
+        $table->getUrl()->shouldReceive('fromRoute')->atLeast()->once()->with($any, $any, $optionsMatcher, $any);
+
+        // Execute
+        $table->renderHeaderColumn(['sort' => 'bar']);
+    }
+
+    /**
+     * @test
+     * @depends renderHeaderColumn_IsDefined
+     */
+    public function renderHeaderColumn_SetsOrderAscendingOnUrls_WhenBuilderSortsOnDifferentColumn_AndBuilderOrdersAscending()
+    {
+        // Set Up
+        $table = $this->setUpSut();
+        $table->setSort('foo');
+        $table->setOrder(TableBuilder::ORDER_ASC);
+
+        // Define Expectations
+        $queryMatcher = IsArrayContainingKeyValuePair::hasKeyValuePair('order', TableBuilder::ORDER_ASC);
+        $optionsMatcher = IsArrayContainingKeyValuePair::hasKeyValuePair('query', $queryMatcher);
+        $any = IsAnything::anything();
+        $table->getUrl()->shouldReceive('fromRoute')->atLeast()->once()->with($any, $any, $optionsMatcher, $any);
+
+        // Execute
+        $table->renderHeaderColumn(['sort' => 'bar']);
+    }
+
+    /**
+     * @test
+     * @depends renderHeaderColumn_IsDefined
+     */
+    public function renderHeaderColumn_SetsOrderAscendingOnUrls_WhenBuilderSortsOnDifferentColumn_AndBuilderOrdersDescending()
+    {
+        // Set Up
+        $table = $this->setUpSut();
+        $table->setSort('foo');
+        $table->setOrder(TableBuilder::ORDER_DESC);
+
+        // Define Expectations
+        $queryMatcher = IsArrayContainingKeyValuePair::hasKeyValuePair('order', TableBuilder::ORDER_ASC);
+        $optionsMatcher = IsArrayContainingKeyValuePair::hasKeyValuePair('query', $queryMatcher);
+        $any = IsAnything::anything();
+        $table->getUrl()->shouldReceive('fromRoute')->atLeast()->once()->with($any, $any, $optionsMatcher, $any);
+
+        // Execute
+        $table->renderHeaderColumn(['sort' => 'bar']);
+    }
+
+    /**
+     * @test
+     * @depends renderHeaderColumn_IsDefined
+     */
+    public function renderHeaderColumn_SetsOrderDescendingOnUrls_WhenBuilderOrdersAsc_AndWhenBuilderSortsOnTheSameColumn()
+    {
+        // Set Up
+        $table = $this->setUpSut();
+        $table->setSort($sortColumn = 'foo');
+        $table->setOrder(TableBuilder::ORDER_ASC);
+
+        // Define Expectations
+        $queryMatcher = IsArrayContainingKeyValuePair::hasKeyValuePair('order', TableBuilder::ORDER_DESC);
+        $optionsMatcher = IsArrayContainingKeyValuePair::hasKeyValuePair('query', $queryMatcher);
+        $any = IsAnything::anything();
+        $table->getUrl()->shouldReceive('fromRoute')->atLeast()->once()->with($any, $any, $optionsMatcher, $any);
+
+        // Execute
+        $table->renderHeaderColumn(['sort' => $sortColumn]);
+    }
+
+    /**
+     * @test
+     * @depends renderHeaderColumn_IsDefined
+     */
+    public function renderHeaderColumn_UnsetsOrderOnUrls_WhenBuilderOrdersDescending_OnSameColumn()
+    {
+        // Set Up
+        $table = $this->setUpSut();
+        $table->setSort($sort = 'foo');
+        $table->setOrder(TableBuilder::ORDER_DESC);
+
+        // Define Expectations
+        $queryMatcher = IsNot::not(IsArrayContainingKey::hasKeyInArray('order'));
+        $optionsMatcher = IsArrayContainingKeyValuePair::hasKeyValuePair('query', $queryMatcher);
+        $any = IsAnything::anything();
+        $table->getUrl()->shouldReceive('fromRoute')->atLeast()->once()->with($any, $any, $optionsMatcher, $any);
+
+        // Execute
+        $table->renderHeaderColumn(['sort' => $sort]);
+    }
+
+    /**
+     * @test
+     * @depends renderHeaderColumn_IsDefined
+     */
+    public function renderHeaderColumn_UnsetsSortOnUrls_WhenBuilderOrdersDescending_OnSameColumn()
+    {
+        // Set Up
+        $table = $this->setUpSut();
+        $table->setSort($sort = 'foo');
+        $table->setOrder(TableBuilder::ORDER_DESC);
+
+        // Define Expectations
+        $queryMatcher = IsNot::not(IsArrayContainingKey::hasKeyInArray('sort'));
+        $optionsMatcher = IsArrayContainingKeyValuePair::hasKeyValuePair('query', $queryMatcher);
+        $any = IsAnything::anything();
+        $table->getUrl()->shouldReceive('fromRoute')->atLeast()->once()->with($any, $any, $optionsMatcher, $any);
+
+        // Execute
+        $table->renderHeaderColumn(['sort' => $sort]);
     }
 
     /**

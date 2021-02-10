@@ -32,6 +32,14 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     const CONTENT_TYPE_HTML = 'html';
     const CONTENT_TYPE_CSV = 'csv';
 
+    const ORDER_DESC = 'DESC';
+    const ORDER_ASC = 'ASC';
+
+    const QUERY_PARAM_SORT = 'sort';
+    const QUERY_PARAM_ORDER = 'order';
+
+    const OMITTED_QUERY_PARAMS = ['controller', 'action'];
+
     /**
      * Hold the pagination helper
      *
@@ -1484,6 +1492,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             }
 
             $column['order'] = 'ASC';
+            $omittedParams = null;
 
             if ($column['sort'] === $this->getSort()) {
                 if ($this->getOrder() === 'ASC') {
@@ -1492,14 +1501,22 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
                 } else {
                     $column['class'] .= ' descending';
                 }
+
+                if ($this->getOrder() === static::ORDER_DESC) {
+
+                    // If the current order is descending then we will omit the sort and order parameters from any sorting
+                    // toggle urls so that the next time that a user toggles the sort they will reset to an unsorted state.
+                    $omittedParams = array_merge(static::OMITTED_QUERY_PARAMS, [
+                        $this->mapUrlParameterName(static::QUERY_PARAM_SORT),
+                        $this->mapUrlParameterName(static::QUERY_PARAM_ORDER),
+                    ]);
+                }
             }
 
-            $column['link'] = $this->generatePaginationUrl(
-                array(
-                    $this->mapUrlParameterName('sort') => $column['sort'],
-                    $this->mapUrlParameterName('order') => $column['order']
-                )
-            );
+            $column['link'] = $this->generatePaginationUrl([
+                $this->mapUrlParameterName(static::QUERY_PARAM_SORT) => $column['sort'],
+                $this->mapUrlParameterName(static::QUERY_PARAM_ORDER) => $column['order'],
+            ], null, true, $omittedParams);
 
             $column['title'] = $this->replaceContent('{{[elements/sortColumn]}}', $column);
         }
@@ -1731,16 +1748,19 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     }
 
     /**
-     * Generate pagination url. Strips the controller and action params from
-     * the URL
+     * Generate pagination url. Strips the controller and action params from the URL
      *
      * @param array $data
      * @param string $route
      * @param array $extendParams
+     * @param array|null $omittedUrlParams
      * @return string
      */
-    private function generatePaginationUrl($data = array(), $route = null, $extendParams = true)
+    private function generatePaginationUrl($data = array(), $route = null, $extendParams = true, array $omittedUrlParams = null)
     {
+        if (null === $omittedUrlParams) {
+            $omittedUrlParams = static::OMITTED_QUERY_PARAMS;
+        }
 
         /** @var \Laminas\Mvc\Controller\Plugin\Url $url */
         $url = $this->getUrl();
@@ -1754,8 +1774,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         }
 
         $params = array_merge($query, $data);
-
-        $params = array_diff_key($params, array_flip(['controller', 'action']));
+        $params = array_diff_key($params, array_flip($omittedUrlParams));
 
         $options = [];
         $options['query'] = $params;
