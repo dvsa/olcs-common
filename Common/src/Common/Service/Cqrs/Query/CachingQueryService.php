@@ -8,6 +8,7 @@ use Dvsa\Olcs\Transfer\Query\Cache\ById;
 use Dvsa\Olcs\Transfer\Query\CacheableLongTermQueryInterface;
 use Dvsa\Olcs\Transfer\Query\CacheableMediumTermQueryInterface;
 use Dvsa\Olcs\Transfer\Query\QueryContainerInterface;
+use Dvsa\Olcs\Transfer\Query\QueryInterface;
 use Dvsa\Olcs\Transfer\Service\CacheEncryption as CacheEncryptionService;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
 
@@ -101,6 +102,19 @@ class CachingQueryService implements QueryServiceInterface, \Laminas\Log\LoggerA
     }
 
     /**
+     * Feed a DTO through the annotation builder and then send the query
+     *
+     * @param QueryInterface $dto
+     *
+     * @return \Common\Service\Cqrs\Response
+     */
+    public function sendFromDto(QueryInterface $dto)
+    {
+        $query = $this->annotationBuilder->createQuery($dto);
+        return $this->send($query);
+    }
+
+    /**
      * Retrieve data that is not found in the usual CQRS cache
      *
      * @param string $identifier
@@ -126,8 +140,7 @@ class CachingQueryService implements QueryServiceInterface, \Laminas\Log\LoggerA
         ];
 
         $dto = ById::create($queryParams);
-        $query = $this->annotationBuilder->createQuery($dto);
-        $response = $this->send($query);
+        $response = $this->sendFromDto($dto);
 
         if ($response->isOk()) {
             return $response->getResult();

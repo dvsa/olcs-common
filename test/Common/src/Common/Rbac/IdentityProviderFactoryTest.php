@@ -4,6 +4,7 @@ namespace CommonTest\Rbac;
 
 use Common\Rbac\IdentityProviderFactory;
 use Common\Service\Cqrs\Query\QuerySender;
+use Dvsa\Olcs\Transfer\Service\CacheEncryption;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Mockery as m;
 use Laminas\Http\Request;
@@ -20,11 +21,13 @@ class IdentityProviderFactoryTest extends TestCase
     {
         $mockQuerySender = m::mock(QuerySender::class);
         $mockRequest = m::mock(Request::class);
+        $cache = m::mock(CacheEncryption::class);
 
         $mockSl = m::mock(ServiceLocatorInterface::class);
         $mockSl->shouldReceive('getServiceLocator')->andReturnSelf();
         $mockSl->shouldReceive('get')->with('QuerySender')->andReturn($mockQuerySender);
         $mockSl->shouldReceive('get')->with('Request')->andReturn($mockRequest);
+        $mockSl->shouldReceive('get')->with(CacheEncryption::class)->andReturn($cache);
 
         $sut = new IdentityProviderFactory();
         $service = $sut->createService($mockSl);

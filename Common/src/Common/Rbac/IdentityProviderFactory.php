@@ -5,8 +5,10 @@
  */
 namespace Common\Rbac;
 
+use Dvsa\Olcs\Transfer\Service\CacheEncryption;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\Session\Container;
 
 /**
  * Identity Provider Factory
@@ -22,7 +24,10 @@ class IdentityProviderFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         return new IdentityProvider(
-            $serviceLocator->get('QuerySender')
+            $serviceLocator->get('QuerySender'),
+            new Container('user_details'),
+            $serviceLocator->get('Request'),
+            $serviceLocator->get(CacheEncryption::class)
         );
     }
 }
