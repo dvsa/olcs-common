@@ -6,6 +6,10 @@ use Common\Rbac\User;
 use Common\Rbac\IdentityProvider;
 use Common\Service\Cqrs\Query\QuerySender;
 use Common\Service\Cqrs\Response;
+use Dvsa\Olcs\Transfer\Service\CacheEncryption;
+use Laminas\Http\Header\GenericHeader;
+use Laminas\Http\Request;
+use Laminas\Session\Container;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Mockery as m;
 
@@ -15,21 +19,95 @@ use Mockery as m;
  */
 class IdentityProviderTest extends TestCase
 {
-    private $sut;
+    const USER_ID = 22;
+    const HEADER_PID = '12345abc';
 
-    private $queryService;
-
-    public function setUp(): void
+    public function testGetIdentityFromCache()
     {
-        $this->queryService = m::mock(QuerySender::class);
+        $cookie = [
+            'secureToken' => 'secure',
+        ];
 
-        $this->sut = new IdentityProvider($this->queryService);
+        $cacheDataUserType = 'cache data user type';
+        $cacheDataLoginId = 'cache data user type';
+
+        $cacheData = [
+            'userType' => $cacheDataUserType,
+            'loginId' => $cacheDataLoginId,
+        ];
+
+        $identity = m::mock(User::class);
+        $identity->expects('getId')->times(2)->andReturn(self::USER_ID);
+        $identity->expects('getPid')->andReturn(self::HEADER_PID);
+        $identity->expects('setUserType')->with($cacheDataUserType);
+        $identity->expects('setUsername')->with($cacheDataLoginId);
+        $identity->expects('setUserData')->with($cacheData);
+
+        $queryService = m::mock(QuerySender::class);
+        $session = m::mock(Container::class);
+        $session->expects('offsetGet')->with('identity')->andReturn($identity);
+        $session->expects('offsetSet')->with('identity', $identity);
+
+        $request = m::mock(Request::class);
+        $request->expects('getCookie')->andReturn($cookie);
+        $request->expects('getHeader')
+            ->with('X-Pid', m::type(GenericHeader::class))
+            ->andReturn(
+                m::mock(GenericHeader::class)
+                    ->shouldReceive('getFieldValue')
+                    ->andReturn(self::HEADER_PID)
+                    ->getMock()
+            );
+
+        $cache = m::mock(CacheEncryption::class);
+        $cache->expects('hasCustomItem')
+            ->with(CacheEncryption::USER_ACCOUNT_IDENTIFIER, self::USER_ID)
+            ->andReturnTrue();
+        $cache->expects('getCustomItem')
+            ->with(CacheEncryption::USER_ACCOUNT_IDENTIFIER, self::USER_ID)
+            ->andReturn($cacheData);
+
+        $sut = new IdentityProvider($queryService, $session, $request, $cache);
+
+        $this->assertEquals($identity, $sut->getIdentity());
     }
 
-    public function testGetIdentity()
+    /**
+     * @dataProvider dpGetIdentityWithDbUpdate
+     */
+    public function testGetIdentityWithDbUpdate($identity, $headerPid, $requestChecked, $cacheChecked)
     {
+        $cookie = [
+            'secureToken' => 'secure',
+        ];
+
+        $queryService = m::mock(QuerySender::class);
+        $session = m::mock(Container::class);
+        $session->expects('offsetGet')->with('identity')->andReturn($identity);
+        $session->expects('offsetSet')->with('identity', m::type(User::class));
+
+        $request = m::mock(Request::class);
+        $request->expects('getCookie')->times($requestChecked)->andReturn($cookie);
+        $request->expects('getHeader')
+            ->times($requestChecked)
+            ->with('X-Pid', m::type(GenericHeader::class))
+            ->andReturn(
+                m::mock(GenericHeader::class)
+                    ->shouldReceive('getFieldValue')
+                    ->andReturn($headerPid)
+                    ->getMock()
+            );
+
+        $cache = m::mock(CacheEncryption::class);
+        $cache->expects('hasCustomItem')
+            ->with(CacheEncryption::USER_ACCOUNT_IDENTIFIER, self::USER_ID)
+            ->times($cacheChecked)
+            ->andReturnFalse();
+
+        $sut = new IdentityProvider($queryService, $session, $request, $cache);
+
         $data = [
-            'id' => 22,
+            'id' => self::USER_ID,
             'pid' => '12345abc',
             'userType' => User::USER_TYPE_OPERATOR,
             'loginId' => 'username',
@@ -43,7 +121,7 @@ class IdentityProviderTest extends TestCase
         $mockResponse->shouldReceive('isOk')->andReturn(true);
         $mockResponse->shouldReceive('getResult')->andReturn($data);
 
-        $this->queryService
+        $queryService
             ->shouldReceive('setRecoverHttpClientException')
             ->once()
             ->with(true)
@@ -51,7 +129,7 @@ class IdentityProviderTest extends TestCase
             ->once()
             ->andReturn($mockResponse);
 
-        $identity = $this->sut->getIdentity();
+        $identity = $sut->getIdentity();
         $this->assertInstanceOf(User::class, $identity);
         $this->assertEquals($data['id'], $identity->getId());
         $this->assertEquals($data['pid'], $identity->getPid());
@@ -61,11 +139,44 @@ class IdentityProviderTest extends TestCase
         $this->assertEquals(['role1', 'role2'], $identity->getRoles());
 
         // test the backend is called only once for any following getIdentity() calls
-        $this->assertEquals($identity, $this->sut->getIdentity());
+        $this->assertEquals($identity, $sut->getIdentity());
+    }
+
+    public function dpGetIdentityWithDbUpdate()
+    {
+        $emptyUser = new User();
+
+        $rbacUserEmptyPid = new User();
+        $rbacUserEmptyPid->setId(self::USER_ID);
+
+        $rbacUserWithPid = new User();
+        $rbacUserWithPid->setId(self::USER_ID);
+        $rbacUserWithPid->setPid(self::HEADER_PID);
+
+        return [
+            [null, null, 0, 0], //no identity, not authenticated
+            [null, self::HEADER_PID, 0, 0], //no identity, header pid included but not used
+            [$emptyUser, null, 0, 0], //empty user identity, no header pid
+            [$emptyUser, self::HEADER_PID, 0, 0], //empty user identity, header pid included but not used
+            [$rbacUserEmptyPid, null, 1, 0], //user has id but no pid, no header pid (request checked)
+            [$rbacUserEmptyPid, self::HEADER_PID, 1, 0], //user has id but no pid, header pid exists (request checked)
+            [$rbacUserWithPid, null, 1, 0], //user has id and pid, but no header pid (request checked)
+            [$rbacUserWithPid, 'zzzzz', 1, 0], //user has id and pid, but header pid doesn't match (request checked)
+            [$rbacUserWithPid, self::HEADER_PID, 1, 1], //user and pid match (request anc cache both checked)
+        ];
     }
 
     public function testGetIdentitySetNotIdentifiedUser()
     {
+        $queryService = m::mock(QuerySender::class);
+        $request = m::mock(Request::class);
+        $cache = m::mock(CacheEncryption::class);
+
+        $session = m::mock(Container::class);
+        $session->expects('offsetGet')->with('identity')->andReturn(null);
+        $session->expects('offsetSet')->with('identity', m::type(User::class));
+
+        $sut = new IdentityProvider($queryService, $session, $request, $cache);
 
         $response = [
             'id' => null,
@@ -75,12 +186,12 @@ class IdentityProviderTest extends TestCase
             'roles' => []
         ];
 
-        $mockResponse = m::mock();
+        $mockResponse = m::mock(Response::class);
         $mockResponse->shouldReceive('getResult')->with()->once()->andReturn($response);
         $mockResponse->shouldReceive('isOk')->andReturn(false);
         $mockResponse->shouldReceive('setResult')->with($response);
 
-        $this->queryService
+        $queryService
             ->shouldReceive('setRecoverHttpClientException')
             ->once()
             ->with(true)
@@ -89,7 +200,7 @@ class IdentityProviderTest extends TestCase
             ->andReturn($mockResponse);
 
         /**  @var \Common\Rbac\User $identity */
-        $identity = $this->sut->getIdentity();
+        $identity = $sut->getIdentity();
 
         $this->assertInstanceOf(User::class, $identity);
         $this->assertNull($identity->getId());
