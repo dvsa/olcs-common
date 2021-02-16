@@ -34,7 +34,7 @@ abstract class SearchAbstract
      * Order/sorting options
      * Contains an array of required results order. This will generate a Select list with value of <field>-<order> and
      * against the label. Then gets split on '-' into sort and order params for the backend query.
-     * 
+     *
      * E.g. [
      *   0 => [
      *       'field' => 'pub_date',
@@ -195,13 +195,18 @@ abstract class SearchAbstract
     /**
      * Formats a cell with a licence link based on licNo
      *
-     * @param array     $row       data row
-     * @param UrlHelper $urlHelper url helper
+     * @param array     $row        data row
+     * @param UrlHelper $urlHelper  url helper
+     * @param bool      $showAsText Whether to return text only
      *
      * @return string
      */
-    public function formatCellLicNo($row, $urlHelper)
+    public function formatCellLicNo($row, $urlHelper, $showAsText = false)
     {
+        if ($showAsText) {
+            return Escape::html($row['licNo']);
+        }
+
         return sprintf(
             '<a href="%s">%s</a>',
             $urlHelper->fromRoute('licence-no', ['licNo' => trim($row['licNo'])]),

@@ -3,7 +3,9 @@
 namespace Common\Data\Object\Search;
 
 use Common\Data\Object\Search\Aggregations\Terms as Filter;
+use Common\RefData;
 use Common\Util\Escape;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Class Licence
@@ -40,7 +42,6 @@ class Cases extends InternalSearchAbstract
     public function getFilters()
     {
         if (empty($this->filters)) {
-
             $this->filters = [
                 new Filter\LicenceStatus(),
                 new Filter\ApplicationStatus(),
@@ -62,9 +63,14 @@ class Cases extends InternalSearchAbstract
             [
                 'title' => 'Case Id',
                 'name'=> 'caseId',
-                'formatter' => function ($data) {
+                'formatter' => function ($data, $column, $sl) {
+                    $authService = $sl->get(AuthorizationService::class);
 
-                    return '<a href="/case/details/' . $data['caseId'] . '">' . $data['caseId'] . '</a>';
+                    if ($authService->isGranted(RefData::PERMISSION_INTERNAL_IRHP_ADMIN)) {
+                        return Escape::html($data['caseId']);
+                    }
+
+                    return '<a href="/case/details/' . $data['caseId'] . '">' . Escape::html($data['caseId']) . '</a>';
                 }
             ],
             ['title' => 'Case type', 'name'=> 'caseStatusDesc'],
@@ -84,11 +90,8 @@ class Cases extends InternalSearchAbstract
                         return '<a href="/application/' . $data['appId'] . '">'
                         . $data['appId']
                         . '</a>';
-
                     } else {
-
                         return 'N/a';
-
                     }
                 }
             ],
@@ -97,13 +100,9 @@ class Cases extends InternalSearchAbstract
                 'name'=> 'appStatusDesc',
                 'formatter' => function ($data) {
                     if (!empty($data['appStatusDesc'])) {
-
                         return $data['appStatusDesc'];
-
                     } else {
-
                         return 'N/a';
-
                     }
                 }
             ],
@@ -111,21 +110,28 @@ class Cases extends InternalSearchAbstract
                 'title' => 'Name',
                 'formatter' => function ($data, $column, $sl) {
                     $urlHelper = $sl->get('Helper\Url');
+
                     if (!empty($data['tmId'])) {
                         $url = $urlHelper->fromRoute(
                             'transport-manager/details',
                             ['transportManager' => $data['tmId']]
                         );
-                        $link = Escape::html($data['tmForename'] . ' ' . $data['tmFamilyName']);
-                        return '<a href="' . $url . '">' . $link . '</a>';
-
+                        $link = $data['tmForename'] . ' ' . $data['tmFamilyName'];
                     } else {
                         $url = $urlHelper->fromRoute(
                             'operator/business-details',
                             ['organisation' => $data['orgId']]
                         );
-                        return '<a href="' . $url . '">' . Escape::html($data['orgName']) . '</a>';
+                        $link = $data['orgName'];
                     }
+
+                    $authService = $sl->get(AuthorizationService::class);
+
+                    if ($authService->isGranted(RefData::PERMISSION_INTERNAL_IRHP_ADMIN)) {
+                        return Escape::html($link);
+                    }
+
+                    return '<a href="' . $url . '">' . Escape::html($link) . '</a>';
                 }
             ],
             ['title' => 'Case status', 'name'=> 'caseStatusDesc'],
