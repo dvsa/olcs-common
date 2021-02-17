@@ -4,6 +4,9 @@ namespace Common\Data\Object\Search;
 
 use Common\Data\Object\Search\Aggregations\Terms as Filter;
 use Common\Data\Object\Search\Aggregations\DateRange as DateRange;
+use Common\RefData;
+use Common\Util\Escape;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Class People
@@ -50,7 +53,6 @@ class People extends InternalSearchAbstract
     public function getFilters()
     {
         if (empty($this->filters)) {
-
             $this->filters = [
                 new Filter\FoundType(),
                 new Filter\FoundBy(),
@@ -69,7 +71,6 @@ class People extends InternalSearchAbstract
     public function getDateRanges()
     {
         if (empty($this->dateRanges)) {
-
             $this->dateRanges = [
                 new DateRange\DateOfBirthFromAndTo()
             ];
@@ -118,43 +119,75 @@ class People extends InternalSearchAbstract
                 'title' => 'Record',
                 'formatter' => function ($row, $column, $serviceLocator) {
                     $urlHelper = $serviceLocator->get('Helper\Url');
+
+                    $authService = $serviceLocator->get(AuthorizationService::class);
+                    $showAsText = $authService->isGranted(RefData::PERMISSION_INTERNAL_IRHP_ADMIN);
+
                     if (!empty($row['applicationId']) && !empty($row['licNo'])) {
+                        if ($showAsText) {
+                            return sprintf(
+                                '%s / %s',
+                                $this->formatCellLicNo($row, $urlHelper, $showAsText),
+                                Escape::html($row['applicationId'])
+                            );
+                        }
+
                         return sprintf(
                             '%s / <a href="%s">%s</a>',
                             $this->formatCellLicNo($row, $urlHelper),
                             $urlHelper->fromRoute('lva-application', ['application' => $row['applicationId']]),
-                            $row['applicationId']
+                            Escape::html($row['applicationId'])
                         );
                     } elseif (!empty($row['tmId']) && $row['foundAs'] !== self::FOUND_AS_HISTORICAL_TM) {
-                        $tmLink = sprintf(
-                            '<a href="%s">TM %s</a>',
-                            $urlHelper->fromRoute('transport-manager/details', ['transportManager' => $row['tmId']]),
-                            $row['tmId']
-                        );
+                        if ($showAsText) {
+                            $tmLink = sprintf('TM %s', Escape::html($row['tmId']));
+                        } else {
+                            $tmLink = sprintf(
+                                '<a href="%s">TM %s</a>',
+                                $urlHelper->fromRoute('transport-manager/details', ['transportManager' => $row['tmId']]),
+                                Escape::html($row['tmId'])
+                            );
+                        }
 
                         if (!empty($row['licNo'])) {
-                            $licenceLink = $this->formatCellLicNo($row, $urlHelper);
+                            $licenceLink = $this->formatCellLicNo($row, $urlHelper, $showAsText);
                             return $tmLink . ' / ' . $licenceLink;
                         }
 
                         return $tmLink;
                     } elseif (!empty($row['licTypeDesc']) && !empty($row['licStatusDesc'])) {
+                        if ($showAsText) {
+                            return sprintf(
+                                '%s, %s<br />%s',
+                                Escape::html($row['licNo']),
+                                Escape::html($row['licTypeDesc']),
+                                Escape::html($row['licStatusDesc'])
+                            );
+                        }
+
                         return sprintf(
                             '<a href="%s">%s</a>, %s<br />%s',
                             $urlHelper->fromRoute('licence', ['licence' => $row['licId']]),
-                            $row['licNo'],
-                            $row['licTypeDesc'],
-                            $row['licStatusDesc']
+                            Escape::html($row['licNo']),
+                            Escape::html($row['licTypeDesc']),
+                            Escape::html($row['licStatusDesc'])
                         );
                     } elseif (!empty($row['licNo'])) {
-                        return $this->formatCellLicNo($row, $urlHelper);
-
+                        return $this->formatCellLicNo($row, $urlHelper, $showAsText);
                     } elseif (!empty($row['applicationId'])) {
+                        if ($showAsText) {
+                            return sprintf(
+                                '%s, %s',
+                                Escape::html($row['applicationId']),
+                                Escape::html($row['appStatusDesc'])
+                            );
+                        }
+
                         return sprintf(
                             '<a href="%s">%s</a>, %s',
                             $urlHelper->fromRoute('lva-application', ['application' => $row['applicationId']]),
-                            $row['applicationId'],
-                            $row['appStatusDesc']
+                            Escape::html($row['applicationId']),
+                            Escape::html($row['appStatusDesc'])
                         );
                     }
                     return '';

@@ -2,33 +2,42 @@
 
 namespace CommonTest\Data\Object\Search;
 
+use Common\Data\Object\Search\People;
+use Common\RefData;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use Mockery as m;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
+ * @covers \Common\Data\Object\Search\SearchAbstract
  * @covers \Common\Data\Object\Search\People
  */
 class PeopleTest extends SearchAbstractTest
 {
-    protected $class = \Common\Data\Object\Search\People::class;
-
-    public function setUp(): void
-    {
-        $this->sut = new \Common\Data\Object\Search\People();
-
-        parent::setUp();
-    }
+    protected $class = People::class;
 
     /**
      * @dataProvider dataProviderTestRecordFormatter
      */
-    public function testRecordFormatter($expected, $row)
+    public function testRecordFormatter($expected, $row, $isIrhpAdmin)
     {
         $column = [];
-        $serviceLocator = m::mock();
 
+        $serviceLocator = m::mock(ServiceLocatorInterface::class);
         $serviceLocator->shouldReceive('get')->with('Helper\Url')->andReturn(
             m::mock()->shouldReceive('fromRoute')->andReturn('http://URL')->getMock()
         );
+
+        $authService = m::mock(AuthorizationService::class);
+        $authService->shouldReceive('isGranted')
+            ->with(RefData::PERMISSION_INTERNAL_IRHP_ADMIN)
+            ->once()
+            ->andReturn($isIrhpAdmin);
+
+        $serviceLocator->shouldReceive('get')
+            ->with(AuthorizationService::class)
+            ->once()
+            ->andReturn($authService);
 
         $columns = $this->sut->getColumns();
         $this->assertSame($expected, $columns[1]['formatter']($row, $column, $serviceLocator));
@@ -37,69 +46,108 @@ class PeopleTest extends SearchAbstractTest
     public function dataProviderTestRecordFormatter()
     {
         return [
-            // expected, row
-            ['', []],
+            // expected, row, isIrhpAdmin
+            ['', [], false],
+            ['', [], true],
             [
-                '<a href="http://URL">TM 123</a>',
+                '<a href="http://URL">OB123&gt;</a> / <a href="http://URL">456&gt;</a>',
                 [
-                    'tmId' => 123,
+                    'licNo' => 'OB123>',
+                    'applicationId' => '456>'
+                ],
+                false,
+            ],
+            [
+                'OB123&gt; / 456&gt;',
+                [
+                    'licNo' => 'OB123>',
+                    'applicationId' => '456>'
+                ],
+                true,
+            ],
+            [
+                '<a href="http://URL">TM 123&gt;</a>',
+                [
+                    'tmId' => '123>',
                     'foundAs' => 'XX'
-                ]
+                ],
+                false,
             ],
             [
-                '<a href="http://URL">TM 123</a> / <a href="http://URL">OB123</a>',
+                'TM 123&gt;',
                 [
-                    'tmId' => 123,
-                    'licNo' => 'OB123',
+                    'tmId' => '123>',
                     'foundAs' => 'XX'
-                ]
+                ],
+                true,
             ],
             [
-                '<a href="http://URL">LIC_NO</a>, LT_DESC<br />LS_DESC',
+                '<a href="http://URL">TM 123&gt;</a> / <a href="http://URL">OB123&gt;</a>',
                 [
-                    'licId' => 123,
-                    'foundAs' => 'XX',
-                    'licNo' => 'LIC_NO',
-                    'licTypeDesc' => 'LT_DESC',
-                    'licStatusDesc' => 'LS_DESC'
-                ]
+                    'tmId' => '123>',
+                    'licNo' => 'OB123>',
+                    'foundAs' => 'XX'
+                ],
+                false,
             ],
             [
-                '<a href="http://URL">LIC_NO</a>',
+                'TM 123&gt; / OB123&gt;',
                 [
-                    'foundAs' => 'XX',
-                    'licNo' => 'LIC_NO',
-                ]
+                    'tmId' => '123>',
+                    'licNo' => 'OB123>',
+                    'foundAs' => 'XX'
+                ],
+                true,
             ],
             [
-                '<a href="http://URL">OB123</a> / <a href="http://URL">456</a>',
+                '<a href="http://URL">OB123&gt;</a>, LIC_TYPE_DESC&gt;<br />LIC_STATUS_DESC&gt;',
                 [
-                    'licId' => 123,
-                    'licNo' => 'OB123',
-                    'applicationId' => 456
-                ]
+                    'licId' => '123>',
+                    'licNo' => 'OB123>',
+                    'licTypeDesc' => 'LIC_TYPE_DESC>',
+                    'licStatusDesc' => 'LIC_STATUS_DESC>',
+                ],
+                false,
             ],
             [
-                '<a href="http://URL">OB123</a>, LIC_TYPE_DESC<br />LIC_STATUS_DESC',
+                'OB123&gt;, LIC_TYPE_DESC&gt;<br />LIC_STATUS_DESC&gt;',
                 [
-                    'licId' => 123,
-                    'licNo' => 'OB123',
-                    'licTypeDesc' => 'LIC_TYPE_DESC',
-                    'licStatusDesc' => 'LIC_STATUS_DESC',
-                ]
+                    'licId' => '123>',
+                    'licNo' => 'OB123>',
+                    'licTypeDesc' => 'LIC_TYPE_DESC>',
+                    'licStatusDesc' => 'LIC_STATUS_DESC>',
+                ],
+                true,
             ],
             [
-                '<a href="http://URL">LIC_NO</a>',
+                '<a href="http://URL">LIC_NO&gt;</a>',
                 [
-                    'licNo' => 'LIC_NO',
-                ]
+                    'licNo' => 'LIC_NO>',
+                ],
+                false,
             ],
             [
-                '<a href="http://URL">123</a>, APP_STATUS_DESC',
+                'LIC_NO&gt;',
                 [
-                    'applicationId' => 123,
-                    'appStatusDesc' => 'APP_STATUS_DESC',
-                ]
+                    'licNo' => 'LIC_NO>',
+                ],
+                true,
+            ],
+            [
+                '<a href="http://URL">123&gt;</a>, APP_STATUS_DESC&gt;',
+                [
+                    'applicationId' => '123>',
+                    'appStatusDesc' => 'APP_STATUS_DESC>',
+                ],
+                false,
+            ],
+            [
+                '123&gt;, APP_STATUS_DESC&gt;',
+                [
+                    'applicationId' => '123>',
+                    'appStatusDesc' => 'APP_STATUS_DESC>',
+                ],
+                true,
             ],
         ];
     }
@@ -110,8 +158,8 @@ class PeopleTest extends SearchAbstractTest
     public function testNameFormatter($expected, $row)
     {
         $column = [];
-        $serviceLocator = m::mock();
 
+        $serviceLocator = m::mock(ServiceLocatorInterface::class);
         $serviceLocator->shouldReceive('get')->with('Helper\Url')->andReturn(
             m::mock()->shouldReceive('fromRoute')->andReturn('http://URL')->getMock()
         );

@@ -2,7 +2,9 @@
 namespace Common\Data\Object\Search;
 
 use Common\Data\Object\Search\Aggregations\Terms as Filter;
+use Common\RefData;
 use Common\Util\Escape;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Class Licence
@@ -39,7 +41,6 @@ class Licence extends InternalSearchAbstract
     public function getFilters()
     {
         if (empty($this->filters)) {
-
             $this->filters = [
                 new Filter\LicenceType(),
                 new Filter\LicenceStatus(),
@@ -132,8 +133,14 @@ class Licence extends InternalSearchAbstract
             [
                 'title' => 'Cases',
                 'name'=> 'caseCount',
-                'formatter' => function ($data) {
-                    return '<a href="/licence/' . $data['licId'] . '/cases">' . $data['caseCount'] . '</a>';
+                'formatter' => function ($data, $column, $sl) {
+                    $authService = $sl->get(AuthorizationService::class);
+
+                    if ($authService->isGranted(RefData::PERMISSION_INTERNAL_IRHP_ADMIN)) {
+                        return Escape::html($data['caseCount']);
+                    }
+
+                    return '<a href="/licence/' . $data['licId'] . '/cases">' . Escape::html($data['caseCount']) . '</a>';
                 }
             ]
         ];

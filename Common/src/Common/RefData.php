@@ -187,6 +187,7 @@ class RefData
     const PERMISSION_SELFSERVE_DASHBOARD = 'selfserve-nav-dashboard';
     const PERMISSION_SYSTEM_ADMIN = 'system-admin';
     const PERMISSION_INTERNAL_ADMIN = 'internal-admin';
+    const PERMISSION_INTERNAL_IRHP_ADMIN = 'internal-irhp-admin';
     const PERMISSION_INTERNAL_EDIT = 'internal-edit';
     const PERMISSION_INTERNAL_VIEW = 'internal-view';
     const PERMISSION_INTERNAL_CASE = 'internal-case';
