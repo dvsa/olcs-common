@@ -1,5 +1,5 @@
 <div class="info-box info-box--grey">
-    <h3 class="info-box__heading">Rhagor o wybodaeth</h3>
+    <h3 class="info-box__heading"><?php echo $this->translate('sidebar-more-information'); ?></h3>
 
     <ul class="links-list">
         <li class="links-list__item">
@@ -17,6 +17,13 @@
                 <?php echo $this->translate('sidebar-variation-safety-and-maintenance'); ?>
             </a>
         </li>
+        <?php if (!$this->niFlag && ($this->numberOfLicences >= 1 || $this->numberOfApplications >= 1)): ?>
+        <li class="links-list__item">
+            <a href="{{OTC_NEWS_ALERTS}}" target="_blank">
+                <?php echo $this->translate('Office of the Traffic Commissioner news alerts'); ?>
+            </a>
+        </li>
+        <?php endif; ?>
     </ul>
-
+    
 </div><!-- links -->
