@@ -17,9 +17,12 @@ class BailOutListener implements ListenerAggregateInterface
 {
     use ListenerAggregateTrait;
 
-    public function attach(EventManagerInterface $events)
+    /**
+     * {@inheritdoc}
+     */
+    public function attach(EventManagerInterface $events, $priority = 1)
     {
-        $events->attach(MvcEvent::EVENT_DISPATCH_ERROR, [$this, 'onDispatchError']);
+        $events->attach(MvcEvent::EVENT_DISPATCH_ERROR, [$this, 'onDispatchError'], $priority);
     }
 
     public function onDispatchError(MvcEvent $e)
