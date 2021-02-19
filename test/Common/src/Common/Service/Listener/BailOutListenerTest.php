@@ -37,7 +37,7 @@ class BailOutListenerTest extends MockeryTestCase
 
         $events->shouldReceive('attach')
             ->once()
-            ->with(MvcEvent::EVENT_DISPATCH_ERROR, [$this->sut, 'onDispatchError']);
+            ->with(MvcEvent::EVENT_DISPATCH_ERROR, [$this->sut, 'onDispatchError'], 1);
 
         $this->sut->attach($events);
     }
