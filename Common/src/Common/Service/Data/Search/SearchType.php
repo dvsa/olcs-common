@@ -2,11 +2,13 @@
 
 namespace Common\Service\Data\Search;
 
+use Common\Data\Object\Search\User;
+use Common\RefData;
 use Common\Service\Data\Interfaces\ListData as ListDataInterface;
-use Common\Service\Data\Search\SearchTypeManager;
 use Laminas\Navigation\Service\AbstractNavigationFactory;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
+use ZfcRbac\Service\RoleService;
 
 /**
  * Class SearchType
@@ -23,6 +25,11 @@ class SearchType implements ListDataInterface, FactoryInterface
      * @var AbstractNavigationFactory
      */
     protected $navigationFactory;
+
+    /**
+     * @var RoleService
+     */
+    protected $roleService;
 
     /**
      * @return mixed
@@ -54,6 +61,16 @@ class SearchType implements ListDataInterface, FactoryInterface
     public function setNavigationFactory($navigationFactory)
     {
         $this->navigationFactory = $navigationFactory;
+    }
+
+    public function getRoleService(): RoleService
+    {
+        return $this->roleService;
+    }
+
+    public function setRoleService(RoleService $authorizationService)
+    {
+        $this->roleService = $authorizationService;
     }
 
     /**
@@ -93,6 +110,12 @@ class SearchType implements ListDataInterface, FactoryInterface
             $indexes[] = $this->getSearchTypeManager()->get($searchIndexName);
         }
 
+        if ($this->roleService->matchIdentityRoles([RefData::ROLE_INTERNAL_LIMITED_READ_ONLY])) {
+            $indexes = array_filter($indexes, function ($value, $key) {
+                return !($value instanceof User);
+            }, ARRAY_FILTER_USE_BOTH);
+        }
+
         return $indexes;
     }
 
@@ -121,6 +144,7 @@ class SearchType implements ListDataInterface, FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $this->setNavigationFactory($serviceLocator->get('NavigationFactory'));
+        $this->setRoleService($serviceLocator->get(RoleService::class));
         $this->setSearchTypeManager($serviceLocator->get(SearchTypeManager::class));
 
         return $this;
