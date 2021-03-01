@@ -198,6 +198,8 @@ class RefData
     const PERMISSION_INTERNAL_PUBLICATIONS = 'internal-publications';
     const PERMISSION_INTERNAL_LIMITED_READ_ONLY = 'internal-limited-read-only';
     const PERMISSION_INTERNAL_FEES = 'internal-fees';
+    const PERMISSION_INTERNAL_OPPOSITION = 'internal-opposition';
+    const PERMISSION_INTERNAL_PROCESSING = 'internal-processing';
     const PERMISSION_CAN_MANAGE_USER_INTERNAL = 'can-manage-user-internal';
     const PERMISSION_SELFSERVE_EBSR_UPLOAD = 'selfserve-ebsr-upload';
     const PERMISSION_SELFSERVE_EBSR_DOCUMENTS = 'selfserve-ebsr-documents';
