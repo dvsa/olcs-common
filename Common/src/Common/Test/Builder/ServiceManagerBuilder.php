@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Common\Test\Builder;
 
 use Laminas\ServiceManager\ServiceManager;
 
-class ServiceManagerBuilder implements BuilderInterface
+class ServiceManagerBuilder
 {
     /**
      * @var callable|object
@@ -20,9 +22,9 @@ class ServiceManagerBuilder implements BuilderInterface
     }
 
     /**
-     * @inheritDoc
+     * @return ServiceManager
      */
-    public function build()
+    public function build(): ServiceManager
     {
         $serviceManager = new ServiceManager();
         $serviceManager->setAllowOverride(true);
@@ -34,6 +36,11 @@ class ServiceManagerBuilder implements BuilderInterface
         foreach ($services as $serviceName => $service) {
             $serviceManager->setService($serviceName, $service);
         }
+
+        // Set controller plugin manager to the main service manager so that all services can be resolved from the one
+        // service manager instance.
+        $serviceManager->setService('ControllerPluginManager', $serviceManager);
+
         return $serviceManager;
     }
 }

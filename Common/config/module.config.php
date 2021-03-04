@@ -5,6 +5,9 @@ use Common\Service\Data\Search\SearchType;
 use Common\FormService\Form\Lva as LvaFormService;
 use Common\FormService\Form\Continuation as ContinuationFormService;
 use Common\Form\View\Helper\Readonly as ReadonlyFormHelper;
+use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Helper\ResponseHelperService;
 use Common\Service\Qa as QaService;
 use Common\Service\Translator\TranslationLoader;
 use Common\Service\Translator\TranslationLoaderFactory;
@@ -91,12 +94,15 @@ return array(
     'controller_plugins' => array(
         'invokables' => array(
             'redirect' => 'Common\Controller\Plugin\Redirect',
+            \Common\Controller\Plugin\Redirect::class => \Common\Controller\Plugin\Redirect::class,
         ),
         'factories' => [
             'currentUser' => \Common\Controller\Plugin\CurrentUserFactory::class,
             'ElasticSearch' => 'Common\Controller\Plugin\ElasticSearchFactory',
             'handleQuery' => \Common\Controller\Plugin\HandleQueryFactory::class,
+            \Common\Controller\Plugin\HandleQuery::class => \Common\Controller\Plugin\HandleQueryFactory::class,
             'handleCommand' => \Common\Controller\Plugin\HandleCommandFactory::class,
+            \Common\Controller\Plugin\HandleCommand::class => \Common\Controller\Plugin\HandleCommandFactory::class,
             'featuresEnabled' => \Common\Controller\Plugin\FeaturesEnabledFactory::class,
             'featuresEnabledForMethod' => \Common\Controller\Plugin\FeaturesEnabledForMethodFactory::class,
         ]
@@ -229,6 +235,10 @@ return array(
             Common\Data\Mapper\DefaultMapper::class => Common\Data\Mapper\DefaultMapper::class,
             SurrenderMapper\OperatorLicence::class => SurrenderMapper\OperatorLicence::class,
             SurrenderMapper\CommunityLicence::class => SurrenderMapper\CommunityLicence::class,
+            \Common\Service\Helper\TranslationHelperService::class => \Common\Service\Helper\TranslationHelperService::class,
+            \Common\Service\Helper\ResponseHelperService::class => \Common\Service\Helper\ResponseHelperService::class,
+            \Common\Service\Helper\FormHelperService::class => \Common\Service\Helper\FormHelperService::class,
+            \Common\Service\Helper\FlashMessengerHelperService::class => \Common\Service\Helper\FlashMessengerHelperService::class,
         ),
         'factories' => array(
             'CommandSender' => \Common\Service\Cqrs\Command\CommandSender::class,
@@ -255,6 +265,7 @@ return array(
             'Common\Service\Data\UserTypesListDataService' => 'Common\Service\Data\UserTypesListDataService',
             'Script' => '\Common\Service\Script\ScriptFactory',
             'Table' => '\Common\Service\Table\TableFactory',
+            \Common\Service\Table\TableFactory::class => \Common\Service\Table\TableFactory::class,
             // Added in a true Laminas Framework V2 compatible factory for TableBuilder, eventually to replace Table above.
             'Common\Service\Table\TableBuilderFactory' => 'Common\Service\Table\TableBuilderFactory',
             'ServiceApiResolver' => 'Common\Service\Api\ResolverFactory',
