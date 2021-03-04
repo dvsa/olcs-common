@@ -60,7 +60,7 @@ class FinancialHistory extends AbstractFormService
             $hasAnyPerson = $dataFieldset->get('hasAnyPerson');
 
             $hasAnyPerson->setTokens(
-                [sprintf('Have any of the new %s been:', $this->getPersonDescription($data['organisationType']))]
+                [sprintf('Has the new %s been:', $this->getPersonDescription($data['organisationType']))]
             );
         }
 
@@ -105,12 +105,12 @@ class FinancialHistory extends AbstractFormService
     {
         switch ($organisationType) {
             case RefData::ORG_TYPE_REGISTERED_COMPANY:
-                return 'directors';
+                return 'director';
             case RefData::ORG_TYPE_LLP:
             case RefData::ORG_TYPE_PARTNERSHIP:
-                return 'partners';
+                return 'partner';
             default:
-                return 'people';
+                return 'person';
         }
     }
 }
