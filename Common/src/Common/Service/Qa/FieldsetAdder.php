@@ -55,6 +55,11 @@ class FieldsetAdder
             $fieldset->setLabelAttributes([]);
         }
 
+        $fieldset->setAttribute(
+            'data-enabled',
+            $options['enabled'] ? 'true' : 'false'
+        );
+
         $form->get('qa')->add($fieldset);
     }
 }
