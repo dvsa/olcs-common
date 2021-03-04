@@ -30,12 +30,6 @@ class SafetyTest extends AbstractFormValidationTestCase
         $this->assertFormElementNumber($element, 1, 13, ['notBetween']);
     }
 
-    public function testSafetyInspections()
-    {
-        $element = ['licence', 'safetyInspections'];
-        $this->assertFormElementHtml($element);
-    }
-
     public function testSafetyInsTrailers()
     {
         $element = ['licence', 'safetyInsTrailers'];
