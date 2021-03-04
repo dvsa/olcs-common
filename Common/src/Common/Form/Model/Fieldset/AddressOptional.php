@@ -116,7 +116,7 @@ class AddressOptional
     public $postcode = null;
 
     /**
-     * @Form\Attributes({"id":"","placeholder":"","value":"GB", "class":"chosen-select-fixed"})
+     * @Form\Attributes({"id":"","placeholder":"","value":"GB"})
      * @Form\Required(false)
      * @Form\Options({
      *     "label": "address_country",

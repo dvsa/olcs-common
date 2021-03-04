@@ -17,8 +17,11 @@
     ],
     "require": {
         "php": ">=7.2",
+        "doctrine/annotations": "^1.8",
+        "doctrine/doctrine-orm-module": "~0.10.0",
         "laminas/laminas-cache": "^2.5",
         "laminas/laminas-code": "^2.5",
+        "laminas/laminas-dependency-plugin": "^2.0",
         "laminas/laminas-di": "^2.5",
         "laminas/laminas-escaper": "^2.5",
         "laminas/laminas-eventmanager": "^2.5",
@@ -41,18 +44,15 @@
         "laminas/laminas-uri": "^2.5",
         "laminas/laminas-validator": "^2.5",
         "laminas/laminas-view": "^2.5",
-        "doctrine/doctrine-orm-module": "~0.10.0",
-        "doctrine/annotations": "^1.8",
-        "symfony/filesystem": "^5",
-        "symfony/lock": "^5",
         "lm-commons/lmc-rbac-mvc": "^2.6",
-        "elendev/nexus-composer-push": "^0.1",
-        "laminas/laminas-dependency-plugin": "^2.0"
+        "olcs/olcs-transfer": "~4.206.0",
+        "symfony/filesystem": "^5",
+        "symfony/lock": "^5"
     },
     "require-dev": {
+        "elendev/nexus-composer-push": "^0.1",
         "olcs/olcs-devtools": "~4.206.0",
         "olcs/olcs-testhelpers": "~4.206.0",
-        "olcs/olcs-transfer": "~4.206.0",
         "olcs/olcs-utils": "~4.206.0",
         "olcs/olcs-logging": "~4.206.0"
     },
@@ -69,7 +69,8 @@
         "secure-http": false,
         "platform": {
             "php": "7.2.31"
-        }
+        },
+        "sort-packages": true
     },
     "scripts": {
         "ut": "vendor/bin/phpunit -c test/phpunit.xml --stop-on-failure",
