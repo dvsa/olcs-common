@@ -148,7 +148,7 @@ class FinancialHistoryTest extends MockeryTestCase
         $mockDataFieldset->shouldReceive('get')->with('hasAnyPerson')->andReturn($mockHasAnyPersonElement);
         $mockHasAnyPersonElement
             ->shouldReceive('setTokens')
-            ->with([sprintf('Have any of the new %s been:', $personDescription)])
+            ->with([sprintf('Has the new %s been:', $personDescription)])
             ->once();
 
         $form = $this->sut->getForm(
@@ -162,13 +162,13 @@ class FinancialHistoryTest extends MockeryTestCase
     public function provideDirectorChangeWordingVariations()
     {
         return [
-            [RefData::ORG_TYPE_REGISTERED_COMPANY, 'directors'],
-            [RefData::ORG_TYPE_SOLE_TRADER, 'people'],
-            [RefData::ORG_TYPE_LLP, 'partners'],
-            [RefData::ORG_TYPE_PARTNERSHIP, 'partners'],
-            [RefData::ORG_TYPE_OTHER, 'people'],
-            [RefData::ORG_TYPE_IRFO, 'people'],
-            ['anything-else', 'people'],
+            [RefData::ORG_TYPE_REGISTERED_COMPANY, 'director'],
+            [RefData::ORG_TYPE_SOLE_TRADER, 'person'],
+            [RefData::ORG_TYPE_LLP, 'partner'],
+            [RefData::ORG_TYPE_PARTNERSHIP, 'partner'],
+            [RefData::ORG_TYPE_OTHER, 'person'],
+            [RefData::ORG_TYPE_IRFO, 'person'],
+            ['anything-else', 'person'],
         ];
     }
 }
