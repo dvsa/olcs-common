@@ -25,5 +25,4 @@ class AddPerson
      * @Form\Attributes({"class":"actions-container"})
      */
     public $formActions = null;
-
 }
