@@ -7,6 +7,8 @@
  */
 namespace Common\Service\Table\Type;
 
+use Common\Util\Escape;
+
 /**
  * Selector type
  *
@@ -49,6 +51,15 @@ class Selector extends AbstractType
             }
         }
 
+        if (isset($column['aria-attributes'])) {
+            foreach ($column['aria-attributes'] as $attrName => $attrValue) {
+                if (is_callable($attrValue)) {
+                    $attrValue = $attrValue($data, $this->getTable()->getTranslator());
+                }
+                $attributes[] = 'aria-' . $attrName . '="' . Escape::html($attrValue) . '"';
+            }
+        }
+
         if (isset($column['disableIfRowIsDisabled']) && $this->getTable()->isRowDisabled($data)) {
             $attributes[] = 'disabled="disabled"';
         }
@@ -66,7 +77,7 @@ class Selector extends AbstractType
             $idx = $column['idIndex'];
         }
 
-        $attributes[] = 'id="'. $fieldset . '[id][' . $data[$idx] .']"' ;
+        $attributes[] = 'id="'. $fieldset . '[id][' . $data[$idx] .']"';
 
         return sprintf($this->format, $name, $data[$idx], implode(' ', $attributes));
     }
