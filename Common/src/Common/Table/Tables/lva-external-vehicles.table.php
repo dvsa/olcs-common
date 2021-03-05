@@ -78,7 +78,12 @@ return array(
             'name' => 'action',
             'width' => 'checkbox',
             'type' => 'Checkbox',
-            'disableIfRowIsDisabled' => true
+            'disableIfRowIsDisabled' => true,
+            'aria-attributes' => [
+                'label' => function ($data, $translator) {
+                    return sprintf($translator->translate("licence.vehicle.table.checkbox.aria-label"), $data['vehicle']['vrm']);
+                },
+            ]
         )
     )
 );

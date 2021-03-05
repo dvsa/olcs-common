@@ -7,15 +7,11 @@
  */
 namespace CommonTest\Service\Table\Type;
 
+use Laminas\I18n\Translator\Translator;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Table\Type\Selector;
 
-/**
- * Selector Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class SelectorTest extends MockeryTestCase
 {
     protected $sut;
@@ -24,6 +20,7 @@ class SelectorTest extends MockeryTestCase
     public function setUp(): void
     {
         $this->table = m::mock();
+        $this->table->shouldIgnoreMissing();
 
         $this->sut = new Selector($this->table);
     }
@@ -203,6 +200,138 @@ class SelectorTest extends MockeryTestCase
             ->once();
 
         $this->assertEquals($expected, $this->sut->render($row, $column));
+    }
+
+    /**
+     * Test render with a single aria attribute defined as a string literal.
+     *
+     * @test
+     * @group tableSelectorAriaSupport
+     */
+    public function render_WithAriaAttribute_LiteralStringDefinition_Single()
+    {
+        $column = [
+            'aria-attributes' => [
+                'label' => 'Some Aria Attribute'
+            ]
+        ];
+
+        $this->assertStringContainsString(
+            ' aria-label="Some Aria Attribute" ',
+            $this->sut->render(['id' => 7], $column)
+        );
+    }
+
+    /**
+     * Test render with a multiple aria attribute defined as string literals.
+     *
+     * @test
+     * @depends render_WithAriaAttribute_LiteralStringDefinition_Single
+     * @group tableSelectorAriaSupport
+     */
+    public function render_WithAriaAttribute_LiteralStringDefinition_Multiple()
+    {
+        $column = [
+            'aria-attributes' => [
+                'label' => 'Some Aria Attribute',
+                'checked' => 'false',
+                'test' => 'testing'
+            ]
+        ];
+
+        $renderedResult = $this->sut->render(['id' => 7], $column);
+        $this->assertStringContainsString(' aria-label="Some Aria Attribute" ', $renderedResult);
+        $this->assertStringContainsString(' aria-checked="false" ', $renderedResult);
+        $this->assertStringContainsString(' aria-test="testing" ', $renderedResult);
+    }
+
+    /**
+     * Test render with aria attribute value being a callback.
+     *
+     * @test
+     * @group tableSelectorAriaSupport
+     */
+    public function render_WithAriaAttribute_AsCallback()
+    {
+        $column = [
+            'aria-attributes' => [
+                'label' => function () {
+                    return 'Test translated string';
+                }
+            ]
+        ];
+
+        $this->assertStringContainsString(
+            ' aria-label="Test translated string" ',
+            $this->sut->render(['id' => 7], $column)
+        );
+    }
+
+    /**
+     * Test render with aria attribute being a callback, translator is passed to callable.
+     *
+     * @test
+     * @depends render_WithAriaAttribute_AsCallback
+     * @group tableSelectorAriaSupport
+     */
+    public function render_WithAriaAttribute_AsCallback_TranslatorIsPassedToCallable()
+    {
+        $translatorMock = m::mock(Translator::class);
+        $this->table
+            ->shouldReceive('getTranslator')
+            ->andReturn($translatorMock);
+
+        $column = [
+            'aria-attributes' => [
+                'label' => function ($data, $translator) use ($translatorMock) {
+                    $this->assertSame($translatorMock, $translator);
+                }
+            ]
+        ];
+
+        $this->sut->render(['id' => 7], $column);
+    }
+
+    /**
+     * Test render with aria attribute being a callback, data is passed to callable.
+     *
+     * @test
+     * @depends render_WithAriaAttribute_AsCallback
+     * @group tableSelectorAriaSupport
+     */
+    public function render_WithAriaAttribute_AsCallback_DataIsPassedToCallable()
+    {
+        $expectedData = ['id' => 7];
+
+        $column = [
+            'aria-attributes' => [
+                'label' => function ($data) use ($expectedData) {
+                    $this->assertSame($expectedData, $data);
+                }
+            ]
+        ];
+
+        $this->sut->render($expectedData, $column);
+    }
+
+    /**
+     * Test render with aria attribute contain HTML is escaped
+     *
+     * @test
+     * @group tableSelectorAriaSupport
+     */
+    public function render_WithAriaAttribute_HtmlIsEscaped()
+    {
+        $column = [
+            'aria-attributes' => [
+                'label' => 'Some <html>'
+            ]
+        ];
+
+        $this->assertStringNotContainsString(
+            '<html>',
+            $this->sut->render(['id' => 7], $column)
+        );
     }
 
     public function disabledCallbackProvider()
