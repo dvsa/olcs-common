@@ -156,11 +156,10 @@ class FinancialHistoryTest extends MockeryTestCase
 
 
         $translationHelperService = m::mock(TranslationHelperService::class);
+        $translationHelperService->shouldReceive('translate')->andReturn([sprintf('Has the new %s been:', $personDescription)]);
         $sl = m::mock(ServiceLocatorInterface::class)->makePartial();
-        $sl->shouldReceive('get')->andReturn($translationHelperService);
+        $sl->shouldReceive('get')->with('Helper\Translation')->andReturn($translationHelperService);
         $this->fsm->shouldReceive('getServiceLocator')->andReturn($sl);
-
-        var_dump($this->fsm->getServiceLocator() === $sl);
 
         $form = $this->sut->getForm(
             $request,
