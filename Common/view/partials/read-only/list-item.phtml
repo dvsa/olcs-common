@@ -76,16 +76,18 @@ else: ?>
             : $this->escapeHtml($this->translate((string)$item['value']))
         );
         ?>
-        <dt><?php echo $this->translate($item['label']); ?></dt>
-        <dd>
-            <?php if (isset($item['url']) && $item['url'] != ''): ?>
-                <a href="<?php echo $item['url']; ?>"><?php echo $value; ?></a>
-            <?php else: ?>
-                <?php echo $value; ?>
-            <?php endif; ?>
+        <dl>
+            <dt><?php echo $this->translate($item['label']); ?></dt>
+            <dd>
+                <?php if (isset($item['url']) && $item['url'] != ''): ?>
+                    <a href="<?php echo $item['url']; ?>"><?php echo $value; ?></a>
+                <?php else: ?>
+                    <?php echo $value; ?>
+                <?php endif; ?>
 
-            <?php echo !empty($item['suffix']) ? $item['suffix'] : '';?>
-        </dd>
+                <?php echo !empty($item['suffix']) ? $item['suffix'] : '';?>
+            </dd>
+        </dl>
         <?php
     }
     ?>
