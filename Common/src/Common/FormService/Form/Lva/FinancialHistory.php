@@ -60,10 +60,10 @@ class FinancialHistory extends AbstractFormService
             /** @var HtmlTranslated $hasAnyPerson */
             $hasAnyPerson = $dataFieldset->get('hasAnyPerson');
 
-            /** @var TranslationHelperService $translator */
             $translator = $this->getServiceLocator()->get('Helper\Translation');
+            assert($translator instanceof TranslationHelperService);
             $hasAnyPersonToken = $translator->translate($this->getCorrectHasAnyPersonKey($data['organisationType']));
-            $hasAnyPerson->setTokens($hasAnyPersonToken);
+            $hasAnyPerson->setTokens([$hasAnyPersonToken]);
         }
 
         return $form;
