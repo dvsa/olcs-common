@@ -15,6 +15,8 @@ use Common\FormService\Form\Lva\FinancialHistory;
 use Common\FormService\FormServiceManager;
 use Common\RefData;
 use Common\Service\Helper\FormHelperService;
+use Common\Service\Helper\TranslationHelperService;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Form\ElementInterface;
@@ -144,12 +146,21 @@ class FinancialHistoryTest extends MockeryTestCase
         $this->formHelper->shouldReceive('remove')->once()->with($mockForm, 'data->financeHint');
         $this->formHelper->shouldReceive('remove')->once()->with($mockForm, 'data->financialHistoryConfirmation');
 
+
         $mockForm->shouldReceive('get')->with('data')->andReturn($mockDataFieldset);
         $mockDataFieldset->shouldReceive('get')->with('hasAnyPerson')->andReturn($mockHasAnyPersonElement);
         $mockHasAnyPersonElement
             ->shouldReceive('setTokens')
             ->with([sprintf('Has the new %s been:', $personDescription)])
             ->once();
+
+
+        $translationHelperService = m::mock(TranslationHelperService::class);
+        $sl = m::mock(ServiceLocatorInterface::class)->makePartial();
+        $sl->shouldReceive('get')->andReturn($translationHelperService);
+        $this->fsm->shouldReceive('getServiceLocator')->andReturn($sl);
+
+        var_dump($this->fsm->getServiceLocator() === $sl);
 
         $form = $this->sut->getForm(
             $request,
