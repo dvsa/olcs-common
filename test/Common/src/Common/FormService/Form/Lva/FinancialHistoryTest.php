@@ -151,7 +151,7 @@ class FinancialHistoryTest extends MockeryTestCase
         $mockDataFieldset->shouldReceive('get')->with('hasAnyPerson')->andReturn($mockHasAnyPersonElement);
         $mockHasAnyPersonElement
             ->shouldReceive('setTokens')
-            ->with([sprintf('Has the new %s been:', $personDescription)])
+            ->with([[sprintf('Has the new %s been:', $personDescription)]])
             ->once();
 
 
