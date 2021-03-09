@@ -6,6 +6,7 @@ use Common\Form\Elements\Types\HtmlTranslated;
 use Common\FormService\Form\AbstractFormService;
 use Common\Form\Form;
 use Common\RefData;
+use Common\Service\Helper\TranslationHelperService;
 use Laminas\Form\ElementInterface;
 use Laminas\Form\FieldsetInterface;
 use Laminas\Http\Request;
@@ -59,9 +60,10 @@ class FinancialHistory extends AbstractFormService
             /** @var HtmlTranslated $hasAnyPerson */
             $hasAnyPerson = $dataFieldset->get('hasAnyPerson');
 
-            $hasAnyPerson->setTokens(
-                [sprintf('Have any of the new %s been:', $this->getPersonDescription($data['organisationType']))]
-            );
+            $translator = $this->getServiceLocator()->get('Helper\Translation');
+            assert($translator instanceof TranslationHelperService);
+            $hasAnyPersonToken = $translator->translate($this->getCorrectHasAnyPersonKey($data['organisationType']));
+            $hasAnyPerson->setTokens([$hasAnyPersonToken]);
         }
 
         return $form;
@@ -95,22 +97,22 @@ class FinancialHistory extends AbstractFormService
     }
 
     /**
-     * Get a word to refer to people in charge of the organisation
+     * Get the correct has any person question for organisation type
      *
      * @param string $organisationType the organisation type
      *
      * @return string
      */
-    private function getPersonDescription($organisationType)
+    private function getCorrectHasAnyPersonKey($organisationType)
     {
         switch ($organisationType) {
             case RefData::ORG_TYPE_REGISTERED_COMPANY:
-                return 'directors';
+                return 'selfserve-app-subSection-person-financial-history-has-director';
             case RefData::ORG_TYPE_LLP:
             case RefData::ORG_TYPE_PARTNERSHIP:
-                return 'partners';
+                return 'selfserve-app-subSection-person-financial-history-has-partner';
             default:
-                return 'people';
+                return 'selfserve-app-subSection-person-financial-history-has-person';
         }
     }
 }
