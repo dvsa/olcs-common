@@ -14,18 +14,8 @@ class AddPerson
 {
 
     /**
-     * @Form\Attributes({"class":"add-multiple"})
-     * @Form\ComposedObject({
-     *     "target_object":"Common\Form\Model\Form\Licence\Fieldset\Person",
-     *     "is_collection":true,
-     *     "options":{
-     *         "count": 1,
-     *         "hint":"markup-add-another-director-hint",
-     *         "hint-position": "below",
-     *         "should_create_template": true,
-     *
-     *     }
-     * })
+     * @Form\Attributes({"class":""})
+     * @Form\ComposedObject("Common\Form\Model\Form\Licence\Fieldset\Person")
      */
     public $data = null;
 
@@ -35,11 +25,4 @@ class AddPerson
      * @Form\Attributes({"class":"actions-container"})
      */
     public $formActions = null;
-
-
-    /**
-     * @Form\Attributes({"value":"1"})
-     * @Form\Type("Hidden")
-     */
-    public $personCount = 1;
 }

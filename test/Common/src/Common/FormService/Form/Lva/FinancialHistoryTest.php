@@ -15,6 +15,8 @@ use Common\FormService\Form\Lva\FinancialHistory;
 use Common\FormService\FormServiceManager;
 use Common\RefData;
 use Common\Service\Helper\FormHelperService;
+use Common\Service\Helper\TranslationHelperService;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Form\ElementInterface;
@@ -144,12 +146,20 @@ class FinancialHistoryTest extends MockeryTestCase
         $this->formHelper->shouldReceive('remove')->once()->with($mockForm, 'data->financeHint');
         $this->formHelper->shouldReceive('remove')->once()->with($mockForm, 'data->financialHistoryConfirmation');
 
+
         $mockForm->shouldReceive('get')->with('data')->andReturn($mockDataFieldset);
         $mockDataFieldset->shouldReceive('get')->with('hasAnyPerson')->andReturn($mockHasAnyPersonElement);
         $mockHasAnyPersonElement
             ->shouldReceive('setTokens')
-            ->with([sprintf('Have any of the new %s been:', $personDescription)])
+            ->with([sprintf('Has the new %s been:', $personDescription)])
             ->once();
+
+
+        $translationHelperService = m::mock(TranslationHelperService::class);
+        $translationHelperService->shouldReceive('translate')->andReturn([sprintf('Has the new %s been:', $personDescription)]);
+        $sl = m::mock(ServiceLocatorInterface::class)->makePartial();
+        $sl->shouldReceive('get')->with('Helper\Translation')->andReturn($translationHelperService);
+        $this->fsm->shouldReceive('getServiceLocator')->andReturn($sl);
 
         $form = $this->sut->getForm(
             $request,
@@ -162,13 +172,13 @@ class FinancialHistoryTest extends MockeryTestCase
     public function provideDirectorChangeWordingVariations()
     {
         return [
-            [RefData::ORG_TYPE_REGISTERED_COMPANY, 'directors'],
-            [RefData::ORG_TYPE_SOLE_TRADER, 'people'],
-            [RefData::ORG_TYPE_LLP, 'partners'],
-            [RefData::ORG_TYPE_PARTNERSHIP, 'partners'],
-            [RefData::ORG_TYPE_OTHER, 'people'],
-            [RefData::ORG_TYPE_IRFO, 'people'],
-            ['anything-else', 'people'],
+            [RefData::ORG_TYPE_REGISTERED_COMPANY, 'director'],
+            [RefData::ORG_TYPE_SOLE_TRADER, 'person'],
+            [RefData::ORG_TYPE_LLP, 'partner'],
+            [RefData::ORG_TYPE_PARTNERSHIP, 'partner'],
+            [RefData::ORG_TYPE_OTHER, 'person'],
+            [RefData::ORG_TYPE_IRFO, 'person'],
+            ['anything-else', 'person'],
         ];
     }
 }
