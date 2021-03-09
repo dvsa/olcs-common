@@ -20,7 +20,16 @@ use Laminas\Form\Form;
  */
 class FieldsetAdderTest extends MockeryTestCase
 {
-    private $options;
+    const FIELDSET_NAME = 'fields123';
+
+    const ELEMENT_TYPE = 'elementType';
+
+    const SHORT_NAME = 'Cabotage';
+
+    const ELEMENT_OPTIONS = [
+        'elementProperty1' => 'elementValue1',
+        'elementProperty2' => 'elementValue2'
+    ];
 
     private $fieldset;
 
@@ -28,26 +37,8 @@ class FieldsetAdderTest extends MockeryTestCase
 
     private $sut;
 
-    private $shortName = 'Cabotage';
-
     public function setUp(): void
     {
-        $fieldsetName = 'fields123';
-
-        $elementType = 'elementType';
-
-        $elementOptions = [
-            'elementProperty1' => 'elementValue1',
-            'elementProperty2' => 'elementValue2'
-        ];
-
-        $this->options = [
-            'fieldsetName' => $fieldsetName,
-            'shortName' => $this->shortName,
-            'type' => $elementType,
-            'element' => $elementOptions
-        ];
-
         $this->fieldset = m::mock(Fieldset::class);
 
         $qaWrapperFieldset = m::mock(Fieldset::class);
@@ -62,13 +53,13 @@ class FieldsetAdderTest extends MockeryTestCase
 
         $fieldsetFactory = m::mock(FieldsetFactory::class);
         $fieldsetFactory->shouldReceive('create')
-            ->with($fieldsetName, $elementType)
+            ->with(self::FIELDSET_NAME, self::ELEMENT_TYPE)
             ->once()
             ->andReturn($this->fieldset);
 
         $fieldsetPopulator = m::mock(FieldsetPopulatorInterface::class);
         $fieldsetPopulator->shouldReceive('populate')
-            ->with($this->form, $this->fieldset, $elementOptions)
+            ->with($this->form, $this->fieldset, self::ELEMENT_OPTIONS)
             ->once()
             ->globally()
             ->ordered();
@@ -82,22 +73,52 @@ class FieldsetAdderTest extends MockeryTestCase
 
         $fieldsetPopulatorProvider = m::mock(FieldsetPopulatorProvider::class);
         $fieldsetPopulatorProvider->shouldReceive('get')
-            ->with($elementType)
+            ->with(self::ELEMENT_TYPE)
             ->once()
             ->andReturn($fieldsetPopulator);
 
         $this->sut = new FieldsetAdder($fieldsetPopulatorProvider, $fieldsetFactory, $fieldsetModifier);
     }
 
-    public function testAddSelfserve()
+    /**
+     * @dataProvider dpEnabled
+     */
+    public function testAddSelfserve($enabled, $expectedDataEnabledAttribute)
     {
-        $this->sut->add($this->form, $this->options, UsageContext::CONTEXT_SELFSERVE);
+        $options = [
+            'fieldsetName' => self::FIELDSET_NAME,
+            'shortName' => self::SHORT_NAME,
+            'type' => self::ELEMENT_TYPE,
+            'element' => self::ELEMENT_OPTIONS,
+            'enabled' => $enabled,
+        ];
+
+        $this->fieldset->shouldReceive('setAttribute')
+            ->with('data-enabled', $expectedDataEnabledAttribute)
+            ->once();
+
+        $this->sut->add($this->form, $options, UsageContext::CONTEXT_SELFSERVE);
     }
 
-    public function testAddInternal()
+    /**
+     * @dataProvider dpEnabled
+     */
+    public function testAddInternal($enabled, $expectedDataEnabledAttribute)
     {
+        $options = [
+            'fieldsetName' => self::FIELDSET_NAME,
+            'shortName' => self::SHORT_NAME,
+            'type' => self::ELEMENT_TYPE,
+            'element' => self::ELEMENT_OPTIONS,
+            'enabled' => $enabled
+        ];
+
+        $this->fieldset->shouldReceive('setAttribute')
+            ->with('data-enabled', $expectedDataEnabledAttribute)
+            ->once();
+
         $this->fieldset->shouldReceive('setLabel')
-            ->with($this->shortName)
+            ->with(self::SHORT_NAME)
             ->once()
             ->globally()
             ->ordered();
@@ -108,6 +129,14 @@ class FieldsetAdderTest extends MockeryTestCase
             ->globally()
             ->ordered();
 
-        $this->sut->add($this->form, $this->options, UsageContext::CONTEXT_INTERNAL);
+        $this->sut->add($this->form, $options, UsageContext::CONTEXT_INTERNAL);
+    }
+
+    public function dpEnabled()
+    {
+        return [
+            [true, 'true'],
+            [false, 'false'],
+        ];
     }
 }
