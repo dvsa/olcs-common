@@ -43,11 +43,12 @@ class AccessedCorrespondenceTest extends MockeryTestCase
                         'accessed' => 'N',
                         'document' => [
                             'description' => 'Description',
+                            'filename' => 'filename.doc'
                         ],
                     ],
                 ],
                 'isNew' => true,
-                'expect' => '<a class="strong" href="LICENCE_URL"><b>Description</b></a>' .
+                'expect' => '<a class="strong" href="LICENCE_URL"><b>Description (doc)</b></a>' .
                     '<span class="status green">unit_New</span> ',
             ],
             [
@@ -57,6 +58,21 @@ class AccessedCorrespondenceTest extends MockeryTestCase
                         'accessed' => 'Y',
                         'document' => [
                             'description' => 'Description',
+                            'filename' => 'filename.doc'
+                        ],
+                    ],
+                ],
+                'isNew' => false,
+                'expect' => '<a class="strong" href="LICENCE_URL"><b>Description (doc)</b></a>',
+            ],
+            [
+                'data' => [
+                    'correspondence' => [
+                        'id' => 1,
+                        'accessed' => 'Y',
+                        'document' => [
+                            'description' => 'Description',
+                            'filename' => 'filename'
                         ],
                     ],
                 ],
