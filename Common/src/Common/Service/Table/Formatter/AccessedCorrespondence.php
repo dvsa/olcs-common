@@ -27,7 +27,6 @@ class AccessedCorrespondence implements FormatterInterface
      */
     public static function format($data, $column = array(), ServiceLocatorInterface $sm = null)
     {
-        unset($column);
 
         $url = $sm->get('Helper\Url')->fromRoute(
             'correspondence/access',
@@ -43,10 +42,16 @@ class AccessedCorrespondence implements FormatterInterface
                 '</span> ';
         }
 
+        $extension = pathinfo($data['correspondence']['document']['filename'], PATHINFO_EXTENSION);
+        if (!empty($extension)) {
+            $extension = ' (' . $extension . ')';
+        }
+
         return sprintf(
-            '<a class="strong" href="%s"><b>%s</b></a>%s',
+            '<a class="strong" href="%s"><b>%s%s</b></a>%s',
             $url,
             $data['correspondence']['document']['description'],
+            $extension,
             $title
         );
     }
