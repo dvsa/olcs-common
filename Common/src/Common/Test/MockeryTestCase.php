@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Common\Test;
 
-use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 
-class UnitTestCase extends MockeryTestCase
+class MockeryTestCase extends \Mockery\Adapter\Phpunit\MockeryTestCase
 {
     /**
      * Configuration for mockery to allow/disallow mocks to mock methods that do not exist when mocking a class.
