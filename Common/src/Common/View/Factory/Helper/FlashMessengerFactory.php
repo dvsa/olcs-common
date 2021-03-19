@@ -9,7 +9,7 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\ServiceManager\ServiceManager;
 
 /**
- * Factory for @see Common\View\Helper\FlashMessenger
+ * @see Common\View\Helper\FlashMessenger
  */
 class FlashMessengerFactory implements FactoryInterface
 {
@@ -26,6 +26,10 @@ class FlashMessengerFactory implements FactoryInterface
         /** @var FlashMessengerHelperService $queryService */
         $flashMessengerHelperService = $sm->get('Helper\FlashMessenger');
 
-        return new FlashMessenger($flashMessengerHelperService);
+        $flashMessenger = new FlashMessenger($flashMessengerHelperService);
+
+        $flashMessenger->setPluginFlashMessenger($sm->get('ControllerPluginManager')->get('FlashMessenger'));
+
+        return $flashMessenger;
     }
 }

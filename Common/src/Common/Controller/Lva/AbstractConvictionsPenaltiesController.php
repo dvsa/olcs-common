@@ -61,7 +61,7 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
                         'id' => $this->getIdentifier(),
                         'version' => $formData['data']['version'],
                         'prevConviction' => $formData['data']['question'],
-                        'convictionsConfirmation' => $formData['convictionsConfirmation']['convictionsConfirmation']
+                        'convictionsConfirmation' => $formData['convictionsConfirmation']['convictionsConfirmation'] ?? null,
                     ]
                 );
 
