@@ -4,6 +4,7 @@ namespace Common\Controller\Lva\Adapters;
 
 use Common\Controller\Lva\AbstractController;
 use Common\Controller\Lva\Interfaces\PeopleAdapterInterface;
+use Common\Controller\Plugin\HandleQuery;
 use Common\RefData;
 use Common\Service\Table\TableBuilder;
 use Laminas\Form\Form;
@@ -102,9 +103,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     protected function handleQuery(\Dvsa\Olcs\Transfer\Query\QueryInterface $command)
     {
         $serviceLocator = $this->getServiceLocator();
-
-        $query = $serviceLocator->get('TransferAnnotationBuilder')->createQuery($command);
-        return $serviceLocator->get('QueryService')->send($query);
+        return $serviceLocator->get('ControllerPluginManager')->get(HandleQuery::class)->__invoke($command);
     }
 
     /**
