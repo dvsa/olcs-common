@@ -2,12 +2,14 @@
 
 namespace Common\View\Helper;
 
+use Laminas\Form\Form;
 use Laminas\I18n\View\Helper\Translate;
 use Laminas\Mvc\Router\Http\RouteMatch;
 use Laminas\View\Helper\AbstractHelper;
 use Laminas\View\Helper\Placeholder;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\View\Model\ViewModel;
 use Olcs\Logging\Log\Logger;
 
 /**
@@ -31,6 +33,11 @@ class PageTitle extends AbstractHelper implements FactoryInterface
     private $routeMatchName;
 
     /**
+     * @var ViewModel
+     */
+    private $viewModel;
+
+    /**
      * @var string
      */
     private $action;
@@ -47,8 +54,12 @@ class PageTitle extends AbstractHelper implements FactoryInterface
         $this->translator = $serviceLocator->get('translate');
         $this->placeholder = $serviceLocator->get('placeholder');
 
-        /** @var RouteMatch $routeMatch */
+
         $routeMatch = $serviceLocator->getServiceLocator()->get('Application')->getMvcEvent()->getRouteMatch();
+        assert($routeMatch instanceof RouteMatch);
+
+        $this->viewModel = $serviceLocator->getServiceLocator()->get('Application')->getMvcEvent()->getResult();
+        assert($this->viewModel instanceof ViewModel);
 
         if ($routeMatch !== null) {
             $this->routeMatchName = $routeMatch->getMatchedRouteName();
@@ -81,6 +92,51 @@ class PageTitle extends AbstractHelper implements FactoryInterface
             }
         }
 
-        return $this->translator->__invoke($pageTitle);
+        $prefix = $this->getPrefix() ?? "";
+        $pageTitle = $this->translator->__invoke($pageTitle);
+
+        if (!is_null($prefix)) {
+            return sprintf('%s: %s', $prefix, $pageTitle);
+        }
+
+        return $pageTitle;
+    }
+
+    /**
+     * Gets a prefix that are required for the title
+     *
+     * @return string|null
+     */
+    private function getPrefix(): ?string
+    {
+        if ($this->pageHasFormErrors()) {
+            return $this->translator->__invoke("Error");
+        }
+
+        return null;
+    }
+
+    /**
+     * Check if any forms on the page have errors
+     *
+     * @return bool
+     */
+    private function pageHasFormErrors(): bool
+    {
+        $children = $this->viewModel->getChildren();
+
+        if (empty($children)) {
+            return false;
+        }
+
+        foreach ($this->viewModel->getChildren() as $child) {
+            foreach ($child->getVariables() as $key => $value) {
+                if ($value instanceof Form && !empty($value->getMessages())) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }
