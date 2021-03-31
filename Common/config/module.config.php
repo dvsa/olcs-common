@@ -98,6 +98,7 @@ return array(
         ),
         'factories' => [
             'currentUser' => \Common\Controller\Plugin\CurrentUserFactory::class,
+            \Common\Controller\Plugin\CurrentUser::class => \Common\Controller\Plugin\CurrentUserFactory::class,
             'ElasticSearch' => 'Common\Controller\Plugin\ElasticSearchFactory',
             'handleQuery' => \Common\Controller\Plugin\HandleQueryFactory::class,
             \Common\Controller\Plugin\HandleQuery::class => \Common\Controller\Plugin\HandleQueryFactory::class,
