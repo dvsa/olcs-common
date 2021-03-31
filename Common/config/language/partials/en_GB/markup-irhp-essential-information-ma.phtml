@@ -1,10 +1,10 @@
 <p class="govuk-body"><?php echo $this->escapeHtml($this->translate('permits.page.bilateral.essential.morocco')); ?></p>
 
-<h2 class="govuk-heading-s govuk-!-margin-top-7"><?php echo $this->escapeHtml($this->translate('permits.page.bilateral.essential.morocco.multi.text1')); ?></h2>
-<p class="govuk-body"><?php echo $this->escapeHtml($this->translate('permits.page.bilateral.essential.morocco.multi.text2')); ?></p>
-
 <h2 class="govuk-heading-s govuk-!-margin-top-7"><?php echo $this->escapeHtml($this->translate('permits.page.bilateral.essential.morocco.standard.text1')); ?></h2>
 <p class="govuk-body"><?php echo $this->escapeHtml($this->translate('permits.page.bilateral.essential.morocco.standard.text2')); ?></p>
+
+<h2 class="govuk-heading-s govuk-!-margin-top-7"><?php echo $this->escapeHtml($this->translate('permits.page.bilateral.essential.morocco.multi.text1')); ?></h2>
+<p class="govuk-body"><?php echo $this->escapeHtml($this->translate('permits.page.bilateral.essential.morocco.multi.text2')); ?></p>
 
 <h2 class="govuk-heading-s govuk-!-margin-top-7"><?php echo $this->escapeHtml($this->translate('permits.page.bilateral.essential.morocco.hors')); ?></h2>
 <p class="govuk-body"><?php echo $this->escapeHtml($this->translate('permits.page.bilateral.essential.morocco.hors.text1')); ?></p>
@@ -23,12 +23,12 @@
     </thead>
     <tbody class="govuk-table__body">
     <tr class="govuk-table__row">
-        <td class="govuk-table__cell">Standard multiple journey permit</td>
-        <td class="govuk-table__cell"><?php echo $this->currencyFormatter(50); ?></td>
-    </tr>
-    <tr class="govuk-table__row">
         <td class="govuk-table__cell">Standard single journey permit</td>
         <td class="govuk-table__cell"><?php echo $this->currencyFormatter(8); ?></td>
+    </tr>
+    <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Standard multiple journey permit</td>
+        <td class="govuk-table__cell"><?php echo $this->currencyFormatter(50); ?></td>
     </tr>
     <tr class="govuk-table__row">
         <td class="govuk-table__cell">Hors contingent (single journey)</td>
