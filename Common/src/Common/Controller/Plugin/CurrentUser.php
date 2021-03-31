@@ -9,7 +9,7 @@ use ZfcRbac\Service\AuthorizationServiceInterface;
  * Class CurrentUser
  * @package Common\Controller\Plugin
  */
-final class CurrentUser extends AbstractPlugin implements CurrentUserInterface
+class CurrentUser extends AbstractPlugin implements CurrentUserInterface
 {
     /**
      * @var \ZfcRbac\Service\AuthorizationService
