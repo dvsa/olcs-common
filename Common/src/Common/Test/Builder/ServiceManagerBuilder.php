@@ -33,8 +33,13 @@ class ServiceManagerBuilder
         } else {
             $services = $this->servicesProvider->setUpDefaultServices($serviceManager);
         }
-        foreach ($services as $serviceName => $service) {
-            $serviceManager->setService($serviceName, $service);
+
+        // Maintain support for deprecated way of registering services via an array of services. Instead, services
+        // should be registered by calling the available setter methods on the ServiceManager instance.
+        if (is_array($services)) {
+            foreach ($services as $serviceName => $service) {
+                $serviceManager->setService($serviceName, $service);
+            }
         }
 
         // Set controller plugin manager to the main service manager so that all services can be resolved from the one

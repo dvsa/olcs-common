@@ -1,39 +1,102 @@
 <?php
 
-/**
- * Form Errors Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\Form\View\Helper;
 
 use Common\Form\Elements\Types\PostcodeSearch;
+use Common\Form\Elements\Validators\Messages\FormElementMessageFormatter;
+use Common\Form\Elements\Validators\Messages\FormElementMessageFormatterFactory;
+use Common\Form\Elements\Validators\Messages\GenericValidationMessage;
+use Common\Form\View\Helper\Extended\FormLabel;
+use Common\Form\View\Helper\Extended\FormLabelFactory;
+use Common\Form\View\Helper\FormErrorsFactory;
+use Common\Test\MocksServicesTrait;
+use Laminas\Form\Form;
+use Laminas\I18n\Translator\TranslatorInterface;
+use Laminas\Mvc\I18n\Translator;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceManager;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Form\View\Helper\FormErrors;
 use Laminas\Form\Element;
 use Laminas\Form\Element\DateSelect;
+use Mockery\MockInterface;
+use HTMLPurifier;
 
 /**
- * Form Errors Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * @see FormErrors
  */
 class FormErrorsTest extends MockeryTestCase
 {
+    use MocksServicesTrait;
+
     protected $sut;
 
     protected $view;
 
-    public function setUp(): void
+    /**
+     * @test
+     */
+    public function __invoke_IsCallable()
     {
-        $this->view = m::mock('\Laminas\View\Renderer\RendererInterface');
+        // Setup
+        $serviceLocator = $this->setUpServiceLocator();
+        $sut = $this->setUpSut($serviceLocator);
 
-        $this->sut = new FormErrors();
-        $this->sut->setView($this->view);
+        // Assert
+        $this->assertIsCallable([$sut, '__invoke']);
     }
 
-    public function testInvokeWithoutForm()
+    /**
+     * @test
+     * @depends __invoke_IsCallable
+     */
+    public function __invoke_EscapesHtmlInMessage()
+    {
+        // Setup
+        $serviceLocator = $this->setUpServiceLocator();
+        $sut = $this->setUpSut($serviceLocator);
+        $form = new Form();
+        $form->setMessages(['<a>some text</a>']);
+
+        // Execute
+        $result = $sut->__invoke($form);
+
+        // Assert
+        $this->assertStringNotContainsString('<a>', $result);
+    }
+
+    /**
+     * @test
+     * @depends __invoke_IsCallable
+     */
+    public function __invoke_DoesNotPurifyMessageHtml_WhenMessageInterfaceHasEscapingDisabled()
+    {
+        // Setup
+        $serviceLocator = $this->setUpServiceLocator();
+        $purifier = $this->setUpMockService(HTMLPurifier::class);
+        $serviceLocator->setService(HTMLPurifier::class, $purifier);
+        $sut = $this->setUpSut($serviceLocator);
+        $message = new GenericValidationMessage();
+        $message->setMessage('bar');
+        $message->setShouldEscape(false);
+        $form = new Form();
+        $form->setMessages(['foo' => $message]);
+
+        // Set Expectations
+        $purifier->shouldReceive('purify')->withAnyArgs()->andReturnUsing(function ($val) {
+            return $val;
+        })->never();
+
+        // Execute
+        $sut->render($form);
+    }
+
+    /**
+     * @test
+     * @depends __invoke_IsCallable
+     */
+    public function __invoke_WithoutForm()
     {
         $form = null;
 
@@ -42,7 +105,11 @@ class FormErrorsTest extends MockeryTestCase
         $this->assertSame($this->sut, $sut($form));
     }
 
-    public function testInvokeRenderWithoutMessages()
+    /**
+     * @test
+     * @depends __invoke_IsCallable
+     */
+    public function __invoke_RenderWithoutMessages()
     {
         $form = m::mock('\Laminas\Form\Form');
         $messages = [];
@@ -51,9 +118,6 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Expectations
-        $this->view->shouldReceive('translate')
-            ->andReturnUsing(array($this, 'mockTranslate'));
-
         $form->shouldReceive('hasValidated')
             ->andReturn(true)
             ->shouldReceive('isValid')
@@ -64,7 +128,11 @@ class FormErrorsTest extends MockeryTestCase
         $this->assertEquals($expected, $sut($form));
     }
 
-    public function testInvokeRenderWithMessagesWithoutLabelOrAnchor()
+    /**
+     * @test
+     * @depends __invoke_IsCallable
+     */
+    public function __invoke_RenderWithMessagesWithoutLabelOrAnchor()
     {
         $messages = [
             'foo' => [
@@ -85,12 +153,10 @@ class FormErrorsTest extends MockeryTestCase
 
         // Mocks
         $form = m::mock('\Laminas\Form\Form');
-        $mockFoo = m::mock('\Laminas\Form\Element');
+
+        $element = $this->setUpElement();
 
         // Expectations
-        $this->view->shouldReceive('translate')
-            ->andReturnUsing(array($this, 'mockTranslate'));
-
         $form->shouldReceive('hasValidated')
             ->andReturn(true)
             ->shouldReceive('isValid')
@@ -112,30 +178,16 @@ class FormErrorsTest extends MockeryTestCase
 
         $form->shouldReceive('get')
             ->with('foo')
-            ->andReturn($mockFoo);
-
-        $mockFoo
-            ->shouldReceive('getOption')
-            ->with('short-label')
-            ->andReturn(null)
-            ->shouldReceive('getOption')
-            ->with('error-message')
-            ->andReturn(null)
-            ->shouldReceive('getOption')
-            ->with('fieldset-attributes')
-            ->andReturn(null)
-            ->shouldReceive('getOption')
-            ->with('label_attributes')
-            ->andReturn(null)
-            ->shouldReceive('getAttribute')
-            ->with('id')
-            ->andReturn(null)
-            ->shouldReceive('getName')->andReturn(null);
+            ->andReturn($element);
 
         $this->assertRegExp($expected, $sut($form));
     }
 
-    public function testInvokeRenderWithMessagesWithAnchor()
+    /**
+     * @test
+     * @depends __invoke_IsCallable
+     */
+    public function __invoke_RenderWithMessagesWithAnchor()
     {
         $messages = [
             'foo' => [
@@ -156,12 +208,12 @@ class FormErrorsTest extends MockeryTestCase
 
         // Mocks
         $form = m::mock('\Laminas\Form\Form');
-        $mockFoo = m::mock('\Laminas\Form\Element');
+
+        $element = $this->setUpElement();
+        $element->setLabel('foo');
+        $element->setAttribute('id', 'foo-id');
 
         // Expectations
-        $this->view->shouldReceive('translate')
-            ->andReturnUsing(array($this, 'mockTranslate'));
-
         $form->shouldReceive('hasValidated')
             ->andReturn(true)
             ->shouldReceive('isValid')
@@ -183,29 +235,16 @@ class FormErrorsTest extends MockeryTestCase
 
         $form->shouldReceive('get')
             ->with('foo')
-            ->andReturn($mockFoo);
-
-        $mockFoo
-            ->shouldReceive('getOption')
-            ->with('short-label')
-            ->andReturn(null)
-            ->shouldReceive('getOption')
-            ->with('error-message')
-            ->andReturn(null)
-            ->shouldReceive('getOption')
-            ->with('fieldset-attributes')
-            ->andReturn(null)
-            ->shouldReceive('getOption')
-            ->with('label_attributes')
-            ->andReturn(null)
-            ->shouldReceive('getAttribute')
-            ->with('id')
-            ->andReturn('foo-id');
+            ->andReturn($element);
 
         $this->assertRegExp($expected, $sut($form));
     }
 
-    public function testInvokeRenderWithMessagesWithAnchor2()
+    /**
+     * @test
+     * @depends __invoke_IsCallable
+     */
+    public function __invoke_RenderWithMessagesWithAnchor2()
     {
         $messages = [
             'foo' => [
@@ -226,12 +265,11 @@ class FormErrorsTest extends MockeryTestCase
 
         // Mocks
         $form = m::mock('\Laminas\Form\Form');
-        $mockFoo = m::mock('\Laminas\Form\Element');
+
+        $element = $this->setUpElement();
+        $element->setOption('label_attributes', ['id' => 'foo-id']);
 
         // Expectations
-        $this->view->shouldReceive('translate')
-            ->andReturnUsing(array($this, 'mockTranslate'));
-
         $form->shouldReceive('hasValidated')
             ->andReturn(true)
             ->shouldReceive('isValid')
@@ -253,26 +291,16 @@ class FormErrorsTest extends MockeryTestCase
 
         $form->shouldReceive('get')
             ->with('foo')
-            ->andReturn($mockFoo);
-
-        $mockFoo
-            ->shouldReceive('getOption')
-            ->with('short-label')
-            ->andReturn(null)
-            ->shouldReceive('getOption')
-            ->with('error-message')
-            ->andReturn(null)
-            ->shouldReceive('getOption')
-            ->with('fieldset-attributes')
-            ->andReturn(null)
-            ->shouldReceive('getOption')
-            ->with('label_attributes')
-            ->andReturn(['id' => 'foo-id']);
+            ->andReturn($element);
 
         $this->assertRegExp($expected, $sut($form));
     }
 
-    public function testInvokeRenderWithMessagesWithAnchor3()
+    /**
+     * @test
+     * @depends __invoke_IsCallable
+     */
+    public function __invoke_RenderWithMessagesWithAnchor3()
     {
         $messages = [
             'foo' => [
@@ -293,12 +321,11 @@ class FormErrorsTest extends MockeryTestCase
 
         // Mocks
         $form = m::mock('\Laminas\Form\Form');
-        $mockFoo = m::mock('\Laminas\Form\Element');
+
+        $element = $this->setUpElement();
+        $element->setOption('fieldset-attributes', ['id' => 'foo-id']);
 
         // Expectations
-        $this->view->shouldReceive('translate')
-            ->andReturnUsing(array($this, 'mockTranslate'));
-
         $form->shouldReceive('hasValidated')
             ->andReturn(true)
             ->shouldReceive('isValid')
@@ -320,23 +347,16 @@ class FormErrorsTest extends MockeryTestCase
 
         $form->shouldReceive('get')
             ->with('foo')
-            ->andReturn($mockFoo);
-
-        $mockFoo
-            ->shouldReceive('getOption')
-            ->with('short-label')
-            ->andReturn(null)
-            ->shouldReceive('getOption')
-            ->with('error-message')
-            ->andReturn(null)
-            ->shouldReceive('getOption')
-            ->with('fieldset-attributes')
-            ->andReturn(['id' => 'foo-id']);
+            ->andReturn($element);
 
         $this->assertRegExp($expected, $sut($form));
     }
 
-    public function testInvokeRenderWithMessagesWithAnchorPostcodeSearch()
+    /**
+     * @test
+     * @depends __invoke_IsCallable
+     */
+    public function __invoke_RenderWithMessagesWithAnchorPostcodeSearch()
     {
         $messages = [
             'foo' => [
@@ -358,8 +378,6 @@ class FormErrorsTest extends MockeryTestCase
         $mockFoo = m::mock(PostcodeSearch::class)->makePartial();
 
         // Expectations
-        $this->view->shouldReceive('translate')->andReturnUsing(array($this, 'mockTranslate'));
-
         $form->shouldReceive('hasValidated')->andReturn(true)
             ->shouldReceive('isValid')->andReturn(false)
             ->shouldReceive('getMessages')->andReturn($messages)
@@ -370,12 +388,17 @@ class FormErrorsTest extends MockeryTestCase
             ->shouldReceive('has')->once()->andReturn()
             ->shouldReceive('get')->with('postcode')->twice()->andReturn(
                 m::mock()->shouldReceive('getAttribute')->with('id')->twice()->andReturn('PC_ID')->getMock()
-            );
+            )
+            ->shouldReceive('getLabel')->andReturn('Default Label');
 
         $this->assertRegExp($expected, $sut($form));
     }
 
-    public function testInvokeRenderWithMessagesWithAnchorDateSelect()
+    /**
+     * @test
+     * @depends __invoke_IsCallable
+     */
+    public function __invoke_RenderWithMessagesWithAnchorDateSelect()
     {
         $messages = [
             'foo' => [
@@ -395,10 +418,9 @@ class FormErrorsTest extends MockeryTestCase
         // Mocks
         $form = m::mock('\Laminas\Form\Form')->makePartial();
         $element = (new DateSelect())->setAttribute('id', 'DS_ID');
+        $element->setLabel('Default Label');
 
         // Expectations
-        $this->view->shouldReceive('translate')->andReturnUsing(array($this, 'mockTranslate'));
-
         $form->shouldReceive('getMessages')->andReturn($messages)
             ->shouldReceive('has')->once()->with('foo')->andReturn(true)
             ->shouldReceive('get')->with('foo')->andReturn($element);
@@ -406,7 +428,11 @@ class FormErrorsTest extends MockeryTestCase
         $this->assertRegExp($expected, $sut($form));
     }
 
-    public function testInvokeRenderWithMessagesWithAnchorUsingName()
+    /**
+     * @test
+     * @depends __invoke_IsCallable
+     */
+    public function __invoke_RenderWithMessagesWithAnchorUsingName()
     {
         $messages = [
             'foo' => [
@@ -425,11 +451,9 @@ class FormErrorsTest extends MockeryTestCase
 
         // Mocks
         $form = m::mock('\Laminas\Form\Form')->makePartial();
-        $element = new Element('NAME');
+        $element = $this->setUpElement('NAME');
 
         // Expectations
-        $this->view->shouldReceive('translate')->andReturnUsing(array($this, 'mockTranslate'));
-
         $form->shouldReceive('getMessages')->andReturn($messages)
             ->shouldReceive('has')->once()->with('foo')->andReturn(true)
             ->shouldReceive('get')->with('foo')->andReturn($element);
@@ -438,9 +462,11 @@ class FormErrorsTest extends MockeryTestCase
     }
 
     /**
-     * Test when a form element has been setup with a custom error message
+     * @test
+     * @testdox Test when a form element has been setup with a custom error message
+     * @depends __invoke_IsCallable
      */
-    public function testInvokeRenderWithCustomErrorMessage()
+    public function __invoke_RenderWithCustomErrorMessage()
     {
         $messages = [
             'foo' => [
@@ -451,7 +477,7 @@ class FormErrorsTest extends MockeryTestCase
             . '<h2 class="govuk-heading-m">form-errors-translated<\/h2>(\s+)?'
             . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
-            . '<li class="validation-summary__item">(\s+)?foo-error-translated(\s+)?<\/li>(\s+)?'
+            . '<li class="validation-summary__item">(\s+)?Foo-error-translated(\s+)?<\/li>(\s+)?'
             . '<\/ol>(\s+)?'
             . '<\/div>/';
 
@@ -459,12 +485,10 @@ class FormErrorsTest extends MockeryTestCase
 
         // Mocks
         $form = m::mock('\Laminas\Form\Form');
-        $mockFoo = m::mock('\Laminas\Form\Element');
+        $element = $this->setUpElement();
+        $element->setOption('error-message', 'foo-error');
 
         // Expectations
-        $this->view->shouldReceive('translate')
-            ->andReturnUsing(array($this, 'mockTranslate'));
-
         $form->shouldReceive('hasValidated')
             ->andReturn(true)
             ->shouldReceive('isValid')
@@ -490,30 +514,16 @@ class FormErrorsTest extends MockeryTestCase
 
         $form->shouldReceive('get')
             ->with('foo')
-            ->andReturn($mockFoo);
-
-        $mockFoo
-            ->shouldReceive('getOption')
-            ->with('short-label')
-            ->andReturn(null)
-            ->shouldReceive('getOption')
-            ->with('error-message')
-            ->andReturn('foo-error')
-            ->shouldReceive('getOption')
-            ->with('fieldset-attributes')
-            ->andReturn(null)
-            ->shouldReceive('getOption')
-            ->with('label_attributes')
-            ->andReturn(null)
-            ->shouldReceive('getAttribute')
-            ->with('id')
-            ->andReturn(null)
-            ->shouldReceive('getName')->andReturn(null);
+            ->andReturn($element);
 
         $this->assertRegExp($expected, $sut($form));
     }
 
-    public function testInvokeRenderWithShortLabelAndAnchor()
+    /**
+     * @test
+     * @depends __invoke_IsCallable
+     */
+    public function __invoke_RenderWithShortLabelAndAnchor()
     {
         $messages = [
             'foo' => [
@@ -526,10 +536,10 @@ class FormErrorsTest extends MockeryTestCase
             . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?'
-            . '<a href="#foo-id">foo-label-translated\: bar-translated-translated<\/a>(\s+)?'
+            . '<a href="#foo-id">Foo-label-translated\: bar-translated<\/a>(\s+)?'
             . '<\/li>(\s+)?'
             . '<li class="validation-summary__item">(\s+)?'
-            . '<a href="#foo-id">foo-label-translated\: cake-translated-translated<\/a>(\s+)?'
+            . '<a href="#foo-id">Foo-label-translated\: cake-translated<\/a>(\s+)?'
             . '<\/li>(\s+)?'
             . '<\/ol>(\s+)?'
             . '<\/div>/';
@@ -538,12 +548,12 @@ class FormErrorsTest extends MockeryTestCase
 
         // Mocks
         $form = m::mock('\Laminas\Form\Form');
-        $mockFoo = m::mock('\Laminas\Form\Element');
+
+        $element = $this->setUpElement();
+        $element->setOption('short-label', 'foo-label');
+        $element->setOption('fieldset-attributes', ['id' => 'foo-id']);
 
         // Expectations
-        $this->view->shouldReceive('translate')
-            ->andReturnUsing(array($this, 'mockTranslate'));
-
         $form->shouldReceive('hasValidated')
             ->andReturn(true)
             ->shouldReceive('isValid')
@@ -565,24 +575,16 @@ class FormErrorsTest extends MockeryTestCase
 
         $form->shouldReceive('get')
             ->with('foo')
-            ->andReturn($mockFoo);
-
-        $mockFoo
-            ->shouldReceive('getOption')
-            ->with('short-label')
-            ->andReturn('foo-label')
-            ->shouldReceive('getOption')
-            ->with('error-message')
-            ->andReturn(null)
-            ->shouldReceive('getOption')
-            ->with('fieldset-attributes')
-            ->andReturn(['id' => 'foo-id'])
-            ->shouldReceive('getName')->andReturn(null);
+            ->andReturn($element);
 
         $this->assertRegExp($expected, $sut($form));
     }
 
-    public function testInvokeRenderWithShortLabelWithoutAnchor()
+    /**
+     * @test
+     * @depends __invoke_IsCallable
+     */
+    public function __invoke_RenderWithShortLabelWithoutAnchor()
     {
         $messages = [
             'foo' => [
@@ -594,9 +596,9 @@ class FormErrorsTest extends MockeryTestCase
             . '<h2 class="govuk-heading-m">form-errors-translated<\/h2>(\s+)?'
             . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
-            . '<li class="validation-summary__item">(\s+)?foo-label-translated\: bar-translated-translated(\s+)?'
+            . '<li class="validation-summary__item">(\s+)?Foo-label-translated\: bar-translated(\s+)?'
             . '<\/li>(\s+)?'
-            . '<li class="validation-summary__item">(\s+)?foo-label-translated\: cake-translated-translated(\s+)?'
+            . '<li class="validation-summary__item">(\s+)?Foo-label-translated\: cake-translated(\s+)?'
             . '<\/li>(\s+)?'
             . '<\/ol>(\s+)?'
             . '<\/div>/';
@@ -605,12 +607,10 @@ class FormErrorsTest extends MockeryTestCase
 
         // Mocks
         $form = m::mock('\Laminas\Form\Form');
-        $mockFoo = m::mock('\Laminas\Form\Element');
+        $element = $this->setUpElement();
+        $element->setOption('short-label', 'foo-label');
 
         // Expectations
-        $this->view->shouldReceive('translate')
-            ->andReturnUsing(array($this, 'mockTranslate'));
-
         $form->shouldReceive('hasValidated')
             ->andReturn(true)
             ->shouldReceive('isValid')
@@ -632,36 +632,20 @@ class FormErrorsTest extends MockeryTestCase
 
         $form->shouldReceive('get')
             ->with('foo')
-            ->andReturn($mockFoo);
-
-        $mockFoo
-            ->shouldReceive('getOption')
-            ->with('short-label')
-            ->andReturn('foo-label')
-            ->shouldReceive('getOption')
-            ->with('error-message')
-            ->andReturn(null)
-            ->shouldReceive('getOption')
-            ->with('fieldset-attributes')
-            ->andReturn(null)
-            ->shouldReceive('getOption')
-            ->with('label_attributes')
-            ->andReturn(null)
-            ->shouldReceive('getAttribute')
-            ->with('id')
-            ->andReturn(null)
-            ->shouldReceive('getName')->andReturn(null);
+            ->andReturn($element);
 
         $this->assertRegExp($expected, $sut($form));
     }
 
-    public function testInvokeRenderWithMessageObjet()
+    /**
+     * @test
+     * @depends __invoke_IsCallable
+     */
+    public function __invoke_RenderWithMessageObjet()
     {
-        $mockValidationMessage = m::mock('\Common\Form\Elements\Validators\Messages\ValidationMessageInterface');
-        $mockValidationMessage->shouldReceive('getMessage')
-            ->andReturn('bar')
-            ->shouldReceive('shouldTranslate')
-            ->andReturn(true);
+        $mockValidationMessage = new GenericValidationMessage();
+        $mockValidationMessage->setMessage('bar');
+        $mockValidationMessage->setShouldTranslate(true);
 
         $messages = [
             'foo' => [
@@ -672,7 +656,7 @@ class FormErrorsTest extends MockeryTestCase
             . '<h2 class="govuk-heading-m">form-errors-translated<\/h2>(\s+)?'
             . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
-            . '<li class="validation-summary__item">(\s+)?bar-translated(\s+)?'
+            . '<li class="validation-summary__item">(\s+)?Bar-translated(\s+)?'
             . '<\/li>(\s+)?'
             . '<\/ol>(\s+)?'
             . '<\/div>/';
@@ -681,12 +665,9 @@ class FormErrorsTest extends MockeryTestCase
 
         // Mocks
         $form = m::mock('\Laminas\Form\Form');
-        $mockFoo = m::mock('\Laminas\Form\Element');
+        $element = $this->setUpElement();
 
         // Expectations
-        $this->view->shouldReceive('translate')
-            ->andReturnUsing(array($this, 'mockTranslate'));
-
         $form->shouldReceive('hasValidated')
             ->andReturn(true)
             ->shouldReceive('isValid')
@@ -708,29 +689,17 @@ class FormErrorsTest extends MockeryTestCase
 
         $form->shouldReceive('get')
             ->with('foo')
-            ->andReturn($mockFoo);
-
-        $mockFoo
-            ->shouldReceive('getOption')
-            ->with('short-label')
-            ->andReturn('foo-label')
-            ->shouldReceive('getOption')
-            ->with('fieldset-attributes')
-            ->andReturn(null)
-            ->shouldReceive('getOption')
-            ->with('label_attributes')
-            ->andReturn(null)
-            ->shouldReceive('getAttribute')
-            ->with('id')
-            ->andReturn(null);
+            ->andReturn($element);
 
         $this->assertRegExp($expected, $sut($form));
     }
 
     /**
-     * Test when a form element has been setup as a fieldset
+     * @test
+     * @testdox Test when a form element has been setup as a fieldset
+     * @depends __invoke_IsCallable
      */
-    public function testInvokeRenderWithMessageObjectElementAsFieldset()
+    public function __invoke_RenderWithMessageObjectElementAsFieldset()
     {
         $messages = [
             'foo' => [
@@ -751,12 +720,8 @@ class FormErrorsTest extends MockeryTestCase
 
         // Mocks
         $form = m::mock('\Laminas\Form\Form');
-        $mockFoo = m::mock('\Laminas\Form\Element');
 
         // Expectations
-        $this->view->shouldReceive('translate')
-            ->andReturnUsing(array($this, 'mockTranslate'));
-
         $form->shouldReceive('hasValidated')
             ->andReturn(true)
             ->shouldReceive('isValid')
@@ -778,31 +743,17 @@ class FormErrorsTest extends MockeryTestCase
             ->shouldReceive('has')
             ->times(3)
             ->andReturn(false)
-            ->shouldReceive('getName')->andReturn(null);
-
-        $form->shouldReceive('get')
-            ->with('foo')
-            ->andReturn($mockFoo);
-
-        $mockFoo
-            ->shouldReceive('getOption')
-            ->with('short-label')
-            ->andReturn(null)
-            ->shouldReceive('getOption')
-            ->with('fieldset-attributes')
-            ->andReturn(null)
-            ->shouldReceive('getOption')
-            ->with('label_attributes')
-            ->andReturn(null)
-            ->shouldReceive('getAttribute')
-            ->with('id')
-            ->andReturn(null)
-            ->shouldReceive('getName')->andReturn(null);
+            ->shouldReceive('getName')->andReturn(null)
+            ->shouldReceive('getLabel')->andReturn('Default Label');
 
         $this->assertRegExp($expected, $sut($form));
     }
 
-    public function testInvokeRenderWithMessagesWithAnchorAndCustomTitle()
+    /**
+     * @test
+     * @depends __invoke_IsCallable
+     */
+    public function __invoke_RenderWithMessagesWithAnchorAndCustomTitle()
     {
         $messages = [
             'foo' => [
@@ -825,12 +776,10 @@ class FormErrorsTest extends MockeryTestCase
 
         // Mocks
         $form = m::mock('\Laminas\Form\Form');
-        $mockFoo = m::mock('\Laminas\Form\Element');
+        $element = $this->setUpElement();
+        $element->setAttribute('id', 'foo-id');
 
         // Expectations
-        $this->view->shouldReceive('translate')
-            ->andReturnUsing(array($this, 'mockTranslate'));
-
         $form->shouldReceive('hasValidated')
             ->andReturn(true)
             ->shouldReceive('isValid')
@@ -852,29 +801,16 @@ class FormErrorsTest extends MockeryTestCase
 
         $form->shouldReceive('get')
             ->with('foo')
-            ->andReturn($mockFoo);
-
-        $mockFoo
-            ->shouldReceive('getOption')
-            ->with('short-label')
-            ->andReturn(null)
-            ->shouldReceive('getOption')
-            ->with('error-message')
-            ->andReturn(null)
-            ->shouldReceive('getOption')
-            ->with('fieldset-attributes')
-            ->andReturn(null)
-            ->shouldReceive('getOption')
-            ->with('label_attributes')
-            ->andReturn(null)
-            ->shouldReceive('getAttribute')
-            ->with('id')
-            ->andReturn('foo-id');
+            ->andReturn($element);
 
         $this->assertRegExp($expected, $sut($form));
     }
 
-    public function testInvokeRenderWithMessagesWithAnchorAndCustomTitleAndParagraph()
+    /**
+     * @test
+     * @depends __invoke_IsCallable
+     */
+    public function __invoke_RenderWithMessagesWithAnchorAndCustomTitleAndParagraph()
     {
         $messages = [
             'foo' => [
@@ -898,12 +834,10 @@ class FormErrorsTest extends MockeryTestCase
 
         // Mocks
         $form = m::mock('\Laminas\Form\Form');
-        $mockFoo = m::mock('\Laminas\Form\Element');
+        $element = $this->setUpElement();
+        $element->setAttribute('id', 'foo-id');
 
         // Expectations
-        $this->view->shouldReceive('translate')
-            ->andReturnUsing(array($this, 'mockTranslate'));
-
         $form->shouldReceive('hasValidated')
             ->andReturn(true)
             ->shouldReceive('isValid')
@@ -925,29 +859,16 @@ class FormErrorsTest extends MockeryTestCase
 
         $form->shouldReceive('get')
             ->with('foo')
-            ->andReturn($mockFoo);
-
-        $mockFoo
-            ->shouldReceive('getOption')
-            ->with('short-label')
-            ->andReturn(null)
-            ->shouldReceive('getOption')
-            ->with('error-message')
-            ->andReturn(null)
-            ->shouldReceive('getOption')
-            ->with('fieldset-attributes')
-            ->andReturn(null)
-            ->shouldReceive('getOption')
-            ->with('label_attributes')
-            ->andReturn(null)
-            ->shouldReceive('getAttribute')
-            ->with('id')
-            ->andReturn('foo-id');
+            ->andReturn($element);
 
         $this->assertRegExp($expected, $sut($form));
     }
 
-    public function testInvokeRenderWithMessagesWithAnchorAndCustomParagraph()
+    /**
+     * @test
+     * @depends __invoke_IsCallable
+     */
+    public function __invoke_RenderWithMessagesWithAnchorAndCustomParagraph()
     {
         $messages = [
             'foo' => [
@@ -970,12 +891,10 @@ class FormErrorsTest extends MockeryTestCase
 
         // Mocks
         $form = m::mock('\Laminas\Form\Form');
-        $mockFoo = m::mock('\Laminas\Form\Element');
+        $element = $this->setUpElement();
+        $element->setAttribute('id', 'foo-id');
 
         // Expectations
-        $this->view->shouldReceive('translate')
-            ->andReturnUsing(array($this, 'mockTranslate'));
-
         $form->shouldReceive('hasValidated')
             ->andReturn(true)
             ->shouldReceive('isValid')
@@ -997,30 +916,72 @@ class FormErrorsTest extends MockeryTestCase
 
         $form->shouldReceive('get')
             ->with('foo')
-            ->andReturn($mockFoo);
-
-        $mockFoo
-            ->shouldReceive('getOption')
-            ->with('short-label')
-            ->andReturn(null)
-            ->shouldReceive('getOption')
-            ->with('error-message')
-            ->andReturn(null)
-            ->shouldReceive('getOption')
-            ->with('fieldset-attributes')
-            ->andReturn(null)
-            ->shouldReceive('getOption')
-            ->with('label_attributes')
-            ->andReturn(null)
-            ->shouldReceive('getAttribute')
-            ->with('id')
-            ->andReturn('foo-id');
+            ->andReturn($element);
 
         $this->assertRegExp($expected, $sut($form));
     }
 
-    public function mockTranslate($text)
+    /**
+     * @inheritDoc
+     */
+    public function setUp(): void
     {
-        return $text . '-translated';
+        $this->view = m::mock('\Laminas\View\Renderer\RendererInterface');
+        $serviceLocator = $this->setUpServiceLocator();
+        $this->sut = $this->setUpSut($serviceLocator);
+        $this->sut->setView($this->view);
+    }
+
+    /**
+     * @param ServiceLocatorInterface $serviceLocator
+     * @return FormErrors
+     */
+    protected function setUpSut(ServiceLocatorInterface $serviceLocator): FormErrors
+    {
+        $pluginManager = $this->setUpAbstractPluginManager($serviceLocator);
+        return (new FormErrorsFactory())->createService($pluginManager);
+    }
+
+    /**
+     * @param ServiceManager $serviceManager
+     */
+    protected function setUpDefaultServices(ServiceManager $serviceManager)
+    {
+        $serviceManager->setService(TranslatorInterface::class, $this->setUpTranslator());
+        $serviceManager->setService(HTMLPurifier::class, new HTMLPurifier());
+        $serviceManager->setFactory(FormLabel::class, new FormLabelFactory());
+        $serviceManager->setFactory(FormElementMessageFormatter::class, new FormElementMessageFormatterFactory());
+    }
+
+    /**
+     * @param ServiceLocatorInterface $serviceLocator
+     * @return FormLabel
+     */
+    protected function setUpFormLabel(ServiceLocatorInterface $serviceLocator): FormLabel
+    {
+        return (new FormLabelFactory())->createService($serviceLocator);
+    }
+
+    /**
+     * @return MockInterface|Translator
+     */
+    protected function setUpTranslator(): MockInterface
+    {
+        $instance = $this->setUpMockService(Translator::class);
+        $instance->shouldReceive('translate')->andReturnUsing(function ($key) {
+            return $key . '-translated';
+        })->byDefault();
+        return $instance;
+    }
+
+    /**
+     * @param string|null $name
+     * @return Element
+     */
+    protected function setUpElement(string $name = null): Element
+    {
+        $element = new Element($name);
+        $element->setLabel('Default Label');
+        return $element;
     }
 }
