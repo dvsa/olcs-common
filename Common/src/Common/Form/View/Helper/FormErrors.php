@@ -1,44 +1,36 @@
 <?php
 
+/**
+ * Form errors view helper
+ *
+ * @author Someone <someone@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
+ */
 namespace Common\Form\View\Helper;
 
 use Common\Form\Elements\Types\PostcodeSearch;
-use Common\Form\Elements\Validators\Messages\FormElementMessageFormatter;
-use Laminas\Form\Element\DateSelect;
-use Laminas\Form\ElementInterface;
+use Laminas\Form\Element;
+use \Laminas\Form\Element\DateSelect;
 use Laminas\Form\View\Helper\AbstractHelper;
 use Laminas\Form\FormInterface;
 use Laminas\Form\Fieldset;
 use Common\Form\Elements\Validators\Messages\ValidationMessageInterface;
-use Laminas\I18n\Translator\TranslatorInterface;
 
 /**
- * @see FormErrorsFactory
- * @see \CommonTest\Form\View\Helper\FormErrorsTest
+ * Form errors view helper
+ *
+ * @author Someone <someone@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
 class FormErrors extends AbstractHelper
 {
+
     /**
      * If set to true, then render formErrors regardless of whether the form is valid.
      * Required for EBSR upload where the form is valid but we still display errors.
      * @var bool
      */
     protected $ignoreValidation = false;
-
-    /**
-     * @var FormElementMessageFormatter
-     */
-    protected $messageFormatter;
-
-    /**
-     * @param FormElementMessageFormatter $messageFormatter
-     * @param TranslatorInterface $translator
-     */
-    public function __construct(FormElementMessageFormatter $messageFormatter, TranslatorInterface $translator)
-    {
-        $this->messageFormatter = $messageFormatter;
-        $this->setTranslator($translator);
-    }
 
     /**
      * Invoke as function
@@ -67,6 +59,14 @@ class FormErrors extends AbstractHelper
      */
     public function render(FormInterface $form)
     {
+        // @NOTE Commenting this out, as messages returned from the api that are set against the form will have already
+        // passed form validation
+        //if (!$this->ignoreValidation) {
+        //    if (!$form->hasValidated() || $form->isValid()) {
+        //        return '';
+        //    }
+        //}
+
         $messages = $form->getMessages();
 
         if (empty($messages)) {
@@ -128,7 +128,7 @@ class FormErrors extends AbstractHelper
                     $this->getFlatMessages($message, $element)
                 );
             } else {
-                $flatMessages[] = $this->formatMessage($element, $message, $field);
+                $flatMessages[] = $this->formatMessage($message, $element);
             }
         }
 
@@ -136,23 +136,45 @@ class FormErrors extends AbstractHelper
     }
 
     /**
-     * Format a message
+     * Format the message
      *
-     * @param ElementInterface $element
-     * @param string $message
-     * @param mixed $messageKey
+     * @param string  $message Message to format
+     * @param Element $element Form element owning the message
+     *
      * @return string
      */
-    protected function formatMessage(ElementInterface $element, $message, $messageKey): string
+    protected function formatMessage($message, $element)
     {
-        $elementShouldEscape = $element->getOption('shouldEscapeMessages');
-        $shouldEscape = true;
         if ($message instanceof ValidationMessageInterface) {
-            $shouldEscape = $message->shouldEscape();
+            $msg = $message->getMessage();
+
+            if ($message->shouldTranslate()) {
+                $msg = $this->translate($msg);
+            }
+
+            return $msg;
         }
-        $message = $this->messageFormatter->formatElementMessage($element, $message, $messageKey);
-        if ($shouldEscape && $elementShouldEscape !== false) {
-            $message = call_user_func($this->getEscapeHtmlHelper(), $message);
+
+        // We translate the initial message, as they are not always translated before they get here
+        $message = $this->translate($message);
+
+        // Grab the short-label if it's set
+        $label = $this->getShortLabel($element);
+
+        if ($label == '') {
+            $message = ucfirst($message);
+        } else {
+            $label = $this->translate($label) . ': ';
+
+            // @NOTE We pass this back through the translator, so individual messages can be tweaked for a better UX
+            $message = $this->translate($label . $message);
+        }
+
+        // If there is a specified custom error message, use that
+        if ($this->getCustomErrorMessage($element)) {
+            $message = $this->getCustomErrorMessage($element);
+            // Translate the message since we have now got new untranslated content
+            $message = $this->translate($message);
         }
 
         // Try and find an element to link to
@@ -169,7 +191,7 @@ class FormErrors extends AbstractHelper
     /**
      * Try and find an anchor to link to
      *
-     * @param ElementInterface $element Element that has the error that we want to link to
+     * @param Element $element Element that has the error that we want to link to
      *
      * @return string
      */
@@ -210,6 +232,42 @@ class FormErrors extends AbstractHelper
     }
 
     /**
+     * Get the short label if it exists
+     *
+     * @param Element $element Element to get teh short label from
+     *
+     * @return string
+     */
+    protected function getShortLabel($element)
+    {
+        $label = $element->getOption('short-label');
+
+        if ($label) {
+            return $label;
+        }
+
+        return '';
+    }
+
+    /**
+     * Get the custom error message if it exists
+     *
+     * @param Element $element Element to get cusomt error message from
+     *
+     * @return string
+     */
+    protected function getCustomErrorMessage($element)
+    {
+        $errorMessage = $element->getOption('error-message');
+
+        if ($errorMessage) {
+            return $errorMessage;
+        }
+
+        return '';
+    }
+
+    /**
      * Helper method to translate strings
      *
      * @param string $text Text to translate
@@ -218,6 +276,8 @@ class FormErrors extends AbstractHelper
      */
     protected function translate($text)
     {
-        return $this->translator->translate($text);
+        $renderer = $this->getView();
+
+        return $renderer->translate($text);
     }
 }

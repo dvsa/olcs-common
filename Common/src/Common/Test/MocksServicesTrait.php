@@ -5,16 +5,15 @@ namespace Common\Test;
 use Common\Test\Builder\ServiceManagerBuilder;
 use Laminas\ServiceManager\AbstractPluginManager;
 use Laminas\ServiceManager\ServiceLocatorInterface;
-use Laminas\ServiceManager\ServiceManager;
 use Mockery\MockInterface;
 use Mockery as m;
 
 trait MocksServicesTrait
 {
     /**
-     * @return ServiceManager
+     * @return ServiceLocatorInterface
      */
-    protected function setUpServiceLocator(): ServiceManager
+    protected function setUpServiceLocator(): ServiceLocatorInterface
     {
         return (new ServiceManagerBuilder(function (ServiceLocatorInterface $serviceLocator) {
             return $this->setUpDefaultServices($serviceLocator);
@@ -46,9 +45,10 @@ trait MocksServicesTrait
     /**
      * Sets up default services.
      *
-     * @param ServiceManager $serviceManager
+     * @param ServiceLocatorInterface $serviceLocator
+     * @return array
      */
-    abstract protected function setUpDefaultServices(ServiceManager $serviceManager);
+    abstract protected function setUpDefaultServices(ServiceLocatorInterface $serviceLocator): array;
 
     /**
      * @param ServiceLocatorInterface $serviceLocator
