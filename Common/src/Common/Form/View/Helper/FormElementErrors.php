@@ -1,39 +1,30 @@
 <?php
 
+/**
+ * Render form element errors
+ *
+ * @author Michael Cooper <michael.cooper@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
+ */
 namespace Common\Form\View\Helper;
 
-use Common\Form\Elements\Validators\Messages\FormElementMessageFormatter;
 use Laminas\Form\View\Helper\FormElementErrors as LaminasFormElementErrors;
-use Laminas\I18n\Translator\TranslatorInterface;
 use Traversable;
 use Laminas\Form\ElementInterface;
 use Laminas\Form\Exception;
 use Common\Form\Elements\Validators\Messages\ValidationMessageInterface;
 
 /**
- * @see FormElementErrorsFactory
- * @see \CommonTest\Form\View\Helper\FormElementErrorsTest
+ * Render form element errors
+ *
+ * @author Michael Cooper <michael.cooper@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
 class FormElementErrors extends LaminasFormElementErrors
 {
     protected $attributes = [
         'class' => 'error__text',
     ];
-
-    /**
-     * @var FormElementMessageFormatter
-     */
-    protected $messageFormatter;
-
-    /**
-     * @param FormElementMessageFormatter $messageFormatter
-     * @param TranslatorInterface $translator
-     */
-    public function __construct(FormElementMessageFormatter $messageFormatter, TranslatorInterface $translator)
-    {
-        $this->messageFormatter = $messageFormatter;
-        $this->setTranslator($translator);
-    }
 
     /**
      * Render validation errors for the provided $element
@@ -69,22 +60,37 @@ class FormElementErrors extends LaminasFormElementErrors
             $attributes = ' ' . $attributes;
         }
 
+        $renderer = $this->getView();
+
         $elementShouldEscape = $element->getOption('shouldEscapeMessages');
-        $escaper = $this->getEscapeHtmlHelper();
 
         // Flatten message array
+        $escapeHtml      = $this->getEscapeHtmlHelper();
         $messagesToPrint = array();
-        array_walk_recursive($messages, function ($item, $itemKey) use (&$messagesToPrint, $elementShouldEscape, $element, $escaper) {
-            $shouldEscape = true;
-            if ($item instanceof ValidationMessageInterface) {
-                $shouldEscape = $item->shouldEscape();
+        array_walk_recursive(
+            $messages,
+            function ($item) use (&$messagesToPrint, $escapeHtml, $renderer, $elementShouldEscape) {
+
+                $shouldTranslate = true;
+                $shouldEscape = true;
+
+                if ($item instanceof ValidationMessageInterface) {
+                    $shouldTranslate = $item->shouldTranslate();
+                    $shouldEscape = $item->shouldEscape();
+                    $item = $item->getMessage();
+                }
+
+                if ($shouldTranslate) {
+                    $item = $renderer->translate($item);
+                }
+
+                if ($shouldEscape && $elementShouldEscape !== false) {
+                    $item = $escapeHtml($item);
+                }
+
+                $messagesToPrint[] = ucfirst($item);
             }
-            $message = $this->messageFormatter->formatElementMessage($element, $item, $itemKey);
-            if ($shouldEscape && $elementShouldEscape !== false) {
-                $message = call_user_func($escaper, $message);
-            }
-            $messagesToPrint[] = $message;
-        });
+        );
 
         if (empty($messagesToPrint)) {
             return '';

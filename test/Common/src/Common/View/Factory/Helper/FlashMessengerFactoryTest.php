@@ -42,10 +42,10 @@ class FlashMessengerFactoryTest extends MockeryTestCase
     }
 
     /**
-     * @param ServiceLocatorInterface $serviceManager
+     * @param ServiceLocatorInterface $serviceLocator
      * @return array
      */
-    protected function setUpDefaultServices(ServiceLocatorInterface $serviceManager): array
+    protected function setUpDefaultServices(ServiceLocatorInterface $serviceLocator): array
     {
         return [
             'FlashMessenger' => $this->setUpMockService(FlashMessenger::class),
