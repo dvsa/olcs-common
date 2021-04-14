@@ -361,6 +361,8 @@ return array(
             PermitsMapper\NoOfPermits::class => PermitsMapper\NoOfPermitsFactory::class,
             Common\Service\User\LastLoginService::class => Common\Service\User\LastLoginServiceFactory::class,
             'HtmlPurifier' => \Common\Service\Utility\HtmlPurifierFactory::class,
+           \Common\Form\View\Helper\Extended\FormLabel::class => \Common\Form\View\Helper\Extended\FormLabelFactory::class,
+            \Common\Form\Elements\Validators\Messages\FormElementMessageFormatter::class => \Common\Form\Elements\Validators\Messages\FormElementMessageFormatterFactory::class,
         )
     ),
     'file_uploader' => array(
@@ -384,8 +386,6 @@ return array(
             'form' => 'Common\Form\View\Helper\Form',
             'formCollection' => Common\Form\View\Helper\FormCollection::class,
             'formElement' => Common\Form\View\Helper\FormElement::class,
-            'formElementErrors' => 'Common\Form\View\Helper\FormElementErrors',
-            'formErrors' => 'Common\Form\View\Helper\FormErrors',
             'formDateTimeSelect' => 'Common\Form\View\Helper\FormDateTimeSelect',
             'formDateSelect' => \Common\Form\View\Helper\FormDateSelect::class,
             FormInputSearch::class => FormInputSearch::class,
@@ -460,7 +460,15 @@ return array(
             'translateReplace' => \Common\View\Helper\TranslateReplace::class,
             'flashMessengerAll' => \Common\View\Factory\Helper\FlashMessengerFactory::class,
             'escapeHtml' => \Common\View\Factory\Helper\EscapeHtmlFactory::class,
+            \Common\Form\View\Helper\FormElementErrors::class => \Common\Form\View\Helper\FormElementErrorsFactory::class,
+            \Common\Form\View\Helper\FormErrors::class => \Common\Form\View\Helper\FormErrorsFactory::class,
         ),
+        'aliases' => [
+            'formElementErrors' => \Common\Form\View\Helper\FormElementErrors::class,
+            'formelementerrors' => \Common\Form\View\Helper\FormElementErrors::class,
+            'formErrors' => \Common\Form\View\Helper\FormErrors::class,
+            'formerrors' => \Common\Form\View\Helper\FormErrors::class,
+        ],
     ),
     'view_manager' => array(
         'template_path_stack' => array(
