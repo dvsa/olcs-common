@@ -11,9 +11,8 @@ use Common\Form\View\Helper\FormElementErrorsFactory;
 use Common\Test\MockeryTestCase;
 use Common\Test\MocksServicesTrait;
 use Laminas\I18n\Translator\TranslatorInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
-use HTMLPurifier;
 use Laminas\ServiceManager\ServiceManager;
+use Laminas\Validator\ValidatorPluginManager;
 
 /**
  * @see FormElementErrorsFactory
@@ -21,6 +20,8 @@ use Laminas\ServiceManager\ServiceManager;
 class FormElementErrorsFactoryTest extends MockeryTestCase
 {
     use MocksServicesTrait;
+
+    protected const VALIDATOR_MANAGER = 'ValidatorManager';
 
     /**
      * @test
@@ -96,7 +97,7 @@ class FormElementErrorsFactoryTest extends MockeryTestCase
     protected function setUpDefaultServices(ServiceManager $serviceManager)
     {
         $serviceManager->setService(TranslatorInterface::class, $this->setUpMockService(TranslatorInterface::class));
-        $serviceManager->setService(HTMLPurifier::class, new HTMLPurifier());
         $serviceManager->setFactory(FormElementMessageFormatter::class, new FormElementMessageFormatterFactory());
+        $serviceManager->setService(static::VALIDATOR_MANAGER, new ValidatorPluginManager());
     }
 }

@@ -6,8 +6,6 @@ use Common\Form\Elements\Types\PostcodeSearch;
 use Common\Form\Elements\Validators\Messages\FormElementMessageFormatter;
 use Common\Form\Elements\Validators\Messages\FormElementMessageFormatterFactory;
 use Common\Form\Elements\Validators\Messages\GenericValidationMessage;
-use Common\Form\View\Helper\Extended\FormLabel;
-use Common\Form\View\Helper\Extended\FormLabelFactory;
 use Common\Form\View\Helper\FormErrorsFactory;
 use Common\Test\MocksServicesTrait;
 use Laminas\Form\Form;
@@ -15,6 +13,7 @@ use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\ServiceManager\ServiceManager;
+use Laminas\Validator\ValidatorPluginManager;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Form\View\Helper\FormErrors;
@@ -29,6 +28,8 @@ use HTMLPurifier;
 class FormErrorsTest extends MockeryTestCase
 {
     use MocksServicesTrait;
+
+    protected const VALIDATOR_MANAGER = 'ValidatorManager';
 
     protected $sut;
 
@@ -948,18 +949,8 @@ class FormErrorsTest extends MockeryTestCase
     protected function setUpDefaultServices(ServiceManager $serviceManager)
     {
         $serviceManager->setService(TranslatorInterface::class, $this->setUpTranslator());
-        $serviceManager->setService(HTMLPurifier::class, new HTMLPurifier());
-        $serviceManager->setFactory(FormLabel::class, new FormLabelFactory());
         $serviceManager->setFactory(FormElementMessageFormatter::class, new FormElementMessageFormatterFactory());
-    }
-
-    /**
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return FormLabel
-     */
-    protected function setUpFormLabel(ServiceLocatorInterface $serviceLocator): FormLabel
-    {
-        return (new FormLabelFactory())->createService($serviceLocator);
+        $serviceManager->setService(static::VALIDATOR_MANAGER, new ValidatorPluginManager());
     }
 
     /**

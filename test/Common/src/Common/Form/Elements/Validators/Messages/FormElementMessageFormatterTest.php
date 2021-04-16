@@ -1,35 +1,146 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Form\Elements\Validators\Messages;
 
 use Common\Form\Elements\Validators\Messages\FormElementMessageFormatter;
 use Common\Form\Elements\Validators\Messages\FormElementMessageFormatterFactory;
 use Common\Form\Elements\Validators\Messages\GenericValidationMessage;
-use Common\Form\View\Helper\Extended\FormLabel;
-use Common\Form\View\Helper\Extended\FormLabelFactory;
+use Common\Test\Form\Element\ElementBuilder;
 use Common\Test\MockeryTestCase;
 use Common\Test\MocksServicesTrait;
+use Common\Test\Translator\MocksTranslatorsTrait;
+use Hamcrest\Matcher;
+use Hamcrest\Text\MatchesPattern;
 use Laminas\Form\Element;
 use Laminas\I18n\Translator\TranslatorInterface;
-use Laminas\Mvc\I18n\Translator;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\ServiceManager\ServiceManager;
-use Laminas\Validator\NotEmpty;
-use Mockery\MockInterface;
-use HTMLPurifier;
+use Laminas\Validator\ValidatorPluginManager;
 
+/**
+ * @see FormElementMessageFormatter
+ */
 class FormElementMessageFormatterTest extends MockeryTestCase
 {
     use MocksServicesTrait;
+    use MocksTranslatorsTrait;
+
+    protected const VALIDATOR_MANAGER = 'ValidatorManager';
+    protected const ELEM_TYPE = 'ELEMENT TYPE';
+    protected const ELEM_TYPE_WITH_NO_TRANSLATION = 'ELEMENT TYPE WITH NO TRANSLATION';
+    protected const MISSING_ELEM_TYPE_REPLACEMENT = 'default';
+    protected const LABEL_PLACEHOLDER = '{{fieldLabel}}';
+    protected const LABEL_WITH_HTML = '<strong>LABEL WITH HTML</strong>';
+    protected const LABEL_WITH_NO_CONTENT = '';
+    protected const LABEL_WITH_CONTENT = 'LABEL WITH CONTENT';
+    protected const LABEL_WITH_TRAILING_WHITESPACE = 'LABEL WITH TRAILING WHITESPACE    ';
+    protected const REPLACEMENT_MESSAGE_WITH_LABEL_PLACEHOLDER = 'REPLACEMENT MESSAGE WITH FIELD LABEL: "{{fieldLabel}}"';
+    protected const REPLACEMENT_MESSAGE_WITHOUT_PLACEHOLDER = 'REPLACEMENT MESSAGE WITHOUT PLACEHOLDER';
+    protected const MESSAGE_KEY = 'MESSAGE KEY';
+    protected const DEFAULT_MESSAGE = 'DEFAULT MESSAGE';
+    protected const DEFAULT_MESSAGE_TRANSLATED = 'DEFAULT MESSAGE TRANSLATED';
+    protected const MESSAGE_WITHOUT_PLACEHOLDER = 'MESSAGE WITHOUT PLACEHOLDER';
+    protected const MESSAGE_WITHOUT_PLACEHOLDER_TRANSLATED = 'MESSAGE WITHOUT PLACEHOLDER TRANSLATED';
+    protected const MESSAGE_WITH_LABEL_PLACEHOLDER = 'CUSTOM MESSAGE WITH FIELD LABEL: "{{fieldLabel}}"';
+    protected const MESSAGE_WITH_LABEL_PLACEHOLDER_REPLACED_WITH_EMPTY_LABEL = 'CUSTOM MESSAGE WITH FIELD LABEL: ""';
+    protected const MESSAGE_WITH_LABEL_PLACEHOLDER_REPLACED_WITH_NON_EMPTY_LABEL = 'CUSTOM MESSAGE WITH FIELD LABEL: "LABEL WITH CONTENT"';
+    protected const MESSAGE_WITH_LABEL_PLACEHOLDER_REPLACED_WITH_TRIMMED_LABEL_WITH_TRAILING_WHITESPACE = 'CUSTOM MESSAGE WITH FIELD LABEL: "LABEL WITH TRAILING WHITESPACE"';
+    protected const DEFAULT_REPLACEMENT_WHERE_ELEMENT_TYPE_DOES_NOT_HAVE_ITS_OWN_TRANSLATION = 'validation.element.default.MESSAGE KEY';
+
+    /**
+     * @var FormElementMessageFormatter|null
+     */
+    protected $sut;
+
+    /**
+     * @test
+     */
+    public function getReplacementFor_IsCallable()
+    {
+        // Setup
+        $this->sut = $this->setUpSut($this->serviceManager());
+
+        // Assert
+        $this->assertIsCallable([$this->sut, 'getReplacementFor']);
+    }
+
+    /**
+     * @test
+     */
+    public function enableReplacementOfMessage_IsCallable()
+    {
+        // Setup
+        $this->sut = $this->setUpSut($this->serviceManager());
+
+        // Assert
+        $this->assertIsCallable([$this->sut, 'enableReplacementOfMessage']);
+    }
+
+    /**
+     * @test
+     * @depends enableReplacementOfMessage_IsCallable
+     */
+    public function enableReplacementOfMessage_SetsDefaultMessageProviderForMessagesWithKey()
+    {
+        // Setup
+        $this->sut = $this->setUpSut($this->serviceManager());
+        $defaultMessageProvider = function ($val) {
+            return $val;
+        };
+
+        // Execute
+        $this->sut->enableReplacementOfMessage(static::MESSAGE_KEY, $defaultMessageProvider);
+
+        // Assert
+        $this->assertSame($defaultMessageProvider, $this->sut->getReplacementFor(static::MESSAGE_KEY));
+    }
+
+    /**
+     * @test
+     * @depends enableReplacementOfMessage_IsCallable
+     */
+    public function enableReplacementOfMessage_EncapsulatesTextReplacements_IsCallable()
+    {
+        // Setup
+        $this->sut = $this->setUpSut($this->serviceManager());
+
+        // Execute
+        $this->sut->enableReplacementOfMessage(static::MESSAGE_KEY, static::DEFAULT_MESSAGE);
+
+        // Assert
+        $provider = $this->sut->getReplacementFor(static::MESSAGE_KEY);
+        $this->assertIsCallable($provider);
+    }
+
+    /**
+     * @test
+     * @depends enableReplacementOfMessage_EncapsulatesTextReplacements_IsCallable
+     */
+    public function enableReplacementOfMessage_EncapsulatesTextReplacements_IsCallableThatReturnsOriginalText()
+    {
+        // Setup
+        $this->sut = $this->setUpSut($this->serviceManager());
+
+        // Execute
+        $this->sut->enableReplacementOfMessage(static::MESSAGE_KEY, static::DEFAULT_MESSAGE);
+
+        // Assert
+        $provider = $this->sut->getReplacementFor(static::MESSAGE_KEY);
+        $this->assertEquals(static::DEFAULT_MESSAGE, call_user_func($provider));
+    }
 
     /**
      * @test
      */
     public function formatElementMessage_IsCallable()
     {
-        $serviceLocator = $this->setUpServiceLocator();
-        $sut = $this->setUpSut($serviceLocator);
-        $this->assertIsCallable([$sut, 'formatElementMessage']);
+        // Setup
+        $this->sut = $this->setUpSut($this->serviceManager());
+
+        // Assert
+        $this->assertIsCallable([$this->sut, 'formatElementMessage']);
     }
 
     /**
@@ -38,417 +149,374 @@ class FormElementMessageFormatterTest extends MockeryTestCase
      */
     public function formatElementMessage_ReturnsString()
     {
-        //setup
-        $serviceLocator = $this->setUpServiceLocator();
-        $sut = $this->setUpSut($serviceLocator);
-        $element = $this->setUpElement();
+        // Setup
+        $this->sut = $this->setUpSut($this->serviceManager());
+        $element = ElementBuilder::anElement()->build();
 
-        //Execute
-        $result = $sut->formatElementMessage($element, 'foo', 'foo');
+        // Execute
+        $formattedMessage = $this->sut->formatElementMessage($element, static::DEFAULT_MESSAGE, static::MESSAGE_KEY);
 
-        //Assert
-        $this->assertIsString($result);
+        // Assert
+        $this->assertIsString($formattedMessage);
     }
 
     /**
      * @test
-     * @testdox Format element message should accept null labels from an element; we have some dodgy elements which do
-     * not always adhere to the element interface by returning a string as a label.
      * @depends formatElementMessage_ReturnsString
      */
     public function formatElementMessage_AcceptsNullElementLabels()
     {
-        //setup
-        $serviceLocator = $this->setUpServiceLocator();
-        $sut = $this->setUpSut($serviceLocator);
-        $element = new class extends Element {
-            public function getLabel()
-            {
-                return null;
-            }
-        };
+        // Setup
+        $this->sut = $this->setUpSut($this->serviceManager());
+        $element = ElementBuilder::anElement();
 
-        //Execute
-        $result = $sut->formatElementMessage($element, 'foo', 'foo');
+        // Execute
+        $formattedMessage = $this->sut->formatElementMessage($element, static::DEFAULT_MESSAGE, static::MESSAGE_KEY);
 
-        //Assert
-        $this->assertIsString($result);
+        // Assert
+        $this->assertIsString($formattedMessage);
     }
 
     /**
      * @test
      * @depends formatElementMessage_IsCallable
      */
-    public function formatElementMessage_ReplacesFieldLabelsPlaceholder()
-    {
-        //setup
-        $serviceLocator = $this->setUpServiceLocator();
-        $sut = $this->setUpSut($serviceLocator);
-        $element = $this->setUpElement();
-
-        //Execute
-        $result = $sut->formatElementMessage($element, 'Enter ' . FormElementMessageFormatter::FIELD_LABEL_PLACEHOLDER, 'foo');
-
-        //Assert
-        $this->assertStringNotContainsString(FormElementMessageFormatter::FIELD_LABEL_PLACEHOLDER, $result);
-    }
-
-    /**
-     * @test
-     * @depends formatElementMessage_IsCallable
-     */
-    public function formatElementMessage_ReplacesFieldLabelPlaceholder_WhenLabelEmpty_WithEmptyString()
+    public function formatElementMessage_ReplacesFieldLabelPlaceholder_InCustomMessage()
     {
         // Setup
-        $serviceLocator = $this->setUpServiceLocator();
-        $sut = $this->setUpSut($serviceLocator);
-        $element = $this->setUpElement();
-        $element->setLabel('');
+        $this->sut = $this->setUpSut($this->serviceManager());
+        $element = ElementBuilder::anElement()->withLabel(static::LABEL_WITH_CONTENT)->build();
 
         // Execute
-        $result = $sut->formatElementMessage($element, 'Enter ' . FormElementMessageFormatter::FIELD_LABEL_PLACEHOLDER, 'foo');
+        $formattedMessage = $this->sut->formatElementMessage($element, static::MESSAGE_WITH_LABEL_PLACEHOLDER, static::MESSAGE_KEY);
 
         // Assert
-        $this->assertStringContainsString('Enter ', $result);
+        $this->assertEquals(static::MESSAGE_WITH_LABEL_PLACEHOLDER_REPLACED_WITH_NON_EMPTY_LABEL, $formattedMessage);
     }
 
     /**
      * @test
-     * @depends formatElementMessage_ReplacesFieldLabelsPlaceholder
+     * @depends formatElementMessage_ReplacesFieldLabelPlaceholder_InCustomMessage
      */
-    public function formatElementMessage_ReplacesFieldLabelPlaceholder_WithLabel()
+    public function formatElementMessage_ReplacesFieldLabelPlaceholder_InCustomMessage_WithEmptyString_WhenLabelEmpty()
     {
         // Setup
-        $serviceLocator = $this->setUpServiceLocator();
-        $labelRenderer = $this->setUpMockService(FormLabel::class);
-        $serviceLocator->setService(FormLabel::class, $labelRenderer);
-        $sut = $this->setUpSut($serviceLocator);
-        $element = $this->setUpElement();
-        $element->setLabel($expectedLabel = 'hello');
+        $this->sut = $this->setUpSut($this->serviceManager());
+        $element = ElementBuilder::anElement()->withLabel(static::LABEL_WITH_NO_CONTENT)->build();
 
         // Execute
-        $result = $sut->formatElementMessage($element, 'Enter ' . FormElementMessageFormatter::FIELD_LABEL_PLACEHOLDER, 'foo');
+        $formattedMessage = $this->sut->formatElementMessage($element, static::MESSAGE_WITH_LABEL_PLACEHOLDER, static::MESSAGE_KEY);
 
         // Assert
-        $this->assertStringContainsString("Enter " . $expectedLabel, $result);
+        $this->assertEquals(static::MESSAGE_WITH_LABEL_PLACEHOLDER_REPLACED_WITH_EMPTY_LABEL, $formattedMessage);
     }
 
     /**
      * @test
-     * @depends formatElementMessage_ReplacesFieldLabelPlaceholder_WithLabel
+     * @depends formatElementMessage_ReplacesFieldLabelPlaceholder_InCustomMessage
      */
-    public function formatElementMessage_ReplacesFieldLabelPlaceholder_WithLabel_AsTrimmed()
+    public function formatElementMessage_ReplacesFieldLabelPlaceholder_InCustomMessage_AsTrimmed()
     {
         //setup
-        $serviceLocator = $this->setUpServiceLocator();
-        $labelRenderer = $this->setUpMockService(FormLabel::class);
-        $serviceLocator->setService(FormLabel::class, $labelRenderer);
-        $sut = $this->setUpSut($serviceLocator);
-        $element = $this->setUpElement();
-        $element->setLabel('     foo');
+        $serviceLocator = $this->setUpServiceManager();
+        $this->sut = $this->setUpSut($serviceLocator);
+        $element = ElementBuilder::anElement()->withLabel(static::LABEL_WITH_TRAILING_WHITESPACE)->build();
 
         //Execute
-        $result = $sut->formatElementMessage($element, 'Enter ' . FormElementMessageFormatter::FIELD_LABEL_PLACEHOLDER, 'foo');
+        $formattedMessage = $this->sut->formatElementMessage($element, static::MESSAGE_WITH_LABEL_PLACEHOLDER, static::MESSAGE_KEY);
 
         //Assert
-        $this->assertStringContainsString("Enter foo", $result);
+        $this->assertEquals(static::MESSAGE_WITH_LABEL_PLACEHOLDER_REPLACED_WITH_TRIMMED_LABEL_WITH_TRAILING_WHITESPACE, $formattedMessage);
     }
 
     /**
      * @test
-     * @depends formatElementMessage_ReplacesFieldLabelPlaceholder_WithLabel
      * @testdox Replaces the field label placeholder with a label that is only translated once. It is important that the
      * replacement message is not translated a second time before having any variables replaced. This is because, at the
      * time of writing this, there is an issue with the MissingTranslationProcessor which will change the placeholder
      * prefix/suffix curly braces so that they no longer get correctly replaced.
+     * @depends formatElementMessage_ReplacesFieldLabelPlaceholder_InCustomMessage
      */
-    public function formatElementMessage_ReplacesFieldLabelPlaceholder_WithLabel_TranslatedOnce()
+    public function formatElementMessage_ReplacesVariablesBeforeTranslating()
     {
         // Setup
-        $serviceLocator = $this->setUpServiceLocator();
-        $sut = $this->setUpSut($serviceLocator);
-        $element = $this->setUpElement();
-        $element->setLabel('bar');
-        $element->setAttribute('type', $elementType = 'password');
-        $messageKey = NotEmpty::IS_EMPTY;
-        $this->resolveMockService($serviceLocator, TranslatorInterface::class)
-            ->shouldReceive('translate')
-            ->with(sprintf('validation.element.%s.%s', $elementType, $messageKey))
-            ->andReturn($translatedReplacementDefaultMessage = 'foo');
-
-        // Define Expectations
-        $this->resolveMockService($serviceLocator, TranslatorInterface::class)
-            ->shouldReceive('translate')
-            ->with($translatedReplacementDefaultMessage)
-            ->never();
+        $this->sut = $this->setUpSut($this->serviceManager());
+        $element = ElementBuilder::anElement()->withLabel(static::LABEL_WITH_CONTENT)->build();
+        $this->enableReplacementOfMessage(static::MESSAGE_KEY, static::DEFAULT_MESSAGE)->andReturn(static::REPLACEMENT_MESSAGE_WITHOUT_PLACEHOLDER);
 
         // Execute
-        $sut->formatElementMessage($element, "Value is required and can't be empty", $messageKey);
-    }
+        $this->sut->formatElementMessage($element, static::DEFAULT_MESSAGE, static::MESSAGE_KEY);
 
-    /**
-     * @return array[]
-     */
-    public function defaultMessageKeyMessagesProvider(): array
-    {
-        return [
-            'NotEmpty::IS_EMPTY default message' => [NotEmpty::IS_EMPTY, "Value is required and can't be empty"],
-        ];
+        // Assert
+        $this->translator()->shouldNotHaveReceived('translate', [static::REPLACEMENT_MESSAGE_WITHOUT_PLACEHOLDER]);
     }
 
     /**
      * @test
      * @depends formatElementMessage_IsCallable
-     * @dataProvider defaultMessageKeyMessagesProvider
-     * @param string $messageKey
-     * @param string $defaultMessage
      */
-    public function formatElementMessage_ReplacesDefaultMessage(string $messageKey, string $defaultMessage)
+    public function formatElementMessage_ReplacesDefaultMessage_WhenElementTypeIsSet()
     {
         // Setup
-        $serviceLocator = $this->setUpServiceLocator();
-        $sut = $this->setUpSut($serviceLocator);
-        $element = $this->setUpElement();
-        $element->setAttribute('type', $expectedType = 'foo');
-        $replacementMessageKey = sprintf('validation.element.%s.%s', $expectedType, NotEmpty::IS_EMPTY);
-        $this->resolveMockService($serviceLocator, TranslatorInterface::class)
-            ->shouldReceive('translate')
-            ->with($replacementMessageKey)
-            ->andReturn($replacementMessage = 'bar');
+        $this->sut = $this->setUpSut($this->serviceManager());
+        $element = ElementBuilder::anElement()->withType(static::ELEM_TYPE)->build();
+        $this->enableReplacementOfMessage(static::MESSAGE_KEY, static::DEFAULT_MESSAGE)->andReturn(static::REPLACEMENT_MESSAGE_WITHOUT_PLACEHOLDER);
 
         // Execute
-        $result = $sut->formatElementMessage($element, $defaultMessage, $messageKey);
+        $formattedMessage = $this->sut->formatElementMessage($element, static::DEFAULT_MESSAGE, static::MESSAGE_KEY);
 
         // Assert
-        $this->assertStringContainsString($replacementMessage, strtolower($result));
+        $this->assertEquals(static::REPLACEMENT_MESSAGE_WITHOUT_PLACEHOLDER, $formattedMessage);
     }
 
     /**
      * @test
-     * @todo depends render_ReplacesDefaultMessage
-     * @dataProvider defaultMessageKeyMessagesProvider
+     * @depends formatElementMessage_ReplacesDefaultMessage_WhenElementTypeIsSet
      */
-    public function formatElementMessage_ReplacesDefaultMessage_WhenDefaultMessageIsTranslated(string $messageKey, string $defaultMessage)
+    public function formatElementMessage_ReplacesDefaultMessage_WhenDefaultMessageIsTranslated()
     {
         // Setup
-        $serviceLocator = $this->setUpServiceLocator();
-        $sut = $this->setUpSut($serviceLocator);
-        $element = $this->setUpElement();
-        $element->setAttribute('type', $expectedType = 'foo');
-        $translatedMessage = 'bar';
-        $replacementMessageKey = sprintf('validation.element.%s.%s', $expectedType, $messageKey);
-        $this->resolveMockService($serviceLocator, TranslatorInterface::class)
-            ->shouldReceive('translate')
-            ->with($replacementMessageKey)
-            ->andReturn($replacementMessage = 'replacement-message');
-        $this->resolveMockService($serviceLocator, TranslatorInterface::class)
-            ->shouldReceive('translate')
-            ->with($defaultMessage)
-            ->andReturn($translatedMessage);
+        $this->sut = $this->setUpSut($this->serviceManager());
+        $element = ElementBuilder::anElement()->withType(static::ELEM_TYPE)->build();
+        $this->enableReplacementOfMessage(static::MESSAGE_KEY, static::DEFAULT_MESSAGE)->andReturn(static::REPLACEMENT_MESSAGE_WITHOUT_PLACEHOLDER);
+        $this->translator()->shouldReceive('translate')->with(static::DEFAULT_MESSAGE)->andReturn(static::DEFAULT_MESSAGE_TRANSLATED);
 
         // Execute
-        $result = $sut->formatElementMessage($element, $translatedMessage, $messageKey);
+        $formattedMessage = $this->sut->formatElementMessage($element, static::DEFAULT_MESSAGE_TRANSLATED, static::MESSAGE_KEY);
 
         // Assert
-        $this->assertStringContainsString($replacementMessage, strtolower($result));
+        $this->assertEquals(static::REPLACEMENT_MESSAGE_WITHOUT_PLACEHOLDER, $formattedMessage);
     }
 
     /**
      * @test
-     * @depends formatElementMessage_ReplacesDefaultMessage
+     * @depends formatElementMessage_ReplacesDefaultMessage_WhenElementTypeIsSet
+     */
+    public function formatElementMessage_ReplacesDefaultMessage_IfElementTypeIsNotSet()
+    {
+        // Setup
+        $this->sut = $this->setUpSut($this->serviceManager());
+        $element = ElementBuilder::anElement()->build();
+        $this->sut->enableReplacementOfMessage(static::MESSAGE_KEY, static::DEFAULT_MESSAGE);
+        $this->translator()
+            ->shouldReceive('translate')
+            ->with($this->replacementMessageMatching(static::MESSAGE_KEY, static::MISSING_ELEM_TYPE_REPLACEMENT))
+            ->andReturn(static::REPLACEMENT_MESSAGE_WITHOUT_PLACEHOLDER);
+
+        // Execute
+        $formattedMessage = $this->sut->formatElementMessage($element, static::DEFAULT_MESSAGE, static::MESSAGE_KEY);
+
+        // Assert
+        $this->assertStringContainsString(static::REPLACEMENT_MESSAGE_WITHOUT_PLACEHOLDER, $formattedMessage);
+    }
+
+    /**
+     * @test
+     * @depends formatElementMessage_ReplacesDefaultMessage_WhenElementTypeIsSet
+     */
+    public function formatElementMessage_ReplacesDefaultMessage_IfElementTypeHasNoTranslation()
+    {
+        // Setup
+        $this->sut = $this->setUpSut($this->serviceManager());
+        $element = ElementBuilder::anElement()->withType(static::ELEM_TYPE_WITH_NO_TRANSLATION)->build();
+        $this->sut->enableReplacementOfMessage(static::MESSAGE_KEY, static::DEFAULT_MESSAGE);
+        $this->translator()
+            ->shouldReceive('translate')
+            ->with(static::DEFAULT_REPLACEMENT_WHERE_ELEMENT_TYPE_DOES_NOT_HAVE_ITS_OWN_TRANSLATION)
+            ->andReturn(static::REPLACEMENT_MESSAGE_WITHOUT_PLACEHOLDER);
+
+        // Execute
+        $formattedMessage = $this->sut->formatElementMessage($element, static::DEFAULT_MESSAGE, static::MESSAGE_KEY);
+
+        // Assert
+        $this->assertEquals(static::REPLACEMENT_MESSAGE_WITHOUT_PLACEHOLDER, $formattedMessage);
+    }
+
+    /**
+     * @test
+     * @depends formatElementMessage_ReplacesDefaultMessage_IfElementTypeIsNotSet
      */
     public function formatElementMessage_UsesOriginalMessage_WhenCustomValidationMessageUsed()
     {
         // Setup
-        $serviceLocator = $this->setUpServiceLocator();
-        $sut = $this->setUpSut($serviceLocator);
-        $element = $this->setUpElement();
-        $element->setAttribute('type', $type = 'foo');
-        $messageKey = NotEmpty::IS_EMPTY;
-        $expectedMessage = 'foo bar baz';
-
-        // Define Expectations
-        $this->resolveMockService($serviceLocator, TranslatorInterface::class)
-            ->shouldReceive('translate')
-            ->andReturnUsing(function ($key) use ($type, $messageKey) {
-                $prefix = sprintf('validation.element.%s.%s', $type, $messageKey);
-                return substr($key, 0, strlen($prefix)) === $prefix ? 'default' : $key;
-            });
+        $this->sut = $this->setUpSut($this->serviceManager());
+        $element = ElementBuilder::anElement()->build();
+        $this->enableReplacementOfMessage(static::MESSAGE_KEY, static::DEFAULT_MESSAGE);
 
         // Execute
-        $result = $sut->formatElementMessage($element, $expectedMessage, $messageKey);
+        $formattedMessage = $this->sut->formatElementMessage($element, static::MESSAGE_WITHOUT_PLACEHOLDER, static::MESSAGE_KEY);
 
         // Assert
-        $this->assertStringContainsString($expectedMessage, strtolower($result));
+        $this->assertEquals(static::MESSAGE_WITHOUT_PLACEHOLDER, $formattedMessage);
     }
 
     /**
      * @test
-     * @depends formatElementMessage_ReplacesDefaultMessage
+     * @depends formatElementMessage_UsesOriginalMessage_WhenCustomValidationMessageUsed
      */
-    public function formatElementMessage_UsesOriginalMessage_WhenMessageIsCustom_AndTranslatesOriginalMessage()
+    public function formatElementMessage_TranslatesCustomMessages()
     {
         // Setup
-        $serviceLocator = $this->setUpServiceLocator();
-        $sut = $this->setUpSut($serviceLocator);
-        $element = $this->setUpElement();
-        $element->setAttribute('type', 'foo');
-        $this->resolveMockService($serviceLocator, TranslatorInterface::class)
+        $this->sut = $this->setUpSut($this->serviceManager());
+        $element = ElementBuilder::anElement()->build();
+        $this->resolveMockService($this->serviceManager(), TranslatorInterface::class)
             ->shouldReceive('translate')
-            ->with('foo bar baz')
-            ->andReturn($expectedMessage = 'bip');
+            ->with(static::MESSAGE_WITHOUT_PLACEHOLDER)
+            ->andReturn(static::MESSAGE_WITHOUT_PLACEHOLDER_TRANSLATED);
 
         // Execute
-        $result = $sut->formatElementMessage($element, 'foo bar baz', NotEmpty::IS_EMPTY);
+        $formattedMessage = $this->sut->formatElementMessage($element, static::MESSAGE_WITHOUT_PLACEHOLDER, static::MESSAGE_KEY);
 
         // Assert
-        $this->assertStringContainsString($expectedMessage, strtolower($result));
+        $this->assertEquals(static::MESSAGE_WITHOUT_PLACEHOLDER_TRANSLATED, $formattedMessage);
     }
 
     /**
      * @test
-     * @depends formatElementMessage_ReplacesDefaultMessage
+     * @depends formatElementMessage_TranslatesCustomMessages
      */
-    public function formatElementMessage_UsesOriginalMessage_WhenMessageIsCustom_AndDoesNotTranslateOriginalMessage_IfDisabledUsingMessageInterface()
+    public function formatElementMessage_DoesNotTranslateCustomMessages_IfTranslationDisabledUsingMessageInterface()
     {
         // Setup
-        $serviceLocator = $this->setUpServiceLocator();
-        $sut = $this->setUpSut($serviceLocator);
-        $element = $this->setUpElement();
+        $this->sut = $this->setUpSut($this->serviceManager());
+        $element = ElementBuilder::anElement()->build();
         $message = new GenericValidationMessage();
-        $message->setMessage($originalMessageText = 'foo bar baz');
+        $message->setMessage(static::MESSAGE_WITHOUT_PLACEHOLDER);
         $message->setShouldTranslate(false);
-        $this->resolveMockService($serviceLocator, TranslatorInterface::class)
+        $this->resolveMockService($this->serviceManager(), TranslatorInterface::class)
             ->shouldReceive('translate')
-            ->with($originalMessageText)
-            ->andReturn('bip');
+            ->with(static::MESSAGE_WITHOUT_PLACEHOLDER)
+            ->andReturn(static::MESSAGE_WITHOUT_PLACEHOLDER_TRANSLATED);
 
         // Execute
-        $result = $sut->formatElementMessage($element, $message, NotEmpty::IS_EMPTY);
+        $formattedMessage = $this->sut->formatElementMessage($element, $message, static::MESSAGE_KEY);
 
         // Assert
-        $this->assertStringContainsString($originalMessageText, strtolower($result));
+        $this->assertEquals(static::MESSAGE_WITHOUT_PLACEHOLDER, $formattedMessage);
     }
 
     /**
      * @test
-     * @depends formatElementMessage_ReplacesDefaultMessage
+     * @depends formatElementMessage_ReplacesDefaultMessage_IfElementTypeIsNotSet
      */
-    public function formatElementMessage_UsesOriginalMessage_WhenNoValidatorIsMappedToTheMessageKey()
+    public function formatElementMessage_UsesOriginalMessage_WhenReplacementIsNotEnabledForAMessageKey()
     {
         // Setup
-        $serviceLocator = $this->setUpServiceLocator();
-        $sut = $this->setUpSut($serviceLocator);
-        $element = $this->setUpElement();
-        $element->setAttribute('type', 'foo');
+        $this->sut = $this->setUpSut($this->serviceManager());
+        $element = ElementBuilder::anElement()->build();
 
         // Execute
-        $result = $sut->formatElementMessage($element, $expectedMessage = 'foo bar baz', 'baz bar foo');
+        $formattedMessage = $this->sut->formatElementMessage($element, static::MESSAGE_WITHOUT_PLACEHOLDER, static::MESSAGE_KEY);
 
         // Assert
-        $this->assertStringContainsString($expectedMessage, strtolower($result));
+        $this->assertEquals(static::MESSAGE_WITHOUT_PLACEHOLDER, $formattedMessage);
     }
 
     /**
      * @test
-     * @depends formatElementMessage_IsCallable
+     * @depends formatElementMessage_ReplacesDefaultMessage_IfElementTypeIsNotSet
      */
-    public function formatElementMessage_UsesOriginalMessage_IfNoTranslationIsAvailable()
+    public function formatElementMessage_UsesOriginalMessage_WhenReplacementEnabledForMessage_ButNoTranslationIsAvailable()
     {
         // Setup
-        $serviceLocator = $this->setUpServiceLocator();
-        $sut = $this->setUpSut($serviceLocator);
-        $element = $this->setUpElement();
-        $element->setAttribute('type', 'foo');
+        $this->sut = $this->setUpSut($this->serviceManager());
+        $element = ElementBuilder::anElement()->build();
+        $this->sut->enableReplacementOfMessage(static::MESSAGE_KEY, static::DEFAULT_MESSAGE);
 
         // Execute
-        $result = $sut->formatElementMessage($element, $expectedMessage = 'foo bar baz', NotEmpty::IS_EMPTY);
+        $formattedMessage = $this->sut->formatElementMessage($element, static::DEFAULT_MESSAGE, static::MESSAGE_KEY);
 
         // Assert
-        $this->assertStringContainsString($expectedMessage, strtolower($result));
+        $this->assertEquals(static::DEFAULT_MESSAGE, $formattedMessage);
     }
 
     /**
      * @test
-     * @depends formatElementMessage_IsCallable
+     * @depends formatElementMessage_ReplacesDefaultMessage_IfElementTypeIsNotSet
      */
-    public function formatElementMessage_UsesOriginalMessage_IfFieldLabelIsEmpty()
+    public function formatElementMessage_DoesNotUseReplacementMessage_ContainingLabelPlaceholder_IfElementLabelIsEmpty()
     {
         // Setup
-        $serviceLocator = $this->setUpServiceLocator();
-        $sut = $this->setUpSut($serviceLocator);
-        $element = $this->setUpElement();
-        $element->setAttribute('type', $type = 'foo');
-        $element->setLabel('');
-        $messageKey = NotEmpty::IS_EMPTY;
-        $this->resolveMockService($serviceLocator, TranslatorInterface::class)
+        $this->sut = $this->setUpSut($this->serviceManager());
+        $this->enableReplacementOfMessage(static::MESSAGE_KEY, static::DEFAULT_MESSAGE)->andReturn(static::REPLACEMENT_MESSAGE_WITH_LABEL_PLACEHOLDER);
+        $element = ElementBuilder::anElement()->withLabel(static::LABEL_WITH_NO_CONTENT)->build();
+
+        // Execute
+        $formattedMessage = $this->sut->formatElementMessage($element, static::DEFAULT_MESSAGE, static::MESSAGE_KEY);
+
+        // Assert
+        $this->assertEquals(static::DEFAULT_MESSAGE, $formattedMessage);
+    }
+
+    /**
+     * @test
+     * @depends formatElementMessage_ReplacesDefaultMessage_IfElementTypeIsNotSet
+     */
+    public function formatElementMessage_DoesNotUseReplacementMessage_ContainingLabelPlaceholder_IfElementLabelContainsHtml()
+    {
+        // Setup
+        $this->sut = $this->setUpSut($this->serviceManager());
+        $this->enableReplacementOfMessage(static::MESSAGE_KEY, static::DEFAULT_MESSAGE)->andReturn(static::REPLACEMENT_MESSAGE_WITH_LABEL_PLACEHOLDER);
+        $element = ElementBuilder::anElement()->withLabel(static::LABEL_WITH_HTML)->build();
+
+        // Execute
+        $formattedMessage = $this->sut->formatElementMessage($element, static::DEFAULT_MESSAGE, static::MESSAGE_KEY);
+
+        // Assert
+        $this->assertEquals(static::DEFAULT_MESSAGE, $formattedMessage);
+    }
+
+    /**
+     * @test
+     * @depends formatElementMessage_DoesNotUseReplacementMessage_ContainingLabelPlaceholder_IfElementLabelContainsHtml
+     */
+    public function formatElementMessage_DoesNotUseReplacementMessage_ContainingLabelPlaceholder_IfElementLabelContainsHtml_AfterBeingTranslated()
+    {
+        // Setup
+        $this->sut = $this->setUpSut($this->serviceManager());
+        $this->enableReplacementOfMessage(static::MESSAGE_KEY, static::DEFAULT_MESSAGE)->andReturn(static::REPLACEMENT_MESSAGE_WITH_LABEL_PLACEHOLDER);
+        $element = ElementBuilder::anElement()->withLabel(static::LABEL_WITH_CONTENT)->build();
+        $this->translator()->shouldReceive('translate')->with(static::LABEL_WITH_CONTENT)->andReturn(static::LABEL_WITH_HTML);
+
+        // Execute
+        $formattedMessage = $this->sut->formatElementMessage($element, static::DEFAULT_MESSAGE, static::MESSAGE_KEY);
+
+        // Assert
+        $this->assertEquals(static::DEFAULT_MESSAGE, $formattedMessage);
+    }
+
+    /**
+     * @param string $messageKey
+     * @param string $messageDefault
+     * @return object
+     */
+    protected function enableReplacementOfMessage(string $messageKey, string $messageDefault): object
+    {
+        $this->sut->enableReplacementOfMessage($messageKey, $messageDefault);
+        return $this->translator()
             ->shouldReceive('translate')
-            ->with(sprintf('validation.element.%s.%s', $type, $messageKey))
-            ->andReturn(FormElementMessageFormatter::FIELD_LABEL_PLACEHOLDER);
-
-        // Execute
-        $result = $sut->formatElementMessage($element, "Value is required and can't be empty", $messageKey);
-
-        // Assert
-        $this->assertRegExp("/Value is required and can(\&\#039\;|\')t be empty/", $result);
+            ->with($this->replacementMessageMatching($messageKey))
+            ->andReturn(static::REPLACEMENT_MESSAGE_WITHOUT_PLACEHOLDER);
     }
 
     /**
-     * @test
-     * @depends formatElementMessage_IsCallable
+     * Gets a matcher that matches any untranslated replacement message for a given message key.
+     *
+     * @param string $messageKey
+     * @param string|null $type
+     * @return Matcher
      */
-    public function formatElementMessage_UsesDefaultMessageForElementType_IfElementTypeIsNotSet()
+    protected function replacementMessageMatching(string $messageKey, string $type = null): Matcher
     {
-        // Setup
-        $serviceLocator = $this->setUpServiceLocator();
-        $sut = $this->setUpSut($serviceLocator);
-        $element = $this->setUpElement();
-        $this->resolveMockService($serviceLocator, TranslatorInterface::class)
-            ->shouldReceive('translate')
-            ->with('validation.element.default.' . NotEmpty::IS_EMPTY)
-            ->andReturn('foo')
-            ->twice();
-
-        // Execute
-        $result = $sut->formatElementMessage($element, "Value is required and can't be empty", NotEmpty::IS_EMPTY);
-
-        // Assert
-        $this->assertStringContainsString('foo', strtolower($result));
+        if (null === $type) {
+            $type = '.+';
+        }
+        return MatchesPattern::matchesPattern(sprintf('/validation\.element\.%s\.%s/', $type, $messageKey));
     }
 
-    /**
-     * @test
-     * @depends formatElementMessage_IsCallable
-     */
-    public function formatElementMessage_UsesDefaultMessageForElementType_IfElementTypeHasNoTranslation()
+    protected function setUp(): void
     {
-        // Setup
-        $serviceLocator = $this->setUpServiceLocator();
-        $sut = $this->setUpSut($serviceLocator);
-        $element = $this->setUpElement();
-        $element->setAttribute('type', 'password');
-        $this->resolveMockService($serviceLocator, TranslatorInterface::class)
-            ->shouldReceive('translate')
-            ->with('validation.element.default.' . NotEmpty::IS_EMPTY)
-            ->andReturn($expectedMessage = 'foo')
-            ->twice();
-
-        // Execute
-        $result = $sut->formatElementMessage($element, "Value is required and can't be empty", NotEmpty::IS_EMPTY);
-
-        // Assert
-        $this->assertStringContainsString($expectedMessage, strtolower($result));
-    }
-
-    /**
-     * @return Element
-     */
-    protected function setUpElement(): Element
-    {
-        $element = new Element();
-        $element->setAttribute('id', 'foo');
-        $element->setLabel("foo");
-        return $element;
+        $this->setUpServiceManager();
     }
 
     /**
@@ -457,19 +525,7 @@ class FormElementMessageFormatterTest extends MockeryTestCase
      */
     protected function setUpSut(ServiceLocatorInterface $serviceLocator): FormElementMessageFormatter
     {
-        return (new FormElementMessageFormatterFactory())->createService($serviceLocator);
-    }
-
-    /**
-     * @return MockInterface|Translator
-     */
-    protected function setUpTranslator(): MockInterface
-    {
-        $instance = $this->setUpMockService(Translator::class);
-        $instance->shouldReceive('translate')->andReturnUsing(function ($key) {
-            return $key;
-        })->byDefault();
-        return $instance;
+        return (new FormElementMessageFormatterFactory())->__invoke($serviceLocator, FormElementMessageFormatter::class);
     }
 
     /**
@@ -477,9 +533,8 @@ class FormElementMessageFormatterTest extends MockeryTestCase
      */
     protected function setUpDefaultServices(ServiceManager $serviceManager)
     {
-        $serviceManager->setService(TranslatorInterface::class, $this->setUpTranslator());
-        $serviceManager->setService(HTMLPurifier::class, new HTMLPurifier());
-        $serviceManager->setFactory(FormLabel::class, new FormLabelFactory());
+        $serviceManager->setService(TranslatorInterface::class, $this->setUpDefaultTranslator());
+        $serviceManager->setService(static::VALIDATOR_MANAGER, new ValidatorPluginManager());
         $serviceManager->setFactory(FormElementMessageFormatter::class, new FormElementMessageFormatterFactory());
     }
 }

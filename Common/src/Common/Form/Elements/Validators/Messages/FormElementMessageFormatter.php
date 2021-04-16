@@ -6,8 +6,7 @@ namespace Common\Form\Elements\Validators\Messages;
 
 use Laminas\Form\ElementInterface;
 use Laminas\I18n\Translator\TranslatorInterface;
-use Laminas\Validator\AbstractValidator;
-use Laminas\Validator\NotEmpty;
+use Common\Helper\Str;
 
 /**
  * @see FormElementMessageFormatterFactory
@@ -17,23 +16,46 @@ class FormElementMessageFormatter
 {
     const FIELD_LABEL_PLACEHOLDER = '{{fieldLabel}}';
 
-    protected const VALIDATOR_MESSAGE_TEMPLATE_MAP = [
-        NotEmpty::IS_EMPTY => NotEmpty::class,
-    ];
-
     /**
      * @var TranslatorInterface
      */
     protected $translator;
 
     /**
-     * FormElementMessageFormatter constructor.
-     *
+     * @var array
+     */
+    protected $messagesReplacementProviders = [];
+
+    /**
      * @param TranslatorInterface $translator
      */
     public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
+    }
+
+    /**
+     * @param string $messageKey
+     * @param string|callable|Closure $defaultMessageOrProvider
+     */
+    public function enableReplacementOfMessage(string $messageKey, $defaultMessageOrProvider)
+    {
+        if (is_string($defaultMessageOrProvider)) {
+            $defaultMessageOrProvider = function () use ($defaultMessageOrProvider) {
+                return $defaultMessageOrProvider;
+            };
+        }
+        assert(is_callable($defaultMessageOrProvider), 'Expected default message provider to be callable or string');
+        $this->messagesReplacementProviders[$messageKey] = $defaultMessageOrProvider;
+    }
+
+    /**
+     * @param string $messageKey
+     * @return callable|Closure|null
+     */
+    public function getReplacementFor(string $messageKey)
+    {
+        return $this->messagesReplacementProviders[$messageKey] ?? null;
     }
 
     /**
@@ -110,8 +132,7 @@ class FormElementMessageFormatter
      */
     protected function replaceMessageVariables(ElementInterface $element, string $message): string
     {
-        $rawLabelText = $this->getFieldLabelForElement($element);
-        $labelText = empty($rawLabelText) ? '' : $this->translator->translate($rawLabelText);
+        $labelText = $this->getFieldLabelForElement($element);
 
         // Replace field label message variable
         $message = str_replace(static::FIELD_LABEL_PLACEHOLDER, $labelText, $message);
@@ -128,8 +149,14 @@ class FormElementMessageFormatter
      */
     protected function elementHasVariablesInMessage(ElementInterface $element, string $message): bool
     {
-        if (str_contains($message, static::FIELD_LABEL_PLACEHOLDER) && empty($this->getFieldLabelForElement($element))) {
-            return false;
+        if (str_contains($message, static::FIELD_LABEL_PLACEHOLDER)) {
+            $elementLabel = $this->getFieldLabelForElement($element);
+            if (empty($elementLabel)) {
+                return false;
+            }
+            if (Str::containsHtml($elementLabel)) {
+                return false;
+            }
         }
         return true;
     }
@@ -142,9 +169,15 @@ class FormElementMessageFormatter
     {
         $label = $element->getLabel();
         if (! is_string($label)) {
-            $label = '';
+            return '';
         }
-        return trim($label);
+
+        $label = trim($label);
+        if (empty($label)) {
+            return '';
+        }
+
+        return $this->translator->translate($label);
     }
 
     /**
@@ -197,20 +230,18 @@ class FormElementMessageFormatter
      */
     protected function isDefaultMessageForKey($messageKey, string $message): bool
     {
-        $validatorClass = static::VALIDATOR_MESSAGE_TEMPLATE_MAP[$messageKey] ?? null;
-        if (null === $validatorClass) {
+        $defaultMessageProvider = $this->messagesReplacementProviders[$messageKey] ?? null;
+        if (null === $defaultMessageProvider) {
             return false;
         }
 
-        $validator = new $validatorClass();
-        assert($validator instanceof AbstractValidator, 'Expected instance of AbstractValidator');
-        $defaultMessageTemplate = $validator->getMessageTemplates()[$messageKey] ?? null;
-        if ($defaultMessageTemplate === $message) {
+        $defaultMessage = $defaultMessageProvider($messageKey);
+        if ($defaultMessage === $message) {
             return true;
         }
 
-        $translatedDefaultMessageTemplate = $this->translator->translate($defaultMessageTemplate);
-        if ($translatedDefaultMessageTemplate === $message) {
+        $translatedDefaultMessage = $this->translator->translate($defaultMessage);
+        if ($translatedDefaultMessage === $message) {
             return true;
         }
 

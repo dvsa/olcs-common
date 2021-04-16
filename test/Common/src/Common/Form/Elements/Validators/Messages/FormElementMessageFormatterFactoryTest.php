@@ -6,10 +6,13 @@ namespace CommonTest\Form\Elements\Validators\Messages;
 
 use Common\Form\Elements\Validators\Messages\FormElementMessageFormatter;
 use Common\Form\Elements\Validators\Messages\FormElementMessageFormatterFactory;
+use Common\Form\Elements\Validators\Messages\ValidatorDefaultMessageProvider;
 use Common\Test\MockeryTestCase;
 use Common\Test\MocksServicesTrait;
 use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\ServiceManager\ServiceManager;
+use Laminas\Validator\ValidatorPluginManager;
+use Mockery as m;
 
 /**
  * @see FormElementMessageFormatterFactory
@@ -18,33 +21,56 @@ class FormElementMessageFormatterFactoryTest extends MockeryTestCase
 {
     use MocksServicesTrait;
 
+    protected const VALIDATOR_MANAGER = 'ValidatorManager';
+    protected const MESSAGE_KEY = 'MESSAGE KEY';
+    protected const VALIDATOR_NAME = 'VALIDATOR NAME';
+    protected const CONFIG_SERVICE = 'config';
+    protected const VALIDATION_CONFIG_NAMESPACE = 'validation';
+    protected const DEFAULT_MESSAGE_TEMPLATES_TO_REPLACE_VARIABLE = 'default_message_templates_to_replace';
+
+    /**
+     * @var FormElementMessageFormatterFactory
+     */
+    protected $sut;
+
     /**
      * @test
      */
     public function createService_IsCallable()
     {
         // Setup
-        $sut = $this->setUpSut();
+        $this->sut = $this->setUpSut();
 
         // Assert
-        $this->assertIsCallable([$sut, 'createService']);
+        $this->assertIsCallable([$this->sut, 'createService']);
     }
+
+    protected const INVOKE_RESULT = 'RESULT FROM CALLING INVOKE';
 
     /**
      * @test
-     * @depends createService_IsCallable
+     * @todo depends createService_IsCallable
      */
-    public function createService_ReturnsInstanceOfFormElementMessageFormatter()
+    public function createService_ShouldReturnInvoke()
     {
         // Setup
-        $serviceLocator = $this->setUpServiceLocator();
-        $sut = $this->setUpSut();
+        $serviceManager = $this->serviceManager();
+
+        // Don't mock the think you are testing - this is a rare time that i think its okish
+        $this->sut = $this->setUpMockService(FormElementMessageFormatterFactory::class);
+        $this->sut->makePartial();
+
+        // Expect
+        $this->sut->shouldReceive('__invoke')
+            ->with($serviceManager, FormElementMessageFormatter::class)
+            ->once()
+            ->andReturn($expectedResult = m::mock(FormElementMessageFormatter::class));
 
         // Execute
-        $result = $sut->createService($serviceLocator);
+        $result = $this->sut->createService($serviceManager);
 
         // Assert
-        $this->assertInstanceOf(FormElementMessageFormatter::class, $result);
+        $this->assertSame($expectedResult, $result);
     }
 
     /**
@@ -53,10 +79,10 @@ class FormElementMessageFormatterFactoryTest extends MockeryTestCase
     public function __invoke_IsCallable()
     {
         // Setup
-        $sut = $this->setUpSut();
+        $this->sut = $this->setUpSut();
 
         // Assert
-        $this->assertIsCallable([$sut, '__invoke']);
+        $this->assertIsCallable([$this->sut, '__invoke']);
     }
 
     /**
@@ -66,14 +92,54 @@ class FormElementMessageFormatterFactoryTest extends MockeryTestCase
     public function __invoke_ReturnsInstanceOfFormElementMessageFormatter()
     {
         // Setup
-        $serviceLocator = $this->setUpServiceLocator();
-        $sut = $this->setUpSut();
+        $this->sut = $this->setUpSut();
 
         // Execute
-        $result = $sut->__invoke($serviceLocator, FormElementMessageFormatter::class);
+        $formatter = $this->sut->__invoke($this->serviceManager(), FormElementMessageFormatter::class);
 
         // Assert
-        $this->assertInstanceOf(FormElementMessageFormatter::class, $result);
+        $this->assertInstanceOf(FormElementMessageFormatter::class, $formatter);
+    }
+
+    /**
+     * @test
+     * @depends __invoke_ReturnsInstanceOfFormElementMessageFormatter
+     */
+    public function __invoke_RegistersReplacementOfMessageKey_WithProvider_ThatIsInstanceOfValidatorDefaultMessageProvider()
+    {
+        // Setup
+        $this->sut = $this->setUpSut();
+        $this->registerDefaultMessageTemplateToReplace(static::MESSAGE_KEY, static::VALIDATOR_NAME);
+
+        // Execute
+        $formatter = $this->sut->__invoke($this->serviceManager(), FormElementMessageFormatter::class);
+
+        // Assert
+        $replacement = $formatter->getReplacementFor(static::MESSAGE_KEY);
+        $this->assertInstanceOf(ValidatorDefaultMessageProvider::class, $replacement);
+    }
+
+    /**
+     * @test
+     * @depends __invoke_RegistersReplacementOfMessageKey_WithProvider_ThatIsInstanceOfValidatorDefaultMessageProvider
+     */
+    public function __invoke_RegistersReplacementOfMessageKey_WithProvider_ForValidatorInConfig()
+    {
+        // Setup
+        $this->sut = $this->setUpSut();
+        $this->registerDefaultMessageTemplateToReplace(static::MESSAGE_KEY, static::VALIDATOR_NAME);
+
+        // Execute
+        $formatter = $this->sut->__invoke($this->serviceManager(), FormElementMessageFormatter::class);
+
+        // Assert
+        $replacement = $formatter->getReplacementFor(static::MESSAGE_KEY);
+        $this->assertEquals(static::VALIDATOR_NAME, $replacement->getValidatorName());
+    }
+
+    protected function setUp(): void
+    {
+        $this->setUpServiceManager();
     }
 
     /**
@@ -90,5 +156,20 @@ class FormElementMessageFormatterFactoryTest extends MockeryTestCase
     protected function setUpDefaultServices(ServiceManager $serviceManager)
     {
         $serviceManager->setService(TranslatorInterface::class, $this->setUpMockService(TranslatorInterface::class));
+        $serviceManager->setService(static::CONFIG_SERVICE, [
+            static::VALIDATION_CONFIG_NAMESPACE => [static::DEFAULT_MESSAGE_TEMPLATES_TO_REPLACE_VARIABLE => []],
+        ]);
+        $serviceManager->setService(static::VALIDATOR_MANAGER, new ValidatorPluginManager());
+    }
+
+    /**
+     * @param string $messageKey
+     * @param string $validatorClassReference
+     */
+    protected function registerDefaultMessageTemplateToReplace(string $messageKey, string $validatorClassReference)
+    {
+        $config = $this->serviceManager->get(static::CONFIG_SERVICE);
+        $config[static::VALIDATION_CONFIG_NAMESPACE][static::DEFAULT_MESSAGE_TEMPLATES_TO_REPLACE_VARIABLE][$messageKey] = $validatorClassReference;
+        $this->serviceManager()->setService(static::CONFIG_SERVICE, $config);
     }
 }
