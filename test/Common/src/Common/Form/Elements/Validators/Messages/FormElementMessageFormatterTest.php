@@ -168,7 +168,7 @@ class FormElementMessageFormatterTest extends MockeryTestCase
     {
         // Setup
         $this->sut = $this->setUpSut($this->serviceManager());
-        $element = ElementBuilder::anElement();
+        $element = ElementBuilder::anElement()->build();
 
         // Execute
         $formattedMessage = $this->sut->formatElementMessage($element, static::DEFAULT_MESSAGE, static::MESSAGE_KEY);
