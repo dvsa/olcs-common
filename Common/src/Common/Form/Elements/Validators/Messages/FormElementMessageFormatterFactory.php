@@ -10,7 +10,7 @@ use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
- * @see FormElementMessageFormatterTest
+ * @see FormElementMessageFormatter
  * @see \CommonTest\Form\Elements\Validators\Messages\FormElementMessageFormatterFactoryTest
  */
 class FormElementMessageFormatterFactory implements FactoryInterface
@@ -18,6 +18,7 @@ class FormElementMessageFormatterFactory implements FactoryInterface
     /**
      * @param ServiceLocatorInterface $serviceLocator
      * @return FormElementMessageFormatter
+     * @deprecated
      */
     public function createService(ServiceLocatorInterface $serviceLocator): FormElementMessageFormatter
     {
@@ -32,6 +33,19 @@ class FormElementMessageFormatterFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): FormElementMessageFormatter
     {
-        return new FormElementMessageFormatter($container->get(TranslatorInterface::class));
+        $formatter = new FormElementMessageFormatter($container->get(TranslatorInterface::class));
+
+        $messageTemplates = [];
+        if ($container->has('config')) {
+            $config = $container->get('config');
+            $messageTemplates = $config['validation']['default_message_templates_to_replace'] ?? [];
+        }
+
+        $validatorPluginManager = $container->get('ValidatorManager');
+        foreach ($messageTemplates as $messageKey => $validatorClassReference) {
+            $formatter->enableReplacementOfMessage($messageKey, new ValidatorDefaultMessageProvider($validatorPluginManager, $validatorClassReference));
+        }
+
+        return $formatter;
     }
 }

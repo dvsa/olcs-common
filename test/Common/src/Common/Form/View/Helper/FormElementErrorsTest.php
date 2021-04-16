@@ -15,6 +15,7 @@ use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\ServiceManager\ServiceManager;
+use Laminas\Validator\ValidatorPluginManager;
 use Laminas\View\HelperPluginManager;
 use Laminas\View\Renderer\PhpRenderer;
 use Mockery\MockInterface;
@@ -26,6 +27,8 @@ use HTMLPurifier;
 class FormElementErrorsTest extends MockeryTestCase
 {
     use MocksServicesTrait;
+
+    protected const VALIDATOR_MANAGER = 'ValidatorManager';
 
     /**
      * @test
@@ -138,5 +141,6 @@ class FormElementErrorsTest extends MockeryTestCase
         $serviceManager->setService(HTMLPurifier::class, new HTMLPurifier());
         $serviceManager->setFactory(FormLabel::class, new FormLabelFactory());
         $serviceManager->setFactory(FormElementMessageFormatter::class, new FormElementMessageFormatterFactory());
+        $serviceManager->setService(static::VALIDATOR_MANAGER, new ValidatorPluginManager());
     }
 }

@@ -5,9 +5,6 @@ use Common\Service\Data\Search\SearchType;
 use Common\FormService\Form\Lva as LvaFormService;
 use Common\FormService\Form\Continuation as ContinuationFormService;
 use Common\Form\View\Helper\Readonly as ReadonlyFormHelper;
-use Common\Service\Helper\FlashMessengerHelperService;
-use Common\Service\Helper\FormHelperService;
-use Common\Service\Helper\ResponseHelperService;
 use Common\Service\Qa as QaService;
 use Common\Service\Translator\TranslationLoader;
 use Common\Service\Translator\TranslationLoaderFactory;
@@ -499,6 +496,22 @@ return array(
             'DynamicRadioHtml' => 'Common\Form\Element\DynamicRadioHtml',
             'OlcsCheckbox' => 'Common\Form\Elements\Custom\OlcsCheckbox'
         ]
+    ],
+    'validation' => [
+
+        /**
+         * Configures which message templates should have their default message templates replaced.
+         *
+         * Entries should map a validation message key to the validator class that yields the validation messages for
+         * that key
+         *
+         * "validation message key" => "validator class reference"
+         *
+         * @type array
+         */
+        'default_message_templates_to_replace' => [
+            \Laminas\Validator\NotEmpty::IS_EMPTY => \Laminas\Validator\NotEmpty::class,
+        ],
     ],
     'validators' => [
         'invokables' => [

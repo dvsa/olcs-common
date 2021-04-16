@@ -9,10 +9,10 @@ use Common\Test\MocksServicesTrait;
 use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\ServiceManager\ServiceManager;
+use Laminas\Validator\ValidatorPluginManager;
 use Laminas\View\HelperPluginManager;
 use Laminas\Form\View\Helper as LaminasHelper;
 use Common\Form\View\Helper as CommonHelper;
-use HTMLPurifier;
 
 /**
  * @covers \Common\Form\View\Helper\FormRow
@@ -21,6 +21,8 @@ use HTMLPurifier;
 class FormRowTest extends \PHPUnit\Framework\TestCase
 {
     use MocksServicesTrait;
+
+    protected const VALIDATOR_MANAGER = 'ValidatorManager';
 
     /**
      * @outputBuffering disabled
@@ -546,19 +548,8 @@ class FormRowTest extends \PHPUnit\Framework\TestCase
     protected function setUpDefaultServices(ServiceManager $serviceManager)
     {
         $serviceManager->setService(TranslatorInterface::class, $this->setUpTranslator());
-        $serviceManager->setService(HTMLPurifier::class, new HTMLPurifier());
-        $serviceManager->setFactory(CommonHelper\Extended\FormLabel::class, function () {
-            return $this->setUpFormLabel();
-        });
         $serviceManager->setFactory(FormElementMessageFormatter::class, new FormElementMessageFormatterFactory());
-    }
-
-    /**
-     * @return CommonHelper\Extended\FormLabel
-     */
-    protected function setUpFormLabel()
-    {
-        return new CommonHelper\Extended\FormLabel();
+        $serviceManager->setService(static::VALIDATOR_MANAGER, $this->setUpValidatorPluginManager());
     }
 
     /**
@@ -567,5 +558,13 @@ class FormRowTest extends \PHPUnit\Framework\TestCase
     protected function setUpTranslator(): TranslatorInterface
     {
         return new \Laminas\I18n\Translator\Translator();
+    }
+
+    /**
+     * @return ValidatorPluginManager
+     */
+    protected function setUpValidatorPluginManager(): ValidatorPluginManager
+    {
+        return new ValidatorPluginManager();
     }
 }
