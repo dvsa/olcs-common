@@ -13,7 +13,6 @@ use Common\Test\MocksServicesTrait;
 use Common\Test\Translator\MocksTranslatorsTrait;
 use Hamcrest\Matcher;
 use Hamcrest\Text\MatchesPattern;
-use Laminas\Form\Element;
 use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\ServiceManager\ServiceManager;
@@ -34,7 +33,7 @@ class FormElementMessageFormatterTest extends MockeryTestCase
     protected const LABEL_PLACEHOLDER = '{{fieldLabel}}';
     protected const LABEL_WITH_HTML = '<strong>LABEL WITH HTML</strong>';
     protected const LABEL_WITH_NO_CONTENT = '';
-    protected const LABEL_WITH_CONTENT = 'LABEL WITH CONTENT';
+    protected const LABEL = 'LABEL WITH CONTENT';
     protected const LABEL_WITH_TRAILING_WHITESPACE = 'LABEL WITH TRAILING WHITESPACE    ';
     protected const REPLACEMENT_MESSAGE_WITH_LABEL_PLACEHOLDER = 'REPLACEMENT MESSAGE WITH FIELD LABEL: "{{fieldLabel}}"';
     protected const REPLACEMENT_MESSAGE_WITHOUT_PLACEHOLDER = 'REPLACEMENT MESSAGE WITHOUT PLACEHOLDER';
@@ -48,6 +47,11 @@ class FormElementMessageFormatterTest extends MockeryTestCase
     protected const MESSAGE_WITH_LABEL_PLACEHOLDER_REPLACED_WITH_NON_EMPTY_LABEL = 'CUSTOM MESSAGE WITH FIELD LABEL: "LABEL WITH CONTENT"';
     protected const MESSAGE_WITH_LABEL_PLACEHOLDER_REPLACED_WITH_TRIMMED_LABEL_WITH_TRAILING_WHITESPACE = 'CUSTOM MESSAGE WITH FIELD LABEL: "LABEL WITH TRAILING WHITESPACE"';
     protected const DEFAULT_REPLACEMENT_WHERE_ELEMENT_TYPE_DOES_NOT_HAVE_ITS_OWN_TRANSLATION = 'validation.element.default.MESSAGE KEY';
+    protected const SHORT_LABEL = 'SHORT LABEL';
+    protected const FORMATTED_SHORT_LABEL_WITH_DEFAULT_MESSAGE = 'SHORT LABEL: DEFAULT MESSAGE';
+    protected const UNTRANSLATED_MESSAGE = 'UNTRANSLATED MESSAGE';
+    protected const TRANSLATED_MESSAGE = 'TRANSLATED MESSAGE';
+    protected const FORMATTED_SHORT_LABEL_WITH_TRANSLATED_MESSAGE = 'SHORT LABEL: TRANSLATED MESSAGE';
 
     /**
      * @var FormElementMessageFormatter|null
@@ -185,7 +189,7 @@ class FormElementMessageFormatterTest extends MockeryTestCase
     {
         // Setup
         $this->sut = $this->setUpSut($this->serviceManager());
-        $element = ElementBuilder::anElement()->withLabel(static::LABEL_WITH_CONTENT)->build();
+        $element = ElementBuilder::anElement()->withLabel(static::LABEL)->build();
 
         // Execute
         $formattedMessage = $this->sut->formatElementMessage($element, static::MESSAGE_WITH_LABEL_PLACEHOLDER, static::MESSAGE_KEY);
@@ -241,7 +245,7 @@ class FormElementMessageFormatterTest extends MockeryTestCase
     {
         // Setup
         $this->sut = $this->setUpSut($this->serviceManager());
-        $element = ElementBuilder::anElement()->withLabel(static::LABEL_WITH_CONTENT)->build();
+        $element = ElementBuilder::anElement()->withLabel(static::LABEL)->build();
         $this->enableReplacementOfMessage(static::MESSAGE_KEY, static::DEFAULT_MESSAGE)->andReturn(static::REPLACEMENT_MESSAGE_WITHOUT_PLACEHOLDER);
 
         // Execute
@@ -475,14 +479,49 @@ class FormElementMessageFormatterTest extends MockeryTestCase
         // Setup
         $this->sut = $this->setUpSut($this->serviceManager());
         $this->enableReplacementOfMessage(static::MESSAGE_KEY, static::DEFAULT_MESSAGE)->andReturn(static::REPLACEMENT_MESSAGE_WITH_LABEL_PLACEHOLDER);
-        $element = ElementBuilder::anElement()->withLabel(static::LABEL_WITH_CONTENT)->build();
-        $this->translator()->shouldReceive('translate')->with(static::LABEL_WITH_CONTENT)->andReturn(static::LABEL_WITH_HTML);
+        $element = ElementBuilder::anElement()->withLabel(static::LABEL)->build();
+        $this->translator()->shouldReceive('translate')->with(static::LABEL)->andReturn(static::LABEL_WITH_HTML);
 
         // Execute
         $formattedMessage = $this->sut->formatElementMessage($element, static::DEFAULT_MESSAGE, static::MESSAGE_KEY);
 
         // Assert
         $this->assertEquals(static::DEFAULT_MESSAGE, $formattedMessage);
+    }
+
+    /**
+     * @test
+     * @depends formatElementMessage_ReturnsString
+     */
+    public function formatElementMessage_ReturnsShortLabel()
+    {
+        // Setup
+        $this->sut = $this->setUpSut($this->serviceManager());
+        $element = ElementBuilder::anElement()->withShortLabel(static::SHORT_LABEL)->build();
+
+        // Execute
+        $formattedMessage = $this->sut->formatElementMessage($element, static::DEFAULT_MESSAGE, static::MESSAGE_KEY);
+
+        // Assert
+        $this->assertEquals(static::FORMATTED_SHORT_LABEL_WITH_DEFAULT_MESSAGE, $formattedMessage);
+    }
+
+    /**
+     * @test
+     * @depends formatElementMessage_ReturnsShortLabel
+     */
+    public function formatElementMessage_ReturnsShortLabel_WithTranslatedMessage()
+    {
+        // Setup
+        $this->sut = $this->setUpSut($this->serviceManager());
+        $element = ElementBuilder::anElement()->withShortLabel(static::SHORT_LABEL)->build();
+        $this->translator()->shouldReceive('translate')->with(static::UNTRANSLATED_MESSAGE)->andReturn(static::TRANSLATED_MESSAGE);
+
+        // Execute
+        $formattedMessage = $this->sut->formatElementMessage($element, static::UNTRANSLATED_MESSAGE, static::MESSAGE_KEY);
+
+        // Assert
+        $this->assertEquals(static::FORMATTED_SHORT_LABEL_WITH_TRANSLATED_MESSAGE, $formattedMessage);
     }
 
     /**

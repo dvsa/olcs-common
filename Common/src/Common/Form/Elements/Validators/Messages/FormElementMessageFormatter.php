@@ -81,6 +81,9 @@ class FormElementMessageFormatter
             $message = $this->replaceMessageVariables($element, $message);
         } else {
             $label = $this->translator->translate($label) . ': ';
+            if ($shouldTranslate) {
+                $message = $this->translator->translate($message);
+            }
             $message = $this->translator->translate($label . $message);
         }
 

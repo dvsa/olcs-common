@@ -19,6 +19,11 @@ class ElementBuilder
     protected $type;
 
     /**
+     * @var array
+     */
+    protected $options = [];
+
+    /**
      * @return static
      */
     public static function anElement(): self
@@ -34,6 +39,17 @@ class ElementBuilder
     {
         $instance = $this->clone();
         $instance->label = $label;
+        return $instance;
+    }
+
+    /**
+     * @param string $label
+     * @return $this
+     */
+    public function withShortLabel(string $label): self
+    {
+        $instance = $this->clone();
+        $instance->options['short-label'] = $label;
         return $instance;
     }
 
@@ -73,6 +89,8 @@ class ElementBuilder
         if (null !== $this->type) {
             $element->setAttribute('type', $this->type);
         }
+
+        $element->setOptions($this->options);
 
         return $element;
     }
