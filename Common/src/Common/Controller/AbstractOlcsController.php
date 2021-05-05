@@ -20,10 +20,14 @@ use Laminas\Mvc\MvcEvent;
  * @method Response handleQuery(QueryInterface $query)
  * @method Response handleCommand(CommandInterface $query)
  * @method \Common\Controller\Plugin\Redirect redirect()
+ *
+ * @todo this would also now be redundant
  */
 abstract class AbstractOlcsController extends AbstractActionController
 {
     /**
+     * @todo this attribute would not be needed
+     *
      * @var array
      *
      * Config for feature toggles - for usage see https://wiki.i-env.net/display/olcs/Feature+toggles
@@ -32,6 +36,7 @@ abstract class AbstractOlcsController extends AbstractActionController
 
     public function onDispatch(MvcEvent $e)
     {
+        // @todo Can we extract this to a mvc listener class?
         if ($this instanceof ToggleAwareInterface && !$this->featuresEnabled($this->toggleConfig, $e)) {
             return $this->notFoundAction();
         }
