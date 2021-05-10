@@ -23,7 +23,7 @@ return array(
     ),
     'controllers' => array(
         // @NOTE These delegators can live in common as both internal and external app controllers currently use the
-        // same adapter
+        // same adapter. Self Serve registers these itself within the application module.
         'delegators' => array(
             'LvaApplication/BusinessType' => array(
                 // @NOTE: we need an associative array when we need to override the
