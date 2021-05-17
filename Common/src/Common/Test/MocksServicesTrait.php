@@ -30,9 +30,23 @@ trait MocksServicesTrait
      */
     protected function setUpServiceManager(): ServiceManager
     {
-        return $this->serviceManager = (new ServiceManagerBuilder(function (ServiceLocatorInterface $serviceLocator) {
-            return $this->setUpDefaultServices($serviceLocator);
-        }))->build();
+        $this->serviceManager = new ServiceManager();
+        $this->serviceManager->setAllowOverride(true);
+        $services = $this->setUpDefaultServices($this->serviceManager);
+
+        // Maintain support for deprecated way of registering services via an array of services. Instead, services
+        // should be registered by calling the available setter methods on the ServiceManager instance.
+        if (is_array($services)) {
+            foreach ($services as $serviceName => $service) {
+                $this->serviceManager->setService($serviceName, $service);
+            }
+        }
+
+        // Set controller plugin manager to the main service manager so that all services can be resolved from the one
+        // service manager instance.
+        $this->serviceManager->setService('ControllerPluginManager', $this->serviceManager);
+
+        return $this->serviceManager;
     }
 
     /**
