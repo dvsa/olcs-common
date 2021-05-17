@@ -382,7 +382,6 @@ return array(
             'formRadioVertical' => \Common\Form\View\Helper\FormRadioVertical::class,
             'form' => 'Common\Form\View\Helper\Form',
             'formCollection' => Common\Form\View\Helper\FormCollection::class,
-            'formElement' => Common\Form\View\Helper\FormElement::class,
             'formDateTimeSelect' => 'Common\Form\View\Helper\FormDateTimeSelect',
             'formDateSelect' => \Common\Form\View\Helper\FormDateSelect::class,
             FormInputSearch::class => FormInputSearch::class,
@@ -459,8 +458,10 @@ return array(
             'escapeHtml' => \Common\View\Factory\Helper\EscapeHtmlFactory::class,
             \Common\Form\View\Helper\FormElementErrors::class => \Common\Form\View\Helper\FormElementErrorsFactory::class,
             \Common\Form\View\Helper\FormErrors::class => \Common\Form\View\Helper\FormErrorsFactory::class,
+            \Common\Form\View\Helper\FormElement::class => \Common\Form\View\Helper\FormElementFactory::class,
         ),
         'aliases' => [
+            'formElement' => \Common\Form\View\Helper\FormElement::class,
             'formElementErrors' => \Common\Form\View\Helper\FormElementErrors::class,
             'formelementerrors' => \Common\Form\View\Helper\FormElementErrors::class,
             'formErrors' => \Common\Form\View\Helper\FormErrors::class,
@@ -585,7 +586,13 @@ return array(
     ),
     'fieldsets_path' => __DIR__ . '/../../Common/src/Common/Form/Fieldsets/',
     'static-list-data' => include __DIR__ . '/list-data/static-list-data.php',
-    'form' => array(),
+    'form' => [
+        'element' => [
+            'renderers' => [
+                \Common\Form\Elements\Custom\RadioVertical::class => \Common\Form\View\Helper\FormRadioVertical::class
+            ],
+        ],
+    ],
     'rest_services' => [
         'abstract_factories' => [
             'Common\Service\Api\AbstractFactory'

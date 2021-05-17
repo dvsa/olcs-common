@@ -1,14 +1,13 @@
-<?php
-/** @var \Laminas\Form\Element $element */
-$element = $this->element;
-$id = $this->id;
-?>
-<div class="govuk-radios__conditional govuk-body" id="<?php echo $id ?>">
-    <?php
-    if ($element instanceof \Laminas\Form\Fieldset) {
-        echo $this->formCollection($element);
-    } else {
-        echo $this->formRow($element);
-    }
-    ?>
-</div>
+<?php if ($this->content) { ?>
+    <div id="<?php echo $this->escapeHtmlAttr($this->id); ?>" class="<?php echo $this->escapeHtmlAttr($this->class); ?>">
+        <?php if ($this->content instanceof \Laminas\Form\Fieldset) { ?>
+            <?php echo $this->formCollection($this->content); ?>
+        <?php } elseif (is_string($this->content)) { ?>
+            <?php echo $this->escapeHtml($this->translate($this->content)); ?>
+        <?php } elseif ($this->content instanceof \Laminas\View\Model\ViewModel) { ?>
+            <?php echo $this->partial($this->content); ?>
+        <?php } else { ?>
+            <?php echo $this->formRow($this->content); ?>
+        <?php } ?>
+    </div>
+<?php } ?>

@@ -11,10 +11,7 @@ if ($element->has('warningVisible')) {
 /** @var Common\Form\Elements\Types\RadioHorizontal $element */
 $element = $this->element;
 
-/** @var \Laminas\Form\Element\Radio $radioElement */
-$radioElementName = $element->getOption('radio-element') ?? 'radio';
-$radioElement = $element->get($radioElementName);
-$errors = $this->formElementErrors()->render($radioElement);
+$errors = $this->formElementErrors()->render($this->radioElement);
 $hasValidationError = !empty($errors);
 $dataGroup = $element->getOption('fieldset-data-group');
 $dataGroupAttribute = empty($dataGroup) ? '' : 'data-group="' . $dataGroup . '"';
@@ -33,24 +30,10 @@ $dataGroupAttribute = empty($dataGroup) ? '' : 'data-group="' . $dataGroup . '"'
         <?php if ($hasValidationError) : ?>
             <?php echo $errors ?>
         <?php endif; ?>
-        <?php
-        foreach ($radioElement->getValueOptions() as $key => $valueOption) {
-            echo $this->formRadioOption($radioElement, $key);
-            $contentElementName = $key . 'Content';
-            if ($element->has($contentElementName)) {
-                echo $this->render(
-                    'partials/form/radio-content',
-                    array_merge(
-                        $this->vars()->getArrayCopy(),
-                        [
-                            'element' => $element->get($contentElementName),
-                            'id' => $valueOption['attributes']['id'] .'_content',
-                        ]
-                    )
-                );
-            }
-        }
-        ?>
+        <?php foreach ($this->valueOptions as $key => $valueOption) { ?>
+            <?php echo $this->formRadioOption($this->radioElement, $key); ?>
+            <?php echo $this->partial(new \Common\Form\View\Model\FormRadioContentViewModel($valueOption)); ?>
+        <?php } ?>
     </fieldset>
 </div>
 

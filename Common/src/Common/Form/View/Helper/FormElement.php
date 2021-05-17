@@ -5,7 +5,6 @@ namespace Common\Form\View\Helper;
 use Common\Form\Elements\InputFilters\ActionLink;
 use Common\Form\Elements\Types\AttachFilesButton;
 use Common\Form\Elements\Types\GuidanceTranslated;
-use Common\Form\Elements\Types\Radio;
 use Common\Form\Elements\Types\Html;
 use Common\Form\Elements\Types\HtmlTranslated;
 use Common\Form\Elements\Types\PlainText;
@@ -18,10 +17,7 @@ use Laminas\Form\ElementInterface as LaminasElementInterface;
 use Laminas\Form\View\Helper\FormElement as LaminasFormElement;
 
 /**
- * Render form
- *
- * @author Michael Cooper <michael.cooper@valtech.co.uk>
- * @author Rob Caiger <rob@clocal.co.uk>
+ * @see FormElementFactory
  */
 class FormElement extends LaminasFormElement
 {

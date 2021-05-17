@@ -3,27 +3,66 @@
 namespace Common\Form\View\Helper;
 
 use Laminas\Form\ElementInterface;
-use Laminas\View\Renderer\PhpRenderer;
+use Laminas\Form\Fieldset;
+use Laminas\Form\Element\MultiCheckbox;
 
 /**
- * Helper to render the GDS vertical radio button pattern
+ * Helper to render the GDS vertical radio button pattern.
+ *
+ * @see \CommonTest\Form\View\Helper\FormRadioVerticalTest
  */
 class FormRadioVertical extends \Common\Form\View\Helper\Extended\FormCollection
 {
     /**
-     * Render
-     *
      * @param ElementInterface $element Element to render
-     *
      * @return string HTML
      */
     public function render(ElementInterface $element)
     {
-        /** @var PhpRenderer $view */
-        $view = $this->view;
-        return $view->render(
-            'partials/form/radio-vertical',
-            array_merge($view->vars()->getArrayCopy(), ['element' => $element])
-        );
+        $variables = $this->view->vars()->getArrayCopy();
+        $fieldset = $variables['element'] = $this->wrapInFieldSet($element);
+        $radioElement = $variables['radioElement'] = $fieldset->get($fieldset->getOption('radio-element') ?? 'radio');
+        $variables['valueOptions'] = $this->parseElementValueOptions($fieldset, $radioElement);
+        return $this->view->render('partials/form/radio-vertical', $variables);
+    }
+
+    /**
+     * @param mixed $element
+     * @return Fieldset
+     */
+    protected function wrapInFieldSet($element): Fieldset
+    {
+        $fieldset = $element;
+        if (! ($fieldset instanceof Fieldset)) {
+            $fieldset = new Fieldset();
+            $fieldset->add($element);
+            $fieldset->setOption('radio-element', $element->getName());
+        }
+        return $fieldset;
+    }
+
+    /**
+     * @param Fieldset $parentFieldset
+     * @param MultiCheckbox $element
+     * @return array
+     */
+    protected function parseElementValueOptions(Fieldset $parentFieldset, MultiCheckbox $element): array
+    {
+        $valueOptions = [];
+        foreach ($element->getValueOptions() as $key => $valueOption) {
+            if (! is_array($valueOption)) {
+                $valueOption = ['value' => $key, 'label' => $valueOption];
+            }
+
+            if (! isset($valueOption['conditional_content'])) {
+                $conditionalContentSiblingKey = sprintf('%sContent', $key);
+                if ($parentFieldset->has($conditionalContentSiblingKey)) {
+                    $valueOption['conditional_content'] = $parentFieldset->get($conditionalContentSiblingKey);
+                }
+            }
+
+            $valueOptions[$key] = $valueOption;
+        }
+        return $valueOptions;
     }
 }
