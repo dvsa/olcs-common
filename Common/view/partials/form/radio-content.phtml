@@ -1,3 +1,8 @@
+<?php
+    // For backwards compatibility, we will continue to access the "element" variable if no "content" variable is provided.
+    $this->content = $this->content ?? $this->element ?? null;
+?>
+
 <?php if ($this->content) { ?>
     <div id="<?php echo $this->escapeHtmlAttr($this->id); ?>" class="<?php echo $this->escapeHtmlAttr($this->class); ?>">
         <?php if ($this->content instanceof \Laminas\Form\Fieldset) { ?>
