@@ -23,6 +23,9 @@ class FormRadioVertical extends \Common\Form\View\Helper\Extended\FormCollection
         $fieldset = $variables['element'] = $this->wrapInFieldSet($element);
         $radioElement = $variables['radioElement'] = $fieldset->get($fieldset->getOption('radio-element') ?? 'radio');
         $variables['valueOptions'] = $this->parseElementValueOptions($fieldset, $radioElement);
+        $variables['hint'] = $element->getOption('hint');
+        $variables['label'] = $element->getLabel();
+        $variables['label_attributes'] = $element->getLabelAttributes();
         return $this->view->render('partials/form/radio-vertical', $variables);
     }
 

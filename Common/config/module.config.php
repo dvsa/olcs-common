@@ -237,6 +237,7 @@ return array(
             \Common\Service\Helper\ResponseHelperService::class => \Common\Service\Helper\ResponseHelperService::class,
             \Common\Service\Helper\FormHelperService::class => \Common\Service\Helper\FormHelperService::class,
             \Common\Service\Helper\FlashMessengerHelperService::class => \Common\Service\Helper\FlashMessengerHelperService::class,
+            \Common\Form\FormValidator::class => \Common\Form\FormValidator::class,
         ),
         'factories' => array(
             'CommandSender' => \Common\Service\Cqrs\Command\CommandSender::class,

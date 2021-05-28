@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Form\View\Helper;
 
 use Common\Form\View\Helper\FormRadioVertical;
@@ -50,6 +52,12 @@ class FormRadioVerticalTest extends MockeryTestCase
         'value' => self::A_VALUE_OPTION_VALUE,
         'label' => self::A_VALUE_OPTION_LABEL,
     ];
+    protected const CONDITIONAL_CONTENT_SIBLING_NAME = '0Content';
+    protected const HINT = 'hint';
+    protected const AN_ELEMENT_HINT = 'AN ELEMENT HINT';
+    protected const AN_ELEMENT_LABEL = 'AN ELEMENT LABEL';
+    protected const LABEL_ATTRIBUTES = 'label_attributes';
+    protected const AN_ELEMENT_LABEL_ATTRIBUTES = ['LABEL_ATTRIBUTE_1' => 'LABEL ATTRIBUTES 1 VALUE'];
 
     /**
      * @var FormRadioVertical
@@ -312,8 +320,6 @@ class FormRadioVerticalTest extends MockeryTestCase
         $this->assertEquals(static::RENDERED_TEMPLATE, $result);
     }
 
-    protected const CONDITIONAL_CONTENT_SIBLING_NAME = '0Content';
-
     /**
      * @test
      * @depends render_RendersARadio
@@ -344,6 +350,69 @@ class FormRadioVerticalTest extends MockeryTestCase
 
         // Assert
         $this->assertEquals(static::RENDERED_TEMPLATE, $result);
+    }
+
+    /**
+     * @test
+     * @depends render_ReturnsARenderedView
+     */
+    public function render_ReturnsARenderedView_WithAHint()
+    {
+        // Setup
+        $this->setUpSut();
+        $element = $this->setUpRadio();
+        $element->setOption(static::HINT, static::AN_ELEMENT_HINT);
+
+        // Execute
+        $this->sut->render($element);
+
+        // Assert
+        $this->renderer()->shouldHaveReceived('render')->withArgs(function ($template, $variables) {
+            $this->assertEquals(static::AN_ELEMENT_HINT, $variables[static::HINT] ?? null);
+            return true;
+        });
+    }
+
+    /**
+     * @test
+     * @depends render_ReturnsARenderedView
+     */
+    public function render_ReturnsARenderedView_WithALabel()
+    {
+        // Setup
+        $this->setUpSut();
+        $element = $this->setUpRadio();
+        $element->setLabel(static::AN_ELEMENT_LABEL);
+
+        // Execute
+        $this->sut->render($element);
+
+        // Assert
+        $this->renderer()->shouldHaveReceived('render')->withArgs(function ($template, $variables) {
+            $this->assertEquals(static::AN_ELEMENT_LABEL, $variables[static::LABEL] ?? null);
+            return true;
+        });
+    }
+
+    /**
+     * @test
+     * @depends render_ReturnsARenderedView
+     */
+    public function render_ReturnsARenderedView_WithLabelAttributes()
+    {
+        // Setup
+        $this->setUpSut();
+        $element = $this->setUpRadio();
+        $element->setLabelAttributes(static::AN_ELEMENT_LABEL_ATTRIBUTES);
+
+        // Execute
+        $this->sut->render($element);
+
+        // Assert
+        $this->renderer()->shouldHaveReceived('render')->withArgs(function ($template, $variables) {
+            $this->assertEquals(static::AN_ELEMENT_LABEL_ATTRIBUTES, $variables[static::LABEL_ATTRIBUTES] ?? null);
+            return true;
+        });
     }
 
     protected function setUp(): void
