@@ -51,7 +51,7 @@ trait MocksServicesTrait
 
     /**
      * @return ServiceManager
-     * @deprecated Please use MocksServicesTrait::getServiceManager instead.
+     * @deprecated Please use MocksServicesTrait::setUpServiceManager instead.
      */
     protected function setUpServiceLocator(): ServiceManager
     {

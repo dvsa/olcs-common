@@ -18,10 +18,7 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
 use Common\Form\Elements\Types\AttachFilesButton;
 
 /**
- * Render form row
- *
- * @author Michael Cooper <michael.cooper@valtech.co.uk>
- * @author Rob Caiger <rob@clocal.co.uk>
+ * @see \CommonTest\Form\View\Helper\FormRowTest
  */
 class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements FactoryInterface
 {
@@ -122,7 +119,7 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
         $type = $element->getAttribute('type');
         $allowWrap = $element->getAttribute('allowWrap');
         if ($type === 'multi_checkbox' || ($type === 'radio' && !$allowWrap)
-            || $element->getAttribute('id') === 'security') {
+            || $element->getAttribute('id') === 'security' || $allowWrap === false) {
             $wrap = false;
         }
 
