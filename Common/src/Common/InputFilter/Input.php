@@ -2,13 +2,11 @@
 
 namespace Common\InputFilter;
 
-use Laminas\InputFilter\Input as LaminasInput;
-
 /**
- * Class Input
- * @package Common\InputFilter
+ * @see \CommonTest\InputFilter\InputTest
+ * @deprecated Use \Common\InputFilter\ChainValidatedInput
  */
-class Input extends LaminasInput
+class Input extends \Laminas\InputFilter\Input
 {
     /**
      * @var mixed

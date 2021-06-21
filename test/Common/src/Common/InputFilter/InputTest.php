@@ -2,52 +2,126 @@
 
 namespace CommonTest\InputFilter;
 
-use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
-use Mockery as m;
 use Common\InputFilter\Input;
+use Laminas\Filter\FilterChain;
+use Common\Test\MockeryTestCase;
 
 /**
- * Class InputTest
- * @package CommonTest\InputFilter
+ * @see Input
  */
-class InputTest extends TestCase
+class InputTest extends MockeryTestCase
 {
-    public function testGetValue()
+    protected const AN_INPUT_NAME = 'AN INPUT NAME';
+    protected const A_RAW_INPUT_VALUE = 'A RAW INPUT VALUE';
+    protected const A_SECOND_RAW_INPUT_VALUE = 'A SECOND RAW INPUT VALUE';
+    protected const A_FILTERED_INPUT_VALUE = 'A FILTERED INPUT VALUE';
+    protected const A_SECOND_FILTERED_INPUT_VALUE = 'A SECOND FILTERED INPUT VALUE';
+
+    /**
+     * @var Input
+     */
+    protected $sut;
+
+    /**
+     * @test
+     */
+    public function setValue_IsCallable()
     {
-        $value = 'raw';
-        $filtered = 'filtered';
+        // Setup
+        $this->setUpSut();
 
-        $sut = new Input();
-
-        $mockFilterChain = m::mock('Laminas\Filter\FilterChain');
-        $mockFilterChain->shouldReceive('filter')->once()->with($value)->andReturn($filtered);
-        $sut->setFilterChain($mockFilterChain);
-
-        $sut->setValue($value);
-        $this->assertEquals($filtered, $sut->getValue());
-
-        //assert only filtered once
-        $sut->getValue();
+        // Assert
+        $this->assertIsCallable([$this->sut, 'setValue']);
     }
 
-    public function testSetValueResetsFilter()
+    /**
+     * @test
+     */
+    public function getValue_IsCallable()
     {
-        $value = 'raw';
-        $value2 = 'raw2';
-        $filtered = 'filtered';
-        $filtered2 = 'filtered2';
+        // Setup
+        $this->setUpSut();
 
-        $sut = new Input();
+        // Assert
+        $this->assertIsCallable([$this->sut, 'getValue']);
+    }
 
-        $mockFilterChain = m::mock('Laminas\Filter\FilterChain');
-        $mockFilterChain->shouldReceive('filter')->once()->with($value)->andReturn($filtered);
-        $mockFilterChain->shouldReceive('filter')->once()->with($value2)->andReturn($filtered2);
-        $sut->setFilterChain($mockFilterChain);
+    /**
+     * @test
+     * @depends getValue_IsCallable
+     */
+    public function getValue_FiltersValue()
+    {
+        // Setup
+        $this->setUpSut();
+        $this->sut->setFilterChain($this->aFilterChainThatReturns(static::A_FILTERED_INPUT_VALUE));
+        $this->sut->setValue(static::A_RAW_INPUT_VALUE);
 
-        $sut->setValue($value);
-        $this->assertEquals($filtered, $sut->getValue());
+        // Execute
+        $result = $this->sut->getValue();
 
-        $sut->setValue($value2);
-        $this->assertEquals($filtered2, $sut->getValue());
+        // Assert
+        $this->assertSame(self::A_FILTERED_INPUT_VALUE, $result);
+    }
+
+    /**
+     * @test
+     * @depends getValue_FiltersValue
+     */
+    public function getValue_FiltersValue_OnceWhenTheValueHasNotBeenSetAgain()
+    {
+        // Setup
+        $this->setUpSut();
+        $this->sut->setValue(static::A_RAW_INPUT_VALUE);
+
+        // Execute
+        $this->sut->getValue();
+        $this->sut->setFilterChain($this->aFilterChainThatReturns(static::A_FILTERED_INPUT_VALUE));
+        $result = $this->sut->getValue();
+
+        // Assert
+        $this->assertSame(static::A_RAW_INPUT_VALUE, $result);
+    }
+
+    /**
+     * @test
+     * @depends getValue_IsCallable
+     * @depends setValue_IsCallable
+     */
+    public function getValue_FiltersValue_TwiceWhenTheValueHasBeenSetSinceFirstBeingGotten()
+    {
+        // Setup
+        $this->setUpSut();
+
+        // Execute
+        $this->sut->setValue(static::A_RAW_INPUT_VALUE);
+        $this->sut->getValue();
+        $this->sut->setFilterChain($this->aFilterChainThatReturns(static::A_FILTERED_INPUT_VALUE));
+        $this->sut->setValue(static::A_RAW_INPUT_VALUE);
+        $result = $this->sut->getValue();
+
+        // Assert
+        $this->assertSame(static::A_FILTERED_INPUT_VALUE, $result);
+    }
+
+    /**
+     * @param mixed $name
+     */
+    protected function setUpSut($name = self::AN_INPUT_NAME)
+    {
+        $this->sut = new Input($name);
+    }
+
+    /**
+     * @param $value
+     * @return FilterChain
+     */
+    protected function aFilterChainThatReturns($value): FilterChain
+    {
+        $chain = new FilterChain();
+        $chain->attach(function () use ($value) {
+            return $value;
+        });
+        return $chain;
     }
 }
