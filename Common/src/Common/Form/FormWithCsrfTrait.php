@@ -7,6 +7,8 @@ namespace Common\Form;
 use Laminas\Form\Element\Csrf;
 use Laminas\InputFilter\Input;
 use Laminas\InputFilter\InputInterface;
+use Laminas\Validator\NotEmpty;
+use Common\InputFilter\ChainValidatedInput;
 
 /**
  * A trait to satisfy the FormWithCsrfInterface interface.
@@ -19,7 +21,7 @@ trait FormWithCsrfTrait
     /**
      * Initialises a child csrf element.
      *
-     * Should ideally be called by the constructor of any form.
+     * Should ideally be called by the constructor of any form that uses this trait.
      */
     protected function initialiseCsrf()
     {
@@ -28,8 +30,7 @@ trait FormWithCsrfTrait
         $this->add($csrfElement);
 
         // Build input
-        $input = new Input(FormWithCsrfInterface::SECURITY);
-        $input->setRequired(true);
+        $input = new ChainValidatedInput(FormWithCsrfInterface::SECURITY);
         $validatorChain = $input->getValidatorChain();
         $validatorChain->attach($csrfElement->getCsrfValidator());
 

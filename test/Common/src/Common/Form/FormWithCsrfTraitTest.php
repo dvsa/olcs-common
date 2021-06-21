@@ -134,6 +134,7 @@ class FormWithCsrfTraitTest extends MockeryTestCase
         return [
             'non-empty invalid csrf value' => [static::INVALID_CSRF_VALUE],
             'empty csrf value - string' => [static::EMPTY_STRING_VALUE],
+            'empty csrf value - null' => [null],
         ];
     }
 
