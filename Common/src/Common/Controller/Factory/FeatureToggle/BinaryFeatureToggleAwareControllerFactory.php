@@ -56,9 +56,9 @@ abstract class BinaryFeatureToggleAwareControllerFactory implements FactoryInter
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $controllerManager = $container;
-        assert($controllerManager instanceof ServiceLocatorAwareInterface, 'Expected instance of ServiceLocatorAwareInterface');
-        $container = $controllerManager->getServiceLocator();
+        if ($container instanceof ServiceLocatorAwareInterface) {
+            $container = $container->getServiceLocator();
+        }
 
         if ($this->featureTogglesAreEnabled($container, $this->getFeatureToggleNames())) {
             return $this->createServiceWhenEnabled($container, $requestedName, $options);

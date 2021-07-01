@@ -47,6 +47,23 @@ class BinaryFeatureToggleAwareControllerFactoryTest extends MockeryTestCase
      * @test
      * @depends __invoke_isCallable
      */
+    public function __invoke_CanUseServiceLocatorAwareInterface()
+    {
+        // Setup
+        $this->setUpSut();
+        $pluginManager = $this->setUpServiceManager();
+
+        // Execute
+        $this->sut->__invoke($pluginManager, static::SUT_NAME);
+
+        // Assert
+        $this->assertTrue(true);
+    }
+
+    /**
+     * @test
+     * @depends __invoke_isCallable
+     */
     public function __invoke_CreatesEnabledService_WhenNoFeatureTogglesAreConfigured()
     {
         // Setup
