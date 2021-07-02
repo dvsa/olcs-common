@@ -11,4 +11,5 @@ class FeatureToggle
     const SELFSERVE_SURRENDER = 'ss_surrender';
     const BACKEND_SURRENDER = 'back_surrender';
     const DVLA_INTEGRATION = 'dvla_integration';
+    const NEW_GOODS_APP_VEHICLE = 'new_goods_app_vehicle';
 }
