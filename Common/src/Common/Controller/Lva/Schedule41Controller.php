@@ -3,6 +3,7 @@
 namespace Common\Controller\Lva;
 
 use Common\RefData;
+use Common\Traits\OperatingCentresTableLgvModifierTrait;
 use Dvsa\Olcs\Transfer\Command\Application\Schedule41;
 use Dvsa\Olcs\Transfer\Command\Application\Schedule41Approve;
 use Dvsa\Olcs\Transfer\Command\Application\Schedule41Refuse;
@@ -18,7 +19,7 @@ use Laminas\View\Model\ViewModel;
  */
 class Schedule41Controller extends AbstractController implements Interfaces\AdapterAwareInterface
 {
-    use Traits\AdapterAwareTrait;
+    use Traits\AdapterAwareTrait, OperatingCentresTableLgvModifierTrait;
 
     /**
      * Search for a licence by licence number.
@@ -405,6 +406,8 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
                 $data
             );
 
+        $this->alterFormTableForLgv($table);
+
         return $table;
     }
 
@@ -422,7 +425,8 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
                 return array(
                     'id' => $operatingCentre['id'],
                     'address' => $operatingCentre['operatingCentre']['address'],
-                    'noOfVehiclesRequired' => $operatingCentre['noOfVehiclesRequired'],
+                    'noOfHgvVehiclesRequired' => $operatingCentre['noOfHgvVehiclesRequired'],
+                    'noOfLgvVehiclesRequired' => $operatingCentre['noOfLgvVehiclesRequired'],
                     'noOfTrailersRequired' => $operatingCentre['noOfTrailersRequired'],
                     'operatingCentre' => $operatingCentre['operatingCentre'],
                     'conditions' => $operatingCentre['operatingCentre']['conditionUndertakings'],

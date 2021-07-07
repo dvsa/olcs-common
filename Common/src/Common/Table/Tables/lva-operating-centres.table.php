@@ -29,9 +29,15 @@ return array(
             'width' => '60%'
         ),
         array(
-            'title' => 'application_operating-centres_authorisation.table.vehicles',
-            'name' => 'noOfVehiclesRequired',
-            'sort' => 'noOfVehiclesRequired'
+            'title' => 'application_operating-centres_authorisation.table.vehicles-hgv',
+            'name' => 'noOfHgvVehiclesRequired',
+            'sort' => 'noOfHgvVehiclesRequired'
+        ),
+        array(
+            'title' => 'application_operating-centres_authorisation.table.vehicles-lgv',
+            'name' => 'noOfLgvVehiclesRequired',
+            'formatter' => 'OcNoOfLgvVehiclesRequired',
+            'sort' => 'noOfLgvVehiclesRequired'
         ),
         array(
             'title' => 'application_operating-centres_authorisation.table.trailers',
@@ -57,7 +63,11 @@ return array(
         ),
         array(
             'formatter' => 'Sum',
-            'name' => 'noOfVehiclesRequired'
+            'name' => 'noOfHgvVehiclesRequired'
+        ),
+        'noOfLgvVehiclesRequired' => array(
+            'formatter' => 'Sum',
+            'name' => 'noOfLgvVehiclesRequired'
         ),
         'trailersCol' => array(
             'formatter' => 'Sum',

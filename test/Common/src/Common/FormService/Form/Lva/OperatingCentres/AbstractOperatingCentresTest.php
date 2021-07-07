@@ -3,6 +3,7 @@
 namespace CommonTest\FormService\Form\Lva\OperatingCentres;
 
 use Common\FormService\Form\Lva\OperatingCentres\AbstractOperatingCentres;
+use Common\Service\Table\TableBuilder;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Form\Element\Text;
@@ -45,8 +46,29 @@ class AbstractOperatingCentresTest extends MockeryTestCase
             m::mock()->shouldReceive('setValueOptions')->with(['A', 'B'])->once()->getMock()
         );
 
+        $rows = [
+            ['noOfLgvVehiclesRequired' => 1]
+        ];
+
+        $mockTableBuilder = m::mock(TableBuilder::class);
+        $mockTableBuilder->shouldReceive('getRows')
+            ->withNoArgs()
+            ->andReturn($rows);
+
         $mockForm = m::mock(\Common\Form\Form::class);
         $mockForm->shouldReceive('get')->with('dataTrafficArea')->once()->andReturn($mockFieldSet);
+        $mockForm->shouldReceive('get')
+            ->with('table')
+            ->once()
+            ->andReturnSelf()
+            ->shouldReceive('get')
+            ->with('table')
+            ->once()
+            ->andReturnSelf()
+            ->shouldReceive('getTable')
+            ->withNoArgs()
+            ->andReturn($mockTableBuilder);
+
 
         $mockFormHelper = m::mock();
         $mockFormHelper->shouldReceive('getValidator->setMessage');
@@ -84,8 +106,28 @@ class AbstractOperatingCentresTest extends MockeryTestCase
             m::mock()->shouldReceive('setValueOptions')->with(['A', 'B'])->once()->getMock()
         );
 
+        $rows = [
+            ['noOfLgvVehiclesRequired' => 1]
+        ];
+
+        $mockTableBuilder = m::mock(TableBuilder::class);
+        $mockTableBuilder->shouldReceive('getRows')
+            ->withNoArgs()
+            ->andReturn($rows);
+
         $mockForm = m::mock(\Common\Form\Form::class);
         $mockForm->shouldReceive('get')->with('dataTrafficArea')->twice()->andReturn($mockFieldSet);
+        $mockForm->shouldReceive('get')
+            ->with('table')
+            ->once()
+            ->andReturnSelf()
+            ->shouldReceive('get')
+            ->with('table')
+            ->once()
+            ->andReturnSelf()
+            ->shouldReceive('getTable')
+            ->withNoArgs()
+            ->andReturn($mockTableBuilder);
 
         $mockFormHelper = m::mock();
         $mockFormHelper->shouldReceive('remove')->with($mockForm, 'dataTrafficArea->trafficArea')->once();
@@ -97,7 +139,121 @@ class AbstractOperatingCentresTest extends MockeryTestCase
 
     public function testAlterFormWithOutTrafficArea()
     {
+        $rows = [
+            ['noOfLgvVehiclesRequired' => 1]
+        ];
+
+        $mockTableBuilder = m::mock(TableBuilder::class);
+        $mockTableBuilder->shouldReceive('getRows')
+            ->withNoArgs()
+            ->andReturn($rows);
+
         $mockForm = m::mock(\Common\Form\Form::class);
+        $mockForm->shouldReceive('get')
+            ->with('table')
+            ->once()
+            ->andReturnSelf()
+            ->shouldReceive('get')
+            ->with('table')
+            ->once()
+            ->andReturnSelf()
+            ->shouldReceive('getTable')
+            ->withNoArgs()
+            ->andReturn($mockTableBuilder);
+
+        $params = [
+            'canHaveSchedule41' => true,
+            'canHaveCommunityLicences' => true,
+            'isPsv' => false,
+            'operatingCentres' => ['XX'],
+            'trafficArea' => null,
+            'niFlag' => 'N',
+            'possibleTrafficAreas' => ['A', 'B'],
+            'possibleEnforcementAreas' => ['A', 'B']
+        ];
+
+        $mockFormHelper = m::mock();
+        $this->sut->shouldReceive('getFormHelper')->andReturn($mockFormHelper);
+
+        $mockFormHelper->shouldReceive('getValidator->setMessage');
+
+        $mockFieldSet = m::mock();
+        $mockForm->shouldReceive('get')->with('dataTrafficArea')->once()->andReturn($mockFieldSet);
+        $mockFieldSet->shouldReceive('remove')->with('trafficAreaSet')->once();
+
+        $mockFieldSet->shouldReceive('get')->with('trafficArea')->once()->andReturn(
+            m::mock()->shouldReceive('setValueOptions')->with(['A', 'B'])->once()->getMock()
+        );
+        $mockFieldSet->shouldReceive('get')->with('enforcementArea')->once()->andReturn(
+            m::mock()->shouldReceive('setValueOptions')->with(['A', 'B'])->once()->getMock()
+        );
+
+        $this->sut->alterForm($mockForm, $params);
+    }
+
+    public function testAlterFormWithoutLgvValues()
+    {
+        $rows = [
+            ['noOfLgvVehiclesRequired' => null],
+            ['noOfLgvVehiclesRequired' => null],
+        ];
+
+        $columns = [
+            'noOfHgvVehiclesRequired' => [
+                'title' => 'no.of.hgv.vehicles.required.title-hgv'
+            ]
+        ];
+
+        $expectedColumns = [
+            'noOfHgvVehiclesRequired' => [
+                'title' => 'no.of.hgv.vehicles.required.title'
+            ]
+        ];
+
+        $footer = [
+            'noOfLgvVehiclesRequired' => 'noOfLgvVehiclesRequiredProperties',
+            'otherFooterColumn' => 'otherFooterColumnProperties',
+        ];
+
+        $expectedFooter = [
+            'otherFooterColumn' => 'otherFooterColumnProperties',
+        ];
+
+        $mockTableBuilder = m::mock(TableBuilder::class);
+        $mockTableBuilder->shouldReceive('getRows')
+            ->withNoArgs()
+            ->andReturn($rows);
+
+        $mockTableBuilder->shouldReceive('getColumns')
+            ->withNoArgs()
+            ->andReturn($columns);
+        $mockTableBuilder->shouldReceive('setColumns')
+            ->with($expectedColumns)
+            ->once();
+
+        $mockTableBuilder->shouldReceive('removeColumn')
+            ->with('noOfLgvVehiclesRequired')
+            ->once();
+
+        $mockTableBuilder->shouldReceive('getFooter')
+            ->withNoArgs()
+            ->andReturn($footer);
+        $mockTableBuilder->shouldReceive('setFooter')
+            ->with($expectedFooter)
+            ->once();
+
+        $mockForm = m::mock(\Common\Form\Form::class);
+        $mockForm->shouldReceive('get')
+            ->with('table')
+            ->once()
+            ->andReturnSelf()
+            ->shouldReceive('get')
+            ->with('table')
+            ->once()
+            ->andReturnSelf()
+            ->shouldReceive('getTable')
+            ->withNoArgs()
+            ->andReturn($mockTableBuilder);
 
         $params = [
             'canHaveSchedule41' => true,

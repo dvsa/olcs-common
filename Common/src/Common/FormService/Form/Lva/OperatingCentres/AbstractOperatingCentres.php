@@ -3,6 +3,7 @@
 namespace Common\FormService\Form\Lva\OperatingCentres;
 
 use Common\FormService\Form\Lva\AbstractLvaFormService;
+use Common\Traits\OperatingCentresTableLgvModifierTrait;
 use Laminas\Form\Form;
 
 /**
@@ -12,6 +13,8 @@ use Laminas\Form\Form;
  */
 abstract class AbstractOperatingCentres extends AbstractLvaFormService
 {
+    use OperatingCentresTableLgvModifierTrait;
+
     protected $mainTableConfigName = 'lva-operating-centres';
 
     /**
@@ -53,6 +56,9 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
         if (!$params['canHaveCommunityLicences']) {
             $this->getFormHelper()->remove($form, 'data->totCommunityLicences');
         }
+
+        $table = $form->get('table')->get('table')->getTable();
+        $this->alterFormTableForLgv($table);
 
         if ($params['isPsv']) {
             $this->alterFormForPsvLicences($form, $params);
