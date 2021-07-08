@@ -109,7 +109,6 @@ class Address
      * @Form\Options({
      *     "label":"address_postcode",
      *     "short-label":"address_postcode",
-     *     "error-message" : "address_postcode-error",
      * })
      *
      * @Form\Type("Text")
