@@ -27,7 +27,6 @@ class OperatingCentre
     /**
      * @Form\Name("data")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\OperatingCentreData")
-     * @Form\Options({"label":"application_operating-centres_authorisation-sub-action.data"})
      */
     public $data = null;
 

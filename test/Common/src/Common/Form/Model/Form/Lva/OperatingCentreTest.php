@@ -100,12 +100,44 @@ class OperatingCentreTest extends AbstractFormValidationTestCase
         $this->assertFormElementDynamicSelect($element);
     }
 
-    public function testNumberOfVehiclesRequired()
+    public function testDataHtml()
     {
-        $element = [ 'data', 'noOfVehiclesRequired' ];
+        $element = ['data', 'dataHtml'];
+        $this->assertFormElementHtml($element);
+    }
+
+    public function testHgvHtml()
+    {
+        $element = ['data', 'hgvHtml'];
+        $this->assertFormElementHtml($element);
+    }
+
+    public function testNumberOfHgvVehiclesRequired()
+    {
+        $element = ['data', 'noOfHgvVehiclesRequired'];
         $this->assertFormElementAllowEmpty($element, false);
         $this->assertFormElementValid($element, 0);
         $this->assertFormElementValid($element, 1000000);
+    }
+
+    public function testLgvHtml()
+    {
+        $element = ['data', 'lgvHtml'];
+        $this->assertFormElementHtml($element);
+    }
+
+    public function testNumberOfLgvVehiclesRequired()
+    {
+        $element = ['data', 'noOfLgvVehiclesRequired'];
+        $this->assertFormElementAllowEmpty($element, false);
+        $this->assertFormElementValid($element, 0);
+        $this->assertFormElementValid($element, 1000000);
+    }
+
+    public function testTrailersHtml()
+    {
+        $element = ['data', 'trailersHtml'];
+        $this->assertFormElementHtml($element);
     }
 
     public function testNumberOfTrailersRequired()

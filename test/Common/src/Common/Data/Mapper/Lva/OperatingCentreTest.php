@@ -26,7 +26,8 @@ class OperatingCentreTest extends MockeryTestCase
     {
         $result = [
             'version' => 1,
-            'noOfVehiclesRequired' => 10,
+            'noOfHgvVehiclesRequired' => 10,
+            'noOfLgvVehiclesRequired' => 12,
             'noOfTrailersRequired' => 11,
             'permission' => 13,
             'operatingCentre' => [
@@ -44,7 +45,8 @@ class OperatingCentreTest extends MockeryTestCase
         $expected = [
             'version' => 1,
             'data' => [
-                'noOfVehiclesRequired' => 10,
+                'noOfHgvVehiclesRequired' => 10,
+                'noOfLgvVehiclesRequired' => 12,
                 'noOfTrailersRequired' => 11,
                 'permission' => [
                     'permission' => 13,
@@ -99,7 +101,7 @@ class OperatingCentreTest extends MockeryTestCase
                     'version' => 1,
                     'address' => ['foo' => 'bar'],
                     'data' => [
-                        'noOfVehiclesRequired' => 10,
+                        'noOfHgvVehiclesRequired' => 10,
                         'noOfTrailersRequired' => 11,
                         'permission' => [
                             'permission' => 'Y'
@@ -116,7 +118,8 @@ class OperatingCentreTest extends MockeryTestCase
                 [
                     'version' => 1,
                     'address' => ['foo' => 'bar'],
-                    'noOfVehiclesRequired' => 10,
+                    'noOfHgvVehiclesRequired' => 10,
+                    'noOfLgvVehiclesRequired' => null,
                     'noOfTrailersRequired' => 11,
                     'permission' => 'Y',
                     'adPlaced' => RefData::AD_UPLOAD_NOW,
@@ -131,7 +134,7 @@ class OperatingCentreTest extends MockeryTestCase
                     'version' => 1,
                     'address' => ['foo' => 'bar'],
                     'data' => [
-                        'noOfVehiclesRequired' => 10,
+                        'noOfHgvVehiclesRequired' => 10,
                         'noOfTrailersRequired' => 11,
                         'permission' => [
                             'permission' => 'Y'
@@ -148,7 +151,8 @@ class OperatingCentreTest extends MockeryTestCase
                 [
                     'version' => 1,
                     'address' => ['foo' => 'bar'],
-                    'noOfVehiclesRequired' => 10,
+                    'noOfHgvVehiclesRequired' => 10,
+                    'noOfLgvVehiclesRequired' => null,
                     'noOfTrailersRequired' => 11,
                     'permission' => 'Y',
                     'adPlaced' => RefData::AD_POST,
@@ -163,7 +167,8 @@ class OperatingCentreTest extends MockeryTestCase
                     'version' => 1,
                     'address' => ['foo' => 'bar'],
                     'data' => [
-                        'noOfVehiclesRequired' => 10,
+                        'noOfHgvVehiclesRequired' => 10,
+                        'noOfLgvVehiclesRequired' => 12,
                         'noOfTrailersRequired' => 11,
                         'permission' => [
                             'permission' => 'Y'
@@ -180,7 +185,8 @@ class OperatingCentreTest extends MockeryTestCase
                 [
                     'version' => 1,
                     'address' => ['foo' => 'bar'],
-                    'noOfVehiclesRequired' => 10,
+                    'noOfHgvVehiclesRequired' => 10,
+                    'noOfLgvVehiclesRequired' => 12,
                     'noOfTrailersRequired' => 11,
                     'permission' => 'Y',
                     'adPlaced' => RefData::AD_UPLOAD_LATER,
@@ -208,8 +214,11 @@ class OperatingCentreTest extends MockeryTestCase
 
         $expectedMessages = [
             'data' => [
-                'noOfVehiclesRequired' => [
+                'noOfHgvVehiclesRequired' => [
                     'bar1'
+                ],
+                'noOfLgvVehiclesRequired' => [
+                    'bar1.5'
                 ],
                 'noOfTrailersRequired' => [
                     'bar2'
@@ -245,8 +254,11 @@ class OperatingCentreTest extends MockeryTestCase
                     'ERR_TA_PSV_SR' => 'Foo',
                 ]
             ],
-            'noOfVehiclesRequired' => [
+            'noOfHgvVehiclesRequired' => [
                 'foo' => 'bar1'
+            ],
+            'noOfLgvVehiclesRequired' => [
+                'foo' => 'bar1.5'
             ],
             'noOfTrailersRequired' => [
                 'foo' => 'bar2'

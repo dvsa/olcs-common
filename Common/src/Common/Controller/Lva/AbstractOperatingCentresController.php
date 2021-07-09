@@ -635,11 +635,13 @@ abstract class AbstractOperatingCentresController extends AbstractController
     private function isVariationWithNoAuthIncrease($data, $resultData)
     {
         //if we're in a variation and the authorisation hasn't increased
+        // TODO LGV - this is a temporary fix which only takes into account HGV
+        // this code will be reviewed and modified by VOL-2103
         return (
             $this->lva === 'variation'
-            && isset($data['data']['noOfVehiclesRequired'])
+            && isset($data['data']['noOfHgvVehiclesRequired'])
             && isset($data['data']['noOfTrailersRequired'])
-            && $data['data']['noOfVehiclesRequired'] <= $resultData['currentVehiclesRequired']
+            && $data['data']['noOfHgvVehiclesRequired'] <= $resultData['currentHgvVehiclesRequired']
             && $data['data']['noOfTrailersRequired'] <= $resultData['currentTrailersRequired']
         );
     }

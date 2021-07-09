@@ -5,7 +5,9 @@ $(function() {
   var formId = '#OperatingCentre';
   var F = OLCS.formHelper;
 
-  var vehicles = F('data', 'noOfVehiclesRequired');
+  // TODO LGV - this is a temporary fix which only takes into account HGV
+  // this code will be reviewed and modified by VOL-2103
+  var vehicles = F('data', 'noOfHgvVehiclesRequired');
   var trailers = F('data', 'noOfTrailersRequired');
 
   var isVariation = vehicles.data('current');

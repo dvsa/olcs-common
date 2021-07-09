@@ -54,6 +54,21 @@ class CommonOperatingCentre extends AbstractFormService
             $this->alterActionFormForPsv($form);
         }
 
+        if (!array_key_exists('isEligibleForLgv', $params) || !$params['isEligibleForLgv']) {
+            // remove fields related to LGV only
+            $formHelper = $this->getFormHelper();
+            $formHelper->remove($form, 'data->lgvHtml');
+            $formHelper->remove($form, 'data->noOfLgvVehiclesRequired');
+
+            // keep the existing wording
+            $form->get('data')->get('noOfHgvVehiclesRequired')->setOptions(
+                [
+                    'label' => 'application_operating-centres_authorisation-sub-action.data.noOfVehiclesRequired',
+                    'error-message' => 'Your total number of vehicles',
+                ]
+            );
+        }
+
         // Set the postcode field as not required
         $form->getInputFilter()->get('address')->get('postcode')
             ->setRequired(false);
@@ -67,8 +82,10 @@ class CommonOperatingCentre extends AbstractFormService
         }
 
         if ($params['wouldIncreaseRequireAdditionalAdvertisement']) {
-            $form->get('data')->get('noOfVehiclesRequired')
-                ->setAttribute('data-current', $params['currentVehiclesRequired']);
+            // TODO LGV - this is a temporary fix which only takes into account HGV
+            // this code will be reviewed and modified by VOL-2103
+            $form->get('data')->get('noOfHgvVehiclesRequired')
+                ->setAttribute('data-current', $params['currentHgvVehiclesRequired']);
 
             if ($form->get('data')->has('noOfTrailersRequired')) {
                 $form->get('data')->get('noOfTrailersRequired')
@@ -88,15 +105,14 @@ class CommonOperatingCentre extends AbstractFormService
      */
     protected function alterActionFormForPsv(Form $form)
     {
+        $this->getFormHelper()->remove($form, 'data->hgvHtml');
+        $this->getFormHelper()->remove($form, 'data->trailersHtml');
         $this->getFormHelper()->remove($form, 'data->noOfTrailersRequired');
         $this->getFormHelper()->remove($form, 'advertisements');
         $this->getFormHelper()->remove($form, 'data->guidance');
 
-        $this->getFormHelper()->alterElementLabel(
-            $form->get('data'),
-            '-psv',
-            FormHelperService::ALTER_LABEL_APPEND
-        );
+        // keep the existing wording
+        $form->get('data')->get('dataHtml')->setOptions(['tokens' => ['application_operating-centres_authorisation-sub-action.data-psv']]);
         $this->getFormHelper()->alterElementLabel(
             $form->get('data')->get('permission')->get('permission'),
             '-psv',

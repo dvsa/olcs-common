@@ -39,7 +39,8 @@ class OperatingCentre implements MapperInterface
         $mappedData = [
             'version' => $data['version'],
             'data' => [
-                'noOfVehiclesRequired' => $data['noOfVehiclesRequired'],
+                'noOfHgvVehiclesRequired' => $data['noOfHgvVehiclesRequired'],
+                'noOfLgvVehiclesRequired' => $data['noOfLgvVehiclesRequired'],
                 'noOfTrailersRequired' => $data['noOfTrailersRequired'],
                 'permission' => [
                     'permission' => $data['permission']
@@ -75,7 +76,8 @@ class OperatingCentre implements MapperInterface
         $mappedData = [
             'version' => $data['version'],
             'address' => isset($data['address']) ? $data['address'] : null,
-            'noOfVehiclesRequired' => null,
+            'noOfHgvVehiclesRequired' => null,
+            'noOfLgvVehiclesRequired' => null,
             'noOfTrailersRequired' => null,
             'permission' => null,
             'adPlaced' => null,
@@ -152,12 +154,20 @@ class OperatingCentre implements MapperInterface
     ) {
         $formMessages = [];
 
-        if (isset($errors['noOfVehiclesRequired'])) {
-            foreach ($errors['noOfVehiclesRequired'] as $key => $message) {
-                $formMessages['data']['noOfVehiclesRequired'][] = $message;
+        if (isset($errors['noOfHgvVehiclesRequired'])) {
+            foreach ($errors['noOfHgvVehiclesRequired'] as $key => $message) {
+                $formMessages['data']['noOfHgvVehiclesRequired'][] = $message;
             }
 
-            unset($errors['noOfVehiclesRequired']);
+            unset($errors['noOfHgvVehiclesRequired']);
+        }
+
+        if (isset($errors['noOfLgvVehiclesRequired'])) {
+            foreach ($errors['noOfLgvVehiclesRequired'] as $key => $message) {
+                $formMessages['data']['noOfLgvVehiclesRequired'][] = $message;
+            }
+
+            unset($errors['noOfLgvVehiclesRequired']);
         }
 
         if (isset($errors['noOfTrailersRequired'])) {

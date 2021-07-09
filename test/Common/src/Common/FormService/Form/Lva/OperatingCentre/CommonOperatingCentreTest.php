@@ -49,6 +49,56 @@ class CommonOperatingCentreTest extends MockeryTestCase
         $this->sut->setFormHelper($this->mockFormHelper);
     }
 
+    public function testGetFormLgv()
+    {
+        $params = [
+            'action' => 'edit',
+            'isPsv' => false,
+            'isEligibleForLgv' => true,
+            'canAddAnother' => true,
+            'canUpdateAddress' => true,
+            'wouldIncreaseRequireAdditionalAdvertisement' => false
+        ];
+
+        $this->mockFormHelper->shouldReceive('remove')
+            ->never();
+
+        $this->form->shouldReceive('get')
+            ->with('form-actions')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('remove')
+                ->once()
+                ->with('addAnother')
+                ->getMock()
+            );
+
+        $this->form->shouldReceive('get')
+            ->with('address')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('get')
+                ->with('postcode')
+                ->andReturn(
+                    m::mock()
+                    ->shouldReceive('setOption')
+                    ->with('shouldEscapeMessages', false)
+                    ->once()
+                    ->getMock()
+                )
+                ->once()
+                ->getMock()
+            )
+            ->once()
+            ->getMock();
+
+        $this->form->shouldReceive('getInputFilter->get->get->setRequired')
+            ->with(false);
+
+        $form = $this->sut->getForm($params, $this->request);
+        $this->assertSame($this->form, $form);
+    }
+
     public function testGetForm()
     {
         $params = [
@@ -60,7 +110,35 @@ class CommonOperatingCentreTest extends MockeryTestCase
         ];
 
         $this->mockFormHelper->shouldReceive('remove')
-            ->never();
+            ->once()
+            ->with($this->form, 'data->lgvHtml')
+            ->shouldReceive('remove')
+            ->once()
+            ->with($this->form, 'data->noOfLgvVehiclesRequired');
+
+        $this->form->shouldReceive('get')
+            ->with('data')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('get')
+                ->with('noOfHgvVehiclesRequired')
+                ->andReturn(
+                    m::mock()
+                    ->shouldReceive('setOptions')
+                    ->with(
+                        [
+                            'label' => 'application_operating-centres_authorisation-sub-action.data.noOfVehiclesRequired',
+                            'error-message' => 'Your total number of vehicles',
+                        ]
+                    )
+                    ->once()
+                    ->getMock()
+                )
+                ->once()
+                ->getMock()
+            )
+            ->once()
+            ->getMock();
 
         $this->form->shouldReceive('get')
             ->with('form-actions')
@@ -113,6 +191,35 @@ class CommonOperatingCentreTest extends MockeryTestCase
         $dataFieldset = m::mock();
         $dataFieldset
             ->shouldReceive('get')
+            ->with('dataHtml')
+            ->once()
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('setOptions')
+                ->with(
+                    [
+                        'tokens' => ['application_operating-centres_authorisation-sub-action.data-psv']
+                    ]
+                )
+                ->once()
+                ->getMock()
+            )
+            ->shouldReceive('get')
+            ->with('noOfHgvVehiclesRequired')
+            ->once()
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('setOptions')
+                ->with(
+                    [
+                        'label' => 'application_operating-centres_authorisation-sub-action.data.noOfVehiclesRequired',
+                        'error-message' => 'Your total number of vehicles',
+                    ]
+                )
+                ->once()
+                ->getMock()
+            )
+            ->shouldReceive('get')
             ->with('permission')
             ->andReturn(
                 m::mock()
@@ -128,6 +235,12 @@ class CommonOperatingCentreTest extends MockeryTestCase
             ->andReturn($dataFieldset);
 
         $this->mockFormHelper->shouldReceive('remove')
+            ->with($this->form, 'data->hgvHtml')
+            ->once()
+            ->shouldReceive('remove')
+            ->with($this->form, 'data->trailersHtml')
+            ->once()
+            ->shouldReceive('remove')
             ->once()
             ->with($this->form, 'data->noOfTrailersRequired')
             ->shouldReceive('remove')
@@ -140,9 +253,12 @@ class CommonOperatingCentreTest extends MockeryTestCase
             ->once()
             ->shouldReceive('remove')
             ->with($dataFieldset, '-psv', FormHelperService::ALTER_LABEL_APPEND)
-            ->shouldReceive('alterElementLabel')
+            ->shouldReceive('remove')
             ->once()
-            ->with($permission, '-psv', FormHelperService::ALTER_LABEL_APPEND);
+            ->with($this->form, 'data->lgvHtml')
+            ->shouldReceive('remove')
+            ->once()
+            ->with($this->form, 'data->noOfLgvVehiclesRequired');
 
         $this->form->shouldReceive('get')
             ->with('form-actions')
@@ -191,7 +307,35 @@ class CommonOperatingCentreTest extends MockeryTestCase
         ];
 
         $this->mockFormHelper->shouldReceive('remove')
-            ->never();
+            ->once()
+            ->with($this->form, 'data->lgvHtml')
+            ->shouldReceive('remove')
+            ->once()
+            ->with($this->form, 'data->noOfLgvVehiclesRequired');
+
+        $this->form->shouldReceive('get')
+            ->with('data')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('get')
+                ->with('noOfHgvVehiclesRequired')
+                ->andReturn(
+                    m::mock()
+                    ->shouldReceive('setOptions')
+                    ->with(
+                        [
+                            'label' => 'application_operating-centres_authorisation-sub-action.data.noOfVehiclesRequired',
+                            'error-message' => 'Your total number of vehicles',
+                        ]
+                    )
+                    ->once()
+                    ->getMock()
+                )
+                ->once()
+                ->getMock()
+            )
+            ->once()
+            ->getMock();
 
         $this->form->shouldReceive('get')
             ->with('form-actions')
@@ -244,7 +388,35 @@ class CommonOperatingCentreTest extends MockeryTestCase
         ];
 
         $this->mockFormHelper->shouldReceive('remove')
-            ->never();
+            ->once()
+            ->with($this->form, 'data->lgvHtml')
+            ->shouldReceive('remove')
+            ->once()
+            ->with($this->form, 'data->noOfLgvVehiclesRequired');
+
+        $this->form->shouldReceive('get')
+            ->with('data')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('get')
+                ->with('noOfHgvVehiclesRequired')
+                ->andReturn(
+                    m::mock()
+                    ->shouldReceive('setOptions')
+                    ->with(
+                        [
+                            'label' => 'application_operating-centres_authorisation-sub-action.data.noOfVehiclesRequired',
+                            'error-message' => 'Your total number of vehicles',
+                        ]
+                    )
+                    ->once()
+                    ->getMock()
+                )
+                ->once()
+                ->getMock()
+            )
+            ->once()
+            ->getMock();
 
         $this->form->shouldReceive('get')
             ->with('form-actions')
@@ -303,12 +475,40 @@ class CommonOperatingCentreTest extends MockeryTestCase
             'canAddAnother' => true,
             'canUpdateAddress' => true,
             'wouldIncreaseRequireAdditionalAdvertisement' => true,
-            'currentVehiclesRequired' => 10,
+            'currentHgvVehiclesRequired' => 10,
             'currentTrailersRequired' => 11
         ];
 
         $this->mockFormHelper->shouldReceive('remove')
-            ->never();
+            ->once()
+            ->with($this->form, 'data->lgvHtml')
+            ->shouldReceive('remove')
+            ->once()
+            ->with($this->form, 'data->noOfLgvVehiclesRequired');
+
+        $this->form->shouldReceive('get')
+            ->with('data')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('get')
+                ->with('noOfHgvVehiclesRequired')
+                ->andReturn(
+                    m::mock()
+                    ->shouldReceive('setOptions')
+                    ->with(
+                        [
+                            'label' => 'application_operating-centres_authorisation-sub-action.data.noOfVehiclesRequired',
+                            'error-message' => 'Your total number of vehicles',
+                        ]
+                    )
+                    ->once()
+                    ->getMock()
+                )
+                ->once()
+                ->getMock()
+            )
+            ->once()
+            ->getMock();
 
         $this->form->shouldReceive('get')
             ->with('form-actions')
@@ -329,7 +529,7 @@ class CommonOperatingCentreTest extends MockeryTestCase
             ->andReturn(true);
 
         $data->shouldReceive('get')
-            ->with('noOfVehiclesRequired')
+            ->with('noOfHgvVehiclesRequired')
             ->andReturn(
                 m::mock()
                 ->shouldReceive('setAttribute')
