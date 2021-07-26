@@ -247,22 +247,55 @@ abstract class AbstractOperatingCentresController extends AbstractController
      */
     public function addAction()
     {
+        $resultData = $this->fetchOcData();
+
+        // #  context      isEligibleForLgv    advert required?
+        // ----------------------------------------------------
+        // 1  variation    false               always
+        // 2  variation    true                if hgv > 0 or trailers > 0
+        // 3  application  false               always
+        // 4  application  true                always
+        // 
+        // The following scenarios apply to internal only:
+        // 5  licence      false               always
+        // 6  licence      true                always
+
+        // NOTE: We don't currently need a goods/psv check as this check is already done by isEligibleForLgv
+        $resultData['wouldIncreaseRequireAdditionalAdvertisement'] = 
+            $resultData['isEligibleForLgv'] && $this->lva == 'variation';
+
+        if ($resultData['wouldIncreaseRequireAdditionalAdvertisement']) {
+            $resultData['currentHgvVehiclesRequired'] = 0;
+            $resultData['currentTrailersRequired'] = 0;
+        }
+
         /** @var \Laminas\Http\PhpEnvironment\Request $request */
         $request = $this->getRequest();
 
         $data = [];
 
+        // normally we validate adverts have been uploaded, but not for operating centres containing only lgv vehicles
+        $validateAdverts = true;
         if ($request->isPost()) {
             $data = OperatingCentre::mapFromPost((array) $request->getPost());
+
+            if ($this->canAdvertisementRequirementBeRemoved($data, $resultData)) {
+                $data = $this->clearAdvertisementData($data);
+                $validateAdverts = false;
+            }
         }
 
-        $resultData = $this->fetchOcData();
+        if (!isset($data['advertisements']['adPlacedContent']['file']['list'])) {
+            $data['advertisements']['adPlacedContent']['file']['list'] = [];
+        }
+
+        $data['advertisements']['uploadedFileCount'] =
+            count($data['advertisements']['adPlacedContent']['file']['list']);
 
         $this->documents = $resultData['documents'];
 
         $resultData['action'] = 'add';
-        // Only applicable when editing (On a variation)
-        $resultData['wouldIncreaseRequireAdditionalAdvertisement'] = false;
+
         // Only applicable when editing (On a variation)
         $resultData['canUpdateAddress'] = true;
 
@@ -282,7 +315,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $hasProcessedPostcode = $this->getServiceLocator()->get('Helper\Form')
             ->processAddressLookupForm($form, $request);
 
-        if ($form->has('advertisements')) {
+        if ($form->has('advertisements') && $validateAdverts) {
             $hasProcessedFiles = $this->processFiles(
                 $form,
                 'advertisements->adPlacedContent->file',
@@ -340,22 +373,50 @@ abstract class AbstractOperatingCentresController extends AbstractController
      */
     public function editAction()
     {
-        //normally we validate adverts have been uploaded, but not for variations where authorisation hasn't increased
-        $validateAdverts = true;
-
         /** @var \Laminas\Http\PhpEnvironment\Request $request */
         $request = $this->getRequest();
 
         $resultData = $this->fetchOcItemData();
 
+        // #  context      isEligibleForLgv    oc created by       advert content displayed?
+        //                                     this variation?
+        // ------------------------------------------------------------------------
+        // 1  variation    true                true                if hgv > 0 or trailers > 0
+        // 2  variation    false               true                always
+        // 3  variation    true                false               if hgv > previousHgv or trailers > previousTrailers
+        // 4  variation    false               false               if hgv > previousHgv or trailers > previousTrailers
+        // 5  application  true                -                   always
+        // 6  application  false               -                   always
+        //
+        // The following scenarios apply only to internal:
+        // 7  licence      true                -                   always (but validation disabled)
+        // 8  licence      false               -                   always (but validation disabled)
+        //
+        // NOTE: adverts content only ever displays in a goods (as opposed to psv) context
+
+        $resultData['wouldIncreaseRequireAdditionalAdvertisement'] = false;
+        if (!$resultData['isPsv'] && $this->lva == 'variation') {
+            // currentHgvVehiclesRequired will be null if oc created by this variation
+            if (is_null($resultData['currentHgvVehiclesRequired'])) {
+                if ($resultData['isEligibleForLgv']) {
+                    $resultData['wouldIncreaseRequireAdditionalAdvertisement'] = true;
+                    $resultData['currentHgvVehiclesRequired'] = 0;
+                    $resultData['currentTrailersRequired'] = 0;
+                }
+            } else {
+                $resultData['wouldIncreaseRequireAdditionalAdvertisement'] = true;
+            }
+        }
+
         $this->documents = $resultData['operatingCentre']['adDocuments'];
         // need to store the operating centre ID so that uploaded documents can be attached
         $this->operatingCentreId = $resultData['operatingCentre']['id'];
 
+        $validateAdverts = true;
         if ($request->isPost()) {
             $data = (array)$request->getPost();
 
-            if ($this->isVariationWithNoAuthIncrease($data, $resultData)) {
+            if ($this->canAdvertisementRequirementBeRemoved($data, $resultData)) {
                 $data = $this->clearAdvertisementData($data);
                 $validateAdverts = false;
             }
@@ -410,7 +471,13 @@ abstract class AbstractOperatingCentresController extends AbstractController
         }
 
         if (!$hasProcessedFiles && !$hasProcessedPostcode && $request->isPost() && $form->isValid()) {
-            $formData = array_merge($form->getData(), ['isTaOverridden' => $request->getPost('form-actions')['confirm-add']]);
+            // NOTE: this is a temporary workaround for a PHP notice causing the request to be terminated in the K8 dev env
+            // This workaround simply stops the notice from being raised and may not resolve the underlying issue
+            // The ticket representing a permanent fix for this is OLCS-27200
+            $formData = $form->getData();
+            $requestFormActions = $request->getPost('form-actions');
+            $formData['isTaOverridden'] = $requestFormActions['confirm-add'] ?? null;
+
             $dtoData = OperatingCentre::mapFromForm($formData);
             if (!$resultData['canUpdateAddress']) {
                 unset($dtoData['address']);
@@ -625,20 +692,23 @@ abstract class AbstractOperatingCentresController extends AbstractController
     }
 
     /**
-     * For lva variations we check whether the authorisation has increased
+     * For scenarios where advert details are conditionally required based upon the details submitted, establish
+     * whether advert details are actually required
      *
      * @param array $data       posted form data
      * @param array $resultData the original operating centre data
      *
      * @return bool
      */
-    private function isVariationWithNoAuthIncrease($data, $resultData)
+    private function canAdvertisementRequirementBeRemoved($data, $resultData)
     {
-        //if we're in a variation and the authorisation hasn't increased
         // TODO LGV - this is a temporary fix which only takes into account HGV
         // this code will be reviewed and modified by VOL-2103
+
+        // TODO: check that this works for all lva values in conjunction with add and edit
+        // on both selfserve and internal
         return (
-            $this->lva === 'variation'
+            $resultData['wouldIncreaseRequireAdditionalAdvertisement']
             && isset($data['data']['noOfHgvVehiclesRequired'])
             && isset($data['data']['noOfTrailersRequired'])
             && $data['data']['noOfHgvVehiclesRequired'] <= $resultData['currentHgvVehiclesRequired']

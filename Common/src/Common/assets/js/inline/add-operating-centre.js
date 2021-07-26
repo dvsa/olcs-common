@@ -10,7 +10,7 @@ $(function() {
   var vehicles = F('data', 'noOfHgvVehiclesRequired');
   var trailers = F('data', 'noOfTrailersRequired');
 
-  var isVariation = vehicles.data('current');
+  var isVariation = typeof(vehicles.data('current')) !== "undefined";
 
   OLCS.cascadeForm({
     form: formId,
