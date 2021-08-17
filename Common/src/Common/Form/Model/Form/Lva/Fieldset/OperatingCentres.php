@@ -18,7 +18,7 @@ class OperatingCentres
     /**
      * @Form\Required(true)
      * @Form\Type("Text")
-     * @Form\Attributes({"class":"short","id":"totAuthVehicles","required":false,"pattern":"\d*"})
+     * @Form\Attributes({"class":"short","id":"totAuthHgvVehicles","required":false,"pattern":"\d*"})
      * @Form\Options({
      *     "label": "application_operating-centres_authorisation.data.totAuthVehicles",
      *     "label_attributes": {"class": "form-element__question"},
@@ -31,7 +31,7 @@ class OperatingCentres
      * @Form\Validator({"name": "Between", "options": {"min":1, "max": 1000000}})
      * @Form\Filter({"name":"\Laminas\Filter\ToNull", "options":{"type":"string"}})
      */
-    public $totAuthVehicles = null;
+    public $totAuthHgvVehicles = null;
 
     /**
      * @Form\Required(true)

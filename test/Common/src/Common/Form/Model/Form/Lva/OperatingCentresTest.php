@@ -57,7 +57,7 @@ class OperatingCentresTest extends AbstractFormValidationTestCase
 
     public function testTotalAuthVehicles()
     {
-        $element = [ 'data', 'totAuthVehicles' ];
+        $element = [ 'data', 'totAuthHgvVehicles' ];
         $this->assertFormElementIsRequired($element, true);
         $this->assertFormElementNumber(
             $element,

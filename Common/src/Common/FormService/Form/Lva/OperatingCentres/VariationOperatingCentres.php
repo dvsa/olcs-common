@@ -28,9 +28,9 @@ class VariationOperatingCentres extends AbstractOperatingCentres
 
         $licence = $params['licence'];
 
-        if ($form->get('data')->has('totAuthVehicles')) {
+        if ($form->get('data')->has('totAuthHgvVehicles')) {
             $hint = $translator->translateReplace('current-authorisation-hint', [$licence['totAuthVehicles']]);
-            $form->get('data')->get('totAuthVehicles')->setOption('hint', $hint);
+            $form->get('data')->get('totAuthHgvVehicles')->setOption('hint', $hint);
         }
 
         if ($form->get('data')->has('totAuthTrailers')) {

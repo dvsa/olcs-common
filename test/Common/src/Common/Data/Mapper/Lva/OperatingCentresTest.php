@@ -139,11 +139,14 @@ class OperatingCentresTest extends MockeryTestCase
                 'totCommunityLicences' => [
                     'bar1'
                 ],
-                'totAuthVehicles' => [
+                'totAuthHgvVehicles' => [
                     'bar2'
                 ],
-                'totAuthTrailers' => [
+                'totAuthLgvVehicles' => [
                     'bar3'
+                ],
+                'totAuthTrailers' => [
+                    'bar4'
                 ],
             ],
             'table' => [
@@ -162,11 +165,14 @@ class OperatingCentresTest extends MockeryTestCase
             'totCommunityLicences' => [
                 'foo' => 'bar1'
             ],
-            'totAuthVehicles' => [
+            'totAuthHgvVehicles' => [
                 'foo' => 'bar2'
             ],
-            'totAuthTrailers' => [
+            'totAuthLgvVehicles' => [
                 'foo' => 'bar3'
+            ],
+            'totAuthTrailers' => [
+                'foo' => 'bar4'
             ],
             'operatingCentres' => [
                 'foo' => 'bar7'

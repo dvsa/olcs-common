@@ -105,7 +105,7 @@ class VariationOperatingCentresTest extends MockeryTestCase
 
         $data = m::mock();
         $data->shouldReceive('has')
-            ->with('totAuthVehicles')
+            ->with('totAuthHgvVehicles')
             ->andReturn(true)
             ->shouldReceive('has')
             ->with('totAuthTrailers')
@@ -114,7 +114,7 @@ class VariationOperatingCentresTest extends MockeryTestCase
             ->with('totCommunityLicences')
             ->andReturn(true)
             ->shouldReceive('get')
-            ->with('totAuthVehicles')
+            ->with('totAuthHgvVehicles')
             ->andReturn(
                 m::mock()
                 ->shouldReceive('setOption')
