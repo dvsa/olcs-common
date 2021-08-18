@@ -40,6 +40,18 @@ class OperatingCentres implements MapperInterface
             $trafficArea = $data['trafficArea']['id'];
         }
 
+        $data['totAuthHgvVehiclesFieldset'] = ['totAuthHgvVehicles' => $data['totAuthHgvVehicles']];
+        unset($data['totAuthHgvVehicles']);
+
+        $data['totAuthLgvVehiclesFieldset'] = ['totAuthLgvVehicles' => $data['totAuthLgvVehicles']];
+        unset($data['totAuthLgvVehicles']);
+
+        $data['totAuthTrailersFieldset'] = ['totAuthTrailers' => $data['totAuthTrailers']];
+        unset($data['totAuthTrailers']);
+
+        $data['totCommunityLicencesFieldset'] = ['totCommunityLicences' => $data['totCommunityLicences']];
+        unset($data['totCommunityLicences']);
+
         return [
             'data' => $data,
             'dataTrafficArea' => [
@@ -63,6 +75,18 @@ class OperatingCentres implements MapperInterface
         if (isset($data['dataTrafficArea'])) {
             $mappedData = array_merge($mappedData, $data['dataTrafficArea']);
         }
+
+        $mappedData['totAuthHgvVehicles'] = $data['data']['totAuthHgvVehiclesFieldset']['totAuthHgvVehicles'];
+        unset($mappedData['totAuthHgvVehiclesFieldset']);
+
+        $mappedData['totAuthLgvVehicles'] = $data['data']['totAuthLgvVehiclesFieldset']['totAuthLgvVehicles'];
+        unset($mappedData['totAuthLgvVehiclesFieldset']);
+
+        $mappedData['totAuthTrailers'] = $data['data']['totAuthTrailersFieldset']['totAuthTrailers'];
+        unset($mappedData['totAuthTrailersFieldset']);
+
+        $mappedData['totCommunityLicences'] = $data['data']['totCommunityLicencesFieldset']['totCommunityLicences'];
+        unset($mappedData['totCommunityLicencesFieldset']);
 
         return $mappedData;
     }
@@ -89,31 +113,28 @@ class OperatingCentres implements MapperInterface
 
         if (isset($errors['totCommunityLicences'])) {
             foreach ($errors['totCommunityLicences'] as $key => $message) {
-                $formMessages['data']['totCommunityLicences'][] = $message;
+                $formMessages['data']['totCommunityLicencesFieldset']['totCommunityLicences'][] = $message;
             }
-
             unset($errors['totCommunityLicences']);
         }
 
         if (isset($errors['totAuthHgvVehicles'])) {
             foreach ($errors['totAuthHgvVehicles'] as $key => $message) {
-                $formMessages['data']['totAuthHgvVehicles'][] = $message;
+                $formMessages['data']['totAuthHgvVehiclesFieldset']['totAuthHgvVehicles'][] = $message;
             }
-
             unset($errors['totAuthHgvVehicles']);
         }
 
         if (isset($errors['totAuthLgvVehicles'])) {
             foreach ($errors['totAuthLgvVehicles'] as $key => $message) {
-                $formMessages['data']['totAuthLgvVehicles'][] = $message;
+                $formMessages['data']['totAuthLgvVehiclesFieldset']['totAuthLgvVehicles'][] = $message;
             }
-
             unset($errors['totAuthLgvVehicles']);
         }
 
         if (isset($errors['totAuthTrailers'])) {
             foreach ($errors['totAuthTrailers'] as $key => $message) {
-                $formMessages['data']['totAuthTrailers'][] = $message;
+                $formMessages['data']['totAuthTrailersFieldset']['totAuthTrailers'][] = $message;
             }
 
             unset($errors['totAuthTrailers']);

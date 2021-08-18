@@ -4,11 +4,11 @@ namespace Common\FormService\Form\Lva\OperatingCentres;
 
 use Common\FormService\Form\Lva\AbstractLvaFormService;
 use Laminas\Form\Form;
+use Common\RefData;
+use Common\Service\Table\TableBuilder;
 
 /**
- * Abstract Operating Centres
- *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * @see \CommonTest\FormService\Form\Lva\OperatingCentres\AbstractOperatingCentresTest
  */
 abstract class AbstractOperatingCentres extends AbstractLvaFormService
 {
@@ -51,14 +51,14 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
         }
 
         if (!$params['canHaveCommunityLicences']) {
-            $this->getFormHelper()->remove($form, 'data->totCommunityLicences');
+            $this->getFormHelper()->remove($form, 'data->totCommunityLicencesFieldset');
         }
 
         if ($params['isPsv']) {
             $this->alterFormForPsvLicences($form, $params);
             $this->alterFormTableForPsv($form);
         } else {
-            $this->alterFormForGoodsLicences($form);
+            $this->alterFormForGoodsLicences($form, $params);
         }
 
         // - Modify the validation message for Required on 'rows' field
@@ -139,12 +139,12 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
     protected function alterFormForPsvLicences(Form $form, array $params)
     {
         $dataFieldset = $form->get('data');
-        if ($dataFieldset->has('totCommunityLicences')) {
-            $totCommunityLicencesElement = $dataFieldset->get('totCommunityLicences');
 
-            $totCommunityLicencesElement->setLabel(
-                $totCommunityLicencesElement->getLabel() . '.psv'
-            );
+        if ($dataFieldset->has('totCommunityLicencesFieldset')) {
+            $totCommunityLicencesFieldset = $dataFieldset->get('totCommunityLicencesFieldset');
+            $totCommunityLicencesFieldset->setLabel('');
+            $totCommunityLicencesElement = $totCommunityLicencesFieldset->get('totCommunityLicences');
+            $totCommunityLicencesElement->setLabel($totCommunityLicencesElement->getLabel() . '.psv');
         }
 
         $dataOptions = $dataFieldset->getOptions();
@@ -154,10 +154,11 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
         $dataFieldset->setOptions($dataOptions);
 
         $removeFields = [
-            'totAuthTrailers'
+            'totAuthTrailersFieldset'
         ];
 
         $this->getFormHelper()->removeFieldList($form, 'data', $removeFields);
+        $this->disableVehicleClassifications($form);
     }
 
     /**
@@ -169,8 +170,8 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
      */
     protected function alterFormTableForPsv(Form $form)
     {
-        /** @var \Common\Service\Table\TableBuilder $table */
         $table = $form->get('table')->get('table')->getTable();
+        assert($table instanceof TableBuilder);
 
         $table->removeColumn('noOfTrailersRequired');
 
@@ -185,11 +186,26 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
     /**
      * Alter Form For Goods Licences
      *
-     * @param Form $form Form
-     *
+     * @param Form $form
+     * @param array $params
      * @return void
      */
-    protected function alterFormForGoodsLicences(Form $form)
+    protected function alterFormForGoodsLicences(Form $form, array $params): void
     {
+        $licenceType = $params['licenceType']['id'] ?? null;
+        if ($licenceType !== RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL) {
+            $this->disableVehicleClassifications($form);
+        }
+    }
+
+    /**
+     * @param $form
+     */
+    protected function disableVehicleClassifications($form)
+    {
+        $this->getFormHelper()->remove($form, 'data->totAuthLgvVehiclesFieldset');
+        $totAuthHgvVehiclesFieldset = $form->get('data')->get('totAuthHgvVehiclesFieldset');
+        $totAuthHgvVehiclesFieldset->setLabel('application_operating-centres_authorisation.data.totAuthHgvVehiclesFieldset.vehicles-label');
+        $totAuthHgvVehiclesFieldset->get('totAuthHgvVehicles')->setLabel('application_operating-centres_authorisation.data.totAuthHgvVehicles.vehicles-label');
     }
 }

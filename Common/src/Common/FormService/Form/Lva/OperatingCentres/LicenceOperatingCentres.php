@@ -1,18 +1,11 @@
 <?php
 
-/**
- * Licence Operating Centres
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\FormService\Form\Lva\OperatingCentres;
 
 use Laminas\Form\Form;
 
 /**
- * Licence Operating Centres
- *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * @see \CommonTest\FormService\Form\Lva\OperatingCentres\LicenceOperatingCentresTest
  */
 class LicenceOperatingCentres extends AbstractOperatingCentres
 {
@@ -28,10 +21,17 @@ class LicenceOperatingCentres extends AbstractOperatingCentres
         $this->alterFormWithTranslationKey($form, 'community-licence-changes-contact-office.psv');
     }
 
-    protected function alterFormForGoodsLicences(Form $form)
+    /**
+     * @inheritDoc
+     */
+    protected function alterFormForGoodsLicences(Form $form, array $params): void
     {
-        parent::alterFormForGoodsLicences($form);
+        parent::alterFormForGoodsLicences($form, $params);
         $this->alterFormWithTranslationKey($form, 'community-licence-changes-contact-office');
+
+        if (is_null($params['totAuthLgvVehicles'] ?? null)) {
+            $this->disableVehicleClassifications($form);
+        }
     }
 
     /**
@@ -44,10 +44,10 @@ class LicenceOperatingCentres extends AbstractOperatingCentres
      */
     protected function alterFormWithTranslationKey(Form $form, $translationKey)
     {
-        if ($form->get('data')->has('totCommunityLicences')) {
-            $this->getFormHelper()->disableElement($form, 'data->totCommunityLicences');
+        if ($form->get('data')->has('totCommunityLicencesFieldset')) {
+            $this->getFormHelper()->disableElement($form, 'data->totCommunityLicencesFieldset->totCommunityLicences');
             $this->getFormHelper()->lockElement(
-                $form->get('data')->get('totCommunityLicences'),
+                $form->get('data')->get('totCommunityLicencesFieldset')->get('totCommunityLicences'),
                 $translationKey
             );
         }

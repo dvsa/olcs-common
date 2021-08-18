@@ -28,18 +28,23 @@ class VariationOperatingCentres extends AbstractOperatingCentres
 
         $licence = $params['licence'];
 
-        if ($form->get('data')->has('totAuthHgvVehicles')) {
-            $hint = $translator->translateReplace('current-authorisation-hint', [$licence['totAuthVehicles']]);
-            $form->get('data')->get('totAuthHgvVehicles')->setOption('hint', $hint);
+        if ($form->get('data')->has('totAuthHgvVehiclesFieldset')) {
+            $hint = $translator->translateReplace('current-authorisation-hint', [$licence['totAuthHgvVehicles'] ?? 0]);
+            $form->get('data')->get('totAuthHgvVehiclesFieldset')->get('totAuthHgvVehicles')->setOption('hint-below', $hint);
         }
 
-        if ($form->get('data')->has('totAuthTrailers')) {
+        if ($form->get('data')->has('totAuthLgvVehiclesFieldset')) {
+            $hint = $translator->translateReplace('current-authorisation-hint', [$licence['totAuthLgvVehicles'] ?? 0]);
+            $form->get('data')->get('totAuthLgvVehiclesFieldset')->get('totAuthLgvVehicles')->setOption('hint-below', $hint);
+        }
+
+        if ($form->get('data')->has('totAuthTrailersFieldset')) {
             $hint = $translator->translateReplace('current-authorisation-hint', [$licence['totAuthTrailers']]);
-            $form->get('data')->get('totAuthTrailers')->setOption('hint', $hint);
+            $form->get('data')->get('totAuthTrailersFieldset')->get('totAuthTrailers')->setOption('hint-below', $hint);
         }
 
-        if ($form->get('data')->has('totCommunityLicences')) {
-            $this->getFormHelper()->disableElement($form, 'data->totCommunityLicences');
+        if ($form->get('data')->has('totCommunityLicencesFieldset')) {
+            $this->getFormHelper()->disableElement($form, 'data->totCommunityLicencesFieldset->totCommunityLicences');
         }
 
         return $form;

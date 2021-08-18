@@ -1,10 +1,7 @@
 <?php
 
-/**
- * Licence Operating Centres Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
+declare(strict_types=1);
+
 namespace CommonTest\FormService\Form\Lva\OperatingCentres;
 
 use Common\FormService\Form\Lva\OperatingCentres\LicenceOperatingCentres;
@@ -13,122 +10,160 @@ use Common\FormService\FormServiceManager;
 use Common\Service\Table\TableBuilder;
 use CommonTest\Bootstrap;
 use Mockery as m;
-use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Form\Element;
 use Laminas\Form\Fieldset;
 use Laminas\Form\Form;
-use Laminas\Http\Request;
 use Common\Service\Helper\FormHelperService;
+use Common\RefData;
+use Common\Test\FormService\Form\Lva\OperatingCentres\LicenceOperatingCentresTestCase;
 
 /**
- * Licence Operating Centres Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * @see LicenceOperatingCentres
  */
-class LicenceOperatingCentresTest extends MockeryTestCase
+class LicenceOperatingCentresTest extends LicenceOperatingCentresTestCase
 {
-    protected $form;
-
     /**
      * @var LicenceOperatingCentres
      */
     protected $sut;
 
-    protected $mockFormHelper;
-
-    protected $tableBuilder;
-
-    public function setUp(): void
+    public function testGetForm()
     {
-        $this->tableBuilder = m::mock();
+        $tableBuilder = m::mock();
 
         $sm = Bootstrap::getServiceManager();
-        $sm->setService('Table', $this->tableBuilder);
+        $sm->setService('Table', $tableBuilder);
 
         $fsm = m::mock(FormServiceManager::class)->makePartial();
         $fsm->shouldReceive('getServiceLocator')
             ->andReturn($sm);
 
-        $this->form = m::mock(Form::class);
+        $form = m::mock(Form::class);
 
         $lvaLicence = m::mock(FormServiceInterface::class);
         $lvaLicence->shouldReceive('alterForm')
             ->once()
-            ->with($this->form);
+            ->with($form);
 
         $fsm->setService('lva-licence', $lvaLicence);
 
-        $this->mockFormHelper = m::mock(FormHelperService::class);
-        $this->mockFormHelper->shouldReceive('createForm')
+        $mockFormHelper = m::mock(FormHelperService::class);
+        $mockFormHelper->shouldReceive('createForm')
             ->once()
             ->with('Lva\OperatingCentres')
-            ->andReturn($this->form);
+            ->andReturn($form);
 
-        $this->sut = new LicenceOperatingCentres();
-        $this->sut->setFormHelper($this->mockFormHelper);
-        $this->sut->setFormServiceLocator($fsm);
-    }
+        $sut = new LicenceOperatingCentres();
+        $sut->setFormHelper($mockFormHelper);
+        $sut->setFormServiceLocator($fsm);
 
-    public function testGetForm()
-    {
         $params = [
             'operatingCentres' => [],
             'canHaveSchedule41' => true,
             'canHaveCommunityLicences' => true,
             'isPsv' => false,
+            'licenceType' => ['id' => RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL],
+            'totAuthLgvVehicles' => 0,
         ];
 
-        $this->mockPopulateFormTable([]);
-
-        $this->mockFormHelper->shouldReceive('getValidator->setMessage')
-            ->with('OperatingCentreNoOfOperatingCentres.required', 'required');
-
-        $this->mockFormHelper->shouldReceive('remove')
-            ->once()
-            ->with($this->form, 'dataTrafficArea');
-
-        $totCommunityLicences = m::mock(Element::class);
-
-        $data = m::mock();
-        $data->shouldReceive('has')
-            ->with('totCommunityLicences')
-            ->andReturn(true)
-            ->shouldReceive('get')
-            ->with('totCommunityLicences')
-            ->andReturn($totCommunityLicences);
-
-        $this->mockFormHelper->shouldReceive('disableElement')
-            ->once()
-            ->with($this->form, 'data->totCommunityLicences');
-
-        $this->mockFormHelper->shouldReceive('lockElement')
-            ->once()
-            ->with($totCommunityLicences, 'community-licence-changes-contact-office');
-
-        $this->form->shouldReceive('get')
-            ->with('data')
-            ->andReturn($data);
-
-        $form = $this->sut->getForm($params);
-        $this->assertSame($this->form, $form);
-    }
-
-    protected function mockPopulateFormTable($data)
-    {
         $table = m::mock(TableBuilder::class);
         $tableElement = m::mock(Fieldset::class);
 
-        $this->form->shouldReceive('get')
+        $form->shouldReceive('get')
             ->with('table')
             ->andReturn($tableElement);
 
-        $this->tableBuilder->shouldReceive('prepareTable')
-            ->with('lva-operating-centres', $data, [])
+        $tableBuilder->shouldReceive('prepareTable')
+            ->with('lva-operating-centres', [], [])
             ->andReturn($table);
 
-        $this->mockFormHelper->shouldReceive('populateFormTable')
+        $mockFormHelper->shouldReceive('populateFormTable')
             ->with($tableElement, $table);
 
-        return $tableElement;
+        $mockFormHelper->shouldReceive('getValidator->setMessage')
+            ->with('OperatingCentreNoOfOperatingCentres.required', 'required');
+
+        $mockFormHelper->shouldReceive('remove')
+            ->once()
+            ->with($form, 'dataTrafficArea');
+
+        $totCommunityLicences = m::mock(Element::class);
+        $totCommunityLicencesFieldset = m::mock(Fieldset::class);
+        $totCommunityLicencesFieldset->shouldReceive('get')
+            ->with('totCommunityLicences')
+            ->andReturn($totCommunityLicences);
+
+        $data = m::mock();
+        $data->shouldReceive('has')
+            ->with('totCommunityLicencesFieldset')
+            ->andReturn(true)
+            ->shouldReceive('get')
+            ->with('totCommunityLicencesFieldset')
+            ->andReturn($totCommunityLicencesFieldset);
+
+        $mockFormHelper->shouldReceive('disableElement')
+            ->once()
+            ->with($form, 'data->totCommunityLicencesFieldset->totCommunityLicences');
+
+        $mockFormHelper->shouldReceive('lockElement')
+            ->once()
+            ->with($totCommunityLicences, 'community-licence-changes-contact-office');
+
+        $form->shouldReceive('get')
+            ->with('data')
+            ->andReturn($data);
+
+        $this->assertSame($form, $sut->getForm($params));
+    }
+
+    /**
+     * @test
+     */
+    public function getForm_IsCallable()
+    {
+        // Setup
+        $this->setUpSut();
+
+        // Assert
+        $this->assertIsCallable([$this->sut, 'getForm']);
+    }
+
+    /**
+     * @test
+     * @depends getForm_IsCallable
+     */
+    public function getForm_ReturnsAForm()
+    {
+        // Setup
+        $this->setUpSut();
+
+        // Execute
+        $result = $this->sut->getForm($this->paramsForStandardInternationalGoodsLicence());
+
+        // Assert
+        $this->assertInstanceOf(Form::class, $result);
+    }
+
+    /**
+     * @test
+     * @depends getForm_ReturnsAForm
+     */
+    public function getForm_DisablesVehicleClassifications_WhenLicenceLgvsAreNull()
+    {
+        // Setup
+        $this->setUpSut();
+
+        // Execute
+        $result = $this->sut->getForm($this->paramsForStandardInternationalGoodsLicence());
+
+        // Assert
+        $this->assertVehicleClassificationsAreDisabledForForm($result);
+    }
+
+    protected function setUpSut()
+    {
+        $this->sut = new LicenceOperatingCentres();
+        $this->sut->setFormHelper($this->formHelper());
+        $this->sut->setFormServiceLocator($this->formServiceManager());
     }
 }

@@ -55,34 +55,46 @@ class OperatingCentresTest extends AbstractFormValidationTestCase
         $this->assertFormElementHidden([ 'data', 'version' ]);
     }
 
-    public function testTotalAuthVehicles()
+    public function testTotalAuthHgvVehicles()
     {
-        $element = [ 'data', 'totAuthHgvVehicles' ];
+        $element = [ 'data', 'totAuthHgvVehiclesFieldset', 'totAuthHgvVehicles' ];
         $this->assertFormElementIsRequired($element, true);
         $this->assertFormElementNumber(
             $element,
             1,
-            1000000,
+            5000,
+            [ \Laminas\Validator\Between::NOT_BETWEEN ]
+        );
+    }
+
+    public function testTotalAuthLgvVehicles()
+    {
+        $element = [ 'data', 'totAuthLgvVehiclesFieldset', 'totAuthLgvVehicles' ];
+        $this->assertFormElementIsRequired($element, true);
+        $this->assertFormElementNumber(
+            $element,
+            0,
+            5000,
             [ \Laminas\Validator\Between::NOT_BETWEEN ]
         );
     }
 
     public function testTotalAuthTrailers()
     {
-        $element = [ 'data', 'totAuthTrailers' ];
+        $element = [ 'data', 'totAuthTrailersFieldset', 'totAuthTrailers' ];
         $this->assertFormElementIsRequired($element, true);
         $this->assertFormElementNumber(
             $element,
             0,
-            1000000,
+            5000,
             [ \Laminas\Validator\Between::NOT_BETWEEN ]
         );
     }
 
     public function testTotalCommunityLicences()
     {
-        $element = [ 'data', 'totCommunityLicences' ];
-        $this->assertFormElementNumber($element, 0, 1000000, [ \Laminas\Validator\Between::NOT_BETWEEN ]);
+        $element = [ 'data', 'totCommunityLicencesFieldset', 'totCommunityLicences' ];
+        $this->assertFormElementNumber($element, 0, 10000, [ \Laminas\Validator\Between::NOT_BETWEEN ]);
     }
 
     public function testSaveAndContinue()
