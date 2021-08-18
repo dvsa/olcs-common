@@ -20,6 +20,10 @@ class IrhpPermitOrganisationName implements FormatterInterface
      */
     public static function format($data)
     {
+        if (!isset($data['irhpPermitApplication']['relatedApplication']['licence']['organisation']['name'])) {
+            return null;
+        }
+
         $value = $data['irhpPermitApplication']['relatedApplication']['licence']['organisation']['name'];
         return Escape::html($value);
     }

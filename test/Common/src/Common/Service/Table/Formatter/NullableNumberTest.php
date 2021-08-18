@@ -3,7 +3,7 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\NullableNumber;
-
+use Olcs\TestHelpers\MockeryTestCase;
 /**
  * Class NullableNumberTest
  *
@@ -11,7 +11,7 @@ use Common\Service\Table\Formatter\NullableNumber;
  *
  * @package CommonTest\Service\Table\Formatter
  */
-class NullableNumberTest extends \PHPUnit\Framework\TestCase
+class NullableNumberTest extends MockeryTestCase
 {
     /**
      * Test the format method
@@ -30,12 +30,16 @@ class NullableNumberTest extends \PHPUnit\Framework\TestCase
     {
         return array(
             array(
-                'permitsRequired' => null,
-                'expected' => 0
+                [
+                    'permitsRequired' => null,
+                    'expected' => 0
+                ],
             ),
             array(
-                'permitsRequired' => 3,
-                'expected' => 3
+                [
+                    'permitsRequired' => 3,
+                    'expected' => 3
+                ],
             ),
         );
     }

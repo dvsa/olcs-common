@@ -146,11 +146,11 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     /**
      * Get Organisation data
      *
-     * @return array
+     * @return array|null
      */
     public function getOrganisation()
     {
-        return $this->licence['organisation'];
+        return $this->licence['organisation'] ?? null;
     }
 
     /**
@@ -265,7 +265,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
             );
         }
 
-        return $this->data['people'];
+        return $this->data['people'] ?? null;
     }
 
     /**
@@ -459,7 +459,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     public function getOrganisationType()
     {
         $orgData = $this->getOrganisation();
-        return $orgData['type']['id'];
+        return $orgData['type']['id'] ?? null;
     }
 
     /**

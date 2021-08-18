@@ -474,8 +474,11 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         } elseif ($mode === 'edit') {
             $personId = (int) $this->params('child_id');
             $personData = $adapter->getPersonData($personId);
-            $data['data'] = $personData['person'];
-            $data['data']['position'] = $personData['position'];
+
+            if ($personData) {
+                $data['data'] = $personData['person'];
+                $data['data']['position'] = $personData['position'];
+            }
         }
 
         /** @var \Common\Form\Form $form */
