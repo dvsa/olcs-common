@@ -20,7 +20,7 @@
         "doctrine/annotations": "^1.8",
         "doctrine/doctrine-orm-module": "~0.10.0",
         "laminas/laminas-cache": "^2.5",
-        "laminas/laminas-code": "^2.5",
+        "laminas/laminas-code": "~3.4.1",
         "laminas/laminas-dependency-plugin": "^2.0",
         "laminas/laminas-di": "^2.5",
         "laminas/laminas-escaper": "^2.5",
