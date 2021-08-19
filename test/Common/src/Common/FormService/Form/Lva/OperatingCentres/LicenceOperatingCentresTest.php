@@ -152,9 +152,11 @@ class LicenceOperatingCentresTest extends LicenceOperatingCentresTestCase
     {
         // Setup
         $this->setUpSut();
+        $params = $this->paramsForStandardInternationalGoodsLicence();
+        $params['totAuthLgvVehicles'] = null;
 
         // Execute
-        $result = $this->sut->getForm($this->paramsForStandardInternationalGoodsLicence());
+        $result = $this->sut->getForm($params);
 
         // Assert
         $this->assertVehicleClassificationsAreDisabledForForm($result);
