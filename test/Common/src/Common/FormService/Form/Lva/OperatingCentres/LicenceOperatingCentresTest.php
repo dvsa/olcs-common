@@ -63,6 +63,7 @@ class LicenceOperatingCentresTest extends LicenceOperatingCentresTestCase
             'canHaveCommunityLicences' => true,
             'isPsv' => false,
             'licenceType' => ['id' => RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL],
+            'isEligibleForLgv' => true,
             'totAuthLgvVehicles' => 0,
         ];
 
@@ -138,7 +139,7 @@ class LicenceOperatingCentresTest extends LicenceOperatingCentresTestCase
         $this->setUpSut();
 
         // Execute
-        $result = $this->sut->getForm($this->paramsForStandardInternationalGoodsLicence());
+        $result = $this->sut->getForm($this->paramsForLicence());
 
         // Assert
         $this->assertInstanceOf(Form::class, $result);
@@ -152,7 +153,7 @@ class LicenceOperatingCentresTest extends LicenceOperatingCentresTestCase
     {
         // Setup
         $this->setUpSut();
-        $params = $this->paramsForStandardInternationalGoodsLicence();
+        $params = $this->paramsForLicenceThatIsEligibleForLgvs();
         $params['totAuthLgvVehicles'] = null;
 
         // Execute

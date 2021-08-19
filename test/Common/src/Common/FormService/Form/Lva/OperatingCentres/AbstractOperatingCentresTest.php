@@ -40,6 +40,7 @@ class AbstractOperatingCentresTest extends OperatingCentresTestCase
             'niFlag' => 'N',
             'possibleEnforcementAreas' => ['A', 'B'],
             'licenceType' => ['id' => RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL],
+            'isEligibleForLgv' => true,
         ];
 
         $mockFieldSet = m::mock();
@@ -78,6 +79,7 @@ class AbstractOperatingCentresTest extends OperatingCentresTestCase
             'niFlag' => 'Y',
             'possibleEnforcementAreas' => ['A', 'B'],
             'licenceType' => ['id' => RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL],
+            'isEligibleForLgv' => true,
         ];
 
         $mockFieldSet = m::mock();
@@ -121,6 +123,7 @@ class AbstractOperatingCentresTest extends OperatingCentresTestCase
             'possibleTrafficAreas' => ['A', 'B'],
             'possibleEnforcementAreas' => ['A', 'B'],
             'licenceType' => ['id' => RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL],
+            'isEligibleForLgv' => true,
         ];
 
         $mockFormHelper = m::mock();
@@ -174,13 +177,13 @@ class AbstractOperatingCentresTest extends OperatingCentresTestCase
      * @test
      * @depends getForm_ReturnsAForm
      */
-    public function getForm_DisablesVehicleClassifications_WhenIsPsv()
+    public function getForm_DisablesVehicleClassifications_WhenIsNotEligibleForLgvs()
     {
         // Setup
         $this->setUpSut();
 
         // Execute
-        $form = $this->sut->getForm($this->paramsForPsvLicence());
+        $form = $this->sut->getForm($this->paramsForLicenceThatIsNotEligibleForLgvs());
 
         // Assert
         $this->assertVehicleClassificationsAreDisabledForForm($form);
@@ -190,29 +193,13 @@ class AbstractOperatingCentresTest extends OperatingCentresTestCase
      * @test
      * @depends getForm_ReturnsAForm
      */
-    public function getForm_DisablesVehicleClassifications_WhenGoodsAndLicenceTypeIsNotStandardInternational()
+    public function getForm_DoesNotDisableVehicleClassifications_WhenIsEligibleForLgvs()
     {
         // Setup
         $this->setUpSut();
 
         // Execute
-        $form = $this->sut->getForm($this->paramsForRestrictedGoodsLicence());
-
-        // Assert
-        $this->assertVehicleClassificationsAreDisabledForForm($form);
-    }
-
-    /**
-     * @test
-     * @depends getForm_ReturnsAForm
-     */
-    public function getForm_DoesNotDisableVehicleClassifications_WhenGoodsAndLicenceTypeIsStandardInternational()
-    {
-        // Setup
-        $this->setUpSut();
-
-        // Execute
-        $form = $this->sut->getForm($this->paramsForStandardInternationalGoodsLicence());
+        $form = $this->sut->getForm($this->paramsForLicenceThatIsEligibleForLgvs());
 
         // Assert
         $this->assertVehicleClassificationsAreEnabledForForm($form);
@@ -228,7 +215,7 @@ class AbstractOperatingCentresTest extends OperatingCentresTestCase
         $this->setUpSut();
 
         // Execute
-        $form = $this->sut->getForm($this->paramsForLicenceThatIsAllowedCommunityLicences());
+        $form = $this->sut->getForm($this->paramsForLicenceThatAreEligibleForCommunityLicences());
         $fieldset = $form->get('data');
 
         // Assert
@@ -245,7 +232,7 @@ class AbstractOperatingCentresTest extends OperatingCentresTestCase
         $this->setUpSut();
 
         // Execute
-        $form = $this->sut->getForm($this->paramsForLicenceThatIsNotAllowedCommunityLicences());
+        $form = $this->sut->getForm($this->paramsForLicenceThatAreNotEligibleForCommunityLicences());
         $fieldset = $form->get('data');
 
         // Assert
@@ -262,7 +249,7 @@ class AbstractOperatingCentresTest extends OperatingCentresTestCase
         $this->setUpSut();
 
         // Execute
-        $form = $this->sut->getForm($this->paramsForPsvLicenceThatIsAllowedCommunityLicences());
+        $form = $this->sut->getForm($this->paramsForPsvLicenceThatAreEligibleForCommunityLicences());
         $fieldset = $form->get('data')->get(static::COMMUNITY_LICENCES_FIELDSET_NAME);
 
         // Assert
@@ -279,7 +266,7 @@ class AbstractOperatingCentresTest extends OperatingCentresTestCase
         $this->setUpSut();
 
         // Execute
-        $form = $this->sut->getForm($this->paramsForPsvLicenceThatIsAllowedCommunityLicences());
+        $form = $this->sut->getForm($this->paramsForPsvLicenceThatAreEligibleForCommunityLicences());
         $field = $form->get('data')->get(static::COMMUNITY_LICENCES_FIELDSET_NAME)->get(static::COMMUNITY_LICENCES_FIELD_NAME);
 
         // Assert

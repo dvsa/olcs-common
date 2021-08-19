@@ -6,7 +6,6 @@ namespace Common\Test\FormService\Form\Lva\OperatingCentres;
 
 use Olcs\TestHelpers\MockeryTestCase;
 use Olcs\TestHelpers\Service\MocksServicesTrait;
-use Common\RefData;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Mvc\Service\TranslatorServiceFactory;
 use Common\Service\Table\TableFactory;
@@ -222,17 +221,33 @@ abstract class OperatingCentresTestCase extends MockeryTestCase
     }
 
     /**
-     * @return array|bool[]
+     * @return array
      */
-    protected function paramsForLicenceThatIsAllowedCommunityLicences()
+    protected function paramsForLicenceThatIsEligibleForLgvs(): array
+    {
+        return array_merge($this->paramsForLicence(), ['isEligibleForLgv' => true]);
+    }
+
+    /**
+     * @return array
+     */
+    protected function paramsForLicenceThatIsNotEligibleForLgvs(): array
+    {
+        return array_merge($this->paramsForLicence(), ['isEligibleForLgv' => false]);
+    }
+
+    /**
+     * @return array
+     */
+    protected function paramsForLicenceThatAreEligibleForCommunityLicences()
     {
         return array_merge($this->paramsForLicence(), ['canHaveCommunityLicences' => true]);
     }
 
     /**
-     * @return array|bool[]
+     * @return array
      */
-    protected function paramsForLicenceThatIsNotAllowedCommunityLicences()
+    protected function paramsForLicenceThatAreNotEligibleForCommunityLicences()
     {
         return array_merge($this->paramsForLicence(), ['canHaveCommunityLicences' => false]);
     }
@@ -256,31 +271,9 @@ abstract class OperatingCentresTestCase extends MockeryTestCase
     /**
      * @return array
      */
-    protected function paramsForPsvLicenceThatIsAllowedCommunityLicences(): array
+    protected function paramsForPsvLicenceThatAreEligibleForCommunityLicences(): array
     {
         return array_merge($this->paramsForPsvLicence(), ['canHaveCommunityLicences' => true]);
-    }
-
-    /**
-     * @return array
-     */
-    protected function paramsForStandardInternationalGoodsLicence(): array
-    {
-        return array_merge($this->paramsForGoodsLicence(), [
-            'isPsv' => false,
-            'licenceType' => ['id' => RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL],
-        ]);
-    }
-
-    /**
-     * @return array
-     */
-    protected function paramsForRestrictedGoodsLicence(): array
-    {
-        return array_merge($this->paramsForGoodsLicence(), [
-            'isPsv' => false,
-            'licenceType' => ['id' => RefData::LICENCE_TYPE_RESTRICTED],
-        ]);
     }
 
     /**

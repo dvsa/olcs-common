@@ -61,6 +61,11 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
             $this->alterFormForGoodsLicences($form, $params);
         }
 
+        $isEligibleForLgv = $params['isEligibleForLgv'] ?? false;
+        if (!$isEligibleForLgv) {
+            $this->disableVehicleClassifications($form);
+        }
+
         // - Modify the validation message for Required on 'rows' field
         // The validator compares the data against the 'rows' field value.
         // This is the reason why we use table->rows instead of table->table
@@ -158,7 +163,6 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
         ];
 
         $this->getFormHelper()->removeFieldList($form, 'data', $removeFields);
-        $this->disableVehicleClassifications($form);
     }
 
     /**
@@ -192,10 +196,7 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
      */
     protected function alterFormForGoodsLicences(Form $form, array $params): void
     {
-        $licenceType = $params['licenceType']['id'] ?? null;
-        if ($licenceType !== RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL) {
-            $this->disableVehicleClassifications($form);
-        }
+
     }
 
     /**
