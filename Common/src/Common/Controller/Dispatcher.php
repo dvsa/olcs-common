@@ -39,6 +39,7 @@ class Dispatcher extends AbstractOlcsController
         $event = $this->getEvent();
         $request = $event->getRequest();
         $routeMatch = $event->getRouteMatch();
+        $response = $event->getResponse();
 
         $action = $routeMatch->getParam('action');
         if (empty($action)) {
@@ -50,7 +51,7 @@ class Dispatcher extends AbstractOlcsController
             return $this->newControllerActionNotFoundResponse($event);
         }
 
-        return $this->delegate->$actionMethod($request, $routeMatch);
+        return $this->delegate->$actionMethod($request, $routeMatch, $response);
     }
 
     /**

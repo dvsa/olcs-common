@@ -76,7 +76,7 @@ class DispatcherTest extends MockeryTestCase
      * @depends dispatch_CallsControllerAction
      * @test
      */
-    public function dispatch_CallsControllerAction_WithRequestAndRouteMatch()
+    public function dispatch_CallsControllerAction_WithRequestAndRouteMatchAndResponse()
     {
         // Set Up
         $dispatcher = $this->setUpSut(m::mock());
@@ -84,9 +84,10 @@ class DispatcherTest extends MockeryTestCase
         $dispatcher->setEvent($event);
         $request = $event->getRequest();
         $routeMatch = $event->getRouteMatch();
+        $response = $event->getResponse();
 
         // Define Expectations
-        $dispatcher->getDelegate()->shouldReceive(sprintf('%sAction', $expectedAction))->once()->with($request, $routeMatch);
+        $dispatcher->getDelegate()->shouldReceive(sprintf('%sAction', $expectedAction))->once()->with($request, $routeMatch, $response);
 
         // Execute
         $dispatcher->dispatch($request, $event->getResponse());

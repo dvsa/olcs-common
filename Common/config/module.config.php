@@ -1,5 +1,9 @@
 <?php
 
+use Common\Auth\Adapter\CommandAdapter;
+use Common\Auth\Adapter\CommandAdapterFactory;
+use Common\Auth\Service\AuthenticationServiceFactory;
+use Common\Auth\Service\AuthenticationServiceInterface;
 use Common\Form\View\Helper\FormInputSearch;
 use Common\Service\Data\Search\SearchType;
 use Common\FormService\Form\Lva as LvaFormService;
@@ -361,6 +365,8 @@ return array(
             'HtmlPurifier' => \Common\Service\Utility\HtmlPurifierFactory::class,
            \Common\Form\View\Helper\Extended\FormLabel::class => \Common\Form\View\Helper\Extended\FormLabelFactory::class,
             \Common\Form\Elements\Validators\Messages\FormElementMessageFormatter::class => \Common\Form\Elements\Validators\Messages\FormElementMessageFormatterFactory::class,
+            AuthenticationServiceInterface::class => AuthenticationServiceFactory::class,
+            CommandAdapter::class => CommandAdapterFactory::class
         )
     ),
     'file_uploader' => array(
