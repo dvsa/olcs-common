@@ -27,9 +27,10 @@ class IrhpPermitApplicationRefLinkTest extends MockeryTestCase
                 'licence/irhp-application',
                 [
                     'action' => 'index',
-                    'licence' => $data['irhpPermitApplication']['relatedApplication']['licence']['id']
+                    'licence' => 100
                 ]
             )
+            ->times(isset($data) ? 1 : 0)
             ->andReturn('url');
 
         $this->assertEquals($expected, IrhpPermitApplicationRefLink::format($data, [], $sm));

@@ -155,7 +155,7 @@ class ResponseHelper
                 if ($this->response->getStatusCode() === Response::STATUS_CODE_201 ||
                     $this->response->getStatusCode() === Response::STATUS_CODE_202
                 ) {
-                    return $this->responseData['Data'];
+                    return $this->responseData['Data'] ?? null;
                 }
 
                 return false;
@@ -163,13 +163,13 @@ class ResponseHelper
             case 'PUT':
             case 'PATCH':
                 if ($this->response->getStatusCode() === Response::STATUS_CODE_200) {
-                    return $this->responseData['Data'];
+                    return $this->responseData['Data'] ?? null;
                 }
 
                 return $this->response->getStatusCode();
             case 'DELETE':
                 if ($this->response->getStatusCode() === Response::STATUS_CODE_200) {
-                    return $this->responseData['Data'];
+                    return $this->responseData['Data'] ?? null;
                 }
 
                 return false;

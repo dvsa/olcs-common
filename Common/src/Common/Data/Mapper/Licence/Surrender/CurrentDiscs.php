@@ -6,13 +6,11 @@ use Common\Data\Mapper\MapperInterface;
 
 class CurrentDiscs implements MapperInterface
 {
-
     public static function mapFromResult(array $data): array
     {
-
         $inPossession = isset($data['discDestroyed']) ? 'Y' : 'N';
-        $lost = isset($data['discLost']) ? 'Y' : isset($data['discLostInfo']) ? 'Y' : 'N';
-        $stolen = isset($data['discStolen']) ? 'Y' : isset($data['discStolenInfo']) ? 'Y' : 'N';
+        $lost = isset($data['discLost']) ? 'Y' : (isset($data['discLostInfo']) ? 'Y' : 'N');
+        $stolen = isset($data['discStolen']) ? 'Y' : (isset($data['discStolenInfo']) ? 'Y' : 'N');
 
         return [
             'version' => $data['version'],
