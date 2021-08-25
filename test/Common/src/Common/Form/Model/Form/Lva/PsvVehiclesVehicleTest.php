@@ -80,7 +80,7 @@ class PsvVehiclesVehicleTest extends AbstractFormValidationTestCase
     {
         $element = ['licence-vehicle','removalDate'];
         $this->assertFormElementDate($element);
-        $this->assertFormElementIsRequired($element, false);
+        $this->assertFormElementRequired($element, false);
     }
 
     public function testLicenceVersion()
