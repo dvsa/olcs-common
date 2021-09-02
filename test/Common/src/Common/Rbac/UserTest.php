@@ -20,12 +20,48 @@ class UserTest extends TestCase
         $this->sut = new User();
     }
 
-    public function testIsNotIdentified()
+    /**
+     * @dataProvider dpIsLocalAuthority
+     */
+    public function testIsLocalAuthority($userType, $isLocalAuthority)
     {
+        $this->sut->setUserType($userType);
+        $this->assertEquals($isLocalAuthority, $this->sut->isLocalAuthority());
+    }
 
-        $this->sut->setUserType(User::USER_TYPE_NOT_IDENTIFIED);
+    public function dpIsLocalAuthority()
+    {
+        return [
+            [User::USER_TYPE_LOCAL_AUTHORITY, true],
+            [User::USER_TYPE_ANON, false],
+            [User::USER_TYPE_OPERATOR, false],
+            [User::USER_TYPE_PARTNER, false],
+            [User::USER_TYPE_TRANSPORT_MANAGER, false],
+            [User::USER_TYPE_INTERNAL, false],
+            [User::USER_TYPE_NOT_IDENTIFIED, false],
+        ];
+    }
 
-        $this->assertTrue($this->sut->isNotIdentified());
+    /**
+     * @dataProvider dpIsNotIdentified
+     */
+    public function testIsNotIdentified($userType, $isNotIdentified)
+    {
+        $this->sut->setUserType($userType);
+        $this->assertEquals($isNotIdentified, $this->sut->isNotIdentified());
+    }
+
+    public function dpIsNotIdentified()
+    {
+        return [
+            [User::USER_TYPE_LOCAL_AUTHORITY, false],
+            [User::USER_TYPE_ANON, false],
+            [User::USER_TYPE_OPERATOR, false],
+            [User::USER_TYPE_PARTNER, false],
+            [User::USER_TYPE_TRANSPORT_MANAGER, false],
+            [User::USER_TYPE_INTERNAL, false],
+            [User::USER_TYPE_NOT_IDENTIFIED, true],
+        ];
     }
 
     public function testIsNotIdentifiedFalse()

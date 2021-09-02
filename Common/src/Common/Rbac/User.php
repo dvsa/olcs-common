@@ -190,6 +190,16 @@ class User implements IdentityInterface
     }
 
     /**
+     * Checks if user is local authority
+     *
+     * @return bool
+     */
+    public function isLocalAuthority()
+    {
+        return $this->userType === self::USER_TYPE_LOCAL_AUTHORITY;
+    }
+
+    /**
      * Checks if user could not be verified
      *
      * @return bool
