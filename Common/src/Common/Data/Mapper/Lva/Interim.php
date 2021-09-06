@@ -33,7 +33,8 @@ class Interim implements MapperInterface
                 'interimReason' => $data['interimReason'],
                 'interimStart' => $data['interimStart'],
                 'interimEnd' => $data['interimEnd'],
-                'interimAuthVehicles' => $data['interimAuthVehicles'],
+                'interimAuthHgvVehicles' => $data['interimAuthHgvVehicles'],
+                'interimAuthLgvVehicles' => $data['interimAuthLgvVehicles'],
                 'interimAuthTrailers' => $data['interimAuthTrailers']
             ],
             'requested' => [
@@ -59,7 +60,8 @@ class Interim implements MapperInterface
             'interimReason' => null,
             'interimStart' => null,
             'interimEnd' => null,
-            'interimAuthVehicles' => null,
+            'interimAuthHgvVehicles' => null,
+            'interimAuthLgvVehicles' => null,
             'interimAuthTrailers' => null
         ];
         $dataData = array_merge($defaultDataData, $data['data']);
@@ -70,7 +72,8 @@ class Interim implements MapperInterface
             'reason' => $dataData['interimReason'],
             'startDate' => $dataData['interimStart'],
             'endDate' => $dataData['interimEnd'],
-            'authVehicles' => $dataData['interimAuthVehicles'],
+            'authHgvVehicles' => $dataData['interimAuthHgvVehicles'],
+            'authLgvVehicles' => $dataData['interimAuthLgvVehicles'],
             'authTrailers' => $dataData['interimAuthTrailers'],
             'operatingCentres' => isset($data['operatingCentres']['id']) ? $data['operatingCentres']['id'] : [],
             'vehicles' => isset($data['vehicles']['id']) ? $data['vehicles']['id'] : [],
@@ -115,12 +118,20 @@ class Interim implements MapperInterface
             unset($errors['endDate']);
         }
 
-        if (isset($errors['authVehicles'])) {
-            foreach ($errors['authVehicles'] as $key => $message) {
-                $formMessages['data']['interimAuthVehicles'][] = $message;
+        if (isset($errors['authHgvVehicles'])) {
+            foreach ($errors['authHgvVehicles'] as $key => $message) {
+                $formMessages['data']['interimAuthHgvVehicles'][] = $message;
             }
 
-            unset($errors['authVehicles']);
+            unset($errors['authHgvVehicles']);
+        }
+
+        if (isset($errors['authLgvVehicles'])) {
+            foreach ($errors['authLgvVehicles'] as $key => $message) {
+                $formMessages['data']['interimAuthLgvVehicles'][] = $message;
+            }
+
+            unset($errors['authLgvVehicles']);
         }
 
         if (isset($errors['authTrailers'])) {
