@@ -25,8 +25,12 @@ class GenerateContinuationTest extends AbstractFormValidationTestCase
         $this->assertFormElementValid($element, 'irfo');
     }
 
+    /**
+     * @todo unskip https://jira.dvsacloud.uk/browse/VOL-2309
+     */
     public function testDate()
     {
+        $this->markTestSkipped();
         $element = ['details', 'date'];
         $this->assertFormElementRequired($element, false);
         $this->assertFormElementMonthSelect($element);
