@@ -24,6 +24,7 @@ class Version extends AbstractHelper implements HelperInterface, ServiceLocatorA
 
     protected $markup = '<div class="version-header">
     <p class="environment">Environment: <span class="environment-marker">%s</span></p>
+    <p class="version">PHP: <span>%s</span></p>
     <p class="version">Description: <span>%s</span></p>
     <p class="version">Version: <span>%s</span></p>
 </div>';
@@ -57,7 +58,7 @@ class Version extends AbstractHelper implements HelperInterface, ServiceLocatorA
         $description = $this->valOrAlt($config['version'], 'description', 'NA');
         $release = $this->valOrAlt($config['version'], 'release');
 
-        return sprintf($this->markup, $environment, $description, $release);
+        return sprintf($this->markup, $environment, phpversion(), $description, $release);
     }
 
     protected function valOrAlt($array, $index, $alt = 'unknown')
