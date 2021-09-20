@@ -9,6 +9,8 @@ use Common\Service\Helper\FlashMessengerHelperService;
 use Dvsa\Olcs\Transfer\Query\LoggerOmitResponseInterface;
 use Dvsa\Olcs\Transfer\Query\QueryContainerInterface;
 use Dvsa\Olcs\Utils\Client\ClientAdapterLoggingWrapper;
+use Laminas\Http\Headers;
+use Laminas\Session\Container;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Http\Request;
@@ -27,10 +29,13 @@ class QueryServiceTest extends MockeryTestCase
 
     /** @var  m\MockInterface|RouteInterface */
     private $mockRouter;
+
     /** @var  m\MockInterface|\Laminas\Http\Client */
     private $mockCli;
+
     /** @var  m\MockInterface|\Laminas\Http\Request */
     private $mockRequest;
+
     /** @var  m\MockInterface|FlashMessengerHelperService */
     private $mockFlashMsgr;
 
@@ -39,8 +44,14 @@ class QueryServiceTest extends MockeryTestCase
 
     /** @var  QueryContainerInterface | m\MockInterface */
     private $mockQueryCntr;
+
     /** @var  m\MockInterface */
     private $mockQuery;
+
+    /**
+     * @var Container|m\MockInterface
+     */
+    private $mockContainer;
 
     public function setUp(): void
     {
@@ -48,6 +59,9 @@ class QueryServiceTest extends MockeryTestCase
         $this->mockCli = m::mock(\Laminas\Http\Client::class);
         $this->mockRequest = m::mock(\Laminas\Http\Request::class);
         $this->mockFlashMsgr = m::mock(FlashMessengerHelperService::class);
+        $this->mockContainer = m::mock(Container::class);
+        $this->mockContainer->allows('offsetGet')->andReturn([])->byDefault();
+
 
         $this->sut = m::mock(
             QueryService::class . '[invalidResponse, showApiMessagesFromResponse]',
@@ -56,7 +70,8 @@ class QueryServiceTest extends MockeryTestCase
                 $this->mockCli,
                 $this->mockRequest,
                 true,
-                $this->mockFlashMsgr
+                $this->mockFlashMsgr,
+                $this->mockContainer
             ]
         )
             ->shouldAllowMockingProtectedMethods();
@@ -307,5 +322,58 @@ class QueryServiceTest extends MockeryTestCase
 
         $this->expectException(Exception::class, 'BODY : '. $uri);
         $this->sut->send($this->mockQueryCntr);
+    }
+
+    public function testAddAuthorizationHeader()
+    {
+        $this->mockQueryCntr
+            ->shouldReceive('isValid')->once()->andReturn(true)
+            ->shouldReceive('getRouteName')->once()->andReturn('backend/unit_RouteName')
+            ->shouldReceive('isStream')->once()->andReturn('unit_IsStream');
+
+        $uri = 'init_Uri';
+
+        $this->mockRouter
+            ->shouldReceive('assemble')
+            ->once()
+            ->with(self::$queryData, ['name' => 'api/backend/api/unit_RouteName/GET'])
+            ->andReturn($uri);
+
+        $mockAdapter = m::mock(ClientAdapterLoggingWrapper::class)
+            ->shouldReceive('getShouldLogData')->once()->andReturn('unit_ShouldLogData')
+            ->shouldReceive('setShouldLogData')->once()->with(false)
+            ->shouldReceive('setShouldLogData')->once()->with('unit_ShouldLogData')
+            ->getMock();
+
+        $this->mockContainer
+            ->shouldReceive('offsetGet')
+            ->with('storage')
+            ->andReturn(['AccessToken' => 'access_token']);
+
+        $headers = new Headers();
+        $this->mockRequest
+            ->shouldReceive('setUri')->once()->with($uri)->andReturn($mockAdapter)
+            ->shouldReceive('setMethod')->once()->with(Request::METHOD_GET)->andReturn()
+            ->shouldReceive('getHeaders')->once()->andReturn($headers);
+
+        $mockResp = m::mock(Response::class);
+        $mockResp->shouldReceive('getStatusCode')->with()->atLeast()->times(1)
+            ->andReturn(HttpResponse::STATUS_CODE_200);
+
+        $this->mockCli
+            ->shouldReceive('getAdapter')->once()->andReturn($mockAdapter)
+            ->shouldReceive('resetParameters')->once()->with(true)
+            ->shouldReceive('setStream')->once()->with('unit_IsStream')
+            ->shouldReceive('send')->once()->with($this->mockRequest)->andReturn($mockResp);
+
+        $this->sut
+            ->shouldReceive('showApiMessagesFromResponse')
+            ->once()
+            ->with(m::type(CqrsResponse::class));
+
+        $this->sut->send($this->mockQueryCntr);
+
+        $this->assertArrayHasKey('Authorization', $headers->toArray());
+        $this->assertSame('Bearer access_token', $headers->get('Authorization')->getFieldValue());
     }
 }

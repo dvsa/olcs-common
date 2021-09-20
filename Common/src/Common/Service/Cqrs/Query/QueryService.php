@@ -10,12 +10,14 @@ use Common\Service\Cqrs\RecoverHttpClientExceptionTrait;
 use Dvsa\Olcs\Transfer\Query\LoggerOmitResponseInterface;
 use Dvsa\Olcs\Transfer\Query\QueryContainerInterface;
 use Dvsa\Olcs\Transfer\Query\QueryInterface;
+use Laminas\Http\Header;
 use Laminas\Http\Client;
 use Laminas\Http\Client\Exception\ExceptionInterface as HttpClientExceptionInterface;
 use Laminas\Http\Request;
 use Laminas\Http\Response as HttpResponse;
 use Laminas\Mvc\Router\Exception\ExceptionInterface;
 use Laminas\Mvc\Router\RouteInterface;
+use Laminas\Session\Container;
 
 /**
  * Query
@@ -29,34 +31,42 @@ class QueryService implements QueryServiceInterface
 
     /** @var RouteInterface */
     protected $router;
+
     /** @var Client */
     protected $client;
+
     /** @var Request */
     protected $request;
 
     /**
+     * @var Container
+     */
+    private $session;
+
+    /**
      * QueryService constructor.
      *
-     * @param RouteInterface              $router          Router
-     * @param Client                      $client          Http Client
-     * @param Request                     $request         Http Request
-     * @param boolean                     $showApiMessages Is Show Api Messages
-     * @param FlashMessengerHelperService $flashMessenger  Flash messeger service
-     *
-     * @return void
+     * @param RouteInterface $router Router
+     * @param Client $client Http Client
+     * @param Request $request Http Request
+     * @param boolean $showApiMessages Is Show Api Messages
+     * @param FlashMessengerHelperService $flashMessenger Flash messeger service
+     * @param Container $session
      */
     public function __construct(
         RouteInterface $router,
         Client $client,
         Request $request,
         $showApiMessages,
-        FlashMessengerHelperService $flashMessenger
+        FlashMessengerHelperService $flashMessenger,
+        Container $session
     ) {
         $this->router = $router;
         $this->client = $client;
         $this->request = $request;
         $this->showApiMessages = $showApiMessages;
         $this->flashMessenger = $flashMessenger;
+        $this->session = $session;
     }
 
     /**
@@ -108,6 +118,8 @@ class QueryService implements QueryServiceInterface
             //  request should use stream for query or reset
             $this->client->setStream($query->isStream());
 
+            $this->addAuthorizationHeader();
+
             $clientResponse = $this->client->send($this->request);
 
             if ($isOmitLog) {
@@ -137,5 +149,18 @@ class QueryService implements QueryServiceInterface
             }
             throw new Exception($ex->getMessage(), HttpResponse::STATUS_CODE_500, $ex);
         }
+    }
+
+    private function addAuthorizationHeader()
+    {
+        $accessToken = $this->session->offsetGet('storage')['AccessToken'] ?? null;
+
+        if (is_null($accessToken)) {
+            return;
+        }
+
+        $header = sprintf("Authorization:Bearer %s", $accessToken);
+        $headers = $this->request->getHeaders();
+        $headers->addHeader(Header\Authorization::FromString($header));
     }
 }

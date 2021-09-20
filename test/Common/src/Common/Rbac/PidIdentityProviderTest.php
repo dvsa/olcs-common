@@ -3,7 +3,7 @@
 namespace CommonTest\Rbac;
 
 use Common\Rbac\User;
-use Common\Rbac\IdentityProvider;
+use Common\Rbac\PidIdentityProvider;
 use Common\Service\Cqrs\Query\QuerySender;
 use Common\Service\Cqrs\Response;
 use Dvsa\Olcs\Transfer\Service\CacheEncryption;
@@ -17,7 +17,7 @@ use Mockery as m;
  * Class IdentityProviderTest
  * @package CommonTest\Rbac
  */
-class IdentityProviderTest extends TestCase
+class PidIdentityProviderTest extends TestCase
 {
     const USER_ID = 22;
     const HEADER_PID = '12345abc';
@@ -67,7 +67,7 @@ class IdentityProviderTest extends TestCase
             ->with(CacheEncryption::USER_ACCOUNT_IDENTIFIER, self::USER_ID)
             ->andReturn($cacheData);
 
-        $sut = new IdentityProvider($queryService, $session, $request, $cache);
+        $sut = new PidIdentityProvider($queryService, $session, $request, $cache);
 
         $this->assertEquals($identity, $sut->getIdentity());
     }
@@ -104,7 +104,7 @@ class IdentityProviderTest extends TestCase
             ->times($cacheChecked)
             ->andReturnFalse();
 
-        $sut = new IdentityProvider($queryService, $session, $request, $cache);
+        $sut = new PidIdentityProvider($queryService, $session, $request, $cache);
 
         $data = [
             'id' => self::USER_ID,
@@ -176,7 +176,7 @@ class IdentityProviderTest extends TestCase
         $session->expects('offsetGet')->with('identity')->andReturn(null);
         $session->expects('offsetSet')->with('identity', m::type(User::class));
 
-        $sut = new IdentityProvider($queryService, $session, $request, $cache);
+        $sut = new PidIdentityProvider($queryService, $session, $request, $cache);
 
         $response = [
             'id' => null,
