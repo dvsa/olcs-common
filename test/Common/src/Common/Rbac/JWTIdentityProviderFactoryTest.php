@@ -3,14 +3,17 @@ declare(strict_types=1);
 
 namespace CommonTest\Rbac;
 
-use Common\Rbac\IdentityProviderFactory;
+use Common\Auth\SessionFactory;
 use Common\Rbac\JWTIdentityProvider;
 use Common\Rbac\JWTIdentityProviderFactory;
+use Common\Service\Cqrs\Query\QuerySender;
+use Dvsa\Olcs\Transfer\Service\CacheEncryption;
+use Laminas\Authentication\Storage\Session;
 use Mockery as m;
 use Olcs\TestHelpers\MockeryTestCase;
 use Olcs\TestHelpers\Service\MocksServicesTrait;
 
-class IdentityProviderFactoryTest extends MockeryTestCase
+class JWTIdentityProviderFactoryTest extends MockeryTestCase
 {
     use MocksServicesTrait;
 
@@ -73,12 +76,11 @@ class IdentityProviderFactoryTest extends MockeryTestCase
      * @test
      * @depends __invoke_IsCallable
      */
-    public function __invoke_ReturnsInstance_WhenItImplementsIdentityProviderInterface()
+    public function __invoke_ReturnsAnInstanceOfJWTIdentityProvider()
     {
         // Setup
         $this->setUpSut();
-        $this->config(['auth' => ['identity_provider' => JWTIdentityProvider::class]]);
-        $this->serviceManager->setService(JWTIdentityProvider::class, $this->setUpMockService(JWTIdentityProvider::class));
+        $this->config(['auth' => ['session_name' => 'session']]);
 
         // Execute
         $result = $this->sut->__invoke($this->serviceManager(), null);
@@ -99,44 +101,6 @@ class IdentityProviderFactoryTest extends MockeryTestCase
 
         // Expectations
         $this->expectException(\RuntimeException::class);
-        $this->expectErrorMessage(IdentityProviderFactory::MESSAGE_CONFIG_MISSING);
-
-        // Execute
-        $this->sut->__invoke($this->serviceManager(), null);
-    }
-
-    /**
-     * @test
-     * @depends __invoke_IsCallable
-     */
-    public function __invoke_ThrowsException_WhenContainerDoesNotHaveRequestedInstance()
-    {
-        // Setup
-        $this->setUpSut();
-        $this->config(['auth' => ['identity_provider' => JWTIdentityProvider::class]]);
-
-        // Expectations
-        $this->expectException(\RuntimeException::class);
-        $this->expectErrorMessage(IdentityProviderFactory::MESSAGE_UNABLE_TO_CREATE);
-
-        // Execute
-        $this->sut->__invoke($this->serviceManager(), null);
-    }
-
-    /**
-     * @test
-     * @depends __invoke_IsCallable
-     */
-    public function __invoke_ThrowsException_WhenInstanceDoesNotImplementIdentityProviderInterface()
-    {
-        // Setup
-        $this->setUpSut();
-        $this->config(['auth' => ['identity_provider' => static::class]]);
-        $this->serviceManager->setService(static::class, $this->setUpMockService(static::class));
-
-        // Expectations
-        $this->expectException(\RuntimeException::class);
-        $this->expectErrorMessage(IdentityProviderFactory::MESSAGE_DOES_NOT_IMPLEMENT);
 
         // Execute
         $this->sut->__invoke($this->serviceManager(), null);
@@ -144,7 +108,14 @@ class IdentityProviderFactoryTest extends MockeryTestCase
 
     protected function setUpSut(): void
     {
-        $this->sut = new IdentityProviderFactory();
+        $this->sut = new JWTIdentityProviderFactory();
+    }
+
+    protected function setUpDefaultServices()
+    {
+        $this->serviceManager->setService('QuerySender', $this->setUpMockService(QuerySender::class));
+        $this->serviceManager->setService(CacheEncryption::class, $this->setUpMockService(CacheEncryption::class));
+        $this->config();
     }
 
     protected function config(array $config = [])

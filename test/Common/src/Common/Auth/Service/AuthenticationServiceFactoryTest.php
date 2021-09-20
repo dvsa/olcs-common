@@ -5,6 +5,7 @@ namespace CommonTest\Auth\Service;
 
 use Common\Auth\Service\AuthenticationService;
 use Common\Auth\Service\AuthenticationServiceFactory;
+use Laminas\Authentication\Storage\Session;
 use Laminas\ServiceManager\ServiceManager;
 use Olcs\TestHelpers\MockeryTestCase;
 use Olcs\TestHelpers\Service\MocksServicesTrait;
@@ -88,5 +89,10 @@ class AuthenticationServiceFactoryTest extends MockeryTestCase
     protected function setUpSut(): void
     {
         $this->sut = new AuthenticationServiceFactory();
+    }
+
+    protected function setUpDefaultServices(ServiceManager $serviceManager)
+    {
+        $serviceManager->setService(Session::class, $this->setUpMockService(Session::class));
     }
 }

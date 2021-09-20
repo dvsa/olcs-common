@@ -15,6 +15,7 @@ use Common\Service\Translator\TranslationLoaderFactory;
 use Common\Data\Mapper\Permits as PermitsMapper;
 use Common\Data\Mapper\Licence\Surrender as SurrenderMapper;
 use Common\View\Helper\Panel;
+use ZfcRbac\Identity\IdentityProviderInterface;
 
 $release = json_decode(file_get_contents(__DIR__ . '/release.json'), true);
 
@@ -281,7 +282,8 @@ return array(
             \Common\Rbac\Navigation\IsAllowedListener::class => Common\Rbac\Navigation\IsAllowedListener::class,
             \Common\Service\Data\Search\SearchTypeManager::class =>
                 \Common\Service\Data\Search\SearchTypeManagerFactory::class,
-            \Common\Rbac\IdentityProvider::class => \Common\Rbac\IdentityProviderFactory::class,
+            \Common\Rbac\PidIdentityProvider::class => \Common\Rbac\PidIdentityProviderFactory::class,
+            \Common\Rbac\JWTIdentityProvider::class => \Common\Rbac\JWTIdentityProviderFactory::class,
             \Common\Service\AntiVirus\Scan::class => \Common\Service\AntiVirus\Scan::class,
             'QaCommonWarningAdder' => QaService\Custom\Common\WarningAdderFactory::class,
             'QaCommonIsValidBasedWarningAdder' => QaService\Custom\Common\IsValidBasedWarningAdderFactory::class,
@@ -366,7 +368,9 @@ return array(
            \Common\Form\View\Helper\Extended\FormLabel::class => \Common\Form\View\Helper\Extended\FormLabelFactory::class,
             \Common\Form\Elements\Validators\Messages\FormElementMessageFormatter::class => \Common\Form\Elements\Validators\Messages\FormElementMessageFormatterFactory::class,
             AuthenticationServiceInterface::class => AuthenticationServiceFactory::class,
-            CommandAdapter::class => CommandAdapterFactory::class
+            CommandAdapter::class => CommandAdapterFactory::class,
+            \Laminas\Authentication\Storage\Session::class => \Common\Auth\SessionFactory::class,
+            IdentityProviderInterface::class => \Common\Rbac\IdentityProviderFactory::class
         )
     ),
     'file_uploader' => array(
@@ -613,7 +617,7 @@ return array(
         )
     ),
     'zfc_rbac' => [
-        'identity_provider' => \Common\Rbac\IdentityProvider::class,
+        'identity_provider' => IdentityProviderInterface::class,
         'role_provider' => [\Common\Rbac\Role\RoleProvider::class => []],
         'role_provider_manager' => [
             'factories' => [

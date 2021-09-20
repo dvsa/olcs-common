@@ -13,9 +13,9 @@ use ZfcRbac\Identity\IdentityInterface;
 use ZfcRbac\Identity\IdentityProviderInterface;
 
 /**
- * Identity Provider
+ * Pid Identity Provider
  */
-class IdentityProvider implements IdentityProviderInterface
+class PidIdentityProvider implements IdentityProviderInterface
 {
     /**
      * @var QuerySender
