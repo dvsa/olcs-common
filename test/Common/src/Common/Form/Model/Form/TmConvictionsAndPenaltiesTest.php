@@ -28,12 +28,8 @@ class TmConvictionsAndPenaltiesTest extends AbstractFormValidationTestCase
         $this->assertFormElementHidden($element);
     }
 
-    /**
-     * @todo unskip https://jira.dvsacloud.uk/browse/VOL-2309
-     */
     public function testConvictionDate()
     {
-        $this->markTestSkipped();
         $element = ['tm-convictions-and-penalties-details', 'convictionDate'];
         $this->assertFormElementRequired($element, true);
         $this->assertFormElementAllowEmpty($element, false);

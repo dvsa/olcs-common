@@ -32,12 +32,8 @@ class AddTransportManagerDetailsTest extends AbstractFormValidationTestCase
         $this->assertFormElementText($element);
     }
 
-    /**
-     * @todo unskip https://jira.dvsacloud.uk/browse/VOL-2309
-     */
     public function testBirthDate()
     {
-        $this->markTestSkipped();
         $element = ['data', 'birthDate'];
         $this->assertFormElementRequired($element, true);
         $this->assertFormElementAllowEmpty($element, false);
