@@ -217,6 +217,7 @@ abstract class OperatingCentresTestCase extends MockeryTestCase
             'canHaveCommunityLicences' => false,
             'isPsv' => false,
             'totAuthLgvVehicles' => 0,
+            'isEligibleForLgv' => false,
         ];
     }
 
