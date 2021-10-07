@@ -50,7 +50,7 @@
         "laminas/laminas-validator": "^2.5",
         "laminas/laminas-view": "^2.5",
         "lm-commons/lmc-rbac-mvc": "^2.6",
-        "olcs/olcs-transfer": "dev-project/lgv-v2",
+        "olcs/olcs-transfer": "dev-project/lgv-post-legislation",
         "symfony/filesystem": "^5",
         "symfony/lock": "^5"
     },
