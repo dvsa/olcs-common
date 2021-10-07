@@ -36,93 +36,16 @@
                     </span>
                 </summary>
               <div class="govuk-details__text" id="details-content-how-calculated">
-
-                <p>This amount is calculated using the following values:</p>
-
-                <table class="govuk-table">
-                  <caption class="govuk-table__caption govuk-table__caption--s">Restricted licence type</caption>
-                  <thead class="govuk-table__head">
-                    <tr class="govuk-table__row">
-                      <th scope="col" class="govuk-table__header app-custom-class">Vehicle Type</th>
-                      <th scope="col" class="govuk-table__header app-custom-class">First Vehicle</th>
-                      <th scope="col" class="govuk-table__header app-custom-class">Each Additional Vehicle</th>
-                    </tr>
-                  </thead>
-                  <tbody class="govuk-table__body">
-
-                    <tr class="govuk-table__row">
-                      <th scope="row" class="govuk-table__header">Heavy goods</th>
-                      <td class="govuk-table__cell">£<?php echo number_format($restrictedHeavyGoodsFirst); ?></td>
-                      <td class="govuk-table__cell">£<?php echo number_format($restrictedHeavyGoodsAdditional); ?></td>
-                    </tr>
-
-                    <tr class="govuk-table__row">
-                      <th scope="row" class="govuk-table__header">Passenger Service</th>
-                      <td class="govuk-table__cell">£<?php echo number_format($restrictedPassengerServiceFirst); ?></td>
-                      <td class="govuk-table__cell">£<?php echo number_format($restrictedPassengerServiceAdditional); ?></td>
-                    </tr>
-
-                  </tbody>
-                </table>
-
-                <table class="govuk-table">
-                  <caption class="govuk-table__caption govuk-table__caption--s">Standard National licence type</caption>
-                  <thead class="govuk-table__head">
-                    <tr class="govuk-table__row">
-                      <th scope="col" class="govuk-table__header app-custom-class">Vehicle Type</th>
-                      <th scope="col" class="govuk-table__header app-custom-class">First Vehicle</th>
-                      <th scope="col" class="govuk-table__header app-custom-class">Each Additional Vehicle</th>
-                    </tr>
-                  </thead>
-                  <tbody class="govuk-table__body">
-
-                    <tr class="govuk-table__row">
-                      <th scope="row" class="govuk-table__header">Heavy goods</th>
-                      <td class="govuk-table__cell">£<?php echo number_format($standardNationalHeavyGoodsFirst); ?></td>
-                      <td class="govuk-table__cell">£<?php echo number_format($standardNationalHeavyGoodsAdditional); ?></td>
-                    </tr>
-
-                    <tr class="govuk-table__row">
-                      <th scope="row" class="govuk-table__header">Passenger Service</th>
-                      <td class="govuk-table__cell">£<?php echo number_format($standardNationalPassengerServiceFirst); ?></td>
-                      <td class="govuk-table__cell">£<?php echo number_format($standardNationalPassengerServiceAdditional); ?></td>
-                    </tr>
-
-                  </tbody>
-                </table>
-
-                <table class="govuk-table">
-                  <caption class="govuk-table__caption govuk-table__caption--s">Standard International licence type</caption>
-                  <thead class="govuk-table__head">
-                    <tr class="govuk-table__row">
-                      <th scope="col" class="govuk-table__header app-custom-class">Vehicle Type</th>
-                      <th scope="col" class="govuk-table__header app-custom-class">First Vehicle</th>
-                      <th scope="col" class="govuk-table__header app-custom-class">Each Additional Vehicle</th>
-                    </tr>
-                  </thead>
-                  <tbody class="govuk-table__body">
-
-                    <tr class="govuk-table__row">
-                      <th scope="row" class="govuk-table__header">Heavy goods</th>
-                      <td class="govuk-table__cell">£<?php echo number_format($standardInternationalHeavyGoodsFirst); ?></td>
-                      <td class="govuk-table__cell">£<?php echo number_format($standardInternationalHeavyGoodsAdditional); ?></td>
-                    </tr>
-
-                    <tr class="govuk-table__row">
-                      <th scope="row" class="govuk-table__header">Light goods</th>
-                      <td class="govuk-table__cell">£<?php echo number_format($standardInternationalLightGoodsFirst); ?></td>
-                      <td class="govuk-table__cell">£<?php echo number_format($standardInternationalLightGoodsAdditional); ?></td>
-                    </tr>
-
-                    <tr class="govuk-table__row">
-                      <th scope="row" class="govuk-table__header">Passenger Service</th>
-                      <td class="govuk-table__cell">£<?php echo number_format($standardInternationalPassengerServiceFirst); ?></td>
-                      <td class="govuk-table__cell">£<?php echo number_format($standardInternationalPassengerServiceAdditional); ?></td>
-                    </tr>
-
-                  </tbody>
-                </table>
-
+                <p>For standard national and international licences you must have:</p>
+                <ul class="govuk-list govuk-list--bullet">
+                    <li>&pound;<?php echo number_format($standardFirst); ?> for the first vehicle</li>
+                    <li>&pound;<?php echo number_format($standardAdditional); ?> for each additional vehicle</li>
+                </ul>
+                <p>For restricted licences you must have:</p>
+                <ul class="govuk-list govuk-list--bullet">
+                    <li>&pound;<?php echo number_format($restrictedFirst); ?> for the first vehicle</li>
+                    <li>&pound;<?php echo number_format($restrictedAdditional); ?> for each additional vehicle</li>
+                </ul>
               </div>
             </details>
         </p>
