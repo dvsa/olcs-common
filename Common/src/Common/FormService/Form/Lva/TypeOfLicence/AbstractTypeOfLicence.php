@@ -151,4 +151,25 @@ abstract class AbstractTypeOfLicence extends AbstractLvaFormService
             $form->getInputFilter()->get('type-of-licence')->get('operator-type')->setRequired(false);
         }
     }
+
+    /**
+     * Alter form for Goods/Standard International applications
+     *
+     * @param Form $form
+     */
+    public function maybeAlterFormForGoodsStandardInternational($form)
+    {
+        $fieldset = $form->get('type-of-licence');
+        $licenceTypeFieldset = $fieldset->get('licence-type');
+
+        $operatorType = $fieldset->get('operator-type')->getValue();
+        $licenceType = $licenceTypeFieldset->get('licence-type')->getValue();
+
+        if ($operatorType != RefData::LICENCE_CATEGORY_GOODS_VEHICLE ||
+            $licenceType != RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
+        ) {
+            $form->getInputFilter()->get('type-of-licence')->get('licence-type')->remove('ltyp_siContent');
+            $licenceTypeFieldset->get('ltyp_siContent')->get('vehicle-type')->setValue(null);
+        }
+    }
 }
