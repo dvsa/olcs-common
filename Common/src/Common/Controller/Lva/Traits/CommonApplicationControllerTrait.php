@@ -2,6 +2,7 @@
 
 namespace Common\Controller\Lva\Traits;
 
+use Common\RefData;
 use Dvsa\Olcs\Transfer\Query\Application\Application;
 use Dvsa\Olcs\Transfer\Query\Application\Completion;
 use Laminas\Http\Response as HttpResponse;
@@ -108,8 +109,24 @@ trait CommonApplicationControllerTrait
      */
     protected function completeSection($section, $prg = [])
     {
-
         if ($this->isButtonPressed('saveAndContinue', $prg)) {
+            if ($section ==='type_of_licence') {
+                $operatorType = $prg['type-of-licence']['operator-type'];
+                $licenceType = $prg['type-of-licence']['licence-type']['licence-type'];
+                $vehicleType = $prg['type-of-licence']['licence-type']['ltyp_siContent']['vehicle-type'];
+
+                if ($operatorType == RefData::LICENCE_CATEGORY_GOODS_VEHICLE &&
+                    $licenceType == RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL &&
+                    $vehicleType == RefData::APP_VEHICLE_TYPE_LGV
+                ) {
+                    // TODO: is this redirection applicable to internal too, or does that need to act differently?
+                    return $this->redirect()->toRoute(
+                        'lva-application/lgv-undertakings',
+                        ['application' => $this->getApplicationId()]
+                    );
+                }
+            }
+
             //undertakings section works differently, we return to the overview as there's no "next section"
             if ($section === 'undertakings') {
                 return $this->goToOverview($this->getApplicationId());

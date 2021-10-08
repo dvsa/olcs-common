@@ -39,7 +39,14 @@ class TypeOfLicenceTest extends AbstractFormValidationTestCase
 
     public function testLicenceType()
     {
-        $element = ['type-of-licence', 'licence-type'];
+        $element = ['type-of-licence', 'licence-type', 'licence-type'];
+        $this->assertFormElementType($element, Radio::class);
+        $this->assertFormElementRequired($element, true);
+    }
+
+    public function testVehicleType()
+    {
+        $element = ['type-of-licence', 'licence-type', 'ltyp_siContent', 'vehicle-type'];
         $this->assertFormElementType($element, Radio::class);
         $this->assertFormElementRequired($element, true);
     }
