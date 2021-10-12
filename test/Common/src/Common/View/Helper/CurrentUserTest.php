@@ -1,24 +1,16 @@
 <?php
 
-/**
- * Test TransportManagerApplicationStatus view helper
- *
- * @author Mat Evans <mat.evans@valtech.co.uk>
- */
-
 namespace CommonTest\View\Helper;
 
 use Common\Rbac\User;
-use \Common\View\Helper\CurrentUser;
+use Common\View\Helper\CurrentUser;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 use Laminas\View\Renderer\RendererInterface;
 use ZfcRbac\Service\AuthorizationService;
 
 /**
- * Test TransportManagerApplicationStatus view helper
- *
- * @author Mat Evans <mat.evans@valtech.co.uk>
+ * @see CurrentUser
  */
 class CurrentUserTest extends MockeryTestCase
 {
@@ -28,7 +20,7 @@ class CurrentUserTest extends MockeryTestCase
 
         $mockAuthService = m::mock(AuthorizationService::class);
         $mockAuthService->shouldReceive('getIdentity')->andReturn($identity);
-        $sut = new CurrentUser($mockAuthService);
+        $sut = new CurrentUser($mockAuthService, '1234');
 
         $this->assertEquals('Not logged in', $sut->getFullName());
     }
@@ -44,7 +36,7 @@ class CurrentUserTest extends MockeryTestCase
 
         $mockAuthService = m::mock(AuthorizationService::class);
         $mockAuthService->shouldReceive('getIdentity')->andReturn($identity);
-        $sut = new CurrentUser($mockAuthService);
+        $sut = new CurrentUser($mockAuthService, '1234');
 
         $this->assertEquals('Not logged in', $sut->getFullName());
     }
@@ -71,7 +63,7 @@ class CurrentUserTest extends MockeryTestCase
             ->with($person, ['forename', 'familyName'])
             ->andReturn('Terry Barret-Edgecombe');
 
-        $sut = new CurrentUser($mockAuthService);
+        $sut = new CurrentUser($mockAuthService, '1234');
         $sut->setView($mockView);
 
         $this->assertEquals('Terry Barret-Edgecombe', $sut->getFullName());
@@ -98,7 +90,7 @@ class CurrentUserTest extends MockeryTestCase
             ->with([], ['forename', 'familyName'])
             ->andReturn('');
 
-        $sut = new CurrentUser($mockAuthService);
+        $sut = new CurrentUser($mockAuthService, '1234');
         $sut->setView($mockView);
 
         $this->assertEquals('username', $sut->getFullName());
@@ -117,7 +109,7 @@ class CurrentUserTest extends MockeryTestCase
         $mockAuthService = m::mock(AuthorizationService::class);
         $mockAuthService->shouldReceive('getIdentity')->andReturn($identity);
 
-        $sut = new CurrentUser($mockAuthService);
+        $sut = new CurrentUser($mockAuthService, '1234');
 
         $this->assertEquals($expected, $sut->getOrganisationName());
     }
@@ -163,7 +155,7 @@ class CurrentUserTest extends MockeryTestCase
         $mockAuthService = m::mock(AuthorizationService::class);
         $mockAuthService->shouldReceive('getIdentity')->andReturn($identity);
 
-        $sut = new CurrentUser($mockAuthService);
+        $sut = new CurrentUser($mockAuthService, '1234');
 
         $this->assertEquals($expected, $sut->isLoggedIn());
     }
@@ -190,7 +182,7 @@ class CurrentUserTest extends MockeryTestCase
         $mockAuthService = m::mock(AuthorizationService::class);
         $mockAuthService->shouldReceive('getIdentity')->andReturn($identity);
 
-        $sut = new CurrentUser($mockAuthService);
+        $sut = new CurrentUser($mockAuthService, '1234');
 
         $this->assertEquals($expected, $sut->isOperator());
     }
@@ -218,7 +210,7 @@ class CurrentUserTest extends MockeryTestCase
         $mockAuthService = m::mock(AuthorizationService::class);
         $mockAuthService->shouldReceive('getIdentity')->andReturn($identity);
 
-        $sut = new CurrentUser($mockAuthService);
+        $sut = new CurrentUser($mockAuthService, '1234');
 
         $this->assertEquals($expected, $sut->isLocalAuthority());
     }
@@ -246,7 +238,7 @@ class CurrentUserTest extends MockeryTestCase
         $mockAuthService = m::mock(AuthorizationService::class);
         $mockAuthService->shouldReceive('getIdentity')->andReturn($identity);
 
-        $sut = new CurrentUser($mockAuthService);
+        $sut = new CurrentUser($mockAuthService, '1234');
 
         $this->assertEquals($expected, $sut->isPartner());
     }
@@ -276,7 +268,7 @@ class CurrentUserTest extends MockeryTestCase
         $mockAuthService = m::mock(AuthorizationService::class);
         $mockAuthService->shouldReceive('getIdentity')->andReturn($identity);
 
-        $sut = new CurrentUser($mockAuthService);
+        $sut = new CurrentUser($mockAuthService, '1234');
 
         $this->assertEquals($expected, $sut->isTransportManager());
     }
@@ -306,7 +298,7 @@ class CurrentUserTest extends MockeryTestCase
         $mockAuthService = m::mock(AuthorizationService::class);
         $mockAuthService->shouldReceive('getIdentity')->andReturn($identity);
 
-        $sut = new CurrentUser($mockAuthService);
+        $sut = new CurrentUser($mockAuthService, '1234');
 
         $this->assertEquals($expected, $sut->getUniqueId());
     }
@@ -316,7 +308,7 @@ class CurrentUserTest extends MockeryTestCase
         return [
             [[], ''],
             [['userType' => User::USER_TYPE_ANON], ''],
-            [['userType' => User::USER_TYPE_OPERATOR, 'pid' => 'testing'], hash('sha256', 'testing')],
+            [['userType' => User::USER_TYPE_OPERATOR, 'loginId' => 'testing'], hash('sha256', 'testing1234')],
         ];
     }
 
@@ -331,7 +323,7 @@ class CurrentUserTest extends MockeryTestCase
         $mockAuthService = m::mock(AuthorizationService::class);
         $mockAuthService->shouldReceive('getIdentity')->andReturn($identity);
 
-        $sut = new CurrentUser($mockAuthService);
+        $sut = new CurrentUser($mockAuthService, '1234');
 
         $this->assertEquals(25, $sut->getNumberOfVehicles());
     }
@@ -344,7 +336,7 @@ class CurrentUserTest extends MockeryTestCase
             ->with('internal-user')
             ->andReturn(true);
 
-        $sut = new CurrentUser($mockAuthService);
+        $sut = new CurrentUser($mockAuthService, '1234');
 
         $this->assertTrue($sut->isInternalUser());
     }
