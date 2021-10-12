@@ -13,6 +13,7 @@ use Dvsa\Olcs\Transfer\Query\QueryInterface;
 use Laminas\Http\Header;
 use Laminas\Http\Client;
 use Laminas\Http\Client\Exception\ExceptionInterface as HttpClientExceptionInterface;
+use Laminas\Http\Header\Authorization;
 use Laminas\Http\Request;
 use Laminas\Http\Response as HttpResponse;
 use Laminas\Mvc\Router\Exception\ExceptionInterface;
@@ -161,6 +162,6 @@ class QueryService implements QueryServiceInterface
 
         $header = sprintf("Authorization:Bearer %s", $accessToken);
         $headers = $this->request->getHeaders();
-        $headers->addHeader(Header\Authorization::FromString($header));
+        $headers->addHeader(Authorization::FromString($header));
     }
 }
