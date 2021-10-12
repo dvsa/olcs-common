@@ -12,13 +12,15 @@ use Dvsa\Olcs\Transfer\Command\CommandContainerInterface;
 use Dvsa\Olcs\Transfer\Command\CommandInterface;
 use Dvsa\Olcs\Transfer\Command\LoggerOmitContentInterface;
 use Dvsa\Olcs\Transfer\Command\User\UpdateUserLastLoginAt;
-use Mockery as m;
-use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Http\Client\Exception\RuntimeException;
 use Laminas\Http\Header\Cookie;
 use Laminas\Http\Headers;
+use Laminas\Http\Request;
 use Laminas\Http\Response as HttpResponse;
 use Laminas\Mvc\Router\Exception\RuntimeException as RouterRuntimeException;
+use Laminas\Session\Container;
+use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
  * @covers \Common\Service\Cqrs\Command\CommandService
@@ -61,13 +63,16 @@ class CommandServiceTest extends MockeryTestCase
         $this->mockClient = m::mock(\Laminas\Http\Client::class)->makePartial();
         $this->mockRequest = m::mock(\Laminas\Http\Request::class)->makePartial();
         $this->mockFlashMsgr = m::mock(\Common\Service\Helper\FlashMessengerHelperService::class);
+        $this->mockContainer = m::mock(Container::class);
+        $this->mockContainer->allows('offsetGet')->andReturn([])->byDefault();
 
         $this->sut = new CommandService(
             $this->mockRouter,
             $this->mockClient,
             $this->mockRequest,
             true,
-            $this->mockFlashMsgr
+            $this->mockFlashMsgr,
+            $this->mockContainer
         );
     }
 
@@ -390,4 +395,52 @@ class CommandServiceTest extends MockeryTestCase
         static::assertStringStartsWith($message, current($actual->getResult()['messages']));
         static::assertEquals($statusCode, $actual->getHttpResponse()->getStatusCode());
     }
+
+    public function testAddAuthorizationHeader(): void
+    {
+        //  mock command
+        $dtoData = [];
+        $dto = UpdateUserLastLoginAt::create($dtoData);
+
+        $mockCmd = m::mock(CommandContainer::class)
+            ->shouldReceive('getRouteName')->once()->andReturn(self::ROUTE_NAME)
+            ->shouldReceive('getMethod')->once()->andReturn(self::METHOD)
+            ->shouldReceive('getDto')->times(3)->andReturn($dto)
+            ->shouldReceive('isValid')->once()->andReturn(true)
+            ->getMock();
+
+        //  mock
+        $this->mockRouter
+            ->shouldReceive('assemble')->once()->andReturn('unit_uri');
+
+        $this->mockContainer
+            ->shouldReceive('offsetGet')
+            ->with('storage')
+            ->andReturn(['AccessToken' => 'access_token']);
+
+        $headers = new Headers();
+        $this->mockRequest->setHeaders($headers);
+        $this->mockRequest
+            ->shouldReceive('setUri')->once()->with('unit_uri')
+            ->shouldReceive('setMethod')->once()->with(self::METHOD)
+            ->shouldReceive('getHeaders')->once()->andReturn($headers);
+
+        $mockAdapter = m::mock(LoggerOmitContentInterface::class);
+
+        $mockResp = m::mock(HttpResponse::class)->makePartial()
+            ->shouldReceive('getStatusCode')->andReturn(HttpResponse::STATUS_CODE_200)
+            ->shouldReceive('getBody')->once()->andReturn('{"key":"EXPECTED"}')
+            ->getMock();
+
+        $this->mockClient
+            ->shouldReceive('getAdapter')->once()->andReturn($mockAdapter)
+            ->shouldReceive('send')->once()->andReturn($mockResp);
+
+        $actual = $this->sut->send($mockCmd);
+
+        static::assertInstanceOf(CqrsResponse::class, $actual);
+        $this->assertArrayHasKey('Authorization', $headers->toArray());
+        $this->assertSame('Bearer access_token', $headers->get('Authorization')->getFieldValue());
+    }
+
 }

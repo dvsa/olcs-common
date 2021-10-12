@@ -13,6 +13,7 @@ use Dvsa\Olcs\Transfer\Command\LoggerOmitContentInterface;
 use Dvsa\Olcs\Utils\Client\ClientAdapterLoggingWrapper;
 use Laminas\Http\Client;
 use Laminas\Http\Client\Exception\ExceptionInterface as HttpClientExceptionInterface;
+use Laminas\Http\Header\Authorization;
 use Laminas\Http\Header\ContentType;
 use Laminas\Http\Header\Cookie;
 use Laminas\Http\Headers;
@@ -20,6 +21,7 @@ use Laminas\Http\Request;
 use Laminas\Http\Response as HttpResponse;
 use Laminas\Mvc\Router\Exception\ExceptionInterface;
 use Laminas\Mvc\Router\RouteInterface;
+use Laminas\Session\Container;
 
 /**
  * Command
@@ -46,6 +48,11 @@ class CommandService
     protected $request;
 
     /**
+     * @var Container
+     */
+    private $session;
+
+    /**
      * CommandService constructor.
      *
      * @param RouteInterface              $router          Router
@@ -59,13 +66,15 @@ class CommandService
         Client $client,
         Request $request,
         $showApiMessages,
-        $flashMessenger
+        $flashMessenger,
+        Container $session
     ) {
         $this->router = $router;
         $this->client = $client;
         $this->request = $request;
         $this->showApiMessages = $showApiMessages;
         $this->flashMessenger = $flashMessenger;
+        $this->session = $session;
     }
 
     /**
@@ -153,6 +162,8 @@ class CommandService
                 $adapter->setShouldLogData(false);
             }
 
+            $this->addAuthorizationHeader();
+
             $clientResponse = $this->client->send();
 
             if ($command->getDto() instanceof LoggerOmitContentInterface) {
@@ -197,5 +208,18 @@ class CommandService
         $request->setHeaders($requestHeaders);
 
         return $request;
+    }
+
+    private function addAuthorizationHeader()
+    {
+        $accessToken = $this->session->offsetGet('storage')['AccessToken'] ?? null;
+
+        if (is_null($accessToken)) {
+            return;
+        }
+
+        $header = sprintf("Authorization:Bearer %s", $accessToken);
+        $headers = $this->request->getHeaders();
+        $headers->addHeader(Authorization::FromString($header));
     }
 }
