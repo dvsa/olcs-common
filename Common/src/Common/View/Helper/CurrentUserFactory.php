@@ -1,26 +1,49 @@
 <?php
 
-/**
- * Current User Factory
- */
 namespace Common\View\Helper;
 
+use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
+use RuntimeException;
 use ZfcRbac\Service\AuthorizationService;
 
-/**
- * Current User Factory
- */
 class CurrentUserFactory implements FactoryInterface
 {
+    const MSG_MISSING_ANALYTICS_CONFIG = 'Missing auth.user_unique_id_salt from config';
+
     /**
-     * @param ServiceLocatorInterface $serviceLocator
+     * @param ContainerInterface $container
+     * @param $requestedName
+     * @param array|null $options
+     *
      * @return CurrentUser
+     * @throws RuntimeException
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): CurrentUser
     {
-        $serviceLocator = $serviceLocator->getServiceLocator();
-        return new CurrentUser($serviceLocator->get(AuthorizationService::class));
+        $serviceLocator = $container->getServiceLocator();
+        $config = $serviceLocator->get('Config');
+
+        if (!isset($config['auth']['user_unique_id_salt'])) {
+            throw new RunTimeException(self::MSG_MISSING_ANALYTICS_CONFIG);
+        }
+
+        return new CurrentUser(
+            $serviceLocator->get(AuthorizationService::class),
+            $config['auth']['user_unique_id_salt']
+        );
+    }
+
+    /**
+     * @deprecated can be removed following laminas v3 upgrade
+     * @param ServiceLocatorInterface $serviceLocator
+     *
+     * @return CurrentUser
+     * @throws RuntimeException
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator): CurrentUser
+    {
+        return $this->__invoke($serviceLocator, null);
     }
 }

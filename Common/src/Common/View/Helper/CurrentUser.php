@@ -1,22 +1,11 @@
 <?php
 
-/**
- * Current User view helper
- *
- * @author Mat Evans <mat.evans@valtech.co.uk>
- */
-
 namespace Common\View\Helper;
 
 use Common\Rbac\User;
 use Laminas\View\Helper\AbstractHelper;
 use ZfcRbac\Service\AuthorizationService;
 
-/**
- * Current User view helper
- *
- * @author Mat Evans <mat.evans@valtech.co.uk>
- */
 class CurrentUser extends AbstractHelper
 {
     protected $userData;
@@ -26,6 +15,8 @@ class CurrentUser extends AbstractHelper
      */
     private $authService;
 
+    private string $userUniqueIdSalt;
+
     /**
      * Construct
      *
@@ -33,9 +24,10 @@ class CurrentUser extends AbstractHelper
      *
      * @return void
      */
-    public function __construct(AuthorizationService $authService)
+    public function __construct(AuthorizationService $authService, string $userUniqueIdSalt)
     {
         $this->authService = $authService;
+        $this->userUniqueIdSalt = $userUniqueIdSalt;
     }
 
     /**
@@ -141,6 +133,9 @@ class CurrentUser extends AbstractHelper
 
     /**
      * Get the user's unique id
+     * @todo we could look at a micro optimisation here to move this into the identity provider
+     * which would mean the need to create the value less often, while also making it available in more places
+     * giving us potential to store and create things against the unique user id
      *
      * @return string
      */
@@ -152,7 +147,9 @@ class CurrentUser extends AbstractHelper
 
         $userData = $this->getUserData();
 
-        return hash('sha256', $userData['pid']);
+        //echo $userData['loginId'] . $this->userUniqueIdSalt;
+
+        return hash('sha256', $userData['loginId'] . $this->userUniqueIdSalt);
     }
 
     /**
