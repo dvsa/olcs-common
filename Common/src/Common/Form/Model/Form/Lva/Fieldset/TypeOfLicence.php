@@ -48,29 +48,10 @@ class TypeOfLicence
 
     /**
      * @Form\Name("licence-type")
-     * @Form\Attributes({"id": ""})
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\LicenceType")
      * @Form\Options({
-     *      "short-label": "short-label-tol-licence-type",
-     *      "error-message": "type-of-licence-error",
-     *      "fieldset-attributes": {"id": "licence-type"},
-     *      "fieldset-data-group": "licence-type",
-     *      "label": "application_type-of-licence_licence-type.data.licenceType",
-     *      "label_attributes": {"class": "form-control form-control--radio"},
-     *      "hint": "markup-typeOfLicence_licenceType-hint",
-     *      "value_options": {
-     *          \Common\RefData::LICENCE_TYPE_RESTRICTED: "Restricted",
-     *          \Common\RefData::LICENCE_TYPE_STANDARD_NATIONAL: "Standard National",
-     *          \Common\RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL: "Standard International",
-     *         "Special Restricted":{
-     *              "value": "ltyp_sr",
-     *               "label":"Special Restricted",
-     *               "attributes":{"id":"ltyp_sr_radio"},
-     *               "item_wrapper_attributes":{"id":"ltyp_sr_radio_group"}
-     *              }
-     *      },
-     *
+     *     "label": "short-label-tol-licence-type",
      * })
-     * @Form\Type("\Common\Form\Elements\Types\Radio")
      */
     public $licenceType = null;
 }
