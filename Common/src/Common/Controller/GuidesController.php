@@ -5,13 +5,6 @@ namespace Common\Controller;
 use Laminas\Mvc\Controller\AbstractActionController as LaminasAbstractActionController;
 use Laminas\View\Model\ViewModel;
 
-/**
- * Guides Controller
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- *
- * @method \Olcs\Mvc\Controller\Plugin\Placeholder placeholder()
- */
 class GuidesController extends LaminasAbstractActionController
 {
     const GUIDE_OC_ADV_GB_NEW = 'advertising-your-operating-centre-gb-new';
@@ -25,6 +18,7 @@ class GuidesController extends LaminasAbstractActionController
     const GUIDE_TRAFFIC_AREA = 'traffic-area';
     const GUIDE_CONVICTIONS_AND_PENALTIES_GUIDANCE_GB = 'convictions-and-penalties-guidance-gb';
     const GUIDE_CONVICTIONS_AND_PENALTIES_GUIDANCE_NI = 'convictions-and-penalties-guidance-ni';
+    const GUIDE_RIGHT_FIRST_TIME = 'right-first-time';
 
     protected $guideMap = [
         self::GUIDE_OC_ADV_GB_NEW => 'oc_advert',
@@ -34,6 +28,7 @@ class GuidesController extends LaminasAbstractActionController
         self::GUIDE_PRIVACY_NOTICE => 'default',
         self::GUIDE_TERMS_AND_CONDITIONS => 'default',
         self::GUIDE_ACCESSIBILITY_STATEMENT => 'default-two-thirds-blank-sidebar',
+        self::GUIDE_RIGHT_FIRST_TIME => 'default-two-thirds-blank-sidebar',
         self::GUIDE_FINANCIAL_EVIDENCE => 'default',
         self::GUIDE_TRAFFIC_AREA => 'default',
         self::GUIDE_CONVICTIONS_AND_PENALTIES_GUIDANCE_GB => 'default',
