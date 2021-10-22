@@ -27,4 +27,21 @@ class StandardInternationalVehicleType
      * @Form\Type("\Common\Form\Elements\Types\Radio")
      */
     public $vehicleType = null;
+
+    /**
+     * @Form\Name("lgv-declaration-confirmation")
+     * @Form\Attributes({
+     *   "id": "lgv-declaration-confirmation",
+     *   "data-container-class": "lgv-declaration-confirmation"
+     * })
+     * @Form\Options({
+     *     "checked_value": "1",
+     *     "unchecked_value": "0",
+     *     "label": "lgv-undertakings.form.declaration.label",
+     *     "must_be_value": "1",
+     *     "not_checked_message": "lgv-undertakings.form.declaration.error"
+     * })
+     * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
+     */
+    public $lgvDeclarationConfirmation = null;
 }

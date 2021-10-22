@@ -79,6 +79,8 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
             ]
         );
 
+        // TODO: call make lgv declaration command for internal only
+
         /** @var \Common\Service\Cqrs\Response $response */
         $response = $this->handleCommand($dto);
 
@@ -111,8 +113,13 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         if ($response->isServerError()) {
             $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
         }
-    
+
+        // TODO: is this redirect getting triggered in internal?    
         if ($vehicleType === RefData::APP_VEHICLE_TYPE_LGV) {
+
+            echo('attempt redirect');
+            exit();
+
             return $this->redirect()->toRoute(
                 'lva-application/lgv-undertakings',
                 ['application' => $this->getIdentifier()]

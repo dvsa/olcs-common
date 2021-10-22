@@ -92,7 +92,8 @@ abstract class AbstractTypeOfLicence extends AbstractLvaFormService
         // Optional disable and lock type of licence
         if (!$params['canUpdateLicenceType']) {
             // Disable and lock type of licence
-            $this->getFormHelper()->disableElement($form, 'type-of-licence->licence-type');
+            $this->getFormHelper()->disableElement($form, 'type-of-licence->licence-type->licence-type');
+            $this->getFormHelper()->disableElement($form, 'type-of-licence->licence-type->ltyp_siContent->vehicle-type');
             $this->getFormHelper()->lockElement(
                 $typeOfLicenceFieldset->get('licence-type'),
                 'licence-type-lock-message'
@@ -103,7 +104,7 @@ abstract class AbstractTypeOfLicence extends AbstractLvaFormService
 
         if (!$params['canBecomeSpecialRestricted']) {
             $this->getFormHelper()->removeOption(
-                $typeOfLicenceFieldset->get('licence-type'),
+                $typeOfLicenceFieldset->get('licence-type')->get('licence-type'),
                 RefData::LICENCE_TYPE_SPECIAL_RESTRICTED
             );
         }

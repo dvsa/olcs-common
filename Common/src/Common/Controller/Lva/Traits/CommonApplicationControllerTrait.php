@@ -110,7 +110,7 @@ trait CommonApplicationControllerTrait
     protected function completeSection($section, $prg = [])
     {
         if ($this->isButtonPressed('saveAndContinue', $prg)) {
-            if ($section ==='type_of_licence') {
+            if (!$this->isInternalController() && $section ==='type_of_licence') {
                 $operatorType = $prg['type-of-licence']['operator-type'];
                 $licenceType = $prg['type-of-licence']['licence-type']['licence-type'];
                 $vehicleType = $prg['type-of-licence']['licence-type']['ltyp_siContent']['vehicle-type'];
