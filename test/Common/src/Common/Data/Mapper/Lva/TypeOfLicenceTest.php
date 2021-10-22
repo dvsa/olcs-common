@@ -23,7 +23,8 @@ class TypeOfLicenceTest extends \PHPUnit\Framework\TestCase
             'niFlag' => 'Y',
             'goodsOrPsv' => ['id' => 'lcat_gv'],
             'licenceType' => ['id' => 'ltyp_sn'],
-            'vehicleType' => ['id' => 'app_veh_type_mixed']
+            'vehicleType' => ['id' => 'app_veh_type_mixed'],
+            'lgvDeclarationConfirmation' => 1,
         ];
 
         $output = TypeOfLicence::mapFromResult($input);
@@ -36,7 +37,10 @@ class TypeOfLicenceTest extends \PHPUnit\Framework\TestCase
                 'licence-type' => [
                     'licence-type' => 'ltyp_sn',
                     'ltyp_siContent' => [
-                        'vehicle-type' => 'app_veh_type_mixed'
+                        'vehicle-type' => 'app_veh_type_mixed',
+                        'lgv-declaration' => [
+                            'lgv-declaration-confirmation' => 1
+                        ]
                     ]
                 ]
             ]

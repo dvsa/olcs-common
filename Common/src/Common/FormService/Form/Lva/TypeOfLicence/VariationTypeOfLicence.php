@@ -18,7 +18,7 @@ class VariationTypeOfLicence extends AbstractTypeOfLicence
         $this->lockElements($form, $params);
 
         $this->getFormHelper()->setCurrentOption(
-            $form->get('type-of-licence')->get('licence-type'),
+            $form->get('type-of-licence')->get('licence-type')->get('licence-type'),
             $params['currentLicenceType']
         );
     }

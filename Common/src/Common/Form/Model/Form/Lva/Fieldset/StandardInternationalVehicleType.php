@@ -27,4 +27,13 @@ class StandardInternationalVehicleType
      * @Form\Type("\Common\Form\Elements\Types\Radio")
      */
     public $vehicleType = null;
+
+    /**
+     * @Form\Name("lgv-declaration")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\LgvDeclaration")
+     * @Form\Options({
+     *     "label": "application_type-of-licence_licence-type.data.lgvDeclaration",
+     * })
+     */
+    public $lgvDeclaration = null;
 }
