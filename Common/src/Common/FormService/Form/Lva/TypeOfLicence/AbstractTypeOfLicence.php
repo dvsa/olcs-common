@@ -92,7 +92,9 @@ abstract class AbstractTypeOfLicence extends AbstractLvaFormService
         // Optional disable and lock type of licence
         if (!$params['canUpdateLicenceType']) {
             // Disable and lock type of licence
-            $this->getFormHelper()->disableElement($form, 'type-of-licence->licence-type');
+            $this->getFormHelper()->disableElement($form, 'type-of-licence->licence-type->licence-type');
+            $this->getFormHelper()->disableElement($form, 'type-of-licence->licence-type->ltyp_siContent->vehicle-type');
+            // TODO: also disable lgv declaration checkbox?
             $this->getFormHelper()->lockElement(
                 $typeOfLicenceFieldset->get('licence-type'),
                 'licence-type-lock-message'
@@ -103,7 +105,7 @@ abstract class AbstractTypeOfLicence extends AbstractLvaFormService
 
         if (!$params['canBecomeSpecialRestricted']) {
             $this->getFormHelper()->removeOption(
-                $typeOfLicenceFieldset->get('licence-type'),
+                $typeOfLicenceFieldset->get('licence-type')->get('licence-type'),
                 RefData::LICENCE_TYPE_SPECIAL_RESTRICTED
             );
         }
@@ -164,12 +166,19 @@ abstract class AbstractTypeOfLicence extends AbstractLvaFormService
 
         $operatorType = $fieldset->get('operator-type')->getValue();
         $licenceType = $licenceTypeFieldset->get('licence-type')->getValue();
+        $vehicleType = $licenceTypeFieldset->get('ltyp_siContent')->get('vehicle-type')->getValue();
 
-        if ($operatorType != RefData::LICENCE_CATEGORY_GOODS_VEHICLE ||
-            $licenceType != RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
+        if ($operatorType == RefData::LICENCE_CATEGORY_GOODS_VEHICLE &&
+            $licenceType == RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
         ) {
+            if ($vehicleType != RefData::APP_VEHICLE_TYPE_LGV) {
+                $form->getInputFilter()->get('type-of-licence')
+                    ->get('licence-type')
+                    ->get('ltyp_siContent')
+                    ->remove('lgv-declaration');
+            }
+        } else {
             $form->getInputFilter()->get('type-of-licence')->get('licence-type')->remove('ltyp_siContent');
-            $licenceTypeFieldset->get('ltyp_siContent')->get('vehicle-type')->setValue(null);
         }
     }
 }

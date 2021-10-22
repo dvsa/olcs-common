@@ -63,10 +63,21 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         }
 
         $formData = $form->getData();
+        $licenceTypeData = $formData['type-of-licence']['licence-type'];
 
         $operatorType = $formData['type-of-licence']['operator-type'];
-        $licenceType = $formData['type-of-licence']['licence-type']['licence-type'];
-        $vehicleType =  $formData['type-of-licence']['licence-type']['ltyp_siContent']['vehicle-type'];
+        $licenceType = $licenceTypeData['licence-type'];
+        $vehicleType =  null;
+        $lgvDeclarationConfirmation = 0;
+
+        if (isset($licenceTypeData['ltyp_siContent'])) {
+            $siContentData = $licenceTypeData['ltyp_siContent'];
+            $vehicleType = $siContentData['vehicle-type'];
+
+            if (isset($siContentData['lgv-declaration']['lgv-declaration-confirmation'])) {
+                $lgvDeclarationConfirmation = $siContentData['lgv-declaration']['lgv-declaration-confirmation'];
+            }
+        }
 
         $dto = UpdateTypeOfLicence::create(
             [
@@ -75,6 +86,7 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
                 'operatorType' => $operatorType,
                 'licenceType' => $licenceType,
                 'vehicleType' => $vehicleType,
+                'lgvDeclarationConfirmation' => $lgvDeclarationConfirmation,
                 'niFlag' => $this->getOperatorLocation($applicationData, $formData)
             ]
         );
@@ -94,6 +106,7 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
                     'operator-type' => $operatorType,
                     'licence-type' => $licenceType,
                     'vehicle-type' => $vehicleType,
+                    'lgv-declaration-confirmation' => $lgvDeclarationConfirmation,
                     'version' => $formData['version']
                 ];
 
@@ -110,13 +123,6 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
 
         if ($response->isServerError()) {
             $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
-        }
-    
-        if ($vehicleType === RefData::APP_VEHICLE_TYPE_LGV) {
-            return $this->redirect()->toRoute(
-                'lva-application/lgv-undertakings',
-                ['application' => $this->getIdentifier()]
-            );
         }
 
         return $this->renderIndex($form);
@@ -162,6 +168,7 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
                     'operatorType' => $query['operator-type'],
                     'licenceType' => $query['licence-type'],
                     'vehicleType' => $query['vehicle-type'],
+                    'lgvDeclarationConfirmation' => $query['lgv-declaration-confirmation'],
                     'niFlag' => $query['operator-location'],
                     'confirm' => true
                 ]
