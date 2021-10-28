@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Transport Manager application test
- *
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
- */
-
 namespace CommonTest\Data\Mapper\Lva;
 
 use Common\Service\Helper\TranslationHelperService;
@@ -13,11 +7,6 @@ use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Data\Mapper\Lva\TransportManagerApplication;
 
-/**
- * Transport Manager application test
- *
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
- */
 class TransportManagerApplicationTest extends MockeryTestCase
 {
     public function testMapFromError()
@@ -60,7 +49,7 @@ class TransportManagerApplicationTest extends MockeryTestCase
         )->twice()->andReturn('__TEST__');
         $translationHelper->shouldReceive(
             'translate'
-        )->times(22)->andReturn('__TEST__');
+        )->times(23)->andReturn('__TEST__');
         $data = TransportManagerApplication::mapForSections($data, $translationHelper);
         $this->assertIsArray($data);
     }
@@ -82,7 +71,7 @@ class TransportManagerApplicationTest extends MockeryTestCase
                     'otherLicences' => [
                     ],
                     'additionalInformation'=>'__TEST__',
-
+                    'hasUndertakenTraining' => 'N',
                     'transportManager' =>
                         [
                             'otherLicences' =>[],
@@ -96,7 +85,6 @@ class TransportManagerApplicationTest extends MockeryTestCase
                                         'countryDesc' => '__TEST__'
                                     ],
                                 ],
-
                                 'person' => [
                                     'forename' => '__TEST__',
                                     'familyName' => '__TEST__',

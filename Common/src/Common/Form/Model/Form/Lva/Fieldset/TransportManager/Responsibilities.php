@@ -54,7 +54,7 @@ class Responsibilities
      *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
      *     "hint" : "transport-manager.responsibilities.is-owner.no.hint",
      *     "hint-position" : "below",
-     *     "hint-class" : "hint hint__below hint__black hintNoOwner",
+     *     "hint-class" : "govuk-radios__conditional govuk-body hint hint__below hint__black hintNoOwner",
      * })
      * @Form\Type("Radio")
      */

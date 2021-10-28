@@ -71,4 +71,17 @@ class Details
      * })
      */
     public $certificate = null;
+
+    /**
+     * @Form\Options({
+     *     "label": "tm-review-responsibility-training-undertaken",
+     *     "value_options": {"Y":"Yes", "N":"No"},
+     *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
+     *     "hint" : "tm-hint-responsibility-training-undertaken",
+     *     "hint-position" : "below",
+     *     "hint-class" : "govuk-radios__conditional govuk-body hint hint__below hint__black hintNoTraining",
+     * })
+     * @Form\Type("Radio")
+     */
+    public $hasUndertakenTraining = null;
 }
