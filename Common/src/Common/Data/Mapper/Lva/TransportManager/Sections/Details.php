@@ -1,13 +1,11 @@
 <?php
 
-
 namespace Common\Data\Mapper\Lva\TransportManager\Sections;
 
 use Common\Category;
 
 class Details extends AbstractSection
 {
-
     use SectionSerializeTrait;
 
     private $name;
@@ -20,18 +18,16 @@ class Details extends AbstractSection
 
     private $certificate;
 
+    private $hasUndertakenTraining;
+
     private $homeCd;
 
     private $workCd;
-
-
-
 
     /**
      * populate
      *
      * @param array $transportManagerApplication
-     *
      *
      * @return \Object;
      */
@@ -41,6 +37,7 @@ class Details extends AbstractSection
         $this->populatePersonDetails($person);
         $this->emailAddress = $transportManagerApplication['transportManager']['homeCd']['emailAddress'];
         $this->certificate = $this->processDocuments($transportManagerApplication);
+        $this->hasUndertakenTraining = $transportManagerApplication['hasUndertakenTraining'];
 
         foreach (['homeCd', 'workCd'] as $addresses) {
             $address = $this->processAddress($transportManagerApplication['transportManager'][$addresses]['address']);

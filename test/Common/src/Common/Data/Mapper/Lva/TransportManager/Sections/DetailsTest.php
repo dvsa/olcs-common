@@ -1,6 +1,5 @@
 <?php
 
-
 namespace CommonTest\Data\Mapper\Lva\TransportManager\Sections;
 
 use Common\Data\Mapper\Lva\TransportManager\Sections\Details;
@@ -18,7 +17,6 @@ class DetailsTest extends MockeryTestCase
      */
     public function setUp(): void
     {
-
         $this->mockTranslator = m::mock(TranslationHelperService::class);
         $this->sut = new Details($this->mockTranslator);
     }
@@ -30,6 +28,7 @@ class DetailsTest extends MockeryTestCase
         )->twice()->andReturn('__TEST__');
 
         $actual = $this->sut->populate([
+            'hasUndertakenTraining' => 'N',
             'transportManager' =>
                 [
 
@@ -66,6 +65,7 @@ class DetailsTest extends MockeryTestCase
             'lva-tmverify-details-checkanswer-birthPlace' => '__TEST__',
             'lva-tmverify-details-checkanswer-emailAddress' => '__TEST__',
             'lva-tmverify-details-checkanswer-certificate' => 'No certificates attached',
+            'lva-tmverify-details-checkanswer-hasUndertakenTraining' => 'N',
             'lva-tmverify-details-checkanswer-homeCd' => '__TEST__',
             'lva-tmverify-details-checkanswer-workCd' => '__TEST__',
         ], $actual->sectionSerialize());
@@ -74,6 +74,7 @@ class DetailsTest extends MockeryTestCase
     public function testFormatAddress()
     {
         $data = [
+            'hasUndertakenTraining' => 'Y',
             'transportManager' =>
                 [
                     'documents' => [],
@@ -130,6 +131,7 @@ class DetailsTest extends MockeryTestCase
             'lva-tmverify-details-checkanswer-birthPlace' => null,
             'lva-tmverify-details-checkanswer-emailAddress' => '__TEST__',
             'lva-tmverify-details-checkanswer-certificate' => 'No certificates attached',
+            'lva-tmverify-details-checkanswer-hasUndertakenTraining' => 'Y',
             'lva-tmverify-details-checkanswer-homeCd' => '__TEST__',
             'lva-tmverify-details-checkanswer-workCd' => '__TEST__',
         ], $this->sut->populate($data)->sectionSerialize());
@@ -138,6 +140,7 @@ class DetailsTest extends MockeryTestCase
     public function testCertificateNotAdded()
     {
         $data = [
+            'hasUndertakenTraining' => 'N',
             'transportManager' =>
                 [
                     'documents' => [],
@@ -177,17 +180,15 @@ class DetailsTest extends MockeryTestCase
     public function testCertificateAdded()
     {
         $data = [
+            'hasUndertakenTraining' => 'Y',
             'transportManager' =>
                 [
                     'documents' => [
-
-
                         [
                             'application' => ['id' => 1],
                             'category' => ['id' => 5],
                             'subCategory' => ['id' => 98]
                         ]
-
                     ],
                     'homeCd' => [
                         'emailAddress' => '__TEST__',
@@ -196,7 +197,6 @@ class DetailsTest extends MockeryTestCase
                                 'countryDesc' => '__TEST__'
                             ],
                         ],
-
                         'person' => [
                             'forename' => '__TEST__',
                             'familyName' => '__TEST__',
