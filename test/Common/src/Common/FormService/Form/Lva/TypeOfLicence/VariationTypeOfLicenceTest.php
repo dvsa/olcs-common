@@ -57,7 +57,12 @@ class VariationTypeOfLicenceTest extends MockeryTestCase
             ->with('operator-type');
 
         $mockLt = m::mock(Element\Select::class);
-        $mockLt->shouldReceive('setLabel')
+
+        $ltFieldset = m::mock(Fieldset::class);
+        $ltFieldset->shouldReceive('get')
+            ->with('licence-type')
+            ->andReturn($mockLt);
+        $ltFieldset->shouldReceive('setLabel')
             ->once()
             ->with('licence-type');
 
@@ -70,7 +75,7 @@ class VariationTypeOfLicenceTest extends MockeryTestCase
             ->andReturn($mockOt)
             ->shouldReceive('get')
             ->with('licence-type')
-            ->andReturn($mockLt);
+            ->andReturn($ltFieldset);
 
         $mockForm = m::mock(Form::class);
         $mockForm->shouldReceive('get')
@@ -127,7 +132,12 @@ class VariationTypeOfLicenceTest extends MockeryTestCase
             ->with('operator-type');
 
         $mockLt = m::mock(Element\Select::class);
-        $mockLt->shouldReceive('setLabel')
+
+        $ltFieldset = m::mock(Fieldset::class);
+        $ltFieldset->shouldReceive('get')
+            ->with('licence-type')
+            ->andReturn($mockLt);
+        $ltFieldset->shouldReceive('setLabel')
             ->once()
             ->with('licence-type');
 
@@ -140,7 +150,7 @@ class VariationTypeOfLicenceTest extends MockeryTestCase
             ->andReturn($mockOt)
             ->shouldReceive('get')
             ->with('licence-type')
-            ->andReturn($mockLt);
+            ->andReturn($ltFieldset);
 
         $mockForm = m::mock(Form::class);
         $mockForm->shouldReceive('get')
@@ -171,7 +181,7 @@ class VariationTypeOfLicenceTest extends MockeryTestCase
             ->with($mockOt, 'operator-type-lock-message')
             ->shouldReceive('lockElement')
             ->once()
-            ->with($mockLt, 'licence-type-lock-message')
+            ->with($ltFieldset, 'licence-type-lock-message')
             ->shouldReceive('disableElement')
             ->once()
             ->with($mockForm, 'type-of-licence->operator-location')
@@ -180,7 +190,10 @@ class VariationTypeOfLicenceTest extends MockeryTestCase
             ->with($mockForm, 'type-of-licence->operator-type')
             ->shouldReceive('disableElement')
             ->once()
-            ->with($mockForm, 'type-of-licence->licence-type')
+            ->with($mockForm, 'type-of-licence->licence-type->licence-type')
+            ->shouldReceive('disableElement')
+            ->once()
+            ->with($mockForm, 'type-of-licence->licence-type->ltyp_siContent->vehicle-type')
             ->shouldReceive('removeOption')
             ->once()
             ->with($mockLt, RefData::LICENCE_TYPE_SPECIAL_RESTRICTED)

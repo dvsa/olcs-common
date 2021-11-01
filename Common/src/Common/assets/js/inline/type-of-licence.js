@@ -17,6 +17,7 @@ OLCS.ready(function () {
     var niFlag = OLCS.formHelper('type-of-licence', 'operator-location');
     var operatorType = OLCS.formHelper('type-of-licence', 'operator-type');
     var licenceType = OLCS.formHelper.findInput('type-of-licence', 'licence-type');
+    var vehicleType = OLCS.formHelper.findInput('type-of-licence', 'vehicle-type');
 
     // set up a cascade form with the appropriate rules
     OLCS.cascadeForm({
@@ -64,6 +65,13 @@ OLCS.ready(function () {
                     return (
                         operatorType.filter(':checked').val() == 'lcat_gv' &&
                         licenceType.filter(':checked').val() == 'ltyp_si'
+                    );
+                },
+                '#lgv-declaration': function() {
+                    return (
+                        operatorType.filter(':checked').val() == 'lcat_gv' &&
+                        licenceType.filter(':checked').val() == 'ltyp_si' &&
+                        vehicleType.filter(':checked').val() == 'app_veh_type_lgv'
                     );
                 }
             }
