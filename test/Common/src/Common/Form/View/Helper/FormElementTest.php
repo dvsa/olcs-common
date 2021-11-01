@@ -14,6 +14,9 @@ use Laminas\Form\View\Helper;
  */
 class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
 {
+    protected const A_HINT = 'A HINT';
+    protected const A_CUSTOM_CSS_CLASS = 'A_CSS_CLASS';
+
     /**
      * @var \Laminas\Form\Element
      */
@@ -508,6 +511,58 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
         $this->assertSame(
             '<p class="hint">Hint</p><input type="text" name="test" class="class" id="test" value="">'
             .'<div class="hint">HINT BELOW</div>',
+            $output
+        );
+    }
+
+    /**
+     * @depends testRenderHintBelow
+     */
+    public function testRenderAddsCustomHintClassToHintsThatArePositionedBelowAnElement()
+    {
+        // Setup
+        $this->prepareElement('Text', [
+            'hint-below' => static::A_HINT,
+            'hint-class' => static::A_CUSTOM_CSS_CLASS,
+        ]);
+        $viewHelper = $this->prepareViewHelper();
+
+        // Execute
+        $output = $viewHelper($this->element, 'formCollection', '/');
+
+        // Assert
+        $this->assertSame(
+            sprintf(
+                '<p class="A_CSS_CLASS">Hint</p><input type="text" name="test" class="class" id="test" value=""><div class="%s">%s</div>',
+                static::A_CUSTOM_CSS_CLASS,
+                static::A_HINT
+            ),
+            $output
+        );
+    }
+
+    /**
+     * @depends testRenderAddsCustomHintClassToHintsThatArePositionedBelowAnElement
+     */
+    public function testRenderAddsCustomBelowHintClassToHintsThatArePositionedBelowAnElement()
+    {
+        // Setup
+        $this->prepareElement('Text', [
+            'hint-below' => static::A_HINT,
+            'hint-below-class' => static::A_CUSTOM_CSS_CLASS,
+        ]);
+        $viewHelper = $this->prepareViewHelper();
+
+        // Execute
+        $output = $viewHelper($this->element, 'formCollection', '/');
+
+        // Assert
+        $this->assertSame(
+            sprintf(
+                '<p class="hint">Hint</p><input type="text" name="test" class="class" id="test" value=""><div class="%s">%s</div>',
+                static::A_CUSTOM_CSS_CLASS,
+                static::A_HINT
+            ),
             $output
         );
     }

@@ -26,7 +26,8 @@ class InterimTest extends MockeryTestCase
             'interimReason' => 'foo',
             'interimStart' => '2015-01-01',
             'interimEnd' => '2015-01-02',
-            'interimAuthVehicles' => 10,
+            'interimAuthHgvVehicles' => 10,
+            'interimAuthLgvVehicles' => 11,
             'interimAuthTrailers' => 12,
             'interimStatus' => [
                 'id' => '123'
@@ -38,7 +39,8 @@ class InterimTest extends MockeryTestCase
                 'interimReason' => 'foo',
                 'interimStart' => '2015-01-01',
                 'interimEnd' => '2015-01-02',
-                'interimAuthVehicles' => 10,
+                'interimAuthHgvVehicles' => 10,
+                'interimAuthLgvVehicles' => 11,
                 'interimAuthTrailers' => 12
             ],
             'requested' => [
@@ -60,7 +62,8 @@ class InterimTest extends MockeryTestCase
                 'interimReason' => 'foo',
                 'interimStart' => '2015-01-01',
                 'interimEnd' => '2015-01-02',
-                'interimAuthVehicles' => 10,
+                'interimAuthHgvVehicles' => 10,
+                'interimAuthLgvVehicles' => 11,
                 'interimAuthTrailers' => 12
             ],
             'requested' => [
@@ -78,7 +81,8 @@ class InterimTest extends MockeryTestCase
             'reason' => 'foo',
             'startDate' => '2015-01-01',
             'endDate' => '2015-01-02',
-            'authVehicles' => 10,
+            'authHgvVehicles' => 10,
+            'authLgvVehicles' => 11,
             'authTrailers' => 12,
             'operatingCentres' => [123],
             'vehicles' => [321],
@@ -100,8 +104,11 @@ class InterimTest extends MockeryTestCase
             'endDate' => [
                 'foo' => 'bar3'
             ],
-            'authVehicles' => [
+            'authHgvVehicles' => [
                 'foo' => 'bar4'
+            ],
+            'authLgvVehicles' => [
+                'foo' => 'bar4.1'
             ],
             'authTrailers' => [
                 'foo' => 'bar5'
@@ -120,8 +127,11 @@ class InterimTest extends MockeryTestCase
                 'interimEnd' => [
                     'bar3'
                 ],
-                'interimAuthVehicles' => [
+                'interimAuthHgvVehicles' => [
                     'bar4'
+                ],
+                'interimAuthLgvVehicles' => [
+                    'bar4.1'
                 ],
                 'interimAuthTrailers' => [
                     'bar5'

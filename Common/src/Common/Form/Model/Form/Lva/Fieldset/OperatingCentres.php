@@ -16,45 +16,36 @@ class OperatingCentres
     public $version = null;
 
     /**
-     * @Form\Required(true)
-     * @Form\Type("Text")
-     * @Form\Attributes({"class":"short","id":"totAuthVehicles","required":false,"pattern":"\d*"})
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\OperatingCentresTotAuthHgvVehicles")
      * @Form\Options({
-     *     "label": "application_operating-centres_authorisation.data.totAuthVehicles",
-     *     "label_attributes": {"class": "form-element__question"},
-     *     "short-label": "totAuthVehicles",
-     *     "error-message": "operatingCentres_totAuthVehicles-error",
+     *     "label": "application_operating-centres_authorisation.data.totAuthHgvVehiclesFieldset.hgvs-label",
      *     "hint": "markup-operating-centres-authorisation",
      *     "hint-position": "below"
      * })
-     * @Form\Validator({"name": "Digits", "options": {"break_chain_on_failure": true}})
-     * @Form\Validator({"name": "Between", "options": {"min":1, "max": 1000000}})
-     * @Form\Filter({"name":"\Laminas\Filter\ToNull", "options":{"type":"string"}})
      */
-    public $totAuthVehicles = null;
+    public $totAuthHgvVehiclesFieldset = null;
 
     /**
-     * @Form\Required(true)
-     * @Form\Type("Text")
-     * @Form\Attributes({"class":"short","id":"totAuthTrailers","required":false,"pattern":"\d*"})
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\OperatingCentresTotAuthLgvVehicles")
      * @Form\Options({
-     *     "label": "application_operating-centres_authorisation.data.totAuthTrailers",
-     *     "label_attributes": {"class": "form-element__question"},
-     *     "short-label": "totAuthTrailers",
-     *     "error-message": "operatingCentres_totAuthTrailers-error"
+     *     "label": "application_operating-centres_authorisation.data.totAuthLgvVehiclesFieldset.label"
      * })
-     * @Form\Validator({"name": "Digits"})
-     * @Form\Validator({"name": "Between", "options": {"min":0, "max": 1000000}})
-     * @Form\Filter({"name":"\Laminas\Filter\ToNull", "options":{"type":"string"}})
      */
-    public $totAuthTrailers = null;
+    public $totAuthLgvVehiclesFieldset = null;
 
     /**
-     * @Form\Attributes({"class":"short","id":"totCommunityLicences"})
-     * @Form\Options({"label": "application_operating-centres_authorisation.data.totCommunityLicences"})
-     * @Form\Validator({"name": "Digits"})
-     * @Form\Validator({"name": "Between", "options": {"min":0, "max": 1000000}})
-     * @Form\Filter({"name":"\Laminas\Filter\ToNull", "options": {"type":"string"} })
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\OperatingCentresTotAuthTrailers")
+     * @Form\Options({
+     *     "label": "application_operating-centres_authorisation.data.totAuthTrailersFieldset.label"
+     * })
      */
-    public $totCommunityLicences = null;
+    public $totAuthTrailersFieldset = null;
+
+    /**
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\OperatingCentresTotCommunityLicences")
+     * @Form\Options({
+     *     "label": "application_operating-centres_authorisation.data.totCommunityLicencesFieldset.label"
+     * })
+     */
+    public $totCommunityLicencesFieldset = null;
 }
