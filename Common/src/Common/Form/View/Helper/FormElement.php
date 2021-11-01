@@ -268,7 +268,7 @@ class FormElement extends LaminasFormElement
         }
 
         $hint = $this->getView()->translate($element->getOption('hint-below'));
-        $customClass = $element->getOption('hint-class');
+        $customClass = $element->getOption('hint-below-class') ?? $element->getOption('hint-class');
         $class = ($customClass === null) ? $this->hintClass : $customClass;
         return sprintf(self::$format, $markup, $class, $hint);
     }

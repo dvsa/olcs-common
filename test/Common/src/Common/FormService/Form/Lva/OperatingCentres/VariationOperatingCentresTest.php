@@ -19,6 +19,7 @@ use Laminas\Form\Fieldset;
 use Laminas\Form\Form;
 use Laminas\Http\Request;
 use Common\Service\Helper\FormHelperService;
+use Common\RefData;
 
 /**
  * Variation Operating Centres Test
@@ -82,9 +83,12 @@ class VariationOperatingCentresTest extends MockeryTestCase
             'canHaveCommunityLicences' => true,
             'isPsv' => false,
             'licence' => [
-                'totAuthVehicles' => 11,
+                'totAuthHgvVehicles' => 11,
+                'totAuthLgvVehicles' => 10,
                 'totAuthTrailers' => 12
-            ]
+            ],
+            'licenceType' => ['id' => RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL],
+            'isEligibleForLgv' => true,
         ];
 
         $this->mockPopulateFormTable([]);
@@ -97,6 +101,9 @@ class VariationOperatingCentresTest extends MockeryTestCase
             ->with($this->form, 'dataTrafficArea');
 
         $this->translator->shouldReceive('translateReplace')
+            ->with('current-authorisation-hint', [10])
+            ->andReturn('current-authorisation-hint-10')
+            ->shouldReceive('translateReplace')
             ->with('current-authorisation-hint', [11])
             ->andReturn('current-authorisation-hint-11')
             ->shouldReceive('translateReplace')
@@ -105,28 +112,48 @@ class VariationOperatingCentresTest extends MockeryTestCase
 
         $data = m::mock();
         $data->shouldReceive('has')
-            ->with('totAuthVehicles')
+            ->with('totAuthLgvVehiclesFieldset')
             ->andReturn(true)
             ->shouldReceive('has')
-            ->with('totAuthTrailers')
+            ->with('totAuthHgvVehiclesFieldset')
             ->andReturn(true)
             ->shouldReceive('has')
-            ->with('totCommunityLicences')
+            ->with('totAuthTrailersFieldset')
+            ->andReturn(true)
+            ->shouldReceive('has')
+            ->with('totCommunityLicencesFieldset')
             ->andReturn(true)
             ->shouldReceive('get')
-            ->with('totAuthVehicles')
+            ->with('totAuthLgvVehiclesFieldset')
             ->andReturn(
                 m::mock()
-                ->shouldReceive('setOption')
-                ->with('hint', 'current-authorisation-hint-11')
-                ->getMock()
+                    ->shouldReceive('get')
+                    ->with('totAuthLgvVehicles')
+                    ->andReturn(
+                        m::mock()->shouldReceive('setOption')->with('hint-below', 'current-authorisation-hint-10')->getMock()
+                    )
+                    ->getMock()
             )
             ->shouldReceive('get')
-            ->with('totAuthTrailers')
+            ->with('totAuthHgvVehiclesFieldset')
             ->andReturn(
                 m::mock()
-                    ->shouldReceive('setOption')
-                    ->with('hint', 'current-authorisation-hint-12')
+                    ->shouldReceive('get')
+                    ->with('totAuthHgvVehicles')
+                    ->andReturn(
+                        m::mock()->shouldReceive('setOption')->with('hint-below', 'current-authorisation-hint-11')->getMock()
+                    )
+                    ->getMock()
+            )
+            ->shouldReceive('get')
+            ->with('totAuthTrailersFieldset')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('get')
+                    ->with('totAuthTrailers')
+                    ->andReturn(
+                        m::mock()->shouldReceive('setOption')->with('hint-below', 'current-authorisation-hint-12')->getMock()
+                    )
                     ->getMock()
             );
 
@@ -135,7 +162,7 @@ class VariationOperatingCentresTest extends MockeryTestCase
             ->andReturn($data);
 
         $this->mockFormHelper->shouldReceive('disableElement')
-            ->with($this->form, 'data->totCommunityLicences');
+            ->with($this->form, 'data->totCommunityLicencesFieldset->totCommunityLicences');
 
         $form = $this->sut->getForm($params);
         $this->assertSame($this->form, $form);

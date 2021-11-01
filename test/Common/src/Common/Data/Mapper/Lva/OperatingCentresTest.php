@@ -45,7 +45,11 @@ class OperatingCentresTest extends MockeryTestCase
                         'enforcementArea' => [
                             'id' => 123
                         ]
-                    ]
+                    ],
+                    'totAuthHgvVehicles' => null,
+                    'totAuthLgvVehicles' => 0,
+                    'totAuthTrailers' => 1,
+                    'totCommunityLicences' => 2,
                 ],
                 'expected' => [
                     'data' => [
@@ -54,7 +58,11 @@ class OperatingCentresTest extends MockeryTestCase
                             'enforcementArea' => [
                                 'id' => 123
                             ]
-                        ]
+                        ],
+                        'totAuthHgvVehiclesFieldset' => ['totAuthHgvVehicles' => null],
+                        'totAuthLgvVehiclesFieldset' => ['totAuthLgvVehicles' => 0],
+                        'totAuthTrailersFieldset' => ['totAuthTrailers' => 1],
+                        'totCommunityLicencesFieldset' => ['totCommunityLicences' => 2],
                     ],
                     'dataTrafficArea' => [
                         'trafficArea' => null,
@@ -70,7 +78,11 @@ class OperatingCentresTest extends MockeryTestCase
                     ],
                     'licence' => [
                         'trafficArea' => ['id' => 'X']
-                    ]
+                    ],
+                    'totAuthHgvVehicles' => null,
+                    'totAuthLgvVehicles' => 0,
+                    'totAuthTrailers' => 1,
+                    'totCommunityLicences' => 2,
                 ],
                 [
                     'data' => [
@@ -80,7 +92,11 @@ class OperatingCentresTest extends MockeryTestCase
                         ],
                         'licence' => [
                             'trafficArea' => ['id' => 'X']
-                        ]
+                        ],
+                        'totAuthHgvVehiclesFieldset' => ['totAuthHgvVehicles' => null],
+                        'totAuthLgvVehiclesFieldset' => ['totAuthLgvVehicles' => 0],
+                        'totAuthTrailersFieldset' => ['totAuthTrailers' => 1],
+                        'totCommunityLicencesFieldset' => ['totCommunityLicences' => 2],
                     ],
                     'dataTrafficArea' => [
                         'trafficArea' => 'X',
@@ -94,7 +110,11 @@ class OperatingCentresTest extends MockeryTestCase
                     'enforcementArea' => [
                         'id' => 123
                     ],
-                    'trafficArea' => ['id' => 'X']
+                    'trafficArea' => ['id' => 'X'],
+                    'totAuthHgvVehicles' => null,
+                    'totAuthLgvVehicles' => 0,
+                    'totAuthTrailers' => 1,
+                    'totCommunityLicences' => 2,
                 ],
                 [
                     'data' => [
@@ -102,7 +122,11 @@ class OperatingCentresTest extends MockeryTestCase
                         'enforcementArea' => [
                             'id' => 123
                         ],
-                        'trafficArea' => ['id' => 'X']
+                        'trafficArea' => ['id' => 'X'],
+                        'totAuthHgvVehiclesFieldset' => ['totAuthHgvVehicles' => null],
+                        'totAuthLgvVehiclesFieldset' => ['totAuthLgvVehicles' => 0],
+                        'totAuthTrailersFieldset' => ['totAuthTrailers' => 1],
+                        'totCommunityLicencesFieldset' => ['totCommunityLicences' => 2],
                     ],
                     'dataTrafficArea' => [
                         'trafficArea' => 'X',
@@ -117,7 +141,11 @@ class OperatingCentresTest extends MockeryTestCase
     {
         $formData = [
             'data' => [
-                'foo' => 'bar'
+                'foo' => 'bar',
+                'totAuthHgvVehiclesFieldset' => ['totAuthHgvVehicles' => null],
+                'totAuthLgvVehiclesFieldset' => ['totAuthLgvVehicles' => 0],
+                'totAuthTrailersFieldset' => ['totAuthTrailers' => 1],
+                'totCommunityLicencesFieldset' => ['totCommunityLicences' => 2],
             ],
             'dataTrafficArea' => [
                 'bar' => 'cake'
@@ -126,7 +154,11 @@ class OperatingCentresTest extends MockeryTestCase
 
         $expected = [
             'foo' => 'bar',
-            'bar' => 'cake'
+            'bar' => 'cake',
+            'totAuthHgvVehicles' => null,
+            'totAuthLgvVehicles' => 0,
+            'totAuthTrailers' => 1,
+            'totCommunityLicences' => 2,
         ];
 
         $this->assertEquals($expected, OperatingCentres::mapFromForm($formData));
@@ -136,14 +168,25 @@ class OperatingCentresTest extends MockeryTestCase
     {
         $expectedMessages = [
             'data' => [
-                'totCommunityLicences' => [
-                    'bar1'
+                'totCommunityLicencesFieldset' => [
+                    'totCommunityLicences' => [
+                        'bar1'
+                    ],
                 ],
-                'totAuthVehicles' => [
-                    'bar2'
+                'totAuthHgvVehiclesFieldset' => [
+                    'totAuthHgvVehicles' => [
+                        'bar2'
+                    ],
                 ],
-                'totAuthTrailers' => [
-                    'bar3'
+                'totAuthLgvVehiclesFieldset' => [
+                    'totAuthLgvVehicles' => [
+                        'bar3'
+                    ],
+                ],
+                'totAuthTrailersFieldset' => [
+                    'totAuthTrailers' => [
+                        'bar4'
+                    ],
                 ],
             ],
             'table' => [
@@ -162,11 +205,14 @@ class OperatingCentresTest extends MockeryTestCase
             'totCommunityLicences' => [
                 'foo' => 'bar1'
             ],
-            'totAuthVehicles' => [
+            'totAuthHgvVehicles' => [
                 'foo' => 'bar2'
             ],
-            'totAuthTrailers' => [
+            'totAuthLgvVehicles' => [
                 'foo' => 'bar3'
+            ],
+            'totAuthTrailers' => [
+                'foo' => 'bar4'
             ],
             'operatingCentres' => [
                 'foo' => 'bar7'
