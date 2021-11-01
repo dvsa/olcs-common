@@ -164,13 +164,13 @@ abstract class AbstractTypeOfLicence extends AbstractLvaFormService
         $fieldset = $form->get('type-of-licence');
         $licenceTypeFieldset = $fieldset->get('licence-type');
 
+        $operatorLocation = $fieldset->get('operator-location')->getValue();
         $operatorType = $fieldset->get('operator-type')->getValue();
         $licenceType = $licenceTypeFieldset->get('licence-type')->getValue();
         $vehicleType = $licenceTypeFieldset->get('ltyp_siContent')->get('vehicle-type')->getValue();
 
-        if ($operatorType == RefData::LICENCE_CATEGORY_GOODS_VEHICLE &&
-            $licenceType == RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
-        ) {
+        $isGoods = $operatorLocation == 'Y' || $operatorType == RefData::LICENCE_CATEGORY_GOODS_VEHICLE;
+        if ($isGoods && $licenceType == RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL) {
             if ($vehicleType != RefData::APP_VEHICLE_TYPE_LGV) {
                 $form->getInputFilter()->get('type-of-licence')
                     ->get('licence-type')

@@ -42,7 +42,6 @@ OLCS.ready(function () {
                     return (
                         niFlag.filter(':checked').val() === 'Y' ||
                         niFlag.filter(':checked').length && operatorType.filter(':checked').length
-
                     );
                 },
                 'licence-type=ltyp_sr': function () {
@@ -62,17 +61,18 @@ OLCS.ready(function () {
                     return operatorType.filter(':checked').val() === 'lcat_psv';
                 },
                 'selector:div[id$=\'ltyp_si_content\']': function() {
-                    return (
-                        operatorType.filter(':checked').val() == 'lcat_gv' &&
-                        licenceType.filter(':checked').val() == 'ltyp_si'
-                    );
+                    var isGoods = niFlag.filter(':checked').val() === 'Y' ||
+                        operatorType.filter(':checked').val() == 'lcat_gv';
+
+                    return isGoods && licenceType.filter(':checked').val() == 'ltyp_si';
                 },
                 '#lgv-declaration': function() {
-                    return (
-                        operatorType.filter(':checked').val() == 'lcat_gv' &&
+                    var isGoods = niFlag.filter(':checked').val() === 'Y' ||
+                        operatorType.filter(':checked').val() == 'lcat_gv';
+
+                    return isGoods &&
                         licenceType.filter(':checked').val() == 'ltyp_si' &&
-                        vehicleType.filter(':checked').val() == 'app_veh_type_lgv'
-                    );
+                        vehicleType.filter(':checked').val() == 'app_veh_type_lgv';
                 }
             }
         },
