@@ -41,11 +41,11 @@ class ApplicationBusinessTypeTest extends MockeryTestCase
         $this->sut->setFormHelper($this->fh);
     }
 
-    /**
-     * @dataProvider trueFalse
-     */
     public function testGetForm()
     {
+        $hasInforceLicences = true;
+        $hasOrganisationSubmittedLicenceApplication = false;
+
         $mockForm = m::mock(Form::class);
 
         $this->fh->shouldReceive('createForm')
@@ -60,20 +60,8 @@ class ApplicationBusinessTypeTest extends MockeryTestCase
 
         $this->fsm->setService('lva-application', $mockApplication);
 
-        $form = $this->sut->getForm(false);
+        $form = $this->sut->getForm($hasInforceLicences, $hasOrganisationSubmittedLicenceApplication);
 
         $this->assertSame($mockForm, $form);
-    }
-
-    public function trueFalse()
-    {
-        return [
-            [
-                true
-            ],
-            [
-                false
-            ]
-        ];
     }
 }

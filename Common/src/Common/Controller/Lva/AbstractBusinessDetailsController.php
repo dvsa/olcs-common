@@ -11,6 +11,7 @@ use Dvsa\Olcs\Transfer\Query\CompanySubsidiary\CompanySubsidiary;
 use Dvsa\Olcs\Transfer\Query\Licence\BusinessDetails;
 use Dvsa\Olcs\Transfer\Query\QueryInterface;
 use Laminas\Form\Form;
+use ZfcRbac\Identity\IdentityProviderInterface;
 
 /**
  * Shared logic between Business Details Controller
@@ -45,6 +46,10 @@ abstract class AbstractBusinessDetailsController extends AbstractController
 
         $orgData = $response->getResult();
 
+        $identityProvider = $this->getServiceLocator()->get(IdentityProviderInterface::class);
+        assert($identityProvider instanceof IdentityProviderInterface);
+        $hasOrganisationSubmittedLicenceApplication = $identityProvider->getIdentity()->getUserData()['hasOrganisationSubmittedLicenceApplication'] ?? false;
+
         if ($request->isPost()) {
             $data = $this->getFormPostData($orgData);
         } else {
@@ -56,7 +61,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         $form = $this->getServiceLocator()
             ->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-' . $this->section)
-            ->getForm($orgData['type']['id'], $orgData['hasInforceLicences'])
+            ->getForm($orgData['type']['id'], $orgData['hasInforceLicences'], $hasOrganisationSubmittedLicenceApplication)
             ->setData($data);
         // need to reset Input Filter defaults after the data has been set on the form
         $form->attachInputFilterDefaults($form->getInputFilter(), $form);

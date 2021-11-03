@@ -39,7 +39,8 @@ class VariationBusinessDetailsTest extends MockeryTestCase
     {
         // Params
         $orgType = RefData::ORG_TYPE_REGISTERED_COMPANY;
-        $orgId = 111;
+        $hasInforceLicences = true;
+        $hasOrganisationSubmittedLicenceApplication = false;
 
         // Mocks
         $mockForm = m::mock();
@@ -55,7 +56,7 @@ class VariationBusinessDetailsTest extends MockeryTestCase
             ->with('Lva\BusinessDetails')
             ->andReturn($mockForm);
 
-        $form = $this->sut->getForm($orgType, $orgId);
+        $form = $this->sut->getForm($orgType, $hasInforceLicences, $hasOrganisationSubmittedLicenceApplication);
 
         $this->assertSame($mockForm, $form);
     }

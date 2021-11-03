@@ -11,6 +11,7 @@ use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 use Common\Data\Mapper\Lva\BusinessType;
 use Dvsa\Olcs\Transfer\Command\Organisation\UpdateBusinessType;
 use Dvsa\Olcs\Transfer\Query\Organisation\Organisation;
+use ZfcRbac\Identity\IdentityProviderInterface;
 
 /**
  * Shared logic between Business type controllers
@@ -41,10 +42,14 @@ abstract class AbstractBusinessTypeController extends AbstractController impleme
 
         $hasInForceLicences = $result['hasInforceLicences'];
 
+        $identityProvider = $this->getServiceLocator()->get(IdentityProviderInterface::class);
+        assert($identityProvider instanceof IdentityProviderInterface);
+        $hasOrganisationSubmittedLicenceApplication = $identityProvider->getIdentity()->getUserData()['hasOrganisationSubmittedLicenceApplication'] ?? false;
+
         /** @var \Laminas\Form\Form $form */
         $form = $this->getServiceLocator()->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-business_type')
-            ->getForm($hasInForceLicences);
+            ->getForm($hasInForceLicences, $hasOrganisationSubmittedLicenceApplication);
 
         // If we haven't posted
         if ($this->getRequest()->isPost() === false) {
