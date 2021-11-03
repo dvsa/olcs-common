@@ -19,12 +19,13 @@ abstract class AbstractBusinessType extends AbstractLvaFormService
 {
     protected $lva;
 
-    public function getForm($inForceLicences)
+    public function getForm($inForceLicences, bool $hasOrganisationSubmittedLicenceApplication)
     {
         $form = $this->getFormHelper()->createForm('Lva\BusinessType');
 
         $params = [
-            'inForceLicences' => $inForceLicences
+            'inForceLicences' => $inForceLicences,
+            'hasOrganisationSubmittedLicenceApplication' => $hasOrganisationSubmittedLicenceApplication,
         ];
 
         $this->alterForm($form, $params);

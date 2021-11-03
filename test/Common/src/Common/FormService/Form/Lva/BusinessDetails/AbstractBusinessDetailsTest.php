@@ -35,7 +35,8 @@ class AbstractBusinessDetailsTest extends MockeryTestCase
     {
         // Params
         $orgType = RefData::ORG_TYPE_REGISTERED_COMPANY;
-        $orgId = 111;
+        $hasInforceLicences = true;
+        $hasOrganisationSubmittedLicenceApplication = false;
 
         // Mocks
         $mockForm = m::mock();
@@ -45,7 +46,7 @@ class AbstractBusinessDetailsTest extends MockeryTestCase
             ->with('Lva\BusinessDetails')
             ->andReturn($mockForm);
 
-        $form = $this->sut->getForm($orgType, $orgId);
+        $form = $this->sut->getForm($orgType, $hasInforceLicences, $hasOrganisationSubmittedLicenceApplication);
 
         $this->assertSame($mockForm, $form);
     }
@@ -54,7 +55,8 @@ class AbstractBusinessDetailsTest extends MockeryTestCase
     {
         // Params
         $orgType = RefData::ORG_TYPE_LLP;
-        $orgId = 111;
+        $hasInforceLicences = true;
+        $hasOrganisationSubmittedLicenceApplication = false;
 
         // Mocks
         $mockForm = m::mock();
@@ -64,7 +66,7 @@ class AbstractBusinessDetailsTest extends MockeryTestCase
             ->with('Lva\BusinessDetails')
             ->andReturn($mockForm);
 
-        $form = $this->sut->getForm($orgType, $orgId);
+        $form = $this->sut->getForm($orgType, $hasInforceLicences, $hasOrganisationSubmittedLicenceApplication);
 
         $this->assertSame($mockForm, $form);
     }
@@ -73,7 +75,8 @@ class AbstractBusinessDetailsTest extends MockeryTestCase
     {
         // Params
         $orgType = RefData::ORG_TYPE_SOLE_TRADER;
-        $orgId = 111;
+        $hasInforceLicences = true;
+        $hasOrganisationSubmittedLicenceApplication = false;
 
         // Mocks
         $mockForm = m::mock();
@@ -95,7 +98,7 @@ class AbstractBusinessDetailsTest extends MockeryTestCase
             ->with($mockForm, 'data->name')
             ->andReturnSelf();
 
-        $form = $this->sut->getForm($orgType, $orgId);
+        $form = $this->sut->getForm($orgType, $hasInforceLicences, $hasOrganisationSubmittedLicenceApplication);
 
         $this->assertSame($mockForm, $form);
     }
@@ -104,7 +107,8 @@ class AbstractBusinessDetailsTest extends MockeryTestCase
     {
         // Params
         $orgType = RefData::ORG_TYPE_PARTNERSHIP;
-        $orgId = 111;
+        $hasInforceLicences = true;
+        $hasOrganisationSubmittedLicenceApplication = false;
 
         // Mocks
         $mockForm = m::mock();
@@ -130,7 +134,7 @@ class AbstractBusinessDetailsTest extends MockeryTestCase
             ->shouldReceive('alterElementLabel')
             ->with($mockName, '.partnership', FormHelperService::ALTER_LABEL_APPEND);
 
-        $form = $this->sut->getForm($orgType, $orgId);
+        $form = $this->sut->getForm($orgType, $hasInforceLicences, $hasOrganisationSubmittedLicenceApplication);
 
         $this->assertSame($mockForm, $form);
     }
@@ -139,7 +143,8 @@ class AbstractBusinessDetailsTest extends MockeryTestCase
     {
         // Params
         $orgType = RefData::ORG_TYPE_OTHER;
-        $orgId = 111;
+        $hasInforceLicences = true;
+        $hasOrganisationSubmittedLicenceApplication = false;
 
         // Mocks
         $mockForm = m::mock();
@@ -168,7 +173,7 @@ class AbstractBusinessDetailsTest extends MockeryTestCase
             ->shouldReceive('alterElementLabel')
             ->with($mockName, '.other', FormHelperService::ALTER_LABEL_APPEND);
 
-        $form = $this->sut->getForm($orgType, $orgId);
+        $form = $this->sut->getForm($orgType, $hasInforceLicences, $hasOrganisationSubmittedLicenceApplication);
 
         $this->assertSame($mockForm, $form);
     }
