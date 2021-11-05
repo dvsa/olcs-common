@@ -61,6 +61,9 @@ abstract class AbstractBusinessTypeController extends AbstractController impleme
         }
 
         $postData = (array)$this->getRequest()->getPost();
+        if ($hasOrganisationSubmittedLicenceApplication) {
+            $postData['data']['type'] = BusinessType::mapFromResult($result)['data']['type'];
+        }
 
         // If this is set, then we have confirmed
         if (isset($postData['custom'])) {
