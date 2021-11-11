@@ -2,6 +2,7 @@
 
 namespace Common;
 
+use Common\Auth\Listener\RefreshJWTListener;
 use Common\Exception\ResourceNotFoundException;
 use Common\Preference\LanguageListener;
 use Common\Service\Cqrs\Exception\AccessDeniedException;
@@ -109,6 +110,9 @@ class Module
         $events->attach($sm->get(\ZfcRbac\View\Strategy\UnauthorizedStrategy::class));
         //  CSRF token check
         $events->attach(MvcEvent::EVENT_DISPATCH, [$this, 'validateCsrfToken'], 100);
+
+        // JWT Refresh Listener
+        $events->attach($sm->get(RefreshJWTListener::class));
 
         // On dispatch error ot certain CQRS exceptions then change page to a 404
         $events->attach(

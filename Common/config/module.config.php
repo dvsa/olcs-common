@@ -370,7 +370,8 @@ return array(
             AuthenticationServiceInterface::class => AuthenticationServiceFactory::class,
             CommandAdapter::class => CommandAdapterFactory::class,
             \Laminas\Authentication\Storage\Session::class => \Common\Auth\SessionFactory::class,
-            IdentityProviderInterface::class => \Common\Rbac\IdentityProviderFactory::class
+            IdentityProviderInterface::class => \Common\Rbac\IdentityProviderFactory::class,
+            Common\Auth\Listener\RefreshJWTListener::class => Common\Auth\Listener\RefreshJWTListenerFactory::class,
         )
     ),
     'file_uploader' => array(
