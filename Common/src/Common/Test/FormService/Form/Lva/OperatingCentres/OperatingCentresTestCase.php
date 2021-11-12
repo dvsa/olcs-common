@@ -8,6 +8,7 @@ use Olcs\TestHelpers\MockeryTestCase;
 use Olcs\TestHelpers\Service\MocksServicesTrait;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Mvc\Service\TranslatorServiceFactory;
+use Common\RefData;
 use Common\Service\Table\TableFactory;
 use Common\Service\Table\TableBuilder;
 use ZfcRbac\Service\AuthorizationService;
@@ -218,6 +219,7 @@ abstract class OperatingCentresTestCase extends MockeryTestCase
             'isPsv' => false,
             'totAuthLgvVehicles' => 0,
             'isEligibleForLgv' => false,
+            'vehicleType' => ['id' => RefData::APP_VEHICLE_TYPE_HGV],
         ];
     }
 
@@ -226,7 +228,13 @@ abstract class OperatingCentresTestCase extends MockeryTestCase
      */
     protected function paramsForLicenceThatIsEligibleForLgvs(): array
     {
-        return array_merge($this->paramsForLicence(), ['isEligibleForLgv' => true]);
+        return array_merge(
+            $this->paramsForLicence(),
+            [
+                'isEligibleForLgv' => true,
+                'vehicleType' => ['id' => RefData::APP_VEHICLE_TYPE_MIXED]
+            ]
+        );
     }
 
     /**

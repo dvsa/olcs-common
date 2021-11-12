@@ -7,8 +7,10 @@ namespace CommonTest\FormService\Form\Lva\OperatingCentres;
 use Common\FormService\Form\Lva\OperatingCentres\AbstractOperatingCentres;
 use Mockery as m;
 use Common\RefData;
+use Common\Form\Elements\Validators\TableRequiredValidator;
 use Common\Form\Form;
 use Common\Test\FormService\Form\Lva\OperatingCentres\OperatingCentresTestCase;
+use Laminas\Validator\Between;
 
 /**
  * @covers \Common\FormService\Form\Lva\OperatingCentres\AbstractOperatingCentres
@@ -40,7 +42,7 @@ class AbstractOperatingCentresTest extends OperatingCentresTestCase
             'niFlag' => 'N',
             'possibleEnforcementAreas' => ['A', 'B'],
             'licenceType' => ['id' => RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL],
-            'isEligibleForLgv' => true,
+            'vehicleType' => ['id' => RefData::APP_VEHICLE_TYPE_MIXED],
         ];
 
         $mockFieldSet = m::mock();
@@ -79,7 +81,7 @@ class AbstractOperatingCentresTest extends OperatingCentresTestCase
             'niFlag' => 'Y',
             'possibleEnforcementAreas' => ['A', 'B'],
             'licenceType' => ['id' => RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL],
-            'isEligibleForLgv' => true,
+            'vehicleType' => ['id' => RefData::APP_VEHICLE_TYPE_MIXED],
         ];
 
         $mockFieldSet = m::mock();
@@ -123,13 +125,90 @@ class AbstractOperatingCentresTest extends OperatingCentresTestCase
             'possibleTrafficAreas' => ['A', 'B'],
             'possibleEnforcementAreas' => ['A', 'B'],
             'licenceType' => ['id' => RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL],
-            'isEligibleForLgv' => true,
+            'vehicleType' => ['id' => RefData::APP_VEHICLE_TYPE_MIXED],
         ];
 
         $mockFormHelper = m::mock();
         $this->sut->shouldReceive('getFormHelper')->andReturn($mockFormHelper);
 
         $mockFormHelper->shouldReceive('getValidator->setMessage');
+
+        $mockFieldSet = m::mock();
+        $mockForm->shouldReceive('get')->with('dataTrafficArea')->once()->andReturn($mockFieldSet);
+        $mockFieldSet->shouldReceive('remove')->with('trafficAreaSet')->once();
+
+        $mockFieldSet->shouldReceive('get')->with('trafficArea')->once()->andReturn(
+            m::mock()->shouldReceive('setValueOptions')->with(['A', 'B'])->once()->getMock()
+        );
+        $mockFieldSet->shouldReceive('get')->with('enforcementArea')->once()->andReturn(
+            m::mock()->shouldReceive('setValueOptions')->with(['A', 'B'])->once()->getMock()
+        );
+
+        $this->sut->alterForm($mockForm, $params);
+    }
+
+    public function testAlterFormForLgv()
+    {
+        $this->sut = m::mock(AbstractOperatingCentres::class);
+        $mockForm = m::mock(\Common\Form\Form::class);
+
+        $params = [
+            'canHaveSchedule41' => true,
+            'canHaveCommunityLicences' => true,
+            'isPsv' => false,
+            'operatingCentres' => [],
+            'trafficArea' => null,
+            'niFlag' => 'N',
+            'possibleTrafficAreas' => ['A', 'B'],
+            'possibleEnforcementAreas' => ['A', 'B'],
+            'licenceType' => ['id' => RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL],
+            'vehicleType' => ['id' => RefData::APP_VEHICLE_TYPE_LGV],
+        ];
+
+        $lgvBetweenValidator = m::mock(Between::class);
+        $lgvBetweenValidator->shouldReceive('setMin')
+            ->with(1)
+            ->once()
+            ->shouldReceive('getMax')
+            ->withNoArgs()
+            ->once()
+            ->andReturn(10);
+
+        $comLicBetweenValidator = m::mock(Between::class);
+        $comLicBetweenValidator->shouldReceive('setMax')
+                ->with(10)
+                ->once();
+
+        $tableRequiredValidator = m::mock(TableRequiredValidator::class);
+        $tableRequiredValidator->shouldReceive('setMessage')
+            ->with('OperatingCentreNoOfOperatingCentres.required', 'required')
+            ->once();
+
+        $mockFormHelper = m::mock();
+        $mockFormHelper
+            ->shouldReceive('remove')
+            ->with($mockForm, 'table')
+            ->once()
+            ->shouldReceive('remove')
+            ->with($mockForm, 'data->totAuthHgvVehiclesFieldset')
+            ->once()
+            ->shouldReceive('remove')
+            ->with($mockForm, 'data->totAuthTrailersFieldset')
+            ->once()
+            ->shouldReceive('getValidator')
+            ->with($mockForm, 'data->totAuthLgvVehiclesFieldset->totAuthLgvVehicles', Between::class)
+            ->once()
+            ->andReturn($lgvBetweenValidator)
+            ->shouldReceive('getValidator')
+            ->with($mockForm, 'data->totCommunityLicencesFieldset->totCommunityLicences', Between::class)
+            ->once()
+            ->andReturn($comLicBetweenValidator)
+            ->shouldReceive('getValidator')
+            ->with($mockForm, 'table->rows', 'Common\Form\Elements\Validators\TableRequiredValidator')
+            ->once()
+            ->andReturn($tableRequiredValidator);
+
+        $this->sut->shouldReceive('getFormHelper')->andReturn($mockFormHelper);
 
         $mockFieldSet = m::mock();
         $mockForm->shouldReceive('get')->with('dataTrafficArea')->once()->andReturn($mockFieldSet);

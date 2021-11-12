@@ -63,7 +63,7 @@ class LicenceOperatingCentresTest extends LicenceOperatingCentresTestCase
             'canHaveCommunityLicences' => true,
             'isPsv' => false,
             'licenceType' => ['id' => RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL],
-            'isEligibleForLgv' => true,
+            'vehicleType' => ['id' => RefData::APP_VEHICLE_TYPE_MIXED],
             'totAuthLgvVehicles' => 0,
         ];
 

@@ -88,7 +88,7 @@ class VariationOperatingCentresTest extends MockeryTestCase
                 'totAuthTrailers' => 12
             ],
             'licenceType' => ['id' => RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL],
-            'isEligibleForLgv' => true,
+            'vehicleType' => ['id' => RefData::APP_VEHICLE_TYPE_MIXED],
         ];
 
         $this->mockPopulateFormTable([]);
