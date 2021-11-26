@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace CommonTest\Rbac;
 
+use Common\Auth\Service\RefreshTokenService;
 use Common\Rbac\JWTIdentityProvider;
 use Common\Rbac\User;
 use Common\Service\Cqrs\Query\QuerySender;
@@ -180,6 +181,68 @@ class JWTIdentityProviderTest extends MockeryTestCase
     /**
      * @test
      */
+    public function getIdentity_ShouldRefreshTokens_WhenRequired_AndCacheExists()
+    {
+        // Setup
+        $this->setupSut();
+
+        $session = $this->session();
+        $session->allows('offsetGet')->with('identity')->andReturnUsing(function () {
+            $user = new User();
+            $user->setId(1);
+            $user->setUsername('username');
+            return $user;
+        });
+        $session->allows('offsetGet')->with('storage')->andReturn(['Token' => ['refreshToken' => 'abc1234']]);
+
+        $cacheService = $this->cacheService();
+        $cacheService->allows('hasCustomItem')->andReturnTrue();
+
+        $cacheService->expects('getCustomItem')->andReturn(static::DATA_WITHOUT_ROLES)->once();
+
+        // Expectations
+        $refreshService = $this->refreshTokenService();
+        $refreshService->expects('isRefreshRequired')->andReturnTrue();
+
+        $session->expects('offsetSet')->with('storage', []);
+
+        // Execute
+        $this->sut->getIdentity();
+    }
+
+    /**
+     * @test
+     */
+    public function getIdentity_ShouldRefreshTokens_WhenRequired_AndCacheDoesntExist()
+    {
+        // Setup
+        $this->setupSut();
+
+        $session = $this->session();
+        $session->allows('offsetGet')->with('identity')->andReturnUsing(function () {
+            $user = new User();
+            $user->setId(1);
+            $user->setUsername('username');
+            return $user;
+        });
+        $session->allows('offsetGet')->with('storage')->andReturn(['Token' => ['refreshToken' => 'abc1234']]);
+
+        $cacheService = $this->cacheService();
+        $cacheService->allows('hasCustomItem')->andReturnFalse();
+
+        // Expectations
+        $refreshService = $this->refreshTokenService();
+        $refreshService->expects('isRefreshRequired')->andReturnTrue();
+
+        $session->expects('offsetSet')->with('storage', []);
+
+        // Execute
+        $this->sut->getIdentity();
+    }
+
+    /**
+     * @test
+     */
     public function getIdentity_ShouldReturnExistingIdentity_WhenPresent()
     {
         // Setup
@@ -205,7 +268,8 @@ class JWTIdentityProviderTest extends MockeryTestCase
         $this->sut = new JWTIdentityProvider(
             $this->session(),
             $this->querySender(),
-            $this->cacheService()
+            $this->cacheService(),
+            $this->refreshTokenService()
         );
     }
 
@@ -254,6 +318,18 @@ class JWTIdentityProviderTest extends MockeryTestCase
         }
         $instance = $this->serviceManager->get(Container::class);
         return $instance;
+    }
+
+    /**
+     * @return MockInterface|RefreshTokenService
+     */
+    protected function refreshTokenService()
+    {
+        if (!$this->serviceManager->has(RefreshTokenService::class)) {
+            $instance = $this->setUpMockService(RefreshTokenService::class);
+            $this->serviceManager->setService(RefreshTokenService::class, $instance);
+        }
+        return $this->serviceManager->get(RefreshTokenService::class);
     }
 
     private function response(bool $isSuccess = false, array $result = []): Response

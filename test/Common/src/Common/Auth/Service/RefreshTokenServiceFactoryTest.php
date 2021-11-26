@@ -1,26 +1,24 @@
 <?php
 declare(strict_types=1);
 
-namespace CommonTest\Auth\Adapter;
+namespace CommonTest\Auth\Service;
 
-use Common\Auth\Adapter\CommandAdapter;
-use Common\Auth\Adapter\CommandAdapterFactory;
-use Common\Auth\Listener\RefreshJWTListener;
-use Common\Auth\Listener\RefreshJWTListenerFactory;
+use Common\Auth\Service\RefreshTokenService;
+use Common\Auth\Service\RefreshTokenServiceFactory;
 use Common\Service\Cqrs\Command\CommandSender;
 use Laminas\ServiceManager\ServiceManager;
+use Mockery as m;
 use Olcs\TestHelpers\MockeryTestCase;
 use Olcs\TestHelpers\Service\MocksServicesTrait;
-use Mockery as m;
 
-class RefreshJWTListenerFactoryTest extends MockeryTestCase
+class RefreshTokenServiceFactoryTest extends MockeryTestCase
 {
     use MocksServicesTrait;
 
     /**
-     * @var RefreshJWTListenerFactory
+     * @var RefreshTokenServiceFactory
      */
-    protected $sut;
+    protected RefreshTokenServiceFactory $sut;
 
     public function setUp(): void
     {
@@ -47,7 +45,7 @@ class RefreshJWTListenerFactoryTest extends MockeryTestCase
     public function createService_CallsInvoke()
     {
         // Setup
-        $this->sut = m::mock(CommandAdapterFactory::class)->makePartial();
+        $this->sut = m::mock(RefreshTokenServiceFactory::class)->makePartial();
 
         // Expectations
         $this->sut->expects('__invoke')->withArgs(function ($serviceManager, $requestedName) {
@@ -76,48 +74,25 @@ class RefreshJWTListenerFactoryTest extends MockeryTestCase
      * @test
      * @depends __invoke_IsCallable
      */
-    public function __invoke_ReturnsAnInstanceOfRefreshJWTListener()
+    public function __invoke_ReturnsAnInstanceOfRefreshTokenService()
     {
         // Setup
         $this->setUpSut();
-        $this->config(['auth' => ['session_name' => 'session']]);
 
         // Execute
         $result = $this->sut->__invoke($this->serviceManager(), null);
 
         // Assert
-        $this->assertInstanceOf(RefreshJWTListener::class, $result);
-    }
-
-    /**
-     * @test
-     * @depends __invoke_IsCallable
-     */
-    public function __invoke_ThrowsException_WhenConfigIsMissing()
-    {
-        // Setup
-        $this->setUpSut();
-        $this->config([]);
-
-        // Expectations
-        $this->expectException(\RuntimeException::class);
-
-        // Execute
-        $this->sut->__invoke($this->serviceManager(), null);
+        $this->assertInstanceOf(RefreshTokenService::class, $result);
     }
 
     protected function setUpSut(): void
     {
-        $this->sut = new RefreshJWTListenerFactory();
+        $this->sut = new RefreshTokenServiceFactory();
     }
 
     protected function setUpDefaultServices(ServiceManager $serviceManager)
     {
-        $this->serviceManager->setService('CommandSender', m::mock(CommandSender::class));
-    }
-
-    protected function config(array $config = [])
-    {
-        $this->serviceManager->setService('config', $config);
+        $serviceManager->setService('CommandSender', $this->setUpMockService(CommandSender::class));
     }
 }

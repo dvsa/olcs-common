@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace CommonTest\Rbac;
 
+use Common\Auth\Service\RefreshTokenService;
 use Common\Auth\SessionFactory;
 use Common\Rbac\JWTIdentityProvider;
 use Common\Rbac\JWTIdentityProviderFactory;
@@ -116,6 +117,7 @@ class JWTIdentityProviderFactoryTest extends MockeryTestCase
         $this->serviceManager->setService('QuerySender', $this->setUpMockService(QuerySender::class));
         $this->serviceManager->setService(CacheEncryption::class, $this->setUpMockService(CacheEncryption::class));
         $this->config();
+        $this->serviceManager->setService(RefreshTokenService::class, $this->setUpMockService(RefreshTokenService::class));
     }
 
     protected function config(array $config = [])
