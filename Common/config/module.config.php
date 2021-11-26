@@ -367,11 +367,12 @@ return array(
             'HtmlPurifier' => \Common\Service\Utility\HtmlPurifierFactory::class,
            \Common\Form\View\Helper\Extended\FormLabel::class => \Common\Form\View\Helper\Extended\FormLabelFactory::class,
             \Common\Form\Elements\Validators\Messages\FormElementMessageFormatter::class => \Common\Form\Elements\Validators\Messages\FormElementMessageFormatterFactory::class,
+
             AuthenticationServiceInterface::class => AuthenticationServiceFactory::class,
             CommandAdapter::class => CommandAdapterFactory::class,
             \Laminas\Authentication\Storage\Session::class => \Common\Auth\SessionFactory::class,
             IdentityProviderInterface::class => \Common\Rbac\IdentityProviderFactory::class,
-            Common\Auth\Listener\RefreshJWTListener::class => Common\Auth\Listener\RefreshJWTListenerFactory::class,
+            \Common\Auth\Service\RefreshTokenService::class => \Common\Auth\Service\RefreshTokenServiceFactory::class,
         )
     ),
     'file_uploader' => array(

@@ -2,6 +2,7 @@
 
 namespace Common\Rbac;
 
+use Common\Auth\Service\RefreshTokenService;
 use Dvsa\Olcs\Transfer\Service\CacheEncryption;
 use Exception;
 use Interop\Container\ContainerInterface;
@@ -32,7 +33,8 @@ class JWTIdentityProviderFactory implements FactoryInterface
         return new JWTIdentityProvider(
             new Container($sessionName),
             $container->get('QuerySender'),
-            $container->get(CacheEncryption::class)
+            $container->get(CacheEncryption::class),
+            $container->get(RefreshTokenService::class)
         );
     }
 
