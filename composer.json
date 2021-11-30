@@ -13,6 +13,10 @@
         {
             "url": "https://nexus.olcs.dev-dvsacloud.uk/repository/Packagist-Proxy",
             "type": "composer"
+        },
+        {
+            "url": "git@repo.olcs.dev-dvsacloud.uk:olcs/olcs-transfer.git",
+            "type": "vcs"
         }
     ],
     "require": {
@@ -46,7 +50,7 @@
         "laminas/laminas-validator": "^2.5",
         "laminas/laminas-view": "^2.5",
         "lm-commons/lmc-rbac-mvc": "^2.6",
-        "olcs/olcs-transfer": "~4.206.0",
+        "olcs/olcs-transfer": "dev-VOL-2185",
         "symfony/filesystem": "^5",
         "symfony/lock": "^5"
     },
