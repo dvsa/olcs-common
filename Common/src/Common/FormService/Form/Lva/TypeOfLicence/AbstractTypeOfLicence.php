@@ -93,8 +93,14 @@ abstract class AbstractTypeOfLicence extends AbstractLvaFormService
         if (!$params['canUpdateLicenceType']) {
             // Disable and lock type of licence
             $this->getFormHelper()->disableElement($form, 'type-of-licence->licence-type->licence-type');
-            $this->getFormHelper()->disableElement($form, 'type-of-licence->licence-type->ltyp_siContent->vehicle-type');
-            // TODO: also disable lgv declaration checkbox?
+            $this->getFormHelper()->disableElement(
+                $form,
+                'type-of-licence->licence-type->ltyp_siContent->vehicle-type'
+            );
+            $this->getFormHelper()->disableElement(
+                $form,
+                'type-of-licence->licence-type->ltyp_siContent->lgv-declaration->lgv-declaration-confirmation'
+            );
             $this->getFormHelper()->lockElement(
                 $typeOfLicenceFieldset->get('licence-type'),
                 'licence-type-lock-message'

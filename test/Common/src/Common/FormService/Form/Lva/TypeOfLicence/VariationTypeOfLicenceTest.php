@@ -194,6 +194,12 @@ class VariationTypeOfLicenceTest extends MockeryTestCase
             ->shouldReceive('disableElement')
             ->once()
             ->with($mockForm, 'type-of-licence->licence-type->ltyp_siContent->vehicle-type')
+            ->shouldReceive('disableElement')
+            ->once()
+            ->with(
+                $mockForm,
+                'type-of-licence->licence-type->ltyp_siContent->lgv-declaration->lgv-declaration-confirmation'
+            )
             ->shouldReceive('removeOption')
             ->once()
             ->with($mockLt, RefData::LICENCE_TYPE_SPECIAL_RESTRICTED)
