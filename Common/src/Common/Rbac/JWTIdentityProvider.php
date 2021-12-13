@@ -8,6 +8,7 @@ use Common\Service\Cqrs\Query\QuerySender;
 use Dvsa\Olcs\Transfer\Query\MyAccount\MyAccount;
 use Dvsa\Olcs\Transfer\Service\CacheEncryption;
 use Exception;
+use Laminas\Authentication\Storage\Session;
 use Laminas\Session\Container;
 use ZfcRbac\Identity\IdentityInterface;
 use ZfcRbac\Identity\IdentityProviderInterface;
@@ -18,40 +19,40 @@ use ZfcRbac\Identity\IdentityProviderInterface;
 class JWTIdentityProvider implements IdentityProviderInterface
 {
     private ?IdentityInterface $identity = null;
-    private Container $session;
+    private Container $identitySession;
     private QuerySender $querySender;
     private CacheEncryption $cacheService;
     private RefreshTokenService $refreshTokenService;
+    private Session $tokenSession;
 
     public function __construct(
         Container $session,
         QuerySender $querySender,
         CacheEncryption $cacheService,
-        RefreshTokenService $refreshTokenService
+        RefreshTokenService $refreshTokenService,
+        Session $tokenSession
     ) {
-        $this->session = $session;
+        $this->identitySession = $session;
         $this->querySender = $querySender;
         $this->cacheService = $cacheService;
         $this->refreshTokenService = $refreshTokenService;
+        $this->tokenSession = $tokenSession;
     }
 
     public function getIdentity()
     {
+        $this->refreshTokenIfRequired();
+
         if (!is_null($this->identity)) {
             return $this->identity;
         }
 
-        $identity = $this->session->offsetGet('identity');
+        $identity = $this->identitySession->offsetGet('identity');
 
         if (!$this->shouldUpdateIdentity($identity) && $this->cacheHasIdentity($identity->getId())) {
             $data = $this->fetchIdentityFromCache($identity->getId());
-            $this->refreshTokenIfRequired($data['loginId']);
+            $this->refreshTokenIfRequired();
         } else {
-            if ($identity instanceof User && !is_null($identity->getUsername())) {
-                // Refresh the token if required before we try to make the call to DB
-                $this->refreshTokenIfRequired($identity->getUsername());
-            }
-
             $data = $this->fetchIdentityFromDB();
             $identity = new User();
             $identity->setId($data['id']);
@@ -66,7 +67,7 @@ class JWTIdentityProvider implements IdentityProviderInterface
         $identity->setUserData($data);
 
         $this->identity = $identity;
-        $this->session->offsetSet('identity', $this->identity);
+        $this->identitySession->offsetSet('identity', $this->identity);
         return $this->identity;
     }
 
@@ -117,16 +118,21 @@ class JWTIdentityProvider implements IdentityProviderInterface
         return $this->cacheService->hasCustomItem(CacheEncryption::USER_ACCOUNT_IDENTIFIER, (string)$userId);
     }
 
-    private function refreshTokenIfRequired(string $identifier): void
+    private function refreshTokenIfRequired(): void
     {
-        $token = $this->session->offsetGet('storage')['Token'] ?? null;
-        if (is_null($token) || !$this->refreshTokenService->isRefreshRequired($token)) {
+        if ($this->tokenSession->isEmpty()) {
+            return;
+        }
+
+        $tokens = $this->tokenSession->read()['Token'] ?? null;
+        $identifier = $this->tokenSession->read()['AccessTokenClaims']['username'] ?? null;
+        if (is_null($tokens) || !$this->refreshTokenService->isRefreshRequired($tokens) || is_null($identifier)) {
             return;
         }
 
         try {
-            $newToken = $this->refreshTokenService->refreshToken($token, $identifier);
-            $this->session->offsetSet('storage', $newToken);
+            $newTokens = $this->refreshTokenService->refreshTokens($tokens, $identifier);
+            $this->tokenSession->write($newTokens);
         } catch (Exception $e) {
             return;
         }

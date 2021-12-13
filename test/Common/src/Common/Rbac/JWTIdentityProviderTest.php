@@ -10,6 +10,7 @@ use Common\Service\Cqrs\Query\QuerySender;
 use Common\Service\Cqrs\Response;
 use Common\Test\MocksServicesTrait;
 use Dvsa\Olcs\Transfer\Service\CacheEncryption;
+use Laminas\Authentication\Storage\Session;
 use Laminas\Http\Response as HttpResponse;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Session\Container;
@@ -36,6 +37,15 @@ class JWTIdentityProviderTest extends MockeryTestCase
         'id' => 1
     ];
 
+    const TOKEN_SESSION_DATA = [
+        'Token' => [
+            'refreshToken' => 'abc1234'
+        ],
+        'AccessTokenClaims' => [
+            'username' => 'username'
+        ]
+    ];
+
     /**
      * @var JWTIdentityProvider
      */
@@ -48,7 +58,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
     {
         $this->setupSut();
 
-        $session = $this->session();
+        $session = $this->identitySession();
         $session->allows('offsetGet')->with('identity')->andReturnUsing(function () {
             $user = new User();
             $user->setId(1);
@@ -72,7 +82,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
         // Setup
         $this->setupSut();
 
-        $session = $this->session();
+        $session = $this->identitySession();
         $session->allows('offsetGet')->with('identity')->andReturnNull();
 
         // Expectations
@@ -91,7 +101,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
         // Setup
         $this->setupSut();
 
-        $session = $this->session();
+        $session = $this->identitySession();
         $session->allows('offsetGet')->with('identity')->andReturn(new User());
 
         // Expectations
@@ -110,7 +120,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
         // Setup
         $this->setupSut();
 
-        $session = $this->session();
+        $session = $this->identitySession();
         $session->allows('offsetGet')->with('identity')->andReturnUsing(function () {
             $user = new User();
             $user->setId(1);
@@ -137,7 +147,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
         $this->setupSut();
 
         // Expectations
-        $session = $this->session();
+        $session = $this->identitySession();
         $session->expects('offsetSet')->withSomeOfArgs('identity')->once();
 
         // Execute
@@ -181,30 +191,19 @@ class JWTIdentityProviderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getIdentity_ShouldRefreshTokens_WhenRequired_AndCacheExists()
+    public function getIdentity_ShouldRefreshTokens_WhenRequired()
     {
         // Setup
         $this->setupSut();
 
-        $session = $this->session();
-        $session->allows('offsetGet')->with('identity')->andReturnUsing(function () {
-            $user = new User();
-            $user->setId(1);
-            $user->setUsername('username');
-            return $user;
-        });
-        $session->allows('offsetGet')->with('storage')->andReturn(['Token' => ['refreshToken' => 'abc1234']]);
-
-        $cacheService = $this->cacheService();
-        $cacheService->allows('hasCustomItem')->andReturnTrue();
-
-        $cacheService->expects('getCustomItem')->andReturn(static::DATA_WITHOUT_ROLES)->once();
+        $tokenSession = $this->tokenSession();
+        $tokenSession->allows('read')->andReturn(static::TOKEN_SESSION_DATA);
 
         // Expectations
         $refreshService = $this->refreshTokenService();
         $refreshService->expects('isRefreshRequired')->andReturnTrue();
 
-        $session->expects('offsetSet')->with('storage', []);
+        $tokenSession->expects('write')->with([]);
 
         // Execute
         $this->sut->getIdentity();
@@ -213,33 +212,24 @@ class JWTIdentityProviderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getIdentity_ShouldRefreshTokens_WhenRequired_AndCacheDoesntExist()
+    public function getIdentity_ShouldNotRefreshTokens_WhenTokenSessionIsEmpty()
     {
         // Setup
         $this->setupSut();
 
-        $session = $this->session();
-        $session->allows('offsetGet')->with('identity')->andReturnUsing(function () {
-            $user = new User();
-            $user->setId(1);
-            $user->setUsername('username');
-            return $user;
-        });
-        $session->allows('offsetGet')->with('storage')->andReturn(['Token' => ['refreshToken' => 'abc1234']]);
-
-        $cacheService = $this->cacheService();
-        $cacheService->allows('hasCustomItem')->andReturnFalse();
+        $tokenSession = $this->tokenSession();
+        $tokenSession->allows('isEmpty')->andReturnTrue();
 
         // Expectations
         $refreshService = $this->refreshTokenService();
-        $refreshService->expects('isRefreshRequired')->andReturnTrue();
+        $refreshService->shouldNotReceive('isRefreshRequired');
 
-        $session->expects('offsetSet')->with('storage', []);
+        $tokenSession->shouldNotReceive('write');
 
         // Execute
         $this->sut->getIdentity();
     }
-
+    
     /**
      * @test
      */
@@ -250,7 +240,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
 
         // Expectations
 
-        $session = $this->session();
+        $session = $this->identitySession();
         $session->expects('offsetGet')->with('identity')->once();
 
         // Execute
@@ -266,10 +256,11 @@ class JWTIdentityProviderTest extends MockeryTestCase
     protected function setupSut()
     {
         $this->sut = new JWTIdentityProvider(
-            $this->session(),
+            $this->identitySession(),
             $this->querySender(),
             $this->cacheService(),
-            $this->refreshTokenService()
+            $this->refreshTokenService(),
+            $this->tokenSession()
         );
     }
 
@@ -277,7 +268,8 @@ class JWTIdentityProviderTest extends MockeryTestCase
     {
         $this->cacheService();
         $this->querySender();
-        $this->session();
+        $this->identitySession();
+        $this->tokenSession();
     }
 
     /**
@@ -310,7 +302,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
     /**
      * @return MockInterface|Container
      */
-    private function session()
+    private function identitySession()
     {
         if (!$this->serviceManager->has(Container::class)) {
             $instance = $this->setUpMockService(Container::class);
@@ -330,6 +322,18 @@ class JWTIdentityProviderTest extends MockeryTestCase
             $this->serviceManager->setService(RefreshTokenService::class, $instance);
         }
         return $this->serviceManager->get(RefreshTokenService::class);
+    }
+
+    /**
+     * @return MockInterface|Sessionion
+     */
+    protected function tokenSession()
+    {
+        if (!$this->serviceManager->has(Session::class)) {
+            $instance = $this->setUpMockService(Session::class);
+            $this->serviceManager->setService(Session::class, $instance);
+        }
+        return $this->serviceManager->get(Session::class);
     }
 
     private function response(bool $isSuccess = false, array $result = []): Response

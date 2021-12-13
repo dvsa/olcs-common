@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Common\Auth\Service;
 
 use Common\Service\Cqrs\Command\CommandSender;
-use Dvsa\Olcs\Transfer\Command\Auth\RefreshToken;
+use Dvsa\Olcs\Transfer\Command\Auth\RefreshTokens;
 use Exception;
 use Laminas\Authentication\Storage\Session;
 
@@ -32,10 +32,10 @@ class RefreshTokenService
     /**
      * @throws Exception
      */
-    public function refreshToken(array $refreshToken, string $identifier): array
+    public function refreshTokens(array $tokens, string $identifier): array
     {
-        $refreshCommand = RefreshToken::create([
-            'refreshToken' => $refreshToken['refresh_token'],
+        $refreshCommand = RefreshTokens::create([
+            'refreshToken' => $tokens['refresh_token'],
             'username' => $identifier
         ]);
 

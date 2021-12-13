@@ -73,7 +73,7 @@ class RefreshTokenServiceTest extends MockeryTestCase
     /**
      * @test
      */
-    public function refreshToken_ReturnsExpectedResult()
+    public function refreshTokens_ReturnsExpectedResult()
     {
         // Setup
         $this->sut = $this->setUpSut();
@@ -97,7 +97,7 @@ class RefreshTokenServiceTest extends MockeryTestCase
         $commandSender->expects('send')->andReturn($result);
 
         // Execute
-        $result = $this->sut->refreshToken($token, $identifier);
+        $result = $this->sut->refreshTokens($token, $identifier);
 
         $this->assertSame(['token' => 'newToken'], $result);
     }
@@ -105,7 +105,7 @@ class RefreshTokenServiceTest extends MockeryTestCase
     /**
      * @test
      */
-    public function refreshToken_ThrowsException_WhenResultIsNotOk()
+    public function refreshTokens_ThrowsException_WhenResultIsNotOk()
     {
         // Setup
         $this->sut = $this->setUpSut();
@@ -122,13 +122,13 @@ class RefreshTokenServiceTest extends MockeryTestCase
         $this->expectExceptionMessage(sprintf(RefreshTokenService::MESSAGE_BASE, RefreshTokenService::MESSAGE_RESULT_NOT_OK));
 
         // Execute
-        $this->sut->refreshToken($token, $identifier);
+        $this->sut->refreshTokens($token, $identifier);
     }
 
     /**
      * @test
      */
-    public function refreshToken_ThrowsException_WhenIsValidFlagIsFalse()
+    public function refreshTokens_ThrowsException_WhenIsValidFlagIsFalse()
     {
         // Setup
         $this->sut = $this->setUpSut();
@@ -152,13 +152,13 @@ class RefreshTokenServiceTest extends MockeryTestCase
         $this->expectExceptionMessage(sprintf(RefreshTokenService::MESSAGE_BASE, RefreshTokenService::MESSAGE_AUTH_RESULT_NOT_VALID));
 
         // Execute
-        $this->sut->refreshToken($token, $identifier);
+        $this->sut->refreshTokens($token, $identifier);
     }
 
     /**
      * @test
      */
-    public function refreshToken_ThrowsException_WhenIdentityFlagIsMissing()
+    public function refreshTokens_ThrowsException_WhenIdentityFlagIsMissing()
     {
         // Setup
         $this->sut = $this->setUpSut();
@@ -182,7 +182,7 @@ class RefreshTokenServiceTest extends MockeryTestCase
         $this->expectExceptionMessage(sprintf(RefreshTokenService::MESSAGE_BASE, RefreshTokenService::MESSAGE_IDENTITY_MISSING));
 
         // Execute
-        $this->sut->refreshToken($token, $identifier);
+        $this->sut->refreshTokens($token, $identifier);
     }
 
     /**
