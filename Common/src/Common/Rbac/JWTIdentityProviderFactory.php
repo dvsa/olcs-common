@@ -6,6 +6,7 @@ use Common\Auth\Service\RefreshTokenService;
 use Dvsa\Olcs\Transfer\Service\CacheEncryption;
 use Exception;
 use Interop\Container\ContainerInterface;
+use Laminas\Authentication\Storage\Session;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\Session\Container;
@@ -34,7 +35,8 @@ class JWTIdentityProviderFactory implements FactoryInterface
             new Container($sessionName),
             $container->get('QuerySender'),
             $container->get(CacheEncryption::class),
-            $container->get(RefreshTokenService::class)
+            $container->get(RefreshTokenService::class),
+            $container->get(Session::class)
         );
     }
 
