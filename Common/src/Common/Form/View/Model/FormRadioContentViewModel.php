@@ -24,7 +24,7 @@ class FormRadioContentViewModel extends ViewModel
         parent::__construct([
             'id' => sprintf('%s_content', $valueOption['attributes']['id'] ?? ''),
             'class' => $this->buildClass($valueOption),
-            'content' => $valueOption['conditional_content'],
+            'content' => $valueOption['conditional_content'] ?? '',
         ]);
     }
 
