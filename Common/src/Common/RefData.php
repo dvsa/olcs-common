@@ -226,6 +226,7 @@ class RefData
     const USER_TYPE_INTERNAL = 'internal';
     const USER_TYPE_LOCAL_AUTHORITY = 'local-authority';
     const USER_TYPE_PARTNER = 'partner';
+    const USER_TYPE_TM = 'transport-manager';
 
     /**
      * Operator CPID.
