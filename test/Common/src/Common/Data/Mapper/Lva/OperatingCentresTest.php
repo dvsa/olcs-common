@@ -137,31 +137,50 @@ class OperatingCentresTest extends MockeryTestCase
         ];
     }
 
-    public function testMapFromForm()
+    /**
+     * @dataProvider dpMapFromForm
+     */
+    public function testMapFromForm($formData, $expected)
     {
-        $formData = [
-            'data' => [
-                'foo' => 'bar',
-                'totAuthHgvVehiclesFieldset' => ['totAuthHgvVehicles' => null],
-                'totAuthLgvVehiclesFieldset' => ['totAuthLgvVehicles' => 0],
-                'totAuthTrailersFieldset' => ['totAuthTrailers' => 1],
-                'totCommunityLicencesFieldset' => ['totCommunityLicences' => 2],
-            ],
-            'dataTrafficArea' => [
-                'bar' => 'cake'
-            ]
-        ];
-
-        $expected = [
-            'foo' => 'bar',
-            'bar' => 'cake',
-            'totAuthHgvVehicles' => null,
-            'totAuthLgvVehicles' => 0,
-            'totAuthTrailers' => 1,
-            'totCommunityLicences' => 2,
-        ];
-
         $this->assertEquals($expected, OperatingCentres::mapFromForm($formData));
+    }
+
+    public function dpMapFromForm()
+    {
+        return [
+            'all fieldsets included' => [
+                'formData' => [
+                    'data' => [
+                        'foo' => 'bar',
+                        'totAuthHgvVehiclesFieldset' => ['totAuthHgvVehicles' => null],
+                        'totAuthLgvVehiclesFieldset' => ['totAuthLgvVehicles' => 0],
+                        'totAuthTrailersFieldset' => ['totAuthTrailers' => 1],
+                        'totCommunityLicencesFieldset' => ['totCommunityLicences' => 2],
+                    ],
+                    'dataTrafficArea' => [
+                        'bar' => 'cake'
+                    ]
+                ],
+                'expected' => [
+                    'foo' => 'bar',
+                    'bar' => 'cake',
+                    'totAuthHgvVehicles' => null,
+                    'totAuthLgvVehicles' => 0,
+                    'totAuthTrailers' => 1,
+                    'totCommunityLicences' => 2,
+                ],
+            ],
+            'all fieldsets removed' => [
+                'formData' => [
+                    'data' => [
+                        'foo' => 'bar',
+                    ],
+                ],
+                'expected' => [
+                    'foo' => 'bar',
+                ],
+            ],
+        ];
     }
 
     public function testMapFormErrors()

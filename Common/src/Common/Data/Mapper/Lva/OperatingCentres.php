@@ -76,17 +76,25 @@ class OperatingCentres implements MapperInterface
             $mappedData = array_merge($mappedData, $data['dataTrafficArea']);
         }
 
-        $mappedData['totAuthHgvVehicles'] = $data['data']['totAuthHgvVehiclesFieldset']['totAuthHgvVehicles'];
-        unset($mappedData['totAuthHgvVehiclesFieldset']);
+        if (isset($data['data']['totAuthHgvVehiclesFieldset'])) {
+            $mappedData['totAuthHgvVehicles'] = $data['data']['totAuthHgvVehiclesFieldset']['totAuthHgvVehicles'];
+            unset($mappedData['totAuthHgvVehiclesFieldset']);
+        }
 
-        $mappedData['totAuthLgvVehicles'] = $data['data']['totAuthLgvVehiclesFieldset']['totAuthLgvVehicles'];
-        unset($mappedData['totAuthLgvVehiclesFieldset']);
+        if (isset($data['data']['totAuthLgvVehiclesFieldset'])) {
+            $mappedData['totAuthLgvVehicles'] = $data['data']['totAuthLgvVehiclesFieldset']['totAuthLgvVehicles'];
+            unset($mappedData['totAuthLgvVehiclesFieldset']);
+        }
 
-        $mappedData['totAuthTrailers'] = $data['data']['totAuthTrailersFieldset']['totAuthTrailers'];
-        unset($mappedData['totAuthTrailersFieldset']);
+        if (isset($data['data']['totAuthTrailersFieldset'])) {
+            $mappedData['totAuthTrailers'] = $data['data']['totAuthTrailersFieldset']['totAuthTrailers'];
+            unset($mappedData['totAuthTrailersFieldset']);
+        }
 
-        $mappedData['totCommunityLicences'] = $data['data']['totCommunityLicencesFieldset']['totCommunityLicences'];
-        unset($mappedData['totCommunityLicencesFieldset']);
+        if (isset($data['data']['totCommunityLicencesFieldset'])) {
+            $mappedData['totCommunityLicences'] = $data['data']['totCommunityLicencesFieldset']['totCommunityLicences'];
+            unset($mappedData['totCommunityLicencesFieldset']);
+        }
 
         return $mappedData;
     }
