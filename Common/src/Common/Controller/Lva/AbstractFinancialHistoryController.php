@@ -217,7 +217,7 @@ abstract class AbstractFinancialHistoryController extends AbstractController
             'administration' => $formData['administration'],
             'disqualified' => $formData['disqualified'],
             'insolvencyDetails' => $formData['insolvencyDetails'],
-            'insolvencyConfirmation' => $formData['financialHistoryConfirmation']['insolvencyConfirmation']
+            'insolvencyConfirmation' => $formData['financialHistoryConfirmation']['insolvencyConfirmation'] ?? false
         ];
 
         /** @var \Common\Service\Cqrs\Response $response */
