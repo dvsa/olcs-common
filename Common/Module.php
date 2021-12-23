@@ -106,7 +106,7 @@ class Module
         );
 
         //  RBAC behaviour if user not authorised
-        $events->attach($sm->get(\ZfcRbac\View\Strategy\UnauthorizedStrategy::class));
+        $events->attach($sm->get(\ZfcRbac\View\Strategy\RedirectStrategy::class));
         //  CSRF token check
         $events->attach(MvcEvent::EVENT_DISPATCH, [$this, 'validateCsrfToken'], 100);
 
