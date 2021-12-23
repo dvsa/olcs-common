@@ -243,6 +243,8 @@ return array(
             \Common\Service\Helper\FormHelperService::class => \Common\Service\Helper\FormHelperService::class,
             \Common\Service\Helper\FlashMessengerHelperService::class => \Common\Service\Helper\FlashMessengerHelperService::class,
             \Common\Form\FormValidator::class => \Common\Form\FormValidator::class,
+
+            'Zend\Authentication\AuthenticationService' => \Laminas\Authentication\AuthenticationService::class,
         ),
         'factories' => array(
             'CommandSender' => \Common\Service\Cqrs\Command\CommandSender::class,
