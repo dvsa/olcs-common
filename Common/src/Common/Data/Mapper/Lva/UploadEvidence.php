@@ -71,6 +71,11 @@ class UploadEvidence implements MapperInterface
     public static function mapFromForm(array $data)
     {
         $apiData = [];
+
+        if (!isset($data['operatingCentres'])) {
+            return $apiData;
+        }
+
         foreach ($data['operatingCentres'] as $operatingCentreData) {
             $apiData['operatingCentres'][$operatingCentreData['aocId']] = [
                 'adPlacedIn' => $operatingCentreData['adPlacedIn'],

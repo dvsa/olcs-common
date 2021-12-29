@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Upload evidence mapper
- *
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
- */
 namespace CommonTest\Data\Mapper\Lva;
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -12,11 +7,6 @@ use Common\Data\Mapper\Lva\UploadEvidence;
 use Common\Form\Form;
 use Mockery as m;
 
-/**
- * Upload Evidence test
- *
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
- */
 class UploadEvidenceTest extends MockeryTestCase
 {
     public function testMapFromResult()
@@ -47,6 +37,11 @@ class UploadEvidenceTest extends MockeryTestCase
         $output = UploadEvidence::mapFromResult($input);
 
         $this->assertEquals($expected, $output);
+    }
+
+    public function testMapFromFormNoOperatingCentres(): void
+    {
+        $this->assertEquals([], UploadEvidence::mapFromForm([]));
     }
 
     public function testMapFromForm()
