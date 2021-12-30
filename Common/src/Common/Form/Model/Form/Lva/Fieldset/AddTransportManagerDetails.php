@@ -38,6 +38,7 @@ class AddTransportManagerDetails
      * @Form\Filter({"name": "DateSelectNullifier"})
      * @Form\Validator({"name": "\Common\Validator\Date"})
      * @Form\Validator({"name":"Date","options":{"format":"Y-m-d"}})
+     * @Form\Validator({"name":"DateNotInFuture"})
      */
     public $birthDate = null;
 
