@@ -35,6 +35,11 @@ class FileUploadList extends Fieldset
      */
     public function setFiles($fileData = array(), $url = null)
     {
+        /** (VOL-2693) this code is used everywhere but we don't seem to be provided an array in all cases */
+        if (!is_array($fileData)) {
+            return;
+        }
+
         $units = array('B', 'KB', 'MB', 'GB', 'TB');
 
         foreach ($fileData as $file) {
