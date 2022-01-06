@@ -67,9 +67,6 @@
     "config": {
         "preferred-install": "dist",
         "secure-http": false,
-        "platform": {
-            "php": "7.2.31"
-        },
         "sort-packages": true
     },
     "scripts": {
