@@ -1,6 +1,5 @@
 <?php
 
-
 namespace CommonTest\Data\Mapper\Licence\Surrender\Sections;
 
 use Common\Data\Mapper\Licence\Surrender\ReviewDetails;
@@ -11,7 +10,6 @@ use Laminas\Mvc\Controller\Plugin\Url;
 
 class ReviewDetailsTest extends TestCase
 {
-
     use ReviewContactDetailsMocksAndExpectationsTrait;
     protected $sut;
 
@@ -36,7 +34,7 @@ class ReviewDetailsTest extends TestCase
         $this->mockUrlHelperFromRoute($mockUrlHelper, 'licence/surrender/current-discs/review/GET', 4);
         $this->mockUrlHelperFromRoute($mockUrlHelper, 'licence/surrender/operator-licence/review/GET', 2);
 
-        $typeOfLicence = $this->dataDescription();
+        $typeOfLicence = $this->dataName();
 
         $expected = [
             $this->expectedForLicenceDetails(),
@@ -45,7 +43,6 @@ class ReviewDetailsTest extends TestCase
 
         ];
 
-
         if ($typeOfLicence === 'StandardInternational') {
             $mockSurrender['surrender']['isInternationalLicence'] = true;
             $this->mockUrlHelperFromRoute($mockUrlHelper, 'licence/surrender/community-licence/review/GET', 2);
@@ -53,7 +50,6 @@ class ReviewDetailsTest extends TestCase
             array_push($expected, $this->expectedCommunityLicence());
         }
         $sections = ReviewDetails::makeSections($mockLicence, $mockUrlHelper, $mockTranslator, $mockSurrender);
-
 
         $this->assertSame($expected, $sections);
     }

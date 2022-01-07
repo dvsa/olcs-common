@@ -191,31 +191,13 @@ class TableBuilderTest extends MockeryTestCase
      */
     public function testBuildTable()
     {
-        $table = $this->getMockTableBuilder(
-            [
-                'loadConfig',
-                'loadData',
-                'loadParams',
-                'setupAction',
-                'render',
-            ]
-        );
+        $table = m::mock(TableBuilder::class)->makePartial();
 
-        $table->expects($this->at(0))
-            ->method('loadConfig');
-
-        $table->expects($this->at(1))
-            ->method('loadData');
-
-        $table->expects($this->at(2))
-            ->method('loadParams');
-
-        $table->expects($this->at(3))
-            ->method('setupAction');
-
-        $table->expects($this->at(4))
-            ->method('render')
-            ->will($this->returnValue('SomeHTML'));
+        $table->expects('loadConfig');
+        $table->expects('loadData');
+        $table->expects('loadParams');
+        $table->expects('setupAction');
+        $table->expects('render')->andReturn('SomeHTML');
 
         $this->assertEquals('SomeHTML', $table->buildTable('test'));
     }
@@ -225,26 +207,12 @@ class TableBuilderTest extends MockeryTestCase
      */
     public function testBuildTableWithoutRender()
     {
-        $table = $this->getMockTableBuilder(
-            [
-                'loadConfig',
-                'loadData',
-                'loadParams',
-                'setupAction',
-            ]
-        );
+        $table = m::mock(TableBuilder::class)->makePartial();
 
-        $table->expects($this->at(0))
-            ->method('loadConfig');
-
-        $table->expects($this->at(1))
-            ->method('loadData');
-
-        $table->expects($this->at(2))
-            ->method('loadParams');
-
-        $table->expects($this->at(3))
-            ->method('setupAction');
+        $table->expects('loadConfig');
+        $table->expects('loadData');
+        $table->expects('loadParams');
+        $table->expects('setupAction');
 
         $this->assertEquals($table, $table->buildTable('test', array(), array(), false));
     }
@@ -1015,25 +983,12 @@ class TableBuilderTest extends MockeryTestCase
             ->with(' {{[elements/total]}}', array('total' => $expectedTotal))
             ->will($this->returnValue($expectedTotal));
 
-        $table = $this->getMockTableBuilder(['getContentHelper', 'shouldPaginate', 'getSetting']);
+        $table = m::mock(TableBuilder::class)->makePartial()->shouldAllowMockingProtectedMethods();
 
-        $table->expects($this->once())
-            ->method('getContentHelper')
-            ->will($this->returnValue($mockContentHelper));
-
-        $table->expects($this->once())
-            ->method('shouldPaginate')
-            ->will($this->returnValue(false));
-
-        $table->expects($this->at(0))
-            ->method('getSetting')
-            ->with('overrideTotal', false)
-            ->will($this->returnValue(false));
-
-        $table->expects($this->at(2))
-            ->method('getSetting')
-            ->with('showTotal', false)
-            ->will($this->returnValue(true));
+        $table->expects('getContentHelper')->andReturn($mockContentHelper);
+        $table->expects('shouldPaginate')->andReturnFalse();
+        $table->expects('getSetting')->with('overrideTotal', false)->andReturnFalse();
+        $table->expects('getSetting')->with('showTotal', false)->andReturnTrue();
 
         $table->setTotal($total);
 
@@ -1489,26 +1444,26 @@ class TableBuilderTest extends MockeryTestCase
     {
         $actions = array(
             array(
-                'foo' => 'bar'
+                'foo1' => 'bar1'
             ),
             array(
-                'foo' => 'bar'
+                'foo2' => 'bar2'
             )
         );
 
-        $mockContentHelper = $this->createPartialMock(ContentHelper::class, array('replaceContent'));
+        $mockContentHelper = m::mock(ContentHelper::class)->makePartial();
 
-        $mockContentHelper->expects($this->at(0))
-            ->method('replaceContent')
-            ->with('{{[elements/actionOption]}}');
+        $mockContentHelper->expects('replaceContent')
+            ->with('{{[elements/actionOption]}}', ['foo1' => 'bar1'])
+            ->andReturn('option1');
 
-        $mockContentHelper->expects($this->at(1))
-            ->method('replaceContent')
-            ->with('{{[elements/actionOption]}}');
+        $mockContentHelper->expects('replaceContent')
+            ->with('{{[elements/actionOption]}}', ['foo2' => 'bar2'])
+            ->andReturn('option2');
 
-        $mockContentHelper->expects($this->at(2))
-            ->method('replaceContent')
-            ->with('{{[elements/actionSelect]}}');
+        $mockContentHelper->expects('replaceContent')
+            ->with('{{[elements/actionSelect]}}', ['option' => 'option1option2', 'action_field_name' => 'action'])
+            ->andReturn('content');
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
 
@@ -1516,7 +1471,7 @@ class TableBuilderTest extends MockeryTestCase
             ->method('getContentHelper')
             ->will($this->returnValue($mockContentHelper));
 
-        $table->renderDropdownActions($actions);
+        $this->assertEquals('content', $table->renderDropdownActions($actions));
     }
 
     /**
@@ -1526,22 +1481,20 @@ class TableBuilderTest extends MockeryTestCase
     {
         $actions = array(
             array(
-                'foo' => 'bar'
+                'foo1' => 'bar1'
             ),
             array(
-                'foo' => 'bar'
+                'foo2' => 'bar2'
             )
         );
 
-        $mockContentHelper = $this->createPartialMock(ContentHelper::class, array('replaceContent'));
+        $mockContentHelper = m::mock(ContentHelper::class);
 
-        $mockContentHelper->expects($this->at(0))
-            ->method('replaceContent')
-            ->with('{{[elements/actionButton]}}');
+        $mockContentHelper->expects('replaceContent')
+            ->with('{{[elements/actionButton]}}', ['foo1' => 'bar1']);
 
-        $mockContentHelper->expects($this->at(1))
-            ->method('replaceContent')
-            ->with('{{[elements/actionButton]}}');
+        $mockContentHelper->expects('replaceContent')
+            ->with('{{[elements/actionButton]}}', ['foo2' => 'bar2']);
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
 
@@ -1682,28 +1635,23 @@ class TableBuilderTest extends MockeryTestCase
             )
         );
 
-        $mockContentHelper = $this->createPartialMock(ContentHelper::class, array('replaceContent'));
+        $mockContentHelper = m::mock(ContentHelper::class)->makePartial();
 
-        $mockContentHelper->expects($this->at(0))
-            ->method('replaceContent')
+        $mockContentHelper->expects('replaceContent')
             ->with('{{[elements/limitOption]}}', array('class' => 'current', 'option' => '10'));
 
-        $mockContentHelper->expects($this->at(1))
-            ->method('replaceContent')
+        $mockContentHelper->expects('replaceContent')
             ->with('{{[elements/limitLink]}}')
             ->will($this->returnValue('20'));
 
-        $mockContentHelper->expects($this->at(2))
-            ->method('replaceContent')
+        $mockContentHelper->expects('replaceContent')
             ->with('{{[elements/limitOption]}}', array('class' => '', 'option' => '20'));
 
-        $mockContentHelper->expects($this->at(3))
-            ->method('replaceContent')
+        $mockContentHelper->expects('replaceContent')
             ->with('{{[elements/limitLink]}}')
             ->will($this->returnValue('30'));
 
-        $mockContentHelper->expects($this->at(4))
-            ->method('replaceContent')
+        $mockContentHelper->expects('replaceContent')
             ->with('{{[elements/limitOption]}}', array('class' => '', 'option' => '30'));
 
         $mockUrl = $this->createPartialMock(Url::class, array('fromRoute'));
@@ -1742,28 +1690,23 @@ class TableBuilderTest extends MockeryTestCase
             )
         );
 
-        $mockContentHelper = $this->createPartialMock(ContentHelper::class, array('replaceContent'));
+        $mockContentHelper = m::mock(ContentHelper::class);
 
-        $mockContentHelper->expects($this->at(0))
-            ->method('replaceContent')
+        $mockContentHelper->expects('replaceContent')
             ->with('{{[elements/limitOption]}}', array('class' => 'current', 'option' => '10'));
 
-        $mockContentHelper->expects($this->at(1))
-            ->method('replaceContent')
+        $mockContentHelper->expects('replaceContent')
             ->with('{{[elements/limitLink]}}')
             ->will($this->returnValue('20'));
 
-        $mockContentHelper->expects($this->at(2))
-            ->method('replaceContent')
+        $mockContentHelper->expects('replaceContent')
             ->with('{{[elements/limitOption]}}', array('class' => '', 'option' => '20'));
 
-        $mockContentHelper->expects($this->at(3))
-            ->method('replaceContent')
+        $mockContentHelper->expects('replaceContent')
             ->with('{{[elements/limitLink]}}', array('option' => '30', 'link' => '?foo=bar&page=1&limit=30'))
             ->will($this->returnValue('30'));
 
-        $mockContentHelper->expects($this->at(4))
-            ->method('replaceContent')
+        $mockContentHelper->expects('replaceContent')
             ->with('{{[elements/limitOption]}}', array('class' => '', 'option' => '30'));
 
         $mockQuery = [
@@ -1850,22 +1793,18 @@ class TableBuilderTest extends MockeryTestCase
 
         $mockUrl = $this->createPartialMock(Url::class, array('fromRoute'));
 
-        $mockContentHelper = $this->createPartialMock(ContentHelper::class, array('replaceContent'));
+        $mockContentHelper = m::mock(ContentHelper::class)->makePartial();
 
-        $mockContentHelper->expects($this->at(0))
-            ->method('replaceContent')
+        $mockContentHelper->expects('replaceContent')
             ->with('{{[elements/paginationItem]}}');
 
-        $mockContentHelper->expects($this->at(1))
-            ->method('replaceContent')
+        $mockContentHelper->expects('replaceContent')
             ->with('{{[elements/paginationLink]}}');
 
-        $mockContentHelper->expects($this->at(2))
-            ->method('replaceContent')
+        $mockContentHelper->expects('replaceContent')
             ->with('{{[elements/paginationItem]}}');
 
-        $mockContentHelper->expects($this->at(3))
-            ->method('replaceContent')
+        $mockContentHelper->expects('replaceContent')
             ->with('{{[elements/paginationItem]}}');
 
         $table = $this->getMockTableBuilder(array('getPaginationHelper', 'getUrl', 'getContentHelper'));
@@ -1953,12 +1892,10 @@ class TableBuilderTest extends MockeryTestCase
 
         $mockContentHelper = $this->createPartialMock(ContentHelper::class, array('replaceContent'));
 
-        $mockContentHelper->expects($this->at(0))
-            ->method('replaceContent')
+        $mockContentHelper->expects('replaceContent')
             ->with('{{[elements/sortColumn]}}', $expectedColumn);
 
-        $mockContentHelper->expects($this->at(1))
-            ->method('replaceContent')
+        $mockContentHelper->expects('replaceContent')
             ->with('{{[elements/foo]}}');
 
         $mockUrl = $this->createPartialMock(Url::class, array('fromRoute'));
@@ -1999,14 +1936,12 @@ class TableBuilderTest extends MockeryTestCase
             'link' => 'LINK'
         );
 
-        $mockContentHelper = $this->createPartialMock(ContentHelper::class, array('replaceContent'));
+        $mockContentHelper = m::mock(ContentHelper::class)->makePartial();
 
-        $mockContentHelper->expects($this->at(0))
-            ->method('replaceContent')
+        $mockContentHelper->expects('replaceContent')
             ->with('{{[elements/sortColumn]}}', $expectedColumn);
 
-        $mockContentHelper->expects($this->at(1))
-            ->method('replaceContent')
+        $mockContentHelper->expects('replaceContent')
             ->with('{{[elements/foo]}}');
 
         $mockUrl = $this->createPartialMock(Url::class, array('fromRoute'));
@@ -2047,14 +1982,12 @@ class TableBuilderTest extends MockeryTestCase
             'link' => 'LINK'
         );
 
-        $mockContentHelper = $this->createPartialMock(ContentHelper::class, array('replaceContent'));
+        $mockContentHelper = m::mock(ContentHelper::class)->makePartial();
 
-        $mockContentHelper->expects($this->at(0))
-            ->method('replaceContent')
+        $mockContentHelper->expects('replaceContent')
             ->with('{{[elements/sortColumn]}}', $expectedColumn);
 
-        $mockContentHelper->expects($this->at(1))
-            ->method('replaceContent')
+        $mockContentHelper->expects('replaceContent')
             ->with('{{[elements/foo]}}');
 
         $mockUrl = $this->createPartialMock(Url::class, array('fromRoute'));
@@ -2173,14 +2106,12 @@ class TableBuilderTest extends MockeryTestCase
             'link' => 'LINK',
         ];
 
-        $mockContentHelper = $this->createPartialMock(ContentHelper::class, array('replaceContent'));
+        $mockContentHelper = m::mock(ContentHelper::class)->makePartial();
 
-        $mockContentHelper->expects($this->at(0))
-            ->method('replaceContent')
+        $mockContentHelper->expects('replaceContent')
             ->with('{{[elements/sortColumn]}}', $expectedColumn);
 
-        $mockContentHelper->expects($this->at(1))
-            ->method('replaceContent')
+        $mockContentHelper->expects('replaceContent')
             ->with('{{[elements/th]}}');
 
         $mockUrl = $this->createPartialMock(Url::class, array('fromRoute'));
@@ -2497,15 +2428,13 @@ class TableBuilderTest extends MockeryTestCase
             'format' => 'FOO'
         );
 
-        $mockContentHelper = $this->createPartialMock(ContentHelper::class, array('replaceContent'));
+        $mockContentHelper = m::mock(ContentHelper::class)->makePartial();
 
-        $mockContentHelper->expects($this->at(0))
-            ->method('replaceContent')
+        $mockContentHelper->expects('replaceContent')
             ->with('FOO', $row)
-            ->will($this->returnValue('FOOBAR'));
+            ->andReturn('FOOBAR');
 
-        $mockContentHelper->expects($this->at(1))
-            ->method('replaceContent')
+        $mockContentHelper->expects('replaceContent')
             ->with('{{[elements/td]}}', array('content' => 'FOOBAR', 'attrs' => ''));
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
@@ -2838,17 +2767,11 @@ class TableBuilderTest extends MockeryTestCase
             ->method('getColumns')
             ->will($this->returnValue(array('foo')));
 
-        $mockContentHelper = $this->createPartialMock(ContentHelper::class, array('replaceContent'));
+        $mockContentHelper = m::mock(ContentHelper::class)->makePartial();
 
-        $mockContentHelper->expects($this->at(0))
-            ->method('replaceContent')
-            ->with('Empty')
-            ->will($this->returnValue('Empty'));
-
-        $mockContentHelper->expects($this->at(1))
-            ->method('replaceContent')
+        $mockContentHelper->expects('replaceContent')
             ->with('{{[elements/emptyRow]}}', array('colspan' => 1, 'message' => 'Empty'))
-            ->will($this->returnValue('CONTENT'));
+            ->andReturn('CONTENT');
 
         $table->expects($this->any())
             ->method('getContentHelper')
@@ -3102,35 +3025,26 @@ class TableBuilderTest extends MockeryTestCase
     public function testRemoveActions()
     {
         $tableConfig = array(
-            'settings' => array(
-                'paginate' => array(),
-                'crud' => array(
-                    'actions' => array(
-                        'foo' => array(),
-                        'bar' => array()
-                    )
+            'crud' => array(
+                'actions' => array(
+                    'foo' => array(),
+                    'bar' => array(),
                 )
             )
         );
 
-        $table = $this->getMockTableBuilder(array('getConfigFromFile', 'removeAction', 'removeColumn'));
+        /** @var TableBuilder $table */
+        $table = m::mock(TableBuilder::class)->makePartial();
 
-        $table->expects($this->once())
-            ->method('getConfigFromFile')
-            ->will($this->returnValue($tableConfig));
+        $table->setSettings($tableConfig);
 
-        $table->loadConfig('test');
-
-        $table->expects($this->at(0))
-            ->method('removeAction')
+        $table->expects('removeAction')
             ->with('foo');
 
-        $table->expects($this->at(1))
-            ->method('removeAction')
+        $table->expects('removeAction')
             ->with('bar');
 
-        $table->expects($this->once())
-            ->method('removeColumn')
+        $table->expects('removeColumn')
             ->with('actionLinks');
 
         $table->removeActions();

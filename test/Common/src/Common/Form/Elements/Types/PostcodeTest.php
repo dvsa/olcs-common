@@ -26,7 +26,7 @@ class PostcodeTest extends \PHPUnit\Framework\TestCase
             ],
             $attributes
         );
-        $this->assertRegExp('/postcodeInput[0-9]/', $attributes['id']);
+        $this->assertMatchesRegularExpression('/postcodeInput[0-9]/', $attributes['id']);
     }
 
     public function testConstructorPostcodeElementNumberIsIncremented()

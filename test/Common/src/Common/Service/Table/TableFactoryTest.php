@@ -1,41 +1,34 @@
 <?php
 
-/**
- * Table Factory Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
-
 namespace CommonTest\Service\Table;
 
 use Common\Service\Table\TableBuilder;
 use Common\Service\Table\TableFactory;
+use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
+use Laminas\ServiceManager\ServiceManager;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Mockery as m;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Table Factory Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class TableFactoryTest extends \PHPUnit\Framework\TestCase
+class TableFactoryTest extends MockeryTestCase
 {
     /**
      * Test createService
      */
     public function testCreateService()
     {
-        $serviceLocator = $this->createPartialMock('\Laminas\ServiceManager\ServiceManager', array('get'));
+        $mockAuthService = m::mock(AuthorizationService::class);
+        $mockTranslator = m::mock(TranslatorDelegator::class);
 
-        $serviceLocator->expects($this->at(0))
-            ->method('get')
-            ->with('Config')
-            ->will($this->returnValue(array()));
-
-        $mockAuthService = $this->createMock('stdClass');
-
-        $serviceLocator->expects($this->at(1))
-            ->method('get')
-            ->with('ZfcRbac\Service\AuthorizationService')
-            ->will($this->returnValue($mockAuthService));
+        $serviceLocator = m::mock(ServiceManager::class);
+        $serviceLocator->expects('get')->with('Config')->andReturn([]);
+        $serviceLocator->expects('get')->with(AuthorizationService::class)->andReturn($mockAuthService);
+        $serviceLocator->expects('get')->with('translator')->andReturn($mockTranslator);
 
         $tableFactory = new TableFactory();
 

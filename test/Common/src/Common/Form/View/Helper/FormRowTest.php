@@ -70,7 +70,7 @@ class FormRowTest extends MockeryTestCase
         $result = $this->sut->__invoke($element);
 
         // Assert
-        $this->assertRegExp('/^<div class="validation-wrapper"><div class="field "><p class="error__text">Message<\/p><label>(.*)<\/label>(.*)<\/div><\/div>$/', $result);
+        $this->assertMatchesRegularExpression('/^<div class="validation-wrapper"><div class="field "><p class="error__text">Message<\/p><label>(.*)<\/label>(.*)<\/div><\/div>$/', $result);
     }
 
     /**
@@ -88,7 +88,7 @@ class FormRowTest extends MockeryTestCase
         $result = $this->sut->__invoke($element);
 
         // Assert
-        $this->assertRegExp('/^<div class="validation-wrapper"><div class="field "><p class="error__text">Message<\/p>(.*)<\/div><\/div>$/', $result);
+        $this->assertMatchesRegularExpression('/^<div class="validation-wrapper"><div class="field "><p class="error__text">Message<\/p>(.*)<\/div><\/div>$/', $result);
     }
 
     /**
@@ -106,7 +106,7 @@ class FormRowTest extends MockeryTestCase
         $result = $this->sut->__invoke($element);
 
         // Assert
-        $this->assertRegExp('/^<div class="field "><label(.*)>(.*)<\/label>(.*)<\/div>$/', $result);
+        $this->assertMatchesRegularExpression('/^<div class="field "><label(.*)>(.*)<\/label>(.*)<\/div>$/', $result);
     }
 
     /**
@@ -123,7 +123,7 @@ class FormRowTest extends MockeryTestCase
         $result = $this->sut->__invoke($element, null, null, 'partial');
 
         // Assert
-        $this->assertRegExp('/^<div class="field "><\/div>$/', $result);
+        $this->assertMatchesRegularExpression('/^<div class="field "><\/div>$/', $result);
     }
 
     /**
@@ -140,7 +140,7 @@ class FormRowTest extends MockeryTestCase
         $result = $this->sut->__invoke($element);
 
         // Assert
-        $this->assertRegExp('/^$/', $result);
+        $this->assertMatchesRegularExpression('/^$/', $result);
     }
 
     /**
@@ -157,7 +157,7 @@ class FormRowTest extends MockeryTestCase
         $result = $this->sut->__invoke($element);
 
         // Assert
-        $this->assertRegExp('/^$/', $result);
+        $this->assertMatchesRegularExpression('/^$/', $result);
     }
 
     /**
@@ -182,7 +182,7 @@ class FormRowTest extends MockeryTestCase
         $result = $this->sut->__invoke($element);
 
         // Assert
-        $this->assertRegExp('/^<div class="field "><table><\/table><\/div>$/', $result);
+        $this->assertMatchesRegularExpression('/^<div class="field "><table><\/table><\/div>$/', $result);
     }
 
     /**
@@ -200,7 +200,7 @@ class FormRowTest extends MockeryTestCase
         $result = $this->sut->__invoke($element);
 
         // Assert
-        $this->assertRegExp('/^<div class="field "><label>(.*)<\/label>(.*)<\/div>$/', $result);
+        $this->assertMatchesRegularExpression('/^<div class="field "><label>(.*)<\/label>(.*)<\/div>$/', $result);
     }
 
     /**
@@ -224,7 +224,7 @@ class FormRowTest extends MockeryTestCase
         $result = $this->sut->__invoke($element);
 
         // Assert
-        $this->assertRegExp('/^<div class="field "><label for="test">(.*)<\/label>(.*)<\/div>$/', $result);
+        $this->assertMatchesRegularExpression('/^<div class="field "><label for="test">(.*)<\/label>(.*)<\/div>$/', $result);
     }
 
     /**
@@ -241,7 +241,7 @@ class FormRowTest extends MockeryTestCase
         $result = $this->sut->__invoke($element);
 
         // Assert
-        $this->assertRegExp('/^<fieldset><legend>(.*)<\/legend><\/fieldset>$/', $result);
+        $this->assertMatchesRegularExpression('/^<fieldset><legend>(.*)<\/legend><\/fieldset>$/', $result);
     }
 
     /**
@@ -265,7 +265,7 @@ class FormRowTest extends MockeryTestCase
         $result = $this->sut->__invoke($element);
 
         // Assert
-        $this->assertRegExp('/^<fieldset><legend class="A_CLASS">(.*)<\/legend><\/fieldset>$/', $result);
+        $this->assertMatchesRegularExpression('/^<fieldset><legend class="A_CLASS">(.*)<\/legend><\/fieldset>$/', $result);
     }
 
     /**
@@ -287,7 +287,7 @@ class FormRowTest extends MockeryTestCase
         $result = $this->sut->__invoke($element);
 
         // Assert
-        $this->assertRegExp('/^<fieldset data-group="data-group"><legend>(.*)<\/legend><\/fieldset>$/', $result);
+        $this->assertMatchesRegularExpression('/^<fieldset data-group="data-group"><legend>(.*)<\/legend><\/fieldset>$/', $result);
     }
 
     /**
@@ -312,7 +312,7 @@ class FormRowTest extends MockeryTestCase
         $result = $this->sut->__invoke($element);
 
         // Assert
-        $this->assertRegExp('/^<fieldset class="inline" data-group="data-group"><legend>(.*)<\/legend><\/fieldset>$/', $result);
+        $this->assertMatchesRegularExpression('/^<fieldset class="inline" data-group="data-group"><legend>(.*)<\/legend><\/fieldset>$/', $result);
     }
 
     /**
@@ -366,7 +366,7 @@ class FormRowTest extends MockeryTestCase
         $result = $this->sut->__invoke($element);
 
         // Assert
-        $this->assertRegExp('/^<div class="field visually-hidden">(.*)<\/div>$/', $result);
+        $this->assertMatchesRegularExpression('/^<div class="field visually-hidden">(.*)<\/div>$/', $result);
     }
 
     /**
@@ -560,7 +560,7 @@ class FormRowTest extends MockeryTestCase
         $result = $this->sut->__invoke($element);
 
         // Assert
-        $this->assertRegExp('/^$/', $result);
+        $this->assertMatchesRegularExpression('/^$/', $result);
     }
 
     /**
