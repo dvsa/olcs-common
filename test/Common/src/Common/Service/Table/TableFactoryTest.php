@@ -10,11 +10,6 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 use ZfcRbac\Service\AuthorizationService;
 
-/**
- * Table Factory Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class TableFactoryTest extends MockeryTestCase
 {
     /**

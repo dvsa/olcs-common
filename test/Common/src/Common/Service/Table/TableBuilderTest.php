@@ -1799,12 +1799,6 @@ class TableBuilderTest extends MockeryTestCase
             ->with('{{[elements/paginationItem]}}');
 
         $mockContentHelper->expects('replaceContent')
-            ->with('{{[elements/paginationLink]}}');
-
-        $mockContentHelper->expects('replaceContent')
-            ->with('{{[elements/paginationItem]}}');
-
-        $mockContentHelper->expects('replaceContent')
             ->with('{{[elements/paginationItem]}}');
 
         $table = $this->getMockTableBuilder(array('getPaginationHelper', 'getUrl', 'getContentHelper'));

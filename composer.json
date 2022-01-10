@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "php": ">=7.2",
+        "php": ">=7.4",
         "doctrine/annotations": "^1.8",
         "doctrine/doctrine-orm-module": "~0.10.0",
         "laminas/laminas-authentication": "^2.5",
@@ -67,9 +67,6 @@
     "config": {
         "preferred-install": "dist",
         "secure-http": false,
-        "platform": {
-            "php": "7.2.31"
-        },
         "sort-packages": true
     },
     "scripts": {
