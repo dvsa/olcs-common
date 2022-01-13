@@ -181,7 +181,7 @@ class FormErrorsTest extends MockeryTestCase
             ->with('foo')
             ->andReturn($element);
 
-        $this->assertRegExp($expected, $sut($form));
+        $this->assertMatchesRegularExpression($expected, $sut($form));
     }
 
     /**
@@ -238,7 +238,7 @@ class FormErrorsTest extends MockeryTestCase
             ->with('foo')
             ->andReturn($element);
 
-        $this->assertRegExp($expected, $sut($form));
+        $this->assertMatchesRegularExpression($expected, $sut($form));
     }
 
     /**
@@ -294,7 +294,7 @@ class FormErrorsTest extends MockeryTestCase
             ->with('foo')
             ->andReturn($element);
 
-        $this->assertRegExp($expected, $sut($form));
+        $this->assertMatchesRegularExpression($expected, $sut($form));
     }
 
     /**
@@ -350,7 +350,7 @@ class FormErrorsTest extends MockeryTestCase
             ->with('foo')
             ->andReturn($element);
 
-        $this->assertRegExp($expected, $sut($form));
+        $this->assertMatchesRegularExpression($expected, $sut($form));
     }
 
     /**
@@ -392,7 +392,7 @@ class FormErrorsTest extends MockeryTestCase
             )
             ->shouldReceive('getLabel')->andReturn('Default Label');
 
-        $this->assertRegExp($expected, $sut($form));
+        $this->assertMatchesRegularExpression($expected, $sut($form));
     }
 
     /**
@@ -426,7 +426,7 @@ class FormErrorsTest extends MockeryTestCase
             ->shouldReceive('has')->once()->with('foo')->andReturn(true)
             ->shouldReceive('get')->with('foo')->andReturn($element);
 
-        $this->assertRegExp($expected, $sut($form));
+        $this->assertMatchesRegularExpression($expected, $sut($form));
     }
 
     /**
@@ -459,7 +459,7 @@ class FormErrorsTest extends MockeryTestCase
             ->shouldReceive('has')->once()->with('foo')->andReturn(true)
             ->shouldReceive('get')->with('foo')->andReturn($element);
 
-        $this->assertRegExp($expected, $sut($form));
+        $this->assertMatchesRegularExpression($expected, $sut($form));
     }
 
     /**
@@ -517,7 +517,7 @@ class FormErrorsTest extends MockeryTestCase
             ->with('foo')
             ->andReturn($element);
 
-        $this->assertRegExp($expected, $sut($form));
+        $this->assertMatchesRegularExpression($expected, $sut($form));
     }
 
     /**
@@ -578,7 +578,7 @@ class FormErrorsTest extends MockeryTestCase
             ->with('foo')
             ->andReturn($element);
 
-        $this->assertRegExp($expected, $sut($form));
+        $this->assertMatchesRegularExpression($expected, $sut($form));
     }
 
     /**
@@ -635,7 +635,7 @@ class FormErrorsTest extends MockeryTestCase
             ->with('foo')
             ->andReturn($element);
 
-        $this->assertRegExp($expected, $sut($form));
+        $this->assertMatchesRegularExpression($expected, $sut($form));
     }
 
     /**
@@ -692,7 +692,7 @@ class FormErrorsTest extends MockeryTestCase
             ->with('foo')
             ->andReturn($element);
 
-        $this->assertRegExp($expected, $sut($form));
+        $this->assertMatchesRegularExpression($expected, $sut($form));
     }
 
     /**
@@ -747,7 +747,7 @@ class FormErrorsTest extends MockeryTestCase
             ->shouldReceive('getName')->andReturn(null)
             ->shouldReceive('getLabel')->andReturn('Default Label');
 
-        $this->assertRegExp($expected, $sut($form));
+        $this->assertMatchesRegularExpression($expected, $sut($form));
     }
 
     /**
@@ -804,7 +804,7 @@ class FormErrorsTest extends MockeryTestCase
             ->with('foo')
             ->andReturn($element);
 
-        $this->assertRegExp($expected, $sut($form));
+        $this->assertMatchesRegularExpression($expected, $sut($form));
     }
 
     /**
@@ -862,7 +862,7 @@ class FormErrorsTest extends MockeryTestCase
             ->with('foo')
             ->andReturn($element);
 
-        $this->assertRegExp($expected, $sut($form));
+        $this->assertMatchesRegularExpression($expected, $sut($form));
     }
 
     /**
@@ -919,7 +919,7 @@ class FormErrorsTest extends MockeryTestCase
             ->with('foo')
             ->andReturn($element);
 
-        $this->assertRegExp($expected, $sut($form));
+        $this->assertMatchesRegularExpression($expected, $sut($form));
     }
 
     /**

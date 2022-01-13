@@ -1,6 +1,5 @@
 <?php
 
-
 namespace CommonTest\Data\Mapper\Licence\Surrender\Sections;
 
 use Common\Data\Mapper\licence\Surrender\OperatorLicence;
@@ -13,7 +12,6 @@ use Laminas\Mvc\Controller\Plugin\Url;
 
 class SurrenderSectionTest extends MockeryTestCase
 {
-
     protected $mockTranslator;
     protected $mockUrlHelper;
 
@@ -270,7 +268,7 @@ class SurrenderSectionTest extends MockeryTestCase
         $this->mockTranslator->shouldReceive('translate')->with('surrender.review.label.documents.operatorLicenceDocument')->andReturn($expected[0]['label']);
 
         // use this to get the appropriate translation key
-        $translationString = $this->getTranslationStrings($this->dataDescription());
+        $translationString = $this->getTranslationStrings($this->dataName());
 
         $this->mockTranslator->shouldReceive('translate')->with($translationString)->andReturn($expected[0]['answer']);
 
@@ -392,7 +390,7 @@ class SurrenderSectionTest extends MockeryTestCase
         $this->mockTranslator->shouldReceive('translate')->with('surrender.review.label.documents.communityLicenceDocument')->andReturn($expected[0]['label']);
 
         // use this to get the appropriate translation key
-        $translationString = $this->getTranslationStrings($this->dataDescription());
+        $translationString = $this->getTranslationStrings($this->dataName());
 
         $this->mockTranslator->shouldReceive('translate')->with($translationString)->andReturn($expected[0]['answer']);
 

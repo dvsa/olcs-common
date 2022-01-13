@@ -1,36 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<phpunit bootstrap="Bootstrap.php"
-         colors="true"
-         stopOnError="false"
->
-    <testsuites>
-        <testsuite name="Common">
-            <directory>./</directory>
-        </testsuite>
-    </testsuites>
-    <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">../Common/src</directory>
-            <exclude>
-                <directory>../Common/src/Common/Table/Tables/</directory>
-                <directory suffix=".fieldset.php">../Common/src/Common/Form/Fieldsets/</directory>
-                <directory suffix=".element.php">../Common/src/Common/Form/Elements/</directory>
-            </exclude>
-        </whitelist>
-    </filter>
-    <listeners>
-        <listener class="JohnKary\PHPUnit\Listener\SpeedTrapListener">
-             <arguments>
-                <array>
-                    <element key="slowThreshold">
-                        <integer>250</integer>
-                    </element>
-                    <element key="reportLength">
-                        <integer>5</integer>
-                    </element>
-                </array>
-            </arguments>
-        </listener>
-    </listeners>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="Bootstrap.php" colors="true" stopOnError="false" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+  <coverage processUncoveredFiles="true">
+    <include>
+      <directory suffix=".php">../Common/src</directory>
+    </include>
+    <exclude>
+      <directory>../Common/src/Common/Table/Tables/</directory>
+      <directory suffix=".fieldset.php">../Common/src/Common/Form/Fieldsets/</directory>
+      <directory suffix=".element.php">../Common/src/Common/Form/Elements/</directory>
+    </exclude>
+  </coverage>
+  <testsuites>
+    <testsuite name="Common">
+      <directory>./</directory>
+    </testsuite>
+  </testsuites>
+  <listeners>
+    <listener class="JohnKary\PHPUnit\Listener\SpeedTrapListener">
+      <arguments>
+        <array>
+          <element key="slowThreshold">
+            <integer>250</integer>
+          </element>
+          <element key="reportLength">
+            <integer>5</integer>
+          </element>
+        </array>
+      </arguments>
+    </listener>
+  </listeners>
 </phpunit>

@@ -1,14 +1,9 @@
 <?php
 
-/**
- * Test FlashMessengerTrait
- *
- * @author Michael Cooper <michael.cooper@valtech.co.uk>
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\Controller\Util;
 
 use Laminas\Mvc\Controller\Plugin\FlashMessenger as FlashMessengerPlugin;
+use Mockery as m;
 
 /**
  * Test FlashMessengerTrait
@@ -16,7 +11,7 @@ use Laminas\Mvc\Controller\Plugin\FlashMessenger as FlashMessengerPlugin;
  * @author Michael Cooper <michael.cooper@valtech.co.uk>
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FlashMessengerTraitTest extends \PHPUnit\Framework\TestCase
+class FlashMessengerTraitTest extends m\Adapter\Phpunit\MockeryTestCase
 {
     private $sut;
 
@@ -151,19 +146,10 @@ class FlashMessengerTraitTest extends \PHPUnit\Framework\TestCase
         $message = 'foo';
         $namespace = 'error';
 
-        $chainMock = $this->createPartialMock(FlashMessengerPlugin::class, array('addMessage', 'setNamespace'));
-        $chainMock->expects($this->at(0))
-            ->method('setNamespace')
-            ->with($namespace)
-            ->will($this->returnSelf());
-        $chainMock->expects($this->at(1))
-            ->method('addMessage')
-            ->with($message)
-            ->will($this->returnSelf());
-        $chainMock->expects($this->at(2))
-            ->method('setNamespace')
-            ->with('default')
-            ->will($this->returnSelf());
+        $chainMock = m::mock(FlashMessengerPlugin::class);
+        $chainMock->expects('setNamespace')->with($namespace)->andReturnSelf();
+        $chainMock->expects('addMessage')->with($message)->andReturnSelf();
+        $chainMock->expects('setNamespace')->with('default')->andReturnSelf();
 
         $this->sut->expects($this->once())
             ->method('getFlashMessenger')

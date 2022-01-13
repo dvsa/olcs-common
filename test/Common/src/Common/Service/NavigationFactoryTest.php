@@ -3,9 +3,7 @@
 namespace CommonTest\Service;
 
 use Common\Service\NavigationFactory;
-use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
-
 use Laminas\Mvc\Router\RouteMatch;
 use Laminas\Mvc\Service\ServiceManagerConfig;
 use Laminas\ServiceManager\ServiceManager;
