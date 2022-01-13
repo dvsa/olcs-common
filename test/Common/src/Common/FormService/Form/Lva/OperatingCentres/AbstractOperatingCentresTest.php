@@ -7,9 +7,12 @@ namespace CommonTest\FormService\Form\Lva\OperatingCentres;
 use Common\FormService\Form\Lva\OperatingCentres\AbstractOperatingCentres;
 use Mockery as m;
 use Common\RefData;
+use Common\Form\Elements\Types\Table;
 use Common\Form\Elements\Validators\TableRequiredValidator;
 use Common\Form\Form;
+use Common\Service\Table\TableBuilder;
 use Common\Test\FormService\Form\Lva\OperatingCentres\OperatingCentresTestCase;
+use Laminas\Form\Fieldset;
 use Laminas\Validator\Between;
 
 /**
@@ -34,7 +37,7 @@ class AbstractOperatingCentresTest extends OperatingCentresTestCase
     {
         $this->sut = m::mock(AbstractOperatingCentres::class);
         $params = [
-            'canHaveSchedule41' => true,
+            'canHaveSchedule41' => false,
             'canHaveCommunityLicences' => true,
             'isPsv' => false,
             'operatingCentres' => ['XX'],
@@ -43,6 +46,7 @@ class AbstractOperatingCentresTest extends OperatingCentresTestCase
             'possibleEnforcementAreas' => ['A', 'B'],
             'licenceType' => ['id' => RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL],
             'vehicleType' => ['id' => RefData::APP_VEHICLE_TYPE_MIXED],
+            'totAuthLgvVehicles' => 0,
         ];
 
         $mockFieldSet = m::mock();
@@ -57,7 +61,46 @@ class AbstractOperatingCentresTest extends OperatingCentresTestCase
             m::mock()->shouldReceive('setValueOptions')->with(['A', 'B'])->once()->getMock()
         );
 
+        $columns = [
+            'noOfVehiclesRequired' => [
+                'title' => 'vehicles',
+            ]
+        ];
+
+        $table = m::mock(TableBuilder::class);
+        $table->shouldReceive('removeAction')
+            ->with('schedule41')
+            ->once()
+            ->shouldReceive('getColumns')
+            ->withNoArgs()
+            ->andReturn($columns)
+            ->shouldReceive('setColumns')
+            ->with(
+                [
+                    'noOfVehiclesRequired' => [
+                        'title' => 'application_operating-centres_authorisation.table.hgvs',
+                    ]
+                ]
+            )
+            ->once();
+
+        $tableElement = m::mock(Table::class);
+        $tableElement->shouldReceive('getTable')
+            ->withNoArgs()
+            ->andReturn($table);
+
+        $fieldset = m::mock(Fieldset::class);
+        $fieldset->shouldReceive('get')
+            ->with('table')
+            ->andReturn($tableElement);
+
         $mockForm = m::mock(\Common\Form\Form::class);
+        $mockForm->shouldReceive('has')
+            ->with('table')
+            ->andReturnTrue();
+        $mockForm->shouldReceive('get')
+            ->with('table')
+            ->andReturn($fieldset);
         $mockForm->shouldReceive('get')->with('dataTrafficArea')->once()->andReturn($mockFieldSet);
 
         $mockFormHelper = m::mock();
@@ -100,6 +143,9 @@ class AbstractOperatingCentresTest extends OperatingCentresTestCase
         );
 
         $mockForm = m::mock(\Common\Form\Form::class);
+        $mockForm->shouldReceive('has')
+            ->with('table')
+            ->andReturnFalse();
         $mockForm->shouldReceive('get')->with('dataTrafficArea')->twice()->andReturn($mockFieldSet);
 
         $mockFormHelper = m::mock();
@@ -132,6 +178,10 @@ class AbstractOperatingCentresTest extends OperatingCentresTestCase
         $this->sut->shouldReceive('getFormHelper')->andReturn($mockFormHelper);
 
         $mockFormHelper->shouldReceive('getValidator->setMessage');
+
+        $mockForm->shouldReceive('has')
+            ->with('table')
+            ->andReturnFalse();
 
         $mockFieldSet = m::mock();
         $mockForm->shouldReceive('get')->with('dataTrafficArea')->once()->andReturn($mockFieldSet);
@@ -210,6 +260,10 @@ class AbstractOperatingCentresTest extends OperatingCentresTestCase
 
         $this->sut->shouldReceive('getFormHelper')->andReturn($mockFormHelper);
 
+        $mockForm->shouldReceive('has')
+            ->with('table')
+            ->andReturnFalse();
+
         $mockFieldSet = m::mock();
         $mockForm->shouldReceive('get')->with('dataTrafficArea')->once()->andReturn($mockFieldSet);
         $mockFieldSet->shouldReceive('remove')->with('trafficAreaSet')->once();
@@ -256,13 +310,13 @@ class AbstractOperatingCentresTest extends OperatingCentresTestCase
      * @test
      * @depends getForm_ReturnsAForm
      */
-    public function getForm_DisablesVehicleClassifications_WhenIsNotEligibleForLgvs()
+    public function getForm_DisablesVehicleClassifications_WhenIsHgv()
     {
         // Setup
         $this->setUpSut();
 
         // Execute
-        $form = $this->sut->getForm($this->paramsForLicenceThatIsNotEligibleForLgvs());
+        $form = $this->sut->getForm($this->paramsForHgvLicence());
 
         // Assert
         $this->assertVehicleClassificationsAreDisabledForForm($form);
@@ -272,13 +326,13 @@ class AbstractOperatingCentresTest extends OperatingCentresTestCase
      * @test
      * @depends getForm_ReturnsAForm
      */
-    public function getForm_DoesNotDisableVehicleClassifications_WhenIsEligibleForLgvs()
+    public function getForm_DoesNotDisableVehicleClassifications_WhenIsMixedWithLgv()
     {
         // Setup
         $this->setUpSut();
 
         // Execute
-        $form = $this->sut->getForm($this->paramsForLicenceThatIsEligibleForLgvs());
+        $form = $this->sut->getForm($this->paramsForMixedLicenceWithLgv());
 
         // Assert
         $this->assertVehicleClassificationsAreEnabledForForm($form);

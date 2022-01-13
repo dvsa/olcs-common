@@ -212,13 +212,19 @@ abstract class OperatingCentresTestCase extends MockeryTestCase
      */
     protected function paramsForLicence(): array
     {
+        return $this->paramsForHgvLicence();
+    }
+
+    /**
+     * @return array
+     */
+    protected function paramsForHgvLicence(): array
+    {
         return [
             'operatingCentres' => [],
             'canHaveSchedule41' => false,
             'canHaveCommunityLicences' => false,
             'isPsv' => false,
-            'totAuthLgvVehicles' => 0,
-            'isEligibleForLgv' => false,
             'vehicleType' => ['id' => RefData::APP_VEHICLE_TYPE_HGV],
         ];
     }
@@ -226,13 +232,13 @@ abstract class OperatingCentresTestCase extends MockeryTestCase
     /**
      * @return array
      */
-    protected function paramsForLicenceThatIsEligibleForLgvs(): array
+    protected function paramsForMixedLicenceWithoutLgv(): array
     {
         return array_merge(
             $this->paramsForLicence(),
             [
-                'isEligibleForLgv' => true,
-                'vehicleType' => ['id' => RefData::APP_VEHICLE_TYPE_MIXED]
+                'vehicleType' => ['id' => RefData::APP_VEHICLE_TYPE_MIXED],
+                'totAuthLgvVehicles' => null,
             ]
         );
     }
@@ -240,9 +246,14 @@ abstract class OperatingCentresTestCase extends MockeryTestCase
     /**
      * @return array
      */
-    protected function paramsForLicenceThatIsNotEligibleForLgvs(): array
+    protected function paramsForMixedLicenceWithLgv(): array
     {
-        return array_merge($this->paramsForLicence(), ['isEligibleForLgv' => false]);
+        return array_merge(
+            $this->paramsForMixedLicenceWithoutLgv(),
+            [
+                'totAuthLgvVehicles' => 0,
+            ]
+        );
     }
 
     /**
@@ -266,7 +277,7 @@ abstract class OperatingCentresTestCase extends MockeryTestCase
      */
     protected function paramsForGoodsLicence(): array
     {
-        return array_merge($this->paramsForLicence(), ['isPsv' => false]);
+        return $this->paramsForHgvLicence();
     }
 
     /**

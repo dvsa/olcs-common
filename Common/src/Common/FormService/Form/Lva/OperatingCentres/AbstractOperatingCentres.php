@@ -47,8 +47,14 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
      */
     protected function alterForm(Form $form, array $params)
     {
-        if (!$params['canHaveSchedule41']) {
-            $form->get('table')->get('table')->getTable()->removeAction('schedule41');
+        if ($form->has('table')) {
+            $table = $form->get('table')->get('table')->getTable();
+
+            if (!$params['canHaveSchedule41']) {
+                $table->removeAction('schedule41');
+            }
+
+            $this->alterTableForLgv($table, $params);
         }
 
         if (!$params['canHaveCommunityLicences']) {
@@ -267,6 +273,23 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
             default:
                 // no changes required to the form
                 break;
+        }
+    }
+
+    /**
+     * Alter the table in accordance with lgv requirements
+     *
+     * @param TableBuilder $tableBuilder
+     * @param array $params
+     */
+    private function alterTableForLgv(TableBuilder $tableBuilder, array $params)
+    {
+        $isMixedWithLgv = ($params['vehicleType']['id'] === RefData::APP_VEHICLE_TYPE_MIXED) && ($params['totAuthLgvVehicles'] !== null);
+
+        if ($isMixedWithLgv) {
+            $columns = $tableBuilder->getColumns();
+            $columns['noOfVehiclesRequired']['title'] = 'application_operating-centres_authorisation.table.hgvs';
+            $tableBuilder->setColumns($columns);
         }
     }
 }
