@@ -45,13 +45,13 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
 
         $params = [
             'canBecomeSpecialRestricted' => $data['canBecomeSpecialRestricted'],
+            'canBecomeStandardInternational' => $data['canBecomeStandardInternational'],
             'canUpdateLicenceType' => $data['canUpdateLicenceType'],
             'currentLicenceType' => $data['currentLicenceType']
         ];
 
-        $form = $this->getServiceLocator()->get('FormServiceManager')
-            ->get('lva-variation-type-of-licence')
-            ->getForm($params);
+        $tolFormService = $this->getServiceLocator()->get('FormServiceManager')->get('lva-variation-type-of-licence');
+        $form = $tolFormService->getForm($params);
 
         // If we have no data (not posted)
         if ($prg === false) {
@@ -63,6 +63,8 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         // If we have posted and have data
         $form->setData($prg);
 
+        $tolFormService->maybeAlterFormForGoodsStandardInternational($form);
+
         // If the form is invalid, render the errors
         if (!$form->isValid()) {
             return $this->renderIndex($form);
@@ -73,7 +75,7 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         $dtoData = [
             'id' => $this->getIdentifier(),
             'version' => $formData['version'],
-            'licenceType' => $formData['type-of-licence']['licence-type']
+            'licenceType' => $formData['type-of-licence']['licence-type']['licence-type']
         ];
 
         /** @var \Common\Service\Cqrs\Response $response */

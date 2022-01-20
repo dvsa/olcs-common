@@ -2,6 +2,7 @@
 
 namespace Common\FormService\Form\Lva\TypeOfLicence;
 
+use Common\RefData;
 use Laminas\Form\Form;
 
 /**
@@ -21,6 +22,23 @@ class VariationTypeOfLicence extends AbstractTypeOfLicence
             $form->get('type-of-licence')->get('licence-type')->get('licence-type'),
             $params['currentLicenceType']
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function lockElements(Form $form, $params = [])
+    {
+        parent::lockElements($form, $params);
+
+        $typeOfLicenceFieldset = $form->get('type-of-licence');
+
+        if (!$params['canBecomeStandardInternational']) {
+            $this->getFormHelper()->disableOption(
+                $typeOfLicenceFieldset->get('licence-type')->get('licence-type'),
+                RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
+            );
+        }
     }
 
     protected function allElementsLocked(Form $form)
