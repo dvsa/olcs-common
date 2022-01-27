@@ -394,6 +394,7 @@ class LicenceChecklist extends AbstractHelper implements FactoryInterface
     private function prepareOperatingCentres($data)
     {
         $operatingCentres = $data['operatingCentres'];
+        $ocVehiclesColumnHeader = $data['ocVehiclesColumnHeader'];
         if (is_array($operatingCentres) && count($operatingCentres) <= $data['displayOperatingCentresCount']) {
             $header = [
                 [
@@ -401,11 +402,11 @@ class LicenceChecklist extends AbstractHelper implements FactoryInterface
                     'header' => true
                 ],
                 [
-                    'value' => $this->translator->__invoke('continuations.oc-section.table.vehicles'),
+                    'value' => $this->translator->__invoke('continuations.oc-section.table.' . $ocVehiclesColumnHeader),
                     'header' => true
                 ]
             ];
-            if ($data['isGoods']) {
+            if ($data['canHaveTrailers']) {
                 $header[] = [
                     'value' => $this->translator->__invoke('continuations.oc-section.table.trailers'),
                     'header' => true
@@ -417,7 +418,7 @@ class LicenceChecklist extends AbstractHelper implements FactoryInterface
                     ['value' => $oc['name']],
                     ['value' => $oc['vehicles']]
                 ];
-                if ($data['isGoods']) {
+                if ($data['canHaveTrailers']) {
                     $row[] = ['value' => $oc['trailers']];
                 }
                 $ocData[] = $row;
@@ -440,25 +441,27 @@ class LicenceChecklist extends AbstractHelper implements FactoryInterface
      */
     private function prepareOperatingCentresAuthority($data)
     {
-        $ocData[] = [
-            [
-                'value' => $this->translator->__invoke('continuations.oc-section.table.auth_vehicles'),
-                'header' => true
-            ],
-            [
-                'value' => $data['totalVehicles'],
-            ]
+        $translationMappings = [
+            'totalVehicles' => 'vehicles',
+            'totalHeavyGoodsVehicles' => 'heavy-goods-vehicles',
+            'totalLightGoodsVehicles' => 'light-goods-vehicles',
+            'totalTrailers' => 'trailers',
         ];
-        if ($data['isGoods']) {
-            $ocData[] = [
-                [
-                    'value' => $this->translator->__invoke('continuations.oc-section.table.auth_trailers'),
-                    'header' => true
-                ],
-                [
-                    'value' => $data['totalTrailers'],
-                ]
-            ];
+
+        foreach ($translationMappings as $propertyName => $translationKeySuffix) {
+            if (isset($data[$propertyName])) {
+                $ocData[] = [
+                    [
+                        'value' => $this->translator->__invoke(
+                            'continuations.oc-section.table.auth_' . $translationKeySuffix
+                        ),
+                        'header' => true
+                    ],
+                    [
+                        'value' => $data[$propertyName],
+                    ]
+                ];
+            }
         }
 
         return $ocData;

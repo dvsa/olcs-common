@@ -236,10 +236,20 @@ class LicenceChecklistTest extends MockeryTestCase
                 ],
                 'tachographInsName' => 'Foo Ltd',
                 'totAuthVehicles' => 5,
+                'totAuthHgvVehicles' => 15,
+                'totAuthLgvVehicles' => 20,
                 'totAuthTrailers' => 10,
             ],
             'ocChanges' => 1,
             'tmChanges' => 1,
+            'isMixedWithLgv' => true,
+            'canHaveTrailers' => true,
+            'applicableAuthProperties' => [
+                'totAuthVehicles',
+                'totAuthHgvVehicles',
+                'totAuthLgvVehicles',
+                'totAuthTrailers',
+            ],
             'id' => 999
         ];
         $out = [
@@ -302,6 +312,7 @@ class LicenceChecklistTest extends MockeryTestCase
                     'correspondenceEmail' => 'test@example.com'
                 ],
                 'operatingCentres' => [
+                    'ocVehiclesColumnHeader' => 'heavy-goods-vehicles',
                     'operatingCentres' => [
                         [
                             'name' => 'Cake, Baz',
@@ -316,10 +327,12 @@ class LicenceChecklistTest extends MockeryTestCase
                     ],
                     'totalOperatingCentres' => 2,
                     'totalVehicles' => 5,
+                    'totalHeavyGoodsVehicles' => 15,
+                    'totalLightGoodsVehicles' => 20,
                     'totalTrailers' => 10,
-                    'isGoods' => true,
                     'displayOperatingCentresCount' => RefData::CONTINUATIONS_DISPLAY_OPERATING_CENTRES_COUNT,
-                    'ocChanges' => 1
+                    'ocChanges' => 1,
+                    'canHaveTrailers' => true,
                 ],
                 'transportManagers' => [
                     'transportManagers' => [
