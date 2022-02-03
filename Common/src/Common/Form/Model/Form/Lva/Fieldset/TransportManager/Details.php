@@ -60,6 +60,12 @@ class Details
     public $birthPlace = null;
 
     /**
+     * @Form\Attributes({"value": "markup-lva-tm-details-details-certificateHtml"})
+     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
+     */
+    public $certificateHtml = null;
+
+    /**
      * @Form\Attributes({"id":"certificate", "class": "file-upload"})
      * @Form\ComposedObject("\Common\Form\Model\Fieldset\MultipleFileUpload")
      * @Form\Options({
@@ -71,6 +77,37 @@ class Details
      * })
      */
     public $certificate = null;
+
+    /**
+     * @Form\Attributes({"value": "markup-lva-tm-details-details-lgvAcquiredRightsHtml"})
+     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
+     */
+    public $lgvAcquiredRightsHtml = null;
+
+    /**
+     * @Form\Required(false)
+     * @Form\Type("Text")
+     * @Form\Attributes({"id":"lgv-acquired-rights-ref-number","class":"medium"})
+     * @Form\Options({
+     *     "label": "lva-tm-details-details-lgvAcquiredRightsReferenceNumber",
+     *     "label_attributes": {"class": "legend"},
+     *     "hint": "lva-tm-details-details-lgvAcquiredRightsReferenceNumber-hint",
+     * })
+     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
+     * @Form\Validator({
+     *     "name": "\Laminas\Validator\StringLength",
+     *     "options": {
+     *         "min": 7,
+     *         "max": 7,
+     *         "messages": {
+     *             \Laminas\Validator\StringLength::INVALID: "lva-tm-details-details-lgvAcquiredRightsReferenceNumber-error-length",
+     *             \Laminas\Validator\StringLength::TOO_SHORT: "lva-tm-details-details-lgvAcquiredRightsReferenceNumber-error-length",
+     *             \Laminas\Validator\StringLength::TOO_LONG: "lva-tm-details-details-lgvAcquiredRightsReferenceNumber-error-length",
+     *         }
+     *     }
+     * })
+     */
+    public $lgvAcquiredRightsReferenceNumber = null;
 
     /**
      * @Form\Options({
