@@ -571,57 +571,137 @@ class LicenceChecklistTest extends MockeryTestCase
         $this->assertEquals($out, LicenceChecklist::mapUsersSectionToView($in, $this->mockTranslator));
     }
 
-    public function testMapOperatingCentresSectionToView()
+    /**
+     * @dataProvider dpMapOperatingCentresSectionToView
+     */
+    public function testMapOperatingCentresSectionToView($canHaveTrailers, $isMixedWithLgv, $expected)
     {
         $in = [
-            'goodsOrPsv' => [
-                'id' => RefData::LICENCE_CATEGORY_GOODS_VEHICLE
-            ],
-            'operatingCentres' => [
-                [
-                    'operatingCentre' => [
-                        'address' => [
-                            'addressLine1' => 'Foo',
-                            'town' => 'Bar'
+            'licence' => [
+                'operatingCentres' => [
+                    [
+                        'operatingCentre' => [
+                            'address' => [
+                                'addressLine1' => 'Foo',
+                                'town' => 'Bar'
+                            ],
                         ],
+                        'noOfVehiclesRequired' => 1,
+                        'noOfTrailersRequired' => 2,
                     ],
-                    'noOfVehiclesRequired' => 1,
-                    'noOfTrailersRequired' => 2,
-                ],
-                [
-                    'operatingCentre' => [
-                        'address' => [
-                            'addressLine1' => 'Baz',
-                            'town' => 'Cake'
+                    [
+                        'operatingCentre' => [
+                            'address' => [
+                                'addressLine1' => 'Baz',
+                                'town' => 'Cake'
+                            ],
                         ],
-                    ],
-                    'noOfVehiclesRequired' => 3,
-                    'noOfTrailersRequired' => 4,
-                ]
-            ]
-        ];
-        $out = [
-            'operatingCentres' => [
-                [
-                    ['value' => 'continuations.oc-section.table.oc_translated', 'header' => true],
-                    ['value' => 'continuations.oc-section.table.vehicles_translated', 'header' => true],
-                    ['value' => 'continuations.oc-section.table.trailers_translated', 'header' => true],
-                ],
-                [
-                    ['value' => 'Baz, Cake'],
-                    ['value' => '3'],
-                    ['value' => '4'],
-                ],
-                [
-                    ['value' => 'Foo, Bar'],
-                    ['value' => '1'],
-                    ['value' => '2'],
+                        'noOfVehiclesRequired' => 3,
+                        'noOfTrailersRequired' => 4,
+                    ]
                 ]
             ],
-            'totalOperatingCentresMessage' => 'continuations.operating-centres.section-header_translated',
+            'isMixedWithLgv' => $isMixedWithLgv,
+            'canHaveTrailers' => $canHaveTrailers,
         ];
 
-        $this->assertEquals($out, LicenceChecklist::mapOperatingCentresSectionToView($in, $this->mockTranslator));
+        $this->assertEquals($expected, LicenceChecklist::mapOperatingCentresSectionToView($in, $this->mockTranslator));
+    }
+
+    public function dpMapOperatingCentresSectionToView()
+    {
+        return [
+            'licence cannot have trailers, vehicle type not mixed with lgv' => [
+                false,
+                false,
+                [
+                    'operatingCentres' => [
+                        [
+                            ['value' => 'continuations.oc-section.table.oc_translated', 'header' => true],
+                            ['value' => 'continuations.oc-section.table.vehicles_translated', 'header' => true],
+                        ],
+                        [
+                            ['value' => 'Baz, Cake'],
+                            ['value' => '3'],
+                        ],
+                        [
+                            ['value' => 'Foo, Bar'],
+                            ['value' => '1'],
+                        ]
+                    ],
+                    'totalOperatingCentresMessage' => 'continuations.operating-centres.section-header_translated',
+                ]
+            ],
+            'licence cannot have trailers, vehicle type mixed with lgv' => [
+                false,
+                true,
+                [
+                    'operatingCentres' => [
+                        [
+                            ['value' => 'continuations.oc-section.table.oc_translated', 'header' => true],
+                            ['value' => 'continuations.oc-section.table.heavy-goods-vehicles_translated', 'header' => true],
+                        ],
+                        [
+                            ['value' => 'Baz, Cake'],
+                            ['value' => '3'],
+                        ],
+                        [
+                            ['value' => 'Foo, Bar'],
+                            ['value' => '1'],
+                        ]
+                    ],
+                    'totalOperatingCentresMessage' => 'continuations.operating-centres.section-header_translated',
+                ]
+            ],
+            'licence can have trailers, vehicle type not mixed with lgv' => [
+                true,
+                false,
+                [
+                    'operatingCentres' => [
+                        [
+                            ['value' => 'continuations.oc-section.table.oc_translated', 'header' => true],
+                            ['value' => 'continuations.oc-section.table.vehicles_translated', 'header' => true],
+                            ['value' => 'continuations.oc-section.table.trailers_translated', 'header' => true],
+                        ],
+                        [
+                            ['value' => 'Baz, Cake'],
+                            ['value' => '3'],
+                            ['value' => '4'],
+                        ],
+                        [
+                            ['value' => 'Foo, Bar'],
+                            ['value' => '1'],
+                            ['value' => '2'],
+                        ]
+                    ],
+                    'totalOperatingCentresMessage' => 'continuations.operating-centres.section-header_translated',
+                ]
+            ],
+            'licence can have trailers, vehicle type mixed with lgv' => [
+                true,
+                true,
+                [
+                    'operatingCentres' => [
+                        [
+                            ['value' => 'continuations.oc-section.table.oc_translated', 'header' => true],
+                            ['value' => 'continuations.oc-section.table.heavy-goods-vehicles_translated', 'header' => true],
+                            ['value' => 'continuations.oc-section.table.trailers_translated', 'header' => true],
+                        ],
+                        [
+                            ['value' => 'Baz, Cake'],
+                            ['value' => '3'],
+                            ['value' => '4'],
+                        ],
+                        [
+                            ['value' => 'Foo, Bar'],
+                            ['value' => '1'],
+                            ['value' => '2'],
+                        ]
+                    ],
+                    'totalOperatingCentresMessage' => 'continuations.operating-centres.section-header_translated',
+                ]
+            ],
+        ];
     }
 
     public function testMapTransportManagerSectionToView()
