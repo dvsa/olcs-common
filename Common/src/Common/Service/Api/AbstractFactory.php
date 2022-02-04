@@ -4,6 +4,7 @@ namespace Common\Service\Api;
 
 use Common\Util\RestClient;
 use Interop\Container\ContainerInterface;
+use Laminas\Authentication\Storage\Session;
 use Laminas\Filter\Word\CamelCaseToDash;
 use Laminas\Http\Header\Cookie;
 use Laminas\Http\Request;
@@ -75,6 +76,12 @@ class AbstractFactory implements AbstractFactoryInterface
         // options
         $rest = new RestClient($url, $options, $auth, $secureToken);
         $rest->setLanguage($translator->getLocale());
+
+        $session = $container->getServiceLocator()->get(Session::class)->read();
+        $accessToken = $session['AccessToken'] ?? null;
+        if (!is_null($accessToken)) {
+            $rest->setAuthHeader(sprintf("Authorization:Bearer %s", $accessToken));
+        }
 
         return $rest;
     }

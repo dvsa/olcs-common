@@ -191,6 +191,8 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
     {
         $mock = $this->getSutMock(array('getClientRequest', 'getAccept', 'getAcceptLanguage'));
 
+        $mock->setAuthHeader('auth_header');
+
         $accept = $this->createPartialMock(Accept::class, array('addMediaType'));
         $accept->expects($this->once())
             ->method('addMediaType')
@@ -232,7 +234,8 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
         $mock->url = $toString;
 
         $client->expects($this->once())
-            ->method('setHeaders');
+            ->method('setHeaders')
+        ->with([$accept, $acceptLanguage, null, 'auth_header']);
         $client->expects($this->once())
             ->method('setMethod')
             ->with('POST');

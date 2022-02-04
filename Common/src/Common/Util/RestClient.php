@@ -51,6 +51,8 @@ class RestClient
      */
     private $cookie;
 
+    private ?string $authHeader = null;
+
     /**
      * @param \Laminas\Uri\Http $url
      * @param array $options options passed to HttpClient
@@ -283,7 +285,11 @@ class RestClient
 
         $this->client->setUri($this->url->toString() . $path);
 
-        $this->client->setHeaders(array($accept, $acceptLanguage, $this->cookie));
+        $headers = [$accept, $acceptLanguage, $this->cookie];
+        if (!is_null($this->authHeader)) {
+            $headers[] = $this->authHeader;
+        }
+        $this->client->setHeaders($headers);
 
         $this->client->setMethod($method);
 
@@ -308,6 +314,11 @@ class RestClient
     public function getClientRequest()
     {
         return new Request();
+    }
+
+    public function setAuthHeader(string $header): void
+    {
+        $this->authHeader = $header;
     }
 
     /**

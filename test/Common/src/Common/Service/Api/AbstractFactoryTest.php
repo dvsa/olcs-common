@@ -3,6 +3,7 @@
 namespace CommonTest\Service\Api;
 
 use Common\Service\Api\AbstractFactory;
+use Laminas\Authentication\Storage\Session;
 use Laminas\Http\Header\Cookie;
 use Laminas\Http\Request;
 use Laminas\I18n\Translator\Translator;
@@ -28,6 +29,11 @@ class AbstractFactoryTest extends MockeryTestCase
     /** @var m\MockInterface | Translator */
     protected $mockTranslator;
 
+    /**
+     * @var Laminas\Authentication\Storage\Session|m\LegacyMockInterface|m\MockInterface
+     */
+    private $mockSession;
+
     public function setUp(): void
     {
         $this->sut = new AbstractFactory();
@@ -37,6 +43,8 @@ class AbstractFactoryTest extends MockeryTestCase
         $this->mockRequest = m::mock(Request::class);
 
         $this->mockTranslator = m::mock(Translator::class);
+
+        $this->mockSession = m::mock(Session::class);
     }
 
     /**
@@ -78,9 +86,12 @@ class AbstractFactoryTest extends MockeryTestCase
 
         $this->mockRequest->shouldReceive('getCookie')->andReturn(new Cookie(['secureToken' => 'abad1dea']));
 
+        $this->mockSession->shouldReceive('read')->andReturn(['AccessToken' => 'abc123']);
+
         $this->mockSl->shouldReceive('getServiceLocator->get')->with('Config')->andReturn($config);
         $this->mockSl->shouldReceive('getServiceLocator->get')->with('translator')->andReturn($this->mockTranslator);
         $this->mockSl->shouldReceive('getServiceLocator->get')->with('Request')->andReturn($this->mockRequest);
+        $this->mockSl->shouldReceive('getServiceLocator->get')->with(Session::class)->andReturn($this->mockSession);
 
         $client = ($this->sut)($this->mockSl, 'Olcs\RestService\TaskType');
         $this->assertEquals('olcs-backend', $client->url->getHost());
@@ -140,9 +151,12 @@ class AbstractFactoryTest extends MockeryTestCase
 
         $this->mockRequest->shouldReceive('getCookie')->andReturn(new Cookie(['secureToken' => 'abad1dea']));
 
+        $this->mockSession->shouldReceive('read')->andReturn(['AccessToken' => 'abc123']);
+
         $this->mockSl->shouldReceive('getServiceLocator->get')->with('Config')->andReturn($config);
         $this->mockSl->shouldReceive('getServiceLocator->get')->with('translator')->andReturn($this->mockTranslator);
         $this->mockSl->shouldReceive('getServiceLocator->get')->with('Request')->andReturn($this->mockRequest);
+        $this->mockSl->shouldReceive('getServiceLocator->get')->with(Session::class)->andReturn($this->mockSession);
 
         $client = ($this->sut)($this->mockSl, 'myapi\\some-resource');
         $this->assertEquals('external-api', $client->url->getHost());
