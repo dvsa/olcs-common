@@ -26,7 +26,6 @@ return array(
             'formatter' => 'Address',
             'addressFields' => 'BRIEF',
             'sort' => 'adr',
-            'width' => '60%'
         ),
         array(
             'title' => 'application_operating-centres_authorisation.table.vehicles',
