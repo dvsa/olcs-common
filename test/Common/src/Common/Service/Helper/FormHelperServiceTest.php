@@ -6,7 +6,6 @@ use Common\Service\Helper\FormHelperService;
 use Common\Service\Helper\TranslationHelperService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Laminas\Form\Element\Radio;
 use Laminas\Form\Element\Select;
 use Laminas\Form\FormInterface;
 use Laminas\InputFilter\InputFilterInterface;
@@ -1293,69 +1292,6 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with(['bar' => 'baz']);
 
         $this->sut->removeOption($element, $index);
-    }
-
-    public function testDisableOptionWithoutOption()
-    {
-        $index = 'blap';
-
-        $valueOptions = [
-            'foo' => [
-                'fooattribute1' => 'fooval1',
-                'fooattribute2' => 'fooval2'
-            ],
-            'bar' => [
-                'barattribute1' => 'barval1',
-                'barattribute2' => 'barval2'
-            ]
-        ];
-
-        $element = m::mock(Radio::class);
-        $element->shouldReceive('getValueOptions')
-            ->withNoArgs()
-            ->andReturn($valueOptions);
-        $element->shouldReceive('setValueOptions')
-            ->never();
-
-        $this->sut->disableOption($element, $index);
-    }
-
-    public function testDisableOptionWithOption()
-    {
-        $index = 'bar';
-
-        $valueOptions = [
-            'foo' => [
-                'fooattribute1' => 'fooval1',
-                'fooattribute2' => 'fooval2'
-            ],
-            'bar' => [
-                'nbarattribute1' => 'fooval1',
-                'fooattribute2' => 'fooval2'
-            ]
-        ];
-
-        $expectedValueOptions = [
-            'foo' => [
-                'fooattribute1' => 'fooval1',
-                'fooattribute2' => 'fooval2'
-            ],
-            'bar' => [
-                'nbarattribute1' => 'fooval1',
-                'fooattribute2' => 'fooval2',
-                'disabled' => 'disabled'
-            ]
-        ];
-
-        $element = m::mock(Radio::class);
-        $element->shouldReceive('getValueOptions')
-            ->withNoArgs()
-            ->andReturn($valueOptions);
-        $element->shouldReceive('setValueOptions')
-            ->with($expectedValueOptions)
-            ->once();
-
-        $this->sut->disableOption($element, $index);
     }
 
     public function testSetCurrentOptionWithoutCurrentOption()

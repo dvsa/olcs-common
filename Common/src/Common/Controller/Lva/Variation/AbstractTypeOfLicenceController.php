@@ -12,6 +12,7 @@ use Dvsa\Olcs\Transfer\Query\Variation\TypeOfLicence;
 use Common\Controller\Lva;
 use Laminas\Http\Response;
 use Common\Data\Mapper\Lva\TypeOfLicence as TypeOfLicenceMapper;
+use Common\RefData;
 
 /**
  * Common Lva Abstract Type Of Licence Controller
@@ -45,7 +46,6 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
 
         $params = [
             'canBecomeSpecialRestricted' => $data['canBecomeSpecialRestricted'],
-            'canBecomeStandardInternational' => $data['canBecomeStandardInternational'],
             'canUpdateLicenceType' => $data['canUpdateLicenceType'],
             'currentLicenceType' => $data['currentLicenceType']
         ];
@@ -56,12 +56,14 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         // If we have no data (not posted)
         if ($prg === false) {
             $form->setData(TypeOfLicenceMapper::mapFromResult($data));
+            $this->alterForm($form);
 
             return $this->renderIndex($form);
         }
 
         // If we have posted and have data
         $form->setData($prg);
+        $this->alterForm($form);
 
         $tolFormService->maybeAlterFormForGoodsStandardInternational($form);
 
@@ -94,5 +96,22 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         }
 
         return $this->renderIndex($form);
+    }
+
+    /**
+     * Hard code vehicle type to mixed and disable element (a variation changing a licence to standard international
+     * can only change to standard international/mixed)
+     *
+     * @param mixed $form
+     */
+    private function alterForm($form)
+    {
+        $vehicleTypeElement = $form->get('type-of-licence')
+            ->get('licence-type')
+            ->get('ltyp_siContent')
+            ->get('vehicle-type');
+
+        $vehicleTypeElement->setAttribute('disabled', 'disabled');
+        $vehicleTypeElement->setValue(RefData::APP_VEHICLE_TYPE_MIXED);
     }
 }
