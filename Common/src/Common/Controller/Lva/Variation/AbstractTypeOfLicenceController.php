@@ -45,7 +45,6 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
 
         $params = [
             'canBecomeSpecialRestricted' => $data['canBecomeSpecialRestricted'],
-            'canBecomeStandardInternational' => $data['canBecomeStandardInternational'],
             'canUpdateLicenceType' => $data['canUpdateLicenceType'],
             'currentLicenceType' => $data['currentLicenceType']
         ];
@@ -53,14 +52,19 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         $tolFormService = $this->getServiceLocator()->get('FormServiceManager')->get('lva-variation-type-of-licence');
         $form = $tolFormService->getForm($params);
 
+        $mappedData = TypeOfLicenceMapper::mapFromResult($data);
+
         // If we have no data (not posted)
         if ($prg === false) {
-            $form->setData(TypeOfLicenceMapper::mapFromResult($data));
+            $form->setData($mappedData);
 
             return $this->renderIndex($form);
         }
 
         // If we have posted and have data
+        // manually set operator location and type data in form as the fields are disabled on submission
+        $prg['type-of-licence']['operator-location'] = $mappedData['type-of-licence']['operator-location'];
+        $prg['type-of-licence']['operator-type'] = $mappedData['type-of-licence']['operator-type'];
         $form->setData($prg);
 
         $tolFormService->maybeAlterFormForGoodsStandardInternational($form);
@@ -71,11 +75,26 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         }
 
         $formData = $form->getData();
+        $licenceTypeData = $formData['type-of-licence']['licence-type'];
+
+        $vehicleType = null;
+        $lgvDeclarationConfirmation = 0;
+
+        if (isset($licenceTypeData['ltyp_siContent'])) {
+            $siContentData = $licenceTypeData['ltyp_siContent'];
+            $vehicleType = $siContentData['vehicle-type'];
+
+            if (isset($siContentData['lgv-declaration']['lgv-declaration-confirmation'])) {
+                $lgvDeclarationConfirmation = $siContentData['lgv-declaration']['lgv-declaration-confirmation'];
+            }
+        }
 
         $dtoData = [
             'id' => $this->getIdentifier(),
             'version' => $formData['version'],
-            'licenceType' => $formData['type-of-licence']['licence-type']['licence-type']
+            'licenceType' => $formData['type-of-licence']['licence-type']['licence-type'],
+            'vehicleType' => $vehicleType,
+            'lgvDeclarationConfirmation' => $lgvDeclarationConfirmation,
         ];
 
         /** @var \Common\Service\Cqrs\Response $response */

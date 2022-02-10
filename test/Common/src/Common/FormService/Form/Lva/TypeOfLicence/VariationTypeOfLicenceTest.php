@@ -43,7 +43,6 @@ class VariationTypeOfLicenceTest extends MockeryTestCase
         $params = [
             'canUpdateLicenceType' => true,
             'canBecomeSpecialRestricted' => true,
-            'canBecomeStandardInternational' => true,
             'currentLicenceType' => 'foo'
         ];
 
@@ -119,7 +118,6 @@ class VariationTypeOfLicenceTest extends MockeryTestCase
         $params = [
             'canUpdateLicenceType' => false,
             'canBecomeSpecialRestricted' => false,
-            'canBecomeStandardInternational' => false,
             'currentLicenceType' => 'foo'
         ];
 
@@ -205,9 +203,6 @@ class VariationTypeOfLicenceTest extends MockeryTestCase
             ->shouldReceive('removeOption')
             ->once()
             ->with($mockLt, RefData::LICENCE_TYPE_SPECIAL_RESTRICTED)
-            ->shouldReceive('disableOption')
-            ->once()
-            ->with($mockLt, RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL)
             ->shouldReceive('setCurrentOption')
             ->with($mockLt, 'foo');
 
