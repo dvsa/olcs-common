@@ -134,6 +134,8 @@ class CommandService
         $request->setUri($uri);
         $request->setMethod($method);
 
+        $this->addAuthorizationHeader($request);
+
         /**
          * If we are sending multipart, we need to remove the application/json header, the multipart header will be
          * added by ZF2s client
@@ -161,8 +163,6 @@ class CommandService
                 $shouldLogContent = $adapter->getShouldLogData();
                 $adapter->setShouldLogData(false);
             }
-
-            $this->addAuthorizationHeader();
 
             $clientResponse = $this->client->send();
 
@@ -210,7 +210,7 @@ class CommandService
         return $request;
     }
 
-    private function addAuthorizationHeader()
+    private function addAuthorizationHeader(Request $request): void
     {
         $accessToken = $this->session->offsetGet('storage')['AccessToken'] ?? null;
 
@@ -219,7 +219,8 @@ class CommandService
         }
 
         $header = sprintf("Authorization:Bearer %s", $accessToken);
-        $headers = $this->request->getHeaders();
+        $headers = $request->getHeaders();
         $headers->addHeader(Authorization::FromString($header));
+        $request->setHeaders($headers);
     }
 }
