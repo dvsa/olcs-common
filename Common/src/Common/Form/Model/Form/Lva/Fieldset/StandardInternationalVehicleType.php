@@ -14,11 +14,11 @@ class StandardInternationalVehicleType
      *      "label_attributes": {"class": "form-control form-control--radio"},
      *      "hint": "application_type-of-licence_licence-type.data.vehicleType.hint",
      *      "value_options": {
-     *          {
+     *          \Common\RefData::APP_VEHICLE_TYPE_LGV: {
      *             "value":\Common\RefData::APP_VEHICLE_TYPE_LGV,
      *             "label":"select-option-yes",
      *          },
-     *          {
+     *          \Common\RefData::APP_VEHICLE_TYPE_MIXED: {
      *             "value":\Common\RefData::APP_VEHICLE_TYPE_MIXED,
      *             "label":"select-option-no",
      *          }

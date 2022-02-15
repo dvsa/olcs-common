@@ -46,7 +46,8 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         $params = [
             'canBecomeSpecialRestricted' => $data['canBecomeSpecialRestricted'],
             'canUpdateLicenceType' => $data['canUpdateLicenceType'],
-            'currentLicenceType' => $data['currentLicenceType']
+            'currentLicenceType' => $data['currentLicenceType'],
+            'currentVehicleType' => $data['currentVehicleType']
         ];
 
         $tolFormService = $this->getServiceLocator()->get('FormServiceManager')->get('lva-variation-type-of-licence');
