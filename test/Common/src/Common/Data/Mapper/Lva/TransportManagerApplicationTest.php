@@ -2,6 +2,7 @@
 
 namespace CommonTest\Data\Mapper\Lva;
 
+use Common\RefData;
 use Common\Service\Helper\TranslationHelperService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -59,6 +60,11 @@ class TransportManagerApplicationTest extends MockeryTestCase
         return [
             [
                 [
+                    'application' => [
+                        'vehicleType' => [
+                            'id' => RefData::APP_VEHICLE_TYPE_MIXED,
+                        ],
+                    ],
                     'isOwner' => '__TEST__',
                     'tmType' => ['description' => '__TEST__'],
                     'hoursMon' => '__TEST__',

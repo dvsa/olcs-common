@@ -3,6 +3,7 @@
 namespace CommonTest\Data\Mapper\Lva\TransportManager\Sections;
 
 use Common\Data\Mapper\Lva\TransportManager\Sections\Details;
+use Common\RefData;
 use Common\Service\Helper\TranslationHelperService;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
@@ -28,6 +29,11 @@ class DetailsTest extends MockeryTestCase
         )->twice()->andReturn('__TEST__');
 
         $actual = $this->sut->populate([
+            'application' => [
+                'vehicleType' => [
+                    'id' => RefData::APP_VEHICLE_TYPE_MIXED,
+                ],
+            ],
             'hasUndertakenTraining' => 'N',
             'transportManager' =>
                 [
@@ -74,6 +80,11 @@ class DetailsTest extends MockeryTestCase
     public function testFormatAddress()
     {
         $data = [
+            'application' => [
+                'vehicleType' => [
+                    'id' => RefData::APP_VEHICLE_TYPE_MIXED,
+                ],
+            ],
             'hasUndertakenTraining' => 'Y',
             'transportManager' =>
                 [
@@ -140,6 +151,11 @@ class DetailsTest extends MockeryTestCase
     public function testCertificateNotAdded()
     {
         $data = [
+            'application' => [
+                'vehicleType' => [
+                    'id' => RefData::APP_VEHICLE_TYPE_MIXED,
+                ],
+            ],
             'hasUndertakenTraining' => 'N',
             'transportManager' =>
                 [
@@ -180,6 +196,11 @@ class DetailsTest extends MockeryTestCase
     public function testCertificateAdded()
     {
         $data = [
+            'application' => [
+                'vehicleType' => [
+                    'id' => RefData::APP_VEHICLE_TYPE_MIXED,
+                ],
+            ],
             'hasUndertakenTraining' => 'Y',
             'transportManager' =>
                 [
@@ -220,7 +241,7 @@ class DetailsTest extends MockeryTestCase
         $actual = $this->sut->populate($data);
 
         $this->assertEquals(
-            'Certificate Added',
+            'Certificate added',
             $actual->sectionSerialize()['lva-tmverify-details-checkanswer-certificate']
         );
     }
@@ -228,5 +249,78 @@ class DetailsTest extends MockeryTestCase
     public function tearDown(): void
     {
         $this->mockTranslator = null;
+    }
+
+    public function dpLgvOnlyApplication()
+    {
+        return [
+            'with LGV AR ref number' => [
+                'lgvAcquiredRightsReferenceNumber' => 'ABC1234',
+                'expected' => 'ABC1234',
+            ],
+            'without LGV AR ref number' => [
+                'lgvAcquiredRightsReferenceNumber' => '',
+                'expected' => 'Not provided',
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider dpLgvOnlyApplication
+     */
+    public function testLgvOnlyApplication($lgvAcquiredRightsReferenceNumber, $expected)
+    {
+        $this->mockTranslator->shouldReceive(
+            'translateReplace'
+        )->twice()->andReturn('__TEST__');
+
+        $actual = $this->sut->populate(
+            [
+                'application' => [
+                    'vehicleType' => [
+                        'id' => RefData::APP_VEHICLE_TYPE_LGV,
+                    ],
+                ],
+                'lgvAcquiredRightsReferenceNumber' => $lgvAcquiredRightsReferenceNumber,
+                'hasUndertakenTraining' => 'N',
+                'transportManager' => [
+                    'documents' => [],
+                    'homeCd' => [
+                        'emailAddress' => '__TEST__',
+                        'address' => [
+                            'countryCode' => [
+                                'countryDesc' => '__TEST__'
+                            ],
+                        ],
+                        'person' => [
+                            'forename' => '__TEST__',
+                            'familyName' => '__TEST__',
+                            'birthDate' => '2000-10-15',
+                            'birthPlace' => '__TEST__',
+                        ]
+                    ],
+                    'workCd' => [
+                        'address' => [
+                            'countryCode' => [
+                                'countryDesc' => '__TEST__'
+                            ],
+                        ]
+                    ]
+                ]
+            ]
+        );
+
+        $this->assertInstanceOf(Details::class, $actual);
+        $this->assertEquals([
+            'lva-tmverify-details-checkanswer-name' => '__TEST__ __TEST__',
+            'lva-tmverify-details-checkanswer-birthDate' => '15 Oct 2000',
+            'lva-tmverify-details-checkanswer-birthPlace' => '__TEST__',
+            'lva-tmverify-details-checkanswer-emailAddress' => '__TEST__',
+            'lva-tmverify-details-checkanswer-certificate' => 'No certificates attached',
+            'lva-tmverify-details-checkanswer-lgvAcquiredRightsReferenceNumber' => $expected,
+            'lva-tmverify-details-checkanswer-hasUndertakenTraining' => 'N',
+            'lva-tmverify-details-checkanswer-homeCd' => '__TEST__',
+            'lva-tmverify-details-checkanswer-workCd' => '__TEST__',
+        ], $actual->sectionSerialize());
     }
 }

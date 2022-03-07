@@ -3,11 +3,10 @@
 namespace Common\Data\Mapper\Lva\TransportManager\Sections;
 
 use Common\Category;
+use Common\RefData;
 
 class Details extends AbstractSection
 {
-    use SectionSerializeTrait;
-
     private $name;
 
     private $birthDate;
@@ -18,11 +17,49 @@ class Details extends AbstractSection
 
     private $certificate;
 
+    private $lgvAcquiredRightsReferenceNumber;
+
     private $hasUndertakenTraining;
 
     private $homeCd;
 
     private $workCd;
+
+    private $propertiesToShow = [
+        'name',
+        'birthDate',
+        'birthPlace',
+        'emailAddress',
+        'certificate',
+        'lgvAcquiredRightsReferenceNumber',
+        'hasUndertakenTraining',
+        'homeCd',
+        'workCd',
+    ];
+
+    private $propertiesToSkip = [];
+
+    /**
+     * sectionSerialize
+     * Replaces SectionSerializeTrait::sectionSerialize as one section is conditional
+     * @return array
+     */
+    public function sectionSerialize()
+    {
+        $templatePrefix = $this->getTranslationTemplate();
+
+        $properties = [];
+        foreach ($this->propertiesToShow as $property) {
+            if (in_array($property, $this->propertiesToSkip)) {
+                continue;
+            }
+
+            $key = $templatePrefix . $property;
+            $properties[$key] = $this->{$property};
+        }
+
+        return $properties;
+    }
 
     /**
      * populate
@@ -37,6 +74,16 @@ class Details extends AbstractSection
         $this->populatePersonDetails($person);
         $this->emailAddress = $transportManagerApplication['transportManager']['homeCd']['emailAddress'];
         $this->certificate = $this->processDocuments($transportManagerApplication);
+
+        if ($transportManagerApplication['application']['vehicleType']['id'] === RefData::APP_VEHICLE_TYPE_LGV) {
+            // LGV only - populate lgvAcquiredRightsReferenceNumber
+            $this->lgvAcquiredRightsReferenceNumber = !empty($transportManagerApplication['lgvAcquiredRightsReferenceNumber'])
+                ? $transportManagerApplication['lgvAcquiredRightsReferenceNumber'] : 'Not provided';
+        } else {
+            // skip lgvAcquiredRightsReferenceNumber
+            $this->propertiesToSkip[] = 'lgvAcquiredRightsReferenceNumber';
+        }
+
         $this->hasUndertakenTraining = $transportManagerApplication['hasUndertakenTraining'];
 
         foreach (['homeCd', 'workCd'] as $addresses) {
@@ -87,7 +134,7 @@ class Details extends AbstractSection
             }
         }
 
-        return $hasDocument ? "Certificate Added" : "No certificates attached";
+        return $hasDocument ? 'Certificate added' : 'No certificates attached';
     }
 
     /**

@@ -6,6 +6,7 @@ use Common\FormService\Form\Lva\AbstractLvaFormService;
 use Laminas\Form\Form;
 use Common\RefData;
 use Common\Service\Table\TableBuilder;
+use Laminas\Validator\Between;
 
 /**
  * @see \CommonTest\FormService\Form\Lva\OperatingCentres\AbstractOperatingCentresTest
@@ -46,8 +47,14 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
      */
     protected function alterForm(Form $form, array $params)
     {
-        if (!$params['canHaveSchedule41']) {
-            $form->get('table')->get('table')->getTable()->removeAction('schedule41');
+        if ($form->has('table')) {
+            $table = $form->get('table')->get('table')->getTable();
+
+            if (!$params['canHaveSchedule41']) {
+                $table->removeAction('schedule41');
+            }
+
+            $this->alterTableForLgv($table, $params);
         }
 
         if (!$params['canHaveCommunityLicences']) {
@@ -61,11 +68,6 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
             $this->alterFormForGoodsLicences($form, $params);
         }
 
-        $isEligibleForLgv = $params['isEligibleForLgv'] ?? false;
-        if (!$isEligibleForLgv) {
-            $this->disableVehicleClassifications($form);
-        }
-
         // - Modify the validation message for Required on 'rows' field
         // The validator compares the data against the 'rows' field value.
         // This is the reason why we use table->rows instead of table->table
@@ -73,6 +75,8 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
         $this->getFormHelper()
             ->getValidator($form, 'table->rows', 'Common\Form\Elements\Validators\TableRequiredValidator')
             ->setMessage('OperatingCentreNoOfOperatingCentres.required', 'required');
+
+        $this->alterFormForVehicleType($form, $params);
 
         if ($this->removeTrafficAreaElements($params)) {
             $this->getFormHelper()->remove($form, 'dataTrafficArea');
@@ -130,6 +134,11 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
      */
     protected function removeTrafficAreaElements($data)
     {
+        if (RefData::APP_VEHICLE_TYPE_LGV === $data['vehicleType']['id']) {
+            // LGV only - Traffic Area element should not be removed
+            return false;
+        }
+
         return empty($data['operatingCentres']);
     }
 
@@ -150,6 +159,7 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
             $totCommunityLicencesFieldset->setLabel('');
             $totCommunityLicencesElement = $totCommunityLicencesFieldset->get('totCommunityLicences');
             $totCommunityLicencesElement->setLabel($totCommunityLicencesElement->getLabel() . '.psv');
+            $totCommunityLicencesElement->setOption('hint', null);
         }
 
         $dataOptions = $dataFieldset->getOptions();
@@ -196,7 +206,6 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
      */
     protected function alterFormForGoodsLicences(Form $form, array $params): void
     {
-
     }
 
     /**
@@ -208,5 +217,79 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
         $totAuthHgvVehiclesFieldset = $form->get('data')->get('totAuthHgvVehiclesFieldset');
         $totAuthHgvVehiclesFieldset->setLabel('application_operating-centres_authorisation.data.totAuthHgvVehiclesFieldset.vehicles-label');
         $totAuthHgvVehiclesFieldset->get('totAuthHgvVehicles')->setLabel('application_operating-centres_authorisation.data.totAuthHgvVehicles.vehicles-label');
+    }
+
+    /**
+     * Alter form for vehicle type
+     *
+     * @param Form $form
+     * @param array $params
+     *
+     * @return void
+     */
+    protected function alterFormForVehicleType(Form $form, array $params): void
+    {
+        switch ($params['vehicleType']['id']) {
+            case RefData::APP_VEHICLE_TYPE_LGV:
+                // get form helper
+                $formHelper = $this->getFormHelper();
+
+                // remove operating centres table
+                $formHelper->remove($form, 'table');
+
+                // remove HGV/PSV specific fields
+                $formHelper->remove($form, 'data->totAuthHgvVehiclesFieldset');
+                $formHelper->remove($form, 'data->totAuthTrailersFieldset');
+
+                // modify validators
+                // LGV between validator
+                $lgvBetweenValidator = $formHelper->getValidator(
+                    $form,
+                    'data->totAuthLgvVehiclesFieldset->totAuthLgvVehicles',
+                    Between::class
+                );
+                if ($lgvBetweenValidator instanceof Between) {
+                    // at least 1 is required for LGV only
+                    $lgvBetweenValidator->setMin(1);
+                }
+
+                // Community Licence between validator
+                $comLicBetweenValidator = $formHelper->getValidator(
+                    $form,
+                    'data->totCommunityLicencesFieldset->totCommunityLicences',
+                    Between::class
+                );
+                if (($comLicBetweenValidator instanceof Between) && ($lgvBetweenValidator instanceof Between)) {
+                    // set max to the same as what LGV field is set to
+                    $comLicBetweenValidator->setMax($lgvBetweenValidator->getMax());
+                }
+                break;
+            case RefData::APP_VEHICLE_TYPE_HGV:
+            case RefData::APP_VEHICLE_TYPE_PSV:
+                // disable vehicle classifications
+                $this->disableVehicleClassifications($form);
+                break;
+            case RefData::APP_VEHICLE_TYPE_MIXED:
+            default:
+                // no changes required to the form
+                break;
+        }
+    }
+
+    /**
+     * Alter the table in accordance with lgv requirements
+     *
+     * @param TableBuilder $tableBuilder
+     * @param array $params
+     */
+    private function alterTableForLgv(TableBuilder $tableBuilder, array $params)
+    {
+        $isMixedWithLgv = ($params['vehicleType']['id'] === RefData::APP_VEHICLE_TYPE_MIXED) && ($params['totAuthLgvVehicles'] !== null);
+
+        if ($isMixedWithLgv) {
+            $columns = $tableBuilder->getColumns();
+            $columns['noOfVehiclesRequired']['title'] = 'application_operating-centres_authorisation.table.hgvs';
+            $tableBuilder->setColumns($columns);
+        }
     }
 }

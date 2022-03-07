@@ -375,6 +375,12 @@ class LicenceChecklist
     private static function mapOperatingCentres($fullData)
     {
         $data = $fullData['licence'];
+
+        $ocVehiclesColumnHeader = 'vehicles';
+        if ($fullData['isMixedWithLgv']) {
+            $ocVehiclesColumnHeader = 'heavy-goods-vehicles';
+        }
+
         $operatingCentres = [];
         foreach ($data['operatingCentres'] as $loc) {
             $oc = $loc['operatingCentre'];
@@ -390,33 +396,61 @@ class LicenceChecklist
                 return strcmp($a['name'], $b['name']);
             }
         );
-        return [
+        $result = [
+            'ocVehiclesColumnHeader' => $ocVehiclesColumnHeader,
             'operatingCentres' => $operatingCentres,
             'totalOperatingCentres' => count($operatingCentres),
-            'totalVehicles' => $data['totAuthVehicles'],
-            'totalTrailers' => $data['totAuthTrailers'],
-            'isGoods' => $data['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_GOODS_VEHICLE,
             'displayOperatingCentresCount' => RefData::CONTINUATIONS_DISPLAY_OPERATING_CENTRES_COUNT,
             'ocChanges' => $fullData['ocChanges'],
+            'canHaveTrailers' => $fullData['canHaveTrailers'],
         ];
+
+        $authPropertyMappings = [
+            'totAuthVehicles' => 'totalVehicles',
+            'totAuthHgvVehicles' => 'totalHeavyGoodsVehicles',
+            'totAuthLgvVehicles' => 'totalLightGoodsVehicles',
+            'totAuthTrailers' => 'totalTrailers',
+        ];
+
+        $applicableAuthProperties = $fullData['applicableAuthProperties'];
+        foreach ($applicableAuthProperties as $dataPropertyName) {
+            $resultPropertyName = $authPropertyMappings[$dataPropertyName];
+            $result[$resultPropertyName] = $data[$dataPropertyName];
+        }
+
+        return $result;
     }
 
     /**
      * Map operating centres section to view
      *
-     * @param array                    $data       data
+     * @param array                    $fullData   data
      * @param TranslationHelperService $translator translator
      *
      * @return array
      */
-    public static function mapOperatingCentresSectionToView($data, $translator)
+    public static function mapOperatingCentresSectionToView(array $fullData, TranslationHelperService $translator)
     {
-        $isGoods = $data['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_GOODS_VEHICLE;
+        $vehiclesColumnSuffix = 'vehicles';
+        if ($fullData['isMixedWithLgv']) {
+            $vehiclesColumnSuffix = 'heavy-goods-vehicles';
+        }
+
+        $canHaveTrailers = $fullData['canHaveTrailers'];
+
+        $data = $fullData['licence'];
+
         $header[] = [
-            ['value' => $translator->translate('continuations.oc-section.table.oc'), 'header' => true],
-            ['value' => $translator->translate('continuations.oc-section.table.vehicles'), 'header' => true],
+            [
+                'value' => $translator->translate('continuations.oc-section.table.oc'),
+                'header' => true
+            ],
+            [
+                'value' => $translator->translate('continuations.oc-section.table.' . $vehiclesColumnSuffix),
+                'header' => true
+            ],
         ];
-        if ($isGoods) {
+        if ($canHaveTrailers) {
             $header[0][] = [
                 'value' => $translator->translate('continuations.oc-section.table.trailers'), 'header' => true
             ];
@@ -429,7 +463,7 @@ class LicenceChecklist
                 ['value' => implode(', ', [$oc['address']['addressLine1'], $oc['address']['town']])],
                 ['value' => $loc['noOfVehiclesRequired']]
             ];
-            if ($isGoods) {
+            if ($canHaveTrailers) {
                 $row[] = ['value' => $loc['noOfTrailersRequired']];
             }
             $operatingCentres[] = $row;

@@ -518,4 +518,10 @@ class RefData
     // journey
     const JOURNEY_SINGLE = 'journey_single';
     const JOURNEY_MULTIPLE = 'journey_multiple';
+
+    //Application vehicle types
+    const APP_VEHICLE_TYPE_MIXED = 'app_veh_type_mixed';
+    const APP_VEHICLE_TYPE_LGV = 'app_veh_type_lgv';
+    const APP_VEHICLE_TYPE_HGV = 'app_veh_type_hgv';
+    const APP_VEHICLE_TYPE_PSV = 'app_veh_type_psv';
 }

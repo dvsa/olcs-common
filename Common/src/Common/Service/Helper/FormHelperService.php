@@ -9,6 +9,7 @@ use Dvsa\Olcs\Transfer\Query\CompaniesHouse\ByNumber;
 use Laminas\Form\Element;
 use Laminas\Form\Element\Checkbox;
 use Laminas\Form\Element\DateSelect;
+use Laminas\Form\Element\Radio;
 use Laminas\Form\Fieldset;
 use Laminas\Form\Form;
 use Laminas\Form\FormInterface;
@@ -770,6 +771,24 @@ class FormHelperService extends AbstractHelperService
 
         if (isset($options[$index])) {
             unset($options[$index]);
+            $element->setValueOptions($options);
+        }
+    }
+
+    /**
+     * Disable a value option within an element
+     *
+     * @param Radio $element Radio group
+     * @param string $index Index
+     *
+     * @return void
+     */
+    public function disableOption(Radio $element, $index)
+    {
+        $options = $element->getValueOptions();
+
+        if (isset($options[$index])) {
+            $options[$index]['disabled'] = 'disabled';
             $element->setValueOptions($options);
         }
     }

@@ -16,6 +16,8 @@ OLCS.ready(function () {
     // cache some input lookups
     var niFlag = OLCS.formHelper('type-of-licence', 'operator-location');
     var operatorType = OLCS.formHelper('type-of-licence', 'operator-type');
+    var licenceType = OLCS.formHelper.findInput('type-of-licence', 'licence-type');
+    var vehicleType = OLCS.formHelper.findInput('type-of-licence', 'vehicle-type');
 
     // set up a cascade form with the appropriate rules
     OLCS.cascadeForm({
@@ -40,11 +42,9 @@ OLCS.ready(function () {
                     return (
                         niFlag.filter(':checked').val() === 'Y' ||
                         niFlag.filter(':checked').length && operatorType.filter(':checked').length
-
                     );
                 },
                 'licence-type=ltyp_sr': function () {
-
                     return operatorType.filter(':checked').val() === 'lcat_psv';
                 },
                 // these are the "Read more about" links
@@ -60,6 +60,20 @@ OLCS.ready(function () {
                 'selector:#ltyp_sr_radio_group': function () {
                     return operatorType.filter(':checked').val() === 'lcat_psv';
                 },
+                'selector:div[id$=\'ltyp_si_content\']': function() {
+                    var isGoods = niFlag.filter(':checked').val() === 'Y' ||
+                        operatorType.filter(':checked').val() == 'lcat_gv';
+
+                    return isGoods && licenceType.filter(':checked').val() == 'ltyp_si';
+                },
+                '#lgv-declaration': function() {
+                    var isGoods = niFlag.filter(':checked').val() === 'Y' ||
+                        operatorType.filter(':checked').val() == 'lcat_gv';
+
+                    return isGoods &&
+                        licenceType.filter(':checked').val() == 'ltyp_si' &&
+                        vehicleType.filter(':checked').val() == 'app_veh_type_lgv';
+                }
             }
         },
         submit: function () {

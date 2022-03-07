@@ -5,6 +5,7 @@ namespace Common\Controller\Lva\Application;
 use Common\Controller\Lva;
 use Common\Data\Mapper\Lva\TypeOfLicence as TypeOfLicenceMapper;
 use Common\FormService\Form\Lva\TypeOfLicence\AbstractTypeOfLicence as TypeOfLicenceFormService;
+use Common\RefData;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateTypeOfLicence;
 use Laminas\Http\Response;
 
@@ -54,19 +55,38 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
             $tolFormService->setAndLockOperatorLocation($form, $applicationData['allowedOperatorLocation']);
         }
 
+        $tolFormService->maybeAlterFormForGoodsStandardInternational($form);
+
         // If the form is invalid, render the errors
         if (!$form->isValid()) {
             return $this->renderIndex($form);
         }
 
         $formData = $form->getData();
+        $licenceTypeData = $formData['type-of-licence']['licence-type'];
+
+        $operatorType = $formData['type-of-licence']['operator-type'];
+        $licenceType = $licenceTypeData['licence-type'];
+        $vehicleType =  null;
+        $lgvDeclarationConfirmation = 0;
+
+        if (isset($licenceTypeData['ltyp_siContent'])) {
+            $siContentData = $licenceTypeData['ltyp_siContent'];
+            $vehicleType = $siContentData['vehicle-type'];
+
+            if (isset($siContentData['lgv-declaration']['lgv-declaration-confirmation'])) {
+                $lgvDeclarationConfirmation = $siContentData['lgv-declaration']['lgv-declaration-confirmation'];
+            }
+        }
 
         $dto = UpdateTypeOfLicence::create(
             [
                 'id' => $this->getIdentifier(),
                 'version' => $formData['version'],
-                'operatorType' => $formData['type-of-licence']['operator-type'],
-                'licenceType' => $formData['type-of-licence']['licence-type'],
+                'operatorType' => $operatorType,
+                'licenceType' => $licenceType,
+                'vehicleType' => $vehicleType,
+                'lgvDeclarationConfirmation' => $lgvDeclarationConfirmation,
                 'niFlag' => $this->getOperatorLocation($applicationData, $formData)
             ]
         );
@@ -81,9 +101,14 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         if ($response->isClientError()) {
             // This means we need confirmation
             if (isset($response->getResult()['messages']['AP-TOL-5'])) {
-                $query = $formData['type-of-licence'];
-                $query['operator-location'] = $this->getOperatorLocation($applicationData, $formData);
-                $query['version'] = $formData['version'];
+                $query = [
+                    'operator-location' => $this->getOperatorLocation($applicationData, $formData),
+                    'operator-type' => $operatorType,
+                    'licence-type' => $licenceType,
+                    'vehicle-type' => $vehicleType,
+                    'lgv-declaration-confirmation' => $lgvDeclarationConfirmation,
+                    'version' => $formData['version']
+                ];
 
                 return $this->redirect()->toRoute(
                     $this->getBaseRoute() . '/action',
@@ -142,6 +167,8 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
                     'version' => $query['version'],
                     'operatorType' => $query['operator-type'],
                     'licenceType' => $query['licence-type'],
+                    'vehicleType' => $query['vehicle-type'],
+                    'lgvDeclarationConfirmation' => $query['lgv-declaration-confirmation'],
                     'niFlag' => $query['operator-location'],
                     'confirm' => true
                 ]

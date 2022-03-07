@@ -472,7 +472,8 @@ class LicenceChecklistTest extends MockeryTestCase
                             ]
                         ],
                         'displayOperatingCentresCount' => 10,
-                        'isGoods' => true
+                        'ocVehiclesColumnHeader' => 'vehicles',
+                        'canHaveTrailers' => true,
                     ]
                 ],
                 [
@@ -515,8 +516,94 @@ class LicenceChecklistTest extends MockeryTestCase
                                 'trailers' => '4'
                             ]
                         ],
+                        'displayOperatingCentresCount' => 10,
+                        'ocVehiclesColumnHeader' => 'heavy-goods-vehicles',
+                        'canHaveTrailers' => true,
+                    ]
+                ],
+                [
+                    [
+                        [
+                            'value' => 'continuations.oc-section.table.oc_translated', 'header' => true
+                        ],
+                        [
+                            'value' => 'continuations.oc-section.table.heavy-goods-vehicles_translated', 'header' => true
+                        ],
+                        [
+                            'value' => 'continuations.oc-section.table.trailers_translated', 'header' => true
+                        ]
+                    ],
+                    [
+                        ['value' => 'Foo'],
+                        ['value' => '1'],
+                        ['value' => '2'],
+                    ],
+                    [
+                        ['value' => 'Bar'],
+                        ['value' => '3'],
+                        ['value' => '4'],
+                    ],
+                ]
+            ],
+            [
+                RefData::LICENCE_CHECKLIST_OPERATING_CENTRES,
+                [
+                    'operatingCentres' => [
+                        'operatingCentres' => [
+                            [
+                                'name' => 'Foo',
+                                'vehicles' => '1',
+                                'trailers' => '2'
+                            ],
+                            [
+                                'name' => 'Bar',
+                                'vehicles' => '3',
+                                'trailers' => '4'
+                            ]
+                        ],
+                        'displayOperatingCentresCount' => 10,
+                        'ocVehiclesColumnHeader' => 'vehicles',
+                        'canHaveTrailers' => false,
+                    ]
+                ],
+                [
+                    [
+                        [
+                            'value' => 'continuations.oc-section.table.oc_translated', 'header' => true
+                        ],
+                        [
+                            'value' => 'continuations.oc-section.table.vehicles_translated', 'header' => true
+                        ],
+                    ],
+                    [
+                        ['value' => 'Foo'],
+                        ['value' => '1'],
+                    ],
+                    [
+                        ['value' => 'Bar'],
+                        ['value' => '3'],
+                    ],
+                ]
+            ],
+            [
+                RefData::LICENCE_CHECKLIST_OPERATING_CENTRES,
+                [
+                    'operatingCentres' => [
+                        'operatingCentres' => [
+                            [
+                                'name' => 'Foo',
+                                'vehicles' => '1',
+                                'trailers' => '2'
+                            ],
+                            [
+                                'name' => 'Bar',
+                                'vehicles' => '3',
+                                'trailers' => '4'
+                            ]
+                        ],
                         'displayOperatingCentresCount' => 1,
-                        'isGoods' => true,
+                        'ocVehiclesColumnHeader' => 'vehicles',
+                        'canHaveTrailers' => true,
                         'totalOperatingCentres' => 2
                     ]
                 ],
@@ -537,13 +624,42 @@ class LicenceChecklistTest extends MockeryTestCase
                     'operatingCentres' => [
                         'totalVehicles' => 10,
                         'totalTrailers' => 20,
-                        'isGoods' => true,
                     ]
                 ],
                 [
                     [
                         ['value' => 'continuations.oc-section.table.auth_vehicles_translated', 'header' => true],
                         ['value' => '10'],
+                    ],
+                    [
+                        ['value' => 'continuations.oc-section.table.auth_trailers_translated', 'header' => true],
+                        ['value' => '20'],
+                    ],
+                ]
+            ],
+            [
+                RefData::LICENCE_CHECKLIST_OPERATING_CENTRES_AUTHORITY,
+                [
+                    'operatingCentres' => [
+                        'totalHeavyGoodsVehicles' => 10,
+                        'totalLightGoodsVehicles' => 15,
+                        'totalTrailers' => 20,
+                    ]
+                ],
+                [
+                    [
+                        [
+                            'value' => 'continuations.oc-section.table.auth_heavy-goods-vehicles_translated',
+                            'header' => true
+                        ],
+                        ['value' => '10'],
+                    ],
+                    [
+                        [
+                            'value' => 'continuations.oc-section.table.auth_light-goods-vehicles_translated',
+                            'header' => true
+                        ],
+                        ['value' => '15'],
                     ],
                     [
                         ['value' => 'continuations.oc-section.table.auth_trailers_translated', 'header' => true],

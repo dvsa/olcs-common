@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CommonTest\FormService\Form\Lva\OperatingCentres;
 
+use Common\Form\Elements\Types\Table;
 use Common\FormService\Form\Lva\OperatingCentres\LicenceOperatingCentres;
 use Common\FormService\FormServiceInterface;
 use Common\FormService\FormServiceManager;
@@ -59,27 +60,61 @@ class LicenceOperatingCentresTest extends LicenceOperatingCentresTestCase
 
         $params = [
             'operatingCentres' => [],
-            'canHaveSchedule41' => true,
+            'canHaveSchedule41' => false,
             'canHaveCommunityLicences' => true,
             'isPsv' => false,
             'licenceType' => ['id' => RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL],
-            'isEligibleForLgv' => true,
+            'vehicleType' => ['id' => RefData::APP_VEHICLE_TYPE_MIXED],
             'totAuthLgvVehicles' => 0,
         ];
 
+        $columns = [
+            'noOfVehiclesRequired' => [
+                'title' => 'vehicles',
+            ]
+        ];
+
         $table = m::mock(TableBuilder::class);
-        $tableElement = m::mock(Fieldset::class);
+        $table->shouldReceive('removeAction')
+            ->with('schedule41')
+            ->once()
+            ->shouldReceive('getColumns')
+            ->withNoArgs()
+            ->andReturn($columns)
+            ->shouldReceive('setColumns')
+            ->with(
+                [
+                    'noOfVehiclesRequired' => [
+                        'title' => 'application_operating-centres_authorisation.table.hgvs',
+                    ]
+                ]
+            )
+            ->once();
+
+        $tableElement = m::mock(Table::class);
+        $tableElement->shouldReceive('getTable')
+            ->withNoArgs()
+            ->andReturn($table);
+
+        $fieldset = m::mock(Fieldset::class);
+        $fieldset->shouldReceive('get')
+            ->with('table')
+            ->andReturn($tableElement);
+
+        $form->shouldReceive('has')
+            ->with('table')
+            ->andReturnTrue();
 
         $form->shouldReceive('get')
             ->with('table')
-            ->andReturn($tableElement);
+            ->andReturn($fieldset);
 
         $tableBuilder->shouldReceive('prepareTable')
             ->with('lva-operating-centres', [], [])
             ->andReturn($table);
 
         $mockFormHelper->shouldReceive('populateFormTable')
-            ->with($tableElement, $table);
+            ->with($fieldset, $table);
 
         $mockFormHelper->shouldReceive('getValidator->setMessage')
             ->with('OperatingCentreNoOfOperatingCentres.required', 'required');
@@ -153,8 +188,7 @@ class LicenceOperatingCentresTest extends LicenceOperatingCentresTestCase
     {
         // Setup
         $this->setUpSut();
-        $params = $this->paramsForLicenceThatIsEligibleForLgvs();
-        $params['totAuthLgvVehicles'] = null;
+        $params = $this->paramsForMixedLicenceWithoutLgv();
 
         // Execute
         $result = $this->sut->getForm($params);
