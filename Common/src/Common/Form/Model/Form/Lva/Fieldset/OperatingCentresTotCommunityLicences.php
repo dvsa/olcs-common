@@ -14,7 +14,8 @@ class OperatingCentresTotCommunityLicences
     /**
      * @Form\Attributes({"class":"short","id":"totCommunityLicences"})
      * @Form\Options({
-     *     "label": "application_operating-centres_authorisation.data.totCommunityLicences"
+     *     "label": "application_operating-centres_authorisation.data.totCommunityLicences",
+     *     "hint": "application_operating-centres_authorisation.data.totCommunityLicences.hint"
      * })
      * @Form\Validator({"name": "Digits"})
      * @Form\Validator({"name": "Between", "options": {"min":0, "max": 10000}})

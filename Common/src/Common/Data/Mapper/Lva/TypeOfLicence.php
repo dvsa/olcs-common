@@ -23,7 +23,15 @@ class TypeOfLicence implements MapperInterface
             'type-of-licence' => [
                 'operator-location' => $data['niFlag'],
                 'operator-type' => $data['goodsOrPsv']['id'],
-                'licence-type' => $data['licenceType']['id']
+                'licence-type' => [
+                    'licence-type' => $data['licenceType']['id'],
+                    'ltyp_siContent' => [
+                        'vehicle-type' => $data['vehicleType']['id'] ?? null,
+                        'lgv-declaration' => [
+                            'lgv-declaration-confirmation' => $data['lgvDeclarationConfirmation'] ? 1 : 0,
+                        ]
+                    ]
+                ]
             ]
         ];
     }

@@ -171,7 +171,7 @@ class ChecklistController extends AbstractContinuationController
         $licenceData = $data['licence'];
         $licenceVehicles = $licenceData['operatingCentres'];
         $mappedData = LicenceChecklistMapper::mapOperatingCentresSectionToView(
-            $licenceData,
+            $data,
             $translator
         );
         $view = new ViewModel(

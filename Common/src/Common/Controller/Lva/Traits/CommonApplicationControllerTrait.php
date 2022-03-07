@@ -2,6 +2,7 @@
 
 namespace Common\Controller\Lva\Traits;
 
+use Common\RefData;
 use Dvsa\Olcs\Transfer\Query\Application\Application;
 use Dvsa\Olcs\Transfer\Query\Application\Completion;
 use Laminas\Http\Response as HttpResponse;
@@ -108,7 +109,6 @@ trait CommonApplicationControllerTrait
      */
     protected function completeSection($section, $prg = [])
     {
-
         if ($this->isButtonPressed('saveAndContinue', $prg)) {
             //undertakings section works differently, we return to the overview as there's no "next section"
             if ($section === 'undertakings') {

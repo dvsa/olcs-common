@@ -162,7 +162,23 @@ abstract class AbstractAddressesController extends AbstractController
             return true;
         }
 
-        if ($response->isClientError() || $response->isServerError()) {
+        if ($response->isClientError()) {
+            $messages = $response->getResult()['messages'];
+
+            $error = '';
+            foreach ($messages as $message) {
+                if ('ERR_TA_NI_APP' === $message) {
+                    $error = $message;
+                    break;
+                }
+            }
+
+            if (!empty($error)) {
+                $this->hlpFlashMsgr->addCurrentErrorMessage($error);
+            } else {
+                $this->hlpFlashMsgr->addUnknownError();
+            }
+        } elseif ($response->isServerError()) {
             $this->hlpFlashMsgr->addUnknownError();
         }
 

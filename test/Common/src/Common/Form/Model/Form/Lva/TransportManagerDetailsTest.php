@@ -6,6 +6,8 @@ use Common\Form\Elements\Validators\SumContext;
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
 use Laminas\I18n\Validator\IsFloat;
 use Laminas\Validator\Between;
+use Laminas\Form\Element\Radio;
+use Laminas\Validator\StringLength;
 
 /**
  * Class TransportManagerDetailsTest
@@ -57,10 +59,54 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
         $this->assertFormElementText($element);
     }
 
+    public function testCertificateHtml()
+    {
+        $element = ['details', 'certificateHtml'];
+        $this->assertFormElementHtml($element);
+    }
+
     public function testCertificateFileUpload()
     {
         $element = ['details', 'certificate'];
         $this->assertFormElementMultipleFileUpload($element);
+    }
+
+    public function testLgvAcquiredRightsHtml()
+    {
+        $element = ['details', 'lgvAcquiredRightsHtml'];
+        $this->assertFormElementHtml($element);
+    }
+
+    public function testLgvAcquiredRightsReferenceNumber()
+    {
+        $element = ['details', 'lgvAcquiredRightsReferenceNumber'];
+
+        $this->assertFormElementValid($element, '');
+        $this->assertFormElementValid($element, 'abc1234');
+        $this->assertFormElementValid($element, ' abc1234 ');
+
+        $this->assertFormElementNotValid(
+            $element,
+            '123456',
+            [StringLength::TOO_SHORT]
+        );
+
+        $this->assertFormElementNotValid(
+            $element,
+            '12345678',
+            [StringLength::TOO_LONG]
+        );
+    }
+
+    public function testHasUndertakenTraining()
+    {
+        $element = ['details', 'hasUndertakenTraining'];
+        $this->assertFormElementType($element, Radio::class);
+
+        $this->assertFormElementRequired($element, true);
+        $this->assertFormElementAllowEmpty($element, false);
+        $this->assertFormElementValid($element, 'N');
+        $this->assertFormElementValid($element, 'Y');
     }
 
     public function testHomeAddress()
