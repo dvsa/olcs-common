@@ -5,6 +5,7 @@ use Common\Auth\Adapter\CommandAdapterFactory;
 use Common\Auth\Service\AuthenticationServiceFactory;
 use Common\Auth\Service\AuthenticationServiceInterface;
 use Common\Form\View\Helper\FormInputSearch;
+use Common\Service\Cqrs\Command\CommandSender;
 use Common\Service\Data\Search\SearchType;
 use Common\FormService\Form\Lva as LvaFormService;
 use Common\FormService\Form\Continuation as ContinuationFormService;
@@ -153,6 +154,7 @@ return array(
             'TableBuilder' => 'Common\Service\Table\TableBuilderFactory',
             'NavigationFactory' => 'Common\Service\NavigationFactory',
             'QueryService' => \Common\Service\Cqrs\Query\CachingQueryService::class,
+            'CommandSender' => CommandSender::class,
         ),
         'invokables' => array(
             'Common\Service\NavigationFactory' => 'Common\Service\NavigationFactory',
@@ -247,7 +249,7 @@ return array(
             'Zend\Authentication\AuthenticationService' => \Laminas\Authentication\AuthenticationService::class,
         ),
         'factories' => array(
-            'CommandSender' => \Common\Service\Cqrs\Command\CommandSender::class,
+            CommandSender::class => CommandSender::class,
             'QuerySender' => \Common\Service\Cqrs\Query\QuerySender::class,
             'LanguagePreference' => \Common\Preference\Language::class,
             'LanguageListener' => \Common\Preference\LanguageListener::class,
