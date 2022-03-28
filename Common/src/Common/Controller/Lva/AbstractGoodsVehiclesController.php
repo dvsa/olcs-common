@@ -313,6 +313,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             $dtoData = [
                 'id' => $this->getIdentifier(),
                 'vrm' => $formData['data']['vrm'],
+                'unvalidatedVrm' => $formData['data']['unvalidatedVrm'] ?? null,
                 'platedWeight' => $formData['data']['platedWeight'],
                 'receivedDate' => isset($formData['licence-vehicle']['receivedDate'])
                     ? $formData['licence-vehicle']['receivedDate'] : null,
