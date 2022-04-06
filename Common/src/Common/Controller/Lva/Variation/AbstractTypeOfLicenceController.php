@@ -78,6 +78,7 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         $formData = $form->getData();
         $licenceTypeData = $formData['type-of-licence']['licence-type'];
 
+        $licenceType = $licenceTypeData['licence-type'];
         $vehicleType = null;
         $lgvDeclarationConfirmation = 0;
 
@@ -93,7 +94,7 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         $dtoData = [
             'id' => $this->getIdentifier(),
             'version' => $formData['version'],
-            'licenceType' => $formData['type-of-licence']['licence-type']['licence-type'],
+            'licenceType' => $licenceType,
             'vehicleType' => $vehicleType,
             'lgvDeclarationConfirmation' => $lgvDeclarationConfirmation,
         ];
@@ -106,6 +107,23 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         }
 
         if ($response->isClientError()) {
+            // This means we need confirmation
+            if (isset($response->getResult()['messages']['AP-TOL-5'])) {
+                $query = [
+                    'licence-type' => $licenceType,
+                    'vehicle-type' => $vehicleType,
+                    'lgv-declaration-confirmation' => $lgvDeclarationConfirmation,
+                    'version' => $formData['version']
+                ];
+
+                return $this->redirect()->toRoute(
+                    $this->getBaseRoute() . '/action',
+                    ['action' => 'confirmation'],
+                    ['query' => $query],
+                    true
+                );
+            }
+
             $this->mapErrors($form, $response->getResult()['messages']);
         }
 
@@ -114,5 +132,61 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         }
 
         return $this->renderIndex($form);
+    }
+
+    /**
+     * Handle action - Confirmation
+     *
+     * @return \Common\View\Model\Section|Response
+     */
+    public function confirmationAction()
+    {
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            $query = (array)$this->params()->fromQuery();
+
+            $version = isset($query['version']) ? $query['version'] : '';
+            $licenceType = isset($query['licence-type']) ? $query['licence-type'] : '';
+            $vehicleType = isset($query['vehicle-type']) ? $query['vehicle-type'] : '';
+            $lgvDeclarationConfirmation = isset($query['lgv-declaration-confirmation']) ?
+                $query['lgv-declaration-confirmation'] : '';
+
+            $dto = UpdateTypeOfLicence::create(
+                [
+                    'id' => $this->getIdentifier(),
+                    'version' => $version,
+                    'licenceType' => $licenceType,
+                    'vehicleType' => $vehicleType,
+                    'lgvDeclarationConfirmation' => $lgvDeclarationConfirmation,
+                    'confirm' => true
+                ]
+            );
+
+            /** @var \Common\Service\Cqrs\Response $response */
+            $response = $this->handleCommand($dto);
+
+            if ($response->isOk()) {
+                return $this->redirect()->toRouteAjax(
+                    'lva-variation',
+                    ['application' => $response->getResult()['id']['application']]
+                );
+            }
+
+            $this->getServiceLocator()->get('Helper\FlashMessenger')
+                ->addErrorMessage('unknown-error');
+
+            return $this->redirect()->toRouteAjax(null, ['action' => null], [], true);
+        }
+
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $form = $formHelper->createForm('GenericConfirmation');
+        $formHelper->setFormActionFromRequest($form, $this->getRequest());
+
+        return $this->render(
+            'application_type_of_licence_confirmation',
+            $form,
+            ['sectionText' => 'application_type_of_licence_confirmation_subtitle']
+        );
     }
 }
