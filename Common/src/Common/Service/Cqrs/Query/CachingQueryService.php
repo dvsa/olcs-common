@@ -7,6 +7,7 @@ use Common\Service\Cqrs\RecoverHttpClientExceptionTrait;
 use Dvsa\Olcs\Transfer\Query\Cache\ById;
 use Dvsa\Olcs\Transfer\Query\CacheableLongTermQueryInterface;
 use Dvsa\Olcs\Transfer\Query\CacheableMediumTermQueryInterface;
+use Dvsa\Olcs\Transfer\Query\CustomCacheableInterface;
 use Dvsa\Olcs\Transfer\Query\QueryContainerInterface;
 use Dvsa\Olcs\Transfer\Query\QueryInterface;
 use Dvsa\Olcs\Transfer\Service\CacheEncryption as CacheEncryptionService;
@@ -28,6 +29,7 @@ class CachingQueryService implements QueryServiceInterface, \Laminas\Log\LoggerA
     const CACHE_PERSISTENT_SAVE_MSG = 'Storing in persistent cache with TTL of %u seconds: %s';
     const CACHE_PERSISTENT_RETRIEVE_MSG = 'Fetching from persistent cache: %s';
     const CACHE_ENCRYPTION_MODE_MSG = 'Using encryption mode: %s';
+    const CACHE_CUSTOM_CONFIG_MISSING_MSG = 'Custom cache config missing for: %s';
     const MISSING_TTL_INTERFACE_TYPE = 'No TTL value found for this query';
 
     /** @var QueryServiceInterface */
@@ -73,7 +75,7 @@ class CachingQueryService implements QueryServiceInterface, \Laminas\Log\LoggerA
     /**
      * Send a query to the backend
      *
-     * @param QueryContainerInterface $query Query container
+     * @param QueryContainerInterface|CustomCacheableInterface $query Query container
      *
      * @return \Common\Service\Cqrs\Response
      */
@@ -83,6 +85,35 @@ class CachingQueryService implements QueryServiceInterface, \Laminas\Log\LoggerA
 
         if (!$this->enabled) {
             return $this->queryService->send($query);
+        }
+
+        /**
+         * @todo we can't switch isCustomCacheable on as yet - before we do, there's a couple of issues to sort with
+         * AbstractInternalController re: table sorting and the need to mimic a CQRS response for existing queries
+         * Other than that it all works and there's code in the backend that should work immediately
+         *
+         * "custom cache" matches the naming scheme used elsewhere. In effect this means data we've added into the cache
+         * which isn't in our traditional CQRS cache format and therefore can be accessed from all nodes (optionally)
+         * and make use of encryption where necessary
+         */
+        if ($query->isCustomCacheable()) {
+            //find the custom cache identifier for the query
+            $cacheIdentifier = $this->cacheService->getCustomCacheIdentifierForCqrs($query);
+
+            if ($cacheIdentifier !== null) {
+                $dto = $query->getDto();
+                $uniqueId = '';
+
+                //this is done to quickly give us functionality for 99% of existing queries - VOL is a CRUD app
+                if (method_exists($dto, 'getId')) {
+                    $uniqueId = $dto->getId();
+                }
+
+                return $this->handleCustomCache($cacheIdentifier, $uniqueId);
+            }
+
+            //log an error for the missing config, but we should be able to fall back to standard CQRS
+            $this->logError(sprintf(self::CACHE_CUSTOM_CONFIG_MISSING_MSG, $cacheIdentifier));
         }
 
         if ($query->isPersistentCacheable()) {

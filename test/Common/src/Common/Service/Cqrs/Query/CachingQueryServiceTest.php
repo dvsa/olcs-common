@@ -7,6 +7,8 @@ use Common\Service\Cqrs\Query\QueryServiceInterface;
 use Dvsa\Olcs\Transfer\Query\Cache\ById;
 use Dvsa\Olcs\Transfer\Query\CacheableLongTermQueryInterface;
 use Dvsa\Olcs\Transfer\Query\CacheableMediumTermQueryInterface;
+use Dvsa\Olcs\Transfer\Query\QueryInterface;
+use Dvsa\Olcs\Transfer\Query\SystemParameter\SystemParameter;
 use Dvsa\Olcs\Transfer\Service\CacheEncryption as CacheEncryptionService;
 use Dvsa\Olcs\Transfer\Query\QueryContainerInterface;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
@@ -75,27 +77,37 @@ class CachingQueryServiceTest extends MockeryTestCase
         $identifier = 'identifier';
         $uniqueId = 'unique id';
         $cacheResult = 'result';
+        $dto = m::mock(SystemParameter::class);
+        $dto->expects('getId')->withNoArgs()->andReturn($uniqueId);
 
         $cqrsQueryContainer = m::mock(QueryContainerInterface::class);
-        $cqrsQueryContainer->expects('isPersistentCacheable')->andReturnFalse();
-        $cqrsQueryContainer->expects('isShortTermCacheable')->andReturnFalse();
+        $cqrsQueryContainer->expects('isCustomCacheable')->withNoArgs()->andReturnTrue();
+        $cqrsQueryContainer->expects('getDto')->withNoArgs()->andReturn($dto);
+        $cqrsQueryContainer->expects('isPersistentCacheable')->never();
+        $cqrsQueryContainer->expects('isShortTermCacheable')->never();
 
+        $this->mockCache->expects('getCustomCacheIdentifierForCqrs')->with($cqrsQueryContainer)->andReturn($identifier);
         $this->mockCache->expects('hasCustomItem')->with($identifier, $uniqueId)->andReturnFalse();
+
+        $cacheCqrsQueryContainer = m::mock(QueryContainerInterface::class);
+        $cacheCqrsQueryContainer->expects('isCustomCacheable')->withNoArgs()->andReturnFalse();
+        $cacheCqrsQueryContainer->expects('isPersistentCacheable')->withNoArgs()->andReturnFalse();
+        $cacheCqrsQueryContainer->expects('isShortTermCacheable')->withNoArgs()->andReturnFalse();
 
         $this->mockAnnotationBuilder->expects('createQuery')
             ->with(m::type(ById::class))
-            ->andReturn($cqrsQueryContainer);
+            ->andReturn($cacheCqrsQueryContainer);
 
         $response = m::mock(Response::class);
         $response->expects('isOk')->withNoArgs()->andReturnTrue();
         $response->expects('getResult')->withNoArgs()->andReturn($cacheResult);
 
         $mockQS = m::mock(QueryServiceInterface::class);
-        $mockQS->expects('setRecoverHttpClientException');
-        $mockQS->expects('send')->with($cqrsQueryContainer)->andReturn($response);
+        $mockQS->expects('setRecoverHttpClientException')->times(2);
+        $mockQS->expects('send')->with($cacheCqrsQueryContainer)->andReturn($response);
 
         $sut = new CachingQueryService($mockQS, $this->mockCache, $this->mockAnnotationBuilder, true, $this->ttlValues());
-        self::assertEquals($cacheResult, $sut->handleCustomCache($identifier, $uniqueId));
+        self::assertEquals($cacheResult, $sut->send($cqrsQueryContainer));
     }
 
     public function testCustomCacheExceptionThenDbFail()
@@ -110,8 +122,9 @@ class CachingQueryServiceTest extends MockeryTestCase
         $cacheResult = 'result';
 
         $cqrsQueryContainer = m::mock(QueryContainerInterface::class);
-        $cqrsQueryContainer->expects('isPersistentCacheable')->andReturnFalse();
-        $cqrsQueryContainer->expects('isShortTermCacheable')->andReturnFalse();
+        $cqrsQueryContainer->expects('isCustomCacheable')->withNoArgs()->andReturnFalse();
+        $cqrsQueryContainer->expects('isPersistentCacheable')->withNoArgs()->andReturnFalse();
+        $cqrsQueryContainer->expects('isShortTermCacheable')->withNoArgs()->andReturnFalse();
 
         $this->mockCache->expects('hasCustomItem')->with($identifier, $uniqueId)->andReturnTrue();
         $this->mockCache->expects('getCustomItem')->with($identifier, $uniqueId)->andThrow(new \Exception());
@@ -132,11 +145,32 @@ class CachingQueryServiceTest extends MockeryTestCase
         self::assertEquals($cacheResult, $sut->handleCustomCache($identifier, $uniqueId));
     }
 
+    public function testSendWithCustomCache()
+    {
+        $identifier = 'identifier';
+        $uniqueId = '';
+        $cacheResult = 'result';
+        $dto = m::mock(QueryInterface::class);
+
+        $cqrsQueryContainer = m::mock(QueryContainerInterface::class);
+        $cqrsQueryContainer->expects('isCustomCacheable')->withNoArgs()->andReturnTrue();
+        $cqrsQueryContainer->expects('getDto')->withNoArgs()->andReturn($dto);
+        $cqrsQueryContainer->expects('isPersistentCacheable')->never();
+        $cqrsQueryContainer->expects('isShortTermCacheable')->never();
+
+        $this->mockCache->expects('getCustomCacheIdentifierForCqrs')->with($cqrsQueryContainer)->andReturn($identifier);
+        $this->mockCache->expects('hasCustomItem')->with($identifier, $uniqueId)->andReturnTrue();
+        $this->mockCache->expects('getCustomItem')->with($identifier, $uniqueId)->andReturn($cacheResult);
+
+        $sut = new CachingQueryService($this->mockQS, $this->mockCache, $this->mockAnnotationBuilder, true, $this->ttlValues());
+        self::assertEquals($cacheResult, $sut->send($cqrsQueryContainer));
+    }
+
     public function testSendWithNoCache()
     {
-        $this->mockQuery
-            ->shouldReceive('isPersistentCacheable')->once()->andReturnFalse()
-            ->shouldReceive('isShortTermCacheable')->once()->andReturnFalse();
+        $this->mockQuery->expects('isCustomCacheable')->withNoArgs()->andReturnFalse();
+        $this->mockQuery->expects('isPersistentCacheable')->withNoArgs()->andReturnFalse();
+        $this->mockQuery->expects('isShortTermCacheable')->withNoArgs()->andReturnFalse();
 
         $sut = new CachingQueryService($this->mockQS, $this->mockCache, $this->mockAnnotationBuilder, true, $this->ttlValues());
         static::assertSame($this->mockResult, $sut->send($this->mockQuery));
@@ -144,13 +178,13 @@ class CachingQueryServiceTest extends MockeryTestCase
 
     public function testSendWithShortCacheNull()
     {
-        $this->mockQuery
-            ->shouldReceive('isPersistentCacheable')->once()->andReturnFalse()
-            ->shouldReceive('isShortTermCacheable')->once()->andReturnTrue()
-            ->shouldReceive('getDtoClassName')->once()->andReturn('dto_class_name')
-            ->shouldReceive('getCacheIdentifier')->once()->andReturn('cache_key');
+        $this->mockQuery->expects('isCustomCacheable')->withNoArgs()->andReturnFalse();
+        $this->mockQuery->expects('isPersistentCacheable')->withNoArgs()->andReturnFalse();
+        $this->mockQuery->expects('isShortTermCacheable')->withNoArgs()->andReturnTrue();
+        $this->mockQuery->expects('getDtoClassName')->withNoArgs()->andReturn('dto_class_name');
+        $this->mockQuery->expects('getCacheIdentifier')->withNoArgs()->andReturn('cache_key');
 
-        $this->mockResult->shouldReceive('isOk')->with()->once()->andReturn(false);
+        $this->mockResult->expects('isOk')->withNoArgs()->andReturnFalse();
 
         $sut = new CachingQueryService($this->mockQS, $this->mockCache, $this->mockAnnotationBuilder, true, $this->ttlValues());
         static::assertSame($this->mockResult, $sut->send($this->mockQuery));
@@ -158,13 +192,13 @@ class CachingQueryServiceTest extends MockeryTestCase
 
     public function testSendWithShortCache()
     {
-        $this->mockQuery
-            ->shouldReceive('isPersistentCacheable')->times(2)->andReturnFalse()
-            ->shouldReceive('isShortTermCacheable')->times(2)->andReturnTrue()
-            ->shouldReceive('getDtoClassName')->twice()->andReturn('dto_class_name')
-            ->shouldReceive('getCacheIdentifier')->times(2)->andReturn('cache_key');
+        $this->mockQuery->expects('isCustomCacheable')->withNoArgs()->twice()->andReturnFalse();
+        $this->mockQuery->expects('isPersistentCacheable')->withNoArgs()->twice()->andReturnFalse();
+        $this->mockQuery->expects('isShortTermCacheable')->withNoArgs()->twice()->andReturnTrue();
+        $this->mockQuery->expects('getDtoClassName')->withNoArgs()->twice()->andReturn('dto_class_name');
+        $this->mockQuery->expects('getCacheIdentifier')->withNoArgs()->twice()->andReturn('cache_key');
 
-        $this->mockResult->shouldReceive('isOk')->with()->once()->andReturn(true);
+        $this->mockResult->expects('isOk')->withNoArgs()->andReturnTrue();
 
         $sut = new CachingQueryService($this->mockQS, $this->mockCache, $this->mockAnnotationBuilder, true, $this->ttlValues());
         $sut->send($this->mockQuery);
@@ -177,18 +211,19 @@ class CachingQueryServiceTest extends MockeryTestCase
     public function testPersistentCacheMissingQueryInterface()
     {
         $mockQuery = m::mock(QueryContainerInterface::class);
-        $mockQuery->expects('isPersistentCacheable')->andReturnTrue();
-        $mockQuery->expects('isMediumTermCacheable')->andReturnFalse();
-        $mockQuery->expects('isLongTermCacheable')->andReturnFalse();
-        $mockQuery->expects('getDtoClassName')->andReturn('dto_class_name');
-        $mockQuery->expects('getCacheIdentifier')->andReturn('cache_key');
-        $mockQuery->expects('getEncryptionMode')->andReturn('encryption_mode');
+        $mockQuery->expects('isCustomCacheable')->withNoArgs()->andReturnFalse();
+        $mockQuery->expects('isPersistentCacheable')->withNoArgs()->andReturnTrue();
+        $mockQuery->expects('isMediumTermCacheable')->withNoArgs()->andReturnFalse();
+        $mockQuery->expects('isLongTermCacheable')->withNoArgs()->andReturnFalse();
+        $mockQuery->expects('getDtoClassName')->withNoArgs()->andReturn('dto_class_name');
+        $mockQuery->expects('getCacheIdentifier')->withNoArgs()->andReturn('cache_key');
+        $mockQuery->expects('getEncryptionMode')->withNoArgs()->andReturn('encryption_mode');
 
         $mockQS = m::mock(QueryServiceInterface::class);
         $mockQS->expects('setRecoverHttpClientException');
         $mockQS->expects('send')->with($mockQuery)->andReturn($this->mockResult);
 
-        $this->mockResult->expects('isOk')->andReturnTrue();
+        $this->mockResult->expects('isOk')->withNoArgs()->andReturnTrue();
 
         $mockCache = m::mock(CacheEncryptionService::class);
         $mockCache->expects('hasItem')->with('cache_key', 'encryption_mode')->andReturnFalse();
@@ -215,19 +250,20 @@ class CachingQueryServiceTest extends MockeryTestCase
     public function testPersistentCacheNotPopulated($isMediumTerm, $cacheTtl)
     {
         $mockQuery = m::mock(QueryContainerInterface::class);
-        $mockQuery->expects('isPersistentCacheable')->andReturnTrue();
-        $mockQuery->expects('isMediumTermCacheable')->andReturn($isMediumTerm);
-        $mockQuery->expects('isLongTermCacheable')->times($isMediumTerm ? 0 : 1)->andReturnTrue();
+        $mockQuery->expects('isCustomCacheable')->withNoArgs()->andReturnFalse();
+        $mockQuery->expects('isPersistentCacheable')->withNoArgs()->andReturnTrue();
+        $mockQuery->expects('isMediumTermCacheable')->withNoArgs()->andReturn($isMediumTerm);
+        $mockQuery->expects('isLongTermCacheable')->withNoArgs()->times($isMediumTerm ? 0 : 1)->andReturnTrue();
         $mockQuery->expects('isShortTermCacheable')->never();
-        $mockQuery->expects('getDtoClassName')->andReturn('dto_class_name');
-        $mockQuery->expects('getCacheIdentifier')->andReturn('cache_key');
-        $mockQuery->expects('getEncryptionMode')->andReturn('encryption_mode');
+        $mockQuery->expects('getDtoClassName')->withNoArgs()->andReturn('dto_class_name');
+        $mockQuery->expects('getCacheIdentifier')->withNoArgs()->andReturn('cache_key');
+        $mockQuery->expects('getEncryptionMode')->withNoArgs()->andReturn('encryption_mode');
 
         $mockQS = m::mock(QueryServiceInterface::class);
         $mockQS->expects('setRecoverHttpClientException');
         $mockQS->expects('send')->with($mockQuery)->andReturn($this->mockResult);
 
-        $this->mockResult->expects('isOk')->andReturnTrue();
+        $this->mockResult->expects('isOk')->withNoArgs()->andReturnTrue();
 
         $mockCache = m::mock(CacheEncryptionService::class);
         $mockCache->expects('hasItem')->with('cache_key', 'encryption_mode')->andReturnFalse();
@@ -265,11 +301,12 @@ class CachingQueryServiceTest extends MockeryTestCase
          * Each test is called twice, except encryption as 2nd time we use local cache
          */
         $mockQuery = m::mock(QueryContainerInterface::class);
-        $mockQuery->expects('isPersistentCacheable')->times(2)->andReturnTrue();
+        $mockQuery->expects('isCustomCacheable')->withNoArgs()->times(2)->andReturnFalse();
+        $mockQuery->expects('isPersistentCacheable')->withNoArgs()->twice()->andReturnTrue();
         $mockQuery->expects('isShortTermCacheable')->never();
-        $mockQuery->expects('getDtoClassName')->twice()->andReturn('dto_class_name');
-        $mockQuery->expects('getCacheIdentifier')->twice()->andReturn('cache_key');
-        $mockQuery->expects('getEncryptionMode')->andReturn('encryption_mode');
+        $mockQuery->expects('getDtoClassName')->withNoArgs()->twice()->andReturn('dto_class_name');
+        $mockQuery->expects('getCacheIdentifier')->withNoArgs()->twice()->andReturn('cache_key');
+        $mockQuery->expects('getEncryptionMode')->withNoArgs()->andReturn('encryption_mode');
 
         $mockQS = m::mock(QueryServiceInterface::class);
         $mockQS->expects('setRecoverHttpClientException')->twice();
@@ -303,11 +340,12 @@ class CachingQueryServiceTest extends MockeryTestCase
     public function testRetrieveFromPersistentWithException()
     {
         $mockQuery = m::mock(QueryContainerInterface::class);
-        $mockQuery->expects('isPersistentCacheable')->andReturnTrue();
-        $mockQuery->expects('isShortTermCacheable')->andReturnFalse();
-        $mockQuery->expects('getDtoClassName')->andReturn('dto_class_name');
-        $mockQuery->expects('getCacheIdentifier')->andReturn('cache_key');
-        $mockQuery->expects('getEncryptionMode')->andReturn('encryption_mode');
+        $mockQuery->expects('isCustomCacheable')->withNoArgs()->andReturnFalse();
+        $mockQuery->expects('isPersistentCacheable')->withNoArgs()->andReturnTrue();
+        $mockQuery->expects('isShortTermCacheable')->withNoArgs()->andReturnFalse();
+        $mockQuery->expects('getDtoClassName')->withNoArgs()->andReturn('dto_class_name');
+        $mockQuery->expects('getCacheIdentifier')->withNoArgs()->andReturn('cache_key');
+        $mockQuery->expects('getEncryptionMode')->withNoArgs()->andReturn('encryption_mode');
 
         $mockQS = m::mock(QueryServiceInterface::class);
         $mockQS->expects('setRecoverHttpClientException');
