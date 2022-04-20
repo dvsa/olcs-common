@@ -569,7 +569,7 @@ class LicenceChecklist extends AbstractHelper implements FactoryInterface
             ]
         ];
 
-        if ($data['isGoods']) {
+        if ($data['canHaveTrailers']) {
             $safetyData[] = [
                 [
                     'value' => $this->translator->__invoke('continuations.safety-section.table.max-time-trailers'),
@@ -583,9 +583,14 @@ class LicenceChecklist extends AbstractHelper implements FactoryInterface
             ];
         }
 
+        $variesKey = 'continuations.safety-section.table.varies';
+        if (!$data['canHaveTrailers']) {
+            $variesKey .= '.no-trailers';
+        }
+
         $safetyData[] = [
             [
-                'value' => $this->translator->__invoke('continuations.safety-section.table.varies'),
+                'value' => $this->translator->__invoke($variesKey),
                 'header' => true
             ],
             [

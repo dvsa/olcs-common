@@ -797,7 +797,7 @@ class LicenceChecklistTest extends MockeryTestCase
                         'tachographIns' => 'External',
                         'showCompany' => true,
                         'tachographInsName' => 'ABC Ltd',
-                        'isGoods' => true,
+                        'canHaveTrailers' => true,
                     ]
                 ],
                 [
@@ -818,6 +818,50 @@ class LicenceChecklistTest extends MockeryTestCase
                     [
                         [
                             'value' => 'continuations.safety-section.table.varies_translated',
+                            'header' => true
+                        ],
+                        ['value' => 'Yes'],
+                    ],
+                    [
+                        [
+                            'value' => 'continuations.safety-section.table.tachographs_translated',
+                            'header' => true
+                        ],
+                        ['value' => 'External'],
+                    ],
+                    [
+                        [
+                            'value' => 'continuations.safety-section.table.tachographInsName_translated',
+                            'header' => true
+                        ],
+                        ['value' => 'ABC Ltd'],
+                    ],
+                ]
+            ],
+            [
+                RefData::LICENCE_CHECKLIST_SAFETY_DETAILS,
+                [
+                    'safety' => [
+                        'safetyInsVehicles' => 2,
+                        'safetyInsTrailers' => 2,
+                        'safetyInsVaries' => 'Yes',
+                        'tachographIns' => 'External',
+                        'showCompany' => true,
+                        'tachographInsName' => 'ABC Ltd',
+                        'canHaveTrailers' => false,
+                    ]
+                ],
+                [
+                    [
+                        [
+                            'value' => 'continuations.safety-section.table.max-time-vehicles_translated',
+                            'header' => true
+                        ],
+                        ['value' => 2],
+                    ],
+                    [
+                        [
+                            'value' => 'continuations.safety-section.table.varies.no-trailers_translated',
                             'header' => true
                         ],
                         ['value' => 'Yes'],

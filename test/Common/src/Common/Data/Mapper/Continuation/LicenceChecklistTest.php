@@ -368,7 +368,8 @@ class LicenceChecklistTest extends MockeryTestCase
                     'tachographInsName' => 'Foo Ltd',
                     'isGoods' => true,
                     'showCompany' => true,
-                    'displaySafetyInspectorsCount' => RefData::CONTINUATIONS_DISPLAY_SAFETY_INSPECTORS_COUNT
+                    'displaySafetyInspectorsCount' => RefData::CONTINUATIONS_DISPLAY_SAFETY_INSPECTORS_COUNT,
+                    'canHaveTrailers' => true
                 ],
                 'continuationDetailId' => 999,
                 'users' => [

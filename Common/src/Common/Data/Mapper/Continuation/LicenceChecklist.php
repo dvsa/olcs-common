@@ -43,7 +43,7 @@ class LicenceChecklist
                 'vehicles' => self::mapVehicles($licenceData, $translator),
                 'operatingCentres' => self::mapOperatingCentres($data),
                 'transportManagers' => self::mapTransportManagers($data),
-                'safety' => self::mapSafetyDetails($licenceData, $translator),
+                'safety' => self::mapSafetyDetails($data, $translator),
                 'users' => self::mapUsers($licenceData, $translator),
                 'continuationDetailId' => $data['id'],
             ]
@@ -571,13 +571,15 @@ class LicenceChecklist
     /**
      * Map safety details
      *
-     * @param array                    $data       data
+     * @param array                    $fullData   data
      * @param TranslationHelperService $translator translator
      *
      * @return array
      */
-    private static function mapSafetyDetails($data, $translator)
+    private static function mapSafetyDetails($fullData, $translator)
     {
+        $data = $fullData['licence'];
+
         $safetyInspectors = [];
         foreach ($data['workshops'] as $workshop) {
             $contactDetails = $workshop['contactDetails'];
@@ -641,7 +643,8 @@ class LicenceChecklist
             'showCompany' =>
                 isset($data['tachographIns']['id'])
                 && $data['tachographIns']['id'] === RefData::LICENCE_SAFETY_INSPECTOR_EXTERNAL,
-            'displaySafetyInspectorsCount' => RefData::CONTINUATIONS_DISPLAY_SAFETY_INSPECTORS_COUNT
+            'displaySafetyInspectorsCount' => RefData::CONTINUATIONS_DISPLAY_SAFETY_INSPECTORS_COUNT,
+            'canHaveTrailers' => $fullData['canHaveTrailers']
         ];
     }
 
