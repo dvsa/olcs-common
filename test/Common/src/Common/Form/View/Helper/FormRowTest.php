@@ -7,22 +7,22 @@ namespace CommonTest\Form\View\Helper;
 use Common\Form\Elements\Types\AttachFilesButton;
 use Common\Form\Elements\Validators\Messages\FormElementMessageFormatter;
 use Common\Form\Elements\Validators\Messages\FormElementMessageFormatterFactory;
+use Common\Form\View\Helper as CommonHelper;
+use Common\Form\View\Helper\FormRow;
+use Common\Test\MockeryTestCase;
 use Common\Test\MocksServicesTrait;
+use Laminas\Form\Element;
+use Laminas\Form\View\Helper as LaminasHelper;
+use Laminas\I18n\Translator\Translator;
 use Laminas\I18n\Translator\TranslatorInterface;
+use Laminas\I18n\View\Helper\Translate;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Validator\ValidatorPluginManager;
 use Laminas\View\HelperPluginManager;
-use Laminas\Form\View\Helper as LaminasHelper;
-use Common\Form\View\Helper as CommonHelper;
-use Common\Form\View\Helper\FormRow;
-use Common\Test\MockeryTestCase;
-use Mockery\MockInterface;
 use Laminas\View\Renderer\PhpRenderer;
-use Laminas\I18n\View\Helper\Translate;
-use Laminas\I18n\Translator\Translator;
+use Mockery\MockInterface;
 use PHPUnit\Framework\MockObject\MockObject;
-use Laminas\Form\Element;
 
 /**
  * @covers \Common\Form\View\Helper\FormRow
@@ -53,26 +53,7 @@ class FormRowTest extends MockeryTestCase
         // Assert
         $this->assertIsCallable([$this->sut, '__invoke']);
     }
-
-    /**
-     * @test
-     * @depends __invoke_IsCallable
-     */
-    public function __invoke_Classic()
-    {
-        // Setup
-        $this->setUpSut();
-        $element = $this->setUpElement();
-        $element->setMessages(['Message']);
-        $element->setLabelOption('always_wrap', true);
-
-        // Execute
-        $result = $this->sut->__invoke($element);
-
-        // Assert
-        $this->assertMatchesRegularExpression('/^<div class="validation-wrapper"><div class="field "><p class="error__text">Message<\/p><label>(.*)<\/label>(.*)<\/div><\/div>$/', $result);
-    }
-
+    
     /**
      * @test
      * @depends __invoke_IsCallable
@@ -88,7 +69,11 @@ class FormRowTest extends MockeryTestCase
         $result = $this->sut->__invoke($element);
 
         // Assert
-        $this->assertMatchesRegularExpression('/^<div class="validation-wrapper"><div class="field "><p class="error__text">Message<\/p>(.*)<\/div><\/div>$/', $result);
+        $this->assertMatchesRegularExpression(
+        '/^<div class="validation-wrapper"><div class="field ">' .
+            '(.*)<\/div><\/div>$/',
+            $result
+        );
     }
 
     /**

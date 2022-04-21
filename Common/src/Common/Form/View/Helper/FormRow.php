@@ -74,10 +74,6 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
             return sprintf(self::$readonlyFormat, $class, $label, $value);
         }
 
-        // We don't want the parent class to render the errors.
-        $this->setRenderErrors(false);
-        $elementErrors = $this->getElementErrorsHelper()->render($element);
-
         if ($element instanceof ActionButton || $element instanceof ActionLink) {
             return $this->renderRow($element);
         }
@@ -123,12 +119,8 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
             $wrap = false;
         }
 
-        if ($elementErrors != '') {
-            $markup = $elementErrors . $markup;
-        }
-
         if (! ($element instanceof Hidden) && $wrap) {
-            if ($elementErrors != '') {
+            if (!empty($element->getMessages())) {
                 $class = '';
             } else {
                 $class = $element->getAttribute('data-container-class');
@@ -149,7 +141,7 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
             }
         }
 
-        if ($elementErrors != '') {
+        if (!empty($element->getMessages())) {
             $markup = sprintf(self::$errorClass, $markup);
         }
 

@@ -2,6 +2,14 @@
 
 namespace CommonTest\Form\View\Helper;
 
+use Common\Form\Elements\Validators\Messages\FormElementMessageFormatter;
+use Common\Form\View\Helper\FormElement;
+use Common\Form\View\Helper\FormElementErrors;
+use Common\Form\View\Helper\FormPlainText;
+use CommonTest\Util\DummyTranslator;
+use Laminas\I18n\View\Helper\Translate;
+use Laminas\View\Helper\Url;
+use Laminas\View\Renderer\PhpRenderer;
 use Mockery as m;
 use Laminas\View\HelperPluginManager;
 use Laminas\View\Renderer\JsonRenderer;
@@ -50,7 +58,7 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
         $this->prepareElement();
         $view = new JsonRenderer();
 
-        $viewHelper = new \Common\Form\View\Helper\FormElement();
+        $viewHelper = new FormElement();
         $viewHelper->setView($view);
         $viewHelper($this->element, 'formElement', '/');
 
@@ -296,43 +304,6 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
         $this->expectOutputRegex('/^<table><\/table>$/');
     }
 
-    private function prepareViewHelper($translateMap = null)
-    {
-        $translator = new \CommonTest\Util\DummyTranslator();
-        if (!is_null($translateMap)) {
-            $translator->setMap($translateMap);
-        }
-
-        $translateHelper = new \Laminas\I18n\View\Helper\Translate();
-        $translateHelper->setTranslator($translator);
-
-        /** @var \Laminas\View\Renderer\PhpRenderer | \PHPUnit_Framework_MockObject_MockObject $view */
-        $view = $this->createPartialMock(\Laminas\View\Renderer\PhpRenderer::class, []);
-
-        $plainTextService = new \Common\Form\View\Helper\FormPlainText();
-        $plainTextService->setTranslator($translator);
-        $plainTextService->setView($view);
-
-        $urlHelper = m::mock(\Laminas\View\Helper\Url::class);
-        $urlHelper->shouldReceive('__invoke')->andReturn('url');
-
-        $helpers = new HelperPluginManager();
-        $helpers->setService('form_text', new Helper\FormText());
-        $helpers->setService('form_input', new Helper\FormInput());
-        $helpers->setService('form_file', new Helper\FormFile());
-        $helpers->setService('translate', $translateHelper);
-        $helpers->setService('form_plain_text', $plainTextService);
-        $helpers->setService('form', new Helper\Form());
-        $helpers->setService('url', $urlHelper);
-
-        $view->setHelperPluginManager($helpers);
-
-        $viewHelper = new \Common\Form\View\Helper\FormElement();
-        $viewHelper->setView($view);
-
-        return $viewHelper;
-    }
-
     public function testRenderForTrafficAreaSet()
     {
         $this->prepareElement(\Common\Form\Elements\Types\TrafficAreaSet::class);
@@ -576,8 +547,49 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
         $markup = $viewHelper($this->element, 'formCollection', '/');
 
         $this->assertSame(
-            '<p class="hint">Hint</p><input type="text" name="test" class="class&#x20;error__input" id="test" value="">',
+            '<p class="hint">Hint</p><span class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span>Message 1</span><input type="text" name="test" class="class&#x20;error__input" id="test" value="">',
             $markup
         );
+    }
+
+    private function prepareViewHelper($translateMap = null)
+    {
+        $translator = new DummyTranslator();
+        if (!is_null($translateMap)) {
+            $translator->setMap($translateMap);
+        }
+
+        $translateHelper = new Translate();
+        $translateHelper->setTranslator($translator);
+
+        /** @var PhpRenderer | \PHPUnit_Framework_MockObject_MockObject $view */
+        $view = $this->createPartialMock(PhpRenderer::class, []);
+
+        $plainTextService = new FormPlainText();
+        $plainTextService->setTranslator($translator);
+        $plainTextService->setView($view);
+
+        $urlHelper = m::mock(Url::class);
+        $urlHelper->shouldReceive('__invoke')->andReturn('url');
+
+        $formElementErrors = new FormElementErrors(new FormElementMessageFormatter($translator), $translator);
+        $formElementErrors->setView($view);
+
+        $helpers = new HelperPluginManager();
+        $helpers->setService('form_text', new Helper\FormText());
+        $helpers->setService('form_input', new Helper\FormInput());
+        $helpers->setService('form_file', new Helper\FormFile());
+        $helpers->setService('translate', $translateHelper);
+        $helpers->setService('form_plain_text', $plainTextService);
+        $helpers->setService('form', new Helper\Form());
+        $helpers->setService('url', $urlHelper);
+        $helpers->setService('form_element_errors', $formElementErrors);
+
+        $view->setHelperPluginManager($helpers);
+
+        $viewHelper = new FormElement();
+        $viewHelper->setView($view);
+
+        return $viewHelper;
     }
 }

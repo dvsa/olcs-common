@@ -2,6 +2,7 @@
 
 namespace Common\Form\View\Helper;
 
+use Common\Form\Element\DynamicRadioHtml;
 use Common\Form\Elements\InputFilters\ActionLink;
 use Common\Form\Elements\Types\AttachFilesButton;
 use Common\Form\Elements\Types\GuidanceTranslated;
@@ -11,7 +12,6 @@ use Common\Form\Elements\Types\PlainText;
 use Common\Form\Elements\Types\Table;
 use Common\Form\Elements\Types\TermsBox;
 use Common\Form\Elements\Types\TrafficAreaSet;
-use Common\Form\Element\DynamicRadioHtml;
 use Laminas\Form\ElementInterface;
 use Laminas\Form\ElementInterface as LaminasElementInterface;
 use Laminas\Form\View\Helper\FormElement as LaminasFormElement;
@@ -220,9 +220,15 @@ class FormElement extends LaminasFormElement
             $element->setAttribute('class', $element->getAttribute('class') . ' error__input');
         }
 
-        $html = $this->attachHint($element, parent::render($element));
+        $elementErrorsHelper = $this->view->plugin('form_element_errors');
+        assert($elementErrorsHelper instanceof FormElementErrors, 'Expected instance of ' . FormElementErrors::class);
 
-        return $this->attachBelowHint($element, $html);
+        $markup = parent::render($element);
+        $markup = $elementErrorsHelper->render($element) . $markup;
+        $markup = $this->attachHint($element, $markup);
+        $markup = $this->attachBelowHint($element, $markup);
+
+        return $markup;
     }
 
     /**

@@ -10,16 +10,18 @@ use Common\Form\View\Helper\FormElementErrors;
 use Common\Form\View\Helper\FormElementErrorsFactory;
 use Common\Test\MockeryTestCase;
 use Common\Test\MocksServicesTrait;
+use HTMLPurifier;
 use Laminas\Form\Element;
+use Laminas\I18n\Translator\Translator;
 use Laminas\I18n\Translator\TranslatorInterface;
-use Laminas\Mvc\I18n\Translator;
+use Laminas\I18n\View\Helper\Translate;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Validator\ValidatorPluginManager;
 use Laminas\View\HelperPluginManager;
 use Laminas\View\Renderer\PhpRenderer;
 use Mockery\MockInterface;
-use HTMLPurifier;
+
 
 /**
  * @see FormElementErrors
@@ -70,8 +72,8 @@ class FormElementErrorsTest extends MockeryTestCase
         $element = new \Laminas\Form\Element\Text('test');
         $element->setLabel('Test');
         $element->setMessages(['Message']);
-        $translator = new \Laminas\I18n\Translator\Translator();
-        $translateHelper = new \Laminas\I18n\View\Helper\Translate();
+        $translator = new Translator();
+        $translateHelper = new Translate();
         $translateHelper->setTranslator($translator);
 
         $helpers = new HelperPluginManager();
@@ -85,7 +87,9 @@ class FormElementErrorsTest extends MockeryTestCase
         $viewHelper->setView($view);
         $markup = $viewHelper($element);
 
-        $this->assertSame('<p class="error__text">Message</p>', $markup);
+        $expectedMarkup = '<span class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span>Message</span>';
+
+        $this->assertSame($expectedMarkup, $markup);
     }
 
     /**

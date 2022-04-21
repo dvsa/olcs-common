@@ -17,7 +17,7 @@ use Common\Form\Elements\Validators\Messages\ValidationMessageInterface;
 class FormElementErrors extends LaminasFormElementErrors
 {
     protected $attributes = [
-        'class' => 'error__text',
+        'class' => 'govuk-error-message',
     ];
 
     /**
@@ -92,7 +92,7 @@ class FormElementErrors extends LaminasFormElementErrors
 
         $markup = '';
         foreach ($messagesToPrint as $message) {
-            $markup .= sprintf('<p%s>%s</p>', $attributes, $message);
+            $markup .= sprintf('<span%s><span class="govuk-visually-hidden">Error:</span>%s</span>', $attributes, $message);
         }
 
         return $markup;

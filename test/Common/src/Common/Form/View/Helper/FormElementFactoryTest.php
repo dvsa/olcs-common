@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CommonTest\Form\View\Helper;
 
+use Common\Form\View\Helper\FormElementErrors;
 use Common\Form\View\Helper\FormElementFactory;
 use Common\Test\MockeryTestCase;
 use Common\Test\MocksServicesTrait;
@@ -161,6 +162,7 @@ class FormElementFactoryTest extends MockeryTestCase
         if (! $this->serviceManager->has(PhpRenderer::class)) {
             $instance = $this->setUpMockService(PhpRenderer::class);
             $instance->allows('plugin')->with(FormElement::DEFAULT_HELPER)->andReturn($this->helper());
+            $instance->allows('plugin')->with('form_element_errors')->andReturn($this->formElementErrors());
             $this->serviceManager->setService(PhpRenderer::class, $instance);
         }
         return $this->serviceManager->get(PhpRenderer::class);
@@ -185,5 +187,12 @@ class FormElementFactoryTest extends MockeryTestCase
         $helper = Mockery::mock(\Closure::fromCallable(function () {}));
         $helper->allows('__invoke')->andReturn(static::RENDERED_STRING);
         return $helper;
+    }
+
+    protected function formElementErrors()
+    {
+        $formElementErrors = Mockery::mock(FormElementErrors::class);
+        $formElementErrors->allows('render')->andReturn('');
+        return $formElementErrors;
     }
 }
