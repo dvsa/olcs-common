@@ -52,10 +52,11 @@ class LicenceChecklist extends AbstractFormService
      *
      * @return void
      */
-    protected function alterForm($form, $data)
+    protected function alterForm($form, $data): void
     {
         $orgData = $data['licence']['organisation'];
         $this->alterPeopleSection($form, $orgData['type']['id']);
+        $this->alterOperatingCentresSection($form, $data['licence']['vehicleType']['id']);
         $this->alterBackUrl($form, $data['licence']['id']);
         $this->alterContinueButton($form, $data);
         $this->alterAllSections($form, $data['sections']);
@@ -69,7 +70,7 @@ class LicenceChecklist extends AbstractFormService
      *
      * @return void
      */
-    protected function alterPeopleSection($form, $orgType)
+    protected function alterPeopleSection($form, $orgType): void
     {
         $dataFieldset = $form->get('data');
         $peopleCheckbox = $dataFieldset->get('peopleCheckbox');
@@ -80,6 +81,29 @@ class LicenceChecklist extends AbstractFormService
     }
 
     /**
+     * Alter operating centres section
+     *
+     * @param Form   $form        form
+     * @param string $vehicleType vehicle type
+     *
+     * @return void
+     */
+    protected function alterOperatingCentresSection($form, $vehicleType): void
+    {
+        if ($vehicleType == RefData::APP_VEHICLE_TYPE_LGV) {
+            $dataFieldset = $form->get('data');
+            $operatingCentresCheckbox = $dataFieldset->get('operatingCentresCheckbox');
+            $operatingCentresCheckbox->setLabel(
+                $operatingCentresCheckbox->getLabel() . '.lgv'
+            );
+            $operatingCentresCheckbox->setOption(
+                'not_checked_message',
+                $operatingCentresCheckbox->getOption('not_checked_message') . '.lgv'
+            );
+        }
+    }
+
+    /**
      * Alter back url
      *
      * @param Form $form      form
@@ -87,7 +111,7 @@ class LicenceChecklist extends AbstractFormService
      *
      * @return void
      */
-    protected function alterBackUrl($form, $licenceId)
+    protected function alterBackUrl($form, $licenceId): void
     {
         $backButton = $form->get('licenceChecklistConfirmation')->get('noContent')->get('backToLicence');
         $backButton->setValue(
@@ -106,7 +130,7 @@ class LicenceChecklist extends AbstractFormService
      *
      * @return void
      */
-    protected function alterAllSections($form, $sections)
+    protected function alterAllSections($form, $sections): void
     {
         $key = array_search('vehiclesPsv', $sections);
         if ($key !== false) {
@@ -128,7 +152,7 @@ class LicenceChecklist extends AbstractFormService
      *
      * @return void
      */
-    protected function alterContinueButton($form, $data)
+    protected function alterContinueButton($form, $data): void
     {
         $licenceData = $data['licence'];
         if ($licenceData['licenceType']['id'] === RefData::LICENCE_TYPE_SPECIAL_RESTRICTED
