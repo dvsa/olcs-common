@@ -38,12 +38,12 @@ class PublicationNumber implements FormatterInterface
         $link = sprintf($linkPattern, Escape::html($url), Escape::html($data['publicationNo']));
 
         if ($data['pubStatus']['id'] === 'pub_s_generated') {
-            $osType = $data['userOsType']['id'] ?? 'windows_7';
-            $documentConfig = $sm->get('Config');
-            $uriPattern = $documentConfig[$osType . '_document_share']['uri_pattern'] ?? $documentConfig['document_share']['uri_pattern'];
-            $url = sprintf($uriPattern, $data['document']['identifier']);
-            $linkPattern = '<a href="%s" data-file-url="%s" data-os-type="'.$osType.'" target="blank">%s</a>';
-            $link = sprintf($linkPattern, Escape::html($url), Escape::html($url), Escape::html($data['publicationNo']));
+            $link = sprintf(
+                '<a href="%s" data-file-url="%s" target="blank">%s</a>',
+                htmlentities($data['webDavUrl'], ENT_QUOTES, 'utf-8'),
+                htmlentities($data['webDavUrl'], ENT_QUOTES, 'utf-8'),
+                htmlentities($data['publicationNo'], ENT_QUOTES, 'utf-8')
+            );
         }
 
         return $link;
