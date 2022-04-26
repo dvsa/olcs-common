@@ -22,7 +22,7 @@ class PublicationNumberTest extends MockeryTestCase
     /**
      * @dataProvider provider
      */
-    public function testFormat($data, $column, $expected, $config)
+    public function testFormat($data, $column, $expected)
     {
         $params = ['foo' => 'bar'];
 
@@ -41,10 +41,7 @@ class PublicationNumberTest extends MockeryTestCase
                     ->with('Common\Service\Data\Publication')
                     ->andReturn($pubService)
                     ->getMock()
-            )
-            ->shouldReceive('get')
-            ->with('Config')
-            ->andReturn($config);
+            );
 
         $this->assertEquals($expected, PublicationNumber::format($data, $column, $sm));
     }
@@ -60,17 +57,9 @@ class PublicationNumberTest extends MockeryTestCase
                     'publicationNo' => 12345
                 ],
                 [],
-                12345,
-                [
-                    'windows_7_document_share' => [
-                        'uri_pattern' => '//foo/%s'
-                    ],
-                    'windows_10_document_share' => [
-                        'uri_pattern' => '//foo/%s'
-                    ]
-                ]
+                12345
             ],
-            "document-webdav-10" => [
+            "document-webdav-generated" => [
                 [
                     'pubStatus' => [
                         'id' => 'pub_s_generated'
@@ -81,41 +70,10 @@ class PublicationNumberTest extends MockeryTestCase
                         'id' => 987654,
 
                     ],
-                    'userOsType' => ['id'=>'windows_10']
+                    'webDavUrl' => 'ms-word:ofe|u|https://testhost/documents-dav/JWT/olcs/ID'
                 ],
                 [],
-                '<a href="//foo/some/path/foo.rtf" data-file-url="//foo/some/path/foo.rtf" data-os-type="windows_10" target="blank">12345</a>',
-                [
-                    'windows_7_document_share' => [
-                        'uri_pattern' => '//win7foo/%s'
-                    ],
-                    'windows_10_document_share' => [
-                        'uri_pattern' => '//foo/%s'
-                    ]
-                ]
-            ],
-            "document-docman-7" => [
-                [
-                    'pubStatus' => [
-                        'id' => 'pub_s_generated'
-                    ],
-                    'publicationNo' => 12345,
-                    'document' => [
-                        'identifier' => 'some/path/foo.rtf',
-                        'id' => 987654
-                    ],
-                    'userOsType' => ['id'=>'windows_7']
-                ],
-                [],
-                '<a href="//win7foo/some/path/foo.rtf" data-file-url="//win7foo/some/path/foo.rtf" data-os-type="windows_7" target="blank">12345</a>',
-                [
-                    'windows_7_document_share' => [
-                        'uri_pattern' => '//win7foo/%s'
-                    ],
-                    'windows_10_document_share' => [
-                        'uri_pattern' => '//foo/%s'
-                    ]
-                ]
+                '<a href="ms-word:ofe|u|https://testhost/documents-dav/JWT/olcs/ID" data-file-url="ms-word:ofe|u|https://testhost/documents-dav/JWT/olcs/ID" target="blank">12345</a>'
             ],
             "docman-config" => [
                 [
@@ -130,12 +88,7 @@ class PublicationNumberTest extends MockeryTestCase
                 ],
                 [],
                 '<a href="/file/987654">'
-                . '12345</a>',
-                [
-                    'document_share' => [
-                        'uri_pattern' => '//foo/%s'
-                    ]
-                ]
+                . '12345</a>'
             ]
         ];
     }
