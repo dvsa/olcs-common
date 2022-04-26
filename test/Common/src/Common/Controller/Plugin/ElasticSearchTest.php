@@ -4,15 +4,14 @@ namespace CommonTest\Controller\Plugin;
 
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Common\Controller\Plugin\ElasticSearch;
 use Olcs\TestHelpers\ControllerPluginManagerHelper;
 use CommonTest\Bootstrap;
 use Laminas\Mvc\MvcEvent;
 use Laminas\Mvc\Router\Http\Segment;
 use Laminas\Mvc\Router\RouteMatch;
 use Laminas\Mvc\Router\SimpleRouteStack;
-use Laminas\View\Helper\Placeholder;
 use Laminas\View\Model\ViewModel;
+use Laminas\Navigation\Page\Mvc as NavigationPage;
 
 /**
  * Class ElasticSearchPluginTest
@@ -263,6 +262,11 @@ class ElasticSearchTest extends MockeryTestCase
             ->with('horizontalNavigationContainer')
             ->andReturn(m::mock()->shouldReceive('set')->once()->with($mi)->getMock());
 
+        $page = m::mock(NavigationPage::class);
+
+        $mi->shouldReceive('findOneBy')->with('id', 'remove-id')->once()->andReturn($page);
+        $mi->shouldReceive('removePage')->with($page, true)->once()->andReturnTrue();
+
         $mockViewHelperManager = m::mock('Laminas\Mvc\Service\ViewHelperManagerFactory');
         $mockViewHelperManager->shouldReceive('get')->with('placeholder')->andReturn($mockPlaceholder);
 
@@ -274,7 +278,7 @@ class ElasticSearchTest extends MockeryTestCase
         $plugin->setSearchData(['search' => 'foo', 'index' => 'da']);
 
         $view = new ViewModel();
-        $plugin->configureNavigation();
+        $plugin->configureNavigation(['remove-id']);
     }
 
     private function getMockSearchObjectArray()
