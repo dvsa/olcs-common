@@ -209,4 +209,17 @@ class PidIdentityProviderTest extends TestCase
         $this->assertNull($identity->getUsername());
         $this->assertEquals([], $identity->getRoles());
     }
+
+    public function testClearSession(): void
+    {
+        $queryService = m::mock(QuerySender::class);
+        $request = m::mock(Request::class);
+        $cache = m::mock(CacheEncryption::class);
+
+        $session = m::mock(Container::class);
+        $session->expects('exchangeArray')->with([]);
+
+        $sut = new PidIdentityProvider($queryService, $session, $request, $cache);
+        $sut->clearSession();
+    }
 }

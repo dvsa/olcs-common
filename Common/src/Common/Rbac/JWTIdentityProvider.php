@@ -137,4 +137,11 @@ class JWTIdentityProvider implements IdentityProviderInterface
             return;
         }
     }
+
+    public function clearSession(): void
+    {
+        $this->identitySession->exchangeArray([]);
+        $this->tokenSession->clear();
+        $this->identity = null;
+    }
 }
