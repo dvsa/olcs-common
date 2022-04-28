@@ -180,4 +180,10 @@ class PidIdentityProvider implements IdentityProviderInterface
 
         return false;
     }
+
+    public function clearSession(): void
+    {
+        $this->session->exchangeArray([]);
+        $this->identity = null;
+    }
 }

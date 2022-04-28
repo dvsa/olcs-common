@@ -248,6 +248,17 @@ class JWTIdentityProviderTest extends MockeryTestCase
         $this->sut->getIdentity();
     }
 
+    /**
+     * @test
+     */
+    public function clearSession_ShouldClearSession(): void
+    {
+        $this->setupSut();
+        $this->identitySession()->expects('exchangeArray')->with([]);
+        $this->tokenSession()->expects('clear')->withNoArgs();
+        $this->sut->clearSession();
+    }
+
     public function setUp(): void
     {
         $this->setUpServiceManager();
