@@ -9,6 +9,7 @@ use Dvsa\Olcs\Transfer\Query\MyAccount\MyAccount;
 use Dvsa\Olcs\Transfer\Service\CacheEncryption;
 use Exception;
 use Laminas\Authentication\Storage\Session;
+use Laminas\Http\Response;
 use Laminas\Session\Container;
 use ZfcRbac\Identity\IdentityInterface;
 use ZfcRbac\Identity\IdentityProviderInterface;
@@ -124,8 +125,8 @@ class JWTIdentityProvider implements IdentityProviderInterface
             return;
         }
 
-        $tokens = $this->tokenSession->read()['Token'] ?? null;
-        $identifier = $this->tokenSession->read()['AccessTokenClaims']['username'] ?? null;
+        $tokens = $this->getToken();
+        $identifier = $this->getIdentifierFromToken();
         if (is_null($tokens) || !$this->refreshTokenService->isRefreshRequired($tokens) || is_null($identifier)) {
             return;
         }
@@ -138,10 +139,65 @@ class JWTIdentityProvider implements IdentityProviderInterface
         }
     }
 
+    /**
+     * This method replicates the response we used to get from OpenAm
+     * Initially, it appears only to be used by the Javascript ajax request when loading modal boxes
+     */
+    public function validateToken(): array
+    {
+        $response = [
+            'status' => Response::STATUS_CODE_200,
+            'valid' => false,
+        ];
+
+        //fetching the identity will also refresh the token if possible
+        $identity = $this->getIdentity();
+
+        //anon user or empty token, return valid = false
+        if ($identity->isAnonymous() || $this->tokenSession->isEmpty()) {
+            return $response;
+        }
+
+        $token = $this->getToken();
+
+        //expired or missing token, return valid = false
+        if (is_null($token) || $this->tokenExpired($token)) {
+            return $response;
+        }
+
+        $tokenIdentifer = $this->getIdentifierFromToken();
+        $username = $identity->getUsername();
+
+        //if username from identity and token don't match, return valid = false
+        if ($tokenIdentifer !== $username) {
+            return $response;
+        }
+
+        $response['valid'] = true;
+        $response['uid'] = $username;
+
+        return $response;
+    }
+
     public function clearSession(): void
     {
         $this->identitySession->exchangeArray([]);
         $this->tokenSession->clear();
         $this->identity = null;
+    }
+
+    private function getToken(): ?array
+    {
+        return $this->tokenSession->read()['Token'] ?? null;
+    }
+
+    private function getIdentifierFromToken(): ?string
+    {
+        return $this->tokenSession->read()['AccessTokenClaims']['username'] ?? null;
+    }
+
+    private function tokenExpired(array $token): bool
+    {
+        return $token['expires'] - time() < 0;
     }
 }
