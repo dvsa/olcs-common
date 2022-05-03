@@ -78,7 +78,8 @@ class Details extends AbstractSection
         if ($transportManagerApplication['application']['vehicleType']['id'] === RefData::APP_VEHICLE_TYPE_LGV) {
             // LGV only - populate lgvAcquiredRightsReferenceNumber
             $this->lgvAcquiredRightsReferenceNumber = !empty($transportManagerApplication['lgvAcquiredRightsReferenceNumber'])
-                ? $transportManagerApplication['lgvAcquiredRightsReferenceNumber'] : 'Not provided';
+                ? $transportManagerApplication['lgvAcquiredRightsReferenceNumber']
+                : $this->getTranslationTemplate() . 'lgvAcquiredRightsReferenceNumberNotProvided';
         } else {
             // skip lgvAcquiredRightsReferenceNumber
             $this->propertiesToSkip[] = 'lgvAcquiredRightsReferenceNumber';
@@ -134,7 +135,7 @@ class Details extends AbstractSection
             }
         }
 
-        return $hasDocument ? 'Certificate added' : 'No certificates attached';
+        return $this->getTranslationTemplate() . ($hasDocument ? 'certificateAdded' : 'noCertificatesAttached');
     }
 
     /**
