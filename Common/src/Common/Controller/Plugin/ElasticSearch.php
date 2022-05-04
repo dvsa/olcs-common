@@ -287,13 +287,17 @@ class ElasticSearch extends AbstractPlugin
         return $incomingParameters;
     }
 
-    public function configureNavigation()
+    public function configureNavigation($removeNavIds = [])
     {
         $sd = $this->getSearchData();
 
         $nav = $this->getSearchTypeService()->getNavigation('internal-search', ['search' => $sd['search']]);
         // A little workaround to set the current nav as active
         $nav->findOneBy('id', 'search-' . $sd['index'])->setActive(true);
+
+        foreach ($removeNavIds as $navId) {
+            $nav->removePage($nav->findOneBy('id', $navId), true);
+        }
 
         $this->getController()->getViewHelperManager()
             ->get('placeholder')
