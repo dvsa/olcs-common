@@ -14,6 +14,7 @@ use Laminas\Authentication\Storage\Session;
 use Laminas\Http\Response as HttpResponse;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Session\Container;
+use Mockery as m;
 use Mockery\MockInterface;
 use Olcs\TestHelpers\MockeryTestCase;
 
@@ -46,10 +47,183 @@ class JWTIdentityProviderTest extends MockeryTestCase
         ]
     ];
 
+    private array $tokenExpired = [
+        'Token' => [
+            'expires' => 0,
+            'refreshToken' => 'abc1234',
+        ],
+    ];
+
+    private array $tokenWrongUser = [
+        'Token' => [
+            'expires' => 99999999999999999999999999999999999999,
+            'refreshToken' => 'abc1234',
+        ],
+        'AccessTokenClaims' => [
+            'username' => 'username',
+        ],
+    ];
+
+    private array $tokenCorrectUser = [
+        'Token' => [
+            'expires' => 99999999999999999999999999999999999999,
+            'refreshToken' => 'abc1234',
+        ],
+        'AccessTokenClaims' => [
+            'username' => 'usr999',
+        ],
+    ];
+
+    private int $defaultUserId = 999;
+    private string $defaultLoginId = 'usr999';
+    private string $defaultUserType = 'user_type';
+    private array $defaultUserData = [
+        'id' => 999,
+        'loginId' => 'usr999',
+        'userType' => 'user_type',
+        'roles' => [],
+    ];
+
     /**
      * @var JWTIdentityProvider
      */
     protected $sut;
+
+    /**
+     * @test
+     */
+    public function validateToken_ShouldReturnFalse_WhenAnonymous(): void
+    {
+        $this->setupSut();
+
+        $identity = $this->identity();
+        $identity->expects('isAnonymous')->andReturnTrue();
+
+        $this->identitySessionWithCachedIdentity($identity);
+        $this->tokenSession()->expects('isEmpty')->twice()->andReturnTrue();
+
+        $result = $this->sut->validateToken();
+
+        // Execute
+        $this->assertFalse($result['valid']);
+    }
+
+    /**
+     * @test
+     */
+    public function validateToken_ShouldReturnFalse_WhenEmptyToken(): void
+    {
+        $this->setupSut();
+
+        $identity = $this->identity();
+        $identity->expects('isAnonymous')->andReturnFalse();
+
+        $this->identitySessionWithCachedIdentity($identity);
+        $this->tokenSession()->expects('isEmpty')->times(3)->andReturnTrue();
+
+        $result = $this->sut->validateToken();
+
+        // Execute
+        $this->assertFalse($result['valid']);
+    }
+
+    /**
+     * @test
+     */
+    public function validateToken_ShouldReturnFalse_WhenCantReadToken(): void
+    {
+        $this->setupSut();
+
+        $identity = $this->identity();
+        $identity->expects('isAnonymous')->andReturnFalse();
+
+        $this->identitySessionWithCachedIdentity($identity);
+        $this->tokenSession()->expects('isEmpty')->times(3)->andReturnFalse();
+        $this->tokenSession()->expects('read')->times(5)->andReturn([]);
+
+        $result = $this->sut->validateToken();
+
+        // Execute
+        $this->assertFalse($result['valid']);
+    }
+
+    /**
+     * @test
+     */
+    public function validateToken_ShouldReturnFalse_WhenExpiredToken(): void
+    {
+        $this->setupSut();
+
+        $identity = $this->identity();
+        $identity->expects('isAnonymous')->andReturnFalse();
+
+        $this->identitySessionWithCachedIdentity($identity);
+        $this->tokenSession()->expects('isEmpty')->times(3)->andReturnFalse();
+        $this->tokenSession()->expects('read')->times(5)->andReturn($this->tokenExpired);
+
+        $this->refreshTokenService()->expects('isRefreshRequired')
+            ->with($this->tokenExpired['Token'])
+            ->twice()
+            ->andReturnFalse();
+
+        $result = $this->sut->validateToken();
+
+        // Execute
+        $this->assertFalse($result['valid']);
+    }
+
+    /**
+     * @test
+     */
+    public function validateToken_ShouldReturnFalse_WhenTokenHasWrongUser(): void
+    {
+        $this->setupSut();
+
+        $identity = $this->identity();
+        $identity->expects('isAnonymous')->andReturnFalse();
+        $identity->expects('getUsername')->andReturn($this->defaultLoginId);
+
+        $this->identitySessionWithCachedIdentity($identity);
+        $this->tokenSession()->expects('isEmpty')->times(3)->andReturnFalse();
+        $this->tokenSession()->expects('read')->times(6)->andReturn($this->tokenWrongUser);
+
+        $this->refreshTokenService()->expects('isRefreshRequired')
+            ->with($this->tokenWrongUser['Token'])
+            ->twice()
+            ->andReturnFalse();
+
+        $result = $this->sut->validateToken();
+
+        // Execute
+        $this->assertFalse($result['valid']);
+    }
+
+    /**
+     * @test
+     */
+    public function validateToken_ShouldReturnTrue_WhenValid(): void
+    {
+        $this->setupSut();
+
+        $identity = $this->identity();
+        $identity->expects('isAnonymous')->andReturnFalse();
+        $identity->expects('getUsername')->andReturn($this->defaultLoginId);
+
+        $this->identitySessionWithCachedIdentity($identity);
+        $this->tokenSession()->expects('isEmpty')->times(3)->andReturnFalse();
+        $this->tokenSession()->expects('read')->times(6)->andReturn($this->tokenCorrectUser);
+
+        $this->refreshTokenService()->expects('isRefreshRequired')
+            ->with($this->tokenCorrectUser['Token'])
+            ->twice()
+            ->andReturnFalse();
+
+        $result = $this->sut->validateToken();
+
+        // Execute
+        $this->assertTrue($result['valid']);
+        $this->assertEquals($result['uid'], $this->defaultLoginId);
+    }
 
     /**
      * @test
@@ -308,6 +482,30 @@ class JWTIdentityProviderTest extends MockeryTestCase
         }
         $instance = $this->serviceManager->get(QuerySender::class);
         return $instance;
+    }
+
+    private function identity(): MockInterface
+    {
+        $identity = m::mock(User::class);
+        $identity->expects('getId')->times(3)->andReturn($this->defaultUserId);
+
+        $identity->expects('setUserType')->with($this->defaultUserType);
+        $identity->expects('setUsername')->with($this->defaultLoginId);
+        $identity->expects('setUserData')->with($this->defaultUserData);
+
+        return $identity;
+    }
+
+    private function identitySessionWithCachedIdentity($identity): void
+    {
+        $this->identitySession()->expects('offsetGet')->with('identity')->andReturn($identity);
+        $this->identitySession()->expects('offsetSet')->with('identity', $identity);
+        $this->cacheService()->expects('hasCustomItem')
+            ->with(CacheEncryption::USER_ACCOUNT_IDENTIFIER, $this->defaultUserId)
+            ->andReturnTrue();
+        $this->cacheService()->expects('getCustomItem')
+            ->with(CacheEncryption::USER_ACCOUNT_IDENTIFIER, $this->defaultUserId)
+            ->andReturn($this->defaultUserData);
     }
 
     /**
