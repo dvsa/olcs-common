@@ -33,17 +33,17 @@ class LicenceNumberAndStatus implements FormatterInterface
         $activeLink = true;
         switch ($row['status']['id']) {
             case RefData::LICENCE_STATUS_VALID:
-                $statusClass .= ' green';
+                $statusClass = 'green';
                 break;
             case RefData::LICENCE_STATUS_SURRENDER_UNDER_CONSIDERATION:
-                $statusClass .= ' green';
+                $statusClass = 'green';
                 $activeLink = false;
                 break;
             case RefData::LICENCE_STATUS_SUSPENDED:
             case RefData::LICENCE_STATUS_CURTAILED:
             case RefData::LICENCE_STATUS_UNDER_CONSIDERATION:
             case RefData::LICENCE_STATUS_GRANTED:
-                $statusClass .= ' orange';
+                $statusClass = 'orange';
                 break;
             case RefData::LICENCE_STATUS_SURRENDERED:
             case RefData::LICENCE_STATUS_REVOKED:
@@ -52,13 +52,13 @@ class LicenceNumberAndStatus implements FormatterInterface
             case RefData::LICENCE_STATUS_WITHDRAWN:
             case RefData::LICENCE_STATUS_REFUSED:
             case RefData::LICENCE_STATUS_NOT_TAKEN_UP:
-                $statusClass .= ' red';
+                $statusClass = 'red';
                 break;
             case RefData::LICENCE_STATUS_CANCELLED:
-                $statusClass .= ' grey';
+                $statusClass = 'grey';
                 break;
             default:
-                $statusClass .= ' grey';
+                $statusClass = 'grey';
                 break;
         }
         $urlHelper = $serviceLocator->get('Helper\Url');
@@ -79,8 +79,8 @@ class LicenceNumberAndStatus implements FormatterInterface
     private static function markupWithLink($row, $urlHelper, $statusClass): string
     {
         return vsprintf(
-            '<a class="overview__link" href="%s"><span class="overview__link--underline">%s</span> ' .
-            '<span class="overview__%s">%s</span></a>',
+            '<a class="overview__link" href="%s"><span>%s</span> ' .
+            '<span class="govuk-tag govuk-tag--%s">%s</span></a>',
             [
                 $urlHelper->fromRoute('lva-licence', ['licence' => $row['id']]),
                 $row['licNo'],

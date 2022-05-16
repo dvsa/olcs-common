@@ -34,14 +34,14 @@ class TransportManagerApplicationStatus extends AbstractHelper
      */
     public function render($statusId, $description)
     {
-        $statusClass = (isset(self::$statusColors[$statusId])) ? ' ' . self::$statusColors[$statusId] : '';
+        $statusClass = self::$statusColors[$statusId] ?? '';
 
         if (!isset($description) || $description === '') {
             return '';
         }
 
         return sprintf(
-            '<span class="status%s">%s</span>',
+            '<strong class="govuk-tag govuk-tag--%s">%s</strong>',
             $statusClass,
             $this->getView()->translate($description)
         );

@@ -63,6 +63,6 @@ class EbsrRegNumberLink implements FormatterInterface
             'description' => $translator->translate($statusDescription),
         ];
 
-        return sprintf(self::LINK_PATTERN, $url, $data['regNo']) . $statusHelper->__invoke($status);
+        return sprintf(self::LINK_PATTERN, $url, $data['regNo']) . ' ' . $statusHelper->__invoke($status);
     }
 }

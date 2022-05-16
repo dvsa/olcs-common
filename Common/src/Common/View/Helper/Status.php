@@ -52,7 +52,7 @@ class Status extends AbstractHelper
      */
     protected function render($value, $colour)
     {
-        return sprintf('<span class="status %s">%s</span>', Escape::html($colour), Escape::html($value));
+        return sprintf('<strong class="govuk-tag govuk-tag--%s">%s</strong>', Escape::html($colour), Escape::html($value));
     }
 
     /**
