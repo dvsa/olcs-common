@@ -24,9 +24,21 @@ class Trailer
     /**
      * @Form\Type("Text")
      * @Form\Attributes({"class":"long"})
-     * @Form\Options({"label":"licence_goods-trailers_trailer.form.add.trailernumber"})
+     * @Form\Options({
+     *     "label": "licence_goods-trailers_trailer.form.add.trailernumber",
+     *     "hint": "licence_goods-trailers_trailer.form.add.trailernumber.hint"
+     * })
      * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
      * @Form\Validator({"name":"Laminas\I18n\Validator\Alnum"})
      */
     public $trailerNo = null;
+
+    /**
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\IsLongerSemiTrailer")
+     * @Form\Options({
+     *     "label": "licence_goods-trailers_trailer.form.add.islongersemitrailer.label",
+     *     "hint": "licence_goods-trailers_trailer.form.add.islongersemitrailer.hint"
+     * })
+     */
+    public $longerSemiTrailer = null;
 }

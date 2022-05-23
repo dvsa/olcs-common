@@ -2,6 +2,7 @@
 
 namespace CommonTest\Form\Model\Form\Lva;
 
+use Common\Form\Elements\Types\Radio;
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
 use Laminas\I18n\Validator\Alnum;
 
@@ -39,6 +40,19 @@ class TrailerTest extends AbstractFormValidationTestCase
             '!!@@ABC123!!',
             [Alnum::NOT_ALNUM]
         );
+    }
+
+    public function testLongerSemiTrailerWarning()
+    {
+        $this->assertFormElementHtml(['data','longerSemiTrailer','YContent','longerSemiTrailerWarning']);
+    }
+
+    public function testIsLongerSemiTrailer()
+    {
+        $element = ['data','longerSemiTrailer','isLongerSemiTrailer'];
+        $this->assertFormElementType($element, Radio::class);
+        $this->assertFormElementValid($element, 'Y');
+        $this->assertFormElementValid($element, 'N');
     }
 
     public function testSubmit()

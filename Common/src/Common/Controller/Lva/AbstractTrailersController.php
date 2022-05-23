@@ -126,6 +126,7 @@ abstract class AbstractTrailersController extends AbstractController
                 $data['id'] = $this->getLicenceId();
                 $data['licence'] = $this->getLicenceId();
                 $data['specifiedDate'] = $this->getServiceLocator()->get('Helper\Date')->getDate();
+                $data['isLongerSemiTrailer'] = $data['longerSemiTrailer']['isLongerSemiTrailer'];
 
                 $response = $this->handleCommand(CreateTrailer::create($data));
 
