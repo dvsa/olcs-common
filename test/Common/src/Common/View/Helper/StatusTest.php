@@ -37,7 +37,7 @@ class StatusTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
     {
         $html = $this->sut->__invoke($status);
 
-        $expected = !empty($color) ? '<span class="status '. $color .'">value</span>' : '';
+        $expected = !empty($color) ? '<strong class="govuk-tag govuk-tag--'. $color .'">value</strong>' : '';
         $this->assertEquals($expected, $html);
     }
 

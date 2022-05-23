@@ -15,7 +15,7 @@ use Common\View\Helper\Status as StatusHelper;
  */
 class BusRegNumberLink implements FormatterInterface
 {
-    const LINK_PATTERN = '<a href="%s">%s</a>';
+    const LINK_PATTERN = '<a class="govuk-link" href="%s">%s</a>';
     const URL_ROUTE = 'licence/bus-details/service'; //internal bus reg service details page
     const LABEL_TRANSLATION_KEY = 'ebsr-link-label';
     const LABEL_COLOUR = 'orange';
@@ -52,6 +52,6 @@ class BusRegNumberLink implements FormatterInterface
         $urlHelper = $sm->get('Helper\Url');
         $url = $urlHelper->fromRoute(self::URL_ROUTE, ['busRegId' => $data['id']], [], true);
 
-        return sprintf(self::LINK_PATTERN, $url, Escape::html($data['regNo'])) . $outputStatus;
+        return sprintf(self::LINK_PATTERN, $url, Escape::html($data['regNo'])) . ' ' . $outputStatus;
     }
 }

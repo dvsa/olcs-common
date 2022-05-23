@@ -63,7 +63,7 @@ class EbsrRegNumberLinkTest extends MockeryTestCase
             ->with($statusArray)
             ->andReturn($statusLabel);
 
-        $expected = sprintf(EbsrRegNumberLink::LINK_PATTERN, $url, $regNo) . $statusLabel;
+        $expected = sprintf(EbsrRegNumberLink::LINK_PATTERN, $url, $regNo) . ' ' . $statusLabel;
 
         $this->assertEquals($expected, $sut::format($data, [], $sm));
     }

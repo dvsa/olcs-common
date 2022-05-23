@@ -32,12 +32,12 @@ class TransportManagerApplicationStatusTest extends MockeryTestCase
     public function dataProviderRender()
     {
         return [
-            [' orange', RefData::TMA_STATUS_AWAITING_SIGNATURE],
-            [' red', RefData::TMA_STATUS_INCOMPLETE],
-            [' green', RefData::TMA_STATUS_OPERATOR_SIGNED],
-            [' green', RefData::TMA_STATUS_POSTAL_APPLICATION],
-            [' orange', RefData::TMA_STATUS_TM_SIGNED],
-            [' green', RefData::TMA_STATUS_RECEIVED],
+            ['orange', RefData::TMA_STATUS_AWAITING_SIGNATURE],
+            ['red', RefData::TMA_STATUS_INCOMPLETE],
+            ['green', RefData::TMA_STATUS_OPERATOR_SIGNED],
+            ['green', RefData::TMA_STATUS_POSTAL_APPLICATION],
+            ['orange', RefData::TMA_STATUS_TM_SIGNED],
+            ['green', RefData::TMA_STATUS_RECEIVED],
             'invalidStatus' => ['', 'foo'],
         ];
     }
@@ -57,7 +57,7 @@ class TransportManagerApplicationStatusTest extends MockeryTestCase
             );
 
         static::assertEquals(
-            '<span class="status' . $expectedClass . '">_TRANSL_' . $status . '</span>',
+            '<strong class="govuk-tag govuk-tag--' . $expectedClass . '">_TRANSL_' . $status . '</strong>',
             $this->sut->__invoke($status, $status)
         );
     }

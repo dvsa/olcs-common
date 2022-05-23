@@ -93,8 +93,8 @@ class LicenceNumberAndStatus implements FormatterInterface
     private static function markupWithoutLink($row, $statusClass): string
     {
         return vsprintf(
-            '<div class="overview__link"><span class="overview__link">%s</span> ' .
-            '<span class="overview__%s">%s</span></div>',
+            '<div class="overview__link"><span>%s</span> ' .
+            '<span class="govuk-tag govuk-tag--%s">%s</span></div>',
             [
                 $row['licNo'],
                 $statusClass,
@@ -115,12 +115,12 @@ class LicenceNumberAndStatus implements FormatterInterface
     {
         if (isset($row['isExpired']) && $row['isExpired'] === true) {
             $row['status']['description'] = $translator->translate('licence.status.expired');
-            $statusClass = 'status red';
+            $statusClass = 'red';
         }
 
         if (isset($row['isExpiring']) && $row['isExpiring'] === true) {
             $row['status']['description'] = $translator->translate('licence.status.expiring');
-            $statusClass = 'status red';
+            $statusClass = 'red';
         }
         return [$row, $statusClass];
     }

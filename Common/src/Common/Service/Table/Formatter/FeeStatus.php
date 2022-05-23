@@ -28,23 +28,22 @@ class FeeStatus implements FormatterInterface
      */
     public static function format($row, $column = null, $serviceLocator = null)
     {
-        $statusClass = 'status';
         switch ($row['feeStatus']['id']) {
             case RefData::FEE_STATUS_PAID:
-                $statusClass .= ' green';
+                $statusClass = 'green';
                 break;
             case RefData::FEE_STATUS_OUTSTANDING:
-                $statusClass .= ' orange';
+                $statusClass = 'orange';
                 break;
             case RefData::FEE_STATUS_CANCELLED:
-                $statusClass .= ' red';
+                $statusClass = 'red';
                 break;
             default:
-                $statusClass .= ' grey';
+                $statusClass = 'grey';
                 break;
         }
         return vsprintf(
-            '<span class="%s">%s</span>',
+            '<strong class="govuk-tag govuk-tag--%s">%s</strong>',
             [$statusClass, $row['feeStatus']['description']]
         );
     }

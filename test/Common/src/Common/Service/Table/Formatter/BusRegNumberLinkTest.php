@@ -63,7 +63,7 @@ class BusRegNumberLinkTest extends MockeryTestCase
         $sm->shouldReceive('get')->times($isTxcApp)->with('translator')->andReturn($translationHelper);
         $sm->expects('get')->with('Helper\Url')->andReturn($urlHelperService);
 
-        $expected = '<a href="'. $url . '">&quot;5678</a>' . $expectedOutputStatus;
+        $expected = '<a class="govuk-link" href="'. $url . '">&quot;5678</a>' . ' ' . $expectedOutputStatus;
         $this->assertEquals($expected, $sut::format($inputData, [], $sm));
     }
 

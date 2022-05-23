@@ -57,7 +57,7 @@ class LicenceNumberAndStatusTest extends MockeryTestCase
     public function provider()
     {
         return [
-            'Not submitted' => [
+            'Valid' => [
                 [
                     'status' => [
                         'id' => RefData::LICENCE_STATUS_VALID,
@@ -66,8 +66,7 @@ class LicenceNumberAndStatusTest extends MockeryTestCase
                     'licNo' => 'OB123',
                     'id' => 2
                 ],
-                '<a class="overview__link" href="lva-licence/2"><span class="overview__link--underline">OB123</span> '.
-                    '<span class="overview__status green">Valid</span></a>',
+                '<a class="overview__link" href="lva-licence/2"><span>OB123</span> <span class="govuk-tag govuk-tag--green">Valid</span></a>',
             ],
             'Suspended' => [
                 [
@@ -78,8 +77,7 @@ class LicenceNumberAndStatusTest extends MockeryTestCase
                     'licNo' => 'OB123',
                     'id' => 2
                 ],
-                '<a class="overview__link" href="lva-licence/2"><span class="overview__link--underline">OB123</span> '.
-                    '<span class="overview__status orange">Suspended</span></a>',
+                '<a class="overview__link" href="lva-licence/2"><span>OB123</span> <span class="govuk-tag govuk-tag--orange">Suspended</span></a>',
             ],
             'Curtailed' => [
                 [
@@ -90,8 +88,7 @@ class LicenceNumberAndStatusTest extends MockeryTestCase
                     'licNo' => 'OB123',
                     'id' => 2
                 ],
-                '<a class="overview__link" href="lva-licence/2"><span class="overview__link--underline">OB123</span> '.
-                    '<span class="overview__status orange">Curtailed</span></a>',
+                '<a class="overview__link" href="lva-licence/2"><span>OB123</span> <span class="govuk-tag govuk-tag--orange">Curtailed</span></a>',
             ],
             'Under consideration' => [
                 [
@@ -102,8 +99,7 @@ class LicenceNumberAndStatusTest extends MockeryTestCase
                     'licNo' => 'OB123',
                     'id' => 2
                 ],
-                '<a class="overview__link" href="lva-licence/2"><span class="overview__link--underline">OB123</span> '.
-                    '<span class="overview__status orange">Under consideration</span></a>',
+                '<a class="overview__link" href="lva-licence/2"><span>OB123</span> <span class="govuk-tag govuk-tag--orange">Under consideration</span></a>',
             ],
             'Granted' => [
                 [
@@ -114,8 +110,7 @@ class LicenceNumberAndStatusTest extends MockeryTestCase
                     'licNo' => 'OB123',
                     'id' => 2
                 ],
-                '<a class="overview__link" href="lva-licence/2"><span class="overview__link--underline">OB123</span> '.
-                    '<span class="overview__status orange">Granted</span></a>',
+                '<a class="overview__link" href="lva-licence/2"><span>OB123</span> <span class="govuk-tag govuk-tag--orange">Granted</span></a>',
             ],
             'Surrender under consideration' => [
                 [
@@ -126,8 +121,7 @@ class LicenceNumberAndStatusTest extends MockeryTestCase
                     'licNo' => 'OB123',
                     'id' => 2
                 ],
-                '<div class="overview__link"><span class="overview__link">OB123</span> '.
-                '<span class="overview__status green">Surrender under consideration</span></div>',
+                '<div class="overview__link"><span>OB123</span> <span class="govuk-tag govuk-tag--green">Surrender under consideration</span></div>',
             ],
             'Surrendered' => [
                 [
@@ -138,8 +132,7 @@ class LicenceNumberAndStatusTest extends MockeryTestCase
                     'licNo' => 'OB123',
                     'id' => 2
                 ],
-                '<a class="overview__link" href="lva-licence/2"><span class="overview__link--underline">OB123</span> '.
-                    '<span class="overview__status red">Surrendered</span></a>',
+                '<a class="overview__link" href="lva-licence/2"><span>OB123</span> <span class="govuk-tag govuk-tag--red">Surrendered</span></a>',
             ],
             'Revoked' => [
                 [
@@ -150,8 +143,7 @@ class LicenceNumberAndStatusTest extends MockeryTestCase
                     'licNo' => 'OB123',
                     'id' => 2
                 ],
-                '<a class="overview__link" href="lva-licence/2"><span class="overview__link--underline">OB123</span> '.
-                    '<span class="overview__status red">Revoked</span></a>',
+                '<a class="overview__link" href="lva-licence/2"><span>OB123</span> <span class="govuk-tag govuk-tag--red">Revoked</span></a>',
             ],
             'Terminated' => [
                 [
@@ -162,8 +154,7 @@ class LicenceNumberAndStatusTest extends MockeryTestCase
                     'licNo' => 'OB123',
                     'id' => 2
                 ],
-                '<a class="overview__link" href="lva-licence/2"><span class="overview__link--underline">OB123</span> '.
-                    '<span class="overview__status red">Terminated</span></a>',
+                '<a class="overview__link" href="lva-licence/2"><span>OB123</span> <span class="govuk-tag govuk-tag--red">Terminated</span></a>',
             ],
             'CNS' => [
                 [
@@ -174,8 +165,7 @@ class LicenceNumberAndStatusTest extends MockeryTestCase
                     'licNo' => 'OB123',
                     'id' => 2
                 ],
-                '<a class="overview__link" href="lva-licence/2"><span class="overview__link--underline">OB123</span> '.
-                    '<span class="overview__status red">CNS</span></a>',
+                '<a class="overview__link" href="lva-licence/2"><span>OB123</span> <span class="govuk-tag govuk-tag--red">CNS</span></a>',
             ],
             'Withdrawn' => [
                 [
@@ -186,8 +176,7 @@ class LicenceNumberAndStatusTest extends MockeryTestCase
                     'licNo' => 'OB123',
                     'id' => 2
                 ],
-                '<a class="overview__link" href="lva-licence/2"><span class="overview__link--underline">OB123</span> '.
-                    '<span class="overview__status red">Withdrawn</span></a>',
+                '<a class="overview__link" href="lva-licence/2"><span>OB123</span> <span class="govuk-tag govuk-tag--red">Withdrawn</span></a>',
             ],
             'Refused' => [
                 [
@@ -198,8 +187,7 @@ class LicenceNumberAndStatusTest extends MockeryTestCase
                     'licNo' => 'OB123',
                     'id' => 2
                 ],
-                '<a class="overview__link" href="lva-licence/2"><span class="overview__link--underline">OB123</span> '.
-                    '<span class="overview__status red">Refused</span></a>',
+                '<a class="overview__link" href="lva-licence/2"><span>OB123</span> <span class="govuk-tag govuk-tag--red">Refused</span></a>',
             ],
             'Not taken up' => [
                 [
@@ -210,8 +198,7 @@ class LicenceNumberAndStatusTest extends MockeryTestCase
                     'licNo' => 'OB123',
                     'id' => 2
                 ],
-                '<a class="overview__link" href="lva-licence/2"><span class="overview__link--underline">OB123</span> '.
-                    '<span class="overview__status red">Not taken up</span></a>',
+                '<a class="overview__link" href="lva-licence/2"><span>OB123</span> <span class="govuk-tag govuk-tag--red">Not taken up</span></a>',
             ],
             'Cancelled' => [
                 [
@@ -222,8 +209,7 @@ class LicenceNumberAndStatusTest extends MockeryTestCase
                     'licNo' => 'OB123',
                     'id' => 2
                 ],
-                '<a class="overview__link" href="lva-licence/2"><span class="overview__link--underline">OB123</span> '.
-                    '<span class="overview__status grey">Cancelled</span></a>',
+                '<a class="overview__link" href="lva-licence/2"><span>OB123</span> <span class="govuk-tag govuk-tag--grey">Cancelled</span></a>',
             ],
             'Unknown' => [
                 [
@@ -234,8 +220,7 @@ class LicenceNumberAndStatusTest extends MockeryTestCase
                     'licNo' => 'OB123',
                     'id' => 2
                 ],
-                '<a class="overview__link" href="lva-licence/2"><span class="overview__link--underline">OB123</span> '.
-                    '<span class="overview__status grey">Unknown</span></a>',
+                '<a class="overview__link" href="lva-licence/2"><span>OB123</span> <span class="govuk-tag govuk-tag--grey">Unknown</span></a>',
             ],
             'Expired' => [
                 [
@@ -247,8 +232,7 @@ class LicenceNumberAndStatusTest extends MockeryTestCase
                     'id' => 2,
                     'isExpired' => true,
                 ],
-                '<a class="overview__link" href="lva-licence/2"><span class="overview__link--underline">OB123</span> '.
-                    '<span class="overview__status red">TRANSLATED_licence.status.expired</span></a>',
+                '<a class="overview__link" href="lva-licence/2"><span>OB123</span> <span class="govuk-tag govuk-tag--red">TRANSLATED_licence.status.expired</span></a>',
             ],
             'Expiring' => [
                 [
@@ -260,8 +244,7 @@ class LicenceNumberAndStatusTest extends MockeryTestCase
                     'id' => 2,
                     'isExpiring' => true,
                 ],
-                '<a class="overview__link" href="lva-licence/2"><span class="overview__link--underline">OB123</span> '.
-                    '<span class="overview__status red">TRANSLATED_licence.status.expiring</span></a>',
+                '<a class="overview__link" href="lva-licence/2"><span>OB123</span> <span class="govuk-tag govuk-tag--red">TRANSLATED_licence.status.expiring</span></a>',
             ],
             'Expiring but Surrendered' =>[
                 [
@@ -273,8 +256,7 @@ class LicenceNumberAndStatusTest extends MockeryTestCase
                     'id' => 2,
                     'isExpiring' => true,
                 ],
-                '<div class="overview__link"><span class="overview__link">OB123</span> '.
-                '<span class="overview__status green">Surrender under consideration</span></div>',
+                '<div class="overview__link"><span>OB123</span> <span class="govuk-tag govuk-tag--green">Surrender under consideration</span></div>',
             ],
         ];
     }
