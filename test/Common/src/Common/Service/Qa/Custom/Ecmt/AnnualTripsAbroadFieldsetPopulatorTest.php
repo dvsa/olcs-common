@@ -25,7 +25,7 @@ class AnnualTripsAbroadFieldsetPopulatorTest extends MockeryTestCase
      */
     public function testPopulate($showNiWarning)
     {
-        $markup = '<div class="guidance-blue">Trips abroad guidance</div><p>paragraph 1</p><p>paragraph</p>';
+        $markup = '<div class="govuk-inset-text">Trips abroad guidance</div><p>paragraph 1</p><p>paragraph</p>';
 
         $textOptions = [
             'textKey1' => 'textValue1',

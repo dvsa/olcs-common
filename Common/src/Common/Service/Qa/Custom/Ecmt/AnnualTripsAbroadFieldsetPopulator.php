@@ -57,7 +57,7 @@ class AnnualTripsAbroadFieldsetPopulator implements FieldsetPopulatorInterface
         $this->niWarningConditionalAdder->addIfRequired($fieldset, $options['showNiWarning']);
 
         $guidanceBlueMarkup = sprintf(
-            '<div class="guidance-blue">%s</div>',
+            '<div class="govuk-inset-text">%s</div>',
             $this->translator->translate('qanda.ecmt.annual-trips-abroad.guidance')
         );
 
