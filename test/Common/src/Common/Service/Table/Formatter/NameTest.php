@@ -72,6 +72,17 @@ class NameTest extends MockeryTestCase
         $this->assertEquals('John Smith', Name::format($data, ['name' => 'foo']));
     }
 
+    public function testEscapedName()
+    {
+        $data = [
+            'foo' => [
+                'forename' => 'John"',
+                'familyName' => 'Smith',
+            ]
+        ];
+        $this->assertEquals('John&quot; Smith', Name::format($data, ['name' => 'foo']));
+    }
+
     public function testFormatDeepNestedData()
     {
         $data = [
