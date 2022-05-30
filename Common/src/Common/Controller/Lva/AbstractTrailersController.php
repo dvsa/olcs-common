@@ -163,6 +163,7 @@ abstract class AbstractTrailersController extends AbstractController
             if ($form->isValid()) {
                 $data = $form->getData()['data'];
                 $data['licence'] = $this->getLicenceId();
+                $data['isLongerSemiTrailer'] = $data['longerSemiTrailer']['isLongerSemiTrailer'];
 
                 $response = $this->handleCommand(UpdateTrailer::create($data));
 
@@ -184,7 +185,12 @@ abstract class AbstractTrailersController extends AbstractController
 
         $trailer = $response->getResult();
 
-        $form->setData(['data' => $trailer]);
+        $data = ['data' => $trailer];
+        $data['data']['longerSemiTrailer'] = [
+            'isLongerSemiTrailer' => $trailer['isLongerSemiTrailer'] ? 'Y' : 'N'
+        ];
+
+        $form->setData($data);
 
         return $this->render('edit_trailer', $form);
     }
