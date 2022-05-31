@@ -37,6 +37,6 @@ class Name implements FormatterInterface
         }
 
         $title = !empty($data['title']['description']) ? $data['title']['description'] . ' ' : '';
-        return $title . $data['forename'] . ' ' . $data['familyName'];
+        return htmlspecialchars($title, ENT_QUOTES, 'UTF-8') . htmlspecialchars($data['forename'], ENT_QUOTES, 'UTF-8') . ' ' . htmlspecialchars($data['familyName'], ENT_QUOTES, 'UTF-8');
     }
 }
