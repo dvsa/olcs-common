@@ -56,7 +56,8 @@ class Contact
      *    "label_attributes": {
      *        "aria-label": "Business email address"
      *    },
-     *     "error-message": "contact_email-error"
+     *     "error-message": "contact_email-error",
+     *     "hint": "application_your-business_business-type.contact-details.operator-email-hint",
      * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
