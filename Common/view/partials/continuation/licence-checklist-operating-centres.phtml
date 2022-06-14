@@ -4,10 +4,11 @@
         <?php
             echo $ocChanges
                 . ' '
-                . $this->translate('continuations.pending.change'. ($ocChanges > 1 ? 's' : ''));
+                . $this->escapeHtml($this->translate('continuations.pending.change'. ($ocChanges > 1 ? 's' : '')));
         ?>
     </p>
 <?php endif;?>
+<?php if ($this->data['operatingCentres']['totalOperatingCentres'] > 0): ?>
 <div class="field">
     <?php
     echo $this->partial(
@@ -29,13 +30,14 @@
             'continuation/checklist/operating-centres', ['continuationDetailId' => $this->data['continuationDetailId']])
         ; ?>"
         class="action--secondary large" target="_blank">
-        <?php echo $this->translate('continuations.operating-centres.button-label'); ?>
+        <?php echo $this->escapeHtml($this->translate('continuations.operating-centres.button-label')); ?>
         </a>
         </p>
-        <p><?php echo $this->translate('continuations.checklist.section.opens_in_a_new_window'); ?></p>
+        <p><?php echo $this->escapeHtml($this->translate('continuations.checklist.section.opens_in_a_new_window')); ?></p>
     <?php endif; ?>
 </div>
-<h3><?php echo $this->translate('continuations.authorisation.label'); ?></h3>
+<?php endif; ?>
+<h3><?php echo $this->escapeHtml($this->translate('continuations.authorisation.label')); ?></h3>
 <?php echo $this->partial(
     'partials/continuation/checklist-section',
     [

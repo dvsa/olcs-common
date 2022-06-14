@@ -43,8 +43,8 @@ class VariationTypeOfLicenceTest extends MockeryTestCase
         $params = [
             'canUpdateLicenceType' => true,
             'canBecomeSpecialRestricted' => true,
-            'canBecomeStandardInternational' => true,
-            'currentLicenceType' => 'foo'
+            'currentLicenceType' => 'foo',
+            'currentVehicleType' => 'bar'
         ];
 
         $mockOl = m::mock(Element::class);
@@ -59,6 +59,13 @@ class VariationTypeOfLicenceTest extends MockeryTestCase
 
         $mockLt = m::mock(Element\Radio::class);
 
+        $mockVt = m::mock(Element\Radio::class);
+
+        $mockLtypSiContent = m::mock(Fieldset::class);
+        $mockLtypSiContent->shouldReceive('get')
+            ->with('vehicle-type')
+            ->andReturn($mockVt);
+
         $ltFieldset = m::mock(Fieldset::class);
         $ltFieldset->shouldReceive('get')
             ->with('licence-type')
@@ -66,6 +73,9 @@ class VariationTypeOfLicenceTest extends MockeryTestCase
         $ltFieldset->shouldReceive('setLabel')
             ->once()
             ->with('licence-type');
+        $ltFieldset->shouldReceive('get')
+            ->with('ltyp_siContent')
+            ->andReturn($mockLtypSiContent);
 
         $tolFieldset = m::mock(Fieldset::class);
         $tolFieldset->shouldReceive('get')
@@ -100,7 +110,11 @@ class VariationTypeOfLicenceTest extends MockeryTestCase
             ->once()
             ->with($mockForm, 'type-of-licence->operator-type')
             ->shouldReceive('setCurrentOption')
-            ->with($mockLt, 'foo');
+            ->with($mockLt, 'foo')
+            ->once()
+            ->shouldReceive('setCurrentOption')
+            ->with($mockVt, 'bar')
+            ->once();
 
         $varService = m::mock(Variation::class);
         $this->fsm->setService('lva-variation', $varService);
@@ -119,8 +133,8 @@ class VariationTypeOfLicenceTest extends MockeryTestCase
         $params = [
             'canUpdateLicenceType' => false,
             'canBecomeSpecialRestricted' => false,
-            'canBecomeStandardInternational' => false,
-            'currentLicenceType' => 'foo'
+            'currentLicenceType' => 'foo',
+            'currentVehicleType' => 'bar'
         ];
 
         $mockOl = m::mock(Element::class);
@@ -135,6 +149,13 @@ class VariationTypeOfLicenceTest extends MockeryTestCase
 
         $mockLt = m::mock(Element\Radio::class);
 
+        $mockVt = m::mock(Element\Radio::class);
+
+        $mockLtypSiContent = m::mock(Fieldset::class);
+        $mockLtypSiContent->shouldReceive('get')
+            ->with('vehicle-type')
+            ->andReturn($mockVt);
+
         $ltFieldset = m::mock(Fieldset::class);
         $ltFieldset->shouldReceive('get')
             ->with('licence-type')
@@ -142,6 +163,9 @@ class VariationTypeOfLicenceTest extends MockeryTestCase
         $ltFieldset->shouldReceive('setLabel')
             ->once()
             ->with('licence-type');
+        $ltFieldset->shouldReceive('get')
+            ->with('ltyp_siContent')
+            ->andReturn($mockLtypSiContent);
 
         $tolFieldset = m::mock(Fieldset::class);
         $tolFieldset->shouldReceive('get')
@@ -205,11 +229,12 @@ class VariationTypeOfLicenceTest extends MockeryTestCase
             ->shouldReceive('removeOption')
             ->once()
             ->with($mockLt, RefData::LICENCE_TYPE_SPECIAL_RESTRICTED)
-            ->shouldReceive('disableOption')
-            ->once()
-            ->with($mockLt, RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL)
             ->shouldReceive('setCurrentOption')
-            ->with($mockLt, 'foo');
+            ->with($mockLt, 'foo')
+            ->once()
+            ->shouldReceive('setCurrentOption')
+            ->with($mockVt, 'bar')
+            ->once();
 
         $varService = m::mock(Variation::class);
         $this->fsm->setService('lva-variation', $varService);

@@ -70,7 +70,7 @@ class DetailsTest extends MockeryTestCase
             'lva-tmverify-details-checkanswer-birthDate' => '15 Oct 2000',
             'lva-tmverify-details-checkanswer-birthPlace' => '__TEST__',
             'lva-tmverify-details-checkanswer-emailAddress' => '__TEST__',
-            'lva-tmverify-details-checkanswer-certificate' => 'No certificates attached',
+            'lva-tmverify-details-checkanswer-certificate' => 'lva-tmverify-details-checkanswer-noCertificatesAttached',
             'lva-tmverify-details-checkanswer-hasUndertakenTraining' => 'N',
             'lva-tmverify-details-checkanswer-homeCd' => '__TEST__',
             'lva-tmverify-details-checkanswer-workCd' => '__TEST__',
@@ -141,7 +141,7 @@ class DetailsTest extends MockeryTestCase
             'lva-tmverify-details-checkanswer-birthDate' => '15 Oct 2000',
             'lva-tmverify-details-checkanswer-birthPlace' => null,
             'lva-tmverify-details-checkanswer-emailAddress' => '__TEST__',
-            'lva-tmverify-details-checkanswer-certificate' => 'No certificates attached',
+            'lva-tmverify-details-checkanswer-certificate' => 'lva-tmverify-details-checkanswer-noCertificatesAttached',
             'lva-tmverify-details-checkanswer-hasUndertakenTraining' => 'Y',
             'lva-tmverify-details-checkanswer-homeCd' => '__TEST__',
             'lva-tmverify-details-checkanswer-workCd' => '__TEST__',
@@ -190,7 +190,7 @@ class DetailsTest extends MockeryTestCase
         ])->times(2)->andReturn('__TEST__');
         $actual = $this->sut->populate($data);
 
-        $this->assertContains('No certificates attached', $actual->sectionSerialize());
+        $this->assertContains('lva-tmverify-details-checkanswer-noCertificatesAttached', $actual->sectionSerialize());
     }
 
     public function testCertificateAdded()
@@ -241,7 +241,7 @@ class DetailsTest extends MockeryTestCase
         $actual = $this->sut->populate($data);
 
         $this->assertEquals(
-            'Certificate added',
+            'lva-tmverify-details-checkanswer-certificateAdded',
             $actual->sectionSerialize()['lva-tmverify-details-checkanswer-certificate']
         );
     }
@@ -260,7 +260,7 @@ class DetailsTest extends MockeryTestCase
             ],
             'without LGV AR ref number' => [
                 'lgvAcquiredRightsReferenceNumber' => '',
-                'expected' => 'Not provided',
+                'expected' => 'lva-tmverify-details-checkanswer-lgvAcquiredRightsReferenceNumberNotProvided',
             ],
         ];
     }
@@ -316,7 +316,7 @@ class DetailsTest extends MockeryTestCase
             'lva-tmverify-details-checkanswer-birthDate' => '15 Oct 2000',
             'lva-tmverify-details-checkanswer-birthPlace' => '__TEST__',
             'lva-tmverify-details-checkanswer-emailAddress' => '__TEST__',
-            'lva-tmverify-details-checkanswer-certificate' => 'No certificates attached',
+            'lva-tmverify-details-checkanswer-certificate' => 'lva-tmverify-details-checkanswer-noCertificatesAttached',
             'lva-tmverify-details-checkanswer-lgvAcquiredRightsReferenceNumber' => $expected,
             'lva-tmverify-details-checkanswer-hasUndertakenTraining' => 'N',
             'lva-tmverify-details-checkanswer-homeCd' => '__TEST__',

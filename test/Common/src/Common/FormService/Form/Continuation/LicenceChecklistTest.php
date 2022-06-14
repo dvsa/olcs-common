@@ -5,11 +5,13 @@ namespace CommonTest\FormService\Form\Lva;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Continuation\LicenceChecklist;
+use Common\Form\Elements\Types\CheckboxAdvanced;
 use Common\Form\Model\Form\Continuation\LicenceChecklist as LicenceChecklistForm;
 use Common\Service\Helper\FormHelperService;
 use Common\RefData;
 use CommonTest\Bootstrap;
 use Common\FormService\FormServiceManager;
+use Laminas\Form\Form;
 
 /**
  * Licence checklist form service test
@@ -145,6 +147,9 @@ class LicenceChecklistTest extends MockeryTestCase
                 'licenceType' => [
                     'id' => RefData::LICENCE_TYPE_SPECIAL_RESTRICTED
                 ],
+                'vehicleType' => [
+                    'id' => RefData::APP_VEHICLE_TYPE_PSV
+                ],
                 'goodsOrPsv' => [
                     'id' => RefData::LICENCE_CATEGORY_PSV
                 ]
@@ -164,6 +169,63 @@ class LicenceChecklistTest extends MockeryTestCase
             ]
         ];
         $this->assertEquals($form, $this->sut->getForm($data));
+    }
+
+    /**
+     * @dataProvider dpAlterOperatingCentresSection
+     */
+    public function testAlterOperatingCentresSection($vehicleTypeId, $updatedLabel, $updatedNotCheckedMessage)
+    {
+        $operatingCentresCheckbox = m::mock(CheckboxAdvanced::class)->makePartial();
+        $operatingCentresCheckbox->setLabel('existing-label');
+        $operatingCentresCheckbox->setOption('not_checked_message', 'existing-not-checked-message');
+
+        $form = m::mock(Form::class);
+        $form->shouldReceive('get')
+            ->with('data')
+            ->andReturnSelf()
+            ->shouldReceive('get')
+            ->with('operatingCentresCheckbox')
+            ->andReturn($operatingCentresCheckbox);
+
+        $sut = m::mock(LicenceChecklist::class)->makePartial();
+        $sut->alterOperatingCentresSection($form, $vehicleTypeId);
+
+        $this->assertEquals(
+            $updatedLabel,
+            $operatingCentresCheckbox->getLabel()
+        );
+
+        $this->assertEquals(
+            $updatedNotCheckedMessage,
+            $operatingCentresCheckbox->getOption('not_checked_message')
+        );
+    }
+
+    public function dpAlterOperatingCentresSection()
+    {
+        return [
+            [
+                RefData::APP_VEHICLE_TYPE_PSV,
+                'existing-label',
+                'existing-not-checked-message'
+            ],
+            [
+                RefData::APP_VEHICLE_TYPE_HGV,
+                'existing-label',
+                'existing-not-checked-message'
+            ],
+            [
+                RefData::APP_VEHICLE_TYPE_MIXED,
+                'existing-label',
+                'existing-not-checked-message'
+            ],
+            [
+                RefData::APP_VEHICLE_TYPE_LGV,
+                'existing-label.lgv',
+                'existing-not-checked-message.lgv'
+            ],
+        ];
     }
 
     public function testAlterContinueButton()

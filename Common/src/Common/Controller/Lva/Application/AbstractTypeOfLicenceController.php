@@ -67,7 +67,7 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
 
         $operatorType = $formData['type-of-licence']['operator-type'];
         $licenceType = $licenceTypeData['licence-type'];
-        $vehicleType =  null;
+        $vehicleType = null;
         $lgvDeclarationConfirmation = 0;
 
         if (isset($licenceTypeData['ltyp_siContent'])) {
