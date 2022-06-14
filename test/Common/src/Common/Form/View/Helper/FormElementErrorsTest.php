@@ -87,7 +87,7 @@ class FormElementErrorsTest extends MockeryTestCase
         $viewHelper->setView($view);
         $markup = $viewHelper($element);
 
-        $expectedMarkup = '<span class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span>Message</span>';
+        $expectedMarkup = '<p class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span>Message</p>';
 
         $this->assertSame($expectedMarkup, $markup);
     }

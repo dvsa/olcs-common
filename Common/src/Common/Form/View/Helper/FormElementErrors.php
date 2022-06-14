@@ -92,7 +92,7 @@ class FormElementErrors extends LaminasFormElementErrors
 
         $markup = '';
         foreach ($messagesToPrint as $message) {
-            $markup .= sprintf('<span%s><span class="govuk-visually-hidden">Error:</span>%s</span>', $attributes, $message);
+            $markup .= sprintf('<p%s><span class="govuk-visually-hidden">Error:</span>%s</p>', $attributes, $message);
         }
 
         return $markup;
