@@ -18,11 +18,11 @@ use Laminas\Form\Fieldset;
 use Laminas\Form\Form;
 use Mockery as m;
 use Common\Service\Helper\TranslationHelperService;
-use Laminas\Di\ServiceLocator;
 use Common\Service\Helper\FormHelperService;
 use Common\FormService\FormServiceManager;
 use Common\Form\Model\Form\Lva\Fieldset\ConvictionsPenaltiesReadMoreLink;
 use Laminas\Mvc\Controller\Plugin\Url;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Convictions & Penalties Form Service Test
@@ -86,9 +86,7 @@ class ConvictionsPenaltiesTest extends AbstractLvaFormServiceTestCase
                 $ConvictionsReadMoreLink
             )->getMock();
 
-        $mockServiceLocator = m::mock(ServiceLocator::class);
-
-
+        $mockServiceLocator = m::mock(ServiceLocatorInterface::class);
         $mockServiceLocator->shouldReceive('get')->with('Helper\Translation')->once()->andReturn($translator);
         $mockServiceLocator->shouldReceive('get')->with('Helper\Url')->once()->andReturn($mockUrl);
 

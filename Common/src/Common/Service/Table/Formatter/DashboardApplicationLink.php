@@ -3,7 +3,6 @@
 namespace Common\Service\Table\Formatter;
 
 use Common\RefData;
-use Laminas\Di\ServiceLocator;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
