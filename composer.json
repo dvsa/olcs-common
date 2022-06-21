@@ -23,7 +23,6 @@
         "laminas/laminas-cache": "^2.5",
         "laminas/laminas-code": "~3.4.1",
         "laminas/laminas-dependency-plugin": "^2.0",
-        "laminas/laminas-di": "^2.5",
         "laminas/laminas-escaper": "^2.5",
         "laminas/laminas-eventmanager": "^2.5",
         "laminas/laminas-filter": "^2.5",

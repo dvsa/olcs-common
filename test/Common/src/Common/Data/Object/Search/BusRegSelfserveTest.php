@@ -2,6 +2,7 @@
 
 namespace CommonTest\Data\Object\Search;
 
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use Mockery as m;
 
 /**
@@ -38,7 +39,7 @@ class BusRegSelfserveTest extends SearchAbstractTest
             )
             ->getMock();
 
-        $mockSm = m::mock(\Laminas\Di\ServiceLocatorInterface::class)
+        $mockSm = m::mock(ServiceLocatorInterface::class)
             ->shouldReceive('get')->with('Helper\Url')->andReturn($mockUrl)
             ->shouldReceive('get')->with('translator')->andReturn($mockTranslator)
             ->getMock();
