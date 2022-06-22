@@ -739,6 +739,7 @@ return array(
 
             // Licence History form services
             'lva-application-licence_history' => LvaFormService\LicenceHistory::class,
+            'lva-variation-licence_history' => LvaFormService\LicenceHistory::class,
 
             // Convictions & Penalties form services
             'lva-variation-convictions_penalties' => LvaFormService\ConvictionsPenalties::class,
