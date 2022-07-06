@@ -2,6 +2,7 @@
 
 namespace Common\Service\Data;
 
+use Dvsa\Olcs\Utils\Traits\PluginManagerTrait;
 use Laminas\ServiceManager\AbstractPluginManager;
 
 /**
@@ -10,6 +11,10 @@ use Laminas\ServiceManager\AbstractPluginManager;
  */
 class PluginManager extends AbstractPluginManager
 {
+    use PluginManagerTrait;
+
+    protected $instanceOf = null;
+
     /**
      * @inheritdoc
      */
@@ -20,20 +25,6 @@ class PluginManager extends AbstractPluginManager
         $this->addInitializer(
             new RestClientAwareInitializer()
         );
-    }
-
-    /**
-     * Validate the plugin
-     *
-     * @param mixed $plugin
-     *
-     * @return bool
-     *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
-    public function validatePlugin($plugin)
-    {
-        return true; //for now. not sure how to validate
     }
 
     /**

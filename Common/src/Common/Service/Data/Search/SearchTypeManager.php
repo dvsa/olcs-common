@@ -3,8 +3,8 @@
 namespace Common\Service\Data\Search;
 
 use Common\Data\Object\Search\SearchAbstract;
+use Dvsa\Olcs\Utils\Traits\PluginManagerTrait;
 use Laminas\ServiceManager\AbstractPluginManager;
-use Laminas\ServiceManager\Exception;
 
 /**
  * Plugin manager for search data objects
@@ -14,6 +14,10 @@ use Laminas\ServiceManager\Exception;
  */
 class SearchTypeManager extends AbstractPluginManager
 {
+    use PluginManagerTrait;
+
+    protected $instanceOf = SearchAbstract::class;
+
     /**
      * Do NOT allow any class which hasn't been explicitly registered to be used as a search type. Changing this to
      * true will probably introduce a security flaw.
@@ -21,23 +25,4 @@ class SearchTypeManager extends AbstractPluginManager
      * @var bool
      */
     protected $autoAddInvokableClass = false;
-
-    /**
-     * Validate the plugin
-     *
-     * Checks that the filter loaded is either a valid callback or an instance
-     * of FilterInterface.
-     *
-     * @param  mixed $plugin
-     * @return void
-     * @throws Exception\RuntimeException if invalid
-     */
-    public function validatePlugin($plugin)
-    {
-        if ($plugin instanceof SearchAbstract) {
-            return;
-        }
-
-        throw new Exception\RuntimeException('Invalid class');
-    }
 }
