@@ -2,8 +2,8 @@
 
 namespace Common\Service\Api;
 
+use Dvsa\Olcs\Utils\Traits\PluginManagerTrait;
 use Laminas\ServiceManager\AbstractPluginManager;
-use Laminas\ServiceManager\Exception;
 
 /**
  * Class Resolver
@@ -11,19 +11,9 @@ use Laminas\ServiceManager\Exception;
  */
 class Resolver extends AbstractPluginManager
 {
-    /**
-     * Validate the plugin
-     *
-     * Checks that the filter loaded is either a valid callback or an instance
-     * of FilterInterface.
-     *
-     * @param  mixed $plugin
-     * @return void
-     * @throws Exception\RuntimeException if invalid
-     */
-    public function validatePlugin($plugin)
-    {
-    }
+    use PluginManagerTrait;
+
+    protected $instanceOf = null;
 
     /**
      * @deprecated

@@ -21,6 +21,15 @@ class ResolverTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($mockService, $sut->getClient('Backend\Tasks'));
     }
 
+    public function testValidate()
+    {
+        $sut = new Resolver();
+        $this->assertNull($sut->validate(null));
+    }
+
+    /**
+     * @todo To be removed as part of OLCS-28149
+     */
     public function testValidatePlugin()
     {
         $sut = new Resolver();

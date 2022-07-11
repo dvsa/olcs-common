@@ -12,10 +12,19 @@ use Mockery as m;
  */
 class PluginManagerTest extends MockeryTestCase
 {
+    public function testValidate()
+    {
+        $sut = new PluginManager();
+        $this->assertNull($sut->validate(null));
+    }
+
+    /**
+     * @todo To be removed as part of OLCS-28149
+     */
     public function testValidatePlugin()
     {
         $sut = new PluginManager();
-        $this->assertTrue($sut->validatePlugin('blargle'));
+        $this->assertNull($sut->validatePlugin(null));
     }
 
     public function testGetChecksMainSlFirst()

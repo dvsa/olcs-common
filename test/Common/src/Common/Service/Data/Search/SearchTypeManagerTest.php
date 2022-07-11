@@ -4,6 +4,8 @@ namespace OlcsTest\Service\Data\Search;
 
 use Common\Data\Object\Search\SearchAbstract;
 use Common\Service\Data\Search\SearchTypeManager;
+use Laminas\ServiceManager\Exception\InvalidServiceException;
+use Laminas\ServiceManager\Exception\RuntimeException;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
@@ -13,25 +15,41 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class SearchTypeManagerTest extends MockeryTestCase
 {
-    public function testValidatePlugin()
+    public function testValidate()
     {
-        $valid = m::mock(SearchAbstract::class);
-        $invalid = new \stdClass();
+        $plugin = m::mock(SearchAbstract::class);
 
         $sut = new SearchTypeManager();
+        $this->assertNull($sut->validate($plugin));
+    }
 
-        $sut->validatePlugin($valid);
+    public function testValidateInvalid()
+    {
+        $this->expectException(InvalidServiceException::class);
 
-        $passed = false;
+        $sut = new SearchTypeManager();
+        $sut->validate(null);
+    }
 
-        try {
-            $sut->validatePlugin($invalid);
-        } catch (\Exception $e) {
-            if ($e->getMessage() == 'Invalid class') {
-                $passed = true;
-            }
-        }
+    /**
+     * @todo To be removed as part of OLCS-28149
+     */
+    public function testValidatePluginInvalid()
+    {
+        $this->expectException(RuntimeException::class);
 
-        $this->assertTrue($passed, 'Expected exception no thrown or message didn\'t match');
+        $sut = new SearchTypeManager();
+        $sut->validatePlugin(null);
+    }
+
+    /**
+     * @todo To be removed as part of OLCS-28149
+     */
+    public function testValidatePlugin()
+    {
+        $plugin = m::mock(SearchAbstract::class);
+
+        $sut = new SearchTypeManager();
+        $this->assertNull($sut->validatePlugin($plugin));
     }
 }
