@@ -52,7 +52,7 @@ class LicenceNumberLinkTest extends TestCase
                         'status' => 'lsts_valid'
                     )
                 ),
-                '<a href="LICENCE_URL">1</a>'
+                '<a class="govuk-link" href="LICENCE_URL">1</a>'
             ),
             array(
                 array(

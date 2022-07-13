@@ -73,7 +73,7 @@ class PublicationNumberTest extends MockeryTestCase
                     'webDavUrl' => 'ms-word:ofe|u|https://testhost/documents-dav/JWT/olcs/ID'
                 ],
                 [],
-                '<a href="ms-word:ofe|u|https://testhost/documents-dav/JWT/olcs/ID" data-file-url="ms-word:ofe|u|https://testhost/documents-dav/JWT/olcs/ID" target="blank">12345</a>'
+                '<a class="govuk-link" href="ms-word:ofe|u|https://testhost/documents-dav/JWT/olcs/ID" data-file-url="ms-word:ofe|u|https://testhost/documents-dav/JWT/olcs/ID" target="blank">12345</a>'
             ],
             "docman-config" => [
                 [
@@ -87,7 +87,7 @@ class PublicationNumberTest extends MockeryTestCase
                     ],
                 ],
                 [],
-                '<a href="/file/987654">'
+                '<a class="govuk-link" href="/file/987654">'
                 . '12345</a>'
             ]
         ];

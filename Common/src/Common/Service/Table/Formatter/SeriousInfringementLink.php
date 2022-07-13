@@ -28,6 +28,6 @@ class SeriousInfringementLink implements FormatterInterface
         $urlHelper = $sm->get('Helper\Url');
         $url = $urlHelper->fromRoute('case_penalty_applied', array('si' => $data['id'], 'action' => 'index'), [], true);
 
-        return '<a href="' . $url . '">' . $data['id'] . '</a>';
+        return '<a class="govuk-link" href="' . $url . '">' . $data['id'] . '</a>';
     }
 }

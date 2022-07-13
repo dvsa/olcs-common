@@ -70,6 +70,6 @@ class FeeIdUrlTest extends MockeryTestCase
             ->with('licence/fee', ['fee' => 1, 'action' => 'edit-fee'], ['query' => ['foo' => 'bar']], true)
             ->andReturn('the_url');
 
-        $this->assertEquals('<a href="the_url">1</a>', FeeIdUrl::format(['id' => 1], [], $this->sm));
+        $this->assertEquals('<a class="govuk-link" href="the_url">1</a>', FeeIdUrl::format(['id' => 1], [], $this->sm));
     }
 }

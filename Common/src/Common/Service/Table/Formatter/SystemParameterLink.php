@@ -32,6 +32,6 @@ class SystemParameterLink implements FormatterInterface
             ['action' => 'edit', 'sp' => $data['id']]
         );
 
-        return '<a href="' . $url . '" class="js-modal-ajax">' . $data['id'] . '</a>';
+        return '<a href="' . $url . '" class="govuk-link js-modal-ajax">' . $data['id'] . '</a>';
     }
 }

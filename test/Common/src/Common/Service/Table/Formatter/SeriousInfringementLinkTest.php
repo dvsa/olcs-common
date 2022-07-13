@@ -40,7 +40,7 @@ class SeriousInfringementLinkTest extends TestCase
             ->getMock();
 
         $this->assertEquals(
-            '<a href="URL">' . $id . '</a>',
+            '<a class="govuk-link" href="URL">' . $id . '</a>',
             SeriousInfringementLink::format($inputData, [], $sm)
         );
     }

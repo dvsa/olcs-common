@@ -34,6 +34,6 @@ class PrinterDocumentCategory implements FormatterInterface
             $row['subCategory']['category']['description'] . ' / ' . $row['subCategory']['subCategoryName'] :
             'Default setting';
 
-        return '<a href="'. $url . '" class="js-modal-ajax">' . $categories .'</a>';
+        return '<a href="'. $url . '" class="govuk-link js-modal-ajax">' . $categories .'</a>';
     }
 }

@@ -50,7 +50,7 @@ class PeopleTest extends SearchAbstractTest
             ['', [], false],
             ['', [], true],
             [
-                '<a href="http://URL">OB123&gt;</a> / <a href="http://URL">456&gt;</a>',
+                '<a class="govuk-link" href="http://URL">OB123&gt;</a> / <a class="govuk-link" href="http://URL">456&gt;</a>',
                 [
                     'licNo' => 'OB123>',
                     'applicationId' => '456>'
@@ -66,7 +66,7 @@ class PeopleTest extends SearchAbstractTest
                 true,
             ],
             [
-                '<a href="http://URL">TM 123&gt;</a>',
+                '<a class="govuk-link" href="http://URL">TM 123&gt;</a>',
                 [
                     'tmId' => '123>',
                     'foundAs' => 'XX'
@@ -82,7 +82,7 @@ class PeopleTest extends SearchAbstractTest
                 true,
             ],
             [
-                '<a href="http://URL">TM 123&gt;</a> / <a href="http://URL">OB123&gt;</a>',
+                '<a class="govuk-link" href="http://URL">TM 123&gt;</a> / <a class="govuk-link" href="http://URL">OB123&gt;</a>',
                 [
                     'tmId' => '123>',
                     'licNo' => 'OB123>',
@@ -100,7 +100,7 @@ class PeopleTest extends SearchAbstractTest
                 true,
             ],
             [
-                '<a href="http://URL">OB123&gt;</a>, LIC_TYPE_DESC&gt;<br />LIC_STATUS_DESC&gt;',
+                '<a class="govuk-link" href="http://URL">OB123&gt;</a>, LIC_TYPE_DESC&gt;<br />LIC_STATUS_DESC&gt;',
                 [
                     'licId' => '123>',
                     'licNo' => 'OB123>',
@@ -120,7 +120,7 @@ class PeopleTest extends SearchAbstractTest
                 true,
             ],
             [
-                '<a href="http://URL">LIC_NO&gt;</a>',
+                '<a class="govuk-link" href="http://URL">LIC_NO&gt;</a>',
                 [
                     'licNo' => 'LIC_NO>',
                 ],
@@ -134,7 +134,7 @@ class PeopleTest extends SearchAbstractTest
                 true,
             ],
             [
-                '<a href="http://URL">123&gt;</a>, APP_STATUS_DESC&gt;',
+                '<a class="govuk-link" href="http://URL">123&gt;</a>, APP_STATUS_DESC&gt;',
                 [
                     'applicationId' => '123>',
                     'appStatusDesc' => 'APP_STATUS_DESC>',
@@ -173,7 +173,7 @@ class PeopleTest extends SearchAbstractTest
         return [
             ['Bobby Smith', ['foundAs' => 'ZZ', 'personFullname' => 'Bobby Smith']],
             [
-                '<a href="http://URL">Bobby Smith</a>',
+                '<a class="govuk-link" href="http://URL">Bobby Smith</a>',
                 ['foundAs' => 'Historical TM', 'personFullname' => 'Bobby Smith', 'tmId' => 1]
             ],
         ];

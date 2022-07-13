@@ -33,7 +33,7 @@ class Vrm implements FormatterInterface
             $action = $column['action-type'] . '-' . $action;
         }
 
-        return '<a href="' . $url(
+        return '<a class="govuk-link" href="' . $url(
             null,
             array(
                 'child_id' => $data['id'],

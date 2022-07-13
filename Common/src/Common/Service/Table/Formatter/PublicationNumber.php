@@ -34,12 +34,12 @@ class PublicationNumber implements FormatterInterface
 
         $uriPattern = '/file/%s';
         $url = sprintf($uriPattern, $data['document']['id']);
-        $linkPattern = '<a href="%s">%s</a>';
+        $linkPattern = '<a class="govuk-link" href="%s">%s</a>';
         $link = sprintf($linkPattern, Escape::html($url), Escape::html($data['publicationNo']));
 
         if ($data['pubStatus']['id'] === 'pub_s_generated') {
             $link = sprintf(
-                '<a href="%s" data-file-url="%s" target="blank">%s</a>',
+                '<a class="govuk-link" href="%s" data-file-url="%s" target="blank">%s</a>',
                 htmlentities($data['webDavUrl'], ENT_QUOTES, 'utf-8'),
                 htmlentities($data['webDavUrl'], ENT_QUOTES, 'utf-8'),
                 htmlentities($data['publicationNo'], ENT_QUOTES, 'utf-8')

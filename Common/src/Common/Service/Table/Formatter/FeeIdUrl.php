@@ -42,6 +42,6 @@ class FeeIdUrl implements FormatterInterface
             true
         );
 
-        return '<a href="'. $url . '">'. $row['id'] . '</a>';
+        return '<a class="govuk-link" href="'. $url . '">'. $row['id'] . '</a>';
     }
 }

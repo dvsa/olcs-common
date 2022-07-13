@@ -56,7 +56,7 @@ class NoteUrlTest extends MockeryTestCase
         $sm->setService('request', $mockRequest);
         $sm->setService('Helper\Url', $mockUrlHelper);
 
-        $expectedLink = '<a class="js-modal-ajax" href="the_url">'
+        $expectedLink = '<a class="govuk-link js-modal-ajax" href="the_url">'
             . (new \DateTime($data['createdOn']))->format(\DATE_FORMAT) . '</a>';
 
         $this->assertEquals($expectedLink, NoteUrl::format($data, [], $sm));

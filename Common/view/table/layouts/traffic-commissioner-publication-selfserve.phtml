@@ -12,8 +12,7 @@ $showStatus = isset($settings['show-status']) ? $settings['show-status'] : true;
         <li class="search-result">
             <div class="search-result__header">
                 <h4>
-                    <a href="/view-details/licence/<?php echo htmlentities($row['licId']); ?>"
-                        ><?php echo htmlentities($row['licNo']); ?></a>&nbsp;
+                    <?php echo $this->link('/view-details/licence/' . $row['licId'], $row['licNo']); ?>&nbsp;
                     <?php echo $this->translate($row['licTypeDesc']); ?>
                 </h4>
                 <p><?php echo htmlentities($row['orgName']); ?></p>

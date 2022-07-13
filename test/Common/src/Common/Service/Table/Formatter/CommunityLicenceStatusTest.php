@@ -87,7 +87,7 @@ class CommunityLicenceStatusTest extends MockeryTestCase
                     'currentSuspension' => null,
                     'currentWithdrawal' => null
                 ],
-                '<a href="the_url">Suspension due: 01/01/2017 to 01/01/2018</a>'
+                '<a class="govuk-link" href="the_url">Suspension due: 01/01/2017 to 01/01/2018</a>'
             ],
             [
                 [
@@ -98,7 +98,7 @@ class CommunityLicenceStatusTest extends MockeryTestCase
                     'currentSuspension' => null,
                     'currentWithdrawal' => null
                 ],
-                '<a href="the_url">Suspension due: 01/01/2017</a>'
+                '<a class="govuk-link" href="the_url">Suspension due: 01/01/2017</a>'
             ],
             [
                 [
@@ -110,7 +110,7 @@ class CommunityLicenceStatusTest extends MockeryTestCase
                     ],
                     'currentWithdrawal' => null
                 ],
-                '<a href="the_url">Suspended: 01/01/2016 to 01/01/2018</a>'
+                '<a class="govuk-link" href="the_url">Suspended: 01/01/2016 to 01/01/2018</a>'
             ],
             [
                 [
@@ -121,7 +121,7 @@ class CommunityLicenceStatusTest extends MockeryTestCase
                     ],
                     'currentWithdrawal' => null
                 ],
-                '<a href="the_url">Suspended: 01/01/2016</a>'
+                '<a class="govuk-link" href="the_url">Suspended: 01/01/2016</a>'
             ],
             [
                 [

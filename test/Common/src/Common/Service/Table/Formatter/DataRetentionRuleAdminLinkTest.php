@@ -34,7 +34,7 @@ class DataRetentionRuleAdminLinkTest extends TestCase
             ->getMock();
 
         $this->assertEquals(
-            '<a href="DATA_RETENTION_RULE_EDIT_URL" class="js-modal-ajax">Test</a>',
+            '<a href="DATA_RETENTION_RULE_EDIT_URL" class="govuk-link js-modal-ajax">Test</a>',
             DataRetentionRuleAdminLink::format($data, [], $sm)
         );
     }

@@ -85,6 +85,6 @@ class TaskDescription implements FormatterInterface
             ]
         );
 
-        return sprintf('<a href="%s" class="js-modal-ajax">%s</a>', $url, $row['description']);
+        return sprintf('<a href="%s" class="govuk-link js-modal-ajax">%s</a>', $url, $row['description']);
     }
 }

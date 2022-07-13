@@ -26,7 +26,7 @@ class DataRetentionRuleLink implements FormatterInterface
             ['dataRetentionRuleId' => $data['id']]
         );
 
-        return '<a href="' . $url . '" target="_self">' .
+        return '<a class="govuk-link" href="' . $url . '" target="_self">' .
             ucwords($data['description']) .
             '</a>';
     }

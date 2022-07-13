@@ -77,7 +77,7 @@ class PiReportRecordTest extends TestCase
                         ]
                     ],
                 ],
-                '<a href="LIC_URL">AB1234567</a> (lic status)',
+                '<a class="govuk-link" href="LIC_URL">AB1234567</a> (lic status)',
             ],
             'tm' => [
                 [
@@ -92,7 +92,7 @@ class PiReportRecordTest extends TestCase
                         ]
                     ],
                 ],
-                '<a href="TM_URL">TM 3</a> (tm status)',
+                '<a class="govuk-link" href="TM_URL">TM 3</a> (tm status)',
             ],
             'other' => [
                 [],

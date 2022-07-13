@@ -26,9 +26,12 @@
                       ?>
                   </p>
                   <p>
-                      <a href="<?php echo $this->url('continuation/declaration/print', [], [], true); ?>" target="_blank">
-                          <?php echo $this->translate('continuation.success.download-declaration-letter'); ?>
-                      </a>
+                      <?php
+                        echo $this->linkNewWindow(
+                            $this->url('continuation/declaration/print', [], [], true),
+                            'continuation.success.download-declaration-letter'
+                        );
+                      ?>
                   </p>
               </div>
           <?php endif; ?>

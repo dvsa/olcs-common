@@ -53,6 +53,6 @@ class IssuedPermitLicencePermitReference implements FormatterInterface
         $urlHelper = $serviceLocator->get('Helper\Url');
         $url = $urlHelper->fromRoute($route, $params);
 
-        return '<a href="' . $url . '">' . Escape::html($row['applicationRef']) . '</a>';
+        return '<a class="govuk-link" href="' . $url . '">' . Escape::html($row['applicationRef']) . '</a>';
     }
 }

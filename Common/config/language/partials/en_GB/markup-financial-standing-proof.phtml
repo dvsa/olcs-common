@@ -1,3 +1,3 @@
-<a rel="external" target="_blank" href="<?php echo $this->url('guides/guide', ['guide' => 'financial-evidence']); ?>">
-    <?php echo $this->translate('MISSING_EVIDENCE_FINANCIAL'); ?>
-</a>
+<?php
+    echo $this->linkNewWindow($this->url('guides/guide',['guide' => 'financial-evidence']),'MISSING_EVIDENCE_FINANCIAL');
+?>

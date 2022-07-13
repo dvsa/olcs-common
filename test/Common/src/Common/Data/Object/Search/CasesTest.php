@@ -46,7 +46,7 @@ class CasesTest extends SearchAbstractTest
         return [
             // expected, row, isIrhpAdmin
             [
-                '<a href="/case/details/123>">123&gt;</a>',
+                '<a class="govuk-link" href="/case/details/123>">123&gt;</a>',
                 [
                     'caseId' => '123>',
                 ],
@@ -104,7 +104,7 @@ class CasesTest extends SearchAbstractTest
         return [
             // expected, row, isIrhpAdmin
             [
-                '<a href="ORG_URL">org name&gt;</a>',
+                '<a class="govuk-link" href="ORG_URL">org name&gt;</a>',
                 [
                     'orgId' => 123,
                     'orgName' => 'org name>',
@@ -120,7 +120,7 @@ class CasesTest extends SearchAbstractTest
                 true,
             ],
             [
-                '<a href="TM_URL">forename&gt; family name&gt;</a>',
+                '<a class="govuk-link" href="TM_URL">forename&gt; family name&gt;</a>',
                 [
                     'tmId' => 123,
                     'tmForename' => 'forename>',

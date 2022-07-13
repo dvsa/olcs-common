@@ -44,7 +44,7 @@ class CaseEntityNrStatusTest extends MockeryTestCase
         ];
 
         static::assertSame(
-            '<a href="EXPECT_URL">' . $tmId . '</a>',
+            '<a class="govuk-link" href="EXPECT_URL">' . $tmId . '</a>',
             CaseEntityNrStatus::format($data, null, $this->mockSm)
         );
     }
@@ -73,7 +73,7 @@ class CaseEntityNrStatusTest extends MockeryTestCase
         ];
 
         static::assertSame(
-            '<a href="EXPECT_LIC_URL">unit_LicNo</a> (unit_LicStatus)',
+            '<a class="govuk-link" href="EXPECT_LIC_URL">unit_LicNo</a> (unit_LicStatus)',
             CaseEntityNrStatus::format($data, null, $this->mockSm)
         );
     }
@@ -113,8 +113,8 @@ class CaseEntityNrStatusTest extends MockeryTestCase
         ];
 
         static::assertSame(
-            '<a href="EXPECT_LIC_URL">unit_LicNo</a> (unit_LicStatus)' .
-            '<br />/<a href="EXPECT_APP_URL">' . $appId . '</a> (unit_AppStatus)',
+            '<a class="govuk-link" href="EXPECT_LIC_URL">unit_LicNo</a> (unit_LicStatus)' .
+            '<br />/<a class="govuk-link" href="EXPECT_APP_URL">' . $appId . '</a> (unit_AppStatus)',
             CaseEntityNrStatus::format($data, null, $this->mockSm)
         );
     }

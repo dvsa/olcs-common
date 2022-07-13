@@ -45,7 +45,7 @@ class LicenceTest extends SearchAbstractTest
         return [
             // expected, row, isIrhpAdmin
             [
-                '<a href="/licence/123/cases">7&gt;</a>',
+                '<a class="govuk-link" href="/licence/123/cases">7&gt;</a>',
                 [
                     'licId' => 123,
                     'caseCount' => '7>'

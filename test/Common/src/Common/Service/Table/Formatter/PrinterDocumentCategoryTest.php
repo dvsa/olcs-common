@@ -66,7 +66,7 @@ class PrinterDocumentCategoryTest extends MockeryTestCase
                         ]
                     ]
                 ],
-                '<a href="foo" class="js-modal-ajax">cake / bar</a>'
+                '<a href="foo" class="govuk-link js-modal-ajax">cake / bar</a>'
             ],
             'defsult setting' => [
                 [
@@ -75,7 +75,7 @@ class PrinterDocumentCategoryTest extends MockeryTestCase
                         'id' => 2
                     ],
                 ],
-                '<a href="foo" class="js-modal-ajax">Default setting</a>'
+                '<a href="foo" class="govuk-link js-modal-ajax">Default setting</a>'
             ]
         ];
     }

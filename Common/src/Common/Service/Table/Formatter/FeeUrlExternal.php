@@ -26,7 +26,7 @@ class FeeUrlExternal extends FeeUrl
             $query      = $serviceLocator->get('request')->getQuery()->toArray();
             $urlHelper  = $serviceLocator->get('Helper\Url');
             $url = $urlHelper->fromRoute('fees/late', ['fee' => $row['id']], ['query' => $query], true);
-            return '<a href="'. $url . '">'. Escape::html($row['description']) . '</a>';
+            return '<a class="govuk-link" href="'. $url . '">'. Escape::html($row['description']) . '</a>';
         }
         return parent::format($row, $column, $serviceLocator);
     }

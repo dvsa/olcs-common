@@ -54,7 +54,7 @@ class DocumentDescriptionTest extends MockeryTestCase
             ->with('getfile', ['identifier' => 666])
             ->andReturn('URL');
 
-        $expected = '<a href="URL" >Foo file</a>';
+        $expected = '<a class="govuk-link" href="URL" >Foo file</a>';
         $this->assertEquals($expected, DocumentDescription::format($data, $column, $this->mockSm));
     }
 
@@ -136,7 +136,7 @@ class DocumentDescriptionTest extends MockeryTestCase
             ->with('getfile', ['identifier' => 666])
             ->andReturn('URL');
 
-        $expected = '<a href="URL" target="_blank">Foo file</a>';
+        $expected = '<a class="govuk-link" href="URL" target="_blank">Foo file</a>';
         $this->assertEquals($expected, DocumentDescription::format($data, $column, $this->mockSm));
     }
 }

@@ -23,8 +23,7 @@ $urlHlp = $sl->get('Helper\Url');
     <li class="search-result">
         <div class="search-result__header">
             <h4>
-                <a href="<?php echo $urlHlp->fromRoute('search-bus/details', ['busRegId' => $row['id']]); ?>">
-                    <?php echo Escape::html($row['regNo']); ?></a>
+                <?php echo $this->link($urlHlp->fromRoute('search-bus/details', ['busRegId' => $row['id']]), $row['regNo']); ?>
                 <?php echo Escape::html($row['brStatus']); ?>
                 <?php if (!empty($row['isShortNotice'])) { ?>
                     (<?php echo $this->translate('selfserve.search.busreg.browse.result.short-notice');?>)

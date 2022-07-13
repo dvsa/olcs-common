@@ -21,7 +21,7 @@ class VehicleLink implements FormatterInterface
     public static function format($data, $column = array(), $sm = null)
     {
         return sprintf(
-            '<a href="%s">%s</a>',
+            '<a class="govuk-link" href="%s">%s</a>',
             $sm->get('Helper\Url')->fromRoute(
                 'licence/vehicle/view/GET',
                 [

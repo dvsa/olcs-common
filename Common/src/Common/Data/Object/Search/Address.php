@@ -76,7 +76,7 @@ class Address extends InternalSearchAbstract
                     /** @var  UrlHelper $urlHelper */
                     $urlHelper  = $serviceLocator->get('Helper\Url');
                     return sprintf(
-                        '<a href="%s">%s</a>',
+                        '<a class="govuk-link" href="%s">%s</a>',
                         $urlHelper->fromRoute('operator/business-details', ['organisation' => $data['orgId']]),
                         Escape::html($data['orgName'])
                     );
@@ -95,7 +95,7 @@ class Address extends InternalSearchAbstract
                         /** @var  UrlHelper $urlHelper */
                         $urlHelper  = $serviceLocator->get('Helper\Url');
                         return sprintf(
-                            '<a href="%s">Yes</a>',
+                            '<a class="govuk-link" href="%s">Yes</a>',
                             $urlHelper->fromRoute('licence/opposition', ['licence' => $row['licId']])
                         );
                     }
@@ -111,7 +111,7 @@ class Address extends InternalSearchAbstract
                         /** @var  UrlHelper $urlHelper */
                         $urlHelper  = $serviceLocator->get('Helper\Url');
                         return sprintf(
-                            '<a href="%s">Yes</a>',
+                            '<a class="govuk-link" href="%s">Yes</a>',
                             $urlHelper->fromRoute('licence/opposition', ['licence' => $row['licId']])
                         );
                     }

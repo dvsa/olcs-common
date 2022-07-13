@@ -46,7 +46,7 @@ class AddressTest extends SearchAbstractTest
 
         return [
             // expected, row, route, routeParams
-            ['<a href="http://URL">ACME Ltd</a>', $data, 'operator/business-details', ['organisation' => 452]],
+            ['<a class="govuk-link" href="http://URL">ACME Ltd</a>', $data, 'operator/business-details', ['organisation' => 452]],
         ];
     }
 
@@ -76,7 +76,7 @@ class AddressTest extends SearchAbstractTest
         ];
 
         $this->assertSame('Complaint', $column['title']);
-        $this->assertSame('<a href="URL">Yes</a>', $column['formatter']($row, [], $mockServiceLocator));
+        $this->assertSame('<a class="govuk-link" href="URL">Yes</a>', $column['formatter']($row, [], $mockServiceLocator));
     }
 
     public function testOppositionColumnNo()
@@ -105,6 +105,6 @@ class AddressTest extends SearchAbstractTest
         ];
 
         $this->assertSame('Opposition', $column['title']);
-        $this->assertSame('<a href="URL">Yes</a>', $column['formatter']($row, [], $mockServiceLocator));
+        $this->assertSame('<a class="govuk-link" href="URL">Yes</a>', $column['formatter']($row, [], $mockServiceLocator));
     }
 }

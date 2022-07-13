@@ -41,7 +41,7 @@ class CommunityLicenceStatus implements FormatterInterface
         $futureSuspension = $data['futureSuspension'];
 
         if ($futureSuspension && isset($futureSuspension['startDate']) && isset($futureSuspension['endDate'])) {
-            return '<a href="'. $url . '">' .
+            return '<a class="govuk-link" href="'. $url . '">' .
                 'Suspension due: ' .
                 self::formatDate($futureSuspension['startDate']) .
                 ' to ' .
@@ -50,7 +50,7 @@ class CommunityLicenceStatus implements FormatterInterface
         }
 
         if ($futureSuspension && isset($futureSuspension['startDate']) && !isset($futureSuspension['endDate'])) {
-            return '<a href="'. $url . '">' .
+            return '<a class="govuk-link" href="'. $url . '">' .
                 'Suspension due: ' .
                 self::formatDate($futureSuspension['startDate']) .
                 '</a>';
@@ -59,7 +59,7 @@ class CommunityLicenceStatus implements FormatterInterface
         $currentSuspension = $data['currentSuspension'];
 
         if ($currentSuspension && isset($currentSuspension['startDate']) && isset($currentSuspension['endDate'])) {
-            return '<a href="'. $url . '">' .
+            return '<a class="govuk-link" href="'. $url . '">' .
                 'Suspended: ' .
                 self::formatDate($currentSuspension['startDate']) .
                 ' to ' .
@@ -68,7 +68,7 @@ class CommunityLicenceStatus implements FormatterInterface
         }
 
         if ($currentSuspension && isset($currentSuspension['startDate']) && !isset($currentSuspension['endDate'])) {
-            return '<a href="'. $url . '">' .
+            return '<a class="govuk-link" href="'. $url . '">' .
                 'Suspended: ' .
                 self::formatDate($currentSuspension['startDate']) .
                 '</a>';

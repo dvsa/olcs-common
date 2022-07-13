@@ -48,7 +48,7 @@ class AccessedCorrespondence implements FormatterInterface
         }
 
         return sprintf(
-            '<a class="strong" href="%s"><b>%s%s</b></a>%s',
+            '<a class="govuk-link" href="%s"><b>%s%s</b></a>%s',
             $url,
             $data['correspondence']['document']['description'],
             $extension,

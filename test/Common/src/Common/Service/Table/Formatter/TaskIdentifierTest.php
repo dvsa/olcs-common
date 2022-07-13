@@ -86,7 +86,7 @@ class TaskIdentifierTest extends \PHPUnit\Framework\TestCase
                 array(),
                 'lva-licence/overview',
                 'licence',
-                '<a href="correctUrl">P1234</a>'
+                '<a class="govuk-link" href="correctUrl">P1234</a>'
             ),
             3 => array(
                 array(
@@ -97,7 +97,7 @@ class TaskIdentifierTest extends \PHPUnit\Framework\TestCase
                 array(),
                 'lva-licence/overview',
                 'licence',
-                '<a href="correctUrl">P1234</a>'
+                '<a class="govuk-link" href="correctUrl">P1234</a>'
             ),
             4 => array(
                 array(
@@ -108,7 +108,7 @@ class TaskIdentifierTest extends \PHPUnit\Framework\TestCase
                 array(),
                 'lva-licence/overview',
                 'licence',
-                '<a href="#">P1234</a>'
+                '<a class="govuk-link" href="#">P1234</a>'
             ),
             // Application
             5 => array(
@@ -131,7 +131,7 @@ class TaskIdentifierTest extends \PHPUnit\Framework\TestCase
                 array(),
                 'lva-application/overview',
                 'application',
-                '<a href="correctUrl">P1234</a>'
+                '<a class="govuk-link" href="correctUrl">P1234</a>'
             ),
             7 => array(
                 array(
@@ -142,7 +142,7 @@ class TaskIdentifierTest extends \PHPUnit\Framework\TestCase
                 array(),
                 'lva-application/overview',
                 'application',
-                '<a href="#">P1234</a>'
+                '<a class="govuk-link" href="#">P1234</a>'
             ),
             // Transport Manager
             8 => array(
@@ -165,7 +165,7 @@ class TaskIdentifierTest extends \PHPUnit\Framework\TestCase
                 array(),
                 'transport-manager/details',
                 'transportManager',
-                '<a href="correctUrl">1234</a>'
+                '<a class="govuk-link" href="correctUrl">1234</a>'
             ),
             10 => array(
                 array(
@@ -176,7 +176,7 @@ class TaskIdentifierTest extends \PHPUnit\Framework\TestCase
                 array(),
                 'transport-manager/details',
                 'transportManager',
-                '<a href="#">1234</a>'
+                '<a class="govuk-link" href="#">1234</a>'
             ),
             // Bus Registration
             11 => array(
@@ -200,7 +200,7 @@ class TaskIdentifierTest extends \PHPUnit\Framework\TestCase
                 array(),
                 'licence/bus-details',
                 'busRegId',
-                '<a href="correctUrl">P1234/123</a>',
+                '<a class="govuk-link" href="correctUrl">P1234/123</a>',
                 array('licence' => 110) // additional route param needed
             ),
             13 => array(
@@ -213,7 +213,7 @@ class TaskIdentifierTest extends \PHPUnit\Framework\TestCase
                 array(),
                 'licence/bus-details',
                 'busRegId',
-                '<a href="#">P1234/123</a>',
+                '<a class="govuk-link" href="#">P1234/123</a>',
                 array('licence' => 110)
             ),
             // Case
@@ -237,7 +237,7 @@ class TaskIdentifierTest extends \PHPUnit\Framework\TestCase
                 array(),
                 'case',
                 'case',
-                '<a href="correctUrl">1234</a>',
+                '<a class="govuk-link" href="correctUrl">1234</a>',
             ),
             16 => array(
                 array(
@@ -248,7 +248,7 @@ class TaskIdentifierTest extends \PHPUnit\Framework\TestCase
                 array(),
                 'case',
                 'case',
-                '<a href="#">1234</a>',
+                '<a class="govuk-link" href="#">1234</a>',
             ),
             // IRFO Organisation
             17 => array(
@@ -271,7 +271,7 @@ class TaskIdentifierTest extends \PHPUnit\Framework\TestCase
                 array(),
                 'operator/business-details',
                 'organisation',
-                '<a href="correctUrl">1234</a>',
+                '<a class="govuk-link" href="correctUrl">1234</a>',
             ),
             19 => array(
                 array(
@@ -282,7 +282,7 @@ class TaskIdentifierTest extends \PHPUnit\Framework\TestCase
                 array(),
                 'operator/business-details',
                 'organisation',
-                '<a href="#">1234</a>',
+                '<a class="govuk-link" href="#">1234</a>',
             ),
             // Submission
             20 => array(
@@ -308,7 +308,7 @@ class TaskIdentifierTest extends \PHPUnit\Framework\TestCase
                 array(),
                 'submission',
                 'submission',
-                '<a href="correctUrl">1234/5</a>',
+                '<a class="govuk-link" href="correctUrl">1234/5</a>',
                 array('case' => 5, 'action' => 'details')
             ),
             22 => array(
@@ -321,7 +321,7 @@ class TaskIdentifierTest extends \PHPUnit\Framework\TestCase
                 array(),
                 'submission',
                 'submission',
-                '<a href="#">1234/5</a>',
+                '<a class="govuk-link" href="#">1234/5</a>',
                 array('case' => 5, 'action' => 'details')
             ),
             // Permits
@@ -335,7 +335,7 @@ class TaskIdentifierTest extends \PHPUnit\Framework\TestCase
                 array(),
                 'licence/irhp-application/application',
                 'irhpAppId',
-                '<a href="correctUrl">OG4569803/6</a>',
+                '<a class="govuk-link" href="correctUrl">OG4569803/6</a>',
                 array(
                     'irhpAppId' => 6,
                     'licence' => 106,

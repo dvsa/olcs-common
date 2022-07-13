@@ -74,7 +74,7 @@ class TaskIdentifier implements FormatterInterface
             default:
                 break;
         }
-        $value = '<a href="' . $url . '">' . $data['linkDisplay'] . '</a>';
+        $value = '<a class="govuk-link" href="' . $url . '">' . $data['linkDisplay'] . '</a>';
 
         return $value;
     }

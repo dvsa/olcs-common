@@ -83,7 +83,7 @@ class OperatingCentreSelfserve extends InternalSearchAbstract
                     $translator = $sl->get('translator');
 
                     return sprintf(
-                        '<a href="%s">%s</a><br/>%s',
+                        '<a class="govuk-link" href="%s">%s</a><br/>%s',
                         '/view-details/licence/' . $data['licId'],
                         Escape::html($data['licNo']),
                         $translator->translate($data['licStatusDesc'])

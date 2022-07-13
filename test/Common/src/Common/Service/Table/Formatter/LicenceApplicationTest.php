@@ -94,8 +94,8 @@ class LicenceApplicationTest extends MockeryTestCase
      */
     public function dpTestFormat()
     {
-        $licenceLink = '<a href="http://licURL">OB1234567</a>formatted lic status';
-        $appLink = '<a href="http://appURL">5678</a>formatted app status';
+        $licenceLink = '<a class="govuk-link" href="http://licURL">OB1234567</a>formatted lic status';
+        $appLink = '<a class="govuk-link" href="http://appURL">5678</a>formatted app status';
 
         return [
             [$licenceLink . '<br />' . $appLink, ['appId' => 5678], 1],

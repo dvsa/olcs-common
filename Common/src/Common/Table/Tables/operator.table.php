@@ -16,7 +16,7 @@ return array(
     'columns' => array(
         array(
             'title' => 'Lic no/status',
-            'format' => '<a href="#">{{licNo}}</a><br/>{{status}}',
+            'format' => '<a class="govuk-link" href="#">{{licNo}}</a><br/>{{status}}',
             'sort' => 'licNo'
         ),
         array(
@@ -59,13 +59,13 @@ return array(
             'title' => 'Cases',
             'formatter' => function ($data) {
                 if (isset($data['caseCount']) && (int) $data['caseCount'] > 0) {
-                    return '<a href="' . $this->generateUrl(
+                    return '<a class="govuk-link" href="' . $this->generateUrl(
                         array('licence' => $data['licenceId']),
                         'licence_case_list/pagination',
                         false
                     ) . '">' . $data['caseCount'] . '</a>';
                 } else {
-                    return '<a href="' . $this->generateUrl(
+                    return '<a class="govuk-link" href="' . $this->generateUrl(
                         array('licence' => $data['licenceId'], 'action' => 'add'),
                         'licence_case_action'
                     ) . '">[Add Case]</a>';

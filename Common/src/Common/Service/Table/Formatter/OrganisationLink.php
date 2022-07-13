@@ -31,6 +31,6 @@ class OrganisationLink implements FormatterInterface
         $urlHelper = $sm->get('Helper\Url');
         $url = $urlHelper->fromRoute('operator/business-details', ['organisation' => $data['organisation']['id']]);
 
-        return '<a href="' . $url . '">' . Escape::html($data['organisation']['name']) . '</a>';
+        return '<a class="govuk-link" href="' . $url . '">' . Escape::html($data['organisation']['name']) . '</a>';
     }
 }

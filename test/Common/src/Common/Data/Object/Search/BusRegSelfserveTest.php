@@ -47,7 +47,7 @@ class BusRegSelfserveTest extends SearchAbstractTest
         $colRegNo = $this->sut->getColumns()[0];
 
         static::assertEquals(
-            '<a href="'.$expectUrl.'">unit_RegNo</a><br/>_TRNSL_unit_Status',
+            '<a class="govuk-link" href="'.$expectUrl.'">unit_RegNo</a><br/>_TRNSL_unit_Status',
             $colRegNo['formatter']($data, null, $mockSm)
         );
     }

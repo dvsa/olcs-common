@@ -37,7 +37,7 @@ class OperatingCentreSelfserveTest extends SearchAbstractTest
         $col = $this->sut->getColumns()[0];
 
         static::assertEquals(
-            '<a href="/view-details/licence/unit_LicId">unit_LicNo</a><br/>_TRNSL_unit_LicStatusDesc',
+            '<a class="govuk-link" href="/view-details/licence/unit_LicId">unit_LicNo</a><br/>_TRNSL_unit_LicStatusDesc',
             $col['formatter']($data, null, $mockSm)
         );
     }

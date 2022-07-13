@@ -35,7 +35,7 @@ class DashboardTmActionLink implements FormatterInterface
         }
 
         return sprintf(
-            '<a href="%s">%s</a>',
+            '<a class="govuk-link" href="%s">%s</a>',
             static::getApplicationUrl(
                 $sm,
                 $data['applicationId'],

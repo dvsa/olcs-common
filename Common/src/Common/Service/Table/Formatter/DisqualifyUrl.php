@@ -67,7 +67,7 @@ class DisqualifyUrl implements FormatterInterface
                 break;
         }
         return sprintf(
-            '<a href="%s" class="js-modal-ajax">%s</a>',
+            '<a href="%s" class="govuk-link js-modal-ajax">%s</a>',
             $url,
             $row['disqualificationStatus']
         );

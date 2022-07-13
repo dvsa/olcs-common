@@ -44,7 +44,7 @@ class OrganisationLinkTest extends TestCase
             ->getMock();
 
         $this->assertEquals(
-            '<a href="ORGANISATION_URL">Foobar Ltd.</a>',
+            '<a class="govuk-link" href="ORGANISATION_URL">Foobar Ltd.</a>',
             OrganisationLink::format($data, [], $sm)
         );
     }

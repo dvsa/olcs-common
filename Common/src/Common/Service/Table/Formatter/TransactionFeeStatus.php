@@ -56,7 +56,7 @@ class TransactionFeeStatus implements FormatterInterface
                     break;
             }
 
-            return '<a href="'. $url . '">'. $status . '</a>';
+            return '<a class="govuk-link" href="'. $url . '">'. $status . '</a>';
         }
 
         return $status;

@@ -70,7 +70,7 @@ class FileUploadList extends Fieldset
             $html = new Html('link', array('render-container' => false));
             $html->setAttribute('data-container-class', 'file-upload');
             $html->setValue(
-                '<a href="' . $file['url'] . '">'
+                '<a class="govuk-link" href="' . $file['url'] . '">'
                 . $file['description'] . '</a> <span>' . $file['size'] . '</span>'
             );
 

@@ -11,7 +11,7 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
  */
 class EbsrRegNumberLink implements FormatterInterface
 {
-    const LINK_PATTERN = '<a href="%s">%s</a>';
+    const LINK_PATTERN = '<a class="govuk-link" href="%s">%s</a>';
     const URL_ROUTE = 'bus-registration/details';
 
     /**

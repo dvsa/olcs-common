@@ -98,7 +98,7 @@ class InspectionRequestIdTest extends MockeryTestCase
                     'id' => 1,
                 ],
                 'url1',
-                '<a href="url1" class=js-modal-ajax>1</a>'
+                '<a href="url1" class="govuk-link js-modal-ajax">1</a>'
             ],
             'application inspection request' => [
                 [
@@ -113,7 +113,7 @@ class InspectionRequestIdTest extends MockeryTestCase
                     'id' => 1,
                 ],
                 'url2',
-                '<a href="url2" class=js-modal-ajax>1</a>'
+                '<a href="url2" class="govuk-link js-modal-ajax">1</a>'
             ]
         ];
     }

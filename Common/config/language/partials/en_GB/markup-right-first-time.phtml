@@ -29,9 +29,12 @@
     financial documents must be in the name of the business applying for this licence.
   </p>
   <p class="govuk-!-margin-bottom-6">
-    <a target="_blank"
-       href="https://www.gov.uk/government/publications/traffic-commissioners-finance-march-2019/statutory-document-2-finance#annex-a---sources-of-financial-evidence"
-       class="govuk-link" rel="noreferrer noopener">How to provide financial evidence (opens in new tab)</a>.
+      <?php
+        echo $this->linkNewWindowExternal(
+            'https://www.gov.uk/government/publications/traffic-commissioners-finance-march-2019/statutory-document-2-finance#annex-a---sources-of-financial-evidence',
+            'How to provide financial evidence'
+        );
+      ?>.
   </p>
   <div class="govuk-warning-text">
     <span class="govuk-warning-text__icon" aria-hidden="true">!</span>

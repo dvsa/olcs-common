@@ -56,7 +56,7 @@ class IrhpPermitRangePermitNumberTest extends MockeryTestCase
                     ],
                     'id' => '1'
                 ],
-                'expect' => "<a class='strong js-modal-ajax' href='WINDOW_EDIT_URL'>1 to 2</a>",
+                'expect' => "<a class='govuk-link js-modal-ajax' href='WINDOW_EDIT_URL'>1 to 2</a>",
             ],
             [
                 'data' => [
@@ -68,7 +68,7 @@ class IrhpPermitRangePermitNumberTest extends MockeryTestCase
                     ],
                     'id' => '1'
                 ],
-                'expect' => "<a class='strong js-modal-ajax' href='WINDOW_EDIT_URL'>UK1 to UK2</a>",
+                'expect' => "<a class='govuk-link js-modal-ajax' href='WINDOW_EDIT_URL'>UK1 to UK2</a>",
             ],
         ];
     }

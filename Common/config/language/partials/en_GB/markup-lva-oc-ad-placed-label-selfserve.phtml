@@ -7,8 +7,9 @@
         <li>upload/send us a copy of the full page on which your advert appears</li>
         <li>ensure the newspaper name and date of publication are legible on the copy you upload/send</li>
         <li>the date of publication must be in the period from 21 days before to 21 days after you submit your application</li>
-        <li>use our <a title="download the advert template" href="%s" target="_blank">advert template (44kb)</a></li>
+        <li>use our <a title="download the advert template" href="%s" target="_blank">advert template (44kb)<?php echo $this->partial('partials/opens-new-window-hidden-text'); ?></a></li>
     </ul>
 	<p class="info-box__text">
-		<a href="%s" target="_blank">See our guidelines on how to advertise your application<span class="govuk-visually-hidden">, link opens in a new window</span></a> <i class="icon selfserve-external-link"></i></p>
+        <?php echo $this->link(); ?>
+		<a href="%s" target="_blank">See our guidelines on how to advertise your application<?php echo $this->partial('partials/opens-new-window-hidden-text'); ?></a> <i class="icon selfserve-external-link"></i></p>
 </div>

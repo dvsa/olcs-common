@@ -50,6 +50,6 @@ class TmApplicationManagerType implements FormatterInterface
                 $status = '';
         }
         return $row['action'] === 'D' ? trim($row['tmType']['description']  . ' ' . $status) :
-            '<a href="' . $url . '">' . trim($row['tmType']['description']  . ' ' . $status) . '</a>';
+            '<a class="govuk-link" href="' . $url . '">' . trim($row['tmType']['description']  . ' ' . $status) . '</a>';
     }
 }

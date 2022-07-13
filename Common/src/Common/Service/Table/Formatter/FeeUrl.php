@@ -70,6 +70,6 @@ class FeeUrl implements FormatterInterface
                 );
                 break;
         }
-        return '<a href="'. $url . '">'. $row['description'] . '</a>';
+        return '<a class="govuk-link" href="'. $url . '">'. $row['description'] . '</a>';
     }
 }

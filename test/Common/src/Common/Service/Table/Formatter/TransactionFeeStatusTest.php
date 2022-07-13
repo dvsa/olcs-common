@@ -93,7 +93,7 @@ class TransactionFeeStatusTest extends MockeryTestCase
                 ],
                 '/foo/transaction',
                 ['transaction' => 99, 'action' => 'edit-fee'],
-                '<a href="the_url">Reversed</a>',
+                '<a class="govuk-link" href="the_url">Reversed</a>',
             ],
             'refunded' => [
                 [
@@ -104,7 +104,7 @@ class TransactionFeeStatusTest extends MockeryTestCase
                 ],
                 '/foo/transaction',
                 ['transaction' => 99, 'action' => 'edit-fee'],
-                '<a href="the_url">Refunded</a>',
+                '<a class="govuk-link" href="the_url">Refunded</a>',
             ],
             'other' => [
                 [
@@ -115,7 +115,7 @@ class TransactionFeeStatusTest extends MockeryTestCase
                 ],
                 '/foo/transaction',
                 ['transaction' => 99, 'action' => 'edit-fee'],
-                '<a href="the_url">Adjusted</a>',
+                '<a class="govuk-link" href="the_url">Adjusted</a>',
             ],
         ];
     }

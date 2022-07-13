@@ -208,7 +208,7 @@ abstract class SearchAbstract
         }
 
         return sprintf(
-            '<a href="%s">%s</a>',
+            '<a class="govuk-link" href="%s">%s</a>',
             $urlHelper->fromRoute('licence-no', ['licNo' => trim($row['licNo'])]),
             Escape::html($row['licNo'])
         );

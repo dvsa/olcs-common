@@ -479,12 +479,12 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         if ($this->lva === 'variation') {
             $link = $this->url()->fromRoute('lva-variation/operating_centres', [], [], true);
 
-            $class = '';
+            $class = 'govuk-link';
         } else {
             $params = ['licence' => $this->getIdentifier(), 'redirectRoute' => 'operating_centres'];
             $link = $this->getServiceLocator()->get('Helper\Url')->fromRoute('lva-licence/variation', $params);
 
-            $class = 'js-modal-ajax';
+            $class = 'govuk-link js-modal-ajax';
         }
 
         $translator = $this->getServiceLocator()->get('Helper\Translation');

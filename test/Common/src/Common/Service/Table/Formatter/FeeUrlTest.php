@@ -94,7 +94,7 @@ class FeeUrlTest extends MockeryTestCase
                 'operator/fees',
                 'operator/fees/fee_action',
                 ['fee' => '99', 'action' => 'edit-fee'],
-                '<a href="the_url">operator fee</a>',
+                '<a class="govuk-link" href="the_url">operator fee</a>',
             ],
             'licence fee' => [
                 [
@@ -104,7 +104,7 @@ class FeeUrlTest extends MockeryTestCase
                 'licence/fees',
                 'licence/fees/fee_action',
                 ['fee' => '99', 'action' => 'edit-fee'],
-                '<a href="the_url">licence fee</a>',
+                '<a class="govuk-link" href="the_url">licence fee</a>',
             ],
             'application fee' => [
                 [
@@ -114,7 +114,7 @@ class FeeUrlTest extends MockeryTestCase
                 'lva-application/fees',
                 'lva-application/fees/fee_action',
                 ['fee' => '99', 'action' => 'edit-fee'],
-                '<a href="the_url">app fee</a>',
+                '<a class="govuk-link" href="the_url">app fee</a>',
             ],
             'bus reg fee' => [
                 [
@@ -124,7 +124,7 @@ class FeeUrlTest extends MockeryTestCase
                 'licence/bus-fees',
                 'licence/bus-fees/fee_action',
                 ['fee' => '99', 'action' => 'edit-fee'],
-                '<a href="the_url">bus reg fee</a>',
+                '<a class="govuk-link" href="the_url">bus reg fee</a>',
             ],
             'ECMT fee link' => [
                 [
@@ -134,7 +134,7 @@ class FeeUrlTest extends MockeryTestCase
                 'licence/irhp-fees/table',
                 'licence/irhp-fees/fee_action',
                 ['fee' => '99', 'action' => 'edit-fee'],
-                '<a href="the_url">ECMT fee</a>',
+                '<a class="govuk-link" href="the_url">ECMT fee</a>',
             ],
             'IRHP fee link' => [
                 [
@@ -144,7 +144,7 @@ class FeeUrlTest extends MockeryTestCase
                 'licence/irhp-application-fees/table',
                 'licence/irhp-application-fees/fee_action',
                 ['fee' => '99', 'action' => 'edit-fee'],
-                '<a href="the_url">IRHP fee</a>',
+                '<a class="govuk-link" href="the_url">IRHP fee</a>',
             ],
             'misc fee' => [
                 [
@@ -154,7 +154,7 @@ class FeeUrlTest extends MockeryTestCase
                 'admin-dashboard/admin-payment-processing/misc-fees',
                 'admin-dashboard/admin-payment-processing/misc-fees/fee_action',
                 ['fee' => '99', 'action' => 'edit-fee', 'controller' => 'Admin\PaymentProcessingController'],
-                '<a href="the_url">misc fee</a>',
+                '<a class="govuk-link" href="the_url">misc fee</a>',
             ],
             'dashboard fee link' => [
                 [
@@ -164,7 +164,7 @@ class FeeUrlTest extends MockeryTestCase
                 'fees',
                 'fees/pay',
                 ['fee' => '99'],
-                '<a href="the_url">my fee</a>',
+                '<a class="govuk-link" href="the_url">my fee</a>',
             ],
         ];
     }

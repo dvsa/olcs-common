@@ -36,7 +36,7 @@ class NoteUrl implements FormatterInterface
             true
         );
 
-        return '<a class="js-modal-ajax" href="' . $url . '">'
+        return '<a class="govuk-link js-modal-ajax" href="' . $url . '">'
         . (new \DateTime($row['createdOn']))->format(\DATE_FORMAT) . '</a>';
     }
 }

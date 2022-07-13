@@ -21,7 +21,12 @@ $showStatus = isset($settings['show-status']) ? $settings['show-status'] : true;
     <?php foreach ($this->object->getRows() as $row): ?>
     <li class="search-result">
         <div class="search-result__header">
-            <h4><a href="/licence/<?php echo htmlentities($row['licId']); ?>"><?php echo htmlentities($row['licNo']); ?></a> <?php echo htmlentities($row['licTypeDesc']); ?></h4>
+            <h4>
+                <?php
+                    echo $this->link('/licence/' . $row['licId'], $row['licNo']);
+                    echo $this->escapeHtml($row['licTypeDesc']);
+                ?>
+            </h4>
             <p><?php echo htmlentities($row['orgName']); ?></p>
         </div>
         <?php if (!empty($row['text1'] . $row['text2'] . $row['text3'])) { ?>

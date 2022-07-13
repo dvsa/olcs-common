@@ -93,7 +93,7 @@ class DashboardTmActionLinkTest extends MockeryTestCase
         $column = [];
 
         static::assertEquals(
-            '<a href="http://url.com">EXPECT</a>',
+            '<a class="govuk-link" href="http://url.com">EXPECT</a>',
             DashboardTmActionLink::format($data, $column, $this->mockSm)
         );
     }

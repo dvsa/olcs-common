@@ -57,7 +57,7 @@ class IrfoOrganisation extends InternalSearchAbstract
                         'operator/business-details',
                         ['organisation' => $data['orgId']]
                     );
-                    return sprintf('<a href="%s">%d</a>', $url, $data['orgId']);
+                    return sprintf('<a class="govuk-link" href="%s">%d</a>', $url, $data['orgId']);
                 }
             ],
             ['title' => 'Operator name', 'name'=> 'orgName'],

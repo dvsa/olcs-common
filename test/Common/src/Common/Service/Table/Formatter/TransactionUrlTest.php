@@ -75,6 +75,6 @@ class TransactionUrlTest extends MockeryTestCase
             )
             ->andReturn('the_url');
 
-        $this->assertEquals('<a href="the_url">1</a>', TransactionUrl::format(['transactionId' => 1], [], $this->sm));
+        $this->assertEquals('<a class="govuk-link" href="the_url">1</a>', TransactionUrl::format(['transactionId' => 1], [], $this->sm));
     }
 }
