@@ -8,7 +8,10 @@
 namespace CommonTest\Service\Review;
 
 use Common\RefData;
+use Common\Service\Helper\TranslationHelperService;
+use Common\Service\Review\AbstractReviewServiceServices;
 use Common\Service\Review\ConditionsUndertakingsReviewService;
+use Mockery as m;
 
 /**
  * Conditions Undertakings Review Service Test
@@ -21,7 +24,14 @@ class ConditionsUndertakingsReviewServiceTest extends \PHPUnit\Framework\TestCas
 
     public function setUp(): void
     {
-        $this->sut = new ConditionsUndertakingsReviewService();
+        $mockTranslationHelper = m::mock(TranslationHelperService::class);
+        
+        $abstractReviewServiceServices = m::mock(AbstractReviewServiceServices::class);
+        $abstractReviewServiceServices->shouldReceive('getTranslationHelper')
+            ->withNoArgs()
+            ->andReturn($mockTranslationHelper);
+
+        $this->sut = new ConditionsUndertakingsReviewService($abstractReviewServiceServices);
     }
 
     public function testGetConfigFromData()

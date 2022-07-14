@@ -8,9 +8,8 @@
 namespace Common\Service\Review;
 
 use Common\RefData;
+use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Table\Formatter\Address;
-use Laminas\ServiceManager\ServiceLocatorAwareInterface;
-use Laminas\ServiceManager\ServiceLocatorAwareTrait;
 
 /**
  * Abstract Review Service
@@ -20,9 +19,22 @@ use Laminas\ServiceManager\ServiceLocatorAwareTrait;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractReviewService implements ReviewServiceInterface, ServiceLocatorAwareInterface
+abstract class AbstractReviewService implements ReviewServiceInterface
 {
-    use ServiceLocatorAwareTrait;
+    /** @var TranslationHelperService */
+    protected $translationHelper;
+
+    /**
+     * Create service instance
+     *
+     * @param AbstractReviewServiceServices $abstractReviewServiceServices
+     *
+     * @return AbstractReviewService
+     */
+    public function __construct(AbstractReviewServiceServices $abstractReviewServiceServices)
+    {
+        $this->translationHelper = $abstractReviewServiceServices->getTranslationHelper();
+    }
 
     protected function formatText($text)
     {
@@ -103,6 +115,6 @@ abstract class AbstractReviewService implements ReviewServiceInterface, ServiceL
 
     protected function translate($string)
     {
-        return $this->getServiceLocator()->get('Helper\Translation')->translate($string);
+        return $this->translationHelper->translate($string);
     }
 }
