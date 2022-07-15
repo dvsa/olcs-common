@@ -2,7 +2,10 @@
 
 namespace Common\Service\Table;
 
-use Laminas\ServiceManager;
+use Common\Service\Helper\UrlHelperService;
+use Laminas\Mvc\I18n\Translator;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Table Builder
@@ -12,10 +15,8 @@ use Laminas\ServiceManager;
  * @author Rob Caiger <rob@clocal.co.uk>
  * @author Jakub Igla <jakub.igla@valtech.co.uk>
  */
-class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
+class TableBuilder
 {
-    use ServiceManager\ServiceLocatorAwareTrait;
-
     const TYPE_DEFAULT = 1;
     const TYPE_PAGINATE = 2;
     const TYPE_CRUD = 3;
@@ -194,15 +195,25 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     private $isDisabled = false;
 
     /**
+     * @var ServiceLocatorInterface
+     */
+    private $serviceLocator;
+
+    /**
      * Authorisation service to allow columns/rows to be hidden depending on permission model
-     * @var \ZfcRbac\Service\AuthorizationService
+     * @var AuthorizationService
      */
     private $authService;
 
     /**
-     * @var \Laminas\Mvc\I18n\Translator
+     * @var Translator
      */
     private $translator;
+
+    /**
+     * @var UrlHelperService
+     */
+    private $urlHelper;
 
     /** @var  \Laminas\Form\Element\Csrf */
     private $elmCsrf;
@@ -243,51 +254,27 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     }
 
     /**
-     * @return \Laminas\Mvc\I18n\Translator
-     */
-    public function getTranslator()
-    {
-        return $this->translator;
-    }
-
-    /**
-     * @param \Laminas\Mvc\I18n\Translator $translator
-     */
-    public function setTranslator($translator)
-    {
-        $this->translator = $translator;
-    }
-
-    /**
-     * @param \ZfcRbac\Service\AuthorizationService $authorisationService
-     */
-    public function setAuthService($authService)
-    {
-        $this->authService = $authService;
-    }
-
-    /**
-     * @return \ZfcRbac\Service\AuthorizationService
-     */
-    public function getAuthService()
-    {
-        return $this->authService;
-    }
-
-    /**
-     * Inject the service locator and auth service
+     * Create service instance
      *
-     * @param \Laminas\ServiceManager\ServiceManager $sm ServiceManager
+     * @param ServiceLocatorInterface $sm
+     * @param AuthorizationService $authService
+     * @param Translator $translator
+     * @param UrlHelperService $urlHelper
+     *
+     * @return TableBuilder
      */
-    public function __construct($sm)
-    {
-        $this->setServiceLocator($sm);
-        $this->applicationConfig = $sm->get('Config');
-        $this->setAuthService($sm->get('ZfcRbac\Service\AuthorizationService'));
-
-        /** @var \Laminas\Mvc\I18n\Translator $translator */
-        $translator  = $sm->get('translator');
-        $this->setTranslator($translator);
+    public function __construct(
+        ServiceLocatorInterface $serviceLocator,
+        AuthorizationService $authService,
+        Translator $translator,
+        UrlHelperService $urlHelper,
+        array $applicationConfig
+    ) {
+        $this->serviceLocator = $serviceLocator;
+        $this->authService = $authService;
+        $this->translator = $translator;
+        $this->urlHelper = $urlHelper;
+        $this->applicationConfig = $applicationConfig;
     }
 
     /**
@@ -535,7 +522,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     {
         if (empty($this->paginationHelper)) {
             $this->paginationHelper = new PaginationHelper($this->getPage(), $this->getTotal(), $this->getLimit());
-            $this->paginationHelper->setTranslator($this->getTranslator());
+            $this->paginationHelper->setTranslator($this->translator);
         }
 
         return $this->paginationHelper;
@@ -869,8 +856,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     private function translateTitle(&$config)
     {
         if (isset($config['variables']['title'])) {
-            $config['variables']['title'] = $this->getTranslator()
-                ->translate($config['variables']['title']);
+            $config['variables']['title'] = $this->translator->translate($config['variables']['title']);
         }
     }
 
@@ -905,10 +891,9 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         $this->setUnfilteredTotal(isset($data['count-unfiltered']) ? $data['count-unfiltered'] : $this->getTotal());
 
         // if there's only one row and we have a singular title, use it
-        $translator = $this->getTranslator();
         if ($this->getTotal() == 1) {
             if ($this->getVariable('titleSingular')) {
-                $this->setVariable('title', $translator->translate($this->getVariable('titleSingular')));
+                $this->setVariable('title', $this->translator->translate($this->getVariable('titleSingular')));
             }
         }
     }
@@ -921,7 +906,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     public function loadParams($array = array())
     {
         if (!isset($array['url'])) {
-            $array['url'] = $this->getServiceLocator()->get('Helper\Url');
+            $array['url'] = $this->urlHelper;
         }
 
         $defaults = array(
@@ -1341,12 +1326,11 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
                 $moreActions[] = $this->replaceContent('{{[elements/actionButton]}}', $details);
             }
 
-            $translator = $this->getServiceLocator()->get('translator');
             $content .= $this->replaceContent(
                 '{{[elements/moreActions]}}',
                 [
                     'content' => implode('', $moreActions),
-                    'label' => $translator->translate('table_button_more_actions'),
+                    'label' => $this->translator->translate('table_button_more_actions'),
                 ]
             );
         }
@@ -1472,8 +1456,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         }
 
         if (isset($column['title'])) {
-            $translator = $this->getServiceLocator()->get('translator');
-            $column['title'] = $translator->translate($column['title']);
+            $column['title'] = $this->translator->translate($column['title']);
         }
 
         if (isset($column['sort'])) {
@@ -1583,7 +1566,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
 
         if ($this->hasAnyTitle()) {
             $dataHeading = isset($column['title'])
-                ? $this->getServiceLocator()->get('translator')->translate($column['title'])
+                ? $this->translator->translate($column['title'])
                 : '';
             $columnAttributes['data-heading'] = strip_tags($dataHeading);
         }
@@ -1660,7 +1643,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             ? $this->replaceContent($this->variables['empty_message'], $this->getVariables())
             : 'The table is empty';
 
-        return $this->getServiceLocator()->get('translator')->translate($message);
+        return $this->translator->translate($message);
     }
 
     /**
@@ -1685,7 +1668,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         }
 
         if (is_callable($column['formatter'])) {
-            return call_user_func($column['formatter'], $data, $column, $this->getServiceLocator());
+            return call_user_func($column['formatter'], $data, $column, $this->serviceLocator);
         }
 
         return '';
@@ -1736,10 +1719,9 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      *
      * @param array $data
      * @param string $route
-     * @param array $extendParams
      * @return string
      */
-    private function generatePaginationUrl($data = array(), $route = null, $extendParams = true)
+    private function generatePaginationUrl($data = array(), $route = null)
     {
 
         /** @var \Laminas\Mvc\Controller\Plugin\Url $url */
@@ -1802,12 +1784,10 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     {
         $newActions = array();
 
-        $translator = $this->getServiceLocator()->get('translator');
-
         foreach ($actions as $name => $details) {
             $value = isset($details['value']) ? $details['value'] : ucwords($name);
 
-            $label = isset($details['label']) ? $translator->translate($details['label']) : $value;
+            $label = isset($details['label']) ? $this->translator->translate($details['label']) : $value;
 
             $class = isset($details['class']) ? $details['class'] : 'action--secondary';
 
@@ -1845,12 +1825,10 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     {
         $newLinks = array();
 
-        $translator = $this->getServiceLocator()->get('translator');
-
         foreach ($links as $name => $details) {
             $value = isset($details['value']) ? $details['value'] : ucwords($name);
 
-            $label = isset($details['label']) ? $translator->translate($details['label']) : $value;
+            $label = isset($details['label']) ? $this->translator->translate($details['label']) : $value;
 
             $class = isset($details['class']) ? $details['class'] : 'action--secondary';
 
@@ -1969,7 +1947,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     {
         if (isset($column['permissionRequisites'])) {
             foreach ((array) $column['permissionRequisites'] as $permission) {
-                if ($this->getAuthService()->isGranted($permission)) {
+                if ($this->authService->isGranted($permission)) {
                     return true;
                 }
             }
@@ -2034,11 +2012,9 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      */
     protected function isInternalReadOnly()
     {
-        $authService = $this->getAuthService();
-
         return (
-            $authService->isGranted('internal-user')
-            && !$authService->isGranted('internal-edit')
+            $this->authService->isGranted('internal-user')
+            && !$this->authService->isGranted('internal-edit')
         );
     }
 
@@ -2091,7 +2067,36 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      */
     public function getCsrfElement()
     {
-
         return $this->elmCsrf;
+    }
+
+    /**
+     * Get authorization service
+     *
+     * @return AuthorizationService
+     */
+    public function getAuthService()
+    {
+        return $this->authService;
+    }
+
+    /**
+     * Get translator service
+     *
+     * @return Translator
+     */
+    public function getTranslator()
+    {
+        return $this->translator;
+    }
+
+    /**
+     * Get service locator
+     *
+     * @return ServiceLocatorInterface
+     */
+    public function getServiceLocator()
+    {
+        return $this->serviceLocator;
     }
 }

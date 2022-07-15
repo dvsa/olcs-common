@@ -38,7 +38,8 @@ class TableFactory implements FactoryInterface
      */
     public function getTableBuilder()
     {
-        return new TableBuilder($this->serviceLocator);
+        $tableBuilderFactory = new TableBuilderFactory();
+        return $tableBuilderFactory($this->serviceLocator, TableBuilder::class);
     }
 
     /**

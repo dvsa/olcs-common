@@ -2,6 +2,7 @@
 
 namespace CommonTest\Service\Table;
 
+use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\ContentHelper;
 use Common\Service\Table\TableBuilder;
 use Common\Service\Table\TableFactory;
@@ -12,8 +13,8 @@ use Hamcrest\Arrays\IsArrayContainingKeyValuePair;
 use Hamcrest\Core\IsAnything;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Laminas\I18n\Translator\Translator;
 use Laminas\Mvc\Controller\Plugin\Url;
+use Laminas\Mvc\I18n\Translator;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use ZfcRbac\Service\AuthorizationService;
 
@@ -42,20 +43,41 @@ class TableBuilderTest extends MockeryTestCase
         m::close();
     }
 
+    private function getConcreteTableBuilder($config = true)
+    {
+        return new TableBuilder(
+            $this->getMockServiceLocator(),
+            $this->getMockAuthService(),
+            $this->getMockTranslator(),
+            $this->getMockUrlHelperService(),
+            $this->getMockConfig($config)
+        );
+    }
+
     /**
      * Get Mock Table Builder
      *
      * @return \Common\Service\Table\TableBuilder | \PHPUnit_Framework_MockObject_MockObject
      */
-    private function getMockTableBuilder($methods = array())
+    private function getMockTableBuilder($methods = array(), $constructorArgs = null)
     {
+        if (is_null($constructorArgs)) {
+            $constructorArgs = [
+                $this->getMockServiceLocator(),
+                $this->getMockAuthService(),
+                $this->getMockTranslator(),
+                $this->getMockUrlHelperService(),
+                $this->getMockConfig()
+            ];
+        }
+
         return $this->getMockBuilder(TableBuilder::class)
             ->setMethods($methods)
-            ->setConstructorArgs([$this->getMockServiceLocator()])
+            ->setConstructorArgs($constructorArgs)
             ->getMock();
     }
 
-    private function getMockServiceLocator($config = true)
+    private function getMockTranslator()
     {
         $mockTranslator = $this->createPartialMock(\Laminas\Mvc\I18n\Translator::class, ['translate']);
         $mockTranslator->expects(static::any())
@@ -70,28 +92,45 @@ class TableBuilderTest extends MockeryTestCase
                 }
             );
 
+        return $mockTranslator;
+    }
+
+    private function getMockAuthService()
+    {
+        return $this->createPartialMock(AuthorizationService::class, array('isGranted'));
+    }
+
+    private function getMockUrlHelperService()
+    {
+        return m::mock(UrlHelperService::class);
+    }
+
+    private function getMockConfig($config = true)
+    {
+        if (!$config) {
+            return [];
+        }
+
+        return [
+            'tables' => [
+                'config' => [__DIR__ . '/TestResources/'],
+                'partials' => [
+                    'html' => ''
+                ]
+            ],
+            'csrf' => [
+                'timeout' => 9999,
+            ],
+        ];
+    }
+
+    private function getMockServiceLocator()
+    {
         $mockSm = $this->createPartialMock('\Laminas\ServiceManager\ServiceManager', array('get'));
         $mockControllerPluginManager = $this->createPartialMock('\Laminas\Mvc\Controller\PluginManager', array('get'));
-        $mockAuthService = $this->createPartialMock(AuthorizationService::class, array('isGranted'));
 
         $servicesMap = [
-            ['Config', true, ($config
-                ? array(
-                    'tables' => array(
-                        'config' => array(__DIR__ . '/TestResources/'),
-                        'partials' => array(
-                            'html' => ''
-                        )
-                    ),
-                    'csrf' => [
-                        'timeout' => 9999,
-                    ],
-                )
-                : array())
-            ],
-            ['translator', true, $mockTranslator],
             ['ControllerPluginManager', true, $mockControllerPluginManager],
-            ['ZfcRbac\Service\AuthorizationService', true, $mockAuthService],
         ];
 
         $mockSm
@@ -107,7 +146,7 @@ class TableBuilderTest extends MockeryTestCase
      */
     public function testGetContentHelper()
     {
-        $table = new TableBuilder($this->getMockServiceLocator());
+        $table = $this->getConcreteTableBuilder();
 
         $contentHelper = $table->getContentHelper();
 
@@ -126,7 +165,7 @@ class TableBuilderTest extends MockeryTestCase
     {
         $this->expectException(\Exception::class);
 
-        $table = new TableBuilder($this->getMockServiceLocator(false));
+        $table = $this->getConcreteTableBuilder(false);
 
         $table->getContentHelper();
     }
@@ -138,7 +177,7 @@ class TableBuilderTest extends MockeryTestCase
     {
         $this->expectException(\Exception::class);
 
-        $table = new TableBuilder($this->getMockServiceLocator());
+        $table = $this->getConcreteTableBuilder();
 
         $table->setContentType('csv');
 
@@ -150,7 +189,7 @@ class TableBuilderTest extends MockeryTestCase
      */
     public function testGetPaginationHelper()
     {
-        $table = new TableBuilder($this->getMockServiceLocator());
+        $table = $this->getConcreteTableBuilder();
 
         $paginationHelper = $table->getPaginationHelper();
 
@@ -166,7 +205,7 @@ class TableBuilderTest extends MockeryTestCase
      */
     public function testGetConfigFromFile()
     {
-        $table = new TableBuilder($this->getMockServiceLocator());
+        $table = $this->getConcreteTableBuilder();
 
         $config = $table->getConfigFromFile('sample');
 
@@ -181,7 +220,7 @@ class TableBuilderTest extends MockeryTestCase
     {
         $this->expectException(\Exception::class);
 
-        $table = new TableBuilder($this->getMockServiceLocator());
+        $table = $this->getConcreteTableBuilder();
 
         $table->getConfigFromFile('DoesntExist');
     }
@@ -225,7 +264,7 @@ class TableBuilderTest extends MockeryTestCase
     {
         $this->expectException(\Exception::class);
 
-        $table = new TableBuilder($this->getMockServiceLocator(false));
+        $table = $this->getConcreteTableBuilder(false);
 
         $table->loadConfig('test');
     }
@@ -359,7 +398,7 @@ class TableBuilderTest extends MockeryTestCase
     {
         $data = array();
 
-        $table = new TableBuilder($this->getMockServiceLocator());
+        $table = $this->getConcreteTableBuilder();
 
         $table->loadData($data);
 
@@ -379,7 +418,7 @@ class TableBuilderTest extends MockeryTestCase
             array('foo' => 'bar')
         );
 
-        $table = new TableBuilder($this->getMockServiceLocator());
+        $table = $this->getConcreteTableBuilder();
 
         $table->loadData($data);
 
@@ -398,9 +437,7 @@ class TableBuilderTest extends MockeryTestCase
             array('foo' => 'bar'),
         );
 
-        $sl = $this->getMockServiceLocator();
-
-        $table = new TableBuilder($sl);
+        $table = $this->getConcreteTableBuilder();
 
         $table->setVariable('title', 'Things');
         $table->setVariable('titleSingular', 'Thing');
@@ -429,7 +466,7 @@ class TableBuilderTest extends MockeryTestCase
             'Count' => 10
         );
 
-        $table = new TableBuilder($this->getMockServiceLocator());
+        $table = $this->getConcreteTableBuilder();
 
         $table->loadData($data);
 
@@ -448,7 +485,7 @@ class TableBuilderTest extends MockeryTestCase
         $params = array(
         );
 
-        $table = new TableBuilder($this->getMockServiceLocator());
+        $table = $this->getConcreteTableBuilder();
 
         $table->loadParams($params);
     }
@@ -467,7 +504,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $expected = array_merge(array('page' => 1, 'sort' => '', 'order' => 'ASC'), $params);
 
-        $table = new TableBuilder($this->getMockServiceLocator());
+        $table = $this->getConcreteTableBuilder();
 
         $table->loadParams($params);
 
@@ -541,7 +578,7 @@ class TableBuilderTest extends MockeryTestCase
             'query' => $query,
         );
 
-        $table = new TableBuilder($this->getMockServiceLocator());
+        $table = $this->getConcreteTableBuilder();
 
         $table->loadParams($params);
 
@@ -658,7 +695,7 @@ class TableBuilderTest extends MockeryTestCase
      */
     public function testRenderTableFooterWithoutFooter()
     {
-        $table = new TableBuilder($this->getMockServiceLocator());
+        $table = $this->getConcreteTableBuilder();
 
         $this->assertEquals('', $table->renderTableFooter());
     }
@@ -899,7 +936,7 @@ class TableBuilderTest extends MockeryTestCase
      */
     public function testRenderTotalWithoutPagination()
     {
-        $table = new TableBuilder($this->getMockServiceLocator());
+        $table = $this->getConcreteTableBuilder();
 
         $table->setType(TableBuilder::TYPE_CRUD);
 
@@ -1020,7 +1057,7 @@ class TableBuilderTest extends MockeryTestCase
      */
     public function testRenderActionsWithoutCrud()
     {
-        $table = new TableBuilder($this->getMockServiceLocator());
+        $table = $this->getConcreteTableBuilder();
 
         $table->setType(TableBuilder::TYPE_PAGINATE);
 
@@ -1037,7 +1074,7 @@ class TableBuilderTest extends MockeryTestCase
             )
         );
 
-        $table = new TableBuilder($this->getMockServiceLocator());
+        $table = $this->getConcreteTableBuilder();
 
         $table->setType(TableBuilder::TYPE_CRUD);
 
@@ -1559,7 +1596,7 @@ class TableBuilderTest extends MockeryTestCase
      */
     public function testRenderFooterWithoutPagination()
     {
-        $table = new TableBuilder($this->getMockServiceLocator());
+        $table = $this->getConcreteTableBuilder();
 
         $table->setType(TableBuilder::TYPE_CRUD);
 
@@ -1611,7 +1648,7 @@ class TableBuilderTest extends MockeryTestCase
             )
         );
 
-        $table = new TableBuilder($this->getMockServiceLocator());
+        $table = $this->getConcreteTableBuilder();
 
         $table->setSettings($settings);
 
@@ -2287,18 +2324,24 @@ class TableBuilderTest extends MockeryTestCase
         $mockContentHelper->expects($this->once())
             ->method('replaceContent');
 
-        $table = $this->getMockTableBuilder(array('getContentHelper'));
-
-        $table->expects($this->any())
-            ->method('getContentHelper')
-            ->will($this->returnValue($mockContentHelper));
-
         $mockAuthService = $this->createPartialMock(AuthorizationService::class, array('isGranted'));
         $mockAuthService->expects($this->once())
             ->method('isGranted')
             ->willReturn(true);
 
-        $table->setAuthService($mockAuthService);
+        $constructorArgs = [
+            $this->getMockServiceLocator(),
+            $mockAuthService,
+            $this->getMockTranslator(),
+            $this->getMockUrlHelperService(),
+            $this->getMockConfig()
+        ];
+
+        $table = $this->getMockTableBuilder(array('getContentHelper'), $constructorArgs);
+
+        $table->expects($this->any())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
 
         $response = $table->renderHeaderColumn($column);
 
@@ -2323,8 +2366,15 @@ class TableBuilderTest extends MockeryTestCase
             ->method('isGranted')
             ->willReturn(true);
 
-        $table = $this->getMockTableBuilder(array('getContentHelper'));
-        $table->setAuthService($mockAuthService);
+        $constructorArgs = [
+            $this->getMockServiceLocator(),
+            $mockAuthService,
+            $this->getMockTranslator(),
+            $this->getMockUrlHelperService(),
+            $this->getMockConfig()
+        ];
+
+        $table = $this->getMockTableBuilder(array('getContentHelper'), $constructorArgs);
         $table->expects($this->any())
             ->method('getContentHelper')
             ->will($this->returnValue($mockContentHelper));
@@ -2824,8 +2874,6 @@ class TableBuilderTest extends MockeryTestCase
      */
     public function testRenderExtraRowsWithoutRowsCustomMessage()
     {
-        $table = $this->getMockTableBuilder(array('getRows', 'getColumns', 'getContentHelper', 'getServiceLocator'));
-
         $mockTranslator = $this->createPartialMock(Translator::class, array('translate'));
 
         $mockTranslator->expects($this->any())
@@ -2838,16 +2886,18 @@ class TableBuilderTest extends MockeryTestCase
                 )
             );
 
-        $mockServiceLocator = $this->createMock(ServiceLocatorInterface::class);
+        $constructorArgs = [
+            $this->getMockServiceLocator(),
+            $this->getMockAuthService(),
+            $mockTranslator,
+            $this->getMockUrlHelperService(),
+            $this->getMockConfig()
+        ];
 
-        $mockServiceLocator->expects($this->any())
-            ->method('get')
-            ->with('translator')
-            ->will($this->returnValue($mockTranslator));
-
-        $table->expects($this->any())
-            ->method('getServiceLocator')
-            ->will($this->returnValue($mockServiceLocator));
+        $table = $this->getMockTableBuilder(
+            array('getRows', 'getColumns', 'getContentHelper', 'getServiceLocator'),
+            $constructorArgs
+        );
 
         $table->setVariables(array('empty_message' => 'Empty'));
 
@@ -2877,8 +2927,6 @@ class TableBuilderTest extends MockeryTestCase
      */
     public function testRenderExtraRowsWithoutRows()
     {
-        $table = $this->getMockTableBuilder(array('getRows', 'getColumns', 'getContentHelper', 'getServiceLocator'));
-
         $mockTranslator = $this->createPartialMock(Translator::class, array('translate'));
 
         $mockTranslator->expects($this->any())
@@ -2891,16 +2939,18 @@ class TableBuilderTest extends MockeryTestCase
                 )
             );
 
-        $mockServiceLocator = $this->createMock(ServiceLocatorInterface::class);
+        $constructorArgs = [
+            $this->getMockServiceLocator(),
+            $this->getMockAuthService(),
+            $mockTranslator,
+            $this->getMockUrlHelperService(),
+            $this->getMockConfig()
+        ];
 
-        $mockServiceLocator->expects($this->any())
-            ->method('get')
-            ->with('translator')
-            ->will($this->returnValue($mockTranslator));
-
-        $table->expects($this->any())
-            ->method('getServiceLocator')
-            ->will($this->returnValue($mockServiceLocator));
+        $table = $this->getMockTableBuilder(
+            array('getRows', 'getColumns', 'getContentHelper', 'getServiceLocator'),
+            $constructorArgs
+        );
 
         $table->expects($this->once())
             ->method('getRows')
@@ -2925,21 +2975,6 @@ class TableBuilderTest extends MockeryTestCase
     }
 
     /**
-     * Test getServiceLocator method
-     */
-    public function testGetServiceLocator()
-    {
-        $tableFactory = new TableFactory();
-        $serviceLocator = $this->createPartialMock('\Laminas\ServiceManager\ServiceManager', array('get'));
-        $tableBuilder = $tableFactory->createService($serviceLocator)->getTableBuilder();
-
-        $newServiceLocator = $tableBuilder->getServiceLocator();
-
-        $this->assertTrue($newServiceLocator instanceof \Laminas\ServiceManager\ServiceManager);
-        $this->assertTrue($newServiceLocator === $serviceLocator);
-    }
-
-    /**
      * Test action field name and fieldset
      */
     public function testActionFieldNameAndFieldset()
@@ -2948,7 +2983,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $fieldset = 'table';
 
-        $table = new TableBuilder($this->getMockServiceLocator());
+        $table = $this->getConcreteTableBuilder();
 
         $table->setActionFieldName($actionName);
 
@@ -2966,8 +3001,8 @@ class TableBuilderTest extends MockeryTestCase
      */
     public function testGetFooter()
     {
-        $table = new TableBuilder($this->getMockServiceLocator());
-
+        $table = $this->getConcreteTableBuilder();
+ 
         $table->setFooter(array('Foo' => 'Bar'));
 
         $this->assertEquals(array('Foo' => 'Bar'), $table->getFooter());
@@ -2978,8 +3013,8 @@ class TableBuilderTest extends MockeryTestCase
      */
     public function testGetVariable()
     {
-        $table = new TableBuilder($this->getMockServiceLocator());
-
+        $table = $this->getConcreteTableBuilder();
+ 
         $vars = array(
             'foo' => 'bar',
             'bar' => 'cake'
@@ -2999,8 +3034,8 @@ class TableBuilderTest extends MockeryTestCase
      */
     public function testRemoveColumn()
     {
-        $table = new TableBuilder($this->getMockServiceLocator());
-
+        $table = $this->getConcreteTableBuilder();
+ 
         $columns = array(
             array('name' => 'name1'),
             array('name' => 'name2')
@@ -3020,7 +3055,7 @@ class TableBuilderTest extends MockeryTestCase
      */
     public function testRemoveColumnNoNameExists()
     {
-        $table = new TableBuilder($this->getMockServiceLocator());
+        $table = $this->getConcreteTableBuilder();
         $columns = array(
             array('name' => 'name1'),
             array('foo' => 'bar')
@@ -3036,7 +3071,7 @@ class TableBuilderTest extends MockeryTestCase
      */
     public function testGetSettings()
     {
-        $table = new TableBuilder($this->getMockServiceLocator());
+        $table = $this->getConcreteTableBuilder();
 
         $table->setSettings(array('Foo' => 'Bar'));
 
@@ -3049,21 +3084,20 @@ class TableBuilderTest extends MockeryTestCase
         $settings = [];
         $row = [];
 
-        $mockAuthService = m::mock();
+        $mockAuthService = m::mock(AuthorizationService::class);
         $mockAuthService->shouldReceive('isGranted')
             ->with(m::type('string'))
             ->andReturn(true);
         $mockTranslatorService = m::mock(\Laminas\Mvc\I18n\Translator::class);
 
         // Setup
-        /** @var \Laminas\ServiceManager\ServiceManager $sm */
-        $sm = m::mock(\Laminas\ServiceManager\ServiceManager::class)->makePartial();
-        $sm->setAllowOverride(true);
-        $sm->setService('Config', array());
-        $sm->setService('ZfcRbac\Service\AuthorizationService', $mockAuthService);
-        $sm->setService('translator', $mockTranslatorService);
-
-        $sut = new TableBuilder($sm);
+        $sut = new TableBuilder(
+            $this->getMockServiceLocator(),
+            $mockAuthService,
+            $mockTranslatorService,
+            $this->getMockUrlHelperService(),
+            $this->getMockConfig()
+        );
 
         $sut->setSettings($settings);
 
@@ -3085,21 +3119,20 @@ class TableBuilderTest extends MockeryTestCase
             'disabled' => $disabled
         ];
 
-        $mockAuthService = m::mock();
+        $mockAuthService = m::mock(AuthorizationService::class);
         $mockAuthService->shouldReceive('isGranted')
             ->with(m::type('string'))
             ->andReturn(true);
         $mockTranslatorService = m::mock(\Laminas\Mvc\I18n\Translator::class);
 
         // Setup
-        /** @var \Laminas\ServiceManager\ServiceManager $sm */
-        $sm = m::mock('\Laminas\ServiceManager\ServiceManager')->makePartial();
-        $sm->setAllowOverride(true);
-        $sm->setService('Config', array());
-        $sm->setService('ZfcRbac\Service\AuthorizationService', $mockAuthService);
-        $sm->setService('translator', $mockTranslatorService);
-
-        $sut = new TableBuilder($sm);
+        $sut = new TableBuilder(
+            $this->getMockServiceLocator(),
+            $mockAuthService,
+            $mockTranslatorService,
+            $this->getMockUrlHelperService(),
+            $this->getMockConfig()
+        );
 
         $sut->setSettings($settings);
 
@@ -3187,22 +3220,23 @@ class TableBuilderTest extends MockeryTestCase
                 ]
             ]
         ];
-        $mockAuthService = m::mock();
+        $mockAuthService = m::mock(AuthorizationService::class);
         $mockAuthService->shouldReceive('isGranted')
             ->with(m::type('string'))
             ->andReturn(true);
 
-        $mockTranslator = m::mock();
+        $mockTranslator = m::mock(Translator::class);
         $mockTranslator->shouldReceive('translate')
             ->with($message)
             ->andReturn($message);
 
-        $sm = Bootstrap::getServiceManager();
-        $sm->setService('Config', $config);
-        $sm->setService('translator', $mockTranslator);
-        $sm->setService('ZfcRbac\Service\AuthorizationService', $mockAuthService);
-
-        $sut = new TableBuilder($sm);
+        $sut = new TableBuilder(
+            $this->getMockServiceLocator(),
+            $mockAuthService,
+            $mockTranslator,
+            $this->getMockUrlHelperService(),
+            $config
+        );
 
         $sut->setEmptyMessage($message);
         $this->assertEquals($message, $sut->getEmptyMessage());
@@ -3270,12 +3304,12 @@ class TableBuilderTest extends MockeryTestCase
             ]
         ];
 
-        $mockTranslator = m::mock();
+        $mockTranslator = m::mock(Translator::class);
         $mockTranslator->shouldReceive('translate')
             ->with(m::type('string'))
             ->andReturn('foo');
 
-        $mockAuthService = m::mock();
+        $mockAuthService = m::mock(AuthorizationService::class);
         $mockAuthService->shouldReceive('isGranted')
             ->with('internal-user')
             ->andReturn(true)
@@ -3286,12 +3320,13 @@ class TableBuilderTest extends MockeryTestCase
             ->once()
             ->getMock();
 
-        $sm = Bootstrap::getServiceManager();
-        $sm->setService('ZfcRbac\Service\AuthorizationService', $mockAuthService);
-        $sm->setService('Config', m::mock());
-        $sm->setService('translator', $mockTranslator);
-
-        $sut = new TableBuilder($sm);
+        $sut = new TableBuilder(
+            $this->getMockServiceLocator(),
+            $mockAuthService,
+            $mockTranslator,
+            $this->getMockUrlHelperService(),
+            $this->getMockConfig()
+        );
 
         $sut->loadConfig($tableConfig);
         $this->assertEquals(
@@ -3308,14 +3343,16 @@ class TableBuilderTest extends MockeryTestCase
 
     public function testSetSetting()
     {
-        $table = new TableBuilder($this->getMockServiceLocator());
+        $table = $this->getConcreteTableBuilder();
+
         $table->setSetting('collapseAt', 2);
         $this->assertEquals(2, $table->getSetting('collapseAt'));
     }
 
     public function testGetAction()
     {
-        $table = new TableBuilder($this->getMockServiceLocator());
+        $table = $this->getConcreteTableBuilder();
+
         $table->setSetting('crud', ['actions' => []]);
         $action = ['foo', 'bar'];
         $table->addAction('add', $action);
@@ -3414,7 +3451,7 @@ class TableBuilderTest extends MockeryTestCase
     public function testRenderLimitOptions_IsDefined()
     {
         // Set Up
-        $table = new TableBuilder($this->getMockServiceLocator());
+        $table = $this->getConcreteTableBuilder();
 
         // Assert
         $this->assertIsCallable([$table, 'renderLimitOptions']);
@@ -3494,7 +3531,7 @@ class TableBuilderTest extends MockeryTestCase
     public function renderPageOptions_IsDefined()
     {
         // Set Up
-        $table = new TableBuilder($this->getMockServiceLocator());
+        $table = $this->getConcreteTableBuilder();
 
         // Assert
         $this->assertIsCallable([$table, 'renderPageOptions']);
@@ -3552,7 +3589,7 @@ class TableBuilderTest extends MockeryTestCase
     public function renderHeaderColumn_IsDefined()
     {
         // Set Up
-        $table = new TableBuilder($this->getMockServiceLocator());
+        $table = $this->getConcreteTableBuilder();
 
         // Assert
         $this->assertIsCallable([$table, 'renderHeaderColumn']);
@@ -3630,10 +3667,65 @@ class TableBuilderTest extends MockeryTestCase
      */
     protected function setUpSut(): TableBuilder
     {
-        $sut = new TableBuilder($this->getMockServiceLocator());
+        $sut = $this->getConcreteTableBuilder();
+
         $urlPlugin = m::mock(Url::class);
         $urlPlugin->shouldIgnoreMissing('');
         $sut->loadParams(['url' => $urlPlugin]);
         return $sut;
+    }
+
+    public function testGetAuthService()
+    {
+        $authService = m::mock(AuthorizationService::class);
+
+        $tableBuilder = new TableBuilder(
+            $this->getMockServiceLocator(),
+            $authService,
+            $this->getMockTranslator(),
+            $this->getMockUrlHelperService(),
+            $this->getMockConfig()
+        );
+
+        $this->assertSame(
+            $authService,
+            $tableBuilder->getAuthService()
+        );
+    }
+
+    public function testGetTranslator()
+    {
+        $translator = m::mock(Translator::class);
+
+        $tableBuilder = new TableBuilder(
+            $this->getMockServiceLocator(),
+            $this->getMockAuthService(),
+            $translator,
+            $this->getMockUrlHelperService(),
+            $this->getMockConfig()
+        );
+
+        $this->assertSame(
+            $translator,
+            $tableBuilder->getTranslator()
+        );
+    }
+
+    public function testGetServiceLocator()
+    {
+        $serviceLocator = m::mock(ServiceLocatorInterface::class);
+
+        $tableBuilder = new TableBuilder(
+            $serviceLocator,
+            $this->getMockAuthService(),
+            $this->getMockTranslator(),
+            $this->getMockUrlHelperService(),
+            $this->getMockConfig()
+        );
+
+        $this->assertSame(
+            $serviceLocator,
+            $tableBuilder->getServiceLocator()
+        );
     }
 }
