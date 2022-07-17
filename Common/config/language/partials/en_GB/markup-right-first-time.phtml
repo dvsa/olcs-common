@@ -9,9 +9,12 @@
   <h3 class="govuk-heading-s">If you have more than one operating centre, you will need a licence for each if they are
     in different traffic areas.</h3>
   <p class="govuk-body">
-    <a target="_blank"
-       href="https://www.gov.uk/being-a-goods-vehicle-operator/apply-for-a-licence#what-the-traffic-commissioners-do"
-       class="govuk-link" rel="noreferrer noopener">Great Britain is divided into 8 traffic areas (opens in new tab)</a>.
+      <?php
+          echo $this->linkNewWindowExternal(
+              'https://www.gov.uk/being-a-goods-vehicle-operator/apply-for-a-licence#what-the-traffic-commissioners-do',
+              'Great Britain is divided into 8 traffic areas'
+          );
+      ?>.
     Each area has a Traffic Commissioner who’s responsible for issuing licences. The Department for Infrastructure is responsible for Northern Ireland.
   </p>
   <p class="govuk-!-margin-bottom-6">
@@ -19,9 +22,12 @@
     to cost around £500.
   </p>
   <p class="govuk-!-margin-bottom-6">
-    <a target="_blank"
-       href="https://www.gov.uk/being-a-goods-vehicle-operator/operating-centres#advertising-your-application-for-a-goods-vehicle-operators-licence"
-       class="govuk-link" rel="noreferrer noopener">How to advertise your application (opens in new tab)</a>.
+      <?php
+          echo $this->linkNewWindowExternal(
+              'https://www.gov.uk/being-a-goods-vehicle-operator/operating-centres#advertising-your-application-for-a-goods-vehicle-operators-licence',
+              'How to advertise your application'
+          );
+      ?>.
   </p>
   <h3 class="govuk-heading-s">You need to provide financial evidence to support your application.</h3>
   <p class="govuk-body">
@@ -60,8 +66,12 @@
 <section id="additional-info-section" class="govuk-!-margin-bottom-7">
   <h2 class="govuk-heading-l">Additional guidance</h2>
   <p class="govuk-body">
-    <a target="_blank" href="https://www.youtube.com/watch?v=D-At2JNVIUM" class="govuk-link" rel="noreferrer noopener">Watch
-      a video demo on how to apply for an operator licence (opens video in new tab)</a>.
+      <?php
+          echo $this->linkNewWindowExternal(
+              'https://www.youtube.com/watch?v=D-At2JNVIUM',
+              'Watch a video demo on how to apply for an operator licence'
+          );
+      ?>.
   </p>
 </section>
 

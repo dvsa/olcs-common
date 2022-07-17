@@ -13,7 +13,12 @@
 </ul>
 
 <p class="govuk-body">This includes cross-trade jobs and transit journeys.</p>
-<p class="govuk-body">Check the <a href="https://www.gov.uk/guidance/carry-out-international-road-haulage-from-1-january-2021" target="_blank">new rules and what documents UK operators need to carry out international road haulage.<span class="govuk-visually-hidden">(link opens in a new window)</span></a></p>
+<p class="govuk-body">Check the
+    <?php echo $this->linkNewWindowExternal(
+        'https://www.gov.uk/guidance/carry-out-international-road-haulage-from-1-january-2021',
+        'new rules and what documents UK operators need to carry out international road haulage'
+    ); ?>
+.</p>
 <a href="<?php echo $this->url('permits'); ?>" role="button" class="govuk-button">Apply for a permit or view existing permits</a>
 
 <h2 class="govuk-heading-m govuk-!-margin-top-4">Licences</h2>

@@ -1,26 +1,20 @@
 <div class="info-box info-box--grey">
-    <h3 class="info-box__heading"><?php echo $this->translate('sidebar-more-information'); ?></h3>
+    <h3 class="info-box__heading"><?php echo $this->escapeHtml($this->translate('sidebar-more-information')); ?></h3>
     
     <ul class="govuk-list">
         <li>
-            <a href="<?php echo $this->translate('being-an-operator-link'); ?>" target="_blank">
-                <?php echo $this->translate('sidebar-variation-being-an-operator'); ?>
-            </a>
+            <?php echo $this->linkNewWindowExternal($this->translate('being-an-operator-link'), 'sidebar-variation-being-an-operator'); ?>
         </li>
         <li>
-            <a href="<?php echo $this->translate('public-services-link'); ?>" target="_blank">
-                <?php echo $this->translate('sidebar-variation-public-service'); ?>
-            </a>
+            <?php echo $this->linkNewWindowExternal($this->translate('public-services-link'), 'sidebar-variation-public-service'); ?>
         </li>
         <li>
-            <a href="<?php echo $this->translate('vehicle-safety-link'); ?>" target="_blank">
-                <?php echo $this->translate('sidebar-variation-safety-and-maintenance'); ?>
-            </a>
+            <?php echo $this->linkNewWindowExternal($this->translate('vehicle-safety-link'), 'sidebar-variation-safety-and-maintenance'); ?>
         </li>
         <?php if (!$this->niFlag && ($this->numberOfLicences >= 1 || $this->numberOfApplications >= 1)): ?>
         <li>
-            <a class="govuk-link" href="{{OTC_NEWS_ALERTS}}" target="_blank">
-                <?php echo $this->translate('Office of the Traffic Commissioner news alerts'); ?>
+            <a class="govuk-link" href="{{OTC_NEWS_ALERTS}}" target="_blank" rel="external noreferrer noopener">
+                <?php echo $this->escapeHtml($this->translate('Office of the Traffic Commissioner news alerts')); ?>
             </a>
         </li>
         <?php endif; ?>

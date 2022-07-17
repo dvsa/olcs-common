@@ -15,7 +15,12 @@
         <p><strong>DVSA customer service centre</strong><br>
             Telephone: 0300 123 9000<br>
             Monday to Friday, 7:30am to 6pm<br>
-            <a href="<?php echo $this->translate('call-charges-info-link'); ?>" target="_blank">Find out about call charges</a>
+            <?php
+                echo $this->linkNewWindow(
+                    $this->translate('call-charges-info-link'),
+                    'Find out about call charges'
+                );
+            ?>
         </p>
     </address>
 
@@ -25,7 +30,12 @@
         <p><strong>Transport Regulation Unit</strong><br>
             Telephone: 0300 200 7831<br>
             Monday to Friday, 9am to 5pm<br>
-            <a href="<?php echo $this->translate('call-charges-info-link'); ?>" target="_blank">Find out about call charges</a>
+            <?php
+                echo $this->linkNewWindow(
+                    $this->translate('call-charges-info-link'),
+                    'Find out about call charges'
+                );
+            ?>
         </p>
     </address>
 
