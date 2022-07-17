@@ -17,14 +17,13 @@ class LinkNewWindowTest extends MockeryTestCase
     /**
      * @dataProvider dpIsExternalLink
      */
-    public function testInvoke($isExternal, $output): void
+    public function testInvoke(bool $hideNewTabMessage, bool $isExternal, string $output): void
     {
         $linkText = 'link text';
         $translatedLinkText = 'translated link text';
         $translatedLinkTextEscaped = 'escaped translated link text';
-        $screenReaderText = 'screen reader text';
-        $translatedScreenReaderText = 'translated screen reader text';
-        $translatedScreenReaderTextEscaped = 'escaped translated screen reader text';
+        $translatedNewTabText = 'translated new tab text';
+        $translatedNewTabTextEscaped = 'escaped translated new tab text';
         $linkClass = 'link class';
         $linkClassEscaped = 'escaped link class';
         $url = 'http://url';
@@ -40,12 +39,12 @@ class LinkNewWindowTest extends MockeryTestCase
             ->andReturn($translatedLinkTextEscaped);
 
         $view->expects('translate')
-            ->with($screenReaderText)
-            ->andReturn($translatedScreenReaderText);
+            ->with(LinkNewWindow::NEW_TAB_MESSAGE)
+            ->andReturn($translatedNewTabText);
 
         $view->expects('escapeHtml')
-            ->with($translatedScreenReaderText)
-            ->andReturn($translatedScreenReaderTextEscaped);
+            ->with($translatedNewTabText)
+            ->andReturn($translatedNewTabTextEscaped);
 
         $view->expects('escapeHtmlAttr')
             ->with($url)
@@ -58,17 +57,21 @@ class LinkNewWindowTest extends MockeryTestCase
         $sut = new LinkNewWindow();
         $sut->setView($view);
 
-        self::assertEquals($output, $sut->__invoke($url, $linkText, $linkClass, $screenReaderText, $isExternal));
+        self::assertEquals($output, $sut->__invoke($url, $linkText, $linkClass, $hideNewTabMessage, $isExternal));
     }
 
     public function dpIsExternalLink(): array
     {
-        $internalLinkOutput = '<a href="http://url/escaped" class="escaped link class" target="_blank">escaped translated link text<span class="govuk-visually-hidden">escaped translated screen reader text</span></a>';
-        $externalLinkOutput = '<a href="http://url/escaped" class="escaped link class" target="_blank" rel="external noreferrer noopener">escaped translated link text<span class="govuk-visually-hidden">escaped translated screen reader text</span></a>';
+        $internalLinkOutputHiddenNewTab = '<a href="http://url/escaped" class="escaped link class" target="_blank">escaped translated link text<span class="govuk-visually-hidden">escaped translated new tab text</span></a>';
+        $externalLinkOutputHiddenNewTab = '<a href="http://url/escaped" class="escaped link class" target="_blank" rel="external noreferrer noopener">escaped translated link text<span class="govuk-visually-hidden">escaped translated new tab text</span></a>';
+        $internalLinkOutputVisibleNewTab = '<a href="http://url/escaped" class="escaped link class" target="_blank">escaped translated link text escaped translated new tab text</a>';
+        $externalLinkOutputVisibleNewTab = '<a href="http://url/escaped" class="escaped link class" target="_blank" rel="external noreferrer noopener">escaped translated link text escaped translated new tab text</a>';
 
         return [
-            [false, $internalLinkOutput],
-            [true, $externalLinkOutput],
+            [true, false, $internalLinkOutputHiddenNewTab],
+            [true, true, $externalLinkOutputHiddenNewTab],
+            [false, false, $internalLinkOutputVisibleNewTab],
+            [false, true, $externalLinkOutputVisibleNewTab],
         ];
     }
 }

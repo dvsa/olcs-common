@@ -17,19 +17,19 @@ class LinkNewWindowExternalTest extends MockeryTestCase
     public function testInvoke(): void
     {
         $linkText = 'link text';
-        $screenReaderText = 'screen reader text';
+        $hideNewTabMessage = false;
         $linkClass = 'link class';
         $url = 'http://url';
         $output = 'output';
 
         $view = m::mock(RendererInterface::class);
         $view->expects('linkNewWindow')
-            ->with($url, $linkText, $linkClass, $screenReaderText, true)
+            ->with($url, $linkText, $linkClass, $hideNewTabMessage, true)
             ->andReturn($output);
 
         $sut = new LinkNewWindowExternal();
         $sut->setView($view);
 
-        self::assertEquals($output, $sut->__invoke($url, $linkText, $linkClass, $screenReaderText));
+        self::assertEquals($output, $sut->__invoke($url, $linkText, $linkClass, $hideNewTabMessage));
     }
 }

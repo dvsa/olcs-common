@@ -18,21 +18,34 @@ use Laminas\View\Helper\AbstractHelper;
  */
 class LinkNewWindow extends AbstractHelper
 {
-    const LINK_FORMAT = '<a href="%s" class="%s" target="_blank">%s<span class="govuk-visually-hidden">%s</span></a>';
-    const LINK_FORMAT_EXTERNAL = '<a href="%s" class="%s" target="_blank" rel="external noreferrer noopener">%s<span class="govuk-visually-hidden">%s</span></a>';
+    const NEW_TAB_MESSAGE = 'link.opens-new-window';
+    const HIDDEN_NEW_TAB_SPAN = '<span class="govuk-visually-hidden">%s</span>';
+    const LINK_FORMAT = '<a href="%s" class="%s" target="_blank">%s%s</a>';
+    const LINK_FORMAT_EXTERNAL = '<a href="%s" class="%s" target="_blank" rel="external noreferrer noopener">%s%s</a>';
 
     public function __invoke(
         string $url,
         string $linkText,
         string $class = 'govuk-link',
-        string $screenReaderText = 'link.opens-new-window',
+        bool $hideNewTabMessage = false,
         bool $isExternal = false
     ): string
     {
-        $escapedUrl = $this->view->escapeHtmlAttr($url);
+        //we have the option to hide the new tab message, this is defaulted to off
+        $hiddenNewTabMarkup = '';
+
+        //the new tab text is the same, regardless of whether it is hidden
+        $escapedNewTabText = $this->view->escapeHtml($this->view->translate(self::NEW_TAB_MESSAGE));
+
+        //the link text is escaped first - the new tab text may be appended to this depending on the option selected
         $escapedText = $this->view->escapeHtml($this->view->translate($linkText));
-        $escapedScreenReaderText = $this->view->escapeHtml($this->view->translate($screenReaderText));
-        $escapedClass = $this->view->escapeHtmlAttr($class);
+
+        //decide whether the new tab text goes in the hidden span or is appended to the link text itself
+        if ($hideNewTabMessage) {
+            $hiddenNewTabMarkup = sprintf(self::HIDDEN_NEW_TAB_SPAN, $escapedNewTabText);
+        } else{
+            $escapedText = $escapedText . ' ' . $escapedNewTabText;
+        }
 
         $linkFormat = self::LINK_FORMAT;
 
@@ -40,6 +53,9 @@ class LinkNewWindow extends AbstractHelper
             $linkFormat = self::LINK_FORMAT_EXTERNAL;
         }
 
-        return sprintf($linkFormat, $escapedUrl, $escapedClass, $escapedText, $escapedScreenReaderText);
+        $escapedUrl = $this->view->escapeHtmlAttr($url);
+        $escapedClass = $this->view->escapeHtmlAttr($class);
+
+        return sprintf($linkFormat, $escapedUrl, $escapedClass, $escapedText, $hiddenNewTabMarkup);
     }
 }
