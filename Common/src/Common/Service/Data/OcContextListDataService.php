@@ -2,32 +2,33 @@
 
 namespace Common\Service\Data;
 
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
-use Laminas\ServiceManager\ServiceLocatorAwareInterface;
-use Laminas\ServiceManager\ServiceLocatorAwareTrait;
-
 /**
  * Class OcContextListDataService
  *
  * @package Olcs\Service\Data
  */
-class OcContextListDataService implements FactoryInterface, ListDataInterface, ServiceLocatorAwareInterface
+class OcContextListDataService implements ListDataInterface
 {
-    use ServiceLocatorAwareTrait;
+    /**
+     * @var LicenceOperatingCentre
+     */
+    private LicenceOperatingCentre $licenceOperatingCentreDataService;
 
     /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator Service locator
-     *
-     * @return $this
+     * @var ApplicationOperatingCentre
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
-    {
-        $this->setServiceLocator($serviceLocator);
+    private ApplicationOperatingCentre $applicationOperatingCentreDataService;
 
-        return $this;
+    /**
+     * @param LicenceOperatingCentre $licenceOperatingCentreDataService
+     * @param ApplicationOperatingCentre $applicationOperatingCentreDataService
+     */
+    public function __construct(
+        LicenceOperatingCentre $licenceOperatingCentreDataService,
+        ApplicationOperatingCentre $applicationOperatingCentreDataService
+    ) {
+        $this->licenceOperatingCentreDataService = $licenceOperatingCentreDataService;
+        $this->applicationOperatingCentreDataService = $applicationOperatingCentreDataService;
     }
 
     /**
@@ -42,13 +43,9 @@ class OcContextListDataService implements FactoryInterface, ListDataInterface, S
     public function fetchListOptions($context, $useGroups = false)
     {
         if ($context == 'licence') {
-            return $this->getServiceLocator('DataServiceManager')
-                ->get('Common\Service\Data\LicenceOperatingCentre')
-                ->fetchListOptions($context, $useGroups);
+            return $this->licenceOperatingCentreDataService->fetchListOptions($context, $useGroups);
         } elseif ($context == 'application') {
-            return $this->getServiceLocator('DataServiceManager')
-                ->get('Common\Service\Data\ApplicationOperatingCentre')
-                ->fetchListOptions($context, $useGroups);
+            return $this->applicationOperatingCentreDataService->fetchListOptions($context, $useGroups);
         }
 
         return [];

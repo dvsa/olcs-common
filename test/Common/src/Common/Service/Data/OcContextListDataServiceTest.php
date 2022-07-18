@@ -2,7 +2,8 @@
 
 namespace OlcsTest\Service\Data;
 
-use CommonTest\Bootstrap;
+use Common\Service\Data\ApplicationOperatingCentre;
+use Common\Service\Data\LicenceOperatingCentre;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Data\OcContextListDataService;
 use Mockery as m;
@@ -16,29 +17,34 @@ class OcContextListDataServiceTest extends MockeryTestCase
     /**
      * Holds the SUT
      *
-     * @var \Common\Service\Data\Application
+     * @var OcContextListDataService
      */
     private $sut;
+
+    /**
+     * @var LicenceOperatingCentre
+     */
+    private $licenceOperatingCentreDataService;
+
+    /**
+     * @var ApplicationOperatingCentre
+     */
+    private $applicationOperatingCentreDataService;
 
     /**
      * Setup the sut
      */
     protected function setUp(): void
     {
-        $this->serviceManager = Bootstrap::getServiceManager();
-        $this->sut = new OcContextListDataService();
+        $this->licenceOperatingCentreDataService = m::mock(LicenceOperatingCentre::class);
+        $this->applicationOperatingCentreDataService = m::mock(ApplicationOperatingCentre::class);
+
+        $this->sut = new OcContextListDataService(
+            $this->licenceOperatingCentreDataService,
+            $this->applicationOperatingCentreDataService
+        );
     }
 
-    /**
-     * @group data_service
-     * @group oc_context_list_data_service
-     */
-    public function testCreateService()
-    {
-        $service = $this->sut->createService($this->serviceManager);
-
-        $this->assertSame($service, $this->sut);
-    }
 
     public function testFetchListOptionsApplicationContext()
     {
@@ -51,14 +57,7 @@ class OcContextListDataServiceTest extends MockeryTestCase
             ]
         ];
 
-        $mockApplicationOperatingCentre = m::mock('Common\Service\Data\ApplicationOperatingCentre');
-        $mockApplicationOperatingCentre->shouldReceive('fetchListOptions')->andReturn($applicationOperatingCentres);
-
-        $mockSl = m::mock('Laminas\ServiceManager\ServiceLocatorInterface');
-        $mockSl->shouldReceive('get')->with('DataServiceManager')->andReturnSelf();
-        $mockSl->shouldReceive('get')->with('Common\Service\Data\ApplicationOperatingCentre')->andReturn($mockApplicationOperatingCentre);
-
-        $this->sut->setServiceLocator($mockSl);
+        $this->applicationOperatingCentreDataService->shouldReceive('fetchListOptions')->andReturn($applicationOperatingCentres);
         $appOptions = $this->sut->fetchListOptions('application', $useGroups);
 
         $this->assertEquals($applicationOperatingCentres, $appOptions);
@@ -74,15 +73,7 @@ class OcContextListDataServiceTest extends MockeryTestCase
             ]
         ];
 
-        $mockLicenceOperatingCentre = m::mock('Common\Service\Data\LicenceOperatingCentre');
-        $mockLicenceOperatingCentre->shouldReceive('fetchListOptions')->andReturn($licenceOperatingCentres);
-
-        $mockSl = m::mock('Laminas\ServiceManager\ServiceLocatorInterface');
-        $mockSl->shouldReceive('get')->with('DataServiceManager')->andReturnSelf();
-        $mockSl->shouldReceive('get')->with('Common\Service\Data\LicenceOperatingCentre')->andReturn($mockLicenceOperatingCentre);
-
-        $this->sut->setServiceLocator($mockSl);
-
+        $this->licenceOperatingCentreDataService->shouldReceive('fetchListOptions')->andReturn($licenceOperatingCentres);
         $lOptions = $this->sut->fetchListOptions('licence', $useGroups);
 
         $this->assertEquals($licenceOperatingCentres, $lOptions);
