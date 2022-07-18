@@ -7,33 +7,37 @@
  */
 namespace Common\View;
 
+use Common\Service\Helper\UrlHelperService;
+use Common\Service\Table\TableFactory;
 use Laminas\View\Model\ViewModel;
-use Laminas\ServiceManager\ServiceLocatorAwareTrait;
-use Laminas\ServiceManager\ServiceLocatorAwareInterface;
 
 /**
  * Abstract View Model
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractViewModel extends ViewModel implements ServiceLocatorAwareInterface
+abstract class AbstractViewModel extends ViewModel
 {
-    use ServiceLocatorAwareTrait;
-
     /**
      * Build a table from config and results, and return the table object
      *
      * @param string $table
      * @param array $results
+     * @param UrlHelperService $urlHelper
+     * @param TableFactory $tableService
      * @param array $data
-     * @return string
      */
-    public function getTable($table, $results, $data = array())
+    public function getTable(
+        string $table,
+        array $results,
+        UrlHelperService $urlHelper,
+        TableFactory $tableService,
+        array $data = array())
     {
         if (!isset($data['url'])) {
-            $data['url'] = $this->getServiceLocator()->get('Helper\Url');
+            $data['url'] = $urlHelper;
         }
 
-        return $this->getServiceLocator()->get('Table')->buildTable($table, $results, $data, false);
+        return $tableService->buildTable($table, $results, $data, false);
     }
 }
