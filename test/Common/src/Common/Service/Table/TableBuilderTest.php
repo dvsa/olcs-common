@@ -1599,9 +1599,9 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderLimitOptions Without limit options
      *
-     * @depends renderLimitOptions_IsDefined
+     * @depends testRenderLimitOptions_IsDefined
      */
-    public function renderLimitOptions_WithoutLimitOptions()
+    public function testRenderLimitOptions_WithoutLimitOptions()
     {
         $settings = array(
             'paginate' => array(
@@ -1621,9 +1621,9 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderLimitOptions
      *
-     * @depends renderLimitOptions_IsDefined
+     * @depends testRenderLimitOptions_IsDefined
      */
-    public function renderLimitOptions()
+    public function testRenderLimitOptions()
     {
         $settings = array(
             'paginate' => array(
@@ -1641,15 +1641,15 @@ class TableBuilderTest extends MockeryTestCase
             ->with('{{[elements/limitOption]}}', array('class' => 'current', 'option' => '10'));
 
         $mockContentHelper->expects('replaceContent')
-            ->with('{{[elements/limitLink]}}')
-            ->will($this->returnValue('20'));
+            ->with('{{[elements/limitLink]}}', array('option' => '20', 'link' => ''))
+            ->andReturn('20');
 
         $mockContentHelper->expects('replaceContent')
             ->with('{{[elements/limitOption]}}', array('class' => '', 'option' => '20'));
 
         $mockContentHelper->expects('replaceContent')
-            ->with('{{[elements/limitLink]}}')
-            ->will($this->returnValue('30'));
+            ->with('{{[elements/limitLink]}}', array('option' => '30', 'link' => ''))
+            ->andReturn('30');
 
         $mockContentHelper->expects('replaceContent')
             ->with('{{[elements/limitOption]}}', array('class' => '', 'option' => '30'));
@@ -1676,9 +1676,9 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderLimitOptions with query enabled
      *
-     * @depends renderLimitOptions_IsDefined
+     * @depends testRenderLimitOptions_IsDefined
      */
-    public function renderLimitOptions_WithQueryEnabled()
+    public function testRenderLimitOptions_WithQueryEnabled()
     {
         $settings = array(
             'paginate' => array(
@@ -1696,15 +1696,15 @@ class TableBuilderTest extends MockeryTestCase
             ->with('{{[elements/limitOption]}}', array('class' => 'current', 'option' => '10'));
 
         $mockContentHelper->expects('replaceContent')
-            ->with('{{[elements/limitLink]}}')
-            ->will($this->returnValue('20'));
+            ->with('{{[elements/limitLink]}}', array('option' => '20', 'link' => '?foo=bar&page=1&limit=30'))
+            ->andReturn('20');
 
         $mockContentHelper->expects('replaceContent')
             ->with('{{[elements/limitOption]}}', array('class' => '', 'option' => '20'));
 
         $mockContentHelper->expects('replaceContent')
             ->with('{{[elements/limitLink]}}', array('option' => '30', 'link' => '?foo=bar&page=1&limit=30'))
-            ->will($this->returnValue('30'));
+            ->andReturn('30');
 
         $mockContentHelper->expects('replaceContent')
             ->with('{{[elements/limitOption]}}', array('class' => '', 'option' => '30'));
@@ -1744,10 +1744,9 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * @depends renderPageOptions_IsDefined
      */
-    public function renderPageOptions_WithoutOptions()
+    public function testRenderPageOptions_WithoutOptions()
     {
         $options = array(
-
         );
 
         $mockPaginationHelper = $this->createPartialMock(PaginationHelper::class, array('getOptions'));
@@ -1768,7 +1767,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * @depends renderPageOptions_IsDefined
      */
-    public function renderPageOptions()
+    public function testRenderPageOptions()
     {
         $options = array(
             array(
@@ -1793,13 +1792,55 @@ class TableBuilderTest extends MockeryTestCase
 
         $mockUrl = $this->createPartialMock(Url::class, array('fromRoute'));
 
-        $mockContentHelper = m::mock(ContentHelper::class)->makePartial();
+        $mockContentHelper = m::mock(ContentHelper::class);
 
         $mockContentHelper->expects('replaceContent')
-            ->with('{{[elements/paginationItem]}}');
+            ->with(
+                '{{[elements/paginationItem]}}',
+                array (
+                    'class' => '',
+                    'page' => null,
+                    'label' => '...',
+                    'option' => '...',
+                )
+            )
+            ->andReturn('[paginationItem...]');
 
         $mockContentHelper->expects('replaceContent')
-            ->with('{{[elements/paginationItem]}}');
+            ->with(
+                '{{[elements/paginationLink]}}',
+                array(
+                    'page' => 1,
+                    'label' => '1',
+                    'link' => '',
+                )
+            )
+            ->andReturn('[paginationLink1]');
+
+        $mockContentHelper->expects('replaceContent')
+            ->with(
+                '{{[elements/paginationItem]}}',
+                array(
+                  'class' => '',
+                  'page' => 1,
+                  'label' => '1',
+                  'link' => '',
+                  'option' => '[paginationLink1]',
+                )
+            )
+            ->andReturn('[linkedPaginationItem1]');
+
+        $mockContentHelper->expects('replaceContent')
+            ->with(
+                '{{[elements/paginationItem]}}',
+                array(
+                  'class' => '',
+                  'page' => 2,
+                  'label' => '2',
+                  'option' => '2',
+                )
+            )
+            ->andReturn('[linkedPaginationItem2]');
 
         $table = $this->getMockTableBuilder(array('getPaginationHelper', 'getUrl', 'getContentHelper'));
 
@@ -1817,16 +1858,18 @@ class TableBuilderTest extends MockeryTestCase
             ->method('getContentHelper')
             ->will($this->returnValue($mockContentHelper));
 
-        $this->assertEquals('', $table->renderPageOptions());
+        $this->assertEquals(
+            '[paginationItem...][linkedPaginationItem1][linkedPaginationItem2]',
+            $table->renderPageOptions()
+        );
     }
 
     /**
      * Test renderHeaderColumn Without options
      */
-    public function renderHeaderColumn_WithoutOptions()
+    public function testRenderHeaderColumn_WithoutOptions()
     {
         $column = array(
-
         );
 
         $mockContentHelper = $this->createPartialMock(ContentHelper::class, array('replaceContent'));
@@ -1847,10 +1890,9 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn With custom content
      */
-    public function renderHeaderColumn_WithCustomContent()
+    public function testRenderHeaderColumn_WithCustomContent()
     {
         $column = array(
-
         );
 
         $mockContentHelper = $this->createPartialMock(ContentHelper::class, array('replaceContent'));
@@ -1871,7 +1913,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn With sort current order asc
      */
-    public function renderHeaderColumn_WithSortCurrentOrderAsc()
+    public function testRenderHeaderColumn_WithSortCurrentOrderAsc()
     {
         $column = array(
             'sort' => 'foo'
@@ -1884,13 +1926,24 @@ class TableBuilderTest extends MockeryTestCase
             'link' => 'LINK'
         );
 
-        $mockContentHelper = $this->createPartialMock(ContentHelper::class, array('replaceContent'));
+        $mockContentHelper = m::mock(ContentHelper::class);
 
         $mockContentHelper->expects('replaceContent')
-            ->with('{{[elements/sortColumn]}}', $expectedColumn);
+            ->with('{{[elements/sortColumn]}}', $expectedColumn)
+            ->andReturn('[generatedSortColumn]');
 
         $mockContentHelper->expects('replaceContent')
-            ->with('{{[elements/foo]}}');
+            ->with(
+                '{{[elements/foo]}}',
+                array(
+                    'sort' => 'foo',
+                    'class' => 'sortable ascending',
+                    'order' => 'DESC',
+                    'link' => 'LINK',
+                    'title' => '[generatedSortColumn]'
+                )
+            )
+            ->andReturn('[generatedFoo]');
 
         $mockUrl = $this->createPartialMock(Url::class, array('fromRoute'));
 
@@ -1911,13 +1964,16 @@ class TableBuilderTest extends MockeryTestCase
         $table->setSort('foo');
         $table->setOrder('ASC');
 
-        $table->renderHeaderColumn($column, '{{[elements/foo]}}');
+        $this->assertEquals(
+            '[generatedFoo]',
+            $table->renderHeaderColumn($column, '{{[elements/foo]}}')
+        );
     }
 
     /**
      * Test renderHeaderColumn With sort current order desc
      */
-    public function renderHeaderColumn_WithSortCurrentOrderDesc()
+    public function testRenderHeaderColumn_WithSortCurrentOrderDesc()
     {
         $column = array(
             'sort' => 'foo'
@@ -1930,13 +1986,24 @@ class TableBuilderTest extends MockeryTestCase
             'link' => 'LINK'
         );
 
-        $mockContentHelper = m::mock(ContentHelper::class)->makePartial();
+        $mockContentHelper = m::mock(ContentHelper::class);
 
         $mockContentHelper->expects('replaceContent')
-            ->with('{{[elements/sortColumn]}}', $expectedColumn);
+            ->with('{{[elements/sortColumn]}}', $expectedColumn)
+            ->andReturn('[generatedSortColumn]');
 
         $mockContentHelper->expects('replaceContent')
-            ->with('{{[elements/foo]}}');
+            ->with(
+                '{{[elements/foo]}}',
+                array(
+                    'sort' => 'foo',
+                    'class' => 'sortable descending',
+                    'order' => 'ASC',
+                    'link' => 'LINK',
+                    'title' => '[generatedSortColumn]',
+                )
+            )
+            ->andReturn('[generatedFoo]');
 
         $mockUrl = $this->createPartialMock(Url::class, array('fromRoute'));
 
@@ -1957,13 +2024,16 @@ class TableBuilderTest extends MockeryTestCase
         $table->setSort('foo');
         $table->setOrder('DESC');
 
-        $table->renderHeaderColumn($column, '{{[elements/foo]}}');
+        $this->assertEquals(
+            '[generatedFoo]',
+            $table->renderHeaderColumn($column, '{{[elements/foo]}}')
+        );
     }
 
     /**
      * Test renderHeaderColumn With sort
      */
-    public function renderHeaderColumn_WithSort()
+    public function testRenderHeaderColumn_WithSort()
     {
         $column = array(
             'sort' => 'foo'
@@ -1976,13 +2046,24 @@ class TableBuilderTest extends MockeryTestCase
             'link' => 'LINK'
         );
 
-        $mockContentHelper = m::mock(ContentHelper::class)->makePartial();
+        $mockContentHelper = m::mock(ContentHelper::class);
 
         $mockContentHelper->expects('replaceContent')
-            ->with('{{[elements/sortColumn]}}', $expectedColumn);
+            ->with('{{[elements/sortColumn]}}', $expectedColumn)
+            ->andReturn('[generatedSortColumn]');
 
         $mockContentHelper->expects('replaceContent')
-            ->with('{{[elements/foo]}}');
+            ->with(
+                '{{[elements/foo]}}',
+                array(
+                    'sort' => 'foo',
+                    'class' => 'sortable',
+                    'order' => 'ASC',
+                    'link' => 'LINK',
+                    'title' => '[generatedSortColumn]',
+                )
+            )
+            ->andReturn('[generatedFoo]');
 
         $mockUrl = $this->createPartialMock(Url::class, array('fromRoute'));
 
@@ -2003,13 +2084,16 @@ class TableBuilderTest extends MockeryTestCase
         $table->setSort('bar');
         $table->setOrder('DESC');
 
-        $table->renderHeaderColumn($column, '{{[elements/foo]}}');
+        $this->assertEquals(
+            '[generatedFoo]',
+            $table->renderHeaderColumn($column, '{{[elements/foo]}}')
+        );
     }
 
     /**
      * Test renderHeaderColumn With pre-set width
      */
-    public function renderHeaderColumn_WithWidthAndTitle()
+    public function testRenderHeaderColumn_WithWidthAndTitle()
     {
         $column = array(
             'width' => 'checkbox',
@@ -2039,7 +2123,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn when disabled
      */
-    public function renderHeaderColumn_WhenDisabled()
+    public function testRenderHeaderColumn_WhenDisabled()
     {
         $column = array(
             'hideWhenDisabled' => true
@@ -2057,7 +2141,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn with alignment
      */
-    public function renderHeaderColumn_WithAlign()
+    public function testRenderHeaderColumn_WithAlign()
     {
         $column = array(
             'align' => 'right',
@@ -2086,7 +2170,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn with sort and alignment
      */
-    public function renderHeaderColumn_WithSortAndAlign()
+    public function testRenderHeaderColumn_WithSortAndAlign()
     {
         $column = [
             'sort' => 'foo',
@@ -2100,13 +2184,24 @@ class TableBuilderTest extends MockeryTestCase
             'link' => 'LINK',
         ];
 
-        $mockContentHelper = m::mock(ContentHelper::class)->makePartial();
+        $mockContentHelper = m::mock(ContentHelper::class);
 
         $mockContentHelper->expects('replaceContent')
-            ->with('{{[elements/sortColumn]}}', $expectedColumn);
+            ->with('{{[elements/sortColumn]}}', $expectedColumn)
+            ->andReturn('[generatedSortColumn]');
 
         $mockContentHelper->expects('replaceContent')
-            ->with('{{[elements/th]}}');
+            ->with(
+                '{{[elements/th]}}',
+                array (
+                    'sort' => 'foo',
+                    'class' => 'right sortable',
+                    'order' => 'ASC',
+                    'link' => 'LINK',
+                    'title' => '[generatedSortColumn]',
+                )
+            )
+            ->andReturn('[generatedTh]');
 
         $mockUrl = $this->createPartialMock(Url::class, array('fromRoute'));
 
@@ -2124,7 +2219,10 @@ class TableBuilderTest extends MockeryTestCase
             ->method('getUrl')
             ->will($this->returnValue($mockUrl));
 
-        $table->renderHeaderColumn($column);
+        $this->assertEquals(
+            '[generatedTh]',
+            $table->renderHeaderColumn($column)
+        );
     }
 
     /**
@@ -2147,7 +2245,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn when incorrect permission set
      */
-    public function renderHeaderColumn_WhenPermissionWontAllow()
+    public function testRenderHeaderColumn_WhenPermissionWontAllow()
     {
         $column = array(
             'permissionRequisites' => ['incorrectPermission']
@@ -2179,7 +2277,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn when correct permission set
      */
-    public function renderHeaderColumn_WhenPermissionWillAllow()
+    public function testRenderHeaderColumn_WhenPermissionWillAllow()
     {
         $column = array(
             'permissionRequisites' => ['correctPermission']
@@ -3313,7 +3411,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function renderLimitOptions_IsDefined()
+    public function testRenderLimitOptions_IsDefined()
     {
         // Set Up
         $table = new TableBuilder($this->getMockServiceLocator());
@@ -3334,7 +3432,7 @@ class TableBuilderTest extends MockeryTestCase
     }
 
     /**
-     * @depends renderLimitOptions_IsDefined
+     * @depends testRenderLimitOptions_IsDefined
      * @dataProvider pageAndLimitUrlParameterNamesDataProvider
      * @test
      */
