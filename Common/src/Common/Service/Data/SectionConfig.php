@@ -5,18 +5,14 @@ namespace Common\Service\Data;
 use Common\RefData;
 use Laminas\Filter\Word\UnderscoreToDash;
 use Laminas\Filter\Word\UnderscoreToCamelCase;
-use Laminas\ServiceManager\ServiceLocatorAwareInterface;
-use Laminas\ServiceManager\ServiceLocatorAwareTrait;
 
 /**
  * Section Config
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class SectionConfig implements ServiceLocatorAwareInterface
+class SectionConfig
 {
-    use ServiceLocatorAwareTrait;
-
     /**
      * Holds the section config
      *
