@@ -3,17 +3,13 @@
 namespace Common\Service\AntiVirus;
 
 use Olcs\Logging\Log\Logger;
-use Laminas\ServiceManager\ServiceLocatorAwareTrait;
-use Laminas\ServiceManager\ServiceLocatorAwareInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * AntiVirus Scan a file
  */
-class Scan implements ServiceLocatorAwareInterface, \Laminas\ServiceManager\FactoryInterface
+class Scan implements \Laminas\ServiceManager\FactoryInterface
 {
-    use ServiceLocatorAwareTrait;
-
     /**
      * @var string
      */
