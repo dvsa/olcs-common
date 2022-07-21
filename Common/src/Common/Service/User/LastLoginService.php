@@ -5,13 +5,9 @@ namespace Common\Service\User;
 use Common\Service\Cqrs\Command\CommandSender;
 use Common\Service\Cqrs\Response;
 use Dvsa\Olcs\Transfer\Command\User\UpdateUserLastLoginAt;
-use Laminas\ServiceManager\ServiceLocatorAwareInterface;
-use Laminas\ServiceManager\ServiceLocatorAwareTrait;
 
-class LastLoginService implements ServiceLocatorAwareInterface
+class LastLoginService
 {
-    use ServiceLocatorAwareTrait;
-
     /**
      * @var CommandSender
      */
