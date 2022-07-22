@@ -2,6 +2,7 @@
 
 namespace CommonTest\Service\Table;
 
+use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\TableBuilder;
 use Common\Service\Table\TableFactory;
 use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
@@ -19,11 +20,14 @@ class TableFactoryTest extends MockeryTestCase
     {
         $mockAuthService = m::mock(AuthorizationService::class);
         $mockTranslator = m::mock(TranslatorDelegator::class);
+        $urlHelperService = m::mock(UrlHelperService::class);
+        $config = ['config1', 'config2'];
 
         $serviceLocator = m::mock(ServiceManager::class);
-        $serviceLocator->expects('get')->with('Config')->andReturn([]);
+        $serviceLocator->expects('get')->with('Config')->andReturn($config);
         $serviceLocator->expects('get')->with(AuthorizationService::class)->andReturn($mockAuthService);
         $serviceLocator->expects('get')->with('translator')->andReturn($mockTranslator);
+        $serviceLocator->expects('get')->with('Helper\Url')->andReturn($urlHelperService);
 
         $tableFactory = new TableFactory();
 

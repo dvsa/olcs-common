@@ -1,6 +1,8 @@
 <?php
+
 namespace Common\Service\Table;
 
+use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
@@ -12,6 +14,17 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
  */
 class TableBuilderFactory implements FactoryInterface
 {
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    {
+        return new TableBuilder(
+            $container,
+            $container->get('ZfcRbac\Service\AuthorizationService'),
+            $container->get('translator'),
+            $container->get('Helper\Url'),
+            $container->get('Config')
+        );
+    }
+
     /**
      * Create the table factory service, and returns TableBuilder. A
      * true Laminas Framework Compatible Table Builder Factory.
@@ -22,12 +35,6 @@ class TableBuilderFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $tableBuilder =  new TableBuilder($serviceLocator);
-
-        /** @var \Laminas\Mvc\I18n\Translator $translator */
-        $translator  = $serviceLocator->get('translator');
-        $tableBuilder->setTranslator($translator);
-
-        return $tableBuilder;
+        return $this($serviceLocator, TableBuilder::class);
     }
 }
