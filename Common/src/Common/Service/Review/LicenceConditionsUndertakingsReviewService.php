@@ -20,6 +20,22 @@ class LicenceConditionsUndertakingsReviewService extends AbstractReviewService
     protected $helper;
 
     /**
+     * Create service instance
+     *
+     * @param AbstractReviewServiceServices $abstractReviewServiceServices
+     * @param ComditionsUndertakingsReviewService $helper
+     *
+     * @return LicenceConditionsUndertakingsReviewService
+     */
+    public function __construct(
+        AbstractReviewServiceServices $abstractReviewServiceServices,
+        ConditionsUndertakingsReviewService $helper
+    ) {
+        parent::__construct($abstractReviewServiceServices);
+        $this->helper = $helper;
+    }
+
+    /**
      * Format the readonly config from the given data
      *
      * @param array $data
@@ -27,8 +43,6 @@ class LicenceConditionsUndertakingsReviewService extends AbstractReviewService
      */
     public function getConfigFromData(array $data = array())
     {
-        $this->helper = $this->getServiceLocator()->get('Review\ConditionsUndertakings');
-
         list($licConds, $licUnds, $ocConds, $ocUnds) = $this->helper
             ->splitUpConditionsAndUndertakings($data, false);
 

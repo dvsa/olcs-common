@@ -155,6 +155,7 @@ return array(
             'NavigationFactory' => 'Common\Service\NavigationFactory',
             'QueryService' => \Common\Service\Cqrs\Query\CachingQueryService::class,
             'CommandSender' => CommandSender::class,
+            'Review\ConditionsUndertakings' => Common\Service\Review\ConditionsUndertakingsReviewService::class,
         ),
         'invokables' => array(
             'Common\Service\NavigationFactory' => 'Common\Service\NavigationFactory',
@@ -365,6 +366,13 @@ return array(
             'QaApplicationStepsPostDataTransformer' =>
                 QaService\DataTransformer\ApplicationStepsPostDataTransformerFactory::class,
             'QaDataTransformerProvider' => QaService\DataTransformer\DataTransformerProviderFactory::class,
+
+            Common\Service\Review\AbstractReviewServiceServices::class
+                => Common\Service\Review\AbstractReviewServiceServicesFactory::class,
+            Common\Service\Review\ConditionsUndertakingsReviewService::class
+                => Common\Service\Review\GenericFactory::class,
+            'Review\LicenceConditionsUndertakings'
+                => Common\Service\Review\LicenceConditionsUndertakingsReviewServiceFactory::class,
 
             PermitsMapper\NoOfPermits::class => PermitsMapper\NoOfPermitsFactory::class,
             Common\Service\User\LastLoginService::class => Common\Service\User\LastLoginServiceFactory::class,
