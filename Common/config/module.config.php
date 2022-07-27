@@ -410,8 +410,6 @@ return array(
             'formDateTimeSelect' => 'Common\Form\View\Helper\FormDateTimeSelect',
             'formDateSelect' => \Common\Form\View\Helper\FormDateSelect::class,
             FormInputSearch::class => FormInputSearch::class,
-            'version' => 'Common\View\Helper\Version',
-            'applicationName' => 'Common\View\Helper\ApplicationName',
             'formPlainText' => 'Common\Form\View\Helper\FormPlainText',
             'addTags' => 'Common\View\Helper\AddTags',
             'transportManagerApplicationStatus' => 'Common\View\Helper\TransportManagerApplicationStatus',
@@ -420,7 +418,6 @@ return array(
             'personName' => 'Common\View\Helper\PersonName',
             'dateTime' => \Common\View\Helper\DateTime::class,
             'returnToAddress' => Common\View\Helper\ReturnToAddress::class,
-            'config' => Common\View\Helper\Config::class,
             'navigationParentPage' => Common\View\Helper\NavigationParentPage::class,
             'panel' => Panel::class,
 
@@ -469,6 +466,9 @@ return array(
             'formweek'                => \Common\Form\View\Helper\Extended\FormWeek::class,
         ),
         'factories' => array(
+            'applicationName' => \Common\View\Helper\ApplicationNameFactory::class,
+            'config' => \Common\View\Helper\ConfigFactory::class,
+            'version' => \Common\View\Helper\VersionFactory::class,
             'pageId' => \Common\View\Helper\PageId::class,
             'pageTitle' => \Common\View\Helper\PageTitle::class,
             'LicenceChecklist' => \Common\View\Helper\LicenceChecklist::class,

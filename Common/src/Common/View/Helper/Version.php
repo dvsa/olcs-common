@@ -7,27 +7,37 @@
  */
 namespace Common\View\Helper;
 
-use Laminas\ServiceManager\ServiceLocatorAwareTrait;
-use Laminas\View\Helper\HelperInterface;
 use Laminas\View\Helper\AbstractHelper;
-use Laminas\ServiceManager\ServiceLocatorAwareInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Version view helper
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class Version extends AbstractHelper implements HelperInterface, ServiceLocatorAwareInterface
+class Version extends AbstractHelper
 {
-    use ServiceLocatorAwareTrait;
-
     protected $markup = '<div class="version-header">
     <p class="environment">Environment: <span class="environment-marker">%s</span></p>
     <p class="version">PHP: <span>%s</span></p>
     <p class="version">Description: <span>%s</span></p>
     <p class="version">Version: <span>%s</span></p>
 </div>';
+
+    /** @var array */
+    private $config;
+
+    /**
+     * Create service instance
+     *
+     * @param array $config
+     *
+     * @return Version
+     */
+    public function __construct(
+        array $config
+    ) {
+        $this->config = $config;
+    }
 
     /**
      * Render the version
@@ -46,17 +56,13 @@ class Version extends AbstractHelper implements HelperInterface, ServiceLocatorA
      */
     public function render()
     {
-        $mainServiceLocator = $this->getServiceLocator()->getServiceLocator();
-
-        $config = $mainServiceLocator->get('Config');
-
-        if (!isset($config['version']) || !is_array($config['version'])) {
+        if (!isset($this->config['version']) || !is_array($this->config['version'])) {
             return '';
         }
 
-        $environment = $this->valOrAlt($config['version'], 'environment');
-        $description = $this->valOrAlt($config['version'], 'description', 'NA');
-        $release = $this->valOrAlt($config['version'], 'release');
+        $environment = $this->valOrAlt($this->config['version'], 'environment');
+        $description = $this->valOrAlt($this->config['version'], 'description', 'NA');
+        $release = $this->valOrAlt($this->config['version'], 'release');
 
         return sprintf($this->markup, $environment, phpversion(), $description, $release);
     }

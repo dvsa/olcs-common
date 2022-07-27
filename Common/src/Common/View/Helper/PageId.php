@@ -8,11 +8,8 @@
 namespace Common\View\Helper;
 
 use Laminas\ServiceManager\FactoryInterface;
-use Laminas\View\Helper\HelperInterface;
 use Laminas\View\Helper\AbstractHelper;
-use Laminas\ServiceManager\ServiceLocatorAwareInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
-use Laminas\View\HelperPluginManager;
 use Laminas\Mvc\Router\Http\RouteMatch;
 
 /**
@@ -29,7 +26,7 @@ class PageId extends AbstractHelper implements FactoryInterface
     /**
      * Create the view helper service
      *
-     * @param HelperPluginManager $serviceLocator
+     * @param ServiceLocatorInterface $serviceLocator
      * @return PageId
      */
     public function createService(ServiceLocatorInterface $serviceLocator)

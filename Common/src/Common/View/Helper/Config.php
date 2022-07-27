@@ -2,17 +2,28 @@
 
 namespace Common\View\Helper;
 
-use Laminas\ServiceManager\ServiceLocatorAwareInterface;
-use Laminas\ServiceManager\ServiceLocatorAwareTrait;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\View\Helper\AbstractHelper;
 
 /**
  * Class return Config to view
  */
-class Config extends AbstractHelper implements ServiceLocatorAwareInterface
+class Config extends AbstractHelper
 {
-    use ServiceLocatorAwareTrait;
+    /** @var array */
+    private $config;
+
+    /**
+     * Create service instance
+     *
+     * @param array $config
+     *
+     * @return Config
+     */
+    public function __construct(
+        array $config
+    ) {
+        $this->config = $config;
+    }
 
     /**
      * Return config
@@ -21,9 +32,6 @@ class Config extends AbstractHelper implements ServiceLocatorAwareInterface
      */
     public function __invoke()
     {
-        /** @var  \Laminas\View\HelperPluginManager $sm */
-        $sm = $this->getServiceLocator();
-
-        return (array) $sm->getServiceLocator()->get('Config');
+        return $this->config;
     }
 }

@@ -7,18 +7,14 @@
  */
 namespace Common\View\Helper;
 
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\View\Helper\HelperInterface;
 use Laminas\View\Helper\AbstractHelper;
-use Laminas\ServiceManager\ServiceLocatorAwareInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Add tags view helper
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class AddTags extends AbstractHelper implements HelperInterface
+class AddTags extends AbstractHelper
 {
     private $tags = [
         // yes, slight repetition of the key phrase

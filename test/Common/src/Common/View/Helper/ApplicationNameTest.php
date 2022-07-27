@@ -20,47 +20,15 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
 class ApplicationNameTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * Setup the view helper
-     */
-    public function setUp(): void
-    {
-        $this->viewHelper = new ApplicationName();
-    }
-
-    /**
-     * Test the service locator injection
-     */
-    public function testSetServiceLocator()
-    {
-        $mockServiceLocator = $this->createMock(HelperPluginManager::class);
-
-        $helper = $this->viewHelper;
-
-        $this->assertSame($mockServiceLocator, $helper->setServiceLocator($mockServiceLocator)->getServiceLocator());
-    }
-
-    /**
      * Test render without version
      */
     public function testRenderWithoutApplicationName()
     {
-        $config = array();
+        $config = [];
+        $sut = new ApplicationName($config);
 
-        $pluginManager = $this->createMock(HelperPluginManager::class);
-        $mockServiceLocator = $this->createMock(ServiceLocatorInterface::class);
-
-        $this->viewHelper->setServiceLocator($pluginManager);
-
-        $pluginManager->expects($this->once())
-            ->method('getServiceLocator')
-            ->will($this->returnValue($mockServiceLocator));
-
-        $mockServiceLocator->expects($this->once())
-            ->method('get')
-            ->with('Config')
-            ->will($this->returnValue($config));
-
-        $this->assertEquals('', $this->viewHelper->render());
+        $this->assertEquals('', $sut->__invoke());
+        $this->assertEquals('', $sut->render());
     }
 
     /**
@@ -68,50 +36,10 @@ class ApplicationNameTest extends \PHPUnit\Framework\TestCase
      */
     public function testRenderWithApplicationName()
     {
-        $config = array(
-            'application-name' => 'Yo'
-        );
+        $config = ['application-name' => 'Yo'];
+        $sut = new ApplicationName($config);
 
-        $pluginManager = $this->createMock(HelperPluginManager::class);
-        $mockServiceLocator = $this->createMock(ServiceLocatorInterface::class);
-
-        $this->viewHelper->setServiceLocator($pluginManager);
-
-        $pluginManager->expects($this->once())
-            ->method('getServiceLocator')
-            ->will($this->returnValue($mockServiceLocator));
-
-        $mockServiceLocator->expects($this->once())
-            ->method('get')
-            ->with('Config')
-            ->will($this->returnValue($config));
-
-        $this->assertEquals('Yo', $this->viewHelper->render());
-    }
-
-    /**
-     * Test invoke
-     */
-    public function testInvoke()
-    {
-        $config = array(
-            'application-name' => 'Test2'
-        );
-
-        $pluginManager = $this->createMock(HelperPluginManager::class);
-        $mockServiceLocator = $this->createMock(ServiceLocatorInterface::class);
-
-        $this->viewHelper->setServiceLocator($pluginManager);
-
-        $pluginManager->expects($this->once())
-            ->method('getServiceLocator')
-            ->will($this->returnValue($mockServiceLocator));
-
-        $mockServiceLocator->expects($this->once())
-            ->method('get')
-            ->with('Config')
-            ->will($this->returnValue($config));
-
-        $this->assertEquals('Test2', $this->viewHelper->__invoke());
+        $this->assertEquals('Yo', $sut->__invoke());
+        $this->assertEquals('Yo', $sut->render());
     }
 }

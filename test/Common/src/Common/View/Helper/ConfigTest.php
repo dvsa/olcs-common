@@ -13,13 +13,9 @@ class ConfigTest extends MockeryTestCase
 {
     public function testInvoke()
     {
-        /** @var \Laminas\ServiceManager\ServiceManager | m\MockInterface $mockSl */
-        $mockSl = m::mock(\Laminas\ServiceManager\ServiceManager::class);
-        $mockSl->shouldReceive('getServiceLocator->get')->once()->with('Config')->andReturn(['EXPECT']);
+        $config = ['EXPECT'];
+        $sut = new Config($config);
 
-        $sut = (new Config())
-            ->setServiceLocator($mockSl);
-
-        static::assertEquals(['EXPECT'], $sut->__invoke());
+        static::assertEquals($config, $sut->__invoke());
     }
 }
