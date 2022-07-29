@@ -4,11 +4,6 @@ namespace Common\Service\Table\Formatter;
 
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
-/**
- * EBSR registration number link
- *
- * @author Ian Lindsay <ian@hemera-business-services.co.uk>
- */
 class EbsrRegNumberLink implements FormatterInterface
 {
     const LINK_PATTERN = '<a class="govuk-link" href="%s">%s</a>';
@@ -35,7 +30,6 @@ class EbsrRegNumberLink implements FormatterInterface
             return '';
         }
 
-        $translator = $sm->get('translator');
         $urlHelper = $sm->get('Helper\Url');
 
         $url = $urlHelper->fromRoute(
@@ -45,24 +39,6 @@ class EbsrRegNumberLink implements FormatterInterface
             ]
         );
 
-        /** @var \Common\View\Helper\Status $statusHelper */
-        $statusHelper = $sm->get('ViewHelperManager')->get('status');
-
-        //status field will be different, depending on whether the data has come from bus reg applications,
-        //txc inbox or ebsr submission table
-        if (isset($data['busRegStatus'])) {
-            $statusId = $data['busRegStatus'];
-            $statusDescription = $data['busRegStatusDesc'];
-        } else {
-            $statusId = $data['status']['id'];
-            $statusDescription = $data['status']['description'];
-        }
-
-        $status = [
-            'id' => $statusId,
-            'description' => $translator->translate($statusDescription),
-        ];
-
-        return sprintf(self::LINK_PATTERN, $url, $data['regNo']) . ' ' . $statusHelper->__invoke($status);
+        return sprintf(self::LINK_PATTERN, $url, $data['regNo']);
     }
 }

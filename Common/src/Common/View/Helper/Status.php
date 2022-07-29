@@ -75,6 +75,8 @@ class Status extends AbstractHelper
             RefData::BUSREG_STATUS_CNS                          => 'grey',
             RefData::BUSREG_STATUS_CANCELLED                    => 'grey',
             RefData::BUSREG_STATUS_NEW                          => 'orange',
+            // EBSR
+
             // Licence
             RefData::LICENCE_STATUS_VALID                       => 'green',
             RefData::LICENCE_STATUS_SUSPENDED                   => 'orange',

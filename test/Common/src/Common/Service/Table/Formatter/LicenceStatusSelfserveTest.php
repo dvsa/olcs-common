@@ -1,24 +1,16 @@
 <?php
 
-/**
- * Licence number and status test
- *
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
- */
+declare(strict_types=1);
+
 namespace CommonTest\Service\Table\Formatter;
 
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Common\Service\Table\Formatter\LicenceNumberAndStatus as sut;
+use Common\Service\Table\Formatter\LicenceStatusSelfserve;
 use CommonTest\Bootstrap;
 use Common\RefData;
 
-/**
- * Licence number and status test
- *
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
- */
-class LicenceNumberAndStatusTest extends MockeryTestCase
+class LicenceStatusSelfserveTest extends MockeryTestCase
 {
     /**
      * Test format
@@ -29,8 +21,6 @@ class LicenceNumberAndStatusTest extends MockeryTestCase
      */
     public function testFormat($data, $expected)
     {
-
-        $mockUrl = m::mock();
         $mockTranslator = m::mock();
         $mockTranslator->shouldReceive('translate')->andReturnUsing(
             function ($message) {
@@ -39,14 +29,9 @@ class LicenceNumberAndStatusTest extends MockeryTestCase
         );
 
         $sm = Bootstrap::getServiceManager();
-        $sm->setService('Helper\Url', $mockUrl);
         $sm->setService('translator', $mockTranslator);
 
-        $mockUrl->shouldReceive('fromRoute')
-            ->with('lva-licence', ['licence' => 2])
-            ->andReturn('lva-licence/2');
-
-        $this->assertEquals($expected, sut::format($data, [], $sm));
+        $this->assertEquals($expected, LicenceStatusSelfserve::format($data, [], $sm));
     }
 
     /**
@@ -61,162 +46,150 @@ class LicenceNumberAndStatusTest extends MockeryTestCase
                 [
                     'status' => [
                         'id' => RefData::LICENCE_STATUS_VALID,
+                        'description' => 'Valid'
                     ],
-                    'licNo' => 'OB123',
-                    'id' => 2
                 ],
-                '<a class="govuk-link" href="lva-licence/2">OB123</a>',
+                '<span class="govuk-tag govuk-tag--green">TRANSLATED_Valid</span>',
             ],
             'Suspended' => [
                 [
                     'status' => [
                         'id' => RefData::LICENCE_STATUS_SUSPENDED,
+                        'description' => 'Suspended'
                     ],
-                    'licNo' => 'OB123',
-                    'id' => 2
                 ],
-                '<a class="govuk-link" href="lva-licence/2">OB123</a>',
+                '<span class="govuk-tag govuk-tag--orange">TRANSLATED_Suspended</span>',
             ],
             'Curtailed' => [
                 [
                     'status' => [
                         'id' => RefData::LICENCE_STATUS_CURTAILED,
+                        'description' => 'Curtailed'
                     ],
-                    'licNo' => 'OB123',
-                    'id' => 2
                 ],
-                '<a class="govuk-link" href="lva-licence/2">OB123</a>',
+                '<span class="govuk-tag govuk-tag--orange">TRANSLATED_Curtailed</span>',
             ],
             'Under consideration' => [
                 [
                     'status' => [
                         'id' => RefData::LICENCE_STATUS_UNDER_CONSIDERATION,
+                        'description' => 'Under consideration'
                     ],
-                    'licNo' => 'OB123',
-                    'id' => 2
                 ],
-                '<a class="govuk-link" href="lva-licence/2">OB123</a>',
+                '<span class="govuk-tag govuk-tag--orange">TRANSLATED_Under consideration</span>',
             ],
             'Granted' => [
                 [
                     'status' => [
                         'id' => RefData::LICENCE_STATUS_GRANTED,
+                        'description' => 'Granted'
                     ],
-                    'licNo' => 'OB123',
-                    'id' => 2
                 ],
-                '<a class="govuk-link" href="lva-licence/2">OB123</a>',
+                '<span class="govuk-tag govuk-tag--orange">TRANSLATED_Granted</span>',
             ],
             'Surrender under consideration' => [
                 [
                     'status' => [
                         'id' => RefData::LICENCE_STATUS_SURRENDER_UNDER_CONSIDERATION,
+                        'description' => 'Surrender under consideration'
                     ],
-                    'licNo' => 'OB123',
-                    'id' => 2
                 ],
-                'OB123',
+                '<span class="govuk-tag govuk-tag--green">TRANSLATED_Surrender under consideration</span>',
             ],
             'Surrendered' => [
                 [
                     'status' => [
                         'id' => RefData::LICENCE_STATUS_SURRENDERED,
+                        'description' => 'Surrendered'
                     ],
-                    'licNo' => 'OB123',
-                    'id' => 2
                 ],
-                '<a class="govuk-link" href="lva-licence/2">OB123</a>',
+                '<span class="govuk-tag govuk-tag--red">TRANSLATED_Surrendered</span>',
             ],
             'Revoked' => [
                 [
                     'status' => [
                         'id' => RefData::LICENCE_STATUS_REVOKED,
+                        'description' => 'Revoked'
                     ],
                     'licNo' => 'OB123',
                     'id' => 2
                 ],
-                '<a class="govuk-link" href="lva-licence/2">OB123</a>',
+                '<span class="govuk-tag govuk-tag--red">TRANSLATED_Revoked</span>',
             ],
             'Terminated' => [
                 [
                     'status' => [
                         'id' => RefData::LICENCE_STATUS_TERMINATED,
+                        'description' => 'Terminated'
                     ],
-                    'licNo' => 'OB123',
-                    'id' => 2
                 ],
-                '<a class="govuk-link" href="lva-licence/2">OB123</a>',
+                '<span class="govuk-tag govuk-tag--red">TRANSLATED_Terminated</span>',
             ],
             'CNS' => [
                 [
                     'status' => [
                         'id' => RefData::LICENCE_STATUS_CONTINUATION_NOT_SOUGHT,
+                        'description' => 'CNS'
                     ],
-                    'licNo' => 'OB123',
-                    'id' => 2
                 ],
-                '<a class="govuk-link" href="lva-licence/2">OB123</a>',
+                '<span class="govuk-tag govuk-tag--red">TRANSLATED_CNS</span>',
             ],
             'Withdrawn' => [
                 [
                     'status' => [
                         'id' => RefData::LICENCE_STATUS_WITHDRAWN,
+                        'description' => 'Withdrawn'
                     ],
-                    'licNo' => 'OB123',
-                    'id' => 2
                 ],
-                '<a class="govuk-link" href="lva-licence/2">OB123</a>',
+                '<span class="govuk-tag govuk-tag--red">TRANSLATED_Withdrawn</span>',
             ],
             'Refused' => [
                 [
                     'status' => [
                         'id' => RefData::LICENCE_STATUS_REFUSED,
+                        'description' => 'Refused'
                     ],
-                    'licNo' => 'OB123',
-                    'id' => 2
                 ],
-                '<a class="govuk-link" href="lva-licence/2">OB123</a>',
+                '<span class="govuk-tag govuk-tag--red">TRANSLATED_Refused</span>',
             ],
             'Not taken up' => [
                 [
                     'status' => [
                         'id' => RefData::LICENCE_STATUS_NOT_TAKEN_UP,
+                        'description' => 'Not taken up'
                     ],
                     'licNo' => 'OB123',
                     'id' => 2
                 ],
-                '<a class="govuk-link" href="lva-licence/2">OB123</a>',
+                '<span class="govuk-tag govuk-tag--red">TRANSLATED_Not taken up</span>',
             ],
             'Cancelled' => [
                 [
                     'status' => [
                         'id' => RefData::LICENCE_STATUS_CANCELLED,
+                        'description' => 'Cancelled'
                     ],
-                    'licNo' => 'OB123',
-                    'id' => 2
                 ],
-                '<a class="govuk-link" href="lva-licence/2">OB123</a>',
+                '<span class="govuk-tag govuk-tag--grey">TRANSLATED_Cancelled</span>',
             ],
             'Unknown' => [
                 [
                     'status' => [
                         'id' => 'unknown',
+                        'description' => 'Unknown'
                     ],
-                    'licNo' => 'OB123',
-                    'id' => 2
                 ],
-                '<a class="govuk-link" href="lva-licence/2">OB123</a>',
+                '<span class="govuk-tag govuk-tag--grey">TRANSLATED_Unknown</span>',
             ],
             'Expired' => [
                 [
                     'status' => [
                         'id' => 'unknown',
+                        'description' => 'Unknown'
                     ],
-                    'licNo' => 'OB123',
-                    'id' => 2,
                     'isExpired' => true,
                 ],
-                '<a class="govuk-link" href="lva-licence/2">OB123</a>',
+                '<span class="govuk-tag govuk-tag--red">TRANSLATED_licence.status.expired</span>',
             ],
             'Expiring' => [
                 [
@@ -224,11 +197,9 @@ class LicenceNumberAndStatusTest extends MockeryTestCase
                         'id' => 'unknown',
                         'description' => 'Unknown'
                     ],
-                    'licNo' => 'OB123',
-                    'id' => 2,
                     'isExpiring' => true,
                 ],
-                '<a class="govuk-link" href="lva-licence/2">OB123</a>',
+                '<span class="govuk-tag govuk-tag--red">TRANSLATED_licence.status.expiring</span>',
             ],
             'Expiring but Surrendered' =>[
                 [
@@ -236,11 +207,9 @@ class LicenceNumberAndStatusTest extends MockeryTestCase
                         'id' => RefData::LICENCE_STATUS_SURRENDER_UNDER_CONSIDERATION,
                         'description' => 'Surrender under consideration'
                     ],
-                    'licNo' => 'OB123',
-                    'id' => 2,
                     'isExpiring' => true,
                 ],
-                'OB123',
+                '<span class="govuk-tag govuk-tag--green">TRANSLATED_Surrender under consideration</span>',
             ],
         ];
     }

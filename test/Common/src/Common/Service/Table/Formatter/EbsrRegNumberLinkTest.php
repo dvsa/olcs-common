@@ -32,38 +32,16 @@ class EbsrRegNumberLinkTest extends MockeryTestCase
     {
         $sut = new EbsrRegNumberLink();
 
-        $regStatus = 'status id';
-        $regStatusDesc = 'status description';
         $id = 1234;
         $regNo = 5678;
-        $statusLabel = 'status label';
         $url = 'the url';
 
-        $statusArray = [
-            'id' => $regStatus,
-            'description' => '_TRNSLT_' . $regStatusDesc,
-        ];
-
         $sm = m::mock(ServiceLocatorInterface::class);
-        $sm->shouldReceive('get->translate')
-            ->once()
-            ->andReturnUsing(
-                function ($key) {
-                    return '_TRNSLT_' . $key;
-                }
-            );
-
-        $sm->shouldReceive('get->fromRoute')
-            ->once()
+        $sm->expects('get->fromRoute')
             ->with(EbsrRegNumberLink::URL_ROUTE, ['busRegId' => $id])
             ->andReturn($url);
 
-        $sm->shouldReceive('get->get->__invoke')
-            ->once()
-            ->with($statusArray)
-            ->andReturn($statusLabel);
-
-        $expected = sprintf(EbsrRegNumberLink::LINK_PATTERN, $url, $regNo) . ' ' . $statusLabel;
+        $expected = sprintf(EbsrRegNumberLink::LINK_PATTERN, $url, $regNo);
 
         $this->assertEquals($expected, $sut::format($data, [], $sm));
     }
@@ -75,25 +53,12 @@ class EbsrRegNumberLinkTest extends MockeryTestCase
      */
     public function formatProvider()
     {
-        $regStatus = 'status id';
-        $regStatusDesc = 'status description';
         $id = 1234;
         $regNo = 5678;
-
-        $busSearchViewFormat = [
-            'id' => $id,
-            'regNo' => $regNo,
-            'busRegStatus' => $regStatus,
-            'busRegStatusDesc' => $regStatusDesc
-        ];
 
         $txcInboxFormat = [
             'id' => $id,
             'regNo' => $regNo,
-            'status' => [
-                'id' => $regStatus,
-                'description' => $regStatusDesc
-            ]
         ];
 
         $ebsrSubmissionFormat = [
@@ -101,7 +66,6 @@ class EbsrRegNumberLinkTest extends MockeryTestCase
         ];
 
         return [
-            [$busSearchViewFormat],
             [$txcInboxFormat],
             [$ebsrSubmissionFormat],
         ];

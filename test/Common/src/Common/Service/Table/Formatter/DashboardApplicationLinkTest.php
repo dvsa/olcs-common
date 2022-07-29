@@ -26,19 +26,8 @@ class DashboardApplicationLinkTest extends MockeryTestCase
             ->andReturn($expectedRoute . '/' . $expectedParams['application'])
             ->getMock();
 
-        $mockTranslator = m::mock()
-            ->shouldReceive('translate')
-            ->once()
-            ->andReturnUsing(
-                function ($desc) {
-                    return '_TRNLTD_' . $desc;
-                }
-            )
-            ->getMock();
-
         $sm = Bootstrap::getServiceManager()
-            ->setService('Helper\Url', $mockUrl)
-            ->setService('translator', $mockTranslator);
+            ->setService('Helper\Url', $mockUrl);
 
         $this->assertEquals($expected, DashboardApplicationLink::format($data, $column, $sm));
     }
@@ -55,7 +44,6 @@ class DashboardApplicationLinkTest extends MockeryTestCase
                 'data' => [
                     'status' => [
                         'id' => RefData::APPLICATION_STATUS_NOT_SUBMITTED,
-                        'description' => 'Not sumbitted'
                     ],
                     'licNo' => 'OB123',
                     'id' => 2
@@ -67,13 +55,12 @@ class DashboardApplicationLinkTest extends MockeryTestCase
                 'expectedParams' => [
                     'application' => 2
                 ],
-                'expect' => '<a class="overview__link" href="lva-application/2"><span>OB123/2</span> <strong class="govuk-tag govuk-tag--grey">_TRNLTD_Not sumbitted</strong></a>',
+                'expect' => '<a class="govuk-link" href="lva-application/2">OB123/2</a>',
             ],
             'Not sumbitted variation' => [
                 'data' => [
                     'status' => [
                         'id' => RefData::APPLICATION_STATUS_NOT_SUBMITTED,
-                        'description' => 'Not sumbitted'
                     ],
                     'licNo' => 'OB123',
                     'id' => 2
@@ -83,13 +70,12 @@ class DashboardApplicationLinkTest extends MockeryTestCase
                 ],
                 'expectedRoute' => 'lva-variation',
                 'expectedParams' => ['application' => 2],
-                'expect' => '<a class="overview__link" href="lva-variation/2"><span>OB123/2</span> <strong class="govuk-tag govuk-tag--grey">_TRNLTD_Not sumbitted</strong></a>',
+                'expect' => '<a class="govuk-link" href="lva-variation/2">OB123/2</a>',
             ],
             'Under consideration' => [
                 'data' => [
                     'status' => [
                         'id' => RefData::APPLICATION_STATUS_UNDER_CONSIDERATION,
-                        'description' => 'Under consideration'
                     ],
                     'id' => 2
                 ],
@@ -98,13 +84,12 @@ class DashboardApplicationLinkTest extends MockeryTestCase
                 ],
                 'expectedRoute' => 'lva-application/submission-summary',
                 'expectedParams' => ['application' => 2],
-                'expect' => '<a class="overview__link" href="lva-application/submission-summary/2"><span>2</span> <strong class="govuk-tag govuk-tag--orange">_TRNLTD_Under consideration</strong></a>',
+                'expect' => '<a class="govuk-link" href="lva-application/submission-summary/2">2</a>',
             ],
             'Valid' => [
                 'data' => [
                     'status' => [
                         'id' => RefData::APPLICATION_STATUS_VALID,
-                        'description' => 'Valid'
                     ],
                     'licNo' => 'OB123',
                     'id' => 2
@@ -114,13 +99,12 @@ class DashboardApplicationLinkTest extends MockeryTestCase
                 ],
                 'expectedRoute' => 'lva-application/submission-summary',
                 'expectedParams' => ['application' => 2],
-                'expect' => '<a class="overview__link" href="lva-application/submission-summary/2"><span>OB123/2</span> <strong class="govuk-tag govuk-tag--green">_TRNLTD_Valid</strong></a>',
+                'expect' => '<a class="govuk-link" href="lva-application/submission-summary/2">OB123/2</a>',
             ],
             'Granted' => [
                 'data' => [
                     'status' => [
                         'id' => RefData::APPLICATION_STATUS_GRANTED,
-                        'description' => 'Granted'
                     ],
                     'licNo' => 'OB123',
                     'id' => 2
@@ -130,13 +114,12 @@ class DashboardApplicationLinkTest extends MockeryTestCase
                 ],
                 'expectedRoute' => 'lva-application/submission-summary',
                 'expectedParams' => ['application' => 2],
-                'expect' => '<a class="overview__link" href="lva-application/submission-summary/2"><span>OB123/2</span> <strong class="govuk-tag govuk-tag--green">_TRNLTD_Granted</strong></a>',
+                'expect' => '<a class="govuk-link" href="lva-application/submission-summary/2">OB123/2</a>',
             ],
             'Withdrawn' => [
                 'data' => [
                     'status' => [
                         'id' => RefData::APPLICATION_STATUS_WITHDRAWN,
-                        'description' => 'Withdrawn'
                     ],
                     'licNo' => 'OB123',
                     'id' => 2
@@ -146,13 +129,12 @@ class DashboardApplicationLinkTest extends MockeryTestCase
                 ],
                 'expectedRoute' => 'lva-application/submission-summary',
                 'expectedParams' => ['application' => 2],
-                'expect' => '<a class="overview__link" href="lva-application/submission-summary/2"><span>OB123/2</span> <strong class="govuk-tag govuk-tag--red">_TRNLTD_Withdrawn</strong></a>',
+                'expect' => '<a class="govuk-link" href="lva-application/submission-summary/2">OB123/2</a>',
             ],
             'Refused' => [
                 'data' => [
                     'status' => [
                         'id' => RefData::APPLICATION_STATUS_REFUSED,
-                        'description' => 'Refused'
                     ],
                     'licNo' => 'OB123',
                     'id' => 2
@@ -162,13 +144,12 @@ class DashboardApplicationLinkTest extends MockeryTestCase
                 ],
                 'expectedRoute' => 'lva-application/submission-summary',
                 'expectedParams' => ['application' => 2],
-                'expect' => '<a class="overview__link" href="lva-application/submission-summary/2"><span>OB123/2</span> <strong class="govuk-tag govuk-tag--red">_TRNLTD_Refused</strong></a>',
+                'expect' => '<a class="govuk-link" href="lva-application/submission-summary/2">OB123/2</a>',
             ],
             'Not taken up' => [
                 'data' => [
                     'status' => [
                         'id' => RefData::APPLICATION_STATUS_NOT_TAKEN_UP,
-                        'description' => 'Not taken up'
                     ],
                     'licNo' => 'OB123',
                     'id' => 2
@@ -178,13 +159,12 @@ class DashboardApplicationLinkTest extends MockeryTestCase
                 ],
                 'expectedRoute' => 'lva-application/submission-summary',
                 'expectedParams' => ['application' => 2],
-                'expect' => '<a class="overview__link" href="lva-application/submission-summary/2"><span>OB123/2</span> <strong class="govuk-tag govuk-tag--red">_TRNLTD_Not taken up</strong></a>',
+                'expect' => '<a class="govuk-link" href="lva-application/submission-summary/2">OB123/2</a>',
             ],
             'Cancelled' => [
                 'data' => [
                     'status' => [
                         'id' => RefData::APPLICATION_STATUS_CANCELLED,
-                        'description' => 'Cancelled'
                     ],
                     'licNo' => 'OB123',
                     'id' => 2
@@ -194,13 +174,12 @@ class DashboardApplicationLinkTest extends MockeryTestCase
                 ],
                 'expectedRoute' => 'lva-application/submission-summary',
                 'expectedParams' => ['application' => 2],
-                'expect' => '<a class="overview__link" href="lva-application/submission-summary/2"><span>OB123/2</span> <strong class="govuk-tag govuk-tag--grey">_TRNLTD_Cancelled</strong></a>',
+                'expect' => '<a class="govuk-link" href="lva-application/submission-summary/2">OB123/2</a>',
             ],
             'Unknown' => [
                 'data' => [
                     'status' => [
                         'id' => 'unknown',
-                        'description' => 'Unknown'
                     ],
                     'licNo' => 'OB123',
                     'id' => 2
@@ -210,7 +189,7 @@ class DashboardApplicationLinkTest extends MockeryTestCase
                 ],
                 'expectedRoute' => 'lva-application/submission-summary',
                 'expectedParams' => ['application' => 2],
-                'expect' => '<a class="overview__link" href="lva-application/submission-summary/2"><span>OB123/2</span> <strong class="govuk-tag govuk-tag--grey">_TRNLTD_Unknown</strong></a>',
+                'expect' => '<a class="govuk-link" href="lva-application/submission-summary/2">OB123/2</a>',
             ],
         ];
     }
