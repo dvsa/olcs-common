@@ -3,18 +3,16 @@
 namespace Common\Service\Data\Search;
 
 use Common\Service\Data\AbstractData;
-use Laminas\ServiceManager\ServiceLocatorAwareInterface;
-use Laminas\ServiceManager\ServiceLocatorAwareTrait;
+use Common\Service\Table\TableFactory;
 use Laminas\Http\Request as HttpRequest;
+use Laminas\View\HelperPluginManager as ViewHelperManager;
 
 /**
  * Class Search
  * @package Olcs\Service\Data\Search
  */
-class Search extends AbstractData implements ServiceLocatorAwareInterface
+class Search extends AbstractData
 {
-    use ServiceLocatorAwareTrait;
-
     protected $serviceName = 'Search';
 
     /**
@@ -43,6 +41,34 @@ class Search extends AbstractData implements ServiceLocatorAwareInterface
      * @var HttpRequest
      */
     protected $request;
+
+    /** @var TableFactory */
+    private $tableService;
+
+    /** @var ViewHelperManager */
+    private $viewHelperManager;
+
+    /** @var SearchTypeManager */
+    private $searchTypeManager;
+
+    /**
+     * Create service instance
+     *
+     * @param TableFactory $tableService
+     * @param ViewHelperManager $viewHelperManager
+     * @param SearchTypeManager $searchTypeManager
+     *
+     * @return Search
+     */
+    public function __construct(
+        TableFactory $tableService,
+        ViewHelperManager $viewHelperManager,
+        SearchTypeManager $searchTypeManager
+    ) {
+        $this->tableService = $tableService;
+        $this->viewHelperManager = $viewHelperManager;
+        $this->searchTypeManager = $searchTypeManager;
+    }
 
     /**
      * @TODO Remove the dependency on request. Set the object/data you need instead. e.g. $post or $post['filters']
@@ -210,9 +236,7 @@ class Search extends AbstractData implements ServiceLocatorAwareInterface
             $results = [];
         }
 
-        $tableBuilder = $this->getServiceLocator()->get('Table');
-        /* @var $tableBuilder \Common\Service\Table\TableBuilder */
-        return $tableBuilder->buildTable(
+        return $this->tableService->buildTable(
             $this->getDataClass()->getTableConfig(),
             $results,
             [
@@ -226,8 +250,7 @@ class Search extends AbstractData implements ServiceLocatorAwareInterface
 
     public function fetchFiltersFormObject()
     {
-        $form = $this->getServiceLocator()
-             ->get('ViewHelperManager')
+        $form = $this->viewHelperManager
              ->get('placeholder')
              ->getContainer('searchFilter')
              ->getValue();
@@ -270,8 +293,7 @@ class Search extends AbstractData implements ServiceLocatorAwareInterface
      */
     protected function getDataClass()
     {
-        $manager = $this->getServiceLocator()->get(SearchTypeManager::class);
-        return $manager->get($this->getIndex());
+        return $this->searchTypeManager->get($this->getIndex());
     }
 
     /**
