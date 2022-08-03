@@ -1,21 +1,11 @@
 <?php
 
-/**
- * Dashboard Transport Manager Application ID
- *
- * @author Mat Evans <mat.evans@valtech.co.uk>
- */
 namespace Common\Service\Table\Formatter;
 
-/**
- * Dashboard Transport Manager Application ID
- *
- * @author Mat Evans <mat.evans@valtech.co.uk>
- */
-class DashboardTmApplicationId implements FormatterInterface
+class DashboardTmApplicationStatus implements FormatterInterface
 {
     /**
-     * Generate the HTML to display the Application ID
+     * Generate the HTML to display the TM Application status
      *
      * @param array $data
      * @param array $column
@@ -26,13 +16,10 @@ class DashboardTmApplicationId implements FormatterInterface
     {
         $viewHelper = $sm->get('ViewHelperManager')->get('transportManagerApplicationStatus');
 
-        return sprintf(
-            '<b>%s</b> %s',
-            $data['applicationId'],
+        return
             $viewHelper->render(
                 $data['transportManagerApplicationStatus']['id'],
                 $data['transportManagerApplicationStatus']['description']
-            )
-        );
+            );
     }
 }

@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Licence number and status formatter
- *
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
- */
-
 namespace Common\Service\Table\Formatter;
 
 use Common\RefData;
@@ -19,8 +13,6 @@ class LicenceStatusSelfserve implements FormatterInterface
     const MARKUP_FORMAT = '<span class="govuk-tag govuk-tag--%s">%s</span>';
 
     /**
-     * Format a licence number and status
-     *
      * @param array                               $row            Row data
      * @param array                               $column         Column data
      * @param \Laminas\ServiceManager\ServiceManager $serviceLocator Service locator
