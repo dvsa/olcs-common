@@ -2,22 +2,40 @@
 
 namespace Common\Service\Data;
 
-use Laminas\ServiceManager\ServiceLocatorAwareInterface;
-use Laminas\ServiceManager\ServiceLocatorAwareTrait;
-
 /**
  * Abstract data service class
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-abstract class AbstractDataService implements ServiceLocatorAwareInterface
+abstract class AbstractDataService
 {
-    use ServiceLocatorAwareTrait;
-
     /**
      * @var array
      */
     protected $data = [];
+
+    /** @var TransferAnnotationBuilder */
+    protected $transferAnnotationBuilder;
+
+    /** @var QueryService */
+    protected $queryService;
+
+    /** @var CommandService */
+    protected $commandService;
+
+    /**
+     * Create service instance
+     *
+     * @param AbstractDataServiceServices $abstractConsumerServices
+     *
+     * @return AbstractDataService
+     */
+    public function __construct(AbstractDataServiceServices $abstractDataServiceServices)
+    {
+        $this->transferAnnotationBuilder = $abstractDataServiceServices->getTransferAnnotationBuilder();
+        $this->queryService = $abstractDataServiceServices->getQueryService();
+        $this->commandService = $abstractDataServiceServices->getCommandService();
+    }
 
     /**
      * Handle query
@@ -28,11 +46,9 @@ abstract class AbstractDataService implements ServiceLocatorAwareInterface
      */
     protected function handleQuery($dtoData)
     {
-        $serviceLocator = $this->getServiceLocator();
+        $query = $this->transferAnnotationBuilder->createQuery($dtoData);
 
-        $query = $serviceLocator->get('TransferAnnotationBuilder')->createQuery($dtoData);
-
-        return $serviceLocator->get('QueryService')->send($query);
+        return $this->queryService->send($query);
     }
 
     /**
@@ -44,11 +60,9 @@ abstract class AbstractDataService implements ServiceLocatorAwareInterface
      */
     protected function handleCommand($dtoData)
     {
-        $serviceLocator = $this->getServiceLocator();
+        $command = $this->transferAnnotationBuilder->createCommand($dtoData);
 
-        $command = $serviceLocator->get('TransferAnnotationBuilder')->createCommand($dtoData);
-
-        return $serviceLocator->get('CommandService')->send($command);
+        return $this->commandService->send($command);
     }
 
     /**

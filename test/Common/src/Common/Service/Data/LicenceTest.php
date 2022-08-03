@@ -1,13 +1,12 @@
 <?php
 
-namespace OlcsTest\Service\Data;
+namespace CommonTest\Service\Data;
 
 use Common\Exception\DataServiceException;
 use Common\Service\Data\Licence;
 use Mockery as m;
 use Dvsa\Olcs\Transfer\Query\Licence\Licence as LicenceQry;
 use Dvsa\Olcs\Transfer\Query\Licence\OperatingCentres as OcQry;
-use CommonTest\Service\Data\AbstractDataServiceTestCase;
 
 /**
  * Class LicenceTest
@@ -15,17 +14,25 @@ use CommonTest\Service\Data\AbstractDataServiceTestCase;
  */
 class LicenceTest extends AbstractDataServiceTestCase
 {
+    /** @var Licence */
+    private $sut;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->sut = new Licence($this->abstractDataServiceServices);
+    }
+
     public function testSetId()
     {
-        $sut = new Licence();
-        $sut->setId(78);
-        $this->assertEquals(78, $sut->getId());
+        $this->sut->setId(78);
+        $this->assertEquals(78, $this->sut->getId());
     }
 
     public function testGetId()
     {
-        $sut = new Licence();
-        $this->assertNull($sut->getId());
+        $this->assertNull($this->sut->getId());
     }
 
     public function testFetchLicenceData()
@@ -52,15 +59,16 @@ class LicenceTest extends AbstractDataServiceTestCase
             'id' => 78
         ];
         $dto = LicenceQry::create($params);
-        $mockTransferAnnotationBuilder = m::mock()
-            ->shouldReceive('createQuery')->once()->andReturnUsing(
+
+        $this->transferAnnotationBuilder->shouldReceive('createQuery')
+            ->with(m::type(LicenceQry::class))
+            ->once()
+            ->andReturnUsing(
                 function ($dto) use ($params) {
                     $this->assertEquals($params['id'], $dto->getId());
-                    return 'query';
+                    return $this->query;
                 }
-            )
-            ->once()
-            ->getMock();
+            );
 
         $mockResponse = m::mock()
             ->shouldReceive('isOk')
@@ -71,33 +79,34 @@ class LicenceTest extends AbstractDataServiceTestCase
             ->once()
             ->getMock();
 
-        $sut = new Licence();
-        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
+        $this->mockHandleQuery($mockResponse);
 
-        $this->assertEquals($expected, $sut->fetchLicenceData(78));
+        $this->assertEquals($expected, $this->sut->fetchLicenceData(78));
     }
 
     public function testFetchLicenceDataWithoutId()
     {
-        $sut = new Licence();
-        $this->assertEquals([], $sut->fetchLicenceData());
+        $this->assertEquals([], $this->sut->fetchLicenceData());
     }
 
     public function testFetchLicenceDataWithException()
     {
         $this->expectException(DataServiceException::class);
-        $mockTransferAnnotationBuilder = m::mock()
-            ->shouldReceive('createQuery')->once()->andReturn('query')->getMock();
+
+        $this->transferAnnotationBuilder->shouldReceive('createQuery')
+            ->with(m::type(LicenceQry::class))
+            ->once()
+            ->andReturn($this->query);
 
         $mockResponse = m::mock()
             ->shouldReceive('isOk')
             ->andReturn(false)
             ->once()
             ->getMock();
-        $sut = new Licence();
-        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
 
-        $sut->fetchLicenceData(78);
+        $this->mockHandleQuery($mockResponse);
+
+        $this->sut->fetchLicenceData(78);
     }
 
     public function testFetchOperatingCentreData()
@@ -120,15 +129,16 @@ class LicenceTest extends AbstractDataServiceTestCase
             'id' => 78
         ];
         $dto = OcQry::create($params);
-        $mockTransferAnnotationBuilder = m::mock()
-            ->shouldReceive('createQuery')->once()->andReturnUsing(
+
+        $this->transferAnnotationBuilder->shouldReceive('createQuery')
+            ->with(m::type(OcQry::class))
+            ->once()
+            ->andReturnUsing(
                 function ($dto) use ($params) {
                     $this->assertEquals($params['id'], $dto->getId());
-                    return 'query';
+                    return $this->query;
                 }
-            )
-            ->once()
-            ->getMock();
+            );
 
         $mockResponse = m::mock()
             ->shouldReceive('isOk')
@@ -139,26 +149,28 @@ class LicenceTest extends AbstractDataServiceTestCase
             ->once()
             ->getMock();
 
-        $sut = new Licence();
-        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
+        $this->mockHandleQuery($mockResponse);
 
-        $this->assertEquals($expected, $sut->fetchOperatingCentreData(78));
+        $this->assertEquals($expected, $this->sut->fetchOperatingCentreData(78));
     }
 
     public function testFetchOperatingCentresDataWithException()
     {
         $this->expectException(DataServiceException::class);
-        $mockTransferAnnotationBuilder = m::mock()
-            ->shouldReceive('createQuery')->once()->andReturn('query')->getMock();
+
+        $this->transferAnnotationBuilder->shouldReceive('createQuery')
+            ->with(m::type(OcQry::class))
+            ->once()
+            ->andReturn($this->query);
 
         $mockResponse = m::mock()
             ->shouldReceive('isOk')
             ->andReturn(false)
             ->once()
             ->getMock();
-        $sut = new Licence();
-        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
 
-        $sut->fetchOperatingCentreData(78);
+        $this->mockHandleQuery($mockResponse);
+
+        $this->sut->fetchOperatingCentreData(78);
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace OlcsTest\Service\Data;
+namespace CommonTest\Service\Data;
 
+use Common\Exception\DataServiceException;
 use Common\Service\Data\BusRegBrowseListDataService;
-use CommonTest\Service\Data\AbstractDataServiceTestCase;
-use Dvsa\Olcs\Transfer\Query\Bus\BusRegBrowseContextList as BusRegBrowseContextListQry;
+use Dvsa\Olcs\Transfer\Query\Bus\BusRegBrowseContextList as Qry;
 use Mockery as m;
 
 /**
@@ -13,15 +13,24 @@ use Mockery as m;
  */
 class BusRegBrowseListDataServiceTest extends AbstractDataServiceTestCase
 {
+    /** @var BusRegBrowseListDataService */
+    private $sut;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->sut = new BusRegBrowseListDataService($this->abstractDataServiceServices);
+    }
+
     /**
      * @dataProvider provideFetchListOptions
      */
     public function testFetchListOptions($context, $result, $expected)
     {
-        $sut = new BusRegBrowseListDataService();
-        $sut->setData('BusRegBrowse' . ucfirst($context), $result);
+        $this->sut->setData('BusRegBrowse' . ucfirst($context), $result);
 
-        $this->assertEquals($expected, $sut->fetchListOptions($context));
+        $this->assertEquals($expected, $this->sut->fetchListOptions($context));
     }
 
     public function provideFetchListOptions()
@@ -59,17 +68,17 @@ class BusRegBrowseListDataServiceTest extends AbstractDataServiceTestCase
             'order' => 'ASC'
         ];
 
-        $mockTransferAnnotationBuilder = m::mock()
-            ->shouldReceive('createQuery')->once()->andReturnUsing(
+        $this->transferAnnotationBuilder->shouldReceive('createQuery')
+            ->with(m::type(Qry::class))
+            ->once()
+            ->andReturnUsing(
                 function ($dto) use ($params) {
-                    $this->assertInstanceOf(BusRegBrowseContextListQry::class, $dto);
                     $this->assertEquals($params['context'], $dto->getContext());
                     $this->assertEquals($params['sort'], $dto->getSort());
                     $this->assertEquals($params['order'], $dto->getOrder());
-                    return 'query';
+                    return $this->query;
                 }
-            )
-            ->getMock();
+            );
 
         $mockResponse = m::mock()
             ->shouldReceive('isOk')
@@ -80,14 +89,13 @@ class BusRegBrowseListDataServiceTest extends AbstractDataServiceTestCase
             ->once()
             ->getMock();
 
-        $sut = new BusRegBrowseListDataService();
-        $sut->setData('BusRegBrowse' . ucfirst($context), null);
+        $this->sut->setData('BusRegBrowse' . ucfirst($context), null);
 
-        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
+        $this->mockHandleQuery($mockResponse);
 
-        $this->assertEquals($expected, $sut->fetchListData($context));
+        $this->assertEquals($expected, $this->sut->fetchListData($context));
         // test caching as well
-        $this->assertEquals($expected, $sut->fetchListData($context));
+        $this->assertEquals($expected, $this->sut->fetchListData($context));
     }
 
     public function provideFetchListData()
@@ -111,13 +119,14 @@ class BusRegBrowseListDataServiceTest extends AbstractDataServiceTestCase
 
     public function testFetchListDataThrowsException()
     {
-        $this->expectException(\Common\Exception\DataServiceException::class);
+        $this->expectException(DataServiceException::class);
 
         $context = 'eventRegistrationStatus';
 
-        $mockTransferAnnotationBuilder = m::mock()
-            ->shouldReceive('createQuery')->once()->andReturn('query')
-            ->getMock();
+        $this->transferAnnotationBuilder->shouldReceive('createQuery')
+            ->with(m::type(Qry::class))
+            ->once()
+            ->andReturn($this->query);
 
         $mockResponse = m::mock()
             ->shouldReceive('isOk')
@@ -125,9 +134,8 @@ class BusRegBrowseListDataServiceTest extends AbstractDataServiceTestCase
             ->once()
             ->getMock();
 
-        $sut = new BusRegBrowseListDataService();
-        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
+        $this->mockHandleQuery($mockResponse);
 
-        $sut->fetchListData($context);
+        $this->sut->fetchListData($context);
     }
 }

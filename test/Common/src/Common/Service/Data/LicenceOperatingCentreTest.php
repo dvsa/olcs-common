@@ -1,34 +1,48 @@
 <?php
 
-namespace OlcsTest\Service\Data;
+namespace CommonTest\Service\Data;
 
-use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Data\LicenceOperatingCentre;
-use Common\Service\Data\Licence as LicenceService;
+use Common\Service\Data\Licence as LicenceDataService;
 use Mockery as m;
 
 /**
  * Class LicenceTest
  * @package OlcsTest\Service\Data
  */
-class LicenceOperatingCentreTest extends MockeryTestCase
+class LicenceOperatingCentreTest extends AbstractDataServiceTestCase
 {
+    /** @var LicenceOperatingCentre */
+    private $sut;
+
+    /** @var LicenceDataService */
+    protected $licenceDataService;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->licenceDataService = m::mock(LicenceDataService::class);
+
+        $this->sut = new LicenceOperatingCentre(
+            $this->abstractDataServiceServices,
+            $this->licenceDataService
+        );
+    }
+
     /**
      * @group licenceOperatingCentreTest
      */
     public function testGetId()
     {
-        $sut = new LicenceOperatingCentre();
         $licenceId = 110;
-        $licenceService = m::mock('Common\Service\Data\Licence');
-        $licenceService
-            ->shouldReceive('getId')
-            ->once()
-            ->with()
-            ->andReturn($licenceId);
-        $sut->setLicenceService($licenceService);
 
-        $this->assertEquals($licenceId, $sut->getId());
+        $this->licenceDataService->shouldReceive('getId')
+            ->once()
+            ->withNoArgs()
+            ->andReturn($licenceId);
+
+        $this->assertEquals($licenceId, $this->sut->getId());
     }
 
     /**
@@ -37,8 +51,8 @@ class LicenceOperatingCentreTest extends MockeryTestCase
      */
     public function testFetchListOptions($outputType)
     {
-        $sut = new LicenceOperatingCentre();
-        $sut->setOutputType($outputType);
+        $this->sut->setOutputType($outputType);
+
         $licenceId = 110;
         $licenceData = [
             'operatingCentres' => [
@@ -58,25 +72,20 @@ class LicenceOperatingCentreTest extends MockeryTestCase
             ]
         ];
 
-        $licenceService = m::mock('Common\Service\Data\Licence');
-        $licenceService
-            ->shouldReceive('getId')
+        $this->licenceDataService->shouldReceive('getId')
             ->times(3)
-            ->with()
-            ->andReturn($licenceId);
-
-        $licenceService
+            ->withNoArgs()
+            ->andReturn($licenceId)
             ->shouldReceive('fetchOperatingCentreData')
             ->once()
             ->with($licenceId)
             ->andReturn($licenceData);
 
-        $sut->setLicenceService($licenceService);
-
-        $result = $sut->fetchListOptions($licenceId);
+        $result = $this->sut->fetchListOptions($licenceId);
 
         $this->assertCount(1, $result);
         $this->assertStringContainsString('a1', $result[1]);
+
         if ($outputType == LicenceOperatingCentre::OUTPUT_TYPE_FULL) {
             $this->assertStringContainsString('a2', $result[1]);
             $this->assertStringContainsString('a3', $result[1]);
@@ -86,10 +95,11 @@ class LicenceOperatingCentreTest extends MockeryTestCase
         }
 
         //test data is cached
-        $result = $sut->fetchListOptions($licenceId);
+        $result = $this->sut->fetchListOptions($licenceId);
 
         $this->assertCount(1, $result);
         $this->assertStringContainsString('a1', $result[1]);
+
         if ($outputType == LicenceOperatingCentre::OUTPUT_TYPE_FULL) {
             $this->assertStringContainsString('a2', $result[1]);
             $this->assertStringContainsString('a3', $result[1]);
@@ -112,8 +122,8 @@ class LicenceOperatingCentreTest extends MockeryTestCase
      */
     public function testSetOutputType()
     {
-        $sut = new LicenceOperatingCentre();
-        $sut->setOutputType(LicenceOperatingCentre::OUTPUT_TYPE_FULL);
-        $this->assertEquals(LicenceOperatingCentre::OUTPUT_TYPE_FULL, $sut->getOutputType());
+        $this->sut->setOutputType(LicenceOperatingCentre::OUTPUT_TYPE_FULL);
+
+        $this->assertEquals(LicenceOperatingCentre::OUTPUT_TYPE_FULL, $this->sut->getOutputType());
     }
 }

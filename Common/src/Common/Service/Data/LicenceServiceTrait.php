@@ -2,8 +2,6 @@
 
 namespace Common\Service\Data;
 
-use Laminas\ServiceManager\ServiceLocatorInterface;
-
 /**
  * Licence Service Trait
  */
@@ -57,19 +55,5 @@ trait LicenceServiceTrait
             'goodsOrPsv' => $licence['goodsOrPsv']['id'],
             'trafficArea' => $licence['trafficArea']['id']
         ];
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator Service locator
-     *
-     * @return $this
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
-    {
-        $this->setLicenceService($serviceLocator->get('\Common\Service\Data\Licence'));
-        
-        return $this;
     }
 }

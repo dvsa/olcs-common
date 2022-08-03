@@ -1,12 +1,12 @@
 <?php
 
-/**
- * Abstract Data Service Test
- *
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
- */
 namespace CommonTest\Service\Data;
 
+use Common\Service\Cqrs\Command\CommandService;
+use Common\Service\Cqrs\Query\CachingQueryService as QueryService;
+use Common\Service\Data\AbstractDataServiceServices;
+use Dvsa\Olcs\Transfer\Query\QueryContainerInterface;
+use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder as TransferAnnotationBuilder;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
@@ -17,44 +17,43 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class AbstractDataServiceTestCase extends MockeryTestCase
 {
-    protected $mockServiceLocator;
+    /** @var  m\MockInterface */
+    protected $query;
 
-    /** @var m\Mock */
-    private $mockQuerySender;
+    /** @var  m\MockInterface */
+    protected $transferAnnotationBuilder;
 
-    public function mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse)
+    /** @var  m\MockInterface */
+    protected $queryService;
+
+    /** @var  m\MockInterface */
+    protected $commandService;
+
+    /** @var  AbstractDataServiceServices */
+    protected $abstractDataServiceServices;
+
+    protected function setUp(): void
     {
-        $this->setupQuerySender($sut, $mockTransferAnnotationBuilder);
+        $this->query = m::mock(QueryContainerInterface::class);
 
-        $this->mockQuerySender->shouldReceive('send')
-            ->with('query')
-            ->once()
-            ->andReturn($mockResponse);
+        $this->transferAnnotationBuilder = m::mock(TransferAnnotationBuilder::class);
+        $this->queryService = m::mock(QueryService::class);
+        $this->commandService = m::mock(CommandService::class);
+
+        $this->abstractDataServiceServices = new AbstractDataServiceServices(
+            $this->transferAnnotationBuilder,
+            $this->queryService,
+            $this->commandService
+        );
     }
 
-    public function mockHandleSingleQuery($mockResponse, $queryContainer)
+    public function mockHandleQuery($mockResponse, $query = null)
     {
-        $this->mockQuerySender->shouldReceive('send')
-            ->with($queryContainer)
+        $query = $query ?? $this->query;
+
+        $this->queryService->shouldReceive('send')
+            ->with($query)
             ->once()
             ->andReturn($mockResponse);
-    }
-
-    /**
-     * @param $sut
-     * @param $mockTransferAnnotationBuilder
-     */
-    public function setupQuerySender($sut, $mockTransferAnnotationBuilder)
-    {
-        $this->mockQuerySender = m::mock();
-        $this->mockServiceLocator = m::mock('\Laminas\ServiceManager\ServiceLocatorInterface')
-            ->shouldReceive('get')
-            ->with('TransferAnnotationBuilder')
-            ->andReturn($mockTransferAnnotationBuilder)
-            ->shouldReceive('get')
-            ->with('QueryService')
-            ->andReturn($this->mockQuerySender)
-            ->getMock();
-        $sut->setServiceLocator($this->mockServiceLocator);
     }
 }

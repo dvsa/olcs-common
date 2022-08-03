@@ -2,8 +2,6 @@
 
 namespace Common\Service\Data;
 
-use Laminas\ServiceManager\ServiceLocatorInterface;
-
 /**
  * Application Service Trait
  */
@@ -52,19 +50,5 @@ trait ApplicationServiceTrait
             'goodsOrPsv' => $application['goodsOrPsv']['id'],
             'isNi' => $application['niFlag']
         ];
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator Service locator
-     *
-     * @return $this
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
-    {
-        $this->setApplicationService($serviceLocator->get('\Common\Service\Data\Application'));
-
-        return $this;
     }
 }

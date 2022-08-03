@@ -3,19 +3,20 @@
 namespace CommonTest\Service\Data;
 
 use CommonTest\Service\Data\Stub\AbstractListDataServiceStub;
-use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
  * @covers \Common\Service\Data\AbstractListDataService
  */
-class AbstractListDataServiceTest extends MockeryTestCase
+class AbstractListDataServiceTest extends AbstractListDataServiceTestCase
 {
     /** @var  AbstractListDataServiceStub */
     private $sut;
 
     public function setUp(): void
     {
-        $this->sut = new AbstractListDataServiceStub();
+        parent::setUp();
+
+        $this->sut = new AbstractListDataServiceStub($this->abstractListDataServiceServices);
     }
 
     public function testFormatDataForGroup()

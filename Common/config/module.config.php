@@ -10,6 +10,7 @@ use Common\Service\Data\Search\SearchType;
 use Common\FormService\Form\Lva as LvaFormService;
 use Common\FormService\Form\Continuation as ContinuationFormService;
 use Common\Form\View\Helper\Readonly as ReadonlyFormHelper;
+use Common\Service\Data as DataService;
 use Common\Service\Qa as QaService;
 use Common\Service\Translator\TranslationLoader;
 use Common\Service\Translator\TranslationLoaderFactory;
@@ -191,15 +192,6 @@ return array(
                 'Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm',
             'Common\Rbac\UserProvider' => 'Common\Rbac\UserProvider',
             'DataMapper\DashboardTmApplications' => 'Common\Service\Table\DataMapper\DashboardTmApplications',
-            'country' => '\Common\Service\Data\Country',
-            'Common\Service\Data\Country' => 'Common\Service\Data\Country',
-            'Common\Service\Data\Role' => 'Common\Service\Data\Role',
-            'Common\Service\Data\RefData' => 'Common\Service\Data\RefData',
-            'Common\Service\Data\Licence' => 'Common\Service\Data\Licence',
-            \Common\Service\Data\Surrender::class =>\Common\Service\Data\Surrender::class,
-            'Common\Service\Data\Application' => 'Common\Service\Data\Application',
-            Common\Service\Data\SiCategoryType::class => Common\Service\Data\SiCategoryType::class,
-            'staticList' => Common\Service\Data\StaticList::class,
             'QaCheckboxFactory' => QaService\CheckboxFactory::class,
             'QaTextFactory' => QaService\TextFactory::class,
             'QaRadioFactory' => QaService\RadioFactory::class,
@@ -248,8 +240,33 @@ return array(
             \Common\Form\FormValidator::class => \Common\Form\FormValidator::class,
 
             'Zend\Authentication\AuthenticationService' => \Laminas\Authentication\AuthenticationService::class,
+            DataService\UserTypesListDataService::class => DataService\UserTypesListDataService::class,
         ),
         'factories' => array(
+            DataService\AbstractDataServiceServices::class => DataService\AbstractDataServiceServicesFactory::class,
+            DataService\AbstractListDataServiceServices::class => DataService\AbstractListDataServiceServicesFactory::class,
+            DataService\AddressDataService::class => DataService\AbstractDataServiceFactory::class,
+            DataService\Application::class => DataService\AbstractDataServiceFactory::class,
+            DataService\ApplicationPathGroup::class => DataService\AbstractDataServiceFactory::class,
+            DataService\BusRegBrowseListDataService::class => DataService\AbstractDataServiceFactory::class,
+            DataService\BusRegSearchViewListDataService::class => DataService\AbstractDataServiceFactory::class,
+            'category' => DataService\CategoryDataService::class,
+            DataService\ContactDetails::class => DataService\AbstractListDataServiceFactory::class,
+            DataService\Country::class => DataService\AbstractDataServiceFactory::class,
+            'country' => DataService\AbstractDataServiceFactory::class,
+            DataService\FeeType::class => DataService\AbstractDataServiceFactory::class,
+            DataService\FeeTypeDataService::class => DataService\AbstractDataServiceFactory::class,
+            DataService\IrhpPermitType::class => DataService\AbstractDataServiceFactory::class,
+            DataService\Licence::class => DataService\AbstractDataServiceFactory::class,
+            DataService\LocalAuthority::class => DataService\AbstractDataServiceFactory::class,
+            DataService\RefData::class => DataService\RefDataFactory::class,
+            DataService\RefDataServices::class => DataService\RefDataServicesFactory::class,
+            DataService\Role::class => DataService\AbstractDataServiceFactory::class,
+            DataService\SiCategoryType::class => DataService\AbstractDataServiceFactory::class,
+            'staticList' => DataService\StaticListFactory::class,
+            DataService\Surrender::class => DataService\AbstractDataServiceFactory::class,
+            DataService\TrafficArea::class => DataService\AbstractDataServiceFactory::class,
+
             CommandSender::class => CommandSender::class,
             'QuerySender' => \Common\Service\Cqrs\Query\QuerySender::class,
             'LanguagePreference' => \Common\Preference\Language::class,
@@ -269,9 +286,6 @@ return array(
                 Common\Controller\Lva\Factories\Adapter\ApplicationTransportManagerAdapterFactory::class,
             'VariationTransportManagerAdapter' =>
                 Common\Controller\Lva\Factories\Adapter\VariationTransportManagerAdapterFactory::class,
-            'Common\Service\Data\LicenceOperatingCentre' => 'Common\Service\Data\LicenceOperatingCentre',
-            'Common\Service\Data\ApplicationOperatingCentre' => 'Common\Service\Data\ApplicationOperatingCentre',
-            'Common\Service\Data\UserTypesListDataService' => 'Common\Service\Data\UserTypesListDataService',
             'Script' => '\Common\Service\Script\ScriptFactory',
             'Table' => '\Common\Service\Table\TableFactory',
             \Common\Service\Table\TableFactory::class => \Common\Service\Table\TableFactory::class,
@@ -280,7 +294,6 @@ return array(
             'ServiceApiResolver' => 'Common\Service\Api\ResolverFactory',
             'navigation' => 'Laminas\Navigation\Service\DefaultNavigationFactory',
             'SectionService' => '\Common\Controller\Service\SectionServiceFactory',
-            'category' => '\Common\Service\Data\CategoryDataService',
             'FormAnnotationBuilder' => '\Common\Service\FormAnnotationBuilderFactory',
             'Common\Service\Data\PluginManager' => Common\Service\Data\PluginManagerFactory::class,
             'Laminas\Cache\Storage\StorageInterface' => 'Laminas\Cache\Service\StorageCacheFactory',
@@ -590,14 +603,12 @@ return array(
     ],
     'data_services' => [
         'factories' => [
-            'Common\Service\Data\Venue' => 'Common\Service\Data\Venue',
-            'Common\Service\Data\LicenceOperatingCentre' =>
-                'Common\Service\Data\LicenceOperatingCentre',
-            'Common\Service\Data\ApplicationOperatingCentre' =>
-                'Common\Service\Data\ApplicationOperatingCentre',
-            'Common\Service\Data\OcContextListDataService' => 'Common\Service\Data\OcContextListDataServiceFactory',
-            \Common\Service\Data\Search\Search::class => \Common\Service\Data\Search\SearchFactory::class,
-            SearchType::class => SearchType::class
+            DataService\ApplicationOperatingCentre::class => DataService\ApplicationOperatingCentreFactory::class,
+            DataService\LicenceOperatingCentre::class => DataService\LicenceOperatingCentreFactory::class,
+            DataService\OcContextListDataService::class => DataService\OcContextListDataServiceFactory::class,
+            DataService\Venue::class => DataService\VenueFactory::class,
+            DataService\Search\Search::class => DataService\Search\SearchFactory::class,
+            SearchType::class => SearchType::class,
         ]
     ],
     'tables' => array(

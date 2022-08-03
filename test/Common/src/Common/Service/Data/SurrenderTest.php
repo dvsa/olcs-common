@@ -5,33 +5,38 @@ namespace CommonTest\Service\Data;
 
 use Common\Exception\DataServiceException;
 use Common\Service\Data\Surrender;
-use Dvsa\Olcs\Transfer\Query\Surrender\ByLicence as SurrenderQry;
+use Dvsa\Olcs\Transfer\Query\Surrender\ByLicence as Qry;
+use Mockery as m;
 
 class SurrenderTest extends AbstractDataServiceTestCase
 {
-    public function setUp(): void
+    /** @var Surrender */
+    private $sut;
+
+    protected function setUp(): void
     {
-        $this->sut = new Surrender();
+        parent::setUp();
+
+        $this->sut = new Surrender($this->abstractDataServiceServices);
     }
 
     public function testFetchSurrender()
     {
         $params = ['id' => 7];
-        $expected = [
+        $expected = [];
+        $dto = Qry::create($params);
 
-        ];
-        $dto = SurrenderQry::create($params);
-        $mockTransferAnnotationBuilder = \Mockery::mock()
-            ->shouldReceive('createQuery')->once()->andReturnUsing(
+        $this->transferAnnotationBuilder->shouldReceive('createQuery')
+            ->with(m::type(Qry::class))
+            ->once()
+            ->andReturnUsing(
                 function ($dto) use ($params) {
                     $this->assertEquals($params['id'], $dto->getId());
-                    return 'query';
+                    return $this->query;
                 }
-            )
-            ->once()
-            ->getMock();
+            );
 
-        $mockResponse = \Mockery::mock()
+        $mockResponse = m::mock()
             ->shouldReceive('isOk')
             ->andReturn(true)
             ->once()
@@ -40,33 +45,35 @@ class SurrenderTest extends AbstractDataServiceTestCase
             ->once()
             ->getMock();
 
-        $this->mockHandleQuery($this->sut, $mockTransferAnnotationBuilder, $mockResponse);
+        $this->mockHandleQuery($mockResponse);
 
         $this->assertEquals($expected, $this->sut->fetchSurrenderData(7));
     }
 
     public function testThrowsExceptionIfNot200Response()
     {
-        $params = ['id' => 7];
         $this->expectException(DataServiceException::class);
-        $dto = SurrenderQry::create($params);
-        $mockTransferAnnotationBuilder = \Mockery::mock()
-            ->shouldReceive('createQuery')->once()->andReturnUsing(
+
+        $params = ['id' => 7];
+        $dto = Qry::create($params);
+
+        $this->transferAnnotationBuilder->shouldReceive('createQuery')
+            ->with(m::type(Qry::class))
+            ->once()
+            ->andReturnUsing(
                 function ($dto) use ($params) {
                     $this->assertEquals($params['id'], $dto->getId());
-                    return 'query';
+                    return $this->query;
                 }
-            )
-            ->once()
-            ->getMock();
+            );
 
-        $mockResponse = \Mockery::mock()
+        $mockResponse = m::mock()
             ->shouldReceive('isOk')
             ->andReturn(false)
             ->once()
             ->getMock();
 
-        $this->mockHandleQuery($this->sut, $mockTransferAnnotationBuilder, $mockResponse);
+        $this->mockHandleQuery($mockResponse);
         $this->sut->fetchSurrenderData(7);
     }
 }

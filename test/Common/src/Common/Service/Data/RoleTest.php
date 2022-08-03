@@ -4,6 +4,7 @@ namespace CommonTest\Service\Data;
 
 use Common\Exception\DataServiceException;
 use Common\Service\Data\Role;
+use Dvsa\Olcs\Transfer\Query\User\RoleList as Qry;
 use Mockery as m;
 
 /**
@@ -14,6 +15,16 @@ use Mockery as m;
  */
 class RoleTest extends AbstractDataServiceTestCase
 {
+    /** @var Role */
+    private $sut;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->sut = new Role($this->abstractDataServiceServices);
+    }
+
     /**
      * @dataProvider provideFetchListOptions
      * @param $input
@@ -21,10 +32,9 @@ class RoleTest extends AbstractDataServiceTestCase
      */
     public function testFetchListOptions($input, $expected)
     {
-        $sut = new Role();
-        $sut->setData('Role', $input);
+        $this->sut->setData('Role', $input);
 
-        $this->assertEquals($expected, $sut->fetchListOptions(''));
+        $this->assertEquals($expected, $this->sut->fetchListOptions(''));
     }
 
     public function provideFetchListOptions()
@@ -62,10 +72,11 @@ class RoleTest extends AbstractDataServiceTestCase
     public function testFetchListData()
     {
         $results = ['results' => 'results'];
-        $mockTransferAnnotationBuilder = m::mock()
-            ->shouldReceive('createQuery')->once()->andReturn('query')
+
+        $this->transferAnnotationBuilder->shouldReceive('createQuery')
+            ->with(m::type(Qry::class))
             ->once()
-            ->getMock();
+            ->andReturn($this->query);
 
         $mockResponse = m::mock()
             ->shouldReceive('isOk')
@@ -76,26 +87,28 @@ class RoleTest extends AbstractDataServiceTestCase
             ->twice()
             ->getMock();
 
-        $sut = new Role();
-        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
+        $this->mockHandleQuery($mockResponse);
 
-        $this->assertEquals($results['results'], $sut->fetchListData());
+        $this->assertEquals($results['results'], $this->sut->fetchListData());
     }
 
     public function testFetchListDataWithException()
     {
         $this->expectException(DataServiceException::class);
-        $mockTransferAnnotationBuilder = m::mock()
-            ->shouldReceive('createQuery')->once()->andReturn('query')->getMock();
+
+        $this->transferAnnotationBuilder->shouldReceive('createQuery')
+            ->with(m::type(Qry::class))
+            ->once()
+            ->andReturn($this->query);
 
         $mockResponse = m::mock()
             ->shouldReceive('isOk')
             ->andReturn(false)
             ->once()
             ->getMock();
-        $sut = new Role();
-        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
 
-        $sut->fetchListData([]);
+        $this->mockHandleQuery($mockResponse);
+
+        $this->sut->fetchListData([]);
     }
 }
