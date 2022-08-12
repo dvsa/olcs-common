@@ -1,15 +1,14 @@
+<?php assert($this->object instanceof Common\Service\Table\TableBuilder); ?>
 <div class="table__footer">
     <?php if ($this->object->getTotal() > $this->object->getLimit()): ?>
-    <div class="results-settings">
-        <p><?php echo $this->translate('pagination.showing');?>:</p>
-        <ul class="results-settings__list">
-            <?php echo $this->object->renderLimitOptions(); ?>
-        </ul><!-- end .results-settings__list -->
-        <p><?php echo $this->translate('pagination.results-per-page');?></p>
-    </div><!-- end .results-settings -->
-
-    <ul class="pagination right-aligned" role="navigation">
-        <?php echo $this->object->renderPageOptions(); ?>
-    </ul><!-- end .pagination.right-aligned -->
+        <nav class="govuk-pagination govuk-grid-column-one-half" role="navigation" aria-label="<?php echo $this->translate('pagination.results-per-page');?>">
+            <ul class="govuk-pagination__list">
+                <?php echo $this->object->renderLimitOptions(); ?>
+            </ul>
+            <p class="govuk-pagination__item"><?php echo $this->translate('pagination.results-per-page');?></p>
+        </nav>
+        <nav class="govuk-pagination govuk-grid-column-one-half" role="navigation" aria-label="results">
+            <?php echo $this->object->renderPageOptions(); ?>
+        </nav>
     <?php endif; ?>
 </div>
