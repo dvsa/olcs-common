@@ -4,11 +4,14 @@ namespace CommonTest\Service\Data\Search;
 
 use Common\Service\Data\Search\Search;
 use Common\Service\Data\Search\SearchTypeManager;
+use Common\Service\Table\TableFactory;
+use Common\Util\RestClient;
 use CommonTest\Service\Data\Search\Asset\SearchType;
+use Laminas\Http\Request as HttpRequest;
 use Laminas\Stdlib\ArrayObject;
+use Laminas\View\HelperPluginManager as ViewHelperManager;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Laminas\Http\Request as HttpRequest;
 
 /**
  * Class SearchTest
@@ -16,17 +19,39 @@ use Laminas\Http\Request as HttpRequest;
  */
 class SearchTest extends MockeryTestCase
 {
+    /** @var  m\MockInterface */
+    private $tableService;
+
+    /** @var  m\MockInterface */
+    private $viewHelperManager;
+
+    /** @var  m\MockInterface */
+    private $searchTypeManager;
+
+    /** @var Search */
+    private $sut;
+
+    public function setUp(): void
+    {
+        $this->tableService = m::mock(TableFactory::class);
+        $this->viewHelperManager = m::mock(ViewHelperManager::class);
+        $this->searchTypeManager = m::mock(SearchTypeManager::class);
+
+        $this->sut = new Search(
+            $this->tableService,
+            $this->viewHelperManager,
+            $this->searchTypeManager
+        );
+    }
+
     /**
      * @dataProvider provideGetLimit
-     * @param $query
-     * @param $expected
      */
     public function testGetLimit($query, $expected)
     {
-        $sut = new Search();
-        $sut->setQuery($query);
+        $this->sut->setQuery($query);
 
-        $this->assertEquals($expected, $sut->getLimit());
+        $this->assertEquals($expected, $this->sut->getLimit());
     }
 
     public function provideGetLimit()
@@ -43,15 +68,12 @@ class SearchTest extends MockeryTestCase
 
     /**
      * @dataProvider provideGetPage
-     * @param $query
-     * @param $expected
      */
     public function testGetPage($query, $expected)
     {
-        $sut = new Search();
-        $sut->setQuery($query);
+        $this->sut->setQuery($query);
 
-        $this->assertEquals($expected, $sut->getPage());
+        $this->assertEquals($expected, $this->sut->getPage());
     }
 
     public function provideGetPage()
@@ -66,78 +88,43 @@ class SearchTest extends MockeryTestCase
         ];
     }
 
-    protected function getMockSearchTypeManager()
-    {
-        $servicesArray = [
-            'factories' => [
-                'licence'
-            ],
-            'invokableClasses' => [
-                'application'
-            ]
-        ];
-
-        $mockStm = m::mock('Laminas\ServiceManager\ServiceLocatorInterface');
-        $mockStm->shouldReceive('getRegisteredServices')->andReturn($servicesArray);
-        $mockStm->shouldReceive('get')->with('application')->andReturn(new SearchType());
-        $mockStm->shouldReceive('get')->with('licence')->andReturn(new SearchType());
-
-        return $mockStm;
-    }
-
     public function testFetchResultsTable()
     {
-        $mockTableBuilder = m::mock('Common\Service\Table\TableBuilder');
-        $mockTableBuilder->shouldReceive('buildTable')->andReturn('table');
+        $this->searchTypeManager->shouldReceive('get')->with('application')->andReturn(new SearchType());
 
-        $mockSl = m::mock('Laminas\ServiceManager\ServiceLocatorInterface');
-        $mockSl->shouldReceive('get')
-            ->with(SearchTypeManager::class)
-            ->andReturn($this->getMockSearchTypeManager());
+        $this->tableService->shouldReceive('buildTable')->andReturn('table');
 
-        $mockRequest = m::mock(get_class(new HttpRequest));
-        $mockRequest->shouldReceive('getPost')->with()->andReturn(null);
+        $mockRequest = m::mock(HttpRequest::class);
+        $mockRequest->shouldReceive('getPost')->withNoArgs()->andReturn(null);
 
-        $mockSl->shouldReceive('get')->with('Table')->andReturn($mockTableBuilder);
+        $this->sut->setData('results', ['results']);
+        $this->sut->setIndex('application');
+        $this->sut->setRequest($mockRequest);
 
-        $sut = new Search();
-        $sut->setData('results', ['results']);
-        $sut->setServiceLocator($mockSl);
-        $sut->setIndex('application');
-        $sut->setRequest($mockRequest);
-
-        $this->assertEquals('table', $sut->fetchResultsTable());
+        $this->assertEquals('table', $this->sut->fetchResultsTable());
     }
 
     public function testFetchResultsTableNoResults()
     {
-        $mockTableBuilder = m::mock('Common\Service\Table\TableBuilder');
-        $mockTableBuilder->shouldReceive('buildTable')->andReturn('table');
+        $this->searchTypeManager->shouldReceive('get')->with('application')->andReturn(new SearchType());
 
-        $mockSl = m::mock('Laminas\ServiceManager\ServiceLocatorInterface');
-        $mockSl->shouldReceive('get')
-            ->with(SearchTypeManager::class)
-            ->andReturn($this->getMockSearchTypeManager());
+        $this->tableService->shouldReceive('buildTable')->andReturn('table');
 
-        $mockRequest = m::mock(get_class(new HttpRequest));
-        $mockRequest->shouldReceive('getPost')->with()->andReturn(null);
+        $mockRequest = m::mock(HttpRequest::class);
+        $mockRequest->shouldReceive('getPost')->withNoArgs()->andReturn(null);
 
-        $mockSl->shouldReceive('get')->with('Table')->andReturn($mockTableBuilder);
+        $this->sut->setData('results', false);
+        $this->sut->setIndex('application');
+        $this->sut->setRequest($mockRequest);
 
-        $sut = new Search();
-        $sut->setData('results', false);
-        $sut->setServiceLocator($mockSl);
-        $sut->setIndex('application');
-        $sut->setRequest($mockRequest);
-
-        $this->assertEquals('table', $sut->fetchResultsTable());
+        $this->assertEquals('table', $this->sut->fetchResultsTable());
     }
 
     public function testFetchResults()
     {
         $index = 'INDEX_NAME';
 
-        $mockRestClient = m::mock(\Common\Util\RestClient::class);
+        $mockRestClient = m::mock(RestClient::class);
         $mockRestClient->shouldReceive('get')->once()->andReturnUsing(
             function ($uri) {
                 // This is the main assertion that test the uri is generated correctly
@@ -147,40 +134,31 @@ class SearchTest extends MockeryTestCase
         );
 
         $mockIndex = m::mock();
-        $mockIndex->shouldReceive('getFilters')->with()->andReturn([]);
-        $mockIndex->shouldReceive('getDateRanges')->with()->andReturn([]);
-        $mockIndex->shouldReceive('getSearchIndices')->with()->andReturn($index);
+        $mockIndex->shouldReceive('getFilters')->withNoArgs()->andReturn([]);
+        $mockIndex->shouldReceive('getDateRanges')->withNoArgs()->andReturn([]);
+        $mockIndex->shouldReceive('getSearchIndices')->withNoArgs()->andReturn($index);
 
-        $mockSearchManager = $this->getMockSearchTypeManager();
-        $mockSearchManager->shouldReceive('get')->with($index)->andReturn($mockIndex);
+        $this->searchTypeManager->shouldReceive('get')->with($index)->andReturn($mockIndex);
 
-        $mockViewHelperManager = m::mock();
-        $mockViewHelperManager->shouldReceive('get->getContainer->getValue')->andReturn('FORM');
+        $this->viewHelperManager->shouldReceive('get->getContainer->getValue')->andReturn('FORM');
 
-        $mockSl = m::mock('Laminas\ServiceManager\ServiceLocatorInterface');
-        $mockSl->shouldReceive('get')->with(SearchTypeManager::class)->andReturn($mockSearchManager);
-        $mockSl->shouldReceive('get')->with('ViewHelperManager')->andReturn($mockViewHelperManager);
+        $mockRequest = m::mock(HttpRequest::class);
+        $mockRequest->shouldReceive('getPost')->withNoArgs()->andReturn([]);
+        $mockRequest->shouldReceive('getQuery')->withNoArgs()->andReturn([]);
 
-        $mockRequest = m::mock(get_class(new HttpRequest));
-        $mockRequest->shouldReceive('getPost')->with()->andReturn([]);
-        $mockRequest->shouldReceive('getQuery')->with()->andReturn([]);
-
-        $sut = new Search();
-        $sut->setServiceLocator($mockSl);
-        $sut->setIndex($index);
-        $sut->setRequest($mockRequest);
-        $sut->setQuery(new \ArrayObject(['sort' => ['order' => 'field_name-desc']], \ArrayObject::ARRAY_AS_PROPS));
-        $sut->setRestClient($mockRestClient);
-
-        $sut->setSearch('SEARCH');
-        $sut->fetchResults();
+        $this->sut->setIndex($index);
+        $this->sut->setRequest($mockRequest);
+        $this->sut->setQuery(new \ArrayObject(['sort' => ['order' => 'field_name-desc']], \ArrayObject::ARRAY_AS_PROPS));
+        $this->sut->setRestClient($mockRestClient);
+        $this->sut->setSearch('SEARCH');
+        $this->sut->fetchResults();
     }
 
     public function testFetchResultsNoSortOrder()
     {
         $index = 'INDEX_NAME';
 
-        $mockRestClient = m::mock(\Common\Util\RestClient::class);
+        $mockRestClient = m::mock(RestClient::class);
         $mockRestClient->shouldReceive('get')->once()->andReturnUsing(
             function ($uri) {
                 // This is the main assertion that test the uri is generated correctly
@@ -190,31 +168,22 @@ class SearchTest extends MockeryTestCase
         );
 
         $mockIndex = m::mock();
-        $mockIndex->shouldReceive('getFilters')->with()->andReturn([]);
-        $mockIndex->shouldReceive('getDateRanges')->with()->andReturn([]);
-        $mockIndex->shouldReceive('getSearchIndices')->with()->andReturn($index);
+        $mockIndex->shouldReceive('getFilters')->withNoArgs()->andReturn([]);
+        $mockIndex->shouldReceive('getDateRanges')->withNoArgs()->andReturn([]);
+        $mockIndex->shouldReceive('getSearchIndices')->withNoArgs()->andReturn($index);
 
-        $mockSearchManager = $this->getMockSearchTypeManager();
-        $mockSearchManager->shouldReceive('get')->with($index)->andReturn($mockIndex);
+        $this->searchTypeManager->shouldReceive('get')->with($index)->andReturn($mockIndex);
 
-        $mockViewHelperManager = m::mock();
-        $mockViewHelperManager->shouldReceive('get->getContainer->getValue')->andReturn('FORM');
+        $this->viewHelperManager->shouldReceive('get->getContainer->getValue')->andReturn('FORM');
 
-        $mockSl = m::mock('Laminas\ServiceManager\ServiceLocatorInterface');
-        $mockSl->shouldReceive('get')->with(SearchTypeManager::class)->andReturn($mockSearchManager);
-        $mockSl->shouldReceive('get')->with('ViewHelperManager')->andReturn($mockViewHelperManager);
-
-        $mockRequest = m::mock(get_class(new HttpRequest));
+        $mockRequest = m::mock(HttpRequest::class);
         $mockRequest->shouldReceive('getPost')->with()->andReturn([]);
         $mockRequest->shouldReceive('getQuery')->with()->andReturn([]);
 
-        $sut = new Search();
-        $sut->setServiceLocator($mockSl);
-        $sut->setIndex($index);
-        $sut->setRequest($mockRequest);
-        $sut->setRestClient($mockRestClient);
-
-        $sut->setSearch('SEARCH');
-        $sut->fetchResults();
+        $this->sut->setIndex($index);
+        $this->sut->setRequest($mockRequest);
+        $this->sut->setRestClient($mockRestClient);
+        $this->sut->setSearch('SEARCH');
+        $this->sut->fetchResults();
     }
 }

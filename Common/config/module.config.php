@@ -596,8 +596,8 @@ return array(
             'Common\Service\Data\ApplicationOperatingCentre' =>
                 'Common\Service\Data\ApplicationOperatingCentre',
             'Common\Service\Data\OcContextListDataService' => 'Common\Service\Data\OcContextListDataServiceFactory',
+            \Common\Service\Data\Search\Search::class => \Common\Service\Data\Search\SearchFactory::class,
             SearchType::class => SearchType::class
-
         ]
     ],
     'tables' => array(

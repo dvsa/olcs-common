@@ -4,14 +4,12 @@ namespace Common\Service\Data;
 
 use Common\Service\Data\Interfaces\RestClientAware;
 use Common\Util\RestClient;
-use Laminas\ServiceManager\ServiceLocatorInterface;
-use Laminas\ServiceManager\FactoryInterface;
 
 /**
  * Class AbstractData
  * @package Olcs\Service\Data
  */
-abstract class AbstractData implements FactoryInterface, RestClientAware
+abstract class AbstractData implements RestClientAware
 {
     /**
      * @var RestClient
@@ -75,26 +73,5 @@ abstract class AbstractData implements FactoryInterface, RestClientAware
         }
 
         return null;
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     * @deprecated
-     * @return mixed
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
-    {
-        /** @var \Common\Util\ResolveApi $apiResolver */
-        $apiResolver = $serviceLocator->get('ServiceApiResolver');
-        /** @var \Laminas\Mvc\I18n\Translator $translator */
-        $translator = $serviceLocator->get('translator');
-
-        $client = $apiResolver->getClient($this->getServiceName());
-        $client->setLanguage($translator->getLocale());
-        $this->setRestClient($client);
-
-        return $this;
     }
 }
