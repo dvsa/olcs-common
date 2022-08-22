@@ -1,5 +1,7 @@
 <?php
 
+use Common\Util\Escape;
+
 /**
  * @var $this->object \Common\Service\Table\TableBuilder
  */
@@ -22,10 +24,8 @@ $showStatus = isset($settings['show-status']) ? $settings['show-status'] : true;
     <li class="search-result">
         <div class="search-result__header">
             <h4>
-                <?php
-                    echo $this->link('/licence/' . $row['licId'], $row['licNo']);
-                    echo $this->escapeHtml($row['licTypeDesc']);
-                ?>
+                <a class="govuk-link" href="/licence/<?php echo Escape::htmlAttr($row['licId']); ?>">
+                        <?php Escape::html($row['licNo']); ?></a> <?php echo Escape::html($row['licTypeDesc']); ?>
             </h4>
             <p><?php echo htmlentities($row['orgName']); ?></p>
         </div>

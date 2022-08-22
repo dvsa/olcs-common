@@ -3,6 +3,7 @@
 namespace Common\Util;
 
 use Laminas\View\Helper\EscapeHtml;
+use Laminas\View\Helper\EscapeHtmlAttr;
 
 /**
  * Contains escape functions
@@ -22,5 +23,14 @@ class Escape
 
         $fnc = self::$fncHtml;
         return $fnc($html);
+    }
+
+    /**
+     * @codeCoverageIgnore only a proxy to Laminas escaper
+     */
+    public static function htmlAttr($value)
+    {
+        $escaper = new EscapeHtmlAttr();
+        return $escaper($value);
     }
 }
