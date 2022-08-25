@@ -63,7 +63,7 @@ class VehicleLinkTest extends MockeryTestCase
             ->andReturn('the_url');
 
         $this->assertEquals(
-            '<a href="the_url">VRM</a>',
+            '<a class="govuk-link" href="the_url">VRM</a>',
             VehicleLink::format(
                 [
                     'vehicle' =>

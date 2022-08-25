@@ -57,7 +57,7 @@ class InspectionRequestId implements FormatterInterface
         }
         return '<a href="'
             . $url
-            . '" class=js-modal-ajax>'
+            . '" class="govuk-link js-modal-ajax">'
             . $data['id']
             . '</a>';
     }

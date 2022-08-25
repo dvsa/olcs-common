@@ -92,7 +92,7 @@ class TmApplicationManagerTypeTest extends MockeryTestCase
                 ],
                 'tm_application.table.status.new',
                 'status new',
-                '<a href="url">desc1 status new</a>'
+                '<a class="govuk-link" href="url">desc1 status new</a>'
             ],
             [
                 [
@@ -102,7 +102,7 @@ class TmApplicationManagerTypeTest extends MockeryTestCase
                 ],
                 'tm_application.table.status.updated',
                 'status updated',
-                '<a href="url">desc2 status updated</a>'
+                '<a class="govuk-link" href="url">desc2 status updated</a>'
             ],
             [
                 [
@@ -122,7 +122,7 @@ class TmApplicationManagerTypeTest extends MockeryTestCase
                 ],
                 '',
                 '',
-                '<a href="url">desc4</a>'
+                '<a class="govuk-link" href="url">desc4</a>'
             ]
         ];
     }

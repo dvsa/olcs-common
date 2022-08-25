@@ -89,7 +89,7 @@ class FeeUrlExternalTest extends MockeryTestCase
                 'fees',
                 'fees/pay',
                 ['fee' => '99'],
-                '<a href="feeurl">my fee</a>',
+                '<a class="govuk-link" href="feeurl">my fee</a>',
                 'feeurl'
             ],
             'dashboard late fee link' => [
@@ -101,7 +101,7 @@ class FeeUrlExternalTest extends MockeryTestCase
                 'fees',
                 'fees/late',
                 ['fee' => '99'],
-                '<a href="lateurl">my fee</a>',
+                '<a class="govuk-link" href="lateurl">my fee</a>',
                 'lateurl'
             ]
         ];

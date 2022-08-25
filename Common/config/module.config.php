@@ -420,6 +420,10 @@ return array(
             'returnToAddress' => Common\View\Helper\ReturnToAddress::class,
             'navigationParentPage' => Common\View\Helper\NavigationParentPage::class,
             'panel' => Panel::class,
+            'link' => Common\View\Helper\Link::class,
+            'linkNewWindow' => Common\View\Helper\LinkNewWindow::class,
+            'linkNewWindowExternal' => Common\View\Helper\LinkNewWindowExternal::class,
+            'linkModal' => Common\View\Helper\LinkModal::class,
 
             //  read only elements helpers
             ReadonlyFormHelper\FormFieldset::class => ReadonlyFormHelper\FormFieldset::class,

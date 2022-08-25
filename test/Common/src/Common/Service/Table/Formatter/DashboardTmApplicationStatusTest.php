@@ -4,14 +4,9 @@ namespace CommonTest\Service\Table\Formatter;
 
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Common\Service\Table\Formatter\DashboardTmApplicationId;
+use Common\Service\Table\Formatter\DashboardTmApplicationStatus;
 
-/**
- * Class DashboardTmApplicationIdTest
- *
- * @package CommonTest\Service\Table\Formatter
- */
-class DashboardTmApplicationIdTest extends MockeryTestCase
+class DashboardTmApplicationStatusTest extends MockeryTestCase
 {
     private $sut;
 
@@ -23,7 +18,7 @@ class DashboardTmApplicationIdTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->sut = new DashboardTmApplicationId();
+        $this->sut = new DashboardTmApplicationStatus();
 
         $this->mockViewHelper = m::mock();
 
@@ -42,14 +37,13 @@ class DashboardTmApplicationIdTest extends MockeryTestCase
             ->andReturn('HTML');
 
         $data = [
-            'applicationId' => 323,
             'transportManagerApplicationStatus' => [
                 'id' => 656,
                 'description' => 'FooBar',
             ]
         ];
         $column = [];
-        $expected = '<b>323</b> HTML';
+        $expected = 'HTML';
 
         $this->assertEquals($expected, $this->sut->format($data, $column, $this->sm));
     }

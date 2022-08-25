@@ -68,7 +68,7 @@ class PiReportNameTest extends TestCase
                         ]
                     ],
                 ],
-                '<a href="ORG_URL">Org name</a>',
+                '<a class="govuk-link" href="ORG_URL">Org name</a>',
             ],
             'tm' => [
                 [

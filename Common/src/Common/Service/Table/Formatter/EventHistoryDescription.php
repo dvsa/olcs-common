@@ -59,7 +59,7 @@ class EventHistoryDescription implements FormatterInterface
         }
 
         return sprintf(
-            '<a class="js-modal-ajax" href="%s">%s</a>',
+            '<a class="govuk-link js-modal-ajax" href="%s">%s</a>',
             $url,
             $text
         );

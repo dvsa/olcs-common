@@ -81,7 +81,7 @@ class PeopleSelfserve extends InternalSearchAbstract
                 'title' => 'Licence number',
                 'name'=> 'licNo',
                 'formatter' => function ($data) {
-                    return '<a href="/view-details/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>';
+                    return '<a class="govuk-link" href="/view-details/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>';
                 }
             ],
             [

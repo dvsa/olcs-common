@@ -52,7 +52,7 @@ class Status extends AbstractHelper
      */
     protected function render($value, $colour)
     {
-        return sprintf('<span class="status %s">%s</span>', Escape::html($colour), Escape::html($value));
+        return sprintf('<strong class="govuk-tag govuk-tag--%s">%s</strong>', Escape::html($colour), Escape::html($value));
     }
 
     /**
@@ -75,6 +75,8 @@ class Status extends AbstractHelper
             RefData::BUSREG_STATUS_CNS                          => 'grey',
             RefData::BUSREG_STATUS_CANCELLED                    => 'grey',
             RefData::BUSREG_STATUS_NEW                          => 'orange',
+            // EBSR
+
             // Licence
             RefData::LICENCE_STATUS_VALID                       => 'green',
             RefData::LICENCE_STATUS_SUSPENDED                   => 'orange',

@@ -34,37 +34,11 @@ class DashboardApplicationLink implements FormatterInterface
 
         $url = $urlHelper->fromRoute($route, array('application' => $data['id']));
 
-        $statusClass = 'status';
-        switch ($data['status']['id']) {
-            case RefData::APPLICATION_STATUS_UNDER_CONSIDERATION:
-                $statusClass .= ' orange';
-                break;
-            case RefData::APPLICATION_STATUS_VALID:
-            case RefData::APPLICATION_STATUS_GRANTED:
-                $statusClass .= ' green';
-                break;
-            case RefData::APPLICATION_STATUS_WITHDRAWN:
-            case RefData::APPLICATION_STATUS_REFUSED:
-            case RefData::APPLICATION_STATUS_NOT_TAKEN_UP:
-                $statusClass .= ' red';
-                break;
-            case RefData::APPLICATION_STATUS_CANCELLED:
-            case RefData::APPLICATION_STATUS_NOT_SUBMITTED:
-                $statusClass .= ' grey';
-                break;
-            default:
-                $statusClass .= ' grey';
-                break;
-        }
-
         return vsprintf(
-            '<a class="overview__link" href="%s"><span class="overview__link--underline">%s</span> '.
-            '<span class="overview__%s">%s</span></a>',
+            '<a class="govuk-link" href="%s">%s</a>',
             [
                 $url,
                 isset($data['licNo']) ? $data['licNo'] . '/' . $data['id'] : $data['id'],
-                $statusClass,
-                $sm->get('translator')->translate($data['status']['description'])
             ]
         );
     }

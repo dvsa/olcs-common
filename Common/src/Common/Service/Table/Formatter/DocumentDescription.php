@@ -40,7 +40,7 @@ class DocumentDescription implements FormatterInterface
             $attr = 'target="_blank"';
         }
 
-        return '<a href="' . $url . '" ' . $attr . '>' . self::getAnchor($data, $translator) . '</a>';
+        return '<a class="govuk-link" href="' . $url . '" ' . $attr . '>' . self::getAnchor($data, $translator) . '</a>';
     }
 
     /**

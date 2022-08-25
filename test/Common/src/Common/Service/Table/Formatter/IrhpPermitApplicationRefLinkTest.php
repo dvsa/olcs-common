@@ -55,7 +55,7 @@ class IrhpPermitApplicationRefLinkTest extends MockeryTestCase
                         ]
                     ]
                 ],
-                '<a href="url">app ref&gt;</a>',
+                '<a class="govuk-link" href="url">app ref&gt;</a>',
             ],
             'empty value' => [
                 null,

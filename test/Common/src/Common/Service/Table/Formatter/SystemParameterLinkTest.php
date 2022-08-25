@@ -45,7 +45,7 @@ class SystemParameterLinkTest extends TestCase
             ->getMock();
 
         $this->assertEquals(
-            '<a href="SYSTEM_PARAMETER_EDIT_URL" class="js-modal-ajax">1</a>',
+            '<a href="SYSTEM_PARAMETER_EDIT_URL" class="govuk-link js-modal-ajax">1</a>',
             SystemParameterLink::format($data, [], $sm)
         );
     }

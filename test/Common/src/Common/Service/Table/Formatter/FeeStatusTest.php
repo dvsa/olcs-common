@@ -45,7 +45,7 @@ class FeeStatusTest extends \PHPUnit\Framework\TestCase
                         'description' => 'outstanding'
                     ],
                 ],
-                '<span class="status orange">outstanding</span>',
+                '<strong class="govuk-tag govuk-tag--orange">outstanding</strong>',
             ],
             'paid' => [
                 [
@@ -54,7 +54,7 @@ class FeeStatusTest extends \PHPUnit\Framework\TestCase
                         'description' => 'paid'
                     ],
                 ],
-                '<span class="status green">paid</span>',
+                '<strong class="govuk-tag govuk-tag--green">paid</strong>',
             ],
             'cancelled' => [
                 [
@@ -63,7 +63,7 @@ class FeeStatusTest extends \PHPUnit\Framework\TestCase
                         'description' => 'cancelled'
                     ],
                 ],
-                '<span class="status red">cancelled</span>',
+                '<strong class="govuk-tag govuk-tag--red">cancelled</strong>',
             ],
             'other' => [
                 [
@@ -72,7 +72,7 @@ class FeeStatusTest extends \PHPUnit\Framework\TestCase
                         'description' => 'foo'
                     ],
                 ],
-                '<span class="status grey">foo</span>',
+                '<strong class="govuk-tag govuk-tag--grey">foo</strong>',
             ],
         ];
     }

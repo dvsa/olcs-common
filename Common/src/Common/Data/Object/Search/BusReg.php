@@ -62,7 +62,7 @@ class BusReg extends InternalSearchAbstract
                 'name'=> 'regNo',
                 'formatter' => function ($data) {
 
-                    return '<a href="/licence/'
+                    return '<a class="govuk-link" href="/licence/'
                     . $data['licId'] . '/bus/' . $data['busregId']
                     . '/details">' . $data['regNo'] . '</a>';
                 }
@@ -75,7 +75,7 @@ class BusReg extends InternalSearchAbstract
                         'operator/business-details',
                         ['organisation' => $data['orgId']]
                     );
-                    return '<a href="' . $url . '">' . Escape::html($data['orgName']) . '</a>';
+                    return '<a class="govuk-link" href="' . $url . '">' . Escape::html($data['orgName']) . '</a>';
                 }
             ],
             ['title' => 'Variation number', 'name'=> 'variationNo'],

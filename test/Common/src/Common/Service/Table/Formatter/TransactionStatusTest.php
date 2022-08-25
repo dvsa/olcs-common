@@ -46,7 +46,7 @@ class TransactionStatusTest extends \PHPUnit\Framework\TestCase
                         'description' => 'outstanding',
                     ],
                 ],
-                '<span class="status orange">outstanding</span>',
+                '<strong class="govuk-tag govuk-tag--orange">outstanding</strong>',
             ],
             'complete' => [
                 [
@@ -55,7 +55,7 @@ class TransactionStatusTest extends \PHPUnit\Framework\TestCase
                         'description' => 'complete',
                     ],
                 ],
-                '<span class="status green">complete</span>',
+                '<strong class="govuk-tag govuk-tag--green">complete</strong>',
             ],
             'cancelled' => [
                 [
@@ -64,7 +64,7 @@ class TransactionStatusTest extends \PHPUnit\Framework\TestCase
                         'description' => 'cancelled',
                     ],
                 ],
-                '<span class="status red">cancelled</span>',
+                '<strong class="govuk-tag govuk-tag--red">cancelled</strong>',
             ],
             'failed' => [
                 [
@@ -73,7 +73,7 @@ class TransactionStatusTest extends \PHPUnit\Framework\TestCase
                         'description' => 'failed',
                     ],
                 ],
-                '<span class="status red">failed</span>',
+                '<strong class="govuk-tag govuk-tag--red">failed</strong>',
             ],
             'other' => [
                 [
@@ -82,7 +82,7 @@ class TransactionStatusTest extends \PHPUnit\Framework\TestCase
                         'description' => 'bar',
                     ],
                 ],
-                '<span class="status grey">bar</span>',
+                '<strong class="govuk-tag govuk-tag--grey">bar</strong>',
             ],
             'migrated' => [
                 [
@@ -92,7 +92,7 @@ class TransactionStatusTest extends \PHPUnit\Framework\TestCase
                     ],
                     'migratedFromOlbs' => true,
                 ],
-                '<span class="status red">Migrated</span>',
+                '<strong class="govuk-tag govuk-tag--red">Migrated</strong>',
             ],
         ];
     }

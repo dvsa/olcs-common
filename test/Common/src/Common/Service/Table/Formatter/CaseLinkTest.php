@@ -59,7 +59,7 @@ class CaseLinkTest extends TestCase
                 [
                     'id' => 69
                 ],
-                '<a href="CASE_URL">69</a>',
+                '<a class="govuk-link" href="CASE_URL">69</a>',
             ],
             'other' => [
                 [],

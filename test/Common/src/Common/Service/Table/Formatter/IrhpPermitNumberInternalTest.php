@@ -43,7 +43,7 @@ class IrhpPermitNumberInternalTest extends MockeryTestCase
         $expectedOptions = [
             'query' => ['irhpPermitType' => $irhpPermitTypeId]
         ];
-        $expectedOutput = '<a href="INTERNAL_IRHP_URL">4&gt;</a>'; //escaped as proved by &gt;
+        $expectedOutput = '<a class="govuk-link" href="INTERNAL_IRHP_URL">4&gt;</a>'; //escaped as proved by &gt;
 
         $urlHelper = m::mock(UrlHelper::class);
         $urlHelper->shouldReceive('fromRoute')

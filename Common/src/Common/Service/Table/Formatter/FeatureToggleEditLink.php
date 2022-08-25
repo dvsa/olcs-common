@@ -12,7 +12,7 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
  */
 class FeatureToggleEditLink implements FormatterInterface
 {
-    const LINK_PATTERN = '<a href="%s" class="js-modal-ajax">%s</a>';
+    const LINK_PATTERN = '<a href="%s" class="govuk-link js-modal-ajax">%s</a>';
     const URL_ROUTE = 'admin-dashboard/admin-feature-toggle';
     const URL_ACTION = 'edit';
 

@@ -97,7 +97,7 @@ class SlaTargetDateTest extends TestCase
                 'case/documents',
                 'case/documents/edit-sla',
                 ['entityType' => 'document', 'entityId' => 201],
-                '<a href="the_url" class="js-modal-ajax">Not set</a> ',
+                '<a href="the_url" class="govuk-link js-modal-ajax">Not set</a> ',
             ],
             'case-documents-target-date-set' => [
                 [
@@ -109,7 +109,7 @@ class SlaTargetDateTest extends TestCase
                 'case/documents',
                 'case/documents/edit-sla',
                 ['entityType' => 'document', 'entityId' => 201],
-                '<a href="the_url" class="js-modal-ajax">02/02/2001</a> <span class="status green">Pass</span>',
+                '<a href="the_url" class="govuk-link js-modal-ajax">02/02/2001</a> <span class="status green">Pass</span>',
             ],
             'case-documents-not-set' => [
                 [
@@ -121,7 +121,7 @@ class SlaTargetDateTest extends TestCase
                 'case/documents',
                 'case/documents/add-sla',
                 ['entityType' => 'document', 'entityId' => 201],
-                '<a href="the_url" class="js-modal-ajax">Not set</a>',
+                '<a href="the_url" class="govuk-link js-modal-ajax">Not set</a>',
             ]
         ];
     }

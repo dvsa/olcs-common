@@ -53,7 +53,7 @@ class SystemInfoMessageLinkTest extends TestCase
                     'description' => 'unit_Desc',
                     'isActive' => true,
                 ],
-                'expect' => '<a href="' . self::EXPECT_URL . '" class="js-modal-ajax">unit_Desc</a>' .
+                'expect' => '<a href="' . self::EXPECT_URL . '" class="govuk-link js-modal-ajax">unit_Desc</a>' .
                     ' <span class="status green">ACTIVE</span>',
             ],
             [
@@ -62,7 +62,7 @@ class SystemInfoMessageLinkTest extends TestCase
                     'isActive' => false,
                 ],
                 'expect' =>
-                    '<a href="' . self::EXPECT_URL . '" class="js-modal-ajax">' .
+                    '<a href="' . self::EXPECT_URL . '" class="govuk-link js-modal-ajax">' .
                         str_repeat('X', SystemInfoMessageLink::MAX_DESC_LEN) . '...' .
                     '</a>' .
                     ' <span class="status grey">INACTIVE</span>',

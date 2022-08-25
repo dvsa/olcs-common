@@ -14,7 +14,7 @@ use Laminas\ServiceManager\ServiceManager;
  */
 class LicenceApplication implements FormatterInterface
 {
-    const LINK_WITH_STATUS = '<a href="%s">%s</a>%s';
+    const LINK_WITH_STATUS = '<a class="govuk-link" href="%s">%s</a>%s';
 
     /**
      * Format a cell with links to licence and application

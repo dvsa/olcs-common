@@ -54,7 +54,7 @@ class IssuedPermitLicencePermitReferenceTest extends MockeryTestCase
                     'applicationRef' => 'ECMT>1234567',
                     'typeId' => RefData::ECMT_PERMIT_TYPE_ID
                 ],
-                '<a href="http://internal/licence/200/irhp-application/3/1/irhp-permits/">ECMT&gt;1234567</a>'
+                '<a class="govuk-link" href="http://internal/licence/200/irhp-application/3/1/irhp-permits/">ECMT&gt;1234567</a>'
             ],
             [
                 [
@@ -63,7 +63,7 @@ class IssuedPermitLicencePermitReferenceTest extends MockeryTestCase
                     'applicationRef' => 'ECMT>2345678',
                     'typeId' => RefData::ECMT_SHORT_TERM_PERMIT_TYPE_ID
                 ],
-                '<a href="http://internal/licence/202/irhp-application/5/2/irhp-permits/">ECMT&gt;2345678</a>'
+                '<a class="govuk-link" href="http://internal/licence/202/irhp-application/5/2/irhp-permits/">ECMT&gt;2345678</a>'
             ],
             [
                 [
@@ -72,7 +72,7 @@ class IssuedPermitLicencePermitReferenceTest extends MockeryTestCase
                     'applicationRef' => 'ECMT>3456789',
                     'typeId' => RefData::ECMT_REMOVAL_PERMIT_TYPE_ID
                 ],
-                '<a href="http://internal/licence/204/irhp-application/7/3/irhp-permits/">ECMT&gt;3456789</a>'
+                '<a class="govuk-link" href="http://internal/licence/204/irhp-application/7/3/irhp-permits/">ECMT&gt;3456789</a>'
             ],
             [
                 [
@@ -81,7 +81,7 @@ class IssuedPermitLicencePermitReferenceTest extends MockeryTestCase
                     'applicationRef' => 'IRHP>7654321',
                     'typeId' => RefData::IRHP_BILATERAL_PERMIT_TYPE_ID
                 ],
-                '<a href="http://internal/licence/206/irhp-application/44/4/irhp-permits/">IRHP&gt;7654321</a>'
+                '<a class="govuk-link" href="http://internal/licence/206/irhp-application/44/4/irhp-permits/">IRHP&gt;7654321</a>'
             ],
             [
                 [
@@ -90,7 +90,7 @@ class IssuedPermitLicencePermitReferenceTest extends MockeryTestCase
                     'applicationRef' => 'IRHP>6543210',
                     'typeId' => RefData::IRHP_MULTILATERAL_PERMIT_TYPE_ID
                 ],
-                '<a href="http://internal/licence/208/irhp-application/46/5/irhp-permits/">IRHP&gt;6543210</a>'
+                '<a class="govuk-link" href="http://internal/licence/208/irhp-application/46/5/irhp-permits/">IRHP&gt;6543210</a>'
             ]
         ];
     }
@@ -120,7 +120,7 @@ class IssuedPermitLicencePermitReferenceTest extends MockeryTestCase
                     'applicationRef' => 'CERT>7654321',
                     'typeId' => RefData::CERT_ROADWORTHINESS_VEHICLE_PERMIT_TYPE_ID
                 ],
-                '<a href="http://internal/licence/212/irhp-application/edit/100010/">CERT&gt;7654321</a>'
+                '<a class="govuk-link" href="http://internal/licence/212/irhp-application/edit/100010/">CERT&gt;7654321</a>'
             ],
             [
                 [
@@ -129,7 +129,7 @@ class IssuedPermitLicencePermitReferenceTest extends MockeryTestCase
                     'applicationRef' => 'CERT>6543210',
                     'typeId' => RefData::CERT_ROADWORTHINESS_TRAILER_PERMIT_TYPE_ID
                 ],
-                '<a href="http://internal/licence/208/irhp-application/edit/100012/">CERT&gt;6543210</a>'
+                '<a class="govuk-link" href="http://internal/licence/208/irhp-application/edit/100012/">CERT&gt;6543210</a>'
             ]
         ];
     }

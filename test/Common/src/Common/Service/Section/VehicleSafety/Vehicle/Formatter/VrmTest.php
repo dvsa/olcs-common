@@ -80,7 +80,7 @@ class VrmTest extends \PHPUnit\Framework\TestCase
                     'vrm' => 'ABC123'
                 ),
                 array(),
-                '<a href="{"child_id":2,"action":"edit"}">ABC123</a>'
+                '<a class="govuk-link" href="{"child_id":2,"action":"edit"}">ABC123</a>'
             ),
             array(
                 array(
@@ -90,7 +90,7 @@ class VrmTest extends \PHPUnit\Framework\TestCase
                 array(
                     'action-type' => 'large'
                 ),
-                '<a href="{"child_id":2,"action":"large-edit"}">ABC123</a>'
+                '<a class="govuk-link" href="{"child_id":2,"action":"large-edit"}">ABC123</a>'
             )
         );
     }

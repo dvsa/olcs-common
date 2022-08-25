@@ -40,7 +40,7 @@ class TaskDescriptionTest extends MockeryTestCase
             ->withNoArgs()
             ->andReturn($query);
 
-        $this->assertEquals('<a href="URL" class="js-modal-ajax">DESC</a>', TaskDescription::format($data, [], $sm));
+        $this->assertEquals('<a href="URL" class="govuk-link js-modal-ajax">DESC</a>', TaskDescription::format($data, [], $sm));
     }
 
     public function dpTestFormat()

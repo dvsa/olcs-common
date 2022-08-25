@@ -64,7 +64,7 @@ class Application extends InternalSearchAbstract
                 'title' => 'Application id',
                 'name'=> 'appId',
                 'formatter' => function ($data) {
-                    return '<a href="/application/' . $data['appId'] . '">' . $data['appId'] . '</a>';
+                    return '<a class="govuk-link" href="/application/' . $data['appId'] . '">' . $data['appId'] . '</a>';
                 }
             ],
             ['title' => 'Application status', 'name'=> 'appStatusDesc'],
@@ -77,7 +77,7 @@ class Application extends InternalSearchAbstract
                 'title' => 'Licence number',
                 'name'=> 'licNo',
                 'formatter' => function ($data) {
-                    return '<a href="/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>';
+                    return '<a class="govuk-link" href="/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>';
                 }
             ],
             ['title' => 'Licence status', 'name'=> 'licStatusDesc'],
@@ -90,7 +90,7 @@ class Application extends InternalSearchAbstract
                         'operator/business-details',
                         ['organisation' => $data['orgId']]
                     );
-                    return '<a href="' . $url . '">' . Escape::html($data['orgName']) . '</a>';
+                    return '<a class="govuk-link" href="' . $url . '">' . Escape::html($data['orgName']) . '</a>';
                 }
             ],
             ['title' => 'Authorisation vehicles', 'name'=> 'totAuthVehicles'],

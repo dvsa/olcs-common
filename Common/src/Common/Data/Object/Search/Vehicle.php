@@ -84,7 +84,7 @@ class Vehicle extends InternalSearchAbstract
                 'title' => 'Licence number',
                 'name'=> 'licNo',
                 'formatter' => function ($data) {
-                    return '<a href="/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>';
+                    return '<a class="govuk-link" href="/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>';
                 }
             ],
             ['title' => 'Licence status', 'name'=> 'licStatusDesc'],
@@ -96,7 +96,7 @@ class Vehicle extends InternalSearchAbstract
                         'operator/business-details',
                         ['organisation' => $data['orgId']]
                     );
-                    return '<a href="' . $url . '">' . Escape::html($data['orgName']) . '</a>';
+                    return '<a class="govuk-link" href="' . $url . '">' . Escape::html($data['orgName']) . '</a>';
                 }
             ],
             [

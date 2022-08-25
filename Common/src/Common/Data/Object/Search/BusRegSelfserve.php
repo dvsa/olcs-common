@@ -87,7 +87,7 @@ class BusRegSelfserve extends InternalSearchAbstract
                     );
 
                     return sprintf(
-                        '<a href="%s">%s</a><br/>%s',
+                        '<a class="govuk-link" href="%s">%s</a><br/>%s',
                         $url,
                         Escape::html($data['regNo']),
                         $translator->translate($data['busRegStatus'])

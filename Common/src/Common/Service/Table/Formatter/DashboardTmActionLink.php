@@ -30,18 +30,24 @@ class DashboardTmActionLink implements FormatterInterface
 
         if (in_array($data['transportManagerApplicationStatus']['id'], $provideStatuses, true)) {
             $linkText = 'dashboard.tm-applications.table.action.provide-details';
+            $ariaLabel = 'dashboard.tm-applications.table.aria.provide-details';
         } else {
             $linkText = 'dashboard.tm-applications.table.action.view-details';
+            $ariaLabel = 'dashboard.tm-applications.table.aria.view-details';
         }
 
+        $helperPluginManager = $sm->get('ViewHelperManager');
+        $translateReplace = $helperPluginManager->get('translateReplace');
+
         return sprintf(
-            '<a href="%s">%s</a>',
+            '<a class="govuk-link" href="%s" aria-label="%s">%s</a>',
             static::getApplicationUrl(
                 $sm,
                 $data['applicationId'],
                 $data['transportManagerApplicationId'],
                 $data['isVariation']
             ),
+            $translateReplace($ariaLabel, [$data['applicationId']]),
             $sm->get('translator')->translate($linkText)
         );
     }

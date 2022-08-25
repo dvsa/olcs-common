@@ -34,7 +34,7 @@ class DataRetentionRuleLinkTest extends TestCase
             ->getMock();
 
         $this->assertEquals(
-            '<a href="DATA_RETENTION_EDIT_URL" target="_self">Test</a>',
+            '<a class="govuk-link" href="DATA_RETENTION_EDIT_URL" target="_self">Test</a>',
             DataRetentionRuleLink::format($data, [], $sm)
         );
     }

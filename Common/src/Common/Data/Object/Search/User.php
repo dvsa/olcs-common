@@ -106,7 +106,7 @@ class User extends InternalSearchAbstract
             array(
                 'title' => 'Username',
                 'formatter' => function ($data) {
-                    return '<a href="/admin/user-management/users/edit/' . $data['userId']
+                    return '<a class="govuk-link" href="/admin/user-management/users/edit/' . $data['userId']
                      . '">' . $data['loginId'] . '</a>';
                 }
             ),

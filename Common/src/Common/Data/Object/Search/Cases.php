@@ -70,7 +70,7 @@ class Cases extends InternalSearchAbstract
                         return Escape::html($data['caseId']);
                     }
 
-                    return '<a href="/case/details/' . $data['caseId'] . '">' . Escape::html($data['caseId']) . '</a>';
+                    return '<a class="govuk-link" href="/case/details/' . $data['caseId'] . '">' . Escape::html($data['caseId']) . '</a>';
                 }
             ],
             ['title' => 'Case type', 'name'=> 'caseStatusDesc'],
@@ -78,7 +78,7 @@ class Cases extends InternalSearchAbstract
                 'title' => 'Licence number',
                 'name'=> 'licNo',
                 'formatter' => function ($data) {
-                    return '<a href="/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>';
+                    return '<a class="govuk-link" href="/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>';
                 }
             ],
             ['title' => 'Licence status', 'name'=> 'licStatusDesc'],
@@ -87,7 +87,7 @@ class Cases extends InternalSearchAbstract
                 'name'=> 'appId',
                 'formatter' => function ($data) {
                     if (!empty($data['appId'])) {
-                        return '<a href="/application/' . $data['appId'] . '">'
+                        return '<a class="govuk-link" href="/application/' . $data['appId'] . '">'
                         . $data['appId']
                         . '</a>';
                     } else {
@@ -131,7 +131,7 @@ class Cases extends InternalSearchAbstract
                         return Escape::html($link);
                     }
 
-                    return '<a href="' . $url . '">' . Escape::html($link) . '</a>';
+                    return '<a class="govuk-link" href="' . $url . '">' . Escape::html($link) . '</a>';
                 }
             ],
             ['title' => 'Case status', 'name'=> 'caseStatusDesc'],

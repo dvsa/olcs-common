@@ -26,6 +26,6 @@ class InternalLicenceNumberLink implements FormatterInterface
         $urlHelper = $sm->get('Helper\Url');
         $url = $urlHelper->fromRoute('lva-licence', array('licence' => $data['licence']['id']));
 
-        return '<a href="' . $url . '" title="Licence details for '. $licenceNo .'">' . $licenceNo . '</a>';
+        return '<a class="govuk-link" href="' . $url . '" title="Licence details for '. $licenceNo .'">' . $licenceNo . '</a>';
     }
 }

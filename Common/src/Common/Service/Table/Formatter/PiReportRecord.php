@@ -24,7 +24,7 @@ class PiReportRecord implements FormatterInterface
     {
         if (!empty($data['pi']['case']['licence'])) {
             return sprintf(
-                '<a href="%s">%s</a> (%s)',
+                '<a class="govuk-link" href="%s">%s</a> (%s)',
                 $sm->get('Helper\Url')->fromRoute(
                     'licence',
                     [
@@ -36,7 +36,7 @@ class PiReportRecord implements FormatterInterface
             );
         } elseif (!empty($data['pi']['case']['transportManager'])) {
             return sprintf(
-                '<a href="%s">TM %s</a> (%s)',
+                '<a class="govuk-link" href="%s">TM %s</a> (%s)',
                 $sm->get('Helper\Url')->fromRoute(
                     'transport-manager/details',
                     [

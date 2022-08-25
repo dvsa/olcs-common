@@ -133,7 +133,7 @@ class People extends InternalSearchAbstract
                         }
 
                         return sprintf(
-                            '%s / <a href="%s">%s</a>',
+                            '%s / <a class="govuk-link" href="%s">%s</a>',
                             $this->formatCellLicNo($row, $urlHelper),
                             $urlHelper->fromRoute('lva-application', ['application' => $row['applicationId']]),
                             Escape::html($row['applicationId'])
@@ -143,7 +143,7 @@ class People extends InternalSearchAbstract
                             $tmLink = sprintf('TM %s', Escape::html($row['tmId']));
                         } else {
                             $tmLink = sprintf(
-                                '<a href="%s">TM %s</a>',
+                                '<a class="govuk-link" href="%s">TM %s</a>',
                                 $urlHelper->fromRoute('transport-manager/details', ['transportManager' => $row['tmId']]),
                                 Escape::html($row['tmId'])
                             );
@@ -166,7 +166,7 @@ class People extends InternalSearchAbstract
                         }
 
                         return sprintf(
-                            '<a href="%s">%s</a>, %s<br />%s',
+                            '<a class="govuk-link" href="%s">%s</a>, %s<br />%s',
                             $urlHelper->fromRoute('licence', ['licence' => $row['licId']]),
                             Escape::html($row['licNo']),
                             Escape::html($row['licTypeDesc']),
@@ -184,7 +184,7 @@ class People extends InternalSearchAbstract
                         }
 
                         return sprintf(
-                            '<a href="%s">%s</a>, %s',
+                            '<a class="govuk-link" href="%s">%s</a>, %s',
                             $urlHelper->fromRoute('lva-application', ['application' => $row['applicationId']]),
                             Escape::html($row['applicationId']),
                             Escape::html($row['appStatusDesc'])
@@ -199,7 +199,7 @@ class People extends InternalSearchAbstract
                     if ($row['foundAs'] === self::FOUND_AS_HISTORICAL_TM) {
                         $urlHelper = $serviceLocator->get('Helper\Url');
                         return sprintf(
-                            '<a href="%s">%s</a>',
+                            '<a class="govuk-link" href="%s">%s</a>',
                             $urlHelper->fromRoute('historic-tm', ['historicId' => $row['tmId']]),
                             $row['personFullname']
                         );

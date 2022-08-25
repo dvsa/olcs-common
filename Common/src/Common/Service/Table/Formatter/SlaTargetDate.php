@@ -45,7 +45,7 @@ class SlaTargetDate implements FormatterInterface
                 [],
                 true
             );
-            return '<a href="' . $url . '" class="js-modal-ajax">Not set</a>';
+            return '<a href="' . $url . '" class="govuk-link js-modal-ajax">Not set</a>';
         } else {
             $url = $urlHelper->fromRoute(
                 $matchedRouteName . '/edit-sla',
@@ -59,7 +59,7 @@ class SlaTargetDate implements FormatterInterface
 
             // if target date is not set, show not set but link to the record to edit
             if (empty($data['targetDate'])) {
-                return '<a href="' . $url . '" class="js-modal-ajax">Not set</a> ';
+                return '<a href="' . $url . '" class="govuk-link js-modal-ajax">Not set</a> ';
             }
 
             $statusHtml = '<span class="status red">Fail</span>';
@@ -69,7 +69,7 @@ class SlaTargetDate implements FormatterInterface
             }
             $targetDate = Date::format($data, ['name' => 'targetDate'], $sm);
 
-            return '<a href="' . $url . '" class="js-modal-ajax">' . $targetDate . '</a> ' . $statusHtml;
+            return '<a href="' . $url . '" class="govuk-link js-modal-ajax">' . $targetDate . '</a> ' . $statusHtml;
         }
     }
 }

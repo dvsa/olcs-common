@@ -99,7 +99,7 @@ class Licence extends InternalSearchAbstract
                 'title' => 'Licence number',
                 'name'=> 'licNo',
                 'formatter' => function ($data) {
-                    return '<a href="/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>';
+                    return '<a class="govuk-link" href="/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>';
                 }
             ],
             ['title' => 'Licence status', 'name'=> 'licStatusDesc'],
@@ -117,7 +117,7 @@ class Licence extends InternalSearchAbstract
                         ['organisation' => $data['orgId']]
                     );
 
-                    return '<a href="' . $url . '">' . Escape::html($orgName) . '</a>';
+                    return '<a class="govuk-link" href="' . $url . '">' . Escape::html($orgName) . '</a>';
                 }
             ],
             [
@@ -140,7 +140,7 @@ class Licence extends InternalSearchAbstract
                         return Escape::html($data['caseCount']);
                     }
 
-                    return '<a href="/licence/' . $data['licId'] . '/cases">' . Escape::html($data['caseCount']) . '</a>';
+                    return '<a class="govuk-link" href="/licence/' . $data['licId'] . '/cases">' . Escape::html($data['caseCount']) . '</a>';
                 }
             ]
         ];

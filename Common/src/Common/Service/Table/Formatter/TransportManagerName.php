@@ -32,24 +32,18 @@ class TransportManagerName extends Name
         $html = $name;
         if ($column['internal']) {
             switch ($column['lva']) {
+                case 'application':
                 case 'licence':
                     $html = sprintf(
-                        '<a href="%s">%s</a>',
+                        '<a class="govuk-link" href="%s">%s</a>',
                         static::getInternalUrl($data, $sm),
                         $name
                     );
                     break;
                 case 'variation':
                     $html = sprintf(
-                        '%s <a href="%s">%s</a>',
+                        '%s <a class="govuk-link" href="%s">%s</a>',
                         static::getActionName($data, $sm),
-                        static::getInternalUrl($data, $sm),
-                        $name
-                    );
-                    break;
-                case 'application':
-                    $html = sprintf(
-                        '<a href="%s">%s</a>',
                         static::getInternalUrl($data, $sm),
                         $name
                     );
@@ -65,7 +59,7 @@ class TransportManagerName extends Name
                     // only hyperlink if Added or Updated
                     if (isset($data['action']) && ($data['action'] == 'A' || $data['action'] == 'U')) {
                         $html = sprintf(
-                            '%s <a href="%s">%s</a>',
+                            '%s <a class="govuk-link" href="%s">%s</a>',
                             static::getActionName($data, $sm),
                             static::getExternalUrl($data, $sm, $column['lva']),
                             $name
@@ -80,7 +74,7 @@ class TransportManagerName extends Name
                     break;
                 case 'application':
                     $html = sprintf(
-                        '<a href="%s">%s</a>',
+                        '<a class="govuk-link" href="%s">%s</a>',
                         static::getExternalUrl($data, $sm, $column['lva']),
                         $name
                     );

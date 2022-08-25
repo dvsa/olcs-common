@@ -25,7 +25,7 @@ class IrhpPermitApplicationRefLink implements FormatterInterface
     public static function format($data, array $column = [], ServiceLocatorInterface $sm = null)
     {
         return isset($data['irhpPermitApplication']['relatedApplication']) ? sprintf(
-            '<a href="%s">%s</a>',
+            '<a class="govuk-link" href="%s">%s</a>',
             $sm->get('Helper\Url')->fromRoute(
                 'licence/irhp-application',
                 [

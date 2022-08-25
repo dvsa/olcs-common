@@ -28,7 +28,7 @@ class CaseLink implements FormatterInterface
         }
 
         return sprintf(
-            '<a href="%s">%s</a>',
+            '<a class="govuk-link" href="%s">%s</a>',
             $sm->get('Helper\Url')->fromRoute(
                 'case',
                 [

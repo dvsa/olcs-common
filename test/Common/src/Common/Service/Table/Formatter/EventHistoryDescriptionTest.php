@@ -92,7 +92,7 @@ class EventHistoryDescriptionTest extends MockeryTestCase
                     'id' => 1,
                 ],
                 'bar',
-                '<a class="js-modal-ajax" href="bar">foo</a>'
+                '<a class="govuk-link js-modal-ajax" href="bar">foo</a>'
             ],
             'variation event history' => [
                 [
@@ -107,7 +107,7 @@ class EventHistoryDescriptionTest extends MockeryTestCase
                     'id' => 1,
                 ],
                 'bar',
-                '<a class="js-modal-ajax" href="bar">foo</a>'
+                '<a class="govuk-link js-modal-ajax" href="bar">foo</a>'
             ],
             'licence event history' => [
                 [
@@ -121,7 +121,7 @@ class EventHistoryDescriptionTest extends MockeryTestCase
                     'id' => 1,
                 ],
                 'bar',
-                '<a class="js-modal-ajax" href="bar"></a>'
+                '<a class="govuk-link js-modal-ajax" href="bar"></a>'
             ],
             'busreg event history' => [
                 [
@@ -138,7 +138,7 @@ class EventHistoryDescriptionTest extends MockeryTestCase
                     'id' => 1,
                 ],
                 'bar',
-                '<a class="js-modal-ajax" href="bar">foo</a>'
+                '<a class="govuk-link js-modal-ajax" href="bar">foo</a>'
             ],
             'transport manager event history' => [
                 [
@@ -155,7 +155,7 @@ class EventHistoryDescriptionTest extends MockeryTestCase
                     'id' => 1,
                 ],
                 'bar',
-                '<a class="js-modal-ajax" href="bar">foo</a>'
+                '<a class="govuk-link js-modal-ajax" href="bar">foo</a>'
             ],
             'operator event history' => [
                 [
@@ -172,7 +172,7 @@ class EventHistoryDescriptionTest extends MockeryTestCase
                     'id' => 1,
                 ],
                 'bar',
-                '<a class="js-modal-ajax" href="bar">foo</a>'
+                '<a class="govuk-link js-modal-ajax" href="bar">foo</a>'
             ],
             'case event history' => [
                 [
@@ -189,7 +189,7 @@ class EventHistoryDescriptionTest extends MockeryTestCase
                     'id' => 1,
                 ],
                 'bar',
-                '<a class="js-modal-ajax" href="bar">foo</a>'
+                '<a class="govuk-link js-modal-ajax" href="bar">foo</a>'
             ],
             'irhp application event history' => [
                 [
@@ -206,7 +206,7 @@ class EventHistoryDescriptionTest extends MockeryTestCase
                     'id' => 1,
                 ],
                 'bar',
-                '<a class="js-modal-ajax" href="bar">foo</a>'
+                '<a class="govuk-link js-modal-ajax" href="bar">foo</a>'
             ],
         ];
     }

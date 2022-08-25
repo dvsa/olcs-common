@@ -57,9 +57,9 @@ class DataRetentionRecordLinkTest extends TestCase
         $sm->shouldReceive('get')->with('ViewHelperManager')->once()->andReturn($viewHelperManager);
 
         $this->assertEquals(
-            '<a href="DATA_RETENTION_RECORD_URL" target="_self">' . $queryData['organisationName'] . '</a> / ' .
-            '<a href="DATA_RETENTION_RECORD_URL" target="_self">' . $queryData['licNo'] . '</a> / ' .
-            '<a href="DATA_RETENTION_RECORD_URL" target="_self">' .
+            '<a class="govuk-link" href="DATA_RETENTION_RECORD_URL" target="_self">' . $queryData['organisationName'] . '</a> / ' .
+            '<a class="govuk-link" href="DATA_RETENTION_RECORD_URL" target="_self">' . $queryData['licNo'] . '</a> / ' .
+            '<a class="govuk-link" href="DATA_RETENTION_RECORD_URL" target="_self">' .
             ucfirst($queryData['entityName']) . ' ' . $queryData['entityPk'] .
             '</a>' .
             $statusLabel,

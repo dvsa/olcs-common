@@ -3,12 +3,16 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\RefData;
+use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Formatter\DashboardTmActionLink;
+use Common\View\Helper\TranslateReplace;
+use Laminas\Mvc\I18n\Translator;
+use Laminas\View\HelperPluginManager;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
- * @covers Common\Service\Table\Formatter\DashboardTmActionLink
+ * @see DashboardTmActionLink
  */
 class DashboardTmActionLinkTest extends MockeryTestCase
 {
@@ -56,15 +60,28 @@ class DashboardTmActionLinkTest extends MockeryTestCase
      */
     public function testFormat($statusId, $isVariation, $expectTextKey)
     {
-        $this->mockSm
-            ->shouldReceive('get->translate')
-            ->once()
+        $translationHelper = m::mock(Translator::class);
+        $translationHelper->expects('translate')
             ->with('dashboard.tm-applications.table.action.' . $expectTextKey)
-            ->andReturn('EXPECT');
+            ->andReturn('LINK TEXT');
+
+        $this->mockSm->expects('get')->with('translator')->andReturn($translationHelper);
+
+        $mockTranslateReplace = m::mock(TranslateReplace::class);
+        $mockTranslateReplace->expects('__invoke')
+            ->with('dashboard.tm-applications.table.aria.' . $expectTextKey, [323])
+            ->andReturn('ARIA');
+
+        $viewHelperManager = m::mock(HelperPluginManager::class);
+        $viewHelperManager->expects('get')->with('translateReplace')->andReturn($mockTranslateReplace);
 
         $this->mockSm
-            ->shouldReceive('get->fromRoute')
-            ->once()
+            ->expects('get')
+            ->with('ViewHelperManager')
+            ->andReturn($viewHelperManager);
+
+        $urlHelperService = m::mock(UrlHelperService::class);
+        $urlHelperService->expects('fromRoute')
             ->with(
                 (
                     $isVariation
@@ -81,6 +98,8 @@ class DashboardTmActionLinkTest extends MockeryTestCase
             )
             ->andReturn('http://url.com');
 
+        $this->mockSm->expects('get')->with('Helper\Url')->andReturn($urlHelperService);
+
         $data = [
             'applicationId' => 323,
             'transportManagerApplicationStatus' => [
@@ -93,7 +112,7 @@ class DashboardTmActionLinkTest extends MockeryTestCase
         $column = [];
 
         static::assertEquals(
-            '<a href="http://url.com">EXPECT</a>',
+            '<a class="govuk-link" href="http://url.com" aria-label="ARIA">LINK TEXT</a>',
             DashboardTmActionLink::format($data, $column, $this->mockSm)
         );
     }

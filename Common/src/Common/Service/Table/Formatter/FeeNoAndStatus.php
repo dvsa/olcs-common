@@ -26,6 +26,6 @@ class FeeNoAndStatus implements FormatterInterface
      */
     public static function format($row, $column = null, $serviceLocator = null)
     {
-        return $row['id'] . FeeStatus::format($row);
+        return $row['id'] . ' ' . FeeStatus::format($row);
     }
 }

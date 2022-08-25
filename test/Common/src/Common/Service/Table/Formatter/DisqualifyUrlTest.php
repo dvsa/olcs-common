@@ -86,7 +86,7 @@ class DisqualifyUrlTest extends MockeryTestCase
                 'disqualify-person/licence',
                 ['person' => '99', 'licence' => 1],
                 ['licence' => 1],
-                '<a href="the_url" class="js-modal-ajax">foo</a>',
+                '<a href="the_url" class="govuk-link js-modal-ajax">foo</a>',
             ],
             'application' => [
                 [
@@ -97,7 +97,7 @@ class DisqualifyUrlTest extends MockeryTestCase
                 'disqualify-person/application',
                 ['person' => '99', 'application' => 2],
                 ['application' => 2],
-                '<a href="the_url" class="js-modal-ajax">foo</a>',
+                '<a href="the_url" class="govuk-link js-modal-ajax">foo</a>',
             ],
             'variation' => [
                 [
@@ -108,7 +108,7 @@ class DisqualifyUrlTest extends MockeryTestCase
                 'disqualify-person/variation',
                 ['person' => '99', 'variation' => 3],
                 ['application' => 3],
-                '<a href="the_url" class="js-modal-ajax">foo</a>',
+                '<a href="the_url" class="govuk-link js-modal-ajax">foo</a>',
             ],
             'unknown' => [
                 [
@@ -119,7 +119,7 @@ class DisqualifyUrlTest extends MockeryTestCase
                 null,
                 null,
                 null,
-                '<a href="" class="js-modal-ajax">foo</a>',
+                '<a href="" class="govuk-link js-modal-ajax">foo</a>',
             ],
         ];
     }

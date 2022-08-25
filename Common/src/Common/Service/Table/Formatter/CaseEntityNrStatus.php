@@ -7,7 +7,7 @@ namespace Common\Service\Table\Formatter;
  */
 class CaseEntityNrStatus implements FormatterInterface
 {
-    const URL_TEMPLATE = '<a href="%s">%s</a>';
+    const URL_TEMPLATE = '<a class="govuk-link" href="%s">%s</a>';
 
     const TEMPLATE_LIC = '%s (%s)';
     const TEMPLATE_APP = '%s (%s)<br />/%s (%s)';

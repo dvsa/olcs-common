@@ -36,7 +36,7 @@ class IrhpPermitStockType implements FormatterInterface
         $canDelete = $data['canDelete'];
 
         return sprintf(
-            "<a class='strong' data-stock-delete='$canDelete' href='%s'>%s</a>",
+            "<a class='govuk-link' data-stock-delete='$canDelete' href='%s'>%s</a>",
             $url,
             $data['irhpPermitType']['name']['description']
         );

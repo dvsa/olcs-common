@@ -18,7 +18,7 @@ class InternalLicencePermitReferenceTest extends MockeryTestCase
     {
         $appId = 4;
         $licenceId = 200;
-        $expectedOutput = '<a href="INTERNAL_IRHP_URL">OB1234567/4&gt;</a>'; //escaped as proved by &gt;
+        $expectedOutput = '<a class="govuk-link" href="INTERNAL_IRHP_URL">OB1234567/4&gt;</a>'; //escaped as proved by &gt;
 
         $row = [
             'id' => $appId,

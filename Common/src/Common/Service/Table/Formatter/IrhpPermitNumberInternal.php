@@ -26,7 +26,7 @@ class IrhpPermitNumberInternal implements FormatterInterface
         ];
 
         return vsprintf(
-            '<a href="%s">%s</a>',
+            '<a class="govuk-link" href="%s">%s</a>',
             [
                 $serviceLocator->get('Helper\Url')->fromRoute($route, $params, $options),
                 Escape::html($row['permitNumber'])

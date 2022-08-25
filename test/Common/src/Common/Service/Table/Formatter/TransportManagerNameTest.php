@@ -64,7 +64,7 @@ class TransportManagerNameTest extends MockeryTestCase
             'lva' => 'application',
             'internal' => true,
         ];
-        $expected = '<a href="a-url">Arthur Smith</a>';
+        $expected = '<a class="govuk-link" href="a-url">Arthur Smith</a>';
 
         $this->mockUrlHelper->shouldReceive('fromRoute')
             ->once()
@@ -94,7 +94,7 @@ class TransportManagerNameTest extends MockeryTestCase
             'lva' => 'application',
             'internal' => false,
         ];
-        $expected = '<a href="a-url">Arthur Smith</a>';
+        $expected = '<a class="govuk-link" href="a-url">Arthur Smith</a>';
 
         $this->mockUrlHelper->shouldReceive('fromRoute')
             ->once()
@@ -124,7 +124,7 @@ class TransportManagerNameTest extends MockeryTestCase
             'lva' => 'variation',
             'internal' => true,
         ];
-        $expected = 'translated <a href="a-url">Arthur Smith</a>';
+        $expected = 'translated <a class="govuk-link" href="a-url">Arthur Smith</a>';
 
         $this->mockUrlHelper->shouldReceive('fromRoute')
             ->once()
@@ -160,7 +160,7 @@ class TransportManagerNameTest extends MockeryTestCase
             'lva' => 'variation',
             'internal' => true,
         ];
-        $expected = ' <a href="a-url">Arthur Smith</a>';
+        $expected = ' <a class="govuk-link" href="a-url">Arthur Smith</a>';
 
         $this->mockUrlHelper->shouldReceive('fromRoute')
             ->once()
@@ -191,7 +191,7 @@ class TransportManagerNameTest extends MockeryTestCase
             'lva' => 'variation',
             'internal' => false,
         ];
-        $expected = 'translated <a href="a-url">Arthur Smith</a>';
+        $expected = 'translated <a class="govuk-link" href="a-url">Arthur Smith</a>';
 
         $this->mockUrlHelper->shouldReceive('fromRoute')
             ->once()
@@ -256,7 +256,7 @@ class TransportManagerNameTest extends MockeryTestCase
             'lva' => 'licence',
             'internal' => true,
         ];
-        $expected = '<a href="a-url">Arthur Smith</a>';
+        $expected = '<a class="govuk-link" href="a-url">Arthur Smith</a>';
 
         $this->mockUrlHelper->shouldReceive('fromRoute')
             ->once()

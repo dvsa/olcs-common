@@ -45,7 +45,7 @@ class IrhpPermitRangePermitNumber implements FormatterInterface
         );
 
         return sprintf(
-            "<a class='strong js-modal-ajax' href='%s'>%s</a>",
+            "<a class='govuk-link js-modal-ajax' href='%s'>%s</a>",
             $url,
             $permitNumber
         );

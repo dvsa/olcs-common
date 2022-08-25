@@ -39,6 +39,6 @@ class TransactionUrl implements FormatterInterface
             true
         );
 
-        return '<a href="'. $url . '">'. $row['transactionId'] . '</a>';
+        return '<a class="govuk-link" href="'. $url . '">'. $row['transactionId'] . '</a>';
     }
 }

@@ -178,7 +178,7 @@ class DataRetentionRecordLink implements FormatterInterface
         return sprintf(
             $organisationName .
             $licenceNumber .
-            sprintf('<a href="%s" target="_self">%s</a>', $url, ucfirst($entityName) . ' ' . $entityPk)
+            sprintf('<a class="govuk-link" href="%s" target="_self">%s</a>', $url, ucfirst($entityName) . ' ' . $entityPk)
         );
     }
 
@@ -208,7 +208,7 @@ class DataRetentionRecordLink implements FormatterInterface
             );
 
             return sprintf(
-                '<a href="%s" target="_self">%s</a>',
+                '<a class="govuk-link" href="%s" target="_self">%s</a>',
                 $url,
                 $licenceNumber
             ) . ' / ';
@@ -244,7 +244,7 @@ class DataRetentionRecordLink implements FormatterInterface
             );
 
             return sprintf(
-                '<a href="%s" target="_self">%s</a>',
+                '<a class="govuk-link" href="%s" target="_self">%s</a>',
                 $url,
                 $organisationName
             ) .

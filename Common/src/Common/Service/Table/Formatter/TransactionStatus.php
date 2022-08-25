@@ -29,11 +29,10 @@ class TransactionStatus implements FormatterInterface
      */
     public static function format($row, $column = null, $serviceLocator = null)
     {
-        $statusClass = 'status';
         switch ($row['status']['id']) {
             case Ref::TRANSACTION_STATUS_FAILED:
             case Ref::TRANSACTION_STATUS_CANCELLED:
-                $statusClass .= ' red';
+                $statusClass = 'red';
 
                 // if transaction is failed and it was migrated then change the status message
                 if (isset($row['migratedFromOlbs']) && $row['migratedFromOlbs'] === true) {
@@ -42,18 +41,18 @@ class TransactionStatus implements FormatterInterface
                 break;
             case Ref::TRANSACTION_STATUS_PAID:
             case Ref::TRANSACTION_STATUS_COMPLETE:
-                $statusClass .= ' green';
+                $statusClass = 'green';
                 break;
             case Ref::TRANSACTION_STATUS_OUTSTANDING:
-                $statusClass .= ' orange';
+                $statusClass = 'orange';
                 break;
             default:
-                $statusClass .= ' grey';
+                $statusClass = 'grey';
                 break;
         }
 
         return sprintf(
-            '<span class="%s">%s</span>',
+            '<strong class="govuk-tag govuk-tag--%s">%s</strong>',
             $statusClass,
             $row['status']['description']
         );
