@@ -19,8 +19,8 @@ class OcContextListDataServiceFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): OcContextListDataService
     {
         return new OcContextListDataService(
-            $container->get('DataServiceManager')->get('Common\Service\Data\LicenceOperatingCentre'),
-            $container->get('DataServiceManager')->get('Common\Service\Data\ApplicationOperatingCentre'),
+            $container->get('DataServiceManager')->get(LicenceOperatingCentre::class),
+            $container->get('DataServiceManager')->get(ApplicationOperatingCentre::class)
         );
     }
 
@@ -31,7 +31,7 @@ class OcContextListDataServiceFactory implements FactoryInterface
      *
      * @return OcContextListDataService
      */
-    public function createService(ServiceLocatorInterface $services)
+    public function createService(ServiceLocatorInterface $services): OcContextListDataService
     {
         return $this($services, OcContextListDataService::class);
     }

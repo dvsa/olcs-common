@@ -5,22 +5,30 @@ namespace CommonTest\Service\Data;
 use Common\Exception\DataServiceException;
 use Common\Service\Data\RefData;
 use Mockery as m;
-use Dvsa\Olcs\Transfer\Query\ContactDetail\ContactDetailsList as Qry;
+use Dvsa\Olcs\Transfer\Query\RefData\RefDataList as Qry;
 
 /**
  * Class RefDataTest
  * @package CommonTest\Service
  */
-class RefDataTest extends AbstractDataServiceTestCase
+class RefDataTest extends RefDataTestCase
 {
+    /** @var RefData */
+    private $sut;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->sut = new RefData($this->refDataServices);
+    }
+
     public function testFormatData()
     {
         $source = $this->getSingleSource();
         $expected = $this->getSingleExpected();
 
-        $sut = new RefData();
-
-        $this->assertEquals($expected, $sut->formatData($source));
+        $this->assertEquals($expected, $this->sut->formatData($source));
     }
 
     public function testFormatDataForGroups()
@@ -28,9 +36,7 @@ class RefDataTest extends AbstractDataServiceTestCase
         $source = $this->getGroupSource();
         $expected = $this->getGroupExpected();
 
-        $sut = new RefData();
-
-        $this->assertEquals($expected, $sut->formatDataForGroups($source));
+        $this->assertEquals($expected, $this->sut->formatDataForGroups($source));
     }
 
     /**
@@ -38,10 +44,9 @@ class RefDataTest extends AbstractDataServiceTestCase
      */
     public function testFetchListOptions($source, $expected, $useGroups)
     {
-        $sut = new RefData();
-        $sut->setData('test', $source);
+        $this->sut->setData('test', $source);
 
-        $this->assertEquals($expected, $sut->fetchListOptions('test', $useGroups));
+        $this->assertEquals($expected, $this->sut->fetchListOptions('test', $useGroups));
     }
 
     public function provideFetchListOptions()
@@ -128,16 +133,17 @@ class RefDataTest extends AbstractDataServiceTestCase
         ];
 
         $dto = Qry::create($params);
-        $mockTransferAnnotationBuilder = m::mock()
-            ->shouldReceive('createQuery')->once()->andReturnUsing(
+
+        $this->transferAnnotationBuilder->shouldReceive('createQuery')
+            ->with(m::type(Qry::class))
+            ->once()
+            ->andReturnUsing(
                 function ($dto) use ($params) {
                     $this->assertEquals($params['refDataCategory'], $dto->getRefDataCategory());
                     $this->assertEquals($params['language'], $dto->getLanguage());
-                    return 'query';
+                    return $this->query;
                 }
-            )
-            ->once()
-            ->getMock();
+            );
 
         $mockResponse = m::mock()
             ->shouldReceive('isOk')
@@ -148,50 +154,36 @@ class RefDataTest extends AbstractDataServiceTestCase
             ->twice()
             ->getMock();
 
-        $sut = new RefData();
-        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
-        $this->mockServiceLocator
-            ->shouldReceive('get')
-            ->with('LanguagePreference')
-            ->andReturn(
-                m::mock()
-                    ->shouldReceive('getPreference')
-                    ->andReturn('en')
-                    ->once()
-                    ->getMock()
-            )
-            ->once()
-            ->getMock();
+        $this->mockHandleQuery($mockResponse);
 
-        $this->assertEquals($results['results'], $sut->fetchListData('cat'));
+        $this->languagePreferenceService->shouldReceive('getPreference')
+            ->once()
+            ->andReturn('en');
+
+        $this->assertEquals($results['results'], $this->sut->fetchListData('cat'));
     }
 
     public function testFetchListDataWithException()
     {
         $this->expectException(DataServiceException::class);
-        $mockTransferAnnotationBuilder = m::mock()
-            ->shouldReceive('createQuery')->once()->andReturn('query')->getMock();
+
+        $this->transferAnnotationBuilder->shouldReceive('createQuery')
+            ->with(m::type(Qry::class))
+            ->once()
+            ->andReturn($this->query);
 
         $mockResponse = m::mock()
             ->shouldReceive('isOk')
             ->andReturn(false)
             ->once()
             ->getMock();
-        $sut = new RefData();
-        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
-        $this->mockServiceLocator
-            ->shouldReceive('get')
-            ->with('LanguagePreference')
-            ->andReturn(
-                m::mock()
-                    ->shouldReceive('getPreference')
-                    ->andReturn('en')
-                    ->once()
-                    ->getMock()
-            )
-            ->once()
-            ->getMock();
 
-        $sut->fetchListData('cat');
+        $this->mockHandleQuery($mockResponse);
+
+        $this->languagePreferenceService->shouldReceive('getPreference')
+            ->once()
+            ->andReturn('en');
+
+        $this->sut->fetchListData('cat');
     }
 }

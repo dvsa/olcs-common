@@ -1,9 +1,8 @@
 <?php
 
-namespace OlcsTest\Service\Data;
+namespace CommonTest\Service\Data;
 
-use CommonTest\Bootstrap;
-use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Common\Service\Data\Application as ApplicationDataService;
 use Common\Service\Data\ApplicationOperatingCentre;
 use Mockery as m;
 
@@ -11,41 +10,39 @@ use Mockery as m;
  * Class ApplicationOperatingCentre Test
  * @package CommonTest\Service
  */
-class ApplicationOperatingCentreTest extends MockeryTestCase
+class ApplicationOperatingCentreTest extends AbstractDataServiceTestCase
 {
-    /**
-     * Holds the SUT
-     *
-     * @var \Common\Service\Data\Application
-     */
+    /** @var ApplicationOperatingCentre */
     private $sut;
 
-    /**
-     * Setup the sut
-     */
+    /** @var ApplicationDataService */
+    protected $applicationDataService;
+
     protected function setUp(): void
     {
-        $this->serviceManager = Bootstrap::getServiceManager();
-        $this->sut = new ApplicationOperatingCentre();
+        parent::setUp();
 
+        $this->applicationDataService = m::mock(ApplicationDataService::class);
+
+        $this->sut = new ApplicationOperatingCentre(
+            $this->abstractDataServiceServices,
+            $this->applicationDataService
+        );
     }
 
     public function testGetId()
     {
         $id = 1;
-        $mockApplicationService = m::mock('Common\Service\Data\Application');
-        $mockApplicationService
-            ->shouldReceive('getId')
+
+        $this->applicationDataService->shouldReceive('getId')
             ->once()
             ->andReturn($id);
-        $this->sut->setApplicationService($mockApplicationService);
 
         $this->assertEquals($id, $this->sut->getId());
     }
 
     public function testFetchListOptionsFullAddress()
     {
-
         $context = 'application';
         $useGroups = false;
 
@@ -68,18 +65,12 @@ class ApplicationOperatingCentreTest extends MockeryTestCase
         ];
 
         $id = 1;
-        $mockApplicationService = m::mock('Common\Service\Data\Application');
 
-        $mockApplicationService
-            ->shouldReceive('getId')
-            ->andReturn($id);
-
-        $mockApplicationService
+        $this->applicationDataService->shouldReceive('getId')
+            ->andReturn($id)
             ->shouldReceive('fetchOperatingCentreData')
             ->with($id)
             ->andReturn($mockData);
-
-        $this->sut->setApplicationService($mockApplicationService);
 
         $output = $this->sut->fetchListOptions($context, $useGroups);
 
@@ -88,7 +79,6 @@ class ApplicationOperatingCentreTest extends MockeryTestCase
 
     public function testFetchListOptionsPartialAddress()
     {
-
         $context = 'application';
         $useGroups = false;
 
@@ -111,18 +101,13 @@ class ApplicationOperatingCentreTest extends MockeryTestCase
         ];
 
         $id = 1;
-        $mockApplicationService = m::mock('Common\Service\Data\Application');
 
-        $mockApplicationService
-            ->shouldReceive('getId')
-            ->andReturn($id);
-
-        $mockApplicationService
+        $this->applicationDataService->shouldReceive('getId')
+            ->andReturn($id)
             ->shouldReceive('fetchOperatingCentreData')
             ->with($id)
             ->andReturn($mockData);
 
-        $this->sut->setApplicationService($mockApplicationService);
         $this->sut->setOutputType(ApplicationOperatingCentre::OUTPUT_TYPE_PARTIAL);
 
         $output = $this->sut->fetchListOptions($context, $useGroups);

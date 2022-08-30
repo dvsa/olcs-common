@@ -3,7 +3,7 @@
 namespace CommonTest\Service\Data;
 
 use Common\Exception\DataServiceException;
-use Common\Service\Data\SiCategoryType as Sut;
+use Common\Service\Data\SiCategoryType;
 use Dvsa\Olcs\Transfer\Query\Si\SiCategoryTypeListData as Qry;
 use Mockery as m;
 
@@ -13,14 +13,22 @@ use Mockery as m;
  */
 class SiCategoryTypeTest extends AbstractDataServiceTestCase
 {
+    /** @var SiCategoryType */
+    private $sut;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->sut = new SiCategoryType($this->abstractDataServiceServices);
+    }
+
     public function testFormatData()
     {
         $source = $this->getSingleSource();
         $expected = $this->getSingleExpected();
 
-        $sut = new Sut();
-
-        $this->assertEquals($expected, $sut->formatData($source));
+        $this->assertEquals($expected, $this->sut->formatData($source));
     }
 
     /**
@@ -30,10 +38,9 @@ class SiCategoryTypeTest extends AbstractDataServiceTestCase
      */
     public function testFetchListOptions($input, $expected)
     {
-        $sut = new Sut();
-        $sut->setData('SiCategoryType', $input);
+        $this->sut->setData('SiCategoryType', $input);
 
-        $this->assertEquals($expected, $sut->fetchListOptions(''));
+        $this->assertEquals($expected, $this->sut->fetchListOptions(''));
     }
 
     public function provideFetchListOptions()
@@ -54,17 +61,16 @@ class SiCategoryTypeTest extends AbstractDataServiceTestCase
 
         $dto = Qry::create($params);
 
-        $mockTransferAnnotationBuilder = m::mock()
-            ->shouldReceive('createQuery')
+        $this->transferAnnotationBuilder->shouldReceive('createQuery')
+            ->with(m::type(Qry::class))
             ->once()
             ->andReturnUsing(
                 function ($dto) use ($params) {
                     $this->assertEquals($params['sort'], $dto->getSort());
                     $this->assertEquals($params['order'], $dto->getOrder());
-                    return 'query';
+                    return $this->query;
                 }
-            )
-            ->getMock();
+            );
 
         $mockResponse = m::mock()
             ->shouldReceive('isOk')
@@ -75,17 +81,19 @@ class SiCategoryTypeTest extends AbstractDataServiceTestCase
             ->andReturn($results)
             ->getMock();
 
-        $sut = new Sut();
-        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
+        $this->mockHandleQuery($mockResponse);
 
-        $this->assertEquals($results['results'], $sut->fetchListData([]));
+        $this->assertEquals($results['results'], $this->sut->fetchListData([]));
     }
 
     public function testFetchListDataWithException()
     {
         $this->expectException(DataServiceException::class);
-        $mockTransferAnnotationBuilder = m::mock()
-            ->shouldReceive('createQuery')->once()->andReturn('query')->getMock();
+
+        $this->transferAnnotationBuilder->shouldReceive('createQuery')
+            ->with(m::type(Qry::class))
+            ->once()
+            ->andReturn($this->query);
 
         $mockResponse = m::mock()
             ->shouldReceive('isOk')
@@ -93,10 +101,9 @@ class SiCategoryTypeTest extends AbstractDataServiceTestCase
             ->andReturn(false)
             ->getMock();
 
-        $sut = new Sut();
-        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
+        $this->mockHandleQuery($mockResponse);
 
-        $sut->fetchListData([]);
+        $this->sut->fetchListData([]);
     }
 
     /**

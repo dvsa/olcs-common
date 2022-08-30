@@ -3,6 +3,7 @@
 namespace Common\Service\Data;
 
 use Common\Exception\DataServiceException;
+use Common\Preference\Language as LanguagePreference;
 use Dvsa\Olcs\Transfer\Query\RefData\RefDataList;
 
 /**
@@ -12,6 +13,22 @@ use Dvsa\Olcs\Transfer\Query\RefData\RefDataList;
  */
 class RefData extends AbstractListDataService
 {
+    /** @var LanguagePreference */
+    protected $languagePreferenceService;
+
+    /**
+     * Create service instance
+     *
+     * @param RefDataServices $refDataServices
+     *
+     * @return RefData
+     */
+    public function __construct(RefDataServices $refDataServices)
+    {
+        parent::__construct($refDataServices->getAbstractListDataServiceServices());
+        $this->languagePreferenceService = $refDataServices->getLanguagePreferenceService();
+    }
+
     /**
      * Fetch list data
      *
@@ -23,10 +40,9 @@ class RefData extends AbstractListDataService
     public function fetchListData($category = null)
     {
         if (is_null($this->getData($category))) {
-            $languagePreferenceService = $this->getServiceLocator()->get('LanguagePreference');
             $params = [
                 'refDataCategory' => $category,
-                'language' => $languagePreferenceService->getPreference()
+                'language' => $this->languagePreferenceService->getPreference()
             ];
             $dtoData = RefDataList::create($params);
             $response = $this->handleQuery($dtoData);

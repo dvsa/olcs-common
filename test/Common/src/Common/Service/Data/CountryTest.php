@@ -3,7 +3,6 @@
 namespace CommonTest\Service\Data;
 
 use Common\Exception\DataServiceException;
-use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Data\Country;
 use Mockery as m;
 use Dvsa\Olcs\Transfer\Query\ContactDetail\CountryList as Qry;
@@ -14,14 +13,22 @@ use Dvsa\Olcs\Transfer\Query\ContactDetail\CountryList as Qry;
  */
 class CountryTest extends AbstractDataServiceTestCase
 {
+    /** @var Country */
+    private $sut;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->sut = new Country($this->abstractDataServiceServices);
+    }
+
     public function testFormatData()
     {
         $source = $this->getSingleSource();
         $expected = $this->getSingleExpected();
 
-        $sut = new Country();
-
-        $this->assertEquals($expected, $sut->formatData($source));
+        $this->assertEquals($expected, $this->sut->formatData($source));
     }
 
     /**
@@ -31,10 +38,9 @@ class CountryTest extends AbstractDataServiceTestCase
      */
     public function testFetchListOptions($input, $category, $expected)
     {
-        $sut = new Country();
-        $sut->setData('Country', $input);
+        $this->sut->setData('Country', $input);
 
-        $this->assertEquals($expected, $sut->fetchListOptions($category));
+        $this->assertEquals($expected, $this->sut->fetchListOptions($category));
     }
 
     public function provideFetchListOptions()
@@ -78,16 +84,17 @@ class CountryTest extends AbstractDataServiceTestCase
             'order' => 'ASC',
         ];
         $dto = Qry::create($params);
-        $mockTransferAnnotationBuilder = m::mock()
-            ->shouldReceive('createQuery')->once()->andReturnUsing(
+
+        $this->transferAnnotationBuilder->shouldReceive('createQuery')
+            ->with(m::type(Qry::class))
+            ->once()
+            ->andReturnUsing(
                 function ($dto) use ($params) {
                     $this->assertEquals($params['sort'], $dto->getSort());
                     $this->assertEquals($params['order'], $dto->getOrder());
-                    return 'query';
+                    return $this->query;
                 }
-            )
-            ->once()
-            ->getMock();
+            );
 
         $mockResponse = m::mock()
             ->shouldReceive('isOk')
@@ -98,27 +105,29 @@ class CountryTest extends AbstractDataServiceTestCase
             ->twice()
             ->getMock();
 
-        $sut = new Country();
-        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
+        $this->mockHandleQuery($mockResponse);
 
-        $this->assertEquals($results['results'], $sut->fetchListData([]));
+        $this->assertEquals($results['results'], $this->sut->fetchListData([]));
     }
 
     public function testFetchListDataWithException()
     {
         $this->expectException(DataServiceException::class);
-        $mockTransferAnnotationBuilder = m::mock()
-            ->shouldReceive('createQuery')->once()->andReturn('query')->getMock();
+
+        $this->transferAnnotationBuilder->shouldReceive('createQuery')
+            ->with(m::type(Qry::class))
+            ->once()
+            ->andReturn($this->query);
 
         $mockResponse = m::mock()
             ->shouldReceive('isOk')
             ->andReturn(false)
             ->once()
             ->getMock();
-        $sut = new Country();
-        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
 
-        $sut->fetchListData([]);
+        $this->mockHandleQuery($mockResponse);
+
+        $this->sut->fetchListData([]);
     }
 
     /**

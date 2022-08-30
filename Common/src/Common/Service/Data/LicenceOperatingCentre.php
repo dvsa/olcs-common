@@ -2,14 +2,12 @@
 
 namespace Common\Service\Data;
 
-use Laminas\ServiceManager\FactoryInterface;
-
 /**
  * Class LicenceOperatingCentre
  *
  * @package Olcs\Service\Data
  */
-class LicenceOperatingCentre extends AbstractDataService implements FactoryInterface, ListDataInterface
+class LicenceOperatingCentre extends AbstractDataService implements ListDataInterface
 {
     use LicenceServiceTrait;
 
@@ -27,12 +25,29 @@ class LicenceOperatingCentre extends AbstractDataService implements FactoryInter
     protected $outputType = self::OUTPUT_TYPE_FULL;
 
     /**
+     * Create service instance
+     *
+     * @param AbstractDataServiceServices $abstractDataServiceServices
+     * @param Licence $licenceDataService
+     *
+     * @return LicenceOperatingCentre
+     */
+    public function __construct(
+        AbstractDataServiceServices $abstractDataServiceServices,
+        Licence $licenceDataService
+    ) {
+        parent::__construct($abstractDataServiceServices);
+        $this->setLicenceService($licenceDataService);
+    }
+
+    /**
      * Fetch list options
      *
      * @param array|string $context   Context
      * @param bool         $useGroups Use groups
      *
      * @return array
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function fetchListOptions($context = null, $useGroups = false)
     {

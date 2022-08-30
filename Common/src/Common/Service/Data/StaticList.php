@@ -11,6 +11,25 @@ use Common\Service\Data\Interfaces\ListData;
  */
 class StaticList extends AbstractDataService implements ListData
 {
+    /** @var array */
+    protected $config;
+
+    /**
+     * Create service instance
+     *
+     * @param AbstractDataServiceServices $abstractDataServiceServices
+     * @param array $config
+     *
+     * @return StaticList
+     */
+    public function __construct(
+        AbstractDataServiceServices $abstractDataServiceServices,
+        array $config
+    ) {
+        parent::__construct($abstractDataServiceServices);
+        $this->config = $config;
+    }
+
     /**
      * Fetch list options
      *
@@ -18,6 +37,7 @@ class StaticList extends AbstractDataService implements ListData
      * @param bool   $useGroups Use groups
      *
      * @return array
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function fetchListOptions($context, $useGroups = false)
     {
@@ -39,11 +59,8 @@ class StaticList extends AbstractDataService implements ListData
      */
     public function fetchListData($context)
     {
-        $config = $this->getServiceLocator()->get('Config');
-
         if (is_null($this->getData('static-list-' . $context))) {
-
-            $data = isset($config['static-list-data'][$context]) ? $config['static-list-data'][$context] : [];
+            $data = $this->config['static-list-data'][$context] ?? [];
             $this->setData('static-list-' . $context, $data);
         }
 

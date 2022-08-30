@@ -1,11 +1,11 @@
 <?php
 
-namespace OlcsTest\Service\Data;
+namespace CommonTest\Service\Data;
 
+use Common\Exception\DataServiceException;
 use Common\Service\Data\BusRegSearchViewListDataService;
-use Dvsa\Olcs\Transfer\Query\BusRegSearchView\BusRegSearchViewContextList as BusRegSearchViewContextListQry;
+use Dvsa\Olcs\Transfer\Query\BusRegSearchView\BusRegSearchViewContextList as Qry;
 use Mockery as m;
-use CommonTest\Service\Data\AbstractDataServiceTestCase;
 
 /**
  * Class BusRegSearchViewListDataServiceTest
@@ -13,6 +13,16 @@ use CommonTest\Service\Data\AbstractDataServiceTestCase;
  */
 class BusRegSearchViewListDataServiceTest extends AbstractDataServiceTestCase
 {
+    /** @var BusRegSearchViewListDataService */
+    private $sut;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->sut = new BusRegSearchViewListDataService($this->abstractDataServiceServices);
+    }
+
     /**
      * @dataProvider provideFetchListOptions
      * @param $context
@@ -21,20 +31,18 @@ class BusRegSearchViewListDataServiceTest extends AbstractDataServiceTestCase
      */
     public function testFetchListOptions($context, $mockResultData, $expected)
     {
-        $sut = new BusRegSearchViewListDataService();
-        $sut->setData('BusRegSearchView' . ucfirst($context), $mockResultData);
+        $this->sut->setData('BusRegSearchView' . ucfirst($context), $mockResultData);
 
-        $this->assertEquals($expected, $sut->fetchListOptions($context));
+        $this->assertEquals($expected, $this->sut->fetchListOptions($context));
     }
 
     public function testFetchListOptionsInvalidContext()
     {
-        $this->expectException(\Common\Exception\DataServiceException::class);
+        $this->expectException(DataServiceException::class);
 
         $context = 'invalid';
-        $sut = new BusRegSearchViewListDataService();
 
-        $sut->fetchListOptions($context);
+        $this->sut->fetchListOptions($context);
     }
 
     /**
@@ -46,16 +54,17 @@ class BusRegSearchViewListDataServiceTest extends AbstractDataServiceTestCase
             'context' => $context,
             'order' => 'ASC'
         ];
-        $dto = BusRegSearchViewContextListQry::create($params);
-        $mockTransferAnnotationBuilder = m::mock()
-            ->shouldReceive('createQuery')->once()->andReturnUsing(
+        $dto = Qry::create($params);
+
+        $this->transferAnnotationBuilder->shouldReceive('createQuery')
+            ->with(m::type(Qry::class))
+            ->once()
+            ->andReturnUsing(
                 function ($dto) use ($params) {
                     $this->assertEquals($params['context'], $dto->getContext());
-                    return 'query';
+                    return $this->query;
                 }
-            )
-            ->once()
-            ->getMock();
+            );
 
         $mockResponse = m::mock()
             ->shouldReceive('isOk')
@@ -66,12 +75,11 @@ class BusRegSearchViewListDataServiceTest extends AbstractDataServiceTestCase
             ->once()
             ->getMock();
 
-        $sut = new BusRegSearchViewListDataService();
-        $sut->setData('BusRegSearchView' . ucfirst($context), null);
+        $this->sut->setData('BusRegSearchView' . ucfirst($context), null);
 
-        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
+        $this->mockHandleQuery($mockResponse);
 
-        $this->assertEquals($expected, $sut->fetchListData($context));
+        $this->assertEquals($expected, $this->sut->fetchListData($context));
     }
 
     public function provideFetchListOptions()

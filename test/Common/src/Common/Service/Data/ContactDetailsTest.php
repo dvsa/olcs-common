@@ -10,14 +10,16 @@ use Mockery as m;
 /**
  * @covers \Common\Service\Data\ContactDetails
  */
-class ContactDetailsTest extends AbstractDataServiceTestCase
+class ContactDetailsTest extends AbstractListDataServiceTestCase
 {
-    /** @var ContactDetails  */
+    /** @var ContactDetails */
     private $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
-        $this->sut = new ContactDetails();
+        parent::setUp();
+
+        $this->sut = new ContactDetails($this->abstractListDataServiceServices);
     }
 
     public function testFetchListData()
@@ -31,26 +33,26 @@ class ContactDetailsTest extends AbstractDataServiceTestCase
             'contactType' => 'unit_ContactType',
         ];
 
-        $mockTransferAnnotationBuilder = m::mock()
-            ->shouldReceive('createQuery')->once()->andReturnUsing(
+        $this->transferAnnotationBuilder->shouldReceive('createQuery')
+            ->with(m::type(Qry::class))
+            ->once()
+            ->andReturnUsing(
                 function (Qry $dto) use ($params) {
                     $this->assertEquals($params['sort'], $dto->getSort());
                     $this->assertEquals($params['order'], $dto->getOrder());
                     $this->assertEquals($params['page'], $dto->getPage());
                     $this->assertEquals($params['limit'], $dto->getLimit());
                     $this->assertEquals($params['contactType'], $dto->getContactType());
-                    return 'query';
+                    return $this->query;
                 }
-            )
-            ->once()
-            ->getMock();
+            );
 
         $mockResponse = m::mock()
             ->shouldReceive('isOk')->andReturn(true)->once()
             ->shouldReceive('getResult')->andReturn($results)->once()
             ->getMock();
 
-        $this->mockHandleQuery($this->sut, $mockTransferAnnotationBuilder, $mockResponse);
+        $this->mockHandleQuery($mockResponse);
 
         $this->assertEquals($results['results'], $this->sut->fetchListData('unit_ContactType'));
     }
@@ -81,8 +83,10 @@ class ContactDetailsTest extends AbstractDataServiceTestCase
     {
         $this->expectException(DataServiceException::class);
 
-        $mockTransferAnnotationBuilder = m::mock()
-            ->shouldReceive('createQuery')->once()->andReturn('query')->getMock();
+        $this->transferAnnotationBuilder->shouldReceive('createQuery')
+            ->with(m::type(Qry::class))
+            ->once()
+            ->andReturn($this->query);
 
         $mockResponse = m::mock()
             ->shouldReceive('isOk')
@@ -90,7 +94,7 @@ class ContactDetailsTest extends AbstractDataServiceTestCase
             ->once()
             ->getMock();
 
-        $this->mockHandleQuery($this->sut, $mockTransferAnnotationBuilder, $mockResponse);
+        $this->mockHandleQuery($mockResponse);
 
         $this->sut->setContactType('unit_ContactType');
         $this->sut->fetchListData([]);

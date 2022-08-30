@@ -10,6 +10,18 @@ use Common\Service\Data\Interfaces\ListData;
 abstract class AbstractListDataService extends AbstractDataService implements ListData
 {
     /**
+     * Create service instance
+     *
+     * @param AbstractListDataServiceServices $abstractListDataServiceServices
+     *
+     * @return AbstractDataService
+     */
+    public function __construct(AbstractListDataServiceServices $abstractListDataServiceServices)
+    {
+        parent::__construct($abstractListDataServiceServices->getAbstractDataServiceServices());
+    }
+
+    /**
      * Format data for groups
      *
      * @param array $data Data

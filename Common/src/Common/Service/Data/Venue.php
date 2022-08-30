@@ -6,7 +6,6 @@ use Common\Exception\DataServiceException;
 use Common\Service\Data\AbstractDataService;
 use Common\Service\Data\Interfaces\ListData;
 use Dvsa\Olcs\Transfer\Query\Venue\VenueList;
-use Laminas\ServiceManager\FactoryInterface;
 
 /**
  * Class Venue
@@ -14,9 +13,25 @@ use Laminas\ServiceManager\FactoryInterface;
  * @author Ian Lindsay <ian@hemera-business-services.co.uk>
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class Venue extends AbstractDataService implements ListData, FactoryInterface
+class Venue extends AbstractDataService implements ListData
 {
     use LicenceServiceTrait;
+
+    /**
+     * Create service instance
+     *
+     * @param AbstractDataServiceServices $abstractDataServiceServices
+     * @param Licence $licenceDataService
+     *
+     * @return RefData
+     */
+    public function __construct(
+        AbstractDataServiceServices $abstractDataServiceServices,
+        Licence $licenceDataService
+    ) {
+        parent::__construct($abstractDataServiceServices);
+        $this->setLicenceService($licenceDataService);
+    }
 
     /**
      * Format data
@@ -43,6 +58,7 @@ class Venue extends AbstractDataService implements ListData, FactoryInterface
      * @param bool   $useGroups Use groups
      *
      * @return array
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function fetchListOptions($category, $useGroups = false)
     {

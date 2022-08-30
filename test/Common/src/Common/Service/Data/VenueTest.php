@@ -4,8 +4,10 @@ namespace OlcsTest\Service\Data;
 
 use Common\Exception\DataServiceException;
 use Common\Service\Data\Venue;
+use Common\Service\Data\Licence as LicenceDataService;
 use Mockery as m;
 use CommonTest\Service\Data\AbstractDataServiceTestCase;
+use Dvsa\Olcs\Transfer\Query\Venue\VenueList as Qry;
 
 /**
  * Class Venue Test
@@ -13,14 +15,30 @@ use CommonTest\Service\Data\AbstractDataServiceTestCase;
  */
 class VenueTest extends AbstractDataServiceTestCase
 {
+    /** @var Venue */
+    private $sut;
+
+    /** @var LicenceDataService */
+    protected $licenceDataService;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->licenceDataService = m::mock(LicenceDataService::class);
+
+        $this->sut = new Venue(
+            $this->abstractDataServiceServices,
+            $this->licenceDataService
+        );
+    }
+
     public function testFormatData()
     {
         $source = $this->getSingleSource();
         $expected = $this->getSingleExpected();
 
-        $sut = new Venue();
-
-        $this->assertEquals($expected, $sut->formatData($source));
+        $this->assertEquals($expected, $this->sut->formatData($source));
     }
 
     /**
@@ -30,8 +48,8 @@ class VenueTest extends AbstractDataServiceTestCase
      */
     public function testFetchListOptions($input, $expected)
     {
-        $mockLicenceService = m::mock()
-            ->shouldReceive('fetchLicenceData')
+        $this->licenceDataService->shouldReceive('fetchLicenceData')
+            ->once()
             ->andReturn(
                 [
                     'id' => 7,
@@ -39,16 +57,11 @@ class VenueTest extends AbstractDataServiceTestCase
                     'goodsOrPsv' => ['id'=>'lcat_gv'],
                     'trafficArea' => ['id' => 'B']
                 ]
-            )
-            ->once()
-            ->getMock();
+            );
 
-        $sut = new Venue();
-        $sut->setLicenceService($mockLicenceService);
+        $this->sut->setData('Venue', $input);
 
-        $sut->setData('Venue', $input);
-
-        $this->assertEquals($expected, $sut->fetchListOptions(''));
+        $this->assertEquals($expected, $this->sut->fetchListOptions(''));
     }
 
     public function provideFetchListOptions()
@@ -68,15 +81,15 @@ class VenueTest extends AbstractDataServiceTestCase
     {
         $results = ['results' => 'results'];
 
-        $mockTransferAnnotationBuilder = m::mock()
-            ->shouldReceive('createQuery')->once()->andReturnUsing(
+        $this->transferAnnotationBuilder->shouldReceive('createQuery')
+            ->with(m::type(Qry::class))
+            ->once()
+            ->andReturnUsing(
                 function ($dto) use ($expectedTrafficArea) {
                     $this->assertEquals($expectedTrafficArea, $dto->getTrafficArea());
-                    return 'query';
+                    return $this->query;
                 }
-            )
-            ->once()
-            ->getMock();
+            );
 
         $mockResponse = m::mock()
             ->shouldReceive('isOk')
@@ -87,10 +100,9 @@ class VenueTest extends AbstractDataServiceTestCase
             ->twice()
             ->getMock();
 
-        $sut = new Venue();
-        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
+        $this->mockHandleQuery($mockResponse);
 
-        $this->assertEquals($results['results'], $sut->fetchListData($input));
+        $this->assertEquals($results['results'], $this->sut->fetchListData($input));
     }
 
     public function provideFetchListData()
@@ -104,18 +116,21 @@ class VenueTest extends AbstractDataServiceTestCase
     public function testFetchLicenceDataWithException()
     {
         $this->expectException(DataServiceException::class);
-        $mockTransferAnnotationBuilder = m::mock()
-            ->shouldReceive('createQuery')->once()->andReturn('query')->getMock();
+
+        $this->transferAnnotationBuilder->shouldReceive('createQuery')
+            ->with(m::type(Qry::class))
+            ->once()
+            ->andReturn($this->query);
 
         $mockResponse = m::mock()
             ->shouldReceive('isOk')
             ->andReturn(false)
             ->once()
             ->getMock();
-        $sut = new Venue();
-        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
 
-        $sut->fetchListData(['trafficArea' => 'B']);
+        $this->mockHandleQuery($mockResponse);
+
+        $this->sut->fetchListData(['trafficArea' => 'B']);
     }
 
     /**
