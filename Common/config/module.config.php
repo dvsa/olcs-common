@@ -157,6 +157,7 @@ return array(
             'QueryService' => \Common\Service\Cqrs\Query\CachingQueryService::class,
             'CommandSender' => CommandSender::class,
             'Review\ConditionsUndertakings' => Common\Service\Review\ConditionsUndertakingsReviewService::class,
+            'Data\Address' => DataService\AddressDataService::class,
         ),
         'invokables' => array(
             'Common\Service\NavigationFactory' => 'Common\Service\NavigationFactory',
