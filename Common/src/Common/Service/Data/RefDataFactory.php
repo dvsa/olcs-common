@@ -16,25 +16,30 @@ class RefDataFactory implements FactoryInterface
      * @param $requestedName
      * @param array|null $options
      *
-     * @return RefData
+     * @return mixed
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): RefData
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        return new RefData(
+        return new $requestedName(
             $container->get(RefDataServices::class)
         );
     }
 
     /**
-     * Create service
+     * Create service method for Laminas v2 compatibility
      *
      * @param ServiceLocatorInterface $services
      *
-     * @return RefData
+     * @return mixed
      */
-    public function createService(ServiceLocatorInterface $services): RefData
+    public function createService(ServiceLocatorInterface $services)
     {
-        return $this($services, RefData::class);
+        // see Laminas\ServiceManager\ServiceManager line 1091
+        // additional arguments are passed into this method beyond those defined in the interface
+        $args = func_get_args();
+        $requestedName = $args[2];
+
+        return $this($services, $requestedName);
     }
 }
