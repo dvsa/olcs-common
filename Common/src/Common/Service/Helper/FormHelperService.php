@@ -2,7 +2,9 @@
 
 namespace Common\Service\Helper;
 
+use Common\Form\Annotation\CustomAnnotationBuilder as FormAnnotationBuilder;
 use Common\Form\Elements\Types\Address;
+use Common\Service\Data\AddressDataService;
 use Common\Service\Table\TableBuilder;
 use Dvsa\Olcs\CompaniesHouse\Service\Exception\ServiceException;
 use Dvsa\Olcs\Transfer\Query\CompaniesHouse\ByNumber;
@@ -19,7 +21,9 @@ use Laminas\InputFilter\InputFilter;
 use Laminas\InputFilter\InputFilterInterface;
 use Laminas\Validator\ValidatorChain;
 use Laminas\View\Model\ViewModel;
+use Laminas\View\Renderer\RendererInterface;
 use Laminas\Validator\ValidatorInterface;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * @internal All validations to do with empty fields must be done as a validator
@@ -29,11 +33,55 @@ use Laminas\Validator\ValidatorInterface;
  *
  * Form Helper Service
  */
-class FormHelperService extends AbstractHelperService
+class FormHelperService
 {
     const ALTER_LABEL_RESET = 0;
     const ALTER_LABEL_APPEND = 1;
     const ALTER_LABEL_PREPEND = 2;
+
+    /** @var FormAnnotationBuilder */
+    private $formAnnotationBuilder;
+
+    /** @var array */
+    private $config;
+
+    /** @var AuthorizationService */
+    private $authorizationService;
+
+    /** @var RendererInterface */
+    private $viewRenderer;
+
+    /** @var AddressDataService */
+    private $addressData;
+
+    /** @var AddressHelperService */
+    private $addressHelper;
+
+    /** @var DateHelperService */
+    private $dateHelper;
+
+    /** @var TranslationHelperService */
+    private $translationHelper;
+
+    public function __construct(
+        FormAnnotationBuilder $formAnnotationBuilder,
+        array $config,
+        AuthorizationService $authorizationService,
+        RendererInterface $viewRenderer,
+        AddressDataService $addressData,
+        AddressHelperService $addressHelper,
+        DateHelperService $dateHelper,
+        TranslationHelperService $translationHelper
+    ) {
+        $this->formAnnotationBuilder = $formAnnotationBuilder;
+        $this->config = $config;
+        $this->authorizationService = $authorizationService;
+        $this->viewRenderer = $viewRenderer;
+        $this->addressData = $addressData;
+        $this->addressHelper = $addressHelper;
+        $this->dateHelper = $dateHelper;
+        $this->translationHelper = $translationHelper;
+    }
 
     /**
      * Create a form
@@ -52,12 +100,8 @@ class FormHelperService extends AbstractHelperService
             $class = $this->findForm($formName);
         }
 
-        $sm = $this->getServiceLocator();
-        $annotationBuilder = $sm->get('FormAnnotationBuilder');
-        $cfg = $sm->get('Config');
-
         /** @var \Common\Form\Form $form */
-        $form = $annotationBuilder->createForm($class);
+        $form = $this->formAnnotationBuilder->createForm($class);
 
         //  add CSRF element
         if ($addCsrf) {
@@ -72,7 +116,7 @@ class FormHelperService extends AbstractHelperService
                         'messageTemplates' => array(
                             'notSame' => 'csrf-message',
                         ),
-                        'timeout' => $cfg['csrf']['timeout'],
+                        'timeout' => $this->config['csrf']['timeout'],
                     ],
                 ],
             ];
@@ -97,10 +141,8 @@ class FormHelperService extends AbstractHelperService
             $form->add($config);
         }
 
-        $authService = $this->getServiceLocator()->get(\ZfcRbac\Service\AuthorizationService::class);
-
-        if ($authService->isGranted('internal-user')) {
-            if (!$authService->isGranted('internal-edit') && !$form->getOption('bypass_auth')) {
+        if ($this->authorizationService->isGranted('internal-user')) {
+            if (!$this->authorizationService->isGranted('internal-edit') && !$form->getOption('bypass_auth')) {
                 $form->setOption('readonly', true);
             }
         }
@@ -300,7 +342,7 @@ class FormHelperService extends AbstractHelperService
         }
 
         try {
-            $addressList = $this->getServiceLocator()->get('Data\Address')->getAddressesForPostcode($postcode);
+            $addressList = $this->addressData->getAddressesForPostcode($postcode);
         } catch (\Exception $e) {
             // RestClient / ResponseHelper throw root exceptions :(
             $fieldset->get('searchPostcode')->setMessages(array('postcode.error.not-available'));
@@ -318,7 +360,7 @@ class FormHelperService extends AbstractHelperService
         }
 
         $fieldset->get('searchPostcode')->get('addresses')->setValueOptions(
-            $this->getServiceLocator()->get('Helper\Address')->formatAddressesForSelect($addressList)
+            $this->addressHelper->formatAddressesForSelect($addressList)
         );
 
         return true;
@@ -334,10 +376,9 @@ class FormHelperService extends AbstractHelperService
      */
     private function processAddressSelect($post, $name)
     {
-        $address = $this->getServiceLocator()->get('Data\Address')
-            ->getAddressForUprn($post[$name]['searchPostcode']['addresses']);
+        $address = $this->addressData->getAddressForUprn($post[$name]['searchPostcode']['addresses']);
 
-        return $this->getServiceLocator()->get('Helper\Address')->formatPostalAddress($address);
+        return $this->addressHelper->formatPostalAddress($address);
     }
 
     /**
@@ -673,18 +714,14 @@ class FormHelperService extends AbstractHelperService
      */
     public function lockElement(Element $element, $message)
     {
-        $translator = $this->getServiceLocator()->get('Helper\Translation');
-
-        $viewRenderer = $this->getServiceLocator()->get('ViewRenderer');
-
         $lockView = new ViewModel(
-            array('message' => $translator->translate($message))
+            array('message' => $this->translationHelper->translate($message))
         );
         $lockView->setTemplate('partials/lock');
 
-        $label = $translator->translate($element->getLabel());
+        $label = $this->translationHelper->translate($element->getLabel());
 
-        $element->setLabel($label . $viewRenderer->render($lockView));
+        $element->setLabel($label . $this->viewRenderer->render($lockView));
         $element->setLabelOption('disable_html_escape', true);
 
         $attributes = $element->getLabelAttributes();
@@ -787,14 +824,12 @@ class FormHelperService extends AbstractHelperService
         $options = $element->getValueOptions();
 
         if (isset($options[$index])) {
-            $translator = $this->getServiceLocator()->get('Helper\Translation');
-
             if (is_array($options[$index])) {
-                $options[$index]['label'] = $translator->translate($options[$index]['label']) . ' ' .
-                    $translator->translate('current.option.suffix');
+                $options[$index]['label'] = $this->translationHelper->translate($options[$index]['label']) . ' ' .
+                    $this->translationHelper->translate('current.option.suffix');
             } else {
-                $options[$index] = $translator->translate($options[$index]) . ' ' .
-                    $translator->translate('current.option.suffix');
+                $options[$index] = $this->translationHelper->translate($options[$index]) . ' ' .
+                    $this->translationHelper->translate('current.option.suffix');
             }
 
             $element->setValueOptions($options);
@@ -887,7 +922,7 @@ class FormHelperService extends AbstractHelperService
         $currentValue = $field->getValue();
         $currentValue = trim($currentValue, '-'); // date element returns '--' when empty!
         if (empty($currentValue)) {
-            $today = $this->getServiceLocator()->get('Helper\Date')->getDateObject();
+            $today = $this->dateHelper->getDateObject();
             $field->setValue($today);
         }
 
@@ -979,11 +1014,9 @@ class FormHelperService extends AbstractHelperService
      */
     protected function setCompaniesHouseFormMessage($form, $detailsFieldset, string $message)
     {
-        $translator = $this->getServiceLocator()->get('translator');
-
         $form->get($detailsFieldset)->get('companyNumber')->setMessages(
             array(
-                'company_number' => array($translator->translate($message)),
+                'company_number' => array($this->translationHelper->translate($message)),
             )
         );
     }

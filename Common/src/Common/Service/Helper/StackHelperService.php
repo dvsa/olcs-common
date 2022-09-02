@@ -12,7 +12,7 @@ namespace Common\Service\Helper;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class StackHelperService extends AbstractHelperService
+class StackHelperService
 {
     public function getStackValue(array $stack, array $stackReference)
     {

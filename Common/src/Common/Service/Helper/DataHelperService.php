@@ -12,7 +12,7 @@ namespace Common\Service\Helper;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class DataHelperService extends AbstractHelperService
+class DataHelperService
 {
     /**
      * Replace the children's array, with their ids
@@ -61,7 +61,6 @@ class DataHelperService extends AbstractHelperService
         }
 
         if (isset($map['_addresses'])) {
-
             foreach ($map['_addresses'] as $address) {
                 $oldData = $this->processAddressData($oldData, $address);
             }
@@ -70,9 +69,7 @@ class DataHelperService extends AbstractHelperService
         $data = array();
 
         if (isset($map[$section]['mapFrom'])) {
-
             foreach ($map[$section]['mapFrom'] as $key) {
-
                 if (isset($oldData[$key])) {
                     $data = array_merge($data, $oldData[$key]);
                 }
@@ -80,7 +77,6 @@ class DataHelperService extends AbstractHelperService
         }
 
         if (isset($map[$section]['children'])) {
-
             foreach ($map[$section]['children'] as $child => $options) {
                 $data[$child] = $this->processDataMap($oldData, array($child => $options), $child);
             }

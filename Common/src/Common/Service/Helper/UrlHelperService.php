@@ -7,6 +7,8 @@
  */
 namespace Common\Service\Helper;
 
+use Laminas\View\HelperPluginManager;
+
 /**
  * Url Helper Service
  *
@@ -16,10 +18,32 @@ namespace Common\Service\Helper;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class UrlHelperService extends AbstractHelperService
+class UrlHelperService
 {
     const EXTERNAL_HOST = 'selfserve';
     const INTERNAL_HOST = 'internal';
+
+    /** @var HelperPluginManager */
+    protected $helperPluginManager;
+
+    /** @var array */
+    protected $config;
+
+    /**
+     * Create service instance
+     *
+     * @param HelperPluginManager $helperPluginManager
+     * @param array $config
+     *
+     * @return UrlHelperService
+     */
+    public function __construct(
+        HelperPluginManager $helperPluginManager,
+        array $config
+    ) {
+        $this->helperPluginManager = $helperPluginManager;
+        $this->config = $config;
+    }
 
     /**
      * Generates a URL based on a route
@@ -33,7 +57,7 @@ class UrlHelperService extends AbstractHelperService
      */
     public function fromRoute($route = null, $params = array(), $options = array(), $reuseMatchedParams = false)
     {
-        $url = $this->getServiceLocator()->get('viewhelpermanager')->get('url');
+        $url = $this->helperPluginManager->get('url');
 
         return $url($route, $params, $options, $reuseMatchedParams);
     }
@@ -49,14 +73,12 @@ class UrlHelperService extends AbstractHelperService
         // this method isn't compatible with the canonical option
         $options['use_canonical'] = false;
 
-        $url = $this->getServiceLocator()->get('viewhelpermanager')->get('url');
-
-        return $hostname . $url($route, $params, $options, $reuseMatchedParams);
+        return $hostname . $this->fromRoute($route, $params, $options, $reuseMatchedParams);
     }
 
     private function getHostname($key)
     {
-        $config = $this->getServiceLocator()->get('config')['hostnames'];
+        $config = $this->config['hostnames'];
         if (!isset($config[$key])) {
             throw new \RuntimeException('Hostname for \'' . $key . '\' not found');
         }

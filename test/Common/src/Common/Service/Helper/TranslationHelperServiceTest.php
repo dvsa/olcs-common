@@ -7,7 +7,6 @@
  */
 namespace CommonTest\Service\Helper;
 
-use CommonTest\Bootstrap;
 use Common\Service\Helper\TranslationHelperService;
 use Laminas\I18n\Translator\Translator;
 
@@ -37,12 +36,7 @@ class TranslationHelperServiceTest extends \PHPUnit\Framework\TestCase
             ->method('translate')
             ->will($this->returnCallback(array($this, 'translate')));
 
-        $serviceManager = Bootstrap::getServiceManager();
-        $serviceManager->setAllowOverride(true);
-        $serviceManager->setService('translator', $this->mockTranslator);
-
-        $this->sut = new TranslationHelperService();
-        $this->sut->setServiceLocator($serviceManager);
+        $this->sut = new TranslationHelperService($this->mockTranslator);
     }
 
     /**

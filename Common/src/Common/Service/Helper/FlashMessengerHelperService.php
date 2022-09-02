@@ -7,12 +7,14 @@
  */
 namespace Common\Service\Helper;
 
+use Laminas\Mvc\Controller\Plugin\FlashMessenger;
+
 /**
  * Flash Messenger Helper Service
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FlashMessengerHelperService extends AbstractHelperService
+class FlashMessengerHelperService
 {
     const NAMESPACE_PROMINENT_ERROR = 'prominent-error';
 
@@ -23,6 +25,22 @@ class FlashMessengerHelperService extends AbstractHelperService
         'warning' => [],
         'info' => []
     ];
+
+    /** @var FlashMessenger */
+    protected $flashMessenger;
+
+    /**
+     * Create service instance
+     *
+     * @param FlashMessenger $flashMessenger
+     *
+     * @return FlashMessengerHelperService
+     */
+    public function __construct(
+        FlashMessenger $flashMessenger
+    ) {
+        $this->flashMessenger = $flashMessenger;
+    }
 
     public function addCurrentMessage($namespace, $message)
     {
@@ -118,7 +136,7 @@ class FlashMessengerHelperService extends AbstractHelperService
      */
     protected function getFlashMessenger()
     {
-        return $this->getServiceLocator()->get('ControllerPluginManager')->get('FlashMessenger');
+        return $this->flashMessenger;
     }
 
     public function addUnknownError()

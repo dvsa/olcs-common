@@ -7,13 +7,31 @@
  */
 namespace Common\Service\Helper;
 
+use Laminas\I18n\Translator\TranslatorInterface;
+
 /**
  * Translation Helper Service
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class TranslationHelperService extends AbstractHelperService
+class TranslationHelperService
 {
+    /** @var TranslatorInterface */
+    protected $translator;
+
+    /**
+     * Create service instance
+     *
+     * @param TranslatorInterface $translator
+     *
+     * @return TranslationHelperService
+     */
+    public function __construct(
+        TranslatorInterface $translator
+    ) {
+        $this->translator = $translator;
+    }
+
     /**
      * Allows you to replace variables after the string is translated
      *
@@ -71,16 +89,16 @@ class TranslationHelperService extends AbstractHelperService
     public function translate($message, $translateToWelsh = 'N')
     {
         $locale = ($translateToWelsh === 'Y') ? 'cy_GB' : null;
-        return $this->getTranslator()->translate($message, 'default', $locale);
+        return $this->translator->translate($message, 'default', $locale);
     }
 
     /**
      * Get translator
      *
-     * @return \Laminas\I18n\Translator\Translator
+     * @return TranslatorInterface
      */
     public function getTranslator()
     {
-        return $this->getServiceLocator()->get('translator');
+        return $this->translator;
     }
 }

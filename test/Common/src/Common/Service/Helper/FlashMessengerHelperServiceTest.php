@@ -34,11 +34,7 @@ class FlashMessengerHelperServiceTest extends MockeryTestCase
     {
         $this->mockFlashMessenger = m::mock('\Laminas\Mvc\Controller\Plugin\FlashMessenger');
 
-        $mockServiceManager = m::mock('\Laminas\ServiceManager\ServiceManager');
-        $mockServiceManager->shouldReceive('get->get')->andReturn($this->mockFlashMessenger);
-
-        $this->sut = new FlashMessengerHelperService();
-        $this->sut->setServiceLocator($mockServiceManager);
+        $this->sut = new FlashMessengerHelperService($this->mockFlashMessenger);
     }
 
     /**

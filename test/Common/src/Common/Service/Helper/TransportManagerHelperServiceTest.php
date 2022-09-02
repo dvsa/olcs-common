@@ -2,12 +2,21 @@
 
 namespace CommonTest\Helper;
 
+use Common\Service\Cqrs\Query\CachingQueryService as QueryService;
+use Common\Service\Data\CategoryDataService;
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Helper\DateHelperService;
+use Common\Service\Helper\TranslationHelperService;
+use Common\Service\Helper\TransportManagerHelperService;
+use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\TableBuilder;
-use CommonTest\Bootstrap;
+use Common\Service\Table\TableFactory;
+use Laminas\Form\Element;
+use Laminas\Form\Fieldset;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Common\Service\Helper\TransportManagerHelperService;
-use Common\Service\Data\CategoryDataService;
+use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder as TransferAnnotationBuilder;
+use Dvsa\Olcs\Transfer\Query\QueryContainerInterface;
 
 /**
  * @covers \Common\Service\Helper\TransportManagerHelperService
@@ -17,32 +26,50 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
     /** @var TransportManagerHelperService */
     protected $sut;
 
-    /** @var \Common\Service\Helper\FormHelperService | m\MockInterface */
-    private $mockFormHlp;
+    /** @var TransferAnnotationBuilder */
+    private $transferAnnotationBuilder;
 
-    protected $tab;
-    protected $qs;
+    /** @var QueryService */
+    private $queryService;
 
-    /** @var \Laminas\ServiceManager\ServiceManager | m\MockInterface */
-    protected $sm;
+    /** @var FormHelperService */
+    private $formHelper;
+
+    /** @var DateHelperService */
+    private $dateHelper;
+
+    /** @var TranslationHelperService */
+    private $translationHelper;
+
+    /** @var UrlHelperService */
+    private $urlHelper;
+
+    /** @var TableFactory */
+    private $tableService;
+
+    /** @var QueryContainerInterface */
+    private $query;
 
     public function setUp(): void
     {
-        $this->sm = Bootstrap::getServiceManager();
+        $this->transferAnnotationBuilder = m::mock(TransferAnnotationBuilder::class);
+        $this->queryService = m::mock(QueryService::class);
+        $this->formHelper = m::mock(FormHelperService::class);
+        $this->dateHelper = m::mock(DateHelperService::class);
+        $this->translationHelper = m::mock(TranslationHelperService::class);
+        $this->urlHelper = m::mock(UrlHelperService::class);
+        $this->tableService = m::mock(TableFactory::class);
+        $this->query = m::mock(QueryContainerInterface::class);
 
-        $this->mockFormHlp = m::mock(\Common\Service\Helper\FormHelperService::class);
-        $this->sm->setService('Helper\Form', $this->mockFormHlp);
-
-        $this->tab = m::mock();
-        $this->sm->setService('TransferAnnotationBuilder', $this->tab);
-
-        $this->qs = m::mock();
-        $this->sm->setService('QueryService', $this->qs);
-
-        $this->sut = new TransportManagerHelperService();
-
-        $this->sut->setServiceLocator($this->sm);
-        $this->sut->createService($this->sm);
+        $this->sut = new TransportManagerHelperService(
+            $this->transferAnnotationBuilder,
+            $this->queryService,
+            $this->formHelper,
+            $this->dateHelper,
+            $this->translationHelper,
+            $this->urlHelper,
+            $this->tableService
+        );
     }
 
     public function testGetCertificateFileData()
@@ -58,14 +85,10 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
             'subCategory' => CategoryDataService::DOC_SUB_CATEGORY_TRANSPORT_MANAGER_CPC_OR_EXEMPTION
         ];
 
-        $this->sm->setService(
-            'Helper\Date',
-            m::mock()
-            ->shouldReceive('getDate')
+        $this->dateHelper->shouldReceive('getDate')
             ->andReturn('2015-01-01 10:10:10')
-            ->once()
-            ->getMock()
-        );
+            ->once();
+
         $response = $this->sut->getCertificateFileData($tmId, $file);
 
         $this->assertEquals($expected, $response);
@@ -73,11 +96,10 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
 
     public function testRemoveTmTypeBothOption()
     {
-        /** @var \Laminas\Form\Element $mockTmTypeField */
-        $mockTmTypeField = m::mock(\Laminas\Form\Element::class);
+        /** @var Element $mockTmTypeField */
+        $mockTmTypeField = m::mock(Element::class);
 
-        $this->mockFormHlp
-            ->shouldReceive('removeOption')->once()->with($mockTmTypeField, 'tm_t_b');
+        $this->formHelper->shouldReceive('removeOption')->once()->with($mockTmTypeField, 'tm_t_b');
 
         $this->sut->removeTmTypeBothOption($mockTmTypeField);
     }
@@ -86,11 +108,13 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
     {
         /** @var TableBuilder $otherLicencesTable */
         $otherLicencesTable = m::mock(TableBuilder::class);
-        /** @var \Laminas\Form\Fieldset $mockOtherLicenceField */
-        $mockOtherLicenceField = m::mock(\Laminas\Form\Fieldset::class);
 
-        $this->mockFormHlp
-            ->shouldReceive('populateFormTable')->once()->with($mockOtherLicenceField, $otherLicencesTable);
+        /** @var Fieldset $mockOtherLicenceField */
+        $mockOtherLicenceField = m::mock(Fieldset::class);
+
+        $this->formHelper->shouldReceive('populateFormTable')
+            ->once()
+            ->with($mockOtherLicenceField, $otherLicencesTable);
 
         $this->sut->populateOtherLicencesTable($mockOtherLicenceField, $otherLicencesTable);
     }
@@ -106,12 +130,8 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
             'subCategory' => CategoryDataService::DOC_SUB_CATEGORY_TRANSPORT_MANAGER_TM1_ASSISTED_DIGITAL
         ];
 
-        // Mocks
-        $mockDateHelper = m::mock();
-        $this->sm->setService('Helper\Date', $mockDateHelper);
-
         // Expectations
-        $mockDateHelper->shouldReceive('getDate')
+        $this->dateHelper->shouldReceive('getDate')
             ->with(\DateTime::W3C)
             ->andReturn('2014-01-20 10:10:10');
 
@@ -125,12 +145,10 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
     {
         $tmId = 111;
 
-        $mockTableBuilder = m::mock();
-        $this->sm->setService('Table', $mockTableBuilder);
         $tableData = [
             'foo' => 'bar'
         ];
-        $mockTable = $this->expectedGetConvictionsAndPenaltiesTable($mockTableBuilder, $tableData);
+        $mockTable = $this->expectedGetConvictionsAndPenaltiesTable($tableData);
 
         $this->assertSame($mockTable, $this->sut->getConvictionsAndPenaltiesTable($tmId));
     }
@@ -139,12 +157,10 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
     {
         $tmId = 111;
 
-        $mockTableBuilder = m::mock();
-        $this->sm->setService('Table', $mockTableBuilder);
         $tableData = [
             'foo' => 'bar'
         ];
-        $mockTable = $this->expectGetPreviousLicencesTable($mockTableBuilder, $tableData);
+        $mockTable = $this->expectGetPreviousLicencesTable($tableData);
 
         $this->assertSame($mockTable, $this->sut->getPreviousLicencesTable($tmId));
     }
@@ -168,21 +184,18 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
         $fieldset->shouldReceive('get')->with('previousLicences')->andReturn($previousLicences);
         $fieldset->shouldReceive('get')->with('hasPreviousLicences')->andReturn($hasPreviousLicences);
 
-        $mockTableBuilder = m::mock();
-        $this->sm->setService('Table', $mockTableBuilder);
-
         $mockResponse = m::mock();
 
         // Expectations
-        $this->tab->shouldReceive('createQuery')
+        $this->transferAnnotationBuilder->shouldReceive('createQuery')
             ->with(\Dvsa\Olcs\Transfer\Query\Tm\TransportManager::class)
-            ->andReturn('TmQuery');
+            ->andReturn($this->query);
 
         $mockResponse->shouldReceive('isOk')
             ->andReturn(true);
 
-        $this->qs->shouldReceive('send')
-            ->with('TmQuery')
+        $this->queryService->shouldReceive('send')
+            ->with($this->query)
             ->andReturn($mockResponse);
 
         $tm = [
@@ -193,25 +206,20 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
                 'foo' => 'bar'
             ]
         ];
-        $convictionTable = $this->expectedGetConvictionsAndPenaltiesTable($mockTableBuilder, $tm['previousConvictions']);
-        $licenceTable = $this->expectGetPreviousLicencesTable($mockTableBuilder, $tm['otherLicences']);
+        $convictionTable = $this->expectedGetConvictionsAndPenaltiesTable($tm['previousConvictions']);
+        $licenceTable = $this->expectGetPreviousLicencesTable($tm['otherLicences']);
 
-        $mockFormHelper = m::mock(\Common\Form\View\Helper\Form::class);
-        $mockFormHelper->shouldReceive('populateFormTable')
+        $this->formHelper->shouldReceive('populateFormTable')
             ->once()
             ->with($convictions, $convictionTable, 'convictions')
             ->shouldReceive('populateFormTable')
             ->once()
             ->with($previousLicences, $licenceTable, 'previousLicences');
-        $this->sm->setService('Helper\Form', $mockFormHelper);
-        $mockTranslator = m::mock(\Common\Service\Helper\TranslationHelperService::class);
-        $mockTranslator->shouldReceive('translate')->andReturn('string');
-        $mockTranslator->shouldReceive('translateReplace')->andReturn('string');
-        $this->sm->setService('Helper\Translation', $mockTranslator);
 
-        $mockUrl = m::mock(\Laminas\View\Helper\Url::class);
-        $mockUrl->shouldReceive('fromRoute')->andReturn('string');
-        $this->sm->setService('Helper\Url', $mockUrl);
+        $this->translationHelper->shouldReceive('translate')->andReturn('string');
+        $this->translationHelper->shouldReceive('translateReplace')->andReturn('string');
+
+        $this->urlHelper->shouldReceive('fromRoute')->andReturn('string');
 
         $this->sut->alterPreviousHistoryFieldsetTm($fieldset, $tm);
     }
@@ -237,23 +245,20 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
 
         $tmId = 111;
 
-        $mockTableBuilder = m::mock();
-        $this->sm->setService('Table', $mockTableBuilder);
-
         $mockResponse = m::mock();
 
         // Expectations
-        $this->tab->shouldReceive('createQuery')
+        $this->transferAnnotationBuilder->shouldReceive('createQuery')
             ->with(\Dvsa\Olcs\Transfer\Query\Tm\TransportManager::class)
-            ->andReturn('TmQuery');
+            ->andReturn($this->query);
 
         $mockResponse->shouldReceive('isOk')
             ->andReturn(true);
         $mockResponse->shouldReceive('getResult')
             ->andReturn(['id' => $tmId, 'removedDate' => null]);
 
-        $this->qs->shouldReceive('send')
-            ->with('TmQuery')
+        $this->queryService->shouldReceive('send')
+            ->with($this->query)
             ->andReturn($mockResponse);
 
         $tm = [
@@ -264,52 +269,48 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
                 'foo' => 'bar'
             ]
         ];
-        $convictionTable = $this->expectedGetConvictionsAndPenaltiesTable($mockTableBuilder, $tm['previousConvictions']);
-        $licenceTable = $this->expectGetPreviousLicencesTable($mockTableBuilder, $tm['otherLicences']);
+        $convictionTable = $this->expectedGetConvictionsAndPenaltiesTable($tm['previousConvictions']);
+        $licenceTable = $this->expectGetPreviousLicencesTable($tm['otherLicences']);
 
-        $mockFormHelper = m::mock(\Common\Form\View\Helper\Form::class);
-        $mockFormHelper->shouldReceive('populateFormTable')
+        $this->formHelper->shouldReceive('populateFormTable')
             ->once()
             ->with($convictions, $convictionTable, 'convictions')
             ->shouldReceive('populateFormTable')
             ->once()
             ->with($previousLicences, $licenceTable, 'previousLicences');
-        $this->sm->setService('Helper\Form', $mockFormHelper);
-        $mockTranslator = m::mock(\Common\Service\Helper\TranslationHelperService::class);
-        $mockTranslator->shouldReceive('translate')->andReturn('string');
-        $mockTranslator->shouldReceive('translateReplace')->andReturn('string');
-        $this->sm->setService('Helper\Translation', $mockTranslator);
 
-        $mockUrl = m::mock(\Laminas\View\Helper\Url::class);
-        $mockUrl->shouldReceive('fromRoute')->andReturn('string');
-        $this->sm->setService('Helper\Url', $mockUrl);
+        $this->translationHelper->shouldReceive('translate')->andReturn('string');
+        $this->translationHelper->shouldReceive('translateReplace')->andReturn('string');
+
+        $this->urlHelper->shouldReceive('fromRoute')->andReturn('string');
 
         $this->sut->alterPreviousHistoryFieldset($fieldset, $tmId);
     }
 
-    protected function expectedGetConvictionsAndPenaltiesTable($mockTableBuilder, $tableData)
+    protected function expectedGetConvictionsAndPenaltiesTable($tableData)
     {
-
         // Mocks
-        $mockTable = m::mock();
+        $mockTable = m::mock(TableBuilder::class);
 
         $mockResponse = m::mock();
 
+        $query = m::mock(QueryContainerInterface::class);
+
         // Expectations
-        $this->tab->shouldReceive('createQuery')
+        $this->transferAnnotationBuilder->shouldReceive('createQuery')
             ->with(\Dvsa\Olcs\Transfer\Query\PreviousConviction\GetList::class)
-            ->andReturn('PreviousConvictionQuery');
+            ->andReturn($query);
 
         $mockResponse->shouldReceive('isOk')
             ->andReturn(true);
         $mockResponse->shouldReceive('getResult')
             ->andReturn(['results' => $tableData]);
 
-        $this->qs->shouldReceive('send')
-            ->with('PreviousConvictionQuery')
+        $this->queryService->shouldReceive('send')
+            ->with($query)
             ->andReturn($mockResponse);
 
-        $mockTableBuilder->shouldReceive('prepareTable')
+        $this->tableService->shouldReceive('prepareTable')
             ->once()
             ->with('tm.convictionsandpenalties', $tableData)
             ->andReturn($mockTable);
@@ -317,28 +318,30 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
         return $mockTable;
     }
 
-    protected function expectGetPreviousLicencesTable($mockTableBuilder, $tableData)
+    protected function expectGetPreviousLicencesTable($tableData)
     {
         // Mocks
-        $mockTable = m::mock();
+        $mockTable = m::mock(TableBuilder::class);
 
         $mockResponse = m::mock();
 
+        $query = m::mock(QueryContainerInterface::class);
+
         // Expectations
-        $this->tab->shouldReceive('createQuery')
+        $this->transferAnnotationBuilder->shouldReceive('createQuery')
             ->with(\Dvsa\Olcs\Transfer\Query\OtherLicence\GetList::class)
-            ->andReturn('query');
+            ->andReturn($query);
 
         $mockResponse->shouldReceive('isOk')
             ->andReturn(true);
         $mockResponse->shouldReceive('getResult')
             ->andReturn(['results' => $tableData]);
 
-        $this->qs->shouldReceive('send')
-            ->with('query')
+        $this->queryService->shouldReceive('send')
+            ->with($query)
             ->andReturn($mockResponse);
 
-        $mockTableBuilder->shouldReceive('prepareTable')
+        $this->tableService->shouldReceive('prepareTable')
             ->once()
             ->with('tm.previouslicences', $tableData)
             ->andReturn($mockTable);

@@ -7,7 +7,7 @@
  */
 namespace CommonTest\Service\Helper;
 
-use CommonTest\Bootstrap;
+use Laminas\View\Helper\Placeholder;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Helper\GuidanceHelperService;
@@ -20,39 +20,32 @@ use Common\Service\Helper\GuidanceHelperService;
 class GuidanceHelperServiceTest extends MockeryTestCase
 {
     protected $sut;
-    protected $sm;
+
+    /** @var Placeholder */
+    private $placeholder;
 
     public function setUp(): void
     {
-        $this->sut = new GuidanceHelperService();
+        $this->placeholder = m::mock(Placeholder::class);
 
-        $this->sm = Bootstrap::getServiceManager();
-        $this->sut->setServiceLocator($this->sm);
+        $this->sut = new GuidanceHelperService($this->placeholder);
     }
 
     public function testAppend()
     {
         $message = 'foo';
 
-        // Mocks
-        $mockViewHelperManager = m::mock();
-        $this->sm->setService('ViewHelperManager', $mockViewHelperManager);
-
         // Expectations
-        $mockViewHelperManager->shouldReceive('get')
-            ->with('placeholder')
+        $this->placeholder->shouldReceive('getContainer')
+            ->with('guidance')
+            ->once()
             ->andReturn(
                 m::mock()
-                ->shouldReceive('getContainer')
-                ->with('guidance')
-                ->andReturn(
-                    m::mock()
-                    ->shouldReceive('append')
-                    ->with($message)
-                    ->getMock()
-                )
+                ->shouldReceive('append')
+                ->with($message)
                 ->getMock()
             );
+
         $this->sut->append($message);
     }
 }

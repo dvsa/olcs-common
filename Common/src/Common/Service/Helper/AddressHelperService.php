@@ -12,7 +12,7 @@ namespace Common\Service\Helper;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class AddressHelperService extends AbstractHelperService
+class AddressHelperService
 {
     /**
      * Max length we'll display in the address dropdown before truncating
@@ -64,7 +64,6 @@ class AddressHelperService extends AbstractHelperService
     {
         $options  = array();
         foreach ($list as $item) {
-
             $address = $this->formatPostalAddress($item);
 
             $allowedParts = array('organisationName', 'addressLine1', 'addressLine2', 'addressLine3', 'town');
