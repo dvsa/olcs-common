@@ -1,15 +1,6 @@
+<?php assert($this->object instanceof Common\Service\Table\TableBuilder); ?>
 <div class="table__header"<?php
     echo !empty($this->object->getVariable('id')) ?
     ' id="' . $this->object->getVariable('id') .'"' : '' ?>>
     <?php echo $this->object->renderActions(); ?>
-    <?php if (!empty($this->getEscaper()->escapeHtml($this->object->getVariable('title')))) { ?>
-    <h2>
-        <?php
-        if ($this->object->renderTotal()) {
-            echo $this->object->renderTotal();
-        }
-        ?>
-        <?php echo $this->getEscaper()->escapeHtml($this->object->getVariable('title')); ?>
-    </h2>
-    <?php } ?>
 </div>

@@ -1,19 +1,23 @@
 <?php use Common\RefData; ?>
+<?php assert($this->object instanceof Common\Service\Table\TableBuilder); ?>
 <?php echo $this->object->renderLayout('default-header'); ?>
 <div class="table__wrapper">
     <table <?php echo $this->object->renderAttributes($this->object->getAttributes()); ?>>
-        <thead>
-        <tr>
+        <caption class="govuk-table__caption govuk-table__caption--l">
+            <?php echo $this->getEscaper()->escapeHtml($this->object->renderCaption()); ?>
+        </caption>
+        <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
             <?php
             foreach ($this->object->getColumns() as $column) {
-                echo $this->object->renderHeaderColumn($column, '{{[elements/th]}}');
+                echo $this->object->renderHeaderColumn($column);
             }
             ?>
         </tr>
         </thead>
-        <tbody>
+        <tbody class="govuk-table__body" aria-live="assertive">
         <?php foreach ($this->object->getRows() as $row) { ?>
-            <tr <?php if ($this->object->isRowDisabled($row)): ?>class="disabled"<?php endif; ?>>
+            <tr class="govuk-table__row<?php if ($this->object->isRowDisabled($row)): ?> disabled<?php endif; ?>">
                 <?php
                 foreach ($this->object->getColumns() as $column) {
                     $attributes = [];
