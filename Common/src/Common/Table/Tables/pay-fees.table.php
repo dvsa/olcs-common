@@ -21,15 +21,15 @@ return array(
         ),
         array(
             'title' => 'pay-fees.amount',
+            'isNumeric' => true,
             'name' => 'amount',
             'formatter' => 'FeeAmount',
-            'align' => 'right',
         ),
         array(
             'title' => 'pay-fees.outstanding',
+            'isNumeric' => true,
             'name' => 'outstanding',
             'formatter' => 'FeeAmount',
-            'align' => 'right',
         ),
     ),
     'footer' => array(
@@ -43,7 +43,7 @@ return array(
             'type' => 'th',
             'formatter' => 'FeeAmountSum',
             'name' => 'outstanding',
-            'align' => 'right',
+            'align' => 'govuk-!-text-align-right',
         ),
     ),
 );

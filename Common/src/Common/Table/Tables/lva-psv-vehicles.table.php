@@ -69,13 +69,18 @@ return array(
             'sort' => 'removalDate'
         ),
         array(
+            'title' => 'markup-table-th-remove', //this is a view partial from olcs-common
             'type' => 'ActionLinks',
+            'ariaDescription' => function ($row) {
+                return $row['vehicle']['vrm'];
+            },
             'isRemoveVisible' => function ($data) {
                 return empty($data['removalDate']);
             },
             'deleteInputName' => 'vehicles[action][delete][%d]'
         ),
         array(
+            'markup-table-th-action', //this is a view partial from olcs-common
             'name' => 'action',
             'width' => 'checkbox',
             'type' => 'Checkbox',

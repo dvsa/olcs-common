@@ -71,6 +71,7 @@ return array(
             'formatter' => 'Comment'
         ),
         array(
+            'title' => 'markup-table-th-remove-restore', //view partial from olcs-common
             'type' => 'DeltaActionLinks',
         ),
     )

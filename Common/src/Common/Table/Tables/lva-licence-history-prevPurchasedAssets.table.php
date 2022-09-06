@@ -3,6 +3,7 @@ $prefix = 'selfserve-app-subSection-previous-history-previous-licence-';
 
 return array(
     'variables' => array(
+        'title' => $prefix . 'tableHeader',
         'within_form' => true,
         'empty_message' => false
     ),
@@ -31,6 +32,8 @@ return array(
             'formatter' => 'Date'
         ),
         array(
+            'title' => 'markup-table-th-remove', //this is a view partial from olcs-common
+            'ariaDescription' => 'licNo',
             'type' => 'ActionLinks',
             'deleteInputName' => 'assets[prevPurchasedAssets-table][action][delete][%d]'
         )

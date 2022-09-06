@@ -44,6 +44,11 @@ return array(
             'name' => 'position',
         ),
         array(
+            'title' => 'markup-table-th-remove-restore', //view partial from olcs-common
+            'ariaDescription' => function ($row, $column) {
+                $column['formatter'] = 'Name';
+                return $this->callFormatter($column, $row['name']);
+            },
             'type' => 'DeltaActionLinks',
         ),
     )

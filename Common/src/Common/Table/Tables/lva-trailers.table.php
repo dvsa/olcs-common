@@ -38,6 +38,8 @@ return array(
             'name' => 'isLongerSemiTrailer'
         ),
         array(
+            'title' => 'markup-table-th-remove', //this is a view partial from olcs-common
+            'ariaDescription' => 'trailerNo',
             'type' => 'ActionLinks',
         ),
         array(

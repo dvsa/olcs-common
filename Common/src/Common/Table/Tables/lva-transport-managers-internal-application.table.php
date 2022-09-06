@@ -31,6 +31,11 @@ return array(
             'lva' => 'application',
         ),
         array(
+            'title' => 'markup-table-th-remove', //this is a view partial from olcs-common
+            'ariaDescription' => function ($row, $column) {
+                $column['formatter'] = 'Name';
+                return $this->callFormatter($column, $row['name']);
+            },
             'type' => 'ActionLinks',
         ),
     )

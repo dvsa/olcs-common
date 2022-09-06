@@ -35,6 +35,8 @@ return array(
             'name' => 'penalty',
         ),
         array(
+            'title' => 'markup-table-th-remove', //this is a view partial from olcs-common
+            'ariaDescription' => 'categoryText',
             'type' => 'ActionLinks',
             'deleteInputName' => 'convictions[action][delete-previous-conviction][%d]'
         )

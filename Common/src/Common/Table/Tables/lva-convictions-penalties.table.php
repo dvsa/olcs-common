@@ -2,7 +2,7 @@
 
 return array(
     'variables' => array(
-        'title' => '',
+        'title' => 'selfserve-app-subSection-previous-history-criminal-conviction-tableHeader',
         'within_form' => true,
         'empty_message' => 'selfserve-app-subSection-previous-history-criminal-conviction-tableEmptyMessage'
     ),
@@ -40,6 +40,7 @@ return array(
             'name' => 'penalty',
         ),
         array(
+            'title' => 'markup-table-th-remove', //this is a view partial from olcs-common
             'type' => 'ActionLinks',
             'deleteInputName' => 'data[table][action][delete][%d]',
         )

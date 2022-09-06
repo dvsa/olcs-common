@@ -3,6 +3,7 @@
 return array(
     'variables' => array(
         'within_form' => true,
+        'title' => 'lva-conditions-undertakings-table-title',
         'empty_message' => 'lva-conditions-undertakings-table-empty-message'
     ),
     'settings' => array(
@@ -68,6 +69,7 @@ return array(
             'formatter' => 'Comment'
         ),
         array(
+            'title' => 'markup-table-th-remove', //this is a view partial from olcs-common
             'type' => 'ActionLinks',
         ),
     )

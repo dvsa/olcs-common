@@ -25,10 +25,13 @@ return [
         ],
         [
             'title' => 'lva.contact-details.phone-contact.table.col.number.title',
+            'isNumeric' => true,
             'name' => 'phoneNumber',
             'width' => '50%',
         ],
         [
+            'title' => 'markup-table-th-remove', //this is a view partial from olcs-common
+            'ariaDescription' => 'phoneNumber',
             'type' => 'ActionLinks',
             'width' => '10%',
         ],

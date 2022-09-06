@@ -5,6 +5,7 @@ $translationPrefix = 'safety-inspection-providers.table';
 
 return array(
     'variables' => array(
+        'title' => $translationPrefix . '.title',
         'empty_message' => $translationPrefix . '.hint',
         'required_label' => 'safety inspection provider',
         'within_form' => true
@@ -42,6 +43,9 @@ return array(
         ),
         array(
             'title' => 'markup-table-th-remove',
+            'ariaDescription' => function ($row) {
+                return $row['contactDetails']['fao'] ?? 'safety inspector';
+            },
             'type' => 'ActionLinks',
         ),
     )
