@@ -10,7 +10,7 @@ use Laminas\Http\Response;
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class ResponseHelperService extends AbstractHelperService
+class ResponseHelperService
 {
     protected static $ignoreColumnsByType = ['ActionLinks'];
     protected static $ignoreColumnsByName = ['action'];

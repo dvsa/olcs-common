@@ -17,7 +17,7 @@ use Laminas\Filter\Word\CamelCaseToUnderscore;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class StringHelperService extends AbstractHelperService
+class StringHelperService
 {
     /**
      * Convert dash to camel case

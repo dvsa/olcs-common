@@ -11,6 +11,7 @@ use Common\FormService\Form\Lva as LvaFormService;
 use Common\FormService\Form\Continuation as ContinuationFormService;
 use Common\Form\View\Helper\Readonly as ReadonlyFormHelper;
 use Common\Service\Data as DataService;
+use Common\Service\Helper as HelperService;
 use Common\Service\Qa as QaService;
 use Common\Service\Translator\TranslationLoader;
 use Common\Service\Translator\TranslationLoaderFactory;
@@ -158,6 +159,14 @@ return array(
             'CommandSender' => CommandSender::class,
             'Review\ConditionsUndertakings' => Common\Service\Review\ConditionsUndertakingsReviewService::class,
             'Data\Address' => DataService\AddressDataService::class,
+
+            'Helper\FileUpload' => HelperService\FileUploadHelperService::class,
+            'Helper\FlashMessenger' => HelperService\FlashMessengerHelperService::class,
+            'Helper\Form' => HelperService\FormHelperService::class,
+            'Helper\Guidance' => HelperService\GuidanceHelperService::class,
+            'Helper\Translation' => HelperService\TranslationHelperService::class,
+            'Helper\TransportManager' => HelperService\TransportManagerHelperService::class,
+            'Helper\Url' => HelperService\UrlHelperService::class,
         ),
         'invokables' => array(
             'Common\Service\NavigationFactory' => 'Common\Service\NavigationFactory',
@@ -234,10 +243,7 @@ return array(
             Common\Data\Mapper\DefaultMapper::class => Common\Data\Mapper\DefaultMapper::class,
             SurrenderMapper\OperatorLicence::class => SurrenderMapper\OperatorLicence::class,
             SurrenderMapper\CommunityLicence::class => SurrenderMapper\CommunityLicence::class,
-            \Common\Service\Helper\TranslationHelperService::class => \Common\Service\Helper\TranslationHelperService::class,
             \Common\Service\Helper\ResponseHelperService::class => \Common\Service\Helper\ResponseHelperService::class,
-            \Common\Service\Helper\FormHelperService::class => \Common\Service\Helper\FormHelperService::class,
-            \Common\Service\Helper\FlashMessengerHelperService::class => \Common\Service\Helper\FlashMessengerHelperService::class,
             \Common\Form\FormValidator::class => \Common\Form\FormValidator::class,
 
             'Zend\Authentication\AuthenticationService' => \Laminas\Authentication\AuthenticationService::class,
@@ -267,6 +273,14 @@ return array(
             'staticList' => DataService\StaticListFactory::class,
             DataService\Surrender::class => DataService\AbstractDataServiceFactory::class,
             DataService\TrafficArea::class => DataService\AbstractDataServiceFactory::class,
+
+            HelperService\FileUploadHelperService::class => HelperService\FileUploadHelperServiceFactory::class,
+            HelperService\FlashMessengerHelperService::class => HelperService\FlashMessengerHelperServiceFactory::class,
+            HelperService\FormHelperService::class => HelperService\FormHelperServiceFactory::class,
+            HelperService\GuidanceHelperService::class => HelperService\GuidanceHelperServiceFactory::class,
+            HelperService\TranslationHelperService::class => HelperService\TranslationHelperServiceFactory::class,
+            HelperService\TransportManagerHelperService::class => HelperService\TransportManagerHelperServiceFactory::class,
+            HelperService\UrlHelperService::class => HelperService\UrlHelperServiceFactory::class,
 
             CommandSender::class => CommandSender::class,
             'QuerySender' => \Common\Service\Cqrs\Query\QuerySender::class,

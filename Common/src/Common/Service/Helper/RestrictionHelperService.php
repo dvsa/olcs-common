@@ -12,7 +12,7 @@ namespace Common\Service\Helper;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class RestrictionHelperService extends AbstractHelperService
+class RestrictionHelperService
 {
     /**
      * Check if restriction is satisfied
@@ -51,7 +51,6 @@ class RestrictionHelperService extends AbstractHelperService
 
         // Check the restrictions
         foreach ($restrictions as $restriction) {
-
             // Check the individual restriction
             $satisfied = $this->checkRestriction($restriction, $accessKeys, !$strict, $reference);
 

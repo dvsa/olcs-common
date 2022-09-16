@@ -55,26 +55,4 @@ class DateHelperServiceTest extends MockeryTestCase
         $this->assertInstanceOf('DateTime', $obj);
         $this->assertEquals('2015-01-07', $obj->format('Y-m-d'));
     }
-
-    public function testCalculateDate()
-    {
-        $sm = m::mock('Laminas\ServiceManager\ServiceLocatorInterface')
-            ->shouldReceive('get')
-            ->with('Common\Util\DateTimeProcessor')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('calculateDate')
-                ->with('2015-01-01', 10, true, false)
-                ->andReturn('result')
-                ->getMock()
-            )
-            ->getMock();
-
-        $this->sut->setServiceLocator($sm);
-
-        $this->assertEquals(
-            'result',
-            $this->sut->calculateDate('2015-01-01', 10, true, false)
-        );
-    }
 }

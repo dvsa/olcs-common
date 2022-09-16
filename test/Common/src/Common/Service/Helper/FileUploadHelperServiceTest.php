@@ -3,6 +3,8 @@
 namespace CommonTest\Service\Helper;
 
 use Common\Exception\File\InvalidMimeException;
+use Common\Service\AntiVirus\Scan as AntiVirusScanner;
+use Common\Service\Helper\UrlHelperService;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Helper\FileUploadHelperService;
 use Mockery as m;
@@ -18,20 +20,24 @@ class FileUploadHelperServiceTest extends MockeryTestCase
     private $mockRequest;
     /** @var  \Laminas\Form\FormInterface | m\MockInterface */
     private $mockForm;
-    /** @var  m\MockInterface | \Laminas\ServiceManager\ServiceLocatorInterface */
-    private $mockSm;
+
+    /** @var UrlHelperService */
+    private $urlHelperService;
+
+    /** @var AntiVirusScanner */
+    private $scanner;
 
     public function setUp(): void
     {
         $this->mockRequest = m::mock(\Laminas\Http\Request::class);
         $this->mockForm = m::mock(\Laminas\Form\Form::class);
 
-        $this->mockSm = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class);
+        $this->urlHelperService = m::mock(UrlHelperService::class);
+        $this->scanner = m::mock(AntiVirusScanner::class);
 
-        $this->sut = new FileUploadHelperService();
+        $this->sut = new FileUploadHelperService($this->urlHelperService, $this->scanner);
         $this->sut->setRequest($this->mockRequest);
         $this->sut->setForm($this->mockForm);
-        $this->sut->setServiceLocator($this->mockSm);
     }
 
     public function testSetGetForm()
@@ -135,22 +141,13 @@ class FileUploadHelperServiceTest extends MockeryTestCase
             }
         );
 
-        $mockUrlHelper = m::mock();
-        $this->sut->setServiceLocator(
-            m::mock('Laminas\ServiceManager\ServiceLocatorInterface')
-                ->shouldReceive('get')
-                    ->with('Helper\Url')
-                    ->andReturn($mockUrlHelper)
-                ->getMock()
-        );
-
         $fieldset = m::mock() // multiple file upload fieldset
             ->shouldReceive('get')
                 ->with('list')
                 ->andReturn(
                     m::mock()
                         ->shouldReceive('setFiles')
-                            ->with(['array-of-files'], $mockUrlHelper)
+                            ->with(['array-of-files'], $this->urlHelperService)
                         ->getMock()
                 )
             ->getMock();
@@ -236,13 +233,9 @@ class FileUploadHelperServiceTest extends MockeryTestCase
 
     private function mockVirusScan($file, $isClean)
     {
-        $mockScan = m::mock(\Common\Service\AntiVirus\Scan::class)
+        $this->scanner
             ->shouldReceive('isEnabled')->with()->once()->andReturn(true)
-            ->shouldReceive('isClean')->with($file)->once()->andReturn($isClean)
-            ->getMock();
-
-        $this->mockSm
-            ->shouldReceive('get')->with(\Common\Service\AntiVirus\Scan::class)->once()->andReturn($mockScan);
+            ->shouldReceive('isClean')->with($file)->once()->andReturn($isClean);
     }
 
     /**
@@ -291,7 +284,6 @@ class FileUploadHelperServiceTest extends MockeryTestCase
             );
 
         $this->sut->setSelector('my-file');
-        $this->sut->setServiceLocator($this->mockSm);
         $this->sut->setUploadCallback(
             function () {
             }
@@ -690,7 +682,6 @@ class FileUploadHelperServiceTest extends MockeryTestCase
 
         $this->sut
             ->setSelector('my-file')
-            ->setServiceLocator($this->mockSm)
             ->setUploadCallback(
                 function () {
                 }

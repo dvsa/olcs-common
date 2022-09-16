@@ -24,6 +24,7 @@ use Mockery as m;
 use Common\FormService\FormServiceManager;
 use Common\Service\Helper\TranslationHelperService;
 use Laminas\Form\Form;
+use Laminas\View\Renderer\PhpRenderer;
 
 abstract class OperatingCentresTestCase extends MockeryTestCase
 {
@@ -36,6 +37,13 @@ abstract class OperatingCentresTestCase extends MockeryTestCase
     protected const HGV_FIELD_LABEL_WITH_VEHICLE_CLASSIFICATIONS_ENABLED = 'application_operating-centres_authorisation.data.totAuthHgvVehicles.hgvs-label';
     protected const HGV_FIELD_NAME = 'totAuthHgvVehicles';
     protected const HGV_FIELDSET_NAME = 'totAuthHgvVehiclesFieldset';
+
+    /** @var  \Common\Service\Helper\AddressHelperService | m\MockInterface */
+    protected $mockHlpAddr;
+    /** @var  \Common\Service\Helper\DateHelperService | m\MockInterface */
+    protected $mockHlpDate;
+    /** @var  \Common\Service\Data\AddressDataService| m\MockInterface */
+    protected $mockDataAddress;
 
     protected function setUp(): void
     {
@@ -89,8 +97,7 @@ abstract class OperatingCentresTestCase extends MockeryTestCase
     protected function translationHelperService(): TranslationHelperService
     {
         if (!$this->serviceManager()->has('Helper\Translation')) {
-            $instance = new TranslationHelperService();
-            $instance->setServiceLocator($this->serviceManager());
+            $instance = new TranslationHelperService($this->translator());
             $this->serviceManager()->setService('Helper\Translation', $instance);
         }
         return $this->serviceManager()->get('Helper\Translation');
@@ -188,13 +195,38 @@ abstract class OperatingCentresTestCase extends MockeryTestCase
     }
 
     /**
+     * @return PhpRenderer
+     */
+    protected function viewRenderer(): PhpRenderer
+    {
+        if (!$this->serviceManager()->has('ViewRenderer')) {
+            $instance = $this->setUpMockService(PhpRenderer::class);
+            $this->serviceManager()->setService('ViewRenderer', $instance);
+        }
+        return $this->serviceManager()->get('ViewRenderer');
+    }
+
+    /**
      * @return m\MockInterface|FormHelperService
      */
     protected function formHelper()
     {
         if (!$this->serviceManager()->has('FormHelperService')) {
-            $instance = new FormHelperService();
-            $instance->setServiceLocator($this->serviceManager());
+            $this->mockDataAddress = m::mock(\Common\Service\Data\AddressDataService::class);
+            $this->mockHlpAddr = m::mock(\Common\Service\Helper\AddressHelperService::class);
+            $this->mockHlpDate = m::mock(\Common\Service\Helper\DateHelperService::class);
+
+            $instance = new FormHelperService(
+                $this->formAnnotationBuilder(),
+                $this->config(),
+                $this->authorizationService(),
+                $this->viewRenderer(),
+                $this->mockDataAddress,
+                $this->mockHlpAddr,
+                $this->mockHlpDate,
+                $this->translationHelperService()
+            );
+
             $this->serviceManager()->setService('FormHelperService', $instance);
         }
         return $this->serviceManager()->get('FormHelperService');

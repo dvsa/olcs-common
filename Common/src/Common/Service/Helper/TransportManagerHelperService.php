@@ -2,35 +2,58 @@
 
 namespace Common\Service\Helper;
 
+use Common\Service\Cqrs\Query\CachingQueryService as QueryService;
 use Common\Service\Data\CategoryDataService;
 use Common\Service\Table\TableBuilder;
+use Common\Service\Table\TableFactory;
+use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder as TransferAnnotationBuilder;
 use Laminas\Form\Element;
 use Laminas\Form\Fieldset;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Transport Manager Helper Service
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class TransportManagerHelperService extends AbstractHelperService implements FactoryInterface
+class TransportManagerHelperService
 {
+    /** @var TransferAnnotationBuilder */
+    protected $transferAnnotationBuilder;
+
+    /** @var QueryService */
+    protected $queryService;
+
     /** @var FormHelperService */
     private $formHelper;
 
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator Service manager
-     *
-     * @return $this
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
-    {
-        $this->formHelper = $serviceLocator->get('Helper\Form');
+    /** @var DateHelperService */
+    private $dateHelper;
 
-        return $this;
+    /** @var TranslationHelperService */
+    private $translationHelper;
+
+    /** @var UrlHelperService */
+    private $urlHelper;
+
+    /** @var TableFactory */
+    private $tableService;
+
+    public function __construct(
+        TransferAnnotationBuilder $transferAnnotationBuilder,
+        QueryService $queryService,
+        FormHelperService $formHelper,
+        DateHelperService $dateHelper,
+        TranslationHelperService $translationHelper,
+        UrlHelperService $urlHelper,
+        TableFactory $tableService
+    ) {
+        $this->transferAnnotationBuilder = $transferAnnotationBuilder;
+        $this->queryService = $queryService;
+        $this->formHelper = $formHelper;
+        $this->dateHelper = $dateHelper;
+        $this->translationHelper = $translationHelper;
+        $this->urlHelper = $urlHelper;
+        $this->tableService = $tableService;
     }
 
     public function getCertificateFileData($tmId, $file)
@@ -38,7 +61,7 @@ class TransportManagerHelperService extends AbstractHelperService implements Fac
         return [
             'transportManager' => $tmId,
             'description' => $file['name'],
-            'issuedDate' => $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s'),
+            'issuedDate' => $this->dateHelper->getDate('Y-m-d H:i:s'),
             'category'    => CategoryDataService::CATEGORY_TRANSPORT_MANAGER,
             'subCategory' => CategoryDataService::DOC_SUB_CATEGORY_TRANSPORT_MANAGER_CPC_OR_EXEMPTION
         ];
@@ -58,7 +81,7 @@ class TransportManagerHelperService extends AbstractHelperService implements Fac
     {
         return [
             'transportManager' => $tmId,
-            'issuedDate' => $this->getServiceLocator()->get('Helper\Date')->getDate(\DateTime::W3C),
+            'issuedDate' => $this->dateHelper->getDate(\DateTime::W3C),
             'category'    => CategoryDataService::CATEGORY_TRANSPORT_MANAGER,
             'subCategory' => CategoryDataService::DOC_SUB_CATEGORY_TRANSPORT_MANAGER_TM1_ASSISTED_DIGITAL
         ];
@@ -71,7 +94,7 @@ class TransportManagerHelperService extends AbstractHelperService implements Fac
         );
         $results = $result['results'];
 
-        return $this->getServiceLocator()->get('Table')->prepareTable(
+        return $this->tableService->prepareTable(
             'tm.convictionsandpenalties',
             $results
         );
@@ -87,10 +110,8 @@ class TransportManagerHelperService extends AbstractHelperService implements Fac
      */
     protected function handleQuery($dto)
     {
-        $annotationBuilder = $this->getServiceLocator()->get('TransferAnnotationBuilder');
-        $queryService = $this->getServiceLocator()->get('QueryService');
         /** @var \Common\Service\Cqrs\Response $response */
-        $response = $queryService->send($annotationBuilder->createQuery($dto));
+        $response = $this->queryService->send($this->transferAnnotationBuilder->createQuery($dto));
 
         if (!$response->isOk()) {
             throw new \RuntimeException('Error fetching query '. get_class($dto));
@@ -108,7 +129,7 @@ class TransportManagerHelperService extends AbstractHelperService implements Fac
 
         $results = $result['results'];
 
-        return $this->getServiceLocator()->get('Table')->prepareTable(
+        return $this->tableService->prepareTable(
             'tm.previouslicences',
             $results
         );
@@ -122,11 +143,11 @@ class TransportManagerHelperService extends AbstractHelperService implements Fac
      */
     public function alterPreviousHistoryFieldsetTm($fieldset, $tm)
     {
-        $convictionsAndPenaltiesTable = $this->getServiceLocator()->get('Table')->prepareTable(
+        $convictionsAndPenaltiesTable = $this->tableService->prepareTable(
             'tm.convictionsandpenalties',
             $tm['previousConvictions']
         );
-        $previousLicencesTable = $this->getServiceLocator()->get('Table')->prepareTable(
+        $previousLicencesTable = $this->tableService->prepareTable(
             'tm.previouslicences',
             $tm['otherLicences']
         );
@@ -186,11 +207,9 @@ class TransportManagerHelperService extends AbstractHelperService implements Fac
      */
     public function prepareOtherEmploymentTableTm($element, $tm)
     {
-        $table = $this->getServiceLocator()->get('Table')->prepareTable('tm.employments', $tm['employments']);
+        $table = $this->tableService->prepareTable('tm.employments', $tm['employments']);
 
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
-
-        $formHelper->populateFormTable($element, $table, 'employment');
+        $this->formHelper->populateFormTable($element, $table, 'employment');
     }
 
     public function getOtherEmploymentData($id)
@@ -224,14 +243,13 @@ class TransportManagerHelperService extends AbstractHelperService implements Fac
 
     private function setConvictionsReadMoreLink(\Laminas\Form\Fieldset $fieldset): void
     {
-        $translator = $this->getServiceLocator()->get('Helper\Translation');
         $hasConvictions = $fieldset->get('hasConvictions');
-        $routeParam = $translator->translate('convictions-and-penalties-guidance-route-param');
-        $convictionsReadMoreRoute = $this->getServiceLocator()->get('Helper\Url')->fromRoute(
+        $routeParam = $this->translationHelper->translate('convictions-and-penalties-guidance-route-param');
+        $convictionsReadMoreRoute = $this->urlHelper->fromRoute(
             'guides/guide',
             ['guide' => $routeParam]
         );
-        $hint = $translator->translateReplace(
+        $hint = $this->translationHelper->translateReplace(
             'transport-manager.convictions-and-penalties.form.radio.hint',
             [$convictionsReadMoreRoute]
         );
@@ -240,14 +258,12 @@ class TransportManagerHelperService extends AbstractHelperService implements Fac
 
     private function populatePreviousHistoryTables(\Laminas\Form\Fieldset $fieldset, $convictionsAndPenaltiesTable, $previousLicencesTable): void
     {
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
-
-        $formHelper->populateFormTable(
+        $this->formHelper->populateFormTable(
             $fieldset->get('convictions'),
             $convictionsAndPenaltiesTable,
             'convictions'
         );
-        $formHelper->populateFormTable(
+        $this->formHelper->populateFormTable(
             $fieldset->get('previousLicences'),
             $previousLicencesTable,
             'previousLicences'

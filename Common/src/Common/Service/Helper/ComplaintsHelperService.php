@@ -14,7 +14,7 @@ use Common\RefData;
  *
  * @author Mat Evans <mat.evans@valtech.co.uk>
  */
-class ComplaintsHelperService extends AbstractHelperService
+class ComplaintsHelperService
 {
     /**
      * From cases, create a sorted array of complaints

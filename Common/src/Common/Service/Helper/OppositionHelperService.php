@@ -12,7 +12,7 @@ namespace Common\Service\Helper;
  *
  * @author Mat Evans <mat.evans@valtech.co.uk>
  */
-class OppositionHelperService extends AbstractHelperService
+class OppositionHelperService
 {
     /**
      * Sort oppositions so that open are at the top, this will keep any existing order eg createdDate

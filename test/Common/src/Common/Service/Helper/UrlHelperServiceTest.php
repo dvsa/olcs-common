@@ -8,10 +8,10 @@
 namespace CommonTest\Service\Helper;
 
 use Common\Service\Helper\UrlHelperService;
-use CommonTest\Bootstrap;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 use Laminas\View\HelperPluginManager;
+use Laminas\View\Helper\Url;
 
 /**
  * Url Helper Service Test
@@ -27,17 +27,23 @@ class UrlHelperServiceTest extends MockeryTestCase
      */
     private $sut;
 
-    private $serviceManager;
+    private $mockViewHelperManager;
+
+    private $mockUrlViewHelper;
 
     /**
      * Setup the sut
      */
     protected function setUp(): void
     {
-        $this->serviceManager = Bootstrap::getServiceManager();
+        $this->mockUrlViewHelper = $this->createPartialMock(Url::class, array('__invoke'));
 
-        $this->sut = new UrlHelperService();
-        $this->sut->setServiceLocator($this->serviceManager);
+        $this->mockViewHelperManager = $this->createPartialMock(HelperPluginManager::class, array('get'));
+        $this->mockViewHelperManager->expects($this->any())
+            ->method('get')
+            ->will($this->returnValue($this->mockUrlViewHelper));
+
+        $this->sut = new UrlHelperService($this->mockViewHelperManager, []);
     }
 
     /**
@@ -52,8 +58,7 @@ class UrlHelperServiceTest extends MockeryTestCase
         $reuseMatchedParams = true;
         $builtUrl = 'some/url';
 
-        $mockUrlViewHelper = $this->attachMockUrlBuilder();
-        $mockUrlViewHelper->expects($this->once())
+        $this->mockUrlViewHelper->expects($this->once())
             ->method('__invoke')
             ->with($route, $params, $options, $reuseMatchedParams)
             ->will($this->returnValue($builtUrl));
@@ -70,8 +75,7 @@ class UrlHelperServiceTest extends MockeryTestCase
         $route = 'foo/bar';
         $builtUrl = 'some/url';
 
-        $mockUrlViewHelper = $this->attachMockUrlBuilder();
-        $mockUrlViewHelper->expects($this->once())
+        $this->mockUrlViewHelper->expects($this->once())
             ->method('__invoke')
             ->with($route, array(), array(), false)
             ->will($this->returnValue($builtUrl));
@@ -81,17 +85,11 @@ class UrlHelperServiceTest extends MockeryTestCase
 
     public function testFromRouteWithHostWithNoMatchingKey()
     {
-        $sm = m::mock('Laminas\ServiceManager\ServiceLocatorInterface')
-            ->shouldReceive('get')
-            ->with('config')
-            ->andReturn(
-                [
-                    'hostnames' => []
-                ]
-            )
-            ->getMock();
+        $config = [
+            'hostnames' => []
+        ];
 
-        $this->sut->setServiceLocator($sm);
+        $this->sut = new UrlHelperService($this->mockViewHelperManager, $config);
 
         try {
             $this->sut->fromRouteWithHost('foo');
@@ -105,7 +103,7 @@ class UrlHelperServiceTest extends MockeryTestCase
 
     public function testFromRouteWithHostWithAndMatchingKey()
     {
-        $urlMock = function ($route, $params = null, $options) {
+        $urlMock = function ($route, $params, $options) {
             $this->assertEquals('a_route', $route);
             $this->assertEquals(
                 [
@@ -117,47 +115,19 @@ class UrlHelperServiceTest extends MockeryTestCase
             return '/a/url';
         };
 
-        $sm = m::mock('Laminas\ServiceManager\ServiceLocatorInterface')
-            ->shouldReceive('get')
-            ->with('config')
-            ->andReturn(
-                [
-                    'hostnames' => [
-                        'foo' => 'http://selfserve'
-                    ]
-                ]
-            )
-            ->shouldReceive('get')
-            ->with('viewhelpermanager')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('get')
-                ->with('url')
-                ->andReturn($urlMock)
-                ->getMock()
-            )
-            ->getMock();
+        $this->mockUrlViewHelper->expects($this->once())
+            ->method('__invoke')
+            ->will($this->returnCallback($urlMock));
 
-        $this->sut->setServiceLocator($sm);
+        $config = [
+            'hostnames' => ['foo' => 'http://selfserve']
+        ];
+
+        $this->sut = new UrlHelperService($this->mockViewHelperManager, $config);
 
         $this->assertEquals(
             'http://selfserve/a/url',
             $this->sut->fromRouteWithHost('foo', 'a_route')
         );
-    }
-
-    protected function attachMockUrlBuilder()
-    {
-        $mockUrlViewHelper = $this->createPartialMock('\Laminas\View\Helper\Url', array('__invoke'));
-
-        $mockViewHelperManager = $this->createPartialMock(HelperPluginManager::class, array('get'));
-        $mockViewHelperManager->expects($this->any())
-            ->method('get')
-            ->will($this->returnValue($mockUrlViewHelper));
-
-        $this->serviceManager->setAllowOverride(true);
-        $this->serviceManager->setService('viewhelpermanager', $mockViewHelperManager);
-
-        return $mockUrlViewHelper;
     }
 }

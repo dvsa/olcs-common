@@ -17,14 +17,14 @@ class FormHelperServiceTest extends MockeryTestCase
 {
     /** @var FormHelperService */
     private $sut;
-    /** @var \Laminas\ServiceManager\ServiceLocatorInterface | m\MockInterface */
-    private $mockSm;
     /** @var \ZfcRbac\Service\AuthorizationService | m\MockInterface */
     private $mockAuthSrv;
     /** @var \Common\Form\Annotation\CustomAnnotationBuilder | m\MockInterface */
     private $mockBuilder;
     /** @var  \Common\Service\Helper\AddressHelperService | m\MockInterface */
     private $mockHlpAddr;
+    /** @var  \Common\Service\Helper\DateHelperService | m\MockInterface */
+    private $mockHlpDate;
     /** @var  \Laminas\View\Renderer\RendererInterface | m\MockInterface */
     private $mockRenderer;
     /** @var  \Common\Service\Helper\TranslationHelperService | m\MockInterface */
@@ -40,21 +40,22 @@ class FormHelperServiceTest extends MockeryTestCase
         $this->mockTransSrv = m::mock(\Common\Service\Helper\TranslationHelperService::class);
         $this->mockRenderer = m::mock(\Laminas\View\Renderer\RendererInterface::class);
         $this->mockHlpAddr = m::mock(\Common\Service\Helper\AddressHelperService::class);
+        $this->mockHlpDate = m::mock(\Common\Service\Helper\DateHelperService::class);
 
         $this->mockDataAddress = m::mock(\Common\Service\Data\AddressDataService::class);
 
-        $this->mockSm = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class);
-        $this->mockSm
-            ->shouldReceive('get')->with(\ZfcRbac\Service\AuthorizationService::class)->andReturn($this->mockAuthSrv)
-            ->shouldReceive('get')->with('ViewRenderer')->andReturn($this->mockRenderer)
-            ->shouldReceive('get')->with('FormAnnotationBuilder')->andReturn($this->mockBuilder)
-            ->shouldReceive('get')->with('Helper\Translation')->andReturn($this->mockTransSrv)
-            ->shouldReceive('get')->with('translator')->andReturn($this->mockTransSrv)
-            ->shouldReceive('get')->with('Helper\Address')->andReturn($this->mockHlpAddr)
-            ->shouldReceive('get')->with('Data\Address')->andReturn($this->mockDataAddress);
+        $config = [];
 
-        $this->sut = new FormHelperService();
-        $this->sut->setServiceLocator($this->mockSm);
+        $this->sut = new FormHelperService(
+            $this->mockBuilder,
+            $config,
+            $this->mockAuthSrv,
+            $this->mockRenderer,
+            $this->mockDataAddress,
+            $this->mockHlpAddr,
+            $this->mockHlpDate,
+            $this->mockTransSrv
+        );
     }
 
     public function testAlterElementLabelWithAppend()
@@ -144,16 +145,23 @@ class FormHelperServiceTest extends MockeryTestCase
         $this->mockBuilder->shouldReceive('createForm')->once()->with($formClass)->andReturn($mockForm);
         $this->mockAuthSrv->shouldReceive('isGranted')->with('internal-user')->andReturn(false);
 
-        $mockCfg = [
+        $config = [
             'csrf' => [
                 'timeout' => 9999,
             ]
         ];
-        $this->mockSm->shouldReceive('get')->once()->with('Config')->andReturn($mockCfg);
 
         /** @var FormHelperService | m\MockInterface $sut */
-        $sut = m::mock(FormHelperService::class)->makePartial();
-        $sut->setServiceLocator($this->mockSm);
+        $sut = new FormHelperService(
+            $this->mockBuilder,
+            $config,
+            $this->mockAuthSrv,
+            $this->mockRenderer,
+            $this->mockDataAddress,
+            $this->mockHlpAddr,
+            $this->mockHlpDate,
+            $this->mockTransSrv
+        );
 
         static::assertEquals($mockForm, $sut->createForm($formClass));
     }
@@ -197,13 +205,7 @@ class FormHelperServiceTest extends MockeryTestCase
         $this->mockBuilder->shouldReceive('createForm')->once()->with($formClass)->andReturn($mockForm);
         $this->mockAuthSrv->shouldReceive('isGranted')->with('internal-user')->andReturn(false);
 
-        $this->mockSm->shouldReceive('get')->once()->with('Config')->andReturn([]);
-
-        /** @var FormHelperService | m\MockInterface $sut */
-        $sut = m::mock(FormHelperService::class)->makePartial();
-        $sut->setServiceLocator($this->mockSm);
-
-        static::assertEquals($mockForm, $sut->createForm($formClass, false, false));
+        static::assertEquals($mockForm, $this->sut->createForm($formClass, false, false));
     }
 
     public function testProcessAddressLookupWithNoPostcodeOrAddressSelected()
@@ -581,15 +583,8 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testProcessAddressLookupServiceUnavailable()
     {
-        /** @var \Laminas\ServiceManager\ServiceLocatorInterface | m\MockInterface $mockSm */
-        $mockSm = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class);
-        $mockSm->shouldReceive('get')->with('Data\Address')->andThrow(new \Exception('fail'));
-
-        $this->sut->setServiceLocator($mockSm);
-
-        $address = m::mock('\stdClass');
-        $address->shouldReceive('getAddressesForPostcode')
-            ->andReturn([]);
+        $this->mockDataAddress->shouldReceive('getAddressesForPostcode')
+            ->andThrow(new \Exception('fail'));
 
         $form = m::mock('Laminas\Form\Form');
 
@@ -1469,13 +1464,11 @@ class FormHelperServiceTest extends MockeryTestCase
     {
         // mocks
         $field = m::mock();
-        $dateHelper = m::mock();
         $today = m::mock('\DateTime');
 
         // expectations
-        $this->mockSm->shouldReceive('get')->with('Helper\Date')->andReturn($dateHelper);
         $field->shouldReceive('getValue')->andReturn('--');
-        $dateHelper->shouldReceive('getDateObject')->andReturn($today);
+        $this->mockHlpDate->shouldReceive('getDateObject')->andReturn($today);
         $field->shouldReceive('setValue')->with($today);
 
         $this->sut->setDefaultDate($field);
@@ -1487,7 +1480,6 @@ class FormHelperServiceTest extends MockeryTestCase
         $field = m::mock();
 
         // expectations
-        $this->mockSm->shouldReceive('get')->with('Helper\Date')->never();
         $field->shouldReceive('getValue')->andReturn('2015-04-09');
         $field->shouldReceive('setValue')->never();
 

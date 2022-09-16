@@ -12,7 +12,7 @@ namespace Common\Service\Helper;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class DateHelperService extends AbstractHelperService
+class DateHelperService
 {
     public function getDate($format = 'Y-m-d')
     {
@@ -34,16 +34,5 @@ class DateHelperService extends AbstractHelperService
         $obj = new \DateTime();
         $obj->setDate($date['year'], $date['month'], $date['day']);
         return $obj;
-    }
-
-    /**
-     * Thin wrapper around \Common\Util\DateTimeProcessor as it's
-     * a helpful method to expose here too
-     */
-    public function calculateDate($date, $days, $we = false, $bh = false)
-    {
-        return $this->getServiceLocator()
-            ->get('Common\Util\DateTimeProcessor')
-            ->calculateDate($date, $days, $we, $bh);
     }
 }

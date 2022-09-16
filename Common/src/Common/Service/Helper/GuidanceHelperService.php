@@ -7,21 +7,26 @@
  */
 namespace Common\Service\Helper;
 
-use Laminas\ServiceManager\ServiceLocatorAwareInterface;
-use Laminas\ServiceManager\ServiceLocatorAwareTrait;
+use Laminas\View\Helper\Placeholder;
 
 /**
  * Guidance Helper Service
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class GuidanceHelperService implements ServiceLocatorAwareInterface
+class GuidanceHelperService
 {
-    use ServiceLocatorAwareTrait;
+    /** @var Placeholder */
+    private $placeholder;
+
+    public function __construct(
+        Placeholder $placeholder
+    ) {
+        $this->placeholder = $placeholder;
+    }
 
     public function append($message)
     {
-        $placeholder = $this->getServiceLocator()->get('ViewHelperManager')->get('placeholder');
-        $placeholder->getContainer('guidance')->append($message);
+        $this->placeholder->getContainer('guidance')->append($message);
     }
 }
