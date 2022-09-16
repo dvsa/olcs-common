@@ -2,6 +2,7 @@
 
 namespace Common\Controller\Lva;
 
+use Common\FeatureToggle;
 use Common\Service\Table\TableBuilder as Table;
 use Dvsa\Olcs\Transfer\Command\Licence\UpdateTrailers;
 use Dvsa\Olcs\Transfer\Command\Trailer\CreateTrailer;
@@ -9,6 +10,7 @@ use Dvsa\Olcs\Transfer\Command\Trailer\DeleteTrailer;
 use Dvsa\Olcs\Transfer\Command\Trailer\UpdateTrailer;
 use Dvsa\Olcs\Transfer\Query\Licence\Trailers;
 use Dvsa\Olcs\Transfer\Query\Trailer\Trailer;
+use Laminas\Form\Form;
 use Laminas\Stdlib\RequestInterface;
 
 /**
@@ -30,6 +32,8 @@ abstract class AbstractTrailersController extends AbstractController
      */
     protected $section = 'trailers';
     protected $baseRoute = 'lva-%s/trailers';
+
+    private $isLongerSemiTrailersFeatureToggleEnabled;
 
     /**
      * Process Action - Index
@@ -118,6 +122,8 @@ abstract class AbstractTrailersController extends AbstractController
         $form = $this->getServiceLocator()->get('Helper\Form')
             ->createFormWithRequest('Lva\Trailer', $request);
 
+        $this->alterForm($form);
+
         if ($request->isPost()) {
             $form->setData((array)$request->getPost());
 
@@ -126,7 +132,8 @@ abstract class AbstractTrailersController extends AbstractController
                 $data['id'] = $this->getLicenceId();
                 $data['licence'] = $this->getLicenceId();
                 $data['specifiedDate'] = $this->getServiceLocator()->get('Helper\Date')->getDate();
-                $data['isLongerSemiTrailer'] = $data['longerSemiTrailer']['isLongerSemiTrailer'];
+                $data['isLongerSemiTrailer'] = $this->isLongerSemiTrailersFeatureToggleEnabled()
+                    ? $data['longerSemiTrailer']['isLongerSemiTrailer'] : 'N';
 
                 $response = $this->handleCommand(CreateTrailer::create($data));
 
@@ -155,6 +162,8 @@ abstract class AbstractTrailersController extends AbstractController
         $form = $this->getServiceLocator()->get('Helper\Form')
             ->createFormWithRequest('Lva\Trailer', $request);
 
+        $this->alterForm($form);
+
         $this->getServiceLocator()->get('Helper\Form')->remove($form, 'form-actions->addAnother');
 
         if ($request->isPost()) {
@@ -163,7 +172,8 @@ abstract class AbstractTrailersController extends AbstractController
             if ($form->isValid()) {
                 $data = $form->getData()['data'];
                 $data['licence'] = $this->getLicenceId();
-                $data['isLongerSemiTrailer'] = $data['longerSemiTrailer']['isLongerSemiTrailer'];
+                $data['isLongerSemiTrailer'] = $this->isLongerSemiTrailersFeatureToggleEnabled()
+                    ? $data['longerSemiTrailer']['isLongerSemiTrailer'] : 'N';
 
                 $response = $this->handleCommand(UpdateTrailer::create($data));
 
@@ -231,7 +241,13 @@ abstract class AbstractTrailersController extends AbstractController
      */
     protected function getTable($tableData)
     {
-        return $this->getServiceLocator()->get('Table')->prepareTable('lva-trailers', $tableData);
+        $table = $this->getServiceLocator()->get('Table')->prepareTable('lva-trailers', $tableData);
+
+        if (!$this->isLongerSemiTrailersFeatureToggleEnabled()) {
+            $table->removeColumn('isLongerSemiTrailer');
+        }
+
+        return $table;
     }
 
     /**
@@ -248,5 +264,34 @@ abstract class AbstractTrailersController extends AbstractController
             ->get('FormServiceManager')
             ->get('lva-licence-trailers')
             ->getForm($request, $table);
+    }
+
+    /**
+     * Alter form
+     *
+     * @param Form $form Form
+     *
+     * @return void
+     */
+    private function alterForm(Form $form)
+    {
+        if (!$this->isLongerSemiTrailersFeatureToggleEnabled()) {
+            $this->getServiceLocator()->get('Helper\Form')->remove($form, 'data->longerSemiTrailer');
+        }
+    }
+
+    /**
+     * Is longer semi-trailers feature toggle enabled
+     *
+     * @return bool
+     */
+    private function isLongerSemiTrailersFeatureToggleEnabled(): bool
+    {
+        if (!isset($this->isLongerSemiTrailersFeatureToggleEnabled)) {
+            $this->isLongerSemiTrailersFeatureToggleEnabled
+                = $this->getServiceLocator()->get('QuerySender')->featuresEnabled([FeatureToggle::LONGER_SEMI_TRAILERS]);
+        }
+
+        return $this->isLongerSemiTrailersFeatureToggleEnabled;
     }
 }
