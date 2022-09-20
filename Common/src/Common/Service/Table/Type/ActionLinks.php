@@ -13,6 +13,7 @@ use Common\Util\Escape;
 class ActionLinks extends Selector
 {
     const DEFAULT_INPUT_NAME = 'table[action][delete][%d]';
+    const BUTTON_MARKUP = '<input type="submit" class="%s" name="%s" aria-label="%s" value="%s">';
 
     /**
      * Render
@@ -26,10 +27,10 @@ class ActionLinks extends Selector
     public function render($data, $column, $formattedContent = null)
     {
         $translator = $this->getTable()->getServiceLocator()->get('translator');
-        $remove = $translator->translate('action_links.remove');
-        $removeAria = $translator->translate('action_links.remove.aria');
-        $replace = $translator->translate('action_links.replace');
-        $replaceAria = $translator->translate('action_links.replace.aria');
+        $remove = $translator->translate(self::KEY_ACTION_LINKS_REMOVE);
+        $removeAria = $translator->translate(self::KEY_ACTION_LINKS_REMOVE_ARIA);
+        $replace = $translator->translate(self::KEY_ACTION_LINKS_REPLACE);
+        $replaceAria = $translator->translate(self::KEY_ACTION_LINKS_REPLACE_ARIA);
         $ariaDescription = $this->getAriaDescription($data, $column, $translator);
 
         $content = '';
@@ -94,13 +95,7 @@ class ActionLinks extends Selector
             $ariaLabel = sprintf(self::ARIA_LABEL_FORMAT, $removeAria, $ariaDescription);
 
             $classes = $this->getClasses($column);
-            $content .= sprintf(
-                '<input type="submit" class="%s" name="%s" aria-label="%s" value="%s">',
-                Escape::htmlAttr($classes),
-                Escape::htmlAttr($inputName),
-                Escape::htmlAttr($ariaLabel),
-                Escape::htmlAttr($remove)
-            );
+            $content .= $this->buttonMarkup(self::BUTTON_MARKUP, $classes, $inputName, $ariaLabel, $remove);
         }
         return $content;
     }
@@ -131,15 +126,27 @@ class ActionLinks extends Selector
         if ($this->isLinkVisible($data, $column, 'Replace', false)) {
             $inputName = sprintf($this->getInputName($column, 'replaceInputName'), $data['id']);
             $ariaLabel = sprintf(self::ARIA_LABEL_FORMAT, $replaceAria, $ariaDescription);
+            $classes = 'right-aligned action--secondary trigger-modal';
 
-            $content .= sprintf(
-                ' <input type="submit" class="action--secondary right-aligned trigger-modal" name="%s" aria-label="%s" value="%s">',
-                Escape::htmlAttr($inputName),
-                Escape::htmlAttr($ariaLabel),
-                Escape::htmlAttr($replace)
-            );
+            $content .= $this->buttonMarkup(' ' . self::BUTTON_MARKUP, $classes, $inputName, $ariaLabel, $replace);
         }
         return $content;
+    }
+
+    private function buttonMarkup(
+        string $format,
+        string $classes,
+        string $inputName,
+        string $ariaLabel,
+        string $value
+    ): string {
+        return sprintf(
+            $format,
+            Escape::htmlAttr($classes),
+            Escape::htmlAttr($inputName),
+            Escape::htmlAttr($ariaLabel),
+            Escape::htmlAttr($value)
+        );
     }
 
     /**

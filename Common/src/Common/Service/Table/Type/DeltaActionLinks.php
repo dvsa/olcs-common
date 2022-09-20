@@ -27,28 +27,28 @@ class DeltaActionLinks extends Selector
         $ariaDescription = $this->getAriaDescription($data, $column, $translator);
 
         if ($this->isRestoreVisible($data, $column)) {
-            $restore = $translator->translate('action_links.restore');
-            $restoreAria = $translator->translate('action_links.restore.aria');
+            $restore = $translator->translate(self::KEY_ACTION_LINKS_RESTORE);
+            $restoreAria = $translator->translate(self::KEY_ACTION_LINKS_RESTORE_ARIA);
             $ariaLabel = sprintf(self::ARIA_LABEL_FORMAT, $restoreAria, $ariaDescription);
 
             return sprintf(
                 '<input type="submit" class="right-aligned action--secondary" '.
                     'name="table[action][restore][%s]" aria-label="%s" value="%s">',
-                $data['id'],
+                Escape::htmlAttr($data['id']),
                 Escape::htmlAttr($ariaLabel),
                 Escape::htmlAttr($restore)
             );
         }
 
         if ($this->isRemoveVisible($data, $column)) {
-            $remove = $translator->translate('action_links.remove');
-            $removeAria = $translator->translate('action_links.remove.aria');
+            $remove = $translator->translate(self::KEY_ACTION_LINKS_REMOVE);
+            $removeAria = $translator->translate(self::KEY_ACTION_LINKS_REMOVE_ARIA);
             $ariaLabel = sprintf(self::ARIA_LABEL_FORMAT, $removeAria, $ariaDescription);
 
             return sprintf(
                 '<input type="submit" class="right-aligned action--secondary trigger-modal" '.
                     'name="table[action][delete][%s]" aria-label="%s" value="%s">',
-                $data['id'],
+                Escape::htmlAttr($data['id']),
                 Escape::htmlAttr($ariaLabel),
                 Escape::htmlAttr($remove)
             );

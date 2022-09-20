@@ -7,6 +7,8 @@
  */
 namespace CommonTest\Service\Table\Type;
 
+use Common\Util\Escape;
+use Laminas\Mvc\I18n\Translator;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Table\Type\DeltaActionLinks;
@@ -38,16 +40,7 @@ class DeltaActionLinksTest extends MockeryTestCase
      */
     public function testRender($data, $expected)
     {
-        $mockTranslate = m::mock()
-            ->shouldReceive('translate')
-            ->with('delta_action_links.remove')
-            ->andReturn('Remove')
-            ->once()
-            ->shouldReceive('translate')
-            ->with('delta_action_links.restore')
-            ->andReturn('Restore')
-            ->once()
-            ->getMock();
+        $mockTranslate = $this->getTranslator($data['action'] ?? null);
 
         $this->sm->setService('translator', $mockTranslate);
 
@@ -56,6 +49,9 @@ class DeltaActionLinksTest extends MockeryTestCase
 
     public function tableDataProvider()
     {
+        $escapedAriaRemove = Escape::htmlAttr('Remove Aria (id 123)');
+        $escapedAriaRestore = Escape::htmlAttr('Restore Aria (id 456)');
+
         return [
             [
                 [
@@ -63,7 +59,7 @@ class DeltaActionLinksTest extends MockeryTestCase
                     'action' => 'A'
                 ],
                 '<input type="submit" class="right-aligned action--secondary trigger-modal" '.
-                    'name="table[action][delete][123]" value="Remove">'
+                    'name="table[action][delete][123]" aria-label="' . $escapedAriaRemove . '" value="Remove">'
             ],
             [
                 [
@@ -71,7 +67,7 @@ class DeltaActionLinksTest extends MockeryTestCase
                     'action' => 'D'
                 ],
                 '<input type="submit" class="right-aligned action--secondary" '.
-                    'name="table[action][restore][456]" value="Restore">'
+                    'name="table[action][restore][456]" aria-label="' . $escapedAriaRestore . '" value="Restore">'
             ],
             [
                 [
@@ -80,5 +76,27 @@ class DeltaActionLinksTest extends MockeryTestCase
                 ''
             ]
         ];
+    }
+
+    private function getTranslator(?string $action): m\MockInterface
+    {
+        if ($action === null) {
+            $removeTimes = 0;
+            $restoreTimes = 0;
+        } elseif ($action === 'A') {
+            $removeTimes = 1;
+            $restoreTimes = 0;
+        } else {
+            $removeTimes = 0;
+            $restoreTimes = 1;
+        }
+
+        $translator = m::mock(Translator::class);
+        $translator->expects('translate')->with(DeltaActionLinks::KEY_ACTION_LINKS_REMOVE)->andReturn('Remove')->times($removeTimes);
+        $translator->expects('translate')->with(DeltaActionLinks::KEY_ACTION_LINKS_REMOVE_ARIA)->andReturn('Remove Aria')->times($removeTimes);;
+        $translator->expects('translate')->with(DeltaActionLinks::KEY_ACTION_LINKS_RESTORE)->andReturn('Restore')->times($restoreTimes);;
+        $translator->expects('translate')->with(DeltaActionLinks::KEY_ACTION_LINKS_RESTORE_ARIA)->andReturn('Restore Aria')->times($restoreTimes);;
+
+        return $translator;
     }
 }
