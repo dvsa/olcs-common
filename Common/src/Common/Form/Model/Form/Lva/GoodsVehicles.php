@@ -16,7 +16,7 @@ class GoodsVehicles
      * @Form\Name("query")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\VehiclesQuery")
      * @Form\Attributes({
-     *   "class": "visually-hidden"
+     *   "class": "govuk-visually-hidden"
      * })
      */
     public $query = null;

@@ -57,7 +57,7 @@ class RegisteredAddress
      * })
      * @Form\Options({
      *     "label":"address_addressLine2",
-     *     "label_attributes":{"class":"visually-hidden"}
+     *     "label_attributes":{"class":"govuk-visually-hidden"}
      * })
      * @Form\Required(false)
      * @Form\Type("Text")
@@ -75,7 +75,7 @@ class RegisteredAddress
      * })
      * @Form\Options({
      *     "label":"address_addressLine3",
-     *     "label_attributes":{"class":"visually-hidden"}
+     *     "label_attributes":{"class":"govuk-visually-hidden"}
      * })
      * @Form\Required(false)
      * @Form\Type("Text")
@@ -93,7 +93,7 @@ class RegisteredAddress
      * })
      * @Form\Options({
      *     "label":"address_addressLine4",
-     *     "label_attributes":{"class":"visually-hidden"}
+     *     "label_attributes":{"class":"govuk-visually-hidden"}
      * })
      * @Form\Required(false)
      * @Form\Type("Text")
@@ -111,7 +111,7 @@ class RegisteredAddress
      * @Form\Options({
      *    "label":"address_townCity",
      *    "label_attributes":{
-     *        "class":"visually-hidden",
+     *        "class":"govuk-visually-hidden",
      *        "aria-label": "Business town or city"
      *    }
      * })

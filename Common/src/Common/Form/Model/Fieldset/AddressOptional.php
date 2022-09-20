@@ -58,7 +58,7 @@ class AddressOptional
      *   "id" : "",
      *   "data-container-class" : "compound"
      * })
-     * @Form\Options({"label":"address_addressLine2","label_attributes":{"class":"visually-hidden"}})
+     * @Form\Options({"label":"address_addressLine2","label_attributes":{"class":"govuk-visually-hidden"}})
      * @Form\Required(false)
      * @Form\Type("Text")
      */
@@ -70,7 +70,7 @@ class AddressOptional
      *   "id" : "",
      *   "data-container-class" : "compound"
      * })
-     * @Form\Options({"label":"address_addressLine3","label_attributes":{"class":"visually-hidden"}})
+     * @Form\Options({"label":"address_addressLine3","label_attributes":{"class":"govuk-visually-hidden"}})
      * @Form\Required(false)
      * @Form\Type("Text")
      */
@@ -78,7 +78,7 @@ class AddressOptional
 
     /**
      * @Form\Attributes({"class":"long","id":""})
-     * @Form\Options({"label":"address_addressLine4","label_attributes":{"class":"visually-hidden"}})
+     * @Form\Options({"label":"address_addressLine4","label_attributes":{"class":"govuk-visually-hidden"}})
      * @Form\Required(false)
      * @Form\Type("Text")
      */

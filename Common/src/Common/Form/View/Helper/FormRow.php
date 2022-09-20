@@ -126,8 +126,8 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
                 $class = $element->getAttribute('data-container-class');
             }
 
-            if (strpos($element->getAttribute('class'), 'visually-hidden') === 0) {
-                $markup = sprintf(self::$format, 'visually-hidden', $markup);
+            if (strpos($element->getAttribute('class'), 'govuk-visually-hidden') === 0) {
+                $markup = sprintf(self::$format, 'govuk-visually-hidden', $markup);
             } elseif ($element->getOption('render-container') !== false) {
                 $renderAsFieldset = $element->getOption('render_as_fieldset');
 

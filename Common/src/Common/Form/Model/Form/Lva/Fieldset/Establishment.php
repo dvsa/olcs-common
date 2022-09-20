@@ -7,7 +7,7 @@ use Laminas\Form\Annotation as Form;
 /**
  * @Form\Name("establishment")
  * @Form\Attributes({
- *     "class": "visually-hidden"
+ *     "class": "govuk-visually-hidden"
  * })
  */
 class Establishment
