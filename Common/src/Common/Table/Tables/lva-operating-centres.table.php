@@ -29,11 +29,13 @@ return array(
         ),
         array(
             'title' => 'application_operating-centres_authorisation.table.vehicles',
+            'isNumeric' => true,
             'name' => 'noOfVehiclesRequired',
             'sort' => 'noOfVehiclesRequired'
         ),
         array(
             'title' => 'application_operating-centres_authorisation.table.trailers',
+            'isNumeric' => true,
             'name' => 'noOfTrailersRequired',
             'sort' => 'noOfTrailersRequired'
         ),
