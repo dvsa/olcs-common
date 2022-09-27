@@ -33,6 +33,11 @@ return array(
             'name' => 'specifiedDate'
         ),
         array(
+            'title' => $translationPrefix . '.longerSemiTrailer',
+            'formatter' => 'YesNo',
+            'name' => 'isLongerSemiTrailer'
+        ),
+        array(
             'type' => 'ActionLinks',
         ),
         array(

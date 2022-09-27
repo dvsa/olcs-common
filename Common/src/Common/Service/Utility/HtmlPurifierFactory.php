@@ -43,6 +43,8 @@ class HtmlPurifierFactory implements FactoryInterface
         $config = HTMLPurifier_Config::createDefault();
         $config->set('Cache.SerializerPath', $options['html-purifier-cache-dir']);
         $config->set('HTML.Allowed', $this->whiteList);
+        $config->set('Attr.AllowedFrameTargets', ['_blank']);
+
         return new HTMLPurifier($config);
     }
 }

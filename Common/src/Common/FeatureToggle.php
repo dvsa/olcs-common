@@ -12,4 +12,5 @@ class FeatureToggle
     const BACKEND_SURRENDER = 'back_surrender';
     const DVLA_INTEGRATION = 'dvla_integration';
     const NEW_GOODS_APP_VEHICLE = 'new_goods_app_vehicle';
+    const LONGER_SEMI_TRAILERS = 'longer_semi_trailers';
 }
