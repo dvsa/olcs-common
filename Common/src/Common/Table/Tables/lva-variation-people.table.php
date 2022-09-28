@@ -2,7 +2,7 @@
 
 return array(
     'variables' => array(
-        'title' => null,
+        'title' => 'selfserve-app-subSection-your-business-people-tableHeaderPeople',
         'empty_message' => 'selfserve-app-subSection-your-business-people-other.table.empty-message',
         'required_label' => 'person',
         'within_form' => true,

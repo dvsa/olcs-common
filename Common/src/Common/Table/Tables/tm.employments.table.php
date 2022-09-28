@@ -2,6 +2,7 @@
 
 return array(
     'variables' => array(
+        'title' => 'transport-manager.employments.table',
         'within_form' => true,
         'empty_message' => false,
     ),
