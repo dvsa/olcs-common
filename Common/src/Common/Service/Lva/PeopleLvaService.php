@@ -9,9 +9,8 @@
 namespace Common\Service\Lva;
 
 use Common\RefData;
+use Common\Service\Helper\FormHelperService;
 use Laminas\Form\FieldsetInterface;
-use Laminas\ServiceManager\ServiceLocatorAwareTrait;
-use Laminas\ServiceManager\ServiceLocatorAwareInterface;
 use Laminas\Form\Form;
 
 /**
@@ -19,9 +18,16 @@ use Laminas\Form\Form;
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class PeopleLvaService implements ServiceLocatorAwareInterface
+class PeopleLvaService
 {
-    use ServiceLocatorAwareTrait;
+    /** @var FormHelperService */
+    private $formHelper;
+
+    public function __construct(
+        FormHelperService $formHelper
+    ) {
+        $this->formHelper = $formHelper;
+    }
 
     /**
      * lock person form
@@ -35,20 +41,19 @@ class PeopleLvaService implements ServiceLocatorAwareInterface
     {
         /** @var FieldsetInterface $fieldset */
         $fieldset = $form->get('data');
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
         foreach (['title', 'forename', 'familyName', 'otherName', 'birthDate', 'position'] as $field) {
             if ($fieldset->has($field)) {
-                $formHelper->lockElement(
+                $this->formHelper->lockElement(
                     $fieldset->get($field),
                     'people.' . $orgType . '.' . $field . '.locked'
                 );
-                $formHelper->disableElement($form, 'data->' . $field);
+                $this->formHelper->disableElement($form, 'data->' . $field);
             }
         }
 
         if ($orgType !== RefData::ORG_TYPE_SOLE_TRADER) {
-            $formHelper->remove($form, 'form-actions->submit');
+            $this->formHelper->remove($form, 'form-actions->submit');
         }
 
         $form->setAttribute('locked', true);
