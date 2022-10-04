@@ -7,17 +7,35 @@
  */
 namespace Common\Service\Lva;
 
-use Laminas\ServiceManager\ServiceLocatorAwareTrait;
-use Laminas\ServiceManager\ServiceLocatorAwareInterface;
+use Common\Service\Helper\GuidanceHelperService;
+use Common\Service\Helper\TranslationHelperService;
+use Common\Service\Helper\UrlHelperService;
 
 /**
  * Variation LVA service
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class VariationLvaService implements ServiceLocatorAwareInterface
+class VariationLvaService
 {
-    use ServiceLocatorAwareTrait;
+    /** @var TranslationHelperService */
+    private $translationHelper;
+
+    /** @var GuidanceHelperService */
+    private $guidanceHelper;
+
+    /** @var UrlHelperService */
+    private $urlHelper;
+
+    public function __construct(
+        TranslationHelperService $translationHelper,
+        GuidanceHelperService $guidanceHelper,
+        UrlHelperService $urlHelper
+    ) {
+        $this->translationHelper = $translationHelper;
+        $this->guidanceHelper = $guidanceHelper;
+        $this->urlHelper = $urlHelper;
+    }
 
     /**
      * add variation message
@@ -32,10 +50,9 @@ class VariationLvaService implements ServiceLocatorAwareInterface
     {
         $link = $this->getVariationLink($licenceId, $redirectRoute);
 
-        $message = $this->getServiceLocator()->get('Helper\Translation')
-            ->translateReplace($msgKey, [$link]);
+        $message = $this->translationHelper->translateReplace($msgKey, [$link]);
 
-        $this->getServiceLocator()->get('Helper\Guidance')->append($message);
+        $this->guidanceHelper->append($message);
     }
 
     /**
@@ -48,7 +65,9 @@ class VariationLvaService implements ServiceLocatorAwareInterface
      */
     public function getVariationLink($licenceId, $redirectRoute = null)
     {
-        return $this->getServiceLocator()->get('Helper\Url')
-            ->fromRoute('lva-licence/variation', ['licence' => $licenceId, 'redirectRoute' => $redirectRoute]);
+        return $this->urlHelper->fromRoute(
+            'lva-licence/variation',
+            ['licence' => $licenceId, 'redirectRoute' => $redirectRoute]
+        );
     }
 }

@@ -167,6 +167,8 @@ return array(
             'Helper\Translation' => HelperService\TranslationHelperService::class,
             'Helper\TransportManager' => HelperService\TransportManagerHelperService::class,
             'Helper\Url' => HelperService\UrlHelperService::class,
+            'Lva\People' => Common\Service\Lva\PeopleLvaService::class,
+            'Lva\Variation' => Common\Service\Lva\VariationLvaService::class,
         ),
         'invokables' => array(
             'Common\Service\NavigationFactory' => 'Common\Service\NavigationFactory',
@@ -281,6 +283,9 @@ return array(
             HelperService\TranslationHelperService::class => HelperService\TranslationHelperServiceFactory::class,
             HelperService\TransportManagerHelperService::class => HelperService\TransportManagerHelperServiceFactory::class,
             HelperService\UrlHelperService::class => HelperService\UrlHelperServiceFactory::class,
+
+            Common\Service\Lva\PeopleLvaService::class => Common\Service\Lva\PeopleLvaServiceFactory::class,
+            Common\Service\Lva\VariationLvaService::class => Common\Service\Lva\VariationLvaServiceFactory::class,
 
             CommandSender::class => CommandSender::class,
             'QuerySender' => \Common\Service\Cqrs\Query\QuerySender::class,

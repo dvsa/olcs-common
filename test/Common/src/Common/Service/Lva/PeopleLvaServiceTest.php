@@ -15,7 +15,6 @@ use Mockery as m;
 use Laminas\Form\Element;
 use Laminas\Form\FieldsetInterface;
 use Laminas\Form\Form;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\Text\Table\Table;
 
 /**
@@ -25,18 +24,17 @@ use Laminas\Text\Table\Table;
  */
 class PeopleLvaServiceTest extends MockeryTestCase
 {
-    /** @var ServiceLocatorInterface|m\Mock */
-    private $sm;
-
     /** @var PeopleLvaService */
     private $sut;
 
+    /** @var FormHelperService */
+    private $formHelper;
+
     public function setUp(): void
     {
-        $this->sm = m::mock(ServiceLocatorInterface::class);
-        $this->sut = new PeopleLvaService();
+        $this->formHelper = m::mock(FormHelperService::class);
 
-        $this->sut->setServiceLocator($this->sm);
+        $this->sut = new PeopleLvaService($this->formHelper);
     }
 
     public function testLockPersonForm()
@@ -62,18 +60,15 @@ class PeopleLvaServiceTest extends MockeryTestCase
             ->with('locked', true)
             ->once();
 
-        $formHelperService = m::mock(FormHelperService::class);
-        $formHelperService->shouldReceive('lockElement')
+        $this->formHelper->shouldReceive('lockElement')
             ->with($mockTitleElement, 'people.org_t_rc.title.locked')
-            ->once();
-        $formHelperService->shouldReceive('disableElement')
+            ->once()
+            ->shouldReceive('disableElement')
             ->with($form, 'data->title')
-            ->once();
-        $formHelperService->shouldReceive('remove')
+            ->once()
+            ->shouldReceive('remove')
             ->with($form, 'form-actions->submit')
             ->once();
-
-        $this->setService('Helper\Form', $formHelperService);
 
         $this->sut->lockPersonForm($form, 'org_t_rc');
     }
@@ -108,12 +103,5 @@ class PeopleLvaServiceTest extends MockeryTestCase
             ->once();
 
         $this->sut->lockOrganisationForm($form, $table);
-    }
-
-    private function setService($service, $mock)
-    {
-        $this->sm->shouldReceive('get')
-            ->with($service)
-            ->andReturn($mock);
     }
 }

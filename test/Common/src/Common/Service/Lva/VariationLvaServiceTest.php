@@ -9,7 +9,9 @@ namespace CommonTest\Service\Printing;
 
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use CommonTest\Bootstrap;
+use Common\Service\Helper\GuidanceHelperService;
+use Common\Service\Helper\TranslationHelperService;
+use Common\Service\Helper\UrlHelperService;
 use Common\Service\Lva\VariationLvaService;
 
 /**
@@ -19,39 +21,45 @@ use Common\Service\Lva\VariationLvaService;
  */
 class VariationLvaServiceTest extends MockeryTestCase
 {
-    private $sm;
     private $sut;
+
+    /** @var TranslationHelperService */
+    private $translationHelper;
+
+    /** @var GuidanceHelperService */
+    private $guidanceHelper;
+
+    /** @var UrlHelperService */
+    private $urlHelper;
 
     public function setUp(): void
     {
-        $this->sm = Bootstrap::getServiceManager();
-        $this->sut = new VariationLvaService();
+        $this->translationHelper = m::mock(TranslationHelperService::class);
+        $this->guidanceHelper = m::mock(GuidanceHelperService::class);
+        $this->urlHelper = m::mock(UrlHelperService::class);
 
-        $this->sut->setServiceLocator($this->sm);
+        $this->sut = new VariationLvaService(
+            $this->translationHelper,
+            $this->guidanceHelper,
+            $this->urlHelper
+        );
     }
 
     public function testAddVariationMessage()
     {
         $licenceId = 123;
 
-        $mockUrl = m::mock();
-        $mockTranslator = m::mock();
-        $mockGuidance = m::mock();
-
-        $this->sm->setService('Helper\Url', $mockUrl);
-        $this->sm->setService('Helper\Translation', $mockTranslator);
-        $this->sm->setService('Helper\Guidance', $mockGuidance);
-
-        $mockUrl->shouldReceive('fromRoute')
+        $this->urlHelper->shouldReceive('fromRoute')
             ->with('lva-licence/variation', ['licence' => 123, 'redirectRoute' => null])
             ->andReturn('URL');
 
-        $mockTranslator->shouldReceive('translateReplace')
+        $this->translationHelper->shouldReceive('translateReplace')
             ->with('variation-message', ['URL'])
             ->andReturn('translated-message');
 
-        $mockGuidance->shouldReceive('append')
-            ->with('translated-message');
+        $this->guidanceHelper->shouldReceive('append')
+            ->with('translated-message')
+            ->once();
 
         $this->sut->addVariationMessage($licenceId);
     }
