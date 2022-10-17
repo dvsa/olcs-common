@@ -42,6 +42,9 @@ return array(
         array(
             'title' => 'markup-table-th-remove', //this is a view partial from olcs-common
             'type' => 'ActionLinks',
+            'ariaDescription' => function ($row) {
+                return $row['forename'] . ' ' . $row['familyName'] . ' ' .$row['categoryText'];
+            },
             'deleteInputName' => 'data[table][action][delete][%d]',
         )
     )
