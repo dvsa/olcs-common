@@ -160,7 +160,6 @@ return array(
             'Review\ConditionsUndertakings' => Common\Service\Review\ConditionsUndertakingsReviewService::class,
             'Data\Address' => DataService\AddressDataService::class,
 
-            'Helper\FileUpload' => HelperService\FileUploadHelperService::class,
             'Helper\FlashMessenger' => HelperService\FlashMessengerHelperService::class,
             'Helper\Form' => HelperService\FormHelperService::class,
             'Helper\Guidance' => HelperService\GuidanceHelperService::class,
@@ -276,7 +275,7 @@ return array(
             DataService\Surrender::class => DataService\AbstractDataServiceFactory::class,
             DataService\TrafficArea::class => DataService\AbstractDataServiceFactory::class,
 
-            HelperService\FileUploadHelperService::class => HelperService\FileUploadHelperServiceFactory::class,
+            HelperService\FileUploadHelperService::class => HelperService\FileUploadHelperService::class,
             HelperService\FlashMessengerHelperService::class => HelperService\FlashMessengerHelperServiceFactory::class,
             HelperService\FormHelperService::class => HelperService\FormHelperServiceFactory::class,
             HelperService\GuidanceHelperService::class => HelperService\GuidanceHelperServiceFactory::class,
