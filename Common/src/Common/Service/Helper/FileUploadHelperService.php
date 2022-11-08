@@ -4,7 +4,6 @@ namespace Common\Service\Helper;
 
 use Common\Exception\ConfigurationException;
 use Common\Exception\File\InvalidMimeException;
-use Common\Service\AntiVirus\Scan as AntiVirusScanner;
 use Common\Service\Table\Type\Selector;
 use Olcs\Logging\Log\Logger;
 use Laminas\Form\ElementInterface;
@@ -17,7 +16,7 @@ use Laminas\Stdlib\RequestInterface;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FileUploadHelperService
+class FileUploadHelperService extends AbstractHelperService
 {
     const FILE_UPLOAD_ERR_PREFIX = 'message.file-upload-error.';
     const FILE_UPLOAD_ERR_FILE_LENGTH_TOO_LONG = 'message.file-upload-error.lengthtoolong';
@@ -62,28 +61,6 @@ class FileUploadHelperService
      * @var ElementInterface
      */
     private $element;
-
-    /** @var UrlHelperService */
-    protected $urlHelperService;
-
-    /** @var AntiVirusScanner */
-    protected $scanner;
-
-    /**
-     * Create service instance
-     *
-     * @param UrlHelperService $urlHelperService
-     * @param AntiVirusScanner $scanner
-     *
-     * @return FileUploadHelperService
-     */
-    public function __construct(
-        UrlHelperService $urlHelperService,
-        AntiVirusScanner $scanner
-    ) {
-        $this->urlHelperService = $urlHelperService;
-        $this->scanner = $scanner;
-    }
 
     /**
      * Get Form
@@ -313,11 +290,13 @@ class FileUploadHelperService
             throw new ConfigurationException('Load data callback is not callable');
         }
 
+        $url = $this->getServiceLocator()->get('Helper\Url');
+
         $files = call_user_func($callback);
 
         $element = $this->getElement();
 
-        $element->get('list')->setFiles($files, $this->urlHelperService);
+        $element->get('list')->setFiles($files, $url);
 
         $this->updateCount(count($files));
     }
@@ -437,7 +416,8 @@ class FileUploadHelperService
         }
 
         // Run virus scan on file
-        if ($this->scanner->isEnabled() && !$this->scanner->isClean($fileTmpName)) {
+        $scanner = $this->getServiceLocator()->get(\Common\Service\AntiVirus\Scan::class);
+        if ($scanner->isEnabled() && !$scanner->isClean($fileTmpName)) {
             $this->getForm()->setMessages($this->formatErrorMessageForForm(self::FILE_UPLOAD_ERR_PREFIX . 'virus'));
 
             return false;
