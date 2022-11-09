@@ -2,7 +2,7 @@
 
 return array(
     'variables' => array(
-        'title' => '',
+        'title' => 'list-of-transport-managers',
         'within_form' => true,
     ),
     'settings' => array(

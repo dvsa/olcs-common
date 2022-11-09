@@ -2,7 +2,7 @@
 
 return array(
     'variables' => array(
-        'title' => '',
+        'title' => 'application_operating-centres_authorisation.table.title',
         'empty_message' => 'application_operating-centres_authorisation-tableEmptyMessage',
         'within_form' => true,
     ),
@@ -29,11 +29,13 @@ return array(
         ),
         array(
             'title' => 'application_operating-centres_authorisation.table.vehicles',
+            'isNumeric' => true,
             'name' => 'noOfVehiclesRequired',
             'sort' => 'noOfVehiclesRequired'
         ),
         array(
             'title' => 'application_operating-centres_authorisation.table.trailers',
+            'isNumeric' => true,
             'name' => 'noOfTrailersRequired',
             'sort' => 'noOfTrailersRequired'
         ),
@@ -44,6 +46,9 @@ return array(
         ),
         array(
             'title' => 'markup-table-th-remove',
+            'ariaDescription' => function($row) {
+                return $row['operatingCentre']['address']['addressLine1'];
+            },
             'type' => 'ActionLinks'
         ),
     ),
@@ -56,10 +61,12 @@ return array(
         ),
         array(
             'formatter' => 'Sum',
+            'align' => 'govuk-!-text-align-right',
             'name' => 'noOfVehiclesRequired'
         ),
         'trailersCol' => array(
             'formatter' => 'Sum',
+            'align' => 'govuk-!-text-align-right',
             'name' => 'noOfTrailersRequired'
         ),
         'remainingColspan' => array(

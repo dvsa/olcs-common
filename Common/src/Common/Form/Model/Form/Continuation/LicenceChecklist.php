@@ -21,7 +21,7 @@ class LicenceChecklist
      *     "hint": "continuations.checklist.form-hint",
      *     "hintClass": "form-hint",
      *     "label": "continuations.checklist.hidden.legend",
-     *     "label_attributes": {"class": "visually-hidden"},
+     *     "label_attributes": {"class": "govuk-visually-hidden"},
      *     "shouldWrap": true,
      *  })
      */

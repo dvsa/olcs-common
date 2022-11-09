@@ -2,7 +2,7 @@
 
 return array(
     'variables' => array(
-        'title' => null,
+        'title' => 'selfserve-app-subSection-your-business-people-tableHeaderPeople',
         'empty_message' => 'selfserve-app-subSection-your-business-people-other.table.empty-message',
         'required_label' => 'person',
         'within_form' => true,
@@ -44,6 +44,11 @@ return array(
             'name' => 'position',
         ),
         array(
+            'title' => 'markup-table-th-remove-restore', //view partial from olcs-common
+            'ariaDescription' => function ($row, $column) {
+                $column['formatter'] = 'Name';
+                return $this->callFormatter($column, $row['name']);
+            },
             'type' => 'DeltaActionLinks',
         ),
     )

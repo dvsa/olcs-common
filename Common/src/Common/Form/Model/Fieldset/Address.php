@@ -60,7 +60,7 @@ class Address
      *   "id" : "",
      *   "data-container-class" : "compound"
      * })
-     * @Form\Options({"label":"address_addressLine2","label_attributes":{"class":"visually-hidden"}})
+     * @Form\Options({"label":"address_addressLine2","label_attributes":{"class":"govuk-visually-hidden"}})
      * @Form\Required(false)
      * @Form\Type("Text")
      * @Form\Validator({"name":"Laminas\Validator\StringLength","options":{"min":0,"max":90}})
@@ -73,7 +73,7 @@ class Address
      *   "id" : "",
      *   "data-container-class" : "compound"
      * })
-     * @Form\Options({"label":"address_addressLine3","label_attributes":{"class":"visually-hidden"}})
+     * @Form\Options({"label":"address_addressLine3","label_attributes":{"class":"govuk-visually-hidden"}})
      * @Form\Required(false)
      * @Form\Type("Text")
      * @Form\Validator({"name":"Laminas\Validator\StringLength","options":{"min":0,"max":100}})
@@ -82,7 +82,7 @@ class Address
 
     /**
      * @Form\Attributes({"class":"long","id":""})
-     * @Form\Options({"label":"address_addressLine4","label_attributes":{"class":"visually-hidden"}})
+     * @Form\Options({"label":"address_addressLine4","label_attributes":{"class":"govuk-visually-hidden"}})
      * @Form\Required(false)
      * @Form\Type("Text")
      * @Form\Validator({"name":"Laminas\Validator\StringLength","options":{"min":0,"max":35}})

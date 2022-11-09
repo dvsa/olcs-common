@@ -135,7 +135,7 @@ class FormHelperServiceTest extends MockeryTestCase
                     ),
                     'attributes' => array(
                         'type' => 'submit',
-                        'class' => 'visually-hidden',
+                        'class' => 'govuk-visually-hidden',
                         'style' => 'display: none;',
                         'id' => 'hidden-continue'
                     )

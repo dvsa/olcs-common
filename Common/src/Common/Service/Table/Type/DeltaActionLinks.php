@@ -2,6 +2,8 @@
 
 namespace Common\Service\Table\Type;
 
+use Common\Util\Escape;
+
 /**
  * DeltaActionLinks
  *
@@ -22,22 +24,33 @@ class DeltaActionLinks extends Selector
     public function render($data, $column, $formattedContent = null)
     {
         $translator = $this->getTable()->getServiceLocator()->get('translator');
-        $remove = $translator->translate('delta_action_links.remove');
-        $restore = $translator->translate('delta_action_links.restore');
+        $ariaDescription = $this->getAriaDescription($data, $column, $translator);
 
         if ($this->isRestoreVisible($data, $column)) {
+            $restore = $translator->translate(self::KEY_ACTION_LINKS_RESTORE);
+            $restoreAria = $translator->translate(self::KEY_ACTION_LINKS_RESTORE_ARIA);
+            $ariaLabel = sprintf(self::ARIA_LABEL_FORMAT, $restoreAria, $ariaDescription);
+
             return sprintf(
                 '<input type="submit" class="right-aligned action--secondary" '.
-                    'name="table[action][restore][%s]" value="' . $restore . '">',
-                $data['id']
+                    'name="table[action][restore][%s]" aria-label="%s" value="%s">',
+                Escape::htmlAttr($data['id']),
+                Escape::htmlAttr($ariaLabel),
+                Escape::htmlAttr($restore)
             );
         }
 
         if ($this->isRemoveVisible($data, $column)) {
+            $remove = $translator->translate(self::KEY_ACTION_LINKS_REMOVE);
+            $removeAria = $translator->translate(self::KEY_ACTION_LINKS_REMOVE_ARIA);
+            $ariaLabel = sprintf(self::ARIA_LABEL_FORMAT, $removeAria, $ariaDescription);
+
             return sprintf(
                 '<input type="submit" class="right-aligned action--secondary trigger-modal" '.
-                    'name="table[action][delete][%s]" value="' . $remove . '">',
-                $data['id']
+                    'name="table[action][delete][%s]" aria-label="%s" value="%s">',
+                Escape::htmlAttr($data['id']),
+                Escape::htmlAttr($ariaLabel),
+                Escape::htmlAttr($remove)
             );
         }
     }

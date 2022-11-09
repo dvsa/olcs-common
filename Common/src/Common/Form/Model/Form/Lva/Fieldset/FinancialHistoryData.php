@@ -133,7 +133,7 @@ class FinancialHistoryData
      *     "label": "short-label-financial-history-additional-information",
      *     "error-message": "financialHistoryData_insolvencyDetails-error",
      *     "label_attributes": {
-     *         "class": "visually-hidden",
+     *         "class": "govuk-visually-hidden",
      *         "id": "additional-information"
      *     }
      * })

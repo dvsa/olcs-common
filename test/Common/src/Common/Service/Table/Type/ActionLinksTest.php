@@ -7,10 +7,12 @@
  */
 namespace CommonTest\Service\Table\Type;
 
+use Common\Util\Escape;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Table\Type\ActionLinks;
 use CommonTest\Bootstrap;
+use Laminas\Mvc\I18n\Translator;
 
 /**
  * ActionLink Test
@@ -33,18 +35,9 @@ class ActionLinksTest extends MockeryTestCase
         $this->sut = new ActionLinks($this->table);
     }
 
-    public function testRender()
+    public function testRender(): void
     {
-        $mockTranslate = m::mock()
-            ->shouldReceive('translate')
-            ->with('action_links.remove')
-            ->andReturn('Remove')
-            ->once()
-            ->shouldReceive('translate')
-            ->with('action_links.replace')
-            ->andReturn('Replace')
-            ->once()
-            ->getMock();
+        $mockTranslate = $this->getTranslator();
 
         $this->sm->setService('translator', $mockTranslate);
 
@@ -62,26 +55,23 @@ class ActionLinksTest extends MockeryTestCase
             'id' => 123
         ];
 
-        $expected = '<input type="submit" class="right-aligned action--secondary trigger-modal" '.
-            'name="table[action][delete][123]" ' .
-            'value="Remove"> <input type="submit" class="action--secondary right-aligned trigger-modal" ' .
-            'name="table[action][replace][123]" value="Replace">';
+        $classes = Escape::htmlAttr('right-aligned action--secondary trigger-modal');
+        $nameRemove = Escape::htmlAttr('table[action][delete][123]');
+        $ariaRemove = Escape::htmlAttr('Remove Aria (id 123)');
+        $nameReplace = Escape::htmlAttr('table[action][replace][123]');
+        $ariaReplace = Escape::htmlAttr('Replace Aria (id 123)');
+
+        $expected = '<input type="submit" class="' . $classes . '" '.
+            'name="' . $nameRemove . '" ' .
+            'aria-label="' . $ariaRemove . '" value="Remove"> <input type="submit" class="' . $classes . '" ' .
+            'name="' . $nameReplace . '" aria-label="' . $ariaReplace . '" value="Replace">';
 
         $this->assertEquals($expected, $this->sut->render($data, $column));
     }
 
-    public function testRenderDefault()
+    public function testRenderDefault(): void
     {
-        $mockTranslate = m::mock()
-            ->shouldReceive('translate')
-            ->with('action_links.remove')
-            ->andReturn('Remove')
-            ->once()
-            ->shouldReceive('translate')
-            ->with('action_links.replace')
-            ->andReturn('Replace')
-            ->once()
-            ->getMock();
+        $mockTranslate = $this->getTranslator();
 
         $this->sm->setService('translator', $mockTranslate);
 
@@ -92,24 +82,19 @@ class ActionLinksTest extends MockeryTestCase
             'id' => 123
         ];
 
-        $expected = '<input type="submit" class="right-aligned action--secondary trigger-modal" '.
-            'name="table[action][delete][123]" value="Remove">';
+        $classes = Escape::htmlAttr('right-aligned action--secondary trigger-modal');
+        $name = Escape::htmlAttr('table[action][delete][123]');
+        $aria = Escape::htmlAttr('Remove Aria (id 123)');
+
+        $expected = '<input type="submit" class="' . $classes . '" '.
+            'name="' . $name . '" aria-label="' . $aria . '" value="Remove">';
 
         $this->assertEquals($expected, $this->sut->render($data, $column));
     }
 
-    public function testRenderNoModal()
+    public function testRenderNoModal(): void
     {
-        $mockTranslate = m::mock()
-            ->shouldReceive('translate')
-            ->with('action_links.remove')
-            ->andReturn('Remove')
-            ->once()
-            ->shouldReceive('translate')
-            ->with('action_links.replace')
-            ->andReturn('Replace')
-            ->once()
-            ->getMock();
+        $mockTranslate = $this->getTranslator();
 
         $this->sm->setService('translator', $mockTranslate);
 
@@ -121,24 +106,19 @@ class ActionLinksTest extends MockeryTestCase
             'id' => 123
         ];
 
-        $expected = '<input type="submit" class="right-aligned action--secondary" '.
-            'name="table[action][delete][123]" value="Remove">';
+        $classes = Escape::htmlAttr('right-aligned action--secondary');
+        $name = Escape::htmlAttr('table[action][delete][123]');
+        $aria = Escape::htmlAttr('Remove Aria (id 123)');
+
+        $expected = '<input type="submit" class="' . $classes . '" '.
+            'name="' . $name . '" aria-label="' . $aria . '" value="Remove">';
 
         $this->assertEquals($expected, $this->sut->render($data, $column));
     }
 
-    public function testRenderWithCustomActionClasses()
+    public function testRenderWithCustomActionClasses(): void
     {
-        $mockTranslate = m::mock()
-            ->shouldReceive('translate')
-            ->with('action_links.remove')
-            ->andReturn('Remove')
-            ->once()
-            ->shouldReceive('translate')
-            ->with('action_links.replace')
-            ->andReturn('Replace')
-            ->once()
-            ->getMock();
+        $mockTranslate = $this->getTranslator();
 
         $this->sm->setService('translator', $mockTranslate);
 
@@ -151,9 +131,24 @@ class ActionLinksTest extends MockeryTestCase
             'id' => 123
         ];
 
-        $expected = '<input type="submit" class="my-custom-class" '.
-            'name="table[action][delete][123]" value="Remove">';
+        $classes = Escape::htmlAttr('my-custom-class');
+        $name = Escape::htmlAttr('table[action][delete][123]');
+        $aria = Escape::htmlAttr('Remove Aria (id 123)');
+
+        $expected = '<input type="submit" class="' . $classes . '" '.
+            'name="' . $name . '" aria-label="' . $aria . '" value="Remove">';
 
         $this->assertEquals($expected, $this->sut->render($data, $column));
+    }
+
+    private function getTranslator(): m\MockInterface
+    {
+        $translator = m::mock(Translator::class);
+        $translator->expects('translate')->with(ActionLinks::KEY_ACTION_LINKS_REMOVE)->andReturn('Remove');
+        $translator->expects('translate')->with(ActionLinks::KEY_ACTION_LINKS_REMOVE_ARIA)->andReturn('Remove Aria');
+        $translator->expects('translate')->with(ActionLinks::KEY_ACTION_LINKS_REPLACE)->andReturn('Replace');
+        $translator->expects('translate')->with(ActionLinks::KEY_ACTION_LINKS_REPLACE_ARIA)->andReturn('Replace Aria');
+
+        return $translator;
     }
 }

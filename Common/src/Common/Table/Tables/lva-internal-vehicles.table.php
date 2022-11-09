@@ -45,6 +45,7 @@ return array(
         ),
         array(
             'title' => $translationPrefix . '.weight',
+            'isNumeric' => true,
             'stringFormat' => '{vehicle->platedWeight} kg',
             'formatter' => 'StackValueReplacer'
         ),
@@ -62,10 +63,15 @@ return array(
         ),
         array(
             'title' => $translationPrefix . '.disc-no',
+            'isNumeric' => true,
             'name' => 'discNo',
             'formatter' => 'VehicleDiscNo'
         ),
         array(
+            'title' => 'markup-table-th-remove', //this is a view partial from olcs-common
+            'ariaDescription' => function ($row) {
+                return $row['vehicle']['vrm'];
+            },
             'type' => 'ActionLinks',
             'isRemoveVisible' => function ($data) {
                 return empty($data['removalDate']);

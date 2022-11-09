@@ -289,7 +289,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $this->assertEquals('default', $table->getSetting('paginate', 'default'));
 
-        $this->assertEquals(array(), $table->getAttributes());
+        $this->assertEquals(array('class' => TableBuilder::CLASS_TABLE), $table->getAttributes());
         $this->assertEquals(array(), $table->getColumns());
         $this->assertEquals(array('hidden' => 'default'), $table->getVariables());
     }
@@ -1675,7 +1675,11 @@ class TableBuilderTest extends MockeryTestCase
         $mockContentHelper = m::mock(ContentHelper::class)->makePartial();
 
         $mockContentHelper->expects('replaceContent')
-            ->with('{{[elements/limitOption]}}', array('class' => 'current', 'option' => '10'));
+            ->with('{{[elements/limitLink]}}', array('option' => '10', 'link' => ''))
+            ->andReturn('10');
+
+        $mockContentHelper->expects('replaceContent')
+            ->with('{{[elements/limitOption]}}', array('class' => PaginationHelper::CLASS_PAGINATION_ITEM_CURRENT, 'option' => '10'));
 
         $mockContentHelper->expects('replaceContent')
             ->with('{{[elements/limitLink]}}', array('option' => '20', 'link' => ''))
@@ -1730,7 +1734,11 @@ class TableBuilderTest extends MockeryTestCase
         $mockContentHelper = m::mock(ContentHelper::class);
 
         $mockContentHelper->expects('replaceContent')
-            ->with('{{[elements/limitOption]}}', array('class' => 'current', 'option' => '10'));
+            ->with('{{[elements/limitLink]}}', array('option' => '10', 'link' => '?foo=bar&page=1&limit=30'))
+            ->andReturn('10');
+
+        $mockContentHelper->expects('replaceContent')
+            ->with('{{[elements/limitOption]}}', array('class' => PaginationHelper::CLASS_PAGINATION_ITEM_CURRENT, 'option' => '10'));
 
         $mockContentHelper->expects('replaceContent')
             ->with('{{[elements/limitLink]}}', array('option' => '20', 'link' => '?foo=bar&page=1&limit=30'))
@@ -1784,6 +1792,9 @@ class TableBuilderTest extends MockeryTestCase
     public function testRenderPageOptions_WithoutOptions()
     {
         $options = array(
+            'previous' => [],
+            'next' => [],
+            'links' => [],
         );
 
         $mockPaginationHelper = $this->createPartialMock(PaginationHelper::class, array('getOptions'));
@@ -1806,20 +1817,34 @@ class TableBuilderTest extends MockeryTestCase
      */
     public function testRenderPageOptions()
     {
-        $options = array(
-            array(
-                'page' => null,
-                'label' => '...'
-            ),
-            array(
+        $options = [
+            'previous' => [
                 'page' => 1,
-                'label' => '1'
-            ),
-            array(
-                'page' => 2,
-                'label' => '2'
-            )
-        );
+                'limit' => 10,
+                'link' => '',
+            ],
+            'links' => [
+                2 => [
+                    'page' => 2,
+                    'label' => '2',
+                    'link' => '',
+                ],
+                'ellipse' => [
+                    'page' => null,
+                    'label' => '...',
+                ],
+                3 => [
+                    'page' => 3,
+                    'label' => '3',
+                    'link' => '',
+                ],
+            ],
+            'next' => [
+                'page' => 4,
+                'limit' => 10,
+                'link' => '',
+            ],
+        ];
 
         $mockPaginationHelper = $this->createPartialMock(PaginationHelper::class, array('getOptions'));
 
@@ -1831,36 +1856,35 @@ class TableBuilderTest extends MockeryTestCase
 
         $mockContentHelper = m::mock(ContentHelper::class);
 
+        $paginationLinkPrevious = '[paginationLinkPrevious]';
         $mockContentHelper->expects('replaceContent')
-            ->with(
-                '{{[elements/paginationItem]}}',
-                array (
-                    'class' => '',
-                    'page' => null,
-                    'label' => '...',
-                    'option' => '...',
-                )
-            )
-            ->andReturn('[paginationItem...]');
+            ->with('{{[elements/paginationPrevious]}}', $options['previous'])
+            ->andReturn($paginationLinkPrevious);
+
+        $paginationLinkNext = '[paginationLinkNext]';
+        $mockContentHelper->expects('replaceContent')
+            ->with('{{[elements/paginationNext]}}', $options['next'])
+            ->andReturn($paginationLinkNext);
 
         $mockContentHelper->expects('replaceContent')
-            ->with(
-                '{{[elements/paginationLink]}}',
-                array(
-                    'page' => 1,
-                    'label' => '1',
-                    'link' => '',
-                )
-            )
+            ->with('{{[elements/paginationEllipses]}}', $options['links']['ellipse'])
+            ->andReturn('[paginationLinkEllipse]');
+
+        $mockContentHelper->expects('replaceContent')
+            ->with('{{[elements/paginationLink]}}', $options['links'][2])
             ->andReturn('[paginationLink1]');
+
+        $mockContentHelper->expects('replaceContent')
+            ->with('{{[elements/paginationLink]}}', $options['links'][3])
+            ->andReturn('[paginationLink2]');
 
         $mockContentHelper->expects('replaceContent')
             ->with(
                 '{{[elements/paginationItem]}}',
                 array(
                   'class' => '',
-                  'page' => 1,
-                  'label' => '1',
+                  'page' => 2,
+                  'label' => '2',
                   'link' => '',
                   'option' => '[paginationLink1]',
                 )
@@ -1872,12 +1896,20 @@ class TableBuilderTest extends MockeryTestCase
                 '{{[elements/paginationItem]}}',
                 array(
                   'class' => '',
-                  'page' => 2,
-                  'label' => '2',
-                  'option' => '2',
+                  'page' => 3,
+                  'label' => '3',
+                  'link' => '',
+                  'option' => '[paginationLink2]',
                 )
             )
             ->andReturn('[linkedPaginationItem2]');
+
+        $expectedListContents = '[linkedPaginationItem1][paginationLinkEllipse][linkedPaginationItem2]';
+        $expectedListsMarkup = '<ul>' . $expectedListContents . '</ul>';
+
+        $mockContentHelper->expects('replaceContent')
+            ->with('{{[elements/paginationList]}}', ['items' => $expectedListContents])
+            ->andReturn($expectedListsMarkup);
 
         $table = $this->getMockTableBuilder(array('getPaginationHelper', 'getUrl', 'getContentHelper'));
 
@@ -1887,7 +1919,7 @@ class TableBuilderTest extends MockeryTestCase
             ->method('getPaginationHelper')
             ->will($this->returnValue($mockPaginationHelper));
 
-        $table->expects($this->once())
+        $table->expects($this->exactly(4))
             ->method('getUrl')
             ->will($this->returnValue($mockUrl));
 
@@ -1896,7 +1928,7 @@ class TableBuilderTest extends MockeryTestCase
             ->will($this->returnValue($mockContentHelper));
 
         $this->assertEquals(
-            '[paginationItem...][linkedPaginationItem1][linkedPaginationItem2]',
+            $paginationLinkPrevious . $expectedListsMarkup . $paginationLinkNext,
             $table->renderPageOptions()
         );
     }
@@ -1958,7 +1990,9 @@ class TableBuilderTest extends MockeryTestCase
 
         $expectedColumn = array(
             'sort' => 'foo',
-            'class' => 'sortable ascending',
+            'scope' => 'col',
+            'class' => TableBuilder::CLASS_TABLE_HEADER . ' sortable ascending',
+            'aria' => '_TRSLTD_sort-in-descending-order',
             'order' => 'DESC',
             'link' => 'LINK'
         );
@@ -1974,8 +2008,10 @@ class TableBuilderTest extends MockeryTestCase
                 '{{[elements/foo]}}',
                 array(
                     'sort' => 'foo',
-                    'class' => 'sortable ascending',
+                    'scope' => 'col',
+                    'class' => TableBuilder::CLASS_TABLE_HEADER . ' sortable ascending',
                     'order' => 'DESC',
+                    'aria' => '_TRSLTD_sort-in-descending-order',
                     'link' => 'LINK',
                     'title' => '[generatedSortColumn]'
                 )
@@ -2018,8 +2054,10 @@ class TableBuilderTest extends MockeryTestCase
 
         $expectedColumn = array(
             'sort' => 'foo',
-            'class' => 'sortable descending',
+            'scope' => 'col',
+            'class' => TableBuilder::CLASS_TABLE_HEADER . ' sortable descending',
             'order' => 'ASC',
+            'aria' => '_TRSLTD_sort-in-ascending-order',
             'link' => 'LINK'
         );
 
@@ -2034,8 +2072,10 @@ class TableBuilderTest extends MockeryTestCase
                 '{{[elements/foo]}}',
                 array(
                     'sort' => 'foo',
-                    'class' => 'sortable descending',
+                    'scope' => 'col',
+                    'class' => TableBuilder::CLASS_TABLE_HEADER . ' sortable descending',
                     'order' => 'ASC',
+                    'aria' => '_TRSLTD_sort-in-ascending-order',
                     'link' => 'LINK',
                     'title' => '[generatedSortColumn]',
                 )
@@ -2078,8 +2118,10 @@ class TableBuilderTest extends MockeryTestCase
 
         $expectedColumn = array(
             'sort' => 'foo',
-            'class' => 'sortable',
+            'scope' => 'col',
+            'class' => TableBuilder::CLASS_TABLE_HEADER . ' sortable',
             'order' => 'ASC',
+            'aria' => '_TRSLTD_sort-in-ascending-order',
             'link' => 'LINK'
         );
 
@@ -2094,8 +2136,10 @@ class TableBuilderTest extends MockeryTestCase
                 '{{[elements/foo]}}',
                 array(
                     'sort' => 'foo',
-                    'class' => 'sortable',
+                    'scope' => 'col',
+                    'class' => TableBuilder::CLASS_TABLE_HEADER . ' sortable',
                     'order' => 'ASC',
+                    'aria' => '_TRSLTD_sort-in-ascending-order',
                     'link' => 'LINK',
                     'title' => '[generatedSortColumn]',
                 )
@@ -2140,6 +2184,8 @@ class TableBuilderTest extends MockeryTestCase
         $expectedColumn = array(
             'width' => '20px',
             'title' => self::TRANSLATED . 'Title',
+            'scope' => 'col',
+            'class' => TableBuilder::CLASS_TABLE_HEADER,
         );
 
         $mockContentHelper = $this->createPartialMock(ContentHelper::class, array('replaceContent'));
@@ -2185,7 +2231,8 @@ class TableBuilderTest extends MockeryTestCase
         );
 
         $expectedColumn = array(
-            'class' => 'right',
+            'class' => TableBuilder::CLASS_TABLE_HEADER . ' right',
+            'scope' => 'col'
         );
 
         $mockContentHelper = $this->createPartialMock(ContentHelper::class, array('replaceContent'));
@@ -2215,9 +2262,11 @@ class TableBuilderTest extends MockeryTestCase
         ];
 
         $expectedColumn = [
-            'class' => 'right sortable',
+            'class' => TableBuilder::CLASS_TABLE_HEADER . ' right sortable',
             'sort' => 'foo',
+            'scope' => 'col',
             'order' => 'ASC',
+            'aria' => '_TRSLTD_sort-in-ascending-order',
             'link' => 'LINK',
         ];
 
@@ -2232,8 +2281,10 @@ class TableBuilderTest extends MockeryTestCase
                 '{{[elements/th]}}',
                 array (
                     'sort' => 'foo',
-                    'class' => 'right sortable',
+                    'scope' => 'col',
+                    'class' => TableBuilder::CLASS_TABLE_HEADER . ' right sortable',
                     'order' => 'ASC',
+                    'aria' => '_TRSLTD_sort-in-ascending-order',
                     'link' => 'LINK',
                     'title' => '[generatedSortColumn]',
                 )
@@ -2397,7 +2448,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
-            ->with('{{[elements/td]}}', array('content' => '', 'attrs' => ''));
+            ->with('{{[elements/td]}}', ['content' => '', 'attrs' => ' class="' . TableBuilder::CLASS_TABLE_CELL . '"']);
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
 
@@ -2425,7 +2476,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
-            ->with('{{[elements/td]}}', array('content' => 'bar', 'attrs' => ''));
+            ->with('{{[elements/td]}}', ['content' => 'bar', 'attrs' => ' class="' . TableBuilder::CLASS_TABLE_CELL . '"']);
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
 
@@ -2454,7 +2505,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
-            ->with('{{[elements/td]}}', array('content' => 'bar', 'attrs' => ' class="right"'));
+            ->with('{{[elements/td]}}', ['content' => 'bar', 'attrs' => ' class="' . TableBuilder::CLASS_TABLE_CELL . ' right"']);
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
 
@@ -2483,7 +2534,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
-            ->with('{{[elements/td]}}', array('content' => 'bar', 'attrs' => ' data-heading="_TRSLTD_Foo"'));
+            ->with('{{[elements/td]}}', array('content' => 'bar', 'attrs' => ' class="' . TableBuilder::CLASS_TABLE_CELL . '" data-heading="_TRSLTD_Foo"'));
 
         $table = $this->getMockTableBuilder(array('getContentHelper', 'getColumns'));
 
@@ -2518,7 +2569,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
-            ->with('{{[elements/td]}}', array('content' => 'bar', 'attrs' => ' class="centre a-class" colspan="2"'));
+            ->with('{{[elements/td]}}', ['content' => 'bar', 'attrs' => ' class="' . TableBuilder::CLASS_TABLE_CELL . ' centre a-class" colspan="2"']);
 
         $table = $this->getMockTableBuilder(array('getContentHelper', 'getColumns'));
 
@@ -2546,7 +2597,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
-            ->with('{{[elements/foo]}}', array('content' => '', 'attrs' => ''));
+            ->with('{{[elements/foo]}}', array('content' => '', 'attrs' => ' class="' . TableBuilder::CLASS_TABLE_CELL . '"'));
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
 
@@ -2576,9 +2627,6 @@ class TableBuilderTest extends MockeryTestCase
             ->with('FOO', $row)
             ->andReturn('FOOBAR');
 
-        $mockContentHelper->expects('replaceContent')
-            ->with('{{[elements/td]}}', array('content' => 'FOOBAR', 'attrs' => ''));
-
         $table = $this->getMockTableBuilder(array('getContentHelper'));
 
         $table->expects($this->any())
@@ -2606,7 +2654,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
-            ->with('{{[elements/td]}}', array('content' => date('d/m/Y'), 'attrs' => ''));
+            ->with('{{[elements/td]}}', array('content' => date('d/m/Y'), 'attrs' => ' class="' . TableBuilder::CLASS_TABLE_CELL . '"'));
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
 
@@ -2642,7 +2690,7 @@ class TableBuilderTest extends MockeryTestCase
             ->method('replaceContent')
             ->with(
                 '{{[elements/td]}}',
-                array('content' => $expected, 'attrs' => '')
+                ['content' => $expected, 'attrs' => ' class="' . TableBuilder::CLASS_TABLE_CELL . '"']
             );
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
@@ -2671,7 +2719,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
-            ->with('{{[elements/td]}}', array('content' => '', 'attrs' => ''));
+            ->with('{{[elements/td]}}', array('content' => '', 'attrs' => ' class="' . TableBuilder::CLASS_TABLE_CELL . '"'));
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
 
@@ -2702,7 +2750,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
-            ->with('{{[elements/td]}}', array('content' => 'Something Else', 'attrs' => ''));
+            ->with('{{[elements/td]}}', array('content' => 'Something Else', 'attrs' => ' class="' . TableBuilder::CLASS_TABLE_CELL . '"'));
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
 
@@ -2732,7 +2780,7 @@ class TableBuilderTest extends MockeryTestCase
             ->method('replaceContent')
             ->with(
                 '{{[elements/td]}}',
-                ['content' => '<input type="radio" name="id" value="1" id="[id][1]" />', 'attrs' => '']
+                ['content' => '<input type="radio" name="id" value="1" id="[id][1]" />', 'attrs' => ' class="' . TableBuilder::CLASS_TABLE_CELL . '"']
             );
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
@@ -2763,7 +2811,7 @@ class TableBuilderTest extends MockeryTestCase
             ->method('replaceContent')
             ->with(
                 '{{[elements/td]}}',
-                ['content' => '<input type="radio" name="table[id]" value="1" id="table[id][1]" />', 'attrs' => '']
+                ['content' => '<input type="radio" name="table[id]" value="1" id="table[id][1]" />', 'attrs' => ' class="' . TableBuilder::CLASS_TABLE_CELL . '"']
             );
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
@@ -2802,7 +2850,7 @@ class TableBuilderTest extends MockeryTestCase
                 '{{[elements/td]}}',
                 [
                     'content' => '<input type="submit" class="" name="action[edit][1]" value="bar"  />',
-                    'attrs' => ''
+                    'attrs' => ' class="' . TableBuilder::CLASS_TABLE_CELL . '"',
                 ]
             );
 
@@ -2840,7 +2888,7 @@ class TableBuilderTest extends MockeryTestCase
                 '{{[elements/td]}}',
                 [
                     'content' => '<input type="submit" class="" name="table[action][edit][1]" value="bar"  />',
-                    'attrs' => ''
+                    'attrs' => ' class="' . TableBuilder::CLASS_TABLE_CELL . '"',
                 ]
             );
 

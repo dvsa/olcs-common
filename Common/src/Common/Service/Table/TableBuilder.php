@@ -33,6 +33,14 @@ class TableBuilder
     const CONTENT_TYPE_HTML = 'html';
     const CONTENT_TYPE_CSV = 'csv';
 
+    const ARIA_SORT_ASC = 'sort-in-ascending-order';
+    const ARIA_SORT_DESC = 'sort-in-descending-order';
+    const CLASS_TABLE = 'govuk-table';
+    const CLASS_TABLE_CELL = 'govuk-table__cell';
+    const CLASS_TABLE_HEADER = 'govuk-table__header';
+    const CLASS_TABLE_HEADER_NUMERIC = 'govuk-table__header--numeric';
+    const CLASS_TABLE_CELL_NUMERIC = 'govuk-table__cell--numeric';
+
     /**
      * Hold the pagination helper
      *
@@ -824,6 +832,13 @@ class TableBuilder
         $this->translateTitle($config);
 
         $this->attributes = $config['attributes'];
+
+        if (isset($this->attributes['class'])) {
+            $this->attributes['class'] .= ' ' . self::CLASS_TABLE;
+        } else {
+            $this->attributes['class'] = self::CLASS_TABLE;
+        }
+
         $this->setColumns($config['columns']);
         $this->setVariables($config['variables']);
         $this->setFooter($config['footer']);
@@ -1073,8 +1088,10 @@ class TableBuilder
 
         $details['colspan'] = $column['colspan'];
 
+        $details['class'] = self::CLASS_TABLE_CELL;
+
         if ($column['align']) {
-            $details['class'] = $column['align'];
+            $details['class'] .= ' ' . $column['align'];
         }
 
         if (isset($column['formatter'])) {
@@ -1197,6 +1214,11 @@ class TableBuilder
         $total = $this->total;
 
         return $this->replaceContent(' {{[elements/total]}}', array('total' => $total));
+    }
+
+    public function renderCaption()
+    {
+        return trim ($this->renderTotal() . ' ' . $this->getVariable('title'));
     }
 
     /**
@@ -1385,8 +1407,8 @@ class TableBuilder
             $option = (string)$option;
 
             if ($option == $this->getLimit()) {
-                $class = 'current';
-            } else {
+                $class = PaginationHelper::CLASS_PAGINATION_ITEM_CURRENT;
+            }
                 $details = array(
                     'option' => $option,
                     'link' => $this->generatePaginationUrl([
@@ -1395,7 +1417,6 @@ class TableBuilder
                     ]),
                 );
                 $option = $this->replaceContent('{{[elements/limitLink]}}', $details);
-            }
 
             $limitDetails = array('class' => $class, 'option' => $option);
 
@@ -1414,27 +1435,39 @@ class TableBuilder
     {
         $options = $this->getPaginationHelper()->getOptions();
 
+        $previousContent = '';
         $content = '';
+        $nextContent = '';
 
-        foreach ($options as $details) {
-            if (is_null($details['page']) || (string)$this->getPage() == $details['page']) {
-                $details['option'] = $details['label'];
-            } else {
-                $details['link'] = $this->generatePaginationUrl(
-                    array(
-                        $this->mapUrlParameterName('page') => $details['page'],
-                        $this->mapUrlParameterName('limit') => $this->getLimit()
-                    )
-                );
-                $details['option'] = $this->replaceContent('{{[elements/paginationLink]}}', $details);
+        if (!empty($options['previous'])) {
+            $options['previous']['link'] = $this->getPageLink($options['previous']['page']);
+            $previousContent = $this->replaceContent('{{[elements/paginationPrevious]}}', $options['previous']);
+        }
+
+        foreach ($options['links'] as $details) {
+            if (is_null($details['page'])) {
+                $content .= $this->replaceContent('{{[elements/paginationEllipses]}}', $details);
+                continue;
             }
+
+            $details['link'] = $this->getPageLink($details['page']);
+            $details['option'] = $this->replaceContent('{{[elements/paginationLink]}}', $details);
 
             $details = array_merge(array('class' => ''), $details);
 
             $content .= $this->replaceContent('{{[elements/paginationItem]}}', $details);
         }
 
-        return $content;
+        if (!empty($content)) {
+            $content = $this->replaceContent('{{[elements/paginationList]}}', ['items' => $content]);
+        }
+
+        if (!empty($options['next'])) {
+            $options['next']['link'] = $this->getPageLink($options['next']['page']);
+            $nextContent = $this->replaceContent('{{[elements/paginationNext]}}', $options['next']);
+        }
+
+        return $previousContent . $content . $nextContent;
     }
 
     /**
@@ -1450,8 +1483,18 @@ class TableBuilder
             return;
         }
 
+        if (!isset($column['scope'])) {
+            $column['scope'] = 'col';
+        }
+
+        $column['class'] = self::CLASS_TABLE_HEADER;
+
+        if (isset($column['isNumeric']) && $column['isNumeric']) {
+            $column['class'] .= ' ' . self::CLASS_TABLE_HEADER_NUMERIC;
+        }
+
         if (isset($column['align'])) {
-            $column['class'] = $column['align'];
+            $column['class'] .= ' ' . $column['align'];
             unset($column['align']);
         }
 
@@ -1460,22 +1503,22 @@ class TableBuilder
         }
 
         if (isset($column['sort'])) {
-            if (isset($column['class'])) {
-                $column['class'] .= ' sortable';
-            } else {
-                $column['class'] = 'sortable';
-            }
-
+            $column['class'] .= ' sortable';
             $column['order'] = 'ASC';
+            $sortAria = self::ARIA_SORT_ASC;
 
             if ($column['sort'] === $this->getSort()) {
                 if ($this->getOrder() === 'ASC') {
                     $column['order'] = 'DESC';
+                    $sortAria = self::ARIA_SORT_DESC;
+
                     $column['class'] .= ' ascending';
                 } else {
                     $column['class'] .= ' descending';
                 }
             }
+
+            $column['aria'] = $this->translator->translate($sortAria);
 
             $column['link'] = $this->generatePaginationUrl(
                 array(
@@ -1558,10 +1601,16 @@ class TableBuilder
     {
         $plainAttributes = '';
 
-        $columnAttributes = [];
+        $columnAttributes = [
+            'class' => self::CLASS_TABLE_CELL
+        ];
+
+        if (isset($column['isNumeric']) && $column['isNumeric']) {
+            $columnAttributes['class'] .= ' ' . self::CLASS_TABLE_CELL_NUMERIC;
+        }
 
         if (isset($column['align'])) {
-            $columnAttributes['class'] = $column['align'];
+            $columnAttributes['class'] .= ' ' . $column['align'];
         }
 
         if ($this->hasAnyTitle()) {
@@ -1711,6 +1760,16 @@ class TableBuilder
         }
 
         return $this->getUrl()->fromRoute($route, $data, $options, $reuseMatchedParams);
+    }
+
+    private function getPageLink($page)
+    {
+        return $this->generatePaginationUrl(
+            [
+                $this->mapUrlParameterName('page') => $page,
+                $this->mapUrlParameterName('limit') => $this->getLimit(),
+            ]
+        );
     }
 
     /**

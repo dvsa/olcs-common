@@ -2,6 +2,7 @@
 
 return array(
     'variables' => array(
+        'title' => 'transport-manager.employments.table',
         'within_form' => true,
         'empty_message' => false,
     ),
@@ -31,6 +32,8 @@ return array(
             'name' => 'position',
         ),
         array(
+            'title' => 'markup-table-th-remove', //this is a view partial from olcs-common
+            'ariaDescription' => 'employerName',
             'type' => 'ActionLinks',
             'deleteInputName' => 'employment[action][delete-employment][%d]'
         )

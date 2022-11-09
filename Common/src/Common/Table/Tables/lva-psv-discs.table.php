@@ -41,6 +41,7 @@ return array(
     'columns' => array(
         array(
             'title' => $translationPrefix . '.discNo',
+            'isNumeric' => true,
             'name' => 'discNo'
         ),
         array(
@@ -59,7 +60,9 @@ return array(
             'formatter' => 'YesNo'
         ),
         array(
+            'title' => 'markup-table-th-remove-replace', //this is a view partial from olcs-common
             'type' => 'ActionLinks',
+            'ariaDescription' => 'discNo',
             'isRemoveVisible' => function ($data) {
                 return empty($data['ceasedDate']);
             },
@@ -70,6 +73,7 @@ return array(
             'replaceInputName' => 'table[action][replace][%d]'
         ),
         array(
+            'title' => 'markup-table-th-action', //this is a view partial from olcs-common
             'width' => 'checkbox',
             'type' => 'Checkbox',
             'disableIfRowIsDisabled' => true

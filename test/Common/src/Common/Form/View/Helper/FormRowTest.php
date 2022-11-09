@@ -344,14 +344,14 @@ class FormRowTest extends MockeryTestCase
             [
                 'name' => 'text',
             ],
-            ['class' => 'visually-hidden']
+            ['class' => 'govuk-visually-hidden']
         );
 
         // Execute
         $result = $this->sut->__invoke($element);
 
         // Assert
-        $this->assertMatchesRegularExpression('/^<div class="field visually-hidden">(.*)<\/div>$/', $result);
+        $this->assertMatchesRegularExpression('/^<div class="field govuk-visually-hidden">(.*)<\/div>$/', $result);
     }
 
     /**
@@ -368,7 +368,7 @@ class FormRowTest extends MockeryTestCase
             [
                 'name' => 'hidden',
             ],
-            ['class' => 'visually-hidden']
+            ['class' => 'govuk-visually-hidden']
         );
 
         // Execute

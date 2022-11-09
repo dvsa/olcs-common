@@ -34,20 +34,27 @@ return array(
         ),
         array(
             'title' => 'application_operating-centres_authorisation.table.vehicles',
+            'isNumeric' => true,
             'name' => 'noOfVehiclesRequired',
             'sort' => 'noOfVehiclesRequired'
         ),
         array(
             'title' => 'application_operating-centres_authorisation.table.trailers',
+            'isNumeric' => true,
             'name' => 'noOfTrailersRequired',
             'sort' => 'noOfTrailersRequired'
         ),
         array(
             'title' => 'application_operating-centres_authorisation.table.complaints',
+            'isNumeric' => true,
             'name' => 'noOfComplaints',
             'formatter' => 'OcComplaints'
         ),
         array(
+            'title' => 'markup-table-th-remove-restore', //view partial from olcs-common
+            'ariaDescription' => function($row) {
+                return $row['operatingCentre']['address']['addressLine1'];
+            },
             'type' => 'DeltaActionLinks'
         ),
     ),
@@ -60,10 +67,12 @@ return array(
         ),
         array(
             'formatter' => 'OpCentreDeltaSum',
+            'align' => 'govuk-!-text-align-right',
             'name' => 'noOfVehiclesRequired'
         ),
         'trailersCol' => array(
             'formatter' => 'OpCentreDeltaSum',
+            'align' => 'govuk-!-text-align-right',
             'name' => 'noOfTrailersRequired'
         ),
         'remainingColspan' => array(

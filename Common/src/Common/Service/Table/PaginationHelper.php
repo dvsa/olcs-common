@@ -12,6 +12,9 @@ namespace Common\Service\Table;
  */
 class PaginationHelper
 {
+    const ELLIPSE = '…';
+    const CLASS_PAGINATION_ITEM_CURRENT = 'govuk-pagination__item--current';
+
     /**
      * Current page
      *
@@ -42,10 +45,12 @@ class PaginationHelper
 
     /**
      * Pagination options
-     *
-     * @var array
      */
-    private $options = array();
+    private array $options = [
+        'previous' => [],
+        'links' => [],
+        'next' => [],
+    ];
 
     /** @var  \Laminas\Mvc\I18n\Translator */
     private $translator;
@@ -133,7 +138,10 @@ class PaginationHelper
         if ($this->page > 1) {
             $label = ($this->translator ? $this->translator->translate('pagination.previous') : 'Previous');
 
-            $this->addPageOption(($this->page - 1), $label, false);
+            $this->options['previous'] = [
+                'label' => $label,
+                'page' => $this->page - 1,
+            ];
         }
     }
 
@@ -147,7 +155,10 @@ class PaginationHelper
         if ($this->page < $totalPages) {
             $label = ($this->translator ? $this->translator->translate('pagination.next') : 'Next');
 
-            $this->addPageOption(($this->page + 1), $label, false);
+            $this->options['next'] = [
+                'label' => $label,
+                'page' => $this->page + 1,
+            ];
         }
     }
 
@@ -159,7 +170,7 @@ class PaginationHelper
     private function maybeAddAbbreviationOption($add)
     {
         if ($add) {
-            $this->addPageOption(null, '...', false);
+            $this->addPageOption(null, self::ELLIPSE);
         }
     }
     /**
@@ -202,10 +213,12 @@ class PaginationHelper
      * @param int|string $page
      * @param int|string $label
      * @param boolean $hasClass
+     * @param boolean $isPrevious
+     * @param boolean $isNext
      */
-    private function addPageOption($page, $label = null, $hasClass = true)
+    private function addPageOption($page, $label = null)
     {
-        $this->options[] = $this->formatPageOption($page, $label, $hasClass);
+        $this->options['links'][] = $this->formatPageOption($page, $label);
     }
 
     /**
@@ -216,15 +229,18 @@ class PaginationHelper
      * @param boolean $hasClass
      * @return array
      */
-    private function formatPageOption($page, $label = null, $hasClass = true)
+    private function formatPageOption($page, $label = null)
     {
         $array = array(
             'page' => is_null($page) ? null : (string)$page,
             'label' => (is_null($label) ? (string)$page : $label),
+            'class' => null,
+            'ariaCurrent' => '',
         );
 
-        if ($hasClass) {
-            $array['class'] = ($this->page == $page ? 'current' : null);
+        if ($this->page == $page) {
+            $array['class'] = self::CLASS_PAGINATION_ITEM_CURRENT;
+            $array['ariaCurrent'] = 'aria-current="page"';
         }
 
         return $array;

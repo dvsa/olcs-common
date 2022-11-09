@@ -3,7 +3,7 @@ $prefix = 'selfserve-app-subSection-previous-history-previous-licence-';
 
 return array(
     'variables' => array(
-        'title' => false,
+        'title' => $prefix . 'tableHeader',
         'within_form' => true,
         'empty_message' => false,
     ),
@@ -36,6 +36,8 @@ return array(
             'name' => 'disqualificationLength',
         ),
         array(
+            'title' => 'markup-table-th-remove', //this is a view partial from olcs-common
+            'ariaDescription' => 'licNo',
             'type' => 'ActionLinks',
             'deleteInputName' => 'data[prevBeenDisqualifiedTc-table][action][delete][%d]'
         )
