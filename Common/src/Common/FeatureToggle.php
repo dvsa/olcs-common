@@ -13,4 +13,5 @@ class FeatureToggle
     const DVLA_INTEGRATION = 'dvla_integration';
     const NEW_GOODS_APP_VEHICLE = 'new_goods_app_vehicle';
     const LONGER_SEMI_TRAILERS = 'longer_semi_trailers';
+    const GOVUK_ACCOUNT = 'govuk_signin';
 }
