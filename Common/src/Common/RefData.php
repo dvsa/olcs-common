@@ -71,6 +71,15 @@ class RefData
     const LICENCE_STATUS_CANCELLED = 'lsts_cancelled';
 
     /**
+     * Journeys
+     */
+    const JOURNEY_NEW_APPLICATION = 'jrny_new_application';
+    const JOURNEY_CONTINUATION = 'jrny_continuation';
+    const JOURNEY_VARIATION = 'jrny_variation';
+    const JOURNEY_TM_APPLICATION = 'jrny_tm_application';
+    const JOURNEY_SURRENDER = 'jrny_surrender';
+
+    /**
      * Application statuses
      */
     const APPLICATION_STATUS_NOT_SUBMITTED = 'apsts_not_submitted';
