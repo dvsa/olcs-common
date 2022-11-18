@@ -2,8 +2,8 @@
     <h2 class="govuk-heading-m" style="font-size: 24px !important">Third-party cookies</h2>
     <p>These are cookies set on your computer by external websites whose services are used on the Vehicle Operator Licensing website.</p>
 
-    <h3 class="govuk-heading-s govuk-!-margin-top-6" id="messages-across-govuk">GOV.UK Verify</h3>
-    <p>We use GOV.UK Verify to prevent identity fraud, protect users' privacy and make sure we are giving the right people access to our service. The GOV.UK Verify uses <a class="govuk-link" rel="external noreferrer noopener" href="{{URL_VERIFY_COOKIE}}" target="_blank">extra cookies <?php echo $this->escapeHtml($this->translate('link.opens-new-window')); ?></a> to track their website.</p>
+    <h3 class="govuk-heading-s govuk-!-margin-top-6" id="messages-across-govuk">{{SIGNING_SERVICE_NAME}}</h3>
+    <p>We use {{SIGNING_SERVICE_NAME}} to prevent identity fraud, protect users' privacy and make sure we are giving the right people access to our service. The {{SIGNING_SERVICE_NAME}} uses <a class="govuk-link" rel="external noreferrer noopener" href="{{URL_VERIFY_COOKIE}}" target="_blank">extra cookies <?php echo $this->escapeHtml($this->translate('link.opens-new-window')); ?></a> to track their website.</p>
 
     <h3 class="govuk-heading-s govuk-!-margin-top-6" id="messages-across-govuk">Capita Pay360</h3>
     <p>Vehicles Operator Licensing payments are hosted by <a class="govuk-link" rel="external noreferrer noopener" href="{{URL_PAY_360}}" target="_blank">Capita Pay 360 <?php echo $this->escapeHtml($this->translate('link.opens-new-window')); ?></a>. Capita uses <a class="govuk-link" rel="external noreferrer noopener" href="{{URL_PAY_360_COOKIE}}" target="_blank">extra cookies <?php echo $this->escapeHtml($this->translate('link.opens-new-window')); ?></a> to track your progress on their website.</p>
