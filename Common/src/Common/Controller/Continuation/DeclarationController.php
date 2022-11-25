@@ -2,8 +2,11 @@
 
 namespace Common\Controller\Continuation;
 
+use Common\FeatureToggle;
 use Common\Form\Declaration;
 use Dvsa\Olcs\Transfer\Command\ContinuationDetail\Submit;
+use Dvsa\Olcs\Transfer\Command\GovUkAccount\GetGovUkAccountRedirect;
+use Dvsa\Olcs\Transfer\Query\FeatureToggle\IsEnabled as IsEnabledQry;
 use Laminas\Http\Response;
 use Laminas\View\Model\ViewModel;
 use Common\RefData;
@@ -41,12 +44,31 @@ class DeclarationController extends AbstractContinuationController
             if ($form->isValid()) {
                 // If using Verify to sign
                 if ($this->isButtonPressed('sign')) {
-                    return $this->redirect()->toRoute(
-                        'verify/initiate-request',
-                        [
-                            'continuationDetailId' => $continuationDetail['id'],
-                        ]
+                    $featureEnabled = $this->handleQuery(IsEnabledQry::create(['ids' => [FeatureToggle::GOVUK_ACCOUNT]]))->getResult()['isEnabled'];
+                    if (!$featureEnabled) {
+                        return $this->redirect()->toRoute(
+                            'verify/initiate-request',
+                            [
+                                'continuationDetailId' => $continuationDetail['id'],
+                            ]
+                        );
+                    }
+
+                    $returnUrl = $this->url()->fromRoute(
+                        'continuation/declaration',
+                        ['continuationDetailId' => $continuationDetail['id']], [], true
                     );
+
+                    $urlResult = $this->handleCommand(GetGovUkAccountRedirect::create([
+                        'journey' => RefData::JOURNEY_CONTINUATION,
+                        'id' => $continuationDetail['id'],
+                        'returnUrl' => $returnUrl,
+                    ]));
+                    if (!$urlResult->isOk()) {
+                        throw new \Exception('GetGovUkAccountRedirect command returned non-OK', $urlResult->getStatusCode());
+                    }
+                    return $this->redirect()->toUrl($urlResult->getResult()['messages'][0]);
+
                 } else {
                     // Using Print to sign
                     // Submit the continuation
