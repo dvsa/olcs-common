@@ -21,7 +21,7 @@ class LastTransportManagerDeleteConfirmation extends GenericDeleteConfirmation
     /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\DeleteConfirmButtons")
-     * @Form\Attributes({"class":"actions-container"})
+     * @Form\Attributes({"class":"govuk-button-group"})
      */
     public $formActions = null;
 }

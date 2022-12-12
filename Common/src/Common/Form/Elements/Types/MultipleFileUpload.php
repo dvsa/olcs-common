@@ -45,7 +45,7 @@ class MultipleFileUpload extends Fieldset
 
         $button = new Element\Submit('upload', array('render-container' => false));
         $button->setValue('Upload');
-        $button->setAttribute('class', 'action--primary');
+        $button->setAttribute('class', 'govuk-button');
 
         $fileControlFieldset->add($uploader);
         $fileControlFieldset->add($button);

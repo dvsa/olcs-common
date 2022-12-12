@@ -44,7 +44,7 @@ class CommonLicenceTrailers extends AbstractFormService
         $this->getFormHelper()->remove($form, 'form-actions->saveAndContinue');
 
         $saveButton = $form->get('form-actions')->get('save');
-        $saveButton->setAttribute('class', 'action--primary large');
+        $saveButton->setAttribute('class', 'govuk-button');
         return $form;
     }
 }

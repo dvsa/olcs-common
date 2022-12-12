@@ -12,8 +12,8 @@ use Laminas\Form\Element\Button;
  */
 class ReadOnlyActions extends AbstractHelper
 {
-    const SECONDARY_CLASS = 'action--secondary';
-    const WRAPPER = '<div class="actions-container">%s</div>';
+    const SECONDARY_CLASS = 'govuk-button govuk-button--secondary';
+    const WRAPPER = '<div class="govuk-button-group">%s</div>';
     const LINK_WRAPPER = '<a href="%s" class="%s" %s>%s</a>';
     const ATTRIBUTES = '%s="%s"';
 

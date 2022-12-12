@@ -61,7 +61,12 @@ class VehicleFilter
     public $includeRemoved = null;
 
     /**
-     * @Form\Attributes({"type":"submit","class":"action--primary","data-container-class":"js-hidden"})
+     * @Form\Attributes({
+     *     "data-module": "govuk-button",
+     *     "type": "submit",
+     *     "class": "govuk-button",
+     *     "data-container-class":"js-hidden",
+     * })
      * @Form\Options({"label": "internal-vehicle-filter-filter"})
      * @Form\Type("\Laminas\Form\Element\Button")
      */

@@ -74,17 +74,17 @@ class User extends InternalSearchAbstract
             'crud' => [
                 'actions' => [
                     'add' => [
-                        'class' => 'action--primary', 
+                        'class' => 'govuk-button', 
                         'requireRows' => false
                     ],
                     'edit' => [
                         'requireRows' => true, 
-                        'class' => 'action--secondary js-require--one'
+                        'class' => 'govuk-button govuk-button--secondary js-require--one'
                     ],
                     'delete' => [
                         'label' => 'action_links.remove',
                         'requireRows' => true, 
-                        'class' => 'action--secondary js-require--one'
+                        'class' => 'govuk-button govuk-button--secondary js-require--one'
                     ]
                 ]
             ],

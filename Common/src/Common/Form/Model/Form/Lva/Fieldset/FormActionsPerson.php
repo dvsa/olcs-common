@@ -6,34 +6,51 @@ use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Name("form-actions")
- * @Form\Attributes({"class":"actions-container"})
+ * @Form\Attributes({"class":"govuk-button-group"})
  */
 class FormActionsPerson
 {
 
     /**
-     * @Form\Attributes({"type":"submit","class":"action--primary large"})
+     * @Form\Attributes({
+     *     "data-module": "govuk-button",
+     *     "type": "submit",
+     *     "class": "govuk-button",
+     * })
      * @Form\Options({"label": "save.continue.button"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
     public $saveAndContinue = null;
 
     /**
-     * @Form\Attributes({"type":"submit","class":"action--secondary large"})
+     * @Form\Attributes({
+     *     "data-module": "govuk-button",
+     *     "type": "submit",
+     *     "class": "govuk-button govuk-button--secondary",
+     * })
      * @Form\Options({"label": "save.button"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
     public $save = null;
 
     /**
-     * @Form\Attributes({"type":"submit","class":"action--secondary large js-modal-ajax", "id": "disqualify"})
+     * @Form\Attributes({
+     *     "data-module": "govuk-button",
+     *     "type": "submit",
+     *     "class": "govuk-button govuk-button--secondary js-modal-ajax",
+     *     "id":"disqualify",
+     * })
      * @Form\Options({"label": "Disqualify person"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionLink")
      */
     public $disqualify = null;
 
     /**
-     * @Form\Attributes({"type":"submit","class":"action--tertiary large"})
+     * @Form\Attributes({
+     *     "data-module": "govuk-button",
+     *     "type": "submit",
+     *     "class": "govuk-button govuk-button--secondary",
+     * })
      * @Form\Options({"label": "cancel.button"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */

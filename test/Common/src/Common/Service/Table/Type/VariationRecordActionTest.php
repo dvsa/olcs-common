@@ -86,31 +86,31 @@ class VariationRecordActionTest extends MockeryTestCase
             [
                 'action' => 'A',
                 'expectPrefix' => 'new',
-                'expect' => '(TRSLTD_STATUS) <input type="submit" class="" name="table[action][foo][7]" ' .
-                    'value="link-text"  />',
+                'expect' => '(TRSLTD_STATUS) <button data-prevent-double-click="true" data-module="govuk-button" type="submit" class="" name="table[action][foo][7]" ' .
+                    '>link-text</button>',
             ],
             [
                 'action' => 'U',
                 'expectPrefix' => 'updated',
-                'expect' => '(TRSLTD_STATUS) <input type="submit" class="" name="table[action][foo][7]" '.
-                    'value="link-text"  />',
+                'expect' => '(TRSLTD_STATUS) <button data-prevent-double-click="true" data-module="govuk-button" type="submit" class="" name="table[action][foo][7]" '.
+                    '>link-text</button>',
             ],
             [
                 'action' => 'C',
                 'expectPrefix' => 'current',
-                'expect' => '(TRSLTD_STATUS) <input type="submit" class="" name="table[action][foo][7]" ' .
-                    'value="link-text" disabled="disabled" />',
+                'expect' => '(TRSLTD_STATUS) <button data-prevent-double-click="true" data-module="govuk-button" type="submit" class="" name="table[action][foo][7]" ' .
+                    'disabled="disabled">link-text</button>',
             ],
             [
                 'action' => 'D',
                 'expectPrefix' => 'removed',
-                'expect' => '(TRSLTD_STATUS) <input type="submit" class="" name="table[action][foo][7]" ' .
-                    'value="link-text" disabled="disabled" />',
+                'expect' => '(TRSLTD_STATUS) <button data-prevent-double-click="true" data-module="govuk-button" type="submit" class="" name="table[action][foo][7]" ' .
+                    'disabled="disabled">link-text</button>',
             ],
             [
                 'action' => 'ABC',
                 'expectPrefix' => null,
-                'expect' => '<input type="submit" class="" name="table[action][foo][7]" value="link-text"  />',
+                'expect' => '<button data-prevent-double-click="true" data-module="govuk-button" type="submit" class="" name="table[action][foo][7]" >link-text</button>',
             ],
         ];
     }

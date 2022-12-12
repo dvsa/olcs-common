@@ -28,7 +28,7 @@ class CaseForm
     /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\CaseFormActions")
-     * @Form\Attributes({"class":"actions-container"})
+     * @Form\Attributes({"class":"govuk-button-group"})
      */
     public $formActions = null;
 }

@@ -16,7 +16,11 @@ class LicenceChecklistConfirmationNo
     public $checklistDeclineText = null;
 
     /**
-     * @Form\Attributes({"type":"submit","class":"action--tertiary large"})
+     * @Form\Attributes({
+     *     "data-module": "govuk-button",
+     *     "type": "submit",
+     *     "class": "govuk-button govuk-button--secondary",
+     * })
      * @Form\Options({"label": "continuations.checklist.confirmation.no-button"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionLink")
      */

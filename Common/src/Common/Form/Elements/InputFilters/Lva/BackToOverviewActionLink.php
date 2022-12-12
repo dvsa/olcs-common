@@ -27,6 +27,6 @@ class BackToOverviewActionLink extends ActionLink
                 'label' => 'back-to-' . $this->lva . '-overview'
             ]
         );
-        $this->setAttribute('class', 'action--primary large');
+        $this->setAttribute('class', 'govuk-button');
     }
 }

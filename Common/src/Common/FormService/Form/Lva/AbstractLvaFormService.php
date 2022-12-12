@@ -29,7 +29,7 @@ abstract class AbstractLvaFormService extends AbstractFormService
         $back = new $backToOverviewClass();
 
         if (!$isPrimary) {
-            $back->setAttribute('class', 'action--secondary large');
+            $back->setAttribute('class', 'govuk-button govuk-button--secondary');
         }
 
         $form->get('form-actions')->add($back);
@@ -67,7 +67,7 @@ abstract class AbstractLvaFormService extends AbstractFormService
             return;
         }
 
-        $formActions->get($action)->setAttribute('class', 'action--primary large');
+        $formActions->get($action)->setAttribute('class', 'govuk-button');
     }
 
     /**

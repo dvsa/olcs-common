@@ -32,8 +32,8 @@ class DeltaActionLinks extends Selector
             $ariaLabel = sprintf(self::ARIA_LABEL_FORMAT, $restoreAria, $ariaDescription);
 
             return sprintf(
-                '<input type="submit" class="right-aligned action--secondary" '.
-                    'name="table[action][restore][%s]" aria-label="%s" value="%s">',
+                '<button data-prevent-double-click="true" data-module="govuk-button" type="submit" class="right-aligned govuk-button govuk-button--secondary" '.
+                    'name="table[action][restore][%s]" aria-label="%s">%s</button>',
                 Escape::htmlAttr($data['id']),
                 Escape::htmlAttr($ariaLabel),
                 Escape::htmlAttr($restore)
@@ -46,8 +46,8 @@ class DeltaActionLinks extends Selector
             $ariaLabel = sprintf(self::ARIA_LABEL_FORMAT, $removeAria, $ariaDescription);
 
             return sprintf(
-                '<input type="submit" class="right-aligned action--secondary trigger-modal" '.
-                    'name="table[action][delete][%s]" aria-label="%s" value="%s">',
+                '<button data-prevent-double-click="true" data-module="govuk-button" type="submit" class="right-aligned govuk-button govuk-button--secondary trigger-modal" '.
+                    'name="table[action][delete][%s]" aria-label="%s">%s</button>',
                 Escape::htmlAttr($data['id']),
                 Escape::htmlAttr($ariaLabel),
                 Escape::htmlAttr($remove)

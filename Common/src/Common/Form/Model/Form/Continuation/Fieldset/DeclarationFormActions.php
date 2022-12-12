@@ -5,26 +5,41 @@ namespace Common\Form\Model\Form\Continuation\Fieldset;
 use Laminas\Form\Annotation as Form;
 
 /**
- * @Form\Attributes({"class":"actions-container"})
+ * @Form\Attributes({"class":"govuk-button-group"})
  */
 class DeclarationFormActions
 {
     /**
-     * @Form\Attributes({"type":"submit","class":"action--primary large","id":"sign"})
+     * @Form\Attributes({
+     *     "data-module": "govuk-button",
+     *     "type": "submit",
+     *     "class": "govuk-button",
+     *     "id":"sign",
+     * })
      * @Form\Options({"label": "application.review-declarations.sign-button"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
     public $sign = null;
 
     /**
-     * @Form\Attributes({"type":"submit","class":"action--primary large","id":"submitAndPay"})
+     * @Form\Attributes({
+     *     "data-module": "govuk-button",
+     *     "type": "submit",
+     *     "class": "govuk-button",
+     *     "id":"submitAndPay",
+     * })
      * @Form\Options({"label": "continue-to-payment.button"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
     public $submitAndPay = null;
 
     /**
-     * @Form\Attributes({"type":"submit","class":"action--primary large","id":"submit"})
+     * @Form\Attributes({
+     *     "data-module": "govuk-button",
+     *     "type": "submit",
+     *     "class": "govuk-button",
+     *     "id": "submit"
+     * })
      * @Form\Options({"label": "continue.button"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */

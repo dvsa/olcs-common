@@ -55,7 +55,7 @@ class CompanyNumber extends Fieldset
                     'label' => 'Find company',
                 ],
                 'attributes' => [
-                    'class' => 'action--primary',
+                    'class' => 'govuk-button',
                     'data-container-class' => 'inline',
                     'type' => 'submit',
                 ],

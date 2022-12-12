@@ -27,7 +27,7 @@ class CommunityLicenceFilter
     /**
      * @Form\Attributes({
      *     "type":"submit",
-     *     "class":"action--primary",
+     *     "class":"govuk-button",
      *     "data-container-class":"js-hidden"
      * })
      * @Form\Options({

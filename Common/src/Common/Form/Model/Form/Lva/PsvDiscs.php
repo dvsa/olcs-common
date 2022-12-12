@@ -21,7 +21,7 @@ class PsvDiscs
     /**
      * @Form\Name("form-actions")
      * @Form\Type("Laminas\Form\Fieldset")
-     * @Form\Attributes({"class":"actions-container"})
+     * @Form\Attributes({"class":"govuk-button-group"})
      */
     public $formActions = null;
 }

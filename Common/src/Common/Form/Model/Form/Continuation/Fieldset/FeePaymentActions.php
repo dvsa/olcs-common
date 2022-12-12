@@ -6,12 +6,17 @@ use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Name("fee-payment-actions")
- * @Form\Attributes({"class":"actions-container"})
+ * @Form\Attributes({"class":"govuk-button-group"})
  */
 class FeePaymentActions
 {
     /**
-     * @Form\Attributes({"type":"submit","class":"action--primary action--external large"})
+     * @Form\Attributes({
+     *     "data-module": "govuk-button",
+     *     "type": "submit",
+     *     "class": "govuk-button",
+     *     "id":"submitAndPay",
+     * })
      * @Form\Options({"label": "continuation.payment.pay-and-submit"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */

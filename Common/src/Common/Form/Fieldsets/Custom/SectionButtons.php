@@ -21,12 +21,12 @@ class SectionButtons extends Fieldset
     {
         parent::__construct('form-actions', $options);
 
-        $this->setAttributes(array('class' => 'actions-container'));
+        $this->setAttributes(array('class' => 'govuk-button-group'));
 
         $submit = new ActionButton('save');
         $submit->setAttributes(
             array(
-                'class' => 'action--primary large',
+                'class' => 'govuk-button',
                 'type' => 'submit'
             )
         );
@@ -37,7 +37,7 @@ class SectionButtons extends Fieldset
         $cancel = new ActionButton('cancel');
         $cancel->setAttributes(
             array(
-                'class' => 'action--secondary large',
+                'class' => 'govuk-button govuk-button--secondary',
                 'type' => 'submit'
             )
         );

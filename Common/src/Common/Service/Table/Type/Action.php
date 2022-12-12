@@ -13,7 +13,7 @@ class Action extends AbstractType
      *
      * @var string
      */
-    private $format = '<input type="submit" class="%s" name="%s" value="%s" %s />';
+    private $format = '<button data-prevent-double-click="true" data-module="govuk-button" type="submit" class="action-button-link %s" name="%s" %s>%s</button>';
 
     /**
      * Render the selector
@@ -55,7 +55,7 @@ class Action extends AbstractType
             return $value;
         }
 
-        return sprintf($this->format, $class, $name, $value, implode(' ', $attributes));
+        return sprintf($this->format, $class, $name, implode(' ', $attributes), $value);
     }
 
     /**

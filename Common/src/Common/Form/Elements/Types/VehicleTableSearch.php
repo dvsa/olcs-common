@@ -51,7 +51,7 @@ class VehicleTableSearch extends AbstractInputSearch
                     'label' => 'licence.vehicle.table.search.button',
                 ],
                 'attributes' => [
-                    'class' => 'action--primary',
+                    'class' => 'govuk-button',
                     'data-container-class' => 'inline',
                     'type' => 'submit',
                 ],

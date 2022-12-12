@@ -48,7 +48,11 @@ class UploadEvidence
 
 
     /**
-     * @Form\Attributes({"type":"submit","class":"action--primary large"})
+     * @Form\Attributes({
+     *     "data-module": "govuk-button",
+     *     "type": "submit",
+     *     "class": "govuk-button",
+     * })
      * @Form\Options({"label": "Save and continue"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */

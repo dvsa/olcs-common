@@ -46,7 +46,7 @@ class ApplicationTransportManagers extends Fieldset
         $searchButton->setAttributes(
             array(
                 'type' => 'submit',
-                'class' => 'action--primary large js-find',
+                'class' => 'govuk-button js-find',
                 'data-container-class' => 'inline'
             )
         );

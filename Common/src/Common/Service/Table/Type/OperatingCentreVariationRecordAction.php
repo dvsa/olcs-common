@@ -21,7 +21,7 @@ class OperatingCentreVariationRecordAction extends VariationRecordAction
         $content = parent::render($data, $column, $formattedContent);
 
         if (isset($data['s4']) && $data['s4'] !== null) {
-            $content = str_replace('<input', ' (Schedule 4/1) <input', $content);
+            $content = str_replace('<button', ' (Schedule 4/1) <button', $content);
         }
 
         return trim($content);

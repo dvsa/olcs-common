@@ -42,7 +42,11 @@ class MultipleZipUpload
     public $messages = null;
 
     /**
-     * @Form\Attributes({"type":"submit","class":"inline-upload action--primary js-upload", "value": "Submit"})
+     * @Form\Attributes({
+     *     "data-module": "govuk-button",
+     *     "type": "submit",
+     *     "class": "inline-upload govuk-button js-upload",
+     * })
      * @Form\Options({
      *     "label": "Submit"
      * })
