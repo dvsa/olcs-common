@@ -2,6 +2,7 @@
 
 namespace Common\Rbac\Role;
 
+use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
@@ -11,15 +12,17 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
  */
 class RoleProviderFactory implements FactoryInterface
 {
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return mixed
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): RoleProvider
     {
-        $serviceLocator = $serviceLocator->getServiceLocator();
+        $serviceLocator = $container->getServiceLocator();
         return new RoleProvider($serviceLocator->get('QuerySender'));
+    }
+
+    /**
+     * @deprecated
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator): RoleProvider
+    {
+        return $this->__invoke($serviceLocator, RoleProvider::class);
     }
 }

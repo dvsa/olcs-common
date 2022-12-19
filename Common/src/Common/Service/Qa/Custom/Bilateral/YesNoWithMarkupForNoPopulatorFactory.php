@@ -2,24 +2,26 @@
 
 namespace Common\Service\Qa\Custom\Bilateral;
 
+use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class YesNoWithMarkupForNoPopulatorFactory implements FactoryInterface
 {
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): YesNoWithMarkupForNoPopulator
+    {
+        return new YesNoWithMarkupForNoPopulator(
+            $container->get('QaRadioFactory'),
+            $container->get('QaBilateralYesNoRadioOptionsApplier'),
+            $container->get('QaCommonHtmlAdder')
+        );
+    }
+
     /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     *
-     * @return YesNoWithMarkupForNoPopulator
+     * @deprecated
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return new YesNoWithMarkupForNoPopulator(
-            $serviceLocator->get('QaRadioFactory'),
-            $serviceLocator->get('QaBilateralYesNoRadioOptionsApplier'),
-            $serviceLocator->get('QaCommonHtmlAdder')
-        );
+        return $this->__invoke($serviceLocator, YesNoWithMarkupForNoPopulator::class);
     }
 }

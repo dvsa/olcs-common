@@ -2,24 +2,26 @@
 
 namespace Common\Service\Qa\Custom\Ecmt;
 
+use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class NoOfPermitsEitherFieldsetPopulatorFactory implements FactoryInterface
 {
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     *
-     * @return NoOfPermitsEitherFieldsetPopulator
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): NoOfPermitsEitherFieldsetPopulator
     {
         return new NoOfPermitsEitherFieldsetPopulator(
-            $serviceLocator->get('Helper\Translation'),
-            $serviceLocator->get('QaEcmtNoOfPermitsBaseInsetTextGenerator'),
-            $serviceLocator->get('QaCommonHtmlAdder')
+            $container->get('Helper\Translation'),
+            $container->get('QaEcmtNoOfPermitsBaseInsetTextGenerator'),
+            $container->get('QaCommonHtmlAdder')
         );
+    }
+
+    /**
+     * @deprecated
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator): NoOfPermitsEitherFieldsetPopulator
+    {
+        return $this->__invoke($serviceLocator, NoOfPermitsBothFieldsetPopulator::class);
     }
 }

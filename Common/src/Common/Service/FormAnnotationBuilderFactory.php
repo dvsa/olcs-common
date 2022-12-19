@@ -3,6 +3,7 @@
 namespace Common\Service;
 
 use Common\Form\Annotation\CustomAnnotationBuilder;
+use Interop\Container\ContainerInterface;
 use Laminas\Form\Factory;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
@@ -13,30 +14,35 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
  */
 class FormAnnotationBuilderFactory implements FactoryInterface
 {
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): CustomAnnotationBuilder
+    {
+        // set up a form factory which can use custom form elements
+        $formElementManager = $container->get('FormElementManager');
+        $formFactory = new Factory($formElementManager);
+
+        // set up input filter factory to use custom validators + filters
+        $inputFilterFactory = $formFactory->getInputFilterFactory();
+
+        $inputFilterFactory->getDefaultValidatorChain()
+            ->setPluginManager($container->get('ValidatorManager'));
+
+        $inputFilterFactory->getDefaultFilterChain()
+            ->setPluginManager($container->get('FilterManager'));
+
+        // create service and set custom form factory
+        $annotationBuilder = new CustomAnnotationBuilder();
+        $annotationBuilder->setFormFactory($formFactory);
+        return $annotationBuilder;
+    }
+
     /**
      * Create service
      *
      * @param ServiceLocatorInterface $serviceLocator
      * @return mixed
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function createService(ServiceLocatorInterface $serviceLocator): CustomAnnotationBuilder
     {
-        //setup a form factory which can use custom form elements
-        $formElementManager = $serviceLocator->get('FormElementManager');
-        $formFactory = new Factory($formElementManager);
-
-        //setup input filter factory to use custom validators + filters
-        $inputFilterFactory = $formFactory->getInputFilterFactory();
-
-        $inputFilterFactory->getDefaultValidatorChain()
-            ->setPluginManager($serviceLocator->get('ValidatorManager'));
-
-        $inputFilterFactory->getDefaultFilterChain()
-            ->setPluginManager($serviceLocator->get('FilterManager'));
-
-        //create service and set custom form factory
-        $annotationBuilder = new CustomAnnotationBuilder();
-        $annotationBuilder->setFormFactory($formFactory);
-        return $annotationBuilder;
+        return $this->__invoke($serviceLocator, CustomAnnotationBuilder::class);
     }
 }

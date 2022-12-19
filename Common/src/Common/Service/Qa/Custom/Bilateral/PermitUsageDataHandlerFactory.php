@@ -2,23 +2,25 @@
 
 namespace Common\Service\Qa\Custom\Bilateral;
 
+use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class PermitUsageDataHandlerFactory implements FactoryInterface
 {
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     *
-     * @return PermitUsageDataHandler
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): PermitUsageDataHandler
     {
         return new PermitUsageDataHandler(
-            $serviceLocator->get('QaCommonIsValidBasedWarningAdder'),
-            $serviceLocator->get('QaBilateralPermitUsageIsValidHandler')
+            $container->get('QaCommonIsValidBasedWarningAdder'),
+            $container->get('QaBilateralPermitUsageIsValidHandler')
         );
+    }
+
+    /**
+     * @deprecated
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator): PermitUsageDataHandler
+    {
+        return $this->__invoke($serviceLocator, PermitUsageDataHandler::class);
     }
 }

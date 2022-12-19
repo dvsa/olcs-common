@@ -6,6 +6,7 @@
 namespace Common\Rbac;
 
 use Dvsa\Olcs\Transfer\Service\CacheEncryption;
+use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\Session\Container;
@@ -15,19 +16,21 @@ use Laminas\Session\Container;
  */
 class PidIdentityProviderFactory implements FactoryInterface
 {
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return mixed
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): PidIdentityProvider
     {
         return new PidIdentityProvider(
-            $serviceLocator->get('QuerySender'),
+            $container->get('QuerySender'),
             new Container('user_details'),
-            $serviceLocator->get('Request'),
-            $serviceLocator->get(CacheEncryption::class)
+            $container->get('Request'),
+            $container->get(CacheEncryption::class)
         );
+    }
+
+    /**
+     * @deprecated
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator): PidIdentityProvider
+    {
+        return $this->__invoke($serviceLocator, PidIdentityProvider::class);
     }
 }

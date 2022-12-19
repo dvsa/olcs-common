@@ -2,23 +2,25 @@
 
 namespace Common\Service\Qa\Custom\Ecmt;
 
+use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class NoOfPermitsEitherStrategySelectingFieldsetPopulatorFactory implements FactoryInterface
 {
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     *
-     * @return NoOfPermitsStrategySelectingFieldsetPopulator
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): NoOfPermitsStrategySelectingFieldsetPopulator
     {
         return new NoOfPermitsStrategySelectingFieldsetPopulator(
-            $serviceLocator->get('QaEcmtNoOfPermitsSingleFieldsetPopulator'),
-            $serviceLocator->get('QaEcmtNoOfPermitsEitherFieldsetPopulator')
+            $container->get('QaEcmtNoOfPermitsSingleFieldsetPopulator'),
+            $container->get('QaEcmtNoOfPermitsEitherFieldsetPopulator')
         );
+    }
+
+    /**
+     * @deprecated
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator): NoOfPermitsStrategySelectingFieldsetPopulator
+    {
+        return $this->__invoke($serviceLocator, NoOfPermitsStrategySelectingFieldsetPopulator::class);
     }
 }

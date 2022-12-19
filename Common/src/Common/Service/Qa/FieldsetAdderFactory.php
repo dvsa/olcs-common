@@ -2,24 +2,26 @@
 
 namespace Common\Service\Qa;
 
+use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class FieldsetAdderFactory implements FactoryInterface
 {
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     *
-     * @return FieldsetAdder
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): FieldsetAdder
     {
         return new FieldsetAdder(
-            $serviceLocator->get('QaFieldsetPopulatorProvider'),
-            $serviceLocator->get('QaFieldsetFactory'),
-            $serviceLocator->get('QaFieldsetModifier')
+            $container->get('QaFieldsetPopulatorProvider'),
+            $container->get('QaFieldsetFactory'),
+            $container->get('QaFieldsetModifier')
         );
+    }
+
+    /**
+     * @deprecated
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator): FieldsetAdder
+    {
+        return $this->__invoke($serviceLocator, FieldsetAdder::class);
     }
 }

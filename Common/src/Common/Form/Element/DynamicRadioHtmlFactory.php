@@ -2,6 +2,7 @@
 
 namespace Common\Form\Element;
 
+use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
@@ -11,6 +12,14 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
  */
 class DynamicRadioHtmlFactory implements FactoryInterface
 {
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): DynamicRadioHtml
+    {
+        $instance = new DynamicRadioHtml();
+        $instance->setServiceLocator($container->getServiceLocator()->get('DataServiceManager'));
+
+        return $instance;
+    }
+
     /**
      * Create service
      *
@@ -19,12 +28,6 @@ class DynamicRadioHtmlFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $formElementManager)
     {
-        /** @var \Laminas\Form\FormElementManager $formElementManager */
-        $serviceLocator = $formElementManager->getServiceLocator();
-
-        $service = new DynamicRadioHtml();
-
-        $service->setServiceLocator($serviceLocator->get('DataServiceManager'));
-        return $service;
+        return $this->__invoke($formElementManager, DynamicRadioHtml::class);
     }
 }

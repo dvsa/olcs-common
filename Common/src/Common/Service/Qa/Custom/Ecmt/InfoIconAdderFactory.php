@@ -2,23 +2,25 @@
 
 namespace Common\Service\Qa\Custom\Ecmt;
 
+use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class InfoIconAdderFactory implements FactoryInterface
 {
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     *
-     * @return InfoIconAdder
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): InfoIconAdder
     {
         return new InfoIconAdder(
-            $serviceLocator->get('Helper\Translation'),
-            $serviceLocator->get('QaCommonHtmlAdder')
+            $container->get('Helper\Translation'),
+            $container->get('QaCommonHtmlAdder')
         );
+    }
+
+    /**
+     * @deprecated
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator): InfoIconAdder
+    {
+        return $this->__invoke($serviceLocator, InfoIconAdder::class);
     }
 }
