@@ -2,24 +2,26 @@
 
 namespace Common\Service\Qa\Custom\Bilateral;
 
+use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class ThirdCountryFieldsetPopulatorFactory implements FactoryInterface
 {
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     *
-     * @return ThirdCountryFieldsetPopulator
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): ThirdCountryFieldsetPopulator
     {
         return new ThirdCountryFieldsetPopulator(
-            $serviceLocator->get('Helper\Translation'),
-            $serviceLocator->get('QaBilateralYesNoWithMarkupForNoPopulator'),
-            $serviceLocator->get('QaBilateralStandardYesNoValueOptionsGenerator')
+            $container->get('Helper\Translation'),
+            $container->get('QaBilateralYesNoWithMarkupForNoPopulator'),
+            $container->get('QaBilateralStandardYesNoValueOptionsGenerator')
         );
+    }
+
+    /**
+     * @deprecated
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator): ThirdCountryFieldsetPopulator
+    {
+        return $this->__invoke($serviceLocator, ThirdCountryFieldsetPopulator::class);
     }
 }

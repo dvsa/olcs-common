@@ -2,26 +2,28 @@
 
 namespace Common\Service\Qa\FieldsetModifier;
 
+use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class FieldsetModifierFactory implements FactoryInterface
 {
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     *
-     * @return FieldsetModifier
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): FieldsetModifier
     {
         $fieldsetModifier = new FieldsetModifier();
 
         $fieldsetModifier->registerModifier(
-            $serviceLocator->get('QaRoadWorthinessMakeAndModelFieldsetModifier')
+            $container->get('QaRoadWorthinessMakeAndModelFieldsetModifier')
         );
 
         return $fieldsetModifier;
+    }
+
+    /**
+     * @deprecated
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator): FieldsetModifier
+    {
+        return $this->__invoke($serviceLocator, FieldsetModifier::class);
     }
 }

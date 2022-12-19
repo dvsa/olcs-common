@@ -2,25 +2,27 @@
 
 namespace Common\Service\Qa\Custom\Ecmt;
 
+use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class AnnualTripsAbroadFieldsetPopulatorFactory implements FactoryInterface
 {
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     *
-     * @return AnnualTripsAbroadFieldsetPopulator
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): AnnualTripsAbroadFieldsetPopulator
     {
         return new AnnualTripsAbroadFieldsetPopulator(
-            $serviceLocator->get('QaTextFieldsetPopulator'),
-            $serviceLocator->get('Helper\Translation'),
-            $serviceLocator->get('QaEcmtNiWarningConditionalAdder'),
-            $serviceLocator->get('QaCommonHtmlAdder')
+            $container->get('QaTextFieldsetPopulator'),
+            $container->get('Helper\Translation'),
+            $container->get('QaEcmtNiWarningConditionalAdder'),
+            $container->get('QaCommonHtmlAdder')
         );
+    }
+
+    /**
+     * @deprecated
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator): AnnualTripsAbroadFieldsetPopulator
+    {
+        return $this->__invoke($serviceLocator, AnnualTripsAbroadFieldsetPopulator::class);
     }
 }

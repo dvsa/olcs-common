@@ -2,6 +2,7 @@
 
 namespace Common\Controller\Plugin;
 
+use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
@@ -10,16 +11,18 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
  */
 class HandleCommandFactory implements FactoryInterface
 {
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return mixed
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): HandleCommand
     {
-        $serviceLocator = $serviceLocator->getServiceLocator();
+        $serviceLocator = $container->getServiceLocator();
 
         return new HandleCommand($serviceLocator->get('CommandSender'), $serviceLocator->get('Helper\FlashMessenger'));
+    }
+
+    /**
+     * @deprecated
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator): HandleCommand
+    {
+        return $this->__invoke($serviceLocator, HandleCommand::class);
     }
 }

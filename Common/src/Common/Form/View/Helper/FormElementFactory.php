@@ -34,7 +34,6 @@ class FormElementFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): FormElement
     {
         assert($container instanceof ServiceLocatorAwareInterface, 'Expected instance of ServiceLocatorAwareInterface');
-        $container = $container->getServiceLocator();
 
         $instance = new FormElement();
         $config = $container->get('config');

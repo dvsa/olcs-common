@@ -7,6 +7,7 @@
  */
 namespace Common\Controller\Lva\Factories;
 
+use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
@@ -19,6 +20,13 @@ abstract class AbstractLvaAdapterFactory implements FactoryInterface
 {
     protected $adapter;
 
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    {
+        $serviceClass = 'Common\Controller\Lva\Adapters\\' . $this->adapter;
+
+        return new $serviceClass();
+    }
+
     /**
      * Create service
      *
@@ -27,8 +35,6 @@ abstract class AbstractLvaAdapterFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $serviceClass = 'Common\Controller\Lva\Adapters\\' . $this->adapter;
-
-        return new $serviceClass();
+        return $this->__invoke($serviceLocator, null);
     }
 }

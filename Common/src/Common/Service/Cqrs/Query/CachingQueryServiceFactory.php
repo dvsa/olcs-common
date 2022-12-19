@@ -4,6 +4,7 @@ namespace Common\Service\Cqrs\Query;
 
 use Dvsa\Olcs\Transfer\Service\CacheEncryption as CacheEncryptionService;
 use Exception;
+use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
@@ -13,13 +14,9 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
  */
 class CachingQueryServiceFactory implements FactoryInterface
 {
-    /**
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return CachingQueryService
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): CachingQueryService
     {
-        $config = $serviceLocator->get('Config');
+        $config = $container->get('Config');
 
         if (!isset($config['query_cache'])) {
             throw new Exception('Query cache config key missing');
@@ -30,15 +27,23 @@ class CachingQueryServiceFactory implements FactoryInterface
         }
 
         $service = new CachingQueryService(
-            $serviceLocator->get(QueryService::class),
-            $serviceLocator->get(CacheEncryptionService::class),
-            $serviceLocator->get('TransferAnnotationBuilder'),
+            $container->get(QueryService::class),
+            $container->get(CacheEncryptionService::class),
+            $container->get('TransferAnnotationBuilder'),
             $config['query_cache']['enabled'],
             $config['query_cache']['ttl']
         );
 
-        $service->setLogger($serviceLocator->get('Logger'));
+        $service->setLogger($container->get('Logger'));
 
         return $service;
+    }
+
+    /**
+     * @deprecated
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator): CachingQueryService
+    {
+        return $this->__invoke($serviceLocator, CachingQueryService::class);
     }
 }

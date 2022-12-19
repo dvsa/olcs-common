@@ -2,6 +2,7 @@
 
 namespace Common\Service\Cqrs;
 
+use Interop\Container\ContainerInterface;
 use Laminas\Http\Header\Authorization;
 use Laminas\Http\Header\Cookie;
 use Laminas\Http\Headers;
@@ -16,14 +17,7 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
  */
 class RequestFactory implements FactoryInterface
 {
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator Service Locator
-     *
-     * @return mixed
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): Request
     {
         $accept = new Accept();
         $accept->addMediaType('application/json');
@@ -31,14 +25,14 @@ class RequestFactory implements FactoryInterface
         $contentType = new ContentType();
         $contentType->setMediaType('application/json');
 
-        $identifier = $serviceLocator->get('LogProcessorManager')->get(\Olcs\Logging\Log\Processor\RequestId::class)
+        $identifier = $container->get('LogProcessorManager')->get(\Olcs\Logging\Log\Processor\RequestId::class)
             ->getIdentifier();
         $correlationHeader = new \Laminas\Http\Header\GenericHeader('X-Correlation-Id', $identifier);
 
         $headers = new Headers();
         $headers->addHeaders([$accept, $contentType, $correlationHeader]);
 
-        $userRequest = $serviceLocator->get('Request');
+        $userRequest = $container->get('Request');
         if ($userRequest instanceof Request) {
             $cookies = $userRequest->getCookie();
             if (isset($cookies['secureToken'])) {
@@ -51,5 +45,13 @@ class RequestFactory implements FactoryInterface
         $request->setHeaders($headers);
 
         return $request;
+    }
+
+    /**
+     * @deprecated
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator): Request
+    {
+        return $this->__invoke($serviceLocator, Request::class);
     }
 }

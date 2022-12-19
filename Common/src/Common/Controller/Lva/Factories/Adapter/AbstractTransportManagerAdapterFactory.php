@@ -2,6 +2,7 @@
 
 namespace Common\Controller\Lva\Factories\Adapter;
 
+use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
@@ -15,15 +16,20 @@ abstract class AbstractTransportManagerAdapterFactory implements FactoryInterfac
     /** @var \Common\Controller\Lva\Adapters\AbstractTransportManagerAdapter */
     protected $adapterClass;
 
-    public function createService(ServiceLocatorInterface $sl)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         /** @var \Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder $transferAnnotationBuilder */
-        $transferAnnotationBuilder = $sl->get('TransferAnnotationBuilder');
+        $transferAnnotationBuilder = $container->get('TransferAnnotationBuilder');
         /** @var \Common\Service\Cqrs\Query\CachingQueryService $querySrv */
-        $querySrv = $sl->get('QueryService');
+        $querySrv = $container->get('QueryService');
         /** @var \Common\Service\Cqrs\Command\CommandService $commandSrv */
-        $commandSrv = $sl->get('CommandService');
+        $commandSrv = $container->get('CommandService');
 
         return new $this->adapterClass($transferAnnotationBuilder, $querySrv, $commandSrv);
+    }
+
+    public function createService(ServiceLocatorInterface $sl)
+    {
+        return $this->__invoke($sl, null);
     }
 }

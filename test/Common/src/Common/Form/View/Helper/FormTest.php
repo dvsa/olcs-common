@@ -35,7 +35,7 @@ class FormTest extends TestCase
         $this->form->add(new \Laminas\Form\Element\Text('test'));
 
         $helpers = new HelperPluginManager();
-        $helpers->setService('formRow', new Helper\FormRow());
+        $helpers->setService('formRow', new Helper\FormRow([]));
         $helpers->setService('formCollection', new Helper\FormCollection());
         $helpers->setService('addTags', new \Common\View\Helper\AddTags());
 
@@ -60,7 +60,7 @@ class FormTest extends TestCase
         $this->form->setAttribute('action', 'foo');
 
         $helpers = new HelperPluginManager();
-        $helpers->setService('formRow', new Helper\FormRow());
+        $helpers->setService('formRow', new Helper\FormRow([]));
         $helpers->setService('formCollection', new Helper\FormCollection());
         $helpers->setService('addTags', new \Common\View\Helper\AddTags());
 
@@ -86,7 +86,7 @@ class FormTest extends TestCase
 
         $helpers = new HelperPluginManager();
         $helpers->setService('formCollection', new Helper\FormCollection());
-        $helpers->setService('formRow', new Helper\FormRow());
+        $helpers->setService('formRow', new Helper\FormRow([]));
         $helpers->setService('addTags', new \Common\View\Helper\AddTags());
         $view = new PhpRenderer();
         $view->setHelperPluginManager($helpers);

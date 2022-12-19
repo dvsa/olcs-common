@@ -509,7 +509,7 @@ return array(
             'pageTitle' => \Common\View\Helper\PageTitle::class,
             'LicenceChecklist' => \Common\View\Helper\LicenceChecklist::class,
             'date' => \Common\View\Helper\Date::class,
-            'formRow' => 'Common\Form\View\Helper\FormRow',
+            'formRow' => \Common\Form\View\Helper\FormRowFactory::class,
             'languageLink' => \Common\View\Helper\LanguageLink::class,
             'currentUser' => \Common\View\Helper\CurrentUserFactory::class,
             'systemInfoMessages' => \Common\View\Factory\Helper\SystemInfoMessagesFactory::class,

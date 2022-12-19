@@ -641,7 +641,7 @@ class FormRowTest extends MockeryTestCase
 
     protected function setUpSut()
     {
-        $this->sut = new CommonHelper\FormRow();
+        $this->sut = new CommonHelper\FormRow([]);
         $this->sut->setView($this->phpRenderer());
         $this->sut->setTranslator($this->translator());
     }

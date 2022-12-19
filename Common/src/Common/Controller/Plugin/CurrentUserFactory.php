@@ -2,6 +2,7 @@
 
 namespace Common\Controller\Plugin;
 
+use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
@@ -11,15 +12,17 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
  */
 final class CurrentUserFactory implements FactoryInterface
 {
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return CurrentUserInterface
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): CurrentUser
     {
-        $serviceLocator = $serviceLocator->getServiceLocator();
+        $serviceLocator = $container->getServiceLocator();
         return new CurrentUser($serviceLocator->get('ZfcRbac\Service\AuthorizationService'));
+    }
+
+    /**
+     * @deprecated
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator): CurrentUser
+    {
+        return $this->__invoke($serviceLocator, CurrentUser::class);
     }
 }

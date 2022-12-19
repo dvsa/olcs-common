@@ -4,6 +4,7 @@ namespace Common\Service\AntiVirus;
 
 use Olcs\Logging\Log\Logger;
 use Laminas\ServiceManager\ServiceLocatorInterface;
+use Interop\Container\ContainerInterface;
 
 /**
  * AntiVirus Scan a file
@@ -27,16 +28,9 @@ class Scan implements \Laminas\ServiceManager\FactoryInterface
      *
      * @return $this
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function createService(ServiceLocatorInterface $serviceLocator): Scan
     {
-        $config = $serviceLocator->get('config');
-        if (isset($config['antiVirus']['cliCommand'])) {
-            $this->cliCommand = $config['antiVirus']['cliCommand'];
-        }
-
-        $this->setShell(new \Common\Filesystem\Shell());
-
-        return $this;
+        return $this->__invoke($serviceLocator, Scan::class);
     }
 
     /**
@@ -166,5 +160,23 @@ class Scan implements \Laminas\ServiceManager\FactoryInterface
     public function setShell(\Common\Filesystem\Shell $shell)
     {
         $this->shell = $shell;
+    }
+
+    /**
+     * @param ContainerInterface $container
+     * @param $requestedName
+     * @param array|null $options
+     * @return $this
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    {
+        $config = $container->get('config');
+        if (isset($config['antiVirus']['cliCommand'])) {
+            $this->cliCommand = $config['antiVirus']['cliCommand'];
+        }
+        $this->setShell(new \Common\Filesystem\Shell());
+        return $this;
     }
 }
