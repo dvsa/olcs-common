@@ -10,6 +10,7 @@ use ZfcRbac\Guard\GuardInterface;
 use ZfcRbac\Service\AuthorizationServiceInterface;
 use ZfcRbac\Guard\ProtectionPolicyTrait;
 use Laminas\EventManager\Event;
+use Interop\Container\ContainerInterface;
 
 /**
  * Class IsAllowedListener
@@ -121,20 +122,28 @@ class IsAllowedListener implements FactoryInterface
      * @param ServiceLocatorInterface $serviceLocator
      * @return mixed
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function createService(ServiceLocatorInterface $serviceLocator): IsAllowedListener
     {
-        $this->setAuthorizationService($serviceLocator->get('ZfcRbac\Service\AuthorizationService'));
+        return $this->__invoke($serviceLocator, IsAllowedListener::class);
+    }
 
-        $options = $serviceLocator->get('ZfcRbac\Options\ModuleOptions');
-
+    /**
+     * @param ContainerInterface $container
+     * @param $requestedName
+     * @param array|null $options
+     * @return $this
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): IsAllowedListener
+    {
+        $this->setAuthorizationService($container->get('ZfcRbac\Service\AuthorizationService'));
+        $options = $container->get('ZfcRbac\Options\ModuleOptions');
         $this->setProtectionPolicy($options->getProtectionPolicy());
-
         $guardsOptions = $options->getGuards();
-
         if (isset($guardsOptions['ZfcRbac\Guard\RoutePermissionsGuard'])) {
             $this->setRules($guardsOptions['ZfcRbac\Guard\RoutePermissionsGuard']);
         }
-
         return $this;
     }
 }
