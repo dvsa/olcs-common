@@ -29,8 +29,6 @@ class CommandServiceFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): CommandService
     {
-        $container = $container->getServiceLocator();
-
         $config = $container->get('Config');
 
         $clientOptions = [];

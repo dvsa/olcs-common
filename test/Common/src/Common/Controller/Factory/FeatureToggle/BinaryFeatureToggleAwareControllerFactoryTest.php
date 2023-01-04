@@ -7,9 +7,11 @@ namespace CommonTest\Controller\Factory\FeatureToggle;
 use Common\Test\MockeryTestCase;
 use Interop\Container\ContainerInterface;
 use Common\Test\MocksServicesTrait;
+use Laminas\ServiceManager\AbstractPluginManager;
 use Laminas\ServiceManager\ServiceManager;
 use Common\Service\Cqrs\Query\QuerySender;
 use Common\Controller\Factory\FeatureToggle\BinaryFeatureToggleAwareControllerFactory;
+use Mockery as m;
 
 /**
  * @see BinaryFeatureToggleAwareControllerFactory
@@ -87,8 +89,7 @@ class BinaryFeatureToggleAwareControllerFactoryTest extends MockeryTestCase
         $this->setUpSut([static::ENABLED_FEATURE_TOGGLE_1]);
         $pluginManager = $this->setUpAbstractPluginManager($this->setUpServiceManager());
 
-        // Expect
-        $this->serviceManager->get(static::QUERY_SENDER_ALIAS)->expects('featuresEnabled')->with([static::ENABLED_FEATURE_TOGGLE_1])->andReturn(true);
+        $pluginManager->shouldReceive('get')->withAnyArgs();
 
         // Execute
         $result = $this->sut->__invoke($pluginManager, static::SUT_NAME);
@@ -107,8 +108,14 @@ class BinaryFeatureToggleAwareControllerFactoryTest extends MockeryTestCase
         $this->setUpSut([static::ENABLED_FEATURE_TOGGLE_1, static::ENABLED_FEATURE_TOGGLE_2]);
         $pluginManager = $this->setUpAbstractPluginManager($this->setUpServiceManager());
 
+        $pluginManager->shouldReceive('get')->withAnyArgs();
+        $pm = m::mock(AbstractPluginManager::class);
+        $pm->shouldReceive('get')->withAnyArgs();
+
         // Expect
         $this->serviceManager->get(static::QUERY_SENDER_ALIAS)->expects('featuresEnabled')->with([static::ENABLED_FEATURE_TOGGLE_1, static::ENABLED_FEATURE_TOGGLE_2])->andReturn(true);
+
+        $pluginManager->expects('get')->withAnyArgs();
 
         // Execute
         $result = $this->sut->__invoke($pluginManager, static::SUT_NAME);

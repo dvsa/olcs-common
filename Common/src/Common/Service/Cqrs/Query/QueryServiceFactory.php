@@ -26,8 +26,6 @@ class QueryServiceFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): QueryService
     {
-        $container = $container->getServiceLocator();
-
         $config = $container->get('Config');
 
         $clientOptions = [];
