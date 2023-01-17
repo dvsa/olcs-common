@@ -17,18 +17,15 @@
     ],
     "require": {
         "php": ">=7.4",
-        "doctrine/annotations": "^1.8",
-        "doctrine/doctrine-orm-module": "~0.10.0",
-        "olcs/olcs-laminas": "~2.5.0 || ~3.0.0",
-        "olcs/olcs-transfer": "~4.206.0",
-        "symfony/filesystem": "^5",
-        "symfony/lock": "^5"
+        "olcs/olcs-laminas": "~2.5.0 || ~3.0.0"
     },
     "require-dev": {
+        "doctrine/annotations": "^1.14.2",
         "olcs/olcs-devtools": "~4.206.0",
-        "olcs/olcs-testhelpers": "~4.206.0",
+        "olcs/olcs-transfer": "~4.206.0",
         "olcs/olcs-utils": "~4.206.0",
-        "olcs/olcs-logging": "~4.206.0"
+        "olcs/olcs-logging": "~4.206.0",
+        "symfony/lock": "^5"
     },
     "autoload": {
         "psr-0": {
