@@ -8,7 +8,7 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class LicenceConditionsUndertakingsReviewServiceFactory implements FactoryInterface
 {
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): LicenceConditionsUndertakingsReviewService
     {
         return new LicenceConditionsUndertakingsReviewService(
             $container->get(AbstractReviewServiceServices::class),
@@ -17,13 +17,9 @@ class LicenceConditionsUndertakingsReviewServiceFactory implements FactoryInterf
     }
 
     /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $services
-     *
-     * @return LicenceConditionsUndertakingsReviewService
+     * @deprecated
      */
-    public function createService(ServiceLocatorInterface $services)
+    public function createService(ServiceLocatorInterface $services): LicenceConditionsUndertakingsReviewService
     {
         return $this($services, LicenceConditionsUndertakingsReviewService::class);
     }

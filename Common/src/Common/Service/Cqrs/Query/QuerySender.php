@@ -8,6 +8,7 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
 use Dvsa\Olcs\Transfer\Query\FeatureToggle\IsEnabled as IsEnabledQry;
 use Dvsa\Olcs\Transfer\Query\QueryInterface;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder as TransferAnnotationBuilder;
+use Interop\Container\ContainerInterface;
 
 /**
  * Query Sender
@@ -35,12 +36,9 @@ class QuerySender implements FactoryInterface
      *
      * @return mixed
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function createService(ServiceLocatorInterface $serviceLocator): QuerySender
     {
-        $this->queryService = $this->getQueryService($serviceLocator);
-        $this->annotationBuilder = $serviceLocator->get('TransferAnnotationBuilder');
-
-        return $this;
+        return $this->__invoke($serviceLocator, QuerySender::class);
     }
 
     /**
@@ -79,5 +77,20 @@ class QuerySender implements FactoryInterface
     protected function getQueryService(ServiceLocatorInterface $serviceLocator)
     {
         return $serviceLocator->get('QueryService');
+    }
+
+    /**
+     * @param ContainerInterface $container
+     * @param $requestedName
+     * @param array|null $options
+     * @return $this
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): QuerySender
+    {
+        $this->queryService = $this->getQueryService($container);
+        $this->annotationBuilder = $container->get('TransferAnnotationBuilder');
+        return $this;
     }
 }

@@ -11,6 +11,7 @@ use Common\Data\Mapper\Lva\TransportManagerApplication;
 use Dvsa\Olcs\Transfer\Command;
 use Dvsa\Olcs\Transfer\Query\TransportManagerApplication\GetDetails;
 use Dvsa\Olcs\Transfer\Query\User\UserSelfserve;
+use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
@@ -38,6 +39,14 @@ abstract class AbstractTransportManagersController extends AbstractController im
     /** @var  \Common\Service\Helper\TransportManagerHelperService */
     protected $hlpTransMngr;
 
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    {
+        $this->hlpForm = $container->get('Helper\Form');
+        $this->hlpTransMngr = $container->get('Helper\TransportManager');
+
+        return $this;
+    }
+
     /**
      * Create service
      *
@@ -47,10 +56,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $this->hlpForm = $serviceLocator->get('Helper\Form');
-        $this->hlpTransMngr = $serviceLocator->get('Helper\TransportManager');
-
-        return $this;
+        return $this->__invoke($serviceLocator, null);
     }
 
     /**

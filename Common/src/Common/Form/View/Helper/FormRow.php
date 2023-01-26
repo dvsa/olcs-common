@@ -20,7 +20,7 @@ use Common\Form\Elements\Types\AttachFilesButton;
 /**
  * @see \CommonTest\Form\View\Helper\FormRowTest
  */
-class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements FactoryInterface
+class FormRow extends \Common\Form\View\Helper\Extended\FormRow
 {
     private $config;
 
@@ -37,22 +37,9 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
     protected $fieldsetLabelWrapper = '<legend>%s</legend>';
     protected $fieldsetHintFormat = "<p class=\"hint\">%s</p>";
 
-    /**
-     * Create service
-     *
-     * @param \Laminas\View\HelperPluginManager $serviceLocator Service locator
-     *
-     * @return FormRow
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __construct(array $config)
     {
-        $sm = $serviceLocator->getServiceLocator();
-
-        $mainConfig = $sm->get('Config');
-
-        $this->config = isset($mainConfig['form_row']) ? $mainConfig['form_row'] : [];
-
-        return $this;
+        $this->config = $config;
     }
 
     /**

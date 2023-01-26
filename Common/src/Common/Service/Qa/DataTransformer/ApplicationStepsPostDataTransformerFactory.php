@@ -2,22 +2,24 @@
 
 namespace Common\Service\Qa\DataTransformer;
 
+use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class ApplicationStepsPostDataTransformerFactory implements FactoryInterface
 {
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     *
-     * @return ApplicationStepsPostDataTransformer
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): ApplicationStepsPostDataTransformer
     {
         return new ApplicationStepsPostDataTransformer(
-            $serviceLocator->get('QaDataTransformerProvider')
+            $container->get('QaDataTransformerProvider')
         );
+    }
+
+    /**
+     * @deprecated
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator): ApplicationStepsPostDataTransformer
+    {
+        return $this->__invoke($serviceLocator, ApplicationStepsPostDataTransformer::class);
     }
 }

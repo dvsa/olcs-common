@@ -2,19 +2,13 @@
 
 namespace Common\Service\Qa;
 
+use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class FieldsetPopulatorProviderFactory implements FactoryInterface
 {
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     *
-     * @return FieldsetPopulatorProvider
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): FieldsetPopulatorProvider
     {
         $fieldsetPopulatorProvider = new FieldsetPopulatorProvider();
 
@@ -45,10 +39,22 @@ class FieldsetPopulatorProviderFactory implements FactoryInterface
         foreach ($populators as $type => $serviceName) {
             $fieldsetPopulatorProvider->registerPopulator(
                 $type,
-                $serviceLocator->get($serviceName)
+                $container->get($serviceName)
             );
         }
 
         return $fieldsetPopulatorProvider;
+    }
+
+    /**
+     * Create service
+     *
+     * @param ServiceLocatorInterface $serviceLocator
+     *
+     * @return FieldsetPopulatorProvider
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator): FieldsetPopulatorProvider
+    {
+        return $this->__invoke($serviceLocator, FieldsetPopulatorProvider::class);
     }
 }

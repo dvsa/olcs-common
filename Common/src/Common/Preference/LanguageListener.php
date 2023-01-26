@@ -14,6 +14,7 @@ use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Laminas\I18n\Translator\Translator;
+use Interop\Container\ContainerInterface;
 
 /**
  * Language Listener
@@ -39,13 +40,9 @@ class LanguageListener implements ListenerAggregateInterface, FactoryInterface
      */
     private $translator;
 
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function createService(ServiceLocatorInterface $serviceLocator): LanguageListener
     {
-        $this->languagePref = $serviceLocator->get('LanguagePreference');
-        $this->flashMessenger = $serviceLocator->get('Helper\FlashMessenger');
-        $this->translator = $serviceLocator->get('translator');
-
-        return $this;
+        return $this->__invoke($serviceLocator, LanguageListener::class);
     }
 
     public function attach(EventManagerInterface $events, $priority = 1)
@@ -71,5 +68,21 @@ class LanguageListener implements ListenerAggregateInterface, FactoryInterface
         }
 
         $this->translator->setLocale($this->languagePref->getPreference() . '_GB');
+    }
+
+    /**
+     * @param ContainerInterface $container
+     * @param $requestedName
+     * @param array|null $options
+     * @return $this
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): LanguageListener
+    {
+        $this->languagePref = $container->get('LanguagePreference');
+        $this->flashMessenger = $container->get('Helper\FlashMessenger');
+        $this->translator = $container->get('translator');
+        return $this;
     }
 }

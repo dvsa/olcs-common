@@ -6,6 +6,7 @@ use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Dvsa\Olcs\Transfer\Command\CommandInterface;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder as TransferAnnotationBuilder;
+use Interop\Container\ContainerInterface;
 
 /**
  * Command Sender
@@ -24,12 +25,9 @@ class CommandSender implements FactoryInterface
      */
     private $commandService;
 
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function createService(ServiceLocatorInterface $serviceLocator): CommandSender
     {
-        $this->commandService = $serviceLocator->get('CommandService');
-        $this->annotationBuilder = $serviceLocator->get('TransferAnnotationBuilder');
-
-        return $this;
+        return $this->__invoke($serviceLocator, CommandSender::class);
     }
 
     /**
@@ -40,5 +38,20 @@ class CommandSender implements FactoryInterface
     {
         $command = $this->annotationBuilder->createCommand($command);
         return $this->commandService->send($command);
+    }
+
+    /**
+     * @param ContainerInterface $container
+     * @param $requestedName
+     * @param array|null $options
+     * @return $this
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): CommandSender
+    {
+        $this->commandService = $container->get('CommandService');
+        $this->annotationBuilder = $container->get('TransferAnnotationBuilder');
+        return $this;
     }
 }

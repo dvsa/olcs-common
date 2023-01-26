@@ -2,24 +2,26 @@
 
 namespace Common\Service\Qa\Custom\CertRoadworthiness;
 
+use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class MotExpiryDateFieldsetPopulatorFactory implements FactoryInterface
 {
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     *
-     * @return MotExpiryDateFieldsetPopulator
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): MotExpiryDateFieldsetPopulator
     {
         return new MotExpiryDateFieldsetPopulator(
-            $serviceLocator->get('Helper\Translation'),
-            $serviceLocator->get('QaCommonHtmlAdder'),
-            $serviceLocator->get('QaCommonFileUploadFieldsetGenerator')
+            $container->get('Helper\Translation'),
+            $container->get('QaCommonHtmlAdder'),
+            $container->get('QaCommonFileUploadFieldsetGenerator')
         );
+    }
+
+    /**
+     * @deprecated
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator): MotExpiryDateFieldsetPopulator
+    {
+        return $this->__invoke($serviceLocator, MotExpiryDateFieldsetPopulator::class);
     }
 }

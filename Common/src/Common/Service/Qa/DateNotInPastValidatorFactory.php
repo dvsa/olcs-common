@@ -2,6 +2,7 @@
 
 namespace Common\Service\Qa;
 
+use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
@@ -22,6 +23,16 @@ class DateNotInPastValidatorFactory implements FactoryInterface
         $this->options = $options;
     }
 
+    // TODO: Check if we need __construct to pass Options in in ZF3? __invoke param $options looks sus
+
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): DateNotInPastValidator
+    {
+        return new DateNotInPastValidator(
+            $container->getServiceLocator()->get('QaDateTimeFactory'),
+            $this->options
+        );
+    }
+
     /**
      * Create service
      *
@@ -29,11 +40,8 @@ class DateNotInPastValidatorFactory implements FactoryInterface
      *
      * @return DateNotInPastValidator
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function createService(ServiceLocatorInterface $serviceLocator): DateNotInPastValidator
     {
-        return new DateNotInPastValidator(
-            $serviceLocator->getServiceLocator()->get('QaDateTimeFactory'),
-            $this->options
-        );
+        return $this->__invoke($serviceLocator, DateNotInPastValidator::class);
     }
 }

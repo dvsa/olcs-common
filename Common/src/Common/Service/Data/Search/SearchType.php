@@ -9,6 +9,7 @@ use Laminas\Navigation\Service\AbstractNavigationFactory;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use ZfcRbac\Service\RoleService;
+use Interop\Container\ContainerInterface;
 
 /**
  * Class SearchType
@@ -141,12 +142,24 @@ class SearchType implements ListDataInterface, FactoryInterface
      * @param ServiceLocatorInterface $serviceLocator
      * @return mixed
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function createService(ServiceLocatorInterface $serviceLocator): SearchType
     {
-        $this->setNavigationFactory($serviceLocator->get('NavigationFactory'));
-        $this->setRoleService($serviceLocator->get(RoleService::class));
-        $this->setSearchTypeManager($serviceLocator->get(SearchTypeManager::class));
+        return $this->__invoke($serviceLocator, SearchType::class);
+    }
 
+    /**
+     * @param ContainerInterface $container
+     * @param $requestedName
+     * @param array|null $options
+     * @return $this
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): SearchType
+    {
+        $this->setNavigationFactory($container->get('NavigationFactory'));
+        $this->setRoleService($container->get(RoleService::class));
+        $this->setSearchTypeManager($container->get(SearchTypeManager::class));
         return $this;
     }
 }

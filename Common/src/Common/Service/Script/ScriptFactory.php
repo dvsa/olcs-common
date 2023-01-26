@@ -8,6 +8,7 @@
 
 namespace Common\Service\Script;
 
+use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use \Laminas\ServiceManager\ServiceLocatorInterface;
 
@@ -40,6 +41,20 @@ class ScriptFactory implements FactoryInterface
     protected $viewHelperManager = null;
 
 
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    {
+        $this->setViewHelperManager($container->get('ViewHelperManager'));
+
+        $config = $container->get('Config');
+
+        if (!isset($config['local_scripts_path'])) {
+            throw new \LogicException('local_scripts_path was not set in the module config');
+        }
+        $this->setFilePaths($config['local_scripts_path']);
+
+        return $this;
+    }
+
     /**
      * Create service
      *
@@ -48,16 +63,7 @@ class ScriptFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $this->setViewHelperManager($serviceLocator->get('ViewHelperManager'));
-
-        $config = $serviceLocator->get('Config');
-
-        if (!isset($config['local_scripts_path'])) {
-            throw new \LogicException('local_scripts_path was not set in the module config');
-        }
-        $this->setFilePaths($config['local_scripts_path']);
-
-        return $this;
+        return $this->__invoke($serviceLocator, ScriptFactory::class);
     }
 
     /**
