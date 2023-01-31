@@ -7,14 +7,14 @@
  */
 namespace Common\View\Model;
 
-use Common\View\AbstractViewModel;
+use Laminas\View\Model\ViewModel;
 
 /**
  * Section View Model
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class Section extends AbstractViewModel
+class Section extends ViewModel
 {
     /**
      * Holds the template
