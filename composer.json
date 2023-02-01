@@ -25,6 +25,7 @@
         "olcs/olcs-transfer": "~4.206.0",
         "olcs/olcs-utils": "~4.206.0",
         "olcs/olcs-logging": "~4.206.0",
+        "soflomo/purifier": "^1.0",
         "symfony/lock": "^5"
     },
     "autoload": {
