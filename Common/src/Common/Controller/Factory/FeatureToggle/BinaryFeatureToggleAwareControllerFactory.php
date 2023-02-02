@@ -72,8 +72,9 @@ abstract class BinaryFeatureToggleAwareControllerFactory implements FactoryInter
         if (empty($featureToggles)) {
             return true;
         }
-        $querySender = $container->get('QuerySender');
+        $querySender = $container->getServiceLocator()->get('QuerySender');
         assert($querySender instanceof QuerySender, 'Expected instance of QuerySender');
         return $querySender->featuresEnabled($this->getFeatureToggleNames());
     }
 }
+
