@@ -14,4 +14,5 @@ class FeatureToggle
     const NEW_GOODS_APP_VEHICLE = 'new_goods_app_vehicle';
     const LONGER_SEMI_TRAILERS = 'longer_semi_trailers';
     const GOVUK_ACCOUNT = 'govuk_signin';
+    const TOP_REPORTS_LINK = 'top_reports_link';
 }

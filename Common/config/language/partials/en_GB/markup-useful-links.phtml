@@ -32,6 +32,18 @@
                 );
             ?>
         </li>
+        <?php if(!empty($this->topReportsLink)): ?>
+        <li>
+            <?php
+            echo $this->linkNewWindowExternal(
+                $this->topReportsLink,
+                $this->translate('your-dvsa-reports'),
+                'govuk-link',
+                true
+            );
+            ?>
+        </li>
+        <?php endif; ?>
         <?php if (!$this->niFlag && ($this->numberOfLicences >= 1 || $this->numberOfApplications >= 1)): ?>
         <li>
             <a class="govuk-link" href="{{OTC_NEWS_ALERTS}}" target="_blank" rel="external noreferrer noopener">
