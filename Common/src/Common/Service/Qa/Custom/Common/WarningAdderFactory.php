@@ -21,6 +21,6 @@ class WarningAdderFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator): WarningAdder
     {
-
+        return $this->__invoke($serviceLocator, null, null);
     }
 }
