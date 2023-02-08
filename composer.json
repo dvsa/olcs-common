@@ -17,7 +17,7 @@
     ],
     "require": {
         "php": ">=7.4",
-        "olcs/olcs-laminas": "~2.5.0 || ~3.0.0"
+        "olcs/olcs-laminas": "~2.5.0"
     },
     "require-dev": {
         "doctrine/annotations": "^1.14.2",
