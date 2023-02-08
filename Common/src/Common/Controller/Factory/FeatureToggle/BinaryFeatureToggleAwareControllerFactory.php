@@ -9,6 +9,7 @@ use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\ServiceManager\ServiceLocatorAwareInterface;
+use Laminas\ServiceManager\ServiceManager;
 
 /**
  * A factory that enables developers to create a controller in two different ways depending on whether a  feature toggle
@@ -72,7 +73,13 @@ abstract class BinaryFeatureToggleAwareControllerFactory implements FactoryInter
         if (empty($featureToggles)) {
             return true;
         }
-        $querySender = $container->getServiceLocator()->get('QuerySender');
+
+        if ($container instanceof ServiceManager) {
+            $querySender = $container->get('QuerySender');
+        } else {
+            $querySender = $container->getServiceLocator()->get('QuerySender');
+        }
+
         assert($querySender instanceof QuerySender, 'Expected instance of QuerySender');
         return $querySender->featuresEnabled($this->getFeatureToggleNames());
     }
