@@ -74,10 +74,10 @@ abstract class BinaryFeatureToggleAwareControllerFactory implements FactoryInter
             return true;
         }
 
-        if ($container instanceof ServiceManager) {
-            $querySender = $container->get('QuerySender');
-        } else {
+        if (method_exists($container, 'getServiceLocator')) {
             $querySender = $container->getServiceLocator()->get('QuerySender');
+        } else {
+            $querySender = $container->get('QuerySender');
         }
 
         assert($querySender instanceof QuerySender, 'Expected instance of QuerySender');
