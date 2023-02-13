@@ -84,4 +84,3 @@ abstract class BinaryFeatureToggleAwareControllerFactory implements FactoryInter
         return $querySender->featuresEnabled($this->getFeatureToggleNames());
     }
 }
-
