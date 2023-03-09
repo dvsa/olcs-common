@@ -25,7 +25,7 @@ class DateTimeSelect extends LaminasElement\DateTimeSelect
      *
      * @return array
      */
-    public function getInputSpecification()
+    public function getInputSpecification(): array
     {
         if ($this->getOption('max_year_delta')) {
             $maxYear = date('Y', strtotime($this->getOption('max_year_delta') . ' years'));

@@ -26,7 +26,7 @@ trait PrepareAttributesTrait
      *
      * @return array
      */
-    protected function prepareAttributes(array $attributes)
+    protected function prepareAttributes(array $attributes): array
     {
         foreach ($attributes as $key => $value) {
             $attribute = strtolower($key);

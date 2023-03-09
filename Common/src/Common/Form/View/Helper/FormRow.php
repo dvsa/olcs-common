@@ -51,7 +51,7 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow
      * @throws \Laminas\Form\Exception\DomainException
      * @return string
      */
-    public function render(ElementInterface $element, $labelPosition = null)
+    public function render(ElementInterface $element, ?string $labelPosition = null): string
     {
         if ($element instanceof Readonly) {
             $class = $element->getAttribute('data-container-class');

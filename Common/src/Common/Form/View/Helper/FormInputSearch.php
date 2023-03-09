@@ -8,7 +8,7 @@ use Laminas\View\Renderer\PhpRenderer;
 
 class FormInputSearch extends Extended\FormCollection
 {
-    public function render(ElementInterface $element)
+    public function render(ElementInterface $element): string
     {
         return $this->view->render(
             'partials/form/input-search',

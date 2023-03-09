@@ -57,7 +57,7 @@ class Form extends LaminasForm\Form
      *
      * @return bool
      */
-    public function isValid()
+    public function isValid(): bool
     {
         if ($this->getOption('readonly')) {
             return false;
@@ -66,7 +66,7 @@ class Form extends LaminasForm\Form
         return parent::isValid();
     }
 
-    public function populateValues($data, $onlyBase = false)
+    public function populateValues($data, $onlyBase = false): void
     {
         $populateDepth = &self::getPopulateDepth();
         try {

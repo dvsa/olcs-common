@@ -18,7 +18,7 @@ class NoOfPermitsForm extends Form
      *
      * @return array
      */
-    public function getMessages($elementName = null)
+    public function getMessages(?string $elementName = null): array
     {
         $messages = $this->callParentGetMessages();
 
@@ -34,7 +34,7 @@ class NoOfPermitsForm extends Form
      *
      * @return bool
      */
-    public function isValid()
+    public function isValid(): bool
     {
         $this->addAllFieldsZeroError = false;
 

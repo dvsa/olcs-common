@@ -261,7 +261,7 @@ trait DynamicTrait
      *
      * @return array
      */
-    public function getValueOptions()
+    public function getValueOptions(): array
     {
         if (empty($this->valueOptions)) {
             $refDataService = $this->getDataService();

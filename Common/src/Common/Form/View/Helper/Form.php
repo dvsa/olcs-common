@@ -22,7 +22,7 @@ class Form extends \Laminas\Form\View\Helper\Form
      *
      * @return string
      */
-    public function render(LaminasFormInterface $form, $includeFormTags = true)
+    public function render(LaminasFormInterface $form, $includeFormTags = true): string
     {
         if (method_exists($form, 'prepare')) {
             $form->prepare();

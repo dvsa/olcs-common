@@ -69,7 +69,7 @@ class CompanyNumber extends Fieldset
         $this->messages = $messages;
     }
 
-    public function getMessages($elementName = null)
+    public function getMessages(?string $elementName = null): array
     {
         return current($this->messages);
     }

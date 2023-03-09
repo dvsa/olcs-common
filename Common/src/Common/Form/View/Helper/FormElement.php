@@ -52,7 +52,7 @@ class FormElement extends LaminasFormElement
      *
      * @return string
      */
-    public function render(LaminasElementInterface $element)
+    public function render(LaminasElementInterface $element): string
     {
         if (!$element->getAttribute('id')) {
             $element->setAttribute('id', $element->getName());
