@@ -2,33 +2,22 @@
 
 namespace Common\Service;
 
+use Interop\Container\ContainerInterface;
+use Laminas\Navigation\Navigation;
 use Laminas\Navigation\Service\ConstructedNavigationFactory;
-use Laminas\ServiceManager\ServiceLocatorAwareInterface;
-use Laminas\ServiceManager\ServiceLocatorAwareTrait;
 
-/**
- * Class NavigationFactory
- * @package Olcs\Service
- */
-class NavigationFactory extends ConstructedNavigationFactory implements ServiceLocatorAwareInterface
+class NavigationFactory
 {
-    use ServiceLocatorAwareTrait;
+    private ContainerInterface $container;
 
-    /**
-     * @param null $nav
-     */
-    public function __construct($nav = null)
+    public function __construct(ContainerInterface $container)
     {
-        $this->config = $nav;
+        $this->container = $container;
     }
 
-    /**
-     * @param $nav
-     * @return \Laminas\Navigation\Navigation
-     */
-    public function getNavigation($nav)
+    public function getNavigation(array $config): Navigation
     {
-        $this->config = $nav;
-        return $this->createService($this->getServiceLocator());
+        $factory = new ConstructedNavigationFactory($config);
+        return $factory->__invoke($this->container, Navigation::class);
     }
 }

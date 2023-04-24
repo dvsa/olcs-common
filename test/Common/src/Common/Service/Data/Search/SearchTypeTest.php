@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Service\Data\Search;
 
 use Common\Data\Object\Search\Application;
@@ -9,7 +11,8 @@ use Common\RefData;
 use Common\Service\Data\Search\SearchType;
 use Common\Service\Data\Search\SearchTypeManager;
 use Common\Service\NavigationFactory;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Interop\Container\ContainerInterface;
+use Laminas\Navigation\Navigation;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use ZfcRbac\Service\RoleService;
@@ -20,7 +23,7 @@ use ZfcRbac\Service\RoleService;
  */
 class SearchTypeTest extends TestCase
 {
-    protected function getMockSearchTypeManager()
+    private function getMockSearchTypeManager(): m\MockInterface
     {
         $servicesArray = [
             'factories' => [
@@ -32,7 +35,7 @@ class SearchTypeTest extends TestCase
             ]
         ];
 
-        $mockStm = m::mock('Laminas\ServiceManager\ServiceLocatorInterface');
+        $mockStm = m::mock(ContainerInterface::class);
         $mockStm->shouldReceive('getRegisteredServices')->andReturn($servicesArray);
         $mockStm->shouldReceive('get')->with('application')->andReturn(new Application());
         $mockStm->shouldReceive('get')->with('licence')->andReturn(new Licence());
@@ -41,28 +44,26 @@ class SearchTypeTest extends TestCase
         return $mockStm;
     }
 
-    public function testGetNavigation()
+    public function testGetNavigation(): void
     {
-        $matcher = function ($item) {
-            return (is_array($item) && count($item) == 2);
-        };
+        $returnedNav = m::mock(Navigation::class);
 
         $mockNavFactory = m::mock(NavigationFactory::class);
         $mockNavFactory->shouldReceive('getNavigation')
-            ->with(m::on($matcher))
-            ->andReturn('navigation');
+            ->with(m::type('array'))
+            ->andReturn($returnedNav);
 
-        $mockRoleService = $this->getMockRoleService('false', [RefData::ROLE_INTERNAL_LIMITED_READ_ONLY]);
+        $mockRoleService = $this->getMockRoleService(false, [RefData::ROLE_INTERNAL_LIMITED_READ_ONLY]);
 
         $sut = new SearchType();
         $sut->setSearchTypeManager($this->getMockSearchTypeManager());
         $sut->setNavigationFactory($mockNavFactory);
         $sut->setRoleService($mockRoleService);
 
-        $this->assertEquals('navigation', $sut->getNavigation());
+        $this->assertEquals($returnedNav, $sut->getNavigation());
     }
 
-    public function testFetchListOptions()
+    public function testFetchListOptions(): void
     {
         $mockRoleService = $this->getMockRoleService(false, [RefData::ROLE_INTERNAL_LIMITED_READ_ONLY]);
 
@@ -75,7 +76,7 @@ class SearchTypeTest extends TestCase
         $this->assertCount(3, $options);
     }
 
-    public function testFetchListOptionsForLimitedReadOnly()
+    public function testFetchListOptionsForLimitedReadOnly(): void
     {
         $mockRoleService = $this->getMockRoleService(true, [RefData::ROLE_INTERNAL_LIMITED_READ_ONLY]);
 
@@ -88,27 +89,26 @@ class SearchTypeTest extends TestCase
         $this->assertCount(2, $options);
     }
 
-    public function testCreateService()
+    public function testInvoke(): void
     {
         $mockStm = $this->getMockSearchTypeManager();
         $mockNav = m::mock(NavigationFactory::class);
         $mockRoleService = m::mock(RoleService::class);
 
-        $mockSl = m::mock(ServiceLocatorInterface::class);
+        $mockSl = m::mock(ContainerInterface::class);
         $mockSl->shouldReceive('get')->with(SearchTypeManager::class)->andReturn($mockStm);
-        $mockSl->shouldReceive('get')->with('NavigationFactory')->andReturn($mockNav);
         $mockSl->shouldReceive('get')->with(RoleService::class)->andReturn($mockRoleService);
 
         $sut = new SearchType();
-        $service = $sut->createService($mockSl);
+        $service = $sut->__invoke($mockSl, SearchType::class);
 
         $this->assertInstanceOf(SearchType::class, $service);
-        $this->assertSame($mockNav, $service->getNavigationFactory());
+        $this->assertInstanceOf(NavigationFactory::class, $service->getNavigationFactory());
         $this->assertSame($mockStm, $service->getSearchTypeManager());
         $this->assertSame($mockRoleService, $service->getRoleService());
     }
 
-    protected function getMockRoleService(bool $match, array $roles)
+    protected function getMockRoleService(bool $match, array $roles): m\MockInterface
     {
         $mockRoleService = m::mock(RoleService::class);
         $mockRoleService->shouldReceive('matchIdentityRoles')
