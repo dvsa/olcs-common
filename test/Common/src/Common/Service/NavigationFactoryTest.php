@@ -1,17 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Service;
 
 use Common\Service\NavigationFactory;
+use Laminas\Navigation\Navigation;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Laminas\Mvc\Router\RouteMatch;
 use Laminas\Mvc\Service\ServiceManagerConfig;
 use Laminas\ServiceManager\ServiceManager;
 
-/**
- * Class NavigationFactoryTest
- * @package OlcsTest\Service
- */
 class NavigationFactoryTest extends TestCase
 {
     /**
@@ -83,11 +82,9 @@ class NavigationFactoryTest extends TestCase
         );
     }
 
-    public function testCreateService()
+    public function testGetNavigation(): void
     {
-        $sut = new NavigationFactory();
-        $sut->setServiceLocator($this->serviceManager);
-
-        $this->assertInstanceOf('Laminas\Navigation\Navigation', $sut->getNavigation([]));
+        $sut = new NavigationFactory($this->serviceManager);
+        $this->assertInstanceOf(Navigation::class, $sut->getNavigation([]));
     }
 }

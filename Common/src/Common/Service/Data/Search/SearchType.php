@@ -5,6 +5,8 @@ namespace Common\Service\Data\Search;
 use Common\Data\Object\Search\User;
 use Common\RefData;
 use Common\Service\Data\Interfaces\ListData as ListDataInterface;
+use Common\Service\NavigationFactory;
+use Laminas\Navigation\Navigation;
 use Laminas\Navigation\Service\AbstractNavigationFactory;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
@@ -98,10 +100,7 @@ class SearchType implements ListDataInterface, FactoryInterface
         return $options;
     }
 
-    /**
-     * @return array
-     */
-    protected function getSearchTypes()
+    protected function getSearchTypes(): array
     {
         $services = $this->getSearchTypeManager()->getRegisteredServices();
 
@@ -120,10 +119,7 @@ class SearchType implements ListDataInterface, FactoryInterface
         return $indexes;
     }
 
-    /**
-     * @return \Laminas\Navigation\Navigation
-     */
-    public function getNavigation($context = null, array $queryParams = [])
+    public function getNavigation($context = null, array $queryParams = []): Navigation
     {
         $nav = [];
         foreach ($this->getSearchTypes() as $searchIndex) {
@@ -157,7 +153,7 @@ class SearchType implements ListDataInterface, FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): SearchType
     {
-        $this->setNavigationFactory($container->get('NavigationFactory'));
+        $this->setNavigationFactory(new NavigationFactory($container));
         $this->setRoleService($container->get(RoleService::class));
         $this->setSearchTypeManager($container->get(SearchTypeManager::class));
         return $this;
