@@ -77,8 +77,8 @@ class ActionTest extends MockeryTestCase
                 ],
                 'content' => 'unit_Content',
                 'expect' =>
-                    '<button data-prevent-double-click="true" data-module="govuk-button" type="submit" class="unit_Class"' .
-                    ' name="unit_Fieldset[action][unit_Action][' . self::ID . ']"' .
+                    '<button data-prevent-double-click="true" data-module="govuk-button" role="link" type="submit"' .
+                    ' class="action-button-link unit_Class" name="unit_Fieldset[action][unit_Action][' . self::ID . ']"' .
                     ' attrA attrB>unit_Content</button>',
                 true,
             ],
@@ -91,8 +91,8 @@ class ActionTest extends MockeryTestCase
                 ],
                 'content' => null,
                 'expect' =>
-                    '<button data-prevent-double-click="true" data-module="govuk-button" type="submit" class=""' .
-                    ' name="action[unit_Action][' . self::ID . ']"' .
+                    '<button data-prevent-double-click="true" data-module="govuk-button" role="link" type="submit"' .
+                    ' class="action-button-link " name="action[unit_Action][' . self::ID . ']"' .
                     ' >unit_Text</button>',
                 true,
             ],
@@ -107,8 +107,8 @@ class ActionTest extends MockeryTestCase
                 ],
                 'content' => null,
                 'expect' =>
-                    '<button data-prevent-double-click="true" data-module="govuk-button" type="submit" class=""' .
-                    ' name="action[unit_Action][' . self::ID . ']"' .
+                    '<button data-prevent-double-click="true" data-module="govuk-button" role="link" type="submit"' .
+                    ' class="action-button-link " name="action[unit_Action][' . self::ID . ']"' .
                     ' >unit_FldVal</button>',
                 true,
             ],
@@ -123,8 +123,8 @@ class ActionTest extends MockeryTestCase
                 ],
                 'content' => null,
                 'expect' =>
-                    '<button data-prevent-double-click="true" data-module="govuk-button" type="submit" class=""' .
-                    ' name="action[unit_Action][' . self::ID . ']"' .
+                    '<button data-prevent-double-click="true" data-module="govuk-button" role="link" type="submit"' .
+                    ' class="action-button-link " name="action[unit_Action][' . self::ID . ']"' .
                     ' >unit_ValueFormat</button>',
                 true,
             ],

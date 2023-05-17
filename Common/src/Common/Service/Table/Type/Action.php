@@ -13,7 +13,7 @@ class Action extends AbstractType
      *
      * @var string
      */
-    private $format = '<button data-prevent-double-click="true" data-module="govuk-button" type="submit" class="action-button-link %s" name="%s" %s>%s</button>';
+    private $format = '<button data-prevent-double-click="true" data-module="govuk-button" role="link" type="submit" class="action-button-link %s" name="%s" %s>%s</button>';
 
     /**
      * Render the selector

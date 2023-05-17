@@ -17,6 +17,9 @@ use Laminas\ServiceManager\ServiceManager;
 class NameActionAndStatus implements FormatterInterface
 {
 
+    public const BUTTON_FORMAT = '<button data-prevent-double-click="true" class="action-button-link" role="link" '
+    . 'data-module="govuk-button" type="submit" name="table[action][edit][%d]">%s</button>';
+
     /**
      * Format a name with default edit action & associated status
      *
@@ -29,9 +32,11 @@ class NameActionAndStatus implements FormatterInterface
     public static function format($data, $column = array(), $sm = null)
     {
         $title = !empty($data['title']['description']) ? $data['title']['description'] . ' ' : '';
-        $return = '<input class="" name="table[action][edit][' . intval($data['id']) . ']" value="'
-            . Escape::html($title . $data['forename'] . ' ' . $data['familyName'])
-            . '" type="submit">';
+        $return = sprintf(
+            self::BUTTON_FORMAT,
+            intval($data['id']),
+            Escape::html($title . $data['forename'] . ' ' . $data['familyName'])
+        );
 
         if (isset($data['status']) && ($data['status'] == 'new')) {
             $return .= ' <span class="overview__status green">New</span>';
