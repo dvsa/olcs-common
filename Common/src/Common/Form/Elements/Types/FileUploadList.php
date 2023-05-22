@@ -76,7 +76,7 @@ class FileUploadList extends Fieldset
 
             $remove = new Submit('remove', array('render-container' => false));
             $remove->setValue('Remove');
-            $remove->setAttribute('class', 'file__remove');
+            $remove->setAttribute('class', 'file__remove action-button-link');
             $remove->setAttribute('data-container-class', 'file-upload');
 
             $fileItem->add($html);
