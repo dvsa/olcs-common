@@ -62,7 +62,7 @@ class PostcodeSearch extends Fieldset
         $searchButton->setAttributes(
             array(
                 'type' => 'submit',
-                'class' => 'action--primary js-find',
+                'class' => 'govuk-button js-find',
                 'data-container-class' => 'inline'
             )
         );
@@ -95,7 +95,7 @@ class PostcodeSearch extends Fieldset
         $selectButton->setAttributes(
             array(
                 'type' => 'submit',
-                'class' => 'action--primary js-select',
+                'class' => 'govuk-button js-select',
                 'data-container-class' => 'js-hidden'
             )
         );

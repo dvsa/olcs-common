@@ -18,12 +18,12 @@ return array(
                 ),
                 'delete' => array(
                     'label' => 'action_links.remove',
-                    'class' => ' more-actions__item action--secondary',
+                    'class' => ' more-actions__item govuk-button govuk-button--secondary',
                     'requireRows' => true
                 ),
                 'transfer' => array(
                     'label' => 'Transfer',
-                    'class' => ' more-actions__item js-require--multiple action--secondary',
+                    'class' => ' more-actions__item js-require--multiple govuk-button govuk-button--secondary',
                     'requireRows' => true,
                     'id' => 'transferSmall'
                 )

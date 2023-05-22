@@ -34,7 +34,11 @@ class ConditionsUndertakings
     public $summary = null;
 
     /**
-     * @Form\Attributes({"type":"submit","class":"action--primary large"})
+     * @Form\Attributes({
+     *     "data-module": "govuk-button",
+     *     "type": "submit",
+     *     "class": "govuk-button",
+     * })
      * @Form\Options({"label":"continuations.conditions-undertakings.continue.label"})
      * @Form\Type("\Laminas\Form\Element\Button")
      */

@@ -55,16 +55,16 @@ class ActionLinksTest extends MockeryTestCase
             'id' => 123
         ];
 
-        $classes = Escape::htmlAttr('right-aligned action--secondary trigger-modal');
+        $classes = Escape::htmlAttr('right-aligned govuk-button govuk-button--secondary trigger-modal');
         $nameRemove = Escape::htmlAttr('table[action][delete][123]');
         $ariaRemove = Escape::htmlAttr('Remove Aria (id 123)');
         $nameReplace = Escape::htmlAttr('table[action][replace][123]');
         $ariaReplace = Escape::htmlAttr('Replace Aria (id 123)');
 
-        $expected = '<input type="submit" class="' . $classes . '" '.
+        $expected = '<button data-prevent-double-click="true" data-module="govuk-button" type="submit" class="' . $classes . '" '.
             'name="' . $nameRemove . '" ' .
-            'aria-label="' . $ariaRemove . '" value="Remove"> <input type="submit" class="' . $classes . '" ' .
-            'name="' . $nameReplace . '" aria-label="' . $ariaReplace . '" value="Replace">';
+            'aria-label="' . $ariaRemove . '">Remove</button> <button data-prevent-double-click="true" data-module="govuk-button" type="submit" class="' . $classes . '" ' .
+            'name="' . $nameReplace . '" aria-label="' . $ariaReplace . '">Replace</button>';
 
         $this->assertEquals($expected, $this->sut->render($data, $column));
     }
@@ -82,12 +82,12 @@ class ActionLinksTest extends MockeryTestCase
             'id' => 123
         ];
 
-        $classes = Escape::htmlAttr('right-aligned action--secondary trigger-modal');
+        $classes = Escape::htmlAttr('right-aligned govuk-button govuk-button--secondary trigger-modal');
         $name = Escape::htmlAttr('table[action][delete][123]');
         $aria = Escape::htmlAttr('Remove Aria (id 123)');
 
-        $expected = '<input type="submit" class="' . $classes . '" '.
-            'name="' . $name . '" aria-label="' . $aria . '" value="Remove">';
+        $expected = '<button data-prevent-double-click="true" data-module="govuk-button" type="submit" class="' . $classes . '" '.
+            'name="' . $name . '" aria-label="' . $aria . '">Remove</button>';
 
         $this->assertEquals($expected, $this->sut->render($data, $column));
     }
@@ -106,12 +106,12 @@ class ActionLinksTest extends MockeryTestCase
             'id' => 123
         ];
 
-        $classes = Escape::htmlAttr('right-aligned action--secondary');
+        $classes = Escape::htmlAttr('right-aligned govuk-button govuk-button--secondary');
         $name = Escape::htmlAttr('table[action][delete][123]');
         $aria = Escape::htmlAttr('Remove Aria (id 123)');
 
-        $expected = '<input type="submit" class="' . $classes . '" '.
-            'name="' . $name . '" aria-label="' . $aria . '" value="Remove">';
+        $expected = '<button data-prevent-double-click="true" data-module="govuk-button" type="submit" class="' . $classes . '" '.
+            'name="' . $name . '" aria-label="' . $aria . '">Remove</button>';
 
         $this->assertEquals($expected, $this->sut->render($data, $column));
     }
@@ -135,8 +135,8 @@ class ActionLinksTest extends MockeryTestCase
         $name = Escape::htmlAttr('table[action][delete][123]');
         $aria = Escape::htmlAttr('Remove Aria (id 123)');
 
-        $expected = '<input type="submit" class="' . $classes . '" '.
-            'name="' . $name . '" aria-label="' . $aria . '" value="Remove">';
+        $expected = '<button data-prevent-double-click="true" data-module="govuk-button" type="submit" class="' . $classes . '" '.
+            'name="' . $name . '" aria-label="' . $aria . '">Remove</button>';
 
         $this->assertEquals($expected, $this->sut->render($data, $column));
     }

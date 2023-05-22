@@ -6,14 +6,14 @@ use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Name("form-actions")
- * @Form\Attributes({"class":"actions-container"})
+ * @Form\Attributes({"class":"govuk-button-group"})
  */
 class FormCrudActions
 {
     /**
      * @Form\Attributes({
      *     "type":"submit",
-     *     "class":"action--primary large",
+     *     "class":"govuk-button",
      *     "aria-label": "Save and Continue"
      * })
      * @Form\Options({"label": "Save"})
@@ -24,7 +24,7 @@ class FormCrudActions
     /**
      * @Form\Attributes({
      *     "type":"submit",
-     *     "class":"action--secondary large",
+     *     "class":"govuk-button govuk-button--secondary",
      *     "id": "cancel"
      * })
      * @Form\Options({
@@ -38,7 +38,7 @@ class FormCrudActions
     /**
      * @Form\Attributes({
      *    "type":"submit",
-     *    "class":"action--tertiary large"
+     *    "class":"govuk-button govuk-button--secondary"
      * })
      * @Form\Options({
      *     "label": "Save and add another"

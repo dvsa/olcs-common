@@ -13,7 +13,7 @@ use Common\Util\Escape;
 class ActionLinks extends Selector
 {
     const DEFAULT_INPUT_NAME = 'table[action][delete][%d]';
-    const BUTTON_MARKUP = '<input type="submit" class="%s" name="%s" aria-label="%s" value="%s">';
+    const BUTTON_MARKUP = '<button data-prevent-double-click="true" data-module="govuk-button" type="submit" class="%s" name="%s" aria-label="%s">%s</button>';
 
     /**
      * Render
@@ -107,7 +107,7 @@ class ActionLinks extends Selector
         }
 
         $modalClass = ($this->useModal($column)) ? ' trigger-modal' :'';
-        return 'right-aligned action--secondary' . $modalClass;
+        return 'right-aligned govuk-button govuk-button--secondary' . $modalClass;
     }
 
     /**
@@ -126,7 +126,7 @@ class ActionLinks extends Selector
         if ($this->isLinkVisible($data, $column, 'Replace', false)) {
             $inputName = sprintf($this->getInputName($column, 'replaceInputName'), $data['id']);
             $ariaLabel = sprintf(self::ARIA_LABEL_FORMAT, $replaceAria, $ariaDescription);
-            $classes = 'right-aligned action--secondary trigger-modal';
+            $classes = 'right-aligned govuk-button govuk-button--secondary trigger-modal';
 
             $content .= $this->buttonMarkup(' ' . self::BUTTON_MARKUP, $classes, $inputName, $ariaLabel, $replace);
         }

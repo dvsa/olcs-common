@@ -629,7 +629,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
                 [
                     'label' => 'vehicle_table_action.reprint.label',
                     'requireRows' => true,
-                    'class' => ' more-actions__item action--secondary',
+                    'class' => ' more-actions__item govuk-button govuk-button--secondary',
                 ]
             );
         }
@@ -639,7 +639,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
                 'transfer',
                 [
                     'label' => 'vehicle_table_action.transfer.label',
-                    'class' => ' more-actions__item js-require--multiple action--secondary',
+                    'class' => ' more-actions__item js-require--multiple govuk-button govuk-button--secondary',
                     'requireRows' => true,
                 ]
             );
@@ -651,7 +651,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
                 [
                     'label' => 'vehicle_table_action.export.label',
                     'requireRows' => true,
-                    'class' => ' more-actions__item js-disable-crud action--secondary',
+                    'class' => ' more-actions__item js-disable-crud govuk-button govuk-button--secondary',
                 ]
             );
         }
@@ -662,7 +662,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
                 [
                     'label' => 'vehicle_table_action.print-vehicles.label',
                     'requireRows' => true,
-                    'class' => ' more-actions__item action--secondary',
+                    'class' => ' more-actions__item govuk-button govuk-button--secondary',
                 ]
             );
         }

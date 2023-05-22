@@ -426,7 +426,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
                 'export',
                 [
                     'requireRows' => true,
-                    'class' => ' more-actions__item js-disable-crud action--secondary'
+                    'class' => ' more-actions__item js-disable-crud govuk-button govuk-button--secondary'
                 ]
             );
         }

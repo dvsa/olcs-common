@@ -11,7 +11,11 @@ use Laminas\Form\Annotation as Form;
 class Start
 {
     /**
-     * @Form\Attributes({"type":"submit","class":"action--primary large"})
+     * @Form\Attributes({
+     *     "data-module": "govuk-button",
+     *     "type": "submit",
+     *     "class": "govuk-button",
+     * })
      * @Form\Options({"label":"continuations.start-page.review-licence-label"})
      * @Form\Type("\Laminas\Form\Element\Button")
      */

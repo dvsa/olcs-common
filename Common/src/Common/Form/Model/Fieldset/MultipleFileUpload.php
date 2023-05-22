@@ -51,13 +51,11 @@ class MultipleFileUpload
 
     /**
      * @Form\Attributes({
-     *     "type":"submit",
-     *     "class":"inline-upload action--primary js-upload",
-     *     "value": "Upload",
+     *     "data-module": "govuk-button",
+     *     "type": "submit",
+     *     "class": "inline-upload govuk-button js-upload",
      * })
-     * @Form\Options({
-     *     "label": "Upload"
-     * })
+     * @Form\Options({"label": "Upload"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
     public $upload = null;

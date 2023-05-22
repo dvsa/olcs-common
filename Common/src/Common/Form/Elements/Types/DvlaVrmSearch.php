@@ -47,7 +47,7 @@ class DvlaVrmSearch extends AbstractInputSearch
                     'label' => 'licence.vehicle.add.search.button',
                 ],
                 'attributes' => [
-                    'class' => 'action--primary',
+                    'class' => 'govuk-button',
                     'data-container-class' => 'inline',
                     'type' => 'submit',
                 ],

@@ -1848,7 +1848,7 @@ class TableBuilder
 
             $label = isset($details['label']) ? $this->translator->translate($details['label']) : $value;
 
-            $class = isset($details['class']) ? $details['class'] : 'action--secondary';
+            $class = isset($details['class']) ? $details['class'] : 'govuk-button govuk-button--secondary';
 
             $id = isset($details['id']) ? $details['id'] : $name;
 
@@ -1889,7 +1889,7 @@ class TableBuilder
 
             $label = isset($details['label']) ? $this->translator->translate($details['label']) : $value;
 
-            $class = isset($details['class']) ? $details['class'] : 'action--secondary';
+            $class = isset($details['class']) ? $details['class'] : 'govuk-button govuk-button--secondary';
 
             $route = isset($details['route']['route']) ? $details['route']['route'] : null;
             $params = isset($details['route']['params']) ? $details['route']['params'] : [];

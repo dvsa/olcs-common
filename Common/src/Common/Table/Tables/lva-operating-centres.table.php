@@ -41,6 +41,7 @@ return array(
         ),
         array(
             'title' => 'application_operating-centres_authorisation.table.complaints',
+            'isNumeric' => true,
             'name' => 'noOfComplaints',
             'formatter' => 'OcComplaints'
         ),

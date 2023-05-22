@@ -20,7 +20,7 @@ class VehicleSearch
     public $vrm = null;
 
     /**
-     * @Form\Attributes({"type":"submit","class":"action--primary inline-search__submit"})
+     * @Form\Attributes({"type":"submit","class":"govuk-button inline-search__submit"})
      * @Form\Options({
      *     "label": "vehicle-search-search",
      * })

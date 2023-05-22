@@ -50,7 +50,6 @@ class ActionTest extends MockeryTestCase
             ->shouldReceive('getFieldset')
             ->once()
             ->andReturn($isFieldset ? 'unit_Fieldset' : null)
-            //
             ->shouldReceive('replaceContent')
             ->andReturn('unit_ValueFormat');
 
@@ -78,10 +77,9 @@ class ActionTest extends MockeryTestCase
                 ],
                 'content' => 'unit_Content',
                 'expect' =>
-                    '<input type="submit" class="unit_Class"' .
-                    ' name="unit_Fieldset[action][unit_Action][' . self::ID . ']"' .
-                    ' value="unit_Content"' .
-                    ' attrA attrB />',
+                    '<button data-prevent-double-click="true" data-module="govuk-button" role="link" type="submit"' .
+                    ' class="action-button-link unit_Class" name="unit_Fieldset[action][unit_Action][' . self::ID . ']"' .
+                    ' attrA attrB>unit_Content</button>',
                 true,
             ],
             [
@@ -93,9 +91,9 @@ class ActionTest extends MockeryTestCase
                 ],
                 'content' => null,
                 'expect' =>
-                    '<input type="submit" class=""' .
-                    ' name="action[unit_Action][' . self::ID . ']"' .
-                    ' value="unit_Text"  />',
+                    '<button data-prevent-double-click="true" data-module="govuk-button" role="link" type="submit"' .
+                    ' class="action-button-link " name="action[unit_Action][' . self::ID . ']"' .
+                    ' >unit_Text</button>',
                 true,
             ],
             [
@@ -109,9 +107,9 @@ class ActionTest extends MockeryTestCase
                 ],
                 'content' => null,
                 'expect' =>
-                    '<input type="submit" class=""' .
-                    ' name="action[unit_Action][' . self::ID . ']"' .
-                    ' value="unit_FldVal"  />',
+                    '<button data-prevent-double-click="true" data-module="govuk-button" role="link" type="submit"' .
+                    ' class="action-button-link " name="action[unit_Action][' . self::ID . ']"' .
+                    ' >unit_FldVal</button>',
                 true,
             ],
             [
@@ -125,9 +123,9 @@ class ActionTest extends MockeryTestCase
                 ],
                 'content' => null,
                 'expect' =>
-                    '<input type="submit" class=""' .
-                    ' name="action[unit_Action][' . self::ID . ']"' .
-                    ' value="unit_ValueFormat"  />',
+                    '<button data-prevent-double-click="true" data-module="govuk-button" role="link" type="submit"' .
+                    ' class="action-button-link " name="action[unit_Action][' . self::ID . ']"' .
+                    ' >unit_ValueFormat</button>',
                 true,
             ],
             [

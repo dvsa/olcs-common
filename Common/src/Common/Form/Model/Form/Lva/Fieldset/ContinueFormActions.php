@@ -6,19 +6,28 @@ use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Name("continue-form-actions")
- * @Form\Attributes({"class":"actions-container"})
+ * @Form\Attributes({"class":"govuk-button-group"})
  */
 class ContinueFormActions
 {
     /**
-     * @Form\Attributes({"type":"submit","class":"action--primary large"})
+     * @Form\Attributes({
+     *     "data-module": "govuk-button",
+     *     "type": "submit",
+     *     "class": "govuk-button",
+     * })
      * @Form\Options({"label": "continue.button"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
     public $continue = null;
 
     /**
-     * @Form\Attributes({"id":"cancel","type":"submit","class":"action--secondary large"})
+     * @Form\Attributes({
+     *     "data-module": "govuk-button",
+     *     "type": "submit",
+     *     "class": "govuk-button govuk-button--secondary",
+     *     "id":"cancel",
+     * })
      * @Form\Options({"label": "cancel.button"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */

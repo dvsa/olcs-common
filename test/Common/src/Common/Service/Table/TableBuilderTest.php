@@ -2685,7 +2685,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $mockContentHelper = $this->createPartialMock(ContentHelper::class, array('replaceContent'));
 
-        $expected = '<input type="submit" class="" name="action[edit][1]" value="' . date('d/m/Y') . '"  />';
+        $expected = '<button data-prevent-double-click="true" data-module="govuk-button" role="link" type="submit" class="action-button-link " name="action[edit][1]" >' . date('d/m/Y') . '</button>';
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
             ->with(
@@ -2849,7 +2849,7 @@ class TableBuilderTest extends MockeryTestCase
             ->with(
                 '{{[elements/td]}}',
                 [
-                    'content' => '<input type="submit" class="" name="action[edit][1]" value="bar"  />',
+                    'content' => '<button data-prevent-double-click="true" data-module="govuk-button" role="link" type="submit" class="action-button-link " name="action[edit][1]" >bar</button>',
                     'attrs' => ' class="' . TableBuilder::CLASS_TABLE_CELL . '"',
                 ]
             );
@@ -2887,7 +2887,7 @@ class TableBuilderTest extends MockeryTestCase
             ->with(
                 '{{[elements/td]}}',
                 [
-                    'content' => '<input type="submit" class="" name="table[action][edit][1]" value="bar"  />',
+                    'content' => '<button data-prevent-double-click="true" data-module="govuk-button" role="link" type="submit" class="action-button-link " name="table[action][edit][1]" >bar</button>',
                     'attrs' => ' class="' . TableBuilder::CLASS_TABLE_CELL . '"',
                 ]
             );

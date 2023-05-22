@@ -14,9 +14,10 @@ use InvalidArgumentException;
  */
 class Button extends \Laminas\Form\Element\Button
 {
-    public const PRIMARY = 'action--primary';
-    public const TERTIARY = 'action--tertiary';
-    public const THEMES = [self::PRIMARY, self::TERTIARY];
+    public const PRIMARY = 'govuk-button';
+    public const SECONDARY = 'govuk-button govuk-button--secondary';
+    public const TERTIARY = 'govuk-button govuk-button--secondary';
+    public const THEMES = [self::PRIMARY, self::SECONDARY, self::TERTIARY];
 
     public const LARGE = 'large';
     public const SIZES = [self::LARGE];

@@ -58,16 +58,16 @@ class DeltaActionLinksTest extends MockeryTestCase
                     'id' => 123,
                     'action' => 'A'
                 ],
-                '<input type="submit" class="right-aligned action--secondary trigger-modal" '.
-                    'name="table[action][delete][123]" aria-label="' . $escapedAriaRemove . '" value="Remove">'
+                '<button data-prevent-double-click="true" data-module="govuk-button" type="submit" class="right-aligned govuk-button govuk-button--secondary trigger-modal" '.
+                    'name="table[action][delete][123]" aria-label="' . $escapedAriaRemove . '">Remove</button>'
             ],
             [
                 [
                     'id' => 456,
                     'action' => 'D'
                 ],
-                '<input type="submit" class="right-aligned action--secondary" '.
-                    'name="table[action][restore][456]" aria-label="' . $escapedAriaRestore . '" value="Restore">'
+                '<button data-prevent-double-click="true" data-module="govuk-button" type="submit" class="right-aligned govuk-button govuk-button--secondary" '.
+                    'name="table[action][restore][456]" aria-label="' . $escapedAriaRestore . '">Restore</button>'
             ],
             [
                 [

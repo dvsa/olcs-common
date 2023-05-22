@@ -57,7 +57,7 @@ class PaymentTest extends MockeryTestCase
                         ->with('back-to-fees')
                         ->once()
                         ->shouldReceive('setAttribute')
-                        ->andReturn('class', 'action--tertiary large')
+                        ->andReturn('class', 'govuk-button govuk-button--secondary')
                         ->once()
                         ->getMock()
                     )

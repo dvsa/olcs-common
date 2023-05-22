@@ -43,7 +43,7 @@ class OperatorSearch extends Fieldset
         $searchButton->setAttributes(
             array(
                 'type' => 'submit',
-                'class' => 'action--secondary small'
+                'class' => 'govuk-button govuk-button--secondary'
             )
         );
         $searchButton->setValue('search');
@@ -63,7 +63,7 @@ class OperatorSearch extends Fieldset
         $selectButton->setAttributes(
             array(
                 'type' => 'submit',
-                'class' => 'action--primary'
+                'class' => 'govuk-button'
             )
         );
         $selectButton->setValue('select');
@@ -84,7 +84,7 @@ class OperatorSearch extends Fieldset
         $addNewButton->setAttributes(
             array(
                 'type' => 'submit',
-                'class' => 'action--secondary small'
+                'class' => 'govuk-button govuk-button--secondary'
             )
         );
         $addNewButton->setValue('addNew');

@@ -7,12 +7,12 @@
         if (isset($multiUrl)) {
             foreach ($multiUrl as $multi) {
     ?>
-                <a class="<?php echo (isset($multi['class']) ? $multi['class'] : 'action--primary'); ?>" href="<?php echo $multi['url']; ?>"><?php echo $this->translate($multi['label']); ?></a>
+                <a class="<?php echo (isset($multi['class']) ? $multi['class'] : 'govuk-button'); ?>" href="<?php echo $multi['url']; ?>"><?php echo $this->translate($multi['label']); ?></a>
     <?php
             }
         } elseif (!empty($url)) {
     ?>
-            <a class="<?php echo (isset($class) ? $class : 'action--primary'); ?>" href="<?php echo $url; ?>"><?php echo $this->translate($label); ?></a>
+            <a class="<?php echo (isset($class) ? $class : 'govuk-button'); ?>" href="<?php echo $url; ?>"><?php echo $this->translate($label); ?></a>
     <?php
         }
     ?>

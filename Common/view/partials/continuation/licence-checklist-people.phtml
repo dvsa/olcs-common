@@ -16,7 +16,7 @@ if (count($this->data['people']['persons']) > 0) {
         href="<?php echo $this->url(
             'continuation/checklist/people', ['continuationDetailId' => $this->data['continuationDetailId']])
         ; ?>"
-        class="action--secondary large" target="_blank">
+        class="govuk-button govuk-button--secondary" target="_blank" role="button" draggable="false">
         <?php
             echo $this->translate(
                 'continuations.people.button-label.'. $this->data['businessType']['typeOfBusinessId']

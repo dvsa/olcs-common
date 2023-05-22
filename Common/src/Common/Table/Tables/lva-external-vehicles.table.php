@@ -17,7 +17,7 @@ return array(
                 'add' => array(),
                 'delete' => array(
                     'label' => 'action_links.remove',
-                    'class' => 'more-actions__item action--secondary',
+                    'class' => 'more-actions__item govuk-button govuk-button--secondary',
                     'requireRows' => true
                 ),
                 // @note other actions may be added dynamically,

@@ -231,15 +231,15 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         if ($licenceData['count'] > 0) {
             $table->addAction(
                 'annul',
-                ['class' => 'action--secondary', 'value' => 'Annul']
+                ['class' => 'govuk-button govuk-button--secondary', 'value' => 'Annul']
             );
             $table->addAction(
                 'stop',
-                ['class' => 'action--secondary', 'value' => 'Stop']
+                ['class' => 'govuk-button govuk-button--secondary', 'value' => 'Stop']
             );
             $table->addAction(
                 'reprint',
-                ['class' => 'action--secondary', 'value' => 'Reprint']
+                ['class' => 'govuk-button govuk-button--secondary', 'value' => 'Reprint']
             );
         }
 

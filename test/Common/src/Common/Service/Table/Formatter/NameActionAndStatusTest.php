@@ -31,9 +31,11 @@ class NameActionAndStatusTest extends \PHPUnit\Framework\TestCase
                     ],
                     'status' => null
                 ],
-                '<input class="" name="table[action][edit][' . self::TEST_ID . ']" value="'
-                . self::TEST_FORENAME . ' ' . self::TEST_FAMILY_NAME
-                . '" type="submit">'
+                sprintf(
+                    NameActionAndStatus::BUTTON_FORMAT,
+                    self::TEST_ID,
+                    self::TEST_FORENAME . ' ' . self::TEST_FAMILY_NAME
+                ),
             ],
             [
                 [
@@ -45,9 +47,11 @@ class NameActionAndStatusTest extends \PHPUnit\Framework\TestCase
                     ],
                     'status' => null
                 ],
-                '<input class="" name="table[action][edit][' . self::TEST_ID . ']" value="'
-                . self::TEST_TITLE . ' ' . self::TEST_FORENAME . ' ' . self::TEST_FAMILY_NAME
-                . '" type="submit">'
+                sprintf(
+                    NameActionAndStatus::BUTTON_FORMAT,
+                    self::TEST_ID,
+                    self::TEST_TITLE . ' ' . self::TEST_FORENAME . ' ' . self::TEST_FAMILY_NAME
+                ),
             ],
             [
                 [
@@ -59,9 +63,11 @@ class NameActionAndStatusTest extends \PHPUnit\Framework\TestCase
                     ],
                     'status' => 'new'
                 ],
-                '<input class="" name="table[action][edit][' . self::TEST_ID . ']" value="'
-                . self::TEST_TITLE . ' ' . self::TEST_FORENAME . ' ' . self::TEST_FAMILY_NAME
-                . '" type="submit"> <span class="overview__status green">New</span>'
+                sprintf(
+                    NameActionAndStatus::BUTTON_FORMAT,
+                    self::TEST_ID,
+                    self::TEST_TITLE . ' ' . self::TEST_FORENAME . ' ' . self::TEST_FAMILY_NAME
+                ) . ' <span class="overview__status green">New</span>'
             ]
         ];
     }

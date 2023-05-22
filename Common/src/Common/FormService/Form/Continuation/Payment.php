@@ -46,7 +46,7 @@ class Payment extends AbstractFormService
             $formActions->remove('pay');
             $cancelButton = $form->get('form-actions')->get('cancel');
             $cancelButton->setLabel('back-to-fees');
-            $cancelButton->setAttribute('class', 'action--tertiary large');
+            $cancelButton->setAttribute('class', 'govuk-button govuk-button--secondary');
             $this->getServiceLocator()->get('Helper\Guidance')->append('selfserve-card-payments-disabled');
         }
     }

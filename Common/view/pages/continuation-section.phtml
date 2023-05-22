@@ -14,11 +14,11 @@
             <h3><?php echo $this->translate($this->totalMessage) . ' ' . $this->totalCount; ?></h3>
         </div>
     </div>
-    <div class="printable__meta printable__meta--right actions-container hide-print js-hidden">
-        <a class="hide-print action action--primary" href="javascript:window.print();">
+    <div class="printable__meta printable__meta--right govuk-button-group hide-print js-hidden">
+        <a class="hide-print action govuk-button" role="button" draggable="false" data-module="govuk-button" href="javascript:window.print();">
             <?php echo $this->translate('continuations.section.print.link'); ?>
         </a> <br>
-        <a class="action--tertiary" href="javascript:window.close();">
+        <a class="govuk-button govuk-button--secondary" role="button" draggable="false" data-module="govuk-button" href="javascript:window.close();">
             <?php echo $this->translate('continuations.section.close-the-window.link'); ?>
         </a>
     </div>

@@ -22,7 +22,7 @@ class ReadOnlyActionsTest extends MockeryTestCase
      */
     private $sut;
 
-    private $wrapper = '<div class="actions-container">%s</div>';
+    private $wrapper = '<div class="govuk-button-group">%s</div>';
 
     private $mockView;
 

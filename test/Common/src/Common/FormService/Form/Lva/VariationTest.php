@@ -48,7 +48,7 @@ class VariationTest extends MockeryTestCase
                         m::mock()
                             ->shouldReceive('setAttribute')
                             ->once()
-                            ->with('class', 'action--primary large')
+                            ->with('class', 'govuk-button')
                             ->getMock()
                     )
                     ->shouldReceive('remove')

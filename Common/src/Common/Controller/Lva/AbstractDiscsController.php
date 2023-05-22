@@ -424,7 +424,7 @@ abstract class AbstractDiscsController extends AbstractController
             self::ACTION_CEASED_SHOW_HIDE,
             [
                 'label' => 'internal-psv-discs-filter-ceased-' . ($isIncluded ? 'hide' : 'show') . '-discs',
-                'class' => 'action--secondary js-disable-crud',
+                'class' => 'govuk-button govuk-button--secondary js-disable-crud',
                 'requireRows' => true,
                 'keepForReadOnly' => true,
             ]
