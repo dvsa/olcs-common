@@ -2,20 +2,25 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Common\Service\Table\Formatter\Date;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\View\HelperPluginManager;
 
 class TransportManagerDateOfBirth extends Date
 {
+    private HelperPluginManager $viewHelperManager;
+
+    public function __construct(HelperPluginManager $viewHelperManager)
+    {
+        $this->viewHelperManager = $viewHelperManager;
+    }
     /**
      * {@inheritdoc}
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
-        $dob = parent::format($data, $column, $sm);
+        $dob = parent::format($data, $column);
 
         if (self::shouldShowStatus($column)) {
-            return sprintf('<span class="nowrap">%s %s</span>', $dob, self::getStatusHtml($data, $sm));
+            return sprintf('<span class="nowrap">%s %s</span>', $dob, self::getStatusHtml($data));
         }
 
         return $dob;
@@ -28,7 +33,7 @@ class TransportManagerDateOfBirth extends Date
      *
      * @return bool
      */
-    protected static function shouldShowStatus(array $column)
+    protected function shouldShowStatus(array $column)
     {
         if (!isset($column['internal']) || (!isset($column['lva']))) {
             return false;
@@ -44,14 +49,13 @@ class TransportManagerDateOfBirth extends Date
     /**
      * Get the html for the status
      *
-     * @param array                   $data Row Data
-     * @param ServiceLocatorInterface $sm   Service Manager
+     * @param array $data Row Data
      *
      * @return string HTML
      */
-    protected static function getStatusHtml(array $data, ServiceLocatorInterface $sm)
+    protected function getStatusHtml(array $data)
     {
-        $viewHelper = $sm->get('ViewHelperManager')->get('transportManagerApplicationStatus');
+        $viewHelper = $this->viewHelperManager->get('transportManagerApplicationStatus');
 
         $id = (isset($data['status']['id'])) ? $data['status']['id'] : '';
         $description = (isset($data['status']['description'])) ? $data['status']['description'] : '';

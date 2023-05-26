@@ -5,6 +5,7 @@ namespace Common\Controller\Lva;
 use Common\Controller\Lva\Traits\TransferVehiclesTrait;
 use Common\Controller\Lva\Traits\VehicleSearchTrait;
 use Common\Data\Mapper;
+use Common\Data\Mapper\Lva\GoodsVehiclesVehicle;
 use Common\RefData;
 use Common\Service\Table\TableBuilder;
 use Dvsa\Olcs\Transfer\Command\Application\CreateGoodsVehicle as ApplicationCreateGoodsVehicle;
@@ -371,7 +372,9 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } else {
-            $data = Mapper\Lva\GoodsVehiclesVehicle::mapFromResult($vehicleData);
+            //ToDo:
+            $mapper = $this->getServiceLocator()->get(GoodsVehiclesVehicle::class);
+            $data = $mapper->mapFromResult($vehicleData);
         }
 
         $params = [

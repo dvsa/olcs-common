@@ -9,7 +9,7 @@ use Common\Util\Escape;
  *
  * @author Scott Callaway <scott.callaway@capgemini.com>
  */
-class IrhpPermitJurisdictionTrafficArea implements FormatterInterface
+class IrhpPermitJurisdictionTrafficArea implements FormatterPluginManagerInterface
 {
     /**
      * Format
@@ -20,7 +20,7 @@ class IrhpPermitJurisdictionTrafficArea implements FormatterInterface
      *
      * @return string
      */
-    public static function format($data)
+    public function format($data, $column = [])
     {
         return Escape::html($data['trafficArea']['name']);
     }

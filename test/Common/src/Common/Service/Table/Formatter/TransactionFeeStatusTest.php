@@ -5,11 +5,14 @@
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\RefData;
-use Common\Service\Table\Formatter\TransactionFeeStatus as Sut;
-use CommonTest\Bootstrap;
+use Common\Service\Helper\UrlHelperService;
+use Common\Service\Table\Formatter\TransactionFeeStatus;
+use Laminas\Http\Request;
+use Laminas\Mvc\Router\Http\TreeRouteStack;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
@@ -20,30 +23,28 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class TransactionFeeStatusTest extends MockeryTestCase
 {
-    protected $sm;
+    protected $urlHelper;
+    protected $router;
+    protected $request;
+    protected $sut;
 
-    protected $mockRouteMatch;
-
-    protected $mockUrlHelper;
-
-    public function setUp(): void
+    protected function setUp(): void
     {
-        parent::setUp();
-
-        $this->sm = Bootstrap::getServiceManager();
-
+        $this->urlHelper = m::mock(UrlHelperService::class);
+        $this->router = m::mock(TreeRouteStack::class);
+        $this->request = m::mock(Request::class);
         $this->mockRouteMatch = m::mock('\Laminas\Mvc\Router\RouteMatch');
-        $this->mockUrlHelper = m::mock();
-        $mockRequest = m::mock('\Laminas\Stdlib\RequestInterface');
-        $mockRouter = m::mock()
-            ->shouldReceive('match')
-            ->with($mockRequest)
-            ->andReturn($this->mockRouteMatch)
-            ->getMock();
+        $this->sut = new TransactionFeeStatus($this->router, $this->request, $this->urlHelper);
 
-        $this->sm->setService('router', $mockRouter);
-        $this->sm->setService('request', $mockRequest);
-        $this->sm->setService('Helper\Url', $this->mockUrlHelper);
+        $this->router
+            ->shouldReceive('match')
+            ->with($this->request)
+            ->andReturn($this->mockRouteMatch);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
     }
 
     /**
@@ -60,12 +61,12 @@ class TransactionFeeStatusTest extends MockeryTestCase
             ->shouldReceive('getMatchedRouteName')
             ->andReturn($route);
 
-        $this->mockUrlHelper
+        $this->urlHelper
             ->shouldReceive('fromRoute')
             ->with($route, $expectedRouteParams, [], true)
             ->andReturn('the_url');
 
-        $this->assertEquals($expectedOutput, Sut::format($data, [], $this->sm));
+        $this->assertEquals($expectedOutput, $this->sut->format($data, []));
     }
 
     /**

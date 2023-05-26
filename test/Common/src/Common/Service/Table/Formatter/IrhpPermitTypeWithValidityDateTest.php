@@ -3,16 +3,26 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\RefData;
+use Common\Service\Table\Formatter\Date;
 use Common\Service\Table\Formatter\IrhpPermitTypeWithValidityDate;
-use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 use Mockery as m;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
  * Irhp Permit Type With Validity Date test
  */
 class IrhpPermitTypeWithValidityDateTest extends MockeryTestCase
 {
+    protected $translator;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->translator = m::mock(TranslatorDelegator::class);
+        $this->sut = new IrhpPermitTypeWithValidityDate(new Date(), $this->translator);
+    }
+
     /**
      * @dataProvider scenariosProvider
      */
@@ -20,10 +30,8 @@ class IrhpPermitTypeWithValidityDateTest extends MockeryTestCase
     {
         $column = ['name' => 'typeDescription'];
 
-        $sut = new IrhpPermitTypeWithValidityDate();
 
-        $sm = m::mock(ServiceLocatorInterface::class);
-        $sm->allows('get->translate')
+        $this->translator->shouldReceive('translate')
             ->andReturnUsing(
                 function ($key) {
                     return '_TRNSLT_' . $key;
@@ -32,7 +40,7 @@ class IrhpPermitTypeWithValidityDateTest extends MockeryTestCase
 
         $this->assertEquals(
             $expectedOutput,
-            $sut->format($row, $column, $sm)
+            $this->sut->format($row, $column)
         );
     }
 

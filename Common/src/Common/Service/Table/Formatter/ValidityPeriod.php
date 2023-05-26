@@ -8,31 +8,43 @@
 
 namespace Common\Service\Table\Formatter;
 
+use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 use IntlDateFormatter;
 use Laminas\I18n\View\Helper\DateFormat;
-use Laminas\ServiceManager\ServiceManager;
+use Laminas\View\HelperPluginManager;
 
 /**
  * Validity period formatter
  */
-class ValidityPeriod implements FormatterInterface
+class ValidityPeriod implements FormatterPluginManagerInterface
 {
+    private HelperPluginManager $viewHelperManager;
+    private TranslatorDelegator $translator;
+
     /**
-     * @param array          $row            Row data
-     * @param array          $column         Column data
-     * @param ServiceManager $serviceLocator Service locator
+     * @param HelperPluginManager $viewHelperManager
+     * @param TranslatorDelegator $translator
+     */
+    public function __construct(HelperPluginManager $viewHelperManager, TranslatorDelegator $translator)
+    {
+        $this->viewHelperManager = $viewHelperManager;
+        $this->translator = $translator;
+    }
+
+    /**
+     * @param array $row    Row data
+     * @param array $column Column data
      *
      * @return string
      */
-    public static function format($row, $column = null, $serviceLocator = null)
+    public function format($row, $column = null)
     {
-        $dateFormatter = $serviceLocator->get('ViewHelperManager')->get('DateFormat');
-        $translator = $serviceLocator->get('Translator');
-        $locale = $translator->getLocale();
+        $dateFormatter = $this->viewHelperManager->get('DateFormat');
+        $locale = $this->translator->getLocale();
         $year = $row['year'];
 
         return sprintf(
-            $translator->translate('permits.irhp.fee-breakdown.validity-period.cell'),
+            $this->translator->translate('permits.irhp.fee-breakdown.validity-period.cell'),
             self::generateDateString($dateFormatter, $row['validFromTimestamp'], $locale, $year),
             self::generateDateString($dateFormatter, $row['validToTimestamp'], $locale, $year)
         );

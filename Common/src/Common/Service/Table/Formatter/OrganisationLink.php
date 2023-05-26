@@ -3,8 +3,10 @@
 /**
  * OrganisationLink.php
  */
+
 namespace Common\Service\Table\Formatter;
 
+use Common\Service\Helper\UrlHelperService;
 use Common\Util\Escape;
 
 /**
@@ -14,23 +16,29 @@ use Common\Util\Escape;
  *
  * @package Common\Service\Table\Formatter
  */
-class OrganisationLink implements FormatterInterface
+class OrganisationLink implements FormatterPluginManagerInterface
 {
+    private UrlHelperService $urlHelper;
+
+    /**
+     * @param UrlHelperService $urlHelper
+     */
+    public function __construct(UrlHelperService $urlHelper)
+    {
+        $this->urlHelper = $urlHelper;
+    }
     /**
      * Return a the organisation URL in a link format for a table.
      *
-     * @param array $data The row data.
-     * @param array $column The column
-     * @param \Laminas\ServiceManager\ServiceManager $sm
+     * @param      array $data   The row data.
+     * @param      array $column The column
      * @inheritdoc
      *
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
-        $urlHelper = $sm->get('Helper\Url');
-        $url = $urlHelper->fromRoute('operator/business-details', ['organisation' => $data['organisation']['id']]);
-
+        $url = $this->urlHelper->fromRoute('operator/business-details', ['organisation' => $data['organisation']['id']]);
         return '<a class="govuk-link" href="' . $url . '">' . Escape::html($data['organisation']['name']) . '</a>';
     }
 }

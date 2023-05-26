@@ -11,7 +11,7 @@ namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Formatter\TaskIdentifier;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Mockery as m;
 
 /**
  * Task identifier formatter tests
@@ -22,7 +22,19 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
  */
 class TaskIdentifierTest extends \PHPUnit\Framework\TestCase
 {
+    protected $urlHelper;
+    protected $sut;
 
+    protected function setUp(): void
+    {
+        $this->urlHelper = m::mock(UrlHelperService::class);
+        $this->sut = new TaskIdentifier($this->urlHelper);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
     /**
      * Test link formatter
      * @group taskIdentifier
@@ -38,21 +50,11 @@ class TaskIdentifierTest extends \PHPUnit\Framework\TestCase
     ) {
         $routeParams = array_merge($routeParams, [$param => $data['linkId']]);
 
-        $sm = $this->createMock(ServiceLocatorInterface::class);
-
-        $mockUrlHelper = $this->createPartialMock(UrlHelperService::class, array('fromRoute'));
-
-        $mockUrlHelper->expects($this->any())
-            ->method('fromRoute')
+        $this->urlHelper->shouldReceive('fromRoute')
             ->with($routeName, $routeParams)
-            ->will($this->returnValue('correctUrl'));
+            ->andReturn('correctUrl');
 
-        $sm->expects($this->any())
-            ->method('get')
-            ->with('Helper\Url')
-            ->will($this->returnValue($mockUrlHelper));
-
-        $result = TaskIdentifier::format($data, $column, $sm);
+        $result = $this->sut->format($data, $column);
 
         $this->assertEquals($expected, $result);
     }

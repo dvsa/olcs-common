@@ -4,15 +4,24 @@ namespace CommonTest\Service\Table\Formatter;
 
 use Common\RefData;
 use Common\Service\Table\Formatter\IrhpPermitRangeType;
-use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 use Mockery as m;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
  * IrhpPermitRangeType test
  */
 class IrhpPermitRangeTypeTest extends MockeryTestCase
 {
+    protected $translator;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->translator = m::mock(TranslatorDelegator::class);
+        $this->sut = new IrhpPermitRangeType($this->translator);
+    }
+
     /**
      * @dataProvider dpFormat
      */
@@ -20,10 +29,7 @@ class IrhpPermitRangeTypeTest extends MockeryTestCase
     {
         $column = ['name' => 'typeDescription'];
 
-        $sut = new IrhpPermitRangeType();
-
-        $sm = m::mock(ServiceLocatorInterface::class);
-        $sm->allows('get->translate')
+        $this->translator->shouldReceive('translate')
             ->andReturnUsing(
                 function ($key) {
                     return '_TRNSLT_' . $key;
@@ -32,7 +38,7 @@ class IrhpPermitRangeTypeTest extends MockeryTestCase
 
         $this->assertEquals(
             $expectedOutput,
-            $sut->format($row, $column, $sm)
+            $this->sut->format($row, $column)
         );
     }
 

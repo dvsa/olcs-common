@@ -23,6 +23,7 @@ abstract class AbstractReviewService implements ReviewServiceInterface
 {
     /** @var TranslationHelperService */
     protected $translationHelper;
+    private Address $addressFormatter;
 
     /**
      * Create service instance
@@ -31,9 +32,10 @@ abstract class AbstractReviewService implements ReviewServiceInterface
      *
      * @return AbstractReviewService
      */
-    public function __construct(AbstractReviewServiceServices $abstractReviewServiceServices)
+    public function __construct(AbstractReviewServiceServices $abstractReviewServiceServices, Address $addressFormatter)
     {
         $this->translationHelper = $abstractReviewServiceServices->getTranslationHelper();
+        $this->addressFormatter = $addressFormatter;
     }
 
     protected function formatText($text)
@@ -71,12 +73,12 @@ abstract class AbstractReviewService implements ReviewServiceInterface
 
     protected function formatShortAddress($address)
     {
-        return Address::format($address);
+        return $this->addressFormatter->format($address);
     }
 
     protected function formatFullAddress($address)
     {
-        return Address::format($address, ['addressFields' => 'FULL']);
+        return $this->addressFormatter->format($address, ['addressFields' => 'FULL']);
     }
 
     protected function formatConfirmed($value)

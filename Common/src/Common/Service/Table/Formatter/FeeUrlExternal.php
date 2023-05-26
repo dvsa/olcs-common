@@ -2,7 +2,10 @@
 
 namespace Common\Service\Table\Formatter;
 
+use Common\Service\Helper\UrlHelperService;
 use Common\Util\Escape;
+use Laminas\Http\Request;
+use Laminas\Mvc\Router\Http\TreeRouteStack;
 
 /**
  * External fee url
@@ -11,23 +14,35 @@ use Common\Util\Escape;
  */
 class FeeUrlExternal extends FeeUrl
 {
+    private Request $request;
+    private UrlHelperService $urlHelper;
+
+    /**
+     * @param TreeRouteStack   $router
+     * @param Request          $request
+     * @param UrlHelperService $urlHelper
+     */
+    public function __construct(TreeRouteStack $router, Request $request, UrlHelperService $urlHelper)
+    {
+        $this->request = $request;
+        $this->urlHelper = $urlHelper;
+        parent::__construct($router, $request, $urlHelper);
+    }
     /**
      * Format a fee amount
      *
-     * @param array                               $row    row
-     * @param array                               $column column
-     * @param \Laminas\ServiceManager\ServiceManager $sm     service locator
+     * @param array $row    row
+     * @param array $column column
      *
      * @return string
      */
-    public static function format($row, $column = [], $serviceLocator = null)
+    public function format($row, $column = [])
     {
         if (isset($row['isExpiredForLicence']) && $row['isExpiredForLicence']) {
-            $query      = $serviceLocator->get('request')->getQuery()->toArray();
-            $urlHelper  = $serviceLocator->get('Helper\Url');
-            $url = $urlHelper->fromRoute('fees/late', ['fee' => $row['id']], ['query' => $query], true);
-            return '<a class="govuk-link" href="'. $url . '">'. Escape::html($row['description']) . '</a>';
+            $query = $this->request->getQuery()->toArray();
+            $url = $this->urlHelper->fromRoute('fees/late', ['fee' => $row['id']], ['query' => $query], true);
+            return '<a class="govuk-link" href="' . $url . '">' . Escape::html($row['description']) . '</a>';
         }
-        return parent::format($row, $column, $serviceLocator);
+        return parent::format($row, $column);
     }
 }

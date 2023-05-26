@@ -13,19 +13,27 @@ namespace Common\Service\Table\Formatter;
  *
  * @author Nick payne <nick.payne@valtech.co.uk>
  */
-class TaskDate implements FormatterInterface
+class TaskDate implements FormatterPluginManagerInterface
 {
+    private Date $dateFormatter;
+
+    /**
+     * @param Date $dateFormatter
+     */
+    public function __construct(Date $dateFormatter)
+    {
+        $this->dateFormatter = $dateFormatter;
+    }
     /**
      * Format a task date
      *
-     * @param array $data
-     * @param array $column
-     * @param \Laminas\ServiceManager\ServiceManager $sm
+     * @param  array $data
+     * @param  array $column
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
-        $date = Date::format($data, $column, $sm);
+        $date = $this->dateFormatter->format($data, $column);
         if (isset($data['urgent']) && $data['urgent'] === 'Y') {
             // @TODO no AC for what the urgent marker looks like
             // $date .= ' <span class="status orange">urgent</span>';

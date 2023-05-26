@@ -2,73 +2,77 @@
 
 namespace Common\Service\Table\Formatter;
 
+use Common\Service\Helper\UrlHelperService;
 use Common\Util\Escape;
-use Laminas\Mvc\Controller\Plugin\Url;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 use Common\View\Helper\Status as StatusHelper;
+use Laminas\Mvc\Controller\Plugin\Url;
+use Laminas\View\HelperPluginManager;
 
 /**
  * Data Retention Record Link
  */
-class DataRetentionRecordLink implements FormatterInterface
+class DataRetentionRecordLink implements FormatterPluginManagerInterface
 {
-    const ENTITY_TRANSPORT_MANAGER = 'transport_manager';
-    const ENTITY_IRFO_GV_PERMIT = 'irfo_gv_permit';
-    const ENTITY_IRFO_PSV_AUTH = 'irfo_psv_auth';
-    const ENTITY_ORGANISATION = 'organisation';
-    const ENTITY_APPLICATION = 'application';
-    const ENTITY_BUS_REG = 'bus_reg';
-    const ENTITY_LICENCE = 'licence';
-    const ENTITY_CASES = 'cases';
+    private const ENTITY_TRANSPORT_MANAGER = 'transport_manager';
+    private const ENTITY_IRFO_GV_PERMIT = 'irfo_gv_permit';
+    private const ENTITY_IRFO_PSV_AUTH = 'irfo_psv_auth';
+    private const ENTITY_ORGANISATION = 'organisation';
+    private const ENTITY_APPLICATION = 'application';
+    private const ENTITY_BUS_REG = 'bus_reg';
+    private const ENTITY_LICENCE = 'licence';
+    private const ENTITY_CASES = 'cases';
 
-    const STATUS_DELETION = [
+    public const STATUS_DELETION = [
         'value' => 'Marked for deletion',
         'colour' => 'red'
     ];
 
-    const STATUS_POSTPONED = [
+    public const STATUS_POSTPONED = [
         'value' => 'Postponed',
         'colour' => 'orange'
     ];
 
-    const STATUS_REVIEW = [
+    public const STATUS_REVIEW = [
         'value' => 'To review',
         'colour' => 'green'
     ];
 
-    /** @var ServiceLocatorInterface */
-    protected static $sm;
+    protected UrlHelperService $urlHelper;
+
+    protected HelperPluginManager $viewHelperManager;
+
+    public function __construct(UrlHelperService $urlHelper, HelperPluginManager $viewHelperManager)
+    {
+        $this->urlHelper = $urlHelper;
+        $this->viewHelperManager = $viewHelperManager;
+    }
 
     /**
      * Format column value
      *
-     * @param array                   $data   Row data
-     * @param array                   $column Column Parameters
-     * @param ServiceLocatorInterface $sm     Service Manager
+     * @param array $data   Row data
+     * @param array $column Column Parameters
      *
      * @return string
      */
-    public static function format($data, array $column = [], ServiceLocatorInterface $sm = null)
+    public function format($data, $column = [])
     {
-        self::$sm = $sm;
-
-        /** @var Url $urlHelper */
         /**
          * @var Url          $urlHelper
          * @var StatusHelper $statusHelper
          */
-        $urlHelper = $sm->get('Helper\Url');
-        $statusHelper = $sm->get('ViewHelperManager')->get('status');
+
+        $statusHelper = $this->viewHelperManager->get('status');
 
         switch ($data['entityName']) {
             case self::ENTITY_LICENCE:
-                $url = $urlHelper->fromRoute('licence', ['licence' => $data['entityPk']], [], true);
+                $url = $this->urlHelper->fromRoute('licence', ['licence' => $data['entityPk']], [], true);
                 break;
             case self::ENTITY_APPLICATION:
-                $url = $urlHelper->fromRoute('lva-application', ['application' => $data['entityPk']], [], true);
+                $url = $this->urlHelper->fromRoute('lva-application', ['application' => $data['entityPk']], [], true);
                 break;
             case self::ENTITY_TRANSPORT_MANAGER:
-                $url = $urlHelper->fromRoute(
+                $url = $this->urlHelper->fromRoute(
                     'transport-manager',
                     ['transportManager' => $data['entityPk']],
                     [],
@@ -76,31 +80,31 @@ class DataRetentionRecordLink implements FormatterInterface
                 );
                 break;
             case self::ENTITY_IRFO_GV_PERMIT:
-                $url = $urlHelper->fromRoute(
+                $url = $this->urlHelper->fromRoute(
                     'operator/irfo/gv-permits',
                     [
-                        'organisation' => $data['organisationId'],
-                        'action' => 'details',
-                        'id' => $data['entityPk']
+                    'organisation' => $data['organisationId'],
+                    'action' => 'details',
+                    'id' => $data['entityPk']
                     ],
                     [],
                     true
                 );
                 break;
             case self::ENTITY_IRFO_PSV_AUTH:
-                $url = $urlHelper->fromRoute(
+                $url = $this->urlHelper->fromRoute(
                     'operator/irfo/psv-authorisations',
                     [
-                        'organisation' => $data['organisationId'],
-                        'action' => 'edit',
-                        'id' => $data['entityPk']
+                    'organisation' => $data['organisationId'],
+                    'action' => 'edit',
+                    'id' => $data['entityPk']
                     ],
                     [],
                     true
                 );
                 break;
             case self::ENTITY_ORGANISATION:
-                $url = $urlHelper->fromRoute(
+                $url = $this->urlHelper->fromRoute(
                     'operator/business-details',
                     ['organisation' => $data['organisationId']],
                     [],
@@ -108,7 +112,7 @@ class DataRetentionRecordLink implements FormatterInterface
                 );
                 break;
             case self::ENTITY_CASES:
-                $url = $urlHelper->fromRoute(
+                $url = $this->urlHelper->fromRoute(
                     'case',
                     ['action' => 'details', 'case' => $data['entityPk']],
                     [],
@@ -116,11 +120,11 @@ class DataRetentionRecordLink implements FormatterInterface
                 );
                 break;
             case self::ENTITY_BUS_REG:
-                $url = $urlHelper->fromRoute(
+                $url = $this->urlHelper->fromRoute(
                     'licence/bus-details',
                     [
-                        'licence' => $data['licenceId'],
-                        'busRegId' => $data['entityPk']
+                    'licence' => $data['licenceId'],
+                    'busRegId' => $data['entityPk']
                     ],
                     [],
                     true
@@ -157,7 +161,7 @@ class DataRetentionRecordLink implements FormatterInterface
      *
      * @return string
      */
-    private static function getOutput(
+    private function getOutput(
         $organisationId,
         $organisationName,
         $licNo,
@@ -190,17 +194,15 @@ class DataRetentionRecordLink implements FormatterInterface
      *
      * @return string
      */
-    private static function getLicenceNumber($licenceNumber, $url = null)
+    private function getLicenceNumber($licenceNumber, $url = null)
     {
         if (empty($licenceNumber)) {
             return '';
         }
 
         if (!is_null($url)) {
-            /** @var Url $urlHelper */
-            $urlHelper = self::$sm->get('Helper\Url');
 
-            $url = $urlHelper->fromRoute(
+            $url = $this->urlHelper->fromRoute(
                 'licence-no',
                 ['licNo' => $licenceNumber],
                 [],
@@ -226,17 +228,15 @@ class DataRetentionRecordLink implements FormatterInterface
      *
      * @return string
      */
-    private static function getOrganisationName($organisationId, $organisationName, $url = null)
+    private function getOrganisationName($organisationId, $organisationName, $url = null)
     {
         if (empty($organisationId) || empty($organisationName)) {
             return '';
         }
 
         if (!is_null($url)) {
-            /** @var Url $urlHelper */
-            $urlHelper = self::$sm->get('Helper\Url');
 
-            $url = $urlHelper->fromRoute(
+            $url = $this->urlHelper->fromRoute(
                 'operator/business-details',
                 ['organisation' => $organisationId],
                 [],

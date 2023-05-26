@@ -5,11 +5,11 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
-use Common\Service\Table\Formatter\StackValue;
-use CommonTest\Bootstrap;
 use Common\Service\Helper\StackHelperService;
+use Common\Service\Table\Formatter\StackValue;
 
 /**
  * StackValue formatter test
@@ -23,9 +23,8 @@ class StackValueTest extends \PHPUnit\Framework\TestCase
         $this->expectException('\InvalidArgumentException');
         $data = [];
         $column = [];
-        $sm = Bootstrap::getServiceManager();
 
-        StackValue::format($data, $column, $sm);
+        (new StackValue(new StackHelperService()))->format($data, $column);
     }
 
     public function testFormatWithString()
@@ -41,13 +40,8 @@ class StackValueTest extends \PHPUnit\Framework\TestCase
             'stack' => 'foo->bar->cake'
         ];
         $expected = 123;
-        $sm = Bootstrap::getServiceManager();
 
-        // @NOTE We use the real stack helper here, as it's a useful component test
-        // and is only a tiny utility class that is also fully tested elsewhere
-        $sm->setService('Helper\Stack', new StackHelperService());
-
-        $this->assertEquals($expected, StackValue::format($data, $column, $sm));
+        $this->assertEquals($expected, (new StackValue(new StackHelperService()))->format($data, $column));
     }
 
     public function testFormat()
@@ -63,12 +57,7 @@ class StackValueTest extends \PHPUnit\Framework\TestCase
             'stack' => ['foo', 'bar', 'cake']
         ];
         $expected = 123;
-        $sm = Bootstrap::getServiceManager();
 
-        // @NOTE We use the real stack helper here, as it's a useful component test
-        // and is only a tiny utility class that is also fully tested elsewhere
-        $sm->setService('Helper\Stack', new StackHelperService());
-
-        $this->assertEquals($expected, StackValue::format($data, $column, $sm));
+        $this->assertEquals($expected, (new StackValue(new StackHelperService()))->format($data, $column));
     }
 }

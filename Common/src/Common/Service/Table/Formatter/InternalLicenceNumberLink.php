@@ -2,6 +2,8 @@
 
 namespace Common\Service\Table\Formatter;
 
+use Common\Service\Helper\UrlHelperService;
+
 /**
  * Class LicenceNumberLink
  *
@@ -9,23 +11,30 @@ namespace Common\Service\Table\Formatter;
  *
  * @package Common\Service\Table\Formatter
  */
-class InternalLicenceNumberLink implements FormatterInterface
+class InternalLicenceNumberLink implements FormatterPluginManagerInterface
 {
+    private UrlHelperService $urlHelper;
+
+    /**
+     * @param UrlHelperService $urlHelper
+     */
+    public function __construct(UrlHelperService $urlHelper)
+    {
+        $this->urlHelper = $urlHelper;
+    }
     /**
      * Return a the licence URL in a link format for a table.
      *
-     * @param array $data The row data.
+     * @param array $data   The row data.
      * @param array $column The column
-     * @param null $sm The service manager
      *
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
         $licenceNo = $data['licence']['licNo'];
-        $urlHelper = $sm->get('Helper\Url');
-        $url = $urlHelper->fromRoute('lva-licence', array('licence' => $data['licence']['id']));
+        $url = $this->urlHelper->fromRoute('lva-licence', array('licence' => $data['licence']['id']));
 
-        return '<a class="govuk-link" href="' . $url . '" title="Licence details for '. $licenceNo .'">' . $licenceNo . '</a>';
+        return '<a class="govuk-link" href="' . $url . '" title="Licence details for ' . $licenceNo . '">' . $licenceNo . '</a>';
     }
 }

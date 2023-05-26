@@ -6,14 +6,21 @@
 
 namespace Common\Service\Table\Formatter;
 
+use Common\Service\Helper\UrlHelperService;
 use Common\Util\Escape;
 
-class IrhpPermitNumberInternal implements FormatterInterface
+class IrhpPermitNumberInternal implements FormatterPluginManagerInterface
 {
+    private UrlHelperService $urlHelper;
+
+    public function __construct(UrlHelperService $urlHelper)
+    {
+        $this->urlHelper = $urlHelper;
+    }
     /**
      * @inheritdoc
      */
-    public static function format($row, $column = null, $serviceLocator = null)
+    public function format($row, $column = null)
     {
         $route = 'licence/irhp-permits/permit';
         $params = [
@@ -28,7 +35,7 @@ class IrhpPermitNumberInternal implements FormatterInterface
         return vsprintf(
             '<a class="govuk-link" href="%s">%s</a>',
             [
-                $serviceLocator->get('Helper\Url')->fromRoute($route, $params, $options),
+                $this->urlHelper->fromRoute($route, $params, $options),
                 Escape::html($row['permitNumber'])
             ]
         );

@@ -15,18 +15,17 @@ use Common\Util\Escape;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class PublicationNumber implements FormatterInterface
+class PublicationNumber implements FormatterPluginManagerInterface
 {
     /**
      * Format
      *
-     * @param array                               $data   The row data
-     * @param array                               $column [OPTIONAL]
-     * @param \Laminas\ServiceManager\ServiceManager $sm     [OPTIONAL]
+     * @param array $data   The row data
+     * @param array $column [OPTIONAL]
      *
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
         if ($data['pubStatus']['id'] === 'pub_s_new') {
             return $data['publicationNo'];

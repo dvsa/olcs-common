@@ -5,6 +5,7 @@
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\PrinterException;
@@ -23,7 +24,7 @@ class PrinterExceptionTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormat($data, $expected)
     {
-        $this->assertEquals($expected, PrinterException::format($data));
+        $this->assertEquals($expected, (new PrinterException())->format($data));
     }
 
     /**

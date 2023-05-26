@@ -5,6 +5,7 @@
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
+
 namespace Common\Service\Table\Formatter;
 
 /**
@@ -12,16 +13,15 @@ namespace Common\Service\Table\Formatter;
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class PrinterException implements FormatterInterface
+class PrinterException implements FormatterPluginManagerInterface
 {
     /**
-     * @param array $data The row data.
+     * @param array $data   The row data.
      * @param array $column The column
-     * @param null $sm The service manager
      *
      * @return string
      */
-    public static function format($data, $column = [], $sm = null)
+    public function format($data, $column = [])
     {
         if (!$data['user']) {
             $exception = $data['team']['name'];

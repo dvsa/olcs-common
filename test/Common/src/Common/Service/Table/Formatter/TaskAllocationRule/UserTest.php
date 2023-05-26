@@ -2,6 +2,7 @@
 
 namespace CommonTest\Service\Table\Formatter\TaskAllocationRule;
 
+use Common\Service\Helper\DataHelperService;
 use Common\Service\Table\Formatter\TaskAllocationRule\User;
 
 /**
@@ -18,7 +19,7 @@ class UserTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormat($expected, $data)
     {
-        $sut = new User();
+        $sut = new User(new DataHelperService());
 
         $this->assertSame($expected, $sut->format($data));
     }

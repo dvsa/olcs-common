@@ -36,6 +36,11 @@
             "./Common/Module.php"
         ]
     },
+    "autoload-dev": {
+        "psr-4": {
+            "CommonTest\\": "test/Common/src/"
+        }
+    },
     "config": {
         "preferred-install": "dist",
         "secure-http": false,

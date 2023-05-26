@@ -3,12 +3,13 @@
 /**
  * SeriousInfringementLinkTest.php
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Service\Helper\UrlHelperService;
+use Common\Service\Table\Formatter\SeriousInfringementLink;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
-
-use Common\Service\Table\Formatter\SeriousInfringementLink;
 
 /**
  * Class SeriousInfringementLinkTest
@@ -17,6 +18,20 @@ use Common\Service\Table\Formatter\SeriousInfringementLink;
  */
 class SeriousInfringementLinkTest extends TestCase
 {
+    protected $urlHelper;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->urlHelper = m::mock(UrlHelperService::class);
+        $this->sut = new SeriousInfringementLink($this->urlHelper);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
+
     public function testFormat()
     {
         $id = 69;
@@ -27,21 +42,14 @@ class SeriousInfringementLinkTest extends TestCase
             'action' => 'index'
         ];
 
-        $sm = m::mock()
-            ->shouldReceive('get')
-            ->with('Helper\Url')
-            ->andReturn(
-                m::mock()
-                    ->shouldReceive('fromRoute')
-                    ->with($route, $routeParams, [], true)
-                    ->andReturn('URL')
-                    ->getMock()
-            )
-            ->getMock();
+        $this->urlHelper
+            ->shouldReceive('fromRoute')
+            ->with($route, $routeParams, [], true)
+            ->andReturn('URL');
 
         $this->assertEquals(
             '<a class="govuk-link" href="URL">' . $id . '</a>',
-            SeriousInfringementLink::format($inputData, [], $sm)
+            $this->sut->format($inputData, [])
         );
     }
 }

@@ -15,7 +15,8 @@ class CaseEntityNameTest extends MockeryTestCase
      */
     public function testFormat($data, $expect)
     {
-        static::assertSame($expect, CaseEntityName::format($data));
+        $sut = new CaseEntityName();
+        static::assertSame($expect, $sut->format($data));
     }
 
     public function dpTestFormat()

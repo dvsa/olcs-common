@@ -8,9 +8,11 @@
 namespace CommonTest\Service\Review;
 
 use Common\RefData;
+use Common\Service\Helper\DataHelperService;
 use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Review\AbstractReviewServiceServices;
 use Common\Service\Review\ConditionsUndertakingsReviewService;
+use Common\Service\Table\Formatter\Address;
 use Mockery as m;
 
 /**
@@ -31,7 +33,7 @@ class ConditionsUndertakingsReviewServiceTest extends \PHPUnit\Framework\TestCas
             ->withNoArgs()
             ->andReturn($mockTranslationHelper);
 
-        $this->sut = new ConditionsUndertakingsReviewService($abstractReviewServiceServices);
+        $this->sut = new ConditionsUndertakingsReviewService($abstractReviewServiceServices, new Address(new DataHelperService()));
     }
 
     public function testGetConfigFromData()

@@ -18,7 +18,6 @@ use Common\Service\Table\Formatter\TransactionAmount;
  */
 class TransactionAmountTest extends \PHPUnit\Framework\TestCase
 {
-
     /**
      * Test the format method
      *
@@ -28,7 +27,7 @@ class TransactionAmountTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormat($data, $column, $expected)
     {
-        $this->assertSame($expected, TransactionAmount::format($data, $column));
+        $this->assertSame($expected, (new TransactionAmount())->format($data, $column));
     }
 
     /**

@@ -8,8 +8,6 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
-use Common\Service\Table\Formatter\FileExtension;
-
 /**
  * File extension formatter test
  *
@@ -27,7 +25,7 @@ class FileExtensionTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormat($data, $column, $expected)
     {
-        $this->assertEquals($expected, FileExtension::format($data, $column));
+        $this->assertEquals($expected, (new \Common\Service\Table\Formatter\FileExtension())->format($data, $column));
     }
 
     /**

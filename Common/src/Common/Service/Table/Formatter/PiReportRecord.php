@@ -6,26 +6,36 @@
 
 namespace Common\Service\Table\Formatter;
 
+use Common\Service\Helper\UrlHelperService;
+
 /**
  * PI Report Record formatter
  */
-class PiReportRecord implements FormatterInterface
+class PiReportRecord implements FormatterPluginManagerInterface
 {
+    private UrlHelperService $urlHelper;
+
+    /**
+     * @param UrlHelperService $urlHelper
+     */
+    public function __construct(UrlHelperService $urlHelper)
+    {
+        $this->urlHelper = $urlHelper;
+    }
     /**
      * Format a PI Report Record
      *
      * @param array $data
      * @param array $column
-     * @param \Laminas\ServiceManager\ServiceManager $sm
      *
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
         if (!empty($data['pi']['case']['licence'])) {
             return sprintf(
                 '<a class="govuk-link" href="%s">%s</a> (%s)',
-                $sm->get('Helper\Url')->fromRoute(
+                $this->urlHelper->fromRoute(
                     'licence',
                     [
                         'licence' => $data['pi']['case']['licence']['id']
@@ -37,7 +47,7 @@ class PiReportRecord implements FormatterInterface
         } elseif (!empty($data['pi']['case']['transportManager'])) {
             return sprintf(
                 '<a class="govuk-link" href="%s">TM %s</a> (%s)',
-                $sm->get('Helper\Url')->fromRoute(
+                $this->urlHelper->fromRoute(
                     'transport-manager/details',
                     [
                         'transportManager' => $data['pi']['case']['transportManager']['id']

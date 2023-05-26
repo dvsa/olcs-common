@@ -7,10 +7,9 @@
  */
 namespace CommonTest\Service\Section\VehicleSafety\Vehicle\Formatter;
 
+use Common\Service\Helper\UrlHelperService;
 use Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm;
-use Laminas\ServiceManager\ServiceLocatorInterface;
-use Laminas\View\Helper\Url;
-use Laminas\View\HelperPluginManager;
+use Mockery as m;
 
 /**
  * Vrm Test
@@ -20,50 +19,28 @@ use Laminas\View\HelperPluginManager;
 class VrmTest extends \PHPUnit\Framework\TestCase
 {
     /**
+    protected function tearDown(): void
+    {
+    m::close();
+    }
+
+    /**
      * @group VrmFormatter
      * @dataProvider provider
      */
     public function testFormat($data, $column, $expected)
     {
-        $output = Vrm::format($data, $column, $this->getMockedServiceManager());
+        $mockUrlHelper = m::mock(UrlHelperService::class);
+        $mockUrlHelper->shouldReceive('fromRoute')
+            ->once()
+            ->andReturnUsing(function ($route, $params, $args, $routeMatch) {
+                return json_encode($params);
+            });
+
+        $sut = new Vrm($mockUrlHelper);
+        $output = $sut->format($data, $column);
 
         $this->assertEquals($expected, $output);
-    }
-
-    /**
-     * Get the mocked service manager
-     *
-     * @NOTE This essentially just mocks the url invokeable to return a json_encoded array of params so we can assert
-     * what the url would be built with
-     *
-     * @return object
-     */
-    private function getMockedServiceManager()
-    {
-        $urlMock = $this->createPartialMock(Url::class, array('__invoke'));
-        $urlMock->expects($this->once())
-            ->method('__invoke')
-            ->will(
-                $this->returnCallback(
-                    function ($route, $params, $args, $routeMatch) {
-                        return json_encode($params);
-                    }
-                )
-            );
-
-        $mockViewHelper = $this->createPartialMock(HelperPluginManager::class, array('get'));
-        $mockViewHelper->expects($this->once())
-            ->method('get')
-            ->with('url')
-            ->will($this->returnValue($urlMock));
-
-        $sm = $this->createMock(ServiceLocatorInterface::class);
-        $sm->expects($this->once())
-            ->method('get')
-            ->with('viewhelpermanager')
-            ->will($this->returnValue($mockViewHelper));
-
-        return $sm;
     }
 
     /**
@@ -73,25 +50,17 @@ class VrmTest extends \PHPUnit\Framework\TestCase
      */
     public function provider()
     {
-        return array(
-            array(
-                array(
-                    'id' => 2,
-                    'vrm' => 'ABC123'
-                ),
-                array(),
+        return [
+            [
+                ['id' => 2, 'vrm' => 'ABC123'],
+                [],
                 '<a class="govuk-link" href="{"child_id":2,"action":"edit"}">ABC123</a>'
-            ),
-            array(
-                array(
-                    'id' => 2,
-                    'vrm' => 'ABC123'
-                ),
-                array(
-                    'action-type' => 'large'
-                ),
+            ],
+            [
+                ['id' => 2, 'vrm' => 'ABC123'],
+                ['action-type' => 'large'],
                 '<a class="govuk-link" href="{"child_id":2,"action":"large-edit"}">ABC123</a>'
-            )
-        );
+            ]
+        ];
     }
 }

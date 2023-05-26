@@ -2,18 +2,27 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
+use Laminas\View\HelperPluginManager;
 
-class BusRegStatus implements FormatterInterface
+class BusRegStatus implements FormatterPluginManagerInterface
 {
+    protected TranslatorDelegator $translator;
+    protected $viewHelperManager;
+
+    public function __construct(TranslatorDelegator $translator, HelperPluginManager $viewHelperManager)
+    {
+        $this->translator = $translator;
+        $this->viewHelperManager = $viewHelperManager;
+    }
+
     /**
-     * @param array                        $data   data array
-     * @param array                        $column column info
-     * @param null|ServiceLocatorInterface $sm     service locator
+     * @param array $data   data array
+     * @param array $column column info
      *
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
         //standardise the format of the data, so this can be used by multiple tables
         //we set the data even if the busReg key is blank
@@ -21,10 +30,10 @@ class BusRegStatus implements FormatterInterface
             $data = $data['busReg'];
         }
 
-        $translator = $sm->get('translator');
-
-        /** @var \Common\View\Helper\Status $statusHelper */
-        $statusHelper = $sm->get('ViewHelperManager')->get('status');
+        /**
+        * @var \Common\View\Helper\Status $statusHelper
+        */
+        $statusHelper = $this->viewHelperManager->get('status');
 
         //status field will be different, depending on whether the data has come from bus reg applications,
         //txc inbox or ebsr submission table
@@ -38,7 +47,7 @@ class BusRegStatus implements FormatterInterface
 
         $status = [
             'id' => $statusId,
-            'description' => $translator->translate($statusDescription),
+            'description' => $this->translator->translate($statusDescription),
         ];
 
         return $statusHelper->__invoke($status);

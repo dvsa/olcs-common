@@ -5,6 +5,7 @@
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\RefData;
@@ -17,7 +18,6 @@ use Common\Service\Table\Formatter\TransactionStatus as Sut;
  */
 class TransactionStatusTest extends \PHPUnit\Framework\TestCase
 {
-
     /**
      * Test the format method
      *
@@ -28,7 +28,7 @@ class TransactionStatusTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormat($data, $expected)
     {
-        $this->assertEquals($expected, Sut::format($data));
+        $this->assertEquals($expected, (new Sut())->format($data));
     }
 
     /**

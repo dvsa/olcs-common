@@ -5,8 +5,11 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Service\Table\Type;
 
+use Common\Service\Helper\StackHelperService;
+use Common\Service\Table\Formatter\StackValue;
 use Common\Service\Table\Formatter\StackValueReplacer;
 
 /**
@@ -31,7 +34,7 @@ class Link extends AbstractType
         $sm = $this->getTable()->getServiceLocator();
 
         foreach ($params as $key => $param) {
-            $params[$key] = StackValueReplacer::format($data, ['stringFormat' => $param], $sm);
+            $params[$key] = (new StackValueReplacer(new StackValue(new StackHelperService())))->format($data, ['stringFormat' => $param]);
         }
 
         $url = $sm->get('Helper\Url')->fromRoute($column['route'], $params);

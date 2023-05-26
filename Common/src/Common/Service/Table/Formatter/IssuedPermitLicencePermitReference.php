@@ -5,27 +5,36 @@
  *
  * @author Tonci Vidovic <tonci.vidovic@capgemini.com>
  */
+
 namespace Common\Service\Table\Formatter;
 
-use Common\Util\Escape;
 use Common\RefData;
-use Laminas\ServiceManager\ServiceManager;
+use Common\Service\Helper\UrlHelperService;
+use Common\Util\Escape;
 
 /**
  * Issued permit licence permit reference formatter
  */
-class IssuedPermitLicencePermitReference implements FormatterInterface
+class IssuedPermitLicencePermitReference implements FormatterPluginManagerInterface
 {
+    private UrlHelperService $urlHelper;
+
+    /**
+     * @param UrlHelperService $urlHelper
+     */
+    public function __construct(UrlHelperService $urlHelper)
+    {
+        $this->urlHelper = $urlHelper;
+    }
     /**
      * Issued permit licence permit reference
      *
-     * @param array $row Row data
+     * @param array $row    Row data
      * @param array $column Column data
-     * @param ServiceManager $serviceLocator Service locator
      *
      * @return string
      */
-    public static function format($row, $column = null, $serviceLocator = null)
+    public function format($row, $column = null)
     {
         $route = 'licence/irhp-application/irhp-permits';
         $params = [
@@ -50,8 +59,7 @@ class IssuedPermitLicencePermitReference implements FormatterInterface
             ];
         }
 
-        $urlHelper = $serviceLocator->get('Helper\Url');
-        $url = $urlHelper->fromRoute($route, $params);
+        $url = $this->urlHelper->fromRoute($route, $params);
 
         return '<a class="govuk-link" href="' . $url . '">' . Escape::html($row['applicationRef']) . '</a>';
     }

@@ -2,27 +2,24 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Laminas\ServiceManager\ServiceManager;
-
 /**
  * IRHP Permit Range table - eplacement Stock column formatter
  *
  * @author Scott Callaway <scott.callaway@capgemini.com>
  */
-class IrhpPermitRangeReplacement implements FormatterInterface
+class IrhpPermitRangeReplacement implements FormatterPluginManagerInterface
 {
     /**
      * Format
      *
      * Returns a formatted column for the Replacement Stock
      *
-     * @param array          $data
-     * @param array          $column
-     * @param ServiceManager $sm
+     * @param array $data
+     * @param array $column
      *
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
         return $data['lostReplacement'] ? 'Yes' : 'N/A';
     }

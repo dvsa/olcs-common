@@ -50,7 +50,7 @@ return array(
         ),
         array(
             'title' => 'lva-conditions-undertakings-table-attached-to',
-            'formatter' => function ($data, $column, $sm) {
+            'formatter' => function ($data, $column) {
 
                 if (isset($data['operatingCentre']['address'])) {
 

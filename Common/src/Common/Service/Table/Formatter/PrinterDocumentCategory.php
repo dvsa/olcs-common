@@ -5,27 +5,36 @@
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
+
 namespace Common\Service\Table\Formatter;
+
+use Common\Service\Helper\UrlHelperService;
 
 /**
  * Printer Document Category formatter
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class PrinterDocumentCategory implements FormatterInterface
+class PrinterDocumentCategory implements FormatterPluginManagerInterface
 {
+    private UrlHelperService $urlHelper;
+
+    /**
+     * @param UrlHelperService $urlHelper
+     */
+    public function __construct(UrlHelperService $urlHelper)
+    {
+        $this->urlHelper = $urlHelper;
+    }
     /**
      * @param array $data
      * @param array $column
-     * @param ServiceManager $sm
      *
      * @return string
      */
-    public static function format($row, $column = [], $sm = null)
+    public function format($row, $column = [])
     {
-        $urlHelper = $sm->get('Helper\Url');
-
-        $url = $urlHelper->fromRoute(
+        $url = $this->urlHelper->fromRoute(
             'admin-dashboard/admin-team-management',
             ['rule' => $row['id'], 'action' => 'editRule', 'team' => $row['team']['id']]
         );
@@ -34,6 +43,6 @@ class PrinterDocumentCategory implements FormatterInterface
             $row['subCategory']['category']['description'] . ' / ' . $row['subCategory']['subCategoryName'] :
             'Default setting';
 
-        return '<a href="'. $url . '" class="govuk-link js-modal-ajax">' . $categories .'</a>';
+        return '<a href="' . $url . '" class="govuk-link js-modal-ajax">' . $categories . '</a>';
     }
 }

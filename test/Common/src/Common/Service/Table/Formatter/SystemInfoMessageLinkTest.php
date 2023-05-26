@@ -2,6 +2,7 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Formatter\SystemInfoMessageLink;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
@@ -11,8 +12,27 @@ use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
  */
 class SystemInfoMessageLinkTest extends TestCase
 {
-    const EXPECT_URL = 'unit_Url';
-    const ID = 9999;
+    private const EXPECT_URL = 'unit_Url';
+    private const ID = 9999;
+
+    protected $urlHelper;
+    protected $translator;
+    protected $viewHelperManager;
+    protected $router;
+    protected $request;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->urlHelper = m::mock(UrlHelperService::class);
+        $this->sut = new SystemInfoMessageLink($this->urlHelper);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
+
 
     /**
      * @dataProvider dpTestFormat
@@ -21,27 +41,20 @@ class SystemInfoMessageLinkTest extends TestCase
     {
         $data['id'] = self::ID;
 
-        $sm = m::mock()
-            ->shouldReceive('get')
-            ->with('Helper\Url')
-            ->andReturn(
-                m::mock()
-                    ->shouldReceive('fromRoute')
-                    ->with(
-                        'admin-dashboard/admin-system-info-message',
-                        [
-                            'action' => 'edit',
-                            'msgId' => self::ID,
-                        ]
-                    )
-                    ->andReturn(self::EXPECT_URL)
-                    ->getMock()
+        $this->urlHelper
+            ->shouldReceive('fromRoute')
+            ->with(
+                'admin-dashboard/admin-system-info-message',
+                [
+                    'action' => 'edit',
+                    'msgId' => self::ID,
+                ]
             )
-            ->getMock();
+            ->andReturn(self::EXPECT_URL);
 
         static::assertEquals(
             $expect,
-            SystemInfoMessageLink::format($data, [], $sm)
+            $this->sut->format($data, [])
         );
     }
 
@@ -63,7 +76,7 @@ class SystemInfoMessageLinkTest extends TestCase
                 ],
                 'expect' =>
                     '<a href="' . self::EXPECT_URL . '" class="govuk-link js-modal-ajax">' .
-                        str_repeat('X', SystemInfoMessageLink::MAX_DESC_LEN) . '...' .
+                    str_repeat('X', SystemInfoMessageLink::MAX_DESC_LEN) . '...' .
                     '</a>' .
                     ' <span class="status grey">INACTIVE</span>',
             ],

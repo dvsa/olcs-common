@@ -4,18 +4,17 @@ namespace CommonTest\Service\Table;
 
 use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\ContentHelper;
-use Common\Service\Table\TableBuilder;
-use Common\Service\Table\TableFactory;
+use Common\Service\Table\Formatter\FormatterPluginManager;
 use Common\Service\Table\PaginationHelper;
-use CommonTest\Bootstrap;
+use Common\Service\Table\TableBuilder;
 use Hamcrest\Arrays\IsArrayContainingKey;
 use Hamcrest\Arrays\IsArrayContainingKeyValuePair;
 use Hamcrest\Core\IsAnything;
-use Mockery as m;
-use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Mvc\Controller\Plugin\Url;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\ServiceManager\ServiceLocatorInterface;
+use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use ZfcRbac\Service\AuthorizationService;
 
 /**
@@ -23,7 +22,14 @@ use ZfcRbac\Service\AuthorizationService;
  */
 class TableBuilderTest extends MockeryTestCase
 {
-    const TRANSLATED = '_TRSLTD_';
+    private const TRANSLATED = '_TRSLTD_';
+
+    private $mockFormatterPluginManager;
+
+    public function setup(): void
+    {
+        $this->mockFormatterPluginManager = m::mock(FormatterPluginManager::class);
+    }
 
     /**
      * @todo the Date formatter now appears to rely on global constants defined
@@ -50,7 +56,8 @@ class TableBuilderTest extends MockeryTestCase
             $this->getMockAuthService(),
             $this->getMockTranslator(),
             $this->getMockUrlHelperService(),
-            $this->getMockConfig($config)
+            $this->getMockConfig($config),
+            $this->mockFormatterPluginManager
         );
     }
 
@@ -67,7 +74,8 @@ class TableBuilderTest extends MockeryTestCase
                 $this->getMockAuthService(),
                 $this->getMockTranslator(),
                 $this->getMockUrlHelperService(),
-                $this->getMockConfig()
+                $this->getMockConfig(),
+                $this->mockFormatterPluginManager
             ];
         }
 
@@ -169,6 +177,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $table->getContentHelper();
     }
+
     /**
      * Test getContentHelper without configured partials for current content type
      *
@@ -274,8 +283,7 @@ class TableBuilderTest extends MockeryTestCase
      */
     public function testLoadConfigWithEmptyArray()
     {
-        $tableConfig = array(
-        );
+        $tableConfig = array();
 
         $table = $this->getMockTableBuilder(array('getConfigFromFile'));
 
@@ -482,8 +490,7 @@ class TableBuilderTest extends MockeryTestCase
      */
     public function testLoadParamsWithoutUrl()
     {
-        $params = array(
-        );
+        $params = array();
 
         $table = $this->getConcreteTableBuilder();
 
@@ -890,8 +897,7 @@ class TableBuilderTest extends MockeryTestCase
      */
     public function testRenderTableDefault()
     {
-        $settings = array(
-        );
+        $settings = array();
 
         $table = $this->getMockTableBuilder(array('setType', 'renderLayout'));
 
@@ -979,7 +985,7 @@ class TableBuilderTest extends MockeryTestCase
      */
     public function testRenderTotalWithPaginationWith1()
     {
-        $total  = 1;
+        $total = 1;
 
         $expectedTotal = 1;
 
@@ -1070,8 +1076,7 @@ class TableBuilderTest extends MockeryTestCase
     public function testRenderActionsWithoutActions()
     {
         $settings = array(
-            'crud' => array(
-            )
+            'crud' => array()
         );
 
         $table = $this->getConcreteTableBuilder();
@@ -1882,11 +1887,11 @@ class TableBuilderTest extends MockeryTestCase
             ->with(
                 '{{[elements/paginationItem]}}',
                 array(
-                  'class' => '',
-                  'page' => 2,
-                  'label' => '2',
-                  'link' => '',
-                  'option' => '[paginationLink1]',
+                    'class' => '',
+                    'page' => 2,
+                    'label' => '2',
+                    'link' => '',
+                    'option' => '[paginationLink1]',
                 )
             )
             ->andReturn('[linkedPaginationItem1]');
@@ -1895,11 +1900,11 @@ class TableBuilderTest extends MockeryTestCase
             ->with(
                 '{{[elements/paginationItem]}}',
                 array(
-                  'class' => '',
-                  'page' => 3,
-                  'label' => '3',
-                  'link' => '',
-                  'option' => '[paginationLink2]',
+                    'class' => '',
+                    'page' => 3,
+                    'label' => '3',
+                    'link' => '',
+                    'option' => '[paginationLink2]',
                 )
             )
             ->andReturn('[linkedPaginationItem2]');
@@ -1938,8 +1943,7 @@ class TableBuilderTest extends MockeryTestCase
      */
     public function testRenderHeaderColumn_WithoutOptions()
     {
-        $column = array(
-        );
+        $column = array();
 
         $mockContentHelper = $this->createPartialMock(ContentHelper::class, array('replaceContent'));
 
@@ -1961,8 +1965,7 @@ class TableBuilderTest extends MockeryTestCase
      */
     public function testRenderHeaderColumn_WithCustomContent()
     {
-        $column = array(
-        );
+        $column = array();
 
         $mockContentHelper = $this->createPartialMock(ContentHelper::class, array('replaceContent'));
 
@@ -2279,7 +2282,7 @@ class TableBuilderTest extends MockeryTestCase
         $mockContentHelper->expects('replaceContent')
             ->with(
                 '{{[elements/th]}}',
-                array (
+                array(
                     'sort' => 'foo',
                     'scope' => 'col',
                     'class' => TableBuilder::CLASS_TABLE_HEADER . ' right sortable',
@@ -2385,7 +2388,8 @@ class TableBuilderTest extends MockeryTestCase
             $mockAuthService,
             $this->getMockTranslator(),
             $this->getMockUrlHelperService(),
-            $this->getMockConfig()
+            $this->getMockConfig(),
+            $this->mockFormatterPluginManager
         ];
 
         $table = $this->getMockTableBuilder(array('getContentHelper'), $constructorArgs);
@@ -2422,7 +2426,8 @@ class TableBuilderTest extends MockeryTestCase
             $mockAuthService,
             $this->getMockTranslator(),
             $this->getMockUrlHelperService(),
-            $this->getMockConfig()
+            $this->getMockConfig(),
+            $this->mockFormatterPluginManager
         ];
 
         $table = $this->getMockTableBuilder(array('getContentHelper'), $constructorArgs);
@@ -2662,6 +2667,11 @@ class TableBuilderTest extends MockeryTestCase
             ->method('getContentHelper')
             ->will($this->returnValue($mockContentHelper));
 
+        $this->mockFormatterPluginManager->shouldReceive('has')->with('\Common\Service\Table\Formatter\Date')->andReturn(true);
+        $mockDateFormatter = m::mock('\Common\Service\Table\Formatter\Date')->makePartial();
+        $mockDateFormatter->shouldReceive('format')->with(date('Y-m-d'))->andReturn(date('d/m/Y'));
+        $this->mockFormatterPluginManager->shouldReceive('get')->with('\Common\Service\Table\Formatter\Date')->andReturn($mockDateFormatter);
+
         $table->renderBodyColumn($row, $column);
     }
 
@@ -2698,6 +2708,14 @@ class TableBuilderTest extends MockeryTestCase
         $table->expects($this->any())
             ->method('getContentHelper')
             ->will($this->returnValue($mockContentHelper));
+
+        $mockFormatterPluginManager = m::mock(FormatterPluginManager::class);
+        $mockFormatterPluginManager->shouldReceive('has')->andReturn(true);
+
+        $this->mockFormatterPluginManager->shouldReceive('has')->with('\Common\Service\Table\Formatter\Date')->andReturn(true);
+        $mockDateFormatter = m::mock('\Common\Service\Table\Formatter\Date')->makePartial();
+        $mockDateFormatter->shouldReceive('format')->with(date('Y-m-d'))->andReturn(date('d/m/Y'));
+        $this->mockFormatterPluginManager->shouldReceive('get')->with('\Common\Service\Table\Formatter\Date')->andReturn($mockDateFormatter);
 
         $table->renderBodyColumn($row, $column);
     }
@@ -2757,6 +2775,7 @@ class TableBuilderTest extends MockeryTestCase
         $table->expects($this->any())
             ->method('getContentHelper')
             ->will($this->returnValue($mockContentHelper));
+
 
         $table->renderBodyColumn($row, $column);
     }
@@ -2939,7 +2958,8 @@ class TableBuilderTest extends MockeryTestCase
             $this->getMockAuthService(),
             $mockTranslator,
             $this->getMockUrlHelperService(),
-            $this->getMockConfig()
+            $this->getMockConfig(),
+            $this->mockFormatterPluginManager
         ];
 
         $table = $this->getMockTableBuilder(
@@ -2992,7 +3012,8 @@ class TableBuilderTest extends MockeryTestCase
             $this->getMockAuthService(),
             $mockTranslator,
             $this->getMockUrlHelperService(),
-            $this->getMockConfig()
+            $this->getMockConfig(),
+            $this->mockFormatterPluginManager
         ];
 
         $table = $this->getMockTableBuilder(
@@ -3050,7 +3071,7 @@ class TableBuilderTest extends MockeryTestCase
     public function testGetFooter()
     {
         $table = $this->getConcreteTableBuilder();
- 
+
         $table->setFooter(array('Foo' => 'Bar'));
 
         $this->assertEquals(array('Foo' => 'Bar'), $table->getFooter());
@@ -3062,7 +3083,7 @@ class TableBuilderTest extends MockeryTestCase
     public function testGetVariable()
     {
         $table = $this->getConcreteTableBuilder();
- 
+
         $vars = array(
             'foo' => 'bar',
             'bar' => 'cake'
@@ -3083,7 +3104,7 @@ class TableBuilderTest extends MockeryTestCase
     public function testRemoveColumn()
     {
         $table = $this->getConcreteTableBuilder();
- 
+
         $columns = array(
             array('name' => 'name1'),
             array('name' => 'name2')
@@ -3144,7 +3165,8 @@ class TableBuilderTest extends MockeryTestCase
             $mockAuthService,
             $mockTranslatorService,
             $this->getMockUrlHelperService(),
-            $this->getMockConfig()
+            $this->getMockConfig(),
+            $this->mockFormatterPluginManager
         );
 
         $sut->setSettings($settings);
@@ -3179,7 +3201,8 @@ class TableBuilderTest extends MockeryTestCase
             $mockAuthService,
             $mockTranslatorService,
             $this->getMockUrlHelperService(),
-            $this->getMockConfig()
+            $this->getMockConfig(),
+            $this->mockFormatterPluginManager
         );
 
         $sut->setSettings($settings);
@@ -3283,7 +3306,8 @@ class TableBuilderTest extends MockeryTestCase
             $mockAuthService,
             $mockTranslator,
             $this->getMockUrlHelperService(),
-            $config
+            $config,
+            $this->mockFormatterPluginManager
         );
 
         $sut->setEmptyMessage($message);
@@ -3373,7 +3397,8 @@ class TableBuilderTest extends MockeryTestCase
             $mockAuthService,
             $mockTranslator,
             $this->getMockUrlHelperService(),
-            $this->getMockConfig()
+            $this->getMockConfig(),
+            $this->mockFormatterPluginManager
         );
 
         $sut->loadConfig($tableConfig);
@@ -3517,7 +3542,7 @@ class TableBuilderTest extends MockeryTestCase
     }
 
     /**
-     * @depends testRenderLimitOptions_IsDefined
+     * @depends      testRenderLimitOptions_IsDefined
      * @dataProvider pageAndLimitUrlParameterNamesDataProvider
      * @test
      */
@@ -3551,7 +3576,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * @param string $originalName
      * @param string $mappedName
-     * @depends renderLimitOptions_DefaultUrlParameterNames
+     * @depends      renderLimitOptions_DefaultUrlParameterNames
      * @dataProvider mappedPageAndLimitUrlParameterNamesDataProvider
      * @test
      */
@@ -3587,7 +3612,7 @@ class TableBuilderTest extends MockeryTestCase
 
     /**
      * @param string $urlParameterName
-     * @depends renderPageOptions_IsDefined
+     * @depends      renderPageOptions_IsDefined
      * @dataProvider pageAndLimitUrlParameterNamesDataProvider
      * @test
      */
@@ -3610,7 +3635,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * @param string $originalName
      * @param string $mappedName
-     * @depends renderPageOptions_DefaultUrlParameterNames
+     * @depends      renderPageOptions_DefaultUrlParameterNames
      * @dataProvider mappedPageAndLimitUrlParameterNamesDataProvider
      * @test
      */
@@ -3656,7 +3681,7 @@ class TableBuilderTest extends MockeryTestCase
 
     /**
      * @param string $urlParameterName
-     * @depends renderHeaderColumn_IsDefined
+     * @depends      renderHeaderColumn_IsDefined
      * @dataProvider sortAndOrderUrlParameterNamesDataProvider
      * @test
      */
@@ -3689,7 +3714,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * @param string $originalName
      * @param string $mappedName
-     * @depends renderHeaderColumn_DefaultUrlParameterNames
+     * @depends      renderHeaderColumn_DefaultUrlParameterNames
      * @dataProvider mappedSortAndOrderUrlParameterNamesDataProvider
      * @test
      */
@@ -3732,7 +3757,8 @@ class TableBuilderTest extends MockeryTestCase
             $authService,
             $this->getMockTranslator(),
             $this->getMockUrlHelperService(),
-            $this->getMockConfig()
+            $this->getMockConfig(),
+            $this->mockFormatterPluginManager
         );
 
         $this->assertSame(
@@ -3750,7 +3776,8 @@ class TableBuilderTest extends MockeryTestCase
             $this->getMockAuthService(),
             $translator,
             $this->getMockUrlHelperService(),
-            $this->getMockConfig()
+            $this->getMockConfig(),
+            $this->mockFormatterPluginManager
         );
 
         $this->assertSame(
@@ -3768,7 +3795,8 @@ class TableBuilderTest extends MockeryTestCase
             $this->getMockAuthService(),
             $this->getMockTranslator(),
             $this->getMockUrlHelperService(),
-            $this->getMockConfig()
+            $this->getMockConfig(),
+            $this->mockFormatterPluginManager
         );
 
         $this->assertSame(

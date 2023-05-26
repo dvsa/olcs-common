@@ -3,12 +3,16 @@
 /**
  * PI Report Name Test
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Service\Helper\DataHelperService;
+use Common\Service\Helper\UrlHelperService;
+use Common\Service\Table\Formatter\Name;
+use Common\Service\Table\Formatter\OrganisationLink;
+use Common\Service\Table\Formatter\PiReportName;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
-
-use Common\Service\Table\Formatter\PiReportName;
 
 /**
  * PI Report Name Test
@@ -17,6 +21,20 @@ use Common\Service\Table\Formatter\PiReportName;
  */
 class PiReportNameTest extends TestCase
 {
+    protected $urlHelper;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->urlHelper = m::mock(UrlHelperService::class);
+        $this->sut = new PiReportName(new OrganisationLink($this->urlHelper), new Name(new DataHelperService()));
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
+
     /**
      * Test the format method
      *
@@ -24,26 +42,19 @@ class PiReportNameTest extends TestCase
      */
     public function testFormat($data, $expected)
     {
-        $sm = m::mock()
-            ->shouldReceive('get')
-            ->with('Helper\Url')
-            ->andReturn(
-                m::mock()
-                    ->shouldReceive('fromRoute')
-                    ->with(
-                        'operator/business-details',
-                        [
-                            'organisation' => 456,
-                        ]
-                    )
-                    ->andReturn('ORG_URL')
-                    ->getMock()
+        $this->urlHelper
+            ->shouldReceive('fromRoute')
+            ->with(
+                'operator/business-details',
+                [
+                    'organisation' => 456,
+                ]
             )
-            ->getMock();
+            ->andReturn('ORG_URL');
 
         $this->assertEquals(
             $expected,
-            PiReportName::format($data, [], $sm)
+            $this->sut->format($data, [])
         );
     }
 

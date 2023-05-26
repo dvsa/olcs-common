@@ -3,8 +3,11 @@
 namespace Common\Service\Table;
 
 use Common\Service\Helper\UrlHelperService;
+use Common\Service\Table\Formatter\FormatterPluginManager;
+use Common\Service\Table\Formatter\FormatterPluginManagerInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\ServiceManager\ServiceLocatorInterface;
+use ReflectionClass;
 use ZfcRbac\Service\AuthorizationService;
 
 /**
@@ -231,6 +234,8 @@ class TableBuilder
      */
     private $urlParameterNameMap = [];
 
+    private FormatterPluginManager $formatterPluginManager;
+
     /**
      * @return array<string,string>
      */
@@ -276,13 +281,15 @@ class TableBuilder
         AuthorizationService $authService,
         Translator $translator,
         UrlHelperService $urlHelper,
-        array $applicationConfig
+        array $applicationConfig,
+        FormatterPluginManager $formatterPluginManager
     ) {
         $this->serviceLocator = $serviceLocator;
         $this->authService = $authService;
         $this->translator = $translator;
         $this->urlHelper = $urlHelper;
         $this->applicationConfig = $applicationConfig;
+        $this->formatterPluginManager = $formatterPluginManager;
     }
 
     /**
@@ -1013,8 +1020,10 @@ class TableBuilder
      */
     public function getConfigFromFile($name)
     {
-        if (!isset($this->applicationConfig['tables']['config'])
-            || empty($this->applicationConfig['tables']['config'])) {
+        if (
+            !isset($this->applicationConfig['tables']['config'])
+            || empty($this->applicationConfig['tables']['config'])
+        ) {
             throw new \Exception('Table config location not defined');
         }
 
@@ -1144,8 +1153,10 @@ class TableBuilder
             return $this->renderLayout('submission-section');
         }
 
-        if ((!isset($this->variables['within_form']) || $this->variables['within_form'] == false)
-            && isset($this->settings['crud'])) {
+        if (
+            (!isset($this->variables['within_form']) || $this->variables['within_form'] == false)
+            && isset($this->settings['crud'])
+        ) {
             return $this->renderLayout('crud');
         }
 
@@ -1204,7 +1215,8 @@ class TableBuilder
      */
     public function renderTotal()
     {
-        if ($this->getSetting('overrideTotal', false)
+        if (
+            $this->getSetting('overrideTotal', false)
             || !$this->shouldPaginate()
             && !$this->getSetting('showTotal', false)
         ) {
@@ -1218,7 +1230,7 @@ class TableBuilder
 
     public function renderCaption()
     {
-        return trim ($this->renderTotal() . ' ' . $this->getVariable('title'));
+        return trim($this->renderTotal() . ' ' . $this->getVariable('title'));
     }
 
     /**
@@ -1418,9 +1430,9 @@ class TableBuilder
                 );
                 $option = $this->replaceContent('{{[elements/limitLink]}}', $details);
 
-            $limitDetails = array('class' => $class, 'option' => $option);
+                $limitDetails = array('class' => $class, 'option' => $option);
 
-            $content .= $this->replaceContent('{{[elements/limitOption]}}', $limitDetails);
+                $content .= $this->replaceContent('{{[elements/limitOption]}}', $limitDetails);
         }
 
         return $content;
@@ -1566,7 +1578,8 @@ class TableBuilder
             }
         }
 
-        if ($this->contentType === self::CONTENT_TYPE_HTML
+        if (
+            $this->contentType === self::CONTENT_TYPE_HTML
             && isset($column['type'])
             && class_exists(__NAMESPACE__ . '\\Type\\' . $column['type'])
         ) {
@@ -1597,7 +1610,7 @@ class TableBuilder
         return $this->replaceContent($wrapper, $replacements);
     }
 
-    private function processBodyColumnAttributes($column, $customAttributes) : string
+    private function processBodyColumnAttributes($column, $customAttributes): string
     {
         $plainAttributes = '';
 
@@ -1705,23 +1718,34 @@ class TableBuilder
      */
     private function callFormatter($column, $data)
     {
-        if (is_string($column['formatter'])
-            && class_exists(__NAMESPACE__ . '\\Formatter\\' . $column['formatter'])) {
-            $className =  '\\' . __NAMESPACE__ . '\\Formatter\\' . $column['formatter'] . '::format';
+        if (is_string($column['formatter'])) {
+            // Remove the leading namespace separator if exists
+            $formatterClass = ltrim($column['formatter'], '\\');
 
-            $column['formatter'] = $className;
+            // Check if the formatter class contains a namespace
+            if (strpos($formatterClass, '\\') === false) {
+                // Append the namespace if it's missing
+                $formatterClass = '\\' . __NAMESPACE__ . '\\Formatter\\' . $formatterClass;
+            }
+
+            if (class_exists($formatterClass)) {
+                if ($this->formatterPluginManager->has($formatterClass)) {
+                    $column['formatter'] = $this->formatterPluginManager->get($formatterClass);
+                }
+            }
         }
 
-        if (is_object($column['formatter']) && $column['formatter'] instanceof Formatter\FormatterInterface) {
-            $column['formatter'] = array($column['formatter'], 'format');
-        }
-
-        if (is_callable($column['formatter'])) {
-            return call_user_func($column['formatter'], $data, $column, $this->serviceLocator);
+        if (is_object($column['formatter'])) {
+            if (method_exists($column['formatter'], 'format')) {
+                return $column['formatter']->format($data, $column);
+            } elseif ($column['formatter'] instanceof \Closure) {
+                return $column['formatter']($data, $column);
+            }
         }
 
         return '';
     }
+
 
     /**
      * Render an attribute string
@@ -2090,7 +2114,8 @@ class TableBuilder
             $updatedColumns = [];
 
             foreach ($this->getColumns() as $column) {
-                if (isset($column['type'])
+                if (
+                    isset($column['type'])
                     && in_array($column['type'], $typesToRemove)
                     && !(
                         isset($column['keepForReadOnly'])

@@ -3,25 +3,34 @@
 /**
  * Case Link
  */
+
 namespace Common\Service\Table\Formatter;
+
+use Common\Service\Helper\UrlHelperService;
 
 /**
  * Case Link
  *
  * @package Common\Service\Table\Formatter
  */
-class CaseLink implements FormatterInterface
+class CaseLink implements FormatterPluginManagerInterface
 {
+    private UrlHelperService $urlHelper;
+
+    public function __construct(UrlHelperService $urlHelper)
+    {
+        $this->urlHelper = $urlHelper;
+    }
+
     /**
      * Return a the case URL in a link format for a table.
      *
      * @param array $data
      * @param array $column
-     * @param \Laminas\ServiceManager\ServiceManager $sm
      *
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
         if (empty($data['id'])) {
             return '';
@@ -29,7 +38,7 @@ class CaseLink implements FormatterInterface
 
         return sprintf(
             '<a class="govuk-link" href="%s">%s</a>',
-            $sm->get('Helper\Url')->fromRoute(
+            $this->urlHelper->fromRoute(
                 'case',
                 [
                     'case' => $data['id']

@@ -2,13 +2,12 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
-use Mockery as m;
-use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Helper\UrlHelperService as UrlHelper;
+use Common\Service\Table\Formatter\LicenceApplication;
 use Common\View\Helper\Status as StatusHelper;
 use Laminas\View\HelperPluginManager as ViewPluginManager;
-use Common\Service\Table\Formatter\LicenceApplication;
-use CommonTest\Bootstrap;
+use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
  * Licence and application test
@@ -17,6 +16,22 @@ use CommonTest\Bootstrap;
  */
 class LicenceApplicationTest extends MockeryTestCase
 {
+    protected $urlHelper;
+    protected $viewHelperManager;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->urlHelper = m::mock(UrlHelper::class);
+        $this->viewHelperManager = m::mock(ViewPluginManager::class);
+        $this->sut = new LicenceApplication($this->urlHelper, $this->viewHelperManager);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
+
     /**
      * @dataProvider dpTestFormat
      *
@@ -67,24 +82,19 @@ class LicenceApplicationTest extends MockeryTestCase
             ->times($appTimes)
             ->andReturn($formattedAppStatus);
 
-        $urlHelperService = m::mock(UrlHelper::class);
-        $urlHelperService->shouldReceive('fromRoute')
+
+        $this->urlHelper->shouldReceive('fromRoute')
             ->with('licence', ['licence' => $licId])
             ->once()
             ->andReturn($licUrl);
-        $urlHelperService->shouldReceive('fromRoute')
+        $this->urlHelper->shouldReceive('fromRoute')
             ->with('lva-application', ['application' => $appId])
             ->times($appTimes)
             ->andReturn($appUrl);
 
-        $viewHelperManager = m::mock(ViewPluginManager::class);
-        $viewHelperManager->shouldReceive('get')->with('status')->once()->andReturn($statusService);
+        $this->viewHelperManager->shouldReceive('get')->with('status')->once()->andReturn($statusService);
 
-        $sm = Bootstrap::getServiceManager();
-        $sm->setService('Helper\Url', $urlHelperService);
-        $sm->setService('ViewHelperManager', $viewHelperManager);
-
-        $this->assertEquals($expected, LicenceApplication::format($row, [], $sm));
+        $this->assertEquals($expected, $this->sut->format($row, []));
     }
 
     /**

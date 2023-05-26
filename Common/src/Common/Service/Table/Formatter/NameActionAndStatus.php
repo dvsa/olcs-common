@@ -7,14 +7,13 @@
 namespace Common\Service\Table\Formatter;
 
 use Common\Util\Escape;
-use Laminas\ServiceManager\ServiceManager;
 
 /**
  * Name Action And Status formatter
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class NameActionAndStatus implements FormatterInterface
+class NameActionAndStatus implements FormatterPluginManagerInterface
 {
 
     public const BUTTON_FORMAT = '<button data-prevent-double-click="true" class="action-button-link" role="link" '
@@ -23,13 +22,12 @@ class NameActionAndStatus implements FormatterInterface
     /**
      * Format a name with default edit action & associated status
      *
-     * @param array          $data   data row
-     * @param array          $column column specification
-     * @param ServiceManager $sm     SM
+     * @param array $data   data row
+     * @param array $column column specification
      *
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
         $title = !empty($data['title']['description']) ? $data['title']['description'] . ' ' : '';
         $return = sprintf(

@@ -5,9 +5,11 @@
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\RefData;
+use Common\Service\Table\Formatter\Money;
 use Common\Service\Table\Formatter\TransactionAmountSum;
 
 /**
@@ -17,7 +19,6 @@ use Common\Service\Table\Formatter\TransactionAmountSum;
  */
 class TransactionAmountSumTest extends \PHPUnit\Framework\TestCase
 {
-
     /**
      * Test the format method
      *
@@ -28,7 +29,7 @@ class TransactionAmountSumTest extends \PHPUnit\Framework\TestCase
     public function testFormat($data, $expected)
     {
         $column = ['name' => 'amount'];
-        $this->assertSame($expected, TransactionAmountSum::format($data, $column));
+        $this->assertSame($expected, (new TransactionAmountSum(new Money()))->format($data, $column));
     }
 
     /**

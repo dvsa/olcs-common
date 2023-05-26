@@ -2,55 +2,63 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Common\Util\Escape;
-use Laminas\I18n\Translator\Translator;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 use Common\Service\Helper\UrlHelperService;
-use Common\View\Helper\Status as StatusHelper;
+use Common\Util\Escape;
+use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
+use Laminas\View\HelperPluginManager;
 
 /**
  * Bus reg number link
  *
  * @author Ian Lindsay <ian@hemera-business-services.co.uk>
  */
-class BusRegNumberLink implements FormatterInterface
+class BusRegNumberLink implements FormatterPluginManagerInterface
 {
-    const LINK_PATTERN = '<a class="govuk-link" href="%s">%s</a>';
-    const URL_ROUTE = 'licence/bus-details/service'; //internal bus reg service details page
-    const LABEL_TRANSLATION_KEY = 'ebsr-link-label';
-    const LABEL_COLOUR = 'orange';
+    private const LINK_PATTERN = '<a class="govuk-link" href="%s">%s</a>';
+    public const URL_ROUTE = 'licence/bus-details/service'; //internal bus reg service details page
+    public const LABEL_TRANSLATION_KEY = 'ebsr-link-label';
+    public const LABEL_COLOUR = 'orange';
+
+    protected TranslatorDelegator $translator;
+    protected $viewHelperManager;
+    protected UrlHelperService $urlHelper;
+
+    /**
+     * @param TranslatorDelegator $translator
+     * @param $viewHelperManager
+     * @param UrlHelperService    $urlHelper
+     */
+    public function __construct(TranslatorDelegator $translator, HelperPluginManager $viewHelperManager, UrlHelperService $urlHelper)
+    {
+        $this->translator = $translator;
+        $this->viewHelperManager = $viewHelperManager;
+        $this->urlHelper = $urlHelper;
+    }
 
     /**
      * Formats the bus registration number with optional EBSR label
      *
-     * @param array                        $data   data array
-     * @param array                        $column column info
-     * @param null|ServiceLocatorInterface $sm     service locator
+     * @param array $data   data array
+     * @param array $column column info
      *
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
         $outputStatus = '';
 
         //if app is EBSR add a label
         if ($data['isTxcApp']) {
-            /** @var Translator $translator */
-            $translator = $sm->get('translator');
-
             $status = [
                 'colour' => self::LABEL_COLOUR,
-                'value' => $translator->translate(self::LABEL_TRANSLATION_KEY),
+                'value' => $this->translator->translate(self::LABEL_TRANSLATION_KEY),
             ];
 
-            /** @var StatusHelper $statusHelper */
-            $statusHelper = $sm->get('ViewHelperManager')->get('status');
+            $statusHelper = $this->viewHelperManager->get('status');
             $outputStatus = $statusHelper->__invoke($status);
         }
 
-        /** @var UrlHelperService $urlHelper */
-        $urlHelper = $sm->get('Helper\Url');
-        $url = $urlHelper->fromRoute(self::URL_ROUTE, ['busRegId' => $data['id']], [], true);
+        $url = $this->urlHelper->fromRoute(self::URL_ROUTE, ['busRegId' => $data['id']], [], true);
 
         return sprintf(self::LINK_PATTERN, $url, Escape::html($data['regNo'])) . ' ' . $outputStatus;
     }

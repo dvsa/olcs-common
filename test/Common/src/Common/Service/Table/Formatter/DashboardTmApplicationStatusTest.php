@@ -2,36 +2,33 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Service\Table\Formatter\DashboardTmApplicationStatus;
+use Laminas\View\HelperPluginManager;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Common\Service\Table\Formatter\DashboardTmApplicationStatus;
 
 class DashboardTmApplicationStatusTest extends MockeryTestCase
 {
-    private $sut;
+    protected $sut;
+    protected $viewHelperManager;
 
-    /* @var \Mockery\MockInterface */
-    private $sm;
-
-    /* @var \Mockery\MockInterface */
-    private $mockViewHelper;
-
-    public function setUp(): void
+    protected function setUp(): void
     {
-        $this->sut = new DashboardTmApplicationStatus();
+        $this->viewHelperManager = m::mock(HelperPluginManager::class);
+        $this->sut = new DashboardTmApplicationStatus($this->viewHelperManager);
+    }
 
-        $this->mockViewHelper = m::mock();
-
-        $this->sm = m::mock('StdClass');
-        $this->sm->shouldReceive('get->get')
-            ->with('transportManagerApplicationStatus')
-            ->once()
-            ->andReturn($this->mockViewHelper);
+    protected function tearDown(): void
+    {
+        m::close();
     }
 
     public function testFormat()
     {
-        $this->mockViewHelper->shouldReceive('render')
+        $tmHelper = m::mock();
+        $this->viewHelperManager->shouldReceive('get')->with('transportManagerApplicationStatus')->once()->andReturn($tmHelper);
+
+        $tmHelper->shouldReceive('render')
             ->with(656, 'FooBar')
             ->once()
             ->andReturn('HTML');
@@ -45,6 +42,6 @@ class DashboardTmApplicationStatusTest extends MockeryTestCase
         $column = [];
         $expected = 'HTML';
 
-        $this->assertEquals($expected, $this->sut->format($data, $column, $this->sm));
+        $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 }

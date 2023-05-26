@@ -8,9 +8,12 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Formatter\TmApplicationManagerType;
-use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
+use Laminas\Mvc\Application;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
  * TmApplicationManagerType Formatter Test
@@ -19,9 +22,27 @@ use Mockery as m;
  */
 class TmApplicationManagerTypeTest extends MockeryTestCase
 {
+    protected $application;
+    protected $urlHelper;
+    protected $translator;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->urlHelper = m::mock(UrlHelperService::class);
+        $this->translator = m::mock(TranslatorDelegator::class);
+        $this->application = m::mock(Application::class);
+        $this->sut = new TmApplicationManagerType($this->application, $this->urlHelper, $this->translator);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
+
     /**
      * Test formatter
-     * 
+     *
      * @group tmApplicationManagerType
      * @dataProvider formatProvider
      */
@@ -33,52 +54,34 @@ class TmApplicationManagerTypeTest extends MockeryTestCase
             'transportManager' => 1
         ];
 
-        $mockTranslator = m::mock();
-
-        $sm = m::mock()
-            ->shouldReceive('get')
-            ->with('Application')
+        $this->application
+            ->shouldReceive('getMvcEvent')
             ->andReturn(
                 m::mock()
-                ->shouldReceive('getMvcEvent')
-                ->andReturn(
-                    m::mock()
                     ->shouldReceive('getRouteMatch')
                     ->andReturn(
                         m::mock()
-                        ->shouldReceive('getParam')
-                        ->with('transportManager')
-                        ->andReturn(1)
-                        ->getMock()
+                            ->shouldReceive('getParam')
+                            ->with('transportManager')
+                            ->andReturn(1)
+                            ->getMock()
                     )
                     ->getMock()
-                )
-                ->getMock()
-            )
-            ->once()
-            ->shouldReceive('get')
-            ->with('Helper\Url')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('fromRoute')
-                ->with(null, $routeParams)
-                ->andReturn('url')
-                ->getMock()
-            )
-            ->once()
-            ->shouldReceive('get')
-            ->with('translator')
-            ->andReturn($mockTranslator)
-            ->getMock();
+            );
+
+        $this->urlHelper
+            ->shouldReceive('fromRoute')
+            ->with(null, $routeParams)
+            ->andReturn('url');
 
         if ($data['action'] !== '') {
-            $mockTranslator->shouldReceive('translate')
+            $this->translator->shouldReceive('translate')
                 ->with($message)
                 ->andReturn($status)
                 ->getMock();
         }
 
-        $this->assertEquals($expected, TmApplicationManagerType::format($data, [], $sm));
+        $this->assertEquals($expected, $this->sut->format($data, []));
     }
 
     public function formatProvider()

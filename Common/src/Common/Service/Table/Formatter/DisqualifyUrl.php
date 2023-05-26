@@ -2,62 +2,77 @@
 
 namespace Common\Service\Table\Formatter;
 
+use Common\Service\Helper\UrlHelperService;
+use Laminas\Http\Request;
+use Laminas\Mvc\Router\Http\TreeRouteStack;
+
 /**
  * Disqualify URL formatter
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class DisqualifyUrl implements FormatterInterface
+class DisqualifyUrl implements FormatterPluginManagerInterface
 {
+    private UrlHelperService $urlHelper;
+    private TreeRouteStack $router;
+    private Request $request;
+
+    /**
+     * @param UrlHelperService $urlHelper
+     * @param TreeRouteStack   $router
+     * @param Request          $request
+     */
+    public function __construct(UrlHelperService $urlHelper, TreeRouteStack $router, Request $request)
+    {
+        $this->urlHelper = $urlHelper;
+        $this->router = $router;
+        $this->request = $request;
+    }
     /**
      * Format a disqualify URL
      *
-     * @param array                               $row            row
-     * @param array                               $column         column
-     * @param \Laminas\ServiceManager\ServiceManager $serviceLocator service locator
+     * @param array $row    row
+     * @param array $column column
      *
      * @return string
      */
-    public static function format($row, $column = [], $serviceLocator = null)
+    public function format($row, $column = [])
     {
-        $router           = $serviceLocator->get('router');
-        $request          = $serviceLocator->get('request');
-        $urlHelper        = $serviceLocator->get('Helper\Url');
-        $routeMatch       = $router->match($request);
+        $routeMatch       = $this->router->match($this->request);
         $matchedRouteName = $routeMatch->getMatchedRouteName();
-        $query            = $request->getQuery()->toArray();
+        $query            = $this->request->getQuery()->toArray();
         $params           = $routeMatch->getParams();
 
         $url = '';
         switch ($matchedRouteName) {
             case 'lva-variation/people':
-                $url = $urlHelper->fromRoute(
+                $url = $this->urlHelper->fromRoute(
                     'disqualify-person/variation',
                     [
-                        'variation'    => $params['application'],
-                        'person'       => $row['id'],
+                    'variation'    => $params['application'],
+                    'person'       => $row['id'],
                     ],
                     ['query' => $query],
                     true
                 );
                 break;
             case 'lva-licence/people':
-                $url = $urlHelper->fromRoute(
+                $url = $this->urlHelper->fromRoute(
                     'disqualify-person/licence',
                     [
-                        'licence'      => $params['licence'],
-                        'person'       => $row['id'],
+                    'licence'      => $params['licence'],
+                    'person'       => $row['id'],
                     ],
                     ['query' => $query],
                     true
                 );
                 break;
             case 'lva-application/people':
-                $url = $urlHelper->fromRoute(
+                $url = $this->urlHelper->fromRoute(
                     'disqualify-person/application',
                     [
-                        'application'  => $params['application'],
-                        'person'       => $row['id'],
+                    'application'  => $params['application'],
+                    'person'       => $row['id'],
                     ],
                     ['query' => $query],
                     true

@@ -4,44 +4,45 @@ namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Helper\DataHelperService;
 use Common\Service\Table\Formatter\Translate;
-use Laminas\I18n\Translator\Translator;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
+use Mockery as m;
 
 /**
  * @covers Common\Service\Table\Formatter\Translate
  */
 class TranslateTest extends \PHPUnit\Framework\TestCase
 {
+    protected $translator;
+    protected $dataHelper;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->translator = m::mock(TranslatorDelegator::class);
+        $this->dataHelper = m::mock(DataHelperService::class);
+        $this->sut = new Translate($this->translator, $this->dataHelper);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
+
     /**
      * @dataProvider provider
      */
     public function testFormat($data, $column, $expected)
     {
-        $mockTranslator = $this->createPartialMock(Translator::class, ['translate']);
-
-        $mockTranslator->expects($this->any())
-            ->method('translate')
-            ->will(
-                $this->returnCallback(
-                    function ($string) {
-                        return strtoupper($string);
-                    }
-                )
+        $this->translator->shouldReceive('translate')
+            ->andReturnUsing(
+                function ($string) {
+                    return strtoupper($string);
+                }
             );
 
-        $hldData = new DataHelperService();
+        $this->dataHelper->shouldReceive('fetchNestedData')->andReturn($expected);
 
-        $sm = $this->createMock(ServiceLocatorInterface::class);
-        $sm->expects($this->any())
-            ->method('get')
-            ->willReturnMap(
-                [
-                    ['translator', $mockTranslator],
-                    ['Helper\Data', $hldData],
-                ]
-            );
-
-        $this->assertEquals($expected, Translate::format($data, $column, $sm));
+        $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 
     /**TaskIdentifierTest

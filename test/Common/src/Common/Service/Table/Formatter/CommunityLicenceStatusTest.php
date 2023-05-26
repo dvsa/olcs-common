@@ -2,10 +2,12 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
-use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Mockery as m;
+use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Formatter\CommunityLicenceStatus;
-use CommonTest\Bootstrap;
+use Laminas\Http\Request;
+use Laminas\Mvc\Router\Http\TreeRouteStack;
+use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
  * Community licence status formatter test
@@ -14,45 +16,38 @@ use CommonTest\Bootstrap;
  */
 class CommunityLicenceStatusTest extends MockeryTestCase
 {
-    protected $sm;
-
-    protected $mockRouteMatch;
-
-    protected $mockUrlHelper;
+    protected $urlHelper;
+    protected $router;
+    protected $request;
 
     public function setUp(): void
     {
-        parent::setUp();
-
-        $this->sm = Bootstrap::getServiceManager();
+        $this->urlHelper = m::mock(UrlHelperService::class);
+        $this->router = m::mock(TreeRouteStack::class);
+        $this->request = m::mock(Request::class);
+        $this->sut = new CommunityLicenceStatus($this->urlHelper, $this->router, $this->request);
 
         $this->mockRouteMatch = m::mock('\Laminas\Mvc\Router\RouteMatch')
             ->shouldReceive('getMatchedRouteName')
             ->andReturn('route')
             ->getMock();
 
-        $this->mockUrlHelper = m::mock();
-        $mockRequest = m::mock('\Laminas\Stdlib\RequestInterface')
-            ->shouldReceive('getQuery')
+
+        $this->request->shouldReceive('getQuery')
             ->andReturn(
                 m::mock()
-                ->shouldReceive('toArray')
-                ->once()
-                ->andReturn(['foo' => 'bar'])
-                ->getMock()
+                    ->shouldReceive('toArray')
+                    ->once()
+                    ->andReturn(['foo' => 'bar'])
+                    ->getMock()
             )
-            ->once()
-            ->getMock();
+            ->once();
 
-        $mockRouter = m::mock()
+        $this->router
             ->shouldReceive('match')
-            ->with($mockRequest)
+            ->with($this->request)
             ->andReturn($this->mockRouteMatch)
             ->getMock();
-
-        $this->sm->setService('router', $mockRouter);
-        $this->sm->setService('request', $mockRequest);
-        $this->sm->setService('Helper\Url', $this->mockUrlHelper);
     }
 
     /**
@@ -62,7 +57,7 @@ class CommunityLicenceStatusTest extends MockeryTestCase
      */
     public function testFormat($data, $url)
     {
-        $this->mockUrlHelper
+        $this->urlHelper
             ->shouldReceive('fromRoute')
             ->with('route', ['child_id' => $data['id'], 'action' => 'edit'], ['query' => ['foo' => 'bar']], true)
             ->andReturn('the_url')
@@ -70,7 +65,7 @@ class CommunityLicenceStatusTest extends MockeryTestCase
 
         $this->assertEquals(
             $url,
-            CommunityLicenceStatus::format($data, [], $this->sm)
+            $this->sut->format($data, [])
         );
     }
 

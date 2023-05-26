@@ -2,7 +2,10 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Formatter\TaskDescription;
+use Laminas\Http\Request;
+use Laminas\Mvc\Router\Http\TreeRouteStack;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
@@ -11,6 +14,24 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class TaskDescriptionTest extends MockeryTestCase
 {
+    protected $urlHelper;
+    protected $router;
+    protected $request;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->urlHelper = m::mock(UrlHelperService::class);
+        $this->router = m::mock(TreeRouteStack::class);
+        $this->request = m::mock(Request::class);
+        $this->mockRouteMatch = m::mock('\Laminas\Mvc\Router\RouteMatch');
+        $this->sut = new TaskDescription($this->router, $this->request, $this->urlHelper);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
     /**
      * @dataProvider dpTestFormat
      */
@@ -22,25 +43,30 @@ class TaskDescriptionTest extends MockeryTestCase
         ];
         $query = ['q1' => 1];
 
-        $sm = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class);
-        $sm->shouldReceive('get->match->getMatchedRouteName')
+        $this->router->shouldReceive('match')
+            ->with($this->request)
+            ->andReturn($this->mockRouteMatch);
+        $this->mockRouteMatch->shouldReceive('getMatchedRouteName')
             ->withNoArgs()
             ->andReturn($matchedRouteName);
-        $sm->shouldReceive('get->match->getParams')
+
+        $this->mockRouteMatch->shouldReceive('getParams')
             ->withNoArgs()
             ->andReturn($params);
-        $sm->shouldReceive('get->fromRoute')
+
+        $this->urlHelper->shouldReceive('fromRoute')
             ->with(
                 'task_action',
                 $expected,
                 ['query' => $query]
             )
             ->andReturn('URL');
-        $sm->shouldReceive('get->getQuery->toArray')
+
+        $this->request->shouldReceive('getQuery->toArray')
             ->withNoArgs()
             ->andReturn($query);
 
-        $this->assertEquals('<a href="URL" class="govuk-link js-modal-ajax">DESC</a>', TaskDescription::format($data, [], $sm));
+        $this->assertEquals('<a href="URL" class="govuk-link js-modal-ajax">DESC</a>', $this->sut->format($data, []));
     }
 
     public function dpTestFormat()

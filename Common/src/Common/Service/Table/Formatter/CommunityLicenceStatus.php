@@ -8,40 +8,57 @@
 
 namespace Common\Service\Table\Formatter;
 
+use Common\Service\Helper\UrlHelperService;
+use Laminas\Http\Request;
+use Laminas\Mvc\Router\Http\TreeRouteStack;
+
 /**
  * Community Licence status formatter
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class CommunityLicenceStatus implements FormatterInterface
+class CommunityLicenceStatus implements FormatterPluginManagerInterface
 {
+    private UrlHelperService $urlHelper;
+    private TreeRouteStack $router;
+    private Request $request;
+
+    /**
+     * @param UrlHelperService $urlHelper
+     * @param TreeRouteStack   $router
+     * @param Request          $request
+     */
+    public function __construct(UrlHelperService $urlHelper, TreeRouteStack $router, Request $request)
+    {
+        $this->urlHelper = $urlHelper;
+        $this->router = $router;
+        $this->request = $request;
+    }
+
     /**
      * Format
      *
-     * @param array                               $data   data
-     * @param array                               $column column
-     * @param \Laminas\ServiceManager\ServiceManager $sm     service manager
+     * @param array $data   data
+     * @param array $column column
      *
      * @return string
      */
-    public static function format($data, $column = [], $sm = null)
+    public function format($data, $column = [])
     {
-        $urlHelper  = $sm->get('Helper\Url');
-        $router     = $sm->get('router');
-        $request    = $sm->get('request');
-        $routeMatch = $router->match($request);
+
+        $routeMatch = $this->router->match($this->request);
         $matchedRouteName = $routeMatch->getMatchedRouteName();
-        $url = $urlHelper->fromRoute(
+        $url = $this->urlHelper->fromRoute(
             $matchedRouteName,
             ['child_id' => $data['id'], 'action' => 'edit'],
-            ['query' => $request->getQuery()->toArray()],
+            ['query' => $this->request->getQuery()->toArray()],
             true
         );
 
         $futureSuspension = $data['futureSuspension'];
 
         if ($futureSuspension && isset($futureSuspension['startDate']) && isset($futureSuspension['endDate'])) {
-            return '<a class="govuk-link" href="'. $url . '">' .
+            return '<a class="govuk-link" href="' . $url . '">' .
                 'Suspension due: ' .
                 self::formatDate($futureSuspension['startDate']) .
                 ' to ' .
@@ -50,7 +67,7 @@ class CommunityLicenceStatus implements FormatterInterface
         }
 
         if ($futureSuspension && isset($futureSuspension['startDate']) && !isset($futureSuspension['endDate'])) {
-            return '<a class="govuk-link" href="'. $url . '">' .
+            return '<a class="govuk-link" href="' . $url . '">' .
                 'Suspension due: ' .
                 self::formatDate($futureSuspension['startDate']) .
                 '</a>';
@@ -59,7 +76,7 @@ class CommunityLicenceStatus implements FormatterInterface
         $currentSuspension = $data['currentSuspension'];
 
         if ($currentSuspension && isset($currentSuspension['startDate']) && isset($currentSuspension['endDate'])) {
-            return '<a class="govuk-link" href="'. $url . '">' .
+            return '<a class="govuk-link" href="' . $url . '">' .
                 'Suspended: ' .
                 self::formatDate($currentSuspension['startDate']) .
                 ' to ' .
@@ -68,7 +85,7 @@ class CommunityLicenceStatus implements FormatterInterface
         }
 
         if ($currentSuspension && isset($currentSuspension['startDate']) && !isset($currentSuspension['endDate'])) {
-            return '<a class="govuk-link" href="'. $url . '">' .
+            return '<a class="govuk-link" href="' . $url . '">' .
                 'Suspended: ' .
                 self::formatDate($currentSuspension['startDate']) .
                 '</a>';
@@ -96,6 +113,6 @@ class CommunityLicenceStatus implements FormatterInterface
      */
     private static function formatDate($date)
     {
-        return date(\DATE_FORMAT, strtotime($date));
+        return date('d/m/Y', strtotime($date));
     }
 }

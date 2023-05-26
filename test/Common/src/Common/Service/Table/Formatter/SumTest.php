@@ -9,8 +9,6 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\Sum;
-use Laminas\I18n\Translator\Translator;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Sum formatter test
@@ -29,14 +27,7 @@ class SumTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormat($data, $column, $expected)
     {
-        $mockTranslator = $this->createPartialMock(Translator::class, array('translate'));
-
-        $sm = $this->createMock(ServiceLocatorInterface::class);
-        $sm->expects($this->any())
-            ->method('get')
-            ->with('translator')
-            ->will($this->returnValue($mockTranslator));
-        $this->assertSame($expected, Sum::format($data, $column, $sm));
+        $this->assertSame($expected, (new Sum())->format($data, $column));
     }
 
     /**
@@ -46,39 +37,39 @@ class SumTest extends \PHPUnit\Framework\TestCase
      */
     public function provider()
     {
-        return array(
-            array(array(), array(), '0'),
-            array(array(), array('name' => 'subTotal'), '0'),
-            array(array(array('subTotal' => 'A'), array('subTotal' => 'B')), array('name' => 'subTotal'), '0'),
-            array(array(array('subTotal' => 5)), array('name' => 'subTotal'), '5'),
-            array(array(array('subTotal' => 5), array('subTotal' => 7)), array('name' => 'subTotal'), '12'),
-            array(
-                array(
-                    array('subTotal' => 5),
-                    array('subTotal' => 7),
-                    array('subTotal' => 'A')
-                ),
-                array('name' => 'subTotal'),
+        return [
+            [[], [], '0'],
+            [[], ['name' => 'subTotal'], '0'],
+            [[['subTotal' => 'A'], ['subTotal' => 'B']], ['name' => 'subTotal'], '0'],
+            [[['subTotal' => 5]], ['name' => 'subTotal'], '5'],
+            [[['subTotal' => 5], ['subTotal' => 7]], ['name' => 'subTotal'], '12'],
+            [
+                [
+                    ['subTotal' => 5],
+                    ['subTotal' => 7],
+                    ['subTotal' => 'A']
+                ],
+                ['name' => 'subTotal'],
                 '12'
-            ),
-            array(
-                array(
-                    array('subTotal' => 5),
-                    array('subTotal' => 7),
-                    array('subTotal' => 95)
-                ),
-                array('name' => 'subTotal'),
+            ],
+            [
+                [
+                    ['subTotal' => 5],
+                    ['subTotal' => 7],
+                    ['subTotal' => 95]
+                ],
+                ['name' => 'subTotal'],
                 '107'
-            ),
-            array(
-                array(
-                    array('subTotal' => '5.50'),
-                    array('subTotal' => '7'),
-                    array('subTotal' => '95.21')
-                ),
-                array('name' => 'subTotal'),
+            ],
+            [
+                [
+                    ['subTotal' => '5.50'],
+                    ['subTotal' => '7'],
+                    ['subTotal' => '95.21']
+                ],
+                ['name' => 'subTotal'],
                 '107.71'
-            ),
-        );
+            ],
+        ];
     }
 }

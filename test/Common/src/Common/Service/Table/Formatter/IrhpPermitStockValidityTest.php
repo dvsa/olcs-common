@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Irhp Permit Stock Validity formatter test
  *
@@ -7,10 +8,18 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Service\Table\Formatter\Date;
 use Common\Service\Table\Formatter\IrhpPermitStockValidity;
 
 class IrhpPermitStockValidityTest extends \PHPUnit\Framework\TestCase
 {
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->sut = new IrhpPermitStockValidity(new Date());
+    }
+
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
@@ -29,7 +38,7 @@ class IrhpPermitStockValidityTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormat($data, $column, $expected)
     {
-        $this->assertEquals($expected, IrhpPermitStockValidity::format($data, $column));
+        $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 
     /**

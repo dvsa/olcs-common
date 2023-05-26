@@ -13,19 +13,24 @@ namespace Common\Service\Table\Formatter;
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class FeeNoAndStatus implements FormatterInterface
+class FeeNoAndStatus implements FormatterPluginManagerInterface
 {
+    private FeeStatus $feeStatusFormatter;
+
+    public function __construct(FeeStatus $feeStatusFormatter)
+    {
+        $this->feeStatusFormatter = $feeStatusFormatter;
+    }
     /**
      * Format a fee status
      *
-     * @param array $row
-     * @param array $column
-     * @param \Laminas\ServiceManager\ServiceManager $serviceLocator
-     * @return string
+     * @param      array $row
+     * @param      array $column
+     * @return     string
      * @inheritdoc
      */
-    public static function format($row, $column = null, $serviceLocator = null)
+    public function format($row, $column = null)
     {
-        return $row['id'] . ' ' . FeeStatus::format($row);
+        return $row['id'] . ' ' . $this->feeStatusFormatter->format($row);
     }
 }

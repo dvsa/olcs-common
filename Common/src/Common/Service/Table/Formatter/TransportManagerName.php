@@ -2,7 +2,8 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Common\Service\Helper\UrlHelperService;
+use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 
 /**
  * TransportManagerName Formatter
@@ -11,18 +12,30 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
  */
 class TransportManagerName extends Name
 {
+    private UrlHelperService $urlHelper;
+    private TranslatorDelegator $translator;
+
+    /**
+     * @param UrlHelperService    $urlHelperService
+     * @param TranslatorDelegator $translator
+     */
+    public function __construct(UrlHelperService $urlHelperService, TranslatorDelegator $translator)
+    {
+        $this->urlHelper = $urlHelperService;
+        $this->translator = $translator;
+    }
+
     /**
      * Format
      *
-     * @param array                   $data   Row Data
-     * @param array                   $column Col params
-     * @param ServiceLocatorInterface $sm     Service manager
+     * @param array $data   Row Data
+     * @param array $column Col params
      *
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
-        $name = parent::format($data['name'], $column, $sm);
+        $name = parent::format($data['name'], $column);
 
         if (!isset($column['internal']) || (!isset($column['lva']))) {
             return $name;
@@ -36,15 +49,15 @@ class TransportManagerName extends Name
                 case 'licence':
                     $html = sprintf(
                         '<a class="govuk-link" href="%s">%s</a>',
-                        static::getInternalUrl($data, $sm),
+                        static::getInternalUrl($data),
                         $name
                     );
                     break;
                 case 'variation':
                     $html = sprintf(
                         '%s <a class="govuk-link" href="%s">%s</a>',
-                        static::getActionName($data, $sm),
-                        static::getInternalUrl($data, $sm),
+                        static::getActionName($data),
+                        static::getInternalUrl($data),
                         $name
                     );
                     break;
@@ -60,14 +73,14 @@ class TransportManagerName extends Name
                     if (isset($data['action']) && ($data['action'] == 'A' || $data['action'] == 'U')) {
                         $html = sprintf(
                             '%s <a class="govuk-link" href="%s">%s</a>',
-                            static::getActionName($data, $sm),
-                            static::getExternalUrl($data, $sm, $column['lva']),
+                            static::getActionName($data),
+                            static::getExternalUrl($data, $column['lva']),
                             $name
                         );
                     } else {
                         $html = sprintf(
                             '%s %s',
-                            static::getActionName($data, $sm),
+                            static::getActionName($data),
                             $name
                         );
                     }
@@ -75,7 +88,7 @@ class TransportManagerName extends Name
                 case 'application':
                     $html = sprintf(
                         '<a class="govuk-link" href="%s">%s</a>',
-                        static::getExternalUrl($data, $sm, $column['lva']),
+                        static::getExternalUrl($data, $column['lva']),
                         $name
                     );
                     break;
@@ -88,18 +101,15 @@ class TransportManagerName extends Name
     /**
      * Get URL for the Transport Managers name
      *
-     * @param array                   $data Row Data
-     * @param ServiceLocatorInterface $sm   Service manager
-     * @param string                  $lva  Type (Lic|Var|App)
+     * @param array  $data Row Data
+     * @param string $lva  Type (Lic|Var|App)
      *
      * @return string
      */
-    protected static function getExternalUrl($data, $sm, $lva)
+    protected function getExternalUrl($data, $lva)
     {
         $route = 'lva-' . $lva . '/transport_manager_details';
-
-        $urlHelper = $sm->get('Helper\Url');
-        $url = $urlHelper->fromRoute($route, ['action' => null, 'child_id' => $data['id']], [], true);
+        $url = $this->urlHelper->fromRoute($route, ['action' => null, 'child_id' => $data['id']], [], true);
 
         return $url;
     }
@@ -107,16 +117,14 @@ class TransportManagerName extends Name
     /**
      * Get URL for the Transport Managers name
      *
-     * @param array                   $data Row Data
-     * @param ServiceLocatorInterface $sm   Service manager
+     * @param array $data Row Data
      *
      * @return string
      */
-    protected static function getInternalUrl($data, $sm)
+    protected function getInternalUrl($data)
     {
         $transportManagerId = $data['transportManager']['id'];
-        $urlHelper = $sm->get('Helper\Url');
-        $url = $urlHelper->fromRoute(
+        $url = $this->urlHelper->fromRoute(
             'transport-manager/details',
             ['transportManager' => $transportManagerId],
             [],
@@ -129,12 +137,11 @@ class TransportManagerName extends Name
     /**
      * Convert action eg "U" into its description
      *
-     * @param string                  $data Row Data
-     * @param ServiceLocatorInterface $sm   Service Manager
+     * @param string $data Row Data
      *
      * @return string Description
      */
-    protected static function getActionName($data, $sm)
+    protected function getActionName($data)
     {
         $statusMaps = [
             'U' => 'tm_application.table.status.updated',
@@ -147,8 +154,6 @@ class TransportManagerName extends Name
             return '';
         }
 
-        $translator = $sm->get('Helper\Translation');
-
-        return $translator->translate($statusMaps[$data['action']]);
+        return $this->translator->translate($statusMaps[$data['action']]);
     }
 }

@@ -7,6 +7,8 @@
  */
 namespace CommonTest\Service\Review;
 
+use Common\Service\Helper\DataHelperService;
+use Common\Service\Table\Formatter\Address;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Helper\TranslationHelperService;
@@ -39,10 +41,11 @@ class LicenceConditionsUndertakingsReviewServiceTest extends MockeryTestCase
             ->andReturn($this->mockTranslationHelper);
 
         $this->mockConditionsUndertakings = m::mock(ConditionsUndertakingsReviewService::class);
-        
+
         $this->sut = new LicenceConditionsUndertakingsReviewService(
             $abstractReviewServiceServices,
-            $this->mockConditionsUndertakings
+            $this->mockConditionsUndertakings,
+            new Address(new DataHelperService())
         );
     }
 

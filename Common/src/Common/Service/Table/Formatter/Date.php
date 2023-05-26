@@ -13,20 +13,19 @@ namespace Common\Service\Table\Formatter;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class Date implements FormatterInterface
+class Date implements FormatterPluginManagerInterface
 {
     /**
      * Format a date
      *
-     * @param array $data
-     * @param array $column
-     * @param \Laminas\ServiceManager\ServiceManager $sm
+     * @param  array $data
+     * @param  array $column
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
         if (!isset($column['dateformat'])) {
-            $column['dateformat'] = \DATE_FORMAT;
+            $column['dateformat'] = 'd/m/Y';
         }
 
         if (isset($data[$column['name']]) && !is_null($data[$column['name']])) {

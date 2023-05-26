@@ -7,13 +7,21 @@ use Common\Service\Helper\UrlHelperService as UrlHelper;
 use Common\Service\Table\Formatter\IrhpPermitNumberInternal;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * IrhpPermitNumberInternal test
  */
 class IrhpPermitNumberInternalTest extends MockeryTestCase
 {
+    protected $urlHelper;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->urlHelper = m::mock(UrlHelper::class);
+        $this->sut = new IrhpPermitNumberInternal($this->urlHelper);
+    }
+
     public function testFormat()
     {
         $licenceId = 200;
@@ -45,19 +53,14 @@ class IrhpPermitNumberInternalTest extends MockeryTestCase
         ];
         $expectedOutput = '<a class="govuk-link" href="INTERNAL_IRHP_URL">4&gt;</a>'; //escaped as proved by &gt;
 
-        $urlHelper = m::mock(UrlHelper::class);
-        $urlHelper->shouldReceive('fromRoute')
+        $this->urlHelper->shouldReceive('fromRoute')
             ->with('licence/irhp-permits/permit', $expectedParams, $expectedOptions)
             ->once()
             ->andReturn('INTERNAL_IRHP_URL');
 
-        $sm = m::mock(ServiceLocatorInterface::class);
-        $sm->shouldReceive('get')->once()->with('Helper\Url')->andReturn($urlHelper);
-
-        $sut = new IrhpPermitNumberInternal();
         $this->assertEquals(
             $expectedOutput,
-            $sut->format($row, null, $sm)
+            $this->sut->format($row, null)
         );
     }
 }

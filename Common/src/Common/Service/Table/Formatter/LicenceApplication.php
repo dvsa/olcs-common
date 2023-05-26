@@ -2,37 +2,43 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Common\Util\Escape;
+use Common\Service\Helper\UrlHelperService;
 use Common\Service\Helper\UrlHelperService as UrlHelper;
+use Common\Util\Escape;
 use Common\View\Helper\Status as StatusHelper;
-use Laminas\ServiceManager\ServiceManager;
+use Laminas\View\HelperPluginManager;
 
 /**
  * LicenceApplication formatter
  *
  * @author Ian Lindsay <ian@hemera-business-services.co.uk>
  */
-class LicenceApplication implements FormatterInterface
+class LicenceApplication implements FormatterPluginManagerInterface
 {
-    const LINK_WITH_STATUS = '<a class="govuk-link" href="%s">%s</a>%s';
+    private const LINK_WITH_STATUS = '<a class="govuk-link" href="%s">%s</a>%s';
+    private UrlHelper $urlHelper;
+    private HelperPluginManager $viewHelperManager;
+
+    public function __construct(UrlHelperService $urlHelper, HelperPluginManager $viewHelperManager)
+    {
+        $this->urlHelper = $urlHelper;
+        $this->viewHelperManager = $viewHelperManager;
+    }
 
     /**
      * Format a cell with links to licence and application
      *
-     * @param array          $row            row of data
-     * @param array          $column         column
-     * @param ServiceManager $serviceLocator service locator
+     * @param array $row    row of data
+     * @param array $column column
      *
      * @return string
      */
-    public static function format($row, $column = null, $serviceLocator = null)
+    public function format($row, $column = null)
     {
         /**
-         * @var UrlHelper    $urlHelper
          * @var StatusHelper $statusHelper
          */
-        $urlHelper = $serviceLocator->get('Helper\Url');
-        $statusHelper = $serviceLocator->get('ViewHelperManager')->get('status');
+        $statusHelper = $this->viewHelperManager->get('status');
 
         $licenceStatus = [
             'id' => $row['licStatus'],
@@ -41,7 +47,7 @@ class LicenceApplication implements FormatterInterface
 
         $licenceLink = sprintf(
             self::LINK_WITH_STATUS,
-            $urlHelper->fromRoute('licence', ['licence' => $row['licId']]),
+            $this->urlHelper->fromRoute('licence', ['licence' => $row['licId']]),
             Escape::html($row['licNo']),
             $statusHelper->__invoke($licenceStatus)
         );
@@ -54,7 +60,7 @@ class LicenceApplication implements FormatterInterface
 
             $appLink = sprintf(
                 self::LINK_WITH_STATUS,
-                $urlHelper->fromRoute('lva-application', ['application' => $row['appId']]),
+                $this->urlHelper->fromRoute('lva-application', ['application' => $row['appId']]),
                 Escape::html($row['appId']),
                 $statusHelper->__invoke($appStatus)
             );

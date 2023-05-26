@@ -2,16 +2,30 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Service\Helper\UrlHelperService;
+use Common\Service\Table\Formatter\EbsrDocumentLink;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Common\Service\Table\Formatter\EbsrDocumentLink;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * @see EbsrDocumentLink
  */
 class EbsrDocumentLinkTest extends MockeryTestCase
 {
+    protected $urlHelper;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->urlHelper = m::mock(UrlHelperService::class);
+        $this->sut = new EbsrDocumentLink($this->urlHelper);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
+
     /**
      * Tests format
      *
@@ -23,14 +37,11 @@ class EbsrDocumentLinkTest extends MockeryTestCase
      */
     public function testFormat()
     {
-        $sut = new EbsrDocumentLink();
-
         $submissionId = 123;
         $documentDescription = 'description';
         $url = 'http://url.com';
 
-        $sm = m::mock(ServiceLocatorInterface::class);
-        $sm->shouldReceive('get->fromRoute')
+        $this->urlHelper->shouldReceive('fromRoute')
             ->once()
             ->with(EbsrDocumentLink::URL_ROUTE, ['id' => $submissionId, 'action' => EbsrDocumentLink::URL_ACTION])
             ->andReturn($url);
@@ -44,6 +55,6 @@ class EbsrDocumentLinkTest extends MockeryTestCase
 
         $expected = sprintf(EbsrDocumentLink::LINK_PATTERN, $url, $documentDescription);
 
-        $this->assertEquals($expected, $sut->format($data, [], $sm));
+        $this->assertEquals($expected, $this->sut->format($data, []));
     }
 }

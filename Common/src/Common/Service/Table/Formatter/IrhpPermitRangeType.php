@@ -3,26 +3,35 @@
 namespace Common\Service\Table\Formatter;
 
 use Common\RefData;
-use Laminas\ServiceManager\ServiceManager;
+use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 
 /**
  * IRHP Permit Range table - Type column formatter
  */
-class IrhpPermitRangeType implements FormatterInterface
+class IrhpPermitRangeType implements FormatterPluginManagerInterface
 {
+    private TranslatorDelegator $translator;
+
     /**
-     * Format
-     *
-     * Returns a formatted column
-     *
-     * @param array          $data
-     * @param array          $column
-     * @param ServiceManager $sm
-     *
-     * @return string
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @param TranslatorDelegator $translator
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function __construct(TranslatorDelegator $translator)
+    {
+        $this->translator = $translator;
+    }
+
+     /**
+      * Format
+      *
+      * Returns a formatted column
+      *
+      * @param array $data
+      * @param array $column
+      *
+      * @return                                        string
+      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+      */
+    public function format($data, $column = [])
     {
         if (!$data['irhpPermitStock']['irhpPermitType']['isBilateral']) {
             return 'N/A';
@@ -39,6 +48,6 @@ class IrhpPermitRangeType implements FormatterInterface
             );
         }
 
-        return $sm->get('translator')->translate($key);
+        return $this->translator->translate($key);
     }
 }

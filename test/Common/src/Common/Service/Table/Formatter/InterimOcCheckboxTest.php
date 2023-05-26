@@ -8,7 +8,6 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
-use Common\Service\Table\Formatter\InterimOcCheckbox;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
@@ -16,17 +15,17 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class MockeryTestCaseTest extends MockeryTestCase
+class InterimOcCheckboxTest extends MockeryTestCase
 {
     /**
      * Test formatter
-     * 
+     *
      * @group interimFormatter
      * @dataProvider formatProvider
      */
     public function testFormat($data, $expected)
     {
-        $this->assertEquals($expected, InterimOcCheckbox::format($data));
+        $this->assertEquals($expected, (new \Common\Service\Table\Formatter\InterimOcCheckbox())->format($data));
     }
 
     public function formatProvider()

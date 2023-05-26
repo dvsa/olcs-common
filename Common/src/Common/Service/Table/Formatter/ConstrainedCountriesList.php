@@ -3,9 +3,11 @@
 /**
  * ConstrainedCountriesList.php
  */
+
 namespace Common\Service\Table\Formatter;
 
 use Common\Util\Escape;
+use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 
 /**
  * Class ConstrainedCountriesList
@@ -14,28 +16,36 @@ use Common\Util\Escape;
  *
  * @package Common\Service\Table\Formatter
  */
-class ConstrainedCountriesList implements FormatterInterface
+class ConstrainedCountriesList implements FormatterPluginManagerInterface
 {
+    private TranslatorDelegator $translator;
+
+    /**
+     * @param TranslatorDelegator $translator
+     */
+    public function __construct(TranslatorDelegator $translator)
+    {
+        $this->translator = $translator;
+    }
+
     /**
      *
-     * @param array $data The row data.
+     * @param array $data   The row data.
      * @param array $column The column
-     * @param null $sm The service manager
      *
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
         $columnName = $column['name'] ?? 'constrainedCountries';
-        $translator = $sm->get('translator');
 
         if (empty($data[$columnName])) {
-            return $translator->translate('no.constrained.countries');
+            return $this->translator->translate('no.constrained.countries');
         }
 
         $c = [];
         foreach ($data[$columnName] as $country) {
-            $c[] = $translator->translate($country['countryDesc']);
+            $c[] = $this->translator->translate($country['countryDesc']);
         }
 
         return Escape::html(implode(', ', $c));

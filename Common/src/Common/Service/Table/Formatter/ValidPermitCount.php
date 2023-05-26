@@ -5,26 +5,25 @@
  *
  * @author Jonathan Thomas <jonathan@opalise.co.uk>
  */
+
 namespace Common\Service\Table\Formatter;
 
 use Common\RefData;
-use Laminas\ServiceManager\ServiceManager;
 
 /**
  * Valid permit count formatter
  */
-class ValidPermitCount implements FormatterInterface
+class ValidPermitCount implements FormatterPluginManagerInterface
 {
     /**
      * Valid permit count
      *
-     * @param array $row Row data
+     * @param array $row    Row data
      * @param array $column Column data
-     * @param ServiceManager $serviceLocator Service locator
      *
      * @return string
      */
-    public static function format($row, $column = null, $serviceLocator = null)
+    public function format($row, $column = null)
     {
         $countOverrideTypeIds = [
             RefData::CERT_ROADWORTHINESS_VEHICLE_PERMIT_TYPE_ID,

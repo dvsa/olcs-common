@@ -3,6 +3,7 @@
 /**
  * Irhp Permit Type Test
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\IrhpPermitType;
@@ -18,7 +19,7 @@ class IrhpPermitTypeTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormat($data, $expected)
     {
-        $this->assertEquals($expected, IrhpPermitType::format($data));
+        $this->assertEquals($expected, (new IrhpPermitType())->format($data));
     }
 
     /**

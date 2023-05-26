@@ -7,26 +7,24 @@ use Common\Service\Helper\UrlHelperService as UrlHelper;
 use Common\Service\Table\Formatter\IssuedPermitLicencePermitReference;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * IssuedPermitLicencePermitReference test
  */
 class IssuedPermitLicencePermitReferenceTest extends MockeryTestCase
 {
-    private $urlHelper;
+    protected $urlHelper;
+    protected $sut;
 
-    private $sm;
-
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->urlHelper = m::mock(UrlHelper::class);
+        $this->sut = new IssuedPermitLicencePermitReference($this->urlHelper);
+    }
 
-        $this->sm = m::mock(ServiceLocatorInterface::class);
-
-        $this->sm->shouldReceive('get')
-            ->with('Helper\Url')
-            ->andReturn($this->urlHelper);
+    protected function tearDown(): void
+    {
+        m::close();
     }
 
     /**
@@ -36,11 +34,11 @@ class IssuedPermitLicencePermitReferenceTest extends MockeryTestCase
     {
         $this->urlHelper->shouldReceive('fromRoute')
             ->with('licence/irhp-application/irhp-permits', ['irhpAppId' => $row['id'], 'licence' => $row['licenceId'], 'permitTypeId' => $row['typeId']])
-            ->andReturn('http://internal/licence/'.$row['licenceId'].'/irhp-application/'.$row['id'].'/'.$row['typeId'].'/irhp-permits/');
+            ->andReturn('http://internal/licence/' . $row['licenceId'] . '/irhp-application/' . $row['id'] . '/' . $row['typeId'] . '/irhp-permits/');
 
         $this->assertEquals(
             $expectedOutput,
-            IssuedPermitLicencePermitReference::format($row, null, $this->sm)
+            $this->sut->format($row, null)
         );
     }
 
@@ -102,11 +100,11 @@ class IssuedPermitLicencePermitReferenceTest extends MockeryTestCase
     {
         $this->urlHelper->shouldReceive('fromRoute')
             ->with('licence/irhp-application/application', ['licence' => $row['licenceId'], 'action' => 'edit', 'irhpAppId' => $row['id']])
-            ->andReturn('http://internal/licence/'.$row['licenceId'].'/irhp-application/edit/'.$row['id'].'/');
+            ->andReturn('http://internal/licence/' . $row['licenceId'] . '/irhp-application/edit/' . $row['id'] . '/');
 
         $this->assertEquals(
             $expectedOutput,
-            IssuedPermitLicencePermitReference::format($row, null, $this->sm)
+            $this->sut->format($row, null)
         );
     }
 

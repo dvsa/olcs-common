@@ -417,6 +417,7 @@ return array(
             \Laminas\Authentication\Storage\Session::class => \Common\Auth\SessionFactory::class,
             IdentityProviderInterface::class => \Common\Rbac\IdentityProviderFactory::class,
             \Common\Auth\Service\RefreshTokenService::class => \Common\Auth\Service\RefreshTokenServiceFactory::class,
+            \Common\Data\Mapper\Lva\GoodsVehiclesVehicle::class => \Common\Data\Mapper\Lva\GoodsVehiclesVehicleFactory::class,
         )
     ),
     'file_uploader' => array(

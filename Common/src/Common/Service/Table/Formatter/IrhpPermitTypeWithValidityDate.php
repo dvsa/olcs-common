@@ -4,33 +4,43 @@ namespace Common\Service\Table\Formatter;
 
 use Common\RefData;
 use Common\Util\Escape;
+use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 
 /**
  * Irhp Permit Type with Validity Date formatter
  */
-class IrhpPermitTypeWithValidityDate implements FormatterInterface
+class IrhpPermitTypeWithValidityDate implements FormatterPluginManagerInterface
 {
+    private Date $dateFormatter;
+    private TranslatorDelegator $translator;
+
+    /**
+     * @param Date $dateFormatter
+     */
+    public function __construct(Date $dateFormatter, TranslatorDelegator $translator)
+    {
+        $this->dateFormatter = $dateFormatter;
+        $this->translator = $translator;
+    }
     /**
      * Format data
      *
      * @param array $data
      * @param array $column
-     * @param \Laminas\ServiceManager\ServiceManager $sm
      *
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
         $value = $data[$column['name']];
 
         if ($data['typeId'] == RefData::ECMT_PERMIT_TYPE_ID && !empty($data['stockValidTo'])) {
-            $date = Date::format(
+            $date = $this->dateFormatter->format(
                 $data,
                 [
                     'name' => 'stockValidTo',
                     'dateformat' => 'Y',
-                ],
-                $sm
+                ]
             );
             $value = sprintf('%s %s', $value, $date);
         }
@@ -41,7 +51,7 @@ class IrhpPermitTypeWithValidityDate implements FormatterInterface
                     $value = sprintf('%s %s', $value, '2019');
                     break;
                 default:
-                    $value = sprintf('%s %s', $value, $sm->get('translator')->translate($data['periodNameKey']));
+                    $value = sprintf('%s %s', $value, $this->translator->translate($data['periodNameKey']));
             }
         }
 

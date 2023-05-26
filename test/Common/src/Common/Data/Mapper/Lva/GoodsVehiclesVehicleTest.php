@@ -6,9 +6,11 @@
  * @author Rob Caiger <rob@clocal.co.uk>
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
+
 namespace CommonTest\Data\Mapper\Lva;
 
 use Common\Data\Mapper\Lva\GoodsVehiclesVehicle;
+use Common\Service\Table\Formatter\VehicleDiscNo;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 use Laminas\Form\FormInterface;
@@ -36,7 +38,21 @@ class GoodsVehiclesVehicleTest extends MockeryTestCase
             ]
         ];
 
-        $output = GoodsVehiclesVehicle::mapFromResult($input);
+        // Mock the VehicleDiscNo
+        $mockVehicleDiscNo = m::mock(VehicleDiscNo::class);
+        $mockVehicleDiscNo->shouldReceive('format')
+            ->with([
+                'bar' => 'foo',
+                'version' => 1,
+                'goodsDiscs' => [
+                    [
+                        'discNo' => 1234
+                    ]
+                ]])
+            ->andReturn('Pending');
+
+        $sut = new GoodsVehiclesVehicle($mockVehicleDiscNo);
+        $output = $sut->mapFromResult($input);
 
         $expected = [
             'licence-vehicle' => [

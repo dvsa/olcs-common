@@ -16,14 +16,13 @@ namespace Common\Service\Table\Formatter;
 class UnlicensedVehicleWeight extends StackValue
 {
     /**
-     * @param array $data
-     * @param array $column
-     * @param \Laminas\ServiceManager\ServiceManager $sm
+     * @param  array $data
+     * @param  array $column
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
-        $value = parent::format($data, $column, $sm);
+        $value = parent::format($data, $column);
 
         return empty($value) ? '' : $value . ' kg';
     }

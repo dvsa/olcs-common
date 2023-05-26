@@ -3,7 +3,9 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\RefData;
+use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Formatter\TransportManagerName;
+use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
@@ -12,23 +14,20 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class TransportManagerNameTest extends MockeryTestCase
 {
-    /** @var TransportManagerName */
-    private $sut;
+    protected $urlHelper;
+    protected $translator;
+    protected $sut;
 
-    /* @var \Mockery\MockInterface */
-    private $sm;
-
-    /* @var \Mockery\MockInterface */
-    private $mockUrlHelper;
-
-    public function setUp(): void
+    protected function setUp(): void
     {
-        $this->sut = new TransportManagerName();
+        $this->urlHelper = m::mock(UrlHelperService::class);
+        $this->translator = m::mock(TranslatorDelegator::class);
+        $this->sut = new TransportManagerName($this->urlHelper, $this->translator);
+    }
 
-        $this->mockUrlHelper = m::mock();
-
-        $this->sm = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class);
-        $this->sm->shouldReceive('get')->with('Helper\Url')->andReturn($this->mockUrlHelper);
+    protected function tearDown(): void
+    {
+        m::close();
     }
 
     public function testFormatNoLvaLocation()
@@ -42,7 +41,7 @@ class TransportManagerNameTest extends MockeryTestCase
         $column = [];
         $expected = 'Arthur Smith';
 
-        $this->assertEquals($expected, $this->sut->format($data, $column, $this->sm));
+        $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 
     public function testFormatApplicationInternal()
@@ -51,7 +50,7 @@ class TransportManagerNameTest extends MockeryTestCase
             'name' => [
                 'forename' => 'Arthur',
                 'familyName' => 'Smith',
-                ],
+            ],
             'status' => [
                 'id' => RefData::TMA_STATUS_POSTAL_APPLICATION,
                 'description' => 'status description',
@@ -66,12 +65,12 @@ class TransportManagerNameTest extends MockeryTestCase
         ];
         $expected = '<a class="govuk-link" href="a-url">Arthur Smith</a>';
 
-        $this->mockUrlHelper->shouldReceive('fromRoute')
+        $this->urlHelper->shouldReceive('fromRoute')
             ->once()
             ->with('transport-manager/details', ['transportManager' => 432], [], true)
             ->andReturn('a-url');
 
-        $this->assertEquals($expected, $this->sut->format($data, $column, $this->sm));
+        $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 
     public function testFormatApplicationExternal()
@@ -81,7 +80,7 @@ class TransportManagerNameTest extends MockeryTestCase
             'name' => [
                 'forename' => 'Arthur',
                 'familyName' => 'Smith',
-                ],
+            ],
             'status' => [
                 'id' => RefData::TMA_STATUS_POSTAL_APPLICATION,
                 'description' => 'status description',
@@ -96,12 +95,12 @@ class TransportManagerNameTest extends MockeryTestCase
         ];
         $expected = '<a class="govuk-link" href="a-url">Arthur Smith</a>';
 
-        $this->mockUrlHelper->shouldReceive('fromRoute')
+        $this->urlHelper->shouldReceive('fromRoute')
             ->once()
             ->with('lva-application/transport_manager_details', ['action' => null, 'child_id' => 333], [], true)
             ->andReturn('a-url');
 
-        $this->assertEquals($expected, $this->sut->format($data, $column, $this->sm));
+        $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 
     public function testFormatVariationInternal()
@@ -110,7 +109,7 @@ class TransportManagerNameTest extends MockeryTestCase
             'name' => [
                 'forename' => 'Arthur',
                 'familyName' => 'Smith',
-                ],
+            ],
             'status' => [
                 'id' => RefData::TMA_STATUS_POSTAL_APPLICATION,
                 'description' => 'status description',
@@ -126,19 +125,18 @@ class TransportManagerNameTest extends MockeryTestCase
         ];
         $expected = 'translated <a class="govuk-link" href="a-url">Arthur Smith</a>';
 
-        $this->mockUrlHelper->shouldReceive('fromRoute')
+        $this->urlHelper->shouldReceive('fromRoute')
             ->once()
             ->with('transport-manager/details', ['transportManager' => 432], [], true)
             ->andReturn('a-url');
 
-        $mockTranslator = m::mock();
-        $mockTranslator->shouldReceive('translate')
+        $this->translator->shouldReceive('translate')
             ->once()
             ->with('tm_application.table.status.updated')
             ->andReturn('translated');
-        $this->sm->shouldReceive('get')->once()->with('Helper\Translation')->andReturn($mockTranslator);
 
-        $this->assertEquals($expected, $this->sut->format($data, $column, $this->sm));
+
+        $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 
     public function testFormatVariationInternalInvalidAction()
@@ -147,7 +145,7 @@ class TransportManagerNameTest extends MockeryTestCase
             'name' => [
                 'forename' => 'Arthur',
                 'familyName' => 'Smith',
-                ],
+            ],
             'status' => [
                 'id' => RefData::TMA_STATUS_POSTAL_APPLICATION,
                 'description' => 'status description',
@@ -162,12 +160,12 @@ class TransportManagerNameTest extends MockeryTestCase
         ];
         $expected = ' <a class="govuk-link" href="a-url">Arthur Smith</a>';
 
-        $this->mockUrlHelper->shouldReceive('fromRoute')
+        $this->urlHelper->shouldReceive('fromRoute')
             ->once()
             ->with('transport-manager/details', ['transportManager' => 432], [], true)
             ->andReturn('a-url');
 
-        $this->assertEquals($expected, $this->sut->format($data, $column, $this->sm));
+        $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 
     public function testFormatVariationExternal()
@@ -177,7 +175,7 @@ class TransportManagerNameTest extends MockeryTestCase
             'name' => [
                 'forename' => 'Arthur',
                 'familyName' => 'Smith',
-                ],
+            ],
             'status' => [
                 'id' => RefData::TMA_STATUS_POSTAL_APPLICATION,
                 'description' => 'status description',
@@ -193,19 +191,17 @@ class TransportManagerNameTest extends MockeryTestCase
         ];
         $expected = 'translated <a class="govuk-link" href="a-url">Arthur Smith</a>';
 
-        $this->mockUrlHelper->shouldReceive('fromRoute')
+        $this->urlHelper->shouldReceive('fromRoute')
             ->once()
             ->with('lva-variation/transport_manager_details', ['action' => null, 'child_id' => 333], [], true)
             ->andReturn('a-url');
 
-        $mockTranslator = m::mock();
-        $mockTranslator->shouldReceive('translate')
+        $this->translator->shouldReceive('translate')
             ->once()
             ->with('tm_application.table.status.updated')
             ->andReturn('translated');
-        $this->sm->shouldReceive('get')->once()->with('Helper\Translation')->andReturn($mockTranslator);
 
-        $this->assertEquals($expected, $this->sut->format($data, $column, $this->sm));
+        $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 
     public function testFormatVariationExternalNoLink()
@@ -215,7 +211,7 @@ class TransportManagerNameTest extends MockeryTestCase
             'name' => [
                 'forename' => 'Arthur',
                 'familyName' => 'Smith',
-                ],
+            ],
             'status' => [
                 'id' => RefData::TMA_STATUS_POSTAL_APPLICATION,
                 'description' => 'status description',
@@ -231,14 +227,12 @@ class TransportManagerNameTest extends MockeryTestCase
         ];
         $expected = 'translated Arthur Smith';
 
-        $mockTranslator = m::mock();
-        $mockTranslator->shouldReceive('translate')
+        $this->translator->shouldReceive('translate')
             ->once()
             ->with('tm_application.table.status.removed')
             ->andReturn('translated');
-        $this->sm->shouldReceive('get')->once()->with('Helper\Translation')->andReturn($mockTranslator);
 
-        $this->assertEquals($expected, $this->sut->format($data, $column, $this->sm));
+        $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 
     public function testFormatLicenceInternal()
@@ -258,12 +252,12 @@ class TransportManagerNameTest extends MockeryTestCase
         ];
         $expected = '<a class="govuk-link" href="a-url">Arthur Smith</a>';
 
-        $this->mockUrlHelper->shouldReceive('fromRoute')
+        $this->urlHelper->shouldReceive('fromRoute')
             ->once()
             ->with('transport-manager/details', ['transportManager' => 432], [], true)
             ->andReturn('a-url');
 
-        $this->assertEquals($expected, $this->sut->format($data, $column, $this->sm));
+        $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 
     public function testFormatLicenceExternal()
@@ -280,6 +274,6 @@ class TransportManagerNameTest extends MockeryTestCase
         ];
         $expected = 'Arthur Smith';
 
-        $this->assertEquals($expected, $this->sut->format($data, $column, $this->sm));
+        $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 }

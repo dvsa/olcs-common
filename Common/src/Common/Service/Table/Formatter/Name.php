@@ -8,29 +8,39 @@
 
 namespace Common\Service\Table\Formatter;
 
+use Common\Service\Helper\DataHelperService;
+
 /**
  * Name formatter
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class Name implements FormatterInterface
+class Name implements FormatterPluginManagerInterface
 {
+    private DataHelperService $dataHelper;
+
+    /**
+     * @param DataHelperService $dataHelper
+     */
+    public function __construct(DataHelperService $dataHelper)
+    {
+        $this->dataHelper = $dataHelper;
+    }
 
     /**
      * Format a name
      *
-     * @param array $data   data row
-     * @param array $column column specification
-     * @param \Laminas\ServiceManager\ServiceManager $sm
+     * @param  array $data   data row
+     * @param  array $column column specification
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
         // if column[name] is specified, look within that index for the data
         if (isset($column['name'])) {
             // if column[name] contains "->" look deeper
             if (strpos($column['name'], '->')) {
-                $data = $sm->get('Helper\Data')->fetchNestedData($data, $column['name']);
+                $data = $this->dataHelper->fetchNestedData($data, $column['name']);
             } elseif (isset($data[$column['name']])) {
                 $data = $data[$column['name']];
             }

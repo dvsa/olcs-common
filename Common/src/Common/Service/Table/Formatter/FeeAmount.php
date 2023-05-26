@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Fee Amount formatter
- *
- * @author Dan Eggleston <dan@stolenegg.com>
- */
-
 namespace Common\Service\Table\Formatter;
 
 /**
@@ -18,12 +12,11 @@ class FeeAmount extends Money
     /**
      * Format a fee amount
      *
-     * @param array $data
-     * @param array $column
-     * @param \Laminas\ServiceManager\ServiceManager $sm
+     * @param  array $data
+     * @param  array $column
      * @return string
      */
-    public static function format($data, $column = array())
+    public function format($data, $column = [])
     {
         $amount = parent::format($data, $column);
 

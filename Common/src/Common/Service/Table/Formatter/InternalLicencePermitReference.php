@@ -8,25 +8,34 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Common\RefData;
+use Common\Service\Helper\UrlHelperService;
 use Common\Util\Escape;
 
 /**
  * Internal licence permit reference formatter
  */
-class InternalLicencePermitReference implements FormatterInterface
+class InternalLicencePermitReference implements FormatterPluginManagerInterface
 {
+    private UrlHelperService $urlHelper;
+
+    /**
+     * @param UrlHelperService $urlHelper
+     */
+    public function __construct(UrlHelperService $urlHelper)
+    {
+        $this->urlHelper = $urlHelper;
+    }
+
     /**
      * status
      *
-     * @param array                               $row            Row data
-     * @param array                               $column         Column data
-     * @param \Laminas\ServiceManager\ServiceManager $serviceLocator Service locator
+     * @param array $row    Row data
+     * @param array $column Column data
      *
-     * @return string
+     * @return     string
      * @inheritdoc
      */
-    public static function format($row, $column = null, $serviceLocator = null)
+    public function format($row, $column = null)
     {
         $route = 'licence/irhp-application/application';
         $params = [
@@ -38,7 +47,7 @@ class InternalLicencePermitReference implements FormatterInterface
         return vsprintf(
             '<a class="govuk-link" href="%s">%s</a>',
             [
-                $serviceLocator->get('Helper\Url')->fromRoute($route, $params),
+                $this->urlHelper->fromRoute($route, $params),
                 Escape::html($row['applicationRef'])
             ]
         );

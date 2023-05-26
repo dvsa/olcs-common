@@ -2,17 +2,31 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\RefData;
 use Common\Service\Table\Formatter\EbsrDocumentStatus;
+use Common\View\Helper\Status;
+use Laminas\View\HelperPluginManager;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Common\RefData;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * @see EbsrDocumentStatus
  */
 class EbsrDocumentStatusTest extends MockeryTestCase
 {
+    protected $viewHelperManager;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->viewHelperManager = m::mock(HelperPluginManager::class);
+        $this->sut = new EbsrDocumentStatus($this->viewHelperManager);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
     /**
      * Tests format
      *
@@ -26,19 +40,21 @@ class EbsrDocumentStatusTest extends MockeryTestCase
      */
     public function testFormat($ebsrStatus, $colour, $label)
     {
-        $sut = new EbsrDocumentStatus();
-
         $statusLabel = 'status label';
         $statusArray = [
             'colour' => $colour,
             'value' => $label
         ];
 
-        $sm = m::mock(ServiceLocatorInterface::class);
+        $statusHelper = m::mock(Status::class);
 
-        $sm->expects('get->get->__invoke')
+        $statusHelper->expects('__invoke')
             ->with($statusArray)
             ->andReturn($statusLabel);
+
+        $this->viewHelperManager->shouldReceive('get')
+            ->with('status')
+            ->andReturn($statusHelper);
 
         $data = [
             'ebsrSubmissionStatus' => [
@@ -46,7 +62,7 @@ class EbsrDocumentStatusTest extends MockeryTestCase
             ],
         ];
 
-        $this->assertEquals($statusLabel, $sut->format($data, [], $sm));
+        $this->assertEquals($statusLabel, $this->sut->format($data, []));
     }
 
     /**

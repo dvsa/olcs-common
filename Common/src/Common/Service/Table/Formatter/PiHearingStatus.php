@@ -9,15 +9,15 @@ namespace Common\Service\Table\Formatter;
 /**
  * PI Hearing Status formatter
  */
-class PiHearingStatus implements FormatterInterface
+class PiHearingStatus implements FormatterPluginManagerInterface
 {
     /**
      * Format a PI Hearing status
      *
-     * @param array $row
+     * @param  array $row
      * @return string
      */
-    public static function format($row)
+    public function format($row, $column = [])
     {
         if (!empty($row['isCancelled']) && ($row['isCancelled'] === 'Y')) {
             $class = 'red';

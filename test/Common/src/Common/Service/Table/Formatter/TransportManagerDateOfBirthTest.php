@@ -4,39 +4,31 @@ namespace CommonTest\Service\Table\Formatter;
 
 use Common\RefData;
 use Common\Service\Table\Formatter\TransportManagerDateOfBirth;
+use Laminas\View\HelperPluginManager;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 class TransportManagerDateOfBirthTest extends MockeryTestCase
 {
-    /** @var TransportManagerDateOfBirth */
-    private $sut;
+    protected $viewHelperManager;
+    protected $sut;
 
-    /* @var \Mockery\MockInterface */
-    private $sm;
-
-    /* @var \Mockery\MockInterface */
-    private $mockUrlHelper;
-
-    public function setUp(): void
+    protected function setUp(): void
     {
-        $this->sut = new TransportManagerDateOfBirth();
+        $this->viewHelperManager = m::mock(HelperPluginManager::class);
+        $this->sut = new TransportManagerDateOfBirth($this->viewHelperManager);
+    }
 
-        $this->sm = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class);
-        $this->sm->shouldReceive('get')->with('Helper\Url')->andReturn($this->mockUrlHelper);
+    protected function tearDown(): void
+    {
+        m::close();
     }
 
     protected function mockGetStatusHtml($expectedStatusId, $expectedStatusDescription, $statusHtml = '<STATUS HTML>')
     {
-        $mockViewHelperManager = m::mock();
         $mockViewHelper = m::mock();
 
-        $this->sm->shouldReceive('get')
-            ->with('ViewHelperManager')
-            ->once()
-            ->andReturn($mockViewHelperManager);
-
-        $mockViewHelperManager->shouldReceive('get')
+        $this->viewHelperManager->shouldReceive('get')
             ->with('transportManagerApplicationStatus')
             ->once()
             ->andReturn($mockViewHelper);
@@ -201,6 +193,6 @@ class TransportManagerDateOfBirthTest extends MockeryTestCase
             $this->mockGetStatusHtml($testData['data']['status']['id'], $testData['data']['status']['description']);
         }
 
-        $this->assertEquals($expected, $this->sut->format($testData['data'], $testData['column'], $this->sm));
+        $this->assertEquals($expected, $this->sut->format($testData['data'], $testData['column']));
     }
 }

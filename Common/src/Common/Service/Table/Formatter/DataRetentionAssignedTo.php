@@ -2,31 +2,37 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\View\HelperPluginManager;
 
 /**
  * Data Retention Assigned To
  */
-class DataRetentionAssignedTo implements FormatterInterface
+class DataRetentionAssignedTo implements FormatterPluginManagerInterface
 {
+    private HelperPluginManager $viewHelperManager;
+
+    /**
+     * @param HelperPluginManager $viewHelperManager
+     */
+    public function __construct(HelperPluginManager $viewHelperManager)
+    {
+        $this->viewHelperManager = $viewHelperManager;
+    }
     /**
      * Format column value
      *
-     * @param array                   $data   Row data
-     * @param array                   $column Column Parameters
-     * @param ServiceLocatorInterface $sm     Service Manager
+     * @param array $data   Row data
+     * @param array $column Column Parameters
      *
      * @return string
      */
-    public static function format($data, array $column = [], ServiceLocatorInterface $sm = null)
+    public function format($data, $column = [])
     {
         if (isset($data['assignedTo']['contactDetails']['person'])) {
             /**
-             * @var \Laminas\View\HelperPluginManager $viewHelperManager
              * @var \Common\View\Helper\PersonName $personName
              */
-            $viewHelperManager = $sm->get('ViewHelperManager');
-            $personName = $viewHelperManager->get('personName');
+            $personName = $this->viewHelperManager->get('personName');
 
             return $personName->__invoke(
                 $data['assignedTo']['contactDetails']['person'],

@@ -5,12 +5,12 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Helper\DataHelperService;
 use Common\Service\Table\Formatter\Address;
-use Laminas\I18n\Translator\Translator;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Mockery as m;
 
 /**
  * Address formatter test
@@ -19,6 +19,19 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
  */
 class AddressTest extends \PHPUnit\Framework\TestCase
 {
+    protected $dataHelper;
+
+    protected function setUp(): void
+    {
+        $this->dataHelper = m::mock(DataHelperService::class);
+        $this->sut = new Address($this->dataHelper);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
+
     /**
      * Test the format method
      *
@@ -29,15 +42,7 @@ class AddressTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormat($data, $column, $expected)
     {
-        $mockTranslator = $this->createPartialMock(Translator::class, array('translate'));
-
-        $sm = $this->createMock(ServiceLocatorInterface::class);
-        $sm->expects($this->any())
-            ->method('get')
-            ->with('translator')
-            ->will($this->returnValue($mockTranslator));
-
-        $this->assertEquals($expected, Address::format($data, $column, $sm));
+        $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 
     /**
@@ -84,7 +89,7 @@ class AddressTest extends \PHPUnit\Framework\TestCase
                     'addressLine3' => 'cake',
                     'addressLine4' => 'baz',
                     'town' => 'spam',
-                    'postcode'  => 'eggs',
+                    'postcode' => 'eggs',
                     'countryCode' => 'ham',
                 ),
                 array('addressFields' => 'BRIEF'),
@@ -97,7 +102,7 @@ class AddressTest extends \PHPUnit\Framework\TestCase
                     'addressLine3' => 'cake',
                     'addressLine4' => 'baz',
                     'town' => 'spam',
-                    'postcode'  => '',
+                    'postcode' => '',
                     'countryCode' => 'ham',
                 ),
                 array('addressFields' => 'BRIEF'),
@@ -140,18 +145,10 @@ class AddressTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormatWithNestedKeys()
     {
-        $mockHelper = $this->createPartialMock(DataHelperService::class, array('fetchNestedData'));
-
-        $mockHelper->expects($this->once())
-            ->method('fetchNestedData')
+        $this->dataHelper->shouldReceive('fetchNestedData')
             ->with(['foo' => 'bar'], 'bar->baz')
-            ->willReturn(['addressLine1' => 'address 1']);
-
-        $sm = $this->createMock(ServiceLocatorInterface::class);
-        $sm->expects($this->any())
-            ->method('get')
-            ->with('Helper\Data')
-            ->will($this->returnValue($mockHelper));
+            ->andReturn(['addressLine1' => 'address 1'])
+            ->once();
 
         $data = [
             'foo' => 'bar'
@@ -159,6 +156,6 @@ class AddressTest extends \PHPUnit\Framework\TestCase
         $columns = [
             'name' => 'bar->baz'
         ];
-        $this->assertEquals('address 1', Address::format($data, $columns, $sm));
+        $this->assertEquals('address 1', $this->sut->format($data, $columns));
     }
 }

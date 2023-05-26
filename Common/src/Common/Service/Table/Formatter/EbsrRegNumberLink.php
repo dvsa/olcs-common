@@ -2,23 +2,32 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Common\Service\Helper\UrlHelperService;
 
-class EbsrRegNumberLink implements FormatterInterface
+class EbsrRegNumberLink implements FormatterPluginManagerInterface
 {
-    const LINK_PATTERN = '<a class="govuk-link" href="%s">%s</a>';
-    const URL_ROUTE = 'bus-registration/details';
+    public const LINK_PATTERN = '<a class="govuk-link" href="%s">%s</a>';
+    public const URL_ROUTE = 'bus-registration/details';
+
+    private UrlHelperService $urlHelper;
+
+    /**
+     * @param UrlHelperService $urlHelper
+     */
+    public function __construct(UrlHelperService $urlHelper)
+    {
+        $this->urlHelper = $urlHelper;
+    }
 
     /**
      * Formats the ebsr registration number
      *
-     * @param array                        $data   data array
-     * @param array                        $column column info
-     * @param null|ServiceLocatorInterface $sm     service locator
+     * @param array $data   data array
+     * @param array $column column info
      *
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
         //standardise the format of the data, so this can be used by multiple tables
         //we set the data even if the busReg key is blank
@@ -30,9 +39,7 @@ class EbsrRegNumberLink implements FormatterInterface
             return '';
         }
 
-        $urlHelper = $sm->get('Helper\Url');
-
-        $url = $urlHelper->fromRoute(
+        $url = $this->urlHelper->fromRoute(
             self::URL_ROUTE,
             [
                 'busRegId' => $data['id']

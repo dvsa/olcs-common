@@ -15,17 +15,16 @@ use Common\Util\Escape;
  *
  * @author Jason de Jonge <jason.de-jonge@capgemini.co.uk>
  */
-class NullableNumber implements FormatterInterface
+class NullableNumber implements FormatterPluginManagerInterface
 {
     /**
      * Transforms null into 0 for display
      *
-     * @param array $data
-     * @param array $column
-     * @param \Laminas\ServiceManager\ServiceManager $sm
+     * @param  array $data
+     * @param  array $column
      * @return int either the input number or 0 for null values
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
         $name = $data[$column['name']];
         if (!is_null($name)) {

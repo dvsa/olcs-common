@@ -2,19 +2,26 @@
 
 namespace Common\Service\Table\Formatter;
 
-class DashboardTmApplicationStatus implements FormatterInterface
+use Laminas\View\HelperPluginManager;
+
+class DashboardTmApplicationStatus implements FormatterPluginManagerInterface
 {
+    private HelperPluginManager $viewHelperManager;
+
+    public function __construct(HelperPluginManager $viewHelperManager)
+    {
+        $this->viewHelperManager = $viewHelperManager;
+    }
     /**
      * Generate the HTML to display the TM Application status
      *
-     * @param array $data
-     * @param array $column
-     * @param \Laminas\ServiceManager\ServiceManager $sm
+     * @param  array $data
+     * @param  array $column
      * @return string HTML
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
-        $viewHelper = $sm->get('ViewHelperManager')->get('transportManagerApplicationStatus');
+        $viewHelper = $this->viewHelperManager->get('transportManagerApplicationStatus');
 
         return
             $viewHelper->render(

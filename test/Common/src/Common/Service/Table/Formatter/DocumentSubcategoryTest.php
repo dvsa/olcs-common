@@ -8,8 +8,6 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
-use Common\Service\Table\Formatter\DocumentSubcategory;
-
 /**
  * Document subcategory formatter test
  *
@@ -17,7 +15,6 @@ use Common\Service\Table\Formatter\DocumentSubcategory;
  */
 class DocumentSubcategoryTest extends \PHPUnit\Framework\TestCase
 {
-
     /**
      * Test the format method
      *
@@ -28,7 +25,7 @@ class DocumentSubcategoryTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormat($data, $expected)
     {
-        $this->assertEquals($expected, DocumentSubcategory::format($data));
+        $this->assertEquals($expected, (new \Common\Service\Table\Formatter\DocumentSubcategory())->format($data));
     }
 
     /**

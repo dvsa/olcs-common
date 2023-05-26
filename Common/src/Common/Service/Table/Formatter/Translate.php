@@ -2,33 +2,47 @@
 
 namespace Common\Service\Table\Formatter;
 
+use Common\Service\Helper\DataHelperService;
+use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
+
 /**
  * Translate formatter
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class Translate implements FormatterInterface
+class Translate implements FormatterPluginManagerInterface
 {
+    private TranslatorDelegator $translator;
+    private DataHelperService $dataHelper;
+
+    /**
+     * @param TranslatorDelegator $translator
+     * @param DataHelperService   $dataHelper
+     */
+    public function __construct(TranslatorDelegator $translator, DataHelperService $dataHelper)
+    {
+        $this->translator = $translator;
+        $this->dataHelper = $dataHelper;
+    }
+
     /**
      * Translate value
      *
-     * @param array                               $data   Data
-     * @param array                               $column Column parameters
-     * @param \Laminas\ServiceManager\ServiceManager $sm     Service manager
+     * @param array $data   Data
+     * @param array $column Column parameters
      *
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
         if (isset($column['name'])) {
-            return $sm->get('translator')->translate(
-                $sm->get('Helper\Data')
-                    ->fetchNestedData($data, $column['name'])
+            return $this->translator->translate(
+                $this->dataHelper->fetchNestedData($data, $column['name'])
             );
         }
 
         if (isset($column['content'])) {
-            return $sm->get('translator')->translate($column['content']);
+            return $this->translator->translate($column['content']);
         }
 
         return '';

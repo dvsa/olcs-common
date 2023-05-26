@@ -5,18 +5,17 @@ namespace Common\Service\Table\Formatter;
 /**
  * @author Dmitry Golubev <d.e.golubev@gmail.com>
  */
-class CaseEntityName implements FormatterInterface
+class CaseEntityName implements FormatterPluginManagerInterface
 {
     /**
      * Return traffic area name
      *
-     * @param array                               $data   Data
-     * @param array                               $column Column data
-     * @param \Laminas\ServiceManager\ServiceManager $sm     Service manager
+     * @param array $data   Data
+     * @param array $column Column data
      *
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
         if ($data['caseType']['id'] === \Common\RefData::CASE_TYPE_TM) {
             if (empty($data['transportManager']['homeCd']['person'])) {

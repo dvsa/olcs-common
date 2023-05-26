@@ -3,8 +3,11 @@
 /**
  * Venue Address formatter test
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Service\Helper\DataHelperService;
+use Common\Service\Table\Formatter\Address;
 use Common\Service\Table\Formatter\VenueAddress;
 
 /**
@@ -22,7 +25,7 @@ class VenueAddressTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormat($data, $expected)
     {
-        $this->assertEquals($expected, VenueAddress::format($data));
+        $this->assertEquals($expected, (new VenueAddress(new Address(new DataHelperService())))->format($data));
     }
 
     /**

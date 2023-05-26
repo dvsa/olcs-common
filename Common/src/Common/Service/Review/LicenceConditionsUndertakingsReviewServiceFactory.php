@@ -2,6 +2,8 @@
 
 namespace Common\Service\Review;
 
+use Common\Service\Table\Formatter\Address;
+use Common\Service\Table\Formatter\FormatterPluginManager;
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
@@ -12,7 +14,8 @@ class LicenceConditionsUndertakingsReviewServiceFactory implements FactoryInterf
     {
         return new LicenceConditionsUndertakingsReviewService(
             $container->get(AbstractReviewServiceServices::class),
-            $container->get('Review\ConditionsUndertakings')
+            $container->get('Review\ConditionsUndertakings'),
+            $container->get(FormatterPluginManager::class)->get(Address::class)
         );
     }
 

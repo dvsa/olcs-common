@@ -2,32 +2,37 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Laminas\ServiceManager\ServiceManager;
+use Common\Service\Helper\UrlHelperService;
 
 /**
  * System info message link formatter
  *
  * @author Dmitry Golubev <dmitrij.golubev@valtech.co.uk>
  */
-class SystemInfoMessageLink implements FormatterInterface
+class SystemInfoMessageLink implements FormatterPluginManagerInterface
 {
-    const MAX_DESC_LEN = 50;
+    public const MAX_DESC_LEN = 50;
+    private UrlHelperService $urlHelper;
+
+    /**
+     * @param UrlHelperService $urlHelper
+     */
+    public function __construct(UrlHelperService $urlHelper)
+    {
+        $this->urlHelper = $urlHelper;
+    }
 
     /**
      * Format
      *
-     * @param array          $data
-     * @param array          $column
-     * @param ServiceManager $sm
+     * @param array $data
+     * @param array $column
      *
      * @return string
      */
-    public static function format($data, array $column = [], $sm = null)
+    public function format($data, $column = [])
     {
-        //  define link
-        $urlHelper = $sm->get('Helper\Url');
-
-        $url = $urlHelper->fromRoute(
+        $url = $this->urlHelper->fromRoute(
             'admin-dashboard/admin-system-info-message',
             [
                 'action' => 'edit',

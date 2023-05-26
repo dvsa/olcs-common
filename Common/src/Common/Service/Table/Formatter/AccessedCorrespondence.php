@@ -2,7 +2,8 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Common\Service\Helper\UrlHelperService;
+use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 
 /**
  * Class AccessedCorrespondence
@@ -12,23 +13,35 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
  *
  * @package Common\Service\Table\Formatter
  *
- * @author  Josh Curtis <josh.curtis@valtech.co.uk>
+ * @author Josh Curtis <josh.curtis@valtech.co.uk>
  */
-class AccessedCorrespondence implements FormatterInterface
+class AccessedCorrespondence implements FormatterPluginManagerInterface
 {
+    protected UrlHelperService $urlHelper;
+    protected TranslatorDelegator $translator;
+
+    /**
+     * @param UrlHelperService    $urlHelper
+     * @param TranslatorDelegator $translator
+     */
+    public function __construct(UrlHelperService $urlHelper, TranslatorDelegator $translator)
+    {
+        $this->urlHelper = $urlHelper;
+        $this->translator = $translator;
+    }
+
     /**
      * Get a link for the document with the access indicator.
      *
-     * @param array                   $data   The row data.
-     * @param array                   $column The column data.
-     * @param ServiceLocatorInterface $sm     The service manager.
+     * @param array $data   The row data.
+     * @param array $column The column data.
      *
      * @return string The document link and accessed indicator
      */
-    public static function format($data, $column = array(), ServiceLocatorInterface $sm = null)
+    public function format($data, $column = [])
     {
 
-        $url = $sm->get('Helper\Url')->fromRoute(
+        $url = $this->urlHelper->fromRoute(
             'correspondence/access',
             [
                 'correspondenceId' => $data['correspondence']['id'],
@@ -38,7 +51,7 @@ class AccessedCorrespondence implements FormatterInterface
         $title = '';
         if ($data['correspondence']['accessed'] === 'N') {
             $title .= '<span class="status green">' .
-                $sm->get('translator')->translate('dashboard-correspondence.table.status.new') .
+                $this->translator->translate('dashboard-correspondence.table.status.new') .
                 '</span> ';
         }
 

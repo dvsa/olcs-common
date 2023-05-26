@@ -3,6 +3,7 @@
 /**
  * PI Hearing status formatter test
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\PiHearingStatus;
@@ -22,7 +23,7 @@ class PiHearingStatusTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormat($data, $expected)
     {
-        $this->assertEquals($expected, PiHearingStatus::format($data));
+        $this->assertEquals($expected, (new PiHearingStatus())->format($data));
     }
 
     /**

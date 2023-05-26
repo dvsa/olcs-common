@@ -7,7 +7,7 @@ namespace Common\Service\Table\Formatter;
  *
  * @author Scott Callaway <scott.callaway@capgemini.com>
  */
-class IrhpPermitRangeTotalPermits implements FormatterInterface
+class IrhpPermitRangeTotalPermits implements FormatterPluginManagerInterface
 {
     /**
      * Format
@@ -18,7 +18,7 @@ class IrhpPermitRangeTotalPermits implements FormatterInterface
      *
      * @return string
      */
-    public static function format($data)
+    public function format($data, $column = [])
     {
         // Need to add one to get a count of all the permits inclusive
         // E.g. Permits 1 to 16 = 16 total permits.

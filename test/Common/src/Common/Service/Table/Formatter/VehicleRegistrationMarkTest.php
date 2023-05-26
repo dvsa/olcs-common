@@ -2,28 +2,31 @@
 
 namespace Common\Service\Table\Formatter;
 
+use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 use Mockery;
-use Laminas\I18n\Translator\TranslatorInterface;
-use Laminas\ServiceManager\ServiceManager;
+use Mockery as m;
 
 class VehicleRegistrationMarkTest extends \PHPUnit\Framework\TestCase
 {
-    /** @var Mockery\MockInterface */
-    private $mockServiceManager;
+    protected $translator;
+    protected $sut;
 
     protected function setUp(): void
     {
-        $mockTranslator = Mockery::mock(TranslatorInterface::class)
+        $this->translator = m::mock(TranslatorDelegator::class);
+        $this->sut = new VehicleRegistrationMark($this->translator);
+
+        $this->translator
             ->shouldReceive('translate')
             ->with('application_vehicle-safety_vehicle.table.vrm.interim-marker')
-            ->andReturn('TEST_INTERIM_TRANSLATION')
-            ->getMock();
-        $this->mockServiceManager = Mockery::mock(ServiceManager::class)
-            ->shouldReceive('get')
-            ->with('translator')
-            ->andReturn($mockTranslator)
-            ->getMock();
+            ->andReturn('TEST_INTERIM_TRANSLATION');
     }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
+    /** @var Mockery\MockInterface */
 
     public function testThatNonInterimVrmIsDisplayed()
     {
@@ -33,7 +36,7 @@ class VehicleRegistrationMarkTest extends \PHPUnit\Framework\TestCase
         ];
         $this->assertSame(
             'TEST_VRM',
-            VehicleRegistrationMark::format($data, [], $this->mockServiceManager)
+            $this->sut->format($data, [])
         );
     }
 
@@ -45,7 +48,7 @@ class VehicleRegistrationMarkTest extends \PHPUnit\Framework\TestCase
         ];
         $this->assertSame(
             'TEST_VRM (TEST_INTERIM_TRANSLATION)',
-            VehicleRegistrationMark::format($data, [], $this->mockServiceManager)
+            $this->sut->format($data, [])
         );
     }
 
@@ -56,7 +59,7 @@ class VehicleRegistrationMarkTest extends \PHPUnit\Framework\TestCase
         ];
         $this->assertSame(
             'TEST_VRM',
-            VehicleRegistrationMark::format($data, [], $this->mockServiceManager)
+            $this->sut->format($data, [])
         );
     }
 }

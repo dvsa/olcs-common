@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Service\Table\Formatter;
 
 use Common\RefData;
@@ -14,14 +15,14 @@ use Common\RefData;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class LicenceTypeShort implements FormatterInterface
+class LicenceTypeShort implements FormatterPluginManagerInterface
 {
-    protected static $prefixMap = [
+    protected static array $prefixMap = [
         RefData::LICENCE_CATEGORY_GOODS_VEHICLE => 'GV',
         RefData::LICENCE_CATEGORY_PSV => 'PSV'
     ];
 
-    protected static $suffixMap = [
+    protected static array $suffixMap = [
         RefData::LICENCE_TYPE_RESTRICTED => 'R',
         RefData::LICENCE_TYPE_SPECIAL_RESTRICTED => 'SR',
         RefData::LICENCE_TYPE_STANDARD_NATIONAL => 'SN',
@@ -31,22 +32,24 @@ class LicenceTypeShort implements FormatterInterface
     /**
      * Retrieve a nested value
      *
-     * @param array $data
+     * @param  array $data
      * @return string
      */
-    public static function format($data)
+    public function format($data, $column = null)
     {
         $ref = [];
 
         $licence = isset($data['licence']) ? $data['licence'] : $data;
 
-        if (isset($licence['goodsOrPsv']['id'])
+        if (
+            isset($licence['goodsOrPsv']['id'])
             && isset(self::$prefixMap[$licence['goodsOrPsv']['id']])
         ) {
             $ref[] = self::$prefixMap[$licence['goodsOrPsv']['id']];
         }
 
-        if (isset($licence['licenceType']['id'])
+        if (
+            isset($licence['licenceType']['id'])
             && isset(self::$suffixMap[$licence['licenceType']['id']])
         ) {
             $ref[] = self::$suffixMap[$licence['licenceType']['id']];

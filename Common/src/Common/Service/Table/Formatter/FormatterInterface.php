@@ -11,13 +11,11 @@ namespace Common\Service\Table\Formatter;
  */
 interface FormatterInterface
 {
-
     /**
      * Format a cell
      *
-     * @param array $data
-     * @param array $column [OPTIONAL]
-     * @param \Laminas\ServiceManager\ServiceManager $sm [OPTIONAL]
+     * @param array                                  $data
+     * @param array                                  $column [OPTIONAL]
      */
-    public static function format($data/*, $column = array(), $sm = null*/);
+    public function format($data, $column = []);
 }

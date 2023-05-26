@@ -2,12 +2,10 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Laminas\ServiceManager\ServiceManager;
-
 /**
  * Data Retention Boolean formatter
  */
-class DataRetentionRuleIsEnabled implements FormatterInterface
+class DataRetentionRuleIsEnabled implements FormatterPluginManagerInterface
 {
     /**
      * Format
@@ -16,7 +14,7 @@ class DataRetentionRuleIsEnabled implements FormatterInterface
      *
      * @return string
      */
-    public static function format($data)
+    public function format($data, $column = [])
     {
         return htmlspecialchars($data['isEnabled'] ? 'Yes' : 'No');
     }

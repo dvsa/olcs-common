@@ -3,6 +3,7 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\RefData;
+use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
@@ -11,14 +12,26 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class RefDataTest extends MockeryTestCase
 {
+    protected $translator;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->translator = m::mock(TranslatorDelegator::class);
+        $this->sut = new RefData($this->translator);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
     /**
      * @dataProvider dpTestFormat
      */
     public function testFormat($data, $expect)
     {
-        $mockSm = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class);
-        $mockSm
-            ->shouldReceive('get->translate')
+        $this->translator
+            ->shouldReceive('translate')
             ->andReturnUsing(
                 function ($text) {
                     return '_TRNSLT_' . $text;
@@ -31,7 +44,7 @@ class RefDataTest extends MockeryTestCase
             'separator' => '@unit_Sepr@',
         ];
 
-        static::assertEquals($expect, RefData::format($data, $col, $mockSm));
+        static::assertEquals($expect, $this->sut->format($data, $col));
     }
 
     public function dpTestFormat()

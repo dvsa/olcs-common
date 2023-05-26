@@ -7,7 +7,7 @@ use Common\Util\Escape;
 /**
  * IRHP Permit Organisation Name formatter
  */
-class IrhpPermitOrganisationName implements FormatterInterface
+class IrhpPermitOrganisationName implements FormatterPluginManagerInterface
 {
     /**
      * Format
@@ -18,7 +18,7 @@ class IrhpPermitOrganisationName implements FormatterInterface
      *
      * @return string
      */
-    public static function format($data)
+    public function format($data, $column = [])
     {
         if (!isset($data['irhpPermitApplication']['relatedApplication']['licence']['organisation']['name'])) {
             return null;

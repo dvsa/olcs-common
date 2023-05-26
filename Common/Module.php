@@ -7,6 +7,7 @@ use Common\Preference\LanguageListener;
 use Common\Service\Cqrs\Exception\AccessDeniedException;
 use Common\Service\Cqrs\Exception\NotFoundException;
 use Common\Service\Helper\TranslationHelperService;
+use Common\Service\Table\Formatter\FormatterPluginManager;
 use Dvsa\Olcs\Utils\Translation\MissingTranslationProcessor;
 use Olcs\Logging\Log\Logger;
 use Laminas\Cache\Storage\Adapter\Redis;
@@ -19,11 +20,13 @@ use Laminas\Mvc\MvcEvent;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\Http\PhpEnvironment\Response;
 use Laminas\View\Model\ViewModel;
+use Laminas\ModuleManager\Feature\ConfigProviderInterface;
+use Laminas\ModuleManager\Feature\ServiceProviderInterface;
 
 /**
  * ZF2 Module
  */
-class Module
+class Module implements ConfigProviderInterface, ServiceProviderInterface
 {
     /**
      * Initialize module
@@ -343,5 +346,25 @@ class Module
         $authService = $serviceManager->get(\ZfcRbac\Service\AuthorizationService::class);
         $serviceManager->get('LogProcessorManager')->get(\Olcs\Logging\Log\Processor\UserId::class)
             ->setUserId($authService->getIdentity()->getUsername());
+    }
+
+    public function getServiceConfig()
+    {
+        return [
+            'factories' => [
+                FormatterPluginManager::class => function ($serviceManager) {
+                    $config = include __DIR__ . '/config/formatter-plugins.config.php';
+                    if (method_exists($serviceManager, 'configure')) {
+                        // Should work with laminas 3
+                        $pluginManager = new FormatterPluginManager($serviceManager);
+                        $pluginManager->configure($config);
+                    } else {
+                        // ToDo: This can be removed when we move to 3 from 2.5
+                        $pluginManager = new FormatterPluginManager($serviceManager, $config);
+                    }
+                    return $pluginManager;
+                },
+            ],
+        ];
     }
 }

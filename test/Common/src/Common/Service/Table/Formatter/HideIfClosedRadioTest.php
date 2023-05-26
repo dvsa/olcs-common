@@ -6,7 +6,6 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
-use Common\Service\Table\Formatter\HideIfClosedRadio;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
@@ -21,7 +20,7 @@ class HideIfClosedRadioTest extends MockeryTestCase
      */
     public function testFormat($data, $expected)
     {
-        $this->assertEquals($expected, HideIfClosedRadio::format($data));
+        $this->assertEquals($expected, (new \Common\Service\Table\Formatter\HideIfClosedRadio())->format($data));
     }
 
     public function formatProvider()

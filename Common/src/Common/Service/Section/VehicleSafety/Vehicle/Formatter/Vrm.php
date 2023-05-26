@@ -7,33 +7,38 @@
  */
 namespace Common\Service\Section\VehicleSafety\Vehicle\Formatter;
 
-use Common\Service\Table\Formatter\FormatterInterface;
+use Common\Service\Helper\UrlHelperService;
+use Common\Service\Table\Formatter\FormatterPluginManagerInterface;
 
 /**
  * Vrm
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class Vrm implements FormatterInterface
+class Vrm implements FormatterPluginManagerInterface
 {
+    private UrlHelperService $viewHelperManager;
+
+    public function __construct(UrlHelperService $urlHelper)
+    {
+        $this->urlHelper = $urlHelper;
+    }
+
     /**
      * Format an cell
      *
      * @param array $data
      * @param array $column
-     * @param \Laminas\ServiceManager\ServiceManager $sm
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = array())
     {
-        $url = $sm->get('viewhelpermanager')->get('url');
-
         $action = 'edit';
 
         if (isset($column['action-type'])) {
             $action = $column['action-type'] . '-' . $action;
         }
 
-        return '<a class="govuk-link" href="' . $url(
+        return '<a class="govuk-link" href="' . $this->urlHelper->fromRoute(
             null,
             array(
                 'child_id' => $data['id'],

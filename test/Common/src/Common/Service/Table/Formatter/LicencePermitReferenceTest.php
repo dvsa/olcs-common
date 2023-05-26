@@ -3,12 +3,11 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\RefData;
-use Common\Service\Table\Formatter\LicencePermitReference;
 use Common\Service\Helper\UrlHelperService as UrlHelper;
-use Common\Service\Helper\TranslationHelperService;
+use Common\Service\Table\Formatter\LicencePermitReference;
+use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Licence permit reference test
@@ -17,13 +16,27 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
  */
 class LicencePermitReferenceTest extends MockeryTestCase
 {
+    protected $urlHelper;
+    protected $translator;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->urlHelper = m::mock(UrlHelper::class);
+        $this->translator = m::mock(TranslatorDelegator::class);
+        $this->sut = new LicencePermitReference($this->translator, $this->urlHelper);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
     /**
      * @dataProvider scenariosProvider
      */
     public function testFormat($row, $expectedOutput)
     {
-        $urlHelper = m::mock(UrlHelper::class);
-        $urlHelper->shouldReceive('fromRoute')
+        $this->urlHelper->shouldReceive('fromRoute')
             ->with('permits/application', ['id' => 100])
             ->andReturn('http://selfserve/permits/application/100')
             ->shouldReceive('fromRoute')
@@ -36,19 +49,13 @@ class LicencePermitReferenceTest extends MockeryTestCase
             ->with('permits/valid', ['licence' => 200, 'type' => $row['typeId']])
             ->andReturn('http://selfserve/permits/valid/105');
 
-        $translator = m::mock(TranslationHelperService::class);
-        $translator->shouldReceive('translate')
+        $this->translator->shouldReceive('translate')
             ->with('dashboard-table-permit-application-ref')
             ->andReturn('Reference number');
 
-        $sm = m::mock(ServiceLocatorInterface::class);
-        $sm->shouldReceive('get')->with('Helper\Url')->andReturn($urlHelper);
-        $sm->shouldReceive('get')->with('translator')->andReturn($translator);
-
-        $sut = new LicencePermitReference();
         $this->assertEquals(
             $expectedOutput,
-            $sut->format($row, null, $sm)
+            $this->sut->format($row, null)
         );
     }
 

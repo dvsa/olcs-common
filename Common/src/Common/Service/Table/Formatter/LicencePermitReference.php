@@ -9,16 +9,18 @@
 namespace Common\Service\Table\Formatter;
 
 use Common\RefData;
+use Common\Service\Helper\UrlHelperService;
 use Common\Util\Escape;
+use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 
 /**
  * Status formatter
  *
  * @author Tonci Vidovic <tonci.vidovic@capgemini.com>
  */
-class LicencePermitReference implements FormatterInterface
+class LicencePermitReference implements FormatterPluginManagerInterface
 {
-    private static $routes = [
+    private static array $routes = [
         RefData::ECMT_PERMIT_TYPE_ID => [
             RefData::PERMIT_APP_STATUS_NOT_YET_SUBMITTED => 'application',
             RefData::PERMIT_APP_STATUS_UNDER_CONSIDERATION => 'application/under-consideration',
@@ -55,33 +57,41 @@ class LicencePermitReference implements FormatterInterface
         ],
     ];
 
+    private TranslatorDelegator $translator;
+    private UrlHelperService $urlHelper;
+
+    public function __construct(TranslatorDelegator $translator, UrlHelperService $urlHelper)
+    {
+        $this->translator = $translator;
+        $this->urlHelper = $urlHelper;
+    }
+
     /**
      * status
      *
-     * @param array                               $row            Row data
-     * @param array                               $column         Column data
-     * @param \Laminas\ServiceManager\ServiceManager $serviceLocator Service locator
+     * @param array $row    Row data
+     * @param array $column Column data
      *
-     * @return string
+     * @return     string
      * @inheritdoc
      */
-    public static function format($row, $column = null, $serviceLocator = null)
+    public function format($row, $column = null)
     {
         $referenceNumberMarkup = sprintf(
             '<span class="govuk-visually-hidden">%s</span>',
             Escape::html(
-                $serviceLocator->get('translator')->translate('dashboard-table-permit-application-ref')
+                $this->translator->translate('dashboard-table-permit-application-ref')
             )
         );
 
         // find a route for the type and status
-        $route = isset(static::$routes[$row['typeId']][$row['statusId']])
-            ? static::$routes[$row['typeId']][$row['statusId']] : null;
+        $route = static::$routes[$row['typeId']][$row['statusId']] ?? null;
 
         $text = $row['applicationRef'];
 
         if (!isset($route)) {
-            if ($row['statusId'] == RefData::PERMIT_APP_STATUS_VALID
+            if (
+                $row['statusId'] == RefData::PERMIT_APP_STATUS_VALID
                 && in_array(
                     $row['typeId'],
                     [
@@ -107,8 +117,8 @@ class LicencePermitReference implements FormatterInterface
             case 'valid':
                 // specific for valid IRHP application
                 $params = [
-                    'licence' => $row['licenceId'],
-                    'type' => $row['typeId'],
+                'licence' => $row['licenceId'],
+                'type' => $row['typeId'],
                 ];
                 $text = $row['licNo'];
                 break;
@@ -117,7 +127,7 @@ class LicencePermitReference implements FormatterInterface
         return sprintf(
             '%s <a class="overview__link" href="%s"><span class="overview__link--underline">%s</span></a>',
             $referenceNumberMarkup,
-            $serviceLocator->get('Helper\Url')->fromRoute('permits/' . $route, $params),
+            $this->urlHelper->fromRoute('permits/' . $route, $params),
             Escape::html($text)
         );
     }

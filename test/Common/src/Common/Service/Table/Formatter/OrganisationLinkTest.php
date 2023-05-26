@@ -3,12 +3,13 @@
 /**
  * OrganisationLinkTest.php
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Service\Helper\UrlHelperService;
+use Common\Service\Table\Formatter\OrganisationLink;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
-
-use Common\Service\Table\Formatter\OrganisationLink;
 
 /**
  * Class OrganisationLinkTest
@@ -17,6 +18,20 @@ use Common\Service\Table\Formatter\OrganisationLink;
  */
 class OrganisationLinkTest extends TestCase
 {
+    protected $urlHelper;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->urlHelper = m::mock(UrlHelperService::class);
+        $this->sut = new OrganisationLink($this->urlHelper);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
+
     public function testFormat()
     {
         $data = [
@@ -26,26 +41,19 @@ class OrganisationLinkTest extends TestCase
             ],
         ];
 
-        $sm = m::mock()
-            ->shouldReceive('get')
-            ->with('Helper\Url')
-            ->andReturn(
-                m::mock()
-                    ->shouldReceive('fromRoute')
-                    ->with(
-                        'operator/business-details',
-                        [
-                            'organisation' => $data['organisation']['id'],
-                        ]
-                    )
-                    ->andReturn('ORGANISATION_URL')
-                    ->getMock()
+        $this->urlHelper
+            ->shouldReceive('fromRoute')
+            ->with(
+                'operator/business-details',
+                [
+                    'organisation' => $data['organisation']['id'],
+                ]
             )
-            ->getMock();
+            ->andReturn('ORGANISATION_URL');
 
         $this->assertEquals(
             '<a class="govuk-link" href="ORGANISATION_URL">Foobar Ltd.</a>',
-            OrganisationLink::format($data, [], $sm)
+            $this->sut->format($data, [])
         );
     }
 }

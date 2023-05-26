@@ -8,31 +8,43 @@
 
 namespace Common\Service\Table\Formatter;
 
+use Common\Service\Helper\UrlHelperService;
+use Laminas\Http\Request;
+
 /**
  * Note URL formatter
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class NoteUrl implements FormatterInterface
+class NoteUrl implements FormatterPluginManagerInterface
 {
+    protected Request $request;
+    protected UrlHelperService $urlHelper;
+
+    /**
+     * @param Request          $request
+     * @param UrlHelperService $urlHelper
+     */
+    public function __construct(Request $request, UrlHelperService $urlHelper)
+    {
+        $this->request = $request;
+        $this->urlHelper = $urlHelper;
+    }
+
     /**
      * Format a note URL
      *
-     * @param array $row
-     * @param array $column
-     * @param \Laminas\ServiceManager\ServiceManager $serviceLocator
-     * @return string
+     * @param      array $row
+     * @param      array $column
+     * @return     string
      * @inheritdoc
      */
-    public static function format($row, $column = array(), $serviceLocator = null)
+    public function format($row, $column = [])
     {
-        $request    = $serviceLocator->get('request');
-        $urlHelper  = $serviceLocator->get('Helper\Url');
-
-        $url = $urlHelper->fromRoute(
+        $url = $this->urlHelper->fromRoute(
             null,
             ['action' => 'edit', 'id' => $row['id']],
-            ['query' => $request->getQuery()->toArray()],
+            ['query' => $this->request->getQuery()->toArray()],
             true
         );
 

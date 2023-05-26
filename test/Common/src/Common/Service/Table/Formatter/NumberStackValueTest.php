@@ -2,24 +2,35 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
-use Common\Service\Table\Formatter\NumberStackValue;
-use Common\Service\Table\Formatter\StackValue;
-use CommonTest\Bootstrap;
 use Common\Service\Helper\StackHelperService;
+use Common\Service\Table\Formatter\NumberStackValue;
+use Mockery as m;
 
 /**
  * NumberStackValue formatter test
  */
 class NumberStackValueTest extends \PHPUnit\Framework\TestCase
 {
+    protected $stackHelper;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->stackHelper = m::mock(StackHelperService::class);
+        $this->sut = new NumberStackValue($this->stackHelper);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
     public function testFormatWithoutStack()
     {
         $this->expectException('\InvalidArgumentException');
         $data = [];
         $column = [];
-        $sm = Bootstrap::getServiceManager();
 
-        StackValue::format($data, $column, $sm);
+        $this->sut->format($data, $column);
     }
 
     public function testWithThousandFormatter()
@@ -35,12 +46,8 @@ class NumberStackValueTest extends \PHPUnit\Framework\TestCase
             'stack' => 'foo->bar->cake'
         ];
         $expected = '12,300';
-        $sm = Bootstrap::getServiceManager();
 
-        // @NOTE We use the real stack helper here, as it's a useful component test
-        // and is only a tiny utility class that is also fully tested elsewhere
-        $sm->setService('Helper\Stack', new StackHelperService());
-
-        $this->assertEquals($expected, NumberStackValue::format($data, $column, $sm));
+        $this->stackHelper->shouldReceive('getStackValue')->once()->with($data, ['foo', 'bar', 'cake'])->andReturn(12300);
+        $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 }

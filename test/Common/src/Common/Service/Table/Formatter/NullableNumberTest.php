@@ -4,6 +4,7 @@ namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\NullableNumber;
 use Olcs\TestHelpers\MockeryTestCase;
+
 /**
  * Class NullableNumberTest
  *
@@ -23,7 +24,7 @@ class NullableNumberTest extends MockeryTestCase
      */
     public function testFormat($data)
     {
-        $this->assertEquals($data['expected'], NullableNumber::format($data, ['name' => 'permitsRequired']));
+        $this->assertEquals($data['expected'], (new NullableNumber())->format($data, ['name' => 'permitsRequired']));
     }
 
     public function provider()

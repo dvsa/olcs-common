@@ -3,15 +3,25 @@
 /**
  * IrhpPermitApplicationRefLink Test
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Service\Helper\UrlHelperService as UrlHelper;
 use Common\Service\Table\Formatter\IrhpPermitApplicationRefLink;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class IrhpPermitApplicationRefLinkTest extends MockeryTestCase
 {
+    protected $urlHelper;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->urlHelper = m::mock(UrlHelper::class);
+        $this->sut = new IrhpPermitApplicationRefLink($this->urlHelper);
+    }
+
     /**
      * Test the format method
      *
@@ -21,8 +31,7 @@ class IrhpPermitApplicationRefLinkTest extends MockeryTestCase
      */
     public function testFormat($data, $expected)
     {
-        $sm = m::mock(ServiceLocatorInterface::class);
-        $sm->shouldReceive('get->fromRoute')
+        $this->urlHelper->shouldReceive('fromRoute')
             ->with(
                 'licence/irhp-application',
                 [
@@ -33,7 +42,7 @@ class IrhpPermitApplicationRefLinkTest extends MockeryTestCase
             ->times(isset($data) ? 1 : 0)
             ->andReturn('url');
 
-        $this->assertEquals($expected, IrhpPermitApplicationRefLink::format($data, [], $sm));
+        $this->assertEquals($expected, $this->sut->format($data, []));
     }
 
     /**

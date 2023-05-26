@@ -5,17 +5,34 @@ namespace CommonTest\Service\Table\Formatter;
 use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Formatter\BusRegNumberLink;
 use Common\View\Helper\Status;
+use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
+use Laminas\View\HelperPluginManager;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Laminas\Mvc\I18n\Translator;
-use Laminas\ServiceManager\ServiceLocatorInterface;
-use Laminas\View\HelperPluginManager;
 
 /**
  * @covers \Common\Service\Table\Formatter\BusRegNumberLink
  */
 class BusRegNumberLinkTest extends MockeryTestCase
 {
+    protected $urlHelper;
+    protected $translator;
+    protected $viewHelperManager;
+    protected $statusHelper;
+
+    protected function setUp(): void
+    {
+        $this->urlHelper = m:: mock(UrlHelperService::class);
+        $this->translator = m::mock(TranslatorDelegator::class);
+        $this->viewHelperManager = m::mock(HelperPluginManager::class);
+        $this->statusHelper = m::mock(Status::class);
+        $this->sut = new BusRegNumberLink($this->translator, $this->viewHelperManager, $this->urlHelper);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
     /**
      * Tests the formatting for the different possible input array formats
      *
@@ -23,8 +40,6 @@ class BusRegNumberLinkTest extends MockeryTestCase
      */
     public function testFormat($isTxcApp, $expectedOutputStatus)
     {
-        $sut = new BusRegNumberLink();
-
         $id = 1234;
         $translatedLabel = 'translated status label';
         $url = 'http://url';
@@ -35,10 +50,7 @@ class BusRegNumberLinkTest extends MockeryTestCase
             'isTxcApp' => $isTxcApp,
         ];
 
-        $sm = m::mock(ServiceLocatorInterface::class);
-
-        $translationHelper = m::mock(Translator::class);
-        $translationHelper->shouldReceive('translate')
+        $this->translator->shouldReceive('translate')
             ->times($isTxcApp)
             ->with(BusRegNumberLink::LABEL_TRANSLATION_KEY)
             ->andReturn($translatedLabel);
@@ -48,23 +60,14 @@ class BusRegNumberLinkTest extends MockeryTestCase
             'value' => $translatedLabel,
         ];
 
-        $statusHelper = m::mock(Status::class);
-        $statusHelper->shouldReceive('__invoke')->times($isTxcApp)->with($statusInput)->andReturn($expectedOutputStatus);
-
-        $viewHelperManager = m::mock(HelperPluginManager::class);
-        $viewHelperManager->shouldReceive('get')->with('status')->times($isTxcApp)->andReturn($statusHelper);
-
-        $urlHelperService = m::mock(UrlHelperService::class);
-        $urlHelperService->expects('fromRoute')
+        $this->statusHelper->shouldReceive('__invoke')->times($isTxcApp)->with($statusInput)->andReturn($expectedOutputStatus);
+        $this->viewHelperManager->shouldReceive('get')->with('status')->times($isTxcApp)->andReturn($this->statusHelper);
+        $this->urlHelper->shouldReceive('fromRoute')
             ->with(BusRegNumberLink::URL_ROUTE, ['busRegId' => $id], [], true)
             ->andReturn($url);
 
-        $sm->shouldReceive('get')->times($isTxcApp)->with('ViewHelperManager')->andReturn($viewHelperManager);
-        $sm->shouldReceive('get')->times($isTxcApp)->with('translator')->andReturn($translationHelper);
-        $sm->expects('get')->with('Helper\Url')->andReturn($urlHelperService);
-
-        $expected = '<a class="govuk-link" href="'. $url . '">&quot;5678</a>' . ' ' . $expectedOutputStatus;
-        $this->assertEquals($expected, $sut::format($inputData, [], $sm));
+        $expected = '<a class="govuk-link" href="' . $url . '">&quot;5678</a>' . ' ' . $expectedOutputStatus;
+        $this->assertEquals($expected, $this->sut->format($inputData, []));
     }
 
     /**

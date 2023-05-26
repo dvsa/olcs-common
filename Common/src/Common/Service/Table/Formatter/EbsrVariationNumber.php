@@ -2,28 +2,38 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Laminas\ServiceManager\ServiceLocatorInterface;
 use Common\Util\Escape;
+use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
+use Laminas\View\HelperPluginManager;
 
 /**
  * EBSR variation number
  *
  * @author Ian Lindsay <ian@hemera-business-services.co.uk>
  */
-class EbsrVariationNumber implements FormatterInterface
+class EbsrVariationNumber implements FormatterPluginManagerInterface
 {
-    const SN_TRANSLATION_KEY = 'ebsr-variation-short-notice';
+    public const SN_TRANSLATION_KEY = 'ebsr-variation-short-notice';
+
+    private HelperPluginManager $viewHelperManager;
+
+    private TranslatorDelegator $translator;
+
+    public function __construct(HelperPluginManager $viewHelperManager, TranslatorDelegator $translator)
+    {
+        $this->viewHelperManager = $viewHelperManager;
+        $this->translator = $translator;
+    }
 
     /**
      * Formats the ebsr variation number
      *
-     * @param array                        $data   data array
-     * @param array                        $column column info
-     * @param null|ServiceLocatorInterface $sm     service locator
+     * @param array $data   data array
+     * @param array $column column info
      *
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
         /**
          * far from ideal, but we sometimes get data in different formats as follows:
@@ -44,12 +54,14 @@ class EbsrVariationNumber implements FormatterInterface
 
         //if the record is short notice, add a short notice status flag
         if (isset($data['isShortNotice']) && $data['isShortNotice'] === 'Y') {
-            /** @var \Common\View\Helper\Status $statusHelper */
-            $statusHelper = $sm->get('ViewHelperManager')->get('status');
+            /**
+            * @var \Common\View\Helper\Status $statusHelper
+            */
+            $statusHelper = $this->viewHelperManager->get('status');
 
             $status = [
                 'colour' => 'orange',
-                'value' => $sm->get('translator')->translate(self::SN_TRANSLATION_KEY)
+                'value' => $this->translator->translate(self::SN_TRANSLATION_KEY)
             ];
 
             return $variationNo . $statusHelper->__invoke($status);

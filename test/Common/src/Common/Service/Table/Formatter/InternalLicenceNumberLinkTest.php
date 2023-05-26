@@ -6,10 +6,10 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Service\Helper\UrlHelperService;
+use Common\Service\Table\Formatter\InternalLicenceNumberLink;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
-
-use Common\Service\Table\Formatter\InternalLicenceNumberLink;
 
 /**
  * Class LicenceNumberLinkTest
@@ -18,6 +18,24 @@ use Common\Service\Table\Formatter\InternalLicenceNumberLink;
  */
 class InternalLicenceNumberLinkTest extends TestCase
 {
+    protected $urlHelper;
+    protected $translator;
+    protected $viewHelperManager;
+    protected $router;
+    protected $request;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->urlHelper = m::mock(UrlHelperService::class);
+        $this->sut = new InternalLicenceNumberLink($this->urlHelper);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
+
     public function testFormat()
     {
         $licence = [
@@ -27,22 +45,16 @@ class InternalLicenceNumberLinkTest extends TestCase
             ]
         ];
 
-        $sm = m::mock()
-            ->shouldReceive('get')
-            ->with('Helper\Url')
-            ->andReturn(
-                m::mock()
-                    ->shouldReceive('fromRoute')
-                    ->with(
-                        'lva-licence',
-                        [
-                            'licence' => $licence['licence']['id']
-                        ]
-                    )
-                    ->andReturn('LICENCE_URL')
-                    ->getMock()
-            );
+        $this->urlHelper
+            ->shouldReceive('fromRoute')
+            ->with(
+                'lva-licence',
+                [
+                    'licence' => $licence['licence']['id']
+                ]
+            )
+            ->andReturn('LICENCE_URL');
         $expected = '<a class="govuk-link" href="LICENCE_URL" title="Licence details for 1">1</a>';
-        $this->assertEquals($expected, InternalLicenceNumberLink::format($licence, array(), $sm->getMock()));
+        $this->assertEquals($expected, $this->sut->format($licence, array()));
     }
 }

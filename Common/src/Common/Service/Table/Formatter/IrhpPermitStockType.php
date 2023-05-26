@@ -2,31 +2,40 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Common\Service\Helper\UrlHelperService;
 
 /**
  * IRHP Permit Stock table - Permit Type column formatter
  *
  * @author Scott Callaway <scott.callaway@capgemini.com>
  */
-class IrhpPermitStockType implements FormatterInterface
+class IrhpPermitStockType implements FormatterPluginManagerInterface
 {
+    private UrlHelperService $urlHelper;
+
+    /**
+     * @param UrlHelperService $urlHelper
+     */
+    public function __construct(UrlHelperService $urlHelper)
+    {
+        $this->urlHelper = $urlHelper;
+    }
+
     /**
      * Format
      *
      * Returns the title of the ECMT Permit
      *
-     * @param array                     $data
-     * @param array                     $column The column data.
-     * @param ServiceLocatorInterface   $sm     The service manager.
+     * @param array $data
+     * @param array $column The column data.
      *
      * @return string
      */
-    public static function format($data, $column = array(), ServiceLocatorInterface $sm = null)
+    public function format($data, $column = [])
     {
         unset($column);
 
-        $url = $sm->get('Helper\Url')->fromRoute(
+        $url = $this->urlHelper->fromRoute(
             'admin-dashboard/admin-permits/ranges',
             [
                 'stockId' => $data['id']

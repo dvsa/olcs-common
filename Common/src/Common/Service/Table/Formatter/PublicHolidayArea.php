@@ -2,27 +2,24 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Laminas\ServiceManager\ServiceManager;
-
 /**
  * Public holidays table - area column formatter
  *
  * @author Dmitry Golubev <dmitrij.golubev@valtech.co.uk>
  */
-class PublicHolidayArea implements FormatterInterface
+class PublicHolidayArea implements FormatterPluginManagerInterface
 {
     const NO_AREA = 'none';
 
     /**
      * Format
      *
-     * @param array          $data
-     * @param array          $column
-     * @param ServiceManager $sm
+     * @param array $data
+     * @param array $column
      *
      * @return string
      */
-    public static function format($data)
+    public function format($data, $column = [])
     {
         $map = [
             'isEngland' => 'England',

@@ -9,7 +9,7 @@ use Common\Util\Escape;
  *
  * @author Scott Callaway <scott.callaway@capgemini.com>
  */
-class IrhpPermitSectorName implements FormatterInterface
+class IrhpPermitSectorName implements FormatterPluginManagerInterface
 {
     /**
      * Format
@@ -20,7 +20,7 @@ class IrhpPermitSectorName implements FormatterInterface
      *
      * @return string
      */
-    public static function format($data)
+    public function format($data, $column = [])
     {
         if (strlen($data['sector']['description']) < 1) {
             return Escape::html($data['sector']['name']);

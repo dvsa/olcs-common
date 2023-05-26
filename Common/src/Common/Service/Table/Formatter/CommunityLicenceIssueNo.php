@@ -13,17 +13,16 @@ namespace Common\Service\Table\Formatter;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class CommunityLicenceIssueNo implements FormatterInterface
+class CommunityLicenceIssueNo implements FormatterPluginManagerInterface
 {
     /**
      * Format the issue no field
      *
-     * @param array $data
-     * @param array $column
-     * @param \Laminas\ServiceManager\ServiceManager $sm
+     * @param  array $data
+     * @param  array $column
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
         return str_pad($data[$column['name']], 5, '0', STR_PAD_LEFT) .
             ($data[$column['name']] === 0 ? ' (Office copy)' : '');

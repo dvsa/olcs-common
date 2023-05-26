@@ -5,12 +5,15 @@
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
-use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Mockery as m;
+use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Formatter\FeeUrl;
-use CommonTest\Bootstrap;
+use Laminas\Http\Request;
+use Laminas\Mvc\Router\Http\TreeRouteStack;
+use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
  * Fee Url formatter test
@@ -19,41 +22,42 @@ use CommonTest\Bootstrap;
  */
 class FeeUrlTest extends MockeryTestCase
 {
-    protected $sm;
+    protected $urlHelper;
+    protected $router;
+    protected $request;
+    protected $sut;
 
-    protected $mockRouteMatch;
-
-    protected $mockUrlHelper;
-
-    public function setUp(): void
+    protected function setUp(): void
     {
-        parent::setUp();
-
-        $this->sm = Bootstrap::getServiceManager();
+        $this->urlHelper = m::mock(UrlHelperService::class);
+        $this->router = m::mock(TreeRouteStack::class);
+        $this->request = m::mock(Request::class);
+        $this->sut = new FeeUrl($this->router, $this->request, $this->urlHelper);
 
         $this->mockRouteMatch = m::mock('\Laminas\Mvc\Router\RouteMatch');
         $this->mockUrlHelper = m::mock();
-        $mockRequest = m::mock('\Laminas\Stdlib\RequestInterface')
+        $this->request
             ->shouldReceive('getQuery')
             ->andReturn(
                 m::mock()
-                ->shouldReceive('toArray')
-                ->once()
-                ->andReturn(['foo' => 'bar'])
-                ->getMock()
+                    ->shouldReceive('toArray')
+                    ->once()
+                    ->andReturn(['foo' => 'bar'])
+                    ->getMock()
             )
             ->once()
             ->getMock();
 
-        $mockRouter = m::mock()
+        $this->router
             ->shouldReceive('match')
-            ->with($mockRequest)
+            ->with($this->request)
             ->andReturn($this->mockRouteMatch)
             ->getMock();
+    }
 
-        $this->sm->setService('router', $mockRouter);
-        $this->sm->setService('request', $mockRequest);
-        $this->sm->setService('Helper\Url', $this->mockUrlHelper);
+    protected function tearDown(): void
+    {
+        m::close();
     }
 
     /**
@@ -70,12 +74,12 @@ class FeeUrlTest extends MockeryTestCase
             ->shouldReceive('getMatchedRouteName')
             ->andReturn($routeMatch);
 
-        $this->mockUrlHelper
+        $this->urlHelper
             ->shouldReceive('fromRoute')
             ->with($expectedRoute, $expectedRouteParams, ['query' => ['foo' => 'bar']], true)
             ->andReturn('the_url');
 
-        $this->assertEquals($expectedLink, FeeUrl::format($data, [], $this->sm));
+        $this->assertEquals($expectedLink, $this->sut->format($data, []));
     }
 
     /**

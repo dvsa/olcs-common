@@ -8,6 +8,7 @@
 namespace CommonTest\Service\Table;
 
 use Common\Service\Helper\UrlHelperService;
+use Common\Service\Table\Formatter\FormatterPluginManager;
 use Common\Service\Table\TableBuilderFactory;
 use Laminas\Mvc\I18n\Translator;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -31,6 +32,7 @@ class TableBuilderFactoryTest extends MockeryTestCase
         $authService = m::mock(AuthorizationService::class);
         $translator = m::mock(Translator::class);
         $urlHelperService = m::mock(UrlHelperService::class);
+        $formatterPluginManager = m::mock(FormatterPluginManager::class);
 
         $serviceLocator = m::mock(\Laminas\ServiceManager\ServiceManager::class);
 
@@ -49,6 +51,10 @@ class TableBuilderFactoryTest extends MockeryTestCase
         $serviceLocator->shouldReceive('get')
             ->with('Helper\Url')
             ->andReturn($urlHelperService);
+
+        $serviceLocator->shouldReceive('get')
+            ->with(FormatterPluginManager::class)
+            ->andReturn($formatterPluginManager);
 
         $tableFactory = new TableBuilderFactory();
         $tableBuilder = $tableFactory->createService($serviceLocator);

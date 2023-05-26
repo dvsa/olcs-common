@@ -2,9 +2,11 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
-use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Mockery as m;
+use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Formatter\DocumentDescription;
+use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
+use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
  * Document Description Formatter Test
@@ -13,23 +15,20 @@ use Common\Service\Table\Formatter\DocumentDescription;
  */
 class DocumentDescriptionTest extends MockeryTestCase
 {
-    protected $mockSm;
+    protected $urlHelper;
+    protected $translator;
+    protected $sut;
 
-    protected $mockTranslator;
-
-    public function setUp(): void
+    protected function setUp(): void
     {
-        parent::setUp();
+        $this->translator = m::mock(TranslatorDelegator::class);
+        $this->urlHelper = m::mock(UrlHelperService::class);
+        $this->sut = new DocumentDescription($this->translator, $this->urlHelper);
+    }
 
-        $this->mockTranslator = m::mock();
-
-        $this->mockSm = m::mock()
-            ->shouldReceive('get')
-            ->with('translator')
-            ->andReturn($this->mockTranslator)
-            ->once()
-            ->getMock();
-
+    protected function tearDown(): void
+    {
+        m::close();
     }
 
     public function testFormat()
@@ -42,20 +41,13 @@ class DocumentDescriptionTest extends MockeryTestCase
         ];
         $column = [];
 
-        // Mocks
-        $mockUrlHelper = m::mock();
 
-        // Expectations
-        $this->mockSm->shouldReceive('get')
-            ->with('Helper\Url')
-            ->andReturn($mockUrlHelper);
-
-        $mockUrlHelper->shouldReceive('fromRoute')
+        $this->urlHelper->shouldReceive('fromRoute')
             ->with('getfile', ['identifier' => 666])
             ->andReturn('URL');
 
         $expected = '<a class="govuk-link" href="URL" >Foo file</a>';
-        $this->assertEquals($expected, DocumentDescription::format($data, $column, $this->mockSm));
+        $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 
     public function testFormatNoIdentifier()
@@ -67,7 +59,7 @@ class DocumentDescriptionTest extends MockeryTestCase
         $column = [];
 
         $expected = 'Foo file';
-        $this->assertEquals($expected, DocumentDescription::format($data, $column, $this->mockSm));
+        $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 
     public function testFormatEmptyIdentifier()
@@ -80,7 +72,7 @@ class DocumentDescriptionTest extends MockeryTestCase
         $column = [];
 
         $expected = 'Foo file';
-        $this->assertEquals($expected, DocumentDescription::format($data, $column, $this->mockSm));
+        $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 
     public function testFormatWithFilename()
@@ -92,7 +84,7 @@ class DocumentDescriptionTest extends MockeryTestCase
         $column = [];
 
         $expected = 'Foofile.txt';
-        $this->assertEquals($expected, DocumentDescription::format($data, $column, $this->mockSm));
+        $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 
     public function testFormatWithNoDecriptionNoFilename()
@@ -103,7 +95,7 @@ class DocumentDescriptionTest extends MockeryTestCase
         ];
         $column = [];
 
-        $this->mockTranslator
+        $this->translator
             ->shouldReceive('translate')
             ->with('internal.document-description.formatter.no-description')
             ->andReturn('File description missing')
@@ -111,7 +103,7 @@ class DocumentDescriptionTest extends MockeryTestCase
             ->getMock();
 
         $expected = 'File description missing';
-        $this->assertEquals($expected, DocumentDescription::format($data, $column, $this->mockSm));
+        $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 
     public function testFormatWithHtml()
@@ -124,19 +116,11 @@ class DocumentDescriptionTest extends MockeryTestCase
         ];
         $column = [];
 
-        // Mocks
-        $mockUrlHelper = m::mock();
-
-        // Expectations
-        $this->mockSm->shouldReceive('get')
-            ->with('Helper\Url')
-            ->andReturn($mockUrlHelper);
-
-        $mockUrlHelper->shouldReceive('fromRoute')
+        $this->urlHelper->shouldReceive('fromRoute')
             ->with('getfile', ['identifier' => 666])
             ->andReturn('URL');
 
         $expected = '<a class="govuk-link" href="URL" target="_blank">Foo file</a>';
-        $this->assertEquals($expected, DocumentDescription::format($data, $column, $this->mockSm));
+        $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 }
