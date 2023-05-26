@@ -39,6 +39,16 @@ class DeclarationController extends AbstractContinuationController
         /** @var \Common\Form\Form $form */
         $form = $this->getForm(\Common\FormService\Form\Continuation\Declaration::class, $continuationDetail);
 
+        $hasGovUkAccountError = $this->getFlashMessenger()->getContainer()->offsetExists('govUkAccountError');
+        if ($hasGovUkAccountError) {
+            $form->setMessages([
+                'content' => [
+                    'signatureOptions' => ['undertakings-sign-declaration-again']
+                ],
+            ]);
+            $form->setOption('formErrorsParagraph', 'undertakings-govuk-account-generic-error');
+        }
+
         if ($this->getRequest()->isPost()) {
             $form->setData($this->getRequest()->getPost());
             if ($form->isValid()) {
