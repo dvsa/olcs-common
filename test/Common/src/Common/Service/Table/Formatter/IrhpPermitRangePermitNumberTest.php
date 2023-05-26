@@ -5,14 +5,24 @@
  *
  * @author Scott Callaway <scott.callaway@capgemini.com>
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Service\Helper\UrlHelperService as UrlHelper;
 use Common\Service\Table\Formatter\IrhpPermitRangePermitNumber;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 class IrhpPermitRangePermitNumberTest extends MockeryTestCase
 {
+    protected $urlHelper;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->urlHelper = m::mock(UrlHelper::class);
+        $this->sut = new IrhpPermitRangePermitNumber($this->urlHelper);
+    }
     /**
      * Test the format method
      *
@@ -23,8 +33,8 @@ class IrhpPermitRangePermitNumberTest extends MockeryTestCase
      */
     public function testFormat($data, $expected)
     {
-        $sm = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class);
-        $sm->shouldReceive('get->fromRoute')
+
+        $this->urlHelper->shouldReceive('fromRoute')
             ->with(
                 'admin-dashboard/admin-permits/ranges',
                 [
@@ -35,7 +45,7 @@ class IrhpPermitRangePermitNumberTest extends MockeryTestCase
             )
             ->andReturn('WINDOW_EDIT_URL');
 
-        static::assertEquals($expected, IrhpPermitRangePermitNumber::format($data, [], $sm));
+        static::assertEquals($expected, $this->sut->format($data, []));
     }
 
     /**

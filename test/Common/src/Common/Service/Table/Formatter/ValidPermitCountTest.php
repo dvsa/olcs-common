@@ -4,7 +4,6 @@ namespace CommonTest\Service\Table\Formatter;
 
 use Common\RefData;
 use Common\Service\Table\Formatter\ValidPermitCount;
-use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
@@ -26,7 +25,7 @@ class ValidPermitCountTest extends MockeryTestCase
 
         $this->assertEquals(
             $expectedValidPermitCount,
-            ValidPermitCount::format($row)
+            (new ValidPermitCount())->format($row)
         );
     }
 

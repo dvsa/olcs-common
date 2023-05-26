@@ -5,6 +5,7 @@
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
+
 namespace Common\Service\Table\Formatter;
 
 // need to alias as RefData exists in Formatter namespace
@@ -15,17 +16,22 @@ use Common\RefData as Ref;
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class TransactionAmountSum implements FormatterInterface
+class TransactionAmountSum implements FormatterPluginManagerInterface
 {
+    private Money $moneyFormatter;
+
+    public function __construct(Money $moneyFormatter)
+    {
+        $this->moneyFormatter = $moneyFormatter;
+    }
     /**
      * Sums the data of a specific column and formats the result as a fee amount
      *
-     * @param array $data
-     * @param array $column
-     * @param \Laminas\ServiceManager\ServiceManager $sm
+     * @param  array $data
+     * @param  array $column
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
         $sum = 0;
 
@@ -36,6 +42,6 @@ class TransactionAmountSum implements FormatterInterface
         }
 
         $data[$column['name']] = $sum;
-        return Money::format($data, $column, $sm);
+        return $this->moneyFormatter->format($data, $column);
     }
 }

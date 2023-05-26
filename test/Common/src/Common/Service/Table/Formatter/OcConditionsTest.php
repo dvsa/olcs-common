@@ -3,6 +3,7 @@
 /**
  * OcConditionsTest.php
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\RefData;
@@ -23,23 +24,23 @@ class OcConditionsTest extends TestCase
      */
     public function testFormat($data, $conditions)
     {
-        $this->assertEquals(OcConditions::format($data), $conditions);
+        $this->assertEquals((new OcConditions())->format($data), $conditions);
     }
 
     public function dpFormatDataProvider()
     {
-        return array(
-            array(
-                array(
-                    'conditions' => array(
-                        array('licence' => null, 'conditionType' => ['id' => RefData::TYPE_UNDERTAKING]),
-                        array('licence' => null, 'conditionType' => ['id' => RefData::TYPE_UNDERTAKING]),
-                        array('licence' => 1, 'conditionType' => ['id' => RefData::TYPE_CONDITION]),
-                        array('licence' => 1, 'conditionType' => ['id' => RefData::TYPE_CONDITION])
-                    )
-                ),
+        return [
+            [
+                [
+                    'conditions' => [
+                        ['licence' => null, 'conditionType' => ['id' => RefData::TYPE_UNDERTAKING]],
+                        ['licence' => null, 'conditionType' => ['id' => RefData::TYPE_UNDERTAKING]],
+                        ['licence' => 1, 'conditionType' => ['id' => RefData::TYPE_CONDITION]],
+                        ['licence' => 1, 'conditionType' => ['id' => RefData::TYPE_CONDITION]]
+                    ]
+                ],
                 2
-            )
-        );
+            ]
+        ];
     }
 }

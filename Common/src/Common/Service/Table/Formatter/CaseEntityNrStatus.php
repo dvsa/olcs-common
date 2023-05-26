@@ -2,29 +2,38 @@
 
 namespace Common\Service\Table\Formatter;
 
+use Common\Service\Helper\UrlHelperService;
+
 /**
  * @author Dmitry Golubev <d.e.golubev@gmail.com>
  */
-class CaseEntityNrStatus implements FormatterInterface
+class CaseEntityNrStatus implements FormatterPluginManagerInterface
 {
-    const URL_TEMPLATE = '<a class="govuk-link" href="%s">%s</a>';
+    private const URL_TEMPLATE = '<a class="govuk-link" href="%s">%s</a>';
 
-    const TEMPLATE_LIC = '%s (%s)';
-    const TEMPLATE_APP = '%s (%s)<br />/%s (%s)';
+    private const TEMPLATE_LIC = '%s (%s)';
+    private const TEMPLATE_APP = '%s (%s)<br />/%s (%s)';
+
+    private UrlHelperService $urlHelper;
+
+    /**
+     * @param UrlHelperService $urlHelper
+     */
+    public function __construct(UrlHelperService $urlHelper)
+    {
+        $this->urlHelper = $urlHelper;
+    }
 
     /**
      * Return traffic area name
      *
-     * @param array                               $data   Data
-     * @param array                               $column Column data
-     * @param \Laminas\ServiceManager\ServiceManager $sm     Service manager
+     * @param array $data   Data
+     * @param array $column Column data
      *
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
-        $hlprUrl = $sm->get('Helper\Url');
-
         $typeId = $data['caseType']['id'];
 
         //  transport manager
@@ -33,7 +42,7 @@ class CaseEntityNrStatus implements FormatterInterface
 
             return sprintf(
                 self::URL_TEMPLATE,
-                $hlprUrl->fromRoute('transport-manager', ['transportManager' => $tmId]),
+                $this->urlHelper->fromRoute('transport-manager', ['transportManager' => $tmId]),
                 $tmId
             );
         }
@@ -43,13 +52,14 @@ class CaseEntityNrStatus implements FormatterInterface
 
         $licLink = sprintf(
             self::URL_TEMPLATE,
-            $hlprUrl->fromRoute('lva-licence', ['licence' => $lic['id']]),
+            $this->urlHelper->fromRoute('lva-licence', ['licence' => $lic['id']]),
             $lic['licNo']
         );
 
         $licStatus = $lic['status']['description'];
 
-        if ($typeId === \Common\RefData::CASE_TYPE_LICENCE
+        if (
+            $typeId === \Common\RefData::CASE_TYPE_LICENCE
             || $typeId === \Common\RefData::CASE_TYPE_IMPOUNDING
         ) {
             return sprintf(self::TEMPLATE_LIC, $licLink, $licStatus);
@@ -61,7 +71,7 @@ class CaseEntityNrStatus implements FormatterInterface
 
         $appLink = sprintf(
             self::URL_TEMPLATE,
-            $hlprUrl->fromRoute('lva-application', ['application' => $appId]),
+            $this->urlHelper->fromRoute('lva-application', ['application' => $appId]),
             $appId
         );
 

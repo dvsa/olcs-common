@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Sum formatter
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
-
 namespace Common\Service\Table\Formatter;
 
 /**
@@ -13,17 +7,16 @@ namespace Common\Service\Table\Formatter;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class Sum implements FormatterInterface
+class Sum implements FormatterPluginManagerInterface
 {
     /**
      * Sums the data of a specific column
      *
-     * @param array $data
-     * @param array $column
-     * @param \Laminas\ServiceManager\ServiceManager $sm
+     * @param  array $data
+     * @param  array $column
      * @return string
      */
-    public static function format($data, $column = array())
+    public function format($data, $column = [])
     {
         $sum = 0;
 

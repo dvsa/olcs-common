@@ -8,14 +8,14 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Common\Service\Helper\DataHelperService;
 
 /**
  * Address formatter
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class Address implements FormatterInterface
+class Address implements FormatterPluginManagerInterface
 {
     protected static $formats = [
         'FULL' => [
@@ -33,21 +33,21 @@ class Address implements FormatterInterface
             'postcode',
         ]
     ];
+    private DataHelperService $dataHelper;
 
     /**
      * Format an address
      *
-     * @param array                   $data   The row data.
-     * @param array                   $column The column data.
-     * @param ServiceLocatorInterface $sm     The service manager.
+     * @param array $data   The row data.
+     * @param array $column The column data.
      *
      * @return string                         The formatted address
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
         if (isset($column['name'])) {
             if (strpos($column['name'], '->')) {
-                $data = $sm->get('Helper\Data')->fetchNestedData($data, $column['name']);
+                $data = $this->dataHelper->fetchNestedData($data, $column['name']);
             } elseif (isset($data[$column['name']])) {
                 $data = $data[$column['name']];
             }
@@ -106,5 +106,13 @@ class Address implements FormatterInterface
             );
         }
         return $fields;
+    }
+
+    /**
+     * @param DataHelperService $dataHelper
+     */
+    public function __construct(DataHelperService $dataHelper)
+    {
+        $this->dataHelper = $dataHelper;
     }
 }

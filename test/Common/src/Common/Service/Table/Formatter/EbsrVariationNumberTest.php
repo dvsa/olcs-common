@@ -2,10 +2,11 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Service\Table\Formatter\EbsrVariationNumber;
+use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
+use Laminas\View\HelperPluginManager;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Common\Service\Table\Formatter\EbsrVariationNumber;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Class EbsrVariationNumberTest
@@ -14,13 +15,28 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
  */
 class EbsrVariationNumberTest extends MockeryTestCase
 {
+    protected $translator;
+    protected $viewHelperManager;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->translator = m::mock(TranslatorDelegator::class);
+        $this->viewHelperManager = m::mock(HelperPluginManager::class);
+        $this->sut = new EbsrVariationNumber($this->viewHelperManager, $this->translator);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
+
     /**
      * Tests empty string returned if there's no variation number set
      */
     public function testFormatWithNoVariationNumber()
     {
-        $sut = new EbsrVariationNumber();
-        $this->assertEquals('', $sut->format([]));
+        $this->assertEquals('', $this->sut->format([]));
     }
 
     /**
@@ -32,8 +48,7 @@ class EbsrVariationNumberTest extends MockeryTestCase
      */
     public function testFormatNotShortNotice($data)
     {
-        $sut = new EbsrVariationNumber();
-        $this->assertEquals(1234, $sut->format($data));
+        $this->assertEquals(1234, $this->sut->format($data));
     }
 
     /**
@@ -69,8 +84,6 @@ class EbsrVariationNumberTest extends MockeryTestCase
      */
     public function testFormatWithShortNotice($data)
     {
-        $sut = new EbsrVariationNumber();
-
         $statusLabel = 'status label';
 
         $statusArray = [
@@ -78,21 +91,25 @@ class EbsrVariationNumberTest extends MockeryTestCase
             'value' => $statusLabel
         ];
 
-        $sm = m::mock(ServiceLocatorInterface::class);
+        $statusHelper = m::mock(Status::class);
 
-        $sm->shouldReceive('get->get->__invoke')
+        $this->viewHelperManager->shouldReceive('get')
+            ->with('status')
+            ->andReturn($statusHelper);
+
+        $statusHelper->shouldReceive('__invoke')
             ->once()
             ->with($statusArray)
             ->andReturn($statusLabel);
 
-        $sm->shouldReceive('get->translate')
+        $this->translator->shouldReceive('translate')
             ->once()
             ->with(EbsrVariationNumber::SN_TRANSLATION_KEY)
             ->andReturn($statusLabel);
 
         $expected = 1234 . $statusLabel;
 
-        $this->assertEquals($expected, $sut->format($data, [], $sm));
+        $this->assertEquals($expected, $this->sut->format($data, []));
     }
 
     /**

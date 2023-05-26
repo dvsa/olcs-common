@@ -5,11 +5,13 @@
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
-use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Mockery as m;
+use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Formatter\PrinterDocumentCategory;
+use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
  * PrinterDocumentCategory Formatter Test
@@ -18,6 +20,19 @@ use Common\Service\Table\Formatter\PrinterDocumentCategory;
  */
 class PrinterDocumentCategoryTest extends MockeryTestCase
 {
+    protected $urlHelper;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->urlHelper = m::mock(UrlHelperService::class);
+        $this->sut = new PrinterDocumentCategory($this->urlHelper);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
     /**
      * Test formatter
      *
@@ -33,21 +48,13 @@ class PrinterDocumentCategoryTest extends MockeryTestCase
             'team' => $data['team']['id']
         ];
 
-        $mockUrlHelper = m::mock()
+        $this->urlHelper
             ->shouldReceive('fromRoute')
             ->with('admin-dashboard/admin-team-management', $params)
             ->once()
-            ->andReturn('foo')
-            ->getMock();
+            ->andReturn('foo');
 
-        $sm = m::mock()
-            ->shouldReceive('get')
-            ->with('Helper\Url')
-            ->andReturn($mockUrlHelper)
-            ->once()
-            ->getMock();
-
-        $this->assertEquals($expected, PrinterDocumentCategory::format($data, [], $sm));
+        $this->assertEquals($expected, $this->sut->format($data, []));
     }
 
     public function provider()

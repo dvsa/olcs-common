@@ -8,7 +8,6 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
-use Common\Service\Table\Formatter\InterimVehiclesCheckbox;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
@@ -20,13 +19,13 @@ class InterimVehiclesCheckboxTest extends MockeryTestCase
 {
     /**
      * Test formatter
-     * 
+     *
      * @group interimFormatter
      * @dataProvider formatProvider
      */
     public function testFormat($data, $expected)
     {
-        $this->assertEquals($expected, InterimVehiclesCheckbox::format($data));
+        $this->assertEquals($expected, (new \Common\Service\Table\Formatter\InterimVehiclesCheckbox())->format($data));
     }
 
     public function formatProvider()

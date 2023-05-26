@@ -2,35 +2,40 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Common\RefData;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Common\Service\Helper\UrlHelperService;
 
 /**
  * EBSR document link
  *
  * @author Ian Lindsay <ian@hemera-business-services.co.uk>
  */
-class EbsrDocumentLink implements FormatterInterface
+class EbsrDocumentLink implements FormatterPluginManagerInterface
 {
-    const LINK_PATTERN = '<a class="govuk-link" href="%s">%s</a>';
-    const URL_ROUTE = 'bus-registration/ebsr';
-    const URL_ACTION = 'detail';
+    public const LINK_PATTERN = '<a class="govuk-link" href="%s">%s</a>';
+    public const URL_ROUTE = 'bus-registration/ebsr';
+    public const URL_ACTION = 'detail';
+
+    private UrlHelperService $urlHelper;
+
+    /**
+     * @param UrlHelperService $urlHelper
+     */
+    public function __construct(UrlHelperService $urlHelper)
+    {
+        $this->urlHelper = $urlHelper;
+    }
 
     /**
      * Formats the link to an EBSR document
      *
-     * @param array                        $data   data array
-     * @param array                        $column column info
-     * @param null|ServiceLocatorInterface $sm     service locator
+     * @param array $data   data array
+     * @param array $column column info
      *
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
-        /** @var \Common\Service\Helper\UrlHelperService $statusHelper */
-        $urlHelper = $sm->get('Helper\Url');
-
-        $url = $urlHelper->fromRoute(
+        $url = $this->urlHelper->fromRoute(
             self::URL_ROUTE,
             [
                 'id' => $data['id'],

@@ -2,7 +2,9 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Service\Helper\StackHelperService;
 use Common\Service\Table\Formatter\YesNo;
+use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
@@ -11,17 +13,20 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class YesNoTest extends MockeryTestCase
 {
-    /** @var  m\MockInterface */
-    private $mockSm;
-    /** @var  m\MockInterface */
-    private $mockTranslator;
+    protected $stackHelper;
+    protected $translator;
+    protected $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
-        $this->mockTranslator = m::mock(\Laminas\I18n\Translator\TranslatorInterface::class);
+        $this->translator = m::mock(TranslatorDelegator::class);
+        $this->stackHelper = m::mock(StackHelperService::class);
+        $this->sut = new YesNo($this->stackHelper, $this->translator);
+    }
 
-        $this->mockSm = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class);
-        $this->mockSm->shouldReceive('get')->once()->with('translator')->andReturn($this->mockTranslator);
+    protected function tearDown(): void
+    {
+        m::close();
     }
 
     /**
@@ -34,10 +39,10 @@ class YesNoTest extends MockeryTestCase
      */
     public function testFormatByName($data, $column, $expected)
     {
-        $this->mockTranslator
+        $this->translator
             ->shouldReceive('translate')->once()->with('common.table.' . $expected)->andReturn('EXPECT');
 
-        static::assertEquals('EXPECT', YesNo::format($data, $column, $this->mockSm));
+        static::assertEquals('EXPECT', $this->sut->format($data, $column));
     }
 
     /**
@@ -83,20 +88,13 @@ class YesNoTest extends MockeryTestCase
             'stack' => 'fieldset->fieldset2->field',
         ];
 
-        $this->mockTranslator->shouldReceive('translate')->once()->with('common.table.Yes')->andReturn('EXPECT');
-        $this->mockSm
-            ->shouldReceive('get')
-            ->with('Helper\Stack')
-            ->once()
-            ->andReturn(
-                m::mock()
+        $this->translator->shouldReceive('translate')->once()->with('common.table.Yes')->andReturn('EXPECT');
+        $this->stackHelper
                     ->shouldReceive('getStackValue')
                     ->once()
                     ->with($data, ['fieldset', 'fieldset2', 'field'])
-                    ->andReturn('Y')
-                    ->getMock()
-            );
+                    ->andReturn('Y');
 
-        static::assertEquals('EXPECT', YesNo::format($data, $column, $this->mockSm));
+        static::assertEquals('EXPECT', $this->sut->format($data, $column));
     }
 }

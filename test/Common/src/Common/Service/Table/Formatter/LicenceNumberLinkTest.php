@@ -3,12 +3,13 @@
 /**
  * LicenceNumberLinkTest.php
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Service\Helper\UrlHelperService;
+use Common\Service\Table\Formatter\LicenceNumberLink;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
-
-use Common\Service\Table\Formatter\LicenceNumberLink;
 
 /**
  * Class LicenceNumberLinkTest
@@ -17,53 +18,61 @@ use Common\Service\Table\Formatter\LicenceNumberLink;
  */
 class LicenceNumberLinkTest extends TestCase
 {
+    protected $urlHelper;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->urlHelper = m::mock(UrlHelperService::class);
+        $this->sut = new LicenceNumberLink($this->urlHelper);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
+
     /**
      * @dataProvider formatProvider
      */
     public function testFormat($data, $expected)
     {
-        $sm = m::mock()
-            ->shouldReceive('get')
-            ->with('Helper\Url')
-            ->andReturn(
-                m::mock()
-                    ->shouldReceive('fromRoute')
-                    ->with(
-                        'lva-licence',
-                        array(
-                            'licence' => $data['licence']['id']
-                        )
-                    )
-                    ->andReturn('LICENCE_URL')
-                    ->getMock()
-            );
+        $this->urlHelper
+            ->shouldReceive('fromRoute')
+            ->with(
+                'lva-licence',
+                [
+                    'licence' => $data['licence']['id']
+                ]
+            )
+            ->andReturn('LICENCE_URL');
 
-        $this->assertEquals($expected, LicenceNumberLink::format($data, array(), $sm->getMock()));
+        $this->assertEquals($expected, $this->sut->format($data, []));
     }
 
     public function formatProvider()
     {
-        return array(
-            array(
-                array(
-                    'licence' => array(
+        return [
+            [
+                [
+                    'licence' => [
                         'id' => 1,
                         'licNo' => 0001,
                         'status' => 'lsts_valid'
-                    )
-                ),
+                    ]
+                ],
                 '<a class="govuk-link" href="LICENCE_URL">1</a>'
-            ),
-            array(
-                array(
-                    'licence' => array(
+            ],
+            [
+                [
+                    'licence' => [
                         'id' => 1,
                         'licNo' => 0001,
                         'status' => 'not-valid'
-                    )
-                ),
+                    ]
+                ],
                 '1'
-            )
-        );
+            ]
+        ];
     }
 }

@@ -5,9 +5,11 @@
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
-use Common\Service\Table\Formatter\FeeNoAndStatus as Sut;
+use Common\Service\Table\Formatter\FeeNoAndStatus;
+use Common\Service\Table\Formatter\FeeStatus;
 
 /**
  * Fee number and status formatter test
@@ -16,7 +18,6 @@ use Common\Service\Table\Formatter\FeeNoAndStatus as Sut;
  */
 class FeeNoAndStatusTest extends \PHPUnit\Framework\TestCase
 {
-
     /**
      * Test the format method
      *
@@ -27,7 +28,7 @@ class FeeNoAndStatusTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormat($data, $expected)
     {
-        $this->assertEquals($expected, Sut::format($data));
+        $this->assertEquals($expected, (new FeeNoAndStatus(new FeeStatus()))->format($data));
     }
 
     /**

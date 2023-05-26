@@ -7,7 +7,7 @@ use Common\Util\Escape;
 /**
  * IRHP Permit Type formatter
  */
-class IrhpPermitType implements FormatterInterface
+class IrhpPermitType implements FormatterPluginManagerInterface
 {
     /**
      * Format
@@ -18,7 +18,7 @@ class IrhpPermitType implements FormatterInterface
      *
      * @return string
      */
-    public static function format($data)
+    public function format($data, $column = [])
     {
         // TODO: Remove ternary when ECMT permits are removed.
         $type = isset($data['irhpPermitType']) ?

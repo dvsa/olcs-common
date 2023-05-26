@@ -8,9 +8,9 @@ use Common\Util\Escape;
 /**
  * IRHP Permit Type formatter
  */
-class IrhpPermitsRequired implements FormatterInterface
+class IrhpPermitsRequired implements FormatterPluginManagerInterface
 {
-    const NAME = 'IrhpPermitsRequired';
+    private const NAME = 'IrhpPermitsRequired';
 
     /**
      * Format
@@ -21,7 +21,7 @@ class IrhpPermitsRequired implements FormatterInterface
      *
      * @return string
      */
-    public static function format($data)
+    public function format($data, $column = [])
     {
         $value = $data['permitsRequired'];
 

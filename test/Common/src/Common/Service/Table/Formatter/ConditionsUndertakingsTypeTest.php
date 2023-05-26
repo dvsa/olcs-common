@@ -2,10 +2,10 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Service\Table\Formatter\ConditionsUndertakingsType;
+use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
-
-use Common\Service\Table\Formatter\ConditionsUndertakingsType;
 
 /**
  * Class ConditionsUndertakingsTypeTest
@@ -14,6 +14,18 @@ use Common\Service\Table\Formatter\ConditionsUndertakingsType;
  */
 class ConditionsUndertakingsTypeTest extends TestCase
 {
+    protected $translator;
+
+    protected function setUp(): void
+    {
+        $this->translator = m::mock(TranslatorDelegator::class);
+        $this->sut = new ConditionsUndertakingsType($this->translator);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
     public function testFormatNoS4()
     {
         $data = [
@@ -23,9 +35,8 @@ class ConditionsUndertakingsTypeTest extends TestCase
             's4' => null
         ];
         $column = null;
-        $sm = null;
 
-        $this->assertSame('DESCRIPTION', ConditionsUndertakingsType::format($data, $column, $sm));
+        $this->assertSame('DESCRIPTION', $this->sut->format($data, $column));
     }
 
     public function testFormatWithS4()
@@ -37,9 +48,8 @@ class ConditionsUndertakingsTypeTest extends TestCase
             's4' => ['FOO']
         ];
         $column = null;
-        $sm = m::mock();
-        $sm->shouldReceive('get->translate')->with('(Schedule 4/1)')->once()->andReturn('TRANSLATED');
+        $this->translator->shouldReceive('translate')->with('(Schedule 4/1)')->once()->andReturn('TRANSLATED');
 
-        $this->assertSame('DESCRIPTION<br>TRANSLATED', ConditionsUndertakingsType::format($data, $column, $sm));
+        $this->assertSame('DESCRIPTION<br>TRANSLATED', $this->sut->format($data, $column));
     }
 }

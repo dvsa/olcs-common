@@ -2,6 +2,7 @@
 
 namespace Common\Service\Table;
 
+use Common\Service\Table\Formatter\FormatterPluginManager;
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
@@ -21,7 +22,8 @@ class TableBuilderFactory implements FactoryInterface
             $container->get('ZfcRbac\Service\AuthorizationService'),
             $container->get('translator'),
             $container->get('Helper\Url'),
-            $container->get('Config')
+            $container->get('Config'),
+            $container->get(FormatterPluginManager::class)
         );
     }
 

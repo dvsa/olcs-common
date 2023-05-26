@@ -5,11 +5,12 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
-use Common\Service\Table\Formatter\StackValueReplacer;
-use CommonTest\Bootstrap;
 use Common\Service\Helper\StackHelperService;
+use Common\Service\Table\Formatter\StackValue;
+use Common\Service\Table\Formatter\StackValueReplacer;
 
 /**
  * StackValueReplacer formatter test
@@ -32,12 +33,7 @@ class StackValueReplacerTest extends \PHPUnit\Framework\TestCase
             'stringFormat' => '{foo->bar->cake} {foo->carrot}(s)'
         ];
         $expected = '123 cake(s)';
-        $sm = Bootstrap::getServiceManager();
 
-        // @NOTE We use the real stack helper here, as it's a useful component test
-        // and is only a tiny utility class that is also fully tested elsewhere
-        $sm->setService('Helper\Stack', new StackHelperService());
-
-        $this->assertEquals($expected, StackValueReplacer::format($data, $column, $sm));
+        $this->assertEquals($expected, (new StackValueReplacer(new StackValue(new StackHelperService())))->format($data, $column));
     }
 }

@@ -3,20 +3,26 @@
 namespace Common\Service\Table\Formatter;
 
 use Common\RefData;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\View\HelperPluginManager;
 
-class EbsrDocumentStatus implements FormatterInterface
+class EbsrDocumentStatus implements FormatterPluginManagerInterface
 {
+    private HelperPluginManager $viewHelperManager;
+
+    public function __construct(HelperPluginManager $viewHelperManager)
+    {
+        $this->viewHelperManager = $viewHelperManager;
+    }
+
     /**
      * Formats the status of an EBSR document
      *
-     * @param array                        $data   data array
-     * @param array                        $column column info
-     * @param null|ServiceLocatorInterface $sm     service locator
+     * @param array $data   data array
+     * @param array $column column info
      *
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
         /**
          * @todo
@@ -29,25 +35,27 @@ class EbsrDocumentStatus implements FormatterInterface
             case RefData::EBSR_STATUS_VALIDATING:
             case RefData::EBSR_STATUS_SUBMITTED:
                 $status = [
-                    'colour' => 'orange',
-                    'value' => 'processing'
+                'colour' => 'orange',
+                'value' => 'processing'
                 ];
                 break;
             case RefData::EBSR_STATUS_PROCESSED:
                 $status = [
-                    'colour' => 'green',
-                    'value' => 'successful'
+                'colour' => 'green',
+                'value' => 'successful'
                 ];
                 break;
             default:
                 $status = [
-                    'colour' => 'red',
-                    'value' => 'failed'
+                'colour' => 'red',
+                'value' => 'failed'
                 ];
         }
 
-        /** @var \Common\View\Helper\Status $statusHelper */
-        $statusHelper = $sm->get('ViewHelperManager')->get('status');
+        /**
+        * @var \Common\View\Helper\Status $statusHelper
+        */
+        $statusHelper = $this->viewHelperManager->get('status');
 
         return $statusHelper->__invoke($status);
     }

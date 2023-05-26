@@ -21,16 +21,16 @@ class TransactionAmount extends Money
     /**
      * Format a transaction amount
      *
-     * @param array $data
-     * @param array $column
-     * @param \Laminas\ServiceManager\ServiceManager $sm
+     * @param  array $data
+     * @param  array $column
      * @return string
      */
-    public static function format($data, $column = array())
+    public function format($data, $column = [])
     {
         $amount = parent::format($data, $column);
 
-        if (isset($data['status']['id'])
+        if (
+            isset($data['status']['id'])
             && $data['status']['id'] !== Ref::TRANSACTION_STATUS_COMPLETE
         ) {
             return sprintf('<span class="void">%s</span>', $amount);

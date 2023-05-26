@@ -5,9 +5,8 @@
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-namespace CommonTest\Service\Table\Formatter;
 
-use Common\Service\Table\Formatter\FeeStatus;
+namespace CommonTest\Service\Table\Formatter;
 
 /**
  * Fee status formatter test
@@ -16,7 +15,6 @@ use Common\Service\Table\Formatter\FeeStatus;
  */
 class FeeStatusTest extends \PHPUnit\Framework\TestCase
 {
-
     /**
      * Test the format method
      *
@@ -27,7 +25,7 @@ class FeeStatusTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormat($data, $expected)
     {
-        $this->assertEquals($expected, FeeStatus::format($data));
+        $this->assertEquals($expected, (new \Common\Service\Table\Formatter\FeeStatus())->format($data));
     }
 
     /**

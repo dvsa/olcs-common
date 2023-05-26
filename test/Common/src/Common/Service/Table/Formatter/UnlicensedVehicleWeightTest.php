@@ -3,12 +3,11 @@
 /**
  * UnlicensedVehicleWeightTest.php
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
-use Mockery as m;
+use Common\Service\Helper\StackHelperService;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
-
-use Common\Service\Table\Formatter\UnlicensedVehicleWeight;
 
 /**
  * Class UnlicensedVehicleWeightTest
@@ -29,22 +28,7 @@ class UnlicensedVehicleWeightTest extends TestCase
             'name' => 'weight',
         ];
 
-        $sm = m::mock()
-            ->shouldReceive('get')
-            ->with('Helper\Stack')
-            ->andReturn(
-                m::mock()
-                    ->shouldReceive('getStackValue')
-                    ->with(
-                        $data,
-                        ['vehicle', 'platedWeight']
-                    )
-                    ->andReturn($data['vehicle']['platedWeight'])
-                    ->getMock()
-            )
-            ->getMock();
-
-        $this->assertEquals($expected, UnlicensedVehicleWeight::format($data, $column, $sm));
+        $this->assertEquals($expected, (new \Common\Service\Table\Formatter\UnlicensedVehicleWeight(new StackHelperService()))->format($data, $column));
     }
 
     public function formatProvider()

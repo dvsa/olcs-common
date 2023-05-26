@@ -8,7 +8,10 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
-use Common\Service\Table\Formatter\FeeTransactionDate as Sut;
+use Common\Service\Helper\StackHelperService;
+use Common\Service\Table\Formatter\Date;
+use Common\Service\Table\Formatter\FeeTransactionDate;
+use Common\Service\Table\Formatter\StackValue;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
@@ -19,6 +22,22 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class FeeTransactionDateTest extends MockeryTestCase
 {
+    protected $urlHelper;
+    protected $translator;
+    protected $viewHelperManager;
+    protected $router;
+    protected $request;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->sut = new FeeTransactionDate(new StackValue(new StackHelperService()), new Date());
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
     public function testFormat()
     {
         $data = [
@@ -33,23 +52,6 @@ class FeeTransactionDateTest extends MockeryTestCase
 
         $expected = '01/09/2015';
 
-        $sm = $this->createMock('\stdClass', array('get'));
-
-        $sm = m::mock()
-            ->shouldReceive('get')
-            ->with('Helper\Stack')
-            ->andReturn(
-                m::mock()
-                    ->shouldReceive('getStackValue')
-                    ->with(
-                        $data,
-                        ['child', 'someDate']
-                    )
-                    ->andReturn('2015-09-01')
-                    ->getMock()
-            )
-            ->getMock();
-
-        $this->assertEquals($expected, Sut::format($data, $column, $sm));
+        $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 }

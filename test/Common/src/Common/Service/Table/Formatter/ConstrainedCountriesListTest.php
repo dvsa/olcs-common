@@ -9,23 +9,18 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\ConstrainedCountriesList;
-use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 use Mockery as m;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 class ConstrainedCountriesListTest extends MockeryTestCase
 {
-    private $sm;
+    protected $translator;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
-        $this->sm = m::mock(ServiceLocatorInterface::class);
-        $this->sm->allows('get->translate')
-            ->andReturnUsing(
-                function ($key) {
-                    return '_TRNSLT_' . $key;
-                }
-            );
+        $this->translator = m::mock(TranslatorDelegator::class);
+        $this->sut = new ConstrainedCountriesList($this->translator);
     }
 
     public function testFormat()
@@ -44,9 +39,14 @@ class ConstrainedCountriesListTest extends MockeryTestCase
             ]
         ];
 
+        $this->translator->shouldReceive('translate')->andReturnUsing(
+            function ($key) {
+                return '_TRNSLT_' . $key;
+            }
+        );
         $this->assertEquals(
             '_TRNSLT_United Kingdom, _TRNSLT_Trinidad &amp; Tobago, _TRNSLT_&quot;Third&quot; country',
-            ConstrainedCountriesList::format($data, [], $this->sm)
+            $this->sut->format($data, [])
         );
     }
 
@@ -67,10 +67,14 @@ class ConstrainedCountriesListTest extends MockeryTestCase
                 ],
             ]
         ];
-
+        $this->translator->shouldReceive('translate')->andReturnUsing(
+            function ($key) {
+                return '_TRNSLT_' . $key;
+            }
+        );
         $this->assertEquals(
             '_TRNSLT_United Kingdom, _TRNSLT_Trinidad &amp; Tobago, _TRNSLT_&quot;Third&quot; country',
-            ConstrainedCountriesList::format($data, ['name' => $columnName], $this->sm)
+            $this->sut->format($data, ['name' => $columnName])
         );
     }
 
@@ -79,10 +83,14 @@ class ConstrainedCountriesListTest extends MockeryTestCase
         $data = [
             'constrainedCountries' => []
         ];
-
+        $this->translator->shouldReceive('translate')->andReturnUsing(
+            function ($key) {
+                return '_TRNSLT_' . $key;
+            }
+        );
         $this->assertEquals(
             '_TRNSLT_no.constrained.countries',
-            ConstrainedCountriesList::format($data, [], $this->sm)
+            $this->sut->format($data, [])
         );
     }
 }

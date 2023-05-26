@@ -18,12 +18,11 @@ class TransactionFeeAllocatedAmount extends Money
     /**
      * Format a transaction fee allocated amount
      *
-     * @param array $data
-     * @param array $column
-     * @param \Laminas\ServiceManager\ServiceManager $sm
+     * @param  array $data
+     * @param  array $column
      * @return string
      */
-    public static function format($data, $column = array())
+    public function format($data, $column = [])
     {
         $amount = parent::format($data, $column);
 

@@ -13,23 +13,29 @@ namespace Common\Service\Table\Formatter;
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class TransactionNoAndStatus implements FormatterInterface
+class TransactionNoAndStatus implements FormatterPluginManagerInterface
 {
+    protected TransactionUrl $transactionUrlFormatter;
+
+    public function __construct(TransactionUrl $transactionUrlFormatter, TransactionStatus $transactionStatusFormatter)
+    {
+            $this->transactionUrlFormatter = $transactionUrlFormatter;
+            $this->transactionStatusFormatter = $transactionStatusFormatter;
+    }
     /**
      * Format a fee status
      *
-     * @param array $row
-     * @param array $column
-     * @param \Laminas\ServiceManager\ServiceManager $serviceLocator
-     * @return string
+     * @param      array $row
+     * @param      array $column
+     * @return     string
      * @inheritdoc
      */
-    public static function format($row, $column = null, $serviceLocator = null)
+    public function format($row, $column = null)
     {
 
-        $link = TransactionUrl::format($row, $column, $serviceLocator);
+        $link = TransactionUrl::format($row, $column);
 
-        $status = TransactionStatus::format($row, $column, $serviceLocator);
+        $status = TransactionStatus::format($row, $column);
 
         return $link . ' ' . $status;
     }

@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Address formatter
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
-
 namespace Common\Service\Table\Formatter;
 
 /**
@@ -13,12 +7,12 @@ namespace Common\Service\Table\Formatter;
  *
  * @author Shaun Lizzio <shaun@lizzio.co.uk>
  */
-class AddressLines extends Address implements FormatterInterface
+class AddressLines extends Address implements FormatterPluginManagerInterface
 {
     /**
      * How to format the resulting address fields. Comma separated.
      *
-     * @param $parts
+     * @param  $parts
      * @return string
      */
     protected static function formatAddress($parts)

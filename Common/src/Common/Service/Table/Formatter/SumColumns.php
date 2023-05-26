@@ -13,17 +13,16 @@ namespace Common\Service\Table\Formatter;
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class SumColumns implements FormatterInterface
+class SumColumns implements FormatterPluginManagerInterface
 {
     /**
      * Sums the data of a specific columns
      *
-     * @param array $data
-     * @param array $column
-     * @param \Laminas\ServiceManager\ServiceManager $sm
+     * @param  array $data
+     * @param  array $column
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
         $total = 0;
         if (isset($column['columns']) && is_array($column['columns'])) {

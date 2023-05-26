@@ -2,40 +2,44 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 
 /**
  * RefData formatter
  */
-class RefData implements FormatterInterface
+class RefData implements FormatterPluginManagerInterface
 {
+    /**
+     * @param TranslatorDelegator $translator
+     */
+    public function __construct(TranslatorDelegator $translator)
+    {
+        $this->translator = $translator;
+    }
     /**
      * Format a address
      *
-     * @param array                   $data   Row data
-     * @param array                   $column Column params
-     * @param ServiceLocatorInterface $sm     Service Manager
+     * @param array $data   Row data
+     * @param array $column Column params
      *
      * @return string
      */
-    public static function format($data, array $column = [], ServiceLocatorInterface $sm = null)
+    public function format($data, $column = [])
     {
         $colData = $data[$column['name']];
         if (empty($colData)) {
             return '';
         }
 
-        $trslSrv = $sm->get('translator');
-
         //  single RefData (check, it is NOT an array of entities)
         if (isset($colData['description'])) {
-            return $trslSrv->translate($colData['description']);
+            return $this->translator->translate($colData['description']);
         }
 
         //  array of RefData
         $result = [];
         foreach ($colData as $row) {
-            $result[] = $trslSrv->translate($row['description']);
+            $result[] = $this->translator->translate($row['description']);
         }
 
         $sprtr = (isset($column['separator']) ? $column['separator'] : '');

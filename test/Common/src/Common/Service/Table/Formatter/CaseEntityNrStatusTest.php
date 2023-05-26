@@ -11,17 +11,13 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class CaseEntityNrStatusTest extends MockeryTestCase
 {
-    /** @var  \Common\Service\Helper\UrlHelperService | \Laminas\ServiceManager\ServiceLocatorInterface */
-    private $mockSm;
     /** @var  \Common\Service\Helper\UrlHelperService | m\MockInterface */
     private $mockUrlHlp;
 
     public function setUp(): void
     {
         $this->mockUrlHlp = m::mock(\Common\Service\Helper\UrlHelperService::class);
-
-        $this->mockSm = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class);
-        $this->mockSm->shouldReceive('get')->with('Helper\Url')->andReturn($this->mockUrlHlp);
+        $this->sut = new CaseEntityNrStatus($this->mockUrlHlp);
     }
 
     public function testFormatTm()
@@ -45,7 +41,7 @@ class CaseEntityNrStatusTest extends MockeryTestCase
 
         static::assertSame(
             '<a class="govuk-link" href="EXPECT_URL">' . $tmId . '</a>',
-            CaseEntityNrStatus::format($data, null, $this->mockSm)
+            $this->sut->format($data, null)
         );
     }
 
@@ -74,7 +70,7 @@ class CaseEntityNrStatusTest extends MockeryTestCase
 
         static::assertSame(
             '<a class="govuk-link" href="EXPECT_LIC_URL">unit_LicNo</a> (unit_LicStatus)',
-            CaseEntityNrStatus::format($data, null, $this->mockSm)
+            $this->sut->format($data, null)
         );
     }
 
@@ -115,7 +111,7 @@ class CaseEntityNrStatusTest extends MockeryTestCase
         static::assertSame(
             '<a class="govuk-link" href="EXPECT_LIC_URL">unit_LicNo</a> (unit_LicStatus)' .
             '<br />/<a class="govuk-link" href="EXPECT_APP_URL">' . $appId . '</a> (unit_AppStatus)',
-            CaseEntityNrStatus::format($data, null, $this->mockSm)
+            $this->sut->format($data, null)
         );
     }
 }

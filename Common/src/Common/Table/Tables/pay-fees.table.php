@@ -1,5 +1,7 @@
 <?php
 
+use Common\Service\Table\Formatter\FeeAmount;
+
 return array(
     'variables' => array(
         'title' => 'pay-fees.table.title',
@@ -15,21 +17,21 @@ return array(
         ),
         array(
             'title' => 'pay-fees.reference',
-            'formatter' => function ($row, $col, $sm) {
+            'formatter' => function ($row, $col) {
                 return $row['licence']['licNo'];
             },
         ),
         array(
-            'title' => 'pay-fees.amount',
+            'title' => 'pay-fees.amountt',
             'isNumeric' => true,
             'name' => 'amount',
-            'formatter' => 'FeeAmount',
+            'formatter' => FeeAmount::class,
         ),
         array(
-            'title' => 'pay-fees.outstanding',
+            'title' => 'pay-fees.outstandingg',
             'isNumeric' => true,
             'name' => 'outstanding',
-            'formatter' => 'FeeAmount',
+            'formatter' => FeeAmount::class,
         ),
     ),
     'footer' => array(

@@ -3,6 +3,7 @@
 /**
  * OcConditions.php
  */
+
 namespace Common\Service\Table\Formatter;
 
 use Common\RefData;
@@ -16,27 +17,27 @@ use Common\RefData;
  *
  * @author Joshua Curtis <josh.curtis@valtech.co.uk>
  */
-class OcConditions implements FormatterInterface
+class OcConditions implements FormatterPluginManagerInterface
 {
     /**
      * Get the conditions for the operating centre and return a count.
      *
-     * @param array $data The row data.
+     * @param array $data   The row data.
      * @param array $column The column data.
-     * @param null $sm The service manager.
      *
      * @return mixed
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
-        unset($column, $sm);
+        unset($column);
 
         $count = 0;
 
         if (!is_null($data['conditions'])) {
             foreach ($data['conditions'] as $condition) {
-                if (!is_null($condition['licence']) &&
-                    $condition['conditionType']['id'] === RefData::TYPE_CONDITION
+                if (
+                    !is_null($condition['licence'])
+                    && $condition['conditionType']['id'] === RefData::TYPE_CONDITION
                 ) {
                     $count++;
                 }

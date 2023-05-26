@@ -13,17 +13,16 @@ namespace Common\Service\Table\Formatter;
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class DocumentSubcategory implements FormatterInterface
+class DocumentSubcategory implements FormatterPluginManagerInterface
 {
     /**
      * Format a address
      *
-     * @param array $data
-     * @param array $column
-     * @param \Laminas\ServiceManager\ServiceManager $sm
+     * @param  array $data
+     * @param  array $column
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
         $str = $data['documentSubCategoryName'];
         if ($data['isExternal']) {

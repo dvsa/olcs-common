@@ -2,27 +2,44 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Formatter\DataRetentionRecordLink;
+use Common\View\Helper\Status as StatusHelper;
+use Laminas\View\HelperPluginManager;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
-use Laminas\Mvc\Controller\Plugin\Url;
-use Laminas\ServiceManager\ServiceLocatorInterface;
-use Common\View\Helper\Status as StatusHelper;
 
 /**
  * DataRetentionRecord Link test
  */
 class DataRetentionRecordLinkTest extends TestCase
 {
-    const ORGANISATION_NAME = 'DVSA';
+    private const ORGANISATION_NAME = 'DVSA';
 
-    const ORGANISATION_ID = 'ORG123';
+    private const ORGANISATION_ID = 'ORG123';
 
-    const LIC_NO = 'OB1234';
+    private const LIC_NO = 'OB1234';
 
-    const LICENCE_ID = 9;
+    private const LICENCE_ID = 9;
 
-    const ENTITY_ID = 9;
+    private const ENTITY_ID = 9;
+
+    protected $urlHelper;
+    protected $viewHelperManager;
+
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->urlHelper = m::mock(UrlHelperService::class);
+        $this->viewHelperManager = m::mock(HelperPluginManager::class);
+        $this->sut = new DataRetentionRecordLink($this->urlHelper, $this->viewHelperManager);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
 
     /**
      * @param array  $queryData           Query Data
@@ -44,17 +61,8 @@ class DataRetentionRecordLinkTest extends TestCase
 
         $statusLabel = 'status label';
 
-        $sm = m::mock(ServiceLocatorInterface::class);
-
-        $sm->shouldReceive('get')
-            ->with('Helper\Url')
-            ->andReturn(
-                $this->getUrlHelperMock()
-            )
-            ->getMock();
-
-        $viewHelperManager = $this->getViewHelperWithStatusMock($statusArray, $statusLabel);
-        $sm->shouldReceive('get')->with('ViewHelperManager')->once()->andReturn($viewHelperManager);
+        $this->getUrlHelperMock();
+        $this->getViewHelperWithStatusMock($statusArray, $statusLabel);
 
         $this->assertEquals(
             '<a class="govuk-link" href="DATA_RETENTION_RECORD_URL" target="_self">' . $queryData['organisationName'] . '</a> / ' .
@@ -63,7 +71,7 @@ class DataRetentionRecordLinkTest extends TestCase
             ucfirst($queryData['entityName']) . ' ' . $queryData['entityPk'] .
             '</a>' .
             $statusLabel,
-            DataRetentionRecordLink::format($queryData, [], $sm)
+            $this->sut->format($queryData, [])
         );
     }
 
@@ -145,15 +153,9 @@ class DataRetentionRecordLinkTest extends TestCase
 
     public function testWithoutLicenceNumberAndUndefinedEntity()
     {
-        $sm = m::mock(ServiceLocatorInterface::class)
-            ->shouldReceive('get')
-            ->with('Helper\Url')
-            ->getMock();
-
         $statusLabel = 'statusLabel';
 
-        $viewHelperManager = $this->getViewHelperWithStatusMock(DataRetentionRecordLink::STATUS_REVIEW, $statusLabel);
-        $sm->shouldReceive('get')->with('ViewHelperManager')->once()->andReturn($viewHelperManager);
+        $this->getViewHelperWithStatusMock(DataRetentionRecordLink::STATUS_REVIEW, $statusLabel);
 
         $queryData = [
             'entityName' => 'undefined',
@@ -172,21 +174,15 @@ class DataRetentionRecordLinkTest extends TestCase
             $queryData['entityName'] . ' ' .
             $queryData['entityPk'] .
             $statusLabel,
-            DataRetentionRecordLink::format($queryData, [], $sm)
+            $this->sut->format($queryData, [])
         );
     }
 
     public function testWithoutLicenceNumberAndOrganisationAndUndefinedEntity()
     {
-        $sm = m::mock(ServiceLocatorInterface::class)
-            ->shouldReceive('get')
-            ->with('Helper\Url')
-            ->getMock();
-
         $statusLabel = 'statusLabel';
 
-        $viewHelperManager = $this->getViewHelperWithStatusMock(DataRetentionRecordLink::STATUS_REVIEW, $statusLabel);
-        $sm->shouldReceive('get')->with('ViewHelperManager')->once()->andReturn($viewHelperManager);
+        $this->getViewHelperWithStatusMock(DataRetentionRecordLink::STATUS_REVIEW, $statusLabel);
 
         $queryData = [
             'entityName' => 'undefined',
@@ -204,7 +200,7 @@ class DataRetentionRecordLinkTest extends TestCase
             $queryData['entityName'] . ' ' .
             $queryData['entityPk'] .
             $statusLabel,
-            DataRetentionRecordLink::format($queryData, [], $sm)
+            $this->sut->format($queryData, [])
         );
     }
 
@@ -216,10 +212,7 @@ class DataRetentionRecordLinkTest extends TestCase
             ->with($statusArray)
             ->andReturn($statusLabel);
 
-        $mockViewHelper = m::mock();
-        $mockViewHelper->shouldReceive('get')->with('status')->andReturn($mockStatusHelper);
-
-        return $mockViewHelper;
+        $this->viewHelperManager->shouldReceive('get')->with('status')->andReturn($mockStatusHelper);
     }
 
     /**
@@ -227,7 +220,7 @@ class DataRetentionRecordLinkTest extends TestCase
      */
     private function getUrlHelperMock()
     {
-        $urlHelper = m::mock(Url::class)
+        $this->urlHelper
             ->shouldReceive('fromRoute')
             ->with(
                 'licence-no',
@@ -304,7 +297,5 @@ class DataRetentionRecordLinkTest extends TestCase
             )
             ->andReturn('DATA_RETENTION_RECORD_URL')
             ->getMock();
-
-        return $urlHelper;
     }
 }

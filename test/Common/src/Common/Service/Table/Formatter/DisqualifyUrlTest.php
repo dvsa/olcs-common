@@ -2,10 +2,12 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
-use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Mockery as m;
+use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Formatter\DisqualifyUrl;
-use CommonTest\Bootstrap;
+use Laminas\Http\Request;
+use Laminas\Mvc\Router\Http\TreeRouteStack;
+use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
  * Disqualify Url formatter test
@@ -14,41 +16,37 @@ use CommonTest\Bootstrap;
  */
 class DisqualifyUrlTest extends MockeryTestCase
 {
-    protected $sm;
-
+    protected $urlHelper;
+    protected $router;
+    protected $request;
     protected $mockRouteMatch;
+    protected $sut;
 
-    protected $mockUrlHelper;
-
-    public function setUp(): void
+    protected function setUp(): void
     {
-        parent::setUp();
-
-        $this->sm = Bootstrap::getServiceManager();
-
+        $this->urlHelper = m::mock(UrlHelperService::class);
+        $this->router = m::mock(TreeRouteStack::class);
+        $this->request = m::mock(Request::class);
         $this->mockRouteMatch = m::mock(\Laminas\Mvc\Router\RouteMatch::class);
-        $this->mockUrlHelper = m::mock();
-        $mockRequest = m::mock(\Laminas\Stdlib\RequestInterface::class)
-            ->shouldReceive('getQuery')
+        $this->sut = new DisqualifyUrl($this->urlHelper, $this->router, $this->request);
+
+        $this->request->shouldReceive('getQuery')
             ->andReturn(
                 m::mock()
-                ->shouldReceive('toArray')
-                ->once()
-                ->andReturn(['foo' => 'bar'])
-                ->getMock()
+                    ->shouldReceive('toArray')
+                    ->once()
+                    ->andReturn(['foo' => 'bar'])
+                    ->getMock()
             )
-            ->once()
-            ->getMock();
+            ->once();
 
-        $mockRouter = m::mock()
-            ->shouldReceive('match')
-            ->with($mockRequest)
-            ->andReturn($this->mockRouteMatch)
-            ->getMock();
+        $this->router->shouldReceive('match')
+            ->andReturn($this->mockRouteMatch);
+    }
 
-        $this->sm->setService('router', $mockRouter);
-        $this->sm->setService('request', $mockRequest);
-        $this->sm->setService('Helper\Url', $this->mockUrlHelper);
+    protected function tearDown(): void
+    {
+        m::close();
     }
 
     /**
@@ -65,13 +63,13 @@ class DisqualifyUrlTest extends MockeryTestCase
             ->once();
 
         if ($expectedRoute !== null) {
-            $this->mockUrlHelper
+            $this->urlHelper
                 ->shouldReceive('fromRoute')
                 ->with($expectedRoute, $expectedRouteParams, ['query' => ['foo' => 'bar']], true)
                 ->andReturn('the_url');
         }
 
-        $this->assertEquals($expectedLink, DisqualifyUrl::format($data, [], $this->sm));
+        $this->assertEquals($expectedLink, $this->sut->format($data, []));
     }
 
     public function provider()

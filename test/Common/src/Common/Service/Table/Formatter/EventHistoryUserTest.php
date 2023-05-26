@@ -3,8 +3,9 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\EventHistoryUser;
-use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
  * Event history user formatter test
@@ -13,6 +14,20 @@ use Mockery as m;
  */
 class EventHistoryUserTest extends MockeryTestCase
 {
+    protected $translator;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->translator = m::mock(TranslatorDelegator::class);
+        $this->sut = new EventHistoryUser($this->translator);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
+
     /**
      * Test the format method
      *
@@ -20,24 +35,15 @@ class EventHistoryUserTest extends MockeryTestCase
      */
     public function testFormat($data, $expectedOutput)
     {
-        $sm = m::mock();
-
         if (isset($data['user']['team'])) {
-            $sm->shouldReceive('get')
-                ->with('Translator')
-                ->andReturn(
-                    m::mock()
-                        ->shouldReceive('translate')
-                        ->with('internal.marker')
-                        ->andReturn('(internal)')
-                        ->once()
-                        ->getMock()
-                )
-                ->once()
-                ->getMock();
+            $this->translator
+                ->shouldReceive('translate')
+                ->with('internal.marker')
+                ->andReturn('(internal)')
+                ->once();
         }
 
-        $this->assertEquals($expectedOutput, EventHistoryUser::format($data, [], $sm));
+        $this->assertEquals($expectedOutput, $this->sut->format($data, []));
     }
 
     /**

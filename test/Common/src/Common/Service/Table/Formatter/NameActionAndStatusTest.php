@@ -1,21 +1,22 @@
 <?php
+
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\NameActionAndStatus;
 
 class NameActionAndStatusTest extends \PHPUnit\Framework\TestCase
 {
-    const TEST_ID = 12345;
-    const TEST_TITLE = 'TEST_TITLE';
-    const TEST_FORENAME = '';
-    const TEST_FAMILY_NAME = '';
+    private const TEST_ID = 12345;
+    private const TEST_TITLE = 'TEST_TITLE';
+    private const TEST_FORENAME = '';
+    private const TEST_FAMILY_NAME = '';
 
     /**
      * @dataProvider provider
      */
     public function testFormat($data, $expected)
     {
-        $this->assertEquals($expected, NameActionAndStatus::format($data));
+        $this->assertEquals($expected, (new NameActionAndStatus())->format($data));
     }
 
     public function provider()

@@ -4,23 +4,32 @@ namespace Common\Service\Table\Formatter;
 
 use Common\RefData;
 use Common\Util\Escape;
+use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 
 /**
  * Licence status is shown slightly differently in selfserve, with certain statuses mapped to "expired" status
  */
-class LicenceStatusSelfserve implements FormatterInterface
+class LicenceStatusSelfserve implements FormatterPluginManagerInterface
 {
-    const MARKUP_FORMAT = '<span class="govuk-tag govuk-tag--%s">%s</span>';
+    private const MARKUP_FORMAT = '<span class="govuk-tag govuk-tag--%s">%s</span>';
+    private TranslatorDelegator $translator;
 
     /**
-     * @param array                               $row            Row data
-     * @param array                               $column         Column data
-     * @param \Laminas\ServiceManager\ServiceManager $serviceLocator Service locator
+     * @param TranslatorDelegator $translator
+     */
+    public function __construct(TranslatorDelegator $translator)
+    {
+        $this->translator = $translator;
+    }
+
+    /**
+     * @param array $row    Row data
+     * @param array $column Column data
      *
-     * @return string
+     * @return     string
      * @inheritdoc
      */
-    public static function format($row, $column = null, $serviceLocator = null)
+    public function format($row, $column = null)
     {
         switch ($row['status']['id']) {
             case RefData::LICENCE_STATUS_VALID:
@@ -48,20 +57,18 @@ class LicenceStatusSelfserve implements FormatterInterface
                 break;
         }
 
-        $translator = $serviceLocator->get('translator');
-
         if ($row['status']['id'] !== RefData::LICENCE_STATUS_SURRENDER_UNDER_CONSIDERATION) {
-            [$row, $statusClass] = self::changeStateIfExpired($row, $statusClass);
+            [$row, $statusClass] = $this->changeStateIfExpired($row, $statusClass);
         }
 
         return sprintf(
             self::MARKUP_FORMAT,
             $statusClass,
-            Escape::html($translator->translate($row['status']['description']))
+            Escape::html($this->translator->translate($row['status']['description']))
         );
     }
 
-    protected static function changeStateIfExpired(array $row, string $statusClass): array
+    protected function changeStateIfExpired(array $row, string $statusClass): array
     {
         if (isset($row['isExpired']) && $row['isExpired'] === true) {
             $row['status']['description'] = 'licence.status.expired';

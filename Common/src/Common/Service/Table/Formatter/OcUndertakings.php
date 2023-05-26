@@ -3,6 +3,7 @@
 /**
  * OcUndertakings.php
  */
+
 namespace Common\Service\Table\Formatter;
 
 use Common\RefData;
@@ -16,27 +17,27 @@ use Common\RefData;
  *
  * @author Joshua Curtis <josh.curtis@valtech.co.uk>
  */
-class OcUndertakings implements FormatterInterface
+class OcUndertakings implements FormatterPluginManagerInterface
 {
     /**
      * Get the undertakings for the operating centre and return a count.
      *
-     * @param array $data The row data.
+     * @param array $data   The row data.
      * @param array $column The column data.
-     * @param null $sm The service manager.
      *
      * @return mixed
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
-        unset($column, $sm);
+        unset($column);
 
         $count = 0;
 
         if (!is_null($data['undertakings'])) {
             foreach ($data['undertakings'] as $undertaking) {
-                if (!is_null($undertaking['licence']) &&
-                    $undertaking['conditionType']['id'] === RefData::TYPE_UNDERTAKING
+                if (
+                    !is_null($undertaking['licence'])
+                    && $undertaking['conditionType']['id'] === RefData::TYPE_UNDERTAKING
                 ) {
                     $count++;
                 }

@@ -4,14 +4,28 @@ declare(strict_types=1);
 
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\RefData;
+use Common\Service\Table\Formatter\LicenceStatusSelfserve;
+use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Common\Service\Table\Formatter\LicenceStatusSelfserve;
-use CommonTest\Bootstrap;
-use Common\RefData;
 
 class LicenceStatusSelfserveTest extends MockeryTestCase
 {
+    protected $translator;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->translator = m::mock(TranslatorDelegator::class);
+        $this->sut = new LicenceStatusSelfserve($this->translator);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
+
     /**
      * Test format
      *
@@ -21,17 +35,13 @@ class LicenceStatusSelfserveTest extends MockeryTestCase
      */
     public function testFormat($data, $expected)
     {
-        $mockTranslator = m::mock();
-        $mockTranslator->shouldReceive('translate')->andReturnUsing(
+        $this->translator->shouldReceive('translate')->andReturnUsing(
             function ($message) {
-                return 'TRANSLATED_'. $message;
+                return 'TRANSLATED_' . $message;
             }
         );
 
-        $sm = Bootstrap::getServiceManager();
-        $sm->setService('translator', $mockTranslator);
-
-        $this->assertEquals($expected, LicenceStatusSelfserve::format($data, [], $sm));
+        $this->assertEquals($expected, $this->sut->format($data, []));
     }
 
     /**
@@ -201,7 +211,7 @@ class LicenceStatusSelfserveTest extends MockeryTestCase
                 ],
                 '<span class="govuk-tag govuk-tag--red">TRANSLATED_licence.status.expiring</span>',
             ],
-            'Expiring but Surrendered' =>[
+            'Expiring but Surrendered' => [
                 [
                     'status' => [
                         'id' => RefData::LICENCE_STATUS_SURRENDER_UNDER_CONSIDERATION,

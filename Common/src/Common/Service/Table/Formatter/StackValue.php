@@ -8,22 +8,33 @@
 
 namespace Common\Service\Table\Formatter;
 
+use Common\Service\Helper\StackHelperService;
+
 /**
  * Stack Value formatter
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class StackValue implements FormatterInterface
+class StackValue implements FormatterPluginManagerInterface
 {
+    private StackHelperService $stackHelper;
+
+    /**
+     * @param StackHelperService $stackHelper
+     */
+    public function __construct(StackHelperService $stackHelper)
+    {
+        $this->stackHelper = $stackHelper;
+    }
+
     /**
      * Retrieve a nested value
      *
-     * @param array $data
-     * @param array $column
-     * @param \Laminas\ServiceManager\ServiceManager $sm
+     * @param  array $data
+     * @param  array $column
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
         if (!isset($column['stack'])) {
             throw new \InvalidArgumentException('No stack configuration found');
@@ -33,6 +44,6 @@ class StackValue implements FormatterInterface
             $column['stack'] = explode('->', $column['stack']);
         }
 
-        return $sm->get('Helper\Stack')->getStackValue($data, $column['stack']);
+        return $this->stackHelper->getStackValue($data, $column['stack']);
     }
 }

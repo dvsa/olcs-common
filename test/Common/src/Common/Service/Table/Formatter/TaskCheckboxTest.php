@@ -8,9 +8,9 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
-use Common\Service\Table\ContentHelper;
 use Common\Service\Table\Formatter\TaskCheckbox;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Common\Service\Table\TableBuilder;
+use Mockery as m;
 
 /**
  * Task checkbox formatter tests
@@ -19,6 +19,15 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
  */
 class TaskCheckboxTest extends \PHPUnit\Framework\TestCase
 {
+    protected $tableBuilder;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->tableBuilder = m::mock(TableBuilder::class);
+        $this->sut = new TaskCheckbox($this->tableBuilder);
+    }
+
     /**
      * @dataProvider notClosedProvider
      */
@@ -26,20 +35,11 @@ class TaskCheckboxTest extends \PHPUnit\Framework\TestCase
     {
         $column = [];
 
-        $mockTableService = $this->createPartialMock(ContentHelper::class, array('replaceContent'));
-
-        $sm = $this->createMock(ServiceLocatorInterface::class);
-        $sm->expects($this->any())
-            ->method('get')
-            ->with('TableBuilder')
-            ->will($this->returnValue($mockTableService));
-
-        $mockTableService->expects($this->once())
-            ->method('replaceContent')
+        $this->tableBuilder->shouldReceive('replaceContent')
             ->with('{{[elements/checkbox]}}', $data)
-            ->will($this->returnValue('checkbox markup'));
+            ->andReturn('checkbox markup');
 
-        $this->assertEquals('checkbox markup', TaskCheckbox::format($data, $column, $sm));
+        $this->assertEquals('checkbox markup', $this->sut->format($data, $column));
     }
 
     public function notClosedProvider()
@@ -74,6 +74,6 @@ class TaskCheckboxTest extends \PHPUnit\Framework\TestCase
 
         $column = [];
 
-        $this->assertEquals('', TaskCheckbox::format($data, $column));
+        $this->assertEquals('', (new TaskCheckbox($this->tableBuilder))->format($data, $column));
     }
 }

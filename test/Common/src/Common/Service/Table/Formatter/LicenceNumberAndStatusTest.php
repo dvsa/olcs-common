@@ -5,13 +5,14 @@
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\RefData;
+use Common\Service\Helper\UrlHelperService;
+use Common\Service\Table\Formatter\LicenceNumberAndStatus;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Common\Service\Table\Formatter\LicenceNumberAndStatus as sut;
-use CommonTest\Bootstrap;
-use Common\RefData;
 
 /**
  * Licence number and status test
@@ -20,6 +21,19 @@ use Common\RefData;
  */
 class LicenceNumberAndStatusTest extends MockeryTestCase
 {
+    protected $urlHelper;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->urlHelper = m::mock(UrlHelperService::class);
+        $this->sut = new LicenceNumberAndStatus($this->urlHelper);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
     /**
      * Test format
      *
@@ -29,24 +43,11 @@ class LicenceNumberAndStatusTest extends MockeryTestCase
      */
     public function testFormat($data, $expected)
     {
-
-        $mockUrl = m::mock();
-        $mockTranslator = m::mock();
-        $mockTranslator->shouldReceive('translate')->andReturnUsing(
-            function ($message) {
-                return 'TRANSLATED_'. $message;
-            }
-        );
-
-        $sm = Bootstrap::getServiceManager();
-        $sm->setService('Helper\Url', $mockUrl);
-        $sm->setService('translator', $mockTranslator);
-
-        $mockUrl->shouldReceive('fromRoute')
+        $this->urlHelper->shouldReceive('fromRoute')
             ->with('lva-licence', ['licence' => 2])
             ->andReturn('lva-licence/2');
 
-        $this->assertEquals($expected, sut::format($data, [], $sm));
+        $this->assertEquals($expected, $this->sut->format($data, []));
     }
 
     /**
@@ -230,7 +231,7 @@ class LicenceNumberAndStatusTest extends MockeryTestCase
                 ],
                 '<a class="govuk-link" href="lva-licence/2">OB123</a>',
             ],
-            'Expiring but Surrendered' =>[
+            'Expiring but Surrendered' => [
                 [
                     'status' => [
                         'id' => RefData::LICENCE_STATUS_SURRENDER_UNDER_CONSIDERATION,

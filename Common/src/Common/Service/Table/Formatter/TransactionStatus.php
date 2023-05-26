@@ -16,18 +16,17 @@ use Common\RefData as Ref;
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class TransactionStatus implements FormatterInterface
+class TransactionStatus implements FormatterPluginManagerInterface
 {
     /**
      * Format a fee status
      *
-     * @param array $row
-     * @param array $column
-     * @param \Laminas\ServiceManager\ServiceManager $serviceLocator
-     * @return string
+     * @param      array $row
+     * @param      array $column
+     * @return     string
      * @inheritdoc
      */
-    public static function format($row, $column = null, $serviceLocator = null)
+    public function format($row, $column = null)
     {
         switch ($row['status']['id']) {
             case Ref::TRANSACTION_STATUS_FAILED:

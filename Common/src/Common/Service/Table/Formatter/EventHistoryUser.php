@@ -2,26 +2,34 @@
 
 namespace Common\Service\Table\Formatter;
 
+use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
+
 /**
  * Event History User
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class EventHistoryUser implements FormatterInterface
+class EventHistoryUser implements FormatterPluginManagerInterface
 {
+    private TranslatorDelegator $translator;
+
+    public function __construct(TranslatorDelegator $translator)
+    {
+        $this->translator = $translator;
+    }
+
     /**
      * Format
      *
      * @param array $data   Event data
      * @param array $column Column data
-     * @param null  $sm     Service Manager
      *
      * @return string
      */
-    public static function format($data, $column = [], $sm = null)
+    public function format($data, $column = [])
     {
         $internalMarker = isset($data['user']['team'])
-            ? ' ' . $sm->get('Translator')->translate('internal.marker')
+            ? ' ' . $this->translator->translate('internal.marker')
             : '';
 
         if ($data['changeMadeBy'] !== null) {

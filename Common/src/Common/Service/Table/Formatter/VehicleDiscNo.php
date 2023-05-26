@@ -5,20 +5,19 @@ namespace Common\Service\Table\Formatter;
 /**
  * Vehicle Disc No
  */
-class VehicleDiscNo implements FormatterInterface
+class VehicleDiscNo implements FormatterPluginManagerInterface
 {
-    const PENDING = 'Pending';
+    private const PENDING = 'Pending';
 
     /**
      * Format Goods disc no
      *
      * @param array $data   Date
      * @param array $column Column data
-     * @param null  $sm     Service Manager
      *
      * @return string '', 'Pending' or a Disc no
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
         // if no specified date AND no removal date, then pending
         if (empty($data['specifiedDate']) && empty($data['removalDate'])) {

@@ -13,7 +13,7 @@ namespace Common\Service\Table\Formatter;
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class FileExtension implements FormatterInterface
+class FileExtension implements FormatterPluginManagerInterface
 {
     /**
      * Format a address
@@ -22,7 +22,7 @@ class FileExtension implements FormatterInterface
      *
      * @return string
      */
-    public static function format($data)
+    public function format($data, $column = [])
     {
         $extPos = strrpos($data['documentStoreIdentifier'], '.');
 

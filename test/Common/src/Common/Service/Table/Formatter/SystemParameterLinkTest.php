@@ -5,12 +5,13 @@
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Service\Helper\UrlHelperService;
+use Common\Service\Table\Formatter\SystemParameterLink;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
-
-use Common\Service\Table\Formatter\SystemParameterLink;
 
 /**
  * SystemParameter Link test
@@ -19,6 +20,19 @@ use Common\Service\Table\Formatter\SystemParameterLink;
  */
 class SystemParameterLinkTest extends TestCase
 {
+    protected $urlHelper;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->urlHelper = m::mock(UrlHelperService::class);
+        $this->sut = new SystemParameterLink($this->urlHelper);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
 
     public function testFormat()
     {
@@ -26,11 +40,7 @@ class SystemParameterLinkTest extends TestCase
             'id' => 1
         ];
 
-        $sm = m::mock()
-            ->shouldReceive('get')
-            ->with('Helper\Url')
-            ->andReturn(
-                m::mock()
+        $this->urlHelper
                     ->shouldReceive('fromRoute')
                     ->with(
                         'admin-dashboard/admin-system-parameters',
@@ -39,14 +49,11 @@ class SystemParameterLinkTest extends TestCase
                             'sp' => 1
                         ]
                     )
-                    ->andReturn('SYSTEM_PARAMETER_EDIT_URL')
-                    ->getMock()
-            )
-            ->getMock();
+                    ->andReturn('SYSTEM_PARAMETER_EDIT_URL');
 
         $this->assertEquals(
             '<a href="SYSTEM_PARAMETER_EDIT_URL" class="govuk-link js-modal-ajax">1</a>',
-            SystemParameterLink::format($data, [], $sm)
+            $this->sut->format($data, [])
         );
     }
 }

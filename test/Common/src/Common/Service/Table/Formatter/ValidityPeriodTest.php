@@ -3,13 +3,12 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\ValidityPeriod;
-use CommonTest\Bootstrap;
+use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 use IntlDateFormatter;
-use Mockery as m;
-use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\I18n\View\Helper\DateFormat;
 use Laminas\View\HelperPluginManager;
+use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
  * Validity period formatter test
@@ -18,6 +17,21 @@ use Laminas\View\HelperPluginManager;
  */
 class ValidityPeriodTest extends MockeryTestCase
 {
+    protected $translator;
+    protected $viewHelperManager;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->translator = m::mock(TranslatorDelegator::class);
+        $this->viewHelperManager = m::mock(HelperPluginManager::class);
+        $this->sut = new ValidityPeriod($this->viewHelperManager, $this->translator);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
     public function testFormat()
     {
         $locale = 'cy_GB';
@@ -38,25 +52,19 @@ class ValidityPeriodTest extends MockeryTestCase
             ->with($validToTimestamp, IntlDateFormatter::MEDIUM, IntlDateFormatter::NONE, $locale)
             ->andReturn('31 Dec 2019');
 
-        $translatorService = m::mock(TranslatorInterface::class);
-        $translatorService->shouldReceive('getLocale')
+        $this->translator->shouldReceive('getLocale')
             ->andReturn($locale);
-        $translatorService->shouldReceive('translate')
+        $this->translator->shouldReceive('translate')
             ->with('permits.irhp.fee-breakdown.validity-period.cell')
             ->andReturn('%s to %s');
 
-        $viewHelperManager = m::mock(HelperPluginManager::class);
-        $viewHelperManager->shouldReceive('get')
+        $this->viewHelperManager->shouldReceive('get')
             ->with('DateFormat')
             ->andReturn($dateFormatService);
 
-        $sm = Bootstrap::getServiceManager();
-        $sm->setService('Translator', $translatorService);
-        $sm->setService('ViewHelperManager', $viewHelperManager);
-
         $this->assertEquals(
             '1 Jan to 31 Dec',
-            ValidityPeriod::format($row, [], $sm)
+            $this->sut->format($row, [])
         );
     }
 }

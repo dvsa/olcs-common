@@ -3,8 +3,8 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\RefData;
+use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Formatter\DashboardApplicationLink;
-use CommonTest\Bootstrap;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
@@ -13,6 +13,18 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class DashboardApplicationLinkTest extends MockeryTestCase
 {
+    protected $urlHelper;
+
+    protected function setUp(): void
+    {
+        $this->urlHelper = m::mock(UrlHelperService::class);
+        $this->sut = new DashboardApplicationLink($this->urlHelper);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
     /**
      * Test format
      *
@@ -20,16 +32,13 @@ class DashboardApplicationLinkTest extends MockeryTestCase
      */
     public function testFormat($data, $column, $expectedRoute, $expectedParams, $expected)
     {
-        $mockUrl = m::mock()
+        $this->urlHelper
             ->shouldReceive('fromRoute')
             ->with($expectedRoute, $expectedParams)
             ->andReturn($expectedRoute . '/' . $expectedParams['application'])
             ->getMock();
 
-        $sm = Bootstrap::getServiceManager()
-            ->setService('Helper\Url', $mockUrl);
-
-        $this->assertEquals($expected, DashboardApplicationLink::format($data, $column, $sm));
+        $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 
     /**

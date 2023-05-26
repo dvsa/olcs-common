@@ -3,6 +3,7 @@
 /**
  * IrhpPermitOrganisationName Test
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\IrhpPermitOrganisationName;
@@ -18,7 +19,7 @@ class IrhpPermitOrganisationNameTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormat($data, $expected)
     {
-        $this->assertEquals($expected, IrhpPermitOrganisationName::format($data));
+        $this->assertEquals($expected, (new IrhpPermitOrganisationName())->format($data));
     }
 
     /**

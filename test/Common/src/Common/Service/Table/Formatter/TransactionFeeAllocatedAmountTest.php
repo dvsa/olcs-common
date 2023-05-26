@@ -5,9 +5,9 @@
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
-use Common\RefData;
 use Common\Service\Table\Formatter\TransactionFeeAllocatedAmount as Sut;
 
 /**
@@ -17,7 +17,6 @@ use Common\Service\Table\Formatter\TransactionFeeAllocatedAmount as Sut;
  */
 class TransactionFeeAllocatedAmountTest extends \PHPUnit\Framework\TestCase
 {
-
     /**
      * Test the format method
      *
@@ -28,7 +27,7 @@ class TransactionFeeAllocatedAmountTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormat($data, $expected)
     {
-        $this->assertEquals($expected, Sut::format($data, ['name' => 'amount']));
+        $this->assertEquals($expected, (new Sut())->format($data, ['name' => 'amount']));
     }
 
     /**

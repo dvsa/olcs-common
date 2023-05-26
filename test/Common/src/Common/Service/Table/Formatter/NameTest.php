@@ -10,8 +10,8 @@ namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Helper\DataHelperService;
 use Common\Service\Table\Formatter\Name;
+use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Name formatter test
@@ -20,6 +20,19 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
  */
 class NameTest extends MockeryTestCase
 {
+    protected $dataHelper;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->dataHelper = m::mock(DataHelperService::class);
+        $this->sut = new Name($this->dataHelper);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
     /**
      * Test the format method
      *
@@ -30,7 +43,7 @@ class NameTest extends MockeryTestCase
      */
     public function testFormat($data, $expected)
     {
-        $this->assertEquals($expected, Name::format($data, [], null));
+        $this->assertEquals($expected, (new Name(new DataHelperService()))->format($data, []));
     }
 
     /**
@@ -69,7 +82,7 @@ class NameTest extends MockeryTestCase
                 'familyName' => 'Smith',
             ]
         ];
-        $this->assertEquals('John Smith', Name::format($data, ['name' => 'foo']));
+        $this->assertEquals('John Smith', (new Name(new DataHelperService()))->format($data, ['name' => 'foo']));
     }
 
     public function testEscapedName()
@@ -80,7 +93,7 @@ class NameTest extends MockeryTestCase
                 'familyName' => 'Smith',
             ]
         ];
-        $this->assertEquals('John&quot; Smith', Name::format($data, ['name' => 'foo']));
+        $this->assertEquals('John&quot; Smith', (new Name(new DataHelperService()))->format($data, ['name' => 'foo']));
     }
 
     public function testFormatDeepNestedData()
@@ -94,19 +107,10 @@ class NameTest extends MockeryTestCase
             ]
         ];
 
-        $mockHelper = $this->createPartialMock(DataHelperService::class, array('fetchNestedData'));
-
-        $mockHelper->expects($this->once())
-            ->method('fetchNestedData')
+        $this->dataHelper->shouldReceive('fetchNestedData')
             ->with($data, 'foo->name')
-            ->willReturn($data['foo']['name']);
+            ->andReturn($data['foo']['name']);
 
-        $sm = $this->createMock(ServiceLocatorInterface::class);
-        $sm->expects($this->any())
-            ->method('get')
-            ->with('Helper\Data')
-            ->will($this->returnValue($mockHelper));
-
-        $this->assertEquals('John Smith', Name::format($data, ['name' => 'foo->name'], $sm));
+        $this->assertEquals('John Smith', $this->sut->format($data, ['name' => 'foo->name']));
     }
 }

@@ -9,6 +9,7 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\Date;
+use Common\Service\Table\Formatter\DateFormat;
 
 /**
  * Date formatter test
@@ -40,8 +41,7 @@ class DateTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormat($data, $column, $expected)
     {
-        $sm = $this->createMock('\stdClass', array('get'));
-        $this->assertEquals($expected, Date::format($data, $column, $sm));
+        $this->assertEquals($expected, (new Date())->format($data, $column));
     }
 
     /**
@@ -51,14 +51,14 @@ class DateTest extends \PHPUnit\Framework\TestCase
      */
     public function provider()
     {
-        return array(
-            array(array('date' => '2013-01-01'), array('dateformat' => 'd/m/Y', 'name' => 'date'), '01/01/2013'),
-            array(array('date' => '2013-12-31'), array('dateformat' => 'd/m/Y', 'name' => 'date'), '31/12/2013'),
-            array(array('date' => '2013-12-31'), array('dateformat' => 'Y', 'name' => 'date'), '2013'),
-            array(array('date' => '2013-12-31'), array('name' => 'date'), '31/12/2013'),
-            array(array('someDate' => array('date' => '2013-12-31')), array('name' => 'someDate'), '31/12/2013'),
-            array(array('date' => null), array('name' => 'date'), ''),
-            array(array(), array('name' => 'date'), '')
-        );
+        return [
+            [['date' => '2013-01-01'], ['dateformat' => 'd/m/Y', 'name' => 'date'], '01/01/2013'],
+            [['date' => '2013-12-31'], ['dateformat' => 'd/m/Y', 'name' => 'date'], '31/12/2013'],
+            [['date' => '2013-12-31'], ['dateformat' => 'Y', 'name' => 'date'], '2013'],
+            [['date' => '2013-12-31'], ['name' => 'date'], '31/12/2013'],
+            [['someDate' => ['date' => '2013-12-31']], ['name' => 'someDate'], '31/12/2013'],
+            [['date' => null], ['name' => 'date'], ''],
+            [[], ['name' => 'date'], '']
+        ];
     }
 }

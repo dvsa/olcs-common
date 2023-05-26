@@ -3,9 +3,11 @@
 /**
  * LicenceNumberLink.php
  */
+
 namespace Common\Service\Table\Formatter;
 
 use Common\RefData;
+use Common\Service\Helper\UrlHelperService;
 
 /**
  * Class LicenceNumberLink
@@ -14,18 +16,24 @@ use Common\RefData;
  *
  * @package Common\Service\Table\Formatter
  */
-class LicenceNumberLink implements FormatterInterface
+class LicenceNumberLink implements FormatterPluginManagerInterface
 {
+    private UrlHelperService $urlHelper;
+
+    public function __construct(UrlHelperService $urlHelper)
+    {
+        $this->urlHelper = $urlHelper;
+    }
+
     /**
      * Return a the licence URL in a link format for a table.
      *
-     * @param array $data The row data.
+     * @param array $data   The row data.
      * @param array $column The column
-     * @param null $sm The service manager
      *
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
         unset($column);
 
@@ -36,8 +44,7 @@ class LicenceNumberLink implements FormatterInterface
         );
 
         if (in_array($data['licence']['status'], $permittedLicenceStatuses)) {
-            $urlHelper = $sm->get('Helper\Url');
-            $url = $urlHelper->fromRoute('lva-licence', array('licence' => $data['licence']['id']));
+            $url = $this->urlHelper->fromRoute('lva-licence', array('licence' => $data['licence']['id']));
 
             return '<a class="govuk-link" href="' . $url . '">' . $data['licence']['licNo'] . '</a>';
         }

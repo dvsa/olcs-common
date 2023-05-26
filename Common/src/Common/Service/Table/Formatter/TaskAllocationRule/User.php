@@ -12,15 +12,14 @@ class User extends \Common\Service\Table\Formatter\Name
     /**
      * User value for a task allocation rule
      *
-     * @param array $data
-     * @param array $column
-     * @param \Laminas\ServiceManager\ServiceManager $sm
+     * @param array                                  $data
+     * @param array                                  $column
      *
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
-        $userName = parent::format($data, $column, $sm);
+        $userName = parent::format($data, $column);
         if (!empty(trim($userName))) {
             return $userName;
         }

@@ -1,12 +1,13 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Common\Service\Table\Formatter;
 
-class NumberStackValue extends StackValue implements FormatterInterface
+class NumberStackValue extends StackValue implements FormatterPluginManagerInterface
 {
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
-        return number_format(parent::format($data, $column, $sm));
+        return number_format(parent::format($data, $column));
     }
 }

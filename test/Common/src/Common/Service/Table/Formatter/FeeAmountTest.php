@@ -8,8 +8,6 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
-use Common\Service\Table\Formatter\FeeAmount;
-
 /**
  * Fee Amount formatter test
  *
@@ -17,7 +15,6 @@ use Common\Service\Table\Formatter\FeeAmount;
  */
 class FeeAmountTest extends \PHPUnit\Framework\TestCase
 {
-
     /**
      * Test the format method
      *
@@ -27,7 +24,7 @@ class FeeAmountTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormat($data, $column, $expected)
     {
-        $this->assertSame($expected, FeeAmount::format($data, $column));
+        $this->assertSame($expected, (new \Common\Service\Table\Formatter\FeeAmount())->format($data, $column));
     }
 
     /**

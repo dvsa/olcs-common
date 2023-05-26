@@ -5,31 +5,48 @@
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
+
 namespace Common\Service\Table\Formatter;
+
+use Common\Service\Helper\UrlHelperService;
+use Laminas\Http\Request;
+use Laminas\Mvc\Router\Http\TreeRouteStack;
 
 /**
  * Event History Description
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class EventHistoryDescription implements FormatterInterface
+class EventHistoryDescription implements FormatterPluginManagerInterface
 {
+    private TreeRouteStack $router;
+    private Request $request;
+    private UrlHelperService $urlHelper;
+
+    /**
+     * @param TreeRouteStack   $router
+     * @param Request          $request
+     * @param UrlHelperService $urlHelper
+     */
+    public function __construct(TreeRouteStack $router, Request $request, UrlHelperService $urlHelper)
+    {
+        $this->router = $router;
+        $this->request = $request;
+        $this->urlHelper = $urlHelper;
+    }
+
     /**
      * Format
      *
      * @param array $data   Event data
      * @param array $column Column data
-     * @param null  $sm     Service Manager
      *
-     * @return string
+     * @return                                        string
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public static function format($data, $column = [], $sm = null)
+    public function format($data, $column = [])
     {
-        $router     = $sm->get('router');
-        $request    = $sm->get('request');
-        $urlHelper  = $sm->get('Helper\Url');
-        $routeMatch = $router->match($request);
+        $routeMatch = $this->router->match($this->request);
         $matchedRouteName = $routeMatch->getMatchedRouteName();
 
         $entity = self::getEntityName($data);
@@ -41,7 +58,7 @@ class EventHistoryDescription implements FormatterInterface
             $id = $data[$entity]['id'];
         }
 
-        $url = $urlHelper->fromRoute(
+        $url = $this->urlHelper->fromRoute(
             $matchedRouteName,
             [
                 'action' => 'edit',

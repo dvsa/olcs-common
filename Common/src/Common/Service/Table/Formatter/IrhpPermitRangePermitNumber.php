@@ -2,7 +2,7 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Laminas\ServiceManager\ServiceManager;
+use Common\Service\Helper\UrlHelperService;
 use Common\Util\Escape;
 
 /**
@@ -10,8 +10,17 @@ use Common\Util\Escape;
  *
  * @author Scott Callaway <scott.callaway@capgemini.com>
  */
-class IrhpPermitRangePermitNumber implements FormatterInterface
+class IrhpPermitRangePermitNumber implements FormatterPluginManagerInterface
 {
+    private UrlHelperService $urlHelper;
+
+    /**
+     * @param UrlHelperService $urlHelper
+     */
+    public function __construct(UrlHelperService $urlHelper)
+    {
+        $this->urlHelper = $urlHelper;
+    }
     /**
      * Format
      *
@@ -19,15 +28,14 @@ class IrhpPermitRangePermitNumber implements FormatterInterface
      *
      * @param array          $data
      * @param array          $column
-     * @param ServiceManager $sm
      *
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
         unset($column);
 
-        $url = $sm->get('Helper\Url')->fromRoute(
+        $url = $this->urlHelper->fromRoute(
             'admin-dashboard/admin-permits/ranges',
             [
                 'stockId' => $data['irhpPermitStock']['id'],

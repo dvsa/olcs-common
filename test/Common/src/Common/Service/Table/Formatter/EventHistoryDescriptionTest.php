@@ -5,11 +5,15 @@
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Formatter\EventHistoryDescription;
-use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Laminas\Http\Request;
+use Laminas\Mvc\Router\Http\TreeRouteStack;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
  * Event history description formatter test
@@ -18,6 +22,23 @@ use Mockery as m;
  */
 class EventHistoryDescriptionTest extends MockeryTestCase
 {
+    protected $urlHelper;
+    protected $router;
+    protected $request;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->urlHelper = m::mock(UrlHelperService::class);
+        $this->router = m::mock(TreeRouteStack::class);
+        $this->request = m::mock(Request::class);
+        $this->sut = new EventHistoryDescription($this->router, $this->request, $this->urlHelper);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
 
     /**
      * Test the format method
@@ -31,17 +52,15 @@ class EventHistoryDescriptionTest extends MockeryTestCase
         $expectedUrl,
         $expectedOutput
     ) {
-        $mockUrlHelper = m::mock()
+        $this->urlHelper
             ->shouldReceive('fromRoute')
             ->with($expectedRouteName, $expectedUrlParams, [], true)
             ->andReturn($expectedUrl)
             ->getMock();
 
-        $mockRequest = m::mock();
-
-        $mockRouter = m::mock()
+        $this->router
             ->shouldReceive('match')
-            ->with($mockRequest)
+            ->with($this->request)
             ->andReturn(
                 m::mock()
                     ->shouldReceive('getMatchedRouteName')
@@ -49,24 +68,9 @@ class EventHistoryDescriptionTest extends MockeryTestCase
                     ->andReturn($expectedRouteName)
                     ->getMock()
             )
-            ->once()
-            ->getMock();
+            ->once();
 
-        $sm = m::mock()->shouldReceive('get')
-            ->with('Helper\Url')
-            ->andReturn($mockUrlHelper)
-            ->once()
-            ->shouldReceive('get')
-            ->with('router')
-            ->andReturn($mockRouter)
-            ->once()
-            ->shouldReceive('get')
-            ->with('request')
-            ->andReturn($mockRequest)
-            ->once()
-            ->getMock();
-
-        $this->assertEquals($expectedOutput, EventHistoryDescription::format($data, [], $sm));
+        $this->assertEquals($expectedOutput, $this->sut->format($data, []));
     }
 
     /**
@@ -217,11 +221,10 @@ class EventHistoryDescriptionTest extends MockeryTestCase
     public function testFormatWithException()
     {
         $this->expectException(\Exception::class);
-        $mockRequest = m::mock();
 
-        $mockRouter = m::mock()
+        $this->router
             ->shouldReceive('match')
-            ->with($mockRequest)
+            ->with($this->request)
             ->andReturn(
                 m::mock()
                     ->shouldReceive('getMatchedRouteName')
@@ -232,20 +235,6 @@ class EventHistoryDescriptionTest extends MockeryTestCase
             ->once()
             ->getMock();
 
-        $sm = m::mock()->shouldReceive('get')
-            ->with('Helper\Url')
-            ->andReturn(m::mock())
-            ->once()
-            ->shouldReceive('get')
-            ->with('router')
-            ->andReturn($mockRouter)
-            ->once()
-            ->shouldReceive('get')
-            ->with('request')
-            ->andReturn($mockRequest)
-            ->once()
-            ->getMock();
-
-        $this->assertEquals('foo', EventHistoryDescription::format([], [], $sm));
+        $this->assertEquals('foo', $this->sut->format([], []));
     }
 }

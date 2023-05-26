@@ -13,17 +13,16 @@ namespace Common\Service\Table\Formatter;
  *
  * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
-class DateTime implements FormatterInterface
+class DateTime implements FormatterPluginManagerInterface
 {
     /**
      * Format a date and time
      *
-     * @param array $data
-     * @param array $column
-     * @param \Laminas\ServiceManager\ServiceManager $sm
+     * @param  array $data
+     * @param  array $column
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
         if (!isset($column['dateformat'])) {
             $column['dateformat'] = \DATETIME_FORMAT;

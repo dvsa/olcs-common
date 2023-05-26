@@ -9,25 +9,37 @@ namespace Common\Service\Table\Formatter;
 /**
  * PI Report Name formatter
  */
-class PiReportName implements FormatterInterface
+class PiReportName implements FormatterPluginManagerInterface
 {
+    private OrganisationLink $organisationLinkformatter;
+    private Name $nameFormatter;
+
+    /**
+     * @param OrganisationLink $organisationLinkformatter
+     * @param Name             $nameFormatter
+     */
+    public function __construct(OrganisationLink $organisationLinkformatter, Name $nameFormatter)
+    {
+        $this->organisationLinkformatter = $organisationLinkformatter;
+        $this->nameFormatter = $nameFormatter;
+    }
+
     /**
      * Format a PI Name Record
      *
      * @param array $data
      * @param array $column
-     * @param \Laminas\ServiceManager\ServiceManager $sm
      *
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
         if (!empty($data['pi']['case']['licence']['organisation'])) {
             // display org linked to the licence
-            return OrganisationLink::format($data['pi']['case']['licence'], $column, $sm);
+            return $this->organisationLinkformatter->format($data['pi']['case']['licence'], $column);
         } elseif (!empty($data['pi']['case']['transportManager']['homeCd']['person'])) {
             // display TM details
-            return Name::format($data['pi']['case']['transportManager']['homeCd']['person']);
+            return $this->nameFormatter->format($data['pi']['case']['transportManager']['homeCd']['person']);
         }
         return '';
     }

@@ -9,7 +9,7 @@ use Common\Util\Escape;
  *
  * @author Scott Callaway <scott.callaway@capgemini.com>
  */
-class IrhpPermitJurisdictionPermitNumber implements FormatterInterface
+class IrhpPermitJurisdictionPermitNumber implements FormatterPluginManagerInterface
 {
     /**
      * Format
@@ -20,7 +20,7 @@ class IrhpPermitJurisdictionPermitNumber implements FormatterInterface
      *
      * @return string
      */
-    public static function format($data)
+    public function format($data, $column = [])
     {
         $quotaNumber = $data['quotaNumber'] ? Escape::html($data['quotaNumber']) : 0;
         $id = Escape::html($data['id']);

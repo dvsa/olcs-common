@@ -2,7 +2,6 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Laminas\ServiceManager\ServiceManager;
 use Common\Util\Escape;
 
 /**
@@ -10,20 +9,19 @@ use Common\Util\Escape;
  *
  * @author Scott Callaway <scott.callaway@capgemini.com>
  */
-class IrhpPermitRangeRestrictedCountries implements FormatterInterface
+class IrhpPermitRangeRestrictedCountries implements FormatterPluginManagerInterface
 {
     /**
      * Format
      *
      * Returns a formatted column for the Restricted Countries
      *
-     * @param array          $data
-     * @param array          $column
-     * @param ServiceManager $sm
+     * @param array $data
+     * @param array $column
      *
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
         $countryNames = [];
 

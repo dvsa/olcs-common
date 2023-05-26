@@ -13,23 +13,30 @@ namespace Common\Service\Table\Formatter;
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class FeeTransactionDate implements FormatterInterface
+class FeeTransactionDate implements FormatterPluginManagerInterface
 {
+    private StackValue $stackValueFormatter;
+    private Date $dateFormatter;
+
+    public function __construct(StackValue $stackValueFormatter, Date $dateFormatter)
+    {
+        $this->stackValueFormatter = $stackValueFormatter;
+        $this->dateFormatter = $dateFormatter;
+    }
     /**
-     * @param array $data
-     * @param array $column
-     * @param \Laminas\ServiceManager\ServiceManager $sm
+     * @param  array $data
+     * @param  array $column
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
-        $value = StackValue::format($data, $column, $sm);
+        $value = $this->stackValueFormatter->format($data, $column);
 
         $newData = [
             'value' => $value,
         ];
         $column['name'] = 'value';
 
-        return Date::format($newData, $column, $sm);
+        return $this->dateFormatter->format($newData, $column);
     }
 }

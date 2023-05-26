@@ -23,7 +23,7 @@ class IrhpPermitStockCountryTest extends \PHPUnit\Framework\TestCase
     {
         $this->assertEquals(
             $expected,
-            IrhpPermitStockCountry::format($data)
+            (new IrhpPermitStockCountry())->format($data)
         );
     }
 

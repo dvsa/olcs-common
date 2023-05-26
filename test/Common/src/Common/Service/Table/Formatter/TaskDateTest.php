@@ -5,11 +5,11 @@
  *
  * @author Nick payne <nick.payne@valtech.co.uk>
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Service\Table\Formatter\Date;
 use Common\Service\Table\Formatter\TaskDate;
-use Laminas\I18n\Translator\Translator;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Task date formatter tests
@@ -23,14 +23,7 @@ class TaskDateTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormat($data, $column, $expected)
     {
-        $mockTranslator = $this->createPartialMock(Translator::class, array('translate'));
-
-        $sm = $this->createMock(ServiceLocatorInterface::class);
-        $sm->expects($this->any())
-            ->method('get')
-            ->with('translator')
-            ->will($this->returnValue($mockTranslator));
-        $this->assertEquals($expected, TaskDate::format($data, $column, $sm));
+        $this->assertEquals($expected, (new TaskDate(new Date()))->format($data, $column));
     }
 
     /**

@@ -2,31 +2,39 @@
 
 namespace Common\Service\Table\Formatter;
 
+use Common\Service\Helper\UrlHelperService;
 use Common\Util\Escape;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * IRHP Permit Application Ref Link formatter
  */
-class IrhpPermitApplicationRefLink implements FormatterInterface
+class IrhpPermitApplicationRefLink implements FormatterPluginManagerInterface
 {
+    private UrlHelperService $urlHelper;
+
+    /**
+     * @param UrlHelperService $urlHelper
+     */
+    public function __construct(UrlHelperService $urlHelper)
+    {
+        $this->urlHelper = $urlHelper;
+    }
     /**
      * Format
      *
      * Returns the IRHP Permit Application Ref Link
      *
-     * @param array                   $data   Row data
-     * @param array                   $column Column Parameters
-     * @param ServiceLocatorInterface $sm     Service Manager
+     * @param array $data   Row data
+     * @param array $column Column Parameters
      *
-     * @return string
+     * @return                                        string
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public static function format($data, array $column = [], ServiceLocatorInterface $sm = null)
+    public function format($data, $column = [])
     {
         return isset($data['irhpPermitApplication']['relatedApplication']) ? sprintf(
             '<a class="govuk-link" href="%s">%s</a>',
-            $sm->get('Helper\Url')->fromRoute(
+            $this->urlHelper->fromRoute(
                 'licence/irhp-application',
                 [
                     'action' => 'index',

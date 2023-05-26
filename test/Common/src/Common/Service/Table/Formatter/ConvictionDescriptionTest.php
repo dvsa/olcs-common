@@ -1,6 +1,5 @@
 <?php
 
-
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\ConvictionDescription;

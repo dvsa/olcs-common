@@ -9,7 +9,6 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\PublicationNumber;
-use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
@@ -24,26 +23,7 @@ class PublicationNumberTest extends MockeryTestCase
      */
     public function testFormat($data, $column, $expected)
     {
-        $params = ['foo' => 'bar'];
-
-
-        $pubService = m::mock();
-        $pubService->shouldReceive('getFilePathVariablesFromPublication')
-            ->with($data)
-            ->andReturn($params);
-
-        $sm = m::mock();
-        $sm->shouldReceive('get')
-            ->with('DataServiceManager')
-            ->andReturn(
-                m::mock()
-                    ->shouldReceive('get')
-                    ->with('Common\Service\Data\Publication')
-                    ->andReturn($pubService)
-                    ->getMock()
-            );
-
-        $this->assertEquals($expected, PublicationNumber::format($data, $column, $sm));
+        $this->assertEquals($expected, (new PublicationNumber())->format($data, $column));
     }
 
     public function provider()

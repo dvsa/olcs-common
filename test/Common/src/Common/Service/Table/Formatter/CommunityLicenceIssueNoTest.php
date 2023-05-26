@@ -10,7 +10,6 @@ namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\CommunityLicenceIssueNo;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Mockery as m;
 
 /**
  * Community Licence Issue No Formetter Test
@@ -24,9 +23,8 @@ class CommunityLicenceIssueNoTest extends MockeryTestCase
      */
     public function testFormat($data, $column, $expected)
     {
-        $sm = m::mock();
-
-        $this->assertEquals($expected, CommunityLicenceIssueNo::format($data, $column, $sm));
+        $sut = new CommunityLicenceIssueNo();
+        $this->assertEquals($expected, $sut->format($data, $column));
     }
 
     public function formatProvider()

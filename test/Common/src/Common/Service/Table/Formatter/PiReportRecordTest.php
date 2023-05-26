@@ -3,12 +3,13 @@
 /**
  * PI Report Record Test
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Service\Helper\UrlHelperService;
+use Common\Service\Table\Formatter\PiReportRecord;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
-
-use Common\Service\Table\Formatter\PiReportRecord;
 
 /**
  * PI Report Record Test
@@ -17,6 +18,19 @@ use Common\Service\Table\Formatter\PiReportRecord;
  */
 class PiReportRecordTest extends TestCase
 {
+    protected $urlHelper;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->urlHelper = m::mock(UrlHelperService::class);
+        $this->sut = new PiReportRecord($this->urlHelper);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
     /**
      * Test the format method
      *
@@ -24,11 +38,7 @@ class PiReportRecordTest extends TestCase
      */
     public function testFormat($data, $expected)
     {
-        $sm = m::mock()
-            ->shouldReceive('get')
-            ->with('Helper\Url')
-            ->andReturn(
-                m::mock()
+        $this->urlHelper
                     ->shouldReceive('fromRoute')
                     ->with(
                         'licence',
@@ -44,14 +54,11 @@ class PiReportRecordTest extends TestCase
                             'transportManager' => 3,
                         ]
                     )
-                    ->andReturn('TM_URL')
-                    ->getMock()
-            )
-            ->getMock();
+                    ->andReturn('TM_URL');
 
         $this->assertEquals(
             $expected,
-            PiReportRecord::format($data, [], $sm)
+            $this->sut->format($data, [])
         );
     }
 

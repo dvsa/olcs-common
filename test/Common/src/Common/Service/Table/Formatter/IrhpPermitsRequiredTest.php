@@ -3,6 +3,7 @@
 /**
  * Irhp Permits Required Test
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\RefData;
@@ -19,7 +20,7 @@ class IrhpPermitsRequiredTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormat($data, $expected)
     {
-        $this->assertEquals($expected, IrhpPermitsRequired::format($data));
+        $this->assertEquals($expected, (new IrhpPermitsRequired())->format($data));
     }
 
     /**

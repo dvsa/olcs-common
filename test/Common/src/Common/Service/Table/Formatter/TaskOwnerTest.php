@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\TaskOwner;
@@ -21,7 +22,7 @@ class TaskOwnerTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormat($data, $expected)
     {
-        $this->assertEquals($expected, TaskOwner::format($data));
+        $this->assertEquals($expected, (new TaskOwner())->format($data));
     }
 
     public function providerFormat()

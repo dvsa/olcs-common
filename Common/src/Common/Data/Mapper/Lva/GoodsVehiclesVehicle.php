@@ -2,7 +2,6 @@
 
 namespace Common\Data\Mapper\Lva;
 
-use Common\Data\Mapper\MapperInterface;
 use Common\Service\Table\Formatter\VehicleDiscNo;
 use Laminas\Form\FormInterface;
 
@@ -12,17 +11,24 @@ use Laminas\Form\FormInterface;
  * @author Rob Caiger <rob@clocal.co.uk>
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class GoodsVehiclesVehicle implements MapperInterface
+class GoodsVehiclesVehicle
 {
+    protected VehicleDiscNo $vehicleDiscNo;
+
+    public function __construct(VehicleDiscNo $vehicleDiscNo)
+    {
+        $this->vehicleDiscNo = $vehicleDiscNo;
+    }
+
     /**
      * @return array
      */
-    public static function mapFromResult(array $data)
+    public function mapFromResult(array $data)
     {
         $licenceVehicle = $data;
         unset($licenceVehicle['vehicle']);
 
-        $licenceVehicle['discNo'] = VehicleDiscNo::format($licenceVehicle);
+        $licenceVehicle['discNo'] = $this->vehicleDiscNo->format($licenceVehicle);
         unset($licenceVehicle['goodsDiscs']);
 
         $dataFieldset = $data['vehicle'];

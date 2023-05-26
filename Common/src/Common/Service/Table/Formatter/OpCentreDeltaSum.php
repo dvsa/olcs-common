@@ -3,6 +3,7 @@
 /**
  * OpCenterDeltaSum.php
  */
+
 namespace Common\Service\Table\Formatter;
 
 /**
@@ -15,18 +16,17 @@ namespace Common\Service\Table\Formatter;
  *
  * @author Josh Curtis <josh.curtis@valtech.co.uk>
  */
-class OpCentreDeltaSum implements FormatterInterface
+class OpCentreDeltaSum implements FormatterPluginManagerInterface
 {
     /**
      * Calculate the total from all records including the deltas.
      *
-     * @param array $data The data from the table.
+     * @param array $data   The data from the table.
      * @param array $column The column data.
-     * @param \Laminas\ServiceManager\ServiceManager|null $sm Service manager.
      *
      * @return string The total count.
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
         $sum = 0;
 

@@ -7,6 +7,8 @@
  */
 namespace Common\Service\Review;
 
+use Common\Service\Table\Formatter\Address;
+
 /**
  * Licence Conditions Undertakings Review Service
  *
@@ -29,9 +31,10 @@ class LicenceConditionsUndertakingsReviewService extends AbstractReviewService
      */
     public function __construct(
         AbstractReviewServiceServices $abstractReviewServiceServices,
-        ConditionsUndertakingsReviewService $helper
+        ConditionsUndertakingsReviewService $helper,
+        Address $addressFormatter
     ) {
-        parent::__construct($abstractReviewServiceServices);
+        parent::__construct($abstractReviewServiceServices, $addressFormatter);
         $this->helper = $helper;
     }
 

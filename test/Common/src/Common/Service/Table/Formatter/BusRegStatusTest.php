@@ -3,15 +3,33 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\BusRegStatus;
+use Common\View\Helper\Status;
+use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
+use Laminas\View\HelperPluginManager;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * @see BusRegStatus
  */
 class BusRegStatusTest extends MockeryTestCase
 {
+    protected $translator;
+    protected $viewHelperManager;
+    protected $statusHelper;
+
+    protected function setUp(): void
+    {
+        $this->viewHelperManager = m::mock(HelperPluginManager::class);
+        $this->translator = m::mock(TranslatorDelegator::class);
+        $this->statusHelper = m::mock(Status::class);
+        $this->sut = new BusRegStatus($this->translator, $this->viewHelperManager);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
     /**
      * Tests the formatting for the different possible input array formats
      *
@@ -21,8 +39,6 @@ class BusRegStatusTest extends MockeryTestCase
      */
     public function testFormat($data)
     {
-        $sut = new BusRegStatus();
-
         $regStatus = 'status id';
         $regStatusDesc = 'status description';
         $statusLabel = 'status label';
@@ -32,19 +48,19 @@ class BusRegStatusTest extends MockeryTestCase
             'description' => '_TRNSLT_' . $regStatusDesc,
         ];
 
-        $sm = m::mock(ServiceLocatorInterface::class);
-        $sm->expects('get->translate')
+        $this->translator->shouldReceive('translate')
             ->andReturnUsing(
                 function ($key) {
                     return '_TRNSLT_' . $key;
                 }
             );
 
-        $sm->expects('get->get->__invoke')
+        $this->viewHelperManager->shouldReceive('get')->with('status')->andReturn($this->statusHelper);
+        $this->statusHelper->shouldReceive('__invoke')
             ->with($statusArray)
             ->andReturn($statusLabel);
 
-        $this->assertEquals($statusLabel, $sut::format($data, [], $sm));
+        $this->assertEquals($statusLabel, $this->sut->format($data, []));
     }
 
     /**

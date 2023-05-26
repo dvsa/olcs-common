@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Service\Table\Formatter;
 
 /**
@@ -12,17 +13,16 @@ namespace Common\Service\Table\Formatter;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class TaskOwner implements FormatterInterface
+class TaskOwner implements FormatterPluginManagerInterface
 {
     /**
      * Format a task owner
      *
-     * @param array $data
-     * @param array $column
-     * @param \Laminas\ServiceManager\ServiceManager $sm
+     * @param  array $data
+     * @param  array $column
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
         $owner = '';
 

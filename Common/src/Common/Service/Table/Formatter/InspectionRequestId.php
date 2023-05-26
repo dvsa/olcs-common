@@ -8,34 +8,49 @@
 
 namespace Common\Service\Table\Formatter;
 
+use Common\Service\Helper\UrlHelperService;
+use Laminas\Http\Request;
+use Laminas\Mvc\Router\Http\TreeRouteStack;
+
 /**
  * Inspection request ID formatter
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class InspectionRequestId implements FormatterInterface
+class InspectionRequestId implements FormatterPluginManagerInterface
 {
+    private UrlHelperService $urlHelper;
+    private TreeRouteStack $router;
+    private Request $request;
+
+    /**
+     * @param UrlHelperService $urlHelper
+     * @param TreeRouteStack   $router
+     * @param Request          $request
+     */
+    public function __construct(UrlHelperService $urlHelper, TreeRouteStack $router, Request $request)
+    {
+        $this->urlHelper = $urlHelper;
+        $this->router = $router;
+        $this->request = $request;
+    }
     /**
      * Inspection request ID as URL
      *
-     * @param array $data
-     * @param array $column
-     * @param \Laminas\ServiceManager\ServiceManager $sm
+     * @param  array $data
+     * @param  array $column
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
         unset($column); // parameter not used
 
-        $urlHelper = $sm->get('Helper\Url');
-        $router     = $sm->get('router');
-        $request    = $sm->get('request');
-        $routeMatch = $router->match($request);
+        $routeMatch = $this->router->match($this->request);
         $matchedRouteName = $routeMatch->getMatchedRouteName();
 
         if (substr($matchedRouteName, 0, 7) === 'licence') {
             // licence inspection request
-            $url = $urlHelper->fromRoute(
+            $url = $this->urlHelper->fromRoute(
                 'licence/processing/inspection-request',
                 [
                     'action' => 'edit',
@@ -46,7 +61,7 @@ class InspectionRequestId implements FormatterInterface
         } else {
             $route = 'lva-application/processing/inspection-request';
             $params = $routeMatch->getParams();
-            $url = $urlHelper->fromRoute(
+            $url = $this->urlHelper->fromRoute(
                 $route,
                 [
                     'action' => 'edit',

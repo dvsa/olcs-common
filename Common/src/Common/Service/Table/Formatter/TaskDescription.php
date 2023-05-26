@@ -8,27 +8,43 @@
 
 namespace Common\Service\Table\Formatter;
 
+use Common\Service\Helper\UrlHelperService;
+use Laminas\Http\Request;
+use Laminas\Mvc\Router\Http\TreeRouteStack;
+
 /**
  * Task description formatter
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class TaskDescription implements FormatterInterface
+class TaskDescription implements FormatterPluginManagerInterface
 {
+    private TreeRouteStack $router;
+    private Request $request;
+    private UrlHelperService $urlHelper;
+
+    /**
+     * @param TreeRouteStack   $router
+     * @param Request          $request
+     * @param UrlHelperService $urlHelper
+     */
+    public function __construct(TreeRouteStack $router, Request $request, UrlHelperService $urlHelper)
+    {
+        $this->router = $router;
+        $this->request = $request;
+        $this->urlHelper = $urlHelper;
+    }
     /**
      * Format a task description
      *
-     * @param array $row
-     * @param array $column
-     * @param \Laminas\ServiceManager\ServiceManager $serviceLocator
-     * @return string
+     * @param      array $row
+     * @param      array $column
+     * @return     string
      * @inheritdoc
      */
-    public static function format($row, $column = array(), $serviceLocator = null)
+    public function format($row, $column = [])
     {
-        $router     = $serviceLocator->get('router');
-        $request    = $serviceLocator->get('request');
-        $routeMatch = $router->match($request);
+        $routeMatch = $this->router->match($this->request);
         $params     = $routeMatch->getParams();
 
         // the edit URL should pass the context of the page we're on,
@@ -46,16 +62,16 @@ class TaskDescription implements FormatterInterface
                 break;
             case 'licence/bus-processing/tasks':
                 $routeParams = [
-                    'type'    => 'busreg',
-                    'typeId'  => $params['busRegId'],
-                    'licence' => $params['licence']
+                'type'    => 'busreg',
+                'typeId'  => $params['busRegId'],
+                'licence' => $params['licence']
                 ];
                 break;
             case 'licence/irhp-application-processing/tasks':
                 $routeParams = [
-                    'type'    => 'irhpapplication',
-                    'typeId'  => $params['irhpAppId'],
-                    'licence' => $params['licence']
+                'type'    => 'irhpapplication',
+                'typeId'  => $params['irhpAppId'],
+                'licence' => $params['licence']
                 ];
                 break;
             case 'case_processing_tasks':
@@ -63,15 +79,15 @@ class TaskDescription implements FormatterInterface
                 break;
             case 'operator/processing/tasks':
                 $routeParams = [
-                    'type'    => 'organisation',
-                    'typeId'  => $params['organisation']
+                'type'    => 'organisation',
+                'typeId'  => $params['organisation']
                 ];
                 break;
             default:
                 $routeParams = [];
                 break;
         }
-        $url = $serviceLocator->get('Helper\Url')->fromRoute(
+        $url = $this->urlHelper->fromRoute(
             'task_action',
             array_merge(
                 [
@@ -81,7 +97,7 @@ class TaskDescription implements FormatterInterface
                 $routeParams
             ),
             [
-                'query' => $request->getQuery()->toArray()
+                'query' => $this->request->getQuery()->toArray()
             ]
         );
 

@@ -2,25 +2,36 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
-use Mockery as m;
-use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Table\Formatter\DataRetentionAssignedTo;
 use Common\View\Helper\PersonName;
 use Laminas\View\HelperPluginManager;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
  * @covers \Common\Service\Table\Formatter\DataRetentionAssignedTo
  */
 class DataRetentionAssignedToTest extends MockeryTestCase
 {
+    protected $viewHelperManager;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->viewHelperManager = m::mock(HelperPluginManager::class);
+        $this->sut = new DataRetentionAssignedTo($this->viewHelperManager);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
     /**
      * Tests empty string returned if there's no person information
      */
     public function testFormatUnassigned()
     {
-        $sut = new DataRetentionAssignedTo();
-        $this->assertEquals('', $sut::format([]));
+        $this->assertEquals('', $this->sut->format([]));
     }
 
     /**
@@ -28,8 +39,6 @@ class DataRetentionAssignedToTest extends MockeryTestCase
      */
     public function testFormat()
     {
-        $sut = new DataRetentionAssignedTo();
-
         $person = [
             'forename' => 'forename',
             'familyName' => 'familyName'
@@ -45,8 +54,6 @@ class DataRetentionAssignedToTest extends MockeryTestCase
             ]
         ];
 
-        $sm = m::mock(ServiceLocatorInterface::class);
-
         $personHelper = m::mock(PersonName::class);
         $personHelper->shouldReceive('__invoke')
             ->once()
@@ -59,11 +66,7 @@ class DataRetentionAssignedToTest extends MockeryTestCase
             )
             ->andReturn($personFormatted);
 
-        $viewHelperManager = m::mock(HelperPluginManager::class);
-        $viewHelperManager->shouldReceive('get')->with('personName')->once()->andReturn($personHelper);
-
-        $sm->shouldReceive('get')->with('ViewHelperManager')->once()->andReturn($viewHelperManager);
-
-        $this->assertEquals($personFormatted, $sut::format($data, [], $sm));
+        $this->viewHelperManager->shouldReceive('get')->with('personName')->once()->andReturn($personHelper);
+        $this->assertEquals($personFormatted, $this->sut->format($data, []));
     }
 }

@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\RefData;
@@ -22,7 +23,7 @@ class LicenceTypeShortTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormat($data, $expected)
     {
-        $this->assertEquals($expected, LicenceTypeShort::format($data));
+        $this->assertEquals($expected, (new LicenceTypeShort())->format($data));
     }
 
     public function provider()

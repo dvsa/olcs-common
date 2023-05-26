@@ -8,35 +8,47 @@
 
 namespace Common\Service\Table\Formatter;
 
+use Common\Service\Helper\UrlHelperService;
+use Laminas\Http\Request;
+use Laminas\Mvc\Router\Http\TreeRouteStack;
+
 /**
  * SlaTargetDate formatter
  * If set returns link to Sla Target date edit form, if not return link to add form with 'not set' anchor text
  *
  * @author Shaun Lizzio <shaun@lizzio.co.uk>
  */
-class SlaTargetDate implements FormatterInterface
+class SlaTargetDate implements FormatterPluginManagerInterface
 {
+    private TreeRouteStack $router;
+    private Request $request;
+    private UrlHelperService $urlHelper;
+    private Date $dateFormatter;
+
+    public function __construct(TreeRouteStack $router, Request $request, UrlHelperService $urlHelper, Date $dateFormatter)
+    {
+        $this->router = $router;
+        $this->request = $request;
+        $this->urlHelper = $urlHelper;
+        $this->dateFormatter = $dateFormatter;
+    }
     /**
      * Format an SlaTargetDate
      *
-     * @param array $data
-     * @param array $column
-     * @param \Laminas\ServiceManager\ServiceManager $sm
+     * @param  array $data
+     * @param  array $column
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
-        $router     = $sm->get('router');
-        $request    = $sm->get('request');
-        $urlHelper  = $sm->get('Helper\Url');
-        $routeMatch = $router->match($request);
+        $routeMatch = $this->router->match($this->request);
         $matchedRouteName = $routeMatch->getMatchedRouteName();
 
         // use agreedDate to determine if we have a record or not since mandatory field.
         // then use target date to show 'Not set' link
 
         if (empty($data['agreedDate'])) {
-            $url = $urlHelper->fromRoute(
+            $url = $this->urlHelper->fromRoute(
                 $matchedRouteName . '/add-sla',
                 [
                     'entityType' => 'document',
@@ -47,7 +59,7 @@ class SlaTargetDate implements FormatterInterface
             );
             return '<a href="' . $url . '" class="govuk-link js-modal-ajax">Not set</a>';
         } else {
-            $url = $urlHelper->fromRoute(
+            $url = $this->urlHelper->fromRoute(
                 $matchedRouteName . '/edit-sla',
                 [
                     'entityType' => 'document',
@@ -67,7 +79,7 @@ class SlaTargetDate implements FormatterInterface
             if ($data['targetDate'] >= $data['sentDate']) {
                 $statusHtml = '<span class="status green">Pass</span>';
             }
-            $targetDate = Date::format($data, ['name' => 'targetDate'], $sm);
+            $targetDate = $this->dateFormatter->format($data, ['name' => 'targetDate']);
 
             return '<a href="' . $url . '" class="govuk-link js-modal-ajax">' . $targetDate . '</a> ' . $statusHtml;
         }

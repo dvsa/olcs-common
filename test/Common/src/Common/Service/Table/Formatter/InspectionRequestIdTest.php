@@ -5,11 +5,15 @@
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
-use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Mockery as m;
+use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Formatter\InspectionRequestId;
+use Laminas\Http\Request;
+use Laminas\Mvc\Router\Http\TreeRouteStack;
+use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
  * InspectionRequestId Formatter Test
@@ -18,6 +22,24 @@ use Common\Service\Table\Formatter\InspectionRequestId;
  */
 class InspectionRequestIdTest extends MockeryTestCase
 {
+    protected $urlHelper;
+    protected $router;
+    protected $request;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->urlHelper = m::mock(UrlHelperService::class);
+        $this->router = m::mock(TreeRouteStack::class);
+        $this->request = m::mock(Request::class);
+        $this->sut = new InspectionRequestId($this->urlHelper, $this->router, $this->request);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
+
     /**
      * Test formatter
      *
@@ -38,48 +60,28 @@ class InspectionRequestIdTest extends MockeryTestCase
         $expectedOutput
     ) {
 
-        // mocks
-        $sm = m::mock();
-        $mockUrlHelper = m::mock();
-
         // expectations
-        $mockUrlHelper
+        $this->urlHelper
             ->shouldReceive('fromRoute')
             ->with($expectedRouteName, $expectedUrlParams)
             ->andReturn($expectedUrl);
 
-        $mockRequest = m::mock();
-
-        $mockRouter = m::mock()
+        $this->router
             ->shouldReceive('match')
-            ->with($mockRequest)
+            ->with($this->request)
             ->andReturn(
                 m::mock()
-                ->shouldReceive('getMatchedRouteName')
-                ->once()
-                ->andReturn($expectedRouteName)
-                ->shouldReceive('getParams')
-                ->andReturn(['application' => 3])
-                ->getMock()
+                    ->shouldReceive('getMatchedRouteName')
+                    ->once()
+                    ->andReturn($expectedRouteName)
+                    ->shouldReceive('getParams')
+                    ->andReturn(['application' => 3])
+                    ->getMock()
             )
             ->once()
             ->getMock();
 
-        $sm->shouldReceive('get')
-            ->with('Helper\Url')
-            ->andReturn($mockUrlHelper)
-            ->once()
-            ->shouldReceive('get')
-            ->with('router')
-            ->andReturn($mockRouter)
-            ->once()
-            ->shouldReceive('get')
-            ->with('request')
-            ->andReturn($mockRequest)
-            ->once()
-            ->getMock();
-
-        $this->assertEquals($expectedOutput, InspectionRequestId::format($data, [], $sm));
+        $this->assertEquals($expectedOutput, $this->sut->format($data, []));
     }
 
     public function formatProvider()

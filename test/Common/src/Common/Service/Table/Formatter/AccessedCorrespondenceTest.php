@@ -2,7 +2,9 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Formatter\AccessedCorrespondence;
+use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
@@ -11,13 +13,26 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class AccessedCorrespondenceTest extends MockeryTestCase
 {
+    protected $urlHelper;
+    protected $translator;
+
+    protected function setUp(): void
+    {
+        $this->urlHelper = m::mock(UrlHelperService::class);
+        $this->translator = m::mock(TranslatorDelegator::class);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
     /**
      * @dataProvider formatProvider
      */
     public function testFormat($data, $isNew, $expected)
     {
-        $sm = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class);
-        $sm->shouldReceive('get->fromRoute')
+
+        $this->urlHelper->shouldReceive('fromRoute')
             ->with(
                 'correspondence/access',
                 array(
@@ -27,11 +42,13 @@ class AccessedCorrespondenceTest extends MockeryTestCase
             ->andReturn('LICENCE_URL');
 
         if ($isNew) {
-            $sm->shouldReceive('get->translate')->once()->andReturn('unit_New');
+            $this->translator->shouldReceive('translate')->once()->andReturn('unit_New');
         }
 
-        static::assertEquals($expected, AccessedCorrespondence::format($data, array(), $sm));
+        $sut = new AccessedCorrespondence($this->urlHelper, $this->translator);
+        static::assertEquals($expected, $sut->format($data, []));
     }
+
 
     public function formatProvider()
     {

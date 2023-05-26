@@ -8,8 +8,12 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Service\Helper\UrlHelperService;
+use Common\Service\Table\Formatter\Date;
 use Common\Service\Table\Formatter\SlaTargetDate;
-use CommonTest\Bootstrap;
+use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
+use Laminas\Http\Request;
+use Laminas\Mvc\Router\Http\TreeRouteStack;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
@@ -20,11 +24,33 @@ use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
  */
 class SlaTargetDateTest extends TestCase
 {
-    protected $sm;
+    protected $urlHelper;
+    protected $translator;
+    protected $router;
+    protected $request;
+    protected $sut;
 
-    protected $mockRouteMatch;
+    protected function setUp(): void
+    {
+        $this->urlHelper = m::mock(UrlHelperService::class);
+        $this->translator = m::mock(TranslatorDelegator::class);
+        $this->router = m::mock(TreeRouteStack::class);
+        $this->request = m::mock(Request::class);
+        $this->sut = new SlaTargetDate($this->router, $this->request, $this->urlHelper, new Date());
 
-    protected $mockUrlHelper;
+        $this->mockRouteMatch = m::mock('\Laminas\Mvc\Router\RouteMatch');
+
+        $this->router
+            ->shouldReceive('match')
+            ->with($this->request)
+            ->andReturn($this->mockRouteMatch)
+            ->getMock();
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
 
     /**
      * @todo the Date formatter now appears to rely on global constants defined
@@ -37,26 +63,6 @@ class SlaTargetDateTest extends TestCase
         if (!defined('DATE_FORMAT')) {
             define('DATE_FORMAT', 'd/m/Y');
         }
-    }
-
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->sm = Bootstrap::getServiceManager();
-
-        $this->mockRouteMatch = m::mock('\Laminas\Mvc\Router\RouteMatch');
-        $this->mockUrlHelper = m::mock();
-        $mockRequest = m::mock('\Laminas\Stdlib\RequestInterface');
-        $mockRouter = m::mock()
-            ->shouldReceive('match')
-            ->with($mockRequest)
-            ->andReturn($this->mockRouteMatch)
-            ->getMock();
-
-        $this->sm->setService('router', $mockRouter);
-        $this->sm->setService('request', $mockRequest);
-        $this->sm->setService('Helper\Url', $this->mockUrlHelper);
     }
 
     /**
@@ -73,12 +79,12 @@ class SlaTargetDateTest extends TestCase
             ->shouldReceive('getMatchedRouteName')
             ->andReturn($routeMatch);
 
-        $this->mockUrlHelper
+        $this->urlHelper
             ->shouldReceive('fromRoute')
             ->with($expectedRoute, $expectedRouteParams, [], true)
             ->andReturn('the_url');
 
-        $this->assertEquals($expectedLink, SlaTargetDate::format($data, [], $this->sm));
+        $this->assertEquals($expectedLink, $this->sut->format($data, []));
     }
 
     /**

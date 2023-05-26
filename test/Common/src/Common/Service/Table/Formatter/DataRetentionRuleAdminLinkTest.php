@@ -2,6 +2,7 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Formatter\DataRetentionRuleAdminLink;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
@@ -11,6 +12,20 @@ use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
  */
 class DataRetentionRuleAdminLinkTest extends TestCase
 {
+    protected $urlHelper;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->urlHelper = m::mock(UrlHelperService::class);
+        $this->sut = new DataRetentionRuleAdminLink($this->urlHelper);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
+
     public function testFormat()
     {
         $data = [
@@ -18,24 +33,18 @@ class DataRetentionRuleAdminLinkTest extends TestCase
             'description' => 'test',
         ];
 
-        $sm = m::mock()
-            ->shouldReceive('get')
-            ->with('Helper\Url')
-            ->andReturn(
-                m::mock()
-                    ->shouldReceive('fromRoute')
-                    ->with(
-                        'admin-dashboard/admin-data-retention/rule-admin',
-                        ['action' => 'edit','id' => 1]
-                    )
-                    ->andReturn('DATA_RETENTION_RULE_EDIT_URL')
-                    ->getMock()
+        $this->urlHelper
+            ->shouldReceive('fromRoute')
+            ->with(
+                'admin-dashboard/admin-data-retention/rule-admin',
+                ['action' => 'edit', 'id' => 1]
             )
-            ->getMock();
+            ->andReturn('DATA_RETENTION_RULE_EDIT_URL');
+
 
         $this->assertEquals(
             '<a href="DATA_RETENTION_RULE_EDIT_URL" class="govuk-link js-modal-ajax">Test</a>',
-            DataRetentionRuleAdminLink::format($data, [], $sm)
+            $this->sut->format($data, [])
         );
     }
 }

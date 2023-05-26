@@ -18,7 +18,7 @@ use Common\RefData;
  *
  * @author Shaun Lizzio <shaun.lizzio@valtech.co.uk>
  */
-class ConvictionDescription implements FormatterInterface
+class ConvictionDescription implements FormatterPluginManagerInterface
 {
     /**
      * ConvictionDescription value
@@ -26,15 +26,15 @@ class ConvictionDescription implements FormatterInterface
      * conv_c_cat_1144 is ref data id for a 'User defined' category. However all new convictions with
      * User defined descriptions have no category. Hence the need for this formatter.
      *
-     * @param array $data
-     * @param array $column
-     * @param \Laminas\ServiceManager\ServiceManager $sm
+     * @param  array $data
+     * @param  array $column
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
-        if (isset($data['convictionCategory']['id']) &&
-            $data['convictionCategory']['id'] !== RefData::CONVICTION_CATEGORY_USER_DEFINED
+        if (
+            isset($data['convictionCategory']['id'])
+            && $data['convictionCategory']['id'] !== RefData::CONVICTION_CATEGORY_USER_DEFINED
         ) {
             $data['categoryText'] = $data['convictionCategory']['description'];
         }

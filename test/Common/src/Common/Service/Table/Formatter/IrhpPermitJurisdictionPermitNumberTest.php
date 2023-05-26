@@ -5,10 +5,10 @@
  *
  * @author Scott Callaway <scott.callaway@capgemini.com>
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\IrhpPermitJurisdictionPermitNumber;
-use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 class IrhpPermitJurisdictionPermitNumberTest extends MockeryTestCase
@@ -23,7 +23,7 @@ class IrhpPermitJurisdictionPermitNumberTest extends MockeryTestCase
      */
     public function testFormat($data, $expected)
     {
-        $this->assertEquals($expected, IrhpPermitJurisdictionPermitNumber::format($data));
+        $this->assertEquals($expected, (new IrhpPermitJurisdictionPermitNumber())->format($data));
     }
 
     /**

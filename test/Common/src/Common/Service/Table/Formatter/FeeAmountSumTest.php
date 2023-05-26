@@ -5,9 +5,12 @@
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Service\Table\Formatter\FeeAmount;
 use Common\Service\Table\Formatter\FeeAmountSum;
+use Common\Service\Table\Formatter\Sum;
 
 /**
  * Fee Amount Sum formatter test
@@ -16,7 +19,6 @@ use Common\Service\Table\Formatter\FeeAmountSum;
  */
 class FeeAmountSumTest extends \PHPUnit\Framework\TestCase
 {
-
     /**
      * Test the format method
      *
@@ -26,7 +28,10 @@ class FeeAmountSumTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormat($data, $column, $expected)
     {
-        $this->assertSame($expected, FeeAmountSum::format($data, $column));
+        $sumFormatter = new Sum();
+        $feeAmountFormatter = new FeeAmount();
+        $sut = new FeeAmountSum($sumFormatter, $feeAmountFormatter);
+        $this->assertSame($expected, $sut->format($data, $column));
     }
 
     /**
@@ -37,38 +42,38 @@ class FeeAmountSumTest extends \PHPUnit\Framework\TestCase
     public function provider()
     {
         return array(
-            array(array(), array(), null),
-            array(array(), array('name' => 'subTotal'), '£0.00'),
-            array(array(array('subTotal' => 'A'), array('subTotal' => 'B')), array('name' => 'subTotal'), '£0.00'),
-            array(array(array('subTotal' => 5)), array('name' => 'subTotal'), '£5.00'),
-            array(array(array('subTotal' => 5), array('subTotal' => 7)), array('name' => 'subTotal'), '£12.00'),
-            array(
-                array(
-                    array('subTotal' => 5),
-                    array('subTotal' => 7),
-                    array('subTotal' => 'A')
-                ),
-                array('name' => 'subTotal'),
+            [[], [], null],
+            [[], ['name' => 'subTotal'], '£0.00'],
+            [[['subTotal' => 'A'], ['subTotal' => 'B']], ['name' => 'subTotal'], '£0.00'],
+            [[['subTotal' => 5]], ['name' => 'subTotal'], '£5.00'],
+            [[['subTotal' => 5], ['subTotal' => 7]], ['name' => 'subTotal'], '£12.00'],
+            [
+                [
+                    ['subTotal' => 5],
+                    ['subTotal' => 7],
+                    ['subTotal' => 'A']
+                ],
+                ['name' => 'subTotal'],
                 '£12.00'
-            ),
-            array(
-                array(
-                    array('subTotal' => 5),
-                    array('subTotal' => 7),
-                    array('subTotal' => 95)
-                ),
-                array('name' => 'subTotal'),
+            ],
+            [
+                [
+                    ['subTotal' => 5],
+                    ['subTotal' => 7],
+                    ['subTotal' => 95]
+                ],
+                ['name' => 'subTotal'],
                 '£107.00'
-            ),
-            array(
-                array(
-                    array('subTotal' => '5.11'),
-                    array('subTotal' => 7),
-                    array('subTotal' => '95.341')
-                ),
-                array('name' => 'subTotal'),
+            ],
+            [
+                [
+                    ['subTotal' => '5.11'],
+                    ['subTotal' => 7],
+                    ['subTotal' => '95.341']
+                ],
+                ['name' => 'subTotal'],
                 '£107.45'
-            ),
+            ],
         );
     }
 }

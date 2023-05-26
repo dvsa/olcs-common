@@ -2,23 +2,35 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Service\Helper\UrlHelperService;
+use Common\Service\Table\Formatter\EbsrRegNumberLink;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Common\Service\Table\Formatter\EbsrRegNumberLink;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * @covers \Common\Service\Table\Formatter\EbsrRegNumberLink
  */
 class EbsrRegNumberLinkTest extends MockeryTestCase
 {
+    protected $urlHelper;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->urlHelper = m::mock(UrlHelperService::class);
+        $this->sut = new EbsrRegNumberLink($this->urlHelper);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
     /**
      * Tests empty string returned if there's no variation number set
      */
     public function testFormatWithNoId()
     {
-        $sut = new EbsrRegNumberLink();
-        $this->assertEquals('', $sut::format([]));
+        $this->assertEquals('', $this->sut->format([]));
     }
 
     /**
@@ -30,20 +42,17 @@ class EbsrRegNumberLinkTest extends MockeryTestCase
      */
     public function testFormat($data)
     {
-        $sut = new EbsrRegNumberLink();
-
         $id = 1234;
         $regNo = 5678;
         $url = 'the url';
 
-        $sm = m::mock(ServiceLocatorInterface::class);
-        $sm->expects('get->fromRoute')
+        $this->urlHelper->expects('fromRoute')
             ->with(EbsrRegNumberLink::URL_ROUTE, ['busRegId' => $id])
             ->andReturn($url);
 
         $expected = sprintf(EbsrRegNumberLink::LINK_PATTERN, $url, $regNo);
 
-        $this->assertEquals($expected, $sut::format($data, [], $sm));
+        $this->assertEquals($expected, $this->sut->format($data, []));
     }
 
     /**

@@ -2,26 +2,31 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Laminas\ServiceManager\ServiceManager;
+use Common\Service\Helper\UrlHelperService;
 
 /**
  * Data Retention Rule link formatter
  */
-class DataRetentionRuleLink implements FormatterInterface
+class DataRetentionRuleLink implements FormatterPluginManagerInterface
 {
+    private UrlHelperService $urlHelper;
+
+    public function __construct(UrlHelperService $urlHelper)
+    {
+        $this->urlHelper = $urlHelper;
+    }
+
     /**
      * Format
      *
-     * @param array          $data   Data of current row
-     * @param array          $column Column
-     * @param ServiceManager $sm     Service manager
+     * @param array $data   Data of current row
+     * @param array $column Column
      *
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
-        $urlHelper = $sm->get('Helper\Url');
-        $url = $urlHelper->fromRoute(
+        $url = $this->urlHelper->fromRoute(
             'admin-dashboard/admin-data-retention/review/records',
             ['dataRetentionRuleId' => $data['id']]
         );

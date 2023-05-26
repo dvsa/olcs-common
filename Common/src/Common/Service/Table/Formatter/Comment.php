@@ -13,22 +13,22 @@ namespace Common\Service\Table\Formatter;
  *
  * @author Shaun Lizzio <shaun.lizzio@valtech.co.uk>
  */
-class Comment implements FormatterInterface
+class Comment implements FormatterPluginManagerInterface
 {
     /**
      * Comment value
      *
-     * @param array $data
-     * @param array $column
-     * @param \Laminas\ServiceManager\ServiceManager $sm
+     * @param  array $data
+     * @param  array $column
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
         $content = '';
 
         if (isset($data[$column['name']]) && !is_null($data[$column['name']])) {
-            if (isset($column['maxlength'])
+            if (
+                isset($column['maxlength'])
                 && is_numeric($column['maxlength'])
                 && strlen($data[$column['name']]) > $column['maxlength']
             ) {

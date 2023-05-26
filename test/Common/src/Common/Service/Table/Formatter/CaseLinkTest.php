@@ -3,12 +3,13 @@
 /**
  * Case Link Test
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Service\Helper\UrlHelperService;
+use Common\Service\Table\Formatter\CaseLink;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
-
-use Common\Service\Table\Formatter\CaseLink;
 
 /**
  * Case Link Test
@@ -17,6 +18,19 @@ use Common\Service\Table\Formatter\CaseLink;
  */
 class CaseLinkTest extends TestCase
 {
+    protected $urlHelper;
+
+    protected function setUp(): void
+    {
+        $this->urlHelper = m::mock(UrlHelperService::class);
+        $this->sut = new CaseLink($this->urlHelper);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
+
     /**
      * Test the format method
      *
@@ -24,26 +38,18 @@ class CaseLinkTest extends TestCase
      */
     public function testFormat($data, $expected)
     {
-        $sm = m::mock()
-            ->shouldReceive('get')
-            ->with('Helper\Url')
-            ->andReturn(
-                m::mock()
-                    ->shouldReceive('fromRoute')
-                    ->with(
-                        'case',
-                        [
-                            'case' => 69,
-                        ]
-                    )
-                    ->andReturn('CASE_URL')
-                    ->getMock()
+        $this->urlHelper->shouldReceive('fromRoute')
+            ->with(
+                'case',
+                [
+                    'case' => 69,
+                ]
             )
-            ->getMock();
+            ->andReturn('CASE_URL');
 
         $this->assertEquals(
             $expected,
-            CaseLink::format($data, [], $sm)
+            $this->sut->format($data, [])
         );
     }
 

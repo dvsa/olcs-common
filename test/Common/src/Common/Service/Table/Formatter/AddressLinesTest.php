@@ -5,19 +5,34 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Helper\DataHelperService;
 use Common\Service\Table\Formatter\AddressLines;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Common\Test\MockeryTestCase;
+use Mockery as m;
 
 /**
  * AddressLines formatter test
  *
  * @author Shaun Lizzio <shaun@lizzio.co.uk>
  */
-class AddressLinesTest extends \PHPUnit\Framework\TestCase
+class AddressLinesTest extends MockeryTestCase
 {
+    protected $dataHelper;
+
+    protected function setUp(): void
+    {
+        $this->dataHelper = m::mock(DataHelperService::class);
+        $this->sut =  new AddressLines($this->dataHelper);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
+
     /**
      * Test the format method
      *
@@ -28,7 +43,7 @@ class AddressLinesTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormat($data, $column, $expected)
     {
-        $this->assertEquals($expected, AddressLines::format($data, $column));
+        $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 
     /**
@@ -95,18 +110,10 @@ class AddressLinesTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormatWithNestedKeys()
     {
-        $mockHelper = $this->createPartialMock(DataHelperService::class, array('fetchNestedData'));
-
-        $mockHelper->expects($this->once())
-            ->method('fetchNestedData')
+        $this->dataHelper->shouldReceive('fetchNestedData')
             ->with(['foo' => 'bar'], 'bar->baz')
-            ->willReturn(['addressLine1' => 'address 1']);
-
-        $sm = $this->createMock(ServiceLocatorInterface::class);
-        $sm->expects($this->any())
-            ->method('get')
-            ->with('Helper\Data')
-            ->will($this->returnValue($mockHelper));
+            ->once()
+            ->andReturn(['addressLine1' => 'address 1']);
 
         $data = [
             'foo' => 'bar'
@@ -114,6 +121,7 @@ class AddressLinesTest extends \PHPUnit\Framework\TestCase
         $columns = [
             'name' => 'bar->baz'
         ];
-        $this->assertEquals('<p>address 1</p>', AddressLines::format($data, $columns, $sm));
+
+        $this->assertEquals('<p>address 1</p>', $this->sut->format($data, $columns));
     }
 }

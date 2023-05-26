@@ -12,10 +12,10 @@ class Criteria implements \Common\Service\Table\Formatter\FormatterInterface
     /**
      * Format Criteria string
      *
-     * @param array $data
+     * @param  array $data
      * @return string
      */
-    public static function format($data)
+    public function format($data, $column = [])
     {
         $content = 'N/A';
         if (isset($data['goodsOrPsv']['id'])) {

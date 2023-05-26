@@ -5,6 +5,7 @@
  *
  * @author Scott Callaway <scott.callaway@capgemini.com>
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\IrhpPermitJurisdictionTrafficArea;
@@ -21,7 +22,7 @@ class IrhpPermitJurisdictionTrafficAreaTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormat($data, $expected)
     {
-        $this->assertEquals($expected, IrhpPermitJurisdictionTrafficArea::format($data));
+        $this->assertEquals($expected, (new IrhpPermitJurisdictionTrafficArea())->format($data));
     }
 
     /**

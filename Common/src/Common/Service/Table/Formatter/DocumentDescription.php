@@ -2,32 +2,43 @@
 
 namespace Common\Service\Table\Formatter;
 
+use Common\Service\Helper\UrlHelperService;
+use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
+
 /**
  * Document Description Formatter
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class DocumentDescription implements FormatterInterface
+class DocumentDescription implements FormatterPluginManagerInterface
 {
+    private TranslatorDelegator $translator;
+    private UrlHelperService $urlHelper;
+
+    /**
+     * @param TranslatorDelegator $translator
+     * @param UrlHelperService    $urlHelper
+     */
+    public function __construct(TranslatorDelegator $translator, UrlHelperService $urlHelper)
+    {
+        $this->translator = $translator;
+        $this->urlHelper = $urlHelper;
+    }
     /**
      * Format a cell
      *
-     * @param array                               $data   Row data
-     * @param array                               $column Column data
-     * @param \Laminas\ServiceManager\ServiceManager $sm     Service manager
+     * @param array $data   Row data
+     * @param array $column Column data
      *
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public function format($data, $column = [])
     {
-        $translator = $sm->get('translator');
         if (!isset($data['documentStoreIdentifier']) || empty($data['documentStoreIdentifier'])) {
-            return self::getAnchor($data, $translator);
+            return $this->getAnchor($data, $this->translator);
         }
 
-        $urlHelper = $sm->get('Helper\Url');
-
-        $url = $urlHelper->fromRoute(
+        $url = $this->urlHelper->fromRoute(
             'getfile',
             [
                 'identifier' => $data['id']
@@ -40,18 +51,17 @@ class DocumentDescription implements FormatterInterface
             $attr = 'target="_blank"';
         }
 
-        return '<a class="govuk-link" href="' . $url . '" ' . $attr . '>' . self::getAnchor($data, $translator) . '</a>';
+        return '<a class="govuk-link" href="' . $url . '" ' . $attr . '>' . $this->getAnchor($data, $this->translator) . '</a>';
     }
 
     /**
      * Get anchor
      *
-     * @param array                            $data       Data
-     * @param \Laminas\I18n\Translator\Translator $translator Translator service
+     * @param array $data Data
      *
      * @return string
      */
-    private static function getAnchor($data, $translator)
+    private function getAnchor($data, $translator)
     {
         if (isset($data['description'])) {
             return $data['description'];

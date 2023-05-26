@@ -2,18 +2,30 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
-use Common\RefData;
-use Common\Service\Table\Formatter\InternalLicencePermitReference;
 use Common\Service\Helper\UrlHelperService as UrlHelper;
+use Common\Service\Table\Formatter\InternalLicencePermitReference;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * InternalLicencePermitReference test
  */
 class InternalLicencePermitReferenceTest extends MockeryTestCase
 {
+    protected $urlHelper;
+    protected $sut;
+
+    protected function setUp(): void
+    {
+        $this->urlHelper = m::mock(UrlHelper::class);
+        $this->sut = new InternalLicencePermitReference($this->urlHelper);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
+    }
+
     public function testFormat()
     {
         $appId = 4;
@@ -32,19 +44,15 @@ class InternalLicencePermitReferenceTest extends MockeryTestCase
             'licence' => $licenceId
         ];
 
-        $urlHelper = m::mock(UrlHelper::class);
-        $urlHelper->shouldReceive('fromRoute')
+        $this->urlHelper->shouldReceive('fromRoute')
             ->with('licence/irhp-application/application', $routeParams)
             ->once()
             ->andReturn('INTERNAL_IRHP_URL');
 
-        $sm = m::mock(ServiceLocatorInterface::class);
-        $sm->shouldReceive('get')->once()->with('Helper\Url')->andReturn($urlHelper);
 
-        $sut = new InternalLicencePermitReference();
         $this->assertEquals(
             $expectedOutput,
-            $sut->format($row, null, $sm)
+            $this->sut->format($row, null)
         );
     }
 }

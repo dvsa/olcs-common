@@ -3,7 +3,6 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\PublicHolidayArea;
-use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
 /**
@@ -16,7 +15,7 @@ class PublicHolidayAreaTest extends TestCase
      */
     public function testFormat($data, $expect)
     {
-        static::assertEquals($expect, PublicHolidayArea::format($data));
+        static::assertEquals($expect, (new PublicHolidayArea())->format($data));
     }
 
     public function dpTestFormat()
