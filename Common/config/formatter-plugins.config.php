@@ -27,6 +27,8 @@ use Common\Service\Table\Formatter\DataRetentionRuleIsEnabled;
 use Common\Service\Table\Formatter\DataRetentionRuleLink;
 use Common\Service\Table\Formatter\DashboardTmApplicationStatus;
 use Common\Service\Table\Formatter\Date;
+use Common\Service\Table\Formatter\DisqualifyUrl;
+use Common\Service\Table\Formatter\DisqualifyUrlFactory;
 use Common\Service\Table\Formatter\DocumentDescription;
 use Common\Service\Table\Formatter\DocumentSubcategory;
 use Common\Service\Table\Formatter\EbsrDocumentLink;
@@ -179,16 +181,24 @@ use Common\Service\Table\Formatter\TaskDescriptionFactory;
 use Common\Service\Table\Formatter\TaskIdentifier;
 use Common\Service\Table\Formatter\TaskIdentifierFactory;
 use Common\Service\Table\Formatter\TaskOwner;
+use Common\Service\Table\Formatter\TmApplicationManagerType;
+use Common\Service\Table\Formatter\TmApplicationManagerTypeFactory;
 use Common\Service\Table\Formatter\TransactionAmount;
 use Common\Service\Table\Formatter\TransactionAmountSum;
 use Common\Service\Table\Formatter\TransactionAmountSumFactory;
+use Common\Service\Table\Formatter\TransactionFeeStatus;
+use Common\Service\Table\Formatter\TransactionFeeStatusFactory;
 use Common\Service\Table\Formatter\TransactionNoAndStatus;
 use Common\Service\Table\Formatter\TransactionNoAndStatusFactory;
 use Common\Service\Table\Formatter\TransactionStatus;
+use Common\Service\Table\Formatter\TransactionUrl;
+use Common\Service\Table\Formatter\TransactionUrlFactory;
 use Common\Service\Table\Formatter\Translate;
 use Common\Service\Table\Formatter\TranslateFactory;
 use Common\Service\Table\Formatter\TransportManagerDateOfBirth;
+use Common\Service\Table\Formatter\TransportManagerDateOfBirthFactory;
 use Common\Service\Table\Formatter\TransportManagerName;
+use Common\Service\Table\Formatter\TransportManagerNameFactory;
 use Common\Service\Table\Formatter\UnlicensedVehicleWeight;
 use Common\Service\Table\Formatter\ValidityPeriod;
 use Common\Service\Table\Formatter\ValidityPeriodFactory;
@@ -251,8 +261,6 @@ return [
         TaskOwner::class => TaskOwner::class,
         TransactionAmount::class => TransactionAmount::class,
         TransactionStatus::class => TransactionStatus::class,
-        TransportManagerDateOfBirth::class => TransportManagerDateOfBirth::class,
-        TransportManagerName::class => TransportManagerName::class,
         UnlicensedVehicleWeight::class => UnlicensedVehicleWeight::class,
         ValidPermitCount::class => ValidPermitCount::class,
         VehicleDiscNo::class => VehicleDiscNo::class,
@@ -275,6 +283,7 @@ return [
         DataRetentionRuleAdminLink::class => DataRetentionRuleAdminLinkFactory::class,
         DataRetentionRuleLink::class => DataRetentionRuleLinkFactory::class,
         DashboardTmApplicationStatus::class => DashboardTmApplicationStatusFactory::class,
+        DisqualifyUrl::class => DisqualifyUrlFactory::class,
         DocumentDescription::class => DocumentDescriptionFactory::class,
         EbsrDocumentLink::class => EbsrDocumentLinkFactory::class,
         EbsrDocumentStatus::class => EbsrDocumentStatusFactory::class,
@@ -305,7 +314,6 @@ return [
         LicenceNumberLink::class => LicenceNumberLinkFactory::class,
         LicencePermitReference::class => LicencePermitReferenceFactory::class,
         LicenceStatusSelfserve::class => LicenceStatusSelfserveFactory::class,
-        LvaConditionsUndertakingsTableAttachedTo::class => LvaConditionsUndertakingsTableAttachedToFactory::class,
         Name::class => NameFactory::class,
         NoteUrl::class => NoteUrlFactory::class,
         OrganisationLink::class => OrganisationLinkFactory::class,
@@ -324,9 +332,14 @@ return [
         TaskDate::class => TaskDateFactory::class,
         TaskDescription::class => TaskDescriptionFactory::class,
         TaskIdentifier::class => TaskIdentifierFactory::class,
+        TmApplicationManagerType::class => TmApplicationManagerTypeFactory::class,
         TransactionAmountSum::class => TransactionAmountSumFactory::class,
+        TransactionFeeStatus::class => TransactionFeeStatusFactory::class,
         TransactionNoAndStatus::class => TransactionNoAndStatusFactory::class,
+        TransactionUrl::class => TransactionUrlFactory::class,
         Translate::class => TranslateFactory::class,
+        TransportManagerDateOfBirth::class => TransportManagerDateOfBirthFactory::class,
+        TransportManagerName::class => TransportManagerNameFactory::class,
         ValidityPeriod::class => ValidityPeriodFactory::class,
         VehicleLink::class => VehicleLinkFactory::class,
         VenueAddress::class => VenueAddressFactory::class,
