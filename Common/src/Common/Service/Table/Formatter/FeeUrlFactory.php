@@ -20,6 +20,7 @@ class FeeUrlFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): FeeUrl
     {
+        $container = method_exists($container, 'getServiceLocator') ? $container->getServiceLocator() : $container;
         $router     = $container->get('router');
         $request    = $container->get('request');
         $urlHelper  = $container->get('Helper\Url');
