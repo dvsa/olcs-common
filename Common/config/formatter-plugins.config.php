@@ -207,6 +207,7 @@ use Common\Service\Table\Formatter\VehicleDiscNo;
 use Common\Service\Table\Formatter\VehicleLink;
 use Common\Service\Table\Formatter\VehicleLinkFactory;
 use Common\Service\Table\Formatter\VehicleRegistrationMark;
+use Common\Service\Table\Formatter\VehicleRegistrationMarkFactory;
 use Common\Service\Table\Formatter\VenueAddress;
 use Common\Service\Table\Formatter\VenueAddressFactory;
 use Common\Service\Table\Formatter\YesNo;
@@ -214,7 +215,6 @@ use Common\Service\Table\Formatter\YesNoFactory;
 
 return [
     'invokables' => [
-        AddressLines::class => AddressLines::class,
         CaseEntityName::class => CaseEntityName::class,
         CaseTrafficArea::class => CaseTrafficArea::class,
         Comment::class => Comment::class,
@@ -264,11 +264,11 @@ return [
         UnlicensedVehicleWeight::class => UnlicensedVehicleWeight::class,
         ValidPermitCount::class => ValidPermitCount::class,
         VehicleDiscNo::class => VehicleDiscNo::class,
-        VehicleRegistrationMark::class => VehicleRegistrationMark::class,
     ],
     'factories' => [
         AccessedCorrespondence::class => AccessedCorrespondenceFactory::class,
         Address::class => AddressFactory::class,
+        AddressLines::class => AddressFactory::class,
         BusRegNumberLink::class => BusRegNumberLinkFactory::class,
         BusRegStatus::class => BusRegStatusFactory::class,
         CaseEntityNrStatus::class => CaseEntityNrStatusFactory::class,
@@ -342,6 +342,7 @@ return [
         TransportManagerName::class => TransportManagerNameFactory::class,
         ValidityPeriod::class => ValidityPeriodFactory::class,
         VehicleLink::class => VehicleLinkFactory::class,
+        VehicleRegistrationMark::class => VehicleRegistrationMarkFactory::class,
         VenueAddress::class => VenueAddressFactory::class,
         Vrm::class => VrmFactory::class,
         YesNo::class => YesNoFactory::class,

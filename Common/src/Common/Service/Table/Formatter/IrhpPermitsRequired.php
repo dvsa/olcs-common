@@ -10,7 +10,7 @@ use Common\Util\Escape;
  */
 class IrhpPermitsRequired implements FormatterPluginManagerInterface
 {
-    private const NAME = 'IrhpPermitsRequired';
+    public const NAME = 'IrhpPermitsRequired';
 
     /**
      * Format

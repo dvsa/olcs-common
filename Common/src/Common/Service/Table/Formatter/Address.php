@@ -17,7 +17,7 @@ use Common\Service\Helper\DataHelperService;
  */
 class Address implements FormatterPluginManagerInterface
 {
-    protected static $formats = [
+    protected $formats = [
         'FULL' => [
             'addressLine1',
             'addressLine2',
@@ -91,11 +91,11 @@ class Address implements FormatterPluginManagerInterface
      *
      * @return array        The fields to include
      */
-    private static function getFields($column)
+    private function getFields($column)
     {
         if (isset($column['addressFields'])) {
-            if (is_string($column['addressFields']) and array_key_exists($column['addressFields'], self::$formats)) {
-                $fields = self::$formats[$column['addressFields']];
+            if (is_string($column['addressFields']) and array_key_exists($column['addressFields'], $this->formats)) {
+                $fields = $this->formats[$column['addressFields']];
             } else {
                 $fields = $column['addressFields'];
             }
