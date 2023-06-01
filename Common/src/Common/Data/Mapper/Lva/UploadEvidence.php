@@ -55,7 +55,7 @@ class UploadEvidence implements MapperInterface
             // Set the label of each operating centre fieldset
             $label = $data['operatingCentres'][$i]['operatingCentre']['address']['town'];
             if (!empty($data['operatingCentres'][$i]['operatingCentre']['address']['postcode'])) {
-                $label .= ', '. $data['operatingCentres'][$i]['operatingCentre']['address']['postcode'];
+                $label .= ', ' . $data['operatingCentres'][$i]['operatingCentre']['address']['postcode'];
             }
             $fieldset->setLabel($label);
         }
@@ -68,20 +68,23 @@ class UploadEvidence implements MapperInterface
      *
      * @return array
      */
-    public static function mapFromForm(array $data)
+    public static function mapFromForm(array $data): array
     {
-        $apiData = [];
 
-        if (!isset($data['operatingCentres'])) {
-            return $apiData;
+        $apiData['supportingEvidence'] = false;
+
+        if (!empty($data['operatingCentres'])) {
+            foreach ($data['operatingCentres'] as $operatingCentreData) {
+                $apiData['operatingCentres'][$operatingCentreData['aocId']] = [
+                    'adPlacedIn' => $operatingCentreData['adPlacedIn'],
+                    'adPlacedDate' => $operatingCentreData['adPlacedDate'],
+                    'aocId' => $operatingCentreData['aocId']
+                ];
+            }
         }
 
-        foreach ($data['operatingCentres'] as $operatingCentreData) {
-            $apiData['operatingCentres'][$operatingCentreData['aocId']] = [
-                'adPlacedIn' => $operatingCentreData['adPlacedIn'],
-                'adPlacedDate' => $operatingCentreData['adPlacedDate'],
-                'aocId' => $operatingCentreData['aocId']
-            ];
+        if (!empty($data['supportingEvidence'])) {
+            $apiData['supportingEvidence'] = true;
         }
 
         return $apiData;

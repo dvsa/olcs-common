@@ -41,7 +41,12 @@ class UploadEvidenceTest extends MockeryTestCase
 
     public function testMapFromFormNoOperatingCentres(): void
     {
-        $this->assertEquals([], UploadEvidence::mapFromForm([]));
+        $this->assertEquals(['supportingEvidence' => false], UploadEvidence::mapFromForm([]));
+    }
+
+    public function testMapFromFormNoOperatingCentresAndNoSupportIngEvidence(): void
+    {
+        $this->assertEquals(['supportingEvidence' => false], UploadEvidence::mapFromForm([]));
     }
 
     public function testMapFromForm()
@@ -62,7 +67,8 @@ class UploadEvidenceTest extends MockeryTestCase
                     'aocId' => 1,
                     'adPlacedDate' => '2017-12-01'
                 ]
-            ]
+            ],
+            'supportingEvidence' => false
         ];
 
         $output = UploadEvidence::mapFromForm($input);
@@ -82,10 +88,11 @@ class UploadEvidenceTest extends MockeryTestCase
                             'address' => [
                             'town' => 'bar',
                             'postcode' => 'cake'
+                            ]
                         ]
-                    ]
-                ]
-            ]
+                ],
+            ],
+              'supportingEvidence' => false
         ];
         $mappedData = [
             'operatingCentres' => [
@@ -128,5 +135,28 @@ class UploadEvidenceTest extends MockeryTestCase
             ->getMock();
 
         UploadEvidence::mapFromResultForm($data, $mockForm);
+    }
+/**
+ * @dataProvider dpSupportingEvidenceProvider
+ */
+    public function testMapFromFormWithSupportIngEvidence($inputData, $expectedData): void
+    {
+        $input = [
+            'supportingEvidence' => $inputData
+        ];
+        $expected = [
+            'supportingEvidence' => $expectedData
+        ];
+        $this->assertEquals($expected, UploadEvidence::mapFromForm($input));
+    }
+
+    public function dpSupportingEvidenceProvider(): array
+    {
+        return [
+            [  ["something here .."],
+                true],
+            [  [],
+                false],
+        ];
     }
 }
