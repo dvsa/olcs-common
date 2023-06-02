@@ -3,9 +3,8 @@
 namespace Common\Data\Object\Search;
 
 use Common\Data\Object\Search\Aggregations\Terms as Filter;
-use Common\RefData;
-use Common\Util\Escape;
-use ZfcRbac\Service\AuthorizationService;
+use Common\Service\Table\Formatter\SearchCasesCaseId;
+use Common\Service\Table\Formatter\SearchCasesName;
 
 /**
  * Class Licence
@@ -59,32 +58,24 @@ class Cases extends InternalSearchAbstract
     public function getColumns()
     {
         return [
-            ['title' => 'Case type', 'name'=> 'caseTypeDesc'],
+            ['title' => 'Case type', 'name' => 'caseTypeDesc'],
             [
                 'title' => 'Case Id',
-                'name'=> 'caseId',
-                'formatter' => function ($data, $column, $sl) {
-                    $authService = $sl->get(AuthorizationService::class);
-
-                    if ($authService->isGranted(RefData::PERMISSION_INTERNAL_IRHP_ADMIN)) {
-                        return Escape::html($data['caseId']);
-                    }
-
-                    return '<a class="govuk-link" href="/case/details/' . $data['caseId'] . '">' . Escape::html($data['caseId']) . '</a>';
-                }
+                'name' => 'caseId',
+                'formatter' => SearchCasesCaseId::class
             ],
-            ['title' => 'Case type', 'name'=> 'caseStatusDesc'],
+            ['title' => 'Case type', 'name' => 'caseStatusDesc'],
             [
                 'title' => 'Licence number',
-                'name'=> 'licNo',
+                'name' => 'licNo',
                 'formatter' => function ($data) {
                     return '<a class="govuk-link" href="/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>';
                 }
             ],
-            ['title' => 'Licence status', 'name'=> 'licStatusDesc'],
+            ['title' => 'Licence status', 'name' => 'licStatusDesc'],
             [
                 'title' => 'Application Id',
-                'name'=> 'appId',
+                'name' => 'appId',
                 'formatter' => function ($data) {
                     if (!empty($data['appId'])) {
                         return '<a class="govuk-link" href="/application/' . $data['appId'] . '">'
@@ -97,7 +88,7 @@ class Cases extends InternalSearchAbstract
             ],
             [
                 'title' => 'Application Status',
-                'name'=> 'appStatusDesc',
+                'name' => 'appStatusDesc',
                 'formatter' => function ($data) {
                     if (!empty($data['appStatusDesc'])) {
                         return $data['appStatusDesc'];
@@ -108,33 +99,9 @@ class Cases extends InternalSearchAbstract
             ],
             [
                 'title' => 'Name',
-                'formatter' => function ($data, $column, $sl) {
-                    $urlHelper = $sl->get('Helper\Url');
-
-                    if (!empty($data['tmId'])) {
-                        $url = $urlHelper->fromRoute(
-                            'transport-manager/details',
-                            ['transportManager' => $data['tmId']]
-                        );
-                        $link = $data['tmForename'] . ' ' . $data['tmFamilyName'];
-                    } else {
-                        $url = $urlHelper->fromRoute(
-                            'operator/business-details',
-                            ['organisation' => $data['orgId']]
-                        );
-                        $link = $data['orgName'];
-                    }
-
-                    $authService = $sl->get(AuthorizationService::class);
-
-                    if ($authService->isGranted(RefData::PERMISSION_INTERNAL_IRHP_ADMIN)) {
-                        return Escape::html($link);
-                    }
-
-                    return '<a class="govuk-link" href="' . $url . '">' . Escape::html($link) . '</a>';
-                }
+                'formatter' => SearchCasesName::class
             ],
-            ['title' => 'Case status', 'name'=> 'caseStatusDesc'],
+            ['title' => 'Case status', 'name' => 'caseStatusDesc'],
         ];
     }
 }

@@ -1,10 +1,10 @@
 <?php
+
 namespace Common\Data\Object\Search;
 
 use Common\Data\Object\Search\Aggregations\Terms as Filter;
-use Common\RefData;
-use Common\Util\Escape;
-use ZfcRbac\Service\AuthorizationService;
+use Common\Service\Table\Formatter\SearchAddressOperatorName;
+use Common\Service\Table\Formatter\SearchLicenceCaseCount;
 
 /**
  * Class Licence
@@ -97,51 +97,31 @@ class Licence extends InternalSearchAbstract
         return [
             [
                 'title' => 'Licence number',
-                'name'=> 'licNo',
+                'name' => 'licNo',
                 'formatter' => function ($data) {
                     return '<a class="govuk-link" href="/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>';
                 }
             ],
-            ['title' => 'Licence status', 'name'=> 'licStatusDesc'],
+            ['title' => 'Licence status', 'name' => 'licStatusDesc'],
             [
                 'title' => 'Operator name',
-                'name'=> 'orgName',
-                'formatter' => function ($data, $column, $sl) {
-
-                    $orgName = $data['orgName'];
-                    if ($data['noOfLicencesHeld'] > 1) {
-                        $orgName .= ' (MLH)';
-                    }
-                    $url = $sl->get('Helper\Url')->fromRoute(
-                        'operator/business-details',
-                        ['organisation' => $data['orgId']]
-                    );
-
-                    return '<a class="govuk-link" href="' . $url . '">' . Escape::html($orgName) . '</a>';
-                }
+                'name' => 'orgName',
+                'formatter' => SearchAddressOperatorName::class
             ],
             [
                 'title' => 'Trading name',
-                'name'=> 'licenceTradingNames',
+                'name' => 'licenceTradingNames',
                 'formatter' => function ($data) {
                     return str_replace('|', ', <br />', $data['licenceTradingNames']);
                 }
             ],
-            ['title' => 'Entity type', 'name'=> 'orgTypeDesc'],
-            ['title' => 'Licence type', 'name'=> 'licTypeDesc'],
-            ['title' => 'FABS Reference', 'name'=> 'fabsReference'],
+            ['title' => 'Entity type', 'name' => 'orgTypeDesc'],
+            ['title' => 'Licence type', 'name' => 'licTypeDesc'],
+            ['title' => 'FABS Reference', 'name' => 'fabsReference'],
             [
                 'title' => 'Cases',
-                'name'=> 'caseCount',
-                'formatter' => function ($data, $column, $sl) {
-                    $authService = $sl->get(AuthorizationService::class);
-
-                    if ($authService->isGranted(RefData::PERMISSION_INTERNAL_IRHP_ADMIN)) {
-                        return Escape::html($data['caseCount']);
-                    }
-
-                    return '<a class="govuk-link" href="/licence/' . $data['licId'] . '/cases">' . Escape::html($data['caseCount']) . '</a>';
-                }
+                'name' => 'caseCount',
+                'formatter' => SearchLicenceCaseCount::class
             ]
         ];
     }

@@ -158,6 +158,26 @@ use Common\Service\Table\Formatter\RefData;
 use Common\Service\Table\Formatter\RefDataFactory;
 use Common\Service\Table\Formatter\RefDataStatus;
 use Common\Service\Table\Formatter\RefDataStatusFactory;
+use Common\Service\Table\Formatter\SearchAddressComplaint;
+use Common\Service\Table\Formatter\SearchAddressComplaintFactory;
+use Common\Service\Table\Formatter\SearchAddressOperatorName;
+use Common\Service\Table\Formatter\SearchAddressOperatorNameFactory;
+use Common\Service\Table\Formatter\SearchBusRegSelfserve;
+use Common\Service\Table\Formatter\SearchBusRegSelfserveFactory;
+use Common\Service\Table\Formatter\SearchCases;
+use Common\Service\Table\Formatter\SearchCasesCaseId;
+use Common\Service\Table\Formatter\SearchCasesCaseIdFactory;
+use Common\Service\Table\Formatter\SearchCasesFactory;
+use Common\Service\Table\Formatter\SearchCasesName;
+use Common\Service\Table\Formatter\SearchCasesNameFactory;
+use Common\Service\Table\Formatter\SearchIrfoOrganisationOperatorNo;
+use Common\Service\Table\Formatter\SearchIrfoOrganisationOperatorNoFactory;
+use Common\Service\Table\Formatter\SearchOperatingCentreSelfserveLicNo;
+use Common\Service\Table\Formatter\SearchOperatingCentreSelfserveLicNoFactory;
+use Common\Service\Table\Formatter\SearchPeopleName;
+use Common\Service\Table\Formatter\SearchPeopleNameFactory;
+use Common\Service\Table\Formatter\SearchPeopleRecord;
+use Common\Service\Table\Formatter\SearchPeopleRecordFactory;
 use Common\Service\Table\Formatter\SeriousInfringementLink;
 use Common\Service\Table\Formatter\SeriousInfringementLinkFactory;
 use Common\Service\Table\Formatter\SlaTargetDate;
@@ -322,6 +342,15 @@ return [
         PrinterDocumentCategory::class => PrinterDocumentCategoryFactory::class,
         RefData::class => RefDataFactory::class,
         RefDataStatus::class => RefDataStatusFactory::class,
+        SearchAddressComplaint::class => SearchAddressComplaintFactory::class,
+        SearchAddressOperatorName::class => SearchAddressOperatorNameFactory::class,
+        SearchBusRegSelfserve::class => SearchBusRegSelfserveFactory::class,
+        SearchCasesCaseId::class => SearchCasesCaseIdFactory::class,
+        SearchCasesName::class => SearchCasesNameFactory::class,
+        SearchOperatingCentreSelfserveLicNo::class => SearchOperatingCentreSelfserveLicNoFactory::class,
+        SearchIrfoOrganisationOperatorNo::class => SearchIrfoOrganisationOperatorNoFactory::class,
+        SearchPeopleRecord::class => SearchPeopleRecordFactory::class,
+        SearchPeopleName::class => SearchPeopleNameFactory::class,
         SeriousInfringementLink::class => SeriousInfringementLinkFactory::class,
         SlaTargetDate::class => SlaTargetDateFactory::class,
         StackValue::class => StackValueFactory::class,

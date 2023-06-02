@@ -1,7 +1,9 @@
 <?php
+
 namespace Common\Data\Object\Search;
 
 use Common\Data\Object\Search\Aggregations\Terms as Filter;
+use Common\Service\Table\Formatter\SearchIrfoOrganisationOperatorNo;
 
 /**
  * Class IrfoOrganisation
@@ -52,15 +54,9 @@ class IrfoOrganisation extends InternalSearchAbstract
         return [
             [
                 'title' => 'Operator no',
-                'formatter' => function ($data, $column, $serviceLocator) {
-                    $url = $serviceLocator->get('Helper\Url')->fromRoute(
-                        'operator/business-details',
-                        ['organisation' => $data['orgId']]
-                    );
-                    return sprintf('<a class="govuk-link" href="%s">%d</a>', $url, $data['orgId']);
-                }
+                'formatter' => SearchIrfoOrganisationOperatorNo::class
             ],
-            ['title' => 'Operator name', 'name'=> 'orgName'],
+            ['title' => 'Operator name', 'name' => 'orgName'],
         ];
     }
 }
