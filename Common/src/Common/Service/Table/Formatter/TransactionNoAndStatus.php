@@ -16,6 +16,7 @@ namespace Common\Service\Table\Formatter;
 class TransactionNoAndStatus implements FormatterPluginManagerInterface
 {
     protected TransactionUrl $transactionUrlFormatter;
+    private TransactionStatus $transactionStatusFormatter;
 
     public function __construct(TransactionUrl $transactionUrlFormatter, TransactionStatus $transactionStatusFormatter)
     {
@@ -32,11 +33,8 @@ class TransactionNoAndStatus implements FormatterPluginManagerInterface
      */
     public function format($row, $column = null)
     {
-
-        $link = TransactionUrl::format($row, $column);
-
-        $status = TransactionStatus::format($row, $column);
-
+        $link = $this->transactionUrlFormatter->format($row, $column);
+        $status = $this->transactionStatusFormatter->format($row, $column);
         return $link . ' ' . $status;
     }
 }
