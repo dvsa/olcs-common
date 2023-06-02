@@ -5,6 +5,7 @@ namespace Common\Data\Object\Search;
 use Common\Data\Object\Search\Aggregations\Terms as Filter;
 use Common\Service\Table\Formatter\SearchAddressComplaint;
 use Common\Service\Table\Formatter\SearchAddressOperatorName;
+use Common\Service\Table\Formatter\SearchAddressOpposition;
 
 /**
  * Class Address
@@ -84,7 +85,7 @@ class Address extends InternalSearchAbstract
             ],
             [
                 'title' => 'Opposition',
-                'formatter' => SearchAddressComplaint::class
+                'formatter' => SearchAddressOpposition::class
             ],
             ['title' => 'C/U', 'name' => 'conditions'],
             [
