@@ -9,7 +9,7 @@ use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 /**
  * @package Common\Service\Table\Formatter
  *
- * @author Josh Curtis <josh.curtis@valtech.co.uk>
+*
  */
 class SearchAddressOperatorName implements FormatterPluginManagerInterface
 {
@@ -24,11 +24,12 @@ class SearchAddressOperatorName implements FormatterPluginManagerInterface
     }
 
     /**
+
      *
      * @param array $data   The row data.
      * @param array $column The column data.
      *
-     * @return string
+     * @return string The document link and accessed indicator
      */
     public function format($data, $column = [])
     {

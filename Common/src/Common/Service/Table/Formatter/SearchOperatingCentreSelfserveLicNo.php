@@ -10,7 +10,7 @@ use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
  *
  * @package Common\Service\Table\Formatter
  *
- * @author Josh Curtis <josh.curtis@valtech.co.uk>
+*
  */
 class SearchOperatingCentreSelfserveLicNo implements FormatterPluginManagerInterface
 {

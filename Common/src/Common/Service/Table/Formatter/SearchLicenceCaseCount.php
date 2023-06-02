@@ -10,7 +10,7 @@ use ZfcRbac\Service\AuthorizationService;
  *
  * @package Common\Service\Table\Formatter
  *
- * @author Josh Curtis <josh.curtis@valtech.co.uk>
+*
  */
 class SearchLicenceCaseCount implements FormatterPluginManagerInterface
 {

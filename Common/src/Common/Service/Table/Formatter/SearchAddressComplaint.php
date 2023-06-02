@@ -9,7 +9,7 @@ use Common\Util\Escape;
  *
  * @package Common\Service\Table\Formatter
  *
- * @author Josh Curtis <josh.curtis@valtech.co.uk>
+*
  */
 class SearchAddressComplaint implements FormatterPluginManagerInterface
 {
@@ -27,7 +27,7 @@ class SearchAddressComplaint implements FormatterPluginManagerInterface
      * @param array $data   The row data.
      * @param array $column The column data.
      *
-     * @return string
+     * @return string The document link and accessed indicator
      */
     public function format($data, $column = [])
     {
