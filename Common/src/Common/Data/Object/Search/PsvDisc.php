@@ -3,7 +3,7 @@
 namespace Common\Data\Object\Search;
 
 use Common\Data\Object\Search\Aggregations\Terms as Filter;
-use Common\Util\Escape;
+use Common\Service\Table\Formatter\SearchAddressOperatorName;
 
 /**
  * Class PsvDisc
@@ -40,7 +40,6 @@ class PsvDisc extends InternalSearchAbstract
     public function getFilters()
     {
         if (empty($this->filters)) {
-
             $this->filters = [
                 new Filter\LicenceStatus(),
             ];
@@ -57,24 +56,18 @@ class PsvDisc extends InternalSearchAbstract
         return [
             [
                 'title' => 'Licence number',
-                'name'=> 'licNo',
+                'name' => 'licNo',
                 'formatter' => function ($data) {
                     return '<a class="govuk-link" href="/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>';
                 }
             ],
-            ['title' => 'Licence status', 'name'=> 'licStatusDesc'],
+            ['title' => 'Licence status', 'name' => 'licStatusDesc'],
             [
                 'title' => 'Operator name',
-                'name'=> 'orgName',
-                'formatter' => function ($data, $column, $sl) {
-                    $url = $sl->get('Helper\Url')->fromRoute(
-                        'operator/business-details',
-                        ['organisation' => $data['orgId']]
-                    );
-                    return '<a class="govuk-link" href="' . $url . '">' . Escape::html($data['orgName']) . '</a>';
-                }
+                'name' => 'orgName',
+                'formatter' => SearchAddressOperatorName::class
             ],
-            ['title' => 'Disc Number', 'name'=> 'discNo'],
+            ['title' => 'Disc Number', 'name' => 'discNo'],
         ];
     }
 }

@@ -6,6 +6,7 @@ use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Formatter\FormatterPluginManager;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\ServiceManager\ServiceLocatorInterface;
+use Olcs\Logging\Log\Logger;
 use ZfcRbac\Service\AuthorizationService;
 
 /**
@@ -18,29 +19,29 @@ use ZfcRbac\Service\AuthorizationService;
  */
 class TableBuilder
 {
-    const TYPE_DEFAULT = 1;
-    const TYPE_PAGINATE = 2;
-    const TYPE_CRUD = 3;
-    const TYPE_HYBRID = 4;
-    const TYPE_FORM_TABLE = 5;
-    const DEFAULT_LIMIT = 10;
-    const DEFAULT_PAGE = 1;
+    public const TYPE_DEFAULT = 1;
+    public const TYPE_PAGINATE = 2;
+    public const TYPE_CRUD = 3;
+    public const TYPE_HYBRID = 4;
+    public const TYPE_FORM_TABLE = 5;
+    public const DEFAULT_LIMIT = 10;
+    public const DEFAULT_PAGE = 1;
 
-    const MAX_FORM_ACTIONS = 6;
+    public const MAX_FORM_ACTIONS = 6;
 
-    const ACTION_FORMAT_BUTTONS = 'buttons';
-    const ACTION_FORMAT_DROPDOWN = 'dropdown';
+    public const ACTION_FORMAT_BUTTONS = 'buttons';
+    public const ACTION_FORMAT_DROPDOWN = 'dropdown';
 
-    const CONTENT_TYPE_HTML = 'html';
-    const CONTENT_TYPE_CSV = 'csv';
+    public const CONTENT_TYPE_HTML = 'html';
+    public const CONTENT_TYPE_CSV = 'csv';
 
-    const ARIA_SORT_ASC = 'sort-in-ascending-order';
-    const ARIA_SORT_DESC = 'sort-in-descending-order';
-    const CLASS_TABLE = 'govuk-table';
-    const CLASS_TABLE_CELL = 'govuk-table__cell';
-    const CLASS_TABLE_HEADER = 'govuk-table__header';
-    const CLASS_TABLE_HEADER_NUMERIC = 'govuk-table__header--numeric';
-    const CLASS_TABLE_CELL_NUMERIC = 'govuk-table__cell--numeric';
+    public const ARIA_SORT_ASC = 'sort-in-ascending-order';
+    public const ARIA_SORT_DESC = 'sort-in-descending-order';
+    public const CLASS_TABLE = 'govuk-table';
+    public const CLASS_TABLE_CELL = 'govuk-table__cell';
+    public const CLASS_TABLE_HEADER = 'govuk-table__header';
+    public const CLASS_TABLE_HEADER_NUMERIC = 'govuk-table__header--numeric';
+    public const CLASS_TABLE_CELL_NUMERIC = 'govuk-table__cell--numeric';
 
     /**
      * Hold the pagination helper

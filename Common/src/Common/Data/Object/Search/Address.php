@@ -3,8 +3,8 @@
 namespace Common\Data\Object\Search;
 
 use Common\Data\Object\Search\Aggregations\Terms as Filter;
-use Common\Util\Escape;
-use Common\Service\Helper\UrlHelperService as UrlHelper;
+use Common\Service\Table\Formatter\SearchAddressComplaint;
+use Common\Service\Table\Formatter\SearchAddressOperatorName;
 
 /**
  * Class Address
@@ -42,7 +42,6 @@ class Address extends InternalSearchAbstract
     public function getFilters()
     {
         if (empty($this->filters)) {
-
             $this->filters = [
                 new Filter\AddressType(),
                 new Filter\AddressComplaint(),
@@ -71,16 +70,8 @@ class Address extends InternalSearchAbstract
             ],
             [
                 'title' => 'Operator name',
-                'name'=> 'orgName',
-                'formatter' => function ($data, $column, $serviceLocator) {
-                    /** @var  UrlHelper $urlHelper */
-                    $urlHelper  = $serviceLocator->get('Helper\Url');
-                    return sprintf(
-                        '<a class="govuk-link" href="%s">%s</a>',
-                        $urlHelper->fromRoute('operator/business-details', ['organisation' => $data['orgId']]),
-                        Escape::html($data['orgName'])
-                    );
-                }
+                'name' => 'orgName',
+                'formatter' => SearchAddressOperatorName::class
             ],
             [
                 'title' => 'Address',
@@ -89,46 +80,22 @@ class Address extends InternalSearchAbstract
             ],
             [
                 'title' => 'Complaint',
-                'formatter' => function ($row, $column, $serviceLocator) {
-
-                    if ($row['complaint'] === 'Yes') {
-                        /** @var  UrlHelper $urlHelper */
-                        $urlHelper  = $serviceLocator->get('Helper\Url');
-                        return sprintf(
-                            '<a class="govuk-link" href="%s">Yes</a>',
-                            $urlHelper->fromRoute('licence/opposition', ['licence' => $row['licId']])
-                        );
-                    }
-
-                    return 'No';
-                }
+                'formatter' => SearchAddressComplaint::class
             ],
             [
                 'title' => 'Opposition',
-                'formatter' => function ($row, $column, $serviceLocator) {
-
-                    if ($row['opposition'] === 'Yes') {
-                        /** @var  UrlHelper $urlHelper */
-                        $urlHelper  = $serviceLocator->get('Helper\Url');
-                        return sprintf(
-                            '<a class="govuk-link" href="%s">Yes</a>',
-                            $urlHelper->fromRoute('licence/opposition', ['licence' => $row['licId']])
-                        );
-                    }
-
-                    return 'No';
-                }
+                'formatter' => SearchAddressComplaint::class
             ],
-            ['title' => 'C/U', 'name'=> 'conditions'],
+            ['title' => 'C/U', 'name' => 'conditions'],
             [
                 'title' => 'Date added',
                 'formatter' => 'Date',
-                'name'=> 'createdOn'
+                'name' => 'createdOn'
             ],
             [
                 'title' => 'Date removed',
                 'formatter' => 'Date',
-                'name'=> 'deletedDate'
+                'name' => 'deletedDate'
             ],
         ];
     }

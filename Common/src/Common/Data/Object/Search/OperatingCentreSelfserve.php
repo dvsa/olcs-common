@@ -3,7 +3,7 @@
 namespace Common\Data\Object\Search;
 
 use Common\Data\Object\Search\Aggregations\Terms as Filter;
-use Common\Util\Escape;
+use Common\Service\Table\Formatter\SearchOperatingCentreSelfserveLicNo;
 
 /**
  * Class Address
@@ -77,22 +77,12 @@ class OperatingCentreSelfserve extends InternalSearchAbstract
         return [
             [
                 'title' => 'Licence number',
-                'name'=> 'licNo',
-                'formatter' => function ($data, $col, $sl) {
-                    /** @var \Laminas\I18n\Translator\TranslatorInterface $translator */
-                    $translator = $sl->get('translator');
-
-                    return sprintf(
-                        '<a class="govuk-link" href="%s">%s</a><br/>%s',
-                        '/view-details/licence/' . $data['licId'],
-                        Escape::html($data['licNo']),
-                        $translator->translate($data['licStatusDesc'])
-                    );
-                }
+                'name' => 'licNo',
+                'formatter' => SearchOperatingCentreSelfserveLicNo::class
             ],
             [
                 'title' => 'Operator name',
-                'name'=> 'orgName'
+                'name' => 'orgName'
             ],
             [
                 'title' => 'Address',

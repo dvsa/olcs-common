@@ -3,7 +3,8 @@
 namespace Common\Data\Object\Search;
 
 use Common\Data\Object\Search\Aggregations\Terms as Filter;
-use Common\Util\Escape;
+use Common\Service\Table\Formatter\SearchAddressOperatorName;
+use Common\Service\Table\Formatter\SearchApplicationLicenceNo;
 
 /**
  * Class Licence
@@ -40,7 +41,6 @@ class Application extends InternalSearchAbstract
     public function getFilters()
     {
         if (empty($this->filters)) {
-
             $this->filters = [
                 new Filter\LicenceType(),
                 new Filter\LicenceStatus(),
@@ -62,39 +62,31 @@ class Application extends InternalSearchAbstract
         return [
             [
                 'title' => 'Application id',
-                'name'=> 'appId',
+                'name' => 'appId',
                 'formatter' => function ($data) {
                     return '<a class="govuk-link" href="/application/' . $data['appId'] . '">' . $data['appId'] . '</a>';
                 }
             ],
-            ['title' => 'Application status', 'name'=> 'appStatusDesc'],
+            ['title' => 'Application status', 'name' => 'appStatusDesc'],
             [
                 'title' => 'Date received',
                 'formatter' => 'Date',
-                'name'=> 'receivedDate'
+                'name' => 'receivedDate'
             ],
             [
                 'title' => 'Licence number',
-                'name'=> 'licNo',
-                'formatter' => function ($data) {
-                    return '<a class="govuk-link" href="/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>';
-                }
+                'name' => 'licNo',
+                'formatter' => SearchApplicationLicenceNo::class
             ],
-            ['title' => 'Licence status', 'name'=> 'licStatusDesc'],
-            ['title' => 'Licence type', 'name'=> 'licTypeDesc'],
+            ['title' => 'Licence status', 'name' => 'licStatusDesc'],
+            ['title' => 'Licence type', 'name' => 'licTypeDesc'],
             [
                 'title' => 'Operator name',
-                'name'=> 'orgName',
-                'formatter' => function ($data, $column, $sl) {
-                    $url = $sl->get('Helper\Url')->fromRoute(
-                        'operator/business-details',
-                        ['organisation' => $data['orgId']]
-                    );
-                    return '<a class="govuk-link" href="' . $url . '">' . Escape::html($data['orgName']) . '</a>';
-                }
+                'name' => 'orgName',
+                'formatter' => SearchAddressOperatorName::class
             ],
-            ['title' => 'Authorisation vehicles', 'name'=> 'totAuthVehicles'],
-            ['title' => 'Authorisation trailers', 'name'=> 'totAuthTrailers'],
+            ['title' => 'Authorisation vehicles', 'name' => 'totAuthVehicles'],
+            ['title' => 'Authorisation trailers', 'name' => 'totAuthTrailers'],
         ];
     }
 }

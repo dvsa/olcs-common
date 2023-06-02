@@ -4,6 +4,7 @@ namespace Common\Data\Object\Search;
 
 use Common\Data\Object\Search\Aggregations\Terms\BusRegStatus;
 use Common\Data\Object\Search\Aggregations\Terms\TrafficArea;
+use Common\Service\Table\Formatter\SearchBusRegSelfserve;
 use Common\Util\Escape;
 
 /**
@@ -77,33 +78,19 @@ class BusRegSelfserve extends InternalSearchAbstract
         return [
             [
                 'title' => 'Registration number',
-                'name'=> 'regNo',
-                'formatter' => function ($data, $column, $sl) {
-                    $translator = $sl->get('translator');
-
-                    $url = $sl->get('Helper\Url')->fromRoute(
-                        'search-bus/details',
-                        ['busRegId' => $data['busregId']]
-                    );
-
-                    return sprintf(
-                        '<a class="govuk-link" href="%s">%s</a><br/>%s',
-                        $url,
-                        Escape::html($data['regNo']),
-                        $translator->translate($data['busRegStatus'])
-                    );
-                }
+                'name' => 'regNo',
+                'formatter' => SearchBusRegSelfserve::class
             ],
             [
                 'title' => 'Operator name',
-                'name'=> 'orgName',
+                'name' => 'orgName',
                 'formatter' => function ($data) {
                     return Escape::html($data['orgName']);
                 },
             ],
-            ['title' => 'Service number', 'name'=> 'serviceNo'],
-            ['title' => 'Start point', 'name'=> 'startPoint'],
-            ['title' => 'Finish point', 'name'=> 'finishPoint'],
+            ['title' => 'Service number', 'name' => 'serviceNo'],
+            ['title' => 'Start point', 'name' => 'startPoint'],
+            ['title' => 'Finish point', 'name' => 'finishPoint'],
         ];
     }
 }

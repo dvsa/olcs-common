@@ -9,6 +9,8 @@ use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
  */
 class RefData implements FormatterPluginManagerInterface
 {
+    private TranslatorDelegator $translator;
+
     /**
      * @param TranslatorDelegator $translator
      */
@@ -26,11 +28,11 @@ class RefData implements FormatterPluginManagerInterface
      */
     public function format($data, $column = [])
     {
+
         $colData = $data[$column['name']];
         if (empty($colData)) {
             return '';
         }
-
         //  single RefData (check, it is NOT an array of entities)
         if (isset($colData['description'])) {
             return $this->translator->translate($colData['description']);
@@ -42,7 +44,7 @@ class RefData implements FormatterPluginManagerInterface
             $result[] = $this->translator->translate($row['description']);
         }
 
-        $sprtr = (isset($column['separator']) ? $column['separator'] : '');
+        $sprtr = ($column['separator'] ?? '');
 
         return implode($sprtr, $result);
     }
