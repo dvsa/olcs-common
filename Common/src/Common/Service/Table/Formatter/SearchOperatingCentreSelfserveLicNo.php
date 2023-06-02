@@ -29,7 +29,7 @@ class SearchOperatingCentreSelfserveLicNo implements FormatterPluginManagerInter
      * @param array $data The row data.
      * @param array $column The column data.
      *
-     * @return string The document link and accessed indicator
+     * @return string
      */
     public function format($data, $column = [])
     {
