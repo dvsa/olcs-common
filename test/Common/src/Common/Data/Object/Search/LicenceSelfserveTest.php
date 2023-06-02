@@ -28,6 +28,5 @@ class LicenceSelfserveTest extends SearchAbstractTest
         ];
 
         static::assertEquals('unit_OrgName (MLH)', $col['formatter']($data));
-
     }
 }

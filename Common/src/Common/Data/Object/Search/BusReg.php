@@ -4,7 +4,7 @@ namespace Common\Data\Object\Search;
 
 use Common\Data\Object\Search\Aggregations\Terms\BusRegStatus;
 use Common\Data\Object\Search\Aggregations\Terms\TrafficArea;
-use Common\Util\Escape;
+use Common\Service\Table\Formatter\SearchAddressOperatorName;
 
 /**
  * Class BusReg
@@ -41,7 +41,6 @@ class BusReg extends InternalSearchAbstract
     public function getFilters()
     {
         if (empty($this->filters)) {
-
             $this->filters = [
                 new TrafficArea(),
                 new BusRegStatus(),
@@ -59,9 +58,8 @@ class BusReg extends InternalSearchAbstract
         return [
             [
                 'title' => 'Registration number',
-                'name'=> 'regNo',
+                'name' => 'regNo',
                 'formatter' => function ($data) {
-
                     return '<a class="govuk-link" href="/licence/'
                     . $data['licId'] . '/bus/' . $data['busregId']
                     . '/details">' . $data['regNo'] . '</a>';
@@ -69,25 +67,19 @@ class BusReg extends InternalSearchAbstract
             ],
             [
                 'title' => 'Operator name',
-                'name'=> 'orgName',
-                'formatter' => function ($data, $column, $sl) {
-                    $url = $sl->get('Helper\Url')->fromRoute(
-                        'operator/business-details',
-                        ['organisation' => $data['orgId']]
-                    );
-                    return '<a class="govuk-link" href="' . $url . '">' . Escape::html($data['orgName']) . '</a>';
-                }
+                'name' => 'orgName',
+                'formatter' => SearchAddressOperatorName::class
             ],
-            ['title' => 'Variation number', 'name'=> 'variationNo'],
-            ['title' => 'Status', 'name'=> 'busRegStatus'],
+            ['title' => 'Variation number', 'name' => 'variationNo'],
+            ['title' => 'Status', 'name' => 'busRegStatus'],
             [
                 'title' => 'Date first registered / cancelled',
                 'formatter' => 'Date',
-                'name'=> 'date_1stReg'
+                'name' => 'date_1stReg'
             ],
-            ['title' => 'Service number', 'name'=> 'serviceNo'],
-            ['title' => 'Start point', 'name'=> 'startPoint'],
-            ['title' => 'Finish point', 'name'=> 'finishPoint']
+            ['title' => 'Service number', 'name' => 'serviceNo'],
+            ['title' => 'Start point', 'name' => 'startPoint'],
+            ['title' => 'Finish point', 'name' => 'finishPoint']
         ];
     }
 }

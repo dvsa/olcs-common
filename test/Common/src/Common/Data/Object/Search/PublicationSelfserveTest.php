@@ -40,6 +40,5 @@ class PublicationSelfserveTest extends SearchAbstractTest
         $this->assertInstanceOf('Common\Data\Object\Search\Aggregations\Terms\GoodsOrPsv', $filters[2]);
         $this->assertInstanceOf('Common\Data\Object\Search\Aggregations\Terms\PublicationType', $filters[3]);
         $this->assertInstanceOf('Common\Data\Object\Search\Aggregations\Terms\PublicationSection', $filters[4]);
-
     }
 }
