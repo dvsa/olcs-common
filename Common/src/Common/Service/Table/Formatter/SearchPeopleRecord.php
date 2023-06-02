@@ -9,11 +9,6 @@ use Common\Util\Escape;
 use ZfcRbac\Service\AuthorizationService;
 
 /**
- * Class AccessedCorrespondence
- *
- * Accessed correspondence formatter, displays correspondence as a link to the document and
- * denotes whether the correspondence has been accessed.
- *
  * @package Common\Service\Table\Formatter
  *
  * @author Josh Curtis <josh.curtis@valtech.co.uk>
@@ -30,7 +25,6 @@ class SearchPeopleRecord implements FormatterPluginManagerInterface
     }
 
     /**
-     * Get a link for the document with the access indicator.
      *
      * @param array $data The row data.
      * @param array $column The column data.

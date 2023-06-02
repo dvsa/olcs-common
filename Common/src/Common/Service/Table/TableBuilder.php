@@ -6,7 +6,6 @@ use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Formatter\FormatterPluginManager;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\ServiceManager\ServiceLocatorInterface;
-use Olcs\Logging\Log\Logger;
 use ZfcRbac\Service\AuthorizationService;
 
 /**

@@ -6,10 +6,6 @@ use Common\Service\Helper\UrlHelperService;
 use Common\Util\Escape;
 
 /**
- * Class AccessedCorrespondence
- *
- * Accessed correspondence formatter, displays correspondence as a link to the document and
- * denotes whether the correspondence has been accessed.
  *
  * @package Common\Service\Table\Formatter
  *
@@ -28,8 +24,6 @@ class SearchAddressComplaint implements FormatterPluginManagerInterface
     }
 
     /**
-     * Get a link for the document with the access indicator.
-     *
      * @param array $data   The row data.
      * @param array $column The column data.
      *
