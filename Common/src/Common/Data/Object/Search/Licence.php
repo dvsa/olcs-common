@@ -65,14 +65,14 @@ class Licence extends InternalSearchAbstract
                 'links' => [
                     'create-operator' => [
                         'label' => 'Create operator',
-                        'class' => 'primary js-modal-ajax',
+                        'class' => 'govuk-button js-modal-ajax',
                         'route' => [
                             'route' => 'create_operator'
                         ]
                     ],
                     'create-unlicensed-operator' => [
                         'label' => 'Create unlicensed operator',
-                        'class' => 'primary js-modal-ajax',
+                        'class' => 'govuk-button js-modal-ajax',
                         'route' => [
                             'route' => 'create_unlicensed_operator'
                         ]

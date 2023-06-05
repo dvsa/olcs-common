@@ -78,6 +78,17 @@ class People extends InternalSearchAbstract
         return $this->dateRanges;
     }
 
+    public function getVariables()
+    {
+        return [
+            'title' => $this->getTitle(),
+            'action_route' => [
+                'route' => 'create_transport_manager',
+                'params' => ['action' => null]
+            ]
+        ];
+    }
+
     /**
      * Get settings
      *
@@ -87,15 +98,13 @@ class People extends InternalSearchAbstract
     {
         return [
             'crud' => [
-                'links' => [
-                    'create-transport-manager' => [
+                'actions' => [
+                    'add' => [
                         'label' => 'Create Transport Manager',
-                        'class' => 'primary js-modal-ajax',
-                        'route' => [
-                            'route' => 'create_transport_manager'
-                        ]
-                    ]
-                ]
+                        'class' => 'govuk-button',
+                        'requireRows' => false
+                    ],
+                ],
             ],
             'paginate' => [
                 'limit' => [
