@@ -94,6 +94,7 @@ use Common\Service\Table\Formatter\NameActionAndStatus;
 use Common\Service\Table\Formatter\NoteUrl;
 use Common\Service\Table\Formatter\NullableNumber;
 use Common\Service\Table\Formatter\NumberStackValue;
+use Common\Service\Table\Formatter\NumberStackValueFactory;
 use Common\Service\Table\Formatter\OcComplaints;
 use Common\Service\Table\Formatter\OcConditions;
 use Common\Service\Table\Formatter\OcUndertakings;
@@ -267,7 +268,6 @@ return [
         Money::class => Money::class,
         NameActionAndStatus::class => NameActionAndStatus::class,
         NullableNumber::class => NullableNumber::class,
-        NumberStackValue::class => NumberStackValue::class,
         OcComplaints::class => OcComplaints::class,
         OcConditions::class => OcConditions::class,
         OcUndertakings::class => OcUndertakings::class,
@@ -335,6 +335,7 @@ return [
         LicencePermitReference::class => LicencePermitReferenceFactory::class,
         LicenceStatusSelfserve::class => LicenceStatusSelfserveFactory::class,
         Name::class => NameFactory::class,
+        NumberStackValue::class => NumberStackValueFactory::class,
         NoteUrl::class => NoteUrlFactory::class,
         OrganisationLink::class => OrganisationLinkFactory::class,
         PiReportName::class => PiReportNameFactory::class,
