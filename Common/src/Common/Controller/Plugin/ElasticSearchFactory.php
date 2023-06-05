@@ -1,10 +1,5 @@
 <?php
 
-/**
- * ElasticSearch Factory
- *
- * @author Shaun Lizzio <shaun@lizzio.co.uk>
- */
 namespace Common\Controller\Plugin;
 
 use Common\Service\Data\Search\Search;
@@ -23,11 +18,14 @@ class ElasticSearchFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): ElasticSearch
     {
+        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
+            $container = $container->getServiceLocator();
+        }
         $plugin = new ElasticSearch();
 
-        $searchService = $container->getServiceLocator()->get('DataServiceManager')->get(Search::class);
-        $searchTypeService = $container->getServiceLocator()->get('DataServiceManager')->get(SearchType::class);
-        $navigation = $container->getServiceLocator()->get('Navigation');
+        $searchService = $container->get('DataServiceManager')->get(Search::class);
+        $searchTypeService = $container->get('DataServiceManager')->get(SearchType::class);
+        $navigation = $container->get('Navigation');
 
         $plugin->setSearchService($searchService);
         $plugin->setSearchTypeService($searchTypeService);

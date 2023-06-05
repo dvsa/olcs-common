@@ -37,14 +37,6 @@ class LinkBackTest extends MockeryTestCase
             ->getMock();
 
         $this->mockRequest = m::mock(\Laminas\Http\Request::class);
-
-        $this->mockSl = m::mock(\Laminas\ServiceManager\ServiceManager::class)
-            ->shouldReceive('get')->once()->with('Request')->andReturn($this->mockRequest)
-            ->getMock();
-
-        $this->mockSm = m::mock(\Laminas\View\HelperPluginManager::class)
-            ->shouldReceive('getServiceLocator')->once()->andReturn($this->mockSl)
-            ->getMock();
     }
 
     /**
@@ -56,8 +48,7 @@ class LinkBackTest extends MockeryTestCase
             $this->mockRequest->shouldReceive('getHeader')->once()->with('referer')->andReturn($referer);
         }
 
-        $sut = (new LinkBack())
-            ->createService($this->mockSm)
+        $sut = (new LinkBack($this->mockRequest))
             ->setView($this->mockView);
 
         static::assertEquals($expect, $sut->__invoke($params));

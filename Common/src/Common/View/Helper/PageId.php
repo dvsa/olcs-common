@@ -1,45 +1,24 @@
 <?php
 
-/**
- * Page Id
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\View\Helper;
 
-use Laminas\ServiceManager\FactoryInterface;
 use Laminas\View\Helper\AbstractHelper;
-use Laminas\ServiceManager\ServiceLocatorInterface;
-use Laminas\Mvc\Router\Http\RouteMatch;
 
 /**
  * Page Id
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class PageId extends AbstractHelper implements FactoryInterface
+class PageId extends AbstractHelper
 {
-    private $routeMatchName = 'unknown';
+    private $routeMatchName;
 
-    private $action = 'unknown';
+    private $action;
 
-    /**
-     * Create the view helper service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return PageId
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __construct(string $routeMatchName, string $action)
     {
-        /** @var RouteMatch $routeMatch */
-        $routeMatch = $serviceLocator->getServiceLocator()->get('Application')->getMvcEvent()->getRouteMatch();
-
-        if ($routeMatch !== null) {
-            $this->routeMatchName = $routeMatch->getMatchedRouteName();
-            $this->action = $routeMatch->getParam('action');
-        }
-
-        return $this;
+        $this->routeMatchName = $routeMatchName;
+        $this->action = $action;
     }
 
     /**

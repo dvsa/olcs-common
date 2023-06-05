@@ -18,14 +18,17 @@ class DecompressToTmpDelegatorFactory implements DelegatorFactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, callable $callback, array $options = null)
     {
-        $config = $container->getServiceLocator()->get('Config');
-        $tmpRoot = (isset($config['tmpDirectory']) ? $config['tmpDirectory'] : sys_get_temp_dir());
+        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
+            $container = $container->getServiceLocator();
+        }
+        $config = $container->get('Config');
+        $tmpRoot = ($config['tmpDirectory'] ?? sys_get_temp_dir());
         $filter = new Decompress('zip');
 
         $service = $callback();
         $service->setDecompressFilter($filter);
         $service->setTempRootDir($tmpRoot);
-        $service->setFileSystem($container->getServiceLocator()->get('Common\Filesystem\Filesystem'));
+        $service->setFileSystem($container->get('Common\Filesystem\Filesystem'));
 
         return $service;
     }

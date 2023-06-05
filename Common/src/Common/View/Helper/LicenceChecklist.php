@@ -4,31 +4,18 @@ namespace Common\View\Helper;
 
 use Laminas\I18n\View\Helper\Translate;
 use Laminas\View\Helper\AbstractHelper;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 use Common\RefData;
 
 /**
  * Licence Checklist view helper
  */
-class LicenceChecklist extends AbstractHelper implements FactoryInterface
+class LicenceChecklist extends AbstractHelper
 {
-    /**
-     * @var Translate
-     */
-    private $translator;
+    private Translate $translator;
 
-    /**
-     * Inject services
-     *
-     * @param ServiceLocatorInterface $serviceLocator Service Manager
-     *
-     * @return $this
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __construct(Translate $translator)
     {
-        $this->translator = $serviceLocator->get('translate');
-        return $this;
+        $this->translator = $translator;
     }
 
     /**

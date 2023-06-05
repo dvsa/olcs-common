@@ -23,12 +23,13 @@ class DateNotInPastValidatorFactory implements FactoryInterface
         $this->options = $options;
     }
 
-    // TODO: Check if we need __construct to pass Options in in ZF3? __invoke param $options looks sus
-
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): DateNotInPastValidator
     {
+        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
+            $container = $container->getServiceLocator();
+        }
         return new DateNotInPastValidator(
-            $container->getServiceLocator()->get('QaDateTimeFactory'),
+            $container->get('QaDateTimeFactory'),
             $this->options
         );
     }

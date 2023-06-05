@@ -20,7 +20,11 @@ class StackValueReplacerFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $stackValueFormatter = $container->get(StackValue::class);
+        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
+            $container = $container->getServiceLocator();
+        }
+        $formatterPluginManager = $container->get(FormatterPluginManager::class);
+        $stackValueFormatter = $formatterPluginManager->get(StackValue::class);
         return new StackValueReplacer($stackValueFormatter);
     }
 

@@ -20,8 +20,12 @@ class TransactionNoAndStatusFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $transactionUrlFormatter = $container->get(TransactionUrl::class);
-        $trasactionStatusFormatter = $container->get(TransactionStatus::class);
+        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
+            $container = $container->getServiceLocator();
+        }
+        $formatterPluginManager = $container->get(FormatterPluginManager::class);
+        $transactionUrlFormatter = $formatterPluginManager->get(TransactionUrl::class);
+        $trasactionStatusFormatter = $formatterPluginManager->get(TransactionStatus::class);
         return new TransactionNoAndStatus($transactionUrlFormatter, $trasactionStatusFormatter);
     }
 

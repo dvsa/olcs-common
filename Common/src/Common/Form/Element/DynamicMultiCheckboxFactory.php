@@ -15,8 +15,11 @@ class DynamicMultiCheckboxFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): DynamicMultiCheckbox
     {
+        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
+            $container = $container->getServiceLocator();
+        }
         $instance = new DynamicMultiCheckbox();
-        $instance->setServiceLocator($container->getServiceLocator()->get('DataServiceManager'));
+        $instance->setServiceLocator($container->get('DataServiceManager'));
 
         return $instance;
     }

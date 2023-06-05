@@ -20,7 +20,11 @@ class TransactionAmountSumFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $moneyFormatter = $container->get(Money::class);
+        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
+            $container = $container->getServiceLocator();
+        }
+        $formatterPluginManager = $container->get(FormatterPluginManager::class);
+        $moneyFormatter = $formatterPluginManager->get(Money::class);
         return new TransactionAmountSum($moneyFormatter);
     }
 

@@ -3,59 +3,29 @@
 namespace Common\View\Helper;
 
 use Laminas\I18n\View\Helper\Translate;
-use Laminas\Mvc\Router\Http\RouteMatch;
 use Laminas\View\Helper\AbstractHelper;
 use Laminas\View\Helper\Placeholder;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 use Olcs\Logging\Log\Logger;
 
 /**
  * Page Title
  */
-class PageTitle extends AbstractHelper implements FactoryInterface
+class PageTitle extends AbstractHelper
 {
-    /**
-     * @var Translate
-     */
-    private $translator;
+    private Translate $translator;
 
-    /**
-     * @var Placeholder
-     */
-    private $placeholder;
+    private Placeholder $placeholder;
 
-    /**
-     * @var string
-     */
     private $routeMatchName;
 
-    /**
-     * @var string
-     */
     private $action;
 
-    /**
-     * Inject services
-     *
-     * @param ServiceLocatorInterface $serviceLocator Service Manager
-     *
-     * @return $this
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __construct(Translate $translator, Placeholder $placeholder, $routeMatchName = null, $action = null)
     {
-        $this->translator = $serviceLocator->get('translate');
-        $this->placeholder = $serviceLocator->get('placeholder');
-
-        /** @var RouteMatch $routeMatch */
-        $routeMatch = $serviceLocator->getServiceLocator()->get('Application')->getMvcEvent()->getRouteMatch();
-
-        if ($routeMatch !== null) {
-            $this->routeMatchName = $routeMatch->getMatchedRouteName();
-            $this->action = $routeMatch->getParam('action');
-        }
-
-        return $this;
+        $this->translator = $translator;
+        $this->placeholder = $placeholder;
+        $this->routeMatchName = $routeMatchName;
+        $this->action = $action;
     }
 
     /**

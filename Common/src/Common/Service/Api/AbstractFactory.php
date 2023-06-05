@@ -32,6 +32,9 @@ class AbstractFactory implements AbstractFactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
+        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
+            $container = $container->getServiceLocator();
+        }
         $api = str_replace('Olcs\\RestService\\', '', $requestedName);
 
         $api = explode('\\', $api);
@@ -41,13 +44,13 @@ class AbstractFactory implements AbstractFactoryInterface
 
         list($endpoint, $uri) = $api;
 
-        $config = $container->getServiceLocator()->get('Config');
+        $config = $container->get('Config');
         if (!isset($config['service_api_mapping']['endpoints'][$endpoint])) {
             throw new InvalidServiceNameException('No endpoint defined for: ' . $endpoint);
         }
 
         /** @var \Laminas\Mvc\I18n\Translator $translator */
-        $translator = $container->getServiceLocator()->get('translator');
+        $translator = $container->get('translator');
 
         $filter = new CamelCaseToDash();
         $uri = strtolower($filter->filter($uri));
@@ -64,7 +67,7 @@ class AbstractFactory implements AbstractFactoryInterface
             $url =  $url->resolve($endpointConfig);
         }
 
-        $userRequest = $container->getServiceLocator()->get('Request');
+        $userRequest = $container->get('Request');
         $secureToken = new Cookie();
         if ($userRequest instanceof Request) {
             $cookies = $userRequest->getCookie();
@@ -77,7 +80,7 @@ class AbstractFactory implements AbstractFactoryInterface
         $rest = new RestClient($url, $options, $auth, $secureToken);
         $rest->setLanguage($translator->getLocale());
 
-        $session = $container->getServiceLocator()->get(Session::class)->read();
+        $session = $container->get(Session::class)->read();
         $accessToken = $session['AccessToken'] ?? null;
         if (!is_null($accessToken)) {
             $rest->setAuthHeader(sprintf("Authorization:Bearer %s", $accessToken));

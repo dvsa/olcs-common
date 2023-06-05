@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Page Id Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\View\Helper;
 
 use Mockery as m;
@@ -28,7 +23,13 @@ class PageIdTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->sut = new PageId();
+        $action = 'someaction';
+        $routeMatchName = 'foo/bar';
+        $routeMatch = m::mock(RouteMatch::class);
+        $routeMatch->shouldReceive('getMatchedRouteName')->andReturn($routeMatchName);
+        $routeMatch->shouldReceive('getParam')->with('action')->andReturn($action);
+
+        $this->sut = new PageId($routeMatchName, $action);
     }
 
     public function testInvoke()
@@ -41,11 +42,6 @@ class PageIdTest extends MockeryTestCase
         $sm->shouldReceive('get->getMvcEvent->getRouteMatch')
             ->andReturn($routeMatch);
 
-        $vhm = m::mock(HelperPluginManager::class)->makePartial();
-        $vhm->setServiceLocator($sm);
-
-        $sut = $this->sut->createService($vhm);
-
-        $this->assertEquals('pg:foo/bar:someaction', $sut());
+        $this->assertEquals('pg:foo/bar:someaction', $this->sut->__invoke());
     }
 }

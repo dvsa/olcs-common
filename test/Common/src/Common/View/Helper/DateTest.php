@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Date Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\View\Helper;
 
 use Mockery as m;
@@ -38,11 +33,7 @@ class DateTest extends MockeryTestCase
                 }
             );
 
-        $sm = m::mock(ServiceLocatorInterface::class);
-        $sm->shouldReceive('get')->with('translate')->andReturn($mockTranslator);
-
-        $this->sut = new Date();
-        $this->sut->createService($sm);
+        $this->sut = new Date($mockTranslator);
     }
 
     /**

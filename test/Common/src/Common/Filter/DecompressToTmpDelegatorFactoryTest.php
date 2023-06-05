@@ -26,8 +26,8 @@ class DecompressToTmpDelegatorFactoryTest extends MockeryTestCase
         $mockFileSystem = m::mock(Filesystem::class);
 
         $mockSl = m::mock(ServiceManager::class);
-        $mockSl->shouldReceive('getServiceLocator->get')->with('Config')->andReturn(['tmpDirectory' => $tmpDir]);
-        $mockSl->shouldReceive('getServiceLocator->get')
+        $mockSl->shouldReceive('get')->with('Config')->andReturn(['tmpDirectory' => $tmpDir]);
+        $mockSl->shouldReceive('get')
                ->with('Common\Filesystem\Filesystem')
                ->andReturn($mockFileSystem);
 
@@ -55,8 +55,8 @@ class DecompressToTmpDelegatorFactoryTest extends MockeryTestCase
         $mockFileSystem = m::mock(Filesystem::class);
 
         $mockSl = m::mock(ServiceManager::class);
-        $mockSl->shouldReceive('getServiceLocator->get')->with('Config')->andReturn(['tmpDirectory' => $tmpDir]);
-        $mockSl->shouldReceive('getServiceLocator->get')
+        $mockSl->shouldReceive('get')->with('Config')->andReturn(['tmpDirectory' => $tmpDir]);
+        $mockSl->shouldReceive('get')
                ->with('Common\Filesystem\Filesystem')
                ->andReturn($mockFileSystem);
 

@@ -3,38 +3,40 @@
 namespace Common\View\Helper;
 
 use Interop\Container\ContainerInterface;
+use Laminas\Mvc\Router\Http\RouteMatch;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use RuntimeException;
-use ZfcRbac\Service\AuthorizationService;
 
-class CurrentUserFactory implements FactoryInterface
+class PageIdFactory implements FactoryInterface
 {
-    public const MSG_MISSING_ANALYTICS_CONFIG = 'Missing auth.user_unique_id_salt from config';
-
     /**
      * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
      *
-     * @return CurrentUser
-     * @throws RuntimeException
+     * @return PageId
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): CurrentUser
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): PageId
     {
         if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
             $container = $container->getServiceLocator();
         }
 
-        $config = $container->get('Config');
+        /** @var RouteMatch $routeMatch */
+        $routeMatch = $container->get('Application')->getMvcEvent()->getRouteMatch();
 
-        if (!isset($config['auth']['user_unique_id_salt'])) {
-            throw new RunTimeException(self::MSG_MISSING_ANALYTICS_CONFIG);
+        $routeMatchName = 'unknown';
+        $action = 'unknown';
+
+        if ($routeMatch !== null) {
+            $routeMatchName = $routeMatch->getMatchedRouteName();
+            $action = $routeMatch->getParam('action');
         }
 
-        return new CurrentUser(
-            $container->get(AuthorizationService::class),
-            $config['auth']['user_unique_id_salt']
+        return new PageId(
+            $routeMatchName,
+            $action
         );
     }
 
@@ -45,7 +47,7 @@ class CurrentUserFactory implements FactoryInterface
      * @return CurrentUser
      * @throws RuntimeException
      */
-    public function createService(ServiceLocatorInterface $serviceLocator): CurrentUser
+    public function createService(ServiceLocatorInterface $serviceLocator): PageId
     {
         return $this->__invoke($serviceLocator, null);
     }

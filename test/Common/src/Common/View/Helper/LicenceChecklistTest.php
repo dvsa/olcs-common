@@ -24,7 +24,8 @@ class LicenceChecklistTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->sut = new LicenceChecklist();
+        $this->translator = m::mock(Translate::class);
+        $this->sut = new LicenceChecklist($this->translator);
     }
 
     /**
@@ -32,22 +33,15 @@ class LicenceChecklistTest extends MockeryTestCase
      */
     public function testInvoke($type, $data, $expected)
     {
-        $mockTranslator = m::mock(Translate::class)
+        $this->translator
             ->shouldReceive('__invoke')
             ->andReturnUsing(
                 function ($arg) {
                     return $arg . '_translated';
                 }
-            )
-            ->getMock();
+            );
 
-        /** @var ServiceLocatorInterface | m\MockInterface $sm */
-        $sm = m::mock(ServiceLocatorInterface::class);
-        $sm->shouldReceive('get')->with('translate')->andReturn($mockTranslator);
-
-        $sut = $this->sut->createService($sm);
-
-        $this->assertEquals($sut->__invoke($type, $data), $expected);
+        $this->assertEquals($this->sut->__invoke($type, $data), $expected);
     }
 
     public function providerInvoke()

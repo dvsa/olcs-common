@@ -18,8 +18,11 @@ class ApplicationNameFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): ApplicationName
     {
+        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
+            $container = $container->getServiceLocator();
+        }
         return new ApplicationName(
-            $container->getServiceLocator()->get('Config')
+            $container->get('Config')
         );
     }
 

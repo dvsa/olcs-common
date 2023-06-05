@@ -18,13 +18,15 @@ class FormRowFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator): FormRow
     {
-        return $this($serviceLocator, FormRow::class);
+        return $this->__invoke($serviceLocator, FormRow::class);
     }
 
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): FormRow
     {
-        $sm = $container->getServiceLocator();
-        $mainConfig = $sm->get('Config');
+        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
+            $container = $container->getServiceLocator();
+        }
+        $mainConfig = $container->get('Config');
         $config = $mainConfig['form_row'] ?? [];
 
         return new FormRow($config);
