@@ -2,6 +2,7 @@
 
 namespace Common\Service\Table\Formatter;
 
+use Common\Data\Object\Search\People;
 use Common\Service\Helper\UrlHelperService;
 
 /**
@@ -30,13 +31,14 @@ class SearchPeopleName implements FormatterPluginManagerInterface
      */
     public function format($data, $column = [])
     {
-        if ($data['complaint'] === 'Yes') {
+        if ($data['foundAs'] === People::FOUND_AS_HISTORICAL_TM) {
             return sprintf(
-                '<a class="govuk-link" href="%s">Yes</a>',
-                $this->urlHelper->fromRoute('licence/opposition', ['licence' => $data['licId']])
+                '<a class="govuk-link" href="%s">%s</a>',
+                $this->urlHelper->fromRoute('historic-tm', ['historicId' => $data['tmId']]),
+                $data['personFullname']
             );
+        } else {
+            return $data['personFullname'];
         }
-
-        return 'No';
     }
 }
