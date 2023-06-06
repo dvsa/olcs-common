@@ -35,71 +35,71 @@ class SearchPeopleRecord implements FormatterPluginManagerInterface
     {
         $showAsText = $this->authService->isGranted(RefData::PERMISSION_INTERNAL_IRHP_ADMIN);
 
-        if (!empty($row['applicationId']) && !empty($row['licNo'])) {
+        if (!empty($data['applicationId']) && !empty($data['licNo'])) {
             if ($showAsText) {
                 return sprintf(
                     '%s / %s',
-                    $this->formatCellLicNo($row, $this->urlHelper, $showAsText),
-                    Escape::html($row['applicationId'])
+                    $this->formatCellLicNo($data, $showAsText),
+                    Escape::html($data['applicationId'])
                 );
             }
 
             return sprintf(
                 '%s / <a class="govuk-link" href="%s">%s</a>',
-                $this->formatCellLicNo($row, $this->urlHelper),
-                $this->urlHelper->fromRoute('lva-application', ['application' => $row['applicationId']]),
-                Escape::html($row['applicationId'])
+                $this->formatCellLicNo($data, $showAsText),
+                $this->urlHelper->fromRoute('lva-application', ['application' => $data['applicationId']]),
+                Escape::html($data['applicationId'])
             );
-        } elseif (!empty($row['tmId']) && $row['foundAs'] !== People::FOUND_AS_HISTORICAL_TM) {
+        } elseif (!empty($data['tmId']) && $data['foundAs'] !== People::FOUND_AS_HISTORICAL_TM) {
             if ($showAsText) {
-                $tmLink = sprintf('TM %s', Escape::html($row['tmId']));
+                $tmLink = sprintf('TM %s', Escape::html($data['tmId']));
             } else {
                 $tmLink = sprintf(
                     '<a class="govuk-link" href="%s">TM %s</a>',
-                    $this->urlHelper->fromRoute('transport-manager/details', ['transportManager' => $row['tmId']]),
-                    Escape::html($row['tmId'])
+                    $this->urlHelper->fromRoute('transport-manager/details', ['transportManager' => $data['tmId']]),
+                    Escape::html($data['tmId'])
                 );
             }
 
-            if (!empty($row['licNo'])) {
-                $licenceLink = $this->formatCellLicNo($row, $this->urlHelper, $showAsText);
+            if (!empty($data['licNo'])) {
+                $licenceLink = $this->formatCellLicNo($data, $showAsText);
                 return $tmLink . ' / ' . $licenceLink;
             }
 
             return $tmLink;
-        } elseif (!empty($row['licTypeDesc']) && !empty($row['licStatusDesc'])) {
+        } elseif (!empty($data['licTypeDesc']) && !empty($data['licStatusDesc'])) {
             if ($showAsText) {
                 return sprintf(
                     '%s, %s<br />%s',
-                    Escape::html($row['licNo']),
-                    Escape::html($row['licTypeDesc']),
-                    Escape::html($row['licStatusDesc'])
+                    Escape::html($data['licNo']),
+                    Escape::html($data['licTypeDesc']),
+                    Escape::html($data['licStatusDesc'])
                 );
             }
 
             return sprintf(
                 '<a class="govuk-link" href="%s">%s</a>, %s<br />%s',
-                $this->urlHelper->fromRoute('licence', ['licence' => $row['licId']]),
-                Escape::html($row['licNo']),
-                Escape::html($row['licTypeDesc']),
-                Escape::html($row['licStatusDesc'])
+                $this->urlHelper->fromRoute('licence', ['licence' => $data['licId']]),
+                Escape::html($data['licNo']),
+                Escape::html($data['licTypeDesc']),
+                Escape::html($data['licStatusDesc'])
             );
-        } elseif (!empty($row['licNo'])) {
-            return $this->formatCellLicNo($row, $this->urlHelper, $showAsText);
-        } elseif (!empty($row['applicationId'])) {
+        } elseif (!empty($data['licNo'])) {
+            return $this->formatCellLicNo($data, $showAsText);
+        } elseif (!empty($data['applicationId'])) {
             if ($showAsText) {
                 return sprintf(
                     '%s, %s',
-                    Escape::html($row['applicationId']),
-                    Escape::html($row['appStatusDesc'])
+                    Escape::html($data['applicationId']),
+                    Escape::html($data['appStatusDesc'])
                 );
             }
 
             return sprintf(
                 '<a class="govuk-link" href="%s">%s</a>, %s',
-                $this->urlHelper->fromRoute('lva-application', ['application' => $row['applicationId']]),
-                Escape::html($row['applicationId']),
-                Escape::html($row['appStatusDesc'])
+                $this->urlHelper->fromRoute('lva-application', ['application' => $data['applicationId']]),
+                Escape::html($data['applicationId']),
+                Escape::html($data['appStatusDesc'])
             );
         }
         return '';
