@@ -27,6 +27,7 @@ use Common\Service\Table\Formatter\DataRetentionRuleIsEnabled;
 use Common\Service\Table\Formatter\DataRetentionRuleLink;
 use Common\Service\Table\Formatter\DashboardTmApplicationStatus;
 use Common\Service\Table\Formatter\Date;
+use Common\Service\Table\Formatter\DateTime;
 use Common\Service\Table\Formatter\DisqualifyUrl;
 use Common\Service\Table\Formatter\DisqualifyUrlFactory;
 use Common\Service\Table\Formatter\DocumentDescription;
