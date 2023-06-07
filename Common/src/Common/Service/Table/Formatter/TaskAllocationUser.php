@@ -1,13 +1,13 @@
 <?php
 
-namespace Common\Service\Table\Formatter\TaskAllocationRule;
+namespace Common\Service\Table\Formatter;
 
 /**
  * User value for a task allocation rule
  *
  * @author Mat Evans <mat.evans@valtech.co.uk>
  */
-class User extends \Common\Service\Table\Formatter\Name
+class TaskAllocationUser extends Name implements FormatterPluginManagerInterface
 {
     /**
      * User value for a task allocation rule

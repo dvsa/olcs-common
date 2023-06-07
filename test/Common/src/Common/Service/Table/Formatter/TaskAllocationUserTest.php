@@ -1,16 +1,16 @@
 <?php
 
-namespace CommonTest\Service\Table\Formatter\TaskAllocationRule;
+namespace CommonTest\Common\Service\Table\Formatter;
 
 use Common\Service\Helper\DataHelperService;
-use Common\Service\Table\Formatter\TaskAllocationRule\User;
+use Common\Service\Table\Formatter\TaskAllocationUser;
 
 /**
  * User test
  *
  * @author Mat Evans <mat.evans@valtech.co.uk>
  */
-class UserTest extends \PHPUnit\Framework\TestCase
+class TaskAllocationUserTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test the format method
@@ -19,7 +19,7 @@ class UserTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormat($expected, $data)
     {
-        $sut = new User(new DataHelperService());
+        $sut = new TaskAllocationUser(new DataHelperService());
 
         $this->assertSame($expected, $sut->format($data));
     }

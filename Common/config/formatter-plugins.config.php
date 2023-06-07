@@ -194,6 +194,9 @@ use Common\Service\Table\Formatter\SystemInfoMessageLink;
 use Common\Service\Table\Formatter\SystemInfoMessageLinkFactory;
 use Common\Service\Table\Formatter\SystemParameterLink;
 use Common\Service\Table\Formatter\SystemParameterLinkFactory;
+use Common\Service\Table\Formatter\TaskAllocationCriteria;
+use Common\Service\Table\Formatter\TaskAllocationUser;
+use Common\Service\Table\Formatter\TaskAllocationUserFactory;
 use Common\Service\Table\Formatter\TaskCheckbox;
 use Common\Service\Table\Formatter\TaskCheckboxFactory;
 use Common\Service\Table\Formatter\TaskDate;
@@ -279,6 +282,7 @@ return [
         PublicHolidayArea::class => PublicHolidayArea::class,
         SumColumns::class => SumColumns::class,
         Sum::class => Sum::class,
+        TaskAllocationCriteria::class => TaskAllocationCriteria::class,
         TaskOwner::class => TaskOwner::class,
         TransactionAmount::class => TransactionAmount::class,
         TransactionStatus::class => TransactionStatus::class,
@@ -359,6 +363,7 @@ return [
         StackValueReplacer::class => StackValueReplacerFactory::class,
         SystemInfoMessageLink::class => SystemInfoMessageLinkFactory::class,
         SystemParameterLink::class => SystemParameterLinkFactory::class,
+        TaskAllocationUser::class => TaskAllocationUserFactory::class,
         TaskCheckbox::class => TaskCheckboxFactory::class,
         TaskDate::class => TaskDateFactory::class,
         TaskDescription::class => TaskDescriptionFactory::class,

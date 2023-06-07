@@ -1,15 +1,15 @@
 <?php
 
-namespace CommonTest\Service\Table\Formatter\TaskAllocationRule;
+namespace CommonTest\Common\Service\Table\Formatter;
 
-use Common\Service\Table\Formatter\TaskAllocationRule\Criteria;
+use Common\Service\Table\Formatter\TaskAllocationCriteria;
 
 /**
  * Criteria test
  *
  * @author Mat Evans <mat.evans@valtech.co.uk>
  */
-class CriteriaTest extends \PHPUnit\Framework\TestCase
+class TaskAllocationCriteriaTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test the format method
@@ -18,7 +18,7 @@ class CriteriaTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormat($expected, $data)
     {
-        $sut = new Criteria();
+        $sut = new TaskAllocationCriteria();
 
         $this->assertSame($expected, $sut->format($data));
     }
