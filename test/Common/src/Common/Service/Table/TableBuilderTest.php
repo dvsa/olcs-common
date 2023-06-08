@@ -4,6 +4,7 @@ namespace CommonTest\Service\Table;
 
 use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\ContentHelper;
+use Common\Service\Table\Exception\MissingFormatterException;
 use Common\Service\Table\Formatter\FormatterPluginManager;
 use Common\Service\Table\PaginationHelper;
 use Common\Service\Table\TableBuilder;
@@ -2725,27 +2726,16 @@ class TableBuilderTest extends MockeryTestCase
      */
     public function testRenderBodyColumnWithInvalidFormatter()
     {
-        $row = array(
-            'date' => date('Y-m-d')
-        );
+        $this->expectException(MissingFormatterException::class);
+        $this->expectExceptionMessage('Missing table formatter: Blah');
 
         $column = array(
             'formatter' => 'Blah'
         );
 
-        $mockContentHelper = $this->createPartialMock(ContentHelper::class, array('replaceContent'));
-
-        $mockContentHelper->expects($this->once())
-            ->method('replaceContent')
-            ->with('{{[elements/td]}}', array('content' => '', 'attrs' => ' class="' . TableBuilder::CLASS_TABLE_CELL . '"'));
-
         $table = $this->getMockTableBuilder(array('getContentHelper'));
 
-        $table->expects($this->any())
-            ->method('getContentHelper')
-            ->will($this->returnValue($mockContentHelper));
-
-        $table->renderBodyColumn($row, $column);
+        $table->renderBodyColumn([], $column);
     }
 
     /**

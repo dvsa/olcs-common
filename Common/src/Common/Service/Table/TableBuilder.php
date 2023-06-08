@@ -3,6 +3,7 @@
 namespace Common\Service\Table;
 
 use Common\Service\Helper\UrlHelperService;
+use Common\Service\Table\Exception\MissingFormatterException;
 use Common\Service\Table\Formatter\FormatterPluginManager;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\ServiceManager\ServiceLocatorInterface;
@@ -1726,11 +1727,11 @@ class TableBuilder
                 $formatterClass = '\\' . __NAMESPACE__ . '\\Formatter\\' . $formatterClass;
             }
 
-            if (class_exists($formatterClass)) {
-                if ($this->formatterPluginManager->has($formatterClass)) {
-                    $column['formatter'] = $this->formatterPluginManager->get($formatterClass);
-                }
+            if (!class_exists($formatterClass) || !$this->formatterPluginManager->has($formatterClass)) {
+                throw new MissingFormatterException('Missing table formatter: ' . $column['formatter']);
             }
+
+            $column['formatter'] = $this->formatterPluginManager->get($formatterClass);
         }
 
         if (is_object($column['formatter'])) {
