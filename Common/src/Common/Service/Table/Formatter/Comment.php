@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Comment formatter
- *
- * @author Shaun Lizzio <shaun.lizzio@valtech.co.uk>
- */
-
 namespace Common\Service\Table\Formatter;
 
 /**
@@ -24,8 +18,6 @@ class Comment implements FormatterPluginManagerInterface
      */
     public function format($data, $column = [])
     {
-        $content = '';
-
         if (isset($data[$column['name']]) && !is_null($data[$column['name']])) {
             if (
                 isset($column['maxlength'])
