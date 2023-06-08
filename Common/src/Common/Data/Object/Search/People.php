@@ -82,6 +82,7 @@ class People extends InternalSearchAbstract
     {
         return [
             'title' => $this->getTitle(),
+            'empty_message' => 'search-no-results-internal',
             'action_route' => [
                 'route' => 'create_transport_manager',
                 'params' => ['action' => null]
