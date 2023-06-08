@@ -58,6 +58,7 @@ class User extends InternalSearchAbstract
     {
         return [
             'title' => $this->getTitle(),
+            'empty_message' => 'search-no-results-internal',
             'action_route' => [
                 'route' => 'admin-dashboard/admin-user-management',
                 'params' => ['action' => null]
