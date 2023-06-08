@@ -163,6 +163,10 @@ use Common\Service\Table\Formatter\SearchAddressComplaint;
 use Common\Service\Table\Formatter\SearchAddressComplaintFactory;
 use Common\Service\Table\Formatter\SearchAddressOperatorName;
 use Common\Service\Table\Formatter\SearchAddressOperatorNameFactory;
+use Common\Service\Table\Formatter\SearchAddressOpposition;
+use Common\Service\Table\Formatter\SearchAddressOppositionFactory;
+use Common\Service\Table\Formatter\SearchApplicationLicenceNo;
+use Common\Service\Table\Formatter\SearchApplicationLicenceNoFactory;
 use Common\Service\Table\Formatter\SearchBusRegSelfserve;
 use Common\Service\Table\Formatter\SearchBusRegSelfserveFactory;
 use Common\Service\Table\Formatter\SearchCases;
@@ -173,6 +177,8 @@ use Common\Service\Table\Formatter\SearchCasesName;
 use Common\Service\Table\Formatter\SearchCasesNameFactory;
 use Common\Service\Table\Formatter\SearchIrfoOrganisationOperatorNo;
 use Common\Service\Table\Formatter\SearchIrfoOrganisationOperatorNoFactory;
+use Common\Service\Table\Formatter\SearchLicenceCaseCount;
+use Common\Service\Table\Formatter\SearchLicenceCaseCountFactory;
 use Common\Service\Table\Formatter\SearchOperatingCentreSelfserveLicNo;
 use Common\Service\Table\Formatter\SearchOperatingCentreSelfserveLicNoFactory;
 use Common\Service\Table\Formatter\SearchPeopleName;
@@ -345,11 +351,14 @@ return [
         RefDataStatus::class => RefDataStatusFactory::class,
         SearchAddressComplaint::class => SearchAddressComplaintFactory::class,
         SearchAddressOperatorName::class => SearchAddressOperatorNameFactory::class,
+        SearchAddressOpposition::class => SearchAddressOppositionFactory::class,
+        SearchApplicationLicenceNo::class => SearchApplicationLicenceNoFactory::class,
         SearchBusRegSelfserve::class => SearchBusRegSelfserveFactory::class,
         SearchCasesCaseId::class => SearchCasesCaseIdFactory::class,
         SearchCasesName::class => SearchCasesNameFactory::class,
         SearchOperatingCentreSelfserveLicNo::class => SearchOperatingCentreSelfserveLicNoFactory::class,
         SearchIrfoOrganisationOperatorNo::class => SearchIrfoOrganisationOperatorNoFactory::class,
+        SearchLicenceCaseCount::class => SearchLicenceCaseCountFactory::class,
         SearchPeopleRecord::class => SearchPeopleRecordFactory::class,
         SearchPeopleName::class => SearchPeopleNameFactory::class,
         SeriousInfringementLink::class => SeriousInfringementLinkFactory::class,
