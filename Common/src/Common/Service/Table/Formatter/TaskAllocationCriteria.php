@@ -1,13 +1,13 @@
 <?php
 
-namespace Common\Service\Table\Formatter\TaskAllocationRule;
+namespace Common\Service\Table\Formatter;
 
 /**
  * TaskAllocationRuleCriteria
  *
  * @author Mat Evans <mat.evans@valtech.co.uk>
  */
-class Criteria implements \Common\Service\Table\Formatter\FormatterInterface
+class TaskAllocationCriteria implements FormatterPluginManagerInterface
 {
     /**
      * Format Criteria string
