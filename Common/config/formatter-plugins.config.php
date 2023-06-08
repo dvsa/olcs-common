@@ -106,6 +106,7 @@ use Common\Service\Table\Formatter\BusRegNumberLinkFactory;
 use Common\Service\Table\Formatter\BusRegStatusFactory;
 use Common\Service\Table\Formatter\CaseEntityNrStatusFactory;
 use Common\Service\Table\Formatter\CaseLinkFactory;
+use Common\Service\Table\Formatter\Comment;
 use Common\Service\Table\Formatter\CommunityLicenceStatusFactory;
 use Common\Service\Table\Formatter\ConditionsUndertakingsTypeFactory;
 use Common\Service\Table\Formatter\ConstrainedCountriesListFactory;
