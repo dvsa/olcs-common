@@ -15,7 +15,6 @@ class VehicleSearch
     /**
      * @Form\Name("vehicleSearch")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\VehicleSearch")
-     * @Form\Attributes({"class":"inline-search"})
      */
     public $vehiclesSearch = null;
 

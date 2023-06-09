@@ -13,14 +13,14 @@ use Laminas\Form\Annotation as Form;
 class VehicleSearch
 {
     /**
-     * @Form\Attributes({"id":"vrm","placeholder":"","class":"inline-search__input"})
+     * @Form\Attributes({"id":"vrm"})
      * @Form\Type("\Laminas\Form\Element\Text")
      * @Form\Required(true)
      */
     public $vrm = null;
 
     /**
-     * @Form\Attributes({"type":"submit","class":"govuk-button inline-search__submit"})
+     * @Form\Attributes({"type":"submit","class":"govuk-button"})
      * @Form\Options({
      *     "label": "vehicle-search-search",
      * })
@@ -29,7 +29,7 @@ class VehicleSearch
     public $filter = null;
 
     /**
-     * @Form\Attributes({"type":"submit","class":"inline-search__clear","id":"clearSearch"})
+     * @Form\Attributes({"type":"submit","class":"govuk-button govuk-button--secondary","id":"clearSearch"})
      * @Form\Options({
      *     "label": "vehicle-search-clear-search"
      * })
