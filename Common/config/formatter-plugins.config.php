@@ -218,6 +218,7 @@ use Common\Service\Table\Formatter\TmApplicationManagerTypeFactory;
 use Common\Service\Table\Formatter\TransactionAmount;
 use Common\Service\Table\Formatter\TransactionAmountSum;
 use Common\Service\Table\Formatter\TransactionAmountSumFactory;
+use Common\Service\Table\Formatter\TransactionFeeAllocatedAmount;
 use Common\Service\Table\Formatter\TransactionFeeStatus;
 use Common\Service\Table\Formatter\TransactionFeeStatusFactory;
 use Common\Service\Table\Formatter\TransactionNoAndStatus;
@@ -292,6 +293,7 @@ return [
         TaskAllocationCriteria::class => TaskAllocationCriteria::class,
         TaskOwner::class => TaskOwner::class,
         TransactionAmount::class => TransactionAmount::class,
+        TransactionFeeAllocatedAmount::class => TransactionFeeAllocatedAmount::class,
         TransactionStatus::class => TransactionStatus::class,
         UnlicensedVehicleWeight::class => UnlicensedVehicleWeight::class,
         ValidPermitCount::class => ValidPermitCount::class,
