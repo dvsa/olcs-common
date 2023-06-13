@@ -2,6 +2,8 @@
 
 namespace Common\Service\Review;
 
+use Common\Service\Table\Formatter\Address;
+use Common\Service\Table\Formatter\FormatterPluginManager;
 use Common\Service\Traits\GenericFactoryCreateServiceTrait;
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
@@ -14,6 +16,7 @@ class GenericFactory implements FactoryInterface
     {
         return new $requestedName(
             $container->get(AbstractReviewServiceServices::class),
+            $container->get(FormatterPluginManager::class)->get(Address::class)
         );
     }
 }
