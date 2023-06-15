@@ -1,11 +1,9 @@
 <p class="govuk-body">
     This website is run by DVSA on behalf of the Traffic Commissioners for Great Britain, the Department for Infrastructure Northern Ireland and the International Road Haulage Permits.
 </p>
-
 <p class="govuk-body">
     We want as many people as possible to be able to use this website. For example, that means you should be able to:
 </p>
-
 <ul class="govuk-list govuk-list--bullet">
     <li>zoom in up to 300% without problems</li>
     <li>navigate most of the website using just a keyboard</li>
@@ -20,17 +18,30 @@
 
 <h2 id="feedback-and-contact-information" class="govuk-heading-l">Feedback and contact information</h2>
 <p class="govuk-body">
-    If you need information on this website in a different format, or you need assistance using this website call 0300 123 9000
+    If you need information on this website in a different format, or you need assistance using this website call {{OPERATOR_LICENSING_PHONE}}
 </p>
 
 <h3 id="contacting-us-by-phone-or-visiting-us-in-person" class="govuk-heading-m">Contacting us</h3>
 <p class="govuk-body">
-    <?php echo $this->linkNewWindowExternal('https://www.gov.uk/contact-dvsa', 'Find out how to contact DVSA'); ?>.
+    <a class="govuk-link"
+       rel="external noreferrer noopener"
+       href="{{DVSA_CONTACT}}"
+       target="_blank">
+        Find out how to contact DVSA
+        <?php echo $this->escapeHtml($this->translate('link.opens-new-window')); ?>
+    </a>
 </p>
 
 <h2 id="reporting-accessibility-problems-with-this-website" class="govuk-heading-m">Reporting accessibility problems with this website</h2>
 <p class="govuk-body">
-    If you find any problems not listed on this page or think we’re not meeting accessibility requirements, contact our dedicated accessibility team <?php echo $this->link('mailto:accessibility@vehicle-operator-licensing.service.gov.uk', 'accessibility@vehicle-operator-licensing.service.gov.uk'); ?> and tell us:
+    If you find any problems not listed on this page or think we’re not meeting accessibility requirements, contact our dedicated accessibility team
+    <a class="govuk-link"
+       href="mailto:{{ACCESSIBILITY_EMAIL}}"
+       rel="external noreferrer noopener"
+       target="_blank">
+        {{ACCESSIBILITY_EMAIL}}
+    </a>
+    and tell us:
 </p>
 <ul class="govuk-list govuk-list--bullet">
     <li>the web address (URL) of the content</li>
@@ -42,10 +53,24 @@
     The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the ‘accessibility regulations’).
 </p>
 <p class="govuk-body">
-If you contact us with a complaint and you’re not happy with our response  <?php echo $this->linkNewWindowExternal('https://www.equalityadvisoryservice.com/', 'contact the Equality Advisory and Support Service (EASS)'); ?>.
+    If you contact us with a complaint and you’re not happy with our response
+    <a class="govuk-link"
+       rel="external noreferrer noopener"
+       href="{{EQUALITY_ADVISORY_SERVICE}}"
+       target="_blank">
+        contact the Equality Advisory and Support Service (EASS)
+        <?php echo $this->escapeHtml($this->translate('link.opens-new-window')); ?>
+    </a>
 </p>
 <p class="govuk-body">
-    If you are an operator based in Northern Ireland, and you are not not happy with how we respond to your complaint, contact the <?php echo $this->linkNewWindowExternal('https://www.equalityni.org/Home', 'Equalities Commission for Northern Ireland (ECNI)'); ?>.
+    If you are an operator based in Northern Ireland, and you are not not happy with how we respond to your complaint, contact the
+    <a class="govuk-link"
+       rel="external noreferrer noopener"
+       href="{{EQUALITY_SERVICE_HOME}}"
+       target="_blank">
+        Equalities Commission for Northern Ireland (ECNI)
+        <?php echo $this->escapeHtml($this->translate('link.opens-new-window')); ?>
+    </a>
 </p>
 
 <h2 id="technical-information-about-this-websites-accessibility" class="govuk-heading-l">Technical information about this website’s accessibility</h2>
@@ -55,7 +80,14 @@ If you contact us with a complaint and you’re not happy with our response  <?p
 
 <h2 id="compliance-status" class="govuk-heading-l">Compliance status</h2>
 <p class="govuk-body">
-    This website is partially compliant with the <?php echo $this->linkNewWindowExternal('https://www.w3.org/TR/WCAG21/', 'Web Content Accessibility Guidelines version 2.1'); ?> AA standard.
+    This website is partially compliant with the
+    <a class="govuk-link" rel="external noreferrer noopener"
+       href="{{WEB_CONTENT_GUIDELINES}}"
+       target="_blank">
+        Web Content Accessibility Guidelines version 2.1
+        <?php echo $this->escapeHtml($this->translate('link.opens-new-window')); ?>
+    </a>
+    AA standard.
 </p>
 
 <h2 id="non-accessible-content" class="govuk-heading-l">Non-accessible content</h2>
@@ -70,7 +102,15 @@ If you contact us with a complaint and you’re not happy with our response  <?p
 
 <h3 id="disproportionate-burden" class="govuk-heading-m">Disproportionate burden</h3>
 <p class="govuk-body">
-    We intend to make our services compliant with the <?php echo $this->linkNewWindowExternal('https://www.w3.org/TR/WCAG21/', 'Web Content Accessibility Guidelines version 2.1'); ?> AA standard. We are not claiming disproportionate burden for any part of our accessibility plan.
+    We intend to make our services compliant with the
+    <a class="govuk-link"
+       rel="external noreferrer noopener"
+       href="{{WEB_CONTENT_GUIDELINES}}"
+       target="_blank">
+        Web Content Accessibility Guidelines version 2.1
+        <?php echo $this->escapeHtml($this->translate('link.opens-new-window')); ?>
+    </a>
+    AA standard. We are not claiming disproportionate burden for any part of our accessibility plan.
 </p>
 
 <h3 id="content-thats-not-within-the-scope-of-the-accessibility-regulations" class="govuk-heading-m">
@@ -78,17 +118,12 @@ If you contact us with a complaint and you’re not happy with our response  <?p
 </h3>
 <p class="govuk-body">
     Non-HTML documents published before September 2018 do not need to be accessible - unless users need them to use a service.
-
 </p>
 
-<h2 id="how-we-tested-this-website" class="govuk-heading-l">
-    How we tested this website
-</h2>
-
+<h2 id="how-we-tested-this-website" class="govuk-heading-l">How we tested this website</h2>
 <p class="govuk-body">
     We used this approach to decide a sample of pages to test:
 </p>
-
 <ul class="govuk-list govuk-list--bullet">
     <li>our highest volume transaction (vehicle changes)</li>
     <li>all sections of the ‘Manage my licence’ user journey (which duplicates the main pages of the ‘Apply for a licence’ journey</li>
@@ -96,18 +131,14 @@ If you contact us with a complaint and you’re not happy with our response  <?p
     <li>links to external pages containing further advice</li>
     <li>critical pages underpinning compliance (the document/correspondence section of the website)</li>
 </ul>
-
 <p class="govuk-body">
     Our public search pages and internal caseworker pages were tested internally using GDS guidance and insights from the independent accessibility audit conducted by DAC.
 </p>
-
 <p class="govuk-body">
     This website was last tested on 13 to 17 January 2020 by The Digital Accessibility Centre (DAC).
 </p>
 
-<h2 id="improve-accessibility-statement" class="govuk-heading-l">
-    What we’re doing to improve accessibility</h2>
-
+<h2 id="improve-accessibility-statement" class="govuk-heading-l">What we’re doing to improve accessibility</h2>
 <p class="govuk-body">
     Following the audit conducted by the DAC in January 2020, we are urgently fixing content which fails to meet the Web Content Accessibility Guidelines version 2.1 AA standard.
 </p>
