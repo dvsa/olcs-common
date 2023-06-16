@@ -21,8 +21,7 @@ class AddressesTest extends MockeryTestCase
     {
         $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);
 
-        $this->sut = new Addresses();
-        $this->sut->setFormHelper($this->formHelper);
+        $this->sut = new Addresses($this->formHelper);
     }
 
     public function testAlterForm()

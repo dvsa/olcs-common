@@ -2,19 +2,27 @@
 
 namespace Common\FormService\Form\Continuation;
 
-use Common\FormService\Form\AbstractFormService;
-use Common\Service\Helper\FormHelperService;
-use Common\Form\Model\Form\Continuation\Payment as PaymentForm;
 use Common\Form\Form;
-use Common\RefData;
+use Common\Form\Model\Form\Continuation\Payment as PaymentForm;
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Helper\GuidanceHelperService;
 
 /**
  * Continuation fee payment form
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class Payment extends AbstractFormService
+class Payment
 {
+    protected FormHelperService $formHelper;
+    private GuidanceHelperService $guidanceHelper;
+
+    public function __construct(FormHelperService $formHelper, GuidanceHelperService $guidanceHelper)
+    {
+        $this->formHelper = $formHelper;
+        $this->guidanceHelper = $guidanceHelper;
+    }
+
     /**
      * Get form
      *
@@ -24,7 +32,7 @@ class Payment extends AbstractFormService
      */
     public function getForm($data)
     {
-        $form = $this->getFormHelper()->createForm(PaymentForm::class);
+        $form = $this->formHelper->createForm(PaymentForm::class);
 
         $this->alterForm($form, $data);
 
@@ -47,7 +55,7 @@ class Payment extends AbstractFormService
             $cancelButton = $form->get('form-actions')->get('cancel');
             $cancelButton->setLabel('back-to-fees');
             $cancelButton->setAttribute('class', 'govuk-button govuk-button--secondary');
-            $this->getServiceLocator()->get('Helper\Guidance')->append('selfserve-card-payments-disabled');
+            $this->guidanceHelper->append('selfserve-card-payments-disabled');
         }
     }
 }

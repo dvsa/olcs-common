@@ -1,24 +1,26 @@
 <?php
 
-/**
- * Undertakings Form
- *
- * @author Dan Eggleston <dan@stolenegg.com>
- */
 namespace Common\FormService\Form\Lva;
 
-use Common\FormService\Form\AbstractFormService;
+use Common\Service\Helper\FormHelperService;
 
 /**
  * Undertakings Form
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class Undertakings extends AbstractFormService
+class Undertakings
 {
+    protected FormHelperService $formHelper;
+
+    public function __construct(FormHelperService $formHelper)
+    {
+        $this->formHelper = $formHelper;
+    }
+
     public function getForm()
     {
-        $form = $this->getFormHelper()->createForm('Lva\ApplicationUndertakings');
+        $form = $this->formHelper->createForm('Lva\ApplicationUndertakings');
 
         $this->alterForm($form);
 

@@ -1,13 +1,10 @@
 <?php
 
-/**
- * Vehicles Declarations Form Service Test
- *
- * @author Dan Eggleston <dan@stolenegg.com>
- */
 namespace CommonTest\FormService\Form\Lva;
 
 use Common\FormService\Form\Lva\VehiclesDeclarations;
+use Laminas\Form\Form;
+use Mockery as m;
 
 /**
  * Vehicles Declarations Form Service Test

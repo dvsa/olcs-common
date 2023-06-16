@@ -2,17 +2,24 @@
 
 namespace Common\FormService\Form\Lva\People;
 
-use Common\Form\Elements\Types\Html;
 use Common\Form\Form;
 use Common\Form\Model\Form\Licence\AddPerson;
-use Laminas\Form\Element\Collection;
-use Laminas\Form\FieldsetInterface;
+use Common\Service\Helper\FormHelperService;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Licence People
  */
 class LicenceAddPerson extends AbstractPeople
 {
+    protected FormHelperService $formHelper;
+    protected AuthorizationService $authService;
+
+    public function __construct(FormHelperService $formHelper, AuthorizationService $authService)
+    {
+        $this->formHelper = $formHelper;
+        $this->authService = $authService;
+    }
     /**
      * Get the form
      *
@@ -22,6 +29,6 @@ class LicenceAddPerson extends AbstractPeople
      */
     public function getForm(array $params = [])
     {
-        return $this->getFormHelper()->createForm(AddPerson::class);
+        return $this->formHelper->createForm(AddPerson::class);
     }
 }

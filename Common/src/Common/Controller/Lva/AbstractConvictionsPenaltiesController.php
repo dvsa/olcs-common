@@ -2,6 +2,7 @@
 
 namespace Common\Controller\Lva;
 
+use Common\FormService\FormServiceManager;
 use Dvsa\Olcs\Transfer\Command\Application\UpdatePreviousConvictions;
 use Dvsa\Olcs\Transfer\Command\PreviousConviction\CreatePreviousConviction;
 use Dvsa\Olcs\Transfer\Command\PreviousConviction\DeletePreviousConviction;
@@ -119,7 +120,7 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
         $form = $this->getServiceLocator()
-            ->get('FormServiceManager')
+            ->get(FormServiceManager::class)
             ->get('lva-' . $this->lva . '-' . $this->section)
             ->getForm($params);
 

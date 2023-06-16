@@ -2,6 +2,7 @@
 
 namespace Common\Controller\Lva\Traits;
 
+use Common\FormService\FormServiceManager;
 use Common\Service\Table\TableBuilder;
 
 /**
@@ -53,7 +54,7 @@ trait VehicleSearchTrait
         $searchForm = null;
         if (($headerData['allVehicleCount'] > self::SEARCH_VEHICLES_COUNT) && ($this->lva !== 'application')) {
             /** @var \Laminas\Form\FormInterface $searchForm */
-            $searchForm = $this->getServiceLocator()->get('FormServiceManager')
+            $searchForm = $this->getServiceLocator()->get(FormServiceManager::class)
                 ->get('lva-vehicles-search')
                 ->getForm();
 
@@ -89,8 +90,10 @@ trait VehicleSearchTrait
      */
     protected function removeUnusedParametersFromQuery($query)
     {
-        if ((isset($query['vehicleSearch']['filter']) && empty($query['vehicleSearch']['vrm'])) ||
-            isset($query['vehicleSearch']['clearSearch'])) {
+        if (
+            (isset($query['vehicleSearch']['filter']) && empty($query['vehicleSearch']['vrm'])) ||
+            isset($query['vehicleSearch']['clearSearch'])
+        ) {
             $query['vehicleSearch'] = null;
             unset($query['vehicleSearch']);
         }

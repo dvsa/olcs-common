@@ -1,13 +1,11 @@
 <?php
 
-/**
- * Abstract Sole Trader
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\FormService\Form\Lva\People\SoleTrader;
 
 use Common\FormService\Form\Lva\AbstractLvaFormService;
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Lva\PeopleLvaService;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Abstract Sole Trader
@@ -16,6 +14,19 @@ use Common\FormService\Form\Lva\AbstractLvaFormService;
  */
 abstract class AbstractSoleTrader extends AbstractLvaFormService
 {
+    protected FormHelperService $formHelper;
+    protected AuthorizationService $authService;
+    protected PeopleLvaService $peopleLvaService;
+
+    public function __construct(
+        FormHelperService $formHelper,
+        AuthorizationService $authService,
+        PeopleLvaService $peopleLvaService
+    ) {
+        $this->formHelper = $formHelper;
+        $this->authService = $authService;
+        $this->peopleLvaService = $peopleLvaService;
+    }
     /**
      * Get sole trader form
      *
@@ -25,7 +36,7 @@ abstract class AbstractSoleTrader extends AbstractLvaFormService
      */
     public function getForm($params)
     {
-        $form = $this->getFormHelper()->createForm('Lva\SoleTrader');
+        $form = $this->formHelper->createForm('Lva\SoleTrader');
 
         $this->alterForm($form, $params);
 
@@ -50,7 +61,7 @@ abstract class AbstractSoleTrader extends AbstractLvaFormService
         }
 
         if (isset($params['canModify']) && $params['canModify'] === false) {
-            $this->getServiceLocator()->get('Lva\People')->lockPersonForm($form, $params['orgType']);
+            $this->peopleLvaService->lockPersonForm($form, $params['orgType']);
         }
 
         return $form;

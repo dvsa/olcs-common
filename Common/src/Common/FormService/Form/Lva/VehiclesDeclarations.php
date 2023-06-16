@@ -1,24 +1,26 @@
 <?php
 
-/**
- * Vehicles Declarations Form
- *
- * @author Dan Eggleston <dan@stolenegg.com>
- */
 namespace Common\FormService\Form\Lva;
 
-use Common\FormService\Form\AbstractFormService;
+use Common\Service\Helper\FormHelperService;
 
 /**
  * Vehicles Declarations Form
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class VehiclesDeclarations extends AbstractFormService
+class VehiclesDeclarations
 {
+    protected FormHelperService $formHelper;
+
+    public function __construct(FormHelperService $formHelper)
+    {
+        $this->formHelper = $formHelper;
+    }
+
     public function getForm()
     {
-        $form = $this->getFormHelper()->createForm('Lva\VehiclesDeclarations');
+        $form = $this->formHelper->createForm('Lva\VehiclesDeclarations');
 
         $this->alterForm($form);
 

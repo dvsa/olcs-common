@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Variation Business Details Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\FormService\Form\Lva\BusinessDetails;
 
 use Common\RefData;
@@ -30,9 +25,7 @@ class VariationBusinessDetailsTest extends MockeryTestCase
         $this->formHelper = m::mock('\Common\Service\Helper\FormHelperService');
         $this->fsl = m::mock('\Common\FormService\FormServiceManager')->makePartial();
 
-        $this->sut = new VariationBusinessDetails();
-        $this->sut->setFormHelper($this->formHelper);
-        $this->sut->setFormServiceLocator($this->fsl);
+        $this->sut = new VariationBusinessDetails($this->formHelper, $this->fsl);
     }
 
     public function testAlterForm()

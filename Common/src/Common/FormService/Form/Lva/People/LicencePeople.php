@@ -1,13 +1,10 @@
 <?php
 
-/**
- * Licence People
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\FormService\Form\Lva\People;
 
 use Common\Form\Form;
+use Common\Service\Helper\FormHelperService;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Licence People
@@ -16,6 +13,14 @@ use Common\Form\Form;
  */
 class LicencePeople extends AbstractPeople
 {
+    protected FormHelperService $formHelper;
+    protected AuthorizationService $authService;
+
+    public function __construct(FormHelperService $formHelper, AuthorizationService $authService)
+    {
+        $this->formHelper = $formHelper;
+        $this->authService = $authService;
+    }
     /**
      * Alter licence people form
      *

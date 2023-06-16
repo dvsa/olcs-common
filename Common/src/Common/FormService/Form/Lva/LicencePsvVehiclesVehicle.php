@@ -1,11 +1,10 @@
 <?php
 
-/**
- * Licence Psv Vehicles Vehicle
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\FormService\Form\Lva;
+
+use Common\FormService\FormServiceManager;
+use Common\Service\Helper\FormHelperService;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Licence Psv Vehicles Vehicle
@@ -14,13 +13,22 @@ namespace Common\FormService\Form\Lva;
  */
 class LicencePsvVehiclesVehicle extends AbstractPsvVehiclesVehicle
 {
+    protected FormServiceManager $formServiceLocator;
+    protected FormHelperService $formHelper;
+
+    public function __construct(FormHelperService $formHelper, FormServiceManager $formServiceLocator)
+    {
+        $this->formHelper = $formHelper;
+        $this->formServiceLocator = $formServiceLocator;
+    }
+
     protected function alterForm($form, $params)
     {
         if ($params['mode'] == 'edit') {
             $form->get('licence-vehicle')->get('specifiedDate')->setShouldCreateEmptyOption(false);
         }
 
-        $this->getFormHelper()->enableDateTimeElement($form->get('licence-vehicle')->get('specifiedDate'));
+        $this->formHelper->enableDateTimeElement($form->get('licence-vehicle')->get('specifiedDate'));
 
         parent::alterForm($form, $params);
 
@@ -28,7 +36,7 @@ class LicencePsvVehiclesVehicle extends AbstractPsvVehiclesVehicle
             if ($params['location'] === 'external') {
                 $form->get('form-actions')->remove('submit');
             } else {
-                $this->getFormHelper()->enableDateElement($form->get('licence-vehicle')->get('removalDate'));
+                $this->formHelper->enableDateElement($form->get('licence-vehicle')->get('removalDate'));
                 $form->get('licence-vehicle')->get('removalDate')->setShouldCreateEmptyOption(false);
             }
         }

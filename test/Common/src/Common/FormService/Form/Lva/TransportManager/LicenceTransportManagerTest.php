@@ -1,16 +1,12 @@
 <?php
 
-/**
- * Licence TransportManager Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\FormService\Form\Lva\TransportManager;
 
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Lva\TransportManager\LicenceTransportManager as Sut;
 use Laminas\Form\Form;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Licence TransportManager Test
@@ -28,11 +24,8 @@ class LicenceTransportManagerTest extends MockeryTestCase
     public function setUp(): void
     {
         $this->formHelper = m::mock('\Common\Service\Helper\FormHelperService');
-        $this->fsm = m::mock('\Common\FormService\FormServiceManager')->makePartial();
-
-        $this->sut = new Sut();
-        $this->sut->setFormHelper($this->formHelper);
-        $this->sut->setFormServiceLocator($this->fsm);
+        $this->authService = m::mock(AuthorizationService::class);
+        $this->sut = new Sut($this->formHelper, $this->authService);
     }
 
     public function testGetForm()

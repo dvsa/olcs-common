@@ -1,14 +1,9 @@
 <?php
 
-/**
- * Form Service Manager Factory
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\FormService;
 
-use Laminas\ServiceManager\Config;
 use Laminas\Mvc\Service\AbstractPluginManagerFactory;
+use Laminas\ServiceManager\Config;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**

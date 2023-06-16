@@ -1,13 +1,9 @@
 <?php
 
-/**
- * Abstract Business Details Form
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\FormService\Form\Lva\BusinessDetails;
 
-use Common\FormService\Form\AbstractFormService;
+use Common\FormService\FormServiceInterface;
+use Common\FormService\FormServiceManager;
 use Common\RefData;
 use Common\Service\Helper\FormHelperService;
 
@@ -16,11 +12,18 @@ use Common\Service\Helper\FormHelperService;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractBusinessDetails extends AbstractFormService
+abstract class AbstractBusinessDetails
 {
+    protected FormHelperService $formHelper;
+
+    public function __construct(FormHelperService $formHelper)
+    {
+        $this->formHelper = $formHelper;
+    }
+
     public function getForm($orgType, $hasInforceLicences, bool $hasOrganisationSubmittedLicenceApplication)
     {
-        $form = $this->getFormHelper()->createForm('Lva\BusinessDetails');
+        $form = $this->formHelper->createForm('Lva\BusinessDetails');
 
         $params = [
             'orgType' => $orgType,
@@ -42,7 +45,7 @@ abstract class AbstractBusinessDetails extends AbstractFormService
                 break;
             case RefData::ORG_TYPE_SOLE_TRADER:
                 $this->alterFormForNonRegisteredCompany($form);
-                $this->getFormHelper()->remove($form, 'data->name');
+                $this->formHelper->remove($form, 'data->name');
                 break;
             case RefData::ORG_TYPE_PARTNERSHIP:
                 $this->alterFormForNonRegisteredCompany($form);
@@ -50,7 +53,7 @@ abstract class AbstractBusinessDetails extends AbstractFormService
                 break;
             case RefData::ORG_TYPE_OTHER:
                 $this->alterFormForNonRegisteredCompany($form);
-                $this->getFormHelper()->remove($form, 'data->tradingNames');
+                $this->formHelper->remove($form, 'data->tradingNames');
                 $this->appendToLabel($form->get('data')->get('name'), '.other');
                 break;
         }
@@ -58,7 +61,7 @@ abstract class AbstractBusinessDetails extends AbstractFormService
 
     protected function appendToLabel($element, $append)
     {
-        $this->getFormHelper()->alterElementLabel($element, $append, FormHelperService::ALTER_LABEL_APPEND);
+        $this->formHelper->alterElementLabel($element, $append, FormHelperService::ALTER_LABEL_APPEND);
     }
 
     /**
@@ -68,7 +71,7 @@ abstract class AbstractBusinessDetails extends AbstractFormService
      */
     protected function alterFormForNonRegisteredCompany($form)
     {
-        $this->getFormHelper()->remove($form, 'table')
+        $this->formHelper->remove($form, 'table')
             ->remove($form, 'data->companyNumber')
             ->remove($form, 'registeredAddress');
     }

@@ -4,6 +4,9 @@ namespace CommonTest\FormService\Form\Lva;
 
 use Common\FormService\FormServiceManager;
 use Common\RefData;
+use Common\Service\Helper\TranslationHelperService;
+use Common\Service\Helper\UrlHelperService;
+use Common\Service\Script\ScriptFactory;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Continuation\Declaration;
@@ -23,25 +26,14 @@ class DeclarationTest extends MockeryTestCase
     public function setUp(): void
     {
         $this->formHelper = m::mock(FormHelperService::class);
-        $this->sut = new Declaration();
-        $this->sut->setFormHelper($this->formHelper);
+        $this->translator = m::mock(TranslationHelperService::class);
+        $this->scriptFactory = m::mock(ScriptFactory::class);
+        $this->urlHelper = m::mock(UrlHelperService::class);
+        $this->sut = new Declaration($this->formHelper, $this->translator, $this->scriptFactory, $this->urlHelper);
     }
 
     public function testGetFormSignatureDisabled()
     {
-        $urlService = m::mock();
-        $translatorService = m::mock();
-        $formHelperService = m::mock();
-        $serviceLocator = m::mock();
-        $serviceLocator->shouldReceive('get')->with('ControllerPluginManager')->andReturn(
-            m::mock()->shouldReceive('get')->with('url')->andReturn($urlService)->getMock()
-        );
-        $serviceLocator->shouldReceive('get')->with('Helper\Translation')->andReturn($translatorService);
-        $serviceLocator->shouldReceive('get')->with('Helper\Form')->andReturn($formHelperService);
-        $formServiceLocator = m::mock(FormServiceManager::class);
-        $formServiceLocator->shouldReceive('getServiceLocator')->with()->andReturn($serviceLocator);
-        $this->sut->setFormServiceLocator($formServiceLocator);
-
         $contentElement = m::mock();
         $declarationElement = m::mock();
         $versionElement = m::mock();
@@ -51,25 +43,25 @@ class DeclarationTest extends MockeryTestCase
         $form->shouldReceive('get')->with('content')->andReturn($contentElement);
         $contentElement->shouldReceive('get')->with('declaration')->andReturn($declarationElement);
 
-        $urlService->shouldReceive('fromRoute')->with('continuation/declaration/print', [], [], true)->once()
+        $this->urlHelper->shouldReceive('fromRoute')->with('continuation/declaration/print', [], [], true)->once()
             ->andReturn('URL');
-        $translatorService->shouldReceive('translate')->with('print-declaration-form')->once()
+        $this->translator->shouldReceive('translate')->with('print-declaration-form')->once()
             ->andReturn('print-declaration-form');
-        $translatorService->shouldReceive('translateReplace')
+        $this->translator->shouldReceive('translateReplace')
             ->with('undertakings_declaration_download', ['URL', 'print-declaration-form'])->once()
             ->andReturn('undertakings_declaration_download');
         $contentElement->shouldReceive('get')->with('declarationDownload')->andReturn(
             m::mock()->shouldReceive('setAttribute')->with('value', 'undertakings_declaration_download')->getMock()
         );
         $declarationElement->shouldReceive('setValue')->with('DECLARATIONS')->once();
-        $formHelperService->shouldReceive('remove')->with($form, 'content->signatureOptions')->once();
-        $formHelperService->shouldReceive('remove')->with($form, 'content->declarationForVerify')->once();
-        $formHelperService->shouldReceive('remove')->with($form, 'form-actions->sign')->once();
-        $formHelperService->shouldReceive('remove')->with($form, 'form-actions->submitAndPay')->once();
+        $this->formHelper->shouldReceive('remove')->with($form, 'content->signatureOptions')->once();
+        $this->formHelper->shouldReceive('remove')->with($form, 'content->declarationForVerify')->once();
+        $this->formHelper->shouldReceive('remove')->with($form, 'form-actions->sign')->once();
+        $this->formHelper->shouldReceive('remove')->with($form, 'form-actions->submitAndPay')->once();
         $form->shouldReceive('get')->with('version')->andReturn($versionElement);
         $versionElement->shouldReceive('setValue')->with(34)->once();
 
-        $formHelperService->shouldReceive('remove')->with($form, 'signatureDetails')->once();
+        $this->formHelper->shouldReceive('remove')->with($form, 'signatureDetails')->once();
 
         $continuationDetailData = [
             'declarations' => 'DECLARATIONS',
@@ -83,21 +75,6 @@ class DeclarationTest extends MockeryTestCase
 
     public function testGetFormSignatureEnabled()
     {
-        $urlService = m::mock();
-        $translatorService = m::mock();
-        $formHelperService = m::mock();
-        $serviceLocator = m::mock();
-        $serviceLocator->shouldReceive('get')->with('ControllerPluginManager')->andReturn(
-            m::mock()->shouldReceive('get')->with('url')->andReturn($urlService)->getMock()
-        );
-        $scriptService = m::mock();
-        $serviceLocator->shouldReceive('get')->with('Script')->andReturn($scriptService);
-        $serviceLocator->shouldReceive('get')->with('Helper\Translation')->andReturn($translatorService);
-        $serviceLocator->shouldReceive('get')->with('Helper\Form')->andReturn($formHelperService);
-        $formServiceLocator = m::mock(FormServiceManager::class);
-        $formServiceLocator->shouldReceive('getServiceLocator')->with()->andReturn($serviceLocator);
-        $this->sut->setFormServiceLocator($formServiceLocator);
-
         $contentElement = m::mock();
         $declarationElement = m::mock();
         $versionElement = m::mock();
@@ -107,24 +84,24 @@ class DeclarationTest extends MockeryTestCase
         $form->shouldReceive('get')->with('content')->andReturn($contentElement);
         $contentElement->shouldReceive('get')->with('declaration')->andReturn($declarationElement);
 
-        $urlService->shouldReceive('fromRoute')->with('continuation/declaration/print', [], [], true)->once()
+        $this->urlHelper->shouldReceive('fromRoute')->with('continuation/declaration/print', [], [], true)->once()
             ->andReturn('URL');
-        $translatorService->shouldReceive('translate')->with('print-declaration-form')->once()
+        $this->translator->shouldReceive('translate')->with('print-declaration-form')->once()
             ->andReturn('print-declaration-form');
-        $translatorService->shouldReceive('translateReplace')
+        $this->translator->shouldReceive('translateReplace')
             ->with('undertakings_declaration_download', ['URL', 'print-declaration-form'])->once()
             ->andReturn('undertakings_declaration_download');
         $contentElement->shouldReceive('get')->with('declarationDownload')->andReturn(
             m::mock()->shouldReceive('setAttribute')->with('value', 'undertakings_declaration_download')->getMock()
         );
         $declarationElement->shouldReceive('setValue')->with('DECLARATIONS')->once();
-        $formHelperService->shouldReceive('remove')->with($form, 'content->disabledReview')->once();
-        $formHelperService->shouldReceive('remove')->with($form, 'form-actions->submitAndPay')->once();
+        $this->formHelper->shouldReceive('remove')->with($form, 'content->disabledReview')->once();
+        $this->formHelper->shouldReceive('remove')->with($form, 'form-actions->submitAndPay')->once();
         $form->shouldReceive('get')->with('version')->andReturn($versionElement);
         $versionElement->shouldReceive('setValue')->with(34)->once();
 
-        $formHelperService->shouldReceive('remove')->with($form, 'signatureDetails')->once();
-        $scriptService->shouldReceive('loadFiles')->with(['continuation-declaration'])->once();
+        $this->formHelper->shouldReceive('remove')->with($form, 'signatureDetails')->once();
+        $this->scriptFactory->shouldReceive('loadFiles')->with(['continuation-declaration'])->once();
 
         $continuationDetailData = [
             'declarations' => 'DECLARATIONS',
@@ -138,21 +115,6 @@ class DeclarationTest extends MockeryTestCase
 
     public function testGetFormNoFees()
     {
-        $urlService = m::mock();
-        $translatorService = m::mock();
-        $formHelperService = m::mock();
-        $serviceLocator = m::mock();
-        $serviceLocator->shouldReceive('get')->with('ControllerPluginManager')->andReturn(
-            m::mock()->shouldReceive('get')->with('url')->andReturn($urlService)->getMock()
-        );
-        $scriptService = m::mock();
-        $serviceLocator->shouldReceive('get')->with('Script')->andReturn($scriptService);
-        $serviceLocator->shouldReceive('get')->with('Helper\Translation')->andReturn($translatorService);
-        $serviceLocator->shouldReceive('get')->with('Helper\Form')->andReturn($formHelperService);
-        $formServiceLocator = m::mock(FormServiceManager::class);
-        $formServiceLocator->shouldReceive('getServiceLocator')->with()->andReturn($serviceLocator);
-        $this->sut->setFormServiceLocator($formServiceLocator);
-
         $contentElement = m::mock();
         $declarationElement = m::mock();
         $versionElement = m::mock();
@@ -162,24 +124,24 @@ class DeclarationTest extends MockeryTestCase
         $form->shouldReceive('get')->with('content')->andReturn($contentElement);
         $contentElement->shouldReceive('get')->with('declaration')->andReturn($declarationElement);
 
-        $urlService->shouldReceive('fromRoute')->with('continuation/declaration/print', [], [], true)->once()
+        $this->urlHelper->shouldReceive('fromRoute')->with('continuation/declaration/print', [], [], true)->once()
             ->andReturn('URL');
-        $translatorService->shouldReceive('translate')->with('print-declaration-form')->once()
+        $this->translator->shouldReceive('translate')->with('print-declaration-form')->once()
             ->andReturn('print-declaration-form');
-        $translatorService->shouldReceive('translateReplace')
+        $this->translator->shouldReceive('translateReplace')
             ->with('undertakings_declaration_download', ['URL', 'print-declaration-form'])->once()
             ->andReturn('undertakings_declaration_download');
         $contentElement->shouldReceive('get')->with('declarationDownload')->andReturn(
             m::mock()->shouldReceive('setAttribute')->with('value', 'undertakings_declaration_download')->getMock()
         );
         $declarationElement->shouldReceive('setValue')->with('DECLARATIONS')->once();
-        $formHelperService->shouldReceive('remove')->with($form, 'content->disabledReview')->once();
-        $formHelperService->shouldReceive('remove')->with($form, 'form-actions->submitAndPay')->once();
+        $this->formHelper->shouldReceive('remove')->with($form, 'content->disabledReview')->once();
+        $this->formHelper->shouldReceive('remove')->with($form, 'form-actions->submitAndPay')->once();
         $form->shouldReceive('get')->with('version')->andReturn($versionElement);
         $versionElement->shouldReceive('setValue')->with(34)->once();
 
-        $formHelperService->shouldReceive('remove')->with($form, 'signatureDetails')->once();
-        $scriptService->shouldReceive('loadFiles')->with(['continuation-declaration'])->once();
+        $this->formHelper->shouldReceive('remove')->with($form, 'signatureDetails')->once();
+        $this->scriptFactory->shouldReceive('loadFiles')->with(['continuation-declaration'])->once();
 
         $continuationDetailData = [
             'declarations' => 'DECLARATIONS',
@@ -193,21 +155,6 @@ class DeclarationTest extends MockeryTestCase
 
     public function testGetFormWithFees()
     {
-        $urlService = m::mock();
-        $translatorService = m::mock();
-        $formHelperService = m::mock();
-        $serviceLocator = m::mock();
-        $serviceLocator->shouldReceive('get')->with('ControllerPluginManager')->andReturn(
-            m::mock()->shouldReceive('get')->with('url')->andReturn($urlService)->getMock()
-        );
-        $scriptService = m::mock();
-        $serviceLocator->shouldReceive('get')->with('Script')->andReturn($scriptService);
-        $serviceLocator->shouldReceive('get')->with('Helper\Translation')->andReturn($translatorService);
-        $serviceLocator->shouldReceive('get')->with('Helper\Form')->andReturn($formHelperService);
-        $formServiceLocator = m::mock(FormServiceManager::class);
-        $formServiceLocator->shouldReceive('getServiceLocator')->with()->andReturn($serviceLocator);
-        $this->sut->setFormServiceLocator($formServiceLocator);
-
         $contentElement = m::mock();
         $declarationElement = m::mock();
         $versionElement = m::mock();
@@ -217,24 +164,24 @@ class DeclarationTest extends MockeryTestCase
         $form->shouldReceive('get')->with('content')->andReturn($contentElement);
         $contentElement->shouldReceive('get')->with('declaration')->andReturn($declarationElement);
 
-        $urlService->shouldReceive('fromRoute')->with('continuation/declaration/print', [], [], true)->once()
+        $this->urlHelper->shouldReceive('fromRoute')->with('continuation/declaration/print', [], [], true)->once()
             ->andReturn('URL');
-        $translatorService->shouldReceive('translate')->with('print-declaration-form')->once()
+        $this->translator->shouldReceive('translate')->with('print-declaration-form')->once()
             ->andReturn('print-declaration-form');
-        $translatorService->shouldReceive('translateReplace')
+        $this->translator->shouldReceive('translateReplace')
             ->with('undertakings_declaration_download', ['URL', 'print-declaration-form'])->once()
             ->andReturn('undertakings_declaration_download');
         $contentElement->shouldReceive('get')->with('declarationDownload')->andReturn(
             m::mock()->shouldReceive('setAttribute')->with('value', 'undertakings_declaration_download')->getMock()
         );
         $declarationElement->shouldReceive('setValue')->with('DECLARATIONS')->once();
-        $formHelperService->shouldReceive('remove')->with($form, 'content->disabledReview')->once();
-        $formHelperService->shouldReceive('remove')->with($form, 'form-actions->submit')->once();
+        $this->formHelper->shouldReceive('remove')->with($form, 'content->disabledReview')->once();
+        $this->formHelper->shouldReceive('remove')->with($form, 'form-actions->submit')->once();
         $form->shouldReceive('get')->with('version')->andReturn($versionElement);
         $versionElement->shouldReceive('setValue')->with(34)->once();
 
-        $formHelperService->shouldReceive('remove')->with($form, 'signatureDetails')->once();
-        $scriptService->shouldReceive('loadFiles')->with(['continuation-declaration'])->once();
+        $this->formHelper->shouldReceive('remove')->with($form, 'signatureDetails')->once();
+        $this->scriptFactory->shouldReceive('loadFiles')->with(['continuation-declaration'])->once();
 
         $continuationDetailData = [
             'declarations' => 'DECLARATIONS',
@@ -248,21 +195,6 @@ class DeclarationTest extends MockeryTestCase
 
     public function testGetFormReviewSection()
     {
-        $urlService = m::mock();
-        $translatorService = m::mock();
-        $formHelperService = m::mock();
-        $serviceLocator = m::mock();
-        $serviceLocator->shouldReceive('get')->with('ControllerPluginManager')->andReturn(
-            m::mock()->shouldReceive('get')->with('url')->andReturn($urlService)->getMock()
-        );
-        $scriptService = m::mock();
-        $serviceLocator->shouldReceive('get')->with('Script')->andReturn($scriptService);
-        $serviceLocator->shouldReceive('get')->with('Helper\Translation')->andReturn($translatorService);
-        $serviceLocator->shouldReceive('get')->with('Helper\Form')->andReturn($formHelperService);
-        $formServiceLocator = m::mock(FormServiceManager::class);
-        $formServiceLocator->shouldReceive('getServiceLocator')->with()->andReturn($serviceLocator);
-        $this->sut->setFormServiceLocator($formServiceLocator);
-
         $contentElement = m::mock();
         $declarationElement = m::mock();
         $versionElement = m::mock();
@@ -272,19 +204,19 @@ class DeclarationTest extends MockeryTestCase
         $form->shouldReceive('get')->with('content')->andReturn($contentElement);
         $contentElement->shouldReceive('get')->with('declaration')->andReturn($declarationElement);
 
-        $urlService->shouldReceive('fromRoute')->with('continuation/declaration/print', [], [], true)->once()
+        $this->urlHelper->shouldReceive('fromRoute')->with('continuation/declaration/print', [], [], true)->once()
             ->andReturn('URL');
-        $translatorService->shouldReceive('translate')->with('print-declaration-form')->once()
+        $this->translator->shouldReceive('translate')->with('print-declaration-form')->once()
             ->andReturn('print-declaration-form');
-        $translatorService->shouldReceive('translateReplace')
+        $this->translator->shouldReceive('translateReplace')
             ->with('undertakings_declaration_download', ['URL', 'print-declaration-form'])->once()
             ->andReturn('undertakings_declaration_download');
         $contentElement->shouldReceive('get')->with('declarationDownload')->andReturn(
             m::mock()->shouldReceive('setAttribute')->with('value', 'undertakings_declaration_download')->getMock()
         );
         $declarationElement->shouldReceive('setValue')->with('DECLARATIONS')->once();
-        $formHelperService->shouldReceive('remove')->with($form, 'content->disabledReview')->once();
-        $formHelperService->shouldReceive('remove')->with($form, 'form-actions->submit')->once();
+        $this->formHelper->shouldReceive('remove')->with($form, 'content->disabledReview')->once();
+        $this->formHelper->shouldReceive('remove')->with($form, 'form-actions->submit')->once();
         $form->shouldReceive('get')->with('version')->andReturn($versionElement);
         $versionElement->shouldReceive('setValue')->with(34)->once();
 
@@ -293,8 +225,8 @@ class DeclarationTest extends MockeryTestCase
                 ->once()->getMock()
         );
 
-        $formHelperService->shouldReceive('remove')->with($form, 'signatureDetails')->once();
-        $scriptService->shouldReceive('loadFiles')->with(['continuation-declaration'])->once();
+        $this->formHelper->shouldReceive('remove')->with($form, 'signatureDetails')->once();
+        $this->scriptFactory->shouldReceive('loadFiles')->with(['continuation-declaration'])->once();
 
         $continuationDetailData = [
             'declarations' => 'DECLARATIONS',
@@ -309,21 +241,6 @@ class DeclarationTest extends MockeryTestCase
 
     public function testGetFormSignature()
     {
-        $urlService = m::mock();
-        $translatorService = m::mock();
-        $formHelperService = m::mock();
-        $serviceLocator = m::mock();
-        $serviceLocator->shouldReceive('get')->with('ControllerPluginManager')->andReturn(
-            m::mock()->shouldReceive('get')->with('url')->andReturn($urlService)->getMock()
-        );
-        $scriptService = m::mock();
-        $serviceLocator->shouldReceive('get')->with('Script')->andReturn($scriptService);
-        $serviceLocator->shouldReceive('get')->with('Helper\Translation')->andReturn($translatorService);
-        $serviceLocator->shouldReceive('get')->with('Helper\Form')->andReturn($formHelperService);
-        $formServiceLocator = m::mock(FormServiceManager::class);
-        $formServiceLocator->shouldReceive('getServiceLocator')->with()->andReturn($serviceLocator);
-        $this->sut->setFormServiceLocator($formServiceLocator);
-
         $contentElement = m::mock();
         $declarationElement = m::mock();
         $versionElement = m::mock();
@@ -333,19 +250,19 @@ class DeclarationTest extends MockeryTestCase
         $form->shouldReceive('get')->with('content')->andReturn($contentElement);
         $contentElement->shouldReceive('get')->with('declaration')->andReturn($declarationElement);
 
-        $urlService->shouldReceive('fromRoute')->with('continuation/declaration/print', [], [], true)->once()
+        $this->urlHelper->shouldReceive('fromRoute')->with('continuation/declaration/print', [], [], true)->once()
             ->andReturn('URL');
-        $translatorService->shouldReceive('translate')->with('print-declaration-form')->once()
+        $this->translator->shouldReceive('translate')->with('print-declaration-form')->once()
             ->andReturn('print-declaration-form');
-        $translatorService->shouldReceive('translateReplace')
+        $this->translator->shouldReceive('translateReplace')
             ->with('undertakings_declaration_download', ['URL', 'print-declaration-form'])->once()
             ->andReturn('undertakings_declaration_download');
         $contentElement->shouldReceive('get')->with('declarationDownload')->andReturn(
             m::mock()->shouldReceive('setAttribute')->with('value', 'undertakings_declaration_download')->getMock()
         );
         $declarationElement->shouldReceive('setValue')->with('DECLARATIONS')->once();
-        $formHelperService->shouldReceive('remove')->with($form, 'content->disabledReview')->once();
-        $formHelperService->shouldReceive('remove')->with($form, 'form-actions->submit')->once();
+        $this->formHelper->shouldReceive('remove')->with($form, 'content->disabledReview')->once();
+        $this->formHelper->shouldReceive('remove')->with($form, 'form-actions->submit')->once();
         $form->shouldReceive('get')->with('version')->andReturn($versionElement);
         $versionElement->shouldReceive('setValue')->with(34)->once();
 
@@ -354,7 +271,7 @@ class DeclarationTest extends MockeryTestCase
                 ->once()->getMock()
         );
 
-        $translatorService->shouldReceive('translateReplace')->with('undertakings_signed', ['NAME', '14/07/2017'])
+        $this->translator->shouldReceive('translateReplace')->with('undertakings_signed', ['NAME', '14/07/2017'])
             ->once()->andReturn('SIGNATURE_DETAILS');
         $form->shouldReceive('get')->with('signatureDetails')->once()->andReturn(
             m::mock()->shouldReceive('get')->with('signature')->once()->andReturn(
@@ -362,8 +279,8 @@ class DeclarationTest extends MockeryTestCase
             )->getMock()
         );
 
-        $formHelperService->shouldReceive('remove')->with($form, 'form-actions->sign')->once();
-        $formHelperService->shouldReceive('remove')->with($form, 'content')->once();
+        $this->formHelper->shouldReceive('remove')->with($form, 'form-actions->sign')->once();
+        $this->formHelper->shouldReceive('remove')->with($form, 'content')->once();
 
         $continuationDetailData = [
             'declarations' => 'DECLARATIONS',

@@ -2,18 +2,18 @@
 
 namespace Common\FormService\Form\Continuation;
 
-use Common\FormService\Form\AbstractFormService;
-use Common\Service\Helper\FormHelperService;
-use Common\Form\Model\Form\Continuation\LicenceChecklist as LicenceChecklistForm;
 use Common\Form\Form;
+use Common\Form\Model\Form\Continuation\LicenceChecklist as LicenceChecklistForm;
 use Common\RefData;
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Helper\UrlHelperService;
 
 /**
  * Continuation licence checklist form
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class LicenceChecklist extends AbstractFormService
+class LicenceChecklist
 {
     protected $checklistCheckboxes = [
         'typeOfLicence',
@@ -28,6 +28,16 @@ class LicenceChecklist extends AbstractFormService
         'users'
     ];
 
+    private UrlHelperService $urlHelper;
+    protected FormHelperService $formHelper;
+
+
+    public function __construct(FormHelperService $formHelper, UrlHelperService $urlHelper)
+    {
+        $this->formHelper = $formHelper;
+        $this->urlHelper = $urlHelper;
+    }
+
     /**
      * Get form
      *
@@ -37,7 +47,7 @@ class LicenceChecklist extends AbstractFormService
      */
     public function getForm($data)
     {
-        $form = $this->getFormHelper()->createForm(LicenceChecklistForm::class);
+        $form = $this->formHelper->createForm(LicenceChecklistForm::class);
 
         $this->alterForm($form, $data);
 
@@ -115,7 +125,7 @@ class LicenceChecklist extends AbstractFormService
     {
         $backButton = $form->get('licenceChecklistConfirmation')->get('noContent')->get('backToLicence');
         $backButton->setValue(
-            $this->getServiceLocator()->get('Helper\Url')->fromRoute(
+            $this->urlHelper->fromRoute(
                 'lva-licence',
                 ['licence' => $licenceId]
             )
@@ -136,10 +146,10 @@ class LicenceChecklist extends AbstractFormService
         if ($key !== false) {
             $sections[$key] = 'vehicles';
         }
-        $formHelper = $this->getFormHelper();
+
         foreach ($this->checklistCheckboxes as $checkbox) {
             if (!in_array($checkbox, $sections)) {
-                $formHelper->remove($form, 'data->' . $checkbox . 'Checkbox');
+                $this->formHelper->remove($form, 'data->' . $checkbox . 'Checkbox');
             }
         }
     }
@@ -155,7 +165,8 @@ class LicenceChecklist extends AbstractFormService
     protected function alterContinueButton($form, $data): void
     {
         $licenceData = $data['licence'];
-        if ($licenceData['licenceType']['id'] === RefData::LICENCE_TYPE_SPECIAL_RESTRICTED
+        if (
+            $licenceData['licenceType']['id'] === RefData::LICENCE_TYPE_SPECIAL_RESTRICTED
             && $licenceData['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_PSV
         ) {
             $form->get('licenceChecklistConfirmation')

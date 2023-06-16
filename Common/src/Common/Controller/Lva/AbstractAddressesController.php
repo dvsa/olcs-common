@@ -3,6 +3,7 @@
 namespace Common\Controller\Lva;
 
 use Common\Data\Mapper;
+use Common\FormService\FormServiceManager;
 use Dvsa\Olcs\Transfer\Command as TransferCmd;
 use Dvsa\Olcs\Transfer\Query as TransferQry;
 use Laminas\Form\Form;
@@ -79,7 +80,7 @@ abstract class AbstractAddressesController extends AbstractController
 
         /** @var \Common\Form\Form $form */
         $form = $this->getServiceLocator()
-            ->get('FormServiceManager')
+            ->get(FormServiceManager::class)
             ->get('lva-' . $this->lva . '-' . $this->section)
             ->getForm(
                 [

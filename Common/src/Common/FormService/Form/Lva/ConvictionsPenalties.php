@@ -1,16 +1,11 @@
 <?php
 
-/**
- * Convictions and Penalties Form
- *
- * @author Dan Eggleston <dan@stolenegg.com>
- */
-
 namespace Common\FormService\Form\Lva;
 
-use Common\FormService\Form\AbstractFormService;
 use Common\RefData;
-use Common\Form\Elements\Types\Html;
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Helper\TranslationHelperService;
+use Common\Service\Helper\UrlHelperService;
 use Dvsa\Olcs\Api\Entity\Licence;
 
 /**
@@ -18,8 +13,22 @@ use Dvsa\Olcs\Api\Entity\Licence;
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class ConvictionsPenalties extends AbstractFormService
+class ConvictionsPenalties
 {
+    protected TranslationHelperService $translator;
+    protected UrlHelperService $urlHelper;
+    protected FormHelperService $formHelper;
+
+    public function __construct(
+        FormHelperService $formHelper,
+        TranslationHelperService $translator,
+        UrlHelperService $urlHelper
+    ) {
+        $this->formHelper = $formHelper;
+        $this->translator = $translator;
+        $this->urlHelper = $urlHelper;
+    }
+
     /**
      * get the form
      *
@@ -29,7 +38,7 @@ class ConvictionsPenalties extends AbstractFormService
      */
     public function getForm(array $params = [])
     {
-        $form = $this->getFormHelper()->createForm('Lva\ConvictionsPenalties');
+        $form = $this->formHelper->createForm('Lva\ConvictionsPenalties');
         $this->alterForm($form, $params);
         return $form;
     }
@@ -60,9 +69,8 @@ class ConvictionsPenalties extends AbstractFormService
     {
         $this->changeFormForDirectorVariation($form, $params);
         $getConvictionsReadMoreLink = $form->get('convictionsReadMoreLink')->get('readMoreLink');
-        $translator = $this->getServiceLocator()->get('Helper\Translation');
-        $routeParam = $translator->translate('convictions-and-penalties-guidance-route-param');
-        $getConvictionsReadMoreRoute = $this->getServiceLocator()->get('Helper\Url')->fromRoute(
+        $routeParam = $this->translator->translate('convictions-and-penalties-guidance-route-param');
+        $getConvictionsReadMoreRoute = $this->urlHelper->fromRoute(
             'guides/guide',
             ['guide' => $routeParam]
         );
@@ -144,7 +152,7 @@ class ConvictionsPenalties extends AbstractFormService
             $this->alterFormHeading($dataTable, $params);
             $this->alterFormButtons($form);
             $this->removeConfirmation($form);
-            $this->getFormHelper()->remove($form, 'form-actions->save');
+            $this->formHelper->remove($form, 'form-actions->save');
         }
     }
 }

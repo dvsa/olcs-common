@@ -24,9 +24,7 @@ class ApplicationPsvVehiclesVehicleTest extends MockeryTestCase
         $this->formHelper = m::mock('\Common\Service\Helper\FormHelperService');
         $this->formService = m::mock('\Common\FormService\FormServiceManager')->makePartial();
 
-        $this->sut = new ApplicationPsvVehiclesVehicle();
-        $this->sut->setFormHelper($this->formHelper);
-        $this->sut->setFormServiceLocator($this->formService);
+        $this->sut = new ApplicationPsvVehiclesVehicle($this->formHelper, $this->formService);
     }
 
     public function testGetFormEdit()

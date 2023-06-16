@@ -1,11 +1,9 @@
 <?php
 
-/**
- * Application Conditions Undertakings
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\FormService\Form\Lva\ConditionsUndertakings;
+
+use Common\Service\Helper\FormHelperService;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Application Conditions Undertakings
@@ -14,6 +12,15 @@ namespace Common\FormService\Form\Lva\ConditionsUndertakings;
  */
 class ApplicationConditionsUndertakings extends AbstractConditionsUndertakings
 {
+    protected FormHelperService $formHelper;
+    protected AuthorizationService $authService;
+
+    public function __construct(FormHelperService $formHelper, AuthorizationService $authService)
+    {
+        $this->formHelper = $formHelper;
+        $this->authService = $authService;
+    }
+
     protected function alterForm($form)
     {
         parent::alterForm($form);

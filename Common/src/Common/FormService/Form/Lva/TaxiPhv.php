@@ -1,11 +1,9 @@
 <?php
 
-/**
- * TaxiPhv Form
- *
- * @author Dan Eggleston <dan@stolenegg.com>
- */
 namespace Common\FormService\Form\Lva;
+
+use Common\Service\Helper\FormHelperService;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * TaxiPhv Form
@@ -14,9 +12,18 @@ namespace Common\FormService\Form\Lva;
  */
 class TaxiPhv extends AbstractLvaFormService
 {
+    protected FormHelperService $formHelper;
+    protected AuthorizationService $authService;
+
+    public function __construct(FormHelperService $formHelper, AuthorizationService $authService)
+    {
+        $this->formHelper = $formHelper;
+        $this->authService = $authService;
+    }
+
     public function getForm()
     {
-        $form = $this->getFormHelper()->createForm('Lva\TaxiPhv');
+        $form = $this->formHelper->createForm('Lva\TaxiPhv');
 
         $this->alterForm($form);
 

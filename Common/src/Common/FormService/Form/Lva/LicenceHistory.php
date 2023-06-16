@@ -1,24 +1,26 @@
 <?php
 
-/**
- * Licence History Form
- *
- * @author Dan Eggleston <dan@stolenegg.com>
- */
 namespace Common\FormService\Form\Lva;
 
-use Common\FormService\Form\AbstractFormService;
+use Common\Service\Helper\FormHelperService;
 
 /**
  * Licence History Form
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class LicenceHistory extends AbstractFormService
+class LicenceHistory
 {
+    protected FormHelperService $formHelper;
+
+    public function __construct(FormHelperService $formHelper)
+    {
+        $this->formHelper = $formHelper;
+    }
+
     public function getForm()
     {
-        $form = $this->getFormHelper()->createForm('Lva\LicenceHistory');
+        $form = $this->formHelper->createForm('Lva\LicenceHistory');
 
         $this->alterForm($form);
 

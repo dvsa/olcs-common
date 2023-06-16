@@ -5,6 +5,7 @@ namespace Common\Controller\Lva\Application;
 use Common\Controller\Lva;
 use Common\Data\Mapper\Lva\TypeOfLicence as TypeOfLicenceMapper;
 use Common\FormService\Form\Lva\TypeOfLicence\AbstractTypeOfLicence as TypeOfLicenceFormService;
+use Common\FormService\FormServiceManager;
 use Common\RefData;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateTypeOfLicence;
 use Laminas\Http\Response;
@@ -30,7 +31,7 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
             return $prg;
         }
         /** @var TypeOfLicenceFormService $tolFormService */
-        $tolFormService = $this->getServiceLocator()->get('FormServiceManager')->get('lva-application-type-of-licence');
+        $tolFormService = $this->getServiceLocator()->get(FormServiceManager::class)->get('lva-application-type-of-licence');
         /** @var \Laminas\Form\FormInterface $form */
         $form = $tolFormService->getForm();
 
@@ -140,9 +141,9 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
     {
         if (isset($data['allowedOperatorLocation'])) {
             if ($data['allowedOperatorLocation'] === TypeOfLicenceFormService::ALLOWED_OPERATOR_LOCATION_NI) {
-                $operatorLocation ='Y';
+                $operatorLocation = 'Y';
             } elseif ($data['allowedOperatorLocation'] === TypeOfLicenceFormService::ALLOWED_OPERATOR_LOCATION_GB) {
-                $operatorLocation ='N';
+                $operatorLocation = 'N';
             }
             return $operatorLocation;
         }

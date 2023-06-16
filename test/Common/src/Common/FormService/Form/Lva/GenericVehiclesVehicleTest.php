@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Generic Vehicles Vehicle Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\FormService\Form\Lva;
 
 use Mockery as m;
@@ -26,8 +21,7 @@ class GenericVehiclesVehicleTest extends MockeryTestCase
     {
         $this->formHelper = m::mock('\Common\Service\Helper\FormHelperService');
 
-        $this->sut = new GenericVehiclesVehicle();
-        $this->sut->setFormHelper($this->formHelper);
+        $this->sut = new GenericVehiclesVehicle($this->formHelper);
     }
 
     public function testAlterFormNoOp()

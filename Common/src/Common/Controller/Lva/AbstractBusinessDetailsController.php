@@ -6,6 +6,7 @@ use Common\Controller\Lva\Traits\CrudTableTrait;
 use Common\Controller\Traits\CompanySearch;
 use Common\Data\Mapper\Lva\BusinessDetails as Mapper;
 use Common\Data\Mapper\Lva\CompanySubsidiary as CompanySubsidiaryMapper;
+use Common\FormService\FormServiceManager;
 use Dvsa\Olcs\Transfer\Command as TransferCmd;
 use Dvsa\Olcs\Transfer\Query\CompanySubsidiary\CompanySubsidiary;
 use Dvsa\Olcs\Transfer\Query\Licence\BusinessDetails;
@@ -20,9 +21,10 @@ use ZfcRbac\Identity\IdentityProviderInterface;
  */
 abstract class AbstractBusinessDetailsController extends AbstractController
 {
-    use CrudTableTrait, CompanySearch;
+    use CrudTableTrait;
+    use CompanySearch;
 
-    const COMPANY_NUMBER_LENGTH = 8;
+    public const COMPANY_NUMBER_LENGTH = 8;
 
     protected $section = 'business_details';
     protected $baseRoute = 'lva-%s/business_details';
@@ -59,7 +61,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         // Gets a fully configured/altered form for any version of this section
         /** @var \Common\Form\Form $form */
         $form = $this->getServiceLocator()
-            ->get('FormServiceManager')
+            ->get(FormServiceManager::class)
             ->get('lva-' . $this->lva . '-' . $this->section)
             ->getForm($orgData['type']['id'], $orgData['hasInforceLicences'], $hasOrganisationSubmittedLicenceApplication)
             ->setData($data);
@@ -129,14 +131,11 @@ abstract class AbstractBusinessDetailsController extends AbstractController
                 'version' => $data['version'],
                 'name' => $data['data']['name'],
                 'tradingNames' => $this->flattenTradingNames($tradingNames),
-                'natureOfBusiness' => isset($data['data']['natureOfBusiness'])
-                    ? $data['data']['natureOfBusiness'] : null,
-                'companyOrLlpNo' => isset($data['data']['companyNumber']['company_number'])
-                    ? $data['data']['companyNumber']['company_number'] : null,
+                'natureOfBusiness' => $data['data']['natureOfBusiness'] ?? null,
+                'companyOrLlpNo' => $data['data']['companyNumber']['company_number'] ?? null,
                 'registeredAddress' => isset($data['registeredAddress']) ? $data['registeredAddress'] : null,
                 'partial' => $crudAction !== null,
-                'allowEmail' => isset($data['allow-email']['allowEmail'])
-                    ? $data['allow-email']['allowEmail'] : null,
+                'allowEmail' => $data['allow-email']['allowEmail'] ?? null,
             ];
 
             $response = $this->handleCommand(TransferCmd\Licence\UpdateBusinessDetails::create($dtoData));
@@ -147,11 +146,9 @@ abstract class AbstractBusinessDetailsController extends AbstractController
                 'version' => $data['version'],
                 'name' => $data['data']['name'],
                 'tradingNames' => $this->flattenTradingNames($tradingNames),
-                'natureOfBusiness' => isset($data['data']['natureOfBusiness'])
-                    ? $data['data']['natureOfBusiness'] : null,
-                'companyOrLlpNo' => isset($data['data']['companyNumber']['company_number'])
-                    ? $data['data']['companyNumber']['company_number'] : null,
-                'registeredAddress' => isset($data['registeredAddress']) ? $data['registeredAddress'] : null,
+                'natureOfBusiness' => $data['data']['natureOfBusiness'] ?? null,
+                'companyOrLlpNo' => $data['data']['companyNumber']['company_number'] ?? null,
+                'registeredAddress' => $data['registeredAddress'] ?? null,
                 'partial' => $crudAction !== null
             ];
 
@@ -234,7 +231,8 @@ abstract class AbstractBusinessDetailsController extends AbstractController
     {
         $data = (array)$this->getRequest()->getPost();
 
-        if (!isset($data['data']['companyNumber'])
+        if (
+            !isset($data['data']['companyNumber'])
             || !array_key_exists('company_number', $data['data']['companyNumber'])
         ) {
             $data['data']['companyNumber']['company_number'] = $orgData['companyOrLlpNo'];

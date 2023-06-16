@@ -1,11 +1,9 @@
 <?php
 
-/**
- * Variation Psv Vehicles
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\FormService\Form\Lva;
+
+use Common\Service\Helper\FormHelperService;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Variation Psv Vehicles
@@ -14,6 +12,14 @@ namespace Common\FormService\Form\Lva;
  */
 class VariationPsvVehicles extends PsvVehicles
 {
+    protected FormHelperService $formHelper;
+    protected AuthorizationService $authService;
+
+    public function __construct(FormHelperService $formHelper, AuthorizationService $authService)
+    {
+        parent::__construct($formHelper, $authService);
+    }
+
     protected function alterForm($form)
     {
         $this->removeStandardFormActions($form);

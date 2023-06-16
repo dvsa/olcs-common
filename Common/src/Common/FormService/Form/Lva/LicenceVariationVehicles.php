@@ -1,13 +1,8 @@
 <?php
 
-/**
- * Licence Variation Vehicles Form
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\FormService\Form\Lva;
 
-use Common\FormService\Form\AbstractFormService;
+use Common\Service\Helper\FormHelperService;
 
 /**
  * Licence Variation Vehicles Form
@@ -15,13 +10,18 @@ use Common\FormService\Form\AbstractFormService;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class LicenceVariationVehicles extends AbstractFormService
+class LicenceVariationVehicles
 {
+    protected FormHelperService $formHelper;
+
+    public function __construct(FormHelperService $formHelper)
+    {
+        $this->formHelper = $formHelper;
+    }
+
     public function alterForm($form)
     {
-        $formHelper = $this->getFormHelper();
-
-        $formHelper->remove($form, 'data->hasEnteredReg');
-        $formHelper->remove($form, 'data->notice');
+        $this->formHelper->remove($form, 'data->hasEnteredReg');
+        $this->formHelper->remove($form, 'data->notice');
     }
 }

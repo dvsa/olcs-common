@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Common Licence Trailers Test
- *
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
- */
 namespace CommonTest\FormService\Form\Lva;
 
 use Mockery as m;
@@ -33,8 +28,7 @@ class CommonLicenceTrailersTest extends MockeryTestCase
     {
         $this->formHelper = m::mock(FormHelperService::class);
 
-        $this->sut = new CommonLicenceTrailers();
-        $this->sut->setFormHelper($this->formHelper);
+        $this->sut = new CommonLicenceTrailers($this->formHelper);
     }
 
     public function testGetForm()

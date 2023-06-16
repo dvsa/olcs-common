@@ -1,12 +1,8 @@
 <?php
 
-/**
- * Common Lva Abstract Type Of Licence Controller
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva\Variation;
 
+use Common\FormService\FormServiceManager;
 use Dvsa\Olcs\Transfer\Command\Variation\UpdateTypeOfLicence;
 use Dvsa\Olcs\Transfer\Query\Variation\TypeOfLicence;
 use Common\Controller\Lva;
@@ -50,7 +46,7 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
             'currentVehicleType' => $data['currentVehicleType']
         ];
 
-        $tolFormService = $this->getServiceLocator()->get('FormServiceManager')->get('lva-variation-type-of-licence');
+        $tolFormService = $this->getServiceLocator()->get(FormServiceManager::class)->get('lva-variation-type-of-licence');
         $form = $tolFormService->getForm($params);
 
         $mappedData = TypeOfLicenceMapper::mapFromResult($data);

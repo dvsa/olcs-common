@@ -1,16 +1,12 @@
 <?php
 
-/**
- * Variation TransportManager Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\FormService\Form\Lva\TransportManager;
 
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Lva\TransportManager\VariationTransportManager as Sut;
 use Laminas\Form\Form;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Variation TransportManager Test
@@ -28,11 +24,9 @@ class VariationTransportManagerTest extends MockeryTestCase
     public function setUp(): void
     {
         $this->formHelper = m::mock('\Common\Service\Helper\FormHelperService');
-        $this->fsm = m::mock('\Common\FormService\FormServiceManager')->makePartial();
+        $this->authService = m::mock(AuthorizationService::class);
 
-        $this->sut = new Sut();
-        $this->sut->setFormHelper($this->formHelper);
-        $this->sut->setFormServiceLocator($this->fsm);
+        $this->sut = new Sut($this->formHelper, $this->authService);
     }
 
     public function testGetForm()

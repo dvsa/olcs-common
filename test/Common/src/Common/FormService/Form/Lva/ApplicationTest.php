@@ -1,15 +1,12 @@
 <?php
 
-/**
- * Application Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\FormService\Form\Lva;
 
+use Common\Service\Helper\FormHelperService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Lva\Application;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Application Test
@@ -22,7 +19,9 @@ class ApplicationTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->sut = new Application();
+        $this->formHelper = m::mock(FormHelperService::class);
+        $this->authService = m::mock(AuthorizationService::class);
+        $this->sut = new Application($this->formHelper, $this->authService);
     }
 
     /**

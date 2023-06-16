@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Form Service Manager Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\FormService;
 
 use CommonTest\Bootstrap;
@@ -43,39 +38,5 @@ class FormServiceManagerTest extends MockeryTestCase
             ->with(m::type(FormServiceManager::class));
 
         new FormServiceManager($config);
-    }
-
-    public function testValidate()
-    {
-        $plugin = m::mock(FormServiceInterface::class);
-
-        $this->assertNull($this->sut->validate($plugin));
-    }
-
-    public function testValidateInvalid()
-    {
-        $this->expectException(InvalidServiceException::class);
-
-        $this->sut->validate(null);
-    }
-
-    /**
-     * @todo To be removed as part of OLCS-28149
-     */
-    public function testValidatePluginInvalid()
-    {
-        $this->expectException(RuntimeException::class);
-
-        $this->sut->validatePlugin(null);
-    }
-
-    /**
-     * @todo To be removed as part of OLCS-28149
-     */
-    public function testValidatePlugin()
-    {
-        $plugin = m::mock(FormServiceInterface::class);
-
-        $this->assertNull($this->sut->validatePlugin($plugin));
     }
 }

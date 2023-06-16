@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Financial History Form Service Test
- *
- * @author Dan Eggleston <dan@stolenegg.com>
- */
-
 namespace CommonTest\FormService\Form\Lva;
 
 use Common\Form\Elements\InputFilters\SingleCheckbox;
@@ -16,7 +10,6 @@ use Common\FormService\FormServiceManager;
 use Common\RefData;
 use Common\Service\Helper\FormHelperService;
 use Common\Service\Helper\TranslationHelperService;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Form\ElementInterface;
@@ -42,11 +35,10 @@ class FinancialHistoryTest extends MockeryTestCase
     public function setUp(): void
     {
         $this->formHelper = m::mock(FormHelperService::class);
+        $this->translator = m::mock(TranslationHelperService::class);
         $this->fsm = m::mock(FormServiceManager::class)->makePartial();
 
-        $this->sut = new FinancialHistory();
-        $this->sut->setFormHelper($this->formHelper);
-        $this->sut->setFormServiceLocator($this->fsm);
+        $this->sut = new FinancialHistory($this->formHelper, $this->translator);
     }
 
     public function testGetForm()
@@ -146,7 +138,6 @@ class FinancialHistoryTest extends MockeryTestCase
         $this->formHelper->shouldReceive('remove')->once()->with($mockForm, 'data->financeHint');
         $this->formHelper->shouldReceive('remove')->once()->with($mockForm, 'data->financialHistoryConfirmation');
 
-
         $mockForm->shouldReceive('get')->with('data')->andReturn($mockDataFieldset);
         $mockDataFieldset->shouldReceive('get')->with('hasAnyPerson')->andReturn($mockHasAnyPersonElement);
         $mockHasAnyPersonElement
@@ -154,12 +145,7 @@ class FinancialHistoryTest extends MockeryTestCase
             ->with([[sprintf('Has the new %s been:', $personDescription)]])
             ->once();
 
-
-        $translationHelperService = m::mock(TranslationHelperService::class);
-        $translationHelperService->shouldReceive('translate')->andReturn([sprintf('Has the new %s been:', $personDescription)]);
-        $sl = m::mock(ServiceLocatorInterface::class)->makePartial();
-        $sl->shouldReceive('get')->with('Helper\Translation')->andReturn($translationHelperService);
-        $this->fsm->shouldReceive('getServiceLocator')->andReturn($sl);
+        $this->translator->shouldReceive('translate')->andReturn([sprintf('Has the new %s been:', $personDescription)]);
 
         $form = $this->sut->getForm(
             $request,

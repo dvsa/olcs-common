@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Application Sole Trader
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\FormService\Form\Lva\People\SoleTrader;
 
 /**

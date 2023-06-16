@@ -2,15 +2,22 @@
 
 namespace Common\FormService\Form\Lva;
 
-use Common\FormService\Form\AbstractFormService;
+use Common\Service\Helper\FormHelperService;
 
 /**
  * Safety Form
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class Safety extends AbstractFormService
+class Safety
 {
+    protected FormHelperService $formHelper;
+
+    public function __construct(FormHelperService $formHelper)
+    {
+        $this->formHelper = $formHelper;
+    }
+
     /**
      * Returns form
      *
@@ -18,6 +25,6 @@ class Safety extends AbstractFormService
      */
     public function getForm()
     {
-        return $this->getFormHelper()->createForm('Lva\Safety');
+        return $this->formHelper->createForm('Lva\Safety');
     }
 }

@@ -4,6 +4,7 @@ namespace Common\Controller\Continuation;
 
 use Common\Controller\Lva\AbstractController;
 use Common\Form\Form;
+use Common\FormService\FormServiceManager;
 use Laminas\View\Model\ViewModel;
 use Dvsa\Olcs\Transfer\Query\ContinuationDetail\Get as GetContinuationDetail;
 use Common\RefData;
@@ -16,17 +17,17 @@ use Common\Service\Helper\TranslationHelperService;
  */
 abstract class AbstractContinuationController extends AbstractController
 {
-    const SUCCESS_CONTROLLER = 'ContinuationController/Success';
-    const LICENCE_OVERVIEW_ROUTE = 'lva-licence';
-    const PATH_SR = 1;
-    const PATH_CU = 2;
-    const PATH_NCU = 3;
-    const STEP_START = 'start';
-    const STEP_CHECKLIST = 'checklist';
-    const STEP_CU = 'cu';
-    const STEP_FINANCE = 'finance';
-    const STEP_DECLARATION = 'declaration';
-    const STEP_DEFAULT = 'default';
+    public const SUCCESS_CONTROLLER = 'ContinuationController/Success';
+    public const LICENCE_OVERVIEW_ROUTE = 'lva-licence';
+    public const PATH_SR = 1;
+    public const PATH_CU = 2;
+    public const PATH_NCU = 3;
+    public const STEP_START = 'start';
+    public const STEP_CHECKLIST = 'checklist';
+    public const STEP_CU = 'cu';
+    public const STEP_FINANCE = 'finance';
+    public const STEP_DECLARATION = 'declaration';
+    public const STEP_DEFAULT = 'default';
 
     /** @var string  */
     protected $layout = 'pages/continuation';
@@ -100,7 +101,7 @@ abstract class AbstractContinuationController extends AbstractController
     protected function getForm($formServiceName, $data = [])
     {
         return $this->getServiceLocator()
-            ->get('FormServiceManager')
+            ->get(FormServiceManager::class)
             ->get($formServiceName)
             ->getForm($data);
     }

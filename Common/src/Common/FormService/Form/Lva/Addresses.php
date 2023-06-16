@@ -2,20 +2,27 @@
 
 namespace Common\FormService\Form\Lva;
 
-use Common\FormService\Form\AbstractFormService;
 use Common\RefData;
+use Common\Service\Helper\FormHelperService;
 
 /**
  * Addresses Form
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class Addresses extends AbstractFormService
+class Addresses
 {
     private static $establishmentAllowedLicTypes = [
         RefData::LICENCE_TYPE_STANDARD_NATIONAL,
         RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
     ];
+
+    protected FormHelperService $formHelper;
+
+    public function __construct(FormHelperService $formHelper)
+    {
+        $this->formHelper = $formHelper;
+    }
 
     /**
      * Return form
@@ -26,7 +33,7 @@ class Addresses extends AbstractFormService
      */
     public function getForm(array $params)
     {
-        $form = $this->getFormHelper()->createForm('Lva\Addresses');
+        $form = $this->formHelper->createForm('Lva\Addresses');
 
         $this->alterForm($form, $params);
 
@@ -57,7 +64,7 @@ class Addresses extends AbstractFormService
     protected function removeEstablishment(\Laminas\Form\Form $form, $licenceType)
     {
         if (!in_array($licenceType, self::$establishmentAllowedLicTypes, true)) {
-            $this->getFormHelper()
+            $this->formHelper
                 ->remove($form, 'establishment')
                 ->remove($form, 'establishment_address');
         }

@@ -8,6 +8,7 @@ use Common\Controller\Lva\Interfaces\AdapterInterface;
 use Common\Data\Mapper\Lva\NewTmUser as NewTmUserMapper;
 use Common\Data\Mapper\Lva\TransportManagerApplication as TransportManagerApplicationMapper;
 use Common\Data\Mapper\Lva\TransportManagerApplication;
+use Common\FormService\FormServiceManager;
 use Dvsa\Olcs\Transfer\Command;
 use Dvsa\Olcs\Transfer\Query\TransportManagerApplication\GetDetails;
 use Dvsa\Olcs\Transfer\Query\User\UserSelfserve;
@@ -92,7 +93,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
 
         /** @var \Laminas\Form\FormInterface $form */
         $form = $this->getServiceLocator()
-            ->get('FormServiceManager')
+            ->get(FormServiceManager::class)
             ->get('lva-' . $this->lva . '-transport_managers')
             ->getForm();
 
@@ -105,7 +106,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
         $form->get('table')->get('table')->setTable($table);
         $form->get('table')->get('rows')->setValue(count($table->getRows()));
 
-        $this->getServiceLocator()->get('FormServiceManager')
+        $this->getServiceLocator()->get(FormServiceManager::class)
             ->get('Lva\\' . ucfirst($this->lva))
             ->alterForm($form);
 
@@ -499,8 +500,10 @@ abstract class AbstractTransportManagersController extends AbstractController im
      */
     protected function isLastTmLicence()
     {
-        if ($this->lva === 'licence'
-            && $this->getAdapter()->getNumberOfRows($this->getIdentifier(), $this->getLicenceId()) === 1) {
+        if (
+            $this->lva === 'licence'
+            && $this->getAdapter()->getNumberOfRows($this->getIdentifier(), $this->getLicenceId()) === 1
+        ) {
             return true;
         }
 

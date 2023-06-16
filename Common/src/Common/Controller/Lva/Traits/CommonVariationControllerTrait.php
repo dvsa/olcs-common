@@ -2,6 +2,7 @@
 
 namespace Common\Controller\Lva\Traits;
 
+use Common\FormService\FormServiceManager;
 use Laminas\Form\Form;
 
 /**
@@ -60,7 +61,7 @@ trait CommonVariationControllerTrait
      */
     protected function alterFormForLva(Form $form, $data = null)
     {
-        return $this->getServiceLocator()->get('FormServiceManager')->get('lva-variation')->alterForm($form);
+        return $this->getServiceLocator()->get(FormServiceManager::class)->get('lva-variation')->alterForm($form);
     }
 
     /**

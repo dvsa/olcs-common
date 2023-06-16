@@ -1,13 +1,7 @@
 <?php
 
-/**
- * Common Operating Centre
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\FormService\Form\Lva\OperatingCentre;
 
-use Common\FormService\Form\AbstractFormService;
 use Common\Service\Helper\FormHelperService;
 use Laminas\Form\Form;
 use Laminas\Http\Request;
@@ -17,8 +11,13 @@ use Laminas\Http\Request;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class CommonOperatingCentre extends AbstractFormService
+class CommonOperatingCentre
 {
+    public function __construct(FormHelperService $formHelper)
+    {
+        $this->formHelper = $formHelper;
+    }
+
     /**
      * Get operating centre form
      *
@@ -29,7 +28,7 @@ class CommonOperatingCentre extends AbstractFormService
      */
     public function getForm(array $params, Request $request)
     {
-        $form = $this->getFormHelper()->createFormWithRequest('Lva\OperatingCentre', $request);
+        $form = $this->formHelper->createFormWithRequest('Lva\OperatingCentre', $request);
 
         if ($params['action'] !== 'add') {
             $form->get('form-actions')->remove('addAnother');
@@ -88,16 +87,16 @@ class CommonOperatingCentre extends AbstractFormService
      */
     protected function alterActionFormForPsv(Form $form)
     {
-        $this->getFormHelper()->remove($form, 'data->noOfTrailersRequired');
-        $this->getFormHelper()->remove($form, 'advertisements');
-        $this->getFormHelper()->remove($form, 'data->guidance');
+        $this->formHelper->remove($form, 'data->noOfTrailersRequired');
+        $this->formHelper->remove($form, 'advertisements');
+        $this->formHelper->remove($form, 'data->guidance');
 
-        $this->getFormHelper()->alterElementLabel(
+        $this->formHelper->alterElementLabel(
             $form->get('data'),
             '-psv',
             FormHelperService::ALTER_LABEL_APPEND
         );
-        $this->getFormHelper()->alterElementLabel(
+        $this->formHelper->alterElementLabel(
             $form->get('data')->get('permission')->get('permission'),
             '-psv',
             FormHelperService::ALTER_LABEL_APPEND
@@ -116,8 +115,8 @@ class CommonOperatingCentre extends AbstractFormService
         $addressElement = $form->get('address');
         $addressElement->remove('searchPostcode');
 
-        $this->getFormHelper()->disableElements($addressElement);
-        $this->getFormHelper()->disableValidation($form->getInputFilter()->get('address'));
+        $this->formHelper->disableElements($addressElement);
+        $this->formHelper->disableValidation($form->getInputFilter()->get('address'));
 
         $lockedElements = [
             $addressElement->get('addressLine1'),
@@ -127,7 +126,7 @@ class CommonOperatingCentre extends AbstractFormService
         ];
 
         foreach ($lockedElements as $element) {
-            $this->getFormHelper()->lockElement($element, 'operating-centre-address-requires-variation');
+            $this->formHelper->lockElement($element, 'operating-centre-address-requires-variation');
         }
     }
 }

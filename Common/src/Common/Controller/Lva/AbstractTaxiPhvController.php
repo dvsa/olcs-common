@@ -1,14 +1,9 @@
 <?php
 
-/**
- * Shared logic between Taxi Phv controllers
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- * @author Mat Evans <mat.evans@valtech.co.uk>
- */
 namespace Common\Controller\Lva;
 
 use Common\Form\Form;
+use Common\FormService\FormServiceManager;
 use Common\Service\Cqrs\Response as CqrsResponse;
 
 /**
@@ -68,7 +63,8 @@ abstract class AbstractTaxiPhvController extends AbstractController
             }
 
             if ($form->isValid()) {
-                if ($this->lva !== 'licence' &&
+                if (
+                    $this->lva !== 'licence' &&
                     ($crudAction == null || $this->getActionFromCrudAction($crudAction) == 'add') &&
                     !$this->save($data)
                 ) {
@@ -130,9 +126,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
     {
         $commandData = [
             'id' => $this->getIdentifier(),
-            'trafficArea' => isset($data['dataTrafficArea']['trafficArea']) ?
-                $data['dataTrafficArea']['trafficArea'] :
-                null
+            'trafficArea' => $data['dataTrafficArea']['trafficArea'] ?? null
         ];
 
         $response = $this->handleCommand(
@@ -155,7 +149,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
 
             foreach ($messages as $key => $message) {
                 $fm->addErrorMessage(
-                    $translator->translateReplace($key .'_'. strtoupper($this->location), $message)
+                    $translator->translateReplace($key . '_' . strtoupper($this->location), $message)
                 );
             }
         }
@@ -173,7 +167,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
         $form = $this->getServiceLocator()
-            ->get('FormServiceManager')
+            ->get(FormServiceManager::class)
             ->get('lva-' . $this->lva . '-' . $this->section)
             ->getForm();
 
@@ -513,7 +507,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
         if (!is_array($result)) {
             $result = [$result];
         }
-        return $translator->translateReplace(key($message) .'_'. strtoupper($this->location), $result);
+        return $translator->translateReplace(key($message) . '_' . strtoupper($this->location), $result);
     }
 
     /**

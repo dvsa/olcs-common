@@ -1,14 +1,12 @@
 <?php
 
-/**
- * Abstract Business Type Form
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\FormService\Form\Lva\BusinessType;
 
 use Common\FormService\Form\Lva\AbstractLvaFormService;
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Helper\GuidanceHelperService;
 use Laminas\Form\Form;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Abstract Business Type Form
@@ -19,9 +17,11 @@ abstract class AbstractBusinessType extends AbstractLvaFormService
 {
     protected $lva;
 
+    protected GuidanceHelperService $guidanceHelper;
+
     public function getForm($inForceLicences, bool $hasOrganisationSubmittedLicenceApplication)
     {
-        $form = $this->getFormHelper()->createForm('Lva\BusinessType');
+        $form = $this->formHelper->createForm('Lva\BusinessType');
 
         $params = [
             'inForceLicences' => $inForceLicences,
@@ -42,11 +42,11 @@ abstract class AbstractBusinessType extends AbstractLvaFormService
     {
         $element = $form->get('data')->get('type');
 
-        $this->getFormHelper()->lockElement($element, 'business-type.locked');
+        $this->formHelper->lockElement($element, 'business-type.locked');
 
-        $this->getFormHelper()->disableElement($form, 'data->type');
+        $this->formHelper->disableElement($form, 'data->type');
 
-        $this->getServiceLocator()->get('Helper\Guidance')->append('business-type.locked.message');
+        $this->guidanceHelper->append('business-type.locked.message');
 
         if ($removeStandardActions) {
             $this->removeStandardFormActions($form);

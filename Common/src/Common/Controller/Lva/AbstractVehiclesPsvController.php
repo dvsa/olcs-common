@@ -2,6 +2,7 @@
 
 namespace Common\Controller\Lva;
 
+use Common\FormService\FormServiceManager;
 use Common\RefData;
 use Common\Data\Mapper\Lva\PsvVehicles;
 use Common\Data\Mapper\Lva\PsvVehiclesVehicle;
@@ -18,13 +19,13 @@ use Laminas\Form\FormInterface;
  */
 abstract class AbstractVehiclesPsvController extends AbstractController
 {
-    const SEARCH_VEHICLES_COUNT = 20;
-
-    use Traits\TransferVehiclesTrait,
-        Traits\VehicleSearchTrait;
+    use Traits\TransferVehiclesTrait;
+    use Traits\VehicleSearchTrait;
     use Traits\CrudTableTrait {
         handleCrudAction as protected traitHandleCrudAction;
     }
+
+    public const SEARCH_VEHICLES_COUNT = 20;
 
     protected $section = 'vehicles_psv';
     protected $baseRoute = 'lva-%s/vehicles_psv';
@@ -69,7 +70,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         }
 
         $form = $this->getServiceLocator()
-            ->get('FormServiceManager')
+            ->get(FormServiceManager::class)
             ->get('lva-' . $this->lva . '-' . $this->section)
             ->getForm()
             ->setData($data);
@@ -215,7 +216,8 @@ abstract class AbstractVehiclesPsvController extends AbstractController
             RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
         ];
 
-        if (in_array($resultData['licenceType']['id'], $acceptedLicenceTypes, true)
+        if (
+            in_array($resultData['licenceType']['id'], $acceptedLicenceTypes, true)
             && $total === $toDelete
         ) {
             return 'deleting.all.vehicles.message';
@@ -259,7 +261,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
 
         /** @var \Common\Form\Form $form */
         $form = $this->getServiceLocator()
-            ->get('FormServiceManager')
+            ->get(FormServiceManager::class)
             ->get('lva-' . $this->lva . '-' . $this->section . '-vehicle')
             ->getForm($this->getRequest(), $params)
             ->setData($data);
@@ -326,7 +328,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
 
         /** @var \Common\Form\Form $form */
         $form = $this->getServiceLocator()
-            ->get('FormServiceManager')
+            ->get(FormServiceManager::class)
             ->get('lva-' . $this->lva . '-' . $this->section . '-vehicle')
             ->getForm($this->getRequest(), $params)
             ->setData($data);
@@ -460,7 +462,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         }
 
         if (in_array($this->lva, ['licence', 'variation'], true)) {
-            $this->getServiceLocator()->get('FormServiceManager')
+            $this->getServiceLocator()->get(FormServiceManager::class)
                 ->get('lva-licence-variation-vehicles')->alterForm($form);
         }
 
