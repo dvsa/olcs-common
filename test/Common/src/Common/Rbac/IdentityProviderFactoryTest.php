@@ -99,7 +99,7 @@ class IdentityProviderFactoryTest extends MockeryTestCase
 
         // Expectations
         $this->expectException(\RuntimeException::class);
-        $this->expectErrorMessage(IdentityProviderFactory::MESSAGE_CONFIG_MISSING);
+        $this->expectExceptionMessage(IdentityProviderFactory::MESSAGE_CONFIG_MISSING);
 
         // Execute
         $this->sut->__invoke($this->serviceManager(), null);
@@ -117,7 +117,7 @@ class IdentityProviderFactoryTest extends MockeryTestCase
 
         // Expectations
         $this->expectException(\RuntimeException::class);
-        $this->expectErrorMessage(IdentityProviderFactory::MESSAGE_UNABLE_TO_CREATE);
+        $this->expectExceptionMessage(IdentityProviderFactory::MESSAGE_UNABLE_TO_CREATE);
 
         // Execute
         $this->sut->__invoke($this->serviceManager(), null);
@@ -136,7 +136,7 @@ class IdentityProviderFactoryTest extends MockeryTestCase
 
         // Expectations
         $this->expectException(\RuntimeException::class);
-        $this->expectErrorMessage(IdentityProviderFactory::MESSAGE_DOES_NOT_IMPLEMENT);
+        $this->expectExceptionMessage(IdentityProviderFactory::MESSAGE_DOES_NOT_IMPLEMENT);
 
         // Execute
         $this->sut->__invoke($this->serviceManager(), null);
