@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\View\Helper;
 
 use Laminas\ServiceManager\FactoryInterface;
@@ -17,18 +18,13 @@ use Common\Preference\Language;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class LanguageLink extends AbstractHelper implements FactoryInterface
+class LanguageLink extends AbstractHelper
 {
-    /**
-     * @var Language
-     */
-    private $languagePref;
+    private Language $languagePref;
 
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __construct(Language $languagePref)
     {
-        $this->languagePref = $serviceLocator->getServiceLocator()->get('LanguagePreference');
-
-        return $this;
+        $this->languagePref = $languagePref;
     }
 
     public function __invoke()

@@ -20,7 +20,11 @@ class VenueAddressFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $addressFormatter = $container->get(Address::class);
+        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
+            $container = $container->getServiceLocator();
+        }
+        $formatterPluginManager = $container->get(FormatterPluginManager::class);
+        $addressFormatter = $formatterPluginManager->get(Address::class);
         return new VenueAddress($addressFormatter);
     }
 

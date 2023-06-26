@@ -10,8 +10,11 @@ class FeaturesEnabledForMethodFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): FeaturesEnabledForMethod
     {
+        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
+            $container = $container->getServiceLocator();
+        }
         return new FeaturesEnabledForMethod(
-            $container->getServiceLocator()->get('QuerySender')
+            $container->get('QuerySender')
         );
     }
 

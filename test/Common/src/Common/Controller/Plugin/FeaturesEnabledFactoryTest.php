@@ -20,7 +20,7 @@ class FeaturesEnabledFactoryTest extends TestCase
         $mockQuerySender = m::mock(QuerySender::class);
 
         $mockSl = m::mock(ServiceLocatorInterface::class);
-        $mockSl->shouldReceive('getServiceLocator->get')->with('QuerySender')->andReturn($mockQuerySender);
+        $mockSl->shouldReceive('get')->with('QuerySender')->andReturn($mockQuerySender);
         $sut = new FeaturesEnabledFactory();
         $service = $sut->createService($mockSl);
 

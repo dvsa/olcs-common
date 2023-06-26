@@ -15,9 +15,12 @@ class DynamicSelectFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): DynamicSelect
     {
+        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
+            $container = $container->getServiceLocator();
+        }
         $instance = new DynamicSelect();
 
-        $instance->setServiceLocator($container->getServiceLocator()->get('DataServiceManager'));
+        $instance->setServiceLocator($container->get('DataServiceManager'));
         return $instance;
     }
 

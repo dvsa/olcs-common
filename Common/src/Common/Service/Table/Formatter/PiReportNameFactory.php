@@ -20,8 +20,12 @@ class PiReportNameFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $organisationLink = $container->get(OrganisationLink::class);
-        $nameFormatter = $container->get(Name::class);
+        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
+            $container = $container->getServiceLocator();
+        }
+        $formatterPluginManager = $container->get(FormatterPluginManager::class);
+        $organisationLink = $formatterPluginManager->get(OrganisationLink::class);
+        $nameFormatter = $formatterPluginManager->get(Name::class);
         return new PiReportName($organisationLink, $nameFormatter);
     }
 

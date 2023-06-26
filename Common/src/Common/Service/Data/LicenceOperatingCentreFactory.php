@@ -22,8 +22,8 @@ class LicenceOperatingCentreFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): LicenceOperatingCentre
     {
         return new LicenceOperatingCentre(
-            $container->get(AbstractDataServiceServices::class),
-            $container->get(Licence::class)
+            $container->get('DataServiceManager')->get(AbstractDataServiceServices::class),
+            $container->get('DataServiceManager')->get(Licence::class)
         );
     }
 

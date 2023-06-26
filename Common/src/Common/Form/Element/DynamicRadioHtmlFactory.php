@@ -14,8 +14,11 @@ class DynamicRadioHtmlFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): DynamicRadioHtml
     {
+        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
+            $container = $container->getServiceLocator();
+        }
         $instance = new DynamicRadioHtml();
-        $instance->setServiceLocator($container->getServiceLocator()->get('DataServiceManager'));
+        $instance->setServiceLocator($container->get('DataServiceManager'));
 
         return $instance;
     }

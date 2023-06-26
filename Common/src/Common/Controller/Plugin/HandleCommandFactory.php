@@ -13,9 +13,11 @@ class HandleCommandFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): HandleCommand
     {
-        $serviceLocator = $container->getServiceLocator();
+        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
+            $container = $container->getServiceLocator();
+        }
 
-        return new HandleCommand($serviceLocator->get('CommandSender'), $serviceLocator->get('Helper\FlashMessenger'));
+        return new HandleCommand($container->get('CommandSender'), $container->get('Helper\FlashMessenger'));
     }
 
     /**

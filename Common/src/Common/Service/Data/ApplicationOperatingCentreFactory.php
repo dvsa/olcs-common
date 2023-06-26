@@ -21,9 +21,10 @@ class ApplicationOperatingCentreFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): ApplicationOperatingCentre
     {
+
         return new ApplicationOperatingCentre(
-            $container->get(AbstractDataServiceServices::class),
-            $container->get(Application::class)
+            $container->get('DataServiceManager')->get(AbstractDataServiceServices::class),
+            $container->get('DataServiceManager')->get(Application::class)
         );
     }
 

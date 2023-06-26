@@ -35,12 +35,14 @@ class SystemInfoMessagesFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): SystemInfoMessages
     {
-        /** @var ServiceManager $sm */
-        $sm = $container->getServiceLocator();
+        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
+            $container = $container->getServiceLocator();
+        }
+
         /** @var \Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder $annotationBuilder */
-        $annotationBuilder = $sm->get('TransferAnnotationBuilder');
+        $annotationBuilder = $container->get('TransferAnnotationBuilder');
         /** @var \Common\Service\Cqrs\Query\CachingQueryService $queryService */
-        $queryService = $sm->get('QueryService');
+        $queryService = $container->get('QueryService');
         return new SystemInfoMessages($annotationBuilder, $queryService);
     }
 }

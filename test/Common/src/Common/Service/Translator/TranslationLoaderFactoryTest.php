@@ -23,11 +23,8 @@ class TranslationLoaderFactoryTest extends MockeryTestCase
         $parentSl = m::mock(ServiceLocatorInterface::class);
         $parentSl->expects('get')->with('QueryService')->andReturn($mockQueryService);
 
-        $mockSl = m::mock(ServiceLocatorInterface::class);
-        $mockSl->expects('getServiceLocator')->withNoArgs()->andReturn($parentSl);
-
         $sut = new TranslationLoaderFactory();
-        $service = $sut->createService($mockSl);
+        $service = $sut->createService($parentSl);
 
         self::assertInstanceOf(TranslationLoader::class, $service);
     }

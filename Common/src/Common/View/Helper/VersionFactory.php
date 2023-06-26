@@ -18,8 +18,11 @@ class VersionFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): Version
     {
+        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
+            $container = $container->getServiceLocator();
+        }
         return new Version(
-            $container->getServiceLocator()->get('Config')
+            $container->get('Config')
         );
     }
 

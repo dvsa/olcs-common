@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Language Link Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\View\Helper;
 
 use Common\Preference\Language;
@@ -29,38 +24,29 @@ class LanguageLinkTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->viewHelper = new LanguageLink();
+        $languagePref = m::mock(Language::class);
+        $this->languagePref = $languagePref;
+
+        $this->viewHelper = new LanguageLink($languagePref);
 
         $this->sm = Bootstrap::getServiceManager();
-        $this->sm->shouldReceive('getServiceLocator')
-            ->andReturnSelf();
     }
 
     public function testInvoke()
     {
-        $lanPref = m::mock();
-        $lanPref->shouldReceive('getPreference')
+        $this->languagePref->shouldReceive('getPreference')
             ->andReturn(Language::OPTION_CY);
 
-        $this->sm->setService('LanguagePreference', $lanPref);
-
-        $helper = $this->viewHelper;
-
-        $this->viewHelper->createService($this->sm);
-        $this->assertEquals('<a class="govuk-footer__link" href="?lang=en">English</a>', $helper());
+        $this->assertEquals('<a class="govuk-footer__link" href="?lang=en">English</a>', $this->viewHelper->__invoke());
     }
 
     public function testInvokeEnglish()
     {
-        $lanPref = m::mock();
-        $lanPref->shouldReceive('getPreference')
+        $this->languagePref->shouldReceive('getPreference')
             ->andReturn(Language::OPTION_EN);
-
-        $this->sm->setService('LanguagePreference', $lanPref);
 
         $helper = $this->viewHelper;
 
-        $this->viewHelper->createService($this->sm);
         $this->assertEquals('<a class="govuk-footer__link" href="?lang=cy">Cymraeg</a>', $helper());
     }
 }

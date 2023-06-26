@@ -14,8 +14,10 @@ final class CurrentUserFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): CurrentUser
     {
-        $serviceLocator = $container->getServiceLocator();
-        return new CurrentUser($serviceLocator->get('ZfcRbac\Service\AuthorizationService'));
+        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
+            $container = $container->getServiceLocator();
+        }
+        return new CurrentUser($container->get('ZfcRbac\Service\AuthorizationService'));
     }
 
     /**

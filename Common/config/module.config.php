@@ -4,6 +4,15 @@ use Common\Auth\Adapter\CommandAdapter;
 use Common\Auth\Adapter\CommandAdapterFactory;
 use Common\Auth\Service\AuthenticationServiceFactory;
 use Common\Auth\Service\AuthenticationServiceInterface;
+use Common\Form\Element\DynamicMultiCheckbox;
+use Common\Form\Element\DynamicMultiCheckboxFactory;
+use Common\Form\Element\DynamicRadio;
+use Common\Form\Element\DynamicRadioFactory;
+use Common\Form\Element\DynamicRadioHtml;
+use Common\Form\Element\DynamicRadioHtmlFactory;
+use Common\Form\Element\DynamicSelect;
+use Common\Form\Element\DynamicSelectFactory;
+use Common\Form\Elements\Custom\OlcsCheckbox;
 use Common\Form\View\Helper\FormInputSearch;
 use Common\Service\Cqrs\Command\CommandSender;
 use Common\Service\Data\Search\SearchType;
@@ -22,43 +31,43 @@ use ZfcRbac\Identity\IdentityProviderInterface;
 
 $release = json_decode(file_get_contents(__DIR__ . '/release.json'), true);
 
-return array(
-    'router' => array(
+return [
+    'router' => [
         'routes' => array_merge(
-            require(__DIR__ .'/routes/general.php'),
-            require(__DIR__ .'/routes/continuations.php')
+            require(__DIR__ . '/routes/general.php'),
+            require(__DIR__ . '/routes/continuations.php')
         )
-    ),
-    'controllers' => array(
+    ],
+    'controllers' => [
         // @NOTE These delegators can live in common as both internal and external app controllers currently use the
         // same adapter. Self Serve registers these itself within the application module.
-        'delegators' => array(
-            'LvaApplication/BusinessType' => array(
+        'delegators' => [
+            'LvaApplication/BusinessType' => [
                 // @NOTE: we need an associative array when we need to override the
                 // delegator elsewhere, such as in selfserve or internal
                 'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessTypeDelegator'
-            ),
-            'LvaLicence/BusinessType' => array(
+            ],
+            'LvaLicence/BusinessType' => [
                 'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessTypeDelegator'
-            ),
-            'LvaVariation/BusinessType' => array(
+            ],
+            'LvaVariation/BusinessType' => [
                 'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessTypeDelegator'
-            ),
-            'LvaApplication/FinancialEvidence' => array(
+            ],
+            'LvaApplication/FinancialEvidence' => [
                 Common\Controller\Lva\Delegators\ApplicationFinancialEvidenceDelegator::class,
-            ),
-            'LvaVariation/FinancialEvidence' => array(
+            ],
+            'LvaVariation/FinancialEvidence' => [
                 Common\Controller\Lva\Delegators\VariationFinancialEvidenceDelegator::class,
-            ),
-            'LvaLicence/People' => array(
+            ],
+            'LvaLicence/People' => [
                 'Common\Controller\Lva\Delegators\LicencePeopleDelegator'
-            ),
-            'LvaVariation/People' => array(
+            ],
+            'LvaVariation/People' => [
                 'Common\Controller\Lva\Delegators\VariationPeopleDelegator'
-            ),
-            'LvaApplication/People' => array(
+            ],
+            'LvaApplication/People' => [
                 'Common\Controller\Lva\Delegators\ApplicationPeopleDelegator'
-            ),
+            ],
             'LvaLicence/TransportManagers' => [
                 Common\Controller\Lva\Delegators\LicenceTransportManagerDelegator::class,
             ],
@@ -68,13 +77,13 @@ return array(
             'LvaApplication/TransportManagers' => [
                 Common\Controller\Lva\Delegators\ApplicationTransportManagerDelegator::class,
             ],
-            'LvaDirectorChange/People' => array(
+            'LvaDirectorChange/People' => [
                 'Common\Controller\Lva\Delegators\VariationPeopleDelegator'
-            ),
-        ),
-        'abstract_factories' => array(
+            ],
+        ],
+        'abstract_factories' => [
             'Common\Controller\Lva\AbstractControllerFactory',
-        ),
+        ],
         'invokables' => [
             'Common\Controller\File' => 'Common\Controller\FileController',
             'Common\Controller\FormRewrite' => 'Common\Controller\FormRewriteController',
@@ -95,16 +104,16 @@ return array(
             'ContinuationController/Success' => \Common\Controller\Continuation\SuccessController::class,
             'ContinuationController/Review' => \Common\Controller\Continuation\ReviewController::class,
         ],
-    ),
-    'controller_plugins' => array(
-        'invokables' => array(
+    ],
+    'controller_plugins' => [
+        'invokables' => [
             'redirect' => 'Common\Controller\Plugin\Redirect',
             \Common\Controller\Plugin\Redirect::class => \Common\Controller\Plugin\Redirect::class,
-        ),
+        ],
         'factories' => [
             'currentUser' => \Common\Controller\Plugin\CurrentUserFactory::class,
             \Common\Controller\Plugin\CurrentUser::class => \Common\Controller\Plugin\CurrentUserFactory::class,
-            'ElasticSearch' => 'Common\Controller\Plugin\ElasticSearchFactory',
+            'ElasticSearch' => \Common\Controller\Plugin\ElasticSearchFactory::class,
             'handleQuery' => \Common\Controller\Plugin\HandleQueryFactory::class,
             \Common\Controller\Plugin\HandleQuery::class => \Common\Controller\Plugin\HandleQueryFactory::class,
             'handleCommand' => \Common\Controller\Plugin\HandleCommandFactory::class,
@@ -112,43 +121,43 @@ return array(
             'featuresEnabled' => \Common\Controller\Plugin\FeaturesEnabledFactory::class,
             'featuresEnabledForMethod' => \Common\Controller\Plugin\FeaturesEnabledForMethodFactory::class,
         ]
-    ),
-    'console' => array(
-        'router' => array(
-            'routes' => array(
-                'route101' => array(
-                    'options' => array(
+    ],
+    'console' => [
+        'router' => [
+            'routes' => [
+                'route101' => [
+                    'options' => [
                         'route' => 'formrewrite [olcs|common|selfserve]:formnamespace',
-                        'defaults' => array(
+                        'defaults' => [
                             'controller' => 'Common\Controller\FormRewrite',
                             'action' => 'index'
-                        )
-                    )
-                ),
-                'route102' => array(
-                    'options' => array(
+                        ]
+                    ]
+                ],
+                'route102' => [
+                    'options' => [
                         'route' => 'formcleanup [olcs|common|selfserve]:formnamespace',
-                        'defaults' => array(
+                        'defaults' => [
                             'controller' => 'Common\Controller\FormRewrite',
                             'action' => 'cleanup'
-                        )
-                    )
-                )
-            )
-        )
-    ),
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ],
     'version' => (isset($release['version']) ? $release['version'] : ''),
-    'service_manager' => array(
-        'shared' => array(
+    'service_manager' => [
+        'shared' => [
             'Helper\FileUpload' => false,
             'CantIncreaseValidator' => false,
             // Create a new request each time
             'CqrsRequest' => false
-        ),
-        'abstract_factories' => array(
+        ],
+        'abstract_factories' => [
             'Common\Util\AbstractServiceFactory'
-        ),
-        'aliases' => array(
+        ],
+        'aliases' => [
             'Cache' => 'Laminas\Cache\Storage\StorageInterface',
             'DataServiceManager' => 'Common\Service\Data\PluginManager',
             'translator' => 'MvcTranslator',
@@ -168,8 +177,8 @@ return array(
             'Helper\Url' => HelperService\UrlHelperService::class,
             'Lva\People' => Common\Service\Lva\PeopleLvaService::class,
             'Lva\Variation' => Common\Service\Lva\VariationLvaService::class,
-        ),
-        'invokables' => array(
+        ],
+        'invokables' => [
             'Common\Service\NavigationFactory' => 'Common\Service\NavigationFactory',
             'SectionConfig' => 'Common\Service\Data\SectionConfig',
             'CantIncreaseValidator' => 'Common\Form\Elements\Validators\CantIncreaseValidator',
@@ -249,8 +258,8 @@ return array(
 
             'Zend\Authentication\AuthenticationService' => \Laminas\Authentication\AuthenticationService::class,
             DataService\UserTypesListDataService::class => DataService\UserTypesListDataService::class,
-        ),
-        'factories' => array(
+        ],
+        'factories' => [
             DataService\AbstractDataServiceServices::class => DataService\AbstractDataServiceServicesFactory::class,
             DataService\AbstractListDataServiceServices::class => DataService\AbstractListDataServiceServicesFactory::class,
             DataService\AddressDataService::class => DataService\AbstractDataServiceFactory::class,
@@ -418,22 +427,22 @@ return array(
             IdentityProviderInterface::class => \Common\Rbac\IdentityProviderFactory::class,
             \Common\Auth\Service\RefreshTokenService::class => \Common\Auth\Service\RefreshTokenServiceFactory::class,
             \Common\Data\Mapper\Lva\GoodsVehiclesVehicle::class => \Common\Data\Mapper\Lva\GoodsVehiclesVehicleFactory::class,
-        )
-    ),
-    'file_uploader' => array(
+        ]
+    ],
+    'file_uploader' => [
         'default' => 'ContentStore',
-        'config' => array(
+        'config' => [
             'location' => 'documents',
             'defaultPath' => '[locale]/[doc_type_name]/[year]/[month]', // e.g. gb/publications/2015/03
-        )
-    ),
+        ]
+    ],
     'navigation_helpers' =>  [
         'invokables' => [
             'menuRbac' => Common\View\Helper\Navigation\MenuRbac::class,
         ],
     ],
-    'view_helpers' => array(
-        'invokables' => array(
+    'view_helpers' => [
+        'invokables' => [
             'formRadioOption' => \Common\Form\View\Helper\FormRadioOption::class,
             'formRadioHorizontal' => \Common\Form\View\Helper\FormRadioHorizontal::class,
             'formCheckboxAdvanced' => \Common\Form\View\Helper\FormCheckboxAdvanced::class,
@@ -501,27 +510,27 @@ return array(
             'formtime'                => \Common\Form\View\Helper\Extended\FormTime::class,
             'formurl'                 => \Common\Form\View\Helper\Extended\FormUrl::class,
             'formweek'                => \Common\Form\View\Helper\Extended\FormWeek::class,
-        ),
-        'factories' => array(
+        ],
+        'factories' => [
             'applicationName' => \Common\View\Helper\ApplicationNameFactory::class,
             'config' => \Common\View\Helper\ConfigFactory::class,
             'version' => \Common\View\Helper\VersionFactory::class,
-            'pageId' => \Common\View\Helper\PageId::class,
-            'pageTitle' => \Common\View\Helper\PageTitle::class,
-            'LicenceChecklist' => \Common\View\Helper\LicenceChecklist::class,
-            'date' => \Common\View\Helper\Date::class,
+            'pageId' => \Common\View\Helper\PageIdFactory::class,
+            'pageTitle' => \Common\View\Helper\PageTitleFactory::class,
+            'LicenceChecklist' => \Common\View\Helper\LicenceChecklistFactory::class,
+            'date' => \Common\View\Helper\DateFactory::class,
             'formRow' => \Common\Form\View\Helper\FormRowFactory::class,
-            'languageLink' => \Common\View\Helper\LanguageLink::class,
+            'languageLink' => \Common\View\Helper\LanguageLinkFactory::class,
             'currentUser' => \Common\View\Helper\CurrentUserFactory::class,
             'systemInfoMessages' => \Common\View\Factory\Helper\SystemInfoMessagesFactory::class,
-            'linkBack' => Common\View\Helper\LinkBack::class,
-            'translateReplace' => \Common\View\Helper\TranslateReplace::class,
+            'linkBack' => Common\View\Helper\LinkBackFactory::class,
+            'translateReplace' => \Common\View\Helper\TranslateReplaceFactory::class,
             'flashMessengerAll' => \Common\View\Factory\Helper\FlashMessengerFactory::class,
             'escapeHtml' => \Common\View\Factory\Helper\EscapeHtmlFactory::class,
             \Common\Form\View\Helper\FormElementErrors::class => \Common\Form\View\Helper\FormElementErrorsFactory::class,
             \Common\Form\View\Helper\FormErrors::class => \Common\Form\View\Helper\FormErrorsFactory::class,
             \Common\Form\View\Helper\FormElement::class => \Common\Form\View\Helper\FormElementFactory::class,
-        ),
+        ],
         'aliases' => [
             'formElement' => \Common\Form\View\Helper\FormElement::class,
             'formElementErrors' => \Common\Form\View\Helper\FormElementErrors::class,
@@ -529,13 +538,13 @@ return array(
             'formErrors' => \Common\Form\View\Helper\FormErrors::class,
             'formerrors' => \Common\Form\View\Helper\FormErrors::class,
         ],
-    ),
-    'view_manager' => array(
-        'template_path_stack' => array(
+    ],
+    'view_manager' => [
+        'template_path_stack' => [
             'partials/view' => __DIR__ . '/../view',
             'translations' => __DIR__ . '/../config/language/partials'
-        )
-    ),
+        ]
+    ],
     'local_scripts_path' => [__DIR__ . '/../src/Common/assets/js/inline/'],
     'forms_path' => __DIR__ . '/../../Common/src/Common/Form/Forms/',
     'form_elements' => [
@@ -547,17 +556,17 @@ return array(
             'Common\Form\Elements\Custom\OlcsCheckbox' => 'Common\Form\Elements\Custom\OlcsCheckbox'
         ],
         'factories' => [
-            'Common\Form\Element\DynamicSelect' => 'Common\Form\Element\DynamicSelectFactory',
-            'Common\Form\Element\DynamicMultiCheckbox' => 'Common\Form\Element\DynamicMultiCheckboxFactory',
-            'Common\Form\Element\DynamicRadio' => 'Common\Form\Element\DynamicRadioFactory',
-            'Common\Form\Element\DynamicRadioHtml' => 'Common\Form\Element\DynamicRadioHtmlFactory'
+            DynamicSelect::class => DynamicSelectFactory::class,
+            DynamicMultiCheckbox::class => DynamicMultiCheckboxFactory::class,
+            DynamicRadio::class => DynamicRadioFactory::class,
+            DynamicRadioHtml::class => DynamicRadioHtmlFactory::class,
         ],
         'aliases' => [
-            'DynamicSelect' => 'Common\Form\Element\DynamicSelect',
-            'DynamicMultiCheckbox' => 'Common\Form\Element\DynamicMultiCheckbox',
-            'DynamicRadio' => 'Common\Form\Element\DynamicRadio',
-            'DynamicRadioHtml' => 'Common\Form\Element\DynamicRadioHtml',
-            'OlcsCheckbox' => 'Common\Form\Elements\Custom\OlcsCheckbox'
+            'DynamicSelect' => DynamicSelect::class,
+            'DynamicMultiCheckbox' => DynamicMultiCheckbox::class,
+            'DynamicRadio' => DynamicRadio::class,
+            'DynamicRadioHtml' => DynamicRadioHtml::class,
+            'OlcsCheckbox' => OlcsCheckbox::class
         ]
     ],
     'validation' => [
@@ -635,15 +644,15 @@ return array(
             SearchType::class => SearchType::class,
         ]
     ],
-    'tables' => array(
-        'config' => array(
+    'tables' => [
+        'config' => [
             __DIR__ . '/../src/Common/Table/Tables/'
-        ),
-        'partials' => array(
+        ],
+        'partials' => [
             'html' => __DIR__ . '/../view/table/',
             'csv' => __DIR__ . '/../view/table/csv'
-        )
-    ),
+        ]
+    ],
     'fieldsets_path' => __DIR__ . '/../../Common/src/Common/Form/Fieldsets/',
     'static-list-data' => include __DIR__ . '/list-data/static-list-data.php',
     'form' => [
@@ -658,13 +667,13 @@ return array(
             'Common\Service\Api\AbstractFactory'
         ]
     ],
-    'service_api_mapping' => array(
-        'endpoints' => array(
+    'service_api_mapping' => [
+        'endpoints' => [
             'payments' => 'http://olcspayment.dev/api/',
             'backend' => 'http://olcs-backend/',
             'postcode' => 'http://postcode.cit.olcs.mgt.mtpdvsa/',
-        )
-    ),
+        ]
+    ],
     'zfc_rbac' => [
         'identity_provider' => IdentityProviderInterface::class,
         'role_provider' => [\Common\Rbac\Role\RoleProvider::class => []],
@@ -830,4 +839,4 @@ return array(
             ]
         ],
     ],
-);
+];

@@ -35,12 +35,13 @@ class FormElementErrorsFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): FormElementErrors
     {
-        $pluginManager = $container;
-        assert($pluginManager instanceof ServiceLocatorAwareInterface, 'Expected instance of ServiceLocatorAwareInterface');
-        $serviceLocator = $pluginManager->getServiceLocator();
+        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
+            $container = $container->getServiceLocator();
+        }
+
         return new FormElementErrors(
-            $serviceLocator->get(FormElementMessageFormatter::class),
-            $serviceLocator->get(TranslatorInterface::class)
+            $container->get(FormElementMessageFormatter::class),
+            $container->get(TranslatorInterface::class)
         );
     }
 }

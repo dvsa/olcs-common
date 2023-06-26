@@ -16,15 +16,16 @@ class FlashMessengerFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): FlashMessenger
     {
-        /** @var ServiceManager $sm */
-        $sm = $container->getServiceLocator();
+        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
+            $container = $container->getServiceLocator();
+        }
 
         /** @var FlashMessengerHelperService $queryService */
-        $flashMessengerHelperService = $sm->get('Helper\FlashMessenger');
+        $flashMessengerHelperService = $container->get('Helper\FlashMessenger');
 
         $flashMessenger = new FlashMessenger($flashMessengerHelperService);
 
-        $flashMessenger->setPluginFlashMessenger($sm->get('ControllerPluginManager')->get('FlashMessenger'));
+        $flashMessenger->setPluginFlashMessenger($container->get('ControllerPluginManager')->get('FlashMessenger'));
 
         return $flashMessenger;
     }

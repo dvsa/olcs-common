@@ -24,7 +24,12 @@ class PageTitleTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->sut = new PageTitle();
+        $placeholder = m::mock(Placeholder::class);
+        $this->placeholder = $placeholder;
+        $translate = m::mock(Translate::class);
+        $routeMatch = m::mock(RouteMatch::class);
+        $this->translate = $translate;
+        $this->routeMatch = $routeMatch;
     }
 
     /**
@@ -32,30 +37,20 @@ class PageTitleTest extends MockeryTestCase
      */
     public function testInvoke($pageTitlePlaceholder, $matchedRouteName, $keyToTranslate)
     {
-        $placeholder = m::mock(Placeholder::class);
-        $placeholder->shouldReceive('getContainer')->with('pageTitle')->andReturn($pageTitlePlaceholder);
+        $this->routeMatch->shouldReceive('getMatchedRouteName')->andReturn($matchedRouteName);
+        $this->routeMatch->shouldReceive('getParam')->with('action')->andReturn('someaction');
+        $this->translate->shouldReceive('__invoke')->with($keyToTranslate)->andReturn('translated');
 
-        $translate = m::mock(Translate::class);
-        $translate->shouldReceive('__invoke')->with($keyToTranslate)->andReturn('translated');
-
-        $routeMatch = m::mock(RouteMatch::class);
-        $routeMatch->shouldReceive('getMatchedRouteName')->andReturn($matchedRouteName);
-        $routeMatch->shouldReceive('getParam')->with('action')->andReturn('someaction');
+        $this->placeholder->shouldReceive('getContainer')->with('pageTitle')->andReturn($pageTitlePlaceholder);
 
         $app = m::mock();
-        $app->shouldReceive('getMvcEvent->getRouteMatch')->andReturn($routeMatch);
+        $app->shouldReceive('getMvcEvent->getRouteMatch')->andReturn($this->routeMatch);
 
         /** @var ServiceLocatorInterface | m\MockInterface $sm */
         $sm = m::mock(ServiceLocatorInterface::class);
         $sm->shouldReceive('get')->with('Application')->andReturn($app);
 
-        /** @var HelperPluginManager | m\MockInterface $vhm */
-        $vhm = m::mock(HelperPluginManager::class)->makePartial();
-        $vhm->setServiceLocator($sm);
-        $vhm->shouldReceive('get')->with('translate')->andReturn($translate);
-        $vhm->shouldReceive('get')->with('placeholder')->andReturn($placeholder);
-
-        $sut = $this->sut->createService($vhm);
+        $sut = new PageTitle($this->translate, $this->placeholder, $matchedRouteName, 'someaction');
 
         $this->assertEquals('translated', $sut->__invoke());
     }

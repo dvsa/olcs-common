@@ -22,8 +22,8 @@ class VenueFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): Venue
     {
         return new Venue(
-            $container->get(AbstractDataServiceServices::class),
-            $container->get(Licence::class)
+            $container->get('DataServiceManager')->get(AbstractDataServiceServices::class),
+            $container->get('DataServiceManager')->get(Licence::class)
         );
     }
 

@@ -16,8 +16,11 @@ class IrhpPermitTypeWithValidityDateFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $dateFormatter = $container->get(Date::class);
-        $container = method_exists($container, 'getServiceLocator') ? $container->getServiceLocator() : $container;
+        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
+            $container = $container->getServiceLocator();
+        }
+        $formatterPluginManager = $container->get(FormatterPluginManager::class);
+        $dateFormatter = $formatterPluginManager->get(Date::class);
         $translator = $container->get('translator');
         return new IrhpPermitTypeWithValidityDate($dateFormatter, $translator);
     }

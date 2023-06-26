@@ -25,11 +25,13 @@ class DateBeforeValidatorFactory implements FactoryInterface
 
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): DateBeforeValidator
     {
-        $mainServiceLocator = $container->getServiceLocator();
+        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
+            $container = $container->getServiceLocator();
+        }
 
         return new DateBeforeValidator(
-            $mainServiceLocator->get('ViewHelperManager')->get('DateFormat'),
-            $mainServiceLocator->get('QaDateTimeFactory'),
+            $container->get('ViewHelperManager')->get('DateFormat'),
+            $container->get('QaDateTimeFactory'),
             $this->options
         );
     }

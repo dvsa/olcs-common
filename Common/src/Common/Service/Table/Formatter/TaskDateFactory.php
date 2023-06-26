@@ -20,7 +20,11 @@ class TaskDateFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $dateFormatter = $container->get(Date::class);
+        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
+            $container = $container->getServiceLocator();
+        }
+        $formatterPluginManager = $container->get(FormatterPluginManager::class);
+        $dateFormatter = $formatterPluginManager->get(Date::class);
         return new TaskDate($dateFormatter);
     }
 

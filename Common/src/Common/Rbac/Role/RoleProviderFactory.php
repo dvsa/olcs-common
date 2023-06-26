@@ -14,8 +14,10 @@ class RoleProviderFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): RoleProvider
     {
-        $serviceLocator = $container->getServiceLocator();
-        return new RoleProvider($serviceLocator->get('QuerySender'));
+        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
+            $container = $container->getServiceLocator();
+        }
+        return new RoleProvider($container->get('QuerySender'));
     }
 
     /**

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Date
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\View\Helper;
 
 use Laminas\ServiceManager\FactoryInterface;
@@ -17,23 +12,13 @@ use Laminas\I18n\View\Helper\Translate;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class Date extends AbstractHelper implements FactoryInterface
+class Date extends AbstractHelper
 {
-    /**
-     * @var Translate
-     */
-    protected $translator;
+    private Translate $translator;
 
-    /**
-     * Inject the translator
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __construct(Translate $translator)
     {
-        $this->translator = $serviceLocator->get('translate');
-
-        return $this;
+        $this->translator = $translator;
     }
 
     /**

@@ -2,8 +2,7 @@
 
 namespace Common\View\Helper;
 
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\Http\Request;
 use Laminas\View\Helper\AbstractHelper;
 
 /**
@@ -11,23 +10,14 @@ use Laminas\View\Helper\AbstractHelper;
  *
  * @author Dmitry Golubev <dmitrij.golubev@valtech.co.uk>
  */
-class LinkBack extends AbstractHelper implements FactoryInterface
+class LinkBack extends AbstractHelper
 {
     /** @var  \Laminas\Http\PhpEnvironment\Request */
-    private $request;
+    private Request $request;
 
-    /**
-     * Factory
-     *
-     * @param \Laminas\View\HelperPluginManager $sl Service Manager
-     *
-     * @return $this;
-     */
-    public function createService(ServiceLocatorInterface $sl)
+    public function __construct(Request $request)
     {
-        $this->request = $sl->getServiceLocator()->get('Request');
-
-        return $this;
+        $this->request = $request;
     }
 
     /**
@@ -52,7 +42,7 @@ class LinkBack extends AbstractHelper implements FactoryInterface
             $url = $params['url'];
         }
 
-        $label = (isset($params['label']) ? $params['label'] : 'common.link.back.label');
+        $label = ($params['label'] ?? 'common.link.back.label');
         $isNeedEscape = (!isset($params['escape']) || $params['escape'] !== false);
 
         $label = $this->view->translate($label);

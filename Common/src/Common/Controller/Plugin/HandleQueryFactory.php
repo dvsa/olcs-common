@@ -10,10 +10,12 @@ class HandleQueryFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): HandleQuery
     {
-        $serviceLocator = $container->getServiceLocator();
+        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
+            $container = $container->getServiceLocator();
+        }
 
-        $annotationBuilder = $serviceLocator->get('TransferAnnotationBuilder');
-        $queryService = $serviceLocator->get('QueryService');
+        $annotationBuilder = $container->get('TransferAnnotationBuilder');
+        $queryService = $container->get('QueryService');
 
         return new HandleQuery($annotationBuilder, $queryService);
     }

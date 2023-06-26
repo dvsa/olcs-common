@@ -18,12 +18,14 @@ class SearchFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): Search
     {
-        $sl = $container->getServiceLocator();
+        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
+            $container = $container->getServiceLocator();
+        }
 
         return new Search(
-            $sl->get('Table'),
-            $sl->get('ViewHelperManager'),
-            $sl->get(SearchTypeManager::class)
+            $container->get('Table'),
+            $container->get('ViewHelperManager'),
+            $container->get(SearchTypeManager::class)
         );
     }
 

@@ -2,6 +2,7 @@
 
 namespace Common\View\Helper;
 
+use Common\Service\Helper\TranslationHelperService;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\View\Helper\AbstractHelper;
@@ -9,25 +10,14 @@ use Laminas\View\Helper\AbstractHelper;
 /**
  * Class return translateReplace to view
  */
-class TranslateReplace extends AbstractHelper implements FactoryInterface
+class TranslateReplace extends AbstractHelper
 {
-    /** @var  \Common\Service\Helper\TranslationHelperService */
-    private $translator;
+    private TranslationHelperService $translator;
 
-    /**
-     * Factory
-     *
-     * @param \Laminas\View\HelperPluginManager $sl Service Manager
-     *
-     * @return $this;
-     */
-    public function createService(ServiceLocatorInterface $sl)
+    public function __construct(TranslationHelperService $translator)
     {
-        $this->translator = $sl->getServiceLocator()->get('Helper\Translation');
-
-        return $this;
+        $this->translator = $translator;
     }
-
     /**
      * Allows you to replace variables after the string is translated
      *
