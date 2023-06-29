@@ -11,6 +11,10 @@ use Laminas\Form\Annotation as Form;
  *     "radio-element":"licence-type"
  * })
  */
+
+// /**
+//  * @Form\Name("licence-type")
+//  */
 class LicenceType
 {
     /**
@@ -25,7 +29,13 @@ class LicenceType
      *      "label_attributes": {"class": "form-control form-control--radio"},
      *      "hint": "markup-typeOfLicence_licenceType-hint",
      *      "value_options": {
-     *          \Common\RefData::LICENCE_TYPE_RESTRICTED: "Restricted",
+     *          \Common\RefData::LICENCE_TYPE_RESTRICTED: {
+     *             "value":\Common\Refdata::LICENCE_TYPE_RESTRICTED,
+     *             "label":"Restricted",
+     *             "attributes":{
+     *                 "data-show-element":"dummy"
+     *             }
+     *          },
      *          \Common\RefData::LICENCE_TYPE_STANDARD_NATIONAL: "Standard National",
      *          \Common\RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL: {
      *             "value":\Common\Refdata::LICENCE_TYPE_STANDARD_INTERNATIONAL,
@@ -46,6 +56,15 @@ class LicenceType
      * @Form\Type("\Common\Form\Elements\Types\Radio")
      */
     public $radio = null;
+
+    /**
+     * @Form\Attributes({
+     *     "value": "application_type-of-licence_licence-type.data.restrictedGuidance",
+     *     "data-container-class": "tm-guidance-email js-visible"
+     * })
+     * @Form\Type("Common\Form\Elements\Types\GuidanceTranslated")
+     */
+    public $ltyp_rContent = null;
 
     /**
      * @Form\ComposedObject("\Common\Form\Model\Form\Lva\Fieldset\StandardInternationalVehicleType")
