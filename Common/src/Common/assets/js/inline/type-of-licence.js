@@ -73,7 +73,13 @@ OLCS.ready(function () {
                     return isGoods &&
                         licenceType.filter(':checked').val() == 'ltyp_si' &&
                         vehicleType.filter(':checked').val() == 'app_veh_type_lgv';
-                }
+                },
+                '.typeOfLicence-guidance-restricted': function() {
+                    return licenceType.filter(':checked').val() == 'ltyp_r';
+                },
+                'selector:div[id$=\'typeOfLicence-guidance-restricted\']': function() {
+                    return licenceType.filter(':checked').val() == 'ltyp_r';
+                },
             }
         },
         submit: function () {

@@ -11,10 +11,6 @@ use Laminas\Form\Annotation as Form;
  *     "radio-element":"licence-type"
  * })
  */
-
-// /**
-//  * @Form\Name("licence-type")
-//  */
 class LicenceType
 {
     /**
@@ -57,12 +53,15 @@ class LicenceType
      */
     public $radio = null;
 
+    // Was: @Form\Type("Common\Form\Elements\Types\GuidanceTranslated")
     /**
      * @Form\Attributes({
      *     "value": "application_type-of-licence_licence-type.data.restrictedGuidance",
-     *     "data-container-class": "tm-guidance-email js-visible"
+     *     "data-container-class": "typeOfLicence-guidance-restricted js-visible",
+     *     "attributes":{"id":"test"}
      * })
-     * @Form\Type("Common\Form\Elements\Types\GuidanceTranslated")
+     * @Form\Options({"tokens":{"application_type-of-licence_licence-type.data.restrictedGuidance"}})
+     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
     public $ltyp_rContent = null;
 
