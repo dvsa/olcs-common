@@ -13,7 +13,7 @@ namespace Common\Service\Table\Formatter;
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class UnlicensedVehicleWeight extends StackValue
+class UnlicensedVehicleWeight extends StackValue implements FormatterPluginManagerInterface
 {
     /**
      * @param  array $data
