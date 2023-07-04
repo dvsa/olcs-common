@@ -14,7 +14,10 @@ class Addresses
     /**
      * @Form\Name("correspondence")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\Correspondence")
-     * @Form\Options({"label":"application_your-business_business-type.correspondence.label"})
+     * @Form\Options({
+     *     "label":"application_your-business_business-type.correspondence.label",
+     *     "hint": "application_correspondence-address.hint"
+     * })
      */
     public $correspondence = null;
 
