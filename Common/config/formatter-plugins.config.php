@@ -233,6 +233,7 @@ use Common\Service\Table\Formatter\TransportManagerDateOfBirthFactory;
 use Common\Service\Table\Formatter\TransportManagerName;
 use Common\Service\Table\Formatter\TransportManagerNameFactory;
 use Common\Service\Table\Formatter\UnlicensedVehicleWeight;
+use Common\Service\Table\Formatter\UnlicensedVehicleWeightFactory;
 use Common\Service\Table\Formatter\ValidityPeriod;
 use Common\Service\Table\Formatter\ValidityPeriodFactory;
 use Common\Service\Table\Formatter\ValidPermitCount;
@@ -295,7 +296,6 @@ return [
         TransactionAmount::class => TransactionAmount::class,
         TransactionFeeAllocatedAmount::class => TransactionFeeAllocatedAmount::class,
         TransactionStatus::class => TransactionStatus::class,
-        UnlicensedVehicleWeight::class => UnlicensedVehicleWeight::class,
         ValidPermitCount::class => ValidPermitCount::class,
         VehicleDiscNo::class => VehicleDiscNo::class,
     ],
@@ -388,6 +388,7 @@ return [
         Translate::class => TranslateFactory::class,
         TransportManagerDateOfBirth::class => TransportManagerDateOfBirthFactory::class,
         TransportManagerName::class => TransportManagerNameFactory::class,
+        UnlicensedVehicleWeight::class => UnlicensedVehicleWeightFactory::class,
         ValidityPeriod::class => ValidityPeriodFactory::class,
         VehicleLink::class => VehicleLinkFactory::class,
         VehicleRegistrationMark::class => VehicleRegistrationMarkFactory::class,
