@@ -214,15 +214,18 @@ class FormServiceAbstractFactory implements AbstractFactoryInterface
     ];
 
 
-    public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
+    public function canCreate($container, $requestedName)
     {
-        file_put_contents('php://stdout', "Requestedddd: " . $requestedName . "\n");
         return in_array($requestedName, self::FORM_SERVICE_CLASS_ALIASES);
     }
 
-    public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
+    public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
-        file_put_contents('php://stdout', "Tryin ta create: " . $requestedName . "\n");
+        return $this->canCreate($serviceLocator, $requestedName);
+    }
+
+    public function __invoke($container, $requestedName, array $options = null)
+    {
         /** @var FormServiceManager $formServiceLocator */
         /** @var FormHelperService $formHelper */
         /** @var AuthorizationService $authService */
@@ -233,7 +236,7 @@ class FormServiceAbstractFactory implements AbstractFactoryInterface
         /** @var ScriptFactory $scriptFactory */
         /** @var $tableBuilder */
 
-        $serviceLocator = method_exists($serviceLocator, 'getServiceLocator') ? $serviceLocator->getServiceLocator() : $serviceLocator;
+        $serviceLocator = method_exists($container, 'getServiceLocator') ? $container->getServiceLocator() : $container;
         $formHelper = $serviceLocator->get(FormHelperService::class);
 
         switch ($requestedName) {
@@ -511,5 +514,10 @@ class FormServiceAbstractFactory implements AbstractFactoryInterface
             'FormServiceAbstractFactory claimed to be able to supply instance of type "%s", but nothing was returned',
             $requestedName
         ));
+    }
+
+    public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
+    {
+        return $this->__invoke($serviceLocator, $requestedName);
     }
 }
