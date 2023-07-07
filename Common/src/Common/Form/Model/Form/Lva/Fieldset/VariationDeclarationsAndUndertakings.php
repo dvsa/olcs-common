@@ -23,7 +23,7 @@ class VariationDeclarationsAndUndertakings
     /**
      * @Form\Options({
      *     "checked_value": "Y",
-     *     "unchecked_value": "N",
+     *     "unchecked_value": "Y",
      *     "must_be_value": "Y",
      *     "label": "variation.review-declarations.confirm-text",
      *     "short-label": "variation.review-declarations.confirm-short-label",
