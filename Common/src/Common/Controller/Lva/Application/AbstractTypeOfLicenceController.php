@@ -87,12 +87,13 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         $dto = UpdateTypeOfLicence::create(
             [
                 'id' => $this->getIdentifier(),
+                'licenceTypeRestrictedGuidance' => $licenceTypeRestrictedGuidance,
                 'version' => $formData['version'],
                 'operatorType' => $operatorType,
                 'licenceType' => $licenceType,
                 'vehicleType' => $vehicleType,
                 'lgvDeclarationConfirmation' => $lgvDeclarationConfirmation,
-                'licenceTypeRestrictedGuidance' => $licenceTypeRestrictedGuidance,
+              
                 'niFlag' => $this->getOperatorLocation($applicationData, $formData)
             ]
         );

@@ -16,6 +16,7 @@ class LicenceType
     /**
      * @Form\Name("licence-type")
      * @Form\Attributes({"id": ""})
+     * @Form\Type("\Common\Form\Elements\Types\Radio")
      * @Form\Options({
      *      "short-label": "short-label-tol-licence-type",
      *      "error-message": "type-of-licence-error",
@@ -23,22 +24,15 @@ class LicenceType
      *      "fieldset-data-group": "licence-type",
      *      "label": "application_type-of-licence_licence-type.data.licenceType",
      *      "label_attributes": {"class": "form-control form-control--radio"},
-     *      "hint": "markup-typeOfLicence_licenceType-hint",
      *      "value_options": {
      *          \Common\RefData::LICENCE_TYPE_RESTRICTED: {
      *             "value":\Common\Refdata::LICENCE_TYPE_RESTRICTED,
      *             "label":"Restricted",
-     *             "attributes":{
-     *                 "data-show-element":"dummy"
-     *             }
      *          },
      *          \Common\RefData::LICENCE_TYPE_STANDARD_NATIONAL: "Standard National",
      *          \Common\RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL: {
      *             "value":\Common\Refdata::LICENCE_TYPE_STANDARD_INTERNATIONAL,
      *             "label":"Standard International",
-     *             "attributes":{
-     *                 "data-show-element":"dummy"
-     *             }
      *          },
      *          "Special Restricted":{
      *              "value":\Common\RefData::LICENCE_TYPE_SPECIAL_RESTRICTED,
@@ -49,16 +43,13 @@ class LicenceType
      *      },
      *
      * })
-     * @Form\Type("\Common\Form\Elements\Types\Radio")
      */
     public $radio = null;
 
-    // Was: @Form\Type("Common\Form\Elements\Types\GuidanceTranslated")
     /**
      * @Form\Attributes({
      *     "value": "application_type-of-licence_licence-type.data.restrictedGuidance",
      *     "data-container-class": "typeOfLicence-guidance-restricted js-visible",
-     *     "attributes":{"id":"test"}
      * })
      * @Form\Options({"tokens":{"application_type-of-licence_licence-type.data.restrictedGuidance"}})
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
