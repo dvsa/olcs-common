@@ -60,7 +60,7 @@ class VariationUndertakingsTest extends AbstractFormValidationTestCase
 
     public function testGoodsApplicationApplicationInterimReason()
     {
-        $element = ['interim', 'goodsApplicationInterimReason'];
+        $element = ['interim','YContent','goodsApplicationInterimReason'];
         $this->assertFormElementType($element, Textarea::class);
         $this->assertFormElementAllowEmpty($element, true);
     }
@@ -85,7 +85,7 @@ class VariationUndertakingsTest extends AbstractFormValidationTestCase
 
     public function testDeclarationsAndUndertakingsInterimInterimFee()
     {
-        $element = ['interim', 'interimFee'];
+        $element = ['interim', 'YContent', 'interimFee'];
         $this->assertFormElementHtml($element);
     }
 }
