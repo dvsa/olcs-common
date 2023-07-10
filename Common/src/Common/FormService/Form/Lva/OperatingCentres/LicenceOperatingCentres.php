@@ -25,10 +25,10 @@ class LicenceOperatingCentres extends AbstractOperatingCentres
         $tableBuilder,
         FormServiceManager $formServiceLocator
     ) {
-        $this->formHelper = $formHelper;
         $this->authService = $authService;
         $this->tableBuilder = $tableBuilder;
         $this->formServiceLocator = $formServiceLocator;
+        parent::__construct($formHelper);
     }
 
     protected function alterForm(Form $form, array $params)

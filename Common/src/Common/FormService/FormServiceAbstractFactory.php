@@ -214,7 +214,7 @@ class FormServiceAbstractFactory implements AbstractFactoryInterface
     ];
 
 
-    public function canCreate($container, $requestedName)
+    public function canCreate($container, $requestedName): bool
     {
         return in_array($requestedName, self::FORM_SERVICE_CLASS_ALIASES);
     }

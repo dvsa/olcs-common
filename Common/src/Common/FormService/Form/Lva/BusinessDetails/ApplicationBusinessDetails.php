@@ -19,8 +19,8 @@ class ApplicationBusinessDetails extends AbstractBusinessDetails
 
     public function __construct(FormHelperService $formHelper, FormServiceManager $formServiceLocator)
     {
-        $this->formHelper = $formHelper;
         $this->formServiceLocator = $formServiceLocator;
+        parent::__construct($formHelper);
     }
     protected function alterForm($form, $params)
     {

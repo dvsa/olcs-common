@@ -12,7 +12,6 @@ use ZfcRbac\Service\AuthorizationService;
  */
 class ApplicationCommunityLicences extends AbstractCommunityLicences
 {
-    protected FormHelperService $formHelper;
     protected AuthorizationService $authService;
 
     public function __construct(FormHelperService $formHelper, AuthorizationService $authService)

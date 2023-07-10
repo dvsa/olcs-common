@@ -17,7 +17,6 @@ use ZfcRbac\Service\AuthorizationService;
  */
 class VariationOperatingCentres extends AbstractOperatingCentres
 {
-    protected FormHelperService $formHelper;
     protected AuthorizationService $authService;
     protected $tableBuilder;
     protected FormServiceManager $formServiceLocator;
@@ -30,11 +29,11 @@ class VariationOperatingCentres extends AbstractOperatingCentres
         FormServiceManager $formServiceLocator,
         TranslationHelperService $translator
     ) {
-        $this->formHelper = $formHelper;
         $this->authService = $authService;
         $this->tableBuilder = $tableBuilder;
         $this->formServiceLocator = $formServiceLocator;
         $this->translator = $translator;
+        parent::__construct($formHelper);
     }
     protected $mainTableConfigName = 'lva-variation-operating-centres';
 
