@@ -78,17 +78,21 @@ class ApplicationUndertakingsTest extends AbstractFormValidationTestCase
 
     public function testGoodsApplicationInterimReason()
     {
-        $element = ['interim', 'goodsApplicationInterimReason'];
+        $element = ['interim','YContent','goodsApplicationInterimReason'];
         $this->assertFormElementRequired($element, false);
         $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementText($element);
-
-        $this->assertFormElementAllowEmpty($element, false, ['interim' => ['goodsApplicationInterim' => 'Y']]);
+        $this->assertFormElementAllowEmpty(['interim','YContent','goodsApplicationInterimReason'], true);
     }
 
     public function testDeclarationsAndUndertakingsInterimInterimFee()
     {
-        $this->assertFormElementHtml(['interim', 'interimFee']);
+        $this->assertFormElementHtml(['interim', 'YContent', 'interimFee']);
+    }
+
+    public function testDeclarationsAndUndertakingsInterimInterimGuidanceText()
+    {
+        $this->assertFormElementHtml(['interim', 'YContent', 'interimGuidanceText']);
     }
 
     public function testSaveAndContinue()
