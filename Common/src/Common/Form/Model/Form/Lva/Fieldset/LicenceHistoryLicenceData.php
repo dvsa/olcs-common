@@ -58,6 +58,17 @@ class LicenceHistoryLicenceData
     public $willSurrender = null;
 
     /**
+     * @Form\Attributes({
+     *     "id":"willSurrenderMessage",
+     *     "data-container-class": "will-surrender",
+     *     "value": "application_add-licence-history-will-surrender-hint",
+     *     "class": "will-surrender-message"
+     * })
+     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
+     */
+    public $willSurrenderMessage = null;
+
+    /**
      * @Form\Required(true)
      * @Form\Attributes({"id":"dob","required":false})
      * @Form\Options({

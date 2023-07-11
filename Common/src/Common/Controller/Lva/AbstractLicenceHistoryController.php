@@ -314,6 +314,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
      */
     public function prevHasLicenceAddAction()
     {
+        $this->getServiceLocator()->get('Script')->loadFiles(['add-licence-history']);
         return $this->addOrEdit('add', 'prevHasLicence');
     }
 
