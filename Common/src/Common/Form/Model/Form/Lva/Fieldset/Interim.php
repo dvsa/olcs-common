@@ -14,7 +14,7 @@ class Interim
 {
     /**
      * @Form\Name("goodsApplicationInterim")
-     * @Form\Attributes({"id":"","placeholder":""})
+     * @Form\Attributes({"id":"interim[goodsApplicationInterim]","placeholder":""})
      * @Form\Options({
      *     "label": "interim.application.undertakings.form.checkbox.label",
      *     "value_options": {"Y": "Yes", "N": "No"},
