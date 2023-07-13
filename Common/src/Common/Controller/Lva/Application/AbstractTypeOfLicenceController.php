@@ -69,6 +69,11 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         $licenceType = $licenceTypeData['licence-type'];
         $vehicleType = null;
         $lgvDeclarationConfirmation = 0;
+        $licenceTypeRestrictedGuidance = '';
+
+        if ($licenceType == RefData::LICENCE_TYPE_RESTRICTED && isset($licenceTypeData['ltyp_rContent'])) {
+            $licenceTypeRestrictedGuidance = $licenceTypeData['ltyp_rContent'];
+        }
 
         if (isset($licenceTypeData['ltyp_siContent'])) {
             $siContentData = $licenceTypeData['ltyp_siContent'];
@@ -82,11 +87,13 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         $dto = UpdateTypeOfLicence::create(
             [
                 'id' => $this->getIdentifier(),
+                'licenceTypeRestrictedGuidance' => $licenceTypeRestrictedGuidance,
                 'version' => $formData['version'],
                 'operatorType' => $operatorType,
                 'licenceType' => $licenceType,
                 'vehicleType' => $vehicleType,
                 'lgvDeclarationConfirmation' => $lgvDeclarationConfirmation,
+              
                 'niFlag' => $this->getOperatorLocation($applicationData, $formData)
             ]
         );
