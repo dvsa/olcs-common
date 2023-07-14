@@ -75,7 +75,7 @@ OLCS.ready(function () {
                         vehicleType.filter(':checked').val() == 'app_veh_type_lgv';
                 },
                 '.typeOfLicence-guidance-restricted': function() {
-                    return licenceType.filter(':checked').val() == 'ltyp_r';
+                    return operatorType.filter(':checked').val() == 'lcat_gv' && licenceType.filter(':checked').val() == 'ltyp_r';
                 },
                 'selector:div[id$=\'typeOfLicence-guidance-restricted\']': function() {
                     return licenceType.filter(':checked').val() == 'ltyp_r';
