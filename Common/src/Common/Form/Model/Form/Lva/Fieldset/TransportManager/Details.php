@@ -37,7 +37,8 @@ class Details
      * @Form\Attributes({"class":"extra-long","id":"emailAddress"})
      * @Form\Options({
      *     "label":"lva-tm-details-details-email",
-     *     "short-label": "lva-tm-details-details-email"
+     *     "short-label": "lva-tm-details-details-email",
+     *     "hint": "lva-tm-email-hint",
      * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
@@ -70,6 +71,8 @@ class Details
      * @Form\ComposedObject("\Common\Form\Model\Fieldset\MultipleFileUpload")
      * @Form\Options({
      *    "label":"lva-tm-details-details-certificate",
+     *    "hint": "markup-professional-competence-certificates-obtained-abroad.phtml",
+     *    "hint-position": "above",
      *    "label_attributes": {
      *        "class": "legend",
      *        "aria-label": "Certificate of professional competence, attach file(s) for upload",
