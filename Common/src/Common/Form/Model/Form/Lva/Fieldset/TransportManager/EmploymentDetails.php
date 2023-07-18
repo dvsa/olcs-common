@@ -60,4 +60,30 @@ class EmploymentDetails
      * })
      */
     public $hoursPerWeek = null;
+
+    /**
+     * @Form\Attributes({
+     *     "value": "<div>%s<br></div>",
+     *     "data-container-class": "help__text"
+     * })
+     * @Form\Options({"tokens":{"transportManager.data.availability.availabilityGuidance"}})
+     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
+     */
+    public $availabilityGuidance = null;
+
+    /**
+     * @Form\Name("understood-availability-agreement-confirmation")
+     * @Form\Attributes({"id": "understoodAvailabilityAgreement", "placeholder": ""})
+     * @Form\Options({
+     *     "label": "transportManager.data.availability.understoodAvailabilityAgreementConfirmation",
+     *     "label_attributes" : {
+     *         "class":"form-control form-control--checkbox form-control--confirm"
+     *     },
+     *     "checked_value":"Y",
+     *     "unchecked_value":"N",
+     *     "must_be_value": "Y"
+     * })
+     * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
+     */
+    public $understoodAvailabilityAgreementConfirmation = null;
 }
