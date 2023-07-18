@@ -609,6 +609,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
         if ($which !== 'prevHasLicence') {
             $formHelper->remove($form, 'data->willSurrender');
+            $formHelper->remove($form, 'data->willSurrenderMessage');
         }
 
         if ($which !== 'prevPurchasedAssets') {
