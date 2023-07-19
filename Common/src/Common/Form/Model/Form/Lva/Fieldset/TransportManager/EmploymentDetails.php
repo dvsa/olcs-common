@@ -76,12 +76,12 @@ class EmploymentDetails
      * @Form\Attributes({"id": "understoodAvailabilityAgreement", "placeholder": ""})
      * @Form\Options({
      *     "label": "transportManager.data.availability.understoodAvailabilityAgreementConfirmation",
-     *     "label_attributes" : {
-     *         "class":"form-control form-control--checkbox form-control--confirm"
-     *     },
      *     "checked_value":"Y",
      *     "unchecked_value":"N",
-     *     "must_be_value": "Y"
+     *     "must_be_value": "Y",
+     *     "label_attributes": {
+     *         "class": "form-control form-control--checkbox form-control--advanced",
+     *     }
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      */
