@@ -2,9 +2,10 @@
 
 namespace Common\Data\Mapper\Licence\Surrender;
 
+use Common\Data\Mapper\MapperInterface;
 use Common\RefData;
 
-class OperatorLicence
+class OperatorLicence implements MapperInterface
 {
     /**
      * Map data from form to DTO
@@ -32,7 +33,7 @@ class OperatorLicence
         return $mappedData[$formData['operatorLicenceDocument']['operatorLicenceDocument']];
     }
 
-    public function mapFromResult(array $data)
+    public static function mapFromResult(array $data)
     {
         $licenceDocumentStatus = $data["licenceDocumentStatus"]["id"] ?? null;
 

@@ -187,6 +187,8 @@ return [
             'Helper\Url' => HelperService\UrlHelperService::class,
             'Lva\People' => Common\Service\Lva\PeopleLvaService::class,
             'Lva\Variation' => Common\Service\Lva\VariationLvaService::class,
+            'LanguagePreference' => \Common\Preference\Language::class,
+            'QaCommonHtmlAdder' => QaService\Custom\Common\HtmlAdder::class,
 
             // Controller LVA Adapters
             'ApplicationConditionsUndertakingsAdapter' => \Common\Controller\Lva\Adapters\ApplicationConditionsUndertakingsAdapter::class,
@@ -206,7 +208,6 @@ return [
             'VariationTransportManagerAdapter' => Common\Controller\Lva\Adapters\VariationTransportManagerAdapter::class,
 
             'FormServiceManager' => Common\FormService\FormServiceManager::class,
-            'Script' => \Common\Service\Script\ScriptFactory::class,
         ],
         'invokables' => [
             'Common\Service\NavigationFactory' => 'Common\Service\NavigationFactory',
@@ -227,7 +228,6 @@ return [
             'QaRadioFactory' => QaService\RadioFactory::class,
             'QaFieldsetFactory' => QaService\FieldsetFactory::class,
             'QaValidatorsAdder' => QaService\ValidatorsAdder::class,
-            'QaCommonHtmlAdder' => QaService\Custom\Common\HtmlAdder::class,
             'QaEcmtYesNoRadioFactory' => QaService\Custom\Ecmt\YesNoRadioFactory::class,
             'QaEcmtRestrictedCountriesMultiCheckboxFactory'
                 => QaService\Custom\Ecmt\RestrictedCountriesMultiCheckboxFactory::class,
@@ -259,6 +259,7 @@ return [
 
             'QaEcmtNoOfPermitsSingleDataTransformer' =>
                 QaService\DataTransformer\EcmtNoOfPermitsSingleDataTransformer::class,
+            QaService\Custom\Common\HtmlAdder::class => QaService\Custom\Common\HtmlAdder::class,
 
             Common\Data\Mapper\DefaultMapper::class => Common\Data\Mapper\DefaultMapper::class,
             SurrenderMapper\OperatorLicence::class => SurrenderMapper\OperatorLicence::class,
@@ -307,7 +308,7 @@ return [
 
             CommandSender::class => CommandSender::class,
             'QuerySender' => \Common\Service\Cqrs\Query\QuerySender::class,
-            'LanguagePreference' => \Common\Preference\Language::class,
+            \Common\Preference\Language::class => \Common\Preference\Language::class,
             'LanguageListener' => \Common\Preference\LanguageListener::class,
             'CqrsRequest' => \Common\Service\Cqrs\RequestFactory::class,
             \Common\Service\Cqrs\Query\CachingQueryService::class
