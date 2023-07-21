@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Convictions & Penalties Form Service Test
- *
- * @author Dan Eggleston <dan@stolenegg.com>
- */
-
 namespace CommonTest\FormService\Form\Lva;
 
 use Common\Form\Elements\InputFilters\ActionLink;

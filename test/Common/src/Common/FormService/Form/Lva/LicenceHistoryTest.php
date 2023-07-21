@@ -2,23 +2,20 @@
 
 namespace CommonTest\FormService\Form\Lva;
 
-use Common\FormService\Form\Lva\ConvictionsPenalties;
 use Common\FormService\Form\Lva\LicenceHistory;
 use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Helper\UrlHelperService;
-use Laminas\Form\Form;
 use Mockery as m;
 
-/**
- * Licence History Form Service Test
- *
- * @author Dan Eggleston <dan@stolenegg.com>
- */
 class LicenceHistoryTest extends AbstractLvaFormServiceTestCase
 {
     protected $classToTest = LicenceHistory::class;
 
     protected $formName = 'Lva\LicenceHistory';
+
+    protected $translator;
+
+    protected $urlHelper;
 
     public function setUp(): void
     {

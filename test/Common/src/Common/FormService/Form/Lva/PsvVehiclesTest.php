@@ -22,7 +22,6 @@ class PsvVehiclesTest extends AbstractLvaFormServiceTestCase
     public function setUp(): void
     {
         $this->authService = m::mock(AuthorizationService::class);
-        $this->mockedForm = m::mock(Form::class);
         $this->classArgs = [$this->authService];
         parent::setUp();
     }

@@ -11,9 +11,10 @@ use Common\FormService\Form\Lva\CommonVehiclesSearch;
  */
 class CommonVehiclesSearchTest extends MockeryTestCase
 {
-    /** @var CommonVehiclesSearch  */
+    /** @var CommonVehiclesSearch */
     protected $sut;
-    /** @var  \Common\Service\Helper\FormHelperService | m\MockInterface */
+
+    /** @var \Common\Service\Helper\FormHelperService | m\MockInterface */
     protected $formHelper;
 
     public function setUp(): void

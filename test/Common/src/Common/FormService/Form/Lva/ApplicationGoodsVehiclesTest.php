@@ -7,11 +7,6 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Lva\ApplicationGoodsVehicles;
 use CommonTest\Bootstrap;
 
-/**
- * Application Goods Vehicles Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class ApplicationGoodsVehiclesTest extends MockeryTestCase
 {
     protected $sut;

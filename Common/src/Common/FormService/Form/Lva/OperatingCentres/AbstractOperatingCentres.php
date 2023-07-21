@@ -37,8 +37,7 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
         $form = $this->formHelper->createForm('Lva\OperatingCentres');
 
         $additionalParams = $params['query'] ?? [];
-        $table = $this->tableBuilder
-            ->prepareTable($this->mainTableConfigName, $params['operatingCentres'], $additionalParams);
+        $table = $this->tableBuilder->prepareTable($this->mainTableConfigName, $params['operatingCentres'], $additionalParams);
 
         $this->formHelper->populateFormTable($form->get('table'), $table);
 

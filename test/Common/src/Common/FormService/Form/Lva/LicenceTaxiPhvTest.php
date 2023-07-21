@@ -20,6 +20,8 @@ class LicenceTaxiPhvTest extends MockeryTestCase
      */
     private $sut;
 
+    protected $authService;
+
     /**
      * @var FormHelperService
      */

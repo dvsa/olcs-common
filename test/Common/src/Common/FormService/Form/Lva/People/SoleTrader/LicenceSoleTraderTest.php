@@ -23,7 +23,7 @@ class LicenceSoleTraderTest extends MockeryTestCase
 
     protected $formHelper;
 
-    protected $fsm;
+    protected $fsl;
 
     protected $sm;
 

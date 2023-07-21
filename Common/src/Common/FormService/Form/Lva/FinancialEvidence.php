@@ -2,10 +2,10 @@
 
 namespace Common\FormService\Form\Lva;
 
+use ZfcRbac\Service\AuthorizationService;
 use Common\Service\Helper\FormHelperService;
 use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Helper\UrlHelperService;
-use ZfcRbac\Service\AuthorizationService;
 
 /**
  * FinancialEvidence Form
@@ -14,10 +14,10 @@ use ZfcRbac\Service\AuthorizationService;
  */
 class FinancialEvidence extends AbstractLvaFormService
 {
-    protected FormHelperService $formHelper;
     protected AuthorizationService $authService;
-    protected UrlHelperService $urlHelper;
+    protected FormHelperService $formHelper;
     protected TranslationHelperService $translator;
+    protected UrlHelperService $urlHelper;
 
     public function __construct(
         FormHelperService $formHelper,
@@ -25,10 +25,10 @@ class FinancialEvidence extends AbstractLvaFormService
         TranslationHelperService $translator,
         UrlHelperService $urlHelper
     ) {
-        $this->formHelper = $formHelper;
         $this->authService = $authService;
-        $this->urlHelper = $urlHelper;
+        $this->formHelper = $formHelper;
         $this->translator = $translator;
+        $this->urlHelper = $urlHelper;
     }
 
     /**
