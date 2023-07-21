@@ -6,18 +6,10 @@ use Common\Form\Elements\Types\HtmlTranslated;
 use Common\Form\Form;
 use Common\RefData;
 use Common\Service\Helper\FormHelperService;
-use Common\Service\Helper\GuidanceHelperService;
 use Common\Service\Helper\TranslationHelperService;
-use Common\Service\Helper\UrlHelperService;
-use Common\Service\Lva\PeopleLvaService;
-use Common\Service\Script\ScriptFactory;
-use Common\Service\Table\TableBuilder;
-use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 use Laminas\Form\ElementInterface;
 use Laminas\Form\FieldsetInterface;
 use Laminas\Http\Request;
-use Laminas\Mvc\Controller\PluginManager;
-use ZfcRbac\Service\AuthorizationService;
 
 /**
  * FinancialHistory Form

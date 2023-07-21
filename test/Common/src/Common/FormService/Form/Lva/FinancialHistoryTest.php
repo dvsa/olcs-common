@@ -16,11 +16,6 @@ use Laminas\Form\ElementInterface;
 use Laminas\Form\Fieldset;
 use Laminas\Http\Request;
 
-/**
- * Financial History Form Service Test
- *
- * @author Dan Eggleston <dan@stolenegg.com>
- */
 class FinancialHistoryTest extends MockeryTestCase
 {
     /** @var  FinancialHistory */
@@ -46,7 +41,6 @@ class FinancialHistoryTest extends MockeryTestCase
         /** @var Request|m\Mock $request */
         $request = m::mock(Request::class);
 
-        // Mocks
         $mockForm = m::mock(Form::class);
 
         $this->formHelper->shouldReceive('createFormWithRequest')

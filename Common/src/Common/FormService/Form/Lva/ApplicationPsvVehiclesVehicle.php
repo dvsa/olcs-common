@@ -4,13 +4,7 @@ namespace Common\FormService\Form\Lva;
 
 use Common\FormService\FormServiceManager;
 use Common\Service\Helper\FormHelperService;
-use ZfcRbac\Service\AuthorizationService;
 
-/**
- * Application Psv Vehicles Vehicle
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class ApplicationPsvVehiclesVehicle extends AbstractPsvVehiclesVehicle
 {
     protected FormServiceManager $formServiceLocator;
