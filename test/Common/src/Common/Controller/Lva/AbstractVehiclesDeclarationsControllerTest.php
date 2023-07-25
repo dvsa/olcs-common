@@ -2,6 +2,7 @@
 
 namespace CommonTest\Controller\Lva;
 
+use Common\FormService\FormServiceManager;
 use Common\RefData;
 use Mockery as m;
 use CommonTest\Bootstrap;
@@ -29,7 +30,7 @@ class AbstractVehiclesDeclarationsControllerTest extends AbstractLvaControllerTe
             );
 
         $mockFormServiceManager = m::mock();
-        $this->sm->setService('FormServiceManager', $mockFormServiceManager);
+        $this->sm->setService(FormServiceManager::class, $mockFormServiceManager);
     }
 
     public function testGetIndexAction()
@@ -37,7 +38,7 @@ class AbstractVehiclesDeclarationsControllerTest extends AbstractLvaControllerTe
         $form = m::mock(\Common\Form\Form::class);
         $mockFormService = m::mock();
         $mockFormServiceManager = m::mock();
-        $this->sm->setService('FormServiceManager', $mockFormServiceManager);
+        $this->sm->setService(FormServiceManager::class, $mockFormServiceManager);
 
         $form->shouldReceive('setValidationGroup')->once();
 

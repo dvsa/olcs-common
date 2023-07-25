@@ -2,6 +2,11 @@
 
 namespace Common\FormService\Form\Lva;
 
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Helper\TranslationHelperService;
+use Common\Service\Helper\UrlHelperService;
+use ZfcRbac\Service\AuthorizationService;
+
 /**
  * FinancialEvidence Form
  *
@@ -9,6 +14,23 @@ namespace Common\FormService\Form\Lva;
  */
 class FinancialEvidence extends AbstractLvaFormService
 {
+    protected AuthorizationService $authService;
+    protected FormHelperService $formHelper;
+    protected TranslationHelperService $translator;
+    protected UrlHelperService $urlHelper;
+
+    public function __construct(
+        FormHelperService $formHelper,
+        AuthorizationService $authService,
+        TranslationHelperService $translator,
+        UrlHelperService $urlHelper
+    ) {
+        $this->authService = $authService;
+        $this->formHelper = $formHelper;
+        $this->translator = $translator;
+        $this->urlHelper = $urlHelper;
+    }
+
     /**
      * Get Form
      *
@@ -18,7 +40,7 @@ class FinancialEvidence extends AbstractLvaFormService
      */
     public function getForm(\Laminas\Http\Request $request)
     {
-        $form = $this->getFormHelper()->createFormWithRequest('Lva\FinancialEvidence', $request);
+        $form = $this->formHelper->createFormWithRequest('Lva\FinancialEvidence', $request);
 
         $this->alterForm($form);
 
@@ -38,19 +60,12 @@ class FinancialEvidence extends AbstractLvaFormService
         $evidenceFieldset->get('uploadNowRadio')->setName('uploadNow');
         $evidenceFieldset->get('uploadLaterRadio')->setName('uploadNow');
         $evidenceFieldset->get('sendByPostRadio')->setName('uploadNow');
-        $this->getFormHelper()->remove($form, 'evidence->uploadNow');
+        $this->formHelper->remove($form, 'evidence->uploadNow');
 
-        $sl = $this->getServiceLocator();
-        /** @var \Laminas\Mvc\Controller\Plugin\Url $urlControllerPlugin */
-        $urlHelper = $sl->get('Helper\Url');
-
-        /** @var \Common\Service\Helper\TranslationHelperService $translator */
-        $translator = $sl->get('Helper\Translation');
-
-        $evidenceHint = $translator->translateReplace(
+        $evidenceHint = $this->translator->translateReplace(
             'lva-financial-evidence-evidence.hint',
             [
-                $urlHelper->fromRoute('guides/guide', ['guide' => 'financial-evidence'], [], true),
+                $this->urlHelper->fromRoute('guides/guide', ['guide' => 'financial-evidence'], [], true),
             ]
         );
         $evidenceFieldset->setOption('hint', $evidenceHint);

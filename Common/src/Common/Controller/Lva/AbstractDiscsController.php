@@ -2,6 +2,7 @@
 
 namespace Common\Controller\Lva;
 
+use Common\FormService\FormServiceManager;
 use Common\RefData;
 use Common\Service\Table\TableBuilder;
 use Dvsa\Olcs\Transfer\Command\AbstractCommand;
@@ -30,12 +31,12 @@ abstract class AbstractDiscsController extends AbstractController
     protected $spacesRemaining = null;
 
     //  actions
-    const ACTION_CEASED_SHOW_HIDE = 'ceased-show-hide';
+    public const ACTION_CEASED_SHOW_HIDE = 'ceased-show-hide';
 
     // Command keys
-    const CMD_REQUEST_DISCS = 'requested';
-    const CMD_VOID_DISCS = 'voided';
-    const CMD_REPLACE_DISCS = 'replaced';
+    public const CMD_REQUEST_DISCS = 'requested';
+    public const CMD_VOID_DISCS = 'voided';
+    public const CMD_REPLACE_DISCS = 'replaced';
 
     protected $commandMap = [
         self::CMD_REQUEST_DISCS => [
@@ -211,7 +212,7 @@ abstract class AbstractDiscsController extends AbstractController
 
         /** @var \Common\Form\Form $form */
         $form = $this->getServiceLocator()
-            ->get('FormServiceManager')
+            ->get(FormServiceManager::class)
             ->get('lva-' . $this->lva . '-' . $this->section)
             ->getForm();
 

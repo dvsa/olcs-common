@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Licence Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\FormService\Form\Lva;
 
 use Mockery as m;
@@ -20,9 +15,15 @@ class LicenceTest extends MockeryTestCase
 {
     protected $sut;
 
+    protected $formHelper;
+
+    protected $authService;
+
     public function setUp(): void
     {
-        $this->sut = new Licence();
+        $this->formHelper = m::mock('\Common\Service\Helper\FormHelperService');
+        $this->authService = m::mock('\ZfcRbac\Service\AuthorizationService');
+        $this->sut = new Licence($this->formHelper, $this->authService);
     }
 
     public function testAlterForm()

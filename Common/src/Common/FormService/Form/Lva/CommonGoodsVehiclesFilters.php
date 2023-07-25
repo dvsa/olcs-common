@@ -2,15 +2,21 @@
 
 namespace Common\FormService\Form\Lva;
 
-use Common\FormService\Form\AbstractFormService;
+use Common\Service\Helper\FormHelperService;
 
 /**
  * Common Goods Vehicles Filters Form
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class CommonGoodsVehiclesFilters extends AbstractFormService
+class CommonGoodsVehiclesFilters
 {
+    protected FormHelperService $formHelper;
+
+    public function __construct(FormHelperService $formHelper)
+    {
+        $this->formHelper = $formHelper;
+    }
     /**
      * Get Form
      *
@@ -18,7 +24,7 @@ class CommonGoodsVehiclesFilters extends AbstractFormService
      */
     public function getForm()
     {
-        $form = $this->getFormHelper()->createForm('Lva\VehicleFilter', false);
+        $form = $this->formHelper->createForm('Lva\VehicleFilter', false);
 
         // @NOTE Might as well hard code this list rather than generating it using range, array_combine and array_merge
         // everytime, as the values will never change

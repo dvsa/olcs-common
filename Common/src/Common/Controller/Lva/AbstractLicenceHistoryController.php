@@ -4,6 +4,7 @@ namespace Common\Controller\Lva;
 
 use Common\Data\Mapper\Lva\LicenceHistory as LicenceHistoryMapper;
 use Common\Data\Mapper\Lva\OtherLicence as OtherLicenceMapper;
+use Common\FormService\FormServiceManager;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateLicenceHistory;
 use Dvsa\Olcs\Transfer\Command\OtherLicence\CreateOtherLicence;
 use Dvsa\Olcs\Transfer\Command\OtherLicence\DeleteOtherLicence;
@@ -23,7 +24,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     use Traits\CrudTableTrait;
 
     protected $sections = [
-        'guidance' =>[],
+        'guidance' => [],
         'data' => [
             'prevHasLicence',
             'prevHadLicence',
@@ -268,7 +269,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
         /** @var \Common\Form\Form $form */
         $form = $this->getServiceLocator()
-            ->get('FormServiceManager')
+            ->get(FormServiceManager::class)
             ->get('lva-' . $this->lva . '-' . $this->section)
             ->getForm();
 

@@ -2,6 +2,7 @@
 
 namespace Common\Controller\Lva;
 
+use Common\FormService\FormServiceManager;
 use Common\View\Helper\ReturnToAddress;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateFinancialEvidence;
 use Dvsa\Olcs\Utils\Helper\ValueHelper;
@@ -39,7 +40,7 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
         // set up form
         /** @var \Common\Form\Form $form */
         $form = $this->getServiceLocator()
-            ->get('FormServiceManager')
+            ->get(FormServiceManager::class)
             ->get('lva-' . $this->lva . '-financial_evidence')
             ->getForm($this->getRequest())
             ->setData($formData);

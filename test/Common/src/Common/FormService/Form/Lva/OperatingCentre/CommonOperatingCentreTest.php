@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Common Operating Centre Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\FormService\Form\Lva\OperatingCentre;
 
 use Common\FormService\Form\Lva\OperatingCentre\CommonOperatingCentre;
@@ -45,8 +40,7 @@ class CommonOperatingCentreTest extends MockeryTestCase
             ->with('Lva\OperatingCentre', $this->request)
             ->andReturn($this->form);
 
-        $this->sut = new CommonOperatingCentre();
-        $this->sut->setFormHelper($this->mockFormHelper);
+        $this->sut = new CommonOperatingCentre($this->mockFormHelper);
     }
 
     public function testGetForm()

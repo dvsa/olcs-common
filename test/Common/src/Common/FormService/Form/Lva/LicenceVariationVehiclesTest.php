@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Licence Variation Vehicles Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\FormService\Form\Lva;
 
 use Mockery as m;
@@ -26,8 +21,7 @@ class LicenceVariationVehiclesTest extends MockeryTestCase
     {
         $this->formHelper = m::mock('\Common\Service\Helper\FormHelperService');
 
-        $this->sut = new LicenceVariationVehicles();
-        $this->sut->setFormHelper($this->formHelper);
+        $this->sut = new LicenceVariationVehicles($this->formHelper);
     }
 
     public function testAlterForm()

@@ -5,6 +5,7 @@ namespace Common\Controller\Lva;
 use Common\Category;
 use Common\Data\Mapper\Lva\OperatingCentre;
 use Common\Data\Mapper\Lva\OperatingCentres;
+use Common\FormService\FormServiceManager;
 use Dvsa\Olcs\Transfer\Command\Application\CreateOperatingCentre as AppCreateOperatingCentre;
 use Dvsa\Olcs\Transfer\Command\Application\DeleteOperatingCentres as AppDeleteOperatingCentres;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateOperatingCentres as AppUpdateOperatingCentres;
@@ -134,7 +135,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $resultData['query'] = $params;
 
         /** @var \Laminas\Form\FormInterface $form */
-        $form = $this->getServiceLocator()->get('FormServiceManager')
+        $form = $this->getServiceLocator()->get(FormServiceManager::class)
             ->get('lva-' . $this->lva . '-operating_centres')
             ->getForm($resultData)
             ->setData($data);
@@ -166,7 +167,8 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
         // if traffic area dropdown and enforement area dropdown exists, then add JS to popoulate enforcement
         // area when traffic area is changed
-        if ($form->has('dataTrafficArea') &&
+        if (
+            $form->has('dataTrafficArea') &&
             $form->get('dataTrafficArea')->has('trafficArea') &&
             $form->get('dataTrafficArea')->has('enforcementArea')
         ) {
@@ -274,7 +276,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
         }
 
         /** @var \Laminas\Form\FormInterface $form */
-        $form = $this->getServiceLocator()->get('FormServiceManager')
+        $form = $this->getServiceLocator()->get(FormServiceManager::class)
             ->get('lva-' . $this->lva . '-operating_centre')
             ->getForm($resultData, $request)
             ->setData($data);
@@ -298,7 +300,6 @@ abstract class AbstractOperatingCentresController extends AbstractController
             $formData = array_merge($form->getData(), ['isTaOverridden' => $request->getPost('form-actions')['confirm-add']]);
             $dtoData = OperatingCentre::mapFromForm($formData);
             $dtoData[$this->getIdentifierIndex()] = $this->getIdentifier();
-
 
             $dtoClass = $this->createCommandMap[$this->lva];
             $response = $this->handleCommand($dtoClass::create($dtoData));
@@ -385,7 +386,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
         }
 
         /** @var \Laminas\Form\FormInterface $form */
-        $form = $this->getServiceLocator()->get('FormServiceManager')
+        $form = $this->getServiceLocator()->get(FormServiceManager::class)
             ->get('lva-' . $this->lva . '-operating_centre')
             ->getForm($resultData, $request)
             ->setData($data);

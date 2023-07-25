@@ -3,6 +3,7 @@
 namespace Common\Controller\Lva;
 
 use Common\Form\Form;
+use Common\FormService\FormServiceManager;
 use Dvsa\Olcs\Transfer\Query\Licence\Licence;
 use Dvsa\Olcs\Transfer\Command\CommunityLic\Application\CreateOfficeCopy as ApplicationCreateOfficeCopy;
 use Dvsa\Olcs\Transfer\Command\CommunityLic\Licence\CreateOfficeCopy as LicenceCreateOfficeCopy;
@@ -30,11 +31,11 @@ use RuntimeException;
  */
 abstract class AbstractCommunityLicencesController extends AbstractController implements AdapterAwareInterface
 {
-    use Traits\CrudTableTrait,
-        Traits\AdapterAwareTrait;
+    use Traits\CrudTableTrait;
+    use Traits\AdapterAwareTrait;
 
     // See OLCS-16655, pagination is to be 50 per page only
-    const TABLE_RESULTS_PER_PAGE = 50;
+    public const TABLE_RESULTS_PER_PAGE = 50;
 
     protected $section = 'community_licences';
     protected $baseRoute = 'lva-%s/community_licences';
@@ -87,7 +88,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
             $this->filters = $this->defaultFilters;
         } else {
             $this->filters = [
-                'status' => empty($filterStatuses) ? 'NULL': $filterStatuses
+                'status' => empty($filterStatuses) ? 'NULL' : $filterStatuses
             ];
         }
 
@@ -176,7 +177,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         $form = $this->getServiceLocator()->get('Helper\Form')
             ->createForm('Lva\CommunityLicenceFilter', false);
 
-        $lva = ($this->lva !== 'variation')? $this->lva :'application';
+        $lva = ($this->lva !== 'variation') ? $this->lva : 'application';
 
         $form->setAttribute(
             'action',
@@ -200,7 +201,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
 
         /** @var \Laminas\Form\FormInterface $form */
         $form = $this->getServiceLocator()
-            ->get('FormServiceManager')
+            ->get(FormServiceManager::class)
             ->get('lva-' . $this->lva . '-' . $this->section)
             ->getForm();
 
@@ -319,24 +320,28 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         if ($officeCopy) {
             $table->removeAction('office-licence-add');
         }
-        if (!$this->checkTableForLicences(
-            $table,
-            [
+        if (
+            !$this->checkTableForLicences(
+                $table,
+                [
                 RefData::COMMUNITY_LICENCE_STATUS_PENDING,
                 RefData::COMMUNITY_LICENCE_STATUS_ACTIVE,
                 RefData::COMMUNITY_LICENCE_STATUS_WITHDRAWN,
                 RefData::COMMUNITY_LICENCE_STATUS_SUSPENDED
-            ]
-        )) {
+                ]
+            )
+        ) {
             $table->removeAction('void');
         }
-        if (!$this->checkTableForLicences(
-            $table,
-            [
+        if (
+            !$this->checkTableForLicences(
+                $table,
+                [
                 RefData::COMMUNITY_LICENCE_STATUS_WITHDRAWN,
                 RefData::COMMUNITY_LICENCE_STATUS_SUSPENDED
-            ]
-        )) {
+                ]
+            )
+        ) {
             $table->removeAction('restore');
         }
         if (!$this->checkTableForLicences($table, [RefData::COMMUNITY_LICENCE_STATUS_ACTIVE])) {

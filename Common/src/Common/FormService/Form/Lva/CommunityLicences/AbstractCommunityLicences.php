@@ -1,13 +1,10 @@
 <?php
 
-/**
- * Community Licences
- *
- * @author Dan Eggleston <dan@stolenegg.com>
- */
 namespace Common\FormService\Form\Lva\CommunityLicences;
 
 use Common\FormService\Form\Lva\AbstractLvaFormService;
+use Common\Service\Helper\FormHelperService;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Community Licences
@@ -16,9 +13,10 @@ use Common\FormService\Form\Lva\AbstractLvaFormService;
  */
 abstract class AbstractCommunityLicences extends AbstractLvaFormService
 {
+    protected FormHelperService $formHelper;
     public function getForm()
     {
-        $form = $this->getFormHelper()->createForm('Lva\CommunityLicences');
+        $form = $this->formHelper->createForm('Lva\CommunityLicences');
 
         $this->alterForm($form);
 

@@ -2,6 +2,7 @@
 
 namespace Common\Controller\Lva;
 
+use Common\FormService\FormServiceManager;
 use Common\Service\Helper\FormHelperService;
 use Dvsa\Olcs\Transfer\Command\Application\CreateWorkshop as ApplicationCreateWorkshop;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateWorkshop as ApplicationUpdateWorkshop;
@@ -22,7 +23,7 @@ abstract class AbstractSafetyController extends AbstractController
 {
     use Traits\CrudTableTrait;
 
-    const DEFAULT_TABLE_RECORDS_COUNT = 10;
+    public const DEFAULT_TABLE_RECORDS_COUNT = 10;
 
     protected $section = 'safety';
     protected $baseRoute = 'lva-%s/safety';
@@ -494,7 +495,7 @@ abstract class AbstractSafetyController extends AbstractController
 
         /** @var \Laminas\Form\Form $form */
         $form = $this->getServiceLocator()
-            ->get('FormServiceManager')
+            ->get(FormServiceManager::class)
             ->get('lva-' . $this->lva . '-' . $this->section)
             ->getForm();
 

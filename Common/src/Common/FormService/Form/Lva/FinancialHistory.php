@@ -3,9 +3,9 @@
 namespace Common\FormService\Form\Lva;
 
 use Common\Form\Elements\Types\HtmlTranslated;
-use Common\FormService\Form\AbstractFormService;
 use Common\Form\Form;
 use Common\RefData;
+use Common\Service\Helper\FormHelperService;
 use Common\Service\Helper\TranslationHelperService;
 use Laminas\Form\ElementInterface;
 use Laminas\Form\FieldsetInterface;
@@ -16,8 +16,19 @@ use Laminas\Http\Request;
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class FinancialHistory extends AbstractFormService
+class FinancialHistory
 {
+    protected TranslationHelperService $translator;
+    protected FormHelperService $formHelper;
+
+    public function __construct(
+        FormHelperService $formHelper,
+        TranslationHelperService $translator
+    ) {
+        $this->formHelper = $formHelper;
+        $this->translator = $translator;
+    }
+
     /**
      * Get form
      *
@@ -29,7 +40,7 @@ class FinancialHistory extends AbstractFormService
     public function getForm($request, array $data = [])
     {
         /** @var Form $form */
-        $form = $this->getFormHelper()->createFormWithRequest('Lva\FinancialHistory', $request);
+        $form = $this->formHelper->createFormWithRequest('Lva\FinancialHistory', $request);
 
         $this->alterForm($form, $data);
 
@@ -51,8 +62,8 @@ class FinancialHistory extends AbstractFormService
         }
 
         if (isset($data['variationType']) && $data['variationType'] == RefData::VARIATION_TYPE_DIRECTOR_CHANGE) {
-            $this->getFormHelper()->remove($form, 'data->financeHint');
-            $this->getFormHelper()->remove($form, 'data->financialHistoryConfirmation');
+            $this->formHelper->remove($form, 'data->financeHint');
+            $this->formHelper->remove($form, 'data->financialHistoryConfirmation');
 
             /** @var FieldsetInterface $dataFieldset */
             $dataFieldset = $form->get('data');
@@ -60,9 +71,7 @@ class FinancialHistory extends AbstractFormService
             /** @var HtmlTranslated $hasAnyPerson */
             $hasAnyPerson = $dataFieldset->get('hasAnyPerson');
 
-            $translator = $this->getServiceLocator()->get('Helper\Translation');
-            assert($translator instanceof TranslationHelperService);
-            $hasAnyPersonToken = $translator->translate($this->getCorrectHasAnyPersonKey($data['organisationType']));
+            $hasAnyPersonToken = $this->translator->translate($this->getCorrectHasAnyPersonKey($data['organisationType']));
             $hasAnyPerson->setTokens([$hasAnyPersonToken]);
         }
 

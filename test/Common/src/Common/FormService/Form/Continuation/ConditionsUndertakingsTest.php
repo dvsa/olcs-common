@@ -21,9 +21,7 @@ class ConditionsUndertakingsTest extends MockeryTestCase
     public function setUp(): void
     {
         $this->formHelper = m::mock(FormHelperService::class);
-
-        $this->sut = new ConditionsUndertakings();
-        $this->sut->setFormHelper($this->formHelper);
+        $this->sut = new ConditionsUndertakings($this->formHelper);
     }
 
     public function testGetForm()

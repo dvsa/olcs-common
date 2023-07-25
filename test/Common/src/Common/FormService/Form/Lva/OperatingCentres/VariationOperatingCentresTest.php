@@ -1,17 +1,13 @@
 <?php
 
-/**
- * Variation Operating Centres Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\FormService\Form\Lva\OperatingCentres;
 
 use Common\Form\Elements\Types\Table;
 use Common\FormService\Form\Lva\OperatingCentres\VariationOperatingCentres;
-use Common\FormService\FormServiceInterface;
 use Common\FormService\FormServiceManager;
+use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Table\TableBuilder;
+use Common\Service\Table\TableFactory;
 use CommonTest\Bootstrap;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -21,6 +17,7 @@ use Laminas\Form\Form;
 use Laminas\Http\Request;
 use Common\Service\Helper\FormHelperService;
 use Common\RefData;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Variation Operating Centres Test
@@ -44,17 +41,11 @@ class VariationOperatingCentresTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->tableBuilder = m::mock(TableBuilder::class);
-
-        $this->translator = m::mock();
-
-        $sm = Bootstrap::getServiceManager();
-        $sm->setService('Table', $this->tableBuilder);
-        $sm->setService('Helper\Translation', $this->translator);
+        $this->tableBuilder = m::mock(TableFactory::class);
+        $this->authService = m::mock(AuthorizationService::class);
+        $this->translator = m::mock(TranslationHelperService::class);
 
         $fsm = m::mock(FormServiceManager::class)->makePartial();
-        $fsm->shouldReceive('getServiceLocator')
-            ->andReturn($sm);
 
         $this->form = m::mock(Form::class);
 
@@ -71,9 +62,7 @@ class VariationOperatingCentresTest extends MockeryTestCase
             ->with('Lva\OperatingCentres')
             ->andReturn($this->form);
 
-        $this->sut = new VariationOperatingCentres();
-        $this->sut->setFormHelper($this->mockFormHelper);
-        $this->sut->setFormServiceLocator($fsm);
+        $this->sut = new VariationOperatingCentres($this->mockFormHelper, $this->authService, $this->tableBuilder, $fsm, $this->translator);
     }
 
     public function testGetForm()

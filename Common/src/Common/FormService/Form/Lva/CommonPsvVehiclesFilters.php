@@ -2,15 +2,22 @@
 
 namespace Common\FormService\Form\Lva;
 
-use Common\FormService\Form\AbstractFormService;
+use Common\Service\Helper\FormHelperService;
 
 /**
  * Common PSV Vehicles Filter Form
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class CommonPsvVehiclesFilters extends AbstractFormService
+class CommonPsvVehiclesFilters
 {
+    protected FormHelperService $formHelper;
+
+    public function __construct(FormHelperService $formHelper)
+    {
+        $this->formHelper = $formHelper;
+    }
+
     /**
      * Get Form
      *
@@ -18,7 +25,7 @@ class CommonPsvVehiclesFilters extends AbstractFormService
      */
     public function getForm()
     {
-        return $this->alterForm($this->getFormHelper()->createForm('Lva\PsvVehicleFilter', false));
+        return $this->alterForm($this->formHelper->createForm('Lva\PsvVehicleFilter', false));
     }
 
     /**
@@ -30,10 +37,10 @@ class CommonPsvVehiclesFilters extends AbstractFormService
      */
     protected function alterForm($form)
     {
-        $this->getFormHelper()->remove($form, 'vrm');
-        $this->getFormHelper()->remove($form, 'specified');
-        $this->getFormHelper()->remove($form, 'disc');
-        $this->getFormHelper()->remove($form, 'limit');
+        $this->formHelper->remove($form, 'vrm');
+        $this->formHelper->remove($form, 'specified');
+        $this->formHelper->remove($form, 'disc');
+        $this->formHelper->remove($form, 'limit');
 
         return $form;
     }

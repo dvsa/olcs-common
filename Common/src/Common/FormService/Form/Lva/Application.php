@@ -1,11 +1,10 @@
 <?php
 
-/**
- * Application Form
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\FormService\Form\Lva;
+
+use Common\FormService\FormServiceInterface;
+use Common\Service\Helper\FormHelperService;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Application Form
@@ -14,6 +13,15 @@ namespace Common\FormService\Form\Lva;
  */
 class Application extends AbstractLvaFormService
 {
+    protected FormHelperService $formHelper;
+    protected AuthorizationService $authService;
+
+    public function __construct(FormHelperService $formHelper, AuthorizationService $authService)
+    {
+        $this->formHelper = $formHelper;
+        $this->authService = $authService;
+    }
+
     public function alterForm($form)
     {
         // No op

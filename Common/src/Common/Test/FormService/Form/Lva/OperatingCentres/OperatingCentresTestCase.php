@@ -45,199 +45,25 @@ abstract class OperatingCentresTestCase extends MockeryTestCase
     /** @var  \Common\Service\Data\AddressDataService| m\MockInterface */
     protected $mockDataAddress;
 
-    protected function setUp(): void
-    {
-        $this->serviceManager = $this->setUpServiceManager();
-    }
+    protected $formServiceLocator;
+    protected $translator;
+    protected $urlHelper;
+    protected $tableBuilder;
+    protected $formHelper;
+    protected $authService;
+
 
     protected function setUpDefaultServices()
     {
-        $this->formServiceManager();
-        $this->translator();
-        $this->translationHelperService();
-        $this->tableBuilder();
-        $this->authorizationService();
-        $this->config();
-        $this->filterManager();
-        $this->validatorManager();
-        $this->formElementManager();
-        $this->formAnnotationBuilder();
-        $this->formHelper();
+        $this->formServiceLocator = m::mock(FormServiceManager::class);
+        $this->translator = m::mock(TranslationHelperService::class);
+        $this->tableBuilder = m::mock(TableFactory::class);
+        $this->authService = m::mock(AuthorizationService::class);
+        $this->filterManager = m::mock(FilterPluginManager::class);
+        $this->formHelper = m::mock(FormHelperService::class);
     }
 
-    /**
-     * @return FormServiceManager
-     */
-    protected function formServiceManager(): FormServiceManager
-    {
-        if (!$this->serviceManager()->has('FormServiceManager')) {
-            $instance = new FormServiceManager();
-            $instance->setServiceLocator($this->serviceManager());
-            $this->serviceManager()->setService('FormServiceManager', $instance);
-        }
-        return $this->serviceManager()->get('FormServiceManager');
-    }
 
-    /**
-     * @return Translator
-     */
-    protected function translator(): Translator
-    {
-        if (!$this->serviceManager()->has('translator')) {
-            $factory = new TranslatorServiceFactory();
-            $instance = $factory->createService($this->serviceManager());
-            $this->serviceManager()->setService('translator', $instance);
-        }
-        return $this->serviceManager()->get('translator');
-    }
-
-    /**
-     * @return TranslationHelperService
-     */
-    protected function translationHelperService(): TranslationHelperService
-    {
-        if (!$this->serviceManager()->has('Helper\Translation')) {
-            $instance = new TranslationHelperService($this->translator());
-            $this->serviceManager()->setService('Helper\Translation', $instance);
-        }
-        return $this->serviceManager()->get('Helper\Translation');
-    }
-
-    /**
-     * @return TableFactory|m\MockInterface
-     */
-    protected function tableBuilder(): m\MockInterface
-    {
-        if (!$this->serviceManager()->has('Table')) {
-            $instance = $this->setUpMockService(TableBuilder::class);
-            $instance->allows('prepareTable')->andReturnSelf()->byDefault();
-            $instance->allows('getRows')->andReturn([])->byDefault();
-            $this->serviceManager()->setService('Table', $instance);
-        }
-        return $this->serviceManager()->get('Table');
-    }
-
-    /**
-     * @return AuthorizationService|m\MockInterface
-     */
-    protected function authorizationService(): m\MockInterface
-    {
-        if (!$this->serviceManager()->has(AuthorizationService::class)) {
-            $instance = $this->setUpMockService(AuthorizationService::class);
-            $this->serviceManager()->setService(AuthorizationService::class, $instance);
-        }
-        return $this->serviceManager()->get(AuthorizationService::class);
-    }
-
-    /**
-     * @return array
-     */
-    protected function config(): array
-    {
-        if (!$this->serviceManager()->has('Config')) {
-            $instance = [
-                'csrf' => [
-                    'timeout' => 300,
-                ],
-            ];
-            $this->serviceManager()->setService('Config', $instance);
-        }
-        return $this->serviceManager()->get('Config');
-    }
-
-    /**
-     * @return FilterPluginManager
-     */
-    protected function filterManager(): FilterPluginManager
-    {
-        if (!$this->serviceManager()->has('FilterManager')) {
-            $factory = new FilterManagerFactory();
-            $instance = $factory->createService($this->serviceManager());
-            $this->serviceManager()->setService('FilterManager', $instance);
-        }
-        return $this->serviceManager()->get('FilterManager');
-    }
-
-    /**
-     * @return ValidatorPluginManager
-     */
-    protected function validatorManager(): ValidatorPluginManager
-    {
-        if (!$this->serviceManager()->has('ValidatorManager')) {
-            $factory = new ValidatorManagerFactory();
-            $instance = $factory->createService($this->serviceManager());
-            $this->serviceManager()->setService('ValidatorManager', $instance);
-        }
-        return $this->serviceManager()->get('ValidatorManager');
-    }
-
-    /**
-     * @return AbstractPluginManager
-     */
-    protected function formElementManager(): AbstractPluginManager
-    {
-        if (!$this->serviceManager()->has('FormElementManager')) {
-            $factory = new FormElementManagerFactory();
-            $instance = $factory->createService($this->serviceManager());
-            $this->serviceManager()->setService('FormElementManager', $instance);
-        }
-        return $this->serviceManager()->get('FormElementManager');
-    }
-
-    protected function formAnnotationBuilder()
-    {
-        if (!$this->serviceManager()->has('FormAnnotationBuilder')) {
-            $factory = new FormAnnotationBuilderFactory();
-            $instance = $factory->createService($this->serviceManager());
-            $this->serviceManager()->setService('FormAnnotationBuilder', $instance);
-        }
-        return $this->serviceManager()->get('FormAnnotationBuilder');
-    }
-
-    /**
-     * @return PhpRenderer
-     */
-    protected function viewRenderer(): PhpRenderer
-    {
-        if (!$this->serviceManager()->has('ViewRenderer')) {
-            $instance = $this->setUpMockService(PhpRenderer::class);
-            $this->serviceManager()->setService('ViewRenderer', $instance);
-        }
-        return $this->serviceManager()->get('ViewRenderer');
-    }
-
-    /**
-     * @return m\MockInterface|FormHelperService
-     */
-    protected function formHelper()
-    {
-        if (!$this->serviceManager()->has('FormHelperService')) {
-            $this->mockDataAddress = m::mock(\Common\Service\Data\AddressDataService::class);
-            $this->mockHlpAddr = m::mock(\Common\Service\Helper\AddressHelperService::class);
-            $this->mockHlpDate = m::mock(\Common\Service\Helper\DateHelperService::class);
-
-            $instance = new FormHelperService(
-                $this->formAnnotationBuilder(),
-                $this->config(),
-                $this->authorizationService(),
-                $this->viewRenderer(),
-                $this->mockDataAddress,
-                $this->mockHlpAddr,
-                $this->mockHlpDate,
-                $this->translationHelperService()
-            );
-
-            $this->serviceManager()->setService('FormHelperService', $instance);
-        }
-        return $this->serviceManager()->get('FormHelperService');
-    }
-
-    protected function overrideFormHelperWithMock(): void
-    {
-        assert(! ($this->formHelper() instanceof m\MockInterface));
-        $mock = m::mock($this->formHelper())->makePartial();
-        $this->serviceManager()->setService('FormHelperService', $mock);
-    }
 
     /**
      * @return array

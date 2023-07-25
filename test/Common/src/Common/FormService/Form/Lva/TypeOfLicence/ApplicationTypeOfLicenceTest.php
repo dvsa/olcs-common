@@ -12,6 +12,7 @@ use Laminas\InputFilter\InputFilter;
 use Laminas\Form\Element;
 use Laminas\Form\Fieldset;
 use Laminas\Form\Form;
+use ZfcRbac\Service\AuthorizationService;
 
 class ApplicationTypeOfLicenceTest extends MockeryTestCase
 {
@@ -25,13 +26,10 @@ class ApplicationTypeOfLicenceTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->sut = new ApplicationTypeOfLicence();
-
         $this->fsm = m::mock(FormServiceManager::class)->makePartial();
         $this->fh = m::mock(FormHelperService::class)->makePartial();
-
-        $this->sut->setFormServiceLocator($this->fsm);
-        $this->sut->setFormHelper($this->fh);
+        $this->authService = m::mock(AuthorizationService::class);
+        $this->sut = new ApplicationTypeOfLicence($this->fh, $this->authService, $this->fsm);
     }
 
     public function testGetForm()

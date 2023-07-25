@@ -3,9 +3,12 @@
 namespace CommonTest\FormService\Form\Lva;
 
 use Common\FormService\Form\Lva\FinancialEvidence;
+use Common\Service\Helper\TranslationHelperService;
+use Common\Service\Helper\UrlHelperService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use CommonTest\Bootstrap;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * @covers Common\FormService\Form\Lva\FinancialEvidence
@@ -28,8 +31,9 @@ class FinancialEvidenceTest extends MockeryTestCase
     {
         $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);
         $this->fsm = m::mock(\Common\FormService\FormServiceManager::class)->makePartial();
-        $this->urlHelper = m::mock();
-        $this->translator = m::mock();
+        $this->authService = m::mock(AuthorizationService::class);
+        $this->urlHelper = m::mock(UrlHelperService::class);
+        $this->translator = m::mock(TranslationHelperService::class);
 
         $sm = Bootstrap::getServiceManager();
         $sm->setService('Helper\Url', $this->urlHelper);
@@ -37,9 +41,7 @@ class FinancialEvidenceTest extends MockeryTestCase
 
         $this->fsm->shouldReceive('getServiceLocator')->andReturn($sm);
 
-        $this->sut = new FinancialEvidence();
-        $this->sut->setFormHelper($this->formHelper);
-        $this->sut->setFormServiceLocator($this->fsm);
+        $this->sut = new FinancialEvidence($this->formHelper, $this->authService, $this->translator, $this->urlHelper);
     }
 
     public function testGetForm()

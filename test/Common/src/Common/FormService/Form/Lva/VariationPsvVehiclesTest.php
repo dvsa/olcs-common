@@ -1,14 +1,11 @@
 <?php
 
-/**
- * Variation Psv Vehicles Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\FormService\Form\Lva;
 
+use Laminas\Form\Form;
 use Mockery as m;
 use Common\FormService\Form\Lva\VariationPsvVehicles;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Variation Psv Vehicles Test
@@ -20,6 +17,12 @@ class VariationPsvVehiclesTest extends AbstractLvaFormServiceTestCase
     protected $classToTest = VariationPsvVehicles::class;
 
     protected $formName = 'Lva\PsvVehicles';
+
+    public function setUp(): void
+    {
+        $this->classArgs = [m::mock(AuthorizationService::class)];
+        parent::setUp();
+    }
 
     public function testGetFormWithoutFormActions()
     {

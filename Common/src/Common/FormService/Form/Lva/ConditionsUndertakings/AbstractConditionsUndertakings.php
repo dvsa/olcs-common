@@ -1,13 +1,10 @@
 <?php
 
-/**
- * Abstract Conditions Undertakings
- *
- * @author Dan Eggleston <dan@stolenegg.com>
- */
 namespace Common\FormService\Form\Lva\ConditionsUndertakings;
 
 use Common\FormService\Form\Lva\AbstractLvaFormService;
+use Common\Service\Helper\FormHelperService;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Abstract Conditions Undertakings
@@ -18,7 +15,7 @@ abstract class AbstractConditionsUndertakings extends AbstractLvaFormService
 {
     public function getForm()
     {
-        $form = $this->getFormHelper()->createForm('Lva\ConditionsUndertakings');
+        $form = $this->formHelper->createForm('Lva\ConditionsUndertakings');
 
         $this->alterForm($form);
 

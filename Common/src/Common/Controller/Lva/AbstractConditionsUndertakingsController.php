@@ -1,13 +1,9 @@
 <?php
 
-/**
- * Abstract Conditions Undertakings Controller
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva;
 
 use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
+use Common\FormService\FormServiceManager;
 
 /**
  * Abstract Conditions Undertakings Controller
@@ -16,8 +12,8 @@ use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
  */
 abstract class AbstractConditionsUndertakingsController extends AbstractController implements AdapterAwareInterface
 {
-    use Traits\AdapterAwareTrait,
-        Traits\CrudTableTrait;
+    use Traits\AdapterAwareTrait;
+    use Traits\CrudTableTrait;
 
     protected $section = 'conditions_undertakings';
     protected $baseRoute = 'lva-%s/conditions_undertakings';
@@ -180,7 +176,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
         $response = $this->handleCommand($command);
         if (!$response->isOk()) {
             throw new \RuntimeException(
-                'Failed creating a ConditionUndertaking - '. print_r($response->getResult(), true)
+                'Failed creating a ConditionUndertaking - ' . print_r($response->getResult(), true)
             );
         }
     }
@@ -198,7 +194,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
         $response = $this->handleCommand($command);
         if (!$response->isOk()) {
             throw new \RuntimeException(
-                'Failed updating a ConditionUndertaking - '. print_r($response->getResult(), true)
+                'Failed updating a ConditionUndertaking - ' . print_r($response->getResult(), true)
             );
         }
     }
@@ -217,7 +213,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
         $response = $this->handleCommand($command);
         if (!$response->isOk()) {
             throw new \RuntimeException(
-                'Failed deleting a ConditionUndertaking - '. print_r($response->getResult(), true)
+                'Failed deleting a ConditionUndertaking - ' . print_r($response->getResult(), true)
             );
         }
     }
@@ -242,7 +238,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
         $form = $this->getServiceLocator()
-            ->get('FormServiceManager')
+            ->get(FormServiceManager::class)
             ->get('lva-' . $this->lva . '-' . $this->section)
             ->getForm();
 

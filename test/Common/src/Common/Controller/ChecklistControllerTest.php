@@ -2,6 +2,7 @@
 
 namespace CommonTest\Controller\Lva;
 
+use Common\FormService\FormServiceManager;
 use Common\RefData;
 use Dvsa\Olcs\Transfer\Query\ContinuationDetail\LicenceChecklist;
 use Hamcrest\Core\IsEqual;
@@ -33,7 +34,7 @@ class ChecklistControllerTest extends MockeryTestCase
             );
 
         $mockFormServiceManager = m::mock();
-        $this->sm->setService('FormServiceManager', $mockFormServiceManager);
+        $this->sm->setService(FormServiceManager::class, $mockFormServiceManager);
     }
 
     public function testUsersAction()

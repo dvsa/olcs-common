@@ -4,6 +4,8 @@ namespace Common\FormService\Form\Lva\People;
 
 use Common\Form\Form;
 use Common\FormService\Form\Lva\AbstractLvaFormService;
+use Common\Service\Helper\FormHelperService;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * People Form
@@ -13,6 +15,8 @@ use Common\FormService\Form\Lva\AbstractLvaFormService;
  */
 abstract class AbstractPeople extends AbstractLvaFormService
 {
+    protected FormHelperService $formHelper;
+
     /**
      * Get People form
      *
@@ -22,7 +26,7 @@ abstract class AbstractPeople extends AbstractLvaFormService
      */
     public function getForm(array $params = [])
     {
-        $form = $this->getFormHelper()->createForm('Lva\People');
+        $form = $this->formHelper->createForm('Lva\People');
 
         $this->alterForm($form, $params);
 

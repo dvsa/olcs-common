@@ -1,21 +1,23 @@
 <?php
 
-/**
- * Generic Vehicles Vehicle
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\FormService\Form\Lva;
 
-use Common\FormService\Form\AbstractFormService;
+use Common\Service\Helper\FormHelperService;
 
 /**
  * Generic Vehicles Vehicle
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class GenericVehiclesVehicle extends AbstractFormService
+class GenericVehiclesVehicle
 {
+    protected FormHelperService $formHelper;
+
+    public function __construct(FormHelperService $formHelper)
+    {
+        $this->formHelper = $formHelper;
+    }
+
     /**
      * Generic form alterations
      *
@@ -26,7 +28,7 @@ class GenericVehiclesVehicle extends AbstractFormService
     public function alterForm($form, $params)
     {
         if ($params['mode'] === 'edit') {
-            $this->getFormHelper()->disableElement($form, 'data->vrm');
+            $this->formHelper->disableElement($form, 'data->vrm');
         }
 
         if ($params['mode'] === 'edit' || !$params['canAddAnother']) {

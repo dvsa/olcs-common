@@ -3,6 +3,7 @@
 namespace Common\Controller\Lva\Licence;
 
 use Common\Controller\Lva;
+use Common\FormService\FormServiceManager;
 use Dvsa\Olcs\Transfer\Query\Licence\TypeOfLicence;
 use Laminas\Http\Response;
 use Common\Data\Mapper\Lva\TypeOfLicence as TypeOfLicenceMapper;
@@ -41,7 +42,7 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         ];
 
         /** @var \Laminas\Form\FormInterface $form */
-        $form = $this->getServiceLocator()->get('FormServiceManager')
+        $form = $this->getServiceLocator()->get(FormServiceManager::class)
             ->get('lva-licence-type-of-licence')
             ->getForm($params);
 

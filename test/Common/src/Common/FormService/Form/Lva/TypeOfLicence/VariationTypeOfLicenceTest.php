@@ -12,6 +12,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Form\Element;
 use Laminas\Form\Fieldset;
 use Laminas\Form\Form;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Variation Type Of Licence Test
@@ -29,13 +30,11 @@ class VariationTypeOfLicenceTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->sut = new VariationTypeOfLicence();
-
         $this->fsm = m::mock(FormServiceManager::class)->makePartial();
         $this->fh = m::mock(FormHelperService::class)->makePartial();
+        $this->authService = m::mock(AuthorizationService::class);
 
-        $this->sut->setFormServiceLocator($this->fsm);
-        $this->sut->setFormHelper($this->fh);
+        $this->sut = new VariationTypeOfLicence($this->fh, $this->authService, $this->fsm);
     }
 
     public function testGetForm()

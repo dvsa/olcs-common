@@ -2,6 +2,9 @@
 
 namespace Common\FormService\Form\Lva;
 
+use Common\Service\Helper\FormHelperService;
+use ZfcRbac\Service\AuthorizationService;
+
 /**
  * PSV Vehicles Form
  *
@@ -9,16 +12,25 @@ namespace Common\FormService\Form\Lva;
  */
 class PsvVehicles extends AbstractLvaFormService
 {
+    protected FormHelperService $formHelper;
+    protected AuthorizationService $authService;
+
+    public function __construct(FormHelperService $formHelper, AuthorizationService $authService)
+    {
+        $this->formHelper = $formHelper;
+        $this->authService = $authService;
+    }
+
     protected $showShareInfo = false;
 
     public function getForm()
     {
-        $form = $this->getFormHelper()->createForm('Lva\PsvVehicles');
+        $form = $this->formHelper->createForm('Lva\PsvVehicles');
 
         $this->alterForm($form);
 
         if ($this->showShareInfo === false) {
-            $this->getFormHelper()->remove($form, 'shareInfo');
+            $this->formHelper->remove($form, 'shareInfo');
         }
 
         return $form;

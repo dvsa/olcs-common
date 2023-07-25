@@ -1,11 +1,9 @@
 <?php
 
-/**
- * Variation Transport Manager
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\FormService\Form\Lva\TransportManager;
+
+use Common\Service\Helper\FormHelperService;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Variation Transport Manager
@@ -14,6 +12,15 @@ namespace Common\FormService\Form\Lva\TransportManager;
  */
 class VariationTransportManager extends AbstractTransportManager
 {
+    protected FormHelperService $formHelper;
+    protected AuthorizationService $authService;
+
+    public function __construct(FormHelperService $formHelper, AuthorizationService $authService)
+    {
+        $this->formHelper = $formHelper;
+        $this->authService = $authService;
+    }
+
     protected function alterForm($form)
     {
         $form = parent::alterForm($form);

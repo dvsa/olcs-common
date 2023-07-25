@@ -2,20 +2,24 @@
 
 namespace Common\FormService\Form\Lva;
 
+use Common\Form\Elements\InputFilters\ActionLink;
 use Common\Form\Elements\InputFilters\Lva\BackToApplicationActionLink;
 use Common\Form\Elements\InputFilters\Lva\BackToLicenceActionLink;
 use Common\Form\Elements\InputFilters\Lva\BackToVariationActionLink;
-use Common\FormService\Form\AbstractFormService;
-use Common\Form\Elements\InputFilters\ActionLink;
 use Common\RefData;
+use Common\Service\Helper\FormHelperService;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Abstract Lva Form Service
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractLvaFormService extends AbstractFormService
+abstract class AbstractLvaFormService
 {
+    protected FormHelperService $formHelper;
+    protected AuthorizationService $authService;
+
     protected $backToLinkMap = [
         'application' => BackToApplicationActionLink::class,
         'licence' => BackToLicenceActionLink::class,
@@ -77,10 +81,9 @@ abstract class AbstractLvaFormService extends AbstractFormService
      */
     protected function isInternalReadOnly()
     {
-        $authService = $this->getServiceLocator()->get(\ZfcRbac\Service\AuthorizationService::class);
         return (
-            $authService->isGranted(RefData::PERMISSION_INTERNAL_USER)
-            && !$authService->isGranted(RefData::PERMISSION_INTERNAL_EDIT)
+            $this->authService->isGranted(RefData::PERMISSION_INTERNAL_USER)
+            && !$this->authService->isGranted(RefData::PERMISSION_INTERNAL_EDIT)
         );
     }
 }

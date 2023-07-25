@@ -6,6 +6,7 @@ use Common\Controller\Lva\Traits\TransferVehiclesTrait;
 use Common\Controller\Lva\Traits\VehicleSearchTrait;
 use Common\Data\Mapper;
 use Common\Data\Mapper\Lva\GoodsVehiclesVehicle;
+use Common\FormService\FormServiceManager;
 use Common\RefData;
 use Common\Service\Table\TableBuilder;
 use Dvsa\Olcs\Transfer\Command\Application\CreateGoodsVehicle as ApplicationCreateGoodsVehicle;
@@ -30,16 +31,16 @@ use Laminas\Form\FormInterface;
  */
 abstract class AbstractGoodsVehiclesController extends AbstractController
 {
-    const DEF_TABLE_FIRST_PAGE_NR = 1;
-    const DEF_TABLE_ITEMS_COUNT = 25;
-
-    const SEARCH_VEHICLES_COUNT = 20;
-
-    use TransferVehiclesTrait,
-        VehicleSearchTrait;
+    use TransferVehiclesTrait;
+    use VehicleSearchTrait;
     use Traits\CrudTableTrait {
         handleCrudAction as protected traitHandleCrudAction;
     }
+
+    public const DEF_TABLE_FIRST_PAGE_NR = 1;
+    public const DEF_TABLE_ITEMS_COUNT = 25;
+
+    public const SEARCH_VEHICLES_COUNT = 20;
 
     protected $section = 'vehicles';
     protected $baseRoute = 'lva-%s/vehicles';
@@ -303,7 +304,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
 
         /** @var \Laminas\Form\FormInterface $form */
         $form = $this->getServiceLocator()
-            ->get('FormServiceManager')
+            ->get(FormServiceManager::class)
             ->get('lva-' . $this->lva . '-goods-vehicles-add-vehicle')
             ->getForm($this->getRequest(), $params)
             ->setData($data);
@@ -383,7 +384,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
 
         /** @var \Laminas\Form\FormInterface $form */
         $form = $this->getServiceLocator()
-            ->get('FormServiceManager')
+            ->get(FormServiceManager::class)
             ->get('lva-' . $this->lva . '-goods-vehicles-edit-vehicle')
             ->getForm($this->getRequest(), $params)
             ->setData($data);
@@ -670,7 +671,8 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             );
         }
 
-        if (isset($params['allVehicleCount'])
+        if (
+            isset($params['allVehicleCount'])
             && isset($params['activeVehicleCount'])
             && (int)$params['allVehicleCount'] > (int)$params['activeVehicleCount']
         ) {
@@ -754,7 +756,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
     protected function getForm($headerData, $formData)
     {
         return $this->getServiceLocator()
-            ->get('FormServiceManager')
+            ->get(FormServiceManager::class)
             ->get('lva-' . $this->lva . '-goods-' . $this->section)
             ->getForm($this->getTable($headerData, $this->getFilters()))
             ->setData($formData);

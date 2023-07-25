@@ -1,12 +1,8 @@
 <?php
 
-/**
- * Vehicles Declarations Controller
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva;
 
+use Common\FormService\FormServiceManager;
 use Common\RefData;
 
 /**
@@ -63,7 +59,7 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
     protected function getForm()
     {
         return $this->getServiceLocator()
-            ->get('FormServiceManager')
+            ->get(FormServiceManager::class)
             ->get('lva-' . $this->lva . '-vehicles_declarations')
             ->getForm();
     }

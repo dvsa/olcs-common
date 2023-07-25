@@ -1,11 +1,8 @@
 <?php
 
-/**
- * Licence Goods Vehicles Filters Form
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\FormService\Form\Lva;
+
+use Common\Service\Helper\FormHelperService;
 
 /**
  * Licence Goods Vehicles Filters  Form
@@ -14,11 +11,18 @@ namespace Common\FormService\Form\Lva;
  */
 class LicenceGoodsVehiclesFilters extends CommonGoodsVehiclesFilters
 {
+    protected FormHelperService $formHelper;
+
+    public function __construct(FormHelperService $formHelper)
+    {
+        parent::__construct($formHelper);
+    }
+
     public function getForm()
     {
         $form = parent::getForm();
 
-        $this->getFormHelper()->remove($form, 'specified');
+        $this->formHelper->remove($form, 'specified');
 
         return $form;
     }

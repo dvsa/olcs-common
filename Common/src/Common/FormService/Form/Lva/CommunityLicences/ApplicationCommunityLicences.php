@@ -1,11 +1,9 @@
 <?php
 
-/**
- * Application Community Licences
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\FormService\Form\Lva\CommunityLicences;
+
+use Common\Service\Helper\FormHelperService;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Application Community Licences
@@ -14,6 +12,14 @@ namespace Common\FormService\Form\Lva\CommunityLicences;
  */
 class ApplicationCommunityLicences extends AbstractCommunityLicences
 {
+    protected AuthorizationService $authService;
+
+    public function __construct(FormHelperService $formHelper, AuthorizationService $authService)
+    {
+        $this->formHelper = $formHelper;
+        $this->authService = $authService;
+    }
+
     /**
      * Make form alterations
      *

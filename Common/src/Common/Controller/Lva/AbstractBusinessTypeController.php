@@ -1,14 +1,10 @@
 <?php
 
-/**
- * Shared logic between Business type controllers
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva;
 
 use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 use Common\Data\Mapper\Lva\BusinessType;
+use Common\FormService\FormServiceManager;
 use Dvsa\Olcs\Transfer\Command\Organisation\UpdateBusinessType;
 use Dvsa\Olcs\Transfer\Query\Organisation\Organisation;
 use ZfcRbac\Identity\IdentityProviderInterface;
@@ -47,7 +43,7 @@ abstract class AbstractBusinessTypeController extends AbstractController impleme
         $hasOrganisationSubmittedLicenceApplication = $identityProvider->getIdentity()->getUserData()['hasOrganisationSubmittedLicenceApplication'] ?? false;
 
         /** @var \Laminas\Form\Form $form */
-        $form = $this->getServiceLocator()->get('FormServiceManager')
+        $form = $this->getServiceLocator()->get(FormServiceManager::class)
             ->get('lva-' . $this->lva . '-business_type')
             ->getForm($hasInForceLicences, $hasOrganisationSubmittedLicenceApplication);
 

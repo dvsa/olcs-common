@@ -4,6 +4,7 @@ namespace Common\Controller\Lva;
 
 use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 use Common\Form\Form;
+use Common\FormService\FormServiceManager;
 use Common\RefData;
 use Dvsa\Olcs\Transfer\Command as TransferCmd;
 use Laminas\Mvc\MvcEvent;
@@ -16,8 +17,8 @@ use Laminas\Mvc\MvcEvent;
  */
 abstract class AbstractPeopleController extends AbstractController implements AdapterAwareInterface
 {
-    use Traits\AdapterAwareTrait,
-        Traits\CrudTableTrait;
+    use Traits\AdapterAwareTrait;
+    use Traits\CrudTableTrait;
 
     /**
      * Needed by the Crud Table Trait
@@ -82,7 +83,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
         // @todo move alterForm and alterFormForOrganisation logic into form services
         $form = $this->getServiceLocator()
-            ->get('FormServiceManager')
+            ->get(FormServiceManager::class)
             ->get('lva-' . $this->lva . '-' . $this->section)
             ->getForm(
                 ['canModify' => $adapter->canModify(), 'isPartnership' => $adapter->isPartnership()]
@@ -171,7 +172,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
         /** @var \Laminas\Form\FormInterface $form */
         $form = $this->getServiceLocator()
-            ->get('FormServiceManager')
+            ->get(FormServiceManager::class)
             ->get('lva-' . $this->lva . '-sole_trader')
             ->getForm($params);
 
@@ -337,7 +338,8 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         }
 
         $additionalGuidanceLabel = null;
-        if ($this->lva === self::LVA_VAR
+        if (
+            $this->lva === self::LVA_VAR
             && $this->getAdapter()->hasMoreThanOneValidCurtailedOrSuspendedLicences()
         ) {
             $additionalGuidanceLabel = 'selfserve-app-subSection-your-business-people-guidanceAdditional';
@@ -351,12 +353,13 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
                 $this->getServiceLocator()->get('Helper\Guidance')->append($additionalGuidanceLabel);
             }
         } else {
-            if ($this->lva === self::LVA_LIC
+            if (
+                $this->lva === self::LVA_LIC
                 &&
                 (
                     ($this->getAdapter()->isOrganisationLimited() &&
-                        $this->getAdapter()->getLicenceType() !== \Common\RefData::LICENCE_TYPE_SPECIAL_RESTRICTED)
-                    || $this->getAdapter()->isOrganisationOther()
+                        $this->getAdapter()->getLicenceType() !== \Common\RefData::LICENCE_TYPE_SPECIAL_RESTRICTED) ||
+                    $this->getAdapter()->isOrganisationOther()
                 )
             ) {
                 $this->getServiceLocator()->get('Lva\Variation')->addVariationMessage($this->getLicenceId(), 'people');
@@ -401,7 +404,8 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
                 ->setContinueIfEmpty(true);
         }
 
-        if ($this->location !== self::LOC_INTERNAL ||
+        if (
+            $this->location !== self::LOC_INTERNAL ||
             empty($personId) ||
             $this->isPersonDisqualified($personData) ||
             !$this->getAdapter()->isSoleTrader()

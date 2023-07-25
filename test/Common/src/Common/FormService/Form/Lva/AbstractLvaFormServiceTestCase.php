@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Abstract LVA Form Service Test Case
- *
- * @author Dan Eggleston <dan@stolenegg.com>
- */
 namespace CommonTest\FormService\Form\Lva;
 
 use Mockery as m;
@@ -28,15 +23,15 @@ abstract class AbstractLvaFormServiceTestCase extends MockeryTestCase
 
     protected $fsm;
 
+    protected $classArgs = [];
+
     public function setUp(): void
     {
-        $this->formHelper = m::mock('\Common\Service\Helper\FormHelperService');
-        $this->fsm = m::mock('\Common\FormService\FormServiceManager')->makePartial();
-
-        $class = $this->classToTest;
-        $this->sut = new $class();
-        $this->sut->setFormHelper($this->formHelper);
-        $this->sut->setFormServiceLocator($this->fsm);
+        $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);
+        $this->fsm = m::mock(\Common\FormService\FormServiceManager::class)->makePartial();
+        $this->classArgs = array_merge([$this->formHelper], $this->classArgs);
+        $reflector = new \ReflectionClass($this->classToTest);
+        $this->sut = $reflector->newInstanceArgs($this->classArgs);
     }
 
     public function testGetForm()

@@ -1,15 +1,11 @@
 <?php
 
-/**
- * Variation Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\FormService\Form\Lva;
 
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Lva\Variation;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Variation Test
@@ -22,7 +18,9 @@ class VariationTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->sut = new Variation();
+        $this->authService = m::mock(AuthorizationService::class);
+        $this->formHelper = m::mock('\Common\Service\Helper\FormHelperService');
+        $this->sut = new Variation($this->formHelper, $this->authService);
     }
 
     public function testAlterForm()

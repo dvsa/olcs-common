@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Abstract Goods Vehicles Form
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\FormService\Form\Lva;
 
 /**
@@ -18,14 +13,14 @@ abstract class AbstractGoodsVehicles extends AbstractLvaFormService
 
     public function getForm($table)
     {
-        $form = $this->getFormHelper()->createForm('Lva\GoodsVehicles');
+        $form = $this->formHelper->createForm('Lva\GoodsVehicles');
 
-        $this->getFormHelper()->populateFormTable($form->get('table'), $table);
+        $this->formHelper->populateFormTable($form->get('table'), $table);
 
         $this->alterForm($form);
 
         if ($this->showShareInfo === false) {
-            $this->getFormHelper()->remove($form, 'shareInfo');
+            $this->formHelper->remove($form, 'shareInfo');
         }
 
         return $form;

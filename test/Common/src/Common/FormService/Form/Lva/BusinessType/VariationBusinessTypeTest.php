@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Variation Business Type Form Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\FormService\Form\Lva\BusinessType;
 
 use Common\Service\Helper\FormHelperService;
@@ -13,7 +8,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Lva\BusinessType\VariationBusinessType;
 use Common\FormService\FormServiceInterface;
 use Laminas\Form\Form;
-use Laminas\Form\Element;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Variation Business Type Form Test
@@ -35,10 +30,10 @@ class VariationBusinessTypeTest extends MockeryTestCase
     {
         $this->fsm = m::mock('\Common\FormService\FormServiceManager')->makePartial();
         $this->fh = m::mock(FormHelperService::class)->makePartial();
+        $this->authService = m::mock(AuthorizationService::class);
+        $this->guidanceService = m::mock(\Common\Service\Helper\GuidanceHelperService::class);
 
-        $this->sut = new VariationBusinessType();
-        $this->sut->setFormServiceLocator($this->fsm);
-        $this->sut->setFormHelper($this->fh);
+        $this->sut = new VariationBusinessType($this->fh, $this->authService, $this->guidanceService, $this->fsm);
     }
 
     public function testGetForm()

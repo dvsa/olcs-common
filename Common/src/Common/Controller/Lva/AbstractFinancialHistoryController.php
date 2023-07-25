@@ -1,13 +1,8 @@
 <?php
 
-/**
- * Financial History Controller
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
- */
 namespace Common\Controller\Lva;
 
+use Common\FormService\FormServiceManager;
 use Common\Service\Data\CategoryDataService;
 use Common\Data\Mapper\Lva\FinancialHistory as FinancialHistoryMapper;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateFinancialHistory;
@@ -125,7 +120,7 @@ abstract class AbstractFinancialHistoryController extends AbstractController
     protected function getFinancialHistoryForm(array $data = [])
     {
         return $this->getServiceLocator()
-            ->get('FormServiceManager')
+            ->get(FormServiceManager::class)
             ->get('lva-' . $this->lva . '-financial_history')
             ->getForm($this->getRequest(), $data);
     }

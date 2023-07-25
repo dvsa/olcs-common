@@ -1,28 +1,19 @@
 <?php
 
-/**
- * Convictions & Penalties Form Service Test
- *
- * @author Dan Eggleston <dan@stolenegg.com>
- */
-
 namespace CommonTest\FormService\Form\Lva;
 
 use Common\Form\Elements\InputFilters\ActionLink;
 use Common\Form\Model\Form\Lva\Fieldset\ConvictionsPenaltiesData;
+use Common\Form\Model\Form\Lva\Fieldset\ConvictionsPenaltiesReadMoreLink;
 use Common\FormService\Form\Lva\ConvictionsPenalties;
 use Common\RefData;
+use Common\Service\Helper\TranslationHelperService;
+use Common\Service\Helper\UrlHelperService;
 use Laminas\Form\Element;
 use Laminas\Form\Element\Radio;
 use Laminas\Form\Fieldset;
 use Laminas\Form\Form;
 use Mockery as m;
-use Common\Service\Helper\TranslationHelperService;
-use Common\Service\Helper\FormHelperService;
-use Common\FormService\FormServiceManager;
-use Common\Form\Model\Form\Lva\Fieldset\ConvictionsPenaltiesReadMoreLink;
-use Laminas\Mvc\Controller\Plugin\Url;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Convictions & Penalties Form Service Test
@@ -40,29 +31,27 @@ class ConvictionsPenaltiesTest extends AbstractLvaFormServiceTestCase
 
     public function setUp(): void
     {
+        $this->translator = m::mock(TranslationHelperService::class);
+        $this->urlHelper = m::mock(UrlHelperService::class);
         $this->mockedForm = m::mock(Form::class);
+        $this->classArgs = [$this->translator, $this->urlHelper];
         parent::setUp();
     }
 
+
     public function checkGetForm($guidePath, $guideName)
     {
-        $translator = m::mock(TranslationHelperService::class);
-        $translator
+        $this->translator
             ->shouldReceive('translate')
             ->andReturn($guideName);
 
-        $mockUrl = m::mock();
-        $mockUrl
+        $this->urlHelper
             ->shouldReceive('fromRoute')
             ->with(
                 'guides/guide',
                 ['guide' => $guideName]
             )
-            ->once()
             ->andReturn($guidePath);
-        $this->formHelper = m::mock(FormHelperService::class);
-        $this->fsm = m::mock(FormServiceManager::class)->makePartial();
-
 
         $dataTable = m::mock(ConvictionsPenaltiesData::class);
         $dataTable
@@ -76,36 +65,24 @@ class ConvictionsPenaltiesTest extends AbstractLvaFormServiceTestCase
         $ConvictionsReadMoreLink
             ->shouldReceive('get')
             ->with('readMoreLink')->andReturn(
-                m::mock(ActionLink::class)->shouldReceive('setValue')->once()->with($guidePath)->getMock()
+                m::mock(ActionLink::class)->shouldReceive('setValue')->with($guidePath)->getMock()
             )->getMock();
 
-        $form = m::mock(Form::class);
-        $form
+        $this->mockedForm
             ->shouldReceive('get')->with('data')->andReturn($dataTable)
             ->shouldReceive('get')->with('convictionsReadMoreLink')->andReturn(
                 $ConvictionsReadMoreLink
             )->getMock();
 
-        $mockServiceLocator = m::mock(ServiceLocatorInterface::class);
-        $mockServiceLocator->shouldReceive('get')->with('Helper\Translation')->once()->andReturn($translator);
-        $mockServiceLocator->shouldReceive('get')->with('Helper\Url')->once()->andReturn($mockUrl);
-
         $this->formHelper
             ->shouldReceive('createForm')
             ->once()
             ->with($this->formName)
-            ->andReturn($form);
-
-        $this->fsm
-            ->shouldReceive('getServiceLocator')
-            ->andReturn($mockServiceLocator);
-
-        $this->sut->setFormHelper($this->formHelper);
-        $this->sut->setFormServiceLocator($this->fsm);
+            ->andReturn($this->mockedForm);
 
         $actual = $this->sut->getForm();
 
-        $this->assertSame($form, $actual);
+        $this->assertSame($this->mockedForm, $actual);
     }
 
     public function checkGetFormNi()

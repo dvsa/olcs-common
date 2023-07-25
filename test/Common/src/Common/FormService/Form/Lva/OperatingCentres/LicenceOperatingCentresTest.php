@@ -1,73 +1,186 @@
 <?php
 
-declare(strict_types=1);
-
 namespace CommonTest\FormService\Form\Lva\OperatingCentres;
 
 use Common\Form\Elements\Types\Table;
 use Common\FormService\Form\Lva\OperatingCentres\LicenceOperatingCentres;
-use Common\FormService\FormServiceInterface;
+use Common\FormService\Form\Lva\OperatingCentres\VariationOperatingCentres;
 use Common\FormService\FormServiceManager;
+use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Table\TableBuilder;
+use Common\Service\Table\TableFactory;
 use CommonTest\Bootstrap;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Form\Element;
 use Laminas\Form\Fieldset;
 use Laminas\Form\Form;
+use Laminas\Http\Request;
 use Common\Service\Helper\FormHelperService;
 use Common\RefData;
-use Common\Test\FormService\Form\Lva\OperatingCentres\LicenceOperatingCentresTestCase;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
- * @see LicenceOperatingCentres
+ * Variation Operating Centres Test
+ *
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
-class LicenceOperatingCentresTest extends LicenceOperatingCentresTestCase
+class LicenceOperatingCentresTest extends MockeryTestCase
 {
+    protected $form;
+
     /**
-     * @var LicenceOperatingCentres
+     * @var VariationOperatingCentres
      */
     protected $sut;
 
-    public function testGetForm()
-    {
-        $tableBuilder = m::mock();
+    protected $mockFormHelper;
 
-        $sm = Bootstrap::getServiceManager();
-        $sm->setService('Table', $tableBuilder);
+    protected $tableBuilder;
+
+    protected $translator;
+
+    public function setUp(): void
+    {
+        $this->tableBuilder = m::mock(TableFactory::class);
+        $this->authService = m::mock(AuthorizationService::class);
+        $this->translator = m::mock(TranslationHelperService::class);
 
         $fsm = m::mock(FormServiceManager::class)->makePartial();
-        $fsm->shouldReceive('getServiceLocator')
-            ->andReturn($sm);
 
-        $form = m::mock(Form::class);
+        $this->form = m::mock(Form::class);
 
-        $lvaLicence = m::mock(FormServiceInterface::class);
-        $lvaLicence->shouldReceive('alterForm')
+        $lvaVariation = m::mock(FormServiceInterface::class);
+        $lvaVariation->shouldReceive('alterForm')
             ->once()
-            ->with($form);
+            ->with($this->form);
 
-        $fsm->setService('lva-licence', $lvaLicence);
+        $fsm->setService('lva-licence', $lvaVariation);
 
-        $mockFormHelper = m::mock(FormHelperService::class);
-        $mockFormHelper->shouldReceive('createForm')
+        $this->mockFormHelper = m::mock(FormHelperService::class);
+        $this->mockFormHelper->shouldReceive('createForm')
             ->once()
             ->with('Lva\OperatingCentres')
-            ->andReturn($form);
+            ->andReturn($this->form);
 
-        $sut = new LicenceOperatingCentres();
-        $sut->setFormHelper($mockFormHelper);
-        $sut->setFormServiceLocator($fsm);
+        $this->sut = new LicenceOperatingCentres($this->mockFormHelper, $this->authService, $this->tableBuilder, $fsm);
+    }
 
+    public function testGetForm()
+    {
         $params = [
             'operatingCentres' => [],
             'canHaveSchedule41' => false,
             'canHaveCommunityLicences' => true,
             'isPsv' => false,
+            'licence' => [
+                'totAuthHgvVehicles' => 11,
+                'totAuthLgvVehicles' => 10,
+                'totAuthTrailers' => 12
+            ],
             'licenceType' => ['id' => RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL],
             'vehicleType' => ['id' => RefData::APP_VEHICLE_TYPE_MIXED],
             'totAuthLgvVehicles' => 0,
         ];
 
+        $this->mockPopulateFormTable([]);
+
+        $this->mockFormHelper->shouldReceive('getValidator->setMessage')
+            ->with('OperatingCentreNoOfOperatingCentres.required', 'required');
+
+        $this->mockFormHelper->shouldReceive('remove')
+            ->once()
+            ->with($this->form, 'dataTrafficArea');
+
+        $this->translator->shouldReceive('translateReplace')
+            ->with('current-authorisation-hint', [10])
+            ->andReturn('current-authorisation-hint-10')
+            ->shouldReceive('translateReplace')
+            ->with('current-authorisation-hint', [11])
+            ->andReturn('current-authorisation-hint-11')
+            ->shouldReceive('translateReplace')
+            ->with('current-authorisation-hint', [12])
+            ->andReturn('current-authorisation-hint-12');
+
+        $data = m::mock();
+        $data->shouldReceive('has')
+            ->with('totAuthLgvVehiclesFieldset')
+            ->andReturn(true)
+            ->shouldReceive('has')
+            ->with('totAuthHgvVehiclesFieldset')
+            ->andReturn(true)
+            ->shouldReceive('has')
+            ->with('totAuthTrailersFieldset')
+            ->andReturn(true)
+            ->shouldReceive('has')
+            ->with('totCommunityLicencesFieldset')
+            ->andReturn(true)
+            ->shouldReceive('get')
+            ->with('totAuthLgvVehiclesFieldset')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('get')
+                    ->with('totAuthLgvVehicles')
+                    ->andReturn(
+                        m::mock()->shouldReceive('setOption')->with('hint-below', 'current-authorisation-hint-10')->getMock()
+                    )
+                    ->getMock()
+            )
+            ->shouldReceive('get')
+            ->with('totAuthHgvVehiclesFieldset')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('get')
+                    ->with('totAuthHgvVehicles')
+                    ->andReturn(
+                        m::mock()->shouldReceive('setOption')->with('hint-below', 'current-authorisation-hint-11')->getMock()
+                    )
+                    ->getMock()
+            )
+            ->shouldReceive('get')
+            ->with('totAuthTrailersFieldset')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('get')
+                    ->with('totAuthTrailers')
+                    ->andReturn(
+                        m::mock()->shouldReceive('setOption')->with('hint-below', 'current-authorisation-hint-12')->getMock()
+                    )
+                    ->getMock()
+            );
+
+        $lockedElement = m::mock(Element::class);
+        $lockedElement->shouldReceive('setOption')->with('hint-below', 'current-authorisation-hint-0')->getMock();
+
+        $data->shouldReceive('get')
+            ->with('totCommunityLicencesFieldset')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('get')
+                    ->with('totCommunityLicences')
+                    ->andReturn(
+                        $lockedElement
+                    )
+                    ->getMock()
+            );
+
+        $this->mockFormHelper->shouldReceive('lockElement')
+            ->with($lockedElement, 'community-licence-changes-contact-office')
+            ->once();
+
+        $this->form->shouldReceive('get')
+            ->with('data')
+            ->andReturn($data);
+
+        $this->mockFormHelper->shouldReceive('disableElement')
+            ->with($this->form, 'data->totCommunityLicencesFieldset->totCommunityLicences');
+
+        $form = $this->sut->getForm($params);
+        $this->assertSame($this->form, $form);
+    }
+
+    protected function mockPopulateFormTable($data)
+    {
         $columns = [
             'noOfVehiclesRequired' => [
                 'title' => 'vehicles',
@@ -101,106 +214,21 @@ class LicenceOperatingCentresTest extends LicenceOperatingCentresTestCase
             ->with('table')
             ->andReturn($tableElement);
 
-        $form->shouldReceive('has')
+        $this->form->shouldReceive('has')
             ->with('table')
             ->andReturnTrue();
 
-        $form->shouldReceive('get')
+        $this->form->shouldReceive('get')
             ->with('table')
             ->andReturn($fieldset);
 
-        $tableBuilder->shouldReceive('prepareTable')
-            ->with('lva-operating-centres', [], [])
+        $this->tableBuilder->shouldReceive('prepareTable')
+            ->with('lva-operating-centres', $data, [])
             ->andReturn($table);
 
-        $mockFormHelper->shouldReceive('populateFormTable')
+        $this->mockFormHelper->shouldReceive('populateFormTable')
             ->with($fieldset, $table);
 
-        $mockFormHelper->shouldReceive('getValidator->setMessage')
-            ->with('OperatingCentreNoOfOperatingCentres.required', 'required');
-
-        $mockFormHelper->shouldReceive('remove')
-            ->once()
-            ->with($form, 'dataTrafficArea');
-
-        $totCommunityLicences = m::mock(Element::class);
-        $totCommunityLicencesFieldset = m::mock(Fieldset::class);
-        $totCommunityLicencesFieldset->shouldReceive('get')
-            ->with('totCommunityLicences')
-            ->andReturn($totCommunityLicences);
-
-        $data = m::mock();
-        $data->shouldReceive('has')
-            ->with('totCommunityLicencesFieldset')
-            ->andReturn(true)
-            ->shouldReceive('get')
-            ->with('totCommunityLicencesFieldset')
-            ->andReturn($totCommunityLicencesFieldset);
-
-        $mockFormHelper->shouldReceive('disableElement')
-            ->once()
-            ->with($form, 'data->totCommunityLicencesFieldset->totCommunityLicences');
-
-        $mockFormHelper->shouldReceive('lockElement')
-            ->once()
-            ->with($totCommunityLicences, 'community-licence-changes-contact-office');
-
-        $form->shouldReceive('get')
-            ->with('data')
-            ->andReturn($data);
-
-        $this->assertSame($form, $sut->getForm($params));
-    }
-
-    /**
-     * @test
-     */
-    public function getForm_IsCallable()
-    {
-        // Setup
-        $this->setUpSut();
-
-        // Assert
-        $this->assertIsCallable([$this->sut, 'getForm']);
-    }
-
-    /**
-     * @test
-     * @depends getForm_IsCallable
-     */
-    public function getForm_ReturnsAForm()
-    {
-        // Setup
-        $this->setUpSut();
-
-        // Execute
-        $result = $this->sut->getForm($this->paramsForLicence());
-
-        // Assert
-        $this->assertInstanceOf(Form::class, $result);
-    }
-
-    /**
-     * @test
-     * @depends getForm_ReturnsAForm
-     */
-    public function getForm_DisablesVehicleClassifications_WhenLicenceLgvsAreNull()
-    {
-        // Setup
-        $this->setUpSut();
-        $params = $this->paramsForMixedLicenceWithoutLgv();
-
-        // Execute
-        $result = $this->sut->getForm($params);
-
-        // Assert
-        $this->assertVehicleClassificationsAreDisabledForForm($result);
-    }
-
-    protected function setUpSut()
-    {
-        $this->sut = new LicenceOperatingCentres();
-        $this->sut->setFormHelper($this->formHelper());
-        $this->sut->setFormServiceLocator($this->formServiceManager());
+        return $tableElement;
     }
 }

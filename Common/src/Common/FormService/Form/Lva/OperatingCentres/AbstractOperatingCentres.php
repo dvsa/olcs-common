@@ -3,10 +3,13 @@
 namespace Common\FormService\Form\Lva\OperatingCentres;
 
 use Common\FormService\Form\Lva\AbstractLvaFormService;
-use Laminas\Form\Form;
 use Common\RefData;
+use Common\Service\Helper\FormHelperService;
 use Common\Service\Table\TableBuilder;
+use Common\Service\Table\TableFactory;
+use Laminas\Form\Form;
 use Laminas\Validator\Between;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * @see \CommonTest\FormService\Form\Lva\OperatingCentres\AbstractOperatingCentresTest
@@ -14,6 +17,13 @@ use Laminas\Validator\Between;
 abstract class AbstractOperatingCentres extends AbstractLvaFormService
 {
     protected $mainTableConfigName = 'lva-operating-centres';
+
+    protected $tableBuilder;
+
+    public function __construct($formHelper)
+    {
+        $this->formHelper = $formHelper;
+    }
 
     /**
      * Get Form
@@ -24,13 +34,12 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
      */
     public function getForm($params)
     {
-        $form = $this->getFormHelper()->createForm('Lva\OperatingCentres');
+        $form = $this->formHelper->createForm('Lva\OperatingCentres');
 
-        $additionalParams = isset($params['query']) ? $params['query'] : [];
-        $table = $this->getFormServiceLocator()->getServiceLocator()->get('Table')
-            ->prepareTable($this->mainTableConfigName, $params['operatingCentres'], $additionalParams);
+        $additionalParams = $params['query'] ?? [];
+        $table = $this->tableBuilder->prepareTable($this->mainTableConfigName, $params['operatingCentres'], $additionalParams);
 
-        $this->getFormHelper()->populateFormTable($form->get('table'), $table);
+        $this->formHelper->populateFormTable($form->get('table'), $table);
 
         $this->alterForm($form, $params);
 
@@ -58,7 +67,7 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
         }
 
         if (!$params['canHaveCommunityLicences']) {
-            $this->getFormHelper()->remove($form, 'data->totCommunityLicencesFieldset');
+            $this->formHelper->remove($form, 'data->totCommunityLicencesFieldset');
         }
 
         if ($params['isPsv']) {
@@ -72,14 +81,14 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
         // The validator compares the data against the 'rows' field value.
         // This is the reason why we use table->rows instead of table->table
         // which it was previously.
-        $this->getFormHelper()
+        $this->formHelper
             ->getValidator($form, 'table->rows', 'Common\Form\Elements\Validators\TableRequiredValidator')
             ->setMessage('OperatingCentreNoOfOperatingCentres.required', 'required');
 
         $this->alterFormForVehicleType($form, $params);
 
         if ($this->removeTrafficAreaElements($params)) {
-            $this->getFormHelper()->remove($form, 'dataTrafficArea');
+            $this->formHelper->remove($form, 'dataTrafficArea');
 
             return $form;
         }
@@ -103,7 +112,7 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
             $dataTrafficAreaFieldset->get('trafficArea')->setValueOptions($params['possibleTrafficAreas']);
             $dataTrafficAreaFieldset->remove('trafficAreaSet');
         } else {
-            $this->getFormHelper()->remove($form, 'dataTrafficArea->trafficArea');
+            $this->formHelper->remove($form, 'dataTrafficArea->trafficArea');
             $dataTrafficAreaFieldset->get('trafficAreaSet')->setValue($trafficArea['name']);
         }
 
@@ -172,7 +181,7 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
             'totAuthTrailersFieldset'
         ];
 
-        $this->getFormHelper()->removeFieldList($form, 'data', $removeFields);
+        $this->formHelper->removeFieldList($form, 'data', $removeFields);
     }
 
     /**
@@ -213,7 +222,7 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
      */
     protected function disableVehicleClassifications($form)
     {
-        $this->getFormHelper()->remove($form, 'data->totAuthLgvVehiclesFieldset');
+        $this->formHelper->remove($form, 'data->totAuthLgvVehiclesFieldset');
         $totAuthHgvVehiclesFieldset = $form->get('data')->get('totAuthHgvVehiclesFieldset');
         $totAuthHgvVehiclesFieldset->setLabel('application_operating-centres_authorisation.data.totAuthHgvVehiclesFieldset.vehicles-label');
         $totAuthHgvVehiclesFieldset->get('totAuthHgvVehicles')->setLabel('application_operating-centres_authorisation.data.totAuthHgvVehicles.vehicles-label');
@@ -231,19 +240,16 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
     {
         switch ($params['vehicleType']['id']) {
             case RefData::APP_VEHICLE_TYPE_LGV:
-                // get form helper
-                $formHelper = $this->getFormHelper();
-
                 // remove operating centres table
-                $formHelper->remove($form, 'table');
+                $this->formHelper->remove($form, 'table');
 
                 // remove HGV/PSV specific fields
-                $formHelper->remove($form, 'data->totAuthHgvVehiclesFieldset');
-                $formHelper->remove($form, 'data->totAuthTrailersFieldset');
+                $this->formHelper->remove($form, 'data->totAuthHgvVehiclesFieldset');
+                $this->formHelper->remove($form, 'data->totAuthTrailersFieldset');
 
                 // modify validators
                 // LGV between validator
-                $lgvBetweenValidator = $formHelper->getValidator(
+                $lgvBetweenValidator = $this->formHelper->getValidator(
                     $form,
                     'data->totAuthLgvVehiclesFieldset->totAuthLgvVehicles',
                     Between::class
@@ -254,7 +260,7 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
                 }
 
                 // Community Licence between validator
-                $comLicBetweenValidator = $formHelper->getValidator(
+                $comLicBetweenValidator = $this->formHelper->getValidator(
                     $form,
                     'data->totCommunityLicencesFieldset->totCommunityLicences',
                     Between::class

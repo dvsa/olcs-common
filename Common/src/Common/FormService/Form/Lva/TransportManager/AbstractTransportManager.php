@@ -1,13 +1,10 @@
 <?php
 
-/**
- * Transport Manager Form
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\FormService\Form\Lva\TransportManager;
 
 use Common\FormService\Form\Lva\AbstractLvaFormService;
+use Common\Service\Helper\FormHelperService;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Transport Manager Form
@@ -16,9 +13,11 @@ use Common\FormService\Form\Lva\AbstractLvaFormService;
  */
 abstract class AbstractTransportManager extends AbstractLvaFormService
 {
+    protected FormHelperService $formHelper;
+
     public function getForm()
     {
-        $form = $this->getFormHelper()->createForm('Lva\TransportManagers');
+        $form = $this->formHelper->createForm('Lva\TransportManagers');
 
         $this->alterForm($form);
 

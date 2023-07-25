@@ -2,6 +2,7 @@
 
 namespace CommonTest\FormService\Form\Lva;
 
+use Common\Service\Helper\UrlHelperService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Continuation\LicenceChecklist;
@@ -28,19 +29,8 @@ class LicenceChecklistTest extends MockeryTestCase
     public function setUp(): void
     {
         $this->formHelper = m::mock(FormHelperService::class);
-
-        $this->urlHelper = m::mock();
-
-        $sm = Bootstrap::getServiceManager();
-        $sm->setService('Helper\Url', $this->urlHelper);
-
-        $fsm = m::mock(FormServiceManager::class)->makePartial();
-        $fsm->shouldReceive('getServiceLocator')
-            ->andReturn($sm);
-
-        $this->sut = new LicenceChecklist();
-        $this->sut->setFormHelper($this->formHelper);
-        $this->sut->setFormServiceLocator($fsm);
+        $this->urlHelper = m::mock(UrlHelperService::class);
+        $this->sut = new LicenceChecklist($this->formHelper, $this->urlHelper);
     }
 
     public function testAlterForm()

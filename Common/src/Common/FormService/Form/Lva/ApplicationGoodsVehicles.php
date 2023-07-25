@@ -1,11 +1,10 @@
 <?php
 
-/**
- * Application Goods Vehicles Form
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\FormService\Form\Lva;
+
+use Common\FormService\FormServiceManager;
+use Common\Service\Helper\FormHelperService;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Application Goods Vehicles Form
@@ -14,8 +13,22 @@ namespace Common\FormService\Form\Lva;
  */
 class ApplicationGoodsVehicles extends AbstractGoodsVehicles
 {
+    protected FormHelperService $formHelper;
+    protected AuthorizationService $authService;
+    private FormServiceManager $formServiceLocator;
+
+    public function __construct(
+        FormHelperService $formHelper,
+        AuthorizationService $authService,
+        FormServiceManager $formServiceLocator
+    ) {
+        $this->formHelper = $formHelper;
+        $this->authService = $authService;
+        $this->formServiceLocator = $formServiceLocator;
+    }
+
     protected function alterForm($form)
     {
-        $this->getFormServiceLocator()->get('lva-application')->alterForm($form);
+        $this->formServiceLocator->get('lva-application')->alterForm($form);
     }
 }

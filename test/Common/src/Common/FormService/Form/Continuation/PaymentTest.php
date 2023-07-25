@@ -2,6 +2,7 @@
 
 namespace CommonTest\FormService\Form\Lva;
 
+use Common\Service\Helper\GuidanceHelperService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Continuation\Payment;
@@ -25,18 +26,9 @@ class PaymentTest extends MockeryTestCase
     public function setUp(): void
     {
         $this->formHelper = m::mock(FormHelperService::class);
-        $this->guidance = m::mock();
+        $this->guidance = m::mock(GuidanceHelperService::class);
 
-        $this->sut = new Payment();
-
-        $sm = Bootstrap::getServiceManager();
-        $sm->setService('Helper\Guidance', $this->guidance);
-
-        $fsm = m::mock(FormServiceManager::class)->makePartial();
-        $fsm->shouldReceive('getServiceLocator')->andReturn($sm);
-
-        $this->sut->setFormServiceLocator($fsm);
-        $this->sut->setFormHelper($this->formHelper);
+        $this->sut = new Payment($this->formHelper, $this->guidance);
     }
 
     public function testGetForm()

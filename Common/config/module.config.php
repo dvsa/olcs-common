@@ -14,6 +14,10 @@ use Common\Form\Element\DynamicSelect;
 use Common\Form\Element\DynamicSelectFactory;
 use Common\Form\Elements\Custom\OlcsCheckbox;
 use Common\Form\View\Helper\FormInputSearch;
+use Common\FormService\Form\Lva\Application;
+use Common\FormService\Form\Lva\BusinessDetails\ApplicationBusinessDetails;
+use Common\FormService\FormServiceAbstractFactory;
+use Common\FormService\FormServiceManager;
 use Common\Service\Cqrs\Command\CommandSender;
 use Common\Service\Data\Search\SearchType;
 use Common\FormService\Form\Lva as LvaFormService;
@@ -177,6 +181,7 @@ return [
             'Helper\Url' => HelperService\UrlHelperService::class,
             'Lva\People' => Common\Service\Lva\PeopleLvaService::class,
             'Lva\Variation' => Common\Service\Lva\VariationLvaService::class,
+            'FormServiceManager' => Common\FormService\FormServiceManager::class,
         ],
         'invokables' => [
             'Common\Service\NavigationFactory' => 'Common\Service\NavigationFactory',
@@ -304,7 +309,7 @@ return [
                 => \Common\Service\Cqrs\Query\CachingQueryServiceFactory::class,
             \Common\Service\Cqrs\Query\QueryService::class => \Common\Service\Cqrs\Query\QueryServiceFactory::class,
             'CommandService' => \Common\Service\Cqrs\Command\CommandServiceFactory::class,
-            'FormServiceManager' => 'Common\FormService\FormServiceManagerFactory',
+            FormServiceManager::class => Common\FormService\FormServiceManagerFactory::class,
             'ApplicationLvaAdapter' => 'Common\Controller\Lva\Factories\ApplicationLvaAdapterFactory',
             'LicenceLvaAdapter' => 'Common\Controller\Lva\Factories\LicenceLvaAdapterFactory',
             'VariationLvaAdapter' => 'Common\Controller\Lva\Factories\VariationLvaAdapterFactory',
@@ -685,143 +690,10 @@ return [
         'protection_policy' => \ZfcRbac\Guard\GuardInterface::POLICY_DENY,
     ],
     'form_service_manager' => [
-        'invokables' => [
-            // OC Forms
-            'lva-licence-operating_centres' => LvaFormService\OperatingCentres\LicenceOperatingCentres::class,
-            'lva-variation-operating_centres' => LvaFormService\OperatingCentres\VariationOperatingCentres::class,
-            'lva-licence-operating_centre' => LvaFormService\OperatingCentre\CommonOperatingCentre::class,
-            'lva-variation-operating_centre' => LvaFormService\OperatingCentre\CommonOperatingCentre::class,
-            'lva-application-operating_centre' => LvaFormService\OperatingCentre\CommonOperatingCentre::class,
-
-            // Business type forms
-            'lva-application-business_type' => LvaFormService\BusinessType\ApplicationBusinessType::class,
-            'lva-licence-business_type' => LvaFormService\BusinessType\LicenceBusinessType::class,
-            'lva-variation-business_type' => LvaFormService\BusinessType\VariationBusinessType::class,
-
-            // Lva form services
-            'lva-licence' => LvaFormService\Licence::class,
-            'lva-variation' => LvaFormService\Variation::class,
-            'lva-application' => LvaFormService\Application::class,
-
-            // Business details form services
-            'lva-licence-business_details' => LvaFormService\BusinessDetails\LicenceBusinessDetails::class,
-            'lva-variation-business_details' => LvaFormService\BusinessDetails\VariationBusinessDetails::class,
-            'lva-application-business_details' => LvaFormService\BusinessDetails\ApplicationBusinessDetails::class,
-
-            // Addresses form services
-            'lva-licence-addresses' => LvaFormService\Addresses::class,
-            'lva-variation-addresses' => LvaFormService\Addresses::class,
-            'lva-application-addresses' => LvaFormService\Addresses::class,
-
-            // Goods vehicle form services
-            'lva-licence-goods-vehicles' => LvaFormService\LicenceGoodsVehicles::class,
-            'lva-variation-goods-vehicles' => LvaFormService\VariationGoodsVehicles::class,
-            'lva-application-goods-vehicles' => LvaFormService\ApplicationGoodsVehicles::class,
-
-            // Psv vehicles vehicle form services
-            'lva-licence-vehicles_psv-vehicle' => LvaFormService\LicencePsvVehiclesVehicle::class,
-            'lva-variation-vehicles_psv-vehicle' => LvaFormService\ApplicationPsvVehiclesVehicle::class,
-            'lva-application-vehicles_psv-vehicle' => LvaFormService\ApplicationPsvVehiclesVehicle::class,
-
-            // Goods vehicle filter form services
-            'lva-licence-goods-vehicles-filters' => LvaFormService\LicenceGoodsVehiclesFilters::class,
-            'lva-variation-goods-vehicles-filters' => LvaFormService\CommonGoodsVehiclesFilters::class,
-            'lva-application-goods-vehicles-filters' => LvaFormService\CommonGoodsVehiclesFilters::class,
-
-            // PSV filter form services
-            'lva-psv-vehicles-filters' => LvaFormService\CommonPsvVehiclesFilters::class,
-
-            // Vehicle search form services
-            'lva-vehicles-search' => LvaFormService\CommonVehiclesSearch::class,
-
-            // Common vehicle services
-            'lva-licence-variation-vehicles' => LvaFormService\LicenceVariationVehicles::class,
-            'lva-generic-vehicles-vehicle' => LvaFormService\GenericVehiclesVehicle::class,
-
-            // Type of licence
-            'lva-licence-type-of-licence' => LvaFormService\TypeOfLicence\LicenceTypeOfLicence::class,
-            'lva-application-type-of-licence' => LvaFormService\TypeOfLicence\ApplicationTypeOfLicence::class,
-            'lva-variation-type-of-licence' => LvaFormService\TypeOfLicence\VariationTypeOfLicence::class,
-
-            // People form services
-            'lva-licence-people' => LvaFormService\People\LicencePeople::class,
-            'lva-licence-addperson' => LvaFormService\People\LicenceAddPerson::class,
-            'lva-variation-people' => LvaFormService\People\VariationPeople::class,
-            'lva-application-people' => LvaFormService\People\ApplicationPeople::class,
-            'lva-licence-sole_trader' => LvaFormService\People\SoleTrader\LicenceSoleTrader::class,
-            'lva-variation-sole_trader' => LvaFormService\People\SoleTrader\VariationSoleTrader::class,
-            'lva-application-sole_trader' => LvaFormService\People\SoleTrader\ApplicationSoleTrader::class,
-
-            // Community Licences form services
-            'lva-licence-community_licences' => LvaFormService\CommunityLicences\LicenceCommunityLicences::class,
-            'lva-variation-community_licences' => LvaFormService\CommunityLicences\VariationCommunityLicences::class,
-            'lva-application-community_licences'
-                => LvaFormService\CommunityLicences\ApplicationCommunityLicences::class,
-
-            // Safety form services
-            'lva-licence-safety' => LvaFormService\Safety::class,
-            'lva-variation-safety' => LvaFormService\Safety::class,
-            'lva-application-safety' => LvaFormService\Safety::class,
-
-            // Conditions and Undertakings form services
-            'lva-licence-conditions_undertakings'
-                => LvaFormService\ConditionsUndertakings\LicenceConditionsUndertakings::class,
-            'lva-variation-conditions_undertakings'
-                => LvaFormService\ConditionsUndertakings\VariationConditionsUndertakings::class,
-            'lva-application-conditions_undertakings'
-                => LvaFormService\ConditionsUndertakings\ApplicationConditionsUndertakings::class,
-
-            // Financial History form services
-            'lva-licence-financial_history' => LvaFormService\FinancialHistory::class,
-            'lva-variation-financial_history' => LvaFormService\FinancialHistory::class,
-            'lva-application-financial_history' => LvaFormService\FinancialHistory::class,
-
-            // Financial Evidence form services
-            'lva-variation-financial_evidence' => LvaFormService\VariationFinancialEvidence::class,
-            'lva-application-financial_evidence' => LvaFormService\FinancialEvidence::class,
-
-            // Declarations (undertakings) form services
-            'lva-variation-undertakings' => LvaFormService\Undertakings::class,
-            'lva-application-undertakings' => LvaFormService\Undertakings::class,
-
-            // Taxi/PHV form services
-            'lva-licence-taxi_phv' => LvaFormService\LicenceTaxiPhv::class,
-            'lva-variation-taxi_phv' => LvaFormService\TaxiPhv::class,
-            'lva-application-taxi_phv' => LvaFormService\TaxiPhv::class,
-
-            // Licence History form services
-            'lva-application-licence_history' => LvaFormService\LicenceHistory::class,
-            'lva-variation-licence_history' => LvaFormService\LicenceHistory::class,
-
-            // Convictions & Penalties form services
-            'lva-variation-convictions_penalties' => LvaFormService\ConvictionsPenalties::class,
-            'lva-application-convictions_penalties' => LvaFormService\ConvictionsPenalties::class,
-
-            // Vehicles Declaratinos form services
-            'lva-variation-vehicles_declarations' => LvaFormService\VehiclesDeclarations::class,
-            'lva-application-vehicles_declarations' => LvaFormService\VehiclesDeclarations::class,
-
-            // PSV Vehicles form services
-            'lva-licence-vehicles_psv' => LvaFormService\PsvVehicles::class,
-            'lva-variation-vehicles_psv' => LvaFormService\VariationPsvVehicles::class,
-            'lva-application-vehicles_psv' => LvaFormService\PsvVehicles::class,
-
-            // Discs form services
-            'lva-licence-discs' => LvaFormService\PsvDiscs::class,
-            'lva-variation-discs' => LvaFormService\PsvDiscs::class,
-
-            'lva-licence-transport_managers' => LvaFormService\TransportManager\LicenceTransportManager::class,
-            'lva-variation-transport_managers' => LvaFormService\TransportManager\VariationTransportManager::class,
-            'lva-application-transport_managers' => LvaFormService\TransportManager\ApplicationTransportManager::class,
-
-            // Continuation forms
-            'continuations-checklist' => ContinuationFormService\LicenceChecklist::class,
-            'continuations-start' => ContinuationFormService\Start::class,
-            'continuations-payment' => ContinuationFormService\Payment::class,
-            ContinuationFormService\Declaration::class => ContinuationFormService\Declaration::class,
-            ContinuationFormService\ConditionsUndertakings::class =>
-                ContinuationFormService\ConditionsUndertakings::class,
-        ]
+        'abstract_factories' => [
+            FormServiceAbstractFactory::class
+        ],
+        'aliases' => FormServiceAbstractFactory::FORM_SERVICE_CLASS_ALIASES,
     ],
     'translator_plugins' => [
         'factories' => [

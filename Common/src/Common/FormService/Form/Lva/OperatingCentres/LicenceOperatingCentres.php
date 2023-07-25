@@ -2,16 +2,38 @@
 
 namespace Common\FormService\Form\Lva\OperatingCentres;
 
+use Common\FormService\FormServiceManager;
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Table\TableBuilder;
+use Common\Service\Table\TableFactory;
 use Laminas\Form\Form;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * @see \CommonTest\FormService\Form\Lva\OperatingCentres\LicenceOperatingCentresTest
  */
 class LicenceOperatingCentres extends AbstractOperatingCentres
 {
+    protected FormHelperService $formHelper;
+    protected AuthorizationService $authService;
+    protected $tableBuilder;
+    protected FormServiceManager $formServiceLocator;
+
+    public function __construct(
+        FormHelperService $formHelper,
+        AuthorizationService $authService,
+        $tableBuilder,
+        FormServiceManager $formServiceLocator
+    ) {
+        $this->authService = $authService;
+        $this->tableBuilder = $tableBuilder;
+        $this->formServiceLocator = $formServiceLocator;
+        parent::__construct($formHelper);
+    }
+
     protected function alterForm(Form $form, array $params)
     {
-        $this->getFormServiceLocator()->get('lva-licence')->alterForm($form);
+        $this->formServiceLocator->get('lva-licence')->alterForm($form);
         parent::alterForm($form, $params);
     }
 
@@ -45,8 +67,8 @@ class LicenceOperatingCentres extends AbstractOperatingCentres
     protected function alterFormWithTranslationKey(Form $form, $translationKey)
     {
         if ($form->get('data')->has('totCommunityLicencesFieldset')) {
-            $this->getFormHelper()->disableElement($form, 'data->totCommunityLicencesFieldset->totCommunityLicences');
-            $this->getFormHelper()->lockElement(
+            $this->formHelper->disableElement($form, 'data->totCommunityLicencesFieldset->totCommunityLicences');
+            $this->formHelper->lockElement(
                 $form->get('data')->get('totCommunityLicencesFieldset')->get('totCommunityLicences'),
                 $translationKey
             );

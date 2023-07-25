@@ -1,11 +1,9 @@
 <?php
 
-/**
- * Licence Form
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\FormService\Form\Lva;
+
+use Common\Service\Helper\FormHelperService;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Licence Form
@@ -14,6 +12,14 @@ namespace Common\FormService\Form\Lva;
  */
 class Licence extends AbstractLvaFormService
 {
+    protected FormHelperService $formHelper;
+    protected AuthorizationService $authService;
+
+    public function __construct(FormHelperService $formHelper, AuthorizationService $authService)
+    {
+        $this->formHelper = $formHelper;
+        $this->authService = $authService;
+    }
     public function alterForm($form)
     {
         $this->removeFormAction($form, 'saveAndContinue');

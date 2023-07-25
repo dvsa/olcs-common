@@ -1,16 +1,12 @@
 <?php
 
-/**
- * Licence Goods Vehicles Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\FormService\Form\Lva;
 
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Lva\LicenceGoodsVehicles;
 use CommonTest\Bootstrap;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Licence Goods Vehicles Test
@@ -29,15 +25,13 @@ class LicenceGoodsVehiclesTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->sm = Bootstrap::getServiceManager();
         $this->formHelper = m::mock('\Common\Service\Helper\FormHelperService');
         $this->formHelper->shouldReceive('getServiceLocator')
             ->andReturn($this->sm);
         $this->formService = m::mock('\Common\FormService\FormServiceManager')->makePartial();
+        $this->authService = m::mock(AuthorizationService::class);
 
-        $this->sut = new LicenceGoodsVehicles();
-        $this->sut->setFormHelper($this->formHelper);
-        $this->sut->setFormServiceLocator($this->formService);
+        $this->sut = new LicenceGoodsVehicles($this->formHelper, $this->authService, $this->formService);
     }
 
     public function testGetForm()
@@ -50,8 +44,6 @@ class LicenceGoodsVehiclesTest extends MockeryTestCase
         $mockForm = m::mock();
         $mockTableElement = m::mock('\Laminas\Form\Fieldset');
         $mockValidator = m::mock();
-
-        $this->sm->setService('oneRowInTablesRequired', $mockValidator);
 
         // Expectations
         $this->formHelper->shouldReceive('createForm')

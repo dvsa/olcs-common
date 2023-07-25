@@ -1,16 +1,12 @@
 <?php
 
-/**
- * Licence Taxi Phv Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\FormService\Form\Lva;
 
 use Common\FormService\Form\Lva\LicenceTaxiPhv;
 use Common\Service\Helper\FormHelperService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Licence Taxi Phv Test
@@ -24,6 +20,8 @@ class LicenceTaxiPhvTest extends MockeryTestCase
      */
     private $sut;
 
+    protected $authService;
+
     /**
      * @var FormHelperService
      */
@@ -32,9 +30,9 @@ class LicenceTaxiPhvTest extends MockeryTestCase
     public function setUp(): void
     {
         $this->formHelper = m::mock(FormHelperService::class);
+        $this->authService = m::mock(AuthorizationService::class);
 
-        $this->sut = new LicenceTaxiPhv();
-        $this->sut->setFormHelper($this->formHelper);
+        $this->sut = new LicenceTaxiPhv($this->formHelper, $this->authService);
     }
 
     public function testGetForm()

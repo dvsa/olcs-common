@@ -3,8 +3,11 @@
 namespace Common\FormService\Form\Lva\TypeOfLicence;
 
 use Common\FormService\Form\Lva\AbstractLvaFormService;
+use Common\FormService\FormServiceInterface;
 use Common\RefData;
+use Common\Service\Helper\FormHelperService;
 use Laminas\Form\Form;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Abstract Type Of Licence Form
@@ -13,8 +16,8 @@ use Laminas\Form\Form;
  */
 abstract class AbstractTypeOfLicence extends AbstractLvaFormService
 {
-    const ALLOWED_OPERATOR_LOCATION_NI = 'NI';
-    const ALLOWED_OPERATOR_LOCATION_GB = 'GB';
+    public const ALLOWED_OPERATOR_LOCATION_NI = 'NI';
+    public const ALLOWED_OPERATOR_LOCATION_GB = 'GB';
 
     /**
      * Get Form
@@ -25,7 +28,7 @@ abstract class AbstractTypeOfLicence extends AbstractLvaFormService
      */
     public function getForm($params = [])
     {
-        $form = $this->getFormHelper()->createForm('Lva\TypeOfLicence');
+        $form = $this->formHelper->createForm('Lva\TypeOfLicence');
 
         $this->alterForm($form, $params);
 
@@ -76,32 +79,32 @@ abstract class AbstractTypeOfLicence extends AbstractLvaFormService
         $typeOfLicenceFieldset->get('licence-type')->setLabel('licence-type');
 
         // Add padlocks
-        $this->getFormHelper()->lockElement(
+        $this->formHelper->lockElement(
             $typeOfLicenceFieldset->get('operator-location'),
             'operator-location-lock-message'
         );
-        $this->getFormHelper()->lockElement(
+        $this->formHelper->lockElement(
             $typeOfLicenceFieldset->get('operator-type'),
             'operator-type-lock-message'
         );
 
         // Disable elements
-        $this->getFormHelper()->disableElement($form, 'type-of-licence->operator-location');
-        $this->getFormHelper()->disableElement($form, 'type-of-licence->operator-type');
+        $this->formHelper->disableElement($form, 'type-of-licence->operator-location');
+        $this->formHelper->disableElement($form, 'type-of-licence->operator-type');
 
         // Optional disable and lock type of licence
         if (!$params['canUpdateLicenceType']) {
             // Disable and lock type of licence
-            $this->getFormHelper()->disableElement($form, 'type-of-licence->licence-type->licence-type');
-            $this->getFormHelper()->disableElement(
+            $this->formHelper->disableElement($form, 'type-of-licence->licence-type->licence-type');
+            $this->formHelper->disableElement(
                 $form,
                 'type-of-licence->licence-type->ltyp_siContent->vehicle-type'
             );
-            $this->getFormHelper()->disableElement(
+            $this->formHelper->disableElement(
                 $form,
                 'type-of-licence->licence-type->ltyp_siContent->lgv-declaration->lgv-declaration-confirmation'
             );
-            $this->getFormHelper()->lockElement(
+            $this->formHelper->lockElement(
                 $typeOfLicenceFieldset->get('licence-type'),
                 'licence-type-lock-message'
             );
@@ -110,7 +113,7 @@ abstract class AbstractTypeOfLicence extends AbstractLvaFormService
         }
 
         if (!$params['canBecomeSpecialRestricted']) {
-            $this->getFormHelper()->removeOption(
+            $this->formHelper->removeOption(
                 $typeOfLicenceFieldset->get('licence-type')->get('licence-type'),
                 RefData::LICENCE_TYPE_SPECIAL_RESTRICTED
             );
@@ -141,9 +144,8 @@ abstract class AbstractTypeOfLicence extends AbstractLvaFormService
             $message = 'alternative-operator-location-lock-message-gb';
         }
 
-        $formHelper = $this->getFormHelper();
-        $formHelper->disableElement($form, 'type-of-licence->operator-location');
-        $formHelper->lockElement($elmOperLoc, $message);
+        $this->formHelper->disableElement($form, 'type-of-licence->operator-location');
+        $this->formHelper->lockElement($elmOperLoc, $message);
     }
 
     /**

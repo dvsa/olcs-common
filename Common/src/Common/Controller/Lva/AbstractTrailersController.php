@@ -3,6 +3,7 @@
 namespace Common\Controller\Lva;
 
 use Common\FeatureToggle;
+use Common\FormService\FormServiceManager;
 use Common\Service\Table\TableBuilder as Table;
 use Dvsa\Olcs\Transfer\Command\Licence\UpdateTrailers;
 use Dvsa\Olcs\Transfer\Command\Trailer\CreateTrailer;
@@ -261,7 +262,7 @@ abstract class AbstractTrailersController extends AbstractController
     protected function getForm(RequestInterface $request, $table)
     {
         return $this->getServiceLocator()
-            ->get('FormServiceManager')
+            ->get(FormServiceManager::class)
             ->get('lva-licence-trailers')
             ->getForm($request, $table);
     }

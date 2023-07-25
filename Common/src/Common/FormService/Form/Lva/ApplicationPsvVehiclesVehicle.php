@@ -1,25 +1,26 @@
 <?php
 
-/**
- * Application Psv Vehicles Vehicle
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\FormService\Form\Lva;
 
-/**
- * Application Psv Vehicles Vehicle
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
+use Common\FormService\FormServiceManager;
+use Common\Service\Helper\FormHelperService;
+
 class ApplicationPsvVehiclesVehicle extends AbstractPsvVehiclesVehicle
 {
+    protected FormServiceManager $formServiceLocator;
+    protected FormHelperService $formHelper;
+
+    public function __construct(FormHelperService $formHelper, FormServiceManager $formServiceLocator)
+    {
+        $this->formHelper = $formHelper;
+        $this->formServiceLocator = $formServiceLocator;
+    }
     protected function alterForm($form, $params)
     {
         $dataFieldset = $form->get('licence-vehicle');
         $specifiedDate = $dataFieldset->get('specifiedDate');
-        $this->getFormHelper()->disableDateElement($specifiedDate);
-        $this->getFormHelper()->disableDateElement($dataFieldset->get('removalDate'));
+        $this->formHelper->disableDateElement($specifiedDate);
+        $this->formHelper->disableDateElement($dataFieldset->get('removalDate'));
 
         $specifiedDate->getYearElement()->setValue('');
         $specifiedDate->getMonthElement()->setValue('');

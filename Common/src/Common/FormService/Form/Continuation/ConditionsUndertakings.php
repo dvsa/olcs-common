@@ -2,17 +2,25 @@
 
 namespace Common\FormService\Form\Continuation;
 
-use Common\FormService\Form\AbstractFormService;
-use Common\Form\Model\Form\Continuation\ConditionsUndertakings as ConditionsUndertakingsForm;
 use Common\Form\Form;
+use Common\Form\Model\Form\Continuation\ConditionsUndertakings as ConditionsUndertakingsForm;
+use Common\FormService\FormServiceInterface;
+use Common\Service\Helper\FormHelperService;
 
 /**
  * Continuation conditions / undertakings form
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class ConditionsUndertakings extends AbstractFormService
+class ConditionsUndertakings
 {
+    protected FormHelperService $formHelper;
+
+    public function __construct(FormHelperService $formHelper)
+    {
+        $this->formHelper = $formHelper;
+    }
+
     /**
      * Get form
      *
@@ -20,8 +28,6 @@ class ConditionsUndertakings extends AbstractFormService
      */
     public function getForm()
     {
-        $form = $this->getFormHelper()->createForm(ConditionsUndertakingsForm::class);
-
-        return $form;
+        return $this->formHelper->createForm(ConditionsUndertakingsForm::class);
     }
 }

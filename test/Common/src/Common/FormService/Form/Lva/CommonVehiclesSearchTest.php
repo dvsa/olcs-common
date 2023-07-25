@@ -11,17 +11,17 @@ use Common\FormService\Form\Lva\CommonVehiclesSearch;
  */
 class CommonVehiclesSearchTest extends MockeryTestCase
 {
-    /** @var CommonVehiclesSearch  */
+    /** @var CommonVehiclesSearch */
     protected $sut;
-    /** @var  \Common\Service\Helper\FormHelperService | m\MockInterface */
+
+    /** @var \Common\Service\Helper\FormHelperService | m\MockInterface */
     protected $formHelper;
 
     public function setUp(): void
     {
         $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);
 
-        $this->sut = new CommonVehiclesSearch();
-        $this->sut->setFormHelper($this->formHelper);
+        $this->sut = new CommonVehiclesSearch($this->formHelper);
     }
 
     public function testGetForm()

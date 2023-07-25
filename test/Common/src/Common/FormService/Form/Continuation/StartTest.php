@@ -22,8 +22,7 @@ class StartTest extends MockeryTestCase
     {
         $this->formHelper = m::mock(FormHelperService::class);
 
-        $this->sut = new Start();
-        $this->sut->setFormHelper($this->formHelper);
+        $this->sut = new Start($this->formHelper);
     }
 
     public function testGetForm()

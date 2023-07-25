@@ -1,16 +1,12 @@
 <?php
 
-/**
- * Application People Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\FormService\Form\Lva\People;
 
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Lva\People\ApplicationPeople as Sut;
 use Laminas\Form\Form;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Application People Test
@@ -23,16 +19,12 @@ class ApplicationPeopleTest extends MockeryTestCase
 
     protected $formHelper;
 
-    protected $fsm;
-
     public function setUp(): void
     {
         $this->formHelper = m::mock('\Common\Service\Helper\FormHelperService');
-        $this->fsm = m::mock('\Common\FormService\FormServiceManager')->makePartial();
+        $this->authService = m::mock(AuthorizationService::class);
 
-        $this->sut = new Sut();
-        $this->sut->setFormHelper($this->formHelper);
-        $this->sut->setFormServiceLocator($this->fsm);
+        $this->sut = new Sut($this->formHelper, $this->authService);
     }
 
     public function testGetForm()
