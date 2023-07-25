@@ -384,11 +384,13 @@ class FormServiceAbstractFactory implements AbstractFactoryInterface
             case self::FORM_SERVICE_CLASS_ALIASES['lva-licence-sole_trader']:
                 $authService = $serviceLocator->get(AuthorizationService::class);
                 $peopleLvaService = $serviceLocator->get(PeopleLvaService::class);
-                return new LicenceSoleTrader($formHelper, $authService, $peopleLvaService);
+                $formServiceLocator = $serviceLocator->get(FormServiceManager::class);
+                return new LicenceSoleTrader($formHelper, $authService, $peopleLvaService, $formServiceLocator);
             case self::FORM_SERVICE_CLASS_ALIASES['lva-variation-sole_trader']:
                 $authService = $serviceLocator->get(AuthorizationService::class);
                 $peopleLvaService = $serviceLocator->get(PeopleLvaService::class);
-                return new VariationSoleTrader($formHelper, $authService, $peopleLvaService);
+                $formServiceLocator = $serviceLocator->get(FormServiceManager::class);
+                return new VariationSoleTrader($formHelper, $authService, $peopleLvaService, $formServiceLocator);
             case self::FORM_SERVICE_CLASS_ALIASES['lva-application-sole_trader']:
                 $authService = $serviceLocator->get(AuthorizationService::class);
                 $peopleLvaService = $serviceLocator->get(PeopleLvaService::class);
