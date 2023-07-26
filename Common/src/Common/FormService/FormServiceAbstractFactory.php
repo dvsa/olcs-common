@@ -210,7 +210,8 @@ class FormServiceAbstractFactory implements AbstractFactoryInterface
         // Continuation forms
         'continuations-checklist' => LicenceChecklist::class,
         'continuations-start' => Start::class,
-        'continuations-payment' => Payment::class
+        'continuations-payment' => Payment::class,
+        Declaration::class => Declaration::class
     ];
 
 
