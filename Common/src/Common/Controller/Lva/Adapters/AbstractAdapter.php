@@ -1,34 +1,28 @@
 <?php
 
-/**
- * Abstract Adapter
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva\Adapters;
 
-use Laminas\ServiceManager\ServiceLocatorAwareInterface;
-use Laminas\ServiceManager\ServiceLocatorAwareTrait;
+use Interop\Container\ContainerInterface;
 use Common\Controller\Lva\Interfaces\AdapterInterface;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
-/**
- * Abstract Adapter
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
-abstract class AbstractAdapter implements ServiceLocatorAwareInterface, AdapterInterface
+abstract class AbstractAdapter implements AdapterInterface
 {
-    use ServiceLocatorAwareTrait;
-
     protected $lva;
     protected $applicationAdapter;
 
+    protected $container;
+
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
+
     /**
      * Get an instance of application lva adapter
-     *
-     * @return \Common\Controller\Lva\Adapters\ApplicationLvaAdapter
      */
-    protected function getApplicationAdapter()
+    protected function getApplicationAdapter(): AbstractLvaAdapter
     {
         if ($this->applicationAdapter === null) {
             $this->applicationAdapter = $this->getLvaAdapter('Application');
@@ -40,15 +34,17 @@ abstract class AbstractAdapter implements ServiceLocatorAwareInterface, AdapterI
     /**
      * Get an instance of an Lva Adapter
      *
-     * @param string $lva
+     * @param string|null $lva
      * @return AbstractLvaAdapter
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
-    protected function getLvaAdapter($lva = null)
+    protected function getLvaAdapter(?string $lva = null): AbstractLvaAdapter
     {
         if ($lva === null) {
             $lva = $this->lva;
         }
 
-        return $this->getServiceLocator()->get($lva . 'LvaAdapter');
+        return $this->container->get($lva . 'LvaAdapter');
     }
 }

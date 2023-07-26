@@ -2,24 +2,25 @@
 
 namespace CommonTest\Controller\Lva\Adapters;
 
+use Common\Controller\Lva\Adapters\ApplicationFinancialEvidenceAdapter;
+use Common\Service\Cqrs\Query\CachingQueryService;
+use Common\Service\Data\CategoryDataService as Category;
+use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
+use Interop\Container\ContainerInterface;
+use Laminas\Form\Form;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Laminas\Form\Form;
-use Common\Controller\Lva\Adapters\ApplicationFinancialEvidenceAdapter;
-use Common\Service\Data\CategoryDataService as Category;
 
-/**
- * Application Financial Evidence Adapter Test
- *
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
- */
 class ApplicationFinancialEvidenceAdapterTest extends MockeryTestCase
 {
     protected $sut;
 
+    protected $container;
+
     public function setUp(): void
     {
-        $this->sut = m::mock(ApplicationFinancialEvidenceAdapter::class)->makePartial();
+        $this->container = m::mock(ContainerInterface::class);
+        $this->sut = m::mock(ApplicationFinancialEvidenceAdapter::class, [$this->container])->makePartial();
     }
 
     public function testAlterFormForLva()
@@ -87,39 +88,34 @@ class ApplicationFinancialEvidenceAdapterTest extends MockeryTestCase
     {
         $applicationId = 1;
 
-        $this->sut->shouldReceive('getServiceLocator')
+        $this->container->shouldReceive('get')
+            ->with(AnnotationBuilder::class)
             ->andReturn(
                 m::mock()
-                ->shouldReceive('get')
-                ->with('TransferAnnotationBuilder')
-                ->andReturn(
-                    m::mock()
-                        ->shouldReceive('createQuery')
-                        ->andReturn('query')
-                        ->once()
-                        ->getMock()
-                )
-                ->once()
-                ->shouldReceive('get')
-                ->with('QueryService')
-                ->andReturn(
-                    m::mock()
-                        ->shouldReceive('send')
-                        ->with('query')
-                        ->andReturn(
-                            m::mock()
-                                ->shouldReceive('getResult')
-                                ->once()
-                                ->andReturn('foo')
-                                ->getMock()
-                        )
-                        ->once()
-                        ->getMock()
-                )
-                ->once()
-                ->getMock()
+                    ->shouldReceive('createQuery')
+                    ->andReturn('query')
+                    ->once()
+                    ->getMock()
             )
-            ->twice();
+            ->once()
+            ->shouldReceive('get')
+            ->with(CachingQueryService::class)
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('send')
+                    ->with('query')
+                    ->andReturn(
+                        m::mock()
+                            ->shouldReceive('getResult')
+                            ->once()
+                            ->andReturn('foo')
+                            ->getMock()
+                    )
+                    ->once()
+                    ->getMock()
+            )
+            ->once()
+            ->getMock();
 
         $this->assertEquals('foo', $this->sut->getData($applicationId, true));
         // testing cache

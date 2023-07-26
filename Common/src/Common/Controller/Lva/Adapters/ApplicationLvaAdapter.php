@@ -1,19 +1,16 @@
 <?php
 
-/**
- * Application Lva Adapter
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva\Adapters;
 
-/**
- * Application Lva Adapter
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
+use Interop\Container\ContainerInterface;
+
 class ApplicationLvaAdapter extends AbstractLvaAdapter
 {
+    public function __construct(ContainerInterface $container)
+    {
+        parent::__construct($container);
+    }
+
     public function getIdentifier()
     {
         $id = $this->getController()->params('application');

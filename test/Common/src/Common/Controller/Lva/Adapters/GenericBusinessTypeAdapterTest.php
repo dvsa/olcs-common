@@ -1,28 +1,22 @@
 <?php
 
-/**
- * Generic Business Type Adapter tests
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
- */
 namespace CommonTest\Controller\Lva\Adapters;
 
+use Interop\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Controller\Lva\Adapters\GenericBusinessTypeAdapter;
 
-/**
- * Generic Business Type Adapter tests
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
- */
 class GenericBusinessTypeAdapterTest extends MockeryTestCase
 {
     protected $sut;
 
+    protected $container;
+
     public function setUp(): void
     {
-        $this->sut = new GenericBusinessTypeAdapter();
+        $this->container = m::mock(ContainerInterface::class);
+        $this->sut = new GenericBusinessTypeAdapter($this->container);
     }
 
     public function testAlterFormIsNoOp()

@@ -1,44 +1,35 @@
 <?php
 
-/**
- * Abstract Conditions Undertakings Adapter Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\Controller\Lva\Adapters;
 
+use Common\Controller\Lva\Adapters\AbstractConditionsUndertakingsAdapter;
 use Common\RefData;
+use Common\Service\Script\ScriptFactory;
+use Interop\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use CommonTest\Bootstrap;
 
-/**
- * Abstract Conditions Undertakings Adapter Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class AbstractConditionsUndertakingsAdapterTest extends MockeryTestCase
 {
     protected $sut;
-    protected $sm;
+    protected $container;
 
     public function setUp(): void
     {
-        $this->sm = Bootstrap::getServiceManager();
+        $this->container = m::mock(ContainerInterface::class);
 
         // Mock it as it is abstract
-        $this->sut = m::mock('\Common\Controller\Lva\Adapters\AbstractConditionsUndertakingsAdapter')
+        $this->sut = m::mock(AbstractConditionsUndertakingsAdapter::class, [$this->container])
             ->makePartial()
             // We need to mock some unimplemented abstract methods
             ->shouldAllowMockingProtectedMethods();
-
-        $this->sut->setServiceLocator($this->sm);
     }
 
     public function testAttachMainScripts()
     {
         $mockScript = m::mock();
-        $this->sm->setService('Script', $mockScript);
+
+        $this->container->shouldReceive('get')->with(ScriptFactory::class)->andReturn($mockScript);
 
         $mockScript->shouldReceive('loadFile')
             ->with('lva-crud');

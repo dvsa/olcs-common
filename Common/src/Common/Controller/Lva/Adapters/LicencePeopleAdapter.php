@@ -1,19 +1,14 @@
 <?php
 
-/**
- * Common (aka Internal) Licence People Adapter
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
- */
 namespace Common\Controller\Lva\Adapters;
 
 use Common\Controller\Lva\Adapters\AbstractPeopleAdapter;
+use Interop\Container\ContainerInterface;
 
-/**
- * Common (aka Internal) Licence People Adapter
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
- */
 class LicencePeopleAdapter extends AbstractPeopleAdapter
 {
+    public function __construct(ContainerInterface $container)
+    {
+        parent::__construct($container);
+    }
 }

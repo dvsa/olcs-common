@@ -1,20 +1,14 @@
 <?php
 
-/**
- * Variation Financial Evidence Adapter
- *
- * @author Dan Eggleston <dan@stolenegg.com>
- */
 namespace Common\Controller\Lva\Adapters;
 
 use Common\Service\Data\CategoryDataService as Category;
+use Interop\Container\ContainerInterface;
 
-/**
- * Variation Financial Evidence Adapter
- *
- * @author Dan Eggleston <dan@stolenegg.com>
- * @note For brevity, this extends the Application version, not the Abstract
- */
 class VariationFinancialEvidenceAdapter extends ApplicationFinancialEvidenceAdapter
 {
+    public function __construct(ContainerInterface $container)
+    {
+        parent::__construct($container);
+    }
 }

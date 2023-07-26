@@ -1,22 +1,18 @@
 <?php
 
-/**
- * Abstact Lva Adapter
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva\Adapters;
 
+use Interop\Container\ContainerInterface;
 use Laminas\Form\Form;
 use Common\Controller\Lva\Interfaces\LvaAdapterInterface;
 
-/**
- * Abstact Lva Adapter
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 abstract class AbstractLvaAdapter extends AbstractControllerAwareAdapter implements LvaAdapterInterface
 {
+    public function __construct(ContainerInterface $container)
+    {
+        parent::__construct($container);
+    }
+
     /**
      * Alter the form based on the LVA rules
      *

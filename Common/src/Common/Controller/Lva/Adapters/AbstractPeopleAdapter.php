@@ -6,31 +6,33 @@ use Common\Controller\Lva\AbstractController;
 use Common\Controller\Lva\Interfaces\PeopleAdapterInterface;
 use Common\Controller\Plugin\HandleQuery;
 use Common\RefData;
+use Common\Service\Cqrs\Command\CommandService;
 use Common\Service\Table\TableBuilder;
+use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
+use Interop\Container\ContainerInterface;
 use Laminas\Form\Form;
 use Laminas\Mvc\Controller\Plugin\FlashMessenger;
 
-/**
- * Abstract people adapter
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
- */
 abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter implements PeopleAdapterInterface
 {
-    const ACTION_ADDED = 'A';
-    const ACTION_EXISTING = 'E';
-    const ACTION_CURRENT = 'C';
-    const ACTION_UPDATED = 'U';
-    const ACTION_DELETED = 'D';
-
-    const SOURCE_APPLICATION = 'A';
-    const SOURCE_ORGANISATION = 'O';
+    public const ACTION_ADDED = 'A';
+    public const ACTION_EXISTING = 'E';
+    public const ACTION_CURRENT = 'C';
+    public const ACTION_UPDATED = 'U';
+    public const ACTION_DELETED = 'D';
+    public const SOURCE_APPLICATION = 'A';
+    public const SOURCE_ORGANISATION = 'O';
 
     protected $tableData = [];
 
     private $licence;
     private $data;
     private $application;
+
+    public function __construct(ContainerInterface $container)
+    {
+        parent::__construct($container);
+    }
 
     /**
      * Load the people dataa
@@ -102,8 +104,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
      */
     protected function handleQuery(\Dvsa\Olcs\Transfer\Query\QueryInterface $command)
     {
-        $serviceLocator = $this->getServiceLocator();
-        return $serviceLocator->get('ControllerPluginManager')->get(HandleQuery::class)->__invoke($command);
+        return $this->container->get('ControllerPluginManager')->get(HandleQuery::class)->__invoke($command);
     }
 
     /**
@@ -115,10 +116,8 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
      */
     protected function handleCommand(\Dvsa\Olcs\Transfer\Command\CommandInterface $command)
     {
-        $serviceLocator = $this->getServiceLocator();
-
-        $annotationBuilder = $serviceLocator->get('TransferAnnotationBuilder');
-        $commandService = $serviceLocator->get('CommandService');
+        $annotationBuilder = $this->container->get(AnnotationBuilder::class);
+        $commandService = $this->container->get(CommandService::class);
 
         return $commandService->send($annotationBuilder->createCommand($command));
     }
@@ -352,7 +351,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     public function createTable()
     {
         /** @var TableBuilder $table */
-        $table = $this->getServiceLocator()
+        $table = $this->container
             ->get('Table')
             ->prepareTable($this->getTableConfig(), $this->getTableData());
 

@@ -1,17 +1,13 @@
 <?php
 
-/**
- * Application Conditions Undertakings Adapter
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva\Adapters;
 
-/**
- * Application Conditions Undertakings Adapter
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
+use Interop\Container\ContainerInterface;
+
 class ApplicationConditionsUndertakingsAdapter extends AbstractConditionsUndertakingsAdapter
 {
+    public function __construct(ContainerInterface $container)
+    {
+        parent::__construct($container);
+    }
 }

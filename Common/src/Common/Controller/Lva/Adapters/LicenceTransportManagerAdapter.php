@@ -2,6 +2,11 @@
 
 namespace Common\Controller\Lva\Adapters;
 
+use Common\Service\Cqrs\Command\CommandService;
+use Common\Service\Cqrs\Query\CachingQueryService;
+use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder as TransferAnnotationBuilder;
+use Interop\Container\ContainerInterface;
+
 /**
  * Licence Transport Manager Adapter
  *
@@ -11,6 +16,11 @@ namespace Common\Controller\Lva\Adapters;
 class LicenceTransportManagerAdapter extends AbstractTransportManagerAdapter
 {
     protected $lva = 'licence';
+
+    public function __construct(TransferAnnotationBuilder $transferAnnotationBuilder, CachingQueryService $querySrv, CommandService $commandSrv, ContainerInterface $container)
+    {
+        parent::__construct($transferAnnotationBuilder, $querySrv, $commandSrv, $container);
+    }
 
     /**
      * get table data

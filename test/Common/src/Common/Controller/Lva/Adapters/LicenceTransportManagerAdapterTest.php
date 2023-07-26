@@ -7,23 +7,19 @@ use Common\Service\Cqrs\Command\CommandService;
 use Common\Service\Cqrs\Query\CachingQueryService;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder as TransferAnnotationBuilder;
 use Dvsa\Olcs\Transfer\Command\CommandContainer;
+use Interop\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Http\Response as HttpResponse;
 use Dvsa\Olcs\Transfer\Command\TransportManagerLicence\Delete;
 
-/**
- * Licence Transport Manager Adapter Test
- *
- * @author Ian Lindsay <ian@hemera-business-services.co.uk>
- */
 class LicenceTransportManagerAdapterTest extends MockeryTestCase
 {
     /** @var LicenceTransportManagerAdapter */
     protected $sut;
-    /** @var  ServiceManager|\Mockery\MockInterface */
-    protected $sm;
+    /** @var  ContainerInterface|\Mockery\MockInterface */
+    protected $container;
     /** @var TransferAnnotationBuilder $mockAnnotationBuilder */
     protected $mockAnnotationBuilder;
     /** @var CachingQueryService $mockQuerySrv */
@@ -33,9 +29,7 @@ class LicenceTransportManagerAdapterTest extends MockeryTestCase
 
     protected function setUp(): void
     {
-        $this->sm = m::mock(ServiceManager::class)->makePartial();
-        $this->sm->setAllowOverride(true);
-
+        $this->container = m::mock(ContainerInterface::class);
         $this->mockAnnotationBuilder = m::mock(TransferAnnotationBuilder::class);
         $this->mockQuerySrv = m::mock(CachingQueryService::class);
         $this->mockCommandSrv = m::mock(CommandService::class);
@@ -43,10 +37,9 @@ class LicenceTransportManagerAdapterTest extends MockeryTestCase
         $this->sut = new LicenceTransportManagerAdapter(
             $this->mockAnnotationBuilder,
             $this->mockQuerySrv,
-            $this->mockCommandSrv
+            $this->mockCommandSrv,
+            $this->container
         );
-
-        $this->sut->setServiceLocator($this->sm);
     }
 
     public function testDelete()

@@ -1,17 +1,13 @@
 <?php
 
-/**
- * Common (aka Internal) Application People Adapter
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
- */
 namespace Common\Controller\Lva\Adapters;
 
-/**
- * Common (aka Internal) Application People Adapter
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
- */
+use Interop\Container\ContainerInterface;
+
 class ApplicationPeopleAdapter extends VariationPeopleAdapter
 {
+    public function __construct(ContainerInterface $container)
+    {
+        parent::__construct($container);
+    }
 }

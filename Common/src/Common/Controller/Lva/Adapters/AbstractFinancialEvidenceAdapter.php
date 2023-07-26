@@ -3,6 +3,7 @@
 namespace Common\Controller\Lva\Adapters;
 
 use Common\Controller\Lva\Interfaces\FinancialEvidenceAdapterInterface;
+use Interop\Container\ContainerInterface;
 
 /**
  * Abstract Financial Evidence Adapter
@@ -12,6 +13,11 @@ use Common\Controller\Lva\Interfaces\FinancialEvidenceAdapterInterface;
 abstract class AbstractFinancialEvidenceAdapter extends AbstractControllerAwareAdapter implements
     FinancialEvidenceAdapterInterface
 {
+    public function __construct(ContainerInterface $container)
+    {
+        parent::__construct($container);
+    }
+
     /**
      * Get documents from application data
      *

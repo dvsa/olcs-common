@@ -6,9 +6,9 @@ use Common\Controller\Lva\Adapters\AbstractTransportManagerAdapter;
 use Common\Service\Cqrs\Command\CommandService;
 use Common\Service\Cqrs\Query\CachingQueryService;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder as TransferAnnotationBuilder;
+use Interop\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Laminas\ServiceManager\ServiceManager;
 
 /**
  * Abstract Transport Manager Adapter Test
@@ -19,13 +19,12 @@ class AbstractTransportManagerAdapterTest extends MockeryTestCase
 {
     /** @var  \CommonTest\Controller\Lva\Adapters\StubAbstractTransportManagerAdapter */
     protected $sut;
-    /** @var  ServiceManager|\Mockery\MockInterface */
-    protected $sm;
+    /** @var  ContainerInterface|\Mockery\MockInterface */
+    protected $container;
 
     protected function setUp(): void
     {
-        $this->sm = m::mock(ServiceManager::class)->makePartial();
-        $this->sm->setAllowOverride(true);
+        $this->container = m::mock(ContainerInterface::class);
 
         /** @var TransferAnnotationBuilder $mockAnnotationBuilder */
         $mockAnnotationBuilder = m::mock(TransferAnnotationBuilder::class);
@@ -37,9 +36,9 @@ class AbstractTransportManagerAdapterTest extends MockeryTestCase
         $this->sut = new StubAbstractTransportManagerAdapter(
             $mockAnnotationBuilder,
             $mockQuerySrv,
-            $mockCommandSrv
+            $mockCommandSrv,
+            $this->container
         );
-        $this->sut->setServiceLocator($this->sm);
     }
 
     public function testGetNumberOfRows()
@@ -50,7 +49,7 @@ class AbstractTransportManagerAdapterTest extends MockeryTestCase
     public function testGetTable()
     {
         $mockTable = m::mock(\stdClass::class);
-        $this->sm->shouldReceive('get->prepareTable')->once()->with('template')->andReturn($mockTable);
+        $this->container->shouldReceive('get->prepareTable')->once()->with('template')->andReturn($mockTable);
 
         static::assertEquals($mockTable, $this->sut->getTable('template'));
     }
