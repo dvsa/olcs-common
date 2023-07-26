@@ -14,6 +14,8 @@ use Common\Form\Element\DynamicSelect;
 use Common\Form\Element\DynamicSelectFactory;
 use Common\Form\Elements\Custom\OlcsCheckbox;
 use Common\Form\View\Helper\FormInputSearch;
+use Common\FormService\Form\Continuation\Declaration;
+use Common\FormService\Form\Continuation\DeclarationFactory;
 use Common\FormService\Form\Lva\Application;
 use Common\FormService\Form\Lva\BusinessDetails\ApplicationBusinessDetails;
 use Common\FormService\FormServiceAbstractFactory;
@@ -182,6 +184,7 @@ return [
             'Lva\People' => Common\Service\Lva\PeopleLvaService::class,
             'Lva\Variation' => Common\Service\Lva\VariationLvaService::class,
             'FormServiceManager' => Common\FormService\FormServiceManager::class,
+            'Script' => \Common\Service\Script\ScriptFactory::class,
         ],
         'invokables' => [
             'Common\Service\NavigationFactory' => 'Common\Service\NavigationFactory',
@@ -319,7 +322,7 @@ return [
                 Common\Controller\Lva\Factories\Adapter\ApplicationTransportManagerAdapterFactory::class,
             'VariationTransportManagerAdapter' =>
                 Common\Controller\Lva\Factories\Adapter\VariationTransportManagerAdapterFactory::class,
-            'Script' => '\Common\Service\Script\ScriptFactory',
+            \Common\Service\Script\ScriptFactory::class => \Common\Service\Script\ScriptFactory::class,
             'Table' => '\Common\Service\Table\TableFactory',
             \Common\Service\Table\TableFactory::class => \Common\Service\Table\TableFactory::class,
             // Added in a true Laminas Framework V2 compatible factory for TableBuilder, eventually to replace Table above.
@@ -694,6 +697,9 @@ return [
             FormServiceAbstractFactory::class
         ],
         'aliases' => FormServiceAbstractFactory::FORM_SERVICE_CLASS_ALIASES,
+        'factories' => [
+            Declaration::class => DeclarationFactory::class,
+        ],
     ],
     'translator_plugins' => [
         'factories' => [
