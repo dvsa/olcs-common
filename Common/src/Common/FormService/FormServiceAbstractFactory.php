@@ -210,8 +210,7 @@ class FormServiceAbstractFactory implements AbstractFactoryInterface
         // Continuation forms
         'continuations-checklist' => LicenceChecklist::class,
         'continuations-start' => Start::class,
-        'continuations-payment' => Payment::class,
-        Declaration::class => Declaration::class
+        'continuations-payment' => Payment::class
     ];
 
 
@@ -503,11 +502,6 @@ class FormServiceAbstractFactory implements AbstractFactoryInterface
             case self::FORM_SERVICE_CLASS_ALIASES['continuations-payment']:
                 $guidanceHelper = $serviceLocator->get(GuidanceHelperService::class);
                 return new Payment($formHelper, $guidanceHelper);
-            case Declaration::class:
-                $translator = $serviceLocator->get(TranslationHelperService::class);
-                $scriptFactory = $serviceLocator->get(ScriptFactory::class);
-                $urlHelper = $serviceLocator->get(UrlHelperService::class);
-                return new Declaration($formHelper, $translator, $scriptFactory, $urlHelper);
             case ConditionsUndertakings::class:
                 return new ConditionsUndertakings($formHelper);
         }
