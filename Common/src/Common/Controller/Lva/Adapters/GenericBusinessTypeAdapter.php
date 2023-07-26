@@ -1,26 +1,18 @@
 <?php
 
-/**
- * Generic Business Type Adapter
- *
- * Shared internally across Licences, Variations and Applications
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
- */
 namespace Common\Controller\Lva\Adapters;
 
+use Interop\Container\ContainerInterface;
 use Laminas\Form\Form;
 use Common\Controller\Lva\Interfaces\BusinessTypeAdapterInterface;
 
-/**
- * Generic Business Type Adapter
- *
- * Shared internally across Licences, Variations and Applications
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
- */
 class GenericBusinessTypeAdapter extends AbstractAdapter implements BusinessTypeAdapterInterface
 {
+    public function __construct(ContainerInterface $container)
+    {
+        parent::__construct($container);
+    }
+
     public function alterFormForOrganisation(Form $form, $orgId)
     {
         // no-op

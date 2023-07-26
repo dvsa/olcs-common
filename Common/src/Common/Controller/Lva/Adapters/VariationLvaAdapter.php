@@ -1,21 +1,16 @@
 <?php
 
-/**
- * Variation Lva Adapter
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva\Adapters;
 
-/**
- * Variation Lva Adapter
- *
- * @NOTE This could potentially extends the ApplicationLvaAdapter
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
+use Interop\Container\ContainerInterface;
+
 class VariationLvaAdapter extends AbstractLvaAdapter
 {
+    public function __construct(ContainerInterface $container)
+    {
+        parent::__construct($container);
+    }
+
     public function getIdentifier()
     {
         return $this->getApplicationAdapter()->getIdentifier();

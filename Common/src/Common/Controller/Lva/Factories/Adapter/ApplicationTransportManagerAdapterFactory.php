@@ -1,15 +1,49 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Common\Controller\Lva\Factories\Adapter;
 
 use Common\Controller\Lva\Adapters\ApplicationTransportManagerAdapter;
+use Common\Service\Cqrs\Command\CommandService;
+use Common\Service\Cqrs\Query\CachingQueryService;
+use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
+use Interop\Container\ContainerInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
-/**
- * Factory Class to create instance of Application TMs
- *
- * @author Dmitry Golubev <dmitrij.golubev@valtech.co.uk>
- */
-class ApplicationTransportManagerAdapterFactory extends AbstractTransportManagerAdapterFactory
+class ApplicationTransportManagerAdapterFactory implements FactoryInterface
 {
-    protected $adapterClass = ApplicationTransportManagerAdapter::class;
+    /**
+     * @throws NotFoundExceptionInterface
+     * @throws ContainerExceptionInterface
+     *
+     * @deprecated Laminas 2 compatibility. To be removed after Laminas 3 upgrade.
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator): ApplicationTransportManagerAdapter
+    {
+        $container = method_exists($serviceLocator, 'getServiceLocator') ? $serviceLocator->getServiceLocator() : $serviceLocator;
+
+        return $this->__invoke($container, ApplicationTransportManagerAdapter::class);
+    }
+
+    /**
+     * @throws NotFoundExceptionInterface
+     * @throws ContainerExceptionInterface
+     */
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): ApplicationTransportManagerAdapter
+    {
+        $transferAnnotationBuilder = $container->get(AnnotationBuilder::class);
+        assert($transferAnnotationBuilder instanceof AnnotationBuilder);
+
+        $queryService = $container->get(CachingQueryService::class);
+        assert($queryService instanceof CachingQueryService);
+
+        $commandService = $container->get(CommandService::class);
+        assert($commandService instanceof CommandService);
+
+        return new ApplicationTransportManagerAdapter($transferAnnotationBuilder, $queryService, $commandService, $container);
+    }
 }

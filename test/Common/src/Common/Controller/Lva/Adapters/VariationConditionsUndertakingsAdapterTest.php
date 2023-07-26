@@ -1,34 +1,22 @@
 <?php
 
-/**
- * Variation Conditions Undertakings Adapter Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\Controller\Lva\Adapters;
 
+use Common\Controller\Lva\Adapters\VariationConditionsUndertakingsAdapter;
+use Common\Service\Script\ScriptFactory;
+use Interop\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use CommonTest\Bootstrap;
-use Common\Controller\Lva\Adapters\VariationConditionsUndertakingsAdapter;
 
-/**
- * Variation Conditions Undertakings Adapter Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class VariationConditionsUndertakingsAdapterTest extends MockeryTestCase
 {
     protected $sut;
-    protected $sm;
+    protected $container;
 
     public function setUp(): void
     {
-        $this->sm = Bootstrap::getServiceManager();
-
-        $this->sut = new VariationConditionsUndertakingsAdapter();
-
-        $this->sut->setServiceLocator($this->sm);
+        $this->container = m::mock(ContainerInterface::class);
+        $this->sut = new VariationConditionsUndertakingsAdapter($this->container);
     }
 
     public function testGetTableName()
@@ -39,7 +27,7 @@ class VariationConditionsUndertakingsAdapterTest extends MockeryTestCase
     public function testAttachMainScripts()
     {
         $mockScript = m::mock();
-        $this->sm->setService('Script', $mockScript);
+        $this->container->expects('get')->with(ScriptFactory::class)->andReturn($mockScript);
 
         $mockScript->shouldReceive('loadFile')
             ->with('lva-crud-delta');

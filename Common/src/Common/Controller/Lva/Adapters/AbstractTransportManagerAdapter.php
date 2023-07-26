@@ -5,20 +5,16 @@ namespace Common\Controller\Lva\Adapters;
 use Common\Controller\Lva\Interfaces\TransportManagerAdapterInterface;
 use Common\Service\Cqrs\Command\CommandService;
 use Common\Service\Cqrs\Query\CachingQueryService;
+use Common\Service\Table\TableFactory;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder as TransferAnnotationBuilder;
+use Interop\Container\ContainerInterface;
 
-/**
- * Abstract Transport Manager Adapter
- *
- * @author Mat Evans <mat.evans@valtech.co.uk>
- * @author Dmitry Golubev <dmitrij.golubev@valtech.co.uk>
- */
 abstract class AbstractTransportManagerAdapter extends AbstractControllerAwareAdapter implements
     TransportManagerAdapterInterface
 {
-    const SORT_LAST_FIRST_NAME = 1;
+    public const SORT_LAST_FIRST_NAME = 1;
     //  sort: Last, First Name, 'A' action (ASC)
-    const SORT_LAST_FIRST_NAME_NEW_AT_END = 2;
+    public const SORT_LAST_FIRST_NAME_NEW_AT_END = 2;
 
     /** @var TransferAnnotationBuilder */
     protected $transferAnnotationBuilder;
@@ -35,17 +31,20 @@ abstract class AbstractTransportManagerAdapter extends AbstractControllerAwareAd
      * @param TransferAnnotationBuilder $transferAnnotationBuilder annotation builder
      * @param CachingQueryService       $querySrv                  caching query service
      * @param CommandService            $commandSrv                command service
+     * @param ContainerInterface        $container                 container
      *
      * @return void
      */
     public function __construct(
         TransferAnnotationBuilder $transferAnnotationBuilder,
         CachingQueryService $querySrv,
-        CommandService $commandSrv
+        CommandService $commandSrv,
+        ContainerInterface $container
     ) {
         $this->transferAnnotationBuilder = $transferAnnotationBuilder;
         $this->querySrv = $querySrv;
         $this->commandSrv = $commandSrv;
+        parent::__construct($container);
     }
 
     /**
@@ -57,7 +56,7 @@ abstract class AbstractTransportManagerAdapter extends AbstractControllerAwareAd
      */
     public function getTable($template = 'lva-transport-manangers')
     {
-        return $this->getServiceLocator()->get('Table')->prepareTable($template);
+        return $this->container->get(TableFactory::class)->prepareTable($template);
     }
 
     /**

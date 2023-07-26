@@ -1,36 +1,24 @@
 <?php
 
-/**
- * Application Lva Adapter Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\Controller\Lva\Adapters;
 
+use Interop\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Controller\Lva\Adapters\ApplicationLvaAdapter;
 
-/**
- * Application Lva Adapter Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class ApplicationLvaAdapterTest extends MockeryTestCase
 {
     protected $sut;
-    protected $sm;
+    protected $container;
     protected $controller;
 
     public function setUp(): void
     {
-        $this->sm = m::mock('\Laminas\ServiceManager\ServiceManager')->makePartial();
-        $this->sm->setAllowOverride(true);
 
+        $this->container = m::mock(ContainerInterface::class);
         $this->controller = m::mock('\Laminas\Mvc\Controller\AbstractController');
-
-        $this->sut = new ApplicationLvaAdapter();
-        $this->sut->setServiceLocator($this->sm);
+        $this->sut = new ApplicationLvaAdapter($this->container);
         $this->sut->setController($this->controller);
     }
 

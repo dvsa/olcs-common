@@ -2,7 +2,11 @@
 
 namespace Common\Controller\Lva\Adapters;
 
+use Common\Service\Cqrs\Command\CommandService;
+use Common\Service\Cqrs\Query\CachingQueryService;
 use Dvsa\Olcs\Transfer\Command;
+use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder as TransferAnnotationBuilder;
+use Interop\Container\ContainerInterface;
 
 /**
  * Variation Transport Manager Adapter
@@ -12,6 +16,11 @@ use Dvsa\Olcs\Transfer\Command;
  */
 class VariationTransportManagerAdapter extends AbstractTransportManagerAdapter
 {
+    public function __construct(TransferAnnotationBuilder $transferAnnotationBuilder, CachingQueryService $querySrv, CommandService $commandSrv, ContainerInterface $container)
+    {
+        parent::__construct($transferAnnotationBuilder, $querySrv, $commandSrv, $container);
+    }
+
     /**
      * Load data into the table
      */

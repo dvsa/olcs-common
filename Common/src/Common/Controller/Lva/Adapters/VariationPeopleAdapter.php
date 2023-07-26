@@ -1,19 +1,16 @@
 <?php
 
-/**
- * Common (aka Internal) Application People Adapter
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
- */
 namespace Common\Controller\Lva\Adapters;
 
-/**
- * Common (aka Internal) Variation People Adapter
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
- */
+use Interop\Container\ContainerInterface;
+
 class VariationPeopleAdapter extends AbstractPeopleAdapter
 {
+    public function __construct(ContainerInterface $container)
+    {
+        parent::__construct($container);
+    }
+
     protected function getTableConfig()
     {
         if (!$this->useDeltas()) {

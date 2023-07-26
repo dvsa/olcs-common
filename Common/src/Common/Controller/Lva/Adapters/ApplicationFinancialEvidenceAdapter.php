@@ -2,9 +2,12 @@
 
 namespace Common\Controller\Lva\Adapters;
 
+use Common\Service\Cqrs\Query\CachingQueryService;
 use Common\Service\Data\CategoryDataService as Category;
 use Dvsa\Olcs\Transfer\Query\Application\FinancialEvidence;
 use Common\RefData;
+use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
+use Interop\Container\ContainerInterface;
 
 /**
  * Application Financial Evidence Adapter
@@ -13,6 +16,11 @@ use Common\RefData;
  */
 class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapter
 {
+    public function __construct(ContainerInterface $container)
+    {
+        parent::__construct($container);
+    }
+
     protected $applicationData = null; // cache
 
     /**
@@ -61,10 +69,10 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
     public function getData($applicationId, $noCache = false)
     {
         if (is_null($this->applicationData) || $noCache) {
-            $query = $this->getServiceLocator()->get('TransferAnnotationBuilder')
+            $query = $this->container->get(AnnotationBuilder::class)
                 ->createQuery(FinancialEvidence::create(['id' => $applicationId]));
 
-            $response = $this->getServiceLocator()->get('QueryService')->send($query);
+            $response = $this->container->get(CachingQueryService::class)->send($query);
 
             $this->applicationData = $response->getResult();
         }

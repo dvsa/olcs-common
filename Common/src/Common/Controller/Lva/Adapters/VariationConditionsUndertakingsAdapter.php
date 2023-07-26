@@ -1,36 +1,33 @@
 <?php
 
-/**
- * Variation Conditions Undertakings Adapter
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva\Adapters;
 
+use Common\Service\Script\ScriptFactory;
 use Common\Service\Table\TableBuilder;
+use Interop\Container\ContainerInterface;
 
-/**
- * Variation Conditions Undertakings Adapter
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class VariationConditionsUndertakingsAdapter extends AbstractConditionsUndertakingsAdapter
 {
     protected $tableName = 'lva-variation-conditions-undertakings';
 
-    const ACTION_ADDED = 'A'; // Record added to the application
-    const ACTION_EXISTING = 'E'; // Unchanged record against the licence
-    const ACTION_CURRENT = 'C'; // Current version of record updated on the application
-    const ACTION_UPDATED = 'U'; // Record updated on the application
-    const ACTION_DELETED = 'D'; // Record deleted on the application
-    const ACTION_REMOVED = 'R'; // The corresponding licence record, to the delta delete record
+    public const ACTION_ADDED = 'A'; // Record added to the application
+    public const ACTION_EXISTING = 'E'; // Unchanged record against the licence
+    public const ACTION_CURRENT = 'C'; // Current version of record updated on the application
+    public const ACTION_UPDATED = 'U'; // Record updated on the application
+    public const ACTION_DELETED = 'D'; // Record deleted on the application
+    public const ACTION_REMOVED = 'R'; // The corresponding licence record, to the delta delete record
+
+    public function __construct(ContainerInterface $container)
+    {
+        parent::__construct($container);
+    }
 
     /**
      * Attach the relevant scripts to the main page
      */
     public function attachMainScripts()
     {
-        $this->getServiceLocator()->get('Script')->loadFile('lva-crud-delta');
+        $this->container->get(ScriptFactory::class)->loadFile('lva-crud-delta');
     }
 
     /**

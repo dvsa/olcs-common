@@ -1,26 +1,18 @@
 <?php
 
-/**
- * Variation Financial Evidence Adapter Test
- *
- * @author Dan Eggleston <dan@stolenegg.com>
- */
 namespace OlcsTest\Controller\Lva\Adapters;
 
+use Interop\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Controller\Lva\Adapters\VariationFinancialEvidenceAdapter;
 
-/**
- * Variation Financial Evidence Adapter Test
- *
- * @author Dan Eggleston <dan@stolenegg.com>
- */
 class VariationFinancialEvidenceAdapterTest extends MockeryTestCase
 {
     public function testAlterFormForLva()
     {
-        $sut = new VariationFinancialEvidenceAdapter();
+        $container = m::mock(ContainerInterface::class);
+        $sut = new VariationFinancialEvidenceAdapter($container);
 
         $mockElement = m::mock()
             ->shouldReceive('setValue')

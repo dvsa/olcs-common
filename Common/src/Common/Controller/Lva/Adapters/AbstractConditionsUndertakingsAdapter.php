@@ -1,34 +1,31 @@
 <?php
 
-/**
- * Abstract Conditions Undertakings Adapter
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva\Adapters;
 
 use Common\RefData;
+use Common\Service\Script\ScriptFactory;
+use Interop\Container\ContainerInterface;
 use Laminas\Form\Form;
 use Common\Controller\Lva\Interfaces\ConditionsUndertakingsAdapterInterface;
 use Common\Service\Table\Formatter\Address;
 use Common\Service\Table\TableBuilder;
 
-/**
- * Abstract Conditions Undertakings Adapter
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter implements
     ConditionsUndertakingsAdapterInterface
 {
     protected $tableName = 'lva-conditions-undertakings';
+
+    public function __construct(ContainerInterface $container)
+    {
+        parent::__construct($container);
+    }
 
     /**
      * Attach the relevant scripts to the main page
      */
     public function attachMainScripts()
     {
-        $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
+        $this->container->get(ScriptFactory::class)->loadFile('lva-crud');
     }
 
     /**

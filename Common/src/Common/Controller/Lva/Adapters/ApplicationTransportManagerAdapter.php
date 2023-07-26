@@ -3,6 +3,10 @@
 namespace Common\Controller\Lva\Adapters;
 
 use Common\RefData;
+use Common\Service\Cqrs\Command\CommandService;
+use Common\Service\Cqrs\Query\CachingQueryService;
+use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder as TransferAnnotationBuilder;
+use Interop\Container\ContainerInterface;
 
 /**
  * Application Transport Manager Adapter
@@ -13,6 +17,11 @@ use Common\RefData;
 class ApplicationTransportManagerAdapter extends AbstractTransportManagerAdapter
 {
     protected $applicationData;
+
+    public function __construct(TransferAnnotationBuilder $transferAnnotationBuilder, CachingQueryService $querySrv, CommandService $commandSrv, ContainerInterface $container)
+    {
+        parent::__construct($transferAnnotationBuilder, $querySrv, $commandSrv, $container);
+    }
 
     /**
      * Load data into the table

@@ -171,9 +171,11 @@ return [
             'TableBuilder' => 'Common\Service\Table\TableBuilderFactory',
             'NavigationFactory' => 'Common\Service\NavigationFactory',
             'QueryService' => \Common\Service\Cqrs\Query\CachingQueryService::class,
+            'CommandService' => \Common\Service\Cqrs\Command\CommandService::class,
             'CommandSender' => CommandSender::class,
             'Review\ConditionsUndertakings' => Common\Service\Review\ConditionsUndertakingsReviewService::class,
             'Data\Address' => DataService\AddressDataService::class,
+            'Script' => \Common\Service\Script\ScriptFactory::class,
 
             'Helper\FlashMessenger' => HelperService\FlashMessengerHelperService::class,
             'Helper\Form' => HelperService\FormHelperService::class,
@@ -183,6 +185,24 @@ return [
             'Helper\Url' => HelperService\UrlHelperService::class,
             'Lva\People' => Common\Service\Lva\PeopleLvaService::class,
             'Lva\Variation' => Common\Service\Lva\VariationLvaService::class,
+
+            // Controller LVA Adapters
+            'ApplicationConditionsUndertakingsAdapter' => \Common\Controller\Lva\Adapters\ApplicationConditionsUndertakingsAdapter::class,
+            'ApplicationFinancialEvidenceAdapter' => Common\Controller\Lva\Adapters\ApplicationFinancialEvidenceAdapter::class,
+            'ApplicationLvaAdapter' => \Common\Controller\Lva\Adapters\ApplicationLvaAdapter::class,
+            'ApplicationPeopleAdapter' => Common\Controller\Lva\Adapters\ApplicationPeopleAdapter::class,
+            'ApplicationTransportManagerAdapter' => Common\Controller\Lva\Adapters\ApplicationTransportManagerAdapter::class,
+            'GenericBusinessTypeAdapter' => \Common\Controller\Lva\Adapters\GenericBusinessTypeAdapter::class,
+            'LicenceConditionsUndertakingsAdapter' => Common\Controller\Lva\Adapters\LicenceConditionsUndertakingsAdapter::class,
+            'LicenceLvaAdapter' => \Common\Controller\Lva\Adapters\LicenceLvaAdapter::class,
+            'LicencePeopleAdapter' => Common\Controller\Lva\Adapters\LicencePeopleAdapter::class,
+            'LicenceTransportManagerAdapter' => Common\Controller\Lva\Adapters\LicenceTransportManagerAdapter::class,
+            'VariationConditionsUndertakingsAdapter' => Common\Controller\Lva\Adapters\VariationConditionsUndertakingsAdapter::class,
+            'VariationFinancialEvidenceAdapter' => Common\Controller\Lva\Adapters\VariationFinancialEvidenceAdapter::class,
+            'VariationLvaAdapter' => \Common\Controller\Lva\Adapters\VariationLvaAdapter::class,
+            'VariationPeopleAdapter' => Common\Controller\Lva\Adapters\VariationPeopleAdapter::class,
+            'VariationTransportManagerAdapter' => Common\Controller\Lva\Adapters\VariationTransportManagerAdapter::class,
+
             'FormServiceManager' => Common\FormService\FormServiceManager::class,
             'Script' => \Common\Service\Script\ScriptFactory::class,
         ],
@@ -190,26 +210,6 @@ return [
             'Common\Service\NavigationFactory' => 'Common\Service\NavigationFactory',
             'SectionConfig' => 'Common\Service\Data\SectionConfig',
             'CantIncreaseValidator' => 'Common\Form\Elements\Validators\CantIncreaseValidator',
-            'GenericBusinessTypeAdapter'
-                => 'Common\Controller\Lva\Adapters\GenericBusinessTypeAdapter',
-            'ApplicationConditionsUndertakingsAdapter'
-                => 'Common\Controller\Lva\Adapters\ApplicationConditionsUndertakingsAdapter',
-            'VariationConditionsUndertakingsAdapter'
-                => 'Common\Controller\Lva\Adapters\VariationConditionsUndertakingsAdapter',
-            'LicenceConditionsUndertakingsAdapter'
-                => 'Common\Controller\Lva\Adapters\LicenceConditionsUndertakingsAdapter',
-            'ApplicationVehicleGoodsAdapter'
-                => 'Common\Controller\Lva\Adapters\ApplicationVehicleGoodsAdapter',
-            'VariationFinancialEvidenceAdapter'
-                => 'Common\Controller\Lva\Adapters\VariationFinancialEvidenceAdapter',
-            'ApplicationFinancialEvidenceAdapter'
-                => 'Common\Controller\Lva\Adapters\ApplicationFinancialEvidenceAdapter',
-            'ApplicationPeopleAdapter'
-                => 'Common\Controller\Lva\Adapters\ApplicationPeopleAdapter',
-            'LicencePeopleAdapter'
-                => 'Common\Controller\Lva\Adapters\LicencePeopleAdapter',
-            'VariationPeopleAdapter'
-                => 'Common\Controller\Lva\Adapters\VariationPeopleAdapter',
             'Common\Filesystem\Filesystem' => 'Common\Filesystem\Filesystem',
             'VehicleList' => '\Common\Service\VehicleList\VehicleList',
             'postcode' => 'Common\Service\Postcode\Postcode',
@@ -311,18 +311,9 @@ return [
             \Common\Service\Cqrs\Query\CachingQueryService::class
                 => \Common\Service\Cqrs\Query\CachingQueryServiceFactory::class,
             \Common\Service\Cqrs\Query\QueryService::class => \Common\Service\Cqrs\Query\QueryServiceFactory::class,
-            'CommandService' => \Common\Service\Cqrs\Command\CommandServiceFactory::class,
-            FormServiceManager::class => Common\FormService\FormServiceManagerFactory::class,
-            'ApplicationLvaAdapter' => 'Common\Controller\Lva\Factories\ApplicationLvaAdapterFactory',
-            'LicenceLvaAdapter' => 'Common\Controller\Lva\Factories\LicenceLvaAdapterFactory',
-            'VariationLvaAdapter' => 'Common\Controller\Lva\Factories\VariationLvaAdapterFactory',
-            'LicenceTransportManagerAdapter' =>
-                Common\Controller\Lva\Factories\Adapter\LicenceTransportManagerAdapterFactory::class,
-            'ApplicationTransportManagerAdapter' =>
-                Common\Controller\Lva\Factories\Adapter\ApplicationTransportManagerAdapterFactory::class,
-            'VariationTransportManagerAdapter' =>
-                Common\Controller\Lva\Factories\Adapter\VariationTransportManagerAdapterFactory::class,
+            \Common\Service\Cqrs\Command\CommandService::class => \Common\Service\Cqrs\Command\CommandServiceFactory::class,
             \Common\Service\Script\ScriptFactory::class => \Common\Service\Script\ScriptFactory::class,
+            FormServiceManager::class => Common\FormService\FormServiceManagerFactory::class,
             'Table' => '\Common\Service\Table\TableFactory',
             \Common\Service\Table\TableFactory::class => \Common\Service\Table\TableFactory::class,
             // Added in a true Laminas Framework V2 compatible factory for TableBuilder, eventually to replace Table above.
@@ -435,7 +426,24 @@ return [
             IdentityProviderInterface::class => \Common\Rbac\IdentityProviderFactory::class,
             \Common\Auth\Service\RefreshTokenService::class => \Common\Auth\Service\RefreshTokenServiceFactory::class,
             \Common\Data\Mapper\Lva\GoodsVehiclesVehicle::class => \Common\Data\Mapper\Lva\GoodsVehiclesVehicleFactory::class,
-        ]
+
+            // Controller LVA Adapters
+            \Common\Controller\Lva\Adapters\ApplicationConditionsUndertakingsAdapter::class => \Common\Controller\Lva\Factories\Adapter\ApplicationConditionsUndertakingsAdapterFactory::class,
+            \Common\Controller\Lva\Adapters\ApplicationFinancialEvidenceAdapter::class => \Common\Controller\Lva\Factories\Adapter\ApplicationFinancialEvidenceAdapterFactory::class,
+            \Common\Controller\Lva\Adapters\ApplicationLvaAdapter::class => \Common\Controller\Lva\Factories\Adapter\ApplicationLvaAdapterFactory::class,
+            \Common\Controller\Lva\Adapters\ApplicationPeopleAdapter::class => \Common\Controller\Lva\Factories\Adapter\ApplicationPeopleAdapterFactory::class,
+            \Common\Controller\Lva\Adapters\ApplicationTransportManagerAdapter::class => \Common\Controller\Lva\Factories\Adapter\ApplicationTransportManagerAdapterFactory::class,
+            \Common\Controller\Lva\Adapters\GenericBusinessTypeAdapter::class => \Common\Controller\Lva\Factories\Adapter\GenericBusinessTypeAdapterFactory::class,
+            \Common\Controller\Lva\Adapters\LicenceConditionsUndertakingsAdapter::class => \Common\Controller\Lva\Factories\Adapter\LicenceConditionsUndertakingsAdapterFactory::class,
+            \Common\Controller\Lva\Adapters\LicenceLvaAdapter::class => \Common\Controller\Lva\Factories\Adapter\LicenceLvaAdapterFactory::class,
+            \Common\Controller\Lva\Adapters\LicencePeopleAdapter::class => \Common\Controller\Lva\Factories\Adapter\LicencePeopleAdapterFactory::class,
+            \Common\Controller\Lva\Adapters\LicenceTransportManagerAdapter::class => \Common\Controller\Lva\Factories\Adapter\LicenceTransportManagerAdapterFactory::class,
+            \Common\Controller\Lva\Adapters\VariationConditionsUndertakingsAdapter::class => \Common\Controller\Lva\Factories\Adapter\VariationConditionsUndertakingsAdapterFactory::class,
+            \Common\Controller\Lva\Adapters\VariationFinancialEvidenceAdapter::class => \Common\Controller\Lva\Factories\Adapter\VariationFinancialEvidenceAdapterFactory::class,
+            \Common\Controller\Lva\Adapters\VariationLvaAdapter::class => \Common\Controller\Lva\Factories\Adapter\VariationLvaAdapterFactory::class,
+            \Common\Controller\Lva\Adapters\VariationPeopleAdapter::class => \Common\Controller\Lva\Factories\Adapter\VariationPeopleAdapterFactory::class,
+            \Common\Controller\Lva\Adapters\VariationTransportManagerAdapter::class => \Common\Controller\Lva\Factories\Adapter\VariationTransportManagerAdapterFactory::class,
+        ],
     ],
     'file_uploader' => [
         'default' => 'ContentStore',

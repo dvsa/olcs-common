@@ -5,19 +5,16 @@ namespace CommonTest\Controller\Lva\Adapters;
 use Common\Controller\Lva\AbstractController;
 use Common\Controller\Lva\Adapters\AbstractPeopleAdapter;
 use Common\Service\Table\TableBuilder;
+use Interop\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Form\Form;
 use Laminas\Mvc\Controller\Plugin\FlashMessenger;
 
-/**
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
- * @covers \Common\Controller\Lva\Adapters\AbstractPeopleAdapter
- */
 class AbstractPeopleAdapterTest extends MockeryTestCase
 {
-    const ID = 9001;
-    const LIC_ID = 8001;
+    protected const ID = 9001;
+    protected const LIC_ID = 8001;
 
     /** @var  m\MockInterface | AbstractPeopleAdapter */
     private $sut;
@@ -25,12 +22,15 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
     /** @var  m\MockInterface | AbstractPeopleAdapter */
     private $mockResp;
 
+    private $container;
+
     public function setUp(): void
     {
+        $this->container = m::mock(ContainerInterface::class);
         $this->mockResp = m::mock(\Laminas\Http\Response::class);
         $this->mockResp->shouldReceive('isOk')->andReturn(true);
 
-        $this->sut = m::mock(AbstractPeopleAdapter::class)
+        $this->sut = m::mock(AbstractPeopleAdapter::class, [$this->container])
             ->makePartial()
             ->shouldAllowMockingProtectedMethods();
 
@@ -210,8 +210,8 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
 
         $mockTableBuilder = m::mock(TableBuilder::class);
 
-        $this->sut
-            ->shouldReceive('getServiceLocator->get')
+        $this->container
+            ->shouldReceive('get')
             ->with('Table')
             ->andReturn($mockTableBuilder);
 
