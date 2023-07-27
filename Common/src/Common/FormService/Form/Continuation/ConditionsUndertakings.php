@@ -4,7 +4,6 @@ namespace Common\FormService\Form\Continuation;
 
 use Common\Form\Form;
 use Common\Form\Model\Form\Continuation\ConditionsUndertakings as ConditionsUndertakingsForm;
-use Common\FormService\FormServiceInterface;
 use Common\Service\Helper\FormHelperService;
 
 /**
