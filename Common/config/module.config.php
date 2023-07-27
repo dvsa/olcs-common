@@ -14,6 +14,8 @@ use Common\Form\Element\DynamicSelect;
 use Common\Form\Element\DynamicSelectFactory;
 use Common\Form\Elements\Custom\OlcsCheckbox;
 use Common\Form\View\Helper\FormInputSearch;
+use Common\FormService\Form\Continuation\ConditionsUndertakings;
+use Common\FormService\Form\Continuation\ConditionsUndertakingsFactory;
 use Common\FormService\Form\Continuation\Declaration;
 use Common\FormService\Form\Continuation\DeclarationFactory;
 use Common\FormService\Form\Lva\Application;
@@ -707,6 +709,7 @@ return [
         'aliases' => FormServiceAbstractFactory::FORM_SERVICE_CLASS_ALIASES,
         'factories' => [
             Declaration::class => DeclarationFactory::class,
+            ConditionsUndertakings::class => ConditionsUndertakingsFactory::class
         ],
     ],
     'translator_plugins' => [
