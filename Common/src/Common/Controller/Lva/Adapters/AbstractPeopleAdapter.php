@@ -12,6 +12,7 @@ use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
 use Interop\Container\ContainerInterface;
 use Laminas\Form\Form;
 use Laminas\Mvc\Controller\Plugin\FlashMessenger;
+use Dvsa\Olcs\Transfer\Command\Licence\DeletePeopleViaVariation;
 
 abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter implements PeopleAdapterInterface
 {
@@ -484,7 +485,14 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
      */
     public function delete($ids)
     {
-        $response = $this->handleCommand($this->getDeleteCommand(['personIds' => $ids]));
+        $params = [
+            'id' => $this->getLicence()['id'],
+            'personIds' => $ids
+        ];
+        $deleteCommand = DeletePeopleViaVariation::create($params);
+
+        $response = $this->handleCommand($deleteCommand);
+
         /* @var $response \Common\Service\Cqrs\Response */
         if (!$response->isOk()) {
             throw new \RuntimeException('Error deleteing Org Person : ' . print_r($response->getResult(), true));
