@@ -35,10 +35,9 @@ trait GenericUpload
         $loadCallback,
         $countSelector = null
     ) {
-        /** @var \Common\Service\Helper\FileUploadHelperService $uploadHelper */
-        $uploadHelper = $this->getServiceLocator()->get('Helper\FileUpload');
 
-        $uploadHelper->setForm($form)
+
+        $this->uploadHelper->setForm($form)
             ->setSelector($selector)
             ->setUploadCallback($uploadCallback)
             ->setDeleteCallback($deleteCallback)
@@ -46,10 +45,10 @@ trait GenericUpload
             ->setRequest($this->getRequest());
 
         if (!is_null($countSelector)) {
-            $uploadHelper->setCountSelector($countSelector);
+            $this->uploadHelper->setCountSelector($countSelector);
         }
 
-        return $uploadHelper->process();
+        return $this->uploadHelper->process();
     }
 
     /**

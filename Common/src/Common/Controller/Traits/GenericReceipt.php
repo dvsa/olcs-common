@@ -58,15 +58,12 @@ trait GenericReceipt
             throw new ResourceNotFoundException('Payment not found');
         }
 
-        /** @var \Laminas\ServiceManager\ServiceLocatorInterface $sl */
-        $sl = $this->getServiceLocator();
 
         /** @var \Common\Service\Table\TableBuilder $table */
-        $table = $sl->get('Table')
-            ->buildTable('pay-fees', $fees, [], false);
+        $table = $this->tableFactory->buildTable('pay-fees', $fees, [], false);
 
         // override table title
-        $table->setVariable('title', $sl->get('Helper\Translation')->translate('pay-fees.success.table.title'));
+        $table->setVariable('title', $this->translationHelper->translate('pay-fees.success.table.title'));
 
         // get operator name from the first fee
         $operatorName = $fees[0]['licence']['organisation']['name'];

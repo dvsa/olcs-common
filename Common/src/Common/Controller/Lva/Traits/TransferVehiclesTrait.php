@@ -51,7 +51,7 @@ trait TransferVehiclesTrait
                 $response = $this->handleCommand(TransferVehicles::create($dtoData));
 
                 /** @var \Common\Service\Helper\FlashMessengerHelperService $fm */
-                $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
+                $fm = $this->flashMessengerHelper;
 
                 if ($response->isOk()) {
                     $fm->addSuccessMessage('licence.vehicles_transfer.form.vehicles_transfered');
@@ -71,7 +71,7 @@ trait TransferVehiclesTrait
                     $messages = $response->getResult()['messages'];
 
                     /** @var \Common\Service\Helper\TranslationHelperService $th */
-                    $th = $this->getServiceLocator()->get('Helper\Translation');
+                    $th = $this->translationHelper;
                     $licNo = $options[$formData['data']['licence']];
 
                     $knownError = false;
@@ -145,7 +145,7 @@ trait TransferVehiclesTrait
      */
     protected function getVehicleTransferForm($options)
     {
-        $form = $this->getServiceLocator()->get('Helper\Form')
+        $form = $this->formHelper
             ->createFormWithRequest('Lva\VehiclesTransfer', $this->getRequest());
 
         $form->get('data')->get('licence')->setValueOptions($options);

@@ -2,8 +2,12 @@
 
 namespace Common\Controller\Lva;
 
+use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Script\ScriptFactory;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\View\Model\ViewModel;
 use Dvsa\Olcs\Transfer\Query\Application\Review;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Review Controller
@@ -13,6 +17,17 @@ use Dvsa\Olcs\Transfer\Query\Application\Review;
 class ReviewController extends AbstractController implements Interfaces\AdapterAwareInterface
 {
     use Traits\AdapterAwareTrait;
+
+    /**
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     */
+    public function __construct(
+        NiTextTranslation $niTextTranslationUtil,
+        AuthorizationService $authService
+    ) {
+        parent::__construct($niTextTranslationUtil, $authService);
+    }
 
     /**
      * Review application action

@@ -5,6 +5,13 @@ namespace Common\Controller\Lva;
 use Common\Form\Form;
 use Common\FormService\FormServiceManager;
 use Common\Service\Cqrs\Response as CqrsResponse;
+use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Helper\TranslationHelperService;
+use Common\Service\Script\ScriptFactory;
+use Common\Service\Table\TableFactory;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Shared logic between Taxi Phv controllers
@@ -23,7 +30,44 @@ abstract class AbstractTaxiPhvController extends AbstractController
     protected $tableData;
 
     protected $section = 'taxi_phv';
-    protected $baseRoute = 'lva-%s/taxi_phv';
+    protected string $baseRoute = 'lva-%s/taxi_phv';
+
+    protected FormHelperService $formHelper;
+    protected FlashMessengerHelperService $flashMessengerHelper;
+    protected FormServiceManager $formServiceManager;
+    protected ScriptFactory $scriptFactory;
+    protected TableFactory $tableFactory;
+    protected TranslationHelperService $translationHelper;
+
+    /**
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     * @param FormHelperService $formHelper
+     * @param FormServiceManager $formServiceManager
+     * @param FlashMessengerHelperService $flashMessengerHelper
+     * @param TableFactory $tableFactory
+     * @param ScriptFactory $scriptFactory
+     * @param TranslationHelperService $translationHelper
+     */
+    public function __construct(
+        NiTextTranslation $niTextTranslationUtil,
+        AuthorizationService $authService,
+        FormHelperService $formHelper,
+        FormServiceManager $formServiceManager,
+        FlashMessengerHelperService $flashMessengerHelper,
+        TableFactory $tableFactory,
+        ScriptFactory $scriptFactory,
+        TranslationHelperService $translationHelper
+    ) {
+        $this->formHelper = $formHelper;
+        $this->formServiceManager = $formServiceManager;
+        $this->scriptFactory = $scriptFactory;
+        $this->flashMessengerHelper = $flashMessengerHelper;
+        $this->tableFactory = $tableFactory;
+        $this->translationHelper = $translationHelper;
+
+        parent::__construct($niTextTranslationUtil, $authService);
+    }
 
     /**
      * Index action
@@ -59,7 +103,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
                     return $this->handleCrudAction($crudAction);
                 }
 
-                $this->getServiceLocator()->get('Helper\Form')->disableEmptyValidation($form);
+                $this->formHelper->disableEmptyValidation($form);
             }
 
             if ($form->isValid()) {
@@ -79,7 +123,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
             }
         }
 
-        $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
+        $this->scriptFactory->loadFile('lva-crud');
 
         return $this->render('taxi_phv', $form);
     }
@@ -105,7 +149,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
                 ? $dataTrafficArea['trafficArea'] : '';
 
             if ($action == 'add' && empty($trafficArea) && $this->getPrivateHireLicencesCount() > 0) {
-                $this->getServiceLocator()->get('Helper\FlashMessenger')
+                $this->flashMessengerHelper
                     ->addErrorMessage('Please select a traffic area');
 
                 return $this->reload();
@@ -138,18 +182,17 @@ abstract class AbstractTaxiPhvController extends AbstractController
         }
 
         if ($response->isServerError()) {
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addUnknownError();
+            $this->flashMessengerHelper->addUnknownError();
         }
 
         $messages = $response->getResult()['messages'];
 
         if (!empty($messages)) {
-            $translator = $this->getServiceLocator()->get('Helper\Translation');
-            $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
+            $fm = $this->flashMessengerHelper;
 
             foreach ($messages as $key => $message) {
                 $fm->addErrorMessage(
-                    $translator->translateReplace($key . '_' . strtoupper($this->location), $message)
+                    $this->translationHelper->translateReplace($key . '_' . strtoupper($this->location), $message)
                 );
             }
         }
@@ -164,10 +207,9 @@ abstract class AbstractTaxiPhvController extends AbstractController
      */
     protected function getForm()
     {
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $formHelper = $this->formHelper;
 
-        $form = $this->getServiceLocator()
-            ->get(FormServiceManager::class)
+        $form = $this->formServiceManager
             ->get('lva-' . $this->lva . '-' . $this->section)
             ->getForm();
 
@@ -193,7 +235,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
      */
     protected function getTable()
     {
-        return $this->getServiceLocator()->get('Table')->prepareTable('lva-taxi-phv', $this->getTableData());
+        return $this->tableFactory->prepareTable('lva-taxi-phv', $this->getTableData());
     }
 
     /**
@@ -241,7 +283,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
 
         $trafficAreaId = $trafficArea ? $trafficArea['id'] : '';
 
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $formHelper = $this->formHelper;
 
         // remove enforcement area as not required
         $formHelper->remove($form, 'dataTrafficArea->enforcementArea');
@@ -317,7 +359,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
             $form->get('form-actions')->remove('addAnother');
         }
 
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $formHelper = $this->formHelper;
         $hasProcessed = $formHelper->processAddressLookupForm($form, $this->getRequest());
         // (don't validate or proceed if we're just processing the postcode lookup)
 
@@ -329,7 +371,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
             } elseif ($result === true) {
                 return $this->handlePostSave();
             } else {
-                $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentUnknownError();
+                $this->flashMessengerHelper->addCurrentUnknownError();
             }
         }
 
@@ -345,7 +387,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
      */
     protected function getLicenceForm($mode)
     {
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $formHelper = $this->formHelper;
 
         $form = $formHelper->createFormWithRequest('Lva\TaxiPhvLicence', $this->getRequest());
         return $this->alterActionForm($form, $mode);
@@ -495,11 +537,9 @@ abstract class AbstractTaxiPhvController extends AbstractController
      *
      * @param array $message message array
      *
-     * @return array
      */
     private function getTrafficAreaValidationMessage(array $message)
     {
-        $translator = $this->getServiceLocator()->get('Helper\Translation');
         if (key($message) === 'PHL_INVALID_TA') {
             return $message;
         }
@@ -507,7 +547,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
         if (!is_array($result)) {
             $result = [$result];
         }
-        return $translator->translateReplace(key($message) . '_' . strtoupper($this->location), $result);
+        return $this->translationHelper->translateReplace(key($message) . '_' . strtoupper($this->location), $result);
     }
 
     /**

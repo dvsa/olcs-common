@@ -70,7 +70,7 @@ trait CrudActionTrait
 
         if (!in_array($action, $rowsNotRequired, true)) {
             if (!isset($data['id'])) {
-                $this->getServiceLocator()->get('Helper\FlashMessenger')->addWarningMessage('please-select-row');
+                $this->flashMessengerHelper->addWarningMessage('please-select-row');
                 return $this->redirect()->refresh();
             }
 

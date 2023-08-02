@@ -8,11 +8,13 @@ use Common\RefData;
 use Common\Util;
 use Dvsa\Olcs\Transfer\Query\Application\Application;
 use Dvsa\Olcs\Transfer\Query\Licence\Licence;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\Form\Form;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\Exception;
 use Laminas\Mvc\MvcEvent;
 use Common\Service\Table\TableBuilder;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Lva Abstract Controller
@@ -34,24 +36,24 @@ use Common\Service\Table\TableBuilder;
  */
 abstract class AbstractController extends AbstractActionController
 {
-    const LVA_LIC = 'licence';
-    const LVA_APP = 'application';
-    const LVA_VAR = 'variation';
+    use Util\FlashMessengerTrait;
+    use GenericUpload;
 
-    const LOC_INTERNAL = 'internal';
-    const LOC_EXTERNAL = 'external';
+    public const LVA_LIC = 'licence';
+    public const LVA_APP = 'application';
+    public const LVA_VAR = 'variation';
 
-    const FLASH_MESSENGER_CREATED_PERSON_NAMESPACE = 'createPerson';
+    public const LOC_INTERNAL = 'internal';
+    public const LOC_EXTERNAL = 'external';
 
-    use Util\FlashMessengerTrait,
-        GenericUpload;
+    public const FLASH_MESSENGER_CREATED_PERSON_NAMESPACE = 'createPerson';
 
     /**
      * Internal/External
      *
      * @var string
      */
-    protected $location;
+    protected string $location;
 
     /**
      * Licence/Variation/Application
@@ -61,14 +63,14 @@ abstract class AbstractController extends AbstractActionController
     protected $lva;
 
     /** @var  string */
-    protected $baseRoute;
+    protected string $baseRoute;
 
     /**
      * Current messages
      *
      * @var array
      */
-    protected $currentMessages = [
+    protected array $currentMessages = [
         'default' => [],
         'error' => [],
         'info' => [],
@@ -76,11 +78,24 @@ abstract class AbstractController extends AbstractActionController
         'success' => []
     ];
 
-    protected $defaultBundles = [
+    protected array $defaultBundles = [
         'licence' => Licence::class,
         'variation' => Application::class,
         'application' => Application::class
     ];
+
+    protected NiTextTranslation $niTextTranslationUtil;
+    protected AuthorizationService $authService;
+
+    /**
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     */
+    public function __construct(NiTextTranslation $niTextTranslationUtil, AuthorizationService $authService)
+    {
+        $this->niTextTranslationUtil = $niTextTranslationUtil;
+        $this->authService = $authService;
+    }
 
     /**
      * Execute the request
@@ -122,8 +137,7 @@ abstract class AbstractController extends AbstractActionController
     {
         if ($this->lva !== null && $this->getIdentifier() !== null) {
             $tolData = $this->getTypeOfLicenceData();
-            $niTranslation = $this->getServiceLocator()->get('Utils\NiTextTranslation');
-            $niTranslation->setLocaleForNiFlag($tolData['niFlag']);
+            $this->niTextTranslationUtil->setLocaleForNiFlag($tolData['niFlag']);
         }
     }
 
@@ -379,10 +393,9 @@ abstract class AbstractController extends AbstractActionController
      */
     protected function isInternalReadOnly()
     {
-        $authService = $this->getServiceLocator()->get(\ZfcRbac\Service\AuthorizationService::class);
         return (
-            $authService->isGranted(RefData::PERMISSION_INTERNAL_USER)
-            && !$authService->isGranted(RefData::PERMISSION_INTERNAL_EDIT)
+            $this->authService->isGranted(RefData::PERMISSION_INTERNAL_USER)
+            && !$this->authService->isGranted(RefData::PERMISSION_INTERNAL_EDIT)
         );
     }
 }

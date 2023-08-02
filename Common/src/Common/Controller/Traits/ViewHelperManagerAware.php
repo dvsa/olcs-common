@@ -16,6 +16,6 @@ trait ViewHelperManagerAware
      */
     public function getViewHelperManager()
     {
-        return $this->getServiceLocator()->get('viewHelperManager');
+        return $this->viewHelperManager;
     }
 }

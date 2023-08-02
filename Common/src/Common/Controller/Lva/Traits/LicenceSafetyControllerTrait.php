@@ -104,7 +104,7 @@ trait LicenceSafetyControllerTrait
      */
     protected function alterFormForLva(Form $form, $data = null)
     {
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $formHelper = $this->formHelper;
         $formHelper->remove($form, 'application->safetyConfirmation');
     }
 }

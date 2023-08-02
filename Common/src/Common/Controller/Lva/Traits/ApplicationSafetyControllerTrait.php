@@ -67,7 +67,7 @@ trait ApplicationSafetyControllerTrait
             $params = [
                 'id' => $this->getApplicationId()
             ];
-            $params['page'] = isset($query['page'])? $query['page'] : 1;
+            $params['page'] = isset($query['page']) ? $query['page'] : 1;
 
             $params['limit'] = isset($query['limit'])
                 ? $query['limit']

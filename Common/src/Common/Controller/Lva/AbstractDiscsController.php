@@ -4,10 +4,17 @@ namespace Common\Controller\Lva;
 
 use Common\FormService\FormServiceManager;
 use Common\RefData;
+use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Helper\GuidanceHelperService;
+use Common\Service\Script\ScriptFactory;
 use Common\Service\Table\TableBuilder;
+use Common\Service\Table\TableFactory;
 use Dvsa\Olcs\Transfer\Command\AbstractCommand;
 use Dvsa\Olcs\Transfer\Query\Licence\PsvDiscs;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\Form\Form;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Abstract Discs Controller
@@ -24,7 +31,7 @@ abstract class AbstractDiscsController extends AbstractController
      * @var string
      */
     protected $section = 'discs';
-    protected $baseRoute = 'lva-%s/discs';
+    protected string $baseRoute = 'lva-%s/discs';
 
     protected $formTableData;
 
@@ -52,6 +59,40 @@ abstract class AbstractDiscsController extends AbstractController
             'variation' => \Dvsa\Olcs\Transfer\Command\Variation\ReplacePsvDiscs::class
         ]
     ];
+
+    protected FormHelperService $formHelper;
+    protected FlashMessengerHelperService $flashMessengerHelper;
+    protected FormServiceManager $formServiceManager;
+    protected ScriptFactory $scriptFactory;
+    protected TableFactory $tableFactory;
+    protected GuidanceHelperService $guidanceHelper;
+
+    /**
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     * @param FormHelperService $formHelper
+     * @param FlashMessengerHelperService $flashMessengerHelper
+     * @param FormServiceManager $formServiceManager
+     * @param TableFactory $tableFactory
+     * @param GuidanceHelperService $guidanceHelper
+     */
+    public function __construct(
+        NiTextTranslation $niTextTranslationUtil,
+        AuthorizationService $authService,
+        FormHelperService $formHelper,
+        FlashMessengerHelperService $flashMessengerHelper,
+        FormServiceManager $formServiceManager,
+        TableFactory $tableFactory,
+        GuidanceHelperService $guidanceHelper
+    ) {
+        $this->formHelper = $formHelper;
+        $this->flashMessengerHelper = $flashMessengerHelper;
+        $this->formServiceManager = $formServiceManager;
+        $this->tableFactory = $tableFactory;
+        $this->guidanceHelper = $guidanceHelper;
+
+        parent::__construct($niTextTranslationUtil, $authService);
+    }
 
     /**
      * Process action Index
@@ -82,12 +123,12 @@ abstract class AbstractDiscsController extends AbstractController
         $form->setData($data);
 
         /** @var \Common\Service\Script\ScriptFactory $scriptSrv */
-        $scriptSrv = $this->getServiceLocator()->get('Script');
+        $scriptSrv = $this->scriptFactory;
         $scriptSrv->loadFiles(['forms/filter']);
         $scriptSrv->loadFiles(['lva-crud', 'more-actions']);
 
         if ((int)$this->spacesRemaining < 0) {
-            $this->getServiceLocator()->get('Helper\Guidance')->append('more-discs-than-authorisation');
+            $this->guidanceHelper->append('more-discs-than-authorisation');
         }
 
         $params = [
@@ -107,7 +148,7 @@ abstract class AbstractDiscsController extends AbstractController
         /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $formHelper = $this->formHelper;
 
         /** @var \Common\Form\Form $form */
         $form = $formHelper->createForm('Lva\PsvDiscsRequest');
@@ -122,7 +163,7 @@ abstract class AbstractDiscsController extends AbstractController
         if ($request->isPost() && $form->isValid()) {
             $response = $this->processRequestDiscs($form->getData());
 
-            $flashMssgrHelper = $this->getServiceLocator()->get('Helper\FlashMessenger');
+            $flashMssgrHelper = $this->flashMessengerHelper;
 
             if ($response->isOk()) {
                 $flashMssgrHelper->addSuccessMessage('psv-discs-' . self::CMD_REQUEST_DISCS . '-successfully');
@@ -208,11 +249,10 @@ abstract class AbstractDiscsController extends AbstractController
      */
     protected function getDiscsForm()
     {
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $formHelper = $this->formHelper;
 
         /** @var \Common\Form\Form $form */
-        $form = $this->getServiceLocator()
-            ->get(FormServiceManager::class)
+        $form = $this->formServiceManager
             ->get('lva-' . $this->lva . '-' . $this->section)
             ->getForm();
 
@@ -240,7 +280,7 @@ abstract class AbstractDiscsController extends AbstractController
         if ($tableData === null) {
             return null;
         }
-        $table = $this->getServiceLocator()->get('Table')->prepareTable(
+        $table = $this->tableFactory->prepareTable(
             'lva-psv-discs',
             $tableData,
             $tableParams
@@ -344,7 +384,7 @@ abstract class AbstractDiscsController extends AbstractController
         }
 
         if (!empty($errors)) {
-            $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
+            $fm = $this->flashMessengerHelper;
 
             foreach ($errors as $error) {
                 $fm->addCurrentErrorMessage($error);
@@ -379,9 +419,7 @@ abstract class AbstractDiscsController extends AbstractController
             );
         }
 
-        $form = $this->getServiceLocator()
-            ->get('Helper\Form')
-            ->createFormWithRequest('GenericConfirmation', $this->getRequest());
+        $form = $this->formHelper->createFormWithRequest('GenericConfirmation', $this->getRequest());
 
         return $this->render($commandKey . '_discs', $form);
     }
@@ -400,7 +438,7 @@ abstract class AbstractDiscsController extends AbstractController
         $commandClass = $this->commandMap[$commandKey][$this->lva];
         $response = $this->handleCommand($commandClass::create($dtoData));
 
-        $flashMssgrHelper = $this->getServiceLocator()->get('Helper\FlashMessenger');
+        $flashMssgrHelper = $this->flashMessengerHelper;
 
         if ($response->isOk()) {
             $flashMssgrHelper->addSuccessMessage('psv-discs-' . $commandKey . '-successfully');

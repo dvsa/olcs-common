@@ -9,56 +9,101 @@ use Common\Data\Mapper\Lva\NewTmUser as NewTmUserMapper;
 use Common\Data\Mapper\Lva\TransportManagerApplication as TransportManagerApplicationMapper;
 use Common\Data\Mapper\Lva\TransportManagerApplication;
 use Common\FormService\FormServiceManager;
+use Common\Service\Cqrs\Command\CommandService;
+use Common\Service\Cqrs\Query\QuerySender;
+use Common\Service\Cqrs\Query\QueryService;
+use Common\Service\Helper\DateHelperService;
+use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Helper\TranslationHelperService;
+use Common\Service\Helper\TransportManagerHelperService;
+use Common\Service\Script\ScriptFactory;
+use Common\Service\Table\TableFactory;
 use Dvsa\Olcs\Transfer\Command;
 use Dvsa\Olcs\Transfer\Query\TransportManagerApplication\GetDetails;
 use Dvsa\Olcs\Transfer\Query\User\UserSelfserve;
+use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Abstract Transport Managers Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractTransportManagersController extends AbstractController implements
-    AdapterAwareInterface,
-    FactoryInterface
+abstract class AbstractTransportManagersController extends AbstractController implements AdapterAwareInterface
 {
     use Traits\CrudTableTrait;
 
     protected $section = 'transport_managers';
     protected $lva = 'application';
-    protected $location = 'external';
+    protected string $location = 'external';
 
     /** @var  AbstractTransportManagerAdapter */
     protected $adapter;
-    protected $baseRoute = 'lva-%s/transport_managers';
+    protected string $baseRoute = 'lva-%s/transport_managers';
 
     /** @var  \Common\Service\Helper\FormHelperService */
     protected $hlpForm;
     /** @var  \Common\Service\Helper\TransportManagerHelperService */
-    protected $hlpTransMngr;
 
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
-    {
-        $this->hlpForm = $container->get('Helper\Form');
-        $this->hlpTransMngr = $container->get('Helper\TransportManager');
 
-        return $this;
-    }
+    protected TransportManagerHelperService $transportManagerHelper;
+    protected FormHelperService $formHelper;
+    protected FlashMessengerHelperService $flashMessengerHelper;
+    protected FormServiceManager $formServiceManager;
+    protected ScriptFactory $scriptFactory;
+    protected TableFactory $tableFactory;
+    protected QuerySender $querySender;
+    protected QueryService $queryService;
+    protected CommandService $commandService;
+    protected AnnotationBuilder $transferAnnotationBuilder;
+    protected $lvaAdapter; //ToDo: Use Union Type Hint when available in php 8.0
 
     /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator Service Manager
-     *
-     * @return $this
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     * @param FormHelperService $formHelper
+     * @param FormServiceManager $formServiceManager
+     * @param FlashMessengerHelperService $flashMessengerHelper
+     * @param ScriptFactory $scriptFactory
+     * @param QueryService $queryService
+     * @param CommandService $commandService
+     * @param AnnotationBuilder $transferAnnotationBuilder
+     * @param TransportManagerHelperService $transportManagerHelper
+     * @param $lvaAdapter
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
-    {
-        return $this->__invoke($serviceLocator, null);
+    public function __construct(
+        NiTextTranslation $niTextTranslationUtil,
+        AuthorizationService $authService,
+        FormHelperService $formHelper,
+        FormServiceManager $formServiceManager,
+        FlashMessengerHelperService $flashMessengerHelper,
+        ScriptFactory $scriptFactory,
+        QueryService $queryService,
+        CommandService $commandService,
+        AnnotationBuilder $transferAnnotationBuilder,
+        TransportManagerHelperService $transportManagerHelper,
+        $lvaAdapter
+    ) {
+        $this->formHelper = $formHelper;
+        $this->formServiceManager = $formServiceManager;
+        $this->scriptFactory = $scriptFactory;
+        $this->flashMessengerHelper = $flashMessengerHelper;
+        $this->queryService = $queryService;
+        $this->commandService = $commandService;
+        $this->transferAnnotationBuilder = $transferAnnotationBuilder;
+        $this->transportManagerHelper = $transportManagerHelper;
+
+        $this->setAdapter($lvaAdapter);
+
+        parent::__construct($niTextTranslationUtil, $authService);
     }
+
+
 
     /**
      * Get Adapter
@@ -92,8 +137,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
         $this->getAdapter()->addMessages($this->getLicenceId());
 
         /** @var \Laminas\Form\FormInterface $form */
-        $form = $this->getServiceLocator()
-            ->get(FormServiceManager::class)
+        $form = $this->formServiceManager
             ->get('lva-' . $this->lva . '-transport_managers')
             ->getForm();
 
@@ -106,7 +150,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
         $form->get('table')->get('table')->setTable($table);
         $form->get('table')->get('rows')->setValue(count($table->getRows()));
 
-        $this->getServiceLocator()->get(FormServiceManager::class)
+        $this->formServiceManager
             ->get('Lva\\' . ucfirst($this->lva))
             ->alterForm($form);
 
@@ -151,7 +195,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
      */
     protected function renderForm($form)
     {
-        $this->getServiceLocator()->get('Script')->loadFile('lva-crud-delta');
+        $this->scriptFactory->loadFile('lva-crud-delta');
 
         return $this->render('transport_managers', $form);
     }
@@ -208,24 +252,24 @@ abstract class AbstractTransportManagersController extends AbstractController im
         if ($user['id'] == $childId) {
             $form = $this->getAddForm();
 
-            $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')
+            $command = $this->transferAnnotationBuilder
                 ->createCommand(
                     Command\TransportManagerApplication\Create::create(
                         ['application' => $this->getIdentifier(), 'user' => $childId, 'action' => 'A']
                     )
                 );
             /* @var $response \Common\Service\Cqrs\Response */
-            $response = $this->getServiceLocator()->get('CommandService')->send($command);
+            $response = $this->commandService->send($command);
 
             if ($response->isServerError()) {
-                $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+                $this->flashMessengerHelper->addErrorMessage('unknown-error');
             }
 
             if ($response->isClientError()) {
                 $errors = TransportManagerApplicationMapper::mapFromErrors($form, $response->getResult());
 
                 foreach ($errors as $error) {
-                    $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage($error);
+                    $this->flashMessengerHelper->addErrorMessage($error);
                 }
             }
 
@@ -254,11 +298,11 @@ abstract class AbstractTransportManagersController extends AbstractController im
         /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
-        $query = $this->getServiceLocator()->get('TransferAnnotationBuilder')
+        $query = $this->transferAnnotationBuilder
             ->createQuery(UserSelfserve::create(['id' => $childId]));
 
         /* @var $response \Common\Service\Cqrs\Response */
-        $response = $this->getServiceLocator()->get('QueryService')->send($query);
+        $response = $this->queryService->send($query);
         $userDetails = $response->getResult();
 
         /** @var \Laminas\Form\FormInterface $form */
@@ -296,19 +340,19 @@ abstract class AbstractTransportManagersController extends AbstractController im
             $response = $this->handleCommand($command);
 
             if ($response->isServerError()) {
-                $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+                $this->flashMessengerHelper->addErrorMessage('unknown-error');
             }
 
             if ($response->isClientError()) {
                 $errors = TransportManagerApplicationMapper::mapFromErrors($form, $response->getResult());
 
                 foreach ($errors as $error) {
-                    $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage($error);
+                    $this->flashMessengerHelper->addErrorMessage($error);
                 }
             }
 
             if ($response->isOk()) {
-                $this->getServiceLocator()->get('Helper\FlashMessenger')
+                $this->flashMessengerHelper
                     ->addSuccessMessage('lva-tm-sent-success');
 
                 return $this->redirect()->toRouteAjax(
@@ -335,7 +379,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
         /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $formHelper = $this->formHelper;
         /** @var \Common\Form\Form $form */
         $form = $formHelper->createFormWithRequest('Lva\NewTmUser', $request);
 
@@ -362,7 +406,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
 
                 $response = $this->handleCommand($command);
 
-                $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
+                $fm = $this->flashMessengerHelper;
 
                 if ($response->isOk()) {
                     if ($hasEmail === 'Y') {
@@ -386,7 +430,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
             }
         }
 
-        $this->getServiceLocator()->get('Script')->loadFile('lva-tm-add-user');
+        $this->scriptFactory->loadFile('lva-tm-add-user');
 
         return $this->render('add-transport_managers', $form);
     }
@@ -401,7 +445,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
     protected function getTmDetailsForm($email)
     {
         /** @var \Laminas\Form\FormInterface $form */
-        $form = $this->getServiceLocator()->get('Helper\Form')
+        $form = $this->formHelper
             ->createFormWithRequest('Lva\AddTransportManagerDetails', $this->getRequest());
 
         $form->get('data')->get('guidance')->setTokens([$email]);
@@ -417,7 +461,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
     protected function getAddForm()
     {
         /** @var \Laminas\Form\FormInterface $form */
-        $form = $this->getServiceLocator()->get('Helper\Form')
+        $form = $this->formHelper
             ->createFormWithRequest('Lva\AddTransportManager', $this->getRequest());
 
         $orgId = $this->getCurrentOrganisationId();
@@ -439,10 +483,10 @@ abstract class AbstractTransportManagersController extends AbstractController im
      */
     protected function getOrganisationUsersForSelect($organisationId)
     {
-        $query = $this->getServiceLocator()->get('TransferAnnotationBuilder')
+        $query = $this->transferAnnotationBuilder
             ->createQuery(\Dvsa\Olcs\Transfer\Query\User\UserList::create(['organisation' => $organisationId]));
         /* @var $response \Common\Service\Cqrs\Response */
-        $response = $this->getServiceLocator()->get('QueryService')->send($query);
+        $response = $this->queryService->send($query);
         $options = [];
         foreach ($response->getResult()['results'] as $user) {
             $name = $user['contactDetails']['person']['forename'] . ' ' . $user['contactDetails']['person']['familyName'];
@@ -534,13 +578,13 @@ abstract class AbstractTransportManagersController extends AbstractController im
         }
 
         if (!empty($tmaIdsToDelete)) {
-            $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')
+            $command = $this->transferAnnotationBuilder
                 ->createCommand(
                     Command\TransportManagerApplication\Delete::create(
                         ['ids' => array_unique($tmaIdsToDelete)]
                     )
                 );
-            $this->getServiceLocator()->get('CommandService')->send($command);
+            $this->commandService->send($command);
         }
 
         return $this->redirect()->toRouteAjax($this->getBaseRoute(), [], [], true);

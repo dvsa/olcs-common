@@ -18,7 +18,7 @@ trait GenericMethods
      */
     protected function loadScripts($scripts)
     {
-        return $this->getServiceLocator()->get('Script')->loadFiles($scripts);
+        return $this->scriptFactory->loadFiles($scripts);
     }
 
     /**
@@ -30,11 +30,9 @@ trait GenericMethods
      */
     public function getForm($type)
     {
-        /** @var \Common\Service\Helper\FormHelperService $formHelper */
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
-        $form = $formHelper->createForm($type);
-        $formHelper->setFormActionFromRequest($form, $this->getRequest());
-        $formHelper->processAddressLookupForm($form, $this->getRequest());
+        $form = $this->formHelper->createForm($type);
+        $this->formHelper->setFormActionFromRequest($form, $this->getRequest());
+        $this->formHelper->processAddressLookupForm($form, $this->getRequest());
 
         return $form;
     }
@@ -171,7 +169,7 @@ trait GenericMethods
             $data['url'] = $this->getPluginManager()->get('url');
         }
 
-        return $this->getServiceLocator()->get('Table')->buildTable($table, $results, $data, false);
+        return $this->tableFactory->buildTable($table, $results, $data, false);
     }
 
     /**

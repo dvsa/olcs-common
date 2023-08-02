@@ -2,9 +2,13 @@
 
 namespace Common\Controller\Continuation;
 
+use Common\FormService\FormServiceManager;
+use Common\Service\Helper\TranslationHelperService;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\View\Model\ViewModel;
 use Dvsa\Olcs\Transfer\Query\ContinuationDetail\Get as GetContinuationDetail;
 use Common\RefData;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Success controller
@@ -16,6 +20,21 @@ class SuccessController extends AbstractContinuationController
 {
     /** @var string */
     protected $layout = 'pages/continuation-success';
+
+    /**
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     * @param FormServiceManager $formServiceManager
+     * @param TranslationHelperService $translationHelper
+     */
+    public function __construct(
+        NiTextTranslation $niTextTranslationUtil,
+        AuthorizationService $authService,
+        FormServiceManager $formServiceManager,
+        TranslationHelperService $translationHelper
+    ) {
+        parent::__construct($niTextTranslationUtil, $authService, $formServiceManager, $translationHelper);
+    }
 
     /**
      * Index action to handle payment result

@@ -4,6 +4,12 @@ namespace Common\Controller\Lva;
 
 use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 use Common\FormService\FormServiceManager;
+use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Script\ScriptFactory;
+use Common\Service\Table\TableFactory;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Abstract Conditions Undertakings Controller
@@ -16,7 +22,41 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
     use Traits\CrudTableTrait;
 
     protected $section = 'conditions_undertakings';
-    protected $baseRoute = 'lva-%s/conditions_undertakings';
+    protected string $baseRoute = 'lva-%s/conditions_undertakings';
+
+    protected FormHelperService $formHelper;
+    protected FlashMessengerHelperService $flashMessengerHelper;
+    protected FormServiceManager $formServiceManager;
+    protected ScriptFactory $scriptFactory;
+    protected TableFactory $tableFactory;
+    protected $lvaAdapter; // ToDo: use UnionType here when PHP 8 is in place
+
+    /**
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     * @param FormHelperService $formHelper
+     * @param FlashMessengerHelperService $flashMessengerHelper
+     * @param FormServiceManager $formServiceManager
+     * @param TableFactory $tableFactory
+     * @param $lvaAdapter
+     */
+    public function __construct(
+        NiTextTranslation $niTextTranslationUtil,
+        AuthorizationService $authService,
+        FormHelperService $formHelper,
+        FlashMessengerHelperService $flashMessengerHelper,
+        FormServiceManager $formServiceManager,
+        TableFactory $tableFactory,
+        $lvaAdapter
+    ) {
+        $this->formHelper = $formHelper;
+        $this->flashMessengerHelper = $flashMessengerHelper;
+        $this->formServiceManager = $formServiceManager;
+        $this->tableFactory = $tableFactory;
+        $this->setAdapter($lvaAdapter);
+
+        parent::__construct($niTextTranslationUtil, $authService);
+    }
 
     /**
      * Conditions Undertakings section
@@ -90,7 +130,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
             }
             $conditionUndertakingData = $response->getResult();
             if (!$this->getAdapter()->canEditRecord($conditionUndertakingData)) {
-                $this->getServiceLocator()->get('Helper\FlashMessenger')
+                $this->flashMessengerHelper
                     ->addErrorMessage('generic-cant-edit-message');
 
                 return $this->redirect()->toRouteAjax(null, ['action' => null], [], true);
@@ -225,7 +265,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
      */
     protected function getConditionUndertakingForm()
     {
-        return $this->getServiceLocator()->get('Helper\Form')->createForm('ConditionUndertaking');
+        return $this->formHelper->createForm('ConditionUndertaking');
     }
 
     /**
@@ -235,10 +275,9 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
      */
     protected function getForm()
     {
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $formHelper = $this->formHelper;
 
-        $form = $this->getServiceLocator()
-            ->get(FormServiceManager::class)
+        $form = $this->formServiceManager
             ->get('lva-' . $this->lva . '-' . $this->section)
             ->getForm();
 
@@ -254,9 +293,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
      */
     protected function getTable()
     {
-        $tableBuilder = $this->getServiceLocator()->get('Table');
-
-        $table = $tableBuilder->prepareTable(
+        $table = $this->tableFactory->prepareTable(
             $this->getAdapter()->getTableName(),
             $this->getTableData()
         );

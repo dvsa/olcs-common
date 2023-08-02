@@ -4,12 +4,17 @@ namespace Common\Controller\Continuation;
 
 use Common\FeatureToggle;
 use Common\Form\Declaration;
+use Common\FormService\FormServiceManager;
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Helper\TranslationHelperService;
 use Dvsa\Olcs\Transfer\Command\ContinuationDetail\Submit;
 use Dvsa\Olcs\Transfer\Command\GovUkAccount\GetGovUkAccountRedirect;
 use Dvsa\Olcs\Transfer\Query\FeatureToggle\IsEnabled as IsEnabledQry;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\Http\Response;
 use Laminas\View\Model\ViewModel;
 use Common\RefData;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * DeclarationController
@@ -26,6 +31,24 @@ class DeclarationController extends AbstractContinuationController
     ];
 
     protected $currentStep = self::STEP_DECLARATION;
+    protected FormHelperService $formHelper;
+
+    /**
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     * @param FormServiceManager $formServiceManager
+     * @param TranslationHelperService $translationHelper
+     */
+    public function __construct(
+        NiTextTranslation $niTextTranslationUtil,
+        AuthorizationService $authService,
+        FormServiceManager $formServiceManager,
+        TranslationHelperService $translationHelper,
+        FormHelperService $formHelper
+    ) {
+        $this->formHelper = $formHelper;
+        parent::__construct($niTextTranslationUtil, $authService, $formServiceManager, $translationHelper);
+    }
 
     /**
      * Index page
@@ -106,11 +129,11 @@ class DeclarationController extends AbstractContinuationController
     /**
      * Get form
      *
-     * @return Form
+     * @return \Common\Form\Form
      */
     protected function getDeclarationForm()
     {
-        return $this->getServiceLocator()->get('Helper\Form')->createForm(
+        return $this->formHelper->createForm(
             \Common\Form\Model\Form\Continuation\Declaration::class
         );
     }

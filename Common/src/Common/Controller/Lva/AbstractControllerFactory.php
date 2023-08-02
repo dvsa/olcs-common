@@ -36,7 +36,7 @@ class AbstractControllerFactory implements AbstractFactoryInterface
 
         $class = $config['controllers']['lva_controllers'][$requestedName];
 
-        $controller = new $class;
+        $controller = new $class();
 
         if ($controller instanceof FactoryInterface) {
             return $controller->createService($sm);

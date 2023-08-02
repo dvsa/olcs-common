@@ -3,12 +3,18 @@
 namespace Common\Controller\Lva;
 
 use Common\FormService\FormServiceManager;
+use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Script\ScriptFactory;
+use Common\Service\Table\TableFactory;
 use Dvsa\Olcs\Transfer\Command\Application\UpdatePreviousConvictions;
 use Dvsa\Olcs\Transfer\Command\PreviousConviction\CreatePreviousConviction;
 use Dvsa\Olcs\Transfer\Command\PreviousConviction\DeletePreviousConviction;
 use Dvsa\Olcs\Transfer\Command\PreviousConviction\UpdatePreviousConviction;
 use Dvsa\Olcs\Transfer\Query\Application\PreviousConvictions;
 use Dvsa\Olcs\Transfer\Query\PreviousConviction\PreviousConviction;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Shared logic between Convictions Penalties controllers
@@ -20,7 +26,40 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
     use Traits\CrudTableTrait;
 
     protected $section = 'convictions_penalties';
-    protected $baseRoute = 'lva-%s/convictions_penalties';
+    protected string $baseRoute = 'lva-%s/convictions_penalties';
+
+    protected FormHelperService $formHelper;
+    protected FlashMessengerHelperService $flashMessengerHelper;
+    protected FormServiceManager $formServiceManager;
+    protected ScriptFactory $scriptFactory;
+    protected TableFactory $tableFactory;
+
+    /**
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     * @param FormHelperService $formHelper
+     * @param FlashMessengerHelperService $flashMessengerHelper
+     * @param FormServiceManager $formServiceManager
+     * @param TableFactory $tableFactory
+     * @param ScriptFactory $scriptFactory
+     */
+    public function __construct(
+        NiTextTranslation $niTextTranslationUtil,
+        AuthorizationService $authService,
+        FormHelperService $formHelper,
+        FlashMessengerHelperService $flashMessengerHelper,
+        FormServiceManager $formServiceManager,
+        TableFactory $tableFactory,
+        ScriptFactory $scriptFactory
+    ) {
+        $this->formHelper = $formHelper;
+        $this->flashMessengerHelper = $flashMessengerHelper;
+        $this->formServiceManager = $formServiceManager;
+        $this->tableFactory = $tableFactory;
+        $this->scriptFactory = $scriptFactory;
+
+        parent::__construct($niTextTranslationUtil, $authService);
+    }
 
     /**
      * Index Action
@@ -51,7 +90,7 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
             $crudAction = $this->getCrudAction(array($data['data']['table']));
 
             if ($crudAction !== null) {
-                $this->getServiceLocator()->get('Helper\Form')->disableEmptyValidation($form);
+                $this->formHelper->disableEmptyValidation($form);
             }
 
             if ($form->isValid()) {
@@ -77,12 +116,12 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
                 }
 
                 if ($response->isClientError() || $response->isServerError()) {
-                    $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+                    $this->flashMessengerHelper->addErrorMessage('unknown-error');
                 }
             }
         }
 
-        $this->getServiceLocator()->get('Script')->loadFiles(['lva-crud', 'convictions-penalties']);
+        $this->scriptFactory->loadFiles(['lva-crud', 'convictions-penalties']);
 
         return $this->render('lva-convictions_penalties', $form);
     }
@@ -117,10 +156,9 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
      */
     protected function getConvictionsPenaltiesForm($data, $params = [])
     {
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $formHelper = $this->formHelper;
 
-        $form = $this->getServiceLocator()
-            ->get(FormServiceManager::class)
+        $form = $this->formServiceManager
             ->get('lva-' . $this->lva . '-' . $this->section)
             ->getForm($params);
 
@@ -142,7 +180,7 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
      */
     protected function getConvictionsPenaltiesTable($data)
     {
-        return $this->getServiceLocator()->get('Table')
+        return $this->tableFactory
             ->prepareTable('lva-convictions-penalties', $data['previousConvictions']);
     }
 
@@ -214,7 +252,7 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
             }
 
             if ($response->isClientError() || $response->isServerError()) {
-                $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+                $this->flashMessengerHelper->addErrorMessage('unknown-error');
             }
         }
 
@@ -254,8 +292,7 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
      */
     protected function getPreviousConvictionForm()
     {
-        return $this->getServiceLocator()
-            ->get('Helper\Form')
+        return $this->formHelper
             ->createFormWithRequest('Lva\PreviousConviction', $this->getRequest());
     }
 }

@@ -61,7 +61,7 @@ trait CommonVariationControllerTrait
      */
     protected function alterFormForLva(Form $form, $data = null)
     {
-        return $this->getServiceLocator()->get(FormServiceManager::class)->get('lva-variation')->alterForm($form);
+        return $this->formServiceManager->get('lva-variation')->alterForm($form);
     }
 
     /**

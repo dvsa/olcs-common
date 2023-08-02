@@ -5,12 +5,14 @@ namespace Common\Controller\Continuation;
 use Common\Controller\Lva\AbstractController;
 use Common\Form\Form;
 use Common\FormService\FormServiceManager;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\View\Model\ViewModel;
 use Dvsa\Olcs\Transfer\Query\ContinuationDetail\Get as GetContinuationDetail;
 use Common\RefData;
 use Laminas\Mvc\MvcEvent;
 use Laminas\Mvc\Exception;
 use Common\Service\Helper\TranslationHelperService;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * AbstractContinuationController
@@ -47,6 +49,24 @@ abstract class AbstractContinuationController extends AbstractController
     ];
 
     protected $currentStep = self::STEP_DEFAULT;
+    protected FormServiceManager $formServiceManager;
+    protected TranslationHelperService $translationHelper;
+
+    /**
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     */
+    public function __construct(
+        NiTextTranslation $niTextTranslationUtil,
+        AuthorizationService $authService,
+        FormServiceManager $formServiceManager,
+        TranslationHelperService $translationHelper
+    )
+    {
+        $this->formServiceManager = $formServiceManager;
+        $this->translationHelper = $translationHelper;
+        parent::__construct($niTextTranslationUtil, $authService);
+    }
 
     /**
      * Get the ViewModel used for continuations
@@ -100,8 +120,7 @@ abstract class AbstractContinuationController extends AbstractController
      */
     protected function getForm($formServiceName, $data = [])
     {
-        return $this->getServiceLocator()
-            ->get(FormServiceManager::class)
+        return $this->formServiceManager
             ->get($formServiceName)
             ->getForm($data);
     }
@@ -269,10 +288,7 @@ abstract class AbstractContinuationController extends AbstractController
 
         $stepDetails = $this->getStepDetails($path, $step);
 
-        /** @var TranslationHelperService $translatorHelper */
-        $translatorHelper = $this->getServiceLocator()->get('Helper\Translation');
-
-        return $translatorHelper->translateReplace(
+        return $this->translationHelper->translateReplace(
             'continuations.step.header',
             [$stepDetails['current'],
             $stepDetails['total']]

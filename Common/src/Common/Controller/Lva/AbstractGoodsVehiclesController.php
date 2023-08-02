@@ -8,7 +8,14 @@ use Common\Data\Mapper;
 use Common\Data\Mapper\Lva\GoodsVehiclesVehicle;
 use Common\FormService\FormServiceManager;
 use Common\RefData;
+use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Helper\GuidanceHelperService;
+use Common\Service\Helper\TranslationHelperService;
+use Common\Service\Lva\VariationLvaService;
+use Common\Service\Script\ScriptFactory;
 use Common\Service\Table\TableBuilder;
+use Common\Service\Table\TableFactory;
 use Dvsa\Olcs\Transfer\Command\Application\CreateGoodsVehicle as ApplicationCreateGoodsVehicle;
 use Dvsa\Olcs\Transfer\Command\Application\DeleteGoodsVehicle as ApplicationDeleteGoodsVehicle;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateGoodsVehicle as ApplicationUpdateGoodsVehicle;
@@ -20,8 +27,10 @@ use Dvsa\Olcs\Transfer\Command\Vehicle\ReprintDisc;
 use Dvsa\Olcs\Transfer\Command\Vehicle\UpdateGoodsVehicle as LicenceUpdateGoodsVehicle;
 use Dvsa\Olcs\Transfer\Query as TransferQry;
 use Dvsa\Olcs\Transfer\Query\LicenceVehicle\LicenceVehicle;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\Form\Element\Checkbox;
 use Laminas\Form\FormInterface;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Goods Vehicles
@@ -43,7 +52,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
     public const SEARCH_VEHICLES_COUNT = 20;
 
     protected $section = 'vehicles';
-    protected $baseRoute = 'lva-%s/vehicles';
+    protected string $baseRoute = 'lva-%s/vehicles';
 
     protected $totalAuthorisedVehicles = [];
     protected $totalVehicles = [];
@@ -73,6 +82,55 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
     ];
 
     protected $headerData = null;
+
+    protected FormHelperService $formHelper;
+    protected FlashMessengerHelperService $flashMessengerHelper;
+    protected FormServiceManager $formServiceManager;
+    protected ScriptFactory $scriptFactory;
+    protected TableFactory $tableFactory;
+    protected GuidanceHelperService $guidanceHelper;
+    protected VariationLvaService $variationLvaService;
+    protected GoodsVehiclesVehicle $goodsVehiclesVehicleMapper;
+    protected TranslationHelperService $translationHelper;
+
+    /**
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     * @param FormHelperService $formHelper
+     * @param FlashMessengerHelperService $flashMessengerHelper
+     * @param FormServiceManager $formServiceManager
+     * @param TableFactory $tableFactory
+     * @param GuidanceHelperService $guidanceHelper
+     * @param TranslationHelperService $translationHelper
+     * @param ScriptFactory $scriptFactory
+     * @param VariationLvaService $variationLvaService
+     * @param GoodsVehiclesVehicle $goodsVehiclesVehicleMapper
+     */
+    public function __construct(
+        NiTextTranslation $niTextTranslationUtil,
+        AuthorizationService $authService,
+        FormHelperService $formHelper,
+        FlashMessengerHelperService $flashMessengerHelper,
+        FormServiceManager $formServiceManager,
+        TableFactory $tableFactory,
+        GuidanceHelperService $guidanceHelper,
+        TranslationHelperService $translationHelper,
+        ScriptFactory $scriptFactory,
+        VariationLvaService $variationLvaService,
+        GoodsVehiclesVehicle $goodsVehiclesVehicleMapper
+    ) {
+        $this->formHelper = $formHelper;
+        $this->flashMessengerHelper = $flashMessengerHelper;
+        $this->formServiceManager = $formServiceManager;
+        $this->tableFactory = $tableFactory;
+        $this->guidanceHelper = $guidanceHelper;
+        $this->scriptFactory = $scriptFactory;
+        $this->variationLvaService = $variationLvaService;
+        $this->goodsVehiclesVehicleMapper = $goodsVehiclesVehicleMapper;
+        $this->translationHelper = $translationHelper;
+
+        parent::__construct($niTextTranslationUtil, $authService);
+    }
 
     /**
      * Additional functionality for action
@@ -187,7 +245,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             $response = $this->handleCommand(AppUpdateVehicles::create($dtoData));
 
             if ($response->isServerError()) {
-                $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentErrorMessage('unknown-error');
+                $this->flashMessengerHelper->addCurrentErrorMessage('unknown-error');
                 return $this->renderForm($form, $headerData);
             }
 
@@ -208,7 +266,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             $response = $this->handleCommand(LicUpdateVehicles::create($dtoData));
 
             if (!$response->isOk()) {
-                $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentErrorMessage('unknown-error');
+                $this->flashMessengerHelper->addCurrentErrorMessage('unknown-error');
                 return $this->renderForm($form, $headerData);
             }
         }
@@ -255,7 +313,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
 
         if ($result['spacesRemaining'] < 1) {
             if ($this->lva === 'variation' || $this->lva === 'application') {
-                $message = $this->getServiceLocator()->get('Helper\Translation')
+                $message = $this->translationHelper
                     ->translateReplace(
                         'markup-more-vehicles-than-total-auth-error-variation',
                         [
@@ -270,19 +328,17 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
                         ]
                     );
             } else {
-                $variation = $this->getServiceLocator()->get('Lva\Variation');
-
-                $message = $this->getServiceLocator()->get('Helper\Translation')
+                $message = $this->translationHelper
                     ->translateReplace(
                         'markup-more-vehicles-than-total-auth-error',
                         [
                             $result['totAuthVehicles'],
-                            $variation->getVariationLink($this->getLicenceId(), 'operating_centres')
+                            $this->variationLvaService->getVariationLink($this->getLicenceId(), 'operating_centres')
                         ]
                     );
             }
 
-            $this->getServiceLocator()->get('Helper\FlashMessenger')
+            $this->flashMessengerHelper
                 ->addProminentErrorMessage($message);
 
             return $this->redirect()->toRouteAjax(
@@ -303,8 +359,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         $params['spacesRemaining'] = $result['spacesRemaining'];
 
         /** @var \Laminas\Form\FormInterface $form */
-        $form = $this->getServiceLocator()
-            ->get(FormServiceManager::class)
+        $form = $this->formServiceManager
             ->get('lva-' . $this->lva . '-goods-vehicles-add-vehicle')
             ->getForm($this->getRequest(), $params)
             ->setData($data);
@@ -317,12 +372,9 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
                 'vrm' => $formData['data']['vrm'],
                 'unvalidatedVrm' => $formData['data']['unvalidatedVrm'] ?? null,
                 'platedWeight' => $formData['data']['platedWeight'],
-                'receivedDate' => isset($formData['licence-vehicle']['receivedDate'])
-                    ? $formData['licence-vehicle']['receivedDate'] : null,
-                'specifiedDate' => isset($formData['licence-vehicle']['specifiedDate'])
-                    ? $formData['licence-vehicle']['specifiedDate'] : null,
-                'confirm' => isset($data['licence-vehicle']['confirm-add'])
-                    ? $data['licence-vehicle']['confirm-add'] : null
+                'receivedDate' => $formData['licence-vehicle']['receivedDate'] ?? null,
+                'specifiedDate' => $formData['licence-vehicle']['specifiedDate'] ?? null,
+                'confirm' => $data['licence-vehicle']['confirm-add'] ?? null
             ];
 
             $dtoClass = $this->createVehicleMap[$this->lva];
@@ -333,7 +385,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             }
 
             if ($response->isServerError()) {
-                $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentErrorMessage('unknown-error');
+                $this->flashMessengerHelper->addCurrentErrorMessage('unknown-error');
             } else {
                 $messages = $response->getResult()['messages'];
 
@@ -373,9 +425,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } else {
-            //ToDo:
-            $mapper = $this->getServiceLocator()->get(GoodsVehiclesVehicle::class);
-            $data = $mapper->mapFromResult($vehicleData);
+            $data = $this->goodsVehiclesVehicleMapper->mapFromResult($vehicleData);
         }
 
         $params = [
@@ -383,21 +433,20 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         ];
 
         /** @var \Laminas\Form\FormInterface $form */
-        $form = $this->getServiceLocator()
-            ->get(FormServiceManager::class)
+        $form = $this->formServiceManager
             ->get('lva-' . $this->lva . '-goods-vehicles-edit-vehicle')
             ->getForm($this->getRequest(), $params)
             ->setData($data);
 
         if ($vehicleData['showHistory']) {
-            $this->getServiceLocator()->get('Helper\Form')->populateFormTable(
+            $this->formHelper->populateFormTable(
                 $form->get('vehicle-history-table'),
-                $this->getServiceLocator()->get('Table')->prepareTable('lva-vehicles-history', $vehicleData['history'])
+                $this->tableFactory->prepareTable('lva-vehicles-history', $vehicleData['history'])
             );
         }
 
         if (!is_null($vehicleData['removalDate'])) {
-            $this->getServiceLocator()->get('Helper\Form')
+            $this->formHelper
                 ->disableValidation($form->getInputFilter());
         }
 
@@ -411,8 +460,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
                     $this->getIdentifierIndex() => $this->getIdentifier(),
                     'id' => $id,
                     'version' => $formData['data']['version'],
-                    'removalDate' => isset($formData['licence-vehicle']['removalDate'])
-                        ? $formData['licence-vehicle']['removalDate'] : null,
+                    'removalDate' => $formData['licence-vehicle']['removalDate'] ?? null,
                 ];
 
                 $dtoClass = $this->updateVehicleMap[$this->lva];
@@ -424,14 +472,10 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
                     'id' => $id,
                     'version' => $formData['data']['version'],
                     'platedWeight' => $formData['data']['platedWeight'],
-                    'receivedDate' => isset($formData['licence-vehicle']['receivedDate'])
-                        ? $formData['licence-vehicle']['receivedDate'] : null,
-                    'specifiedDate' => isset($formData['licence-vehicle']['specifiedDate'])
-                        ? $formData['licence-vehicle']['specifiedDate'] : null,
-                    'seedDate' => isset($formData['licence-vehicle']['warningLetterSeedDate'])
-                        ? $formData['licence-vehicle']['warningLetterSeedDate'] : null,
-                    'sentDate' =>  isset($formData['licence-vehicle']['warningLetterSentDate'])
-                        ? $formData['licence-vehicle']['warningLetterSentDate'] : null,
+                    'receivedDate' => $formData['licence-vehicle']['receivedDate'] ?? null,
+                    'specifiedDate' => $formData['licence-vehicle']['specifiedDate'] ?? null,
+                    'seedDate' => $formData['licence-vehicle']['warningLetterSeedDate'] ?? null,
+                    'sentDate' => $formData['licence-vehicle']['warningLetterSentDate'] ?? null,
                 ];
 
                 $dtoClass = $this->updateVehicleMap[$this->lva];
@@ -444,7 +488,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             }
 
             if ($response->isServerError()) {
-                $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentErrorMessage('unknown-error');
+                $this->flashMessengerHelper->addCurrentErrorMessage('unknown-error');
             } else {
                 $this->mapVehicleErrors($form, $response->getResult()['messages']);
             }
@@ -527,7 +571,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             $response = $this->handleCommand(ReprintDisc::create(['ids' => $ids]));
 
             if (!$response->isOk()) {
-                $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+                $this->flashMessengerHelper->addErrorMessage('unknown-error');
             }
 
             return $this->redirect()->toRouteAjax(
@@ -568,7 +612,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
     protected function renderForm($form, $headerData)
     {
         if ($headerData['spacesRemaining'] < 0) {
-            $this->getServiceLocator()->get('Helper\Guidance')->append('more-vehicles-than-authorisation');
+            $this->guidanceHelper->append('more-vehicles-than-authorisation');
         }
 
         $files = $this->getScripts();
@@ -582,7 +626,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             $files[] = 'forms/vehicle-search';
         }
 
-        $this->getServiceLocator()->get('Script')->loadFiles($files);
+        $this->scriptFactory->loadFiles($files);
 
         return $this->render('vehicles', $form, $params);
     }
@@ -608,7 +652,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
 
         $tableName = 'lva-' . $this->location . '-vehicles';
 
-        $table = $this->getServiceLocator()->get('Table')
+        $table = $this->tableFactory
             ->prepareTable($tableName, $headerData['licenceVehicles'], $params);
 
         $this->makeTableAlterations($table, $headerData, $filters);
@@ -689,7 +733,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
      */
     protected function getConfirmationForm(\Laminas\Http\Request $request)
     {
-        return $this->getServiceLocator()->get('Helper\Form')
+        return $this->formHelper
             ->createFormWithRequest('GenericConfirmation', $request);
     }
 
@@ -755,8 +799,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
      */
     protected function getForm($headerData, $formData)
     {
-        return $this->getServiceLocator()
-            ->get(FormServiceManager::class)
+        return $this->formServiceManager
             ->get('lva-' . $this->lva . '-goods-' . $this->section)
             ->getForm($this->getTable($headerData, $this->getFilters()))
             ->setData($formData);
@@ -785,7 +828,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         $form->setMessages($formMessages);
 
         if (!empty($errors)) {
-            $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
+            $fm = $this->flashMessengerHelper;
 
             foreach ($errors as $error) {
                 $fm->addCurrentErrorMessage($error);
@@ -806,7 +849,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         $errors = Mapper\Lva\GoodsVehiclesVehicle::mapFromErrors($errors, $form);
 
         if (!empty($errors)) {
-            $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
+            $fm = $this->flashMessengerHelper;
 
             foreach ($errors as $error) {
                 $fm->addCurrentErrorMessage($error);
@@ -823,7 +866,6 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
      */
     protected function formatConfirmationMessage($message)
     {
-        $translator = $this->getServiceLocator()->get('Helper\Translation');
         $decoded = json_decode($message);
 
         if (is_array($decoded)) {
@@ -833,12 +875,11 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
                 $message .= '-multiple';
             }
 
-            return $translator->translateReplace($message, [implode(', ', $decoded)]);
+            return $this->translationHelper->translateReplace($message, [implode(', ', $decoded)]);
         }
 
-        return $translator->translate('vehicle-belongs-to-another-licence-message-external');
+        return $this->translationHelper->translate('vehicle-belongs-to-another-licence-message-external');
     }
-
 
     /**
      * Get vehicle section data

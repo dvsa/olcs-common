@@ -152,7 +152,7 @@ trait CheckForCrudAction
      */
     protected function crudActionMissingId()
     {
-        $this->getServiceLocator()->get('Helper\FlashMessenger')->addWarningMessage('please-select-row');
+        $this->flashMessengerHelper->addWarningMessage('please-select-row');
         return $this->redirect()->toRoute(null, [], [], true);
     }
 }

@@ -4,9 +4,14 @@ namespace Common\Controller\Continuation;
 
 use Common\Data\Mapper\Continuation\OtherFinances;
 use Common\Form\Form;
+use Common\FormService\FormServiceManager;
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Helper\GuidanceHelperService;
 use Common\Service\Helper\TranslationHelperService;
 use Dvsa\Olcs\Transfer\Command\ContinuationDetail\UpdateFinances;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\View\Model\ViewModel;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * OtherFinancesController
@@ -14,6 +19,28 @@ use Laminas\View\Model\ViewModel;
 class OtherFinancesController extends AbstractContinuationController
 {
     protected $currentStep = self::STEP_FINANCE;
+
+    protected FormHelperService $formHelper;
+    protected GuidanceHelperService $guidanceHelper;
+
+    /**
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     * @param FormServiceManager $formServiceManager
+     * @param TranslationHelperService $translationHelper
+     */
+    public function __construct(
+        NiTextTranslation $niTextTranslationUtil,
+        AuthorizationService $authService,
+        FormServiceManager $formServiceManager,
+        TranslationHelperService $translationHelper,
+        FormHelperService $formHelper,
+        GuidanceHelperService $guidanceHelper
+    ) {
+        $this->formHelper = $formHelper;
+        $this->guidanceHelper = $guidanceHelper;
+        parent::__construct($niTextTranslationUtil, $authService, $formServiceManager, $translationHelper);
+    }
 
     /**
      * Index page
@@ -66,7 +93,7 @@ class OtherFinancesController extends AbstractContinuationController
      */
     protected function getFinancesForm()
     {
-        return $this->getServiceLocator()->get('Helper\Form')->createForm(
+        return $this->formHelper->createForm(
             \Common\Form\Model\Form\Continuation\OtherFinances::class
         );
     }
@@ -89,12 +116,10 @@ class OtherFinancesController extends AbstractContinuationController
             2
         );
 
-        /** @var TranslationHelperService $translatorHelper */
-        $translatorHelper = $this->getServiceLocator()->get('Helper\Translation');
-        $guideMessage = $translatorHelper->translateReplace(
+        $guideMessage = $this->translationHelper->translateReplace(
             'continuations.other-finances.hint',
             [$financeRequired, $shortByAmount]
         );
-        $this->getServiceLocator()->get('Helper\Guidance')->append($guideMessage);
+        $this->guidanceHelper->append($guideMessage);
     }
 }

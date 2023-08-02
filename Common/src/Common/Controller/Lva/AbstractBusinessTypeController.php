@@ -2,12 +2,21 @@
 
 namespace Common\Controller\Lva;
 
+use Common\Controller\Lva\Adapters\GenericBusinessTypeAdapter;
 use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 use Common\Data\Mapper\Lva\BusinessType;
 use Common\FormService\FormServiceManager;
+use Common\Service\Cqrs\Query\QueryService;
+use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Helper\TranslationHelperService;
+use Common\Service\Script\ScriptFactory;
 use Dvsa\Olcs\Transfer\Command\Organisation\UpdateBusinessType;
 use Dvsa\Olcs\Transfer\Query\Organisation\Organisation;
+use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use ZfcRbac\Identity\IdentityProviderInterface;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Shared logic between Business type controllers
@@ -17,6 +26,56 @@ use ZfcRbac\Identity\IdentityProviderInterface;
 abstract class AbstractBusinessTypeController extends AbstractController implements AdapterAwareInterface
 {
     use Traits\AdapterAwareTrait;
+
+    protected FormHelperService $formHelper;
+    protected FlashMessengerHelperService $flashMessengerHelper;
+    protected FormServiceManager $formServiceManager;
+    protected ScriptFactory $scriptFactory;
+    protected IdentityProviderInterface $identityProvider;
+    protected TranslationHelperService $translationHelper;
+    protected AnnotationBuilder $transferAnnotationBuilder;
+    protected QueryService $queryService;
+    protected GenericBusinessTypeAdapter $lvaAdapter;
+
+    /**
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     * @param FormHelperService $formHelper
+     * @param FlashMessengerHelperService $flashMessengerHelper
+     * @param FormServiceManager $formServiceManager
+     * @param ScriptFactory $scriptFactory
+     * @param IdentityProviderInterface $identityProvider
+     * @param TranslationHelperService $translationHelper
+     * @param AnnotationBuilder $transferAnnotationBuilder
+     * @param QueryService $queryService
+     * @param GenericBusinessTypeAdapter $lvaAdapter
+     */
+    public function __construct(
+        NiTextTranslation $niTextTranslationUtil,
+        AuthorizationService $authService,
+        FormHelperService $formHelper,
+        FlashMessengerHelperService $flashMessengerHelper,
+        FormServiceManager $formServiceManager,
+        ScriptFactory $scriptFactory,
+        IdentityProviderInterface $identityProvider,
+        TranslationHelperService $translationHelper,
+        AnnotationBuilder $transferAnnotationBuilder,
+        QueryService $queryService,
+        $lvaAdapter
+    ) {
+        $this->formHelper = $formHelper;
+        $this->flashMessengerHelper = $flashMessengerHelper;
+        $this->formServiceManager = $formServiceManager;
+        $this->scriptFactory = $scriptFactory;
+        $this->identityProvider = $identityProvider;
+        $this->translationHelper = $translationHelper;
+        $this->transferAnnotationBuilder = $transferAnnotationBuilder;
+        $this->queryService = $queryService;
+
+        $this->setAdapter($lvaAdapter);
+
+        parent::__construct($niTextTranslationUtil, $authService);
+    }
 
     /**
      * Business type section
@@ -28,7 +87,7 @@ abstract class AbstractBusinessTypeController extends AbstractController impleme
 
         if (!$response->isOk()) {
             if ($response->isClientError() || $response->isServerError()) {
-                $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+                $this->flashMessengerHelper->addErrorMessage('unknown-error');
             }
 
             return $this->notFoundAction();
@@ -38,12 +97,10 @@ abstract class AbstractBusinessTypeController extends AbstractController impleme
 
         $hasInForceLicences = $result['hasInforceLicences'];
 
-        $identityProvider = $this->getServiceLocator()->get(IdentityProviderInterface::class);
-        assert($identityProvider instanceof IdentityProviderInterface);
-        $hasOrganisationSubmittedLicenceApplication = $identityProvider->getIdentity()->getUserData()['hasOrganisationSubmittedLicenceApplication'] ?? false;
+        $hasOrganisationSubmittedLicenceApplication = $this->identityProvider->getIdentity()->getUserData()['hasOrganisationSubmittedLicenceApplication'] ?? false;
 
         /** @var \Laminas\Form\Form $form */
-        $form = $this->getServiceLocator()->get(FormServiceManager::class)
+        $form = $this->formServiceManager
             ->get('lva-' . $this->lva . '-business_type')
             ->getForm($hasInForceLicences, $hasOrganisationSubmittedLicenceApplication);
 
@@ -101,13 +158,11 @@ abstract class AbstractBusinessTypeController extends AbstractController impleme
 
             $labels = [];
 
-            $translation = $this->getServiceLocator()->get('Helper\Translation');
-
             foreach ($transitions as $transition) {
-                $labels[] = $translation->translate($transition);
+                $labels[] = $this->translationHelper->translate($transition);
             }
 
-            $label = $translation->translateReplace('BUS_TYP_REQ_CONF', [implode('', $labels)]);
+            $label = $this->translationHelper->translateReplace('BUS_TYP_REQ_CONF', [implode('', $labels)]);
 
             $view = $this->confirm($label, $this->getRequest()->isXmlHttpRequest(), json_encode($dto->getArrayCopy()));
             $view->setTerminal(false);
@@ -116,7 +171,7 @@ abstract class AbstractBusinessTypeController extends AbstractController impleme
             return $this->viewBuilder()->buildView($view);
         }
 
-        $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+        $this->flashMessengerHelper->addErrorMessage('unknown-error');
 
         // We may have a disabled business type element, so we need to fill in the values
         if (empty($data['data']['type'])) {
@@ -129,7 +184,7 @@ abstract class AbstractBusinessTypeController extends AbstractController impleme
 
     public function getForm($form)
     {
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $formHelper = $this->formHelper;
 
         return $formHelper->createFormWithRequest($form, $this->getRequest());
     }
@@ -139,9 +194,9 @@ abstract class AbstractBusinessTypeController extends AbstractController impleme
      */
     private function getBusinessType($orgId)
     {
-        $query = $this->getServiceLocator()->get('TransferAnnotationBuilder')
+        $query = $this->transferAnnotationBuilder
             ->createQuery(Organisation::create(['id' => $orgId]));
 
-        return $this->getServiceLocator()->get('QueryService')->send($query);
+        return $this->queryService->send($query);
     }
 }

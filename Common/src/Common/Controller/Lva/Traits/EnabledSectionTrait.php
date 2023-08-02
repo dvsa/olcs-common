@@ -25,8 +25,8 @@ trait EnabledSectionTrait
      */
     protected function setEnabledAndCompleteFlagOnSections($accessibleSections, $applicationCompletion)
     {
-        $restrictionHelper = $this->getServiceLocator()->get('Helper\Restriction');
-        $filter = $this->getServiceLocator()->get('Helper\String');
+        $restrictionHelper = $this->restrictionHelper;
+        $filter = $this->stringHelper;
         $sections = array();
         $completeSections = array();
 

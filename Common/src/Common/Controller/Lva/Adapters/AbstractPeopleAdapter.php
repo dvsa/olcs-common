@@ -388,7 +388,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     private function addNewStatuses(array $tableData)
     {
         /** @var FlashMessenger $flashMessenger */
-        $flashMessenger = $this->getController()->plugin('FlashMessenger');
+        $flashMessenger = $this->container->get('ControllerPluginManager')->get(FlashMessenger::class);
         $newPersonIDs = $flashMessenger->getMessages(AbstractController::FLASH_MESSENGER_CREATED_PERSON_NAMESPACE);
 
         $newTableData = [];

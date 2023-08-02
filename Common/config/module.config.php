@@ -4,6 +4,9 @@ use Common\Auth\Adapter\CommandAdapter;
 use Common\Auth\Adapter\CommandAdapterFactory;
 use Common\Auth\Service\AuthenticationServiceFactory;
 use Common\Auth\Service\AuthenticationServiceInterface;
+use Common\Controller\Continuation as ContinuationControllers;
+use Common\Data\Mapper\Licence\Surrender as SurrenderMapper;
+use Common\Data\Mapper\Permits as PermitsMapper;
 use Common\Form\Element\DynamicMultiCheckbox;
 use Common\Form\Element\DynamicMultiCheckboxFactory;
 use Common\Form\Element\DynamicRadio;
@@ -14,26 +17,22 @@ use Common\Form\Element\DynamicSelect;
 use Common\Form\Element\DynamicSelectFactory;
 use Common\Form\Elements\Custom\OlcsCheckbox;
 use Common\Form\View\Helper\FormInputSearch;
+use Common\Form\View\Helper\Readonly as ReadonlyFormHelper;
 use Common\FormService\Form\Continuation\ConditionsUndertakings;
 use Common\FormService\Form\Continuation\ConditionsUndertakingsFactory;
 use Common\FormService\Form\Continuation\Declaration;
 use Common\FormService\Form\Continuation\DeclarationFactory;
-use Common\FormService\Form\Lva\Application;
-use Common\FormService\Form\Lva\BusinessDetails\ApplicationBusinessDetails;
 use Common\FormService\FormServiceAbstractFactory;
 use Common\FormService\FormServiceManager;
 use Common\Service\Cqrs\Command\CommandSender;
-use Common\Service\Data\Search\SearchType;
-use Common\FormService\Form\Lva as LvaFormService;
-use Common\FormService\Form\Continuation as ContinuationFormService;
-use Common\Form\View\Helper\Readonly as ReadonlyFormHelper;
 use Common\Service\Data as DataService;
+use Common\Service\Data\Search\SearchType;
 use Common\Service\Helper as HelperService;
+use Common\Service\Helper\DataHelperService;
+use Common\Service\Helper\StringHelperService;
 use Common\Service\Qa as QaService;
 use Common\Service\Translator\TranslationLoader;
 use Common\Service\Translator\TranslationLoaderFactory;
-use Common\Data\Mapper\Permits as PermitsMapper;
-use Common\Data\Mapper\Licence\Surrender as SurrenderMapper;
 use Common\View\Helper\Panel;
 use ZfcRbac\Identity\IdentityProviderInterface;
 
@@ -49,49 +48,6 @@ return [
     'controllers' => [
         // @NOTE These delegators can live in common as both internal and external app controllers currently use the
         // same adapter. Self Serve registers these itself within the application module.
-        'delegators' => [
-            'LvaApplication/BusinessType' => [
-                // @NOTE: we need an associative array when we need to override the
-                // delegator elsewhere, such as in selfserve or internal
-                'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessTypeDelegator'
-            ],
-            'LvaLicence/BusinessType' => [
-                'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessTypeDelegator'
-            ],
-            'LvaVariation/BusinessType' => [
-                'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessTypeDelegator'
-            ],
-            'LvaApplication/FinancialEvidence' => [
-                Common\Controller\Lva\Delegators\ApplicationFinancialEvidenceDelegator::class,
-            ],
-            'LvaVariation/FinancialEvidence' => [
-                Common\Controller\Lva\Delegators\VariationFinancialEvidenceDelegator::class,
-            ],
-            'LvaLicence/People' => [
-                'Common\Controller\Lva\Delegators\LicencePeopleDelegator'
-            ],
-            'LvaVariation/People' => [
-                'Common\Controller\Lva\Delegators\VariationPeopleDelegator'
-            ],
-            'LvaApplication/People' => [
-                'Common\Controller\Lva\Delegators\ApplicationPeopleDelegator'
-            ],
-            'LvaLicence/TransportManagers' => [
-                Common\Controller\Lva\Delegators\LicenceTransportManagerDelegator::class,
-            ],
-            'LvaVariation/TransportManagers' => [
-                Common\Controller\Lva\Delegators\VariationTransportManagerDelegator::class,
-            ],
-            'LvaApplication/TransportManagers' => [
-                Common\Controller\Lva\Delegators\ApplicationTransportManagerDelegator::class,
-            ],
-            'LvaDirectorChange/People' => [
-                'Common\Controller\Lva\Delegators\VariationPeopleDelegator'
-            ],
-        ],
-        'abstract_factories' => [
-            'Common\Controller\Lva\AbstractControllerFactory',
-        ],
         'invokables' => [
             'Common\Controller\File' => 'Common\Controller\FileController',
             'Common\Controller\FormRewrite' => 'Common\Controller\FormRewriteController',
@@ -99,6 +55,21 @@ return [
                 Common\Controller\TransportManagerReviewController::class,
             \Common\Controller\ErrorController::class => \Common\Controller\ErrorController::class,
             \Common\Controller\GuidesController::class => \Common\Controller\GuidesController::class,
+        ],
+        'factories' => [
+            \Common\Controller\Lva\AbstractController::class => \Common\Controller\Factory\Lva\AbstractControllerFactory::class,
+            ContinuationControllers\ChecklistController::class => \Common\Controller\Factory\Continuation\ChecklistControllerFactory::class,
+            ContinuationControllers\ConditionsUndertakingsController::class => \Common\Controller\Factory\Continuation\ChecklistControllerFactory::class,
+            ContinuationControllers\DeclarationController::class => \Common\Controller\Factory\Continuation\ChecklistControllerFactory::class,
+            ContinuationControllers\FinancesController::class => \Common\Controller\Factory\Continuation\ChecklistControllerFactory::class,
+            ContinuationControllers\InsufficientFinancesController::class => \Common\Controller\Factory\Continuation\ChecklistControllerFactory::class,
+            ContinuationControllers\OtherFinancesController::class => \Common\Controller\Factory\Continuation\ChecklistControllerFactory::class,
+            ContinuationControllers\PaymentController::class => \Common\Controller\Factory\Continuation\ChecklistControllerFactory::class,
+            ContinuationControllers\ReviewController::class => \Common\Controller\Factory\Continuation\ChecklistControllerFactory::class,
+            ContinuationControllers\StartController::class => \Common\Controller\Factory\Continuation\ChecklistControllerFactory::class,
+            ContinuationControllers\SuccessController::class => \Common\Controller\Factory\Continuation\ChecklistControllerFactory::class,
+        ],
+        'aliases' => [
             'ContinuationController/Start' => \Common\Controller\Continuation\StartController::class,
             'ContinuationController/Checklist' => \Common\Controller\Continuation\ChecklistController::class,
             'ContinuationController/ConditionsUndertakings' =>
@@ -111,7 +82,7 @@ return [
             'ContinuationController/Payment' => \Common\Controller\Continuation\PaymentController::class,
             'ContinuationController/Success' => \Common\Controller\Continuation\SuccessController::class,
             'ContinuationController/Review' => \Common\Controller\Continuation\ReviewController::class,
-        ],
+        ]
     ],
     'controller_plugins' => [
         'invokables' => [
@@ -207,6 +178,9 @@ return [
             'VariationPeopleAdapter' => Common\Controller\Lva\Adapters\VariationPeopleAdapter::class,
             'VariationTransportManagerAdapter' => Common\Controller\Lva\Adapters\VariationTransportManagerAdapter::class,
 
+            'DataMapper\DashboardTmApplications' => \Common\Service\Table\DataMapper\DashboardTmApplications::class,
+
+
             'FormServiceManager' => Common\FormService\FormServiceManager::class,
         ],
         'invokables' => [
@@ -217,12 +191,13 @@ return [
             'VehicleList' => '\Common\Service\VehicleList\VehicleList',
             'postcode' => 'Common\Service\Postcode\Postcode',
             'CompaniesHouseApi' => 'Common\Service\CompaniesHouse\Api',
+            \Common\Service\Table\DataMapper\DashboardTmApplications::class => \Common\Service\Table\DataMapper\DashboardTmApplications::class,
+
             'applicationIdValidator' => 'Common\Form\Elements\Validators\ApplicationIdValidator',
             'totalVehicleAuthorityValidator' => 'Common\Form\Elements\Validators\Lva\TotalVehicleAuthorityValidator',
             'section.vehicle-safety.vehicle.formatter.vrm' =>
                 'Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm',
             'Common\Rbac\UserProvider' => 'Common\Rbac\UserProvider',
-            'DataMapper\DashboardTmApplications' => 'Common\Service\Table\DataMapper\DashboardTmApplications',
             'QaCheckboxFactory' => QaService\CheckboxFactory::class,
             'QaTextFactory' => QaService\TextFactory::class,
             'QaRadioFactory' => QaService\RadioFactory::class,
@@ -269,6 +244,11 @@ return [
 
             'Zend\Authentication\AuthenticationService' => \Laminas\Authentication\AuthenticationService::class,
             DataService\UserTypesListDataService::class => DataService\UserTypesListDataService::class,
+            HelperService\OppositionHelperService::class => HelperService\OppositionHelperService::class,
+            HelperService\RestrictionHelperService::class => HelperService\RestrictionHelperService::class,
+            StringHelperService::class => StringHelperService::class,
+            DataHelperService::class => DataHelperService::class,
+            HelperService\FileUploadHelperService::class => HelperService\FileUploadHelperService::class,
         ],
         'factories' => [
             DataService\AbstractDataServiceServices::class => DataService\AbstractDataServiceServicesFactory::class,
