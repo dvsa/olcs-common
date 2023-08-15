@@ -2,6 +2,14 @@
 
 namespace Common\Controller\Traits;
 
+use Common\Form\Form;
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Script\ScriptFactory;
+use Common\Service\Table\TableBuilder;
+use Exception;
+use Laminas\Http\Request;
+use Laminas\Http\Response;
+
 /**
  * Generic Methods from legacy Abstract Action controller
  *
@@ -9,6 +17,10 @@ namespace Common\Controller\Traits;
  */
 trait GenericMethods
 {
+    protected ScriptFactory $scriptFactory;
+    protected FormHelperService $formHelperService;
+    protected TableBuilder $tableBuilder;
+
     /**
      * Load an array of script files which will be rendered inline inside a view
      *
@@ -18,7 +30,7 @@ trait GenericMethods
      */
     protected function loadScripts($scripts)
     {
-        return $this->getServiceLocator()->get('Script')->loadFiles($scripts);
+        return $this->scriptFactory->loadFiles($scripts);
     }
 
     /**
@@ -26,12 +38,11 @@ trait GenericMethods
      *
      * @param string $type Form name or class
      *
-     * @return \Common\Form\Form
+     * @return Form
      */
     public function getForm($type)
     {
-        /** @var \Common\Service\Helper\FormHelperService $formHelper */
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $formHelper = $this->formHelperService;
         $form = $formHelper->createForm($type);
         $formHelper->setFormActionFromRequest($form, $this->getRequest());
         $formHelper->processAddressLookupForm($form, $this->getRequest());
@@ -42,13 +53,13 @@ trait GenericMethods
     /**
      * Method to process posted form data and validate it and process a callback
      *
-     * @param \Common\Form\Form $form             Form
+     * @param Form $form             Form
      * @param callable          $callback         onSuccess callback
      * @param array             $additionalParams onSuccess callback additional params
      * @param bool              $validateForm     is need validate form
      * @param array             $fieldValues      Forced Form Values
      *
-     * @return \Common\Form\Form
+     * @return Form
      */
     public function formPost(
         $form,
@@ -61,7 +72,7 @@ trait GenericMethods
             $form = $this->alterFormBeforeValidation($form);
         }
 
-        /* @var \Laminas\Http\Request $request */
+        /* @var Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -113,7 +124,7 @@ trait GenericMethods
      * @param array    $params   Callback params
      *
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function callCallbackIfExists($callback, $params)
     {
@@ -122,7 +133,7 @@ trait GenericMethods
         } elseif (is_callable(array($this, $callback))) {
             call_user_func_array(array($this, $callback), $params);
         } elseif (!empty($callback)) {
-            throw new \Exception('Invalid form callback: ' . $callback);
+            throw new Exception('Invalid form callback: ' . $callback);
         }
     }
 
@@ -134,7 +145,7 @@ trait GenericMethods
      * @param array  $options RouteInterface-specific options to use in url generation, if any
      * @param bool   $reuse   Whether to reuse matched parameters
      *
-     * @return \Laminas\Http\Response
+     * @return Response
      */
     public function redirectToRoute($route = null, $params = array(), $options = array(), $reuse = false)
     {
@@ -149,7 +160,7 @@ trait GenericMethods
      * @param array  $options RouteInterface-specific options to use in url generation, if any
      * @param bool   $reuse   Whether to reuse matched parameters
      *
-     * @return \Laminas\Http\Response
+     * @return Response
      */
     public function redirectToRouteAjax($route = null, $params = array(), $options = array(), $reuse = false)
     {
@@ -163,7 +174,7 @@ trait GenericMethods
      * @param array  $results Table Data
      * @param array  $data    Params
      *
-     * @return \Common\Service\Table\TableBuilder
+     * @return TableBuilder
      */
     public function getTable($table, $results, $data = array())
     {
@@ -171,7 +182,7 @@ trait GenericMethods
             $data['url'] = $this->getPluginManager()->get('url');
         }
 
-        return $this->getServiceLocator()->get('Table')->buildTable($table, $results, $data, false);
+        return $this->tableBuilder->prepareTable($table, $results, $data);
     }
 
     /**
@@ -184,7 +195,7 @@ trait GenericMethods
      */
     public function isButtonPressed($button, $data = null)
     {
-        /** @var \Laminas\Http\Request $request */
+        /** @var Request $request */
         $request = $this->getRequest();
 
         if (is_null($data)) {
@@ -215,7 +226,7 @@ trait GenericMethods
      * @param boolean  $tables      Is tables
      * @param array    $fieldValues onSuccess callback additional params
      *
-     * @return \Common\Form\Form
+     * @return Form
      * @deprecated Used in 2 places only, better do not use and remove in future
      */
     public function generateFormWithData(
@@ -242,7 +253,7 @@ trait GenericMethods
      * @param bool     $tables      is table
      * @param array    $fieldValues onSuccess callback additional params
      *
-     * @return \Common\Form\Form
+     * @return Form
      * @deprecated Used twice only, better don't use and remove in future
      */
     protected function generateForm($name, $callback, $tables = false, $fieldValues = [])

@@ -170,7 +170,7 @@ return [
             'DataServiceManager' => 'Common\Service\Data\PluginManager',
             'translator' => 'MvcTranslator',
             'Laminas\Log' => 'Logger',
-            'TableBuilder' => 'Common\Service\Table\TableBuilderFactory',
+            'TableBuilder' => Common\Service\Table\TableBuilder::class,
             'NavigationFactory' => 'Common\Service\NavigationFactory',
             'QueryService' => \Common\Service\Cqrs\Query\CachingQueryService::class,
             'CommandService' => \Common\Service\Cqrs\Command\CommandService::class,
@@ -320,7 +320,7 @@ return [
             'Table' => '\Common\Service\Table\TableFactory',
             \Common\Service\Table\TableFactory::class => \Common\Service\Table\TableFactory::class,
             // Added in a true Laminas Framework V2 compatible factory for TableBuilder, eventually to replace Table above.
-            'Common\Service\Table\TableBuilderFactory' => 'Common\Service\Table\TableBuilderFactory',
+            Common\Service\Table\TableBuilder::class => Common\Service\Table\TableBuilderFactory::class,
             'ServiceApiResolver' => 'Common\Service\Api\ResolverFactory',
             'navigation' => 'Laminas\Navigation\Service\DefaultNavigationFactory',
             'SectionService' => '\Common\Controller\Service\SectionServiceFactory',
