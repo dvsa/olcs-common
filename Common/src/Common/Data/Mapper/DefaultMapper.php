@@ -7,7 +7,7 @@ use Laminas\Form\FormInterface;
 /**
  * Default data mapper
  */
-class DefaultMapper
+class DefaultMapper implements MapperInterface
 {
     /**
      * Should map data from a result array into an array suitable for a form
@@ -16,7 +16,7 @@ class DefaultMapper
      *
      * @return array
      */
-    public function mapFromResult(array $data): array
+    public static function mapFromResult(array $data): array
     {
         return ['fields' => $data];
     }

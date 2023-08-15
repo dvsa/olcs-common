@@ -1,11 +1,11 @@
 <?php
 
-
 namespace Common\Data\Mapper\Licence\Surrender;
 
+use Common\Data\Mapper\MapperInterface;
 use Common\RefData;
 
-class CommunityLicence
+class CommunityLicence implements MapperInterface
 {
     /**
      * Map data from form to DTO
@@ -33,7 +33,7 @@ class CommunityLicence
         return $mappedData[$formData['communityLicenceDocument']['communityLicenceDocument']];
     }
 
-    public function mapFromResult(array $data)
+    public static function mapFromResult(array $data)
     {
         $licenceDocumentStatus = $data["communityLicenceDocumentStatus"]["id"] ?? null;
 
