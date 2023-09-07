@@ -31,6 +31,7 @@ use Common\Service\Helper as HelperService;
 use Common\Service\Helper\DataHelperService;
 use Common\Service\Helper\StringHelperService;
 use Common\Service\Qa as QaService;
+use Common\Service\Review\LicenceConditionsUndertakingsReviewService;
 use Common\Service\Translator\TranslationLoader;
 use Common\Service\Translator\TranslationLoaderFactory;
 use Common\View\Helper\Panel;
@@ -182,6 +183,7 @@ return [
 
 
             'FormServiceManager' => Common\FormService\FormServiceManager::class,
+            'Review\LicenceConditionsUndertakings' => Common\Service\Review\LicenceConditionsUndertakingsReviewService::class,
         ],
         'invokables' => [
             'Common\Service\NavigationFactory' => 'Common\Service\NavigationFactory',
@@ -426,6 +428,7 @@ return [
             \Common\Controller\Lva\Adapters\VariationLvaAdapter::class => \Common\Controller\Lva\Factories\Adapter\VariationLvaAdapterFactory::class,
             \Common\Controller\Lva\Adapters\VariationPeopleAdapter::class => \Common\Controller\Lva\Factories\Adapter\VariationPeopleAdapterFactory::class,
             \Common\Controller\Lva\Adapters\VariationTransportManagerAdapter::class => \Common\Controller\Lva\Factories\Adapter\VariationTransportManagerAdapterFactory::class,
+            LicenceConditionsUndertakingsReviewService::class => Common\Service\Review\LicenceConditionsUndertakingsReviewServiceFactory::class,
         ],
     ],
     'file_uploader' => [
