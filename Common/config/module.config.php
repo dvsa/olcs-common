@@ -22,12 +22,16 @@ use Common\FormService\Form\Continuation\ConditionsUndertakings;
 use Common\FormService\Form\Continuation\ConditionsUndertakingsFactory;
 use Common\FormService\Form\Continuation\Declaration;
 use Common\FormService\Form\Continuation\DeclarationFactory;
+use Common\FormService\Form\Lva\Application;
+use Common\FormService\Form\Lva\BusinessDetails\ApplicationBusinessDetails;
 use Common\FormService\FormServiceAbstractFactory;
 use Common\FormService\FormServiceManager;
 use Common\Service\Cqrs\Command\CommandSender;
 use Common\Service\Cqrs\Query\QuerySender;
 use Common\Service\Data as DataService;
 use Common\Service\Data\Search\SearchType;
+use Common\FormService\Form\Lva as LvaFormService;
+use Common\FormService\Form\Continuation as ContinuationFormService;
 use Common\Service\Helper as HelperService;
 use Common\Service\Helper\DataHelperService;
 use Common\Service\Helper\StringHelperService;
@@ -521,7 +525,6 @@ return [
         ],
         'factories' => [
             'applicationName' => \Common\View\Helper\ApplicationNameFactory::class,
-            'config' => \Common\View\Helper\ConfigFactory::class,
             'version' => \Common\View\Helper\VersionFactory::class,
             'pageId' => \Common\View\Helper\PageIdFactory::class,
             'pageTitle' => \Common\View\Helper\PageTitleFactory::class,
@@ -538,6 +541,7 @@ return [
             \Common\Form\View\Helper\FormElementErrors::class => \Common\Form\View\Helper\FormElementErrorsFactory::class,
             \Common\Form\View\Helper\FormErrors::class => \Common\Form\View\Helper\FormErrorsFactory::class,
             \Common\Form\View\Helper\FormElement::class => \Common\Form\View\Helper\FormElementFactory::class,
+            \Common\View\Helper\Config::class => \Common\View\Helper\ConfigFactory::class,
         ],
         'aliases' => [
             'formElement' => \Common\Form\View\Helper\FormElement::class,
@@ -545,6 +549,7 @@ return [
             'formelementerrors' => \Common\Form\View\Helper\FormElementErrors::class,
             'formErrors' => \Common\Form\View\Helper\FormErrors::class,
             'formerrors' => \Common\Form\View\Helper\FormErrors::class,
+            'config' => \Common\View\Helper\Config::class,
         ],
     ],
     'view_manager' => [

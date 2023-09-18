@@ -48,15 +48,7 @@ class TableFactory implements FactoryInterface
         return $tableBuilderFactory($this->serviceLocator, TableBuilder::class);
     }
 
-    /**
-     * Wrap the prepare table method
-     *
-     * @param string $name
-     * @param array $data
-     * @param array $params
-     *
-     * @return TableBuilder
-     */
+
     public function prepareTable($name, array $data = array(), array $params = array())
     {
         return $this->getTableBuilder()->prepareTable($name, $data, $params);
