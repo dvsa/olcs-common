@@ -21,10 +21,8 @@ use ZfcRbac\Service\AuthorizationService;
  *
  * @author Joshua Curtis <josh.curtis@valtech.co.uk>
  */
-class Schedule41Controller extends AbstractController implements Interfaces\AdapterAwareInterface
+class Schedule41Controller extends AbstractController
 {
-    use Traits\AdapterAwareTrait;
-
     protected FormHelperService $formHelper;
     protected TableFactory $tableFactory;
     protected FlashMessengerHelperService $flashMessengerHelper;
@@ -55,7 +53,7 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
     public function licenceSearchAction()
     {
         $request = $this->getRequest();
-        $form = $this-$this->formHelper
+        $form = $this - $this->formHelper
             ->createFormWithRequest(
                 'Schedule41LicenceSearch',
                 $request

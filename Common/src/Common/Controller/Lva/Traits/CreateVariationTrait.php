@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Create Variation Trait
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva\Traits;
 
 /**

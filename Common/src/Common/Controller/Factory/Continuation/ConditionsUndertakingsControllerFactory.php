@@ -2,7 +2,6 @@
 
 namespace Common\Controller\Factory\Continuation;
 
-
 use Common\Controller\Continuation\ConditionsUndertakingsController;
 use Common\FormService\FormServiceManager;
 use Common\Service\Helper\TranslationHelperService;

@@ -215,6 +215,15 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
             ->with('Table')
             ->andReturn($mockTableBuilder);
 
+        $mockControllerPluginManager = m::mock();
+
+        $this->container
+            ->shouldReceive('get')
+            ->with('ControllerPluginManager')
+        ->andReturn($mockControllerPluginManager);
+
+        $mockControllerPluginManager->shouldReceive('get')->andReturn($mockFM);
+
         $mockFM
             ->shouldReceive('getMessages')
             ->with(AbstractController::FLASH_MESSENGER_CREATED_PERSON_NAMESPACE)

@@ -3,6 +3,7 @@
 namespace CommonTest\Controller\Traits\Stubs;
 
 use Common\Controller\Traits;
+use Common\Service\Helper\FormHelperService;
 
 /**
  * @author Dmitry Golubev <dmitrij.golubev@valtech.com>
@@ -10,4 +11,9 @@ use Common\Controller\Traits;
 class GenericMethodsStub
 {
     use Traits\GenericMethods;
+
+    public function __construct(FormHelperService $formHelper)
+    {
+        $this->formHelper = $formHelper;
+    }
 }

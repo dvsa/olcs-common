@@ -58,7 +58,6 @@ trait GenericReceipt
             throw new ResourceNotFoundException('Payment not found');
         }
 
-
         /** @var \Common\Service\Table\TableBuilder $table */
         $table = $this->tableFactory->buildTable('pay-fees', $fees, [], false);
 

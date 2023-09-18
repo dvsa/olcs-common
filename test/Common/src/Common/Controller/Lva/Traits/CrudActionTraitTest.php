@@ -2,7 +2,7 @@
 
 namespace CommonTest\Controller\Lva\Traits;
 
-use CommonTest\Bootstrap;
+use Common\Service\Helper\FlashMessengerHelperService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
@@ -12,7 +12,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class CrudActionTraitTest extends MockeryTestCase
 {
-    const ID = 9999;
+    public const ID = 9999;
 
     /** @var Stubs\CrudActionTraitStub | m\MockInterface */
     protected $sut;
@@ -21,13 +21,10 @@ class CrudActionTraitTest extends MockeryTestCase
 
     protected function setUp(): void
     {
-        $this->sm = Bootstrap::getServiceManager();
-
-        $this->sut = m::mock(Stubs\CrudActionTraitStub::class)
+        $this->mockFlashMessengerHelper = m::mock(FlashMessengerHelperService::class);
+        $this->sut = m::mock(Stubs\CrudActionTraitStub::class, [$this->mockFlashMessengerHelper])
             ->makePartial()
             ->shouldAllowMockingProtectedMethods();
-
-        $this->sut->setServiceLocator($this->sm);
     }
 
     public function tearDown(): void
@@ -232,10 +229,8 @@ class CrudActionTraitTest extends MockeryTestCase
         $childIdParamName = 'child_id';
         $route = null;
 
-        $mockFm = m::mock();
-        $this->sm->setService('Helper\FlashMessenger', $mockFm);
 
-        $mockFm->shouldReceive('addWarningMessage')
+        $this->mockFlashMessengerHelper->shouldReceive('addWarningMessage')
             ->once()
             ->with('please-select-row');
 

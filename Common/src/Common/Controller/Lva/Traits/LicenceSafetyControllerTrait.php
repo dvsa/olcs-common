@@ -65,11 +65,9 @@ trait LicenceSafetyControllerTrait
             $params = [
                 'id' => $this->getLicenceId()
             ];
-            $params['page'] = isset($query['page'])? $query['page'] : 1;
+            $params['page'] = isset($query['page']) ? $query['page'] : 1;
 
-            $params['limit'] = isset($query['limit'])
-                ? $query['limit']
-                : AbstractSafetyController::DEFAULT_TABLE_RECORDS_COUNT;
+            $params['limit'] = $query['limit'] ?? AbstractSafetyController::DEFAULT_TABLE_RECORDS_COUNT;
 
             $response = $this->handleQuery(Safety::create($params));
 

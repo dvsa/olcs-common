@@ -70,7 +70,7 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
         $this->commandService = $commandService;
         $this->uploadHelper = $uploadHelper;
 
-        $this->setAdapter($lvaAdapter);
+        $this->lvaAdapter = $lvaAdapter;
 
         parent::__construct($niTextTranslationUtil, $authService);
     }
@@ -86,7 +86,7 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
         $request = $this->getRequest();
         $id      = $this->getIdentifier();
         /** @var \Common\Controller\Lva\Adapters\AbstractFinancialEvidenceAdapter $adapter */
-        $adapter = $this->getAdapter();
+        $adapter = $this->lvaAdapter;
 
         // get data
         if ($request->isPost()) {
@@ -149,7 +149,7 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
     public function processFinancialEvidenceFileUpload($file)
     {
         /** @var \Common\Controller\Lva\Adapters\AbstractFinancialEvidenceAdapter $adapter */
-        $adapter = $this->getAdapter();
+        $adapter = $this->lvaAdapter;
 
         $id = $this->getIdentifier();
 
@@ -174,7 +174,7 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
     public function getDocuments()
     {
         /** @var \Common\Controller\Lva\Adapters\AbstractFinancialEvidenceAdapter $adapter */
-        $adapter = $this->getAdapter();
+        $adapter = $this->lvaAdapter;
 
         return $adapter->getDocuments(
             $this->getIdentifier()

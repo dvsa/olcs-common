@@ -19,7 +19,6 @@ use Dvsa\Olcs\Transfer\Command\CommunityLic\Restore as RestoreDto;
 use Common\Data\Mapper\Lva\CommunityLicence as CommunityLicMapper;
 use Dvsa\Olcs\Transfer\Query\CommunityLic\CommunityLicences;
 use Dvsa\Olcs\Transfer\Command\CommunityLic\Stop as StopDto;
-use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 use Dvsa\Olcs\Transfer\Query\CommunityLic\CommunityLicence;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
 use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
@@ -36,10 +35,9 @@ use ZfcRbac\Service\AuthorizationService;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractCommunityLicencesController extends AbstractController implements AdapterAwareInterface
+abstract class AbstractCommunityLicencesController extends AbstractController
 {
     use Traits\CrudTableTrait;
-    use Traits\AdapterAwareTrait;
 
     // See OLCS-16655, pagination is to be 50 per page only
     public const TABLE_RESULTS_PER_PAGE = 50;
@@ -91,7 +89,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         FormServiceManager $formServiceManager,
         ScriptFactory $scriptFactory,
         AnnotationBuilder $transferAnnotationBuilder,
-        CommandService $commandService,
+        CommandService $commandService
     ) {
         $this->formHelper = $formHelper;
         $this->flashMessengerHelper = $flashMessengerHelper;
@@ -241,7 +239,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     private function getForm()
     {
         /** @var \Laminas\Form\FormInterface $form */
-        $form = $this->formServiceManager->get(FormServiceManager::class)
+        $form = $this->formServiceManager
             ->get('lva-' . $this->lva . '-' . $this->section)
             ->getForm();
 

@@ -35,8 +35,6 @@ trait GenericUpload
         $loadCallback,
         $countSelector = null
     ) {
-
-
         $this->uploadHelper->setForm($form)
             ->setSelector($selector)
             ->setUploadCallback($uploadCallback)

@@ -25,6 +25,7 @@ use Common\FormService\Form\Continuation\DeclarationFactory;
 use Common\FormService\FormServiceAbstractFactory;
 use Common\FormService\FormServiceManager;
 use Common\Service\Cqrs\Command\CommandSender;
+use Common\Service\Cqrs\Query\QuerySender;
 use Common\Service\Data as DataService;
 use Common\Service\Data\Search\SearchType;
 use Common\Service\Helper as HelperService;
@@ -184,6 +185,7 @@ return [
 
             'FormServiceManager' => Common\FormService\FormServiceManager::class,
             'Review\LicenceConditionsUndertakings' => Common\Service\Review\LicenceConditionsUndertakingsReviewService::class,
+            'QuerySender' => \Common\Service\Cqrs\Query\QuerySender::class,
         ],
         'invokables' => [
             'Common\Service\NavigationFactory' => 'Common\Service\NavigationFactory',
@@ -251,6 +253,9 @@ return [
             StringHelperService::class => StringHelperService::class,
             DataHelperService::class => DataHelperService::class,
             HelperService\FileUploadHelperService::class => HelperService\FileUploadHelperService::class,
+            \Laminas\View\HelperPluginManager::class => \Laminas\View\HelperPluginManager::class,
+            HelperService\DateHelperService::class => HelperService\DateHelperService::class,
+            HelperService\ComplaintsHelperService::class => HelperService\ComplaintsHelperService::class,
         ],
         'factories' => [
             DataService\AbstractDataServiceServices::class => DataService\AbstractDataServiceServicesFactory::class,
@@ -289,7 +294,8 @@ return [
             Common\Service\Lva\VariationLvaService::class => Common\Service\Lva\VariationLvaServiceFactory::class,
 
             CommandSender::class => CommandSender::class,
-            'QuerySender' => \Common\Service\Cqrs\Query\QuerySender::class,
+            QuerySender::class => \Common\Service\Cqrs\Query\QuerySender::class,
+
             \Common\Preference\Language::class => \Common\Preference\Language::class,
             'LanguageListener' => \Common\Preference\LanguageListener::class,
             'CqrsRequest' => \Common\Service\Cqrs\RequestFactory::class,

@@ -3,7 +3,6 @@
 namespace Common\Controller\Lva;
 
 use Common\Controller\Lva\Adapters\GenericBusinessTypeAdapter;
-use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 use Common\Data\Mapper\Lva\BusinessType;
 use Common\FormService\FormServiceManager;
 use Common\Service\Cqrs\Query\QueryService;
@@ -23,10 +22,8 @@ use ZfcRbac\Service\AuthorizationService;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractBusinessTypeController extends AbstractController implements AdapterAwareInterface
+abstract class AbstractBusinessTypeController extends AbstractController
 {
-    use Traits\AdapterAwareTrait;
-
     protected FormHelperService $formHelper;
     protected FlashMessengerHelperService $flashMessengerHelper;
     protected FormServiceManager $formServiceManager;
@@ -72,7 +69,7 @@ abstract class AbstractBusinessTypeController extends AbstractController impleme
         $this->transferAnnotationBuilder = $transferAnnotationBuilder;
         $this->queryService = $queryService;
 
-        $this->setAdapter($lvaAdapter);
+        $this->lvaAdapter = $lvaAdapter;
 
         parent::__construct($niTextTranslationUtil, $authService);
     }

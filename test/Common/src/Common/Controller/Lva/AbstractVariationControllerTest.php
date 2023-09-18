@@ -1,15 +1,16 @@
 <?php
 
-/**
- * Abstract Variation Controller Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\Controller\Lva;
 
+use Common\Controller\Lva\AbstractVariationController;
+use Common\FormService\FormServiceManager;
+use Common\Service\Helper\TranslationHelperService;
 use CommonTest\Bootstrap;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Olcs\Service\Processing\CreateVariationProcessingService;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Abstract Variation Controller Test
@@ -19,17 +20,21 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class AbstractVariationControllerTest extends MockeryTestCase
 {
     protected $sut;
-    protected $sm;
 
     public function setUp(): void
     {
-        $this->sm = Bootstrap::getServiceManager();
-
-        $this->sut = m::mock('\Common\Controller\Lva\AbstractVariationController')
+        $this->mockNiTextTranslationUtil = m::mock(NiTextTranslation::class);
+        $this->mockAuthService = m::mock(AuthorizationService::class);
+        $this->mockTranslationHelper = m::mock(TranslationHelperService::class);
+        $this->mockProcessingCreateVariation = m::mock();
+        $this->sut = m::mock(AbstractVariationController::class, [
+            $this->mockNiTextTranslationUtil,
+            $this->mockAuthService,
+            $this->mockTranslationHelper,
+            $this->mockProcessingCreateVariation,
+            ])
             ->makePartial()
             ->shouldAllowMockingProtectedMethods();
-
-        $this->sut->setServiceLocator($this->sm);
     }
 
     /**
@@ -38,14 +43,8 @@ class AbstractVariationControllerTest extends MockeryTestCase
     public function testIndexAction($conditional)
     {
         // Mocks
-        $mockProcessingService = m::mock();
-        $mockTranslator = m::mock();
-
-        $mockTranslator->shouldReceive('translate')
+        $this->mockTranslationHelper->shouldReceive('translate')
             ->andReturn('sometext');
-
-        $this->sm->setService('Processing\CreateVariation', $mockProcessingService);
-        $this->sm->setService('Helper\Translation', $mockTranslator);
 
         $mockRequest = m::mock();
         $mockForm = m::mock('\Laminas\Form\Form');
@@ -61,7 +60,7 @@ class AbstractVariationControllerTest extends MockeryTestCase
             )
             ->andReturn('RENDER');
 
-        $mockProcessingService->shouldReceive('getForm')
+        $this->mockProcessingCreateVariation->shouldReceive('getForm')
             ->with($mockRequest)
             ->andReturn($mockForm);
 
@@ -81,9 +80,6 @@ class AbstractVariationControllerTest extends MockeryTestCase
             'foo' => 'bar'
         ];
 
-        // Mocks
-        $mockProcessingService = m::mock();
-        $this->sm->setService('Processing\CreateVariation', $mockProcessingService);
         $mockRequest = m::mock();
         $mockForm = m::mock('\Laminas\Form\Form');
 
@@ -100,7 +96,7 @@ class AbstractVariationControllerTest extends MockeryTestCase
         $mockForm->shouldReceive('isValid')
             ->andReturn(true);
 
-        $mockProcessingService->shouldReceive('getForm')
+        $this->mockProcessingCreateVariation->shouldReceive('getForm')
             ->with($mockRequest)
             ->andReturn($mockForm)
             ->shouldReceive('getDataFromForm')

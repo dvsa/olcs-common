@@ -3,7 +3,6 @@
 namespace Common\Controller\Lva;
 
 use Common\Controller\Lva\Adapters\AbstractTransportManagerAdapter;
-use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 use Common\Controller\Lva\Interfaces\AdapterInterface;
 use Common\Data\Mapper\Lva\NewTmUser as NewTmUserMapper;
 use Common\Data\Mapper\Lva\TransportManagerApplication as TransportManagerApplicationMapper;
@@ -12,21 +11,15 @@ use Common\FormService\FormServiceManager;
 use Common\Service\Cqrs\Command\CommandService;
 use Common\Service\Cqrs\Query\QuerySender;
 use Common\Service\Cqrs\Query\QueryService;
-use Common\Service\Helper\DateHelperService;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\FormHelperService;
-use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Helper\TransportManagerHelperService;
 use Common\Service\Script\ScriptFactory;
 use Common\Service\Table\TableFactory;
 use Dvsa\Olcs\Transfer\Command;
-use Dvsa\Olcs\Transfer\Query\TransportManagerApplication\GetDetails;
 use Dvsa\Olcs\Transfer\Query\User\UserSelfserve;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
 use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
-use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 use ZfcRbac\Service\AuthorizationService;
 
 /**
@@ -34,7 +27,7 @@ use ZfcRbac\Service\AuthorizationService;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractTransportManagersController extends AbstractController implements AdapterAwareInterface
+abstract class AbstractTransportManagersController extends AbstractController
 {
     use Traits\CrudTableTrait;
 
@@ -98,33 +91,9 @@ abstract class AbstractTransportManagersController extends AbstractController im
         $this->transferAnnotationBuilder = $transferAnnotationBuilder;
         $this->transportManagerHelper = $transportManagerHelper;
 
-        $this->setAdapter($lvaAdapter);
+        $this->lvaAdapter = $lvaAdapter;
 
         parent::__construct($niTextTranslationUtil, $authService);
-    }
-
-
-
-    /**
-     * Get Adapter
-     *
-     * @return AbstractTransportManagerAdapter
-     */
-    public function getAdapter()
-    {
-        return $this->adapter;
-    }
-
-    /**
-     * Set Adapter
-     *
-     * @param AdapterInterface $adapter Adapter
-     *
-     * @return void
-     */
-    public function setAdapter(AdapterInterface $adapter)
-    {
-        $this->adapter = $adapter;
     }
 
     /**
@@ -134,15 +103,15 @@ abstract class AbstractTransportManagersController extends AbstractController im
      */
     public function indexAction()
     {
-        $this->getAdapter()->addMessages($this->getLicenceId());
+        $this->lvaAdapter->addMessages($this->getLicenceId());
 
         /** @var \Laminas\Form\FormInterface $form */
         $form = $this->formServiceManager
             ->get('lva-' . $this->lva . '-transport_managers')
             ->getForm();
 
-        $table = $this->getAdapter()->getTable('lva-transport-managers-' . $this->location . '-' . $this->lva);
-        $tableData = $this->getAdapter()->getTableData($this->getIdentifier(), $this->getLicenceId());
+        $table = $this->lvaAdapter->getTable('lva-transport-managers-' . $this->location . '-' . $this->lva);
+        $tableData = $this->lvaAdapter->getTableData($this->getIdentifier(), $this->getLicenceId());
         if ($tableData === null) {
             return $this->notFoundAction();
         }
@@ -165,7 +134,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
         $form->setData($data);
 
         // if is it not required to have at least one TM, then remove the validator
-        if (!$this->getAdapter()->mustHaveAtLeastOneTm()) {
+        if (!$this->lvaAdapter->mustHaveAtLeastOneTm()) {
             $form->getInputFilter()->remove('table');
         }
 
@@ -510,7 +479,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
         // get ids to delete
         $ids = explode(',', $this->params('child_id'));
 
-        $this->getAdapter()->delete($ids, $this->getIdentifier());
+        $this->lvaAdapter->delete($ids, $this->getIdentifier());
     }
 
     /**
@@ -546,7 +515,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
     {
         if (
             $this->lva === 'licence'
-            && $this->getAdapter()->getNumberOfRows($this->getIdentifier(), $this->getLicenceId()) === 1
+            && $this->lvaAdapter->getNumberOfRows($this->getIdentifier(), $this->getLicenceId()) === 1
         ) {
             return true;
         }
@@ -564,7 +533,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
         $ids = explode(',', $this->params('child_id'));
 
         // get table data
-        $data = $this->getAdapter()->getTableData($this->getIdentifier(), $this->getLicenceId());
+        $data = $this->lvaAdapter->getTableData($this->getIdentifier(), $this->getLicenceId());
 
         $tmaIdsToDelete = [];
         foreach ($ids as $id) {

@@ -3,6 +3,8 @@
 namespace CommonTest\Controller\Lva\Traits\Stubs;
 
 use Common\Controller\Lva\Traits\CrudTableTrait;
+use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Helper\FormHelperService;
 use Laminas\Mvc\Controller\AbstractActionController;
 
 /**
@@ -15,6 +17,12 @@ class CrudTableTraitStub extends AbstractActionController
     use CrudTableTrait;
 
     protected $section = 'fake-section';
+
+    public function __construct(FlashMessengerHelperService $flashMessengerHelper, FormHelperService $formHelper)
+    {
+        $this->flashMessengerHelper = $flashMessengerHelper;
+        $this->formHelper = $formHelper;
+    }
 
     public function callHandlePostSave($prefix = null, $options = [])
     {

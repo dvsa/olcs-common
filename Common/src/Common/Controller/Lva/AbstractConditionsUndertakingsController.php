@@ -2,7 +2,6 @@
 
 namespace Common\Controller\Lva;
 
-use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 use Common\FormService\FormServiceManager;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\FormHelperService;
@@ -16,9 +15,8 @@ use ZfcRbac\Service\AuthorizationService;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractConditionsUndertakingsController extends AbstractController implements AdapterAwareInterface
+abstract class AbstractConditionsUndertakingsController extends AbstractController
 {
-    use Traits\AdapterAwareTrait;
     use Traits\CrudTableTrait;
 
     protected $section = 'conditions_undertakings';
@@ -53,7 +51,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
         $this->flashMessengerHelper = $flashMessengerHelper;
         $this->formServiceManager = $formServiceManager;
         $this->tableFactory = $tableFactory;
-        $this->setAdapter($lvaAdapter);
+        $this->lvaAdapter = $lvaAdapter;
 
         parent::__construct($niTextTranslationUtil, $authService);
     }
@@ -83,7 +81,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
 
         $form = $this->getForm();
 
-        $this->getAdapter()->attachMainScripts();
+        $this->lvaAdapter->attachMainScripts();
 
         return $this->render($this->section, $form, $this->getRenderVariables());
     }
@@ -129,7 +127,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
                 throw new \RuntimeException('Failed to get ConditionUndertaking');
             }
             $conditionUndertakingData = $response->getResult();
-            if (!$this->getAdapter()->canEditRecord($conditionUndertakingData)) {
+            if (!$this->lvaAdapter->canEditRecord($conditionUndertakingData)) {
                 $this->flashMessengerHelper
                     ->addErrorMessage('generic-cant-edit-message');
 
@@ -154,7 +152,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
 
         $form = $this->getConditionUndertakingForm();
 
-        $this->getAdapter()->alterForm($form, $this->getData());
+        $this->lvaAdapter->alterForm($form, $this->getData());
 
         $form->setData($formData);
 
@@ -211,7 +209,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
      */
     protected function create($formData)
     {
-        $command = $this->getAdapter()->getCreateCommand($formData, $this->lva, $this->getIdentifier());
+        $command = $this->lvaAdapter->getCreateCommand($formData, $this->lva, $this->getIdentifier());
 
         $response = $this->handleCommand($command);
         if (!$response->isOk()) {
@@ -229,7 +227,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
      */
     protected function update($formData)
     {
-        $command = $this->getAdapter()->getUpdateCommand($formData, $this->getIdentifier());
+        $command = $this->lvaAdapter->getUpdateCommand($formData, $this->getIdentifier());
 
         $response = $this->handleCommand($command);
         if (!$response->isOk()) {
@@ -248,7 +246,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
         $id = $this->params('child_id');
         $ids = explode(',', $id);
 
-        $command = $this->getAdapter()->getDeleteCommand($this->getIdentifier(), $ids);
+        $command = $this->lvaAdapter->getDeleteCommand($this->getIdentifier(), $ids);
 
         $response = $this->handleCommand($command);
         if (!$response->isOk()) {
@@ -294,11 +292,11 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
     protected function getTable()
     {
         $table = $this->tableFactory->prepareTable(
-            $this->getAdapter()->getTableName(),
+            $this->lvaAdapter->getTableName(),
             $this->getTableData()
         );
 
-        $this->getAdapter()->alterTable($table);
+        $this->lvaAdapter->alterTable($table);
 
         return $table;
     }

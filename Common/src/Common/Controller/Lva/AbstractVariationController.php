@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Abstract Variation Controller
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva;
 
 use Common\Service\Helper\FlashMessengerHelperService;

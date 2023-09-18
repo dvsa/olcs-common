@@ -1,10 +1,5 @@
 <?php
 
-/**
- * CheckForCrudAction trait
- *
- * @author Alex Peshkov <alex.pehkov@valtech.co.uk>
- */
 namespace Common\Controller\Traits;
 
 use Laminas\Http\Response;

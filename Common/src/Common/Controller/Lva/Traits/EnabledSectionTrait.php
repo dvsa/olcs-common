@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Enabled Section Trait
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva\Traits;
 
 use Common\RefData;

@@ -14,10 +14,8 @@ use ZfcRbac\Service\AuthorizationService;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class ReviewController extends AbstractController implements Interfaces\AdapterAwareInterface
+class ReviewController extends AbstractController
 {
-    use Traits\AdapterAwareTrait;
-
     /**
      * @param NiTextTranslation $niTextTranslationUtil
      * @param AuthorizationService $authService
