@@ -269,6 +269,11 @@ return [
 
             'Zend\Authentication\AuthenticationService' => \Laminas\Authentication\AuthenticationService::class,
             DataService\UserTypesListDataService::class => DataService\UserTypesListDataService::class,
+            HelperService\OppositionHelperService::class => HelperService\OppositionHelperService::class,
+            HelperService\ComplaintsHelperService::class => HelperService\ComplaintsHelperService::class,
+            HelperService\DateHelperService::class =>  HelperService\DateHelperService::class,
+            HelperService\DataHelperService::class =>  HelperService\DataHelperService::class,
+
         ],
         'factories' => [
             DataService\AbstractDataServiceServices::class => DataService\AbstractDataServiceServicesFactory::class,
@@ -532,7 +537,6 @@ return [
         ],
         'factories' => [
             'applicationName' => \Common\View\Helper\ApplicationNameFactory::class,
-            'config' => \Common\View\Helper\ConfigFactory::class,
             'version' => \Common\View\Helper\VersionFactory::class,
             'pageId' => \Common\View\Helper\PageIdFactory::class,
             'pageTitle' => \Common\View\Helper\PageTitleFactory::class,
@@ -549,6 +553,7 @@ return [
             \Common\Form\View\Helper\FormElementErrors::class => \Common\Form\View\Helper\FormElementErrorsFactory::class,
             \Common\Form\View\Helper\FormErrors::class => \Common\Form\View\Helper\FormErrorsFactory::class,
             \Common\Form\View\Helper\FormElement::class => \Common\Form\View\Helper\FormElementFactory::class,
+            \Common\View\Helper\Config::class => \Common\View\Helper\ConfigFactory::class,
         ],
         'aliases' => [
             'formElement' => \Common\Form\View\Helper\FormElement::class,
@@ -556,6 +561,7 @@ return [
             'formelementerrors' => \Common\Form\View\Helper\FormElementErrors::class,
             'formErrors' => \Common\Form\View\Helper\FormErrors::class,
             'formerrors' => \Common\Form\View\Helper\FormErrors::class,
+            'config' => \Common\View\Helper\Config::class,
         ],
     ],
     'view_manager' => [

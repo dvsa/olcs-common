@@ -760,14 +760,7 @@ class TableBuilder
         return $this->order;
     }
 
-    /**
-     * Prepare the table
-     *
-     * @param string|array $config
-     * @param array $data
-     * @param array $params
-     * @return \Common\Service\Table\TableBuilder
-     */
+
     public function prepareTable($config, array $data = array(), array $params = array())
     {
         $this->loadConfig($config);
