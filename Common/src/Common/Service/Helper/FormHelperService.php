@@ -530,7 +530,7 @@ class FormHelperService
     }
 
 
-    public function populateFormTable(Fieldset $fieldset, TableFactory $table, $tableFieldsetName = null)
+    public function populateFormTable(Fieldset $fieldset, $table, $tableFieldsetName = null)
     {
         $fieldset->get('table')->setTable($table, $tableFieldsetName);
         $fieldset->get('rows')->setValue(count($table->getRows()));
