@@ -1,5 +1,8 @@
 <?php
 
+use Common\Service\Table\Formatter\Date;
+use Common\Service\Table\Formatter\Name;
+
 return array(
     'variables' => array(
         'title' => 'selfserve-app-subSection-previous-history-criminal-conviction-tableHeader',
@@ -18,14 +21,14 @@ return array(
     'columns' => array(
         array(
             'title' => 'selfserve-app-subSection-previous-history-criminal-conviction-columnName',
-            'formatter' => 'Name',
+            'formatter' => Name::class,
             'type' => 'Action',
             'action' => 'edit'
         ),
         array(
             'title' => 'selfserve-app-subSection-previous-history-criminal-conviction-columnDate',
             'name' => 'convictionDate',
-            'formatter' => 'Date',
+            'formatter' => Date::class,
         ),
         array(
             'title' => 'selfserve-app-subSection-previous-history-criminal-conviction-columnOffence',

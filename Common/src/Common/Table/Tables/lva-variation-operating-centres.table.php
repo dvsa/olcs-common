@@ -1,5 +1,10 @@
 <?php
 
+use Common\Service\Table\Formatter\Address;
+use Common\Service\Table\Formatter\OcComplaints;
+use Common\Service\Table\Formatter\OpCentreDeltaSum;
+use Common\Service\Table\Formatter\Translate;
+
 return array(
     'variables' => array(
         'title' => 'application_operating-centres_authorisation.table.title',
@@ -28,7 +33,7 @@ return array(
             'type' => 'OperatingCentreVariationRecordAction',
             'action' => 'edit',
             'name' => 'operatingCentre->address',
-            'formatter' => 'Address',
+            'formatter' => Address::class,
             'addressFields' => 'BRIEF',
             'sort' => 'adr',
         ),
@@ -48,7 +53,7 @@ return array(
             'title' => 'application_operating-centres_authorisation.table.complaints',
             'isNumeric' => true,
             'name' => 'noOfComplaints',
-            'formatter' => 'OcComplaints'
+            'formatter' => OcComplaints::class
         ),
         array(
             'title' => 'markup-table-th-remove-restore', //view partial from olcs-common
@@ -62,16 +67,16 @@ return array(
         'total' => array(
             'type' => 'th',
             'content' => 'application_operating-centres_authorisation.table.footer.total',
-            'formatter' => 'Translate',
+            'formatter' => Translate::class,
             'colspan' => 1
         ),
         array(
-            'formatter' => 'OpCentreDeltaSum',
+            'formatter' => OpCentreDeltaSum::class,
             'align' => 'govuk-!-text-align-right',
             'name' => 'noOfVehiclesRequired'
         ),
         'trailersCol' => array(
-            'formatter' => 'OpCentreDeltaSum',
+            'formatter' => OpCentreDeltaSum::class,
             'align' => 'govuk-!-text-align-right',
             'name' => 'noOfTrailersRequired'
         ),

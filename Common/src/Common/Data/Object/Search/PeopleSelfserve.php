@@ -3,6 +3,7 @@
 namespace Common\Data\Object\Search;
 
 use Common\Data\Object\Search\Aggregations\Terms as Filter;
+use Common\Service\Table\Formatter\Date;
 
 /**
  * Class People
@@ -106,7 +107,7 @@ class PeopleSelfserve extends InternalSearchAbstract
             [
                 'permissionRequisites' => ['partner-user', 'partner-admin'],
                 'title' => 'Date of birth',
-                'formatter' => 'Date',
+                'formatter' => Date::class,
                 'name' => 'personBirthDate'
             ]
         ];

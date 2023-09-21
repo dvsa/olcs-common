@@ -5,6 +5,7 @@ namespace CommonTest\Service\Table;
 use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\ContentHelper;
 use Common\Service\Table\Exception\MissingFormatterException;
+use Common\Service\Table\Formatter\Date;
 use Common\Service\Table\Formatter\FormatterPluginManager;
 use Common\Service\Table\PaginationHelper;
 use Common\Service\Table\TableBuilder;
@@ -2652,7 +2653,7 @@ class TableBuilderTest extends MockeryTestCase
         );
 
         $column = array(
-            'formatter' => 'Date',
+            'formatter' => Date::class,
             'name' => 'date'
         );
 
@@ -2690,7 +2691,7 @@ class TableBuilderTest extends MockeryTestCase
             'type' => 'Action',
             'class' => '',
             'action' => 'edit',
-            'formatter' => 'Date',
+            'formatter' => Date::class,
             'name' => 'date'
         );
 

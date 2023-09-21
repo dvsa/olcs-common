@@ -1,5 +1,7 @@
 <?php
 
+use Common\Service\Table\Formatter\Address;
+
 return array(
     'variables' => array(
         'title' => 'transport-manager.employments.table',
@@ -25,7 +27,7 @@ return array(
         array(
             'title' => 'Address',
             'name' => 'contactDetails->address',
-            'formatter' => 'Address'
+            'formatter' => Address::class
         ),
         array(
             'title' => 'Position',

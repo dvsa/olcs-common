@@ -1,5 +1,7 @@
 <?php
 
+use Common\Service\Table\Formatter\Translate;
+
 return [
     'variables' => [
         'title' => 'lva.contact-details.phone-contact.table.title',
@@ -20,7 +22,7 @@ return [
             'action' => 'edit',
             'name' => 'phoneContactType->description',
             'width' => '40%',
-            'formatter' => 'Translate',
+            'formatter' => Translate::class,
             'keepForReadOnly' => true,
         ],
         [

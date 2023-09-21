@@ -3,6 +3,8 @@
 namespace Common\Data\Object\Search;
 
 use Common\Data\Object\Search\Aggregations\Terms as Filter;
+use Common\Service\Table\Formatter\Date;
+use Common\Service\Table\Formatter\LicenceApplication;
 use Common\Service\Table\Formatter\SearchAddressComplaint;
 use Common\Service\Table\Formatter\SearchAddressOperatorName;
 use Common\Service\Table\Formatter\SearchAddressOpposition;
@@ -67,7 +69,7 @@ class Address extends InternalSearchAbstract
         return [
             [
                 'title' => 'Licence / Application',
-                'formatter' => 'LicenceApplication'
+                'formatter' => LicenceApplication::class
             ],
             [
                 'title' => 'Operator name',
@@ -76,7 +78,7 @@ class Address extends InternalSearchAbstract
             ],
             [
                 'title' => 'Address',
-                'formatter' => 'Address',
+                'formatter' => \Common\Service\Table\Formatter\Address::class,
                 'addressFields' => ['saonDesc', 'paonDesc', 'street', 'locality', 'town', 'postcode']
             ],
             [
@@ -90,12 +92,12 @@ class Address extends InternalSearchAbstract
             ['title' => 'C/U', 'name' => 'conditions'],
             [
                 'title' => 'Date added',
-                'formatter' => 'Date',
+                'formatter' => Date::class,
                 'name' => 'createdOn'
             ],
             [
                 'title' => 'Date removed',
-                'formatter' => 'Date',
+                'formatter' => Date::class,
                 'name' => 'deletedDate'
             ],
         ];

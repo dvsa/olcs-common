@@ -1,5 +1,8 @@
 <?php
 
+use Common\Service\Table\Formatter\Date;
+use Common\Service\Table\Formatter\StackValue;
+
 $translationPrefix = 'application_vehicle-safety_vehicle-psv.table';
 
 return array(
@@ -22,23 +25,23 @@ return array(
         array(
             'title' => $translationPrefix . '.vrm',
             'stack' => 'vehicle->vrm',
-            'formatter' => 'StackValue',
+            'formatter' => StackValue::class,
             'sort' => 'v.vrm'
         ),
         array(
             'title' => $translationPrefix . '.make',
             'stack' => 'vehicle->makeModel',
-            'formatter' => 'StackValue'
+            'formatter' => StackValue::class,
         ),
         array(
             'title' => $translationPrefix . '.specified',
-            'formatter' => 'Date',
+            'formatter' => Date::class,
             'name' => 'specifiedDate',
             'sort' => 'specifiedDate'
         ),
         array(
             'title' => $translationPrefix . '.removed',
-            'formatter' => 'Date',
+            'formatter' => Date::class,
             'name' => 'removalDate',
             'sort' => 'removalDate'
         )

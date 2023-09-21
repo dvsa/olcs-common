@@ -40,7 +40,7 @@ class RefDataTest extends MockeryTestCase
 
         $col = [
             'name' => 'statusField',
-            'formatter' => 'RefData',
+            'formatter' => RefData::class,
             'separator' => '@unit_Sepr@',
         ];
 

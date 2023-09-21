@@ -1,5 +1,8 @@
 <?php
 use Common\Controller\Lva\AbstractSafetyController;
+use Common\Service\Table\Formatter\Address;
+use Common\Service\Table\Formatter\StackValue;
+use Common\Service\Table\Formatter\YesNo;
 
 $translationPrefix = 'safety-inspection-providers.table';
 
@@ -28,17 +31,17 @@ return array(
             'title' => $translationPrefix . '.providerName',
             'action' => 'edit',
             'stack' => 'contactDetails->fao',
-            'formatter' => 'StackValue',
+            'formatter' => StackValue::class,
             'type' => 'Action',
         ),
         array(
             'title' => $translationPrefix . '.external',
             'name' => 'isExternal',
-            'formatter' => 'YesNo'
+            'formatter' => YesNo::class
         ),
         array(
             'title' => $translationPrefix . '.address',
-            'formatter' => 'Address',
+            'formatter' => Address::class,
             'name' => 'contactDetails->address'
         ),
         array(

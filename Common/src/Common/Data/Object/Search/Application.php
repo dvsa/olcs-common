@@ -3,6 +3,7 @@
 namespace Common\Data\Object\Search;
 
 use Common\Data\Object\Search\Aggregations\Terms as Filter;
+use Common\Service\Table\Formatter\Date;
 use Common\Service\Table\Formatter\SearchAddressOperatorName;
 use Common\Service\Table\Formatter\SearchApplicationLicenceNo;
 
@@ -70,7 +71,7 @@ class Application extends InternalSearchAbstract
             ['title' => 'Application status', 'name' => 'appStatusDesc'],
             [
                 'title' => 'Date received',
-                'formatter' => 'Date',
+                'formatter' => Date::class,
                 'name' => 'receivedDate'
             ],
             [

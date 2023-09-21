@@ -3,6 +3,7 @@
 namespace Common\Data\Object\Search;
 
 use Common\Data\Object\Search\Aggregations\Terms as Filter;
+use Common\Service\Table\Formatter\Date;
 use Common\Service\Table\Formatter\SearchAddressOperatorName;
 
 /**
@@ -102,12 +103,12 @@ class Vehicle extends InternalSearchAbstract
             ['title' => 'Disc Number', 'name' => 'discNo'],
             [
                 'title' => 'Specified date',
-                'formatter' => 'Date',
+                'formatter' => Date::class,
                 'name' => 'specifiedDate'
             ],
             [
                 'title' => 'Removed date',
-                'formatter' => 'Date',
+                'formatter' => Date::class,
                 'name' => 'removalDate'
             ],
             [

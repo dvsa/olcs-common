@@ -1,6 +1,8 @@
 <?php
 
 use Common\Service\Table\Formatter\FeeAmount;
+use Common\Service\Table\Formatter\FeeAmountSum;
+use Common\Service\Table\Formatter\Translate;
 
 return array(
     'variables' => array(
@@ -38,12 +40,12 @@ return array(
         'total' => array(
             'type' => 'th',
             'content' => 'dashboard-fees-total',
-            'formatter' => 'Translate',
+            'formatter' => Translate::class,
             'colspan' => 3,
         ),
         array(
             'type' => 'th',
-            'formatter' => 'FeeAmountSum',
+            'formatter' => FeeAmountSum::class,
             'name' => 'outstanding',
             'align' => 'govuk-!-text-align-right',
         ),

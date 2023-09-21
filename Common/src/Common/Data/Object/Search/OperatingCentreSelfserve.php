@@ -86,7 +86,7 @@ class OperatingCentreSelfserve extends InternalSearchAbstract
             ],
             [
                 'title' => 'Address',
-                'formatter' => 'Address',
+                'formatter' => \Common\Service\Table\Formatter\Address::class,
                 'addressFields' => [
                     'street', 'locality', 'town', 'postcode'
                 ]
