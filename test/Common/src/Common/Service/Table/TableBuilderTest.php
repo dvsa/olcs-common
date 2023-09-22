@@ -2669,10 +2669,10 @@ class TableBuilderTest extends MockeryTestCase
             ->method('getContentHelper')
             ->will($this->returnValue($mockContentHelper));
 
-        $this->mockFormatterPluginManager->shouldReceive('has')->with('\Common\Service\Table\Formatter\Date')->andReturn(true);
-        $mockDateFormatter = m::mock('\Common\Service\Table\Formatter\Date')->makePartial();
+        $this->mockFormatterPluginManager->shouldReceive('has')->with(Date::class)->andReturn(true);
+        $mockDateFormatter = m::mock(Date::class)->makePartial();
         $mockDateFormatter->shouldReceive('format')->with(date('Y-m-d'))->andReturn(date('d/m/Y'));
-        $this->mockFormatterPluginManager->shouldReceive('get')->with('\Common\Service\Table\Formatter\Date')->andReturn($mockDateFormatter);
+        $this->mockFormatterPluginManager->shouldReceive('get')->with(Date::class)->andReturn($mockDateFormatter);
 
         $table->renderBodyColumn($row, $column);
     }
@@ -2714,10 +2714,10 @@ class TableBuilderTest extends MockeryTestCase
         $mockFormatterPluginManager = m::mock(FormatterPluginManager::class);
         $mockFormatterPluginManager->shouldReceive('has')->andReturn(true);
 
-        $this->mockFormatterPluginManager->shouldReceive('has')->with('\Common\Service\Table\Formatter\Date')->andReturn(true);
-        $mockDateFormatter = m::mock('\Common\Service\Table\Formatter\Date')->makePartial();
+        $this->mockFormatterPluginManager->shouldReceive('has')->with(Date::class)->andReturn(true);
+        $mockDateFormatter = m::mock(Date::class)->makePartial();
         $mockDateFormatter->shouldReceive('format')->with(date('Y-m-d'))->andReturn(date('d/m/Y'));
-        $this->mockFormatterPluginManager->shouldReceive('get')->with('\Common\Service\Table\Formatter\Date')->andReturn($mockDateFormatter);
+        $this->mockFormatterPluginManager->shouldReceive('get')->with(Date::class)->andReturn($mockDateFormatter);
 
         $table->renderBodyColumn($row, $column);
     }
