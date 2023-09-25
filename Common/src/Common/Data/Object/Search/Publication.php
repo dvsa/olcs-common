@@ -4,6 +4,7 @@ namespace Common\Data\Object\Search;
 
 use Common\Data\Object\Search\Aggregations\Terms as Filter;
 use Common\Data\Object\Search\Aggregations\DateRange as DateRange;
+use Common\Service\Table\Formatter\Date;
 
 /**
  * Class Publication
@@ -142,7 +143,7 @@ class Publication extends InternalSearchAbstract
             ),
             array(
                 'title' => 'Close date',
-                'formatter' => 'Date',
+                'formatter' => Date::class,
                 'name' => 'pubDate'
             ),
             array(

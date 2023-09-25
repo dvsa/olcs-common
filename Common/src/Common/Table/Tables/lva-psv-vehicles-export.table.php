@@ -1,5 +1,7 @@
 <?php
 
+use Common\Service\Table\Formatter\Date;
+
 $translationPrefix = 'application_vehicle-safety_vehicle-psv.table';
 
 return array(
@@ -20,12 +22,12 @@ return array(
         array(
             'title' => $translationPrefix . '.specified',
             'name' => 'specifiedDate',
-            'formatter' => 'Date',
+            'formatter' => Date::class,
         ),
         array(
             'title' => $translationPrefix . '.removed',
             'name' => 'removalDate',
-            'formatter' => 'Date',
+            'formatter' => Date::class,
         )
     )
 );

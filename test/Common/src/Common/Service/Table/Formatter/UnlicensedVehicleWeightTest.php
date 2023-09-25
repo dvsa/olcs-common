@@ -7,6 +7,7 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Helper\StackHelperService;
+use Common\Service\Table\Formatter\UnlicensedVehicleWeight;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
 /**
@@ -24,7 +25,7 @@ class UnlicensedVehicleWeightTest extends TestCase
         $column = [
             'title' => 'some.translation.key',
             'stack' => 'vehicle->platedWeight',
-            'formatter' => 'UnlicensedVehicleWeight',
+            'formatter' => UnlicensedVehicleWeight::class,
             'name' => 'weight',
         ];
 

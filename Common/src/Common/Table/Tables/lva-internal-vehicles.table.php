@@ -1,6 +1,10 @@
 <?php
 
 use Common\Controller\Lva\AbstractGoodsVehiclesController;
+use Common\Service\Table\Formatter\Date;
+use Common\Service\Table\Formatter\StackValueReplacer;
+use Common\Service\Table\Formatter\VehicleDiscNo;
+use Common\Service\Table\Formatter\VehicleRegistrationMark;
 
 $translationPrefix = 'application_vehicle-safety_vehicle.table';
 
@@ -39,7 +43,7 @@ return array(
             'title' => $translationPrefix . '.vrm',
             'name' => 'vrm',
             'action' => 'edit',
-            'formatter' => 'VehicleRegistrationMark',
+            'formatter' => VehicleRegistrationMark::class,
             'type' => 'Action',
             'sort' => 'v.vrm',
         ),
@@ -47,17 +51,17 @@ return array(
             'title' => $translationPrefix . '.weight',
             'isNumeric' => true,
             'stringFormat' => '{vehicle->platedWeight} kg',
-            'formatter' => 'StackValueReplacer'
+            'formatter' => StackValueReplacer::class
         ),
         array(
             'title' => $translationPrefix . '.specified',
-            'formatter' => 'Date',
+            'formatter' => Date::class,
             'name' => 'specifiedDate',
             'sort' => 'specifiedDate'
         ),
         array(
             'title' => $translationPrefix . '.removed',
-            'formatter' => 'Date',
+            'formatter' => Date::class,
             'name' => 'removalDate',
             'sort' => 'removalDate'
         ),
@@ -65,7 +69,7 @@ return array(
             'title' => $translationPrefix . '.disc-no',
             'isNumeric' => true,
             'name' => 'discNo',
-            'formatter' => 'VehicleDiscNo'
+            'formatter' => VehicleDiscNo::class
         ),
         array(
             'title' => 'markup-table-th-remove', //this is a view partial from olcs-common

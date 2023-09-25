@@ -4,6 +4,7 @@ namespace Common\Data\Object\Search;
 
 use Common\Data\Object\Search\Aggregations\Terms\BusRegStatus;
 use Common\Data\Object\Search\Aggregations\Terms\TrafficArea;
+use Common\Service\Table\Formatter\Date;
 use Common\Service\Table\Formatter\SearchAddressOperatorName;
 
 /**
@@ -74,7 +75,7 @@ class BusReg extends InternalSearchAbstract
             ['title' => 'Status', 'name' => 'busRegStatus'],
             [
                 'title' => 'Date first registered / cancelled',
-                'formatter' => 'Date',
+                'formatter' => Date::class,
                 'name' => 'date_1stReg'
             ],
             ['title' => 'Service number', 'name' => 'serviceNo'],

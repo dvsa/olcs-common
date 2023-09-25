@@ -16,12 +16,12 @@ return array(
         array(
             'title' => $translationPrefix . '.specified',
             'name' => 'specifiedDate',
-            'formatter' => 'DateTime'
+            'formatter' => \Common\Service\Table\Formatter\DateTime::class
         ),
         array(
             'title' => $translationPrefix . '.removed',
             'name' => 'removalDate',
-            'formatter' => 'DateTime'
+            'formatter' => \Common\Service\Table\Formatter\DateTime::class
         ),
         array(
             'title' => $translationPrefix . '.disc-no',
