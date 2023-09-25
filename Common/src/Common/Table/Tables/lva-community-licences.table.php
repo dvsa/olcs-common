@@ -1,5 +1,9 @@
 <?php
 
+use Common\Service\Table\Formatter\CommunityLicenceIssueNo;
+use Common\Service\Table\Formatter\CommunityLicenceStatus;
+use Common\Service\Table\Formatter\Date;
+
 return array(
     'variables' => array(
         'title' => 'lva-community-licences-table-title',
@@ -53,17 +57,17 @@ return array(
         array(
             'title' => 'lva-community-licences-table-column-issue-date',
             'name' => 'specifiedDate',
-            'formatter' => 'Date'
+            'formatter' => Date::class
         ),
         array(
             'title' => 'lva-community-licences-table-column-issue-number',
             'name' => 'issueNo',
-            'formatter' => 'CommunityLicenceIssueNo'
+            'formatter' => CommunityLicenceIssueNo::class
         ),
         array(
             'title' => 'lva-community-licences-table-column-status',
             'name' => 'status',
-            'formatter' => 'CommunityLicenceStatus'
+            'formatter' => CommunityLicenceStatus::class
         ),
         array(
             'title' => '',

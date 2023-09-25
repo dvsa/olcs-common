@@ -1,5 +1,8 @@
 <?php
 
+use Common\Service\Table\Formatter\TransportManagerDateOfBirth;
+use Common\Service\Table\Formatter\TransportManagerName;
+
 return array(
     'variables' => array(
         'title' => 'list-of-transport-managers',
@@ -18,7 +21,7 @@ return array(
     'columns' => array(
         array(
             'title' => 'Name',
-            'formatter' => 'TransportManagerName',
+            'formatter' => TransportManagerName::class,
             'internal' => false,
             'lva' => 'application',
         ),
@@ -29,7 +32,7 @@ return array(
         array(
             'title' => 'Date of birth',
             'name' => 'dob',
-            'formatter' => 'TransportManagerDateOfBirth',
+            'formatter' => TransportManagerDateOfBirth::class,
             'internal' => false,
             'lva' => 'application',
         ),

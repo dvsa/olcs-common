@@ -1,4 +1,7 @@
 <?php
+
+use Common\Service\Table\Formatter\Date;
+
 $prefix = 'selfserve-app-subSection-previous-history-previous-licence-';
 
 return array(
@@ -29,7 +32,7 @@ return array(
         array(
             'title' => $prefix . 'columnPurchaseDate',
             'name' => 'purchaseDate',
-            'formatter' => 'Date'
+            'formatter' => Date::class
         ),
         array(
             'title' => 'markup-table-th-remove', //this is a view partial from olcs-common

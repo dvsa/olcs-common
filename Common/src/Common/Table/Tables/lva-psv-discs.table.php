@@ -1,5 +1,7 @@
 <?php
 
+use Common\Service\Table\Formatter\YesNo;
+
 $translationPrefix = 'psv_discs.table';
 
 return array(
@@ -45,19 +47,19 @@ return array(
             'name' => 'discNo'
         ),
         array(
-            'formatter' => 'DateTime',
+            'formatter' => \Common\Service\Table\Formatter\DateTime::class,
             'title' => $translationPrefix . '.issuedDate',
             'name' => 'issuedDate'
         ),
         array(
-            'formatter' => 'DateTime',
+            'formatter' => \Common\Service\Table\Formatter\DateTime::class,
             'title' => $translationPrefix . '.ceasedDate',
             'name' => 'ceasedDate'
         ),
         array(
             'title' => $translationPrefix . '.replacement',
             'name' => 'isCopy',
-            'formatter' => 'YesNo'
+            'formatter' => YesNo::class
         ),
         array(
             'title' => 'markup-table-th-remove-replace', //this is a view partial from olcs-common

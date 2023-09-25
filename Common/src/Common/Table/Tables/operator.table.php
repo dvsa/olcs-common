@@ -1,5 +1,7 @@
 <?php
 
+use Common\Service\Table\Formatter\Date;
+
 return array(
     'variables' => array(
         'title' => 'Result list'
@@ -38,7 +40,7 @@ return array(
         array(
             'title' => 'Last act CN/Date',
             'name' => 'last_updated_on',
-            'formatter' => 'Date',
+            'formatter' => Date::class,
             'sort' => 'lastActionDate'
         ),
         array(

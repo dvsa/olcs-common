@@ -1,5 +1,10 @@
 <?php
 
+use Common\Service\Table\Formatter\Date;
+use Common\Service\Table\Formatter\DisqualifyUrl;
+use Common\Service\Table\Formatter\Name;
+use Common\Service\Table\Formatter\YesNo;
+
 return array(
     'variables' => array(
         'title' => 'selfserve-app-subSection-your-business-people-tableHeaderPeople',
@@ -22,22 +27,22 @@ return array(
             'title' => 'selfserve-app-subSection-your-business-people-columnName',
             'type' => 'VariationRecordAction',
             'action' => 'edit',
-            'formatter' => 'Name'
+            'formatter' => Name::class
         ),
         array(
             'title' => 'selfserve-app-subSection-your-business-people-columnHasOtherNames',
             'name' => 'otherName',
-            'formatter' => 'YesNo',
+            'formatter' => YesNo::class,
         ),
         array(
             'title' => 'selfserve-app-subSection-your-business-people-columnDate',
             'name' => 'birthDate',
-            'formatter' => 'Date',
+            'formatter' => Date::class,
         ),
         array(
             'title' => 'Disqual',
             'name' => 'disqual',
-            'formatter' => 'DisqualifyUrl'
+            'formatter' => DisqualifyUrl::class
         ),
         array(
             'title' => 'selfserve-app-subSection-your-business-people-columnPosition',

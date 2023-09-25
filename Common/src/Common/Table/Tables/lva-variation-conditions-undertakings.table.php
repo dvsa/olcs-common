@@ -1,5 +1,10 @@
 <?php
 
+use Common\Service\Table\Formatter\Address;
+use Common\Service\Table\Formatter\ConditionsUndertakingsType;
+use Common\Service\Table\Formatter\Translate;
+use Common\Service\Table\Formatter\YesNo;
+
 return array(
     'variables' => array(
         'within_form' => true,
@@ -32,16 +37,16 @@ return array(
         ),
         array(
             'title' => 'lva-conditions-undertakings-table-type',
-            'formatter' => 'ConditionsUndertakingsType',
+            'formatter' => ConditionsUndertakingsType::class,
         ),
         array(
             'title' => 'lva-conditions-undertakings-table-added-via',
-            'formatter' => 'Translate',
+            'formatter' => Translate::class,
             'name' => 'addedVia->description'
         ),
         array(
             'title' => 'lva-conditions-undertakings-table-fulfilled',
-            'formatter' => 'YesNo',
+            'formatter' => YesNo::class,
             'name' => 'isFulfilled'
         ),
         array(
@@ -56,7 +61,7 @@ return array(
 
                 if (isset($data['operatingCentre']['address'])) {
 
-                    $column['formatter'] = 'Address';
+                    $column['formatter'] = Address::class;
 
                     return $this->callFormatter($column, $data['operatingCentre']['address']);
                 }
@@ -68,7 +73,7 @@ return array(
             'title' => 'lva-conditions-undertakings-table-description',
             'name' => 'notes',
             'maxlength' => 30,
-            'formatter' => 'Comment'
+            'formatter' => \Common\Service\Table\Formatter\Comment::class
         ),
         array(
             'title' => 'markup-table-th-remove-restore', //view partial from olcs-common

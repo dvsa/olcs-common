@@ -1,5 +1,7 @@
 <?php
 
+use Common\Service\Table\Formatter\Date;
+
 return array(
     'variables' => array(
         'empty_message' => false,
@@ -18,7 +20,7 @@ return array(
         array(
             'title' => 'transport-manager.convictionsandpenalties.table.conviction-date',
             'name' => 'convictionDate',
-            'formatter' => 'Date',
+            'formatter' => Date::class,
             'type' => 'Action',
             'action' => 'edit-previous-conviction'
         ),

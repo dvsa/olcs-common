@@ -1,5 +1,8 @@
 <?php
 
+use Common\Service\Table\Formatter\Date;
+use Common\Service\Table\Formatter\YesNo;
+
 $translationPrefix = 'licence_goods-trailers_trailer.table';
 
 return array(
@@ -29,12 +32,12 @@ return array(
         ),
         array(
             'title' => $translationPrefix . '.specified',
-            'formatter' => 'Date',
+            'formatter' => Date::class,
             'name' => 'specifiedDate'
         ),
         array(
             'title' => $translationPrefix . '.longerSemiTrailer',
-            'formatter' => 'YesNo',
+            'formatter' => YesNo::class,
             'name' => 'isLongerSemiTrailer'
         ),
         array(

@@ -1,5 +1,7 @@
 <?php
 
+use Common\Service\Table\Formatter\Address;
+
 $translationPrefix = 'application_taxi-phv_licence.table';
 
 return array(
@@ -29,7 +31,7 @@ return array(
         ),
         array(
             'title' => $translationPrefix . '.address',
-            'formatter' => 'Address',
+            'formatter' => Address::class,
             'name' => 'address'
         ),
         array(

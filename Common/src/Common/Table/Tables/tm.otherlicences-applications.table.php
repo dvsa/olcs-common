@@ -1,5 +1,7 @@
 <?php
 
+use Common\Service\Table\Formatter\RefData;
+
 return array(
     'variables' => array(
         'within_form' => true,
@@ -24,7 +26,7 @@ return array(
         array(
             'title' => 'transport-manager.otherlicences.table.role',
             'name' => 'role',
-            'formatter' => 'RefData'
+            'formatter' => RefData::class
         ),
         array(
             'title' => 'transport-manager.otherlicences.table.total_auth_vehicles',
