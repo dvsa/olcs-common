@@ -25,8 +25,6 @@ use ZfcRbac\Service\AuthorizationService;
  */
 abstract class AbstractFinancialEvidenceController extends AbstractController
 {
-    use Traits\AdapterAwareTrait;
-
     protected FormHelperService $formHelper;
     protected FlashMessengerHelperService $flashMessengerHelper;
     protected FormServiceManager $formServiceManager;

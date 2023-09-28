@@ -58,6 +58,7 @@ class ReviewController extends AbstractContinuationController
         if (!$response->isOk()) {
             $this->addErrorMessage('unknown-error');
         }
+
         return $response->getResult()['markup'];
     }
 }

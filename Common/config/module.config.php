@@ -5,6 +5,7 @@ use Common\Auth\Adapter\CommandAdapterFactory;
 use Common\Auth\Service\AuthenticationServiceFactory;
 use Common\Auth\Service\AuthenticationServiceInterface;
 use Common\Controller\Continuation as ContinuationControllers;
+use Common\Controller\Lva\ReviewController;
 use Common\Data\Mapper\Licence\Surrender as SurrenderMapper;
 use Common\Data\Mapper\Permits as PermitsMapper;
 use Common\Form\Element\DynamicMultiCheckbox;
@@ -74,6 +75,7 @@ return [
             ContinuationControllers\ReviewController::class => \Common\Controller\Factory\Continuation\ChecklistControllerFactory::class,
             ContinuationControllers\StartController::class => \Common\Controller\Factory\Continuation\ChecklistControllerFactory::class,
             ContinuationControllers\SuccessController::class => \Common\Controller\Factory\Continuation\ChecklistControllerFactory::class,
+            ReviewController::class => Common\Controller\Lva\Factories\Controller\ReviewControllerFactory::class,
         ],
         'aliases' => [
             'ContinuationController/Start' => \Common\Controller\Continuation\StartController::class,
@@ -260,6 +262,7 @@ return [
             \Laminas\View\HelperPluginManager::class => \Laminas\View\HelperPluginManager::class,
             HelperService\DateHelperService::class => HelperService\DateHelperService::class,
             HelperService\ComplaintsHelperService::class => HelperService\ComplaintsHelperService::class,
+            \Laminas\Mvc\Router\Http\TreeRouteStack::class => \Laminas\Mvc\Router\Http\TreeRouteStack::class
         ],
         'factories' => [
             DataService\AbstractDataServiceServices::class => DataService\AbstractDataServiceServicesFactory::class,
