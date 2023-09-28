@@ -166,8 +166,7 @@ class ElasticSearch extends AbstractPlugin
      */
     public function getSearchForm()
     {
-        $form = $this->getController()->getViewHelperManager()
-            ->get('placeholder')
+        $form = $this->getController()->getPlaceholder()
             ->getContainer('headerSearch')
             ->getValue();
 
@@ -182,8 +181,7 @@ class ElasticSearch extends AbstractPlugin
     public function getFiltersForm()
     {
         /** @var \Laminas\Form\Form $form */
-        $form = $this->getController()->getViewHelperManager()
-            ->get('placeholder')
+        $form = $this->getController()->getPlaceholder()
             ->getContainer('searchFilter')
             ->getValue();
 
