@@ -4,6 +4,7 @@ namespace CommonTest\Controller\Plugin;
 
 use Common\Controller\Traits\ViewHelperManagerAware;
 use Laminas\Mvc\Controller\AbstractActionController as LaminasAbstractActionController;
+use Laminas\View\Helper\Placeholder;
 
 /**
  * Class TestController
@@ -13,7 +14,18 @@ use Laminas\Mvc\Controller\AbstractActionController as LaminasAbstractActionCont
  */
 class ControllerStub extends LaminasAbstractActionController
 {
-    use ViewHelperManagerAware;
+
+    protected Placeholder $placeholder;
+
+    public function __construct(Placeholder $placeholder)
+    {
+        $this->placeholder = $placeholder;
+    }
+
+    public function getPlaceholder()
+    {
+        return $this->placeholder;
+    }
 
     /**
      * Method to test the invoking of the plugin with array of options

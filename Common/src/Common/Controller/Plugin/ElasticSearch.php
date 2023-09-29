@@ -297,8 +297,7 @@ class ElasticSearch extends AbstractPlugin
             $nav->removePage($nav->findOneBy('id', $navId), true);
         }
 
-        $this->getController()->getViewHelperManager()
-            ->get('placeholder')
+        $this->getController()->getPlaceholder()
             ->getContainer('horizontalNavigationContainer')
             ->set($nav);
     }
