@@ -83,13 +83,15 @@ abstract class AbstractDiscsController extends AbstractController
         FlashMessengerHelperService $flashMessengerHelper,
         FormServiceManager $formServiceManager,
         TableFactory $tableFactory,
-        GuidanceHelperService $guidanceHelper
+        GuidanceHelperService $guidanceHelper,
+        ScriptFactory $scriptFactory
     ) {
         $this->formHelper = $formHelper;
         $this->flashMessengerHelper = $flashMessengerHelper;
         $this->formServiceManager = $formServiceManager;
         $this->tableFactory = $tableFactory;
         $this->guidanceHelper = $guidanceHelper;
+        $this->scriptFactory = $scriptFactory;
 
         parent::__construct($niTextTranslationUtil, $authService);
     }
