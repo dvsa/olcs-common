@@ -9,6 +9,7 @@ use Common\FormService\Form\Lva\TypeOfLicence\AbstractTypeOfLicence as TypeOfLic
 use Common\FormService\FormServiceManager;
 use Common\RefData;
 use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Helper\FormHelperService;
 use Common\Service\Script\ScriptFactory;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateTypeOfLicence;
 use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
@@ -25,6 +26,7 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
     protected FlashMessengerHelperService $flashMessengerHelper;
     protected ScriptFactory $scriptFactory;
     protected FormServiceManager $formServiceManager;
+    protected FormHelperService $formHelper;
 
     /**
      * @param NiTextTranslation $niTextTranslationUtil
@@ -32,17 +34,20 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
      * @param FlashMessengerHelperService $flashMessengerHelper
      * @param ScriptFactory $scriptFactory
      * @param FormServiceManager $formServiceManager
+     * @param FormHelperService $formHelper
      */
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
         FlashMessengerHelperService $flashMessengerHelper,
         ScriptFactory $scriptFactory,
-        FormServiceManager $formServiceManager
+        FormServiceManager $formServiceManager,
+        FormHelperService $formHelper
     ) {
         $this->scriptFactory = $scriptFactory;
         $this->flashMessengerHelper = $flashMessengerHelper;
         $this->formServiceManager = $formServiceManager;
+        $this->formHelper = $formHelper;
 
         parent::__construct($niTextTranslationUtil, $authService, $flashMessengerHelper, $scriptFactory);
     }
