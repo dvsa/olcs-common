@@ -3,17 +3,14 @@
 namespace Common\Controller\Lva;
 
 use Common\Category;
-use Common\Data\Mapper\Lva\GoodsVehiclesVehicle;
 use Common\Data\Mapper\Lva\OperatingCentre;
 use Common\Data\Mapper\Lva\OperatingCentres;
 use Common\FormService\FormServiceManager;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\FormHelperService;
-use Common\Service\Helper\GuidanceHelperService;
 use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Lva\VariationLvaService;
 use Common\Service\Script\ScriptFactory;
-use Common\Service\Table\TableFactory;
 use Dvsa\Olcs\Transfer\Command\Application\CreateOperatingCentre as AppCreateOperatingCentre;
 use Dvsa\Olcs\Transfer\Command\Application\DeleteOperatingCentres as AppDeleteOperatingCentres;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateOperatingCentres as AppUpdateOperatingCentres;
@@ -30,7 +27,6 @@ use Dvsa\Olcs\Transfer\Query\Licence\OperatingCentres as LicOperatingCentres;
 use Dvsa\Olcs\Transfer\Query\LicenceOperatingCentre\LicenceOperatingCentre;
 use Dvsa\Olcs\Transfer\Query\VariationOperatingCentre\VariationOperatingCentre;
 use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
-use Laminas\Mvc\MvcEvent;
 use ZfcRbac\Service\AuthorizationService;
 
 /**

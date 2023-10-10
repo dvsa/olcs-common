@@ -4,9 +4,9 @@ namespace Common\Controller\Continuation;
 
 use Common\FormService\FormServiceManager;
 use Common\Service\Helper\TranslationHelperService;
+use Dvsa\Olcs\Transfer\Query\ContinuationDetail\Review as ReviewQuery;
 use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\View\Model\ViewModel;
-use Dvsa\Olcs\Transfer\Query\ContinuationDetail\Review as ReviewQuery;
 use ZfcRbac\Service\AuthorizationService;
 
 /**

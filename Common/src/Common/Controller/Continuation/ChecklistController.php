@@ -2,13 +2,13 @@
 
 namespace Common\Controller\Continuation;
 
+use Common\Data\Mapper\Continuation\LicenceChecklist as LicenceChecklistMapper;
 use Common\FormService\FormServiceManager;
+use Common\RefData;
 use Common\Service\Helper\TranslationHelperService;
+use Dvsa\Olcs\Transfer\Query\ContinuationDetail\LicenceChecklist as LicenceChecklistQuery;
 use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\View\Model\ViewModel;
-use Dvsa\Olcs\Transfer\Query\ContinuationDetail\LicenceChecklist as LicenceChecklistQuery;
-use Common\Data\Mapper\Continuation\LicenceChecklist as LicenceChecklistMapper;
-use Common\RefData;
 use ZfcRbac\Service\AuthorizationService;
 
 /**

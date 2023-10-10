@@ -2,10 +2,10 @@
 
 namespace Common\Controller\Lva\Traits;
 
+use Common\Controller\Lva\AbstractSafetyController;
 use Dvsa\Olcs\Transfer\Command\Application\DeleteWorkshop;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateSafety;
 use Dvsa\Olcs\Transfer\Query\Application\Safety;
-use Common\Controller\Lva\AbstractSafetyController;
 
 /**
  * Application Safety Controller Trait

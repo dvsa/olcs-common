@@ -2,7 +2,6 @@
 
 namespace Common\Controller\Lva\Adapters;
 
-use Common\Service\Data\CategoryDataService as Category;
 use Interop\Container\ContainerInterface;
 
 class VariationFinancialEvidenceAdapter extends ApplicationFinancialEvidenceAdapter

@@ -11,7 +11,6 @@ use Dvsa\Olcs\Transfer\Command as TransferCmd;
 use Dvsa\Olcs\Transfer\Query as TransferQry;
 use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\Form\Form;
-use Laminas\Mvc\MvcEvent;
 use ZfcRbac\Service\AuthorizationService;
 
 /**

@@ -2,31 +2,31 @@
 
 namespace Common\Controller\Lva;
 
+use Common\Data\Mapper\Lva\CommunityLicence as CommunityLicMapper;
 use Common\Form\Form;
 use Common\FormService\FormServiceManager;
+use Common\RefData;
 use Common\Service\Cqrs\Command\CommandService;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\FormHelperService;
 use Common\Service\Script\ScriptFactory;
-use Dvsa\Olcs\Transfer\Query\Licence\Licence;
-use Dvsa\Olcs\Transfer\Command\CommunityLic\Application\CreateOfficeCopy as ApplicationCreateOfficeCopy;
-use Dvsa\Olcs\Transfer\Command\CommunityLic\Licence\CreateOfficeCopy as LicenceCreateOfficeCopy;
+use Common\Service\Table\TableBuilder;
+use Dvsa\Olcs\Transfer\Command as TransferCmd;
 use Dvsa\Olcs\Transfer\Command\CommunityLic\Application\Create as ApplicationCreateCommunityLic;
-use Dvsa\Olcs\Transfer\Command\CommunityLic\Licence\Create as LicenceCreateCommunityLic;
+use Dvsa\Olcs\Transfer\Command\CommunityLic\Application\CreateOfficeCopy as ApplicationCreateOfficeCopy;
 use Dvsa\Olcs\Transfer\Command\CommunityLic\EditSuspension as EditSuspensionDto;
+use Dvsa\Olcs\Transfer\Command\CommunityLic\Licence\Create as LicenceCreateCommunityLic;
+use Dvsa\Olcs\Transfer\Command\CommunityLic\Licence\CreateOfficeCopy as LicenceCreateOfficeCopy;
 use Dvsa\Olcs\Transfer\Command\CommunityLic\Reprint as ReprintDto;
 use Dvsa\Olcs\Transfer\Command\CommunityLic\Restore as RestoreDto;
-use Common\Data\Mapper\Lva\CommunityLicence as CommunityLicMapper;
-use Dvsa\Olcs\Transfer\Query\CommunityLic\CommunityLicences;
 use Dvsa\Olcs\Transfer\Command\CommunityLic\Stop as StopDto;
 use Dvsa\Olcs\Transfer\Query\CommunityLic\CommunityLicence;
+use Dvsa\Olcs\Transfer\Query\CommunityLic\CommunityLicences;
+use Dvsa\Olcs\Transfer\Query\Licence\Licence;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
 use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
-use Olcs\Mvc\Controller\ParameterProvider\GenericList;
-use Dvsa\Olcs\Transfer\Command as TransferCmd;
-use Common\Service\Table\TableBuilder;
 use Laminas\View\Model\ViewModel;
-use Common\RefData;
+use Olcs\Mvc\Controller\ParameterProvider\GenericList;
 use RuntimeException;
 use ZfcRbac\Service\AuthorizationService;
 

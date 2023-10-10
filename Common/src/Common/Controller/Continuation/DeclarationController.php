@@ -5,6 +5,7 @@ namespace Common\Controller\Continuation;
 use Common\FeatureToggle;
 use Common\Form\Declaration;
 use Common\FormService\FormServiceManager;
+use Common\RefData;
 use Common\Service\Helper\FormHelperService;
 use Common\Service\Helper\TranslationHelperService;
 use Dvsa\Olcs\Transfer\Command\ContinuationDetail\Submit;
@@ -13,7 +14,6 @@ use Dvsa\Olcs\Transfer\Query\FeatureToggle\IsEnabled as IsEnabledQry;
 use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\Http\Response;
 use Laminas\View\Model\ViewModel;
-use Common\RefData;
 use ZfcRbac\Service\AuthorizationService;
 
 /**

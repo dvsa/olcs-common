@@ -3,10 +3,10 @@
 namespace Common\Controller;
 
 use Common\Controller\Interfaces\ToggleAwareInterface;
+use Common\Controller\Plugin\FeaturesEnabled as FeaturesEnabledPlugin;
 use Common\Service\Cqrs\Response;
 use Dvsa\Olcs\Transfer\Command\CommandInterface;
 use Dvsa\Olcs\Transfer\Query\QueryInterface;
-use Common\Controller\Plugin\FeaturesEnabled as FeaturesEnabledPlugin;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\MvcEvent;
 

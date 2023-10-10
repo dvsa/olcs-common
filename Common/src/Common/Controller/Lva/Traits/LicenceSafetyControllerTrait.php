@@ -2,11 +2,11 @@
 
 namespace Common\Controller\Lva\Traits;
 
+use Common\Controller\Lva\AbstractSafetyController;
 use Dvsa\Olcs\Transfer\Command\Licence\UpdateSafety;
 use Dvsa\Olcs\Transfer\Command\Workshop\DeleteWorkshop;
 use Dvsa\Olcs\Transfer\Query\Licence\Safety;
 use Laminas\Form\Form;
-use Common\Controller\Lva\AbstractSafetyController;
 
 /**
  * Licence Safety Controller Trait

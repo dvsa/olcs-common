@@ -7,7 +7,6 @@ use Common\Service\Data\Search\SearchType;
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
-use Laminas\Mvc\Controller\Plugin\PluginInterface;
 
 /**
  * ElasticSearch Factory

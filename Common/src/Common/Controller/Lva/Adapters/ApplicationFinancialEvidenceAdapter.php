@@ -5,7 +5,6 @@ namespace Common\Controller\Lva\Adapters;
 use Common\Service\Cqrs\Query\CachingQueryService;
 use Common\Service\Data\CategoryDataService as Category;
 use Dvsa\Olcs\Transfer\Query\Application\FinancialEvidence;
-use Common\RefData;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
 use Interop\Container\ContainerInterface;
 

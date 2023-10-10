@@ -2,8 +2,8 @@
 
 namespace Common\Controller\Lva\Traits;
 
-use Olcs\View\Model\ViewModel;
 use Laminas\Http\Response;
+use Olcs\View\Model\ViewModel;
 
 /**
  * Crud table trait

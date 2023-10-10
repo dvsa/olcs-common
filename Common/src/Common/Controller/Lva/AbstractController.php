@@ -5,6 +5,7 @@ namespace Common\Controller\Lva;
 use Common\Controller\Traits\GenericUpload;
 use Common\Exception\ResourceConflictException;
 use Common\RefData;
+use Common\Service\Table\TableBuilder;
 use Common\Util;
 use Dvsa\Olcs\Transfer\Query\Application\Application;
 use Dvsa\Olcs\Transfer\Query\Licence\Licence;
@@ -13,7 +14,6 @@ use Laminas\Form\Form;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\Exception;
 use Laminas\Mvc\MvcEvent;
-use Common\Service\Table\TableBuilder;
 use ZfcRbac\Service\AuthorizationService;
 
 /**

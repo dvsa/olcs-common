@@ -3,8 +3,8 @@
 namespace Common\Controller\Plugin;
 
 use Laminas\Mvc\Controller\Plugin\AbstractPlugin;
-use Laminas\View\Model\ViewModel;
 use Laminas\Session\Container;
+use Laminas\View\Model\ViewModel;
 
 /**
  * Class ElasticSearch - Generates and processes calls to Elastic Search

@@ -3,10 +3,9 @@
 namespace Common\Controller\Lva;
 
 use Common\Controller\Lva\Adapters\AbstractTransportManagerAdapter;
-use Common\Controller\Lva\Interfaces\AdapterInterface;
 use Common\Data\Mapper\Lva\NewTmUser as NewTmUserMapper;
-use Common\Data\Mapper\Lva\TransportManagerApplication as TransportManagerApplicationMapper;
 use Common\Data\Mapper\Lva\TransportManagerApplication;
+use Common\Data\Mapper\Lva\TransportManagerApplication as TransportManagerApplicationMapper;
 use Common\FormService\FormServiceManager;
 use Common\Service\Cqrs\Command\CommandService;
 use Common\Service\Cqrs\Query\QuerySender;

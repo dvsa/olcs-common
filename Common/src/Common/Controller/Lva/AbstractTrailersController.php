@@ -8,7 +8,6 @@ use Common\Service\Cqrs\Query\QuerySender;
 use Common\Service\Helper\DateHelperService;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\FormHelperService;
-use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Script\ScriptFactory;
 use Common\Service\Table\TableBuilder as Table;
 use Common\Service\Table\TableFactory;

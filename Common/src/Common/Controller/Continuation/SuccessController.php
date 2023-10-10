@@ -3,11 +3,10 @@
 namespace Common\Controller\Continuation;
 
 use Common\FormService\FormServiceManager;
+use Common\RefData;
 use Common\Service\Helper\TranslationHelperService;
 use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\View\Model\ViewModel;
-use Dvsa\Olcs\Transfer\Query\ContinuationDetail\Get as GetContinuationDetail;
-use Common\RefData;
 use ZfcRbac\Service\AuthorizationService;
 
 /**

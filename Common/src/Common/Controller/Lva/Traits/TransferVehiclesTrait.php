@@ -2,8 +2,8 @@
 
 namespace Common\Controller\Lva\Traits;
 
-use Dvsa\Olcs\Transfer\Query\Licence\OtherActiveLicences;
 use Dvsa\Olcs\Transfer\Command\Licence\TransferVehicles;
+use Dvsa\Olcs\Transfer\Query\Licence\OtherActiveLicences;
 
 /**
  * Transfer Vehicles Trait

@@ -5,7 +5,6 @@ namespace Common\Controller\Lva;
 use Common\Data\Mapper\Lva\LicenceHistory as LicenceHistoryMapper;
 use Common\Data\Mapper\Lva\OtherLicence as OtherLicenceMapper;
 use Common\FormService\FormServiceManager;
-use Common\Service\Helper\DataHelperService;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\FormHelperService;
 use Common\Service\Helper\StringHelperService;

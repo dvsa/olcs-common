@@ -2,6 +2,7 @@
 
 namespace Common\Controller\Lva;
 
+use Common\Data\Mapper\Lva\FinancialEvidence;
 use Common\FormService\FormServiceManager;
 use Common\Service\Cqrs\Command\CommandService;
 use Common\Service\Helper\FileUploadHelperService;
@@ -14,7 +15,6 @@ use Common\View\Helper\ReturnToAddress;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateFinancialEvidence;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
 use Dvsa\Olcs\Utils\Helper\ValueHelper;
-use Common\Data\Mapper\Lva\FinancialEvidence;
 use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use ZfcRbac\Service\AuthorizationService;
 

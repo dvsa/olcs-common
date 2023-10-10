@@ -2,10 +2,7 @@
 
 namespace Common\Controller\Lva\Traits;
 
-use Common\Controller\Interfaces\MethodToggleAwareInterface;
-use Common\Service\Cqrs\Query\QuerySender;
 use Common\Controller\Plugin\FeaturesEnabledForMethod as FeaturesEnabledForMethodPlugin;
-use Laminas\Mvc\MvcEvent;
 
 /**
  * @method FeaturesEnabledForMethodPlugin featuresEnabledForMethod(array $toggleConfig, $method)

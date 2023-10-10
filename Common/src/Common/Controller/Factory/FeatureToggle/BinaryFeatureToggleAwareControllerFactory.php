@@ -8,8 +8,6 @@ use Common\Service\Cqrs\Query\QuerySender;
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
-use Laminas\ServiceManager\ServiceLocatorAwareInterface;
-use Laminas\ServiceManager\ServiceManager;
 
 /**
  * A factory that enables developers to create a controller in two different ways depending on whether a  feature toggle

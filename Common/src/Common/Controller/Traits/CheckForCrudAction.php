@@ -3,7 +3,6 @@
 namespace Common\Controller\Traits;
 
 use Laminas\Http\Response;
-use Laminas\View\Model\ViewModel;
 
 /**
  * CheckForCrudAction trait

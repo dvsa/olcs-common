@@ -2,9 +2,9 @@
 
 namespace Common\Controller\Lva\Adapters;
 
+use Common\Controller\Lva\Interfaces\LvaAdapterInterface;
 use Interop\Container\ContainerInterface;
 use Laminas\Form\Form;
-use Common\Controller\Lva\Interfaces\LvaAdapterInterface;
 
 abstract class AbstractLvaAdapter extends AbstractControllerAwareAdapter implements LvaAdapterInterface
 {

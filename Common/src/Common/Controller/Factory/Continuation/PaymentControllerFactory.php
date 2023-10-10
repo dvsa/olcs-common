@@ -4,7 +4,6 @@ namespace Common\Controller\Factory\Continuation;
 
 use Common\Controller\Continuation\PaymentController;
 use Common\FormService\FormServiceManager;
-use Common\Service\Helper\FormHelperService;
 use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\TableFactory;

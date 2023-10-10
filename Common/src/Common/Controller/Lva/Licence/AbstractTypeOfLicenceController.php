@@ -3,6 +3,7 @@
 namespace Common\Controller\Lva\Licence;
 
 use Common\Controller\Lva;
+use Common\Data\Mapper\Lva\TypeOfLicence as TypeOfLicenceMapper;
 use Common\FormService\FormServiceManager;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Lva\VariationLvaService;
@@ -10,7 +11,6 @@ use Common\Service\Script\ScriptFactory;
 use Dvsa\Olcs\Transfer\Query\Licence\TypeOfLicence;
 use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\Http\Response;
-use Common\Data\Mapper\Lva\TypeOfLicence as TypeOfLicenceMapper;
 use ZfcRbac\Service\AuthorizationService;
 
 /**
