@@ -56,8 +56,7 @@ return [
         // @NOTE These delegators can live in common as both internal and external app controllers currently use the
         // same adapter. Self Serve registers these itself within the application module.
         'invokables' => [
-            'Common\Controller\File' => 'Common\Controller\FileController',
-            'Common\Controller\FormRewrite' => 'Common\Controller\FormRewriteController',
+            \Common\Controller\FileController::class => \Common\Controller\FileController::class,
             Common\Controller\TransportManagerReviewController::class =>
                 Common\Controller\TransportManagerReviewController::class,
             \Common\Controller\ErrorController::class => \Common\Controller\ErrorController::class,
@@ -76,8 +75,10 @@ return [
             ContinuationControllers\StartController::class => \Common\Controller\Factory\Continuation\ChecklistControllerFactory::class,
             ContinuationControllers\SuccessController::class => \Common\Controller\Factory\Continuation\ChecklistControllerFactory::class,
             ReviewController::class => Common\Controller\Lva\Factories\Controller\ReviewControllerFactory::class,
+            \Common\Controller\Lva\Schedule41Controller::class => \Common\Controller\Lva\Factories\Controller\Schedule41ControllerFactory::class,
         ],
         'aliases' => [
+            'Common\Controller\File' => \Common\Controller\FileController::class,
             'ContinuationController/Start' => \Common\Controller\Continuation\StartController::class,
             'ContinuationController/Checklist' => \Common\Controller\Continuation\ChecklistController::class,
             'ContinuationController/ConditionsUndertakings' =>

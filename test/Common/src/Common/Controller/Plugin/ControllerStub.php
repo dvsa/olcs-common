@@ -14,7 +14,6 @@ use Laminas\View\Helper\Placeholder;
  */
 class ControllerStub extends LaminasAbstractActionController
 {
-
     protected Placeholder $placeholder;
 
     public function __construct(Placeholder $placeholder)

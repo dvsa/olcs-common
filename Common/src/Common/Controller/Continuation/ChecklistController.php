@@ -16,9 +16,9 @@ use ZfcRbac\Service\AuthorizationService;
  */
 class ChecklistController extends AbstractContinuationController
 {
-    const FINANCES_ROUTE = 'continuation/finances';
-    const DECLARATION_ROUTE = 'continuation/declaration';
-    const CONDITIONS_UNDERTAKINGS_ROUTE = 'continuation/conditions-undertakings';
+    public const FINANCES_ROUTE = 'continuation/finances';
+    public const DECLARATION_ROUTE = 'continuation/declaration';
+    public const CONDITIONS_UNDERTAKINGS_ROUTE = 'continuation/conditions-undertakings';
 
     protected $layout = 'pages/continuation-checklist';
     protected $checklistSectionLayout = 'layouts/simple';

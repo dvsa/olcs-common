@@ -89,7 +89,9 @@ class DeclarationController extends AbstractContinuationController
 
                     $returnUrl = $this->url()->fromRoute(
                         'continuation/declaration',
-                        ['continuationDetailId' => $continuationDetail['id']], [], true
+                        ['continuationDetailId' => $continuationDetail['id']],
+                        [],
+                        true
                     );
 
                     $urlResult = $this->handleCommand(GetGovUkAccountRedirect::create([
@@ -101,7 +103,6 @@ class DeclarationController extends AbstractContinuationController
                         throw new \Exception('GetGovUkAccountRedirect command returned non-OK', $urlResult->getStatusCode());
                     }
                     return $this->redirect()->toUrl($urlResult->getResult()['messages'][0]);
-
                 } else {
                     // Using Print to sign
                     // Submit the continuation

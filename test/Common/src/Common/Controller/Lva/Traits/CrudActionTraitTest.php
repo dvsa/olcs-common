@@ -229,7 +229,6 @@ class CrudActionTraitTest extends MockeryTestCase
         $childIdParamName = 'child_id';
         $route = null;
 
-
         $this->mockFlashMessengerHelper->shouldReceive('addWarningMessage')
             ->once()
             ->with('please-select-row');

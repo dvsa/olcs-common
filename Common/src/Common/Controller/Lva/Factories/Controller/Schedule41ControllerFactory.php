@@ -2,9 +2,14 @@
 
 namespace Common\Controller\Lva\Factories\Controller;
 
+use Common\Controller\Lva\Schedule41Controller;
+use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Table\TableFactory;
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
+use ZfcRbac\Service\AuthorizationService;
 
 class Schedule41ControllerFactory implements FactoryInterface
 {
@@ -17,8 +22,20 @@ class Schedule41ControllerFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): Schedule41Controller
     {
         $container = method_exists($container, 'getServiceLocator') ? $container->getServiceLocator() : $container;
-        //ToDo: Migrate SM calls here
-        return new Schedule41Controller();
+
+        $niTextTranslationUtil = $container->get(NiTextTranslation::class);
+        $authService = $container->get(AuthorizationService::class);
+        $formHelper = $container->get(FormHelperService::class);
+        $tableFactory = $container->get(TableFactory::class);
+        $flashMessengerHelpe = $container->get(FlashMessengerHelperService::class);
+
+        return new Schedule41Controller(
+            $niTextTranslationUtil,
+            $authService,
+            $formHelper,
+            $tableFactory,
+            $flashMessengerHelpe
+        );
     }
 
     /**

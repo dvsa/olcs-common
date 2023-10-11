@@ -62,8 +62,7 @@ abstract class AbstractPeopleController extends AbstractController
         $this->scriptFactory = $scriptFactory;
         $this->variationLvaService = $variationLvaService;
         $this->guidanceHelper = $guidanceHelper;
-
-        $this->lvaAdapter = $lvaAdapter;;
+        $this->lvaAdapter = $lvaAdapter;
 
         parent::__construct($niTextTranslationUtil, $authService);
     }

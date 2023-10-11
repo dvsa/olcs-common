@@ -17,7 +17,7 @@ use ZfcRbac\Service\AuthorizationService;
  */
 class ConditionsUndertakingsController extends AbstractContinuationController
 {
-    const NEXT_STEP = 'continuation/finances';
+    public const NEXT_STEP = 'continuation/finances';
 
     protected $layout = 'pages/continuation-conditions-undertakings';
 

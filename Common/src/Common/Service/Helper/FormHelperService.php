@@ -35,9 +35,9 @@ use ZfcRbac\Service\AuthorizationService;
  */
 class FormHelperService
 {
-    const ALTER_LABEL_RESET = 0;
-    const ALTER_LABEL_APPEND = 1;
-    const ALTER_LABEL_PREPEND = 2;
+    public const ALTER_LABEL_RESET = 0;
+    public const ALTER_LABEL_APPEND = 1;
+    public const ALTER_LABEL_PREPEND = 2;
 
     /** @var FormAnnotationBuilder */
     private $formAnnotationBuilder;

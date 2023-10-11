@@ -22,11 +22,11 @@ use ZfcRbac\Service\AuthorizationService;
  */
 class PaymentController extends AbstractContinuationController
 {
+    use StoredCardsTrait;
+
     protected $layout = 'pages/fees/pay-one';
     protected UrlHelperService $urlHelper;
     protected TableFactory $tableFactory;
-
-    use StoredCardsTrait;
 
     /**
      * @param NiTextTranslation $niTextTranslationUtil

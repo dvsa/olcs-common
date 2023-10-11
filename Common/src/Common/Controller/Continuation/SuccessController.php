@@ -55,7 +55,8 @@ class SuccessController extends AbstractContinuationController
         ];
 
         // if licence is PSV R, PSV SN or PSV SI
-        if ($licence['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_PSV &&
+        if (
+            $licence['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_PSV &&
             ($licence['licenceType']['id'] === RefData::LICENCE_TYPE_RESTRICTED ||
             $licence['licenceType']['id'] === RefData::LICENCE_TYPE_STANDARD_NATIONAL ||
             $licence['licenceType']['id'] === RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL)

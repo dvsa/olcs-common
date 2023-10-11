@@ -1,4 +1,5 @@
 <?php
+
 namespace Common\Service\Table;
 
 use Interop\Container\ContainerInterface;

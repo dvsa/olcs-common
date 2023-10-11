@@ -15,7 +15,6 @@ use Laminas\Mvc\Controller\Plugin\AbstractPlugin;
  */
 class HandleCommand extends AbstractPlugin
 {
-
     /**
      * @var CommandSender
      */

@@ -19,7 +19,6 @@ trait CreateVariationTrait
         $form = $processingService->getForm($request);
 
         if ($request->isPost() && $form->isValid()) {
-
             $data = $processingService->getDataFromForm($form);
 
             $licenceId = $this->params('licence');

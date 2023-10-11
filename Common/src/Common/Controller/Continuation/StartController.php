@@ -13,7 +13,7 @@ use ZfcRbac\Service\AuthorizationService;
  */
 class StartController extends AbstractContinuationController
 {
-    const BACK_ROUTE = 'lva-licence';
+    public const BACK_ROUTE = 'lva-licence';
 
     /** @var string  */
     protected $layout = 'pages/continuation-start';

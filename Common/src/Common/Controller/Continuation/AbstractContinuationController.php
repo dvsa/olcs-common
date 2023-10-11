@@ -61,8 +61,7 @@ abstract class AbstractContinuationController extends AbstractController
         AuthorizationService $authService,
         FormServiceManager $formServiceManager,
         TranslationHelperService $translationHelper
-    )
-    {
+    ) {
         $this->formServiceManager = $formServiceManager;
         $this->translationHelper = $translationHelper;
         parent::__construct($niTextTranslationUtil, $authService);
