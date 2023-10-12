@@ -20,7 +20,6 @@ class ReviewControllerFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): ReviewController
     {
         $container = method_exists($container, 'getServiceLocator') ? $container->getServiceLocator() : $container;
-        $container = method_exists($container, 'getServiceLocator') ? $container->getServiceLocator() : $container;
 
         $niTextTranslationUtil = $container->get(NiTextTranslation::class);
         $authService = $container->get(AuthorizationService::class);
