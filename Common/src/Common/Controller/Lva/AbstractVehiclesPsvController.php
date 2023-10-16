@@ -2,15 +2,25 @@
 
 namespace Common\Controller\Lva;
 
-use Common\FormService\FormServiceManager;
-use Common\RefData;
 use Common\Data\Mapper\Lva\PsvVehicles;
 use Common\Data\Mapper\Lva\PsvVehiclesVehicle;
+use Common\FormService\FormServiceManager;
+use Common\RefData;
+use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Helper\GuidanceHelperService;
+use Common\Service\Helper\ResponseHelperService;
+use Common\Service\Helper\TranslationHelperService;
+use Common\Service\Helper\UrlHelperService;
+use Common\Service\Script\ScriptFactory;
+use Common\Service\Table\TableFactory;
 use Dvsa\Olcs\Transfer\Command as CommandDto;
 use Dvsa\Olcs\Transfer\Query as QueryDto;
 use Dvsa\Olcs\Transfer\Query\Licence\PsvVehiclesExport;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\Form\Form;
 use Laminas\Form\FormInterface;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Vehicles PSV Controller
@@ -28,7 +38,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     public const SEARCH_VEHICLES_COUNT = 20;
 
     protected $section = 'vehicles_psv';
-    protected $baseRoute = 'lva-%s/vehicles_psv';
+    protected string $baseRoute = 'lva-%s/vehicles_psv';
 
     private $queryMap = [
         'licence' => QueryDto\Licence\PsvVehicles::class,
@@ -47,6 +57,54 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         'variation' => CommandDto\Application\CreatePsvVehicle::class,
         'application' => CommandDto\Application\CreatePsvVehicle::class
     ];
+
+    protected UrlHelperService $urlHelper;
+    protected ScriptFactory $scriptFactory;
+    protected FormServiceManager $formServiceManager;
+    protected FormHelperService $formHelper;
+    protected FlashMessengerHelperService $flashMessengerHelper;
+    protected ResponseHelperService $responseHelper;
+    protected TableFactory $tableFactory;
+    protected TranslationHelperService $translatorHelper;
+    protected GuidanceHelperService $guidanceHelper;
+
+    /**
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     * @param FormHelperService $formHelper
+     * @param FormServiceManager $formServiceManager
+     * @param FlashMessengerHelperService $flashMessengerHelper
+     * @param ScriptFactory $scriptFactory
+     * @param UrlHelperService $urlHelper
+     * @param ResponseHelperService $responseHelper
+     * @param TableFactory $tableFactory
+     * @param TranslationHelperService $translatorHelper
+     * @param GuidanceHelperService $guidanceHelper
+     */
+    public function __construct(
+        NiTextTranslation $niTextTranslationUtil,
+        AuthorizationService $authService,
+        FormHelperService $formHelper,
+        FormServiceManager $formServiceManager,
+        FlashMessengerHelperService $flashMessengerHelper,
+        ScriptFactory $scriptFactory,
+        UrlHelperService $urlHelper,
+        ResponseHelperService $responseHelper,
+        TableFactory $tableFactory,
+        TranslationHelperService $translatorHelper,
+        GuidanceHelperService $guidanceHelper
+    ) {
+        $this->urlHelper = $urlHelper;
+        $this->scriptFactory = $scriptFactory;
+        $this->formServiceManager = $formServiceManager;
+        $this->formHelper = $formHelper;
+        $this->flashMessengerHelper = $flashMessengerHelper;
+        $this->responseHelper = $responseHelper;
+        $this->tableFactory = $tableFactory;
+        $this->translatorHelper = $translatorHelper;
+        $this->guidanceHelper = $guidanceHelper;
+        parent::__construct($niTextTranslationUtil, $authService);
+    }
 
     /**
      * Process action - Index
@@ -69,8 +127,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
             $data = PsvVehicles::mapFromResult($resultData);
         }
 
-        $form = $this->getServiceLocator()
-            ->get(FormServiceManager::class)
+        $form = $this->formServiceManager
             ->get('lva-' . $this->lva . '-' . $this->section)
             ->getForm()
             ->setData($data);
@@ -143,7 +200,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     protected function updateVehiclesSection(FormInterface $form, $haveCrudAction)
     {
         /** @var \Common\Service\Helper\FlashMessengerHelperService $flashMssgr */
-        $flashMssgr = $this->getServiceLocator()->get('Helper\FlashMessenger');
+        $flashMssgr = $this->flashMessengerHelper;
 
         $resultData = [];
 
@@ -260,8 +317,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         ];
 
         /** @var \Common\Form\Form $form */
-        $form = $this->getServiceLocator()
-            ->get(FormServiceManager::class)
+        $form = $this->formServiceManager
             ->get('lva-' . $this->lva . '-' . $this->section . '-vehicle')
             ->getForm($this->getRequest(), $params)
             ->setData($data);
@@ -281,7 +337,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
             }
 
             /** @var \Common\Service\Helper\FlashMessengerHelperService $fm */
-            $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
+            $fm = $this->flashMessengerHelper;
 
             if ($response->isClientError()) {
                 PsvVehiclesVehicle::mapFormErrors($form, $response->getResult()['messages'], $fm);
@@ -327,20 +383,19 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         ];
 
         /** @var \Common\Form\Form $form */
-        $form = $this->getServiceLocator()
-            ->get(FormServiceManager::class)
+        $form = $this->formServiceManager
             ->get('lva-' . $this->lva . '-' . $this->section . '-vehicle')
             ->getForm($this->getRequest(), $params)
             ->setData($data);
 
         if ($resultData['showHistory']) {
             /** @var \Common\Service\Table\TableBuilder $table */
-            $table = $this->getServiceLocator()->get('Table')
+            $table = $this->tableFactory
                 ->prepareTable('lva-psv-vehicles-history', $resultData['history']);
 
             $table->removeColumn('discNo');
 
-            $this->getServiceLocator()->get('Helper\Form')->populateFormTable(
+            $this->formHelper->populateFormTable(
                 $form->get('vehicle-history-table'),
                 $table
             );
@@ -360,7 +415,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
             }
 
             /** @var \Common\Service\Helper\FlashMessengerHelperService $fm */
-            $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
+            $fm = $this->flashMessengerHelper;
 
             if ($response->isClientError()) {
                 PsvVehiclesVehicle::mapFormErrors($form, $response->getResult()['messages'], $fm);
@@ -392,7 +447,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
             ];
             $response = $this->handleQuery(PsvVehiclesExport::create($data));
             if (!$response->isOk()) {
-                $this->getServiceLocator()->get('Helper\FlashMessenger')->addUnknownError();
+                $this->flashMessengerHelper->addUnknownError();
                 return $this->redirect()->toRouteAjax(
                     $this->getBaseRoute(),
                     [$this->getIdentifierIndex() => $this->getIdentifier()]
@@ -400,11 +455,10 @@ abstract class AbstractVehiclesPsvController extends AbstractController
             }
             $data = $response->getResult();
 
-            return $this->getServiceLocator()
-                ->get('Helper\Response')
+            return $this->responseHelper
                 ->tableToCsv(
                     $this->getResponse(),
-                    $this->getServiceLocator()->get('Table')->prepareTable('lva-psv-vehicles-export', $data['result']),
+                    $this->tableFactory->prepareTable('lva-psv-vehicles-export', $data['result']),
                     'psv-vehicles'
                 );
         }
@@ -447,7 +501,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
      */
     private function alterForm(Form $form, $resultData, $removeActions)
     {
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $formHelper = $this->formHelper;
 
         $table = $this->getTable($resultData['licenceVehicles'], $removeActions);
 
@@ -462,7 +516,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         }
 
         if (in_array($this->lva, ['licence', 'variation'], true)) {
-            $this->getServiceLocator()->get(FormServiceManager::class)
+            $this->formServiceManager
                 ->get('lva-licence-variation-vehicles')->alterForm($form);
         }
 
@@ -484,15 +538,15 @@ abstract class AbstractVehiclesPsvController extends AbstractController
             $class = 'govuk-link';
         } else {
             $params = ['licence' => $this->getIdentifier(), 'redirectRoute' => 'operating_centres'];
-            $link = $this->getServiceLocator()->get('Helper\Url')->fromRoute('lva-licence/variation', $params);
+            $link = $this->urlHelper->fromRoute('lva-licence/variation', $params);
 
             $class = 'govuk-link js-modal-ajax';
         }
 
-        $translator = $this->getServiceLocator()->get('Helper\Translation');
+        $translator = $this->translationHelper;
         $message = $translator->translateReplace($message, [$link, $class]);
 
-        $this->getServiceLocator()->get('Helper\Guidance')->append($message);
+        $this->guidanceHelper->append($message);
     }
 
     /**
@@ -504,7 +558,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
      */
     private function getTotalNumberOfVehicles($resultData)
     {
-        return isset($resultData['total']) ? $resultData['total'] : 0;
+        return $resultData['total'] ?? 0;
     }
 
     /**
@@ -557,7 +611,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
             (array) $this->getRequest()->getQuery()
         );
         $params = array_merge($query, ['query' => $query]);
-        return $this->getServiceLocator()->get('Table')->prepareTable($tableName, $tableData, $params);
+        return $this->tableFactory->prepareTable($tableName, $tableData, $params);
     }
 
     /**
@@ -580,7 +634,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
             $params['searchForm'] = $searchForm;
             $files[] = 'forms/vehicle-search';
         }
-        $this->getServiceLocator()->get('Script')->loadFiles($files);
+        $this->scriptFactory->loadFiles($files);
         return $this->render($section, $form, $params);
     }
 
@@ -644,10 +698,10 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     {
         $filters = [];
         $filters['includeRemoved'] = (isset($query['includeRemoved']) && $query['includeRemoved'] == '1');
-        $filters['page'] = isset($query['page']) ? $query['page'] : 1;
-        $filters['limit'] = isset($query['limit']) ? $query['limit'] : 10;
-        $filters['sort'] = isset($query['sort']) ? $query['sort'] : 'createdOn';
-        $filters['order'] = isset($query['order']) ? $query['order'] : 'DESC';
+        $filters['page'] = $query['page'] ?? 1;
+        $filters['limit'] = $query['limit'] ?? 10;
+        $filters['sort'] = $query['sort'] ?? 'createdOn';
+        $filters['order'] = $query['order'] ?? 'DESC';
         if (isset($query['vehicleSearch']['vrm']) && !isset($query['vehicleSearch']['clearSearch'])) {
             $filters['vrm'] = $query['vehicleSearch']['vrm'];
         }

@@ -4,15 +4,23 @@ namespace Common\Controller\Lva;
 
 use Common\FeatureToggle;
 use Common\FormService\FormServiceManager;
+use Common\Service\Cqrs\Query\QuerySender;
+use Common\Service\Helper\DateHelperService;
+use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Script\ScriptFactory;
 use Common\Service\Table\TableBuilder as Table;
+use Common\Service\Table\TableFactory;
 use Dvsa\Olcs\Transfer\Command\Licence\UpdateTrailers;
 use Dvsa\Olcs\Transfer\Command\Trailer\CreateTrailer;
 use Dvsa\Olcs\Transfer\Command\Trailer\DeleteTrailer;
 use Dvsa\Olcs\Transfer\Command\Trailer\UpdateTrailer;
 use Dvsa\Olcs\Transfer\Query\Licence\Trailers;
 use Dvsa\Olcs\Transfer\Query\Trailer\Trailer;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\Form\Form;
 use Laminas\Stdlib\RequestInterface;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Abstract Trailers Controller
@@ -32,9 +40,50 @@ abstract class AbstractTrailersController extends AbstractController
      * @var string $section
      */
     protected $section = 'trailers';
-    protected $baseRoute = 'lva-%s/trailers';
+    protected string $baseRoute = 'lva-%s/trailers';
 
     private $isLongerSemiTrailersFeatureToggleEnabled;
+
+    protected FormHelperService $formHelper;
+    protected FlashMessengerHelperService $flashMessengerHelper;
+    protected FormServiceManager $formServiceManager;
+    protected ScriptFactory $scriptFactory;
+    protected TableFactory $tableFactory;
+    protected DateHelperService $dateHelper;
+    protected QuerySender $querySender;
+
+    /**
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     * @param FormHelperService $formHelper
+     * @param FormServiceManager $formServiceManager
+     * @param FlashMessengerHelperService $flashMessengerHelper
+     * @param TableFactory $tableFactory
+     * @param ScriptFactory $scriptFactory
+     * @param DateHelperService $dateHelper
+     * @param QuerySender $querySender
+     */
+    public function __construct(
+        NiTextTranslation $niTextTranslationUtil,
+        AuthorizationService $authService,
+        FormHelperService $formHelper,
+        FormServiceManager $formServiceManager,
+        FlashMessengerHelperService $flashMessengerHelper,
+        TableFactory $tableFactory,
+        ScriptFactory $scriptFactory,
+        DateHelperService $dateHelper,
+        QuerySender $querySender
+    ) {
+        $this->formHelper = $formHelper;
+        $this->formServiceManager = $formServiceManager;
+        $this->scriptFactory = $scriptFactory;
+        $this->flashMessengerHelper = $flashMessengerHelper;
+        $this->tableFactory = $tableFactory;
+        $this->dateHelper = $dateHelper;
+        $this->querySender = $querySender;
+
+        parent::__construct($niTextTranslationUtil, $authService);
+    }
 
     /**
      * Process Action - Index
@@ -71,7 +120,7 @@ abstract class AbstractTrailersController extends AbstractController
                     return $this->handleCrudAction($crudAction);
                 }
 
-                $this->getServiceLocator()->get('Helper\Form')->disableValidation($form->getInputFilter());
+                $this->formHelper->disableValidation($form->getInputFilter());
             }
 
             if ($form->isValid()) {
@@ -95,12 +144,12 @@ abstract class AbstractTrailersController extends AbstractController
                 }
 
                 if ($response->isServerError()) {
-                    $this->getServiceLocator()->get('Helper\FlashMessenger')->addUnknownError();
+                    $this->flashMessengerHelper->addUnknownError();
                 }
             }
         }
 
-        $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
+        $this->scriptFactory->loadFile('lva-crud');
 
         $params = [
             'mainWrapperCssClass' => 'full-width',
@@ -120,7 +169,7 @@ abstract class AbstractTrailersController extends AbstractController
         $request = $this->getRequest();
 
         /** @var \Laminas\Form\FormInterface $form */
-        $form = $this->getServiceLocator()->get('Helper\Form')
+        $form = $this->formHelper
             ->createFormWithRequest('Lva\Trailer', $request);
 
         $this->alterForm($form);
@@ -132,7 +181,7 @@ abstract class AbstractTrailersController extends AbstractController
                 $data = $form->getData()['data'];
                 $data['id'] = $this->getLicenceId();
                 $data['licence'] = $this->getLicenceId();
-                $data['specifiedDate'] = $this->getServiceLocator()->get('Helper\Date')->getDate();
+                $data['specifiedDate'] = $this->dateHelper->getDate();
                 $data['isLongerSemiTrailer'] = $this->isLongerSemiTrailersFeatureToggleEnabled()
                     ? $data['longerSemiTrailer']['isLongerSemiTrailer'] : 'N';
 
@@ -142,7 +191,7 @@ abstract class AbstractTrailersController extends AbstractController
                     return $this->handlePostSave(null, false);
                 }
 
-                $this->getServiceLocator()->get('Helper\FlashMessenger')->addUnknownError();
+                $this->flashMessengerHelper->addUnknownError();
             }
         }
 
@@ -160,12 +209,12 @@ abstract class AbstractTrailersController extends AbstractController
         $request = $this->getRequest();
 
         /** @var \Laminas\Form\FormInterface $form */
-        $form = $this->getServiceLocator()->get('Helper\Form')
+        $form = $this->formHelper
             ->createFormWithRequest('Lva\Trailer', $request);
 
         $this->alterForm($form);
 
-        $this->getServiceLocator()->get('Helper\Form')->remove($form, 'form-actions->addAnother');
+        $this->formHelper->remove($form, 'form-actions->addAnother');
 
         if ($request->isPost()) {
             $form->setData($request->getPost());
@@ -189,7 +238,7 @@ abstract class AbstractTrailersController extends AbstractController
         $response = $this->handleQuery($query);
 
         if (!$response->isOk()) {
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addUnknownError();
+            $this->flashMessengerHelper->addUnknownError();
 
             return $this->notFoundAction();
         }
@@ -242,7 +291,7 @@ abstract class AbstractTrailersController extends AbstractController
      */
     protected function getTable($tableData)
     {
-        $table = $this->getServiceLocator()->get('Table')->prepareTable('lva-trailers', $tableData);
+        $table = $this->tableFactory->prepareTable('lva-trailers', $tableData);
 
         if (!$this->isLongerSemiTrailersFeatureToggleEnabled()) {
             $table->removeColumn('isLongerSemiTrailer');
@@ -261,8 +310,7 @@ abstract class AbstractTrailersController extends AbstractController
      */
     protected function getForm(RequestInterface $request, $table)
     {
-        return $this->getServiceLocator()
-            ->get(FormServiceManager::class)
+        return $this->formServiceManager
             ->get('lva-licence-trailers')
             ->getForm($request, $table);
     }
@@ -277,7 +325,7 @@ abstract class AbstractTrailersController extends AbstractController
     private function alterForm(Form $form)
     {
         if (!$this->isLongerSemiTrailersFeatureToggleEnabled()) {
-            $this->getServiceLocator()->get('Helper\Form')->remove($form, 'data->longerSemiTrailer');
+            $this->formHelper->remove($form, 'data->longerSemiTrailer');
         }
     }
 
@@ -290,7 +338,7 @@ abstract class AbstractTrailersController extends AbstractController
     {
         if (!isset($this->isLongerSemiTrailersFeatureToggleEnabled)) {
             $this->isLongerSemiTrailersFeatureToggleEnabled
-                = $this->getServiceLocator()->get('QuerySender')->featuresEnabled([FeatureToggle::LONGER_SEMI_TRAILERS]);
+                = $this->querySender->featuresEnabled([FeatureToggle::LONGER_SEMI_TRAILERS]);
         }
 
         return $this->isLongerSemiTrailersFeatureToggleEnabled;

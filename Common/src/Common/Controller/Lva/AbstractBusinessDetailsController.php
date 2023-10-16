@@ -7,12 +7,19 @@ use Common\Controller\Traits\CompanySearch;
 use Common\Data\Mapper\Lva\BusinessDetails as Mapper;
 use Common\Data\Mapper\Lva\CompanySubsidiary as CompanySubsidiaryMapper;
 use Common\FormService\FormServiceManager;
+use Common\Service\Helper\FileUploadHelperService;
+use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Script\ScriptFactory;
+use Common\Service\Table\TableFactory;
 use Dvsa\Olcs\Transfer\Command as TransferCmd;
 use Dvsa\Olcs\Transfer\Query\CompanySubsidiary\CompanySubsidiary;
 use Dvsa\Olcs\Transfer\Query\Licence\BusinessDetails;
 use Dvsa\Olcs\Transfer\Query\QueryInterface;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\Form\Form;
 use ZfcRbac\Identity\IdentityProviderInterface;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Shared logic between Business Details Controller
@@ -27,7 +34,46 @@ abstract class AbstractBusinessDetailsController extends AbstractController
     public const COMPANY_NUMBER_LENGTH = 8;
 
     protected $section = 'business_details';
-    protected $baseRoute = 'lva-%s/business_details';
+    protected string $baseRoute = 'lva-%s/business_details';
+
+    protected FormHelperService $formHelper;
+    protected FlashMessengerHelperService $flashMessengerHelper;
+    protected FormServiceManager $formServiceManager;
+    protected ScriptFactory $scriptFactory;
+    protected IdentityProviderInterface $identityProvider;
+    protected TableFactory $tableFactory;
+    protected FileUploadHelperService $uploadHelper;
+
+    /**
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     * @param FormHelperService $formHelper
+     * @param FlashMessengerHelperService $flashMessengerHelper
+     * @param FormServiceManager $formServiceManager
+     * @param ScriptFactory $scriptFactory
+     * @param IdentityProviderInterface $identityProvider
+     */
+    public function __construct(
+        NiTextTranslation $niTextTranslationUtil,
+        AuthorizationService $authService,
+        FormHelperService $formHelper,
+        FlashMessengerHelperService $flashMessengerHelper,
+        FormServiceManager $formServiceManager,
+        ScriptFactory $scriptFactory,
+        IdentityProviderInterface $identityProvider,
+        TableFactory $tableFactory,
+        FileUploadHelperService $uploadHelper
+    ) {
+        $this->formHelper = $formHelper;
+        $this->flashMessengerHelper = $flashMessengerHelper;
+        $this->formServiceManager = $formServiceManager;
+        $this->scriptFactory = $scriptFactory;
+        $this->identityProvider = $identityProvider;
+        $this->tableFactory = $tableFactory;
+        $this->uploadHelper = $uploadHelper;
+
+        parent::__construct($niTextTranslationUtil, $authService);
+    }
 
     /**
      * Business details section
@@ -42,15 +88,13 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         $response = $this->handleQuery(BusinessDetails::create(['id' => $this->getLicenceId()]));
 
         if ($response->isClientError() || $response->isServerError()) {
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentErrorMessage('unknown-error');
+            $this->flashMessengerHelper->addCurrentErrorMessage('unknown-error');
             return $this->notFoundAction();
         }
 
         $orgData = $response->getResult();
 
-        $identityProvider = $this->getServiceLocator()->get(IdentityProviderInterface::class);
-        assert($identityProvider instanceof IdentityProviderInterface);
-        $hasOrganisationSubmittedLicenceApplication = $identityProvider->getIdentity()->getUserData()['hasOrganisationSubmittedLicenceApplication'] ?? false;
+        $hasOrganisationSubmittedLicenceApplication = $this->identityProvider->getIdentity()->getUserData()['hasOrganisationSubmittedLicenceApplication'] ?? false;
 
         if ($request->isPost()) {
             $data = $this->getFormPostData($orgData);
@@ -60,8 +104,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
 
         // Gets a fully configured/altered form for any version of this section
         /** @var \Common\Form\Form $form */
-        $form = $this->getServiceLocator()
-            ->get(FormServiceManager::class)
+        $form = $this->formServiceManager
             ->get('lva-' . $this->lva . '-' . $this->section)
             ->getForm($orgData['type']['id'], $orgData['hasInforceLicences'], $hasOrganisationSubmittedLicenceApplication)
             ->setData($data);
@@ -77,7 +120,6 @@ abstract class AbstractBusinessDetailsController extends AbstractController
             return $this->renderForm($form);
         }
 
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
         $addressFieldset = 'registeredAddress';
         $detailsFieldset = 'data';
 
@@ -87,14 +129,14 @@ abstract class AbstractBusinessDetailsController extends AbstractController
 
             if ($this->isValidCompanyNumber($companyNumber)) {
                 $form = $this->populateCompanyDetails(
-                    $formHelper,
+                    $this->formHelper,
                     $form,
                     $detailsFieldset,
                     $addressFieldset,
                     $companyNumber
                 );
             } else {
-                $formHelper->setInvalidCompanyNumberErrors($form, $detailsFieldset);
+                $this->formHelper->setInvalidCompanyNumberErrors($form, $detailsFieldset);
             }
 
             return $this->renderForm($form);
@@ -116,8 +158,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         }
 
         if ($crudAction !== null) {
-            $formHelper = $this->getServiceLocator()->get('Helper\Form');
-            $formHelper->disableValidation($form->getInputFilter());
+            $this->formHelper->disableValidation($form->getInputFilter());
         }
 
         // If our form is invalid, render the form to display the errors
@@ -216,7 +257,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
      */
     protected function renderForm($form)
     {
-        $this->getServiceLocator()->get('Script')->loadFiles(['lva-crud']);
+        $this->scriptFactory->loadFiles(['lva-crud']);
         return $this->render('business_details', $form);
     }
 
@@ -297,7 +338,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
 
         // @todo Move this into a form service
         /** @var \Common\Form\Form $form */
-        $form = $this->getServiceLocator()->get('Helper\Form')
+        $form = $this->formHelper
             ->createFormWithRequest('Lva\BusinessDetailsSubsidiaryCompany', $request)
             ->setData($data);
 
@@ -345,7 +386,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
                 return $this->handlePostSave(null, ['fragment' => 'table']);
             }
 
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+            $this->flashMessengerHelper->addErrorMessage('unknown-error');
         }
 
         return $this->render($mode . '_subsidiary_company', $form);
@@ -361,10 +402,10 @@ abstract class AbstractBusinessDetailsController extends AbstractController
      */
     protected function populateTable($form, $orgData)
     {
-        $table = $this->getServiceLocator()->get('Table')
+        $table = $this->tableFactory
             ->prepareTable('lva-subsidiaries', $orgData['companySubsidiaries']);
 
-        $this->getServiceLocator()->get('Helper\Form')->populateFormTable($form->get('table'), $table);
+        $this->formHelper->populateFormTable($form->get('table'), $table);
     }
 
     /**
@@ -419,7 +460,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         }
 
         if (!empty($errors)) {
-            $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
+            $fm = $this->flashMessengerHelper;
 
             foreach ($errors as $error) {
                 $fm->addCurrentErrorMessage($error);

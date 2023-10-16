@@ -3,6 +3,7 @@
 namespace CommonTest\Controller\Lva\Traits\Stubs;
 
 use Common\Controller\Lva\Traits\CrudActionTrait;
+use Common\Service\Helper\FlashMessengerHelperService;
 use Laminas\Mvc\Controller\AbstractActionController;
 
 /**
@@ -16,6 +17,13 @@ class CrudActionTraitStub extends AbstractActionController
 
     public $baseRoute;
     public $lva;
+    public $flashMessengerHelper;
+
+    public function __construct(FlashMessengerHelperService $flashMessengerHelper)
+    {
+        $this->flashMessengerHelper = $flashMessengerHelper;
+    }
+
 
     public function callGetCrudAction(array $formTables = array())
     {

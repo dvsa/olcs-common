@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Enabled Section Trait
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva\Traits;
 
 use Common\RefData;
@@ -25,8 +20,8 @@ trait EnabledSectionTrait
      */
     protected function setEnabledAndCompleteFlagOnSections($accessibleSections, $applicationCompletion)
     {
-        $restrictionHelper = $this->getServiceLocator()->get('Helper\Restriction');
-        $filter = $this->getServiceLocator()->get('Helper\String');
+        $restrictionHelper = $this->restrictionHelper;
+        $filter = $this->stringHelper;
         $sections = array();
         $completeSections = array();
 

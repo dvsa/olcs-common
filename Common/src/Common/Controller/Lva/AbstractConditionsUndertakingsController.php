@@ -2,21 +2,59 @@
 
 namespace Common\Controller\Lva;
 
-use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 use Common\FormService\FormServiceManager;
+use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Script\ScriptFactory;
+use Common\Service\Table\TableFactory;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Abstract Conditions Undertakings Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractConditionsUndertakingsController extends AbstractController implements AdapterAwareInterface
+abstract class AbstractConditionsUndertakingsController extends AbstractController
 {
-    use Traits\AdapterAwareTrait;
     use Traits\CrudTableTrait;
 
     protected $section = 'conditions_undertakings';
-    protected $baseRoute = 'lva-%s/conditions_undertakings';
+    protected string $baseRoute = 'lva-%s/conditions_undertakings';
+
+    protected FormHelperService $formHelper;
+    protected FlashMessengerHelperService $flashMessengerHelper;
+    protected FormServiceManager $formServiceManager;
+    protected ScriptFactory $scriptFactory;
+    protected TableFactory $tableFactory;
+    protected $lvaAdapter; // ToDo: use UnionType here when PHP 8 is in place
+
+    /**
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     * @param FormHelperService $formHelper
+     * @param FlashMessengerHelperService $flashMessengerHelper
+     * @param FormServiceManager $formServiceManager
+     * @param TableFactory $tableFactory
+     * @param $lvaAdapter
+     */
+    public function __construct(
+        NiTextTranslation $niTextTranslationUtil,
+        AuthorizationService $authService,
+        FormHelperService $formHelper,
+        FlashMessengerHelperService $flashMessengerHelper,
+        FormServiceManager $formServiceManager,
+        TableFactory $tableFactory,
+        $lvaAdapter
+    ) {
+        $this->formHelper = $formHelper;
+        $this->flashMessengerHelper = $flashMessengerHelper;
+        $this->formServiceManager = $formServiceManager;
+        $this->tableFactory = $tableFactory;
+        $this->lvaAdapter = $lvaAdapter;
+
+        parent::__construct($niTextTranslationUtil, $authService);
+    }
 
     /**
      * Conditions Undertakings section
@@ -43,7 +81,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
 
         $form = $this->getForm();
 
-        $this->getAdapter()->attachMainScripts();
+        $this->lvaAdapter->attachMainScripts();
 
         return $this->render($this->section, $form, $this->getRenderVariables());
     }
@@ -89,8 +127,8 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
                 throw new \RuntimeException('Failed to get ConditionUndertaking');
             }
             $conditionUndertakingData = $response->getResult();
-            if (!$this->getAdapter()->canEditRecord($conditionUndertakingData)) {
-                $this->getServiceLocator()->get('Helper\FlashMessenger')
+            if (!$this->lvaAdapter->canEditRecord($conditionUndertakingData)) {
+                $this->flashMessengerHelper
                     ->addErrorMessage('generic-cant-edit-message');
 
                 return $this->redirect()->toRouteAjax(null, ['action' => null], [], true);
@@ -114,7 +152,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
 
         $form = $this->getConditionUndertakingForm();
 
-        $this->getAdapter()->alterForm($form, $this->getData());
+        $this->lvaAdapter->alterForm($form, $this->getData());
 
         $form->setData($formData);
 
@@ -171,7 +209,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
      */
     protected function create($formData)
     {
-        $command = $this->getAdapter()->getCreateCommand($formData, $this->lva, $this->getIdentifier());
+        $command = $this->lvaAdapter->getCreateCommand($formData, $this->lva, $this->getIdentifier());
 
         $response = $this->handleCommand($command);
         if (!$response->isOk()) {
@@ -189,7 +227,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
      */
     protected function update($formData)
     {
-        $command = $this->getAdapter()->getUpdateCommand($formData, $this->getIdentifier());
+        $command = $this->lvaAdapter->getUpdateCommand($formData, $this->getIdentifier());
 
         $response = $this->handleCommand($command);
         if (!$response->isOk()) {
@@ -208,7 +246,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
         $id = $this->params('child_id');
         $ids = explode(',', $id);
 
-        $command = $this->getAdapter()->getDeleteCommand($this->getIdentifier(), $ids);
+        $command = $this->lvaAdapter->getDeleteCommand($this->getIdentifier(), $ids);
 
         $response = $this->handleCommand($command);
         if (!$response->isOk()) {
@@ -225,7 +263,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
      */
     protected function getConditionUndertakingForm()
     {
-        return $this->getServiceLocator()->get('Helper\Form')->createForm('ConditionUndertaking');
+        return $this->formHelper->createForm('ConditionUndertaking');
     }
 
     /**
@@ -235,10 +273,9 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
      */
     protected function getForm()
     {
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $formHelper = $this->formHelper;
 
-        $form = $this->getServiceLocator()
-            ->get(FormServiceManager::class)
+        $form = $this->formServiceManager
             ->get('lva-' . $this->lva . '-' . $this->section)
             ->getForm();
 
@@ -254,14 +291,12 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
      */
     protected function getTable()
     {
-        $tableBuilder = $this->getServiceLocator()->get('Table');
-
-        $table = $tableBuilder->prepareTable(
-            $this->getAdapter()->getTableName(),
+        $table = $this->tableFactory->prepareTable(
+            $this->lvaAdapter->getTableName(),
             $this->getTableData()
         );
 
-        $this->getAdapter()->alterTable($table);
+        $this->lvaAdapter->alterTable($table);
 
         return $table;
     }

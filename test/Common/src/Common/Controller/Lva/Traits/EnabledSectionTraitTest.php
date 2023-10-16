@@ -5,10 +5,16 @@
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
+
 namespace CommonTest\Controller\Lva\Traits;
 
 use Common\RefData;
+use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Helper\RestrictionHelperService;
+use Common\Service\Helper\StringHelperService;
 use CommonTest\Bootstrap;
+use CommonTest\Controller\Lva\Traits\Stubs\EnabledSectionTraitStub;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
@@ -25,13 +31,11 @@ class EnabledSectionTraitTest extends MockeryTestCase
 
     protected function setUp(): void
     {
-        $this->sm = Bootstrap::getServiceManager();
-
-        $this->sut = m::mock('CommonTest\Controller\Lva\Traits\Stubs\EnabledSectionTraitStub')
+        $this->mockRestrictionHelper = m::mock(RestrictionHelperService::class);
+        $this->mockStringHelper = m::mock(StringHelperService::class);
+        $this->sut = m::mock(EnabledSectionTraitStub::class, [$this->mockRestrictionHelper, $this->mockStringHelper])
             ->makePartial()
             ->shouldAllowMockingProtectedMethods();
-
-        $this->sut->setServiceLocator($this->sm);
     }
 
     /**
@@ -43,24 +47,17 @@ class EnabledSectionTraitTest extends MockeryTestCase
      */
     public function testSetEnabledAndCompleteFlagOnSections($sections, $completions, $expected)
     {
-        $this->sm->setService(
-            'Helper\Restriction',
-            m::mock()
+        $this->mockRestrictionHelper
                 ->shouldReceive('isRestrictionSatisfied')
-                ->andReturn(true)
-                ->getMock()
-        );
-        $this->sm->setService(
-            'Helper\String',
-            m::mock()
+                ->andReturn(true);
+
+        $this->mockStringHelper
                 ->shouldReceive('camelToUnderscore')
                 ->with('typeOfLicence')->andReturn('type_of_licence')
                 ->shouldReceive('camelToUnderscore')
                 ->with('businessType')->andReturn('business_type')
                 ->shouldReceive('camelToUnderscore')
-                ->with('undertakings')->andReturn('undertakings')
-                ->getMock()
-        );
+                ->with('undertakings')->andReturn('undertakings');
 
         $result = $this->sut->setEnabledAndCompleteFlagOnSections($sections, $completions);
 

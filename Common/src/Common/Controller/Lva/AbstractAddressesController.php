@@ -4,10 +4,14 @@ namespace Common\Controller\Lva;
 
 use Common\Data\Mapper;
 use Common\FormService\FormServiceManager;
+use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Script\ScriptFactory;
 use Dvsa\Olcs\Transfer\Command as TransferCmd;
 use Dvsa\Olcs\Transfer\Query as TransferQry;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\Form\Form;
-use Laminas\Mvc\MvcEvent;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Shared logic between Addresses controllers
@@ -22,28 +26,36 @@ abstract class AbstractAddressesController extends AbstractController
         'variation' => TransferCmd\Variation\UpdateAddresses::class,
     ];
 
-    protected $section = 'addresses';
-    protected $baseRoute = 'lva-%s/addresses';
+    protected string $section = 'addresses';
+    protected string $baseRoute = 'lva-%s/addresses';
 
-    /** @var  \Common\Service\Helper\FormHelperService */
-    protected $hlpForm;
-    /** @var  \Common\Service\Helper\FlashMessengerHelperService */
-    protected $hlpFlashMsgr;
+    protected FormHelperService $formHelper;
+    protected FlashMessengerHelperService $flashMessengerHelper;
+    protected FormServiceManager $formServiceManager;
+    protected ScriptFactory $scriptFactory;
 
     /**
-     * Add functionality (use like factory)
-     *
-     * @param MvcEvent $e Mvc Event
-     *
-     * @inheritdoc
-     * @return mixed
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     * @param FormHelperService $formHelper
+     * @param FlashMessengerHelperService $flashMessengerHelper
+     * @param FormServiceManager $formServiceManager
+     * @param ScriptFactory $scriptFactory
      */
-    public function onDispatch(MvcEvent $e)
-    {
-        $this->hlpForm = $this->getServiceLocator()->get('Helper\Form');
-        $this->hlpFlashMsgr = $this->getServiceLocator()->get('Helper\FlashMessenger');
+    public function __construct(
+        NiTextTranslation $niTextTranslationUtil,
+        AuthorizationService $authService,
+        FormHelperService $formHelper,
+        FlashMessengerHelperService $flashMessengerHelper,
+        FormServiceManager $formServiceManager,
+        ScriptFactory $scriptFactory
+    ) {
+        $this->formHelper = $formHelper;
+        $this->flashMessengerHelper = $flashMessengerHelper;
+        $this->formServiceManager = $formServiceManager;
+        $this->scriptFactory = $scriptFactory;
 
-        return parent::onDispatch($e);
+        parent::__construct($niTextTranslationUtil, $authService);
     }
 
     /**
@@ -79,9 +91,7 @@ abstract class AbstractAddressesController extends AbstractController
         }
 
         /** @var \Common\Form\Form $form */
-        $form = $this->getServiceLocator()
-            ->get(FormServiceManager::class)
-            ->get('lva-' . $this->lva . '-' . $this->section)
+        $form = $this->formServiceManager->get('lva-' . $this->lva . '-' . $this->section)
             ->getForm(
                 [
                     'typeOfLicence' => $this->getTypeOfLicenceData(),
@@ -92,7 +102,7 @@ abstract class AbstractAddressesController extends AbstractController
 
         $this->alterFormForLva($form);
 
-        $hasProcessed = $this->hlpForm->processAddressLookupForm($form, $request);
+        $hasProcessed = $this->formHelper->processAddressLookupForm($form, $request);
 
         if (!$hasProcessed && $request->isPost()) {
             if ($this->isValid($form, $formData)) {
@@ -108,7 +118,7 @@ abstract class AbstractAddressesController extends AbstractController
             }
         }
 
-        $this->getServiceLocator()->get('Script')->loadFiles(['forms/addresses']);
+        $this->scriptFactory->loadFiles(['forms/addresses']);
 
         return $this->render('addresses', $form);
     }
@@ -175,12 +185,12 @@ abstract class AbstractAddressesController extends AbstractController
             }
 
             if (!empty($error)) {
-                $this->hlpFlashMsgr->addCurrentErrorMessage($error);
+                $this->flashMessengerHelper->addCurrentErrorMessage($error);
             } else {
-                $this->hlpFlashMsgr->addUnknownError();
+                $this->flashMessengerHelper->addUnknownError();
             }
         } elseif ($response->isServerError()) {
-            $this->hlpFlashMsgr->addUnknownError();
+            $this->flashMessengerHelper->addUnknownError();
         }
 
         return null;
@@ -200,10 +210,10 @@ abstract class AbstractAddressesController extends AbstractController
             return;
         }
 
-        $this->hlpForm->disableValidation(
+        $this->formHelper->disableValidation(
             $form->getInputFilter()->get('consultant')
         );
-        $this->hlpForm->disableValidation(
+        $this->formHelper->disableValidation(
             $form->getInputFilter()->get('consultantAddress')
         );
     }

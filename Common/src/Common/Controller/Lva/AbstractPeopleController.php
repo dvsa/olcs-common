@@ -2,12 +2,16 @@
 
 namespace Common\Controller\Lva;
 
-use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 use Common\Form\Form;
 use Common\FormService\FormServiceManager;
 use Common\RefData;
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Helper\GuidanceHelperService;
+use Common\Service\Lva\VariationLvaService;
+use Common\Service\Script\ScriptFactory;
 use Dvsa\Olcs\Transfer\Command as TransferCmd;
-use Laminas\Mvc\MvcEvent;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Shared logic between People controllers
@@ -15,34 +19,53 @@ use Laminas\Mvc\MvcEvent;
  * @author Nick Payne <nick.payne@valtech.co.uk>
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractPeopleController extends AbstractController implements AdapterAwareInterface
+abstract class AbstractPeopleController extends AbstractController
 {
-    use Traits\AdapterAwareTrait;
     use Traits\CrudTableTrait;
 
     /**
      * Needed by the Crud Table Trait
      */
     protected $section = 'people';
-    protected $baseRoute = 'lva-%s/people';
+    protected string $baseRoute = 'lva-%s/people';
 
-    /** @var  \Common\Service\Helper\FormHelperService */
-    private $hlpForm;
+
+    protected FormHelperService $formHelper;
+    protected FormServiceManager $formServiceManager;
+    protected ScriptFactory $scriptFactory;
+    protected VariationLvaService $variationLvaService;
+    protected GuidanceHelperService $guidanceHelper;
+    protected $lvaAdapter; //ToDo: Use Union Type Hint when available in php 8.0
 
     /**
-     * On Dispatch
-     *
-     * @param MvcEvent $e Event
-     *
-     * @return mixed
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     * @param FormHelperService $formHelper
+     * @param FormServiceManager $formServiceManager
+     * @param ScriptFactory $scriptFactory
+     * @param VariationLvaService $variationLvaService
+     * @param GuidanceHelperService $guidanceHelper
+     * @param $lvaAdapter
      */
-    public function onDispatch(MvcEvent $e)
-    {
-        $this->hlpForm = $this->getServiceLocator()->get('Helper\Form');
+    public function __construct(
+        NiTextTranslation $niTextTranslationUtil,
+        AuthorizationService $authService,
+        FormHelperService $formHelper,
+        FormServiceManager $formServiceManager,
+        ScriptFactory $scriptFactory,
+        VariationLvaService $variationLvaService,
+        GuidanceHelperService $guidanceHelper,
+        $lvaAdapter
+    ) {
+        $this->formHelper = $formHelper;
+        $this->formServiceManager = $formServiceManager;
+        $this->scriptFactory = $scriptFactory;
+        $this->variationLvaService = $variationLvaService;
+        $this->guidanceHelper = $guidanceHelper;
+        $this->lvaAdapter = $lvaAdapter;
 
-        return parent::onDispatch($e);
+        parent::__construct($niTextTranslationUtil, $authService);
     }
-
 
     /**
      * Index action
@@ -53,7 +76,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
     {
         /* @var $adapter Adapters\AbstractPeopleAdapter */
         try {
-            $this->getAdapter()->loadPeopleData($this->lva, $this->getIdentifier());
+            $this->lvaAdapter->loadPeopleData($this->lva, $this->getIdentifier());
         } catch (\RuntimeException $ex) {
             return $this->notFoundAction();
         }
@@ -62,7 +85,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             $this->addGuidanceMessage();
         }
 
-        if ($this->getAdapter()->isSoleTrader()) {
+        if ($this->lvaAdapter->isSoleTrader()) {
             return $this->handleSoleTrader();
         }
 
@@ -79,17 +102,15 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
-        $adapter = $this->getAdapter();
+        $adapter = $this->lvaAdapter;
 
-        // @todo move alterForm and alterFormForOrganisation logic into form services
-        $form = $this->getServiceLocator()
-            ->get(FormServiceManager::class)
+        $form = $this->formServiceManager
             ->get('lva-' . $this->lva . '-' . $this->section)
             ->getForm(
                 ['canModify' => $adapter->canModify(), 'isPartnership' => $adapter->isPartnership()]
             );
 
-        $table = $this->getAdapter()->createTable();
+        $table = $this->lvaAdapter->createTable();
 
         $form->get('table')
             ->get('table')
@@ -97,9 +118,9 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
         $form->get('table')->get('rows')->setValue(count($table->getRows()));
 
-        $this->alterForm($form, $table, $this->getAdapter()->getOrganisationType());
+        $this->alterForm($form, $table, $this->lvaAdapter->getOrganisationType());
 
-        $this->getAdapter()->alterFormForOrganisation($form, $table);
+        $this->lvaAdapter->alterFormForOrganisation($form, $table);
 
         if ($request->isPost()) {
             $postData = (array)$request->getPost();
@@ -117,10 +138,10 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             }
         }
 
-        $this->getServiceLocator()->get('Script')->loadFiles(['lva-crud-delta', 'more-actions']);
+        $this->scriptFactory->loadFiles(['lva-crud-delta', 'more-actions']);
 
         $variables = [
-            'title' => $this->getPageTitle($this->getAdapter()->getOrganisationType()),
+            'title' => $this->getPageTitle($this->lvaAdapter->getOrganisationType()),
         ];
         return $this->render('people', $form, $variables);
     }
@@ -133,7 +154,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
     private function handleSoleTrader()
     {
         /* @var $adapter Adapters\AbstractPeopleAdapter */
-        $adapter = $this->getAdapter();
+        $adapter = $this->lvaAdapter;
 
         /** @var array $personData */
         $personData = $adapter->getFirstPersonData();
@@ -171,8 +192,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         }
 
         /** @var \Laminas\Form\FormInterface $form */
-        $form = $this->getServiceLocator()
-            ->get(FormServiceManager::class)
+        $form = $this->formServiceManager
             ->get('lva-' . $this->lva . '-sole_trader')
             ->getForm($params);
 
@@ -207,7 +227,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
         //  update organisation name
         /* @var $adapter Adapters\AbstractPeopleAdapter */
-        $adapter = $this->getAdapter();
+        $adapter = $this->lvaAdapter;
         if (!$adapter->isSoleTrader() && !$adapter->isPartnership()) {
             return;
         }
@@ -248,7 +268,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
     private function savePerson($data)
     {
         /* @var Adapters\AbstractPeopleAdapter $adapter */
-        $adapter = $this->getAdapter();
+        $adapter = $this->lvaAdapter;
         if (empty($data['id'])) {
             $adapter->create($data);
         } else {
@@ -320,7 +340,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
     private function addGuidanceMessage()
     {
         $guidanceLabel = 'selfserve-app-subSection-your-business-people-guidance';
-        switch ($this->getAdapter()->getOrganisationType()) {
+        switch ($this->lvaAdapter->getOrganisationType()) {
             case RefData::ORG_TYPE_REGISTERED_COMPANY:
                 $guidanceLabel .= 'LC';
                 break;
@@ -340,31 +360,31 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         $additionalGuidanceLabel = null;
         if (
             $this->lva === self::LVA_VAR
-            && $this->getAdapter()->hasMoreThanOneValidCurtailedOrSuspendedLicences()
+            && $this->lvaAdapter->hasMoreThanOneValidCurtailedOrSuspendedLicences()
         ) {
             $additionalGuidanceLabel = 'selfserve-app-subSection-your-business-people-guidanceAdditional';
         }
 
-        if ($this->getAdapter()->canModify()) {
+        if ($this->lvaAdapter->canModify()) {
             if ($guidanceLabel !== null) {
-                $this->getServiceLocator()->get('Helper\Guidance')->append($guidanceLabel);
+                $this->guidanceHelper->append($guidanceLabel);
             }
             if ($additionalGuidanceLabel !== null) {
-                $this->getServiceLocator()->get('Helper\Guidance')->append($additionalGuidanceLabel);
+                $this->guidanceHelper->append($additionalGuidanceLabel);
             }
         } else {
             if (
                 $this->lva === self::LVA_LIC
                 &&
                 (
-                    ($this->getAdapter()->isOrganisationLimited() &&
-                        $this->getAdapter()->getLicenceType() !== \Common\RefData::LICENCE_TYPE_SPECIAL_RESTRICTED) ||
-                    $this->getAdapter()->isOrganisationOther()
+                    ($this->lvaAdapter->isOrganisationLimited() &&
+                        $this->lvaAdapter->getLicenceType() !== \Common\RefData::LICENCE_TYPE_SPECIAL_RESTRICTED) ||
+                    $this->lvaAdapter->isOrganisationOther()
                 )
             ) {
-                $this->getServiceLocator()->get('Lva\Variation')->addVariationMessage($this->getLicenceId(), 'people');
+                $this->variationLvaService->addVariationMessage($this->getLicenceId(), 'people');
             } else {
-                $this->getServiceLocator()->get('Helper\Guidance')->append(
+                $this->guidanceHelper->append(
                     'selfserve-app-subSection-your-business-people-guidance-disabled'
                 );
             }
@@ -386,7 +406,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             $form->get('form-actions')->remove('addAnother');
         }
 
-        $personData = $this->getAdapter()->getFirstPersonData();
+        $personData = $this->lvaAdapter->getFirstPersonData();
         $personId = (isset($personData['person']['id'])) ? $personData['person']['id'] : null;
         // if not internal OR no  person OR already disqualified then hide the disqualify button
 
@@ -408,21 +428,21 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             $this->location !== self::LOC_INTERNAL ||
             empty($personId) ||
             $this->isPersonDisqualified($personData) ||
-            !$this->getAdapter()->isSoleTrader()
+            !$this->lvaAdapter->isSoleTrader()
         ) {
-            $this->getServiceLocator()->get('Helper\Form')->remove($form, 'form-actions->disqualify');
+            $this->formHelper->remove($form, 'form-actions->disqualify');
         } else {
             $form->get('form-actions')->get('disqualify')->setValue(
                 $this->url()->fromRoute(
                     'operator/disqualify_person',
-                    ['organisation' => $this->getAdapter()->getOrganisationId(), 'person' => $personId]
+                    ['organisation' => $this->lvaAdapter->getOrganisationId(), 'person' => $personId]
                 )
             );
         }
 
         if ($orgData['type']['id'] !== RefData::ORG_TYPE_OTHER) {
             // otherwise we're not interested in position at all, bin it off
-            $this->getServiceLocator()->get('Helper\Form')
+            $this->formHelper
                 ->remove($form, 'data->position');
         }
     }
@@ -435,7 +455,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
     public function addAction()
     {
         /* @var $adapter Adapters\AbstractPeopleAdapter */
-        $adapter = $this->getAdapter();
+        $adapter = $this->lvaAdapter;
         $adapter->loadPeopleData($this->lva, $this->getIdentifier());
         if (!$adapter->canModify()) {
             return $this->redirectWithoutPermission();
@@ -452,7 +472,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
     public function editAction()
     {
         /* @var $adapter Adapters\AbstractPeopleAdapter */
-        $adapter = $this->getAdapter();
+        $adapter = $this->lvaAdapter;
         $adapter->loadPeopleData($this->lva, $this->getIdentifier());
         return $this->addOrEdit('edit');
     }
@@ -468,7 +488,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
     private function addOrEdit($mode)
     {
         /* @var $adapter Adapters\AbstractPeopleAdapter */
-        $adapter = $this->getAdapter();
+        $adapter = $this->lvaAdapter;
         /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
@@ -486,7 +506,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         }
 
         /** @var \Common\Form\Form $form */
-        $form = $this->getServiceLocator()->get('Helper\Form')
+        $form = $this->formHelper
             ->createFormWithRequest('Lva\Person', $request);
 
         $this->alterCrudForm($form, $mode, $adapter->getOrganisation());
@@ -533,7 +553,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
     protected function delete()
     {
         /* @var $adapter Adapters\AbstractPeopleAdapter */
-        $adapter = $this->getAdapter();
+        $adapter = $this->lvaAdapter;
 
         $adapter->loadPeopleData($this->lva, $this->getIdentifier());
         if (!$adapter->canModify()) {
@@ -581,7 +601,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
     public function restoreAction()
     {
         /* @var $adapter Adapters\AbstractPeopleAdapter */
-        $adapter = $this->getAdapter();
+        $adapter = $this->lvaAdapter;
         $adapter->loadPeopleData($this->lva, $this->getIdentifier());
         $id = $this->params('child_id');
         $ids = explode(',', $id);

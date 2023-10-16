@@ -2,43 +2,48 @@
 
 namespace Common\Controller\Lva;
 
+use Common\Data\Mapper\Lva\CommunityLicence as CommunityLicMapper;
 use Common\Form\Form;
 use Common\FormService\FormServiceManager;
-use Dvsa\Olcs\Transfer\Query\Licence\Licence;
-use Dvsa\Olcs\Transfer\Command\CommunityLic\Application\CreateOfficeCopy as ApplicationCreateOfficeCopy;
-use Dvsa\Olcs\Transfer\Command\CommunityLic\Licence\CreateOfficeCopy as LicenceCreateOfficeCopy;
+use Common\RefData;
+use Common\Service\Cqrs\Command\CommandService;
+use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Script\ScriptFactory;
+use Common\Service\Table\TableBuilder;
+use Dvsa\Olcs\Transfer\Command as TransferCmd;
 use Dvsa\Olcs\Transfer\Command\CommunityLic\Application\Create as ApplicationCreateCommunityLic;
-use Dvsa\Olcs\Transfer\Command\CommunityLic\Licence\Create as LicenceCreateCommunityLic;
+use Dvsa\Olcs\Transfer\Command\CommunityLic\Application\CreateOfficeCopy as ApplicationCreateOfficeCopy;
 use Dvsa\Olcs\Transfer\Command\CommunityLic\EditSuspension as EditSuspensionDto;
+use Dvsa\Olcs\Transfer\Command\CommunityLic\Licence\Create as LicenceCreateCommunityLic;
+use Dvsa\Olcs\Transfer\Command\CommunityLic\Licence\CreateOfficeCopy as LicenceCreateOfficeCopy;
 use Dvsa\Olcs\Transfer\Command\CommunityLic\Reprint as ReprintDto;
 use Dvsa\Olcs\Transfer\Command\CommunityLic\Restore as RestoreDto;
-use Common\Data\Mapper\Lva\CommunityLicence as CommunityLicMapper;
-use Dvsa\Olcs\Transfer\Query\CommunityLic\CommunityLicences;
 use Dvsa\Olcs\Transfer\Command\CommunityLic\Stop as StopDto;
-use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 use Dvsa\Olcs\Transfer\Query\CommunityLic\CommunityLicence;
-use Olcs\Mvc\Controller\ParameterProvider\GenericList;
-use Dvsa\Olcs\Transfer\Command as TransferCmd;
-use Common\Service\Table\TableBuilder;
+use Dvsa\Olcs\Transfer\Query\CommunityLic\CommunityLicences;
+use Dvsa\Olcs\Transfer\Query\Licence\Licence;
+use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\View\Model\ViewModel;
-use Common\RefData;
+use Olcs\Mvc\Controller\ParameterProvider\GenericList;
 use RuntimeException;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Shared logic between Community Licences controllers
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractCommunityLicencesController extends AbstractController implements AdapterAwareInterface
+abstract class AbstractCommunityLicencesController extends AbstractController
 {
     use Traits\CrudTableTrait;
-    use Traits\AdapterAwareTrait;
 
     // See OLCS-16655, pagination is to be 50 per page only
     public const TABLE_RESULTS_PER_PAGE = 50;
 
     protected $section = 'community_licences';
-    protected $baseRoute = 'lva-%s/community_licences';
+    protected string $baseRoute = 'lva-%s/community_licences';
 
     protected $officeCopy = null;
 
@@ -59,6 +64,42 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     ];
 
     protected $filters = [];
+    protected FormHelperService $formHelper;
+    protected FlashMessengerHelperService $flashMessengerHelper;
+    protected FormServiceManager $formServiceManager;
+    protected ScriptFactory $scriptFactory;
+    protected AnnotationBuilder $transferAnnotationBuilder;
+    protected CommandService $commandService;
+
+    /**
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     * @param FormHelperService $formHelper
+     * @param FlashMessengerHelperService $flashMessengerHelper
+     * @param FormServiceManager $formServiceManager
+     * @param ScriptFactory $scriptFactory
+     * @param AnnotationBuilder $transferAnnotationBuilder
+     * @param CommandService $commandService
+     */
+    public function __construct(
+        NiTextTranslation $niTextTranslationUtil,
+        AuthorizationService $authService,
+        FormHelperService $formHelper,
+        FlashMessengerHelperService $flashMessengerHelper,
+        FormServiceManager $formServiceManager,
+        ScriptFactory $scriptFactory,
+        AnnotationBuilder $transferAnnotationBuilder,
+        CommandService $commandService
+    ) {
+        $this->formHelper = $formHelper;
+        $this->flashMessengerHelper = $flashMessengerHelper;
+        $this->formServiceManager = $formServiceManager;
+        $this->scriptFactory = $scriptFactory;
+        $this->transferAnnotationBuilder = $transferAnnotationBuilder;
+        $this->commandService = $commandService;
+
+        parent::__construct($niTextTranslationUtil, $authService);
+    }
 
     /**
      * Community Licences section
@@ -100,7 +141,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         $data = $this->formatDataForForm($this->getFormData());
         $form->setData($data);
 
-        $this->getServiceLocator()->get('Script')->loadFiles(['forms/filter', 'community-licence']);
+        $this->scriptFactory->loadFiles(['forms/filter', 'community-licence']);
 
         $title = 'lva.section.title.community_licences';
         if ($this->getGoodsOrPsv() == RefData::LICENCE_CATEGORY_PSV) {
@@ -174,7 +215,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     private function getFilterForm()
     {
         /** @var Form $form */
-        $form = $this->getServiceLocator()->get('Helper\Form')
+        $form = $this->formHelper
             ->createForm('Lva\CommunityLicenceFilter', false);
 
         $lva = ($this->lva !== 'variation') ? $this->lva : 'application';
@@ -197,17 +238,14 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
      */
     private function getForm()
     {
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
-
         /** @var \Laminas\Form\FormInterface $form */
-        $form = $this->getServiceLocator()
-            ->get(FormServiceManager::class)
+        $form = $this->formServiceManager
             ->get('lva-' . $this->lva . '-' . $this->section)
             ->getForm();
 
         $table = $this->alterTable($this->getTableConfig());
-        $formHelper->populateFormTable($form->get('table'), $table);
-        $this->getServiceLocator()->get('Helper\Form')->setFormActionFromRequest($form, $this->getRequest());
+        $this->formHelper->populateFormTable($form->get('table'), $table);
+        $this->formHelper->setFormActionFromRequest($form, $this->getRequest());
 
         return $form;
     }
@@ -265,7 +303,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         $response = $this->handleQuery(CommunityLicences::create($listParams));
 
         if ($response->isClientError() || $response->isServerError()) {
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+            $this->flashMessengerHelper->addErrorMessage('unknown-error');
         }
 
         $results = [];
@@ -423,10 +461,8 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
 
         $licenceId = $this->getLicenceId();
 
-        /** @var \Common\Service\Helper\FormHelperService $formHelper */
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
-        $form = $formHelper->createForm('Lva\CommunityLicencesAdd');
-        $formHelper->setFormActionFromRequest($form, $request);
+        $form = $this->formHelper->createForm('Lva\CommunityLicencesAdd');
+        $this->formHelper->setFormActionFromRequest($form, $request);
 
         $view = new ViewModel(['form' => $form]);
         $view->setTemplate('partials/form');
@@ -468,8 +504,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
 
         $ids = explode(',', $this->params('child_id'));
         if (!$request->isPost()) {
-            $formHelper = $this->getServiceLocator()->get('Helper\Form');
-            $form = $formHelper->createForm('Lva\CommunityLicencesAnnul');
+            $form = $this->formHelper->createForm('Lva\CommunityLicencesAnnul');
             $formHelper->setFormActionFromRequest($form, $this->getRequest());
 
             $view = new ViewModel(['form' => $form]);
@@ -508,9 +543,8 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         $request = $this->getRequest();
 
         if (!$request->isPost()) {
-            $formHelper = $this->getServiceLocator()->get('Helper\Form');
-            $form = $formHelper->createForm('Lva\CommunityLicencesRestore');
-            $formHelper->setFormActionFromRequest($form, $this->getRequest());
+            $form = $this->formHelper->createForm('Lva\CommunityLicencesRestore');
+            $this->formHelper->setFormActionFromRequest($form, $this->getRequest());
             $view = new ViewModel(['form' => $form]);
             $view->setTemplate('partials/form');
             return $this->render($view);
@@ -573,7 +607,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         }
 
         $this->placeholder()->setPlaceholder('contentTitle', 'Stop community licence');
-        $this->getServiceLocator()->get('Script')->loadFile('community-licence-stop');
+        $this->scriptFactory->loadFile('community-licence-stop');
         return $this->render($view);
     }
 
@@ -634,9 +668,8 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
      */
     protected function getEditSuspensionForm()
     {
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
-        $form = $formHelper->createForm('Lva\CommunityLicencesEditSuspension');
-        $formHelper->setFormActionFromRequest($form, $this->getRequest());
+        $form = $this->formHelper->createForm('Lva\CommunityLicencesEditSuspension');
+        $this->formHelper->setFormActionFromRequest($form, $this->getRequest());
         return $form;
     }
 
@@ -649,7 +682,6 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
      */
     protected function alterEditSuspensionForm($form)
     {
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
         $status = $form->get('data')->get('status')->getValue();
 
         if ($status === RefData::COMMUNITY_LICENCE_STATUS_SUSPENDED) {
@@ -658,7 +690,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
             $startDate->getDayElement()->setAttribute('readonly', 'readonly');
             $startDate->getMonthElement()->setAttribute('readonly', 'readonly');
             $startDate->getYearElement()->setAttribute('readonly', 'readonly');
-            $formHelper->removeValidator(
+            $this->formHelper->removeValidator(
                 $form,
                 'dates->startDate',
                 \Dvsa\Olcs\Transfer\Validators\DateInFuture::class
@@ -676,7 +708,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         $response = $this->handleQuery(CommunityLicence::create(['id' => $this->params('child_id')]));
 
         if ($response->isClientError() || $response->isServerError()) {
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+            $this->flashMessengerHelper->addErrorMessage('unknown-error');
         }
 
         $result = [];
@@ -693,9 +725,8 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
      */
     protected function getStopForm()
     {
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
-        $form = $formHelper->createForm('Lva\CommunityLicencesStop');
-        $formHelper->setFormActionFromRequest($form, $this->getRequest());
+        $form = $this->formHelper->createForm('Lva\CommunityLicencesStop');
+        $this->formHelper->setFormActionFromRequest($form, $this->getRequest());
         return $form;
     }
 
@@ -709,7 +740,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     protected function alterStopForm($form)
     {
         if ($form->get('data')->get('type')->getValue() === 'N') {
-            $this->getServiceLocator()->get('Helper\Form')
+            $this->formHelper
                 ->disableValidation(
                     $form->getInputFilter()->get('dates')->get('startDate')
                 );
@@ -752,7 +783,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
      */
     protected function renderConfirmation($message)
     {
-        $form = $this->getServiceLocator()->get('Helper\Form')
+        $form = $this->formHelper
             ->createFormWithRequest('GenericConfirmation', $this->getRequest());
 
         $form->get('messages')->get('message')->setValue($message);
@@ -794,9 +825,9 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
      */
     protected function sendCommand($dto)
     {
-        $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')->createCommand($dto);
+        $command = $this->transferAnnotationBuilder->createCommand($dto);
         /** @var \Common\Service\Cqrs\Response $response */
-        return $this->getServiceLocator()->get('CommandService')->send($command);
+        return $this->commandService->send($command);
     }
 
     /**

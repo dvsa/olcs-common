@@ -2,23 +2,42 @@
 
 namespace Common\Controller\Continuation;
 
-use Laminas\View\Model\ViewModel;
-use Dvsa\Olcs\Transfer\Query\ContinuationDetail\LicenceChecklist as LicenceChecklistQuery;
 use Common\Data\Mapper\Continuation\LicenceChecklist as LicenceChecklistMapper;
+use Common\FormService\FormServiceManager;
 use Common\RefData;
+use Common\Service\Helper\TranslationHelperService;
+use Dvsa\Olcs\Transfer\Query\ContinuationDetail\LicenceChecklist as LicenceChecklistQuery;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
+use Laminas\View\Model\ViewModel;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * ChecklistController
  */
 class ChecklistController extends AbstractContinuationController
 {
-    const FINANCES_ROUTE = 'continuation/finances';
-    const DECLARATION_ROUTE = 'continuation/declaration';
-    const CONDITIONS_UNDERTAKINGS_ROUTE = 'continuation/conditions-undertakings';
+    public const FINANCES_ROUTE = 'continuation/finances';
+    public const DECLARATION_ROUTE = 'continuation/declaration';
+    public const CONDITIONS_UNDERTAKINGS_ROUTE = 'continuation/conditions-undertakings';
 
     protected $layout = 'pages/continuation-checklist';
     protected $checklistSectionLayout = 'layouts/simple';
     protected $currentStep = self::STEP_CHECKLIST;
+
+    /**
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     * @param FormServiceManager $formServiceManager
+     * @param TranslationHelperService $translationHelper
+     */
+    public function __construct(
+        NiTextTranslation $niTextTranslationUtil,
+        AuthorizationService $authService,
+        FormServiceManager $formServiceManager,
+        TranslationHelperService $translationHelper
+    ) {
+        parent::__construct($niTextTranslationUtil, $authService, $formServiceManager, $translationHelper);
+    }
 
     /**
      * Index page
@@ -27,7 +46,6 @@ class ChecklistController extends AbstractContinuationController
      */
     public function indexAction()
     {
-        $translator = $this->getServiceLocator()->get('Helper\Translation');
         $data = $this->getData(
             $this->getContinuationDetailId()
         );
@@ -46,7 +64,7 @@ class ChecklistController extends AbstractContinuationController
         return $this->getViewModel(
             $licenceData['licNo'],
             $form,
-            LicenceChecklistMapper::mapFromResultToView($data, $translator)
+            LicenceChecklistMapper::mapFromResultToView($data, $this->translationHelper)
         );
     }
 
@@ -74,7 +92,6 @@ class ChecklistController extends AbstractContinuationController
      */
     public function peopleAction()
     {
-        $translator = $this->getServiceLocator()->get('Helper\Translation');
         $data = $this->getData(
             $this->getContinuationDetailId()
         );
@@ -84,7 +101,7 @@ class ChecklistController extends AbstractContinuationController
         $mappedData = LicenceChecklistMapper::mapPeopleSectionToView(
             $organisationUsers,
             $organisation['type']['id'],
-            $translator
+            $this->translationHelper
         );
         $view = new ViewModel(
             [
@@ -105,7 +122,6 @@ class ChecklistController extends AbstractContinuationController
      */
     public function vehiclesAction()
     {
-        $translator = $this->getServiceLocator()->get('Helper\Translation');
         $data = $this->getData(
             $this->getContinuationDetailId()
         );
@@ -113,7 +129,7 @@ class ChecklistController extends AbstractContinuationController
         $licenceVehicles = $licenceData['licenceVehicles'];
         $mappedData = LicenceChecklistMapper::mapVehiclesSectionToView(
             $licenceData,
-            $translator
+            $this->translationHelper
         );
         $view = new ViewModel(
             [
@@ -134,7 +150,6 @@ class ChecklistController extends AbstractContinuationController
      */
     public function usersAction()
     {
-        $translator = $this->getServiceLocator()->get('Helper\Translation');
         $data = $this->getData(
             $this->getContinuationDetailId()
         );
@@ -143,7 +158,7 @@ class ChecklistController extends AbstractContinuationController
 
         $mappedData = LicenceChecklistMapper::mapUsersSectionToView(
             $licenceData,
-            $translator
+            $this->translationHelper
         );
         $view = new ViewModel(
             [
@@ -164,7 +179,6 @@ class ChecklistController extends AbstractContinuationController
      */
     public function operatingCentresAction()
     {
-        $translator = $this->getServiceLocator()->get('Helper\Translation');
         $data = $this->getData(
             $this->getContinuationDetailId()
         );
@@ -172,7 +186,7 @@ class ChecklistController extends AbstractContinuationController
         $licenceVehicles = $licenceData['operatingCentres'];
         $mappedData = LicenceChecklistMapper::mapOperatingCentresSectionToView(
             $data,
-            $translator
+            $this->translationHelper
         );
         $view = new ViewModel(
             [
@@ -193,7 +207,6 @@ class ChecklistController extends AbstractContinuationController
      */
     public function transportManagersAction()
     {
-        $translator = $this->getServiceLocator()->get('Helper\Translation');
         $data = $this->getData(
             $this->getContinuationDetailId()
         );
@@ -201,7 +214,7 @@ class ChecklistController extends AbstractContinuationController
         $tmLicences = $licenceData['tmLicences'];
         $mappedData = LicenceChecklistMapper::mapTransportManagerSectionToView(
             $licenceData,
-            $translator
+            $this->translationHelper
         );
         $view = new ViewModel(
             [
@@ -222,14 +235,13 @@ class ChecklistController extends AbstractContinuationController
      */
     public function safetyInspectorsAction()
     {
-        $translator = $this->getServiceLocator()->get('Helper\Translation');
         $data = $this->getData(
             $this->getContinuationDetailId()
         );
         $licenceData = $data['licence'];
         $mappedData = LicenceChecklistMapper::mapSafetyInspectorsSectionToView(
             $licenceData,
-            $translator
+            $this->translationHelper
         );
         $workshops = $licenceData['workshops'];
         $view = new ViewModel(
@@ -272,7 +284,8 @@ class ChecklistController extends AbstractContinuationController
     protected function getNextStepRoute($data)
     {
         $licenceData = $data['licence'];
-        if ($licenceData['licenceType']['id'] === RefData::LICENCE_TYPE_SPECIAL_RESTRICTED
+        if (
+            $licenceData['licenceType']['id'] === RefData::LICENCE_TYPE_SPECIAL_RESTRICTED
             && $licenceData['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_PSV
         ) {
             return self::DECLARATION_ROUTE;

@@ -2,10 +2,12 @@
 
 namespace Common\Controller\Continuation;
 
-use Common\Form\Form;
-use Common\RefData;
-use Laminas\View\Model\ViewModel;
 use Common\FormService\Form\Continuation\ConditionsUndertakings as ConditionsUndertakingsFormService;
+use Common\FormService\FormServiceManager;
+use Common\Service\Helper\TranslationHelperService;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
+use Laminas\View\Model\ViewModel;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Conditions & undertakings controller controller
@@ -15,11 +17,26 @@ use Common\FormService\Form\Continuation\ConditionsUndertakings as ConditionsUnd
  */
 class ConditionsUndertakingsController extends AbstractContinuationController
 {
-    const NEXT_STEP = 'continuation/finances';
+    public const NEXT_STEP = 'continuation/finances';
 
     protected $layout = 'pages/continuation-conditions-undertakings';
 
     protected $currentStep = self::STEP_CU;
+
+    /**
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     * @param FormServiceManager $formServiceManager
+     * @param TranslationHelperService $translationHelper
+     */
+    public function __construct(
+        NiTextTranslation $niTextTranslationUtil,
+        AuthorizationService $authService,
+        FormServiceManager $formServiceManager,
+        TranslationHelperService $translationHelper
+    ) {
+        parent::__construct($niTextTranslationUtil, $authService, $formServiceManager, $translationHelper);
+    }
 
     /**
      * Index action
@@ -55,10 +72,8 @@ class ConditionsUndertakingsController extends AbstractContinuationController
 
     protected function addExtraConditionsUndertakings($data): array
     {
-        $translator = $this->getServiceLocator()->get('Helper\Translation');
-
-        $data['conditionsUndertakings']['licence']['psv_restricted']['comment'] = $translator->translate('markup-continuation-psv-restricted-comment');
-        $data['conditionsUndertakings']['licence']['psv_restricted']['undertakings'] = $translator->translate('markup-continuation-psv-restricted-required-undertaking');
+        $data['conditionsUndertakings']['licence']['psv_restricted']['comment'] = $this->translationHelper->translate('markup-continuation-psv-restricted-comment');
+        $data['conditionsUndertakings']['licence']['psv_restricted']['undertakings'] = $this->translationHelper->translate('markup-continuation-psv-restricted-required-undertaking');
 
         return $data;
     }

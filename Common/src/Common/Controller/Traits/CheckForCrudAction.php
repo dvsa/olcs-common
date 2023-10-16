@@ -1,14 +1,8 @@
 <?php
 
-/**
- * CheckForCrudAction trait
- *
- * @author Alex Peshkov <alex.pehkov@valtech.co.uk>
- */
 namespace Common\Controller\Traits;
 
 use Laminas\Http\Response;
-use Laminas\View\Model\ViewModel;
 
 /**
  * CheckForCrudAction trait
@@ -152,7 +146,7 @@ trait CheckForCrudAction
      */
     protected function crudActionMissingId()
     {
-        $this->getServiceLocator()->get('Helper\FlashMessenger')->addWarningMessage('please-select-row');
+        $this->flashMessengerHelper->addWarningMessage('please-select-row');
         return $this->redirect()->toRoute(null, [], [], true);
     }
 }

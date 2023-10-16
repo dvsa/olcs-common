@@ -2,10 +2,15 @@
 
 namespace CommonTest\Controller\Lva;
 
+use Common\Controller\Lva\AbstractVehiclesDeclarationsController;
 use Common\FormService\FormServiceManager;
 use Common\RefData;
+use Common\Service\Helper\DataHelperService;
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Script\ScriptFactory;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Mockery as m;
-use CommonTest\Bootstrap;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Test Abstract Vehicles Declarations Controller
@@ -18,31 +23,32 @@ class AbstractVehiclesDeclarationsControllerTest extends AbstractLvaControllerTe
     {
         parent::setUp();
 
-        $this->mockController('\Common\Controller\Lva\AbstractVehiclesDeclarationsController');
+        $this->mockNiTextTranslationUtil = m::mock(NiTextTranslation::class);
+        $this->mockAuthService = m::mock(AuthorizationService::class);
+        $this->mockScriptFactory = m::mock(ScriptFactory::class);
+        $this->mockFormServiceManager = m::mock(FormServiceManager::class);
+        $this->mockFormHelper = m::mock(FormHelperService::class);
+        $this->mockDataHelper = m::mock(DataHelperService::class);
 
-        $this->mockService('Script', 'loadFile')->with('vehicle-declarations');
-
-        $this->mockService('Helper\Translation', 'translate')
-            ->andReturnUsing(
-                function ($input) {
-                    return $input;
-                }
-            );
-
-        $mockFormServiceManager = m::mock();
-        $this->sm->setService(FormServiceManager::class, $mockFormServiceManager);
+        $this->mockController(AbstractVehiclesDeclarationsController::class, [
+            $this->mockNiTextTranslationUtil,
+            $this->mockAuthService,
+            $this->mockFormHelper,
+            $this->mockFormServiceManager,
+            $this->mockScriptFactory,
+            $this->mockDataHelper
+        ]);
+        $this->mockScriptFactory->shouldReceive('loadFile')->with('vehicle-declarations');
     }
 
     public function testGetIndexAction()
     {
         $form = m::mock(\Common\Form\Form::class);
         $mockFormService = m::mock();
-        $mockFormServiceManager = m::mock();
-        $this->sm->setService(FormServiceManager::class, $mockFormServiceManager);
 
         $form->shouldReceive('setValidationGroup')->once();
 
-        $mockFormServiceManager->shouldReceive('get')
+        $this->mockFormServiceManager->shouldReceive('get')
             ->once()
             ->with('lva--vehicles_declarations')
             ->andReturn($mockFormService);

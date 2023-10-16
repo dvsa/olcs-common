@@ -5,13 +5,20 @@ namespace Common\Controller\Lva;
 use Common\Data\Mapper\Lva\LicenceHistory as LicenceHistoryMapper;
 use Common\Data\Mapper\Lva\OtherLicence as OtherLicenceMapper;
 use Common\FormService\FormServiceManager;
+use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Helper\StringHelperService;
+use Common\Service\Script\ScriptFactory;
+use Common\Service\Table\TableFactory;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateLicenceHistory;
 use Dvsa\Olcs\Transfer\Command\OtherLicence\CreateOtherLicence;
 use Dvsa\Olcs\Transfer\Command\OtherLicence\DeleteOtherLicence;
 use Dvsa\Olcs\Transfer\Command\OtherLicence\UpdateOtherLicence;
 use Dvsa\Olcs\Transfer\Query\Application\LicenceHistory;
 use Dvsa\Olcs\Transfer\Query\OtherLicence\OtherLicence;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\Filter\Word\CamelCaseToDash;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Licence History Trait
@@ -43,9 +50,46 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     ];
 
     protected $section = 'licence_history';
-    protected $baseRoute = 'lva-%s/licence_history';
+    protected string $baseRoute = 'lva-%s/licence_history';
 
     protected $otherLicences = [];
+
+    protected FormHelperService $formHelper;
+    protected FlashMessengerHelperService $flashMessengerHelper;
+    protected FormServiceManager $formServiceManager;
+    protected ScriptFactory $scriptFactory;
+    protected TableFactory $tableFactory;
+    protected StringHelperService $stringHelper;
+
+    /**
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     * @param FlashMessengerHelperService $flashMessengerHelper
+     * @param FormServiceManager $formServiceManager
+     * @param ScriptFactory $scriptFactory
+     * @param StringHelperService $stringHelper
+     * @param TableFactory $tableFactory
+     * @param FormHelperService $formHelper
+     */
+    public function __construct(
+        NiTextTranslation $niTextTranslationUtil,
+        AuthorizationService $authService,
+        FlashMessengerHelperService $flashMessengerHelper,
+        FormServiceManager $formServiceManager,
+        ScriptFactory $scriptFactory,
+        StringHelperService $stringHelper,
+        TableFactory $tableFactory,
+        FormHelperService $formHelper
+    ) {
+        $this->flashMessengerHelper = $flashMessengerHelper;
+        $this->formServiceManager = $formServiceManager;
+        $this->scriptFactory = $scriptFactory;
+        $this->formHelper = $formHelper;
+        $this->tableFactory = $tableFactory;
+        $this->stringHelper = $stringHelper;
+
+        parent::__construct($niTextTranslationUtil, $authService);
+    }
 
     public function indexAction()
     {
@@ -68,7 +112,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
             $inProgress = false;
             if ($crudAction !== null) {
                 $inProgress = true;
-                $this->getServiceLocator()->get('Helper\Form')->disableEmptyValidation($form);
+                $this->formHelper->disableEmptyValidation($form);
             }
 
             if ($form->isValid() && $this->saveLicenceHistory($form, $data, $inProgress)) {
@@ -80,7 +124,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
             }
         }
 
-        $this->getServiceLocator()->get('Script')->loadFiles(['lva-crud', 'licence-history']);
+        $this->scriptFactory->loadFiles(['lva-crud', 'licence-history']);
 
         return $this->render('licence_history', $form);
     }
@@ -129,7 +173,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         }
 
         if ($response->isServerError() || $response->isClientError()) {
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+            $this->flashMessengerHelper->addErrorMessage('unknown-error');
         }
 
         return false;
@@ -163,7 +207,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         }
 
         if ($response->isServerError()) {
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+            $this->flashMessengerHelper->addErrorMessage('unknown-error');
         }
 
         return false;
@@ -189,7 +233,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
             }
         }
 
-        $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
+        $fm = $this->flashMessengerHelper;
         if (!empty($errors)) {
             foreach ($errors as $error) {
                 $fm->addCurrentErrorMessage($error);
@@ -221,7 +265,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         $response = $this->getLicenceHistory();
 
         if ($response->isClientError() || $response->isServerError()) {
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+            $this->flashMessengerHelper->addErrorMessage('unknown-error');
         }
 
         $mappedResults = [];
@@ -265,11 +309,10 @@ abstract class AbstractLicenceHistoryController extends AbstractController
      */
     protected function getLicenceHistoryForm()
     {
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $formHelper = $this->formHelper;
 
         /** @var \Common\Form\Form $form */
-        $form = $this->getServiceLocator()
-            ->get(FormServiceManager::class)
+        $form = $this->formServiceManager
             ->get('lva-' . $this->lva . '-' . $this->section)
             ->getForm();
 
@@ -291,7 +334,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
     protected function getTable($which)
     {
-        return $this->getServiceLocator()->get('Table')
+        return $this->tableFactory
             ->prepareTable('lva-licence-history-' . $which, $this->getTableData($which));
     }
 
@@ -305,9 +348,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
     protected function getLicenceTypeFromSection($section)
     {
-        $stringHelper = $this->getServiceLocator()->get('Helper\String');
-
-        return $stringHelper->camelToUnderscore($section);
+        return $this->stringHelper->camelToUnderscore($section);
     }
 
     /**
@@ -315,7 +356,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
      */
     public function prevHasLicenceAddAction()
     {
-        $this->getServiceLocator()->get('Script')->loadFiles(['add-licence-history']);
+        $this->scriptFactory->loadFiles(['add-licence-history']);
         return $this->addOrEdit('add', 'prevHasLicence');
     }
 
@@ -557,7 +598,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         $response = $this->getOtherLicenceData($id);
 
         if ($response->isClientError() || $response->isServerError()) {
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+            $this->flashMessengerHelper->addErrorMessage('unknown-error');
         }
 
         $mappedResults = [];
@@ -586,8 +627,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
      */
     protected function getLicenceForm()
     {
-        return $this->getServiceLocator()
-            ->get('Helper\Form')
+        return $this->formHelper
             ->createFormWithRequest('Lva\LicenceHistoryLicence', $this->getRequest());
     }
 
@@ -601,7 +641,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
      */
     protected function alterActionForm($form, $which)
     {
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $formHelper = $this->formHelper;
 
         if ($which !== 'prevBeenDisqualifiedTc') {
             $formHelper->remove($form, 'data->disqualificationDate');
@@ -674,7 +714,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         }
 
         if ($response->isServerError()) {
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+            $this->flashMessengerHelper->addErrorMessage('unknown-error');
         }
         return false;
     }
@@ -693,7 +733,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
             }
         }
 
-        $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
+        $fm = $this->flashMessengerHelper;
         if (!empty($errors['application'])) {
             $fm->addCurrentErrorMessage($errors['application']);
         } elseif (!empty($errors)) {

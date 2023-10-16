@@ -2,6 +2,7 @@
 
 namespace CommonTest\Controller\Plugin;
 
+use Laminas\View\Helper\Placeholder;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Olcs\TestHelpers\ControllerPluginManagerHelper;
@@ -55,7 +56,8 @@ class ElasticSearchTest extends MockeryTestCase
         $this->pm = m::mock('\Laminas\Mvc\Controller\PluginManager[setInvokableClass]')->makePartial();
         $this->pm->setInvokableClass('ElasticSearch', 'Common\Controller\Plugin\ElasticSearch');
 
-        $this->sut = new ControllerStub();
+        $this->mockPlaceholder = m::mock(Placeholder::class);
+        $this->sut = new ControllerStub($this->mockPlaceholder);
         $this->sut->setEvent($this->event);
         $this->sut->setServiceLocator($this->sm);
         $this->sut->setPluginManager($this->pm);
@@ -97,13 +99,7 @@ class ElasticSearchTest extends MockeryTestCase
         $mockContainer = m::mock('Laminas\View\Helper\Placeholder\Container');
         $mockContainer->shouldReceive('getValue')->andReturn($mockForm);
 
-        $mockPlaceholder = m::mock('Laminas\View\Helper\Placeholder');
-        $mockPlaceholder->shouldReceive('getContainer')->with('headerSearch')->andReturn($mockContainer);
-
-        $mockViewHelperManager = m::mock('Laminas\Mvc\Service\ViewHelperManagerFactory');
-        $mockViewHelperManager->shouldReceive('get')->with('placeholder')->andReturn($mockPlaceholder);
-
-        $this->sm->setService('ViewHelperManager', $mockViewHelperManager);
+        $this->mockPlaceholder->shouldReceive('getContainer')->with('headerSearch')->andReturn($mockContainer);
 
         $plugin = $this->sut->getPlugin();
 
@@ -122,13 +118,7 @@ class ElasticSearchTest extends MockeryTestCase
         $mockContainer = m::mock('Laminas\View\Helper\Placeholder\Container');
         $mockContainer->shouldReceive('getValue')->andReturn($mockForm);
 
-        $mockPlaceholder = m::mock('Laminas\View\Helper\Placeholder');
-        $mockPlaceholder->shouldReceive('getContainer')->with('headerSearch')->andReturn($mockContainer);
-
-        $mockViewHelperManager = m::mock('Laminas\Mvc\Service\ViewHelperManagerFactory');
-        $mockViewHelperManager->shouldReceive('get')->with('placeholder')->andReturn($mockPlaceholder);
-
-        $this->sm->setService('ViewHelperManager', $mockViewHelperManager);
+        $this->mockPlaceholder->shouldReceive('getContainer')->with('headerSearch')->andReturn($mockContainer);
 
         $plugin = $this->sut->getPlugin();
         $plugin->setSearchData(['index' => 'SEARCHINDEX', 'search' => 'foo']);
@@ -149,13 +139,7 @@ class ElasticSearchTest extends MockeryTestCase
         $mockContainer = m::mock('Laminas\View\Helper\Placeholder\Container');
         $mockContainer->shouldReceive('getValue')->andReturn($mockForm);
 
-        $mockPlaceholder = m::mock('Laminas\View\Helper\Placeholder');
-        $mockPlaceholder->shouldReceive('getContainer')->with('searchFilter')->andReturn($mockContainer);
-
-        $mockViewHelperManager = m::mock('Laminas\Mvc\Service\ViewHelperManagerFactory');
-        $mockViewHelperManager->shouldReceive('get')->with('placeholder')->andReturn($mockPlaceholder);
-
-        $this->sm->setService('ViewHelperManager', $mockViewHelperManager);
+        $this->mockPlaceholder->shouldReceive('getContainer')->with('searchFilter')->andReturn($mockContainer);
 
         $plugin = $this->sut->getPlugin();
         $plugin->setSearchData(['index' => 'SEARCHINDEX', 'search' => 'foo']);
@@ -200,13 +184,8 @@ class ElasticSearchTest extends MockeryTestCase
         $mockContainer = m::mock('Laminas\View\Helper\Placeholder\Container');
         $mockContainer->shouldReceive('getValue')->andReturn($mockForm);
 
-        $mockPlaceholder = m::mock('Laminas\View\Helper\Placeholder');
-        $mockPlaceholder->shouldReceive('getContainer')->with(m::type('string'))->andReturn($mockContainer);
-
-        $mockViewHelperManager = m::mock('Laminas\Mvc\Service\ViewHelperManagerFactory');
-        $mockViewHelperManager->shouldReceive('get')->with('placeholder')->andReturn($mockPlaceholder);
-
-        $this->sm->setService('ViewHelperManager', $mockViewHelperManager);
+        $this->mockPlaceholder->shouldReceive('getContainer')->with('searchFilter')->andReturn($mockContainer);
+        $this->mockPlaceholder->shouldReceive('getContainer')->with('headerSearch')->andReturn($mockContainer);
 
         $plugin = $this->sut->getPlugin();
         $plugin->setSearchData(['index' => 'SEARCHINDEX', 'search' => 'foo']);
@@ -251,26 +230,17 @@ class ElasticSearchTest extends MockeryTestCase
         $mi->shouldReceive('findOneBy')->with('id', 'search-da')->andReturnSelf();
         $mi->shouldReceive('setActive')->with(true)->andReturnNull();
 
-
         $mockSearchTypeService->shouldReceive('getNavigation')->with(
             'internal-search',
             ['search' => 'foo']
         )->andReturn($mi);
-
-        $mockPlaceholder = m::mock('Laminas\View\Helper\Placeholder');
-        $mockPlaceholder->shouldReceive('getContainer')
-            ->with('horizontalNavigationContainer')
-            ->andReturn(m::mock()->shouldReceive('set')->once()->with($mi)->getMock());
 
         $page = m::mock(NavigationPage::class);
 
         $mi->shouldReceive('findOneBy')->with('id', 'remove-id')->once()->andReturn($page);
         $mi->shouldReceive('removePage')->with($page, true)->once()->andReturnTrue();
 
-        $mockViewHelperManager = m::mock('Laminas\Mvc\Service\ViewHelperManagerFactory');
-        $mockViewHelperManager->shouldReceive('get')->with('placeholder')->andReturn($mockPlaceholder);
-
-        $this->sm->setService('ViewHelperManager', $mockViewHelperManager);
+        $this->mockPlaceholder->shouldReceive('getContainer')->with('horizontalNavigationContainer')->andReturn(m::mock()->shouldReceive('set')->once()->with($mi)->getMock());
 
         $plugin = $this->sut->getPlugin();
         $plugin->setSearchTypeService($mockSearchTypeService);
@@ -297,13 +267,7 @@ class ElasticSearchTest extends MockeryTestCase
         $mockContainer = m::mock('Laminas\View\Helper\Placeholder\Container');
         $mockContainer->shouldReceive('getValue')->andReturn($mockForm);
 
-        $mockPlaceholder = m::mock('Laminas\View\Helper\Placeholder');
-        $mockPlaceholder->shouldReceive('getContainer')->with('headerSearch')->andReturn($mockContainer);
-
-        $mockViewHelperManager = m::mock('Laminas\Mvc\Service\ViewHelperManagerFactory');
-        $mockViewHelperManager->shouldReceive('get')->with('placeholder')->andReturn($mockPlaceholder);
-
-        $this->sm->setService('ViewHelperManager', $mockViewHelperManager);
+        $this->mockPlaceholder->shouldReceive('getContainer')->with('headerSearch')->andReturn($mockContainer);
 
         $mockSearchTypeService = m::mock('Olcs\Service\Data\Search\SearchType');
         $mockSearchService = m::mock('Common\Service\Data\Search\Search');

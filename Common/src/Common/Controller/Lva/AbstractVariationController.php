@@ -1,13 +1,11 @@
 <?php
 
-/**
- * Abstract Variation Controller
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva;
 
+use Common\Service\Helper\TranslationHelperService;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\Form\Form;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Abstract Variation Controller
@@ -17,6 +15,26 @@ use Laminas\Form\Form;
 abstract class AbstractVariationController extends AbstractController
 {
     use Traits\CreateVariationTrait;
+
+    protected TranslationHelperService $translationHelper;
+    protected $processingCreateVariation;
+
+    /**
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     * @param TranslationHelperService $translationHelper
+     * @param $processingCreateVariation
+     */
+    public function __construct(
+        NiTextTranslation $niTextTranslationUtil,
+        AuthorizationService $authService,
+        TranslationHelperService $translationHelper,
+        $processingCreateVariation
+    ) {
+        $this->processingCreateVariation = $processingCreateVariation;
+        $this->translationHelper = $translationHelper;
+        parent::__construct($niTextTranslationUtil, $authService);
+    }
 
     /**
      * Index action
@@ -31,12 +49,10 @@ abstract class AbstractVariationController extends AbstractController
             return $form;
         }
 
-        $translator = $this->getServiceLocator()->get('Helper\Translation');
-
         return $this->render(
             'create-variation-confirmation',
             $form,
-            ['sectionText' => $translator->translate('markup-licence-changes-confirmation-text')]
+            ['sectionText' => $this->translationHelper->translate('markup-licence-changes-confirmation-text')]
         );
     }
 }

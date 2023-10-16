@@ -3,16 +3,22 @@
 namespace Common\Controller\Lva;
 
 use Common\FormService\FormServiceManager;
+use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\FormHelperService;
+use Common\Service\Helper\TranslationHelperService;
+use Common\Service\Script\ScriptFactory;
+use Common\Service\Table\TableFactory;
 use Dvsa\Olcs\Transfer\Command\Application\CreateWorkshop as ApplicationCreateWorkshop;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateWorkshop as ApplicationUpdateWorkshop;
 use Dvsa\Olcs\Transfer\Command\Workshop\CreateWorkshop as LicenceCreateWorkshop;
 use Dvsa\Olcs\Transfer\Command\Workshop\UpdateWorkshop as LicenceUpdateWorkshop;
 use Dvsa\Olcs\Transfer\Query\Workshop\Workshop;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\Form\Form;
 use Laminas\Form\FormInterface;
 use Laminas\Http\Response;
 use Laminas\View\Model\ViewModel;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Safety Trait
@@ -26,7 +32,7 @@ abstract class AbstractSafetyController extends AbstractController
     public const DEFAULT_TABLE_RECORDS_COUNT = 10;
 
     protected $section = 'safety';
-    protected $baseRoute = 'lva-%s/safety';
+    protected string $baseRoute = 'lva-%s/safety';
 
     /**
      * Shared action data map
@@ -78,6 +84,43 @@ abstract class AbstractSafetyController extends AbstractController
     ];
 
     protected $safetyData = null;
+
+    protected FormHelperService $formHelper;
+    protected FlashMessengerHelperService $flashMessengerHelper;
+    protected FormServiceManager $formServiceManager;
+    protected ScriptFactory $scriptFactory;
+    protected TableFactory $tableFactory;
+    protected TranslationHelperService $translationHelper;
+
+    /**
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     * @param FormHelperService $formHelper
+     * @param FormServiceManager $formServiceManager
+     * @param FlashMessengerHelperService $flashMessengerHelper
+     * @param TableFactory $tableFactory
+     * @param ScriptFactory $scriptFactory
+     * @param TranslationHelperService $translationHelper
+     */
+    public function __construct(
+        NiTextTranslation $niTextTranslationUtil,
+        AuthorizationService $authService,
+        FormHelperService $formHelper,
+        FormServiceManager $formServiceManager,
+        FlashMessengerHelperService $flashMessengerHelper,
+        TableFactory $tableFactory,
+        ScriptFactory $scriptFactory,
+        TranslationHelperService $translationHelper
+    ) {
+        $this->formHelper = $formHelper;
+        $this->formServiceManager = $formServiceManager;
+        $this->scriptFactory = $scriptFactory;
+        $this->flashMessengerHelper = $flashMessengerHelper;
+        $this->tableFactory = $tableFactory;
+        $this->translationHelper = $translationHelper;
+
+        parent::__construct($niTextTranslationUtil, $authService);
+    }
 
     /**
      * Delete Workshops
@@ -140,7 +183,7 @@ abstract class AbstractSafetyController extends AbstractController
                     return $this->handleCrudAction($crudAction);
                 }
 
-                $this->getServiceLocator()->get('Helper\Form')->disableEmptyValidation($form);
+                $this->formHelper->disableEmptyValidation($form);
             }
 
             if ($form->isValid()) {
@@ -155,14 +198,14 @@ abstract class AbstractSafetyController extends AbstractController
                 }
 
                 if ($response->isServerError()) {
-                    $this->getServiceLocator()->get('Helper\FlashMessenger')->addUnknownError();
+                    $this->flashMessengerHelper->addUnknownError();
                 } else {
                     $this->mapErrors($form, $response->getResult()['messages']);
                 }
             }
         }
 
-        $this->getServiceLocator()->get('Script')->loadFiles(['vehicle-safety', 'lva-crud']);
+        $this->scriptFactory->loadFiles(['vehicle-safety', 'lva-crud']);
 
         return $this->render('safety', $form);
     }
@@ -196,7 +239,7 @@ abstract class AbstractSafetyController extends AbstractController
         }
 
         if (!empty($errors)) {
-            $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
+            $fm = $this->flashMessengerHelper;
 
             foreach ($errors as $error) {
                 $fm->addCurrentErrorMessage($error);
@@ -238,7 +281,7 @@ abstract class AbstractSafetyController extends AbstractController
         $response = $this->deleteWorkshops($ids);
 
         if (!$response->isOk()) {
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addUnknownError();
+            $this->flashMessengerHelper->addUnknownError();
         }
     }
 
@@ -295,7 +338,7 @@ abstract class AbstractSafetyController extends AbstractController
             $form->get('form-actions')->remove('addAnother');
         }
 
-        $addressLookup = $this->getServiceLocator()->get('Helper\Form')->processAddressLookupForm($form, $request);
+        $addressLookup = $this->formHelper->processAddressLookupForm($form, $request);
 
         if (!$addressLookup && $request->isPost() && $form->isValid()) {
             $dtoData = [
@@ -322,10 +365,10 @@ abstract class AbstractSafetyController extends AbstractController
                 return $this->handlePostSave(null, ['fragment' => 'table']);
             }
 
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addUnknownError();
+            $this->flashMessengerHelper->addUnknownError();
         }
 
-        $this->getServiceLocator()->get('Script')->loadFiles(['safety-inspector-add']);
+        $this->scriptFactory->loadFiles(['safety-inspector-add']);
 
         return $this->render($mode . '_safety', $form);
     }
@@ -350,7 +393,6 @@ abstract class AbstractSafetyController extends AbstractController
         // load application/variation data
         $response = $this->handleQuery($dto);
         if ($response->isOk()) {
-            $translationHelper = $this->getServiceLocator()->get('Helper\Translation');
             $data = $response->getResult();
 
             $ref = $data['niFlag'] . '-' . $data['goodsOrPsv']['id'];
@@ -360,12 +402,12 @@ abstract class AbstractSafetyController extends AbstractController
                 'Y-' . \Common\RefData::LICENCE_CATEGORY_GOODS_VEHICLE => 'safety-inspector-sample-contract-GV79-NI',
             ];
 
-            $hint = $translationHelper->translateReplace(
+            $hint = $this->translationHelper->translateReplace(
                 'safety-inspector-external-hint',
                 [$this->url()->fromRoute(
                     'getfile',
                     ['identifier' => base64_encode(
-                        $translationHelper->translate($links[$ref])
+                        $this->translationHelper->translate($links[$ref])
                     )]
                 )]
             );
@@ -411,7 +453,7 @@ abstract class AbstractSafetyController extends AbstractController
      */
     protected function getSafetyProviderForm()
     {
-        return $this->getServiceLocator()->get('Helper\Form')
+        return $this->formHelper
             ->createFormWithRequest('Lva\SafetyProviders', $this->getRequest());
     }
 
@@ -425,7 +467,7 @@ abstract class AbstractSafetyController extends AbstractController
     protected function alterForm($form)
     {
         /** @var FormHelperService $formHelper */
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $formHelper = $this->formHelper;
 
         // This element needs to be visible internally
         $formHelper->remove($form, 'application->isMaintenanceSuitable');
@@ -485,8 +527,7 @@ abstract class AbstractSafetyController extends AbstractController
     protected function getSafetyForm()
     {
         /** @var \Common\Service\Table\TableBuilder $table */
-        $table = $this->getServiceLocator()
-            ->get('Table')
+        $table = $this->tableFactory
             ->prepareTable('lva-safety', $this->workshops, (array) $this->getRequest()->getQuery());
 
         if ($this->location === 'external') {
@@ -494,12 +535,11 @@ abstract class AbstractSafetyController extends AbstractController
         }
 
         /** @var \Laminas\Form\Form $form */
-        $form = $this->getServiceLocator()
-            ->get(FormServiceManager::class)
+        $form = $this->formServiceManager
             ->get('lva-' . $this->lva . '-' . $this->section)
             ->getForm();
 
-        $this->getServiceLocator()->get('Helper\Form')
+        $this->formHelper
             ->populateFormTable($form->get('table'), $table);
 
         return $form;

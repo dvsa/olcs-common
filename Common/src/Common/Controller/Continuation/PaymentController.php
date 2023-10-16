@@ -2,12 +2,18 @@
 
 namespace Common\Controller\Continuation;
 
-use Laminas\View\Model\ViewModel;
 use Common\Controller\Traits\StoredCardsTrait;
+use Common\FormService\FormServiceManager;
+use Common\RefData;
+use Common\Service\Helper\TranslationHelperService;
+use Common\Service\Helper\UrlHelperService;
+use Common\Service\Table\TableFactory;
+use Dvsa\Olcs\Transfer\Command\Transaction\CompleteTransaction as CompletePayment;
 use Dvsa\Olcs\Transfer\Command\Transaction\PayOutstandingFees;
 use Dvsa\Olcs\Transfer\Query\Transaction\Transaction as PaymentById;
-use Dvsa\Olcs\Transfer\Command\Transaction\CompleteTransaction as CompletePayment;
-use Common\RefData;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
+use Laminas\View\Model\ViewModel;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * PaymentController
@@ -16,9 +22,30 @@ use Common\RefData;
  */
 class PaymentController extends AbstractContinuationController
 {
-    protected $layout = 'pages/fees/pay-one';
-
     use StoredCardsTrait;
+
+    protected $layout = 'pages/fees/pay-one';
+    protected UrlHelperService $urlHelper;
+    protected TableFactory $tableFactory;
+
+    /**
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     * @param FormServiceManager $formServiceManager
+     * @param TranslationHelperService $translationHelper
+     */
+    public function __construct(
+        NiTextTranslation $niTextTranslationUtil,
+        AuthorizationService $authService,
+        FormServiceManager $formServiceManager,
+        TranslationHelperService $translationHelper,
+        UrlHelperService $urlHelper,
+        TableFactory $tableFactory
+    ) {
+        $this->urlHelper = $urlHelper;
+        $this->tableFactory = $tableFactory;
+        parent::__construct($niTextTranslationUtil, $authService, $formServiceManager, $translationHelper);
+    }
 
     /**
      * Index page
@@ -62,7 +89,7 @@ class PaymentController extends AbstractContinuationController
             'type' => 'fees'
         ];
         if (count($fees) > 1) {
-            $table = $this->getServiceLocator()->get('Table')->buildTable('pay-fees', $fees, [], false);
+            $table = $this->tableFactory->buildTable('pay-fees', $fees, [], false);
             $viewVariables['table'] = $table;
             $this->layout = 'pages/fees/pay-multi';
         } else {
@@ -82,9 +109,12 @@ class PaymentController extends AbstractContinuationController
      */
     protected function payFees($feeIds, $organisationId, $storedCardReference = false)
     {
-        $cpmsRedirectUrl = $this->getServiceLocator()
-            ->get('Helper\Url')
-            ->fromRoute('continuation/payment/result', [], ['force_canonical' => true], true);
+        $cpmsRedirectUrl = $this->url()->fromRoute(
+            'continuation/payment/result',
+            [],
+            ['force_canonical' => true],
+            true
+        );
 
         $paymentMethod = RefData::FEE_PAYMENT_METHOD_CARD_ONLINE;
         $dtoData = compact('cpmsRedirectUrl', 'feeIds', 'paymentMethod', 'organisationId', 'storedCardReference');
@@ -124,13 +154,12 @@ class PaymentController extends AbstractContinuationController
 
         $messages = $response->getResult()['messages'];
 
-        $translateHelper = $this->getServiceLocator()->get('Helper\Translation');
         foreach ($messages as $message) {
             if (is_array($message) && array_key_exists(RefData::ERR_WAIT, $message)) {
-                $errorMessage = $translateHelper->translate('payment.error.15sec');
+                $errorMessage = $this->translationHelper->translate('payment.error.15sec');
                 break;
             } elseif (is_array($message) && array_key_exists(RefData::ERR_NO_FEES, $message)) {
-                $errorMessage = $translateHelper->translate('payment.error.feepaid');
+                $errorMessage = $this->translationHelper->translate('payment.error.feepaid');
                 break;
             }
         }

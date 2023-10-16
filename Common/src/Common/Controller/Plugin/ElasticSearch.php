@@ -3,8 +3,8 @@
 namespace Common\Controller\Plugin;
 
 use Laminas\Mvc\Controller\Plugin\AbstractPlugin;
-use Laminas\View\Model\ViewModel;
 use Laminas\Session\Container;
+use Laminas\View\Model\ViewModel;
 
 /**
  * Class ElasticSearch - Generates and processes calls to Elastic Search
@@ -166,8 +166,7 @@ class ElasticSearch extends AbstractPlugin
      */
     public function getSearchForm()
     {
-        $form = $this->getController()->getViewHelperManager()
-            ->get('placeholder')
+        $form = $this->getController()->getPlaceholder()
             ->getContainer('headerSearch')
             ->getValue();
 
@@ -182,8 +181,7 @@ class ElasticSearch extends AbstractPlugin
     public function getFiltersForm()
     {
         /** @var \Laminas\Form\Form $form */
-        $form = $this->getController()->getViewHelperManager()
-            ->get('placeholder')
+        $form = $this->getController()->getPlaceholder()
             ->getContainer('searchFilter')
             ->getValue();
 
@@ -299,8 +297,7 @@ class ElasticSearch extends AbstractPlugin
             $nav->removePage($nav->findOneBy('id', $navId), true);
         }
 
-        $this->getController()->getViewHelperManager()
-            ->get('placeholder')
+        $this->getController()->getPlaceholder()
             ->getContainer('horizontalNavigationContainer')
             ->set($nav);
     }

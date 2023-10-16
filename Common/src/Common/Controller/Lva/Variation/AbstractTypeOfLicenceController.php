@@ -2,12 +2,17 @@
 
 namespace Common\Controller\Lva\Variation;
 
+use Common\Controller\Lva;
+use Common\Data\Mapper\Lva\TypeOfLicence as TypeOfLicenceMapper;
 use Common\FormService\FormServiceManager;
+use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Script\ScriptFactory;
 use Dvsa\Olcs\Transfer\Command\Variation\UpdateTypeOfLicence;
 use Dvsa\Olcs\Transfer\Query\Variation\TypeOfLicence;
-use Common\Controller\Lva;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\Http\Response;
-use Common\Data\Mapper\Lva\TypeOfLicence as TypeOfLicenceMapper;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Common Lva Abstract Type Of Licence Controller
@@ -16,6 +21,35 @@ use Common\Data\Mapper\Lva\TypeOfLicence as TypeOfLicenceMapper;
  */
 abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicenceController
 {
+    protected FlashMessengerHelperService $flashMessengerHelper;
+    protected ScriptFactory $scriptFactory;
+    protected FormServiceManager $formServiceManager;
+    protected FormHelperService $formHelper;
+
+    /**
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     * @param FlashMessengerHelperService $flashMessengerHelper
+     * @param ScriptFactory $scriptFactory
+     * @param FormServiceManager $formServiceManager
+     * @param FormHelperService $formHelper
+     */
+    public function __construct(
+        NiTextTranslation $niTextTranslationUtil,
+        AuthorizationService $authService,
+        FlashMessengerHelperService $flashMessengerHelper,
+        ScriptFactory $scriptFactory,
+        FormServiceManager $formServiceManager,
+        FormHelperService $formHelper
+    ) {
+        $this->scriptFactory = $scriptFactory;
+        $this->flashMessengerHelper = $flashMessengerHelper;
+        $this->formServiceManager = $formServiceManager;
+        $this->formHelper = $formHelper;
+
+        parent::__construct($niTextTranslationUtil, $authService, $flashMessengerHelper, $scriptFactory);
+    }
+
     /**
      * Licence type of licence section
      *
@@ -33,7 +67,7 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         $response = $this->handleQuery(TypeOfLicence::create(['id' => $this->getIdentifier()]));
 
         if ($response->isClientError() || $response->isServerError()) {
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+            $this->flashMessengerHelper->addErrorMessage('unknown-error');
             return $this->notFoundAction();
         }
 
@@ -46,7 +80,7 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
             'currentVehicleType' => $data['currentVehicleType']
         ];
 
-        $tolFormService = $this->getServiceLocator()->get(FormServiceManager::class)->get('lva-variation-type-of-licence');
+        $tolFormService = $this->formServiceManager->get('lva-variation-type-of-licence');
         $form = $tolFormService->getForm($params);
 
         $mappedData = TypeOfLicenceMapper::mapFromResult($data);
@@ -124,7 +158,7 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         }
 
         if ($response->isServerError()) {
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+            $this->flashMessengerHelper->addErrorMessage('unknown-error');
         }
 
         return $this->renderIndex($form);
@@ -142,11 +176,10 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         if ($request->isPost()) {
             $query = (array)$this->params()->fromQuery();
 
-            $version = isset($query['version']) ? $query['version'] : '';
-            $licenceType = isset($query['licence-type']) ? $query['licence-type'] : '';
-            $vehicleType = isset($query['vehicle-type']) ? $query['vehicle-type'] : '';
-            $lgvDeclarationConfirmation = isset($query['lgv-declaration-confirmation']) ?
-                $query['lgv-declaration-confirmation'] : '';
+            $version = $query['version'] ?? '';
+            $licenceType = $query['licence-type'] ?? '';
+            $vehicleType = $query['vehicle-type'] ?? '';
+            $lgvDeclarationConfirmation = $query['lgv-declaration-confirmation'] ?? '';
 
             $dto = UpdateTypeOfLicence::create(
                 [
@@ -169,13 +202,13 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
                 );
             }
 
-            $this->getServiceLocator()->get('Helper\FlashMessenger')
+            $this->flashMessengerHelper
                 ->addErrorMessage('unknown-error');
 
             return $this->redirect()->toRouteAjax(null, ['action' => null], [], true);
         }
 
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $formHelper = $this->formHelper;
         $form = $formHelper->createForm('GenericConfirmation');
         $formHelper->setFormActionFromRequest($form, $this->getRequest());
 

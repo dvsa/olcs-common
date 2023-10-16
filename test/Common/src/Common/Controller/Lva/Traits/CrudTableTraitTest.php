@@ -2,6 +2,8 @@
 
 namespace CommonTest\Controller\Lva\Traits;
 
+use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Helper\FormHelperService;
 use CommonTest\Bootstrap;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -20,13 +22,12 @@ class CrudTableTraitTest extends MockeryTestCase
 
     protected function setUp(): void
     {
-        $this->sm = Bootstrap::getServiceManager();
+        $this->mockFlashMessengerHelper = m::mock(FlashMessengerHelperService::class);
+        $this->mockFormHelper = m::mock(FormHelperService::class);
 
-        $this->sut = m::mock(Stubs\CrudTableTraitStub::class)
+        $this->sut = m::mock(Stubs\CrudTableTraitStub::class, [$this->mockFlashMessengerHelper, $this->mockFormHelper])
             ->makePartial()
             ->shouldAllowMockingProtectedMethods();
-
-        $this->sut->setServiceLocator($this->sm);
     }
 
     public function testHandlePostSaveWithAddAnother()
@@ -60,13 +61,9 @@ class CrudTableTraitTest extends MockeryTestCase
             ->with('action')
             ->andReturn('add');
 
-        $this->sm->setService(
-            'Helper\FlashMessenger',
-            m::mock()
+        $this->mockFlashMessengerHelper
             ->shouldReceive('addSuccessMessage')
-            ->with('section.add.fake-section')
-            ->getMock()
-        );
+            ->with('section.add.fake-section');
 
         $this->assertEquals(
             'redirect',
@@ -102,13 +99,9 @@ class CrudTableTraitTest extends MockeryTestCase
             ->with('action')
             ->andReturn('add');
 
-        $this->sm->setService(
-            'Helper\FlashMessenger',
-            m::mock()
+        $this->mockFlashMessengerHelper
             ->shouldReceive('addSuccessMessage')
-            ->with('section.add.fake-section')
-            ->getMock()
-        );
+            ->with('section.add.fake-section');
 
         $this->assertEquals(
             'redirect',
@@ -131,14 +124,10 @@ class CrudTableTraitTest extends MockeryTestCase
             ->with('delete', $form, ['sectionText' => 'delete.confirmation.text'])
             ->andReturn('render');
 
-        $this->sm->setService(
-            'Helper\Form',
-            m::mock()
+        $this->mockFormHelper
             ->shouldReceive('createFormWithRequest')
             ->with('GenericDeleteConfirmation', $request)
-            ->andReturn($form)
-            ->getMock()
-        );
+            ->andReturn($form);
 
         $this->assertEquals(
             'render',
@@ -151,9 +140,7 @@ class CrudTableTraitTest extends MockeryTestCase
         $route = 'unit_Route';
         $queryParams = ['unit_queryParams'];
 
-        $mockFlashMessenger = m::mock();
-        $mockFlashMessenger->shouldReceive('addSuccessMessage');
-        $this->sm->setService('Helper\FlashMessenger', $mockFlashMessenger);
+        $this->mockFlashMessengerHelper->shouldReceive('addSuccessMessage');
 
         $redirectMock = m::mock()
             ->shouldReceive('toRouteAjax')

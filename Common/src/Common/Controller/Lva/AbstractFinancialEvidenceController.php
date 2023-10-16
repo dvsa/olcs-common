@@ -2,11 +2,21 @@
 
 namespace Common\Controller\Lva;
 
+use Common\Data\Mapper\Lva\FinancialEvidence;
 use Common\FormService\FormServiceManager;
+use Common\Service\Cqrs\Command\CommandService;
+use Common\Service\Helper\FileUploadHelperService;
+use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Helper\GuidanceHelperService;
+use Common\Service\Script\ScriptFactory;
+use Common\Service\Table\TableFactory;
 use Common\View\Helper\ReturnToAddress;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateFinancialEvidence;
+use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
 use Dvsa\Olcs\Utils\Helper\ValueHelper;
-use Common\Data\Mapper\Lva\FinancialEvidence;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Abstract Financial Evidence Controller
@@ -15,7 +25,53 @@ use Common\Data\Mapper\Lva\FinancialEvidence;
  */
 abstract class AbstractFinancialEvidenceController extends AbstractController
 {
-    use Traits\AdapterAwareTrait;
+    protected FormHelperService $formHelper;
+    protected FlashMessengerHelperService $flashMessengerHelper;
+    protected FormServiceManager $formServiceManager;
+    protected ScriptFactory $scriptFactory;
+    protected TableFactory $tableFactory;
+    protected GuidanceHelperService $guidanceHelper;
+    protected AnnotationBuilder $transferAnnotationBuilder;
+    protected CommandService $commandService;
+    protected $lvaAdapter;  //TODO: Use Union Type when PHP 8 is available
+    protected FileUploadHelperService $uploadHelper;
+
+    /**
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     * @param FlashMessengerHelperService $flashMessengerHelper
+     * @param FormServiceManager $formServiceManager
+     * @param ScriptFactory $scriptFactory
+     * @param TableFactory $tableFactory
+     * @param AnnotationBuilder $transferAnnotationBuilder
+     * @param CommandService $commandService
+     * @param $lvaAdapter
+     * @param FileUploadHelperService $uploadHelper
+     */
+    public function __construct(
+        NiTextTranslation $niTextTranslationUtil,
+        AuthorizationService $authService,
+        FlashMessengerHelperService $flashMessengerHelper,
+        FormServiceManager $formServiceManager,
+        ScriptFactory $scriptFactory,
+        TableFactory $tableFactory,
+        AnnotationBuilder $transferAnnotationBuilder,
+        CommandService $commandService,
+        $lvaAdapter,
+        FileUploadHelperService $uploadHelper
+    ) {
+        $this->flashMessengerHelper = $flashMessengerHelper;
+        $this->formServiceManager = $formServiceManager;
+        $this->scriptFactory = $scriptFactory;
+        $this->tableFactory = $tableFactory;
+        $this->transferAnnotationBuilder = $transferAnnotationBuilder;
+        $this->commandService = $commandService;
+        $this->uploadHelper = $uploadHelper;
+
+        $this->lvaAdapter = $lvaAdapter;
+
+        parent::__construct($niTextTranslationUtil, $authService);
+    }
 
     /**
      * Application create : Financial evidence section
@@ -28,7 +84,7 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
         $request = $this->getRequest();
         $id      = $this->getIdentifier();
         /** @var \Common\Controller\Lva\Adapters\AbstractFinancialEvidenceAdapter $adapter */
-        $adapter = $this->getAdapter();
+        $adapter = $this->lvaAdapter;
 
         // get data
         if ($request->isPost()) {
@@ -39,8 +95,7 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
 
         // set up form
         /** @var \Common\Form\Form $form */
-        $form = $this->getServiceLocator()
-            ->get(FormServiceManager::class)
+        $form = $this->formServiceManager
             ->get('lva-' . $this->lva . '-financial_evidence')
             ->getForm($this->getRequest())
             ->setData($formData);
@@ -66,7 +121,7 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
         }
 
         // load scripts
-        $this->getServiceLocator()->get('Script')->loadFiles(['financial-evidence']);
+        $this->scriptFactory->loadFiles(['financial-evidence']);
 
         // render view
         $lvaData = $adapter->getData($id);
@@ -92,7 +147,7 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
     public function processFinancialEvidenceFileUpload($file)
     {
         /** @var \Common\Controller\Lva\Adapters\AbstractFinancialEvidenceAdapter $adapter */
-        $adapter = $this->getAdapter();
+        $adapter = $this->lvaAdapter;
 
         $id = $this->getIdentifier();
 
@@ -117,7 +172,7 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
     public function getDocuments()
     {
         /** @var \Common\Controller\Lva\Adapters\AbstractFinancialEvidenceAdapter $adapter */
-        $adapter = $this->getAdapter();
+        $adapter = $this->lvaAdapter;
 
         return $adapter->getDocuments(
             $this->getIdentifier()
@@ -135,16 +190,16 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
     {
         $dto = UpdateFinancialEvidence::create(FinancialEvidence::mapFromForm($formData));
 
-        $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')->createCommand($dto);
+        $command = $this->transferAnnotationBuilder->createCommand($dto);
 
         /** @var \Common\Service\Cqrs\Response $response */
-        $response = $this->getServiceLocator()->get('CommandService')->send($command);
+        $response = $this->commandService->send($command);
 
         if ($response->isOk()) {
             return true;
         }
 
-        $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentErrorMessage('unknown-error');
+        $this->flashMessengerHelper->addCurrentErrorMessage('unknown-error');
         return false;
     }
 

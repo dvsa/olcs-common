@@ -3,22 +3,47 @@
 namespace Common\Controller\Lva;
 
 use Common\RefData;
+use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Table\TableFactory;
 use Dvsa\Olcs\Transfer\Command\Application\Schedule41;
 use Dvsa\Olcs\Transfer\Command\Application\Schedule41Approve;
 use Dvsa\Olcs\Transfer\Command\Application\Schedule41Refuse;
 use Dvsa\Olcs\Transfer\Command\Application\Schedule41Reset;
 use Dvsa\Olcs\Transfer\Query\Licence\LicenceByNumber;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\Form\Form;
 use Laminas\View\Model\ViewModel;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Review Controller
  *
  * @author Joshua Curtis <josh.curtis@valtech.co.uk>
  */
-class Schedule41Controller extends AbstractController implements Interfaces\AdapterAwareInterface
+class Schedule41Controller extends AbstractController
 {
-    use Traits\AdapterAwareTrait;
+    protected FormHelperService $formHelper;
+    protected TableFactory $tableFactory;
+    protected FlashMessengerHelperService $flashMessengerHelper;
+
+    /**
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     */
+    public function __construct(
+        NiTextTranslation $niTextTranslationUtil,
+        AuthorizationService $authService,
+        FormHelperService $formHelper,
+        TableFactory $tableFactory,
+        FlashMessengerHelperService $flashMessengerHelper
+    ) {
+        $this->formHelper = $formHelper;
+        $this->tableFactory = $tableFactory;
+        $this->flashMessengerHelper = $flashMessengerHelper;
+
+        parent::__construct($niTextTranslationUtil, $authService);
+    }
 
     /**
      * Search for a licence by licence number.
@@ -28,8 +53,7 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
     public function licenceSearchAction()
     {
         $request = $this->getRequest();
-        $form = $this->getServiceLocator()
-            ->get('Helper\Form')
+        $form = $this - $this->formHelper
             ->createFormWithRequest(
                 'Schedule41LicenceSearch',
                 $request
@@ -132,7 +156,7 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
             }
         }
 
-        $form = $this->getServiceLocator()->get('Helper\Form')->createFormWithRequest('Schedule41Transfer', $request);
+        $form = $this->formHelper->createFormWithRequest('Schedule41Transfer', $request);
         $form->get('table')->get('table')->setTable(
             $this->getOcTable(
                 $this->formatDataForTable($licence)
@@ -162,12 +186,10 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
         }
 
         if ($application['isVariation']) {
-            $form = $this->getServiceLocator()
-                ->get('Helper\Form')
+            $form = $this->formHelper
                 ->createFormWithRequest('VariationApproveSchedule41', $request);
         } else {
-            $form = $this->getServiceLocator()
-                ->get('Helper\Form')
+            $form = $this->formHelper
                 ->createFormWithRequest('GenericConfirmation', $request);
 
             $form->get('messages')->get('message')->setValue('schedule41.approve.application.message');
@@ -215,7 +237,7 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
      */
     private function cannotPublish($errors)
     {
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $formHelper = $this->formHelper;
         $form = $formHelper->createFormWithRequest('Message', $this->getRequest());
         $form->setMessage($errors);
         $form->removeOkButton();
@@ -235,8 +257,7 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
     {
         $request = $this->getRequest();
 
-        $form = $this->getServiceLocator()
-            ->get('Helper\Form')
+        $form = $this->formHelper
             ->createFormWithRequest(
                 'GenericConfirmation',
                 $request
@@ -282,8 +303,7 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
     {
         $request = $this->getRequest();
 
-        $form = $this->getServiceLocator()
-            ->get('Helper\Form')
+        $form = $this->formHelper
             ->createFormWithRequest(
                 'GenericConfirmation',
                 $request
@@ -398,8 +418,7 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
      */
     public function getOcTable($data)
     {
-        $table = $this->getServiceLocator()
-            ->get('Table')
+        $table = $this->tableFactory
             ->prepareTable(
                 'schedule41.operating-centres',
                 $data
@@ -472,7 +491,7 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
         }
 
         if (!empty($errors)) {
-            $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
+            $fm = $this->flashMessengerHelper;
 
             foreach ($errors as $error) {
                 $fm->addCurrentErrorMessage($error);

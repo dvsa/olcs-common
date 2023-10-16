@@ -2,11 +2,11 @@
 
 namespace Common\Controller\Lva\Traits;
 
+use Common\Controller\Lva\AbstractSafetyController;
 use Dvsa\Olcs\Transfer\Command\Licence\UpdateSafety;
 use Dvsa\Olcs\Transfer\Command\Workshop\DeleteWorkshop;
 use Dvsa\Olcs\Transfer\Query\Licence\Safety;
 use Laminas\Form\Form;
-use Common\Controller\Lva\AbstractSafetyController;
 
 /**
  * Licence Safety Controller Trait
@@ -65,11 +65,9 @@ trait LicenceSafetyControllerTrait
             $params = [
                 'id' => $this->getLicenceId()
             ];
-            $params['page'] = isset($query['page'])? $query['page'] : 1;
+            $params['page'] = isset($query['page']) ? $query['page'] : 1;
 
-            $params['limit'] = isset($query['limit'])
-                ? $query['limit']
-                : AbstractSafetyController::DEFAULT_TABLE_RECORDS_COUNT;
+            $params['limit'] = $query['limit'] ?? AbstractSafetyController::DEFAULT_TABLE_RECORDS_COUNT;
 
             $response = $this->handleQuery(Safety::create($params));
 
@@ -104,7 +102,7 @@ trait LicenceSafetyControllerTrait
      */
     protected function alterFormForLva(Form $form, $data = null)
     {
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $formHelper = $this->formHelper;
         $formHelper->remove($form, 'application->safetyConfirmation');
     }
 }

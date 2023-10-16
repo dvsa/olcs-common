@@ -3,7 +3,11 @@
 namespace Common\Controller\Lva;
 
 use Common\Controller\Lva\Traits\CrudActionTrait;
+use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Script\ScriptFactory;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\Form\Form;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Common Lva Abstract Type Of Licence Controller
@@ -15,7 +19,27 @@ abstract class AbstractTypeOfLicenceController extends AbstractController
     use CrudActionTrait;
 
     /** @var string */
-    protected $baseRoute = 'lva-%s/type_of_licence';
+    protected string $baseRoute = 'lva-%s/type_of_licence';
+
+    protected FlashMessengerHelperService $flashMessengerHelper;
+    protected ScriptFactory $scriptFactory;
+
+    /**
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     * @param FlashMessengerHelperService $flashMessengerHelper
+     * @param ScriptFactory $scriptFactory
+     */
+    public function __construct(
+        NiTextTranslation $niTextTranslationUtil,
+        AuthorizationService $authService,
+        FlashMessengerHelperService $flashMessengerHelper,
+        ScriptFactory $scriptFactory
+    ) {
+        $this->scriptFactory = $scriptFactory;
+        $this->flashMessengerHelper = $flashMessengerHelper;
+        parent::__construct($niTextTranslationUtil, $authService);
+    }
 
     /**
      * Render for Index action
@@ -26,7 +50,7 @@ abstract class AbstractTypeOfLicenceController extends AbstractController
      */
     protected function renderIndex($form)
     {
-        $this->getServiceLocator()->get('Script')->loadFile('type-of-licence');
+        $this->scriptFactory->loadFile('type-of-licence');
 
         return $this->render('type_of_licence', $form);
     }
@@ -60,7 +84,7 @@ abstract class AbstractTypeOfLicenceController extends AbstractController
         }
 
         if (!empty($errors)) {
-            $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
+            $fm = $this->flashMessengerHelper;
 
             foreach ($errors as $error) {
                 $fm->addCurrentErrorMessage($error);

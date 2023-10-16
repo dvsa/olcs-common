@@ -2,8 +2,8 @@
 
 namespace Common\Controller\Plugin;
 
-use Laminas\Mvc\Controller\Plugin\AbstractPlugin;
 use Common\Service\Cqrs\Query\QuerySender;
+use Laminas\Mvc\Controller\Plugin\AbstractPlugin;
 use Laminas\Mvc\MvcEvent;
 
 /**

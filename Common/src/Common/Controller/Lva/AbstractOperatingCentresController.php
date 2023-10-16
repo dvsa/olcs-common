@@ -6,6 +6,11 @@ use Common\Category;
 use Common\Data\Mapper\Lva\OperatingCentre;
 use Common\Data\Mapper\Lva\OperatingCentres;
 use Common\FormService\FormServiceManager;
+use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Helper\TranslationHelperService;
+use Common\Service\Lva\VariationLvaService;
+use Common\Service\Script\ScriptFactory;
 use Dvsa\Olcs\Transfer\Command\Application\CreateOperatingCentre as AppCreateOperatingCentre;
 use Dvsa\Olcs\Transfer\Command\Application\DeleteOperatingCentres as AppDeleteOperatingCentres;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateOperatingCentres as AppUpdateOperatingCentres;
@@ -21,7 +26,8 @@ use Dvsa\Olcs\Transfer\Query\ApplicationOperatingCentre\ApplicationOperatingCent
 use Dvsa\Olcs\Transfer\Query\Licence\OperatingCentres as LicOperatingCentres;
 use Dvsa\Olcs\Transfer\Query\LicenceOperatingCentre\LicenceOperatingCentre;
 use Dvsa\Olcs\Transfer\Query\VariationOperatingCentre\VariationOperatingCentre;
-use Laminas\Mvc\MvcEvent;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Shared logic between Operating Centres controllers
@@ -36,7 +42,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
     }
 
     protected $section = 'operating_centres';
-    protected $baseRoute = 'lva-%s/operating_centres';
+    protected string $baseRoute = 'lva-%s/operating_centres';
 
     protected $listQueryMap = [
         'licence' => LicOperatingCentres::class,
@@ -83,25 +89,41 @@ abstract class AbstractOperatingCentresController extends AbstractController
      */
     protected $operatingCentreId;
 
-    /** @var  \Common\Service\Helper\FlashMessengerHelperService */
-    private $hlpFlashMsgr;
-    /** @var  \Common\Service\Helper\TranslationHelperService */
-    private $hlpTranslator;
-
+    protected FormHelperService $formHelper;
+    protected FlashMessengerHelperService $flashMessengerHelper;
+    protected FormServiceManager $formServiceManager;
+    protected ScriptFactory $scriptFactory;
+    protected VariationLvaService $variationLvaService;
+    protected TranslationHelperService $translationHelper;
 
     /**
-     * On Dispatch
-     *
-     * @param MvcEvent $e Event
-     *
-     * @return void
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     * @param FormHelperService $formHelper
+     * @param FlashMessengerHelperService $flashMessengerHelper
+     * @param FormServiceManager $formServiceManager
+     * @param TranslationHelperService $translationHelper
+     * @param ScriptFactory $scriptFactory
+     * @param VariationLvaService $variationLvaService
      */
-    public function onDispatch(MvcEvent $e)
-    {
-        $this->hlpFlashMsgr = $this->getServiceLocator()->get('Helper\FlashMessenger');
-        $this->hlpTranslator = $this->getServiceLocator()->get('Helper\Translation');
+    public function __construct(
+        NiTextTranslation $niTextTranslationUtil,
+        AuthorizationService $authService,
+        FormHelperService $formHelper,
+        FlashMessengerHelperService $flashMessengerHelper,
+        FormServiceManager $formServiceManager,
+        TranslationHelperService $translationHelper,
+        ScriptFactory $scriptFactory,
+        VariationLvaService $variationLvaService
+    ) {
+        $this->formHelper = $formHelper;
+        $this->flashMessengerHelper = $flashMessengerHelper;
+        $this->formServiceManager = $formServiceManager;
+        $this->scriptFactory = $scriptFactory;
+        $this->variationLvaService = $variationLvaService;
+        $this->translationHelper = $translationHelper;
 
-        parent::onDispatch($e);
+        parent::__construct($niTextTranslationUtil, $authService);
     }
 
     /**
@@ -117,7 +139,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
         }
 
         if ($resultData['requiresVariation']) {
-            $this->getServiceLocator()->get('Lva\Variation')
+            $this->variationLvaService
                 ->addVariationMessage($this->getIdentifier(), $this->section);
         }
 
@@ -135,7 +157,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $resultData['query'] = $params;
 
         /** @var \Laminas\Form\FormInterface $form */
-        $form = $this->getServiceLocator()->get(FormServiceManager::class)
+        $form = $this->formServiceManager
             ->get('lva-' . $this->lva . '-operating_centres')
             ->getForm($resultData)
             ->setData($data);
@@ -147,7 +169,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
                 if ($this->isInternalReadOnly()) {
                     return $this->handleCrudAction($crudAction);
                 }
-                $this->getServiceLocator()->get('Helper\Form')->disableValidation($form->getInputFilter());
+                $this->formHelper->disableValidation($form->getInputFilter());
             }
 
             if ($form->isValid()) {
@@ -160,9 +182,9 @@ abstract class AbstractOperatingCentresController extends AbstractController
         }
 
         if (isset($resultData['isVariation']) && $resultData['isVariation']) {
-            $this->getServiceLocator()->get('Script')->loadFile('lva-crud-delta');
+            $this->scriptFactory->loadFile('lva-crud-delta');
         } else {
-            $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
+            $this->scriptFactory->loadFile('lva-crud');
         }
 
         // if traffic area dropdown and enforement area dropdown exists, then add JS to popoulate enforcement
@@ -172,7 +194,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
             $form->get('dataTrafficArea')->has('trafficArea') &&
             $form->get('dataTrafficArea')->has('enforcementArea')
         ) {
-            $this->getServiceLocator()->get('Script')->loadFile('application-oc');
+            $this->scriptFactory->loadFile('application-oc');
         }
 
         return $this->render('operating_centres', $form);
@@ -210,7 +232,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
         }
 
         if ($response->isServerError()) {
-            $this->hlpFlashMsgr->addUnknownError();
+            $this->flashMessengerHelper->addUnknownError();
         } else {
             $errors = $response->getResult()['messages'];
 
@@ -219,7 +241,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
                 return null;
             }
 
-            OperatingCentres::mapFormErrors($form, $errors, $this->hlpFlashMsgr, $this->hlpTranslator, $this->location);
+            OperatingCentres::mapFormErrors($form, $errors, $this->flashMessengerHelper, $this->translationHelper, $this->location);
         }
 
         return null;
@@ -235,11 +257,11 @@ abstract class AbstractOperatingCentresController extends AbstractController
     private function displayCrudErrors($errors)
     {
         if (empty($errors)) {
-            $this->hlpFlashMsgr->addUnknownError();
+            $this->flashMessengerHelper->addUnknownError();
             return;
         }
 
-        OperatingCentres::mapApiErrors($this->location, $errors, $this->hlpFlashMsgr, $this->hlpTranslator);
+        OperatingCentres::mapApiErrors($this->location, $errors, $this->flashMessengerHelper, $this->translationHelper);
     }
 
     /**
@@ -276,12 +298,12 @@ abstract class AbstractOperatingCentresController extends AbstractController
         }
 
         /** @var \Laminas\Form\FormInterface $form */
-        $form = $this->getServiceLocator()->get(FormServiceManager::class)
+        $form = $this->formServiceManager
             ->get('lva-' . $this->lva . '-operating_centre')
             ->getForm($resultData, $request)
             ->setData($data);
 
-        $hasProcessedPostcode = $this->getServiceLocator()->get('Helper\Form')
+        $hasProcessedPostcode = $this->formHelper
             ->processAddressLookupForm($form, $request);
 
         if ($form->has('advertisements')) {
@@ -308,7 +330,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
                 return $this->handlePostSave(null, false);
             }
 
-            $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
+            $fm = $this->flashMessengerHelper;
 
             if ($response->isServerError()) {
                 $fm->addUnknownError();
@@ -317,19 +339,18 @@ abstract class AbstractOperatingCentresController extends AbstractController
                     'guides/guide',
                     ['guide' => 'traffic-area']
                 );
-                $translator = $this->getServiceLocator()->get('Helper\Translation');
                 OperatingCentre::mapFormErrors(
                     $form,
                     $response->getResult()['messages'],
                     $fm,
-                    $translator,
+                    $this->translationHelper,
                     $this->location,
                     $taGuidesUrl
                 );
             }
         }
 
-        $this->getServiceLocator()->get('Script')->loadFile('add-operating-centre');
+        $this->scriptFactory->loadFile('add-operating-centre');
 
         return $this->render('add_operating_centre', $form);
     }
@@ -386,13 +407,13 @@ abstract class AbstractOperatingCentresController extends AbstractController
         }
 
         /** @var \Laminas\Form\FormInterface $form */
-        $form = $this->getServiceLocator()->get(FormServiceManager::class)
+        $form = $this->formServiceManager
             ->get('lva-' . $this->lva . '-operating_centre')
             ->getForm($resultData, $request)
             ->setData($data);
 
         if ($form->get('address')->has('searchPostcode')) {
-            $hasProcessedPostcode = $this->getServiceLocator()->get('Helper\Form')
+            $hasProcessedPostcode = $this->formHelper
                 ->processAddressLookupForm($form, $request);
         } else {
             $hasProcessedPostcode = false;
@@ -432,7 +453,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
                 return $this->handlePostSave(null, false);
             }
 
-            $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
+            $fm = $this->flashMessengerHelper;
 
             if ($response->isServerError()) {
                 $fm->addUnknownError();
@@ -441,19 +462,18 @@ abstract class AbstractOperatingCentresController extends AbstractController
                     'guides/guide',
                     ['guide' => 'traffic-area']
                 );
-                $translator = $this->getServiceLocator()->get('Helper\Translation');
                 OperatingCentre::mapFormErrors(
                     $form,
                     $response->getResult()['messages'],
                     $fm,
-                    $translator,
+                    $this->translationHelper,
                     $this->location,
                     $taGuidesUrl
                 );
             }
         }
 
-        $this->getServiceLocator()->get('Script')->loadFile('add-operating-centre');
+        $this->scriptFactory->loadFile('add-operating-centre');
 
         return $this->render('edit_operating_centre', $form);
     }
@@ -498,7 +518,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
             return true;
         }
 
-        $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
+        $fm = $this->flashMessengerHelper;
 
         if ($response->isClientError()) {
             $messages = $response->getResult()['messages'];

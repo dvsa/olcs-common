@@ -5,9 +5,14 @@ namespace Common\Controller\Continuation;
 use Common\Category;
 use Common\Data\Mapper\Continuation\InsufficientFinances;
 use Common\Form\Form;
+use Common\FormService\FormServiceManager;
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Helper\GuidanceHelperService;
 use Common\Service\Helper\TranslationHelperService;
 use Dvsa\Olcs\Transfer\Command\ContinuationDetail\UpdateInsufficientFinances;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\View\Model\ViewModel;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * InsufficientFinancesController
@@ -15,6 +20,28 @@ use Laminas\View\Model\ViewModel;
 class InsufficientFinancesController extends AbstractContinuationController
 {
     protected $currentStep = self::STEP_FINANCE;
+
+    protected FormHelperService $formHelper;
+    protected GuidanceHelperService $guidanceHelper;
+
+    /**
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     * @param FormServiceManager $formServiceManager
+     * @param TranslationHelperService $translationHelper
+     */
+    public function __construct(
+        NiTextTranslation $niTextTranslationUtil,
+        AuthorizationService $authService,
+        FormServiceManager $formServiceManager,
+        TranslationHelperService $translationHelper,
+        FormHelperService $formHelper,
+        GuidanceHelperService $guidanceHelper
+    ) {
+        $this->formHelper = $formHelper;
+        $this->guidanceHelper = $guidanceHelper;
+        parent::__construct($niTextTranslationUtil, $authService, $formServiceManager, $translationHelper);
+    }
 
     /**
      * Index page
@@ -74,7 +101,7 @@ class InsufficientFinancesController extends AbstractContinuationController
      */
     protected function getInsufficientFinancesForm()
     {
-        return $this->getServiceLocator()->get('Helper\Form')->createForm(
+        return $this->formHelper->createForm(
             \Common\Form\Model\Form\Continuation\InsufficientFinances::class
         );
     }
@@ -88,10 +115,8 @@ class InsufficientFinancesController extends AbstractContinuationController
      */
     private function setGuidanceMessage($continuationDetail)
     {
-        /** @var TranslationHelperService $translatorHelper */
-        $translatorHelper = $this->getServiceLocator()->get('Helper\Translation');
-        $guideMessage = $translatorHelper->translate('continuations.insufficient-finances.hint');
-        $this->getServiceLocator()->get('Helper\Guidance')->append($guideMessage);
+        $guideMessage = $this->translationHelper->translate('continuations.insufficient-finances.hint');
+        $this->guidanceHelper->append($guideMessage);
     }
 
     /**

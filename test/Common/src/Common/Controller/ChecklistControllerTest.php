@@ -2,14 +2,17 @@
 
 namespace CommonTest\Controller\Lva;
 
+use Common\Controller\Continuation\ChecklistController;
 use Common\FormService\FormServiceManager;
-use Common\RefData;
+use Common\Service\Helper\TranslationHelperService;
 use Dvsa\Olcs\Transfer\Query\ContinuationDetail\LicenceChecklist;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Hamcrest\Core\IsEqual;
 use Mockery as m;
 use CommonTest\Bootstrap;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Olcs\TestHelpers\Controller\Traits\ControllerTestTrait;
+use ZfcRbac\Service\AuthorizationService;
 
 class ChecklistControllerTest extends MockeryTestCase
 {
@@ -24,17 +27,24 @@ class ChecklistControllerTest extends MockeryTestCase
     {
         parent::setUp();
 
-        $this->mockController('\Common\Controller\Continuation\ChecklistController');
+        $this->mockNiTextTranslationUtil = m::mock(NiTextTranslation::class);
+        $this->mockAuthService = m::mock(AuthorizationService::class);
+        $this->mockFormServiceManager = m::mock(FormServiceManager::class);
+        $this->mockTranslationHelper = m::mock(TranslationHelperService::class);
 
-        $this->mockService('Helper\Translation', 'translate')
+        $this->mockController(ChecklistController::class, [
+            $this->mockNiTextTranslationUtil,
+            $this->mockAuthService,
+            $this->mockFormServiceManager,
+            $this->mockTranslationHelper,
+        ]);
+
+        $this->mockTranslationHelper->shouldReceive('translate')
             ->andReturnUsing(
                 function ($input) {
                     return $input;
                 }
             );
-
-        $mockFormServiceManager = m::mock();
-        $this->sm->setService(FormServiceManager::class, $mockFormServiceManager);
     }
 
     public function testUsersAction()

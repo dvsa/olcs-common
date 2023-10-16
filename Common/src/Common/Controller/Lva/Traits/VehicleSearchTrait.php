@@ -2,7 +2,6 @@
 
 namespace Common\Controller\Lva\Traits;
 
-use Common\FormService\FormServiceManager;
 use Common\Service\Table\TableBuilder;
 
 /**
@@ -54,7 +53,7 @@ trait VehicleSearchTrait
         $searchForm = null;
         if (($headerData['allVehicleCount'] > self::SEARCH_VEHICLES_COUNT) && ($this->lva !== 'application')) {
             /** @var \Laminas\Form\FormInterface $searchForm */
-            $searchForm = $this->getServiceLocator()->get(FormServiceManager::class)
+            $searchForm = $this->formServiceManager
                 ->get('lva-vehicles-search')
                 ->getForm();
 
@@ -68,10 +67,9 @@ trait VehicleSearchTrait
             }
             $searchForm->setData($query);
             if (isset($query['vehicleSearch']['filter']) && !$searchForm->isValid()) {
-                $translator = $this->getServiceLocator()->get('Helper\Translation');
                 $message = [
                     'vehicleSearch' => [
-                        'vrm' => [$translator->translate('vehicle-table.search.message')]
+                        'vrm' => [$this->translationHelper->translate('vehicle-table.search.message')]
                     ]
                 ];
                 $searchForm->setMessages($message);

@@ -2,17 +2,28 @@
 
 namespace Common\Controller\Lva;
 
-use Laminas\View\Model\ViewModel;
 use Dvsa\Olcs\Transfer\Query\Application\Review;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
+use Laminas\View\Model\ViewModel;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Review Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class ReviewController extends AbstractController implements Interfaces\AdapterAwareInterface
+class ReviewController extends AbstractController
 {
-    use Traits\AdapterAwareTrait;
+    /**
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     */
+    public function __construct(
+        NiTextTranslation $niTextTranslationUtil,
+        AuthorizationService $authService
+    ) {
+        parent::__construct($niTextTranslationUtil, $authService);
+    }
 
     /**
      * Review application action

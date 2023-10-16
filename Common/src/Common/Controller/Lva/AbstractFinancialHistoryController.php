@@ -2,13 +2,20 @@
 
 namespace Common\Controller\Lva;
 
+use Common\Data\Mapper\Lva\FinancialHistory as FinancialHistoryMapper;
 use Common\FormService\FormServiceManager;
 use Common\Service\Data\CategoryDataService;
-use Common\Data\Mapper\Lva\FinancialHistory as FinancialHistoryMapper;
+use Common\Service\Helper\DataHelperService;
+use Common\Service\Helper\FileUploadHelperService;
+use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Script\ScriptFactory;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateFinancialHistory;
 use Dvsa\Olcs\Transfer\Query\Application\FinancialHistory;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\Form\Form;
 use Laminas\Form\FormInterface;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Financial History Controller
@@ -32,6 +39,40 @@ abstract class AbstractFinancialHistoryController extends AbstractController
             )
         )
     );
+
+    protected FormHelperService $formHelper;
+    protected FlashMessengerHelperService $flashMessengerHelper;
+    protected FormServiceManager $formServiceManager;
+    protected ScriptFactory $scriptFactory;
+    protected DataHelperService $dataHelper;
+    protected FileUploadHelperService $uploadHelper;
+
+    /**
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     * @param FlashMessengerHelperService $flashMessengerHelper
+     * @param FormServiceManager $formServiceManager
+     * @param ScriptFactory $scriptFactory
+     * @param DataHelperService $dataHelper
+     * @param FileUploadHelperService $uploadHelper
+     */
+    public function __construct(
+        NiTextTranslation $niTextTranslationUtil,
+        AuthorizationService $authService,
+        FlashMessengerHelperService $flashMessengerHelper,
+        FormServiceManager $formServiceManager,
+        ScriptFactory $scriptFactory,
+        DataHelperService $dataHelper,
+        FileUploadHelperService $uploadHelper
+    ) {
+        $this->flashMessengerHelper = $flashMessengerHelper;
+        $this->formServiceManager = $formServiceManager;
+        $this->scriptFactory = $scriptFactory;
+        $this->dataHelper = $dataHelper;
+        $this->uploadHelper = $uploadHelper;
+
+        parent::__construct($niTextTranslationUtil, $authService);
+    }
 
     /**
      * Process Action - Index
@@ -69,14 +110,14 @@ abstract class AbstractFinancialHistoryController extends AbstractController
         );
 
         if (!$hasProcessedFiles && $request->isPost() && $form->isValid()) {
-            $data = $this->getServiceLocator()->get('Helper\Data')->processDataMap($data, $this->dataMap);
+            $data = $this->dataHelper->processDataMap($data, $this->dataMap);
 
             if ($this->saveFinancialHistory($form, $data)) {
                 return $this->completeSection('financial_history');
             }
         }
 
-        $this->getServiceLocator()->get('Script')->loadFile('financial-history');
+        $this->scriptFactory->loadFile('financial-history');
 
         return $this->render('financial_history', $form);
     }
@@ -119,8 +160,7 @@ abstract class AbstractFinancialHistoryController extends AbstractController
      */
     protected function getFinancialHistoryForm(array $data = [])
     {
-        return $this->getServiceLocator()
-            ->get(FormServiceManager::class)
+        return $this->formServiceManager
             ->get('lva-' . $this->lva . '-financial_history')
             ->getForm($this->getRequest(), $data);
     }
@@ -135,7 +175,7 @@ abstract class AbstractFinancialHistoryController extends AbstractController
         $response = $this->getFinancialHistory();
 
         if ($response->isClientError() || $response->isServerError()) {
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+            $this->flashMessengerHelper->addErrorMessage('unknown-error');
         }
 
         $mappedResults = [];
@@ -227,7 +267,7 @@ abstract class AbstractFinancialHistoryController extends AbstractController
             return false;
         }
 
-        $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+        $this->flashMessengerHelper->addErrorMessage('unknown-error');
         return false;
     }
 
@@ -264,7 +304,7 @@ abstract class AbstractFinancialHistoryController extends AbstractController
         }
 
         if (!empty($errors)) {
-            $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
+            $fm = $this->flashMessengerHelper;
 
             foreach ($errors as $error) {
                 $fm->addCurrentErrorMessage($error);

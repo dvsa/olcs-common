@@ -5,7 +5,7 @@ namespace Common\Service\Helper;
 use Common\Form\Annotation\CustomAnnotationBuilder as FormAnnotationBuilder;
 use Common\Form\Elements\Types\Address;
 use Common\Service\Data\AddressDataService;
-use Common\Service\Table\TableBuilder;
+use Common\Service\Table\TableFactory;
 use Dvsa\Olcs\CompaniesHouse\Service\Exception\ServiceException;
 use Dvsa\Olcs\Transfer\Query\CompaniesHouse\ByNumber;
 use Laminas\Form\Element;
@@ -35,9 +35,9 @@ use ZfcRbac\Service\AuthorizationService;
  */
 class FormHelperService
 {
-    const ALTER_LABEL_RESET = 0;
-    const ALTER_LABEL_APPEND = 1;
-    const ALTER_LABEL_PREPEND = 2;
+    public const ALTER_LABEL_RESET = 0;
+    public const ALTER_LABEL_APPEND = 1;
+    public const ALTER_LABEL_PREPEND = 2;
 
     /** @var FormAnnotationBuilder */
     private $formAnnotationBuilder;
@@ -529,16 +529,8 @@ class FormHelperService
         $filter->get($name)->setRequired(false);
     }
 
-    /**
-     * Populate form table
-     *
-     * @param \Laminas\Form\Fieldset                $fieldset          Fieldset
-     * @param \Common\Service\Table\TableBuilder $table             Table
-     * @param string|null                        $tableFieldsetName Fieldset name
-     *
-     * @return void
-     */
-    public function populateFormTable(Fieldset $fieldset, TableBuilder $table, $tableFieldsetName = null)
+
+    public function populateFormTable(Fieldset $fieldset, $table, $tableFieldsetName = null)
     {
         $fieldset->get('table')->setTable($table, $tableFieldsetName);
         $fieldset->get('rows')->setValue(count($table->getRows()));

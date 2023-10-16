@@ -33,7 +33,7 @@ trait VariationOperatingCentresControllerTrait
         }
 
         /** @var \Common\Service\Helper\FlashMessengerHelperService $hlpFlashMsgr */
-        $hlpFlashMsgr = $this->getServiceLocator()->get('Helper\FlashMessenger');
+        $hlpFlashMsgr = $this->flashMessengerHelper;
         if ($response->isServerError()) {
             $hlpFlashMsgr->addUnknownError();
         } else {

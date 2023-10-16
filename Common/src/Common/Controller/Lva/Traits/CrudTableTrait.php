@@ -2,8 +2,8 @@
 
 namespace Common\Controller\Lva\Traits;
 
-use Olcs\View\Model\ViewModel;
 use Laminas\Http\Response;
+use Olcs\View\Model\ViewModel;
 
 /**
  * Crud table trait
@@ -41,7 +41,7 @@ trait CrudTableTrait
             $method = 'toRouteAjax';
         }
 
-        $this->getServiceLocator()->get('Helper\FlashMessenger')->addSuccessMessage(
+        $this->flashMessengerHelper->addSuccessMessage(
             'section.' . $this->params('action') . '.' . $this->section
         );
 
@@ -69,7 +69,7 @@ trait CrudTableTrait
             if ($response === false) {
                 $this->deleteFailed();
             } else {
-                $this->getServiceLocator()->get('Helper\FlashMessenger')->addSuccessMessage(
+                $this->flashMessengerHelper->addSuccessMessage(
                     'section.' . $this->params('action') . '.' . $this->section
                 );
             }
@@ -85,7 +85,7 @@ trait CrudTableTrait
             );
         }
 
-        $form = $this->getServiceLocator()->get('Helper\Form')
+        $form = $this->formHelper
             ->createFormWithRequest($this->getDeleteConfirmationForm(), $request);
 
         $params = ['sectionText' => $this->getDeleteMessage()];
@@ -101,7 +101,7 @@ trait CrudTableTrait
      */
     protected function deleteFailed()
     {
-        $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage(
+        $this->flashMessengerHelper->addErrorMessage(
             'section.' . $this->params('action') . '.' . $this->section . '-failed'
         );
     }

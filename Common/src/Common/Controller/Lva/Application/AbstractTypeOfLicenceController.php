@@ -7,8 +7,13 @@ use Common\Data\Mapper\Lva\TypeOfLicence as TypeOfLicenceMapper;
 use Common\FormService\Form\Lva\TypeOfLicence\AbstractTypeOfLicence as TypeOfLicenceFormService;
 use Common\FormService\FormServiceManager;
 use Common\RefData;
+use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Script\ScriptFactory;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateTypeOfLicence;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\Http\Response;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Common Lva Abstract Type Of Licence Controller
@@ -17,6 +22,35 @@ use Laminas\Http\Response;
  */
 abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicenceController
 {
+    protected FlashMessengerHelperService $flashMessengerHelper;
+    protected ScriptFactory $scriptFactory;
+    protected FormServiceManager $formServiceManager;
+    protected FormHelperService $formHelper;
+
+    /**
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     * @param FlashMessengerHelperService $flashMessengerHelper
+     * @param ScriptFactory $scriptFactory
+     * @param FormServiceManager $formServiceManager
+     * @param FormHelperService $formHelper
+     */
+    public function __construct(
+        NiTextTranslation $niTextTranslationUtil,
+        AuthorizationService $authService,
+        FlashMessengerHelperService $flashMessengerHelper,
+        ScriptFactory $scriptFactory,
+        FormServiceManager $formServiceManager,
+        FormHelperService $formHelper
+    ) {
+        $this->scriptFactory = $scriptFactory;
+        $this->flashMessengerHelper = $flashMessengerHelper;
+        $this->formServiceManager = $formServiceManager;
+        $this->formHelper = $formHelper;
+
+        parent::__construct($niTextTranslationUtil, $authService, $flashMessengerHelper, $scriptFactory);
+    }
+
     /**
      * Application type of licence section
      *
@@ -31,7 +65,7 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
             return $prg;
         }
         /** @var TypeOfLicenceFormService $tolFormService */
-        $tolFormService = $this->getServiceLocator()->get(FormServiceManager::class)->get('lva-application-type-of-licence');
+        $tolFormService = $this->formServiceManager->get('lva-application-type-of-licence');
         /** @var \Laminas\Form\FormInterface $form */
         $form = $tolFormService->getForm();
 
@@ -94,7 +128,7 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
                 'licenceType' => $licenceType,
                 'vehicleType' => $vehicleType,
                 'lgvDeclarationConfirmation' => $lgvDeclarationConfirmation,
-              
+
                 'niFlag' => $this->getOperatorLocation($applicationData, $formData)
             ]
         );
@@ -130,7 +164,7 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         }
 
         if ($response->isServerError()) {
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+            $this->flashMessengerHelper->addErrorMessage('unknown-error');
         }
 
         return $this->renderIndex($form);
@@ -192,13 +226,13 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
                 );
             }
 
-            $this->getServiceLocator()->get('Helper\FlashMessenger')
+            $this->flashMessengerHelper
                 ->addErrorMessage('unknown-error');
 
             return $this->redirect()->toRouteAjax(null, ['action' => null], [], true);
         }
 
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $formHelper = $this->formHelper;
         $form = $formHelper->createForm('GenericConfirmation');
         $formHelper->setFormActionFromRequest($form, $this->getRequest());
 

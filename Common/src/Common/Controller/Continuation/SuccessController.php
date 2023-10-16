@@ -2,9 +2,12 @@
 
 namespace Common\Controller\Continuation;
 
-use Laminas\View\Model\ViewModel;
-use Dvsa\Olcs\Transfer\Query\ContinuationDetail\Get as GetContinuationDetail;
+use Common\FormService\FormServiceManager;
 use Common\RefData;
+use Common\Service\Helper\TranslationHelperService;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
+use Laminas\View\Model\ViewModel;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Success controller
@@ -16,6 +19,21 @@ class SuccessController extends AbstractContinuationController
 {
     /** @var string */
     protected $layout = 'pages/continuation-success';
+
+    /**
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     * @param FormServiceManager $formServiceManager
+     * @param TranslationHelperService $translationHelper
+     */
+    public function __construct(
+        NiTextTranslation $niTextTranslationUtil,
+        AuthorizationService $authService,
+        FormServiceManager $formServiceManager,
+        TranslationHelperService $translationHelper
+    ) {
+        parent::__construct($niTextTranslationUtil, $authService, $formServiceManager, $translationHelper);
+    }
 
     /**
      * Index action to handle payment result
@@ -37,7 +55,8 @@ class SuccessController extends AbstractContinuationController
         ];
 
         // if licence is PSV R, PSV SN or PSV SI
-        if ($licence['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_PSV &&
+        if (
+            $licence['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_PSV &&
             ($licence['licenceType']['id'] === RefData::LICENCE_TYPE_RESTRICTED ||
             $licence['licenceType']['id'] === RefData::LICENCE_TYPE_STANDARD_NATIONAL ||
             $licence['licenceType']['id'] === RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL)

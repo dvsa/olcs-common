@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Create Variation Trait
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva\Traits;
 
 /**
@@ -17,14 +12,13 @@ trait CreateVariationTrait
     protected function processForm()
     {
         // @NOTE The behaviour of this service differs internally to externally
-        $processingService = $this->getServiceLocator()->get('Processing\CreateVariation');
+        $processingService = $this->processingCreateVariation;
 
         $request = $this->getRequest();
 
         $form = $processingService->getForm($request);
 
         if ($request->isPost() && $form->isValid()) {
-
             $data = $processingService->getDataFromForm($form);
 
             $licenceId = $this->params('licence');
@@ -32,7 +26,7 @@ trait CreateVariationTrait
             $appId = $processingService->createVariation($licenceId, $data);
 
             if ($appId === null) {
-                $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+                $this->flashMessengerHelper->addErrorMessage('unknown-error');
                 return $this->redirect()->refreshAjax();
             }
 

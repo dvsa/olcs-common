@@ -2,19 +2,38 @@
 
 namespace Common\Controller\Continuation;
 
+use Common\FormService\FormServiceManager;
+use Common\Service\Helper\TranslationHelperService;
+use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\View\Model\ViewModel;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * StartController
  */
 class StartController extends AbstractContinuationController
 {
-    const BACK_ROUTE = 'lva-licence';
+    public const BACK_ROUTE = 'lva-licence';
 
     /** @var string  */
     protected $layout = 'pages/continuation-start';
 
     protected $currentStep = self::STEP_START;
+
+    /**
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     * @param FormServiceManager $formServiceManager
+     * @param TranslationHelperService $translationHelper
+     */
+    public function __construct(
+        NiTextTranslation $niTextTranslationUtil,
+        AuthorizationService $authService,
+        FormServiceManager $formServiceManager,
+        TranslationHelperService $translationHelper
+    ) {
+        parent::__construct($niTextTranslationUtil, $authService, $formServiceManager, $translationHelper);
+    }
 
     /**
      * Index page

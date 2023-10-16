@@ -24,11 +24,7 @@ class GenericMethodsTest extends MockeryTestCase
     {
         $this->mockHlpForm = m::mock(\Common\Service\Helper\FormHelperService::class);
 
-        $this->mockSm = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class);
-        $this->mockSm
-            ->shouldReceive('get')->with('Helper\Form')->andReturn($this->mockHlpForm);
-
-        $this->sut = m::mock(GenericMethodsStub::class)->makePartial();
+        $this->sut = m::mock(GenericMethodsStub::class, [$this->mockHlpForm])->makePartial();
         $this->sut->shouldReceive('getServiceLocator')->andReturn($this->mockSm);
     }
 

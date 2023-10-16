@@ -2,10 +2,10 @@
 
 namespace Common\Controller\Lva\Traits;
 
+use Common\Controller\Lva\AbstractSafetyController;
 use Dvsa\Olcs\Transfer\Command\Application\DeleteWorkshop;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateSafety;
 use Dvsa\Olcs\Transfer\Query\Application\Safety;
-use Common\Controller\Lva\AbstractSafetyController;
 
 /**
  * Application Safety Controller Trait
@@ -67,7 +67,7 @@ trait ApplicationSafetyControllerTrait
             $params = [
                 'id' => $this->getApplicationId()
             ];
-            $params['page'] = isset($query['page'])? $query['page'] : 1;
+            $params['page'] = isset($query['page']) ? $query['page'] : 1;
 
             $params['limit'] = isset($query['limit'])
                 ? $query['limit']
