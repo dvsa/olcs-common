@@ -6,6 +6,7 @@ use Common\Category;
 use Common\Data\Mapper\Lva\OperatingCentre;
 use Common\Data\Mapper\Lva\OperatingCentres;
 use Common\FormService\FormServiceManager;
+use Common\Service\Helper\FileUploadHelperService;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\FormHelperService;
 use Common\Service\Helper\TranslationHelperService;
@@ -95,6 +96,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
     protected ScriptFactory $scriptFactory;
     protected VariationLvaService $variationLvaService;
     protected TranslationHelperService $translationHelper;
+    protected FileUploadHelperService $uploadHelper;
 
     /**
      * @param NiTextTranslation $niTextTranslationUtil
@@ -105,6 +107,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
      * @param TranslationHelperService $translationHelper
      * @param ScriptFactory $scriptFactory
      * @param VariationLvaService $variationLvaService
+     * @param FileUploadHelperService $uploadHelper
      */
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
@@ -114,7 +117,8 @@ abstract class AbstractOperatingCentresController extends AbstractController
         FormServiceManager $formServiceManager,
         TranslationHelperService $translationHelper,
         ScriptFactory $scriptFactory,
-        VariationLvaService $variationLvaService
+        VariationLvaService $variationLvaService,
+        FileUploadHelperService $uploadHelper
     ) {
         $this->formHelper = $formHelper;
         $this->flashMessengerHelper = $flashMessengerHelper;
@@ -122,6 +126,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $this->scriptFactory = $scriptFactory;
         $this->variationLvaService = $variationLvaService;
         $this->translationHelper = $translationHelper;
+        $this->uploadHelper = $uploadHelper;
 
         parent::__construct($niTextTranslationUtil, $authService);
     }
