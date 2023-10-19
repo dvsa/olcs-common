@@ -5,6 +5,7 @@ namespace Common\Controller\Lva;
 use Common\Form\Form;
 use Common\FormService\FormServiceManager;
 use Common\RefData;
+use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\FormHelperService;
 use Common\Service\Helper\GuidanceHelperService;
 use Common\Service\Lva\VariationLvaService;
@@ -36,6 +37,7 @@ abstract class AbstractPeopleController extends AbstractController
     protected VariationLvaService $variationLvaService;
     protected GuidanceHelperService $guidanceHelper;
     protected $lvaAdapter; //ToDo: Use Union Type Hint when available in php 8.0
+    protected FlashMessengerHelperService $flashMessengerHelper;
 
     /**
      * @param NiTextTranslation $niTextTranslationUtil
@@ -46,6 +48,7 @@ abstract class AbstractPeopleController extends AbstractController
      * @param VariationLvaService $variationLvaService
      * @param GuidanceHelperService $guidanceHelper
      * @param $lvaAdapter
+     * @param FlashMessengerHelperService $flashMessengerHelper
      */
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
@@ -55,7 +58,8 @@ abstract class AbstractPeopleController extends AbstractController
         ScriptFactory $scriptFactory,
         VariationLvaService $variationLvaService,
         GuidanceHelperService $guidanceHelper,
-        $lvaAdapter
+        $lvaAdapter,
+        FlashMessengerHelperService $flashMessengerHelper
     ) {
         $this->formHelper = $formHelper;
         $this->formServiceManager = $formServiceManager;
@@ -63,6 +67,7 @@ abstract class AbstractPeopleController extends AbstractController
         $this->variationLvaService = $variationLvaService;
         $this->guidanceHelper = $guidanceHelper;
         $this->lvaAdapter = $lvaAdapter;
+        $this->flashMessengerHelper = $flashMessengerHelper;
 
         parent::__construct($niTextTranslationUtil, $authService);
     }
