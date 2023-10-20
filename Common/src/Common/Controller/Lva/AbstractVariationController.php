@@ -2,6 +2,7 @@
 
 namespace Common\Controller\Lva;
 
+use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\TranslationHelperService;
 use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\Form\Form;
@@ -18,6 +19,7 @@ abstract class AbstractVariationController extends AbstractController
 
     protected TranslationHelperService $translationHelper;
     protected $processingCreateVariation;
+    protected FlashMessengerHelperService $flashMessengerHelper;
 
     /**
      * @param NiTextTranslation $niTextTranslationUtil
@@ -29,10 +31,12 @@ abstract class AbstractVariationController extends AbstractController
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
         TranslationHelperService $translationHelper,
-        $processingCreateVariation
+        $processingCreateVariation,
+        FlashMessengerHelperService $flashMessengerHelper
     ) {
         $this->processingCreateVariation = $processingCreateVariation;
         $this->translationHelper = $translationHelper;
+        $this->flashMessengerHelper = $flashMessengerHelper;
         parent::__construct($niTextTranslationUtil, $authService);
     }
 

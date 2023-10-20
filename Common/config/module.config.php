@@ -63,7 +63,6 @@ return [
             \Common\Controller\GuidesController::class => \Common\Controller\GuidesController::class,
         ],
         'factories' => [
-            \Common\Controller\Lva\AbstractController::class => \Common\Controller\Factory\Lva\AbstractControllerFactory::class,
             ContinuationControllers\ChecklistController::class => \Common\Controller\Factory\Continuation\ChecklistControllerFactory::class,
             ContinuationControllers\ConditionsUndertakingsController::class => \Common\Controller\Factory\Continuation\ChecklistControllerFactory::class,
             ContinuationControllers\DeclarationController::class => \Common\Controller\Factory\Continuation\ChecklistControllerFactory::class,
