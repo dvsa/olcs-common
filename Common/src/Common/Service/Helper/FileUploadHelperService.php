@@ -4,6 +4,7 @@ namespace Common\Service\Helper;
 
 use Common\Exception\ConfigurationException;
 use Common\Exception\File\InvalidMimeException;
+use Common\Service\AntiVirus\Scan;
 use Common\Service\Table\Type\Selector;
 use Olcs\Logging\Log\Logger;
 use Laminas\Form\ElementInterface;
@@ -61,6 +62,17 @@ class FileUploadHelperService extends AbstractHelperService
      * @var ElementInterface
      */
     private $element;
+
+    protected UrlHelperService $urlHelper;
+    protected Scan $antiVirusService;
+
+    public function __construct(
+        UrlHelperService $urlHelper,
+        Scan $antiVirusService
+    ) {
+        $this->urlHelper = $urlHelper;
+        $this->antiVirusService = $antiVirusService;
+    }
 
     /**
      * Get Form
@@ -290,7 +302,7 @@ class FileUploadHelperService extends AbstractHelperService
             throw new ConfigurationException('Load data callback is not callable');
         }
 
-        $url = $this->getServiceLocator()->get('Helper\Url');
+        $url = $this->urlHelper;
 
         $files = call_user_func($callback);
 
@@ -329,7 +341,7 @@ class FileUploadHelperService extends AbstractHelperService
         if (!is_null($selector)) {
             $element = $this->findElement($this->getForm(), $selector);
             $count = (int)$element->getValue();
-            if ($count>0) {
+            if ($count > 0) {
                 $element->setValue($count - 1);
             }
         }
@@ -380,7 +392,8 @@ class FileUploadHelperService extends AbstractHelperService
             $fileData['file-controls'] = $fileData;
         }
 
-        if ($postData === null
+        if (
+            $postData === null
             || $fileData === null
             || !isset($postData['file-controls']['upload'])
             || empty($postData['file-controls']['upload'])
@@ -416,7 +429,7 @@ class FileUploadHelperService extends AbstractHelperService
         }
 
         // Run virus scan on file
-        $scanner = $this->getServiceLocator()->get(\Common\Service\AntiVirus\Scan::class);
+        $scanner = $this->antiVirusService;
         if ($scanner->isEnabled() && !$scanner->isClean($fileTmpName)) {
             $this->getForm()->setMessages($this->formatErrorMessageForForm(self::FILE_UPLOAD_ERR_PREFIX . 'virus'));
 
@@ -462,7 +475,8 @@ class FileUploadHelperService extends AbstractHelperService
 
         $postData = $this->findSelectorData((array)$this->getRequest()->getPost(), $this->getSelector());
 
-        if ($postData === null
+        if (
+            $postData === null
             || !isset($postData['list'])
         ) {
             return false;
@@ -473,8 +487,10 @@ class FileUploadHelperService extends AbstractHelperService
         foreach ($element->getFieldsets() as $listFieldset) {
             $name = $listFieldset->getName();
 
-            if (isset($postData['list'][$name]['remove'])
-                && !empty($postData['list'][$name]['remove'])) {
+            if (
+                isset($postData['list'][$name]['remove'])
+                && !empty($postData['list'][$name]['remove'])
+            ) {
                 $success = call_user_func(
                     $callback,
                     $postData['list'][$name]['id']

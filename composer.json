@@ -22,9 +22,10 @@
     "require-dev": {
         "doctrine/annotations": "^1.14.2",
         "olcs/olcs-devtools": "~4.206.0",
+        "olcs/olcs-logging": "~4.206.0",
         "olcs/olcs-transfer": "~4.206.0",
         "olcs/olcs-utils": "~4.206.0",
-        "olcs/olcs-logging": "~4.206.0",
+        "phpstan/phpstan": "^0.12.100",
         "soflomo/purifier": "^1.0",
         "symfony/lock": "^5"
     },
