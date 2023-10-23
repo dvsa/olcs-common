@@ -258,7 +258,6 @@ return [
             HelperService\RestrictionHelperService::class => HelperService\RestrictionHelperService::class,
             StringHelperService::class => StringHelperService::class,
             DataHelperService::class => DataHelperService::class,
-            HelperService\FileUploadHelperService::class => HelperService\FileUploadHelperService::class,
             \Laminas\View\HelperPluginManager::class => \Laminas\View\HelperPluginManager::class,
             HelperService\DateHelperService::class => HelperService\DateHelperService::class,
             HelperService\ComplaintsHelperService::class => HelperService\ComplaintsHelperService::class,
@@ -289,7 +288,7 @@ return [
             DataService\Surrender::class => DataService\AbstractDataServiceFactory::class,
             DataService\TrafficArea::class => DataService\AbstractDataServiceFactory::class,
 
-            HelperService\FileUploadHelperService::class => HelperService\FileUploadHelperService::class,
+            HelperService\FileUploadHelperService::class => HelperService\FileUploadHelperServiceFactory::class,
             HelperService\FlashMessengerHelperService::class => HelperService\FlashMessengerHelperServiceFactory::class,
             HelperService\FormHelperService::class => HelperService\FormHelperServiceFactory::class,
             HelperService\GuidanceHelperService::class => HelperService\GuidanceHelperServiceFactory::class,
