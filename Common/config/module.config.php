@@ -63,7 +63,6 @@ return [
             \Common\Controller\GuidesController::class => \Common\Controller\GuidesController::class,
         ],
         'factories' => [
-            \Common\Controller\Lva\AbstractController::class => \Common\Controller\Factory\Lva\AbstractControllerFactory::class,
             ContinuationControllers\ChecklistController::class => \Common\Controller\Factory\Continuation\ChecklistControllerFactory::class,
             ContinuationControllers\ConditionsUndertakingsController::class => \Common\Controller\Factory\Continuation\ChecklistControllerFactory::class,
             ContinuationControllers\DeclarationController::class => \Common\Controller\Factory\Continuation\ChecklistControllerFactory::class,
@@ -259,7 +258,6 @@ return [
             HelperService\RestrictionHelperService::class => HelperService\RestrictionHelperService::class,
             StringHelperService::class => StringHelperService::class,
             DataHelperService::class => DataHelperService::class,
-            HelperService\FileUploadHelperService::class => HelperService\FileUploadHelperService::class,
             \Laminas\View\HelperPluginManager::class => \Laminas\View\HelperPluginManager::class,
             HelperService\DateHelperService::class => HelperService\DateHelperService::class,
             HelperService\ComplaintsHelperService::class => HelperService\ComplaintsHelperService::class,
@@ -290,7 +288,7 @@ return [
             DataService\Surrender::class => DataService\AbstractDataServiceFactory::class,
             DataService\TrafficArea::class => DataService\AbstractDataServiceFactory::class,
 
-            HelperService\FileUploadHelperService::class => HelperService\FileUploadHelperService::class,
+            HelperService\FileUploadHelperService::class => HelperService\FileUploadHelperServiceFactory::class,
             HelperService\FlashMessengerHelperService::class => HelperService\FlashMessengerHelperServiceFactory::class,
             HelperService\FormHelperService::class => HelperService\FormHelperServiceFactory::class,
             HelperService\GuidanceHelperService::class => HelperService\GuidanceHelperServiceFactory::class,

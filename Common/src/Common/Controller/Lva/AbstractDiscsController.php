@@ -75,6 +75,7 @@ abstract class AbstractDiscsController extends AbstractController
      * @param FormServiceManager $formServiceManager
      * @param TableFactory $tableFactory
      * @param GuidanceHelperService $guidanceHelper
+     * @param ScriptFactory $scriptFactory
      */
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,

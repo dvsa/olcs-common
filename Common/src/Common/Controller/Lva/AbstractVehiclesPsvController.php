@@ -65,7 +65,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     protected FlashMessengerHelperService $flashMessengerHelper;
     protected ResponseHelperService $responseHelper;
     protected TableFactory $tableFactory;
-    protected TranslationHelperService $translatorHelper;
+    protected TranslationHelperService $translationHelper;
     protected GuidanceHelperService $guidanceHelper;
 
     /**
@@ -78,7 +78,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
      * @param UrlHelperService $urlHelper
      * @param ResponseHelperService $responseHelper
      * @param TableFactory $tableFactory
-     * @param TranslationHelperService $translatorHelper
+     * @param TranslationHelperService $translationHelper
      * @param GuidanceHelperService $guidanceHelper
      */
     public function __construct(
@@ -91,7 +91,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         UrlHelperService $urlHelper,
         ResponseHelperService $responseHelper,
         TableFactory $tableFactory,
-        TranslationHelperService $translatorHelper,
+        TranslationHelperService $translationHelper,
         GuidanceHelperService $guidanceHelper
     ) {
         $this->urlHelper = $urlHelper;
@@ -101,7 +101,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         $this->flashMessengerHelper = $flashMessengerHelper;
         $this->responseHelper = $responseHelper;
         $this->tableFactory = $tableFactory;
-        $this->translatorHelper = $translatorHelper;
+        $this->translationHelper = $translationHelper;
         $this->guidanceHelper = $guidanceHelper;
         parent::__construct($niTextTranslationUtil, $authService);
     }
