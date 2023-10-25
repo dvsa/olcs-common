@@ -4,6 +4,7 @@ namespace CommonTest\Controller\Lva;
 
 use Common\Controller\Lva\AbstractVariationController;
 use Common\FormService\FormServiceManager;
+use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\TranslationHelperService;
 use CommonTest\Bootstrap;
 use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
@@ -27,11 +28,13 @@ class AbstractVariationControllerTest extends MockeryTestCase
         $this->mockAuthService = m::mock(AuthorizationService::class);
         $this->mockTranslationHelper = m::mock(TranslationHelperService::class);
         $this->mockProcessingCreateVariation = m::mock();
+        $this->mockFlashMessengerHelper = m::mock(FlashMessengerHelperService::class);
         $this->sut = m::mock(AbstractVariationController::class, [
             $this->mockNiTextTranslationUtil,
             $this->mockAuthService,
             $this->mockTranslationHelper,
             $this->mockProcessingCreateVariation,
+            $this->mockFlashMessengerHelper
             ])
             ->makePartial()
             ->shouldAllowMockingProtectedMethods();
