@@ -53,7 +53,7 @@ class Schedule41Controller extends AbstractController
     public function licenceSearchAction()
     {
         $request = $this->getRequest();
-        $form = $this - $this->formHelper
+        $form = $this->formHelper
             ->createFormWithRequest(
                 'Schedule41LicenceSearch',
                 $request
