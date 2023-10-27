@@ -30,9 +30,10 @@ trait GenericMethods
      */
     public function getForm($type)
     {
-        $form = $this->formHelper->createForm($type);
-        $this->formHelper->setFormActionFromRequest($form, $this->getRequest());
-        $this->formHelper->processAddressLookupForm($form, $this->getRequest());
+        $formHelper = $this->formHelper ?? $this->formHelperService;
+        $form = $formHelper->createForm($type);
+        $formHelper->setFormActionFromRequest($form, $this->getRequest());
+        $formHelper->processAddressLookupForm($form, $this->getRequest());
 
         return $form;
     }
