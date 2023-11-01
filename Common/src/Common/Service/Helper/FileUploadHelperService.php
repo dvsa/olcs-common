@@ -4,6 +4,7 @@ namespace Common\Service\Helper;
 
 use Common\Exception\ConfigurationException;
 use Common\Exception\File\InvalidMimeException;
+use Common\Service\AntiVirus\Scan;
 use Common\Service\Table\Type\Selector;
 use Olcs\Logging\Log\Logger;
 use Laminas\Form\ElementInterface;
@@ -61,6 +62,17 @@ class FileUploadHelperService extends AbstractHelperService
      * @var ElementInterface
      */
     private $element;
+
+    protected UrlHelperService $urlHelper;
+    protected Scan $antiVirusService;
+
+    public function __construct(
+        UrlHelperService $urlHelper,
+        Scan $antiVirusService
+    ) {
+        $this->urlHelper = $urlHelper;
+        $this->antiVirusService = $antiVirusService;
+    }
 
     /**
      * Get Form
@@ -290,7 +302,7 @@ class FileUploadHelperService extends AbstractHelperService
             throw new ConfigurationException('Load data callback is not callable');
         }
 
-        $url = $this->getServiceLocator()->get('Helper\Url');
+        $url = $this->urlHelper;
 
         $files = call_user_func($callback);
 
@@ -416,7 +428,7 @@ class FileUploadHelperService extends AbstractHelperService
         }
 
         // Run virus scan on file
-        $scanner = $this->getServiceLocator()->get(\Common\Service\AntiVirus\Scan::class);
+        $scanner = $this->antiVirusService;
         if ($scanner->isEnabled() && !$scanner->isClean($fileTmpName)) {
             $this->getForm()->setMessages($this->formatErrorMessageForForm(self::FILE_UPLOAD_ERR_PREFIX . 'virus'));
 

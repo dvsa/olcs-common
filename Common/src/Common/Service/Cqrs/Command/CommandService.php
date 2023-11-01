@@ -19,8 +19,8 @@ use Laminas\Http\Header\Cookie;
 use Laminas\Http\Headers;
 use Laminas\Http\Request;
 use Laminas\Http\Response as HttpResponse;
-use Laminas\Mvc\Router\Exception\ExceptionInterface;
-use Laminas\Mvc\Router\RouteInterface;
+use Laminas\Router\Exception\ExceptionInterface;
+use Laminas\Router\RouteInterface;
 use Laminas\Session\Container;
 
 /**

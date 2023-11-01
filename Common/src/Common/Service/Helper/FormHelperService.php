@@ -23,7 +23,7 @@ use Laminas\Validator\ValidatorChain;
 use Laminas\View\Model\ViewModel;
 use Laminas\View\Renderer\RendererInterface;
 use Laminas\Validator\ValidatorInterface;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * @internal All validations to do with empty fields must be done as a validator

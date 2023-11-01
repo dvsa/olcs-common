@@ -8,7 +8,7 @@ use Common\Form\Elements\InputFilters\Lva\BackToLicenceActionLink;
 use Common\Form\Elements\InputFilters\Lva\BackToVariationActionLink;
 use Common\RefData;
 use Common\Service\Helper\FormHelperService;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Abstract Lva Form Service

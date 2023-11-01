@@ -13,7 +13,7 @@ use Common\Service\Table\TableBuilderFactory;
 use Laminas\Mvc\I18n\Translator;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * TableBuilderFactory Test
@@ -41,7 +41,7 @@ class TableBuilderFactoryTest extends MockeryTestCase
             ->andReturn($config);
 
         $serviceLocator->shouldReceive('get')
-            ->with('ZfcRbac\Service\AuthorizationService')
+            ->with('LmcRbacMvc\Service\AuthorizationService')
             ->andReturn($authService);
 
         $serviceLocator->shouldReceive('get')

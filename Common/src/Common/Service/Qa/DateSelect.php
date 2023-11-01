@@ -47,7 +47,7 @@ class DateSelect extends LaminasDateSelect
     /**
      * {@inheritdoc}
      */
-    public function getInputSpecification()
+    public function getInputSpecification(): array
     {
         return [
             'id' => 'qaDateSelect',

@@ -10,7 +10,7 @@ use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Hamcrest\Core\IsEqual;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 class ChecklistControllerTest extends MockeryTestCase
 {

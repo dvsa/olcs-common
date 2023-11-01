@@ -35,7 +35,6 @@ class FinancialHistoryData
     public $hasAnyPerson = null;
 
     /**
-     * @Form\Annotations({"id":""})
      * @Form\Options({
      *     "short-label": "short-label-financial-history-bankrupt",
      *     "label": "application_previous-history_financial-history.finance.bankrupt",
@@ -50,7 +49,6 @@ class FinancialHistoryData
     public $bankrupt = null;
 
     /**
-     * @Form\Annotations({"id":""})
      * @Form\Options({
      *     "short-label": "short-label-financial-history-liquidation",
      *     "label": "application_previous-history_financial-history.finance.liquidation",
@@ -65,7 +63,6 @@ class FinancialHistoryData
     public $liquidation = null;
 
     /**
-     * @Form\Annotations({"id":""})
      * @Form\Options({
      *     "short-label": "short-label-financial-history-receivership",
      *     "label": "application_previous-history_financial-history.finance.receivership",
@@ -80,7 +77,6 @@ class FinancialHistoryData
     public $receivership = null;
 
     /**
-     * @Form\Annotations({"id":""})
      * @Form\Options({
      *     "short-label": "short-label-financial-history-administration",
      *     "label": "application_previous-history_financial-history.finance.administration",
@@ -95,7 +91,6 @@ class FinancialHistoryData
     public $administration = null;
 
     /**
-     * @Form\Annotations({"id":""})
      * @Form\Options({
      *     "short-label": "short-label-financial-history-disqualified",
      *     "fieldset-attributes": {"id":"disqualified"},

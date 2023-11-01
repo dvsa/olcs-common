@@ -11,7 +11,7 @@ use Laminas\ServiceManager\AbstractPluginManager;
  */
 class PluginManager extends AbstractPluginManager
 {
-    use PluginManagerTrait;
+    //use PluginManagerTrait;
 
     protected $instanceOf = null;
 

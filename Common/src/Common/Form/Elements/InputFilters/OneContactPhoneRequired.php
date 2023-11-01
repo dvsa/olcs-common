@@ -24,7 +24,7 @@ class OneContactPhoneRequired extends LaminasElement\Hidden implements InputProv
      *
      * @return array
      */
-    public function getInputSpecification()
+    public function getInputSpecification(): array
     {
         $specification = [
             'name' => $this->getName(),

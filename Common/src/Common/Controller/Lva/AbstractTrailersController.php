@@ -20,7 +20,7 @@ use Dvsa\Olcs\Transfer\Query\Trailer\Trailer;
 use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\Form\Form;
 use Laminas\Stdlib\RequestInterface;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Abstract Trailers Controller

@@ -11,7 +11,7 @@ use Common\Service\Helper\TranslationHelperService;
 use Dvsa\Olcs\Transfer\Command\ContinuationDetail\UpdateFinances;
 use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\View\Model\ViewModel;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * FinancesController

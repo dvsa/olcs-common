@@ -11,7 +11,7 @@ use Common\Service\Table\TableBuilder;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
 use Interop\Container\ContainerInterface;
 use Laminas\Form\Form;
-use Laminas\Mvc\Controller\Plugin\FlashMessenger;
+use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 
 abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter implements PeopleAdapterInterface
 {

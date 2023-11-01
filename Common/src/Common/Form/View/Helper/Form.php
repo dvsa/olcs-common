@@ -22,7 +22,7 @@ class Form extends \Laminas\Form\View\Helper\Form
      *
      * @return string
      */
-    public function render(LaminasFormInterface $form, $includeFormTags = true)
+    public function render(LaminasFormInterface $form, $includeFormTags = true): string
     {
         if (method_exists($form, 'prepare')) {
             $form->prepare();
@@ -52,7 +52,7 @@ class Form extends \Laminas\Form\View\Helper\Form
         foreach ($form as $element) {
             if ($element instanceof FieldsetInterface) {
                 $canKeepEmptyFieldset = $element->hasAttribute('keepEmptyFieldset')
-                    ? (bool) $element->getAttribute('keepEmptyFieldset')
+                    ? (bool)$element->getAttribute('keepEmptyFieldset')
                     : false;
 
                 // do not display empty fieldsets as per OLCS-12318

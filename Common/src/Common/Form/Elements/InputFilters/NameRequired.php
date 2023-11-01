@@ -20,7 +20,7 @@ class NameRequired extends Name implements InputProviderInterface
      *
      * @return array
      */
-    public function getInputSpecification()
+    public function getInputSpecification(): array
     {
         $specification = parent::getInputSpecification();
         $specification['required'] = true;

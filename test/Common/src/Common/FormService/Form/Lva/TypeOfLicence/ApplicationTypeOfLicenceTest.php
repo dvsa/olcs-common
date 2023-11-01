@@ -12,7 +12,7 @@ use Laminas\InputFilter\InputFilter;
 use Laminas\Form\Element;
 use Laminas\Form\Fieldset;
 use Laminas\Form\Form;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 class ApplicationTypeOfLicenceTest extends MockeryTestCase
 {

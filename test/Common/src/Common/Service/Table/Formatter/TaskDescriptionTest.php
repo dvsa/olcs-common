@@ -5,7 +5,7 @@ namespace CommonTest\Service\Table\Formatter;
 use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Formatter\TaskDescription;
 use Laminas\Http\Request;
-use Laminas\Mvc\Router\Http\TreeRouteStack;
+use Laminas\Router\Http\TreeRouteStack;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
@@ -24,7 +24,7 @@ class TaskDescriptionTest extends MockeryTestCase
         $this->urlHelper = m::mock(UrlHelperService::class);
         $this->router = m::mock(TreeRouteStack::class);
         $this->request = m::mock(Request::class);
-        $this->mockRouteMatch = m::mock('\Laminas\Mvc\Router\RouteMatch');
+        $this->mockRouteMatch = m::mock('\Laminas\Router\RouteMatch');
         $this->sut = new TaskDescription($this->router, $this->request, $this->urlHelper);
     }
 

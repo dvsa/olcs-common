@@ -1,39 +1,36 @@
 <?php
 
-/**
- * OLCS custom form annotation builder
- *
- * @author Ian Lindsay <ian@hemera-business-services.co.uk>
- */
 namespace Common\Form\Annotation;
 
-use Laminas\Form\Annotation\AnnotationBuilder;
-use ArrayObject;
 use Laminas\Code\Annotation\AnnotationCollection;
+use Laminas\Form\Annotation\AnnotationBuilder;
+use Laminas\Form\Annotation\Flags;
+use ReflectionProperty;
+use ArrayObject;
 use Laminas\EventManager\Event;
 
-/**
- * OLCS custom form annotation builder
- *
- * @author Ian Lindsay <ian@hemera-business-services.co.uk>
- */
-class CustomAnnotationBuilder extends AnnotationBuilder
+class CustomAnnotationBuilder
 {
-    /**
-     * Configure an element from annotations
-     *
-     * @param  AnnotationCollection $annotations
-     * @param  \Laminas\Code\Reflection\PropertyReflection $reflection
-     * @param  ArrayObject $formSpec
-     * @param  ArrayObject $filterSpec
-     * @return void
-     * @triggers checkForExclude
-     * @triggers discoverName
-     * @triggers configureElement
-     */
-    protected function configureElement($annotations, $reflection, $formSpec, $filterSpec)
+    private $annotationBuilder;
+
+    public function __construct(AnnotationBuilder $annotationBuilder)
     {
-        // If the element is marked as exclude, return early
+        $this->annotationBuilder = $annotationBuilder;
+    }
+
+    public function configureElement(
+        AnnotationCollection $annotations,
+        ReflectionProperty $reflection,
+        ArrayObject $formSpec,
+        ArrayObject $filterSpec
+    ): void {
+        // Access the protected configureElement method using reflection
+        $method = new \ReflectionMethod($this->annotationBuilder, 'configureElement');
+        $method->setAccessible(true);
+        $method->invoke($this->annotationBuilder, $annotations, $reflection, $formSpec, $filterSpec);
+
+        // The below code is directly from your original CustomAnnotationBuilder::configureElement method
+
         if ($this->checkForExclude($annotations)) {
             return;
         }
@@ -70,9 +67,6 @@ class CustomAnnotationBuilder extends AnnotationBuilder
             $events->trigger(__FUNCTION__, $this, $event);
         }
 
-        // Since "type" is a reserved name in the filter specification,
-        // we need to add the specification without the name as the key.
-        // In all other cases, though, the name is fine.
         if ($event->getParam('inputSpec')->count() > 1) {
             if ($name === 'type') {
                 $filterSpec[] = $event->getParam('inputSpec');
@@ -85,5 +79,21 @@ class CustomAnnotationBuilder extends AnnotationBuilder
             $formSpec['elements'] = array();
         }
         $formSpec['elements'][] = $event->getParam('elementSpec');
+    }
+
+    public function __call($name, $arguments)
+    {
+        try {
+            $method = new \ReflectionMethod($this->annotationBuilder, $name);
+        } catch (\ReflectionException $e) {
+            // Handle non-existent method
+            throw new \BadMethodCallException(
+                sprintf('Method %s::%s does not exist.', get_class($this->annotationBuilder), $name)
+            );
+        }
+
+        $method->setAccessible(true);
+
+        return $method->invokeArgs($this->annotationBuilder, $arguments);
     }
 }

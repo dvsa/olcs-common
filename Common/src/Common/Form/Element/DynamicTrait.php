@@ -3,6 +3,7 @@
 namespace Common\Form\Element;
 
 use Common\Service\Data\Interfaces\ListData;
+use Common\Service\Data\PluginManager;
 
 trait DynamicTrait
 {
@@ -34,10 +35,9 @@ trait DynamicTrait
      */
     protected $exclude = [];
 
-    /**
-     * @var \Common\Service\Data\Interfaces\ListData
-     */
     protected $dataService;
+
+    protected PluginManager $dataServiceManager;
 
     /**
      * @var \Laminas\ServiceManager\ServiceLocatorInterface
@@ -125,17 +125,13 @@ trait DynamicTrait
     }
 
     /**
-     * @return \Common\Service\Data\RefData
+     * @return string
      */
     public function getServiceName()
     {
         return $this->serviceName;
     }
 
-    /**
-     * @param \Common\Service\Data\Interfaces\ListData $dataService
-     * @return $this
-     */
     public function setDataService($dataService)
     {
         $this->dataService = $dataService;
@@ -149,7 +145,7 @@ trait DynamicTrait
     public function getDataService()
     {
         if (is_null($this->dataService)) {
-            $this->dataService = $this->getServiceLocator()->get($this->getServiceName());
+            $this->dataService = $this->dataServiceManager->get($this->getServiceName());
             if (!($this->dataService instanceof ListData)) {
                 throw new \Exception(
                     sprintf(
@@ -161,16 +157,6 @@ trait DynamicTrait
         }
 
         return $this->dataService;
-    }
-
-    /**
-     * @param \Laminas\ServiceManager\ServiceLocatorInterface $serviceLocator
-     * @return $this
-     */
-    public function setServiceLocator($serviceLocator)
-    {
-        $this->serviceLocator = $serviceLocator;
-        return $this;
     }
 
     /**
@@ -261,9 +247,9 @@ trait DynamicTrait
      *
      * @return array
      */
-    public function getValueOptions()
+    public function getValueOptions(): array
     {
-        if (empty($this->valueOptions)) {
+        if (empty($this->valueOptions) && $this->getContext()) {
             $refDataService = $this->getDataService();
             $this->valueOptions = $refDataService->fetchListOptions($this->getContext(), $this->useGroups());
 

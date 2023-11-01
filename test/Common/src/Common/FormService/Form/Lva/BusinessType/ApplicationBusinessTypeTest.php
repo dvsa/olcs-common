@@ -9,7 +9,7 @@ use Common\FormService\Form\Lva\BusinessType\ApplicationBusinessType;
 use Common\FormService\FormServiceInterface;
 use Laminas\Form\Form;
 use Laminas\Form\Element;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Application Business Type Form Test

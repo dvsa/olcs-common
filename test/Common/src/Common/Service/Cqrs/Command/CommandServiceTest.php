@@ -17,7 +17,7 @@ use Laminas\Http\Header\Cookie;
 use Laminas\Http\Headers;
 use Laminas\Http\Request;
 use Laminas\Http\Response as HttpResponse;
-use Laminas\Mvc\Router\Exception\RuntimeException as RouterRuntimeException;
+use Laminas\Router\Exception\RuntimeException as RouterRuntimeException;
 use Laminas\Session\Container;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -38,7 +38,7 @@ class CommandServiceTest extends MockeryTestCase
     /** @var  m\MockInterface | CommandContainerInterface */
     private $mockCmd;
 
-    /** @var  m\MockInterface | \Laminas\Mvc\Router\RouteInterface */
+    /** @var  m\MockInterface | \Laminas\Router\RouteInterface */
     private $mockRouter;
     /** @var  m\MockInterface | \Laminas\Http\Client */
     private $mockClient;
@@ -59,7 +59,7 @@ class CommandServiceTest extends MockeryTestCase
             ->shouldReceive('getMethod')->atMost(1)->andReturn(self::METHOD)
             ->shouldReceive('getDto')->atMost(1)->andReturn($this->mockDto);
 
-        $this->mockRouter = m::mock(\Laminas\Mvc\Router\RouteInterface::class)->makePartial();
+        $this->mockRouter = m::mock(\Laminas\Router\RouteInterface::class)->makePartial();
         $this->mockClient = m::mock(\Laminas\Http\Client::class)->makePartial();
         $this->mockRequest = m::mock(\Laminas\Http\Request::class)->makePartial();
         $this->mockFlashMsgr = m::mock(\Common\Service\Helper\FlashMessengerHelperService::class);

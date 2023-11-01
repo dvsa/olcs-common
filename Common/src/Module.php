@@ -95,7 +95,7 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
         );
 
         //  RBAC behaviour if user not authorised
-        $events->attach($sm->get(\ZfcRbac\View\Strategy\RedirectStrategy::class));
+        $events->attach(MvcEvent::EVENT_DISPATCH_ERROR, [$sm->get(\LmcRbacMvc\View\Strategy\RedirectStrategy::class), 'onError']);
         //  CSRF token check
         $events->attach(MvcEvent::EVENT_DISPATCH, [$this, 'validateCsrfToken'], 100);
 
@@ -254,9 +254,8 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
     {
         /**
          * @var Translator $translator
-         * @var Redis      $cache
          */
-        $cache = $sm->get(Redis::class);
+        $cache = $sm->get('default-cache');
         $translator = $sm->get('translator');
         $translator->setCache($cache);
 
@@ -329,28 +328,13 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
      */
     private function setLoggerUser(ServiceLocatorInterface $serviceManager)
     {
-        $authService = $serviceManager->get(\ZfcRbac\Service\AuthorizationService::class);
+        $authService = $serviceManager->get(\LmcRbacMvc\Service\AuthorizationService::class);
         $serviceManager->get('LogProcessorManager')->get(\Olcs\Logging\Log\Processor\UserId::class)
             ->setUserId($authService->getIdentity()->getUsername());
     }
 
     public function getServiceConfig()
     {
-        return [
-            'factories' => [
-                FormatterPluginManager::class => function ($serviceManager) {
-                    $config = include __DIR__ . '/../config/formatter-plugins.config.php';
-                    if (method_exists($serviceManager, 'configure')) {
-                        // Should work with laminas 3
-                        $pluginManager = new FormatterPluginManager($serviceManager);
-                        $pluginManager->configure($config);
-                    } else {
-                        // ToDo: This can be removed when we move to 3 from 2.5
-                        $pluginManager = new FormatterPluginManager($serviceManager, $config);
-                    }
-                    return $pluginManager;
-                },
-            ],
-        ];
+        return [];
     }
 }

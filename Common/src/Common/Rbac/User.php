@@ -1,7 +1,7 @@
 <?php
 namespace Common\Rbac;
 
-use ZfcRbac\Identity\IdentityInterface;
+use LmcRbacMvc\Identity\IdentityInterface;
 
 /**
  * Class User

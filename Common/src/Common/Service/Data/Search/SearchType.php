@@ -10,7 +10,7 @@ use Laminas\Navigation\Navigation;
 use Laminas\Navigation\Service\AbstractNavigationFactory;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
-use ZfcRbac\Service\RoleService;
+use LmcRbacMvc\Service\RoleService;
 use Interop\Container\ContainerInterface;
 
 /**

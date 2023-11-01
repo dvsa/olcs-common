@@ -11,7 +11,7 @@ use Laminas\Mvc\Service\TranslatorServiceFactory;
 use Common\RefData;
 use Common\Service\Table\TableFactory;
 use Common\Service\Table\TableBuilder;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 use Laminas\Filter\FilterPluginManager;
 use Laminas\Mvc\Service\FilterManagerFactory;
 use Laminas\Validator\ValidatorPluginManager;

@@ -14,8 +14,6 @@ use Laminas\ServiceManager\AbstractPluginManager;
  */
 class SearchTypeManager extends AbstractPluginManager
 {
-    use PluginManagerTrait;
-
     protected $instanceOf = SearchAbstract::class;
 
     /**

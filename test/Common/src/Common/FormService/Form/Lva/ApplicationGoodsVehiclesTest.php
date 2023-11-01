@@ -17,7 +17,7 @@ class ApplicationGoodsVehiclesTest extends MockeryTestCase
     public function setUp(): void
     {
         $this->formHelper = m::mock('\Common\Service\Helper\FormHelperService');
-        $this->authService = m::mock('\ZfcRbac\Service\AuthorizationService');
+        $this->authService = m::mock('\LmcRbacMvc\Service\AuthorizationService');
         $this->formService = m::mock('\Common\FormService\FormServiceManager')->makePartial();
 
         $this->sut = new ApplicationGoodsVehicles($this->formHelper, $this->authService, $this->formService);

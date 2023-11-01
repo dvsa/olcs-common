@@ -16,7 +16,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Http\Request;
 use Laminas\Http\Response;
 use Laminas\Http\Response as HttpResponse;
-use Laminas\Mvc\Router\RouteInterface;
+use Laminas\Router\RouteInterface;
 
 /**
  * @covers \Common\Service\Cqrs\Query\QueryService
@@ -109,7 +109,7 @@ class QueryServiceTest extends MockeryTestCase
         $this->mockRouter
             ->shouldReceive('assemble')
             ->once()
-            ->andThrow(new \Laminas\Mvc\Router\Exception\RuntimeException('unit_ExcMsg'));
+            ->andThrow(new \Laminas\Router\Exception\RuntimeException('unit_ExcMsg'));
 
         $this->expectException(Exception::class, 'unit_ExcMsg', HttpResponse::STATUS_CODE_404);
         $this->sut->send($this->mockQueryCntr);

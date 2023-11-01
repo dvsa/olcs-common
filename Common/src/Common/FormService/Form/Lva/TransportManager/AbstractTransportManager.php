@@ -4,7 +4,7 @@ namespace Common\FormService\Form\Lva\TransportManager;
 
 use Common\FormService\Form\Lva\AbstractLvaFormService;
 use Common\Service\Helper\FormHelperService;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Transport Manager Form

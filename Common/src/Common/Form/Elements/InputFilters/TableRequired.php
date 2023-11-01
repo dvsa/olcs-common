@@ -22,7 +22,7 @@ class TableRequired extends Table implements InputProviderInterface
      *
      * @return array
      */
-    public function getInputSpecification()
+    public function getInputSpecification(): array
     {
         $label = 'row to the table';
 

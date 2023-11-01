@@ -6,7 +6,7 @@ use Common\Data\Object\Search\Licence;
 use Common\RefData;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Mockery as m;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Class LicenceTest

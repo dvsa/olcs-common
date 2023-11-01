@@ -34,7 +34,7 @@ class FormDateSelect extends AbstractHelper
      * @param ElementInterface $element
      * @return string
      */
-    public function render(ElementInterface $element)
+    public function render(ElementInterface $element): string
     {
         if (!($element instanceof DateSelect)) {
             return '';

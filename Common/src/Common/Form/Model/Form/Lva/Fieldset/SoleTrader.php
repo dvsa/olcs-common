@@ -69,7 +69,7 @@ class SoleTrader
      * @Form\Options({
      *     "label": "application_your-business_people-sub-action-formDateOfBirth",
      *     "create_empty_option": false,
-     *     "render_delimiters": "d m y"
+     *     "render_delimiters": true
      * })
      * @Form\Type("DateSelect")
      * @Form\Filter({"name": "DateSelectNullifier"})

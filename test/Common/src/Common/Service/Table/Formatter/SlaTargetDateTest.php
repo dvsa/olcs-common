@@ -13,7 +13,7 @@ use Common\Service\Table\Formatter\Date;
 use Common\Service\Table\Formatter\SlaTargetDate;
 use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 use Laminas\Http\Request;
-use Laminas\Mvc\Router\Http\TreeRouteStack;
+use Laminas\Router\Http\TreeRouteStack;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
@@ -38,7 +38,7 @@ class SlaTargetDateTest extends TestCase
         $this->request = m::mock(Request::class);
         $this->sut = new SlaTargetDate($this->router, $this->request, $this->urlHelper, new Date());
 
-        $this->mockRouteMatch = m::mock('\Laminas\Mvc\Router\RouteMatch');
+        $this->mockRouteMatch = m::mock('\Laminas\Router\RouteMatch');
 
         $this->router
             ->shouldReceive('match')

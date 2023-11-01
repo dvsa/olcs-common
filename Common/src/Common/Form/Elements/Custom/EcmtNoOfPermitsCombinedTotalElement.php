@@ -12,7 +12,7 @@ class EcmtNoOfPermitsCombinedTotalElement extends Hidden implements InputProvide
     /**
      * {@inheritdoc}
      */
-    public function getInputSpecification()
+    public function getInputSpecification(): array
     {
         return [
             'name' => $this->getName(),

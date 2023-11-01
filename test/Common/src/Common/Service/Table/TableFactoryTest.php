@@ -10,7 +10,7 @@ use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 use Laminas\ServiceManager\ServiceManager;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 class TableFactoryTest extends MockeryTestCase
 {

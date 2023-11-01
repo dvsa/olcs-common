@@ -91,7 +91,7 @@ class FormSelect extends AbstractHelper
      *
      * @return string
      */
-    public function render(ElementInterface $element)
+    public function render(ElementInterface $element): string
     {
         if (!($element instanceof Select) && !($element instanceof \Laminas\Form\Element\Radio)) {
             return '';

@@ -6,7 +6,7 @@ use Common\Data\Object\Search\People;
 use Common\RefData;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Mockery as m;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * @covers \Common\Data\Object\Search\SearchAbstract

@@ -346,7 +346,7 @@ class SectionConfig
                     'may_terminate' => true,
                     'child_routes' => [
                         'action' => [
-                            'type' => \Laminas\Mvc\Router\Http\Segment::class,
+                            'type' => \Laminas\Router\Http\Segment::class,
                             'options' => [
                                 'route' => ':action[/:child_id][/]',
                             ],

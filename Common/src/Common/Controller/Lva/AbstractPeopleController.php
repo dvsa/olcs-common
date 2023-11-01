@@ -12,7 +12,7 @@ use Common\Service\Lva\VariationLvaService;
 use Common\Service\Script\ScriptFactory;
 use Dvsa\Olcs\Transfer\Command as TransferCmd;
 use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Shared logic between People controllers

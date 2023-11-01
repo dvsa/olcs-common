@@ -7,7 +7,7 @@ use Common\Service\Cqrs\Query\QuerySender;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Mockery as m;
 use Laminas\ServiceManager\ServiceLocatorInterface;
-use ZfcRbac\Role\RoleProviderInterface;
+use LmcRbacMvc\Role\RoleProviderInterface;
 
 /**
  * Class RoleProviderFactoryTest

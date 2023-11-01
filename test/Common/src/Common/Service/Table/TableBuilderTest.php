@@ -17,7 +17,7 @@ use Laminas\Mvc\I18n\Translator;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * @covers \Common\Service\Table\TableBuilder

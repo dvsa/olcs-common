@@ -5,7 +5,7 @@ namespace CommonTest\View\Helper;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\View\Helper\PageId;
-use Laminas\Mvc\Router\Http\RouteMatch;
+use Laminas\Router\Http\RouteMatch;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\View\HelperPluginManager;
 

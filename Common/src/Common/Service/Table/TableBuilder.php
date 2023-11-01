@@ -7,7 +7,7 @@ use Common\Service\Table\Exception\MissingFormatterException;
 use Common\Service\Table\Formatter\FormatterPluginManager;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\ServiceManager\ServiceLocatorInterface;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Table Builder

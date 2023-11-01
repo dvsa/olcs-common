@@ -9,7 +9,7 @@ class DateSelectMustBeBefore extends BaseDateSelect
     /**
      * {@inheritdoc}
      */
-    public function getInputSpecification()
+    public function getInputSpecification(): array
     {
         $inputSpecification = $this->callParentGetInputSpecification();
 

@@ -2,6 +2,7 @@
 
 namespace Common\FormService\Form\Lva\OperatingCentres;
 
+use Common\Form\Elements\Validators\TableRequiredValidator;
 use Common\FormService\Form\Lva\AbstractLvaFormService;
 use Common\RefData;
 use Common\Service\Helper\FormHelperService;
@@ -9,7 +10,7 @@ use Common\Service\Table\TableBuilder;
 use Common\Service\Table\TableFactory;
 use Laminas\Form\Form;
 use Laminas\Validator\Between;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * @see \CommonTest\FormService\Form\Lva\OperatingCentres\AbstractOperatingCentresTest
@@ -40,7 +41,6 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
         $table = $this->tableBuilder->prepareTable($this->mainTableConfigName, $params['operatingCentres'], $additionalParams);
 
         $this->formHelper->populateFormTable($form->get('table'), $table);
-
         $this->alterForm($form, $params);
 
         return $form;
@@ -58,7 +58,6 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
     {
         if ($form->has('table')) {
             $table = $form->get('table')->get('table')->getTable();
-
             if (!$params['canHaveSchedule41']) {
                 $table->removeAction('schedule41');
             }
@@ -81,9 +80,10 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
         // The validator compares the data against the 'rows' field value.
         // This is the reason why we use table->rows instead of table->table
         // which it was previously.
-        $this->formHelper
-            ->getValidator($form, 'table->rows', 'Common\Form\Elements\Validators\TableRequiredValidator')
-            ->setMessage('OperatingCentreNoOfOperatingCentres.required', 'required');
+
+      /*  $this->formHelper
+            ->getValidator($form, 'table->rows', TableRequiredValidator::class)
+            ->setMessage('OperatingCentreNoOfOperatingCentres.required', 'required');*/
 
         $this->alterFormForVehicleType($form, $params);
 
