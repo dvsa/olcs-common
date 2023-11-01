@@ -15,7 +15,7 @@ use Dvsa\Olcs\Transfer\Query\Application\FinancialHistory;
 use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\Form\Form;
 use Laminas\Form\FormInterface;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Financial History Controller

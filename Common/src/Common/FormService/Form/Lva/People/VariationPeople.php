@@ -4,7 +4,7 @@ namespace Common\FormService\Form\Lva\People;
 
 use Common\Form\Form;
 use Common\Service\Helper\FormHelperService;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Variation People

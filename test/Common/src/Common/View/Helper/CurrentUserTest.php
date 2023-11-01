@@ -7,7 +7,7 @@ use Common\View\Helper\CurrentUser;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 use Laminas\View\Renderer\RendererInterface;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * @see CurrentUser

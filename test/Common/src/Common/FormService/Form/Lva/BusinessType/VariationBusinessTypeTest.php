@@ -8,7 +8,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Lva\BusinessType\VariationBusinessType;
 use Common\FormService\FormServiceInterface;
 use Laminas\Form\Form;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Variation Business Type Form Test

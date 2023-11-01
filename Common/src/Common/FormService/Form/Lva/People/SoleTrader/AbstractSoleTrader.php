@@ -5,7 +5,7 @@ namespace Common\FormService\Form\Lva\People\SoleTrader;
 use Common\FormService\Form\Lva\AbstractLvaFormService;
 use Common\Service\Helper\FormHelperService;
 use Common\Service\Lva\PeopleLvaService;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Abstract Sole Trader

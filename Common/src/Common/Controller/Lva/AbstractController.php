@@ -14,7 +14,7 @@ use Laminas\Form\Form;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\Exception;
 use Laminas\Mvc\MvcEvent;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Lva Abstract Controller

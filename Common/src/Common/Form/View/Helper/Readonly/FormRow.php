@@ -81,7 +81,7 @@ class FormRow extends AbstractHelper
      *
      * @return string
      */
-    public function render(ElementInterface $element)
+    public function render(ElementInterface $element): string
     {
         /** @var \Common\Form\View\Helper\FormElement $defElmHlpr */
         $defElmHlpr = $this->getView()->plugin('FormElement');

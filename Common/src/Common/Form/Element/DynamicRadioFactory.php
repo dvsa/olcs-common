@@ -17,10 +17,8 @@ class DynamicRadioFactory implements FactoryInterface
         if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
             $container = $container->getServiceLocator();
         }
-        $instance = new DynamicRadio();
-        $instance->setServiceLocator($container->get('DataServiceManager'));
-
-        return $instance;
+        $dataServiceManager = $container->get('DataServiceManager');
+        return new DynamicRadio($dataServiceManager);
     }
 
     /**

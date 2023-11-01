@@ -116,7 +116,6 @@ class Address
      * @Form\Attributes({"id":"postcode", "required":false})
      * @Form\Validator({"name":"Laminas\Validator\NotEmpty","options":{"null"}})
      * @Form\Validator({"name":"Dvsa\Olcs\Transfer\Validators\Postcode"})
-     * @Flags({"priority": 1000})
      */
     public $postcode = null;
 
@@ -133,7 +132,6 @@ class Address
      *     "service_name": "Common\Service\Data\Country"
      * })
      * @Form\Type("DynamicSelect")
-     * @Flags({"priority": 2})
      */
     public $countryCode = null;
 }

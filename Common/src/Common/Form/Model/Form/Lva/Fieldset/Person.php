@@ -87,7 +87,7 @@ class Person
      * @Form\Options({
      *     "label": "dob",
      *     "create_empty_option": false,
-     *     "render_delimiters": "d m y",
+     *     "render_delimiters": true,
      *     "error-message": "person_birthDate-error",
      *     "fieldset-attributes": {"id":"dob_day"}
      * })

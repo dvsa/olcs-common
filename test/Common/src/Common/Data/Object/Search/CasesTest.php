@@ -7,7 +7,7 @@ use Common\RefData;
 use Common\Service\Helper\UrlHelperService;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Mockery as m;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Class CasesTest

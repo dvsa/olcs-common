@@ -3,7 +3,7 @@
 namespace Common\View\Helper;
 
 use Interop\Container\ContainerInterface;
-use Laminas\Mvc\Router\Http\RouteMatch;
+use Laminas\Router\Http\RouteMatch;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use RuntimeException;

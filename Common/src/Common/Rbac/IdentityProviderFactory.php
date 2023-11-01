@@ -6,7 +6,7 @@ use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use RuntimeException;
-use ZfcRbac\Identity\IdentityProviderInterface;
+use LmcRbacMvc\Identity\IdentityProviderInterface;
 
 /**
  * Identity Provider Factory

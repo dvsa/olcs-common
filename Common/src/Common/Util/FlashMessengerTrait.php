@@ -21,7 +21,7 @@ trait FlashMessengerTrait
     /**
      * returns an instance of the flash messenger plugin.
      *
-     * @return \Laminas\Mvc\Controller\Plugin\FlashMessenger
+     * @return \Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger
      */
     public function getFlashMessenger()
     {

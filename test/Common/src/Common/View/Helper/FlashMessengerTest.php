@@ -33,7 +33,7 @@ class FlashMessengerTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->mockPluginManager = m::mock('\Laminas\Mvc\Controller\Plugin\FlashMessenger');
+        $this->mockPluginManager = m::mock('\Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger');
         $this->flashMessengerHelperService = m::mock(FlashMessengerHelperService::class);
 
         $mockTranslator = m::mock('\Laminas\I18n\Translator\Translator');

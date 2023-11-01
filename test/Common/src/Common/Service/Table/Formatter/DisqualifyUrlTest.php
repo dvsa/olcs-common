@@ -5,7 +5,7 @@ namespace CommonTest\Service\Table\Formatter;
 use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Formatter\DisqualifyUrl;
 use Laminas\Http\Request;
-use Laminas\Mvc\Router\Http\TreeRouteStack;
+use Laminas\Router\Http\TreeRouteStack;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
@@ -27,7 +27,7 @@ class DisqualifyUrlTest extends MockeryTestCase
         $this->urlHelper = m::mock(UrlHelperService::class);
         $this->router = m::mock(TreeRouteStack::class);
         $this->request = m::mock(Request::class);
-        $this->mockRouteMatch = m::mock(\Laminas\Mvc\Router\RouteMatch::class);
+        $this->mockRouteMatch = m::mock(\Laminas\Router\RouteMatch::class);
         $this->sut = new DisqualifyUrl($this->urlHelper, $this->router, $this->request);
 
         $this->request->shouldReceive('getQuery')

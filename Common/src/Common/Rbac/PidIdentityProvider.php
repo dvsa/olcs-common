@@ -9,8 +9,8 @@ use Laminas\Http\Header\GenericHeader;
 use Laminas\Http\Request;
 use Laminas\Session\Container;
 use Olcs\Logging\Log\Logger;
-use ZfcRbac\Identity\IdentityInterface;
-use ZfcRbac\Identity\IdentityProviderInterface;
+use LmcRbacMvc\Identity\IdentityInterface;
+use LmcRbacMvc\Identity\IdentityProviderInterface;
 
 /**
  * Pid Identity Provider

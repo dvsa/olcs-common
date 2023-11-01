@@ -4,23 +4,18 @@ namespace Common\FormService;
 
 use Laminas\Mvc\Service\AbstractPluginManagerFactory;
 use Laminas\ServiceManager\Config;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Interop\Container\ContainerInterface;
 
 /**
  * Form Service Manager Factory
- *
- * @author Rob Caiger <rob@clocal.co.uk>
  */
 class FormServiceManagerFactory extends AbstractPluginManagerFactory
 {
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public const PLUGIN_MANAGER_CLASS = FormServiceManager::class;
+
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $config = $serviceLocator->get('Config');
-        $configObject = new Config($config['form_service_manager']);
-
-        $plugins = new FormServiceManager($configObject);
-        $plugins->setServiceLocator($serviceLocator);
-
-        return $plugins;
+        $config = $container->get('Config')['form_service_manager'] ?? [];
+        return new FormServiceManager($container, $config);
     }
 }

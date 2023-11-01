@@ -38,7 +38,7 @@ class FormRadio extends \Laminas\Form\View\Helper\FormRadio
         array $options,
         array $selectedOptions,
         array $attributes
-    ) {
+    ): string {
         $translator = $this->getTranslator();
         $escapeHtmlHelper = $this->getEscapeHtmlHelper();
         $labelHelper = $this->getLabelHelper();

@@ -18,7 +18,7 @@ use Laminas\Form\Form;
 use Laminas\Form\FormInterface;
 use Laminas\Http\Response;
 use Laminas\View\Model\ViewModel;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Safety Trait

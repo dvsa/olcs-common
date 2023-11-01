@@ -8,7 +8,7 @@ use Common\Service\Helper\UrlHelperService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use CommonTest\Bootstrap;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * @covers Common\FormService\Form\Lva\FinancialEvidence

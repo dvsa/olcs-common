@@ -15,7 +15,7 @@ use Interop\Container\ContainerInterface;
 use Laminas\Navigation\Navigation;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
-use ZfcRbac\Service\RoleService;
+use LmcRbacMvc\Service\RoleService;
 
 /**
  * Class SearchTypeTest

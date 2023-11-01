@@ -8,9 +8,9 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Mvc\MvcEvent;
 use Laminas\Navigation;
 use Laminas\ServiceManager\ServiceLocatorInterface;
-use ZfcRbac\Guard\GuardInterface;
-use ZfcRbac\Options\ModuleOptions;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Guard\GuardInterface;
+use LmcRbacMvc\Options\ModuleOptions;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * @covers \Common\Rbac\Navigation\IsAllowedListener
@@ -85,7 +85,7 @@ class IsAllowedListenerTest extends MockeryTestCase
             ->shouldReceive('getGuards')
             ->andReturn(
                 [
-                    'ZfcRbac\Guard\RoutePermissionsGuard' => $rules,
+                    'LmcRbacMvc\Guard\RoutePermissionsGuard' => $rules,
                 ]
             )
             ->getMock();

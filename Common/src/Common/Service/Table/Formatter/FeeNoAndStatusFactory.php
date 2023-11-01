@@ -20,7 +20,7 @@ class FeeNoAndStatusFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $feeStatusFormatter = $container->get(FeeStatus::class);
+        $feeStatusFormatter = $container->get(FormatterPluginManager::class)->get(FeeStatus::class);
         return new FeeNoAndStatus($feeStatusFormatter);
     }
 

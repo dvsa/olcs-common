@@ -6,7 +6,7 @@ use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Lva\CommunityLicences\LicenceCommunityLicences as Sut;
 use Laminas\Form\Form;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Licence Community Licences Test

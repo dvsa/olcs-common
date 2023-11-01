@@ -17,7 +17,7 @@ class FormHelperServiceTest extends MockeryTestCase
 {
     /** @var FormHelperService */
     private $sut;
-    /** @var \ZfcRbac\Service\AuthorizationService | m\MockInterface */
+    /** @var \LmcRbacMvc\Service\AuthorizationService | m\MockInterface */
     private $mockAuthSrv;
     /** @var \Common\Form\Annotation\CustomAnnotationBuilder | m\MockInterface */
     private $mockBuilder;
@@ -35,7 +35,7 @@ class FormHelperServiceTest extends MockeryTestCase
     public function setUp(): void
     {
         $this->mockBuilder = m::mock(\Common\Form\Annotation\CustomAnnotationBuilder::class);
-        $this->mockAuthSrv = m::mock(\ZfcRbac\Service\AuthorizationService::class);
+        $this->mockAuthSrv = m::mock(\LmcRbacMvc\Service\AuthorizationService::class);
 
         $this->mockTransSrv = m::mock(\Common\Service\Helper\TranslationHelperService::class);
         $this->mockRenderer = m::mock(\Laminas\View\Renderer\RendererInterface::class);

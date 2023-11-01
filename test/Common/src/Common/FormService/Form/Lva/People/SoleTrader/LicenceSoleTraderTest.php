@@ -9,7 +9,7 @@ use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Lva\People\SoleTrader\LicenceSoleTrader as Sut;
 use Laminas\Form\Form;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Licence Sole Trader Test
@@ -43,9 +43,9 @@ class LicenceSoleTraderTest extends MockeryTestCase
             ->andReturn($this->mockLicenceService);
 
         $this->sut = new Sut(
-            $this->formHelper, 
-            $this->authService, 
-            $this->peopleLvaService, 
+            $this->formHelper,
+            $this->authService,
+            $this->peopleLvaService,
             $this->fsl
         );
     }

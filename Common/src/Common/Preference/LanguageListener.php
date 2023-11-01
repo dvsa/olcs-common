@@ -6,7 +6,7 @@ use Laminas\EventManager\EventManagerInterface;
 use Laminas\EventManager\ListenerAggregateInterface;
 use Laminas\EventManager\ListenerAggregateTrait;
 use Laminas\Mvc\MvcEvent;
-use Laminas\Mvc\Router;
+use Laminas\Router;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
 use Laminas\Http\Request as HttpRequest;
 use Laminas\Http\Response;

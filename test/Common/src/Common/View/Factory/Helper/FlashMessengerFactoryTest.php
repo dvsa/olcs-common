@@ -6,7 +6,7 @@ use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Test\MockeryTestCase;
 use Common\Test\MocksServicesTrait;
 use Common\View\Factory\Helper\FlashMessengerFactory;
-use Laminas\Mvc\Controller\Plugin\FlashMessenger;
+use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class FlashMessengerFactoryTest extends MockeryTestCase

@@ -17,7 +17,7 @@ final class CurrentUserFactory implements FactoryInterface
         if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
             $container = $container->getServiceLocator();
         }
-        return new CurrentUser($container->get('ZfcRbac\Service\AuthorizationService'));
+        return new CurrentUser($container->get('LmcRbacMvc\Service\AuthorizationService'));
     }
 
     /**

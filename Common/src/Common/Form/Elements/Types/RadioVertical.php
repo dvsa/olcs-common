@@ -9,7 +9,7 @@ use Laminas\Form\Fieldset;
  */
 class RadioVertical extends Fieldset
 {
-    public function getLabelAttributes()
+    public function getLabelAttributes(): array
     {
         // TODO: Implode attributes into string and return it instead of an array
         return parent::getLabelAttributes();

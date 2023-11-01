@@ -7,7 +7,7 @@ use Common\FormService\Form\Lva\PsvDiscs;
 use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Helper\UrlHelperService;
 use Laminas\Form\Form;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 use Mockery as m;
 
 /**

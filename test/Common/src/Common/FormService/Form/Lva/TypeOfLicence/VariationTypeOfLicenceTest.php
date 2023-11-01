@@ -12,7 +12,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Form\Element;
 use Laminas\Form\Fieldset;
 use Laminas\Form\Form;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Variation Type Of Licence Test

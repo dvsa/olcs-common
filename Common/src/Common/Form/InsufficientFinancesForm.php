@@ -12,7 +12,7 @@ class InsufficientFinancesForm extends Form
      *
      * @return bool
      */
-    public function isValid()
+    public function isValid(): bool
     {
         $yesContentInput = $this->getInputFilter()->get('insufficientFinances')->get('yesContent');
 

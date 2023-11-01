@@ -4,7 +4,7 @@ namespace CommonTest\FormService\Form\Lva;
 
 use Common\FormService\Form\Lva\Undertakings;
 use Laminas\Form\Form;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 use Mockery as m;
 
 /**

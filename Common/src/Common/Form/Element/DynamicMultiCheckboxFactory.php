@@ -5,7 +5,6 @@ namespace Common\Form\Element;
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
-use Common\Service\Data\RefData as RefDataService;
 
 /**
  * Class DynamicMultiCheckboxFactory
@@ -18,10 +17,8 @@ class DynamicMultiCheckboxFactory implements FactoryInterface
         if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
             $container = $container->getServiceLocator();
         }
-        $instance = new DynamicMultiCheckbox();
-        $instance->setServiceLocator($container->get('DataServiceManager'));
-
-        return $instance;
+        $dataServiceManager = $container->get('DataServiceManager');
+        return new DynamicMultiCheckbox($dataServiceManager);
     }
 
     /**

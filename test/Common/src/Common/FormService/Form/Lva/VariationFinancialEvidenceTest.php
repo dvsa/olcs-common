@@ -33,7 +33,7 @@ class VariationFinancialEvidenceTest extends MockeryTestCase
         $this->fsm = m::mock(\Common\FormService\FormServiceManager::class)->makePartial();
         $this->urlHelper = m::mock(UrlHelperService::class);
         $this->translator = m::mock(TranslationHelperService::class);
-        $this->authService = m::mock(\ZfcRbac\Service\AuthorizationService::class);
+        $this->authService = m::mock(\LmcRbacMvc\Service\AuthorizationService::class);
 
         $sm = Bootstrap::getServiceManager();
         $sm->setService('Helper\Url', $this->urlHelper);

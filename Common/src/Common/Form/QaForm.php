@@ -57,7 +57,7 @@ class QaForm extends BaseQaForm
      *
      * @return bool
      */
-    public function isValid()
+    public function isValid(): bool
     {
         $isValid = $this->callParentIsValid();
 

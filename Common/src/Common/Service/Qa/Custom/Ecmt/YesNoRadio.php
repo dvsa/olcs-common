@@ -42,7 +42,7 @@ class YesNoRadio extends Radio
     /**
      * {@inheritdoc}
      */
-    public function getInputSpecification()
+    public function getInputSpecification(): array
     {
         $spec = parent::getInputSpecification();
 

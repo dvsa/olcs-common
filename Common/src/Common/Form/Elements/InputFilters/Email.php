@@ -23,7 +23,7 @@ class Email extends LaminasElement implements InputProviderInterface
      *
      * @return array
      */
-    public function getInputSpecification()
+    public function getInputSpecification(): array
     {
         $specification = [
             'name' => $this->getName(),

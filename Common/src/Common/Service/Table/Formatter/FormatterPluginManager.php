@@ -2,9 +2,10 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Laminas\ServiceManager\AbstractPluginManager;
+use Laminas\Mvc\Controller\PluginManager;
+use Laminas\ServiceManager\Exception\InvalidServiceException;
 
-class FormatterPluginManager extends AbstractPluginManager
+class FormatterPluginManager extends PluginManager
 {
     protected $instanceOf = FormatterPluginManagerInterface::class;
 
@@ -14,8 +15,28 @@ class FormatterPluginManager extends AbstractPluginManager
     protected $factories = [
     ];
 
+    /**
+     * Validate the plugin.
+     * Throws exception if it is invalid.
+     *
+     * @param mixed $plugin
+     * @return void
+     * @throws InvalidServiceException If plugin is invalid.
+     */
+    public function validate($plugin)
+    {
+        if (!($plugin instanceof $this->instanceOf)) {
+            throw new InvalidServiceException(sprintf(
+                'Plugin of type %s is invalid; must implement %s',
+                (is_object($plugin) ? get_class($plugin) : gettype($plugin)),
+                $this->instanceOf
+            ));
+        }
+    }
+
+    // Since Laminas 3, we also typically add the `validate()` method as a proxy to the `validatePlugin()` for BC reasons.
     public function validatePlugin($plugin)
     {
-        // TODO: Implement validatePlugin() method for formatters if we need one?
+        $this->validate($plugin);
     }
 }

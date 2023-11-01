@@ -18,7 +18,7 @@ class MonthSelect extends LaminasElement\MonthSelect
 {
     use Traits\YearDelta;
 
-    public function getInputSpecification()
+    public function getInputSpecification(): array
     {
         return array(
             'name' => $this->getName(),

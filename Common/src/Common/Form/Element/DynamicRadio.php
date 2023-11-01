@@ -2,7 +2,7 @@
 
 namespace Common\Form\Element;
 
-use Laminas\Form\Element\Radio;
+use Common\Service\Data\PluginManager;
 
 /**
  * Class DynamicRadio
@@ -11,4 +11,13 @@ use Laminas\Form\Element\Radio;
 class DynamicRadio extends ErrorOverrideRadio
 {
     use DynamicTrait;
+
+    public function __construct(
+        PluginManager $dataServiceManager,
+        $name = null,
+        iterable $options = []
+    ) {
+        $this->dataServiceManager = $dataServiceManager;
+        parent::__construct($name, $options);
+    }
 }

@@ -71,10 +71,10 @@ use Common\Service\Helper\UrlHelperService;
 use Common\Service\Lva\PeopleLvaService;
 use Common\Service\Script\ScriptFactory;
 use Common\Service\Table\TableFactory;
-use Laminas\ServiceManager\AbstractFactoryInterface;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
+use Laminas\ServiceManager\Factory\AbstractFactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 class FormServiceAbstractFactory implements AbstractFactoryInterface
 {
@@ -210,7 +210,9 @@ class FormServiceAbstractFactory implements AbstractFactoryInterface
         // Continuation forms
         'continuations-checklist' => LicenceChecklist::class,
         'continuations-start' => Start::class,
-        'continuations-payment' => Payment::class
+        'continuations-payment' => Payment::class,
+        'Lva\Application' => Application::class,
+        'Lva\Licence' => Licence::class
     ];
 
 

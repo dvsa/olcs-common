@@ -10,7 +10,7 @@ class EcmtNoOfPermitsBothElement extends EcmtNoOfPermitsElement
     /**
      * {@inheritdoc}
      */
-    public function getInputSpecification()
+    public function getInputSpecification(): array
     {
         $inputSpecification = $this->callParentGetInputSpecification();
 

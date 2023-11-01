@@ -12,7 +12,7 @@ use Mockery as m;
 use CommonTest\Bootstrap;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Olcs\TestHelpers\Controller\Traits\ControllerTestTrait;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 class ChecklistControllerTest extends MockeryTestCase
 {

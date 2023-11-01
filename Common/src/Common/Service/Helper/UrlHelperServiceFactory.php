@@ -22,7 +22,7 @@ class UrlHelperServiceFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): UrlHelperService
     {
         return new UrlHelperService(
-            $container->get('viewhelpermanager'),
+            $container->get('ViewHelperManager'),
             $container->get('config')
         );
     }

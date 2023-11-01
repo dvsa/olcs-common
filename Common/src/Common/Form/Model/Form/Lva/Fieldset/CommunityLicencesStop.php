@@ -10,7 +10,6 @@ use Laminas\Form\Annotation as Form;
 class CommunityLicencesStop
 {
     /**
-     * @Form\Annotations({"id":""})
      * @Form\Options({
      *     "label": "internal.community_licence.form.change_status_to",
      *     "value_options": {

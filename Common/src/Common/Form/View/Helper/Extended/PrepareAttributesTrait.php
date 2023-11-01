@@ -26,7 +26,7 @@ trait PrepareAttributesTrait
      *
      * @return array
      */
-    protected function prepareAttributes(array $attributes)
+    protected function prepareAttributes(array $attributes): array
     {
         foreach ($attributes as $key => $value) {
             $attribute = strtolower($key);
@@ -59,6 +59,11 @@ trait PrepareAttributesTrait
             if (isset($this->booleanAttributes[$attribute])) {
                 $attributes[$attribute] = $this->prepareBooleanAttributeValue($attribute, $value);
             }
+
+            $stringValue = (string) $value;
+
+            // Use the string key and value
+            $attributes[$key] = $stringValue;
         }
 
         return $attributes;

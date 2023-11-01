@@ -18,7 +18,7 @@ use Laminas\Form\Form;
 use Laminas\Http\Request;
 use Common\Service\Helper\FormHelperService;
 use Common\RefData;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Variation Operating Centres Test

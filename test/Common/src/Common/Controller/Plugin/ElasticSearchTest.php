@@ -8,9 +8,9 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Olcs\TestHelpers\ControllerPluginManagerHelper;
 use CommonTest\Bootstrap;
 use Laminas\Mvc\MvcEvent;
-use Laminas\Mvc\Router\Http\Segment;
-use Laminas\Mvc\Router\RouteMatch;
-use Laminas\Mvc\Router\SimpleRouteStack;
+use Laminas\Router\Http\Segment;
+use Laminas\Router\RouteMatch;
+use Laminas\Router\SimpleRouteStack;
 use Laminas\View\Model\ViewModel;
 use Laminas\Navigation\Page\Mvc as NavigationPage;
 

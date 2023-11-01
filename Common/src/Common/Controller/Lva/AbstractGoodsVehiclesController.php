@@ -30,7 +30,7 @@ use Dvsa\Olcs\Transfer\Query\LicenceVehicle\LicenceVehicle;
 use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\Form\Element\Checkbox;
 use Laminas\Form\FormInterface;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Goods Vehicles

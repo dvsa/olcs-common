@@ -3,6 +3,7 @@
 namespace Common\Service;
 
 use Common\Form\Annotation\CustomAnnotationBuilder;
+use Laminas\Form\Annotation\AnnotationBuilder;
 use Interop\Container\ContainerInterface;
 use Laminas\Form\Factory;
 use Laminas\ServiceManager\FactoryInterface;
@@ -30,9 +31,13 @@ class FormAnnotationBuilderFactory implements FactoryInterface
             ->setPluginManager($container->get('FilterManager'));
 
         // create service and set custom form factory
-        $annotationBuilder = new CustomAnnotationBuilder();
+        $annotationBuilder = new AnnotationBuilder();
         $annotationBuilder->setFormFactory($formFactory);
-        return $annotationBuilder;
+
+        // Wrap the AnnotationBuilder instance with your custom wrapper
+        $customAnnotationBuilderWrapper = new CustomAnnotationBuilder($annotationBuilder);
+
+        return $customAnnotationBuilderWrapper;
     }
 
     /**

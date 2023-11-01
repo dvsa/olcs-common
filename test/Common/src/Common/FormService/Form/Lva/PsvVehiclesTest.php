@@ -4,7 +4,7 @@ namespace CommonTest\FormService\Form\Lva;
 
 use Mockery as m;
 use Common\FormService\Form\Lva\PsvVehicles;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 class PsvVehiclesTest extends AbstractLvaFormServiceTestCase
 {

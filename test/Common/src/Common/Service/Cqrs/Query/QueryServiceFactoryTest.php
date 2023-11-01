@@ -8,7 +8,7 @@ use Common\Service\Cqrs\Query\QueryServiceFactory;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Laminas\Http\Client\Adapter\Curl;
 use Laminas\Http\Request;
-use Laminas\Mvc\Router\RouteInterface;
+use Laminas\Router\RouteInterface;
 use Laminas\ServiceManager\ServiceManager;
 use Mockery as m;
 use Olcs\TestHelpers\MockeryTestCase;

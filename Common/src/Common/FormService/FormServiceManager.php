@@ -2,7 +2,7 @@
 
 namespace Common\FormService;
 
-use Laminas\ServiceManager\AbstractPluginManager;
+use Laminas\Mvc\Controller\PluginManager;
 use Laminas\ServiceManager\ConfigInterface;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
 use Laminas\ServiceManager\Exception\RuntimeException;
@@ -12,7 +12,7 @@ use Laminas\ServiceManager\Exception\RuntimeException;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormServiceManager extends AbstractPluginManager
+class FormServiceManager extends PluginManager
 {
     // The Abstract Factory in common, selfserve and internal validates the requested plugins
     public function validate($instance)
@@ -37,11 +37,8 @@ class FormServiceManager extends AbstractPluginManager
         }
     }
 
-    public function __construct(ConfigInterface $config = null)
+    public function __construct($container, array $config = null)
     {
-        if ($config) {
-            $config->configureServiceManager($this);
-        }
-        parent::__construct($config);
+        parent::__construct($container, $config);
     }
 }

@@ -9,7 +9,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Mockery as m;
 use Laminas\Http\Request;
 use Laminas\ServiceManager\ServiceLocatorInterface;
-use ZfcRbac\Identity\IdentityProviderInterface;
+use LmcRbacMvc\Identity\IdentityProviderInterface;
 
 /**
  * Class IdentityProviderFactoryTest

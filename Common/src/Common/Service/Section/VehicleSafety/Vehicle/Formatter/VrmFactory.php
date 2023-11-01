@@ -18,7 +18,7 @@ class VrmFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $container = method_exists($container, 'getServiceLocator') ? $container->getServiceLocator() : $container;
-        $viewHelperManager = $container->get('viewhelpermanager');
+        $viewHelperManager = $container->get('ViewHelperManager');
         return new Vrm($viewHelperManager);
     }
 

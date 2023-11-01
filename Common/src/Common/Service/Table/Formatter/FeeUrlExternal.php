@@ -5,7 +5,7 @@ namespace Common\Service\Table\Formatter;
 use Common\Service\Helper\UrlHelperService;
 use Common\Util\Escape;
 use Laminas\Http\Request;
-use Laminas\Mvc\Router\Http\TreeRouteStack;
+use Laminas\Router\Http\TreeRouteStack;
 
 /**
  * External fee url

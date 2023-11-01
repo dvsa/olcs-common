@@ -5,7 +5,7 @@ namespace CommonTest\Service\Table\Formatter;
 use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Formatter\CommunityLicenceStatus;
 use Laminas\Http\Request;
-use Laminas\Mvc\Router\Http\TreeRouteStack;
+use Laminas\Router\Http\TreeRouteStack;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
@@ -27,7 +27,7 @@ class CommunityLicenceStatusTest extends MockeryTestCase
         $this->request = m::mock(Request::class);
         $this->sut = new CommunityLicenceStatus($this->urlHelper, $this->router, $this->request);
 
-        $this->mockRouteMatch = m::mock('\Laminas\Mvc\Router\RouteMatch')
+        $this->mockRouteMatch = m::mock('\Laminas\Router\RouteMatch')
             ->shouldReceive('getMatchedRouteName')
             ->andReturn('route')
             ->getMock();

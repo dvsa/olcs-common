@@ -5,10 +5,10 @@ namespace Common\Rbac\Navigation;
 use Laminas\Navigation\Page\Mvc;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
-use ZfcRbac\Exception;
-use ZfcRbac\Guard\GuardInterface;
-use ZfcRbac\Service\AuthorizationServiceInterface;
-use ZfcRbac\Guard\ProtectionPolicyTrait;
+use LmcRbacMvc\Exception;
+use LmcRbacMvc\Guard\GuardInterface;
+use LmcRbacMvc\Service\AuthorizationServiceInterface;
+use LmcRbacMvc\Guard\ProtectionPolicyTrait;
 use Laminas\EventManager\Event;
 use Interop\Container\ContainerInterface;
 
@@ -31,7 +31,7 @@ class IsAllowedListener implements FactoryInterface
     protected $rules = [];
 
     /**
-     * @param \ZfcRbac\Service\AuthorizationServiceInterface $authorizationService
+     * @param \LmcRbacMvc\Service\AuthorizationServiceInterface $authorizationService
      */
     public function setAuthorizationService($authorizationService)
     {
@@ -39,7 +39,7 @@ class IsAllowedListener implements FactoryInterface
     }
 
     /**
-     * @return \ZfcRbac\Service\AuthorizationServiceInterface
+     * @return \LmcRbacMvc\Service\AuthorizationServiceInterface
      */
     public function getAuthorizationService()
     {
@@ -137,12 +137,12 @@ class IsAllowedListener implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): IsAllowedListener
     {
-        $this->setAuthorizationService($container->get('ZfcRbac\Service\AuthorizationService'));
-        $options = $container->get('ZfcRbac\Options\ModuleOptions');
+        $this->setAuthorizationService($container->get('LmcRbacMvc\Service\AuthorizationService'));
+        $options = $container->get('LmcRbacMvc\Options\ModuleOptions');
         $this->setProtectionPolicy($options->getProtectionPolicy());
         $guardsOptions = $options->getGuards();
-        if (isset($guardsOptions['ZfcRbac\Guard\RoutePermissionsGuard'])) {
-            $this->setRules($guardsOptions['ZfcRbac\Guard\RoutePermissionsGuard']);
+        if (isset($guardsOptions['LmcRbacMvc\Guard\RoutePermissionsGuard'])) {
+            $this->setRules($guardsOptions['LmcRbacMvc\Guard\RoutePermissionsGuard']);
         }
         return $this;
     }

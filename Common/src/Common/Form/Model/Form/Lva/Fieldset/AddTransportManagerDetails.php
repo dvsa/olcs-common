@@ -32,7 +32,7 @@ class AddTransportManagerDetails
      * @Form\Options({
      *     "label": "dob",
      *     "create_empty_option": false,
-     *     "render_delimiters": "d m y"
+     *     "render_delimiters": true
      * })
      * @Form\Type("DateSelect")
      * @Form\Filter({"name": "DateSelectNullifier"})
