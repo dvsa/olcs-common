@@ -6,19 +6,22 @@ use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
-class InternalLicencePermitReferenceFactory implements FactoryInterface
+class InternalLicenceConversationFactory implements FactoryInterface
 {
     /**
      * @param  ContainerInterface $container
      * @param  $requestedName
      * @param  array|null         $options
-     * @return InternalLicencePermitReference
+     * @return InternalLicenceConversationLink
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $container = method_exists($container, 'getServiceLocator') ? $container->getServiceLocator() : $container;
+        $formatterPluginManager = $container->get(FormatterPluginManager::class);
+        $refDataStatusFormatter = $formatterPluginManager->get(RefDataStatus::class);
+       // $dateTimeFormatter = $formatterPluginManager->get(DateTime::class);
         $urlHelper = $container->get('Helper\Url');
-        return new InternalLicencePermitReference($urlHelper);
+        return new InternalLicenceConversationLink($urlHelper,$refDataStatusFormatter);
     }
 
     /**
@@ -26,10 +29,10 @@ class InternalLicencePermitReferenceFactory implements FactoryInterface
      *
      * @param ServiceLocatorInterface $serviceLocator
      *
-     * @return InternalLicencePermitReference
+     * @return InternalLicenceConversationLink
      */
-    public function createService(ServiceLocatorInterface $serviceLocator): InternalLicencePermitReference
+    public function createService(ServiceLocatorInterface $serviceLocator): InternalLicenceConversationLink
     {
-        return $this->__invoke($serviceLocator, InternalLicencePermitReference::class);
+        return $this->__invoke($serviceLocator, InternalLicenceConversationLink::class);
     }
 }
