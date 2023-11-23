@@ -5,6 +5,16 @@ use Common\Auth\Adapter\CommandAdapterFactory;
 use Common\Auth\Service\AuthenticationServiceFactory;
 use Common\Auth\Service\AuthenticationServiceInterface;
 use Common\Controller\Continuation as ContinuationControllers;
+use Common\Controller\Factory\Continuation\ChecklistControllerFactory;
+use Common\Controller\Factory\Continuation\ConditionsUndertakingsControllerFactory;
+use Common\Controller\Factory\Continuation\DeclarationControllerFactory;
+use Common\Controller\Factory\Continuation\FinancesControllerFactory;
+use Common\Controller\Factory\Continuation\InsufficientFinancesControllerFactory;
+use Common\Controller\Factory\Continuation\OtherFinancesControllerFactory;
+use Common\Controller\Factory\Continuation\PaymentControllerFactory;
+use Common\Controller\Factory\Continuation\ReviewControllerFactory;
+use Common\Controller\Factory\Continuation\StartControllerFactory;
+use Common\Controller\Factory\Continuation\SuccessControllerFactory;
 use Common\Controller\Lva\ReviewController;
 use Common\Data\Mapper\Licence\Surrender as SurrenderMapper;
 use Common\Data\Mapper\Permits as PermitsMapper;
@@ -63,33 +73,31 @@ return [
             \Common\Controller\GuidesController::class => \Common\Controller\GuidesController::class,
         ],
         'factories' => [
-            ContinuationControllers\ChecklistController::class => \Common\Controller\Factory\Continuation\ChecklistControllerFactory::class,
-            ContinuationControllers\ConditionsUndertakingsController::class => \Common\Controller\Factory\Continuation\ChecklistControllerFactory::class,
-            ContinuationControllers\DeclarationController::class => \Common\Controller\Factory\Continuation\ChecklistControllerFactory::class,
-            ContinuationControllers\FinancesController::class => \Common\Controller\Factory\Continuation\ChecklistControllerFactory::class,
-            ContinuationControllers\InsufficientFinancesController::class => \Common\Controller\Factory\Continuation\ChecklistControllerFactory::class,
-            ContinuationControllers\OtherFinancesController::class => \Common\Controller\Factory\Continuation\ChecklistControllerFactory::class,
-            ContinuationControllers\PaymentController::class => \Common\Controller\Factory\Continuation\ChecklistControllerFactory::class,
-            ContinuationControllers\ReviewController::class => \Common\Controller\Factory\Continuation\ChecklistControllerFactory::class,
-            ContinuationControllers\StartController::class => \Common\Controller\Factory\Continuation\ChecklistControllerFactory::class,
-            ContinuationControllers\SuccessController::class => \Common\Controller\Factory\Continuation\ChecklistControllerFactory::class,
+            ContinuationControllers\ChecklistController::class => ChecklistControllerFactory::class,
+            ContinuationControllers\ConditionsUndertakingsController::class => ConditionsUndertakingsControllerFactory::class,
+            ContinuationControllers\DeclarationController::class => DeclarationControllerFactory::class,
+            ContinuationControllers\FinancesController::class => FinancesControllerFactory::class,
+            ContinuationControllers\InsufficientFinancesController::class => InsufficientFinancesControllerFactory::class,
+            ContinuationControllers\OtherFinancesController::class => OtherFinancesControllerFactory::class,
+            ContinuationControllers\PaymentController::class => PaymentControllerFactory::class,
+            ContinuationControllers\ReviewController::class => ReviewControllerFactory::class,
+            ContinuationControllers\StartController::class => StartControllerFactory::class,
+            ContinuationControllers\SuccessController::class => SuccessControllerFactory::class,
             ReviewController::class => Common\Controller\Lva\Factories\Controller\ReviewControllerFactory::class,
             \Common\Controller\Lva\Schedule41Controller::class => \Common\Controller\Lva\Factories\Controller\Schedule41ControllerFactory::class,
         ],
         'aliases' => [
             'Common\Controller\File' => \Common\Controller\FileController::class,
-            'ContinuationController/Start' => \Common\Controller\Continuation\StartController::class,
-            'ContinuationController/Checklist' => \Common\Controller\Continuation\ChecklistController::class,
-            'ContinuationController/ConditionsUndertakings' =>
-                \Common\Controller\Continuation\ConditionsUndertakingsController::class,
-            'ContinuationController/Finances' => \Common\Controller\Continuation\FinancesController::class,
-            'ContinuationController/OtherFinances' => \Common\Controller\Continuation\OtherFinancesController::class,
-            'ContinuationController/InsufficientFinances' =>
-                \Common\Controller\Continuation\InsufficientFinancesController::class,
-            'ContinuationController/Declaration' => \Common\Controller\Continuation\DeclarationController::class,
-            'ContinuationController/Payment' => \Common\Controller\Continuation\PaymentController::class,
-            'ContinuationController/Success' => \Common\Controller\Continuation\SuccessController::class,
-            'ContinuationController/Review' => \Common\Controller\Continuation\ReviewController::class,
+            'ContinuationController/Start' => ContinuationControllers\StartController::class,
+            'ContinuationController/Checklist' => ContinuationControllers\ChecklistController::class,
+            'ContinuationController/ConditionsUndertakings' => ContinuationControllers\ConditionsUndertakingsController::class,
+            'ContinuationController/Finances' => ContinuationControllers\FinancesController::class,
+            'ContinuationController/OtherFinances' => ContinuationControllers\OtherFinancesController::class,
+            'ContinuationController/InsufficientFinances' => ContinuationControllers\InsufficientFinancesController::class,
+            'ContinuationController/Declaration' => ContinuationControllers\DeclarationController::class,
+            'ContinuationController/Payment' => ContinuationControllers\PaymentController::class,
+            'ContinuationController/Success' => ContinuationControllers\SuccessController::class,
+            'ContinuationController/Review' => ContinuationControllers\ReviewController::class,
         ]
     ],
     'controller_plugins' => [
