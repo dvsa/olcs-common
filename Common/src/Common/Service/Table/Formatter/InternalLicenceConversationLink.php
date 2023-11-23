@@ -40,16 +40,38 @@ class InternalLicenceConversationLink implements FormatterPluginManagerInterface
      */
     public function format($row, $column = null)
     {
-
+     //   dd($row);
         $route = 'licence/conversation/view';
         $licence = $row['task']['licence']['id'];
         $params = [
             'licence' => $licence,
             'conversation' => $row['id']
         ];
-        $statusCSS = $row['userContextStatus'] == "NEW_MESSAGE" ? 'govuk-!-font-weight-bold' : '';
+        
+        $statusCSS = '';
+
+        switch($row['userContextStatus'])
+        {
+            case "NEW_MESSAGE":
+                $statusCSS = 'govuk-!-font-weight-bold';
+                $tagColor = 'govuk-tag--red';
+                break;
+            case "OPEN":
+                $tagColor = 'govuk-tag--blue';
+                break;
+            case "CLOSED":
+                $tagColor = 'govuk-tag--grey';
+                break;
+            default:
+                $tagColor = 'govuk-tag--green';
+                break;               
+        }
+
+
+
+
         $rows ='<a class="'.'govuk-body govuk-link govuk-!-padding-right-1 '. $statusCSS.'" href="%s">%s: %s</a>
-                <strong class="govuk-tag govuk-tag--red">
+                <strong class="govuk-tag '.$tagColor.'">
                     %s
                 </strong>
                 <br>';
