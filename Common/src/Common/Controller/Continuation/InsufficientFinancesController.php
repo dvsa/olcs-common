@@ -6,6 +6,7 @@ use Common\Category;
 use Common\Data\Mapper\Continuation\InsufficientFinances;
 use Common\Form\Form;
 use Common\FormService\FormServiceManager;
+use Common\Service\Helper\FileUploadHelperService;
 use Common\Service\Helper\FormHelperService;
 use Common\Service\Helper\GuidanceHelperService;
 use Common\Service\Helper\TranslationHelperService;
@@ -23,6 +24,7 @@ class InsufficientFinancesController extends AbstractContinuationController
 
     protected FormHelperService $formHelper;
     protected GuidanceHelperService $guidanceHelper;
+    protected FileUploadHelperService $uploadHelper;
 
     /**
      * @param NiTextTranslation $niTextTranslationUtil
@@ -36,8 +38,10 @@ class InsufficientFinancesController extends AbstractContinuationController
         FormServiceManager $formServiceManager,
         TranslationHelperService $translationHelper,
         FormHelperService $formHelper,
+        FileUploadHelperService $uploadHelper,
         GuidanceHelperService $guidanceHelper
     ) {
+        $this->uploadHelper = $uploadHelper;
         $this->formHelper = $formHelper;
         $this->guidanceHelper = $guidanceHelper;
         parent::__construct($niTextTranslationUtil, $authService, $formServiceManager, $translationHelper);
