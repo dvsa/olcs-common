@@ -26,7 +26,6 @@ class InternalLicenceConversationLink implements FormatterPluginManagerInterface
     {
         $this->urlHelper = $urlHelper;
         $this->refDataStatus = $refDataStatus;
-       // $this->dateTime = $dateTime;
     }
 
     /**
@@ -40,7 +39,6 @@ class InternalLicenceConversationLink implements FormatterPluginManagerInterface
      */
     public function format($row, $column = null)
     {
-     //   dd($row);
         $route = 'licence/conversation/view';
         $licence = $row['task']['licence']['id'];
         $params = [
@@ -67,9 +65,6 @@ class InternalLicenceConversationLink implements FormatterPluginManagerInterface
                 break;               
         }
 
-
-
-
         $rows ='<a class="'.'govuk-body govuk-link govuk-!-padding-right-1 '. $statusCSS.'" href="%s">%s: %s</a>
                 <strong class="govuk-tag '.$tagColor.'">
                     %s
@@ -91,11 +86,11 @@ class InternalLicenceConversationLink implements FormatterPluginManagerInterface
         return vsprintf(
             $rows,
             [
-                $this->urlHelper->fromRoute($route, $params), // route
-                $idMatrix, //id 
+                $this->urlHelper->fromRoute($route, $params), 
+                $idMatrix,  
                 $row["subject"],
-                str_replace('_',' ',$row['userContextStatus']), //status
-                $dtOutput // date time stamp
+                str_replace('_',' ',$row['userContextStatus']), 
+                $dtOutput
             ]
         );
     }
