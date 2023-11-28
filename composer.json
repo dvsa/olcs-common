@@ -10,7 +10,8 @@
             "type": "composer",
             "url": "https://nexus.olcs.dev-dvsacloud.uk/repository/Packagist-Proxy",
             "only": [
-                "olcs/olcs-logging"
+                "olcs/olcs-logging",
+                "olcs/olcs-utils"
             ]
         },
         {
@@ -31,7 +32,7 @@
         "olcs/olcs-devtools": "~4.206.0",
         "olcs/olcs-logging": "^5.0.0",
         "olcs/olcs-transfer": "~4.206.0",
-        "olcs/olcs-utils": "~4.206.0",
+        "olcs/olcs-utils": "^5.0.0",
         "phpstan/phpstan": "^0.12.100",
         "soflomo/purifier": "^1.0",
         "symfony/lock": "^5"
