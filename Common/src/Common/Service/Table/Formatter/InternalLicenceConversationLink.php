@@ -1,9 +1,7 @@
 <?php
 
 /**
- * Internal licence permit reference formatter
- *
- * @author Tonci Vidovic <tonci.vidovic@capgemini.com>
+ * Internal licence conversation link
  */
 
 namespace Common\Service\Table\Formatter;
@@ -12,7 +10,7 @@ use Common\Service\Helper\UrlHelperService;
 use Common\Util\Escape;
 
 /**
- * Internal licence permit reference formatter
+ * Internal licence conversation link
  */
 class InternalLicenceConversationLink implements FormatterPluginManagerInterface
 {
@@ -39,7 +37,7 @@ class InternalLicenceConversationLink implements FormatterPluginManagerInterface
      */
     public function format($row, $column = null)
     {
-        $route = 'licence/conversation/view';
+        $route = 'licence/conversation/index';
         $licence = $row['task']['licence']['id'];
         $params = [
             'licence' => $licence,
