@@ -312,6 +312,7 @@ return [
         CommunityLicenceStatus::class => CommunityLicenceStatusFactory::class,
         ConditionsUndertakingsType::class => ConditionsUndertakingsTypeFactory::class,
         ConstrainedCountriesList::class => ConstrainedCountriesListFactory::class,
+        ConversationMessage::class => ConversationMessageFactory::class,
         DashboardApplicationLink::class => DashboardApplicationLinkFactory::class,
         DashboardTmActionLink::class => DashboardTmActionLinkFactory::class,
         DataRetentionAssignedTo::class => DataRetentionAssignedToFactory::class,
