@@ -111,6 +111,8 @@ use Common\Service\Table\Formatter\CaseLinkFactory;
 use Common\Service\Table\Formatter\Comment;
 use Common\Service\Table\Formatter\CommunityLicenceStatusFactory;
 use Common\Service\Table\Formatter\ConditionsUndertakingsTypeFactory;
+use Common\Service\Table\Formatter\ConversationMessage;
+use Common\Service\Table\Formatter\ConversationMessageFactory;
 use Common\Service\Table\Formatter\ConstrainedCountriesListFactory;
 use Common\Service\Table\Formatter\DashboardApplicationLinkFactory;
 use Common\Service\Table\Formatter\DashboardTmActionLinkFactory;

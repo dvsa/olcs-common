@@ -5,6 +5,7 @@ namespace Common\Service\Table\Formatter;
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
+use Common\Service\Table\Formatter\ConversationMessage;
 
 class ConversationMessageFactory implements FactoryInterface
 {
@@ -19,6 +20,7 @@ class ConversationMessageFactory implements FactoryInterface
         $container = method_exists($container, 'getServiceLocator') ? $container->getServiceLocator() : $container;
         $formatterPluginManager = $container->get(FormatterPluginManager::class);
         $refDataStatusFormatter = $formatterPluginManager->get(RefDataStatus::class);
+        $urlHelper = $container->get('Helper\Url');
         return new ConversationMessage($refDataStatusFormatter);
     }
 

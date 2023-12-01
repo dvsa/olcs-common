@@ -27,6 +27,7 @@ class ConversationMessage implements FormatterPluginManagerInterface
      */
     public function format($row, $column = null)
     {
+    
        $html = '<div class="govuk-!-margin-bottom-6">
                     <div class="govuk-summary-card">
                         <div class="govuk-summary-card__title-wrapper">
