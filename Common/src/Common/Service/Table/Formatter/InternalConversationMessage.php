@@ -28,7 +28,7 @@ class InternalConversationMessage implements FormatterPluginManagerInterface
      */
     public function format($row, $column = null)
     {
-        $rows ='';
+        $rows ='_message-placeholder_';
         
         return $rows;
     }
