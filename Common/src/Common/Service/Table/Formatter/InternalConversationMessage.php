@@ -28,10 +28,7 @@ class InternalConversationMessage implements FormatterPluginManagerInterface
      */
     public function format($row, $column = null)
     {
-        $rows ='<strong>
-                    Test
-                </strong>
-                <br>';
+        $rows ='';
         
         return $rows;
     }

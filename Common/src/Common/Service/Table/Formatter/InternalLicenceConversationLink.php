@@ -37,7 +37,7 @@ class InternalLicenceConversationLink implements FormatterPluginManagerInterface
      */
     public function format($row, $column = null)
     {
-        $route = 'licence/conversation/view';
+        $route = 'licence/conversation/index';
         $licence = $row['task']['licence']['id'];
         $params = [
             'licence' => $licence,
