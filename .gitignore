@@ -7,7 +7,7 @@ nbproject
 .idea
 .project
 .settings
-/vendor
+vendor
 test/coverage-report
 config/autoload/local.php
 .sublime-project
@@ -22,3 +22,11 @@ test/coverage/
 composer.lock
 Common/config/language/key-analysis/reports
 Common/config/language/import/translationKeyImport.sql
+.phpunit.result.cache
+
+# Non-dist files for the static analysis.
+# This allows developers to set a different (more strict) static analysis locally.
+phpcs.xml
+phpstan.neon
+phpunit.xml
+psalm.xml
