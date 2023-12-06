@@ -11,13 +11,10 @@ use Hamcrest\Core\IsEqual;
 use Mockery as m;
 use CommonTest\Bootstrap;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Olcs\TestHelpers\Controller\Traits\ControllerTestTrait;
 use ZfcRbac\Service\AuthorizationService;
 
 class ChecklistControllerTest extends MockeryTestCase
 {
-    use ControllerTestTrait;
-
     protected function getServiceManager()
     {
         return Bootstrap::getServiceManager();
