@@ -2,7 +2,6 @@
 
 namespace CommonTest\Form\Model\Form;
 
-use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
 
 /**
  * Class ConfirmationTest

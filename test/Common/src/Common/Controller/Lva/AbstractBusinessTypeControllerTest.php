@@ -1,8 +1,10 @@
 <?php
 
-namespace CommonTest\Controller\Lva;
+namespace CommonTest\Common\Controller\Lva;
 
+use CommonTest\Common\Controller\Lva\AbstractLvaControllerTestCase;
 use Mockery as m;
+use Common\Controller\Lva\AbstractBusinessTypeController;
 
 /**
  * Test Abstract Business Type Controller
@@ -15,7 +17,7 @@ class AbstractBusinessTypeControllerTest extends AbstractLvaControllerTestCase
     {
         parent::setUp();
 
-        $this->mockController('\Common\Controller\Lva\AbstractBusinessTypeController');
+        $this->mockController(AbstractBusinessTypeController::class);
     }
 
     public function testGetIndexAction()

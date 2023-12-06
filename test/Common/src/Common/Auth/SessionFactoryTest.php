@@ -1,13 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace CommonTest\Auth\Adapter;
+namespace CommonTest\Common\Auth;
 
 use Common\Auth\SessionFactory;
+use Common\Service\Cqrs\Command\CommandSender;
+use Common\Test\MocksServicesTrait;
 use Laminas\Authentication\Storage\Session;
+use Laminas\ServiceManager\ServiceManager;
 use Mockery as m;
-use Olcs\TestHelpers\MockeryTestCase;
-use Olcs\TestHelpers\Service\MocksServicesTrait;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 class SessionFactoryTest extends MockeryTestCase
 {
@@ -110,5 +112,10 @@ class SessionFactoryTest extends MockeryTestCase
     protected function config(array $config = [])
     {
         $this->serviceManager->setService('config', $config);
+    }
+
+    protected function setUpDefaultServices(ServiceManager $serviceManager)
+    {
+        $this->serviceManager->setService('CommandSender', m::mock(CommandSender::class));
     }
 }

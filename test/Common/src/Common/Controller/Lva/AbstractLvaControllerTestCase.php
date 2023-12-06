@@ -1,10 +1,9 @@
 <?php
 
-namespace CommonTest\Controller\Lva;
+namespace CommonTest\Common\Controller\Lva;
 
 use CommonTest\Bootstrap;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Olcs\TestHelpers\Controller\Traits\ControllerTestTrait;
 
 /**
  * Helper functions for testing LVA controllers
@@ -13,8 +12,6 @@ use Olcs\TestHelpers\Controller\Traits\ControllerTestTrait;
  */
 abstract class AbstractLvaControllerTestCase extends MockeryTestCase
 {
-    use ControllerTestTrait;
-
     protected function getServiceManager()
     {
         return Bootstrap::getServiceManager();

@@ -1,6 +1,8 @@
 <?php
 
-namespace CommonTest\Data\Object\Search;
+namespace CommonTest\Common\Data\Object\Search;
+
+use Common\Data\Object\Search\BusReg;
 
 /**
  * Class BusRegTest
@@ -8,5 +10,5 @@ namespace CommonTest\Data\Object\Search;
  */
 class BusRegTest extends SearchAbstractTest
 {
-    protected $class = 'Common\Data\Object\Search\BusReg';
+    protected $class = BusReg::class;
 }

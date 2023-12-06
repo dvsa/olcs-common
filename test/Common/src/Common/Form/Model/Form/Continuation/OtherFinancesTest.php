@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Form\Model\Form\Continuation;
+namespace CommonTest\Common\Form\Model\Form\Continuation;
 
 use Dvsa\Olcs\Transfer\Validators\Money;
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;

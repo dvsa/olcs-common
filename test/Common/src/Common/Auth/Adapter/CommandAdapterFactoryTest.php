@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace CommonTest\Auth\Adapter;
+namespace CommonTest\Common\Auth\Adapter;
 
 use Common\Auth\Adapter\CommandAdapter;
 use Common\Auth\Adapter\CommandAdapterFactory;
 use Common\Service\Cqrs\Command\CommandSender;
+use Common\Test\MocksServicesTrait;
 use Laminas\ServiceManager\ServiceManager;
-use Olcs\TestHelpers\MockeryTestCase;
-use Olcs\TestHelpers\Service\MocksServicesTrait;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 class CommandAdapterFactoryTest extends MockeryTestCase
 {

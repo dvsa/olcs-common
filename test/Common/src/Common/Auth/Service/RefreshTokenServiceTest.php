@@ -1,18 +1,18 @@
 <?php
 declare(strict_types=1);
 
-namespace CommonTest\Auth\Service;
+namespace CommonTest\Common\Auth\Service;
 
 use Common\Auth\Service\RefreshTokenService;
 use Common\Auth\Service\RefreshTokenServiceFactory;
 use Common\Service\Cqrs\Command\CommandSender;
 use Common\Service\Cqrs\Response;
+use Common\Test\MocksServicesTrait;
 use Exception;
 use Laminas\Authentication\Storage\Session;
 use Laminas\ServiceManager\ServiceManager;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
-use Olcs\TestHelpers\MockeryTestCase;
-use Olcs\TestHelpers\Service\MocksServicesTrait;
 use Mockery as m;
 
 /**

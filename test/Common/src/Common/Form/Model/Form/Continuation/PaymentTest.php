@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Form\Model\Form\Continuation;
+namespace CommonTest\Common\Form\Model\Form\Continuation;
 
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
 use Common\Form\Model\Form\Continuation\Payment;

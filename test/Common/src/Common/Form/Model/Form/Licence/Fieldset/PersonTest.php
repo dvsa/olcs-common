@@ -1,5 +1,5 @@
 <?php
-namespace CommonTest\Form\Model\Form\Licence\Fieldset;
+namespace CommonTest\Common\Form\Model\Form\Licence\Fieldset;
 
 use Common\Form\Elements\Validators\DateNotInFuture;
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;

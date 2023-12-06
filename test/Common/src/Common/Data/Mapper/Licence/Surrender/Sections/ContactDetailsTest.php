@@ -1,11 +1,11 @@
 <?php
 
 
-namespace CommonTest\Data\Mapper\Licence\Surrender\Sections;
+namespace CommonTest\Common\Data\Mapper\Licence\Surrender\Sections;
 
 use Common\Data\Mapper\Licence\Surrender\Sections\ContactDetails;
 use Common\Service\Helper\TranslationHelperService;
-use CommonTest\Data\Mapper\Licence\Surrender\ReviewContactDetailsMocksAndExpectationsTrait;
+use CommonTest\Common\Data\Mapper\Licence\Surrender\ReviewContactDetailsMocksAndExpectationsTrait;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 use Laminas\Mvc\Controller\Plugin\Url;

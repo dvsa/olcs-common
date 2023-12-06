@@ -6,7 +6,7 @@
  * @author Dan Eggleston <dan@stolenegg.com>
  */
 
-namespace CommonTest\Controller\Lva\Traits;
+namespace CommonTest\Common\Controller\Lva\Traits;
 
 use Common\RefData;
 use Common\Service\Helper\FlashMessengerHelperService;
@@ -14,7 +14,7 @@ use Common\Service\Helper\FormHelperService;
 use Common\Service\Helper\RestrictionHelperService;
 use Common\Service\Helper\StringHelperService;
 use CommonTest\Bootstrap;
-use CommonTest\Controller\Lva\Traits\Stubs\EnabledSectionTraitStub;
+use CommonTest\Common\Controller\Lva\Traits\Stubs\EnabledSectionTraitStub;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 

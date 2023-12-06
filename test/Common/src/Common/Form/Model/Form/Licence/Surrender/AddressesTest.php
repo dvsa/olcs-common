@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Form\Model\Form\Licence\Surrender;
+namespace CommonTest\Common\Form\Model\Form\Licence\Surrender;
 
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Form\Model\Form\Lva;
+namespace CommonTest\Common\Form\Model\Form\Lva;
 
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
 use Laminas\Validator\Digits;

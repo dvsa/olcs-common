@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Controller\Lva\Traits;
+namespace CommonTest\Common\Controller\Lva\Traits;
 
 use Common\Service\Helper\FlashMessengerHelperService;
 use Mockery as m;

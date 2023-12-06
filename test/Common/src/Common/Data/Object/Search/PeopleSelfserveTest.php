@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Data\Object\Search;
+namespace CommonTest\Common\Data\Object\Search;
 
 use Mockery as m;
 

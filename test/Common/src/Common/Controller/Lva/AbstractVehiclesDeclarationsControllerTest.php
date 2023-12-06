@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Controller\Lva;
+namespace CommonTest\Common\Controller\Lva;
 
 use Common\Controller\Lva\AbstractVehiclesDeclarationsController;
 use Common\FormService\FormServiceManager;
