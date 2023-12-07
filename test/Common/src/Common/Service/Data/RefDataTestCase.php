@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Service\Data;
+namespace CommonTest\Common\Service\Data;
 
 use Common\Preference\Language as LanguagePreference;
 use Common\Service\Data\RefDataServices;

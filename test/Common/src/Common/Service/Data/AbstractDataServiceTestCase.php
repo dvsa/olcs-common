@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Service\Data;
+namespace CommonTest\Common\Service\Data;
 
 use Common\Service\Cqrs\Command\CommandService;
 use Common\Service\Cqrs\Query\CachingQueryService as QueryService;
