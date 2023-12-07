@@ -4,7 +4,7 @@ namespace OlcsTest\Service\Data\Search;
 
 use Common\Service\Data\Search\SearchTypeManager;
 use Common\Service\Data\Search\SearchTypeManagerFactory;
-use CommonTest\Service\Data\Search\Asset\SearchType;
+use CommonTest\Common\Service\Data\Search\Asset\SearchType;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 

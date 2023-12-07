@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CommonTest\Service\Data\Search;
+namespace CommonTest\Common\Service\Data\Search;
 
 use Common\Data\Object\Search\Application;
 use Common\Data\Object\Search\Licence;

@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Rbac;
+namespace CommonTest\Common\Rbac;
 
 use Common\Rbac\PidIdentityProviderFactory;
 use Common\Service\Cqrs\Query\QuerySender;

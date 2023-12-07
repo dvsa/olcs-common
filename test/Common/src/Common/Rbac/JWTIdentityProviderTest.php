@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace CommonTest\Rbac;
+namespace CommonTest\Common\Rbac;
 
 use Common\Auth\Service\RefreshTokenService;
 use Common\Rbac\JWTIdentityProvider;
@@ -15,8 +15,8 @@ use Laminas\Http\Response as HttpResponse;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Session\Container;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
-use Olcs\TestHelpers\MockeryTestCase;
 
 class JWTIdentityProviderTest extends MockeryTestCase
 {
@@ -403,7 +403,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
         // Execute
         $this->sut->getIdentity();
     }
-    
+
     /**
      * @test
      */

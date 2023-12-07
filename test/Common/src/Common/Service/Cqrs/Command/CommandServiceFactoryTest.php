@@ -5,19 +5,19 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace CommonTest\Service\Cqrs\Command;
+namespace CommonTest\Common\Service\Cqrs\Command;
 
 use Common\Auth\Adapter\CommandAdapterFactory;
 use Common\Service\Cqrs\Command\CommandService;
 use Common\Service\Cqrs\Command\CommandServiceFactory;
 use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Test\MocksServicesTrait;
 use Laminas\Http\Client\Adapter\Curl;
 use Laminas\Http\Request;
 use Laminas\Mvc\Router\RouteInterface;
 use Laminas\ServiceManager\ServiceManager;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Olcs\TestHelpers\Service\MocksServicesTrait;
 use RuntimeException;
 
 /**

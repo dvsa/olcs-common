@@ -6,7 +6,7 @@ use Common\Exception\DataServiceException;
 use Common\Service\Data\Venue;
 use Common\Service\Data\Licence as LicenceDataService;
 use Mockery as m;
-use CommonTest\Service\Data\AbstractDataServiceTestCase;
+use CommonTest\Common\Service\Data\AbstractDataServiceTestCase;
 use Dvsa\Olcs\Transfer\Query\Venue\VenueList as Qry;
 
 /**
