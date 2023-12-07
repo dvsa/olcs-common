@@ -1,7 +1,7 @@
 <?php
 namespace CommonTest\Common\Form\Model\Form\Licence;
 
-use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
+use CommonTest\Common\Controller\Lva\AbstractFormValidationTestCase;
 use Laminas\Form\Element\Collection;
 
 class AddPersonTest extends AbstractFormValidationTestCase

@@ -2,7 +2,7 @@
 namespace CommonTest\Common\Form\Model\Form\Licence\Fieldset;
 
 use Common\Form\Elements\Validators\DateNotInFuture;
-use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
+use CommonTest\Common\Controller\Lva\AbstractFormValidationTestCase;
 
 class PersonTest extends AbstractFormValidationTestCase
 {

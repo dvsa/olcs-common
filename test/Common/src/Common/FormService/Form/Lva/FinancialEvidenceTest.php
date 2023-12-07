@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\FormService\Form\Lva;
+namespace CommonTest\Common\FormService\Form\Lva;
 
 use Common\FormService\Form\Lva\FinancialEvidence;
 use Common\Service\Helper\TranslationHelperService;

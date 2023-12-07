@@ -2,7 +2,7 @@
 
 namespace CommonTest\Common\Form\Model\Form\Licence\Surrender;
 
-use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
+use CommonTest\Common\Controller\Lva\AbstractFormValidationTestCase;
 
 class AddressesTest extends AbstractFormValidationTestCase
 {

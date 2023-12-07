@@ -9,7 +9,7 @@
 namespace CommonTest\Service\Printing;
 
 use Common\Service\Helper\FormHelperService;
-use Common\Service\Lva\PeopleLvaService;
+use CommonTest\Common\Controller\Lva\PeopleLvaService;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 use Laminas\Form\Element;

@@ -1,8 +1,8 @@
 <?php
 
-namespace CommonTest\Form\Model\Form;
+namespace CommonTest\Common\Form\Model\Form;
 
-
+use CommonTest\Common\Controller\Lva\AbstractFormValidationTestCase;
 /**
  * Class ConfirmationTest
  *

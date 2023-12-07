@@ -3,7 +3,7 @@
 namespace CommonTest\Common\Form\Model\Form\Lva;
 
 use Common\Form\Elements\Validators\SumContext;
-use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
+use CommonTest\Common\Controller\Lva\AbstractFormValidationTestCase;
 use Laminas\I18n\Validator\IsFloat;
 use Laminas\Validator\Between;
 use Laminas\Form\Element\Radio;

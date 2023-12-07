@@ -3,7 +3,7 @@
 namespace CommonTest\Common\Form\Model\Form\Lva;
 
 use Common\Validator\Date;
-use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
+use CommonTest\Common\Controller\Lva\AbstractFormValidationTestCase;
 use Common\Form\Elements\InputFilters\SingleCheckbox;
 
 /**

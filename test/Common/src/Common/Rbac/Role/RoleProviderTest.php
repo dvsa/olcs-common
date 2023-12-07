@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Rbac\Role;
+namespace CommonTest\Common\Rbac\Role;
 
 use Common\Rbac\Role\RoleProvider;
 use Common\Service\Cqrs\Query\QuerySender;

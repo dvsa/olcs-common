@@ -3,7 +3,7 @@
 namespace CommonTest\Common\Form\Model\Form\Continuation;
 
 use Dvsa\Olcs\Transfer\Validators\Money;
-use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
+use CommonTest\Common\Controller\Lva\AbstractFormValidationTestCase;
 use Laminas\Validator\GreaterThan;
 use Laminas\Validator\LessThan;
 

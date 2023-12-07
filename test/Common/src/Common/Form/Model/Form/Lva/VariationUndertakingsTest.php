@@ -2,7 +2,7 @@
 
 namespace CommonTest\Common\Form\Model\Form\Lva;
 
-use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
+use CommonTest\Common\Controller\Lva\AbstractFormValidationTestCase;
 use Common\Form\Elements\InputFilters\SingleCheckbox;
 use Laminas\Form\Element\Radio;
 use Laminas\Form\Element\Textarea;

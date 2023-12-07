@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\FormService\Form\Lva;
+namespace CommonTest\Common\FormService\Form\Lva;
 
 use Common\Form\Elements\InputFilters\SingleCheckbox;
 use Common\Form\Elements\Types\HtmlTranslated;

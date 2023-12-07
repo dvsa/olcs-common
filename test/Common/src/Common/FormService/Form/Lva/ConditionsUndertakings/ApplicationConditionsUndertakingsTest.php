@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\FormService\Form\Lva\ConditionsUndertakings;
+namespace CommonTest\Common\FormService\Form\Lva\ConditionsUndertakings;
 
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;

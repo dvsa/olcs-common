@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\FormService\Form\Lva\People;
+namespace CommonTest\Common\FormService\Form\Lva\People;
 
 use Common\Form\Model\Form\Licence\AddPerson;
 use Common\FormService\Form\Lva\People\LicenceAddPerson as Sut;

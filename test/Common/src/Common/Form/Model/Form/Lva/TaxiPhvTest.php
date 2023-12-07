@@ -2,7 +2,7 @@
 
 namespace CommonTest\Common\Form\Model\Form\Lva;
 
-use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
+use CommonTest\Common\Controller\Lva\AbstractFormValidationTestCase;
 use Laminas\Form\Element\Select;
 use Common\Form\Elements\Types\TrafficAreaSet;
 
