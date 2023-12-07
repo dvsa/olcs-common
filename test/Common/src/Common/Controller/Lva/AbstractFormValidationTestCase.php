@@ -13,6 +13,7 @@ use Laminas\Form\ElementInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Laminas\Validator;
+use CommonTest\Bootstrap;
 
 /**
  * Class AbstractFormValidationTest
@@ -70,7 +71,7 @@ abstract class AbstractFormValidationTestCase extends TestCase
         if ($this->serviceManager === null) {
             if (class_exists('\OlcsTest\Bootstrap')) {
                 $this->serviceManager = \OlcsTest\Bootstrap::getRealServiceManager();
-            } elseif (class_exists('\CommonTest\Bootstrap')) {
+            } elseif (class_exists(Bootstrap::class)) {
                 $this->serviceManager = \CommonTest\Bootstrap::getRealServiceManager();
             } else {
                 throw new \Exception('Cannot find Bootstap');
