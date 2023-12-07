@@ -2,38 +2,20 @@
     "name": "olcs/olcs-common",
     "description": "Common library for the OLCS Project",
     "type": "library",
-    "repositories": [
-        {
-            "packagist": false
-        },
-        {
-            "type": "composer",
-            "url": "https://nexus.olcs.dev-dvsacloud.uk/repository/Packagist-Proxy",
-            "only": [
-                "olcs/olcs-logging",
-                "olcs/olcs-utils"
-            ]
-        },
-        {
-            "url": "https://nexus.olcs.dev-dvsacloud.uk/repository/OLCS",
-            "type": "composer"
-        },
-        {
-            "url": "https://nexus.olcs.dev-dvsacloud.uk/repository/Packagist-Proxy",
-            "type": "composer"
-        }
-    ],
     "require": {
         "php": ">=7.4",
-        "olcs/olcs-laminas": "~2.5.0 || ~3.0.0"
+        "laminas/laminas-authentication": "^2.6",
+        "laminas/laminas-form": "^2.13",
+        "laminas/laminas-servicemanager": "^2.7"
     },
     "require-dev": {
-        "doctrine/annotations": "^1.14.2",
-        "olcs/olcs-devtools": "~4.206.0",
+        "johnkary/phpunit-speedtrap": "^4.0",
+        "mockery/mockery": "^1.6",
         "olcs/olcs-logging": "^5.0.0",
         "olcs/olcs-transfer": "~4.206.0",
         "olcs/olcs-utils": "^5.0.0",
         "phpstan/phpstan": "^0.12.100",
+        "phpunit/phpunit": "^9.6",
         "soflomo/purifier": "^1.0",
         "symfony/lock": "^5"
     },
@@ -57,27 +39,32 @@
         "secure-http": false,
         "sort-packages": true,
         "allow-plugins": {
-            "elendev/composer-push": true,
+            "bamarni/composer-bin-plugin": true,
+            "laminas/laminas-dependency-plugin": true,
             "phpstan/extension-installer": true,
-            "laminas/laminas-dependency-plugin": true
+            "elendev/composer-push": true
         }
     },
     "scripts": {
-        "ut": "vendor/bin/phpunit -c test/phpunit.xml --stop-on-failure",
-        "review": "vendor/bin/review",
-        "cs": "vendor/bin/phpcs --severity=1 --standard=vendor/dvsa/coding-standards/src/Profiles/DVSA/CS/ruleset.xml",
-        "coverage": "vendor/bin/phpunit -c test/phpunit.xml --coverage-html ./test/coverage/html",
-        "sonar": "vendor/bin/phpunit -c test/phpunit.xml --coverage-clover ./test/coverage/coverage-report.clover --log-junit ./test/coverage/log.junit",
-        "update-syms": "vendor/bin/composer-update-syms"
+        "bin": "echo 'bin not installed'",
+        "post-install-cmd": [
+          "@composer bin all install"
+        ],
+        "test": "phpunit",
+        "phpcs": "phpcs",
+        "psalm": "psalm",
+        "phpstan": "phpstan",
+        "all": [
+          "@test",
+          "@phpcs",
+          "@psalm",
+          "@phpstan"
+        ]
     },
     "extra": {
-        "nexus-push": {
-            "url": "https://nexus.olcs.dev-dvsacloud.uk/repository/olcs-common",
-            "ignore": [
-                "composer.phar",
-                "build.xml",
-                "composer-update.sh"
-            ]
-        }
+      "bamarni-bin": {
+        "bin-links": true,
+        "forward-command": true
+      }
     }
 }
