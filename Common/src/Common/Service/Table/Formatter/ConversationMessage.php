@@ -9,13 +9,6 @@ use Common\Util\Escape;
  */
 class ConversationMessage implements FormatterPluginManagerInterface
 {
-    private RefDataStatus $refDataStatus;
-
-    public function __construct(RefDataStatus $refDataStatus)
-    {
-        $this->refDataStatus = $refDataStatus;
-    }
-
     /**
      * status
      *
@@ -28,6 +21,7 @@ class ConversationMessage implements FormatterPluginManagerInterface
     public function format($row, $column = null)
     {
     
+        dd("hello");
        $html = '<div class="govuk-!-margin-bottom-6">
                     <div class="govuk-summary-card">
                         <div class="govuk-summary-card__title-wrapper">
@@ -42,14 +36,24 @@ class ConversationMessage implements FormatterPluginManagerInterface
         $dateTimeUnix = !isset($row["createdOn"]) ? "2023-11-09T15:53:45+0000" : $row["createdOn"];
 
         $latestMessageCreatedOn = \DateTimeImmutable::createFromFormat(\DateTimeInterface::ATOM, $dateTimeUnix);
-        $dtOutput = $latestMessageCreatedOn->format('l j F Y \a\t H:ia');            
+        $dTime = $latestMessageCreatedOn->format('l j F Y \a\t H:ia');            
+
+        if(!empty($row["createdBy"]["team"])) { 
+            $sender_name = "Case Worker"; 
+        } else if($person = $row["createdBy"]["contactDetails"]["person"]){
+            $sender_name = $person["forename"] . " " . $person["familyName"]; 
+        } else {
+            $sender_name = $row["createdBy"]["loginId"];
+        }
+
 
         return vsprintf(
             $html,
             [   
-                !isset($row['name']) ? "James Atkins" : $row['name'],
-                $dtOutput,
-                nl2br("Welcome To chat\r\nThis is my OLCS document", false)
+                $sender_name,
+                $dTime,
+                $row["messagingContent"]["text"]
+                
             ]
         );
     }
