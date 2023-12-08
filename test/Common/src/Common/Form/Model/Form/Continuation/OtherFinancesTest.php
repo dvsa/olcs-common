@@ -52,7 +52,8 @@ class OtherFinancesTest extends AbstractFormValidationTestCase
         $element = ['finances', 'yesContent', 'detail'];
 
         $this->assertFormElementIsRequired($element, true);
-        $this->assertFormElementAllowEmpty($element, false);
+
+        $this->assertFormElementAllowEmpty($element, true);
 
         $_POST = ['finances' => ['otherFinances' => ['yesNo' => 'Y']]];
         $this->assertFormElementAllowEmpty($element, false);
