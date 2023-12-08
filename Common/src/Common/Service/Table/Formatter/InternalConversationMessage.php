@@ -28,8 +28,26 @@ class InternalConversationMessage implements FormatterPluginManagerInterface
      */
     public function format($row, $column = null)
     {
-        $rows ='_message-placeholder_';
-        
-        return $rows;
+        if($row["createdBy"]["team"]) { // Somehow use getUserType()?
+            $sender_name = "Case Worker"; // Translation?
+        } else if($person = $row["createdBy"]["contactDetails"]["person"]){
+            $sender_name = $person["forename"] . " " . $person["familyName"]; // Somehow use Person->getFullName()?
+        } else {
+            $sender_name = $row["createdBy"]["loginId"];
+        }
+
+        $latestMessageCreatedOn = \DateTimeImmutable::createFromFormat(\DateTimeInterface::ATOM, $row["createdOn"]);
+        $date = $latestMessageCreatedOn->format('l j F Y \a\t H:ia');
+
+        $rowTemplate = '%s %s %s';
+
+        return vsprintf(
+            $rowTemplate,
+            [
+                $sender_name,
+                $date,
+                $row["messagingContent"]["text"]
+            ]
+        );
     }
 }
