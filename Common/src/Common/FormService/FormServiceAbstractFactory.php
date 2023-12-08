@@ -212,7 +212,8 @@ class FormServiceAbstractFactory implements AbstractFactoryInterface
         'continuations-start' => Start::class,
         'continuations-payment' => Payment::class,
         'Lva\Application' => Application::class,
-        'Lva\Licence' => Licence::class
+        'Lva\Licence' => Licence::class,
+        'Lva\Variation' => Variation::class,
     ];
 
 
