@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Service\Cqrs\Stub;
+namespace CommonTest\Common\Service\Cqrs\Stub;
 
 use Common\Service\Cqrs\CqrsTrait;
 

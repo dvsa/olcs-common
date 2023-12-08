@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Service\Cqrs\Command;
+namespace CommonTest\Common\Service\Cqrs\Command;
 
 use Common\Exception\ResourceConflictException;
 use Common\Service\Cqrs\Command\CommandService;

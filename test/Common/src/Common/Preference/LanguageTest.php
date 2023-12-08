@@ -53,7 +53,13 @@ class LanguageTest extends MockeryTestCase
     {
         $this->sut = new Language();
 
-        $this->sm = Bootstrap::getServiceManager();
+        $this->sm = m::mock('\Laminas\ServiceManager\ServiceManager')
+            ->makePartial()
+            ->setAllowOverride(true);
+
+        // inject a real string helper
+        $this->sm->setService('Helper\String', new \Common\Service\Helper\StringHelperService());
+
         $this->request = m::mock(Request::class);
         $this->response = m::mock(Response::class);
 

@@ -5,7 +5,7 @@ namespace CommonTest\Controller\Traits;
 use Common\Exception\File\InvalidMimeException;
 use Common\Util\FileContent;
 use CommonTest\Bootstrap;
-use CommonTest\Controller\Traits\Stubs\GenericUploadStub;
+use CommonTest\Common\Controller\Traits\Stubs\GenericUploadStub;
 use Dvsa\Olcs\Transfer\Command as TransferCmd;
 use Dvsa\Olcs\Transfer\Command\Document\DeleteDocument;
 use Dvsa\Olcs\Transfer\Command\Document\Upload;
@@ -26,7 +26,13 @@ class GenericUploadTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->sm = Bootstrap::getServiceManager();
+        $this->sm = m::mock('\Laminas\ServiceManager\ServiceManager')
+            ->makePartial()
+            ->setAllowOverride(true);
+
+        // inject a real string helper
+        $this->sm->setService('Helper\String', new \Common\Service\Helper\StringHelperService());
+
         $this->mockResp = m::mock(\Laminas\Http\Response::class);
 
         $this->sut = new GenericUploadStub();

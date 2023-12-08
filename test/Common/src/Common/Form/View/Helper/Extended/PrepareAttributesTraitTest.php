@@ -1,8 +1,8 @@
 <?php
 
-namespace CommonTest\Form\View\Helper\Extended;
+namespace CommonTest\Common\Form\View\Helper\Extended;
 
-use CommonTest\Form\View\Helper\Extended\Stub\PrepareAttributesTraitStub;
+use CommonTest\Common\Form\View\Helper\Extended\Stub\PrepareAttributesTraitStub;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**

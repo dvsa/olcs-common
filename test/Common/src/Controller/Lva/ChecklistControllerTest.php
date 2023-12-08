@@ -44,6 +44,26 @@ class ChecklistControllerTest extends MockeryTestCase
             );
     }
 
+    protected function mockController($className, array $constructorParams = [])
+    {
+        $this->request = m::mock('\Laminas\Http\Request')->makePartial();
+
+        // If constructor params are provided, pass them to the mock, otherwise mock without them
+        if (!empty($constructorParams)) {
+            $this->sut = m::mock($className, $constructorParams)
+                ->makePartial()
+                ->shouldAllowMockingProtectedMethods();
+        } else {
+            $this->sut = m::mock($className)
+                ->makePartial()
+                ->shouldAllowMockingProtectedMethods();
+        }
+
+        $this->sut
+            ->shouldReceive('getRequest')
+            ->andReturn($this->request);
+    }
+
     public function testUsersAction()
     {
         $continuationId = 99;

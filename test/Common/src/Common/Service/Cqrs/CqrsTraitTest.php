@@ -1,14 +1,13 @@
 <?php
 
-namespace CommonTest\Service\Cqrs;
+namespace CommonTest\Common\Service\Cqrs;
 
 use Common\Service\Cqrs\Response;
 use Common\Service\Helper\FlashMessengerHelperService;
-use CommonTest\Service\Cqrs\Stub\CqrsTraitStub;
+use CommonTest\Common\Service\Cqrs\Stub\CqrsTraitStub;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 use Laminas\Http\Response as HttpResponse;
-
 class CqrsTraitTest extends MockeryTestCase
 {
     /** @var  m\MockInterface */

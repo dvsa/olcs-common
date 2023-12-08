@@ -10,6 +10,9 @@ use Laminas\Form\Element\DateSelect;
 use Laminas\Form\Element\DateTimeSelect;
 use Laminas\Form\Element\MonthSelect;
 use Laminas\Form\ElementInterface;
+use Laminas\Mvc\I18n\Translator;
+use Laminas\Mvc\Service\ServiceManagerConfig;
+use Laminas\ServiceManager\ServiceManager;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Laminas\Validator;
@@ -69,14 +72,7 @@ abstract class AbstractFormValidationTestCase extends TestCase
     protected function getServiceManager()
     {
         if ($this->serviceManager === null) {
-            if (class_exists('\OlcsTest\Bootstrap')) {
-                $this->serviceManager = \OlcsTest\Bootstrap::getRealServiceManager();
-            } elseif (class_exists(Bootstrap::class)) {
-                $this->serviceManager = \CommonTest\Bootstrap::getRealServiceManager();
-            } else {
-                throw new \Exception('Cannot find Bootstap');
-            }
-
+            $this->serviceManager =  $this->getRealServiceManager();
             $this->serviceManager->setAllowOverride(true);
 
             $this->serviceManager->get('FormElementManager')->setFactory(
@@ -1279,5 +1275,74 @@ abstract class AbstractFormValidationTestCase extends TestCase
             $elementOrFieldSet = $elementOrFieldSet->get($name);
         }
         return $elementOrFieldSet;
+    }
+
+    /**
+     * Added this method for backwards compatibility
+     *
+     * @return \Laminas\ServiceManager\ServiceManager
+     */
+    public function getRealServiceManager()
+    {
+        // Grab the application config
+        $config = array(
+            'modules' => array(
+                'Common',
+            ),
+            'module_listener_options' => array(
+                'module_paths' => array(
+                    __DIR__ . '/../'
+                )
+            )
+        );
+        // When we fix our unit tests to mock all dependencies
+        // we need to put this line back in to speed up our tests
+        //return m::mock('\Laminas\ServiceManager\ServiceManager')->makePartial();
+
+        $serviceManager = new ServiceManager(new ServiceManagerConfig());
+        $serviceManager->setService('ApplicationConfig', $config);
+        $serviceManager->get('ModuleManager')->loadModules();
+        $serviceManager->setAllowOverride(true);
+
+        $config = $serviceManager->get('Config');
+        $config['service_api_mapping']['endpoints']['backend'] = 'http://some-fake-backend/';
+        $serviceManager->setService('Config', $config);
+
+        $translator = m::mock(\Laminas\I18n\Translator\Translator::class)->makePartial();
+        /** @var Translator $mvcTranslator */
+        $mvcTranslator = m::mock(Translator::class, [$translator])->makePartial();
+        $serviceManager->setService('MvcTranslator', $mvcTranslator);
+
+        /*
+         * NP 17th Nov 2014
+         *
+         * Although this is commented out I'd like to leave it in for now;
+         * it's a more elegant way to trap unmocked backend requests than
+         * setting a fake URL as above. Only trouble is at the moment $path
+         * always comes through as null... needs a bit of investigation
+         *
+        $closure = function ($method, $path, $params) {
+            $str = sprintf(
+                "Trapped unmocked backend request: %s %s",
+                $method, $path
+            );
+            throw new \Exception($str);
+        };
+
+        $serviceManager->setService(
+            'ServiceApiResolver',
+            m::mock()
+            ->shouldReceive('getClient')
+            ->andReturn(
+                m::mock('\Common\Util\RestClient[request]', [new \Laminas\Uri\Http])
+                ->shouldReceive('request')
+                ->andReturnUsing($closure)
+                ->getMock()
+            )
+            ->getMock()
+        );
+         */
+
+        return $serviceManager;
     }
 }

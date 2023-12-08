@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Service\Cqrs\Command;
+namespace CommonTest\Common\Service\Cqrs\Command;
 
 use Common\Service\Cqrs\Command\CommandSender;
 use CommonTest\Bootstrap;
@@ -27,7 +27,13 @@ class CommandSenderTest extends MockeryTestCase
         $this->commandService = m::mock();
         $this->annotationBuilder = m::mock();
 
-        $sm = Bootstrap::getServiceManager();
+        $sm = m::mock('\Laminas\ServiceManager\ServiceManager')
+            ->makePartial()
+            ->setAllowOverride(true);
+
+        // inject a real string helper
+        $sm->setService('Helper\String', new \Common\Service\Helper\StringHelperService());
+
         $sm->setService('CommandService', $this->commandService);
         $sm->setService('TransferAnnotationBuilder', $this->annotationBuilder);
 

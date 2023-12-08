@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Service\Cqrs\Query;
+namespace CommonTest\Common\Service\Cqrs\Query;
 
 use Common\Auth\Adapter\CommandAdapterFactory;
 use Common\Service\Cqrs\Query\QueryService;

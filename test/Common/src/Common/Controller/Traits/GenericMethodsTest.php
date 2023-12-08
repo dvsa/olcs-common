@@ -3,7 +3,7 @@
 namespace CommonTest\Controller\Traits;
 
 use Common\Controller\Traits\GenericMethods;
-use CommonTest\Controller\Traits\Stubs\GenericMethodsStub;
+use CommonTest\Common\Controller\Traits\Stubs\GenericMethodsStub;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 

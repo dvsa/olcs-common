@@ -1,5 +1,5 @@
 <?php
-namespace CommonTest\Util;
+namespace CommonTest\Common\Util;
 
 /**
  * Dummy translator, useful for unit testing

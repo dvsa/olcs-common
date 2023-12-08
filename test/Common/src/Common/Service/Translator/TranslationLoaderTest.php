@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Service\Translator;
+namespace CommonTest\Common\Service\Translator;
 
 use Common\Service\Cqrs\Query\CachingQueryService;
 use Common\Service\Translator\TranslationLoader;
@@ -8,6 +8,7 @@ use Dvsa\Olcs\Transfer\Service\CacheEncryption;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\I18n\Translator\TextDomain;
+use Olcs\Logging\Log\Logger;
 
 /**
  * TranslationLoaderTest
@@ -16,6 +17,10 @@ use Laminas\I18n\Translator\TextDomain;
  */
 class TranslationLoaderTest extends MockeryTestCase
 {
+    public function setUp(): void
+    {
+        self::setupLogger();
+    }
     /**
      * test loading translations from the cache
      */
@@ -97,5 +102,13 @@ class TranslationLoaderTest extends MockeryTestCase
 
         $loader = new TranslationLoader($mockCache);
         self::assertSame([], $loader->loadReplacements());
+    }
+    public static function setupLogger()
+    {
+        $logWriter = new \Laminas\Log\Writer\Mock();
+        $logger = new \Laminas\Log\Logger();
+        $logger->addWriter($logWriter);
+
+        Logger::setLogger($logger);
     }
 }

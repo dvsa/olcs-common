@@ -3,7 +3,7 @@
 namespace CommonTest\Util;
 
 use Common\Util\AbstractServiceFactory;
-use CommonTest\Util\Stub\ServiceWithFactoryStub;
+use CommonTest\Common\Util\Stub\ServiceWithFactoryStub;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Mockery as m;

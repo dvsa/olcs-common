@@ -9,6 +9,7 @@ namespace CommonTest\FormService;
 
 use CommonTest\Bootstrap;
 use Common\FormService\FormServiceManagerFactory;
+use Mockery as m;
 
 /**
  * Form Service Manager Factory Test
@@ -25,7 +26,13 @@ class FormServiceManagerFactoryTest extends \PHPUnit\Framework\TestCase
     {
         $this->sut = new FormServiceManagerFactory();
 
-        $this->sm = Bootstrap::getServiceManager();
+        $this->sm = m::mock('\Laminas\ServiceManager\ServiceManager')
+            ->makePartial()
+            ->setAllowOverride(true);
+
+        // inject a real string helper
+        $this->sm->setService('Helper\String', new \Common\Service\Helper\StringHelperService());
+
     }
 
     public function testCreateService()
