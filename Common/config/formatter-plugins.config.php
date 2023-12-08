@@ -54,8 +54,8 @@ use Common\Service\Table\Formatter\HideIfClosedRadio;
 use Common\Service\Table\Formatter\InspectionRequestId;
 use Common\Service\Table\Formatter\InterimOcCheckbox;
 use Common\Service\Table\Formatter\InterimVehiclesCheckbox;
-use Common\Service\Table\Formatter\InternalLicenceConversationFactory;
 use Common\Service\Table\Formatter\InternalLicenceConversationLink;
+use Common\Service\Table\Formatter\InternalLicenceConversationLinkFactory;
 use Common\Service\Table\Formatter\InternalLicenceNumberLink;
 use Common\Service\Table\Formatter\InternalLicencePermitReference;
 use Common\Service\Table\Formatter\IrhpPermitApplicationRefLink;
@@ -340,7 +340,7 @@ return [
         InspectionRequestId::class => InspectionRequestIdFactory::class,
         InternalLicenceNumberLink::class => InternalLicenceNumberLinkFactory::class,
         InternalLicencePermitReference::class => InternalLicencePermitReferenceFactory::class,
-        InternalLicenceConversationLink::class => InternalLicenceConversationFactory::class,
+        InternalLicenceConversationLink::class => InternalLicenceConversationLinkFactory::class,
         IrhpPermitApplicationRefLink::class => IrhpPermitApplicationRefLinkFactory::class,
         IrhpPermitNumberInternal::class => IrhpPermitNumberInternalFactory::class,
         IrhpPermitRangePermitNumber::class => IrhpPermitRangePermitNumberFactory::class,
