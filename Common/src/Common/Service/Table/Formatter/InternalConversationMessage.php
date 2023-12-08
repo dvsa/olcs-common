@@ -39,7 +39,17 @@ class InternalConversationMessage implements FormatterPluginManagerInterface
         $latestMessageCreatedOn = \DateTimeImmutable::createFromFormat(\DateTimeInterface::ATOM, $row["createdOn"]);
         $date = $latestMessageCreatedOn->format('l j F Y \a\t H:ia');
 
-        $rowTemplate = '%s %s %s';
+        $rowTemplate = '<div class="govuk-!-margin-bottom-6">
+                    <div class="govuk-summary-card">
+                        <div class="govuk-summary-card__title-wrapper">
+                            <h2 class="govuk-summary-card__title">%s</h2> <h2 class="govuk-summary-card__title govuk-summary-card__date">%s</h2>
+                        </div>
+                        <div class="govuk-summary-card__content">
+                            <p class="govuk-body">%s</p>
+                        </div>
+                    </div>
+                </div>
+';
 
         return vsprintf(
             $rowTemplate,

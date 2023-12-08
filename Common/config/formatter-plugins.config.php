@@ -56,8 +56,6 @@ use Common\Service\Table\Formatter\InterimOcCheckbox;
 use Common\Service\Table\Formatter\InterimVehiclesCheckbox;
 use Common\Service\Table\Formatter\InternalLicenceConversationLink;
 use Common\Service\Table\Formatter\InternalLicenceConversationLinkFactory;
-use Common\Service\Table\Formatter\InternalConversationMessage;
-use Common\Service\Table\Formatter\InternalConversationMessageFactory;
 use Common\Service\Table\Formatter\InternalLicenceNumberLink;
 use Common\Service\Table\Formatter\InternalLicencePermitReference;
 use Common\Service\Table\Formatter\IrhpPermitApplicationRefLink;
@@ -337,7 +335,6 @@ return [
         FeeUrl::class => FeeUrlFactory::class,
         FeeUrlExternal::class => FeeUrlExternalFactory::class,
         InspectionRequestId::class => InspectionRequestIdFactory::class,
-        InternalConversationMessage::class => InternalConversationMessageFactory::class,
         InternalLicenceNumberLink::class => InternalLicenceNumberLinkFactory::class,
         InternalLicencePermitReference::class => InternalLicencePermitReferenceFactory::class,
         InternalLicenceConversationLink::class => InternalLicenceConversationLinkFactory::class,
