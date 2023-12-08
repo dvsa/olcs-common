@@ -22,17 +22,7 @@ class SendMessageFormActions
      */
     public $submit = null;
     
-    
-    /**
-     * @Form\Name("file")
-     * @Form\Attributes({"id":"file"})
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\MultipleFileUpload")
-     * @Form\Options({
-     *     "label": "application_operating-centres_authorisation-sub-action.advertisements.file",
-     *     "label_attributes": {"class": "form-element__label"}
-     * })
-     */
-    // public $file = null;
+
     
 }
 
