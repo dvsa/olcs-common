@@ -1,5 +1,5 @@
 parameters:
   level: 1
   paths:
-    - Common/src
+    - Common
     - test
