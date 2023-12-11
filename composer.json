@@ -14,7 +14,9 @@
         "laminas/laminas-modulemanager": "^2.9",
         "laminas/laminas-mvc": "^2.7",
         "laminas/laminas-view": "^2.11",
-        "laminas/laminas-validator": "^2.11"
+        "laminas/laminas-validator": "^2.11",
+        "olcs/olcs-utils": "^4.206",
+        "dvsa/authentication-cognito": "^2.0"
     },
     "require-dev": {
         "bamarni/composer-bin-plugin": "^1.8",
@@ -30,7 +32,6 @@
         "mockery/mockery": "^1.6.7",
         "olcs/olcs-logging": "^5.0.0",
         "olcs/olcs-transfer": "^5.0.0",
-        "olcs/olcs-utils": "^5.0.0",
         "phpstan/phpstan": "^1.8",
         "phpunit/phpunit": "^9.6",
         "soflomo/purifier": "^1.0",
