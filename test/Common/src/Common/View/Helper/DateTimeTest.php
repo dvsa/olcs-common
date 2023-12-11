@@ -44,10 +44,8 @@ class DateTimeTest extends MockeryTestCase
     {
         return [
             [
-                //datetime
                 new \DateTime('2016-06-10 12:00', new \DateTimeZone('UTC')),
                 'd/m/Y H:i',
-                //expected
                 '10/06/2016 12:00'
             ],
             [
