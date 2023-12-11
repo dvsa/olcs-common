@@ -9,14 +9,13 @@
         "laminas/laminas-servicemanager": "^2.7"
     },
     "require-dev": {
-        "composer": "*",
         "dms/phpunit-arraysubset-asserts": "^0.5.0",
         "doctrine/annotations": "^1.14.2",
         "ezyang/htmlpurifier": "^4.17",
         "johnkary/phpunit-speedtrap": "^4.0",
-        "laminas/laminas-code": "^2.6",
+        "laminas/laminas-code": "^2.6||^3.0",
         "laminas/laminas-modulemanager": "^2.9",
-        "laminas/laminas-navigation": "<=2.13.0",
+        "laminas/laminas-navigation": "~2.13.0",
         "laminas/laminas-serializer": "^2.5",
         "lm-commons/lmc-rbac-mvc": "^2.6",
         "mikey179/vfsstream": "~v1.6.11",
