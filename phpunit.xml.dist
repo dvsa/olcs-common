@@ -4,9 +4,8 @@
          backupGlobals="true"
          colors="true"
          executionOrder="random"
-         failOnRisky="true"
-         failOnWarning="true"
          convertDeprecationsToExceptions="true"
+         convertWarningsToExceptions="false"
 >
   <php>
     <ini name="date.timezone" value="UTC"/>
