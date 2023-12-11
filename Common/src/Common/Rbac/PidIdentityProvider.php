@@ -81,6 +81,7 @@ class PidIdentityProvider implements IdentityProviderInterface
         if ($this->identity === null) {
             /** @var User|null $identity */
             $identity = $this->session->offsetGet('identity');
+
             //the session we have may be fine, but we may wish to update the user data
             if (!$this->shouldUpdateIdentity($identity)) {
                 $userId = $identity->getId();
