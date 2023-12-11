@@ -24,7 +24,7 @@
         "olcs/olcs-logging": "^5.0.0",
         "olcs/olcs-transfer": "~4.206.171",
         "olcs/olcs-utils": "^5.0.0",
-        "phpstan/phpstan": "^0.12.100",
+        "phpstan/phpstan": "^1.8",
         "phpunit/phpunit": "^9.6",
         "soflomo/purifier": "^1.0",
         "symfony/filesystem": "^5.4",
