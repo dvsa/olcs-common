@@ -16,22 +16,18 @@
         "laminas/laminas-view": "^2.11",
         "laminas/laminas-validator": "^2.11",
         "olcs/olcs-utils": "^5.0",
-        "dvsa/authentication-cognito": "^2.0",
-        "laminas/laminas-console": "^2.7",
         "laminas/laminas-stdlib": "^2.7",
-        "laminas/laminas-zendframework-bridge": "^1.6",
         "container-interop/container-interop": "^1.2",
-        "laminas/laminas-psr7bridge": "^0.2.2"
+        "laminas/laminas-filter": "^2.9",
+        "ezyang/htmlpurifier": "^4.17",
+        "laminas/laminas-code": "^3.4.1",
+        "laminas/laminas-navigation": "2.13.0"
     },
     "require-dev": {
         "bamarni/composer-bin-plugin": "^1.8",
         "dms/phpunit-arraysubset-asserts": "^0.5.0",
         "doctrine/annotations": "^1.14.2",
-        "ezyang/htmlpurifier": "^4.17",
         "johnkary/phpunit-speedtrap": "^4.0",
-        "laminas/laminas-code": "^3.4.1",
-        "laminas/laminas-navigation": "2.13.0",
-        "laminas/laminas-serializer": "^2.5",
         "lm-commons/lmc-rbac-mvc": "^2.6",
         "mikey179/vfsstream": "~v1.6.11",
         "mockery/mockery": "^1.6.7",
@@ -40,8 +36,9 @@
         "phpunit/phpunit": "^9.6",
         "soflomo/purifier": "^1.0",
         "symfony/filesystem": "^5.4",
-        "symfony/lock": "^5",
-        "laminas/laminas-inputfilter": "^2.10"
+        "laminas/laminas-inputfilter": "^2.10",
+        "laminas/laminas-serializer": "^2.10",
+        "symfony/lock": "^5.4"
     },
     "autoload": {
         "psr-0": {
