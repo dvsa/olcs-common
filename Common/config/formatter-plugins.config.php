@@ -112,7 +112,6 @@ use Common\Service\Table\Formatter\Comment;
 use Common\Service\Table\Formatter\CommunityLicenceStatusFactory;
 use Common\Service\Table\Formatter\ConditionsUndertakingsTypeFactory;
 use Common\Service\Table\Formatter\ConversationMessage;
-use Common\Service\Table\Formatter\ConversationMessageFactory;
 use Common\Service\Table\Formatter\ConstrainedCountriesListFactory;
 use Common\Service\Table\Formatter\DashboardApplicationLinkFactory;
 use Common\Service\Table\Formatter\DashboardTmActionLinkFactory;
@@ -314,7 +313,6 @@ return [
         CommunityLicenceStatus::class => CommunityLicenceStatusFactory::class,
         ConditionsUndertakingsType::class => ConditionsUndertakingsTypeFactory::class,
         ConstrainedCountriesList::class => ConstrainedCountriesListFactory::class,
-        ConversationMessage::class => ConversationMessageFactory::class,
         DashboardApplicationLink::class => DashboardApplicationLinkFactory::class,
         DashboardTmActionLink::class => DashboardTmActionLinkFactory::class,
         DataRetentionAssignedTo::class => DataRetentionAssignedToFactory::class,

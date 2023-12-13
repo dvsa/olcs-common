@@ -14,9 +14,6 @@ use Common\Util\Escape;
  */
 class InternalConversationMessage implements FormatterPluginManagerInterface
 {
-    private UrlHelperService $urlHelper;
-    private RefDataStatus $refDataStatus;
-
     /**
      * status
      *
@@ -28,10 +25,10 @@ class InternalConversationMessage implements FormatterPluginManagerInterface
      */
     public function format($row, $column = null)
     {
-        if($row["createdBy"]["team"]) { // Somehow use getUserType()?
-            $sender_name = "Case Worker"; // Translation?
+        if($row["createdBy"]["team"]) { 
+            $sender_name = "Case Worker"; 
         } else if($person = $row["createdBy"]["contactDetails"]["person"]){
-            $sender_name = $person["forename"] . " " . $person["familyName"]; // Somehow use Person->getFullName()?
+            $sender_name = $person["forename"] . " " . $person["familyName"];
         } else {
             $sender_name = $row["createdBy"]["loginId"];
         }
@@ -56,7 +53,7 @@ class InternalConversationMessage implements FormatterPluginManagerInterface
             [
                 $sender_name,
                 $date,
-                $row["messagingContent"]["text"]
+                nl2br($row["messagingContent"]["text"])
             ]
         );
     }
