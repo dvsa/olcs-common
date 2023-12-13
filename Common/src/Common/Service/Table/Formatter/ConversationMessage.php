@@ -51,7 +51,7 @@ class ConversationMessage implements FormatterPluginManagerInterface
             [   
                 $sender_name,
                 $dTime,
-                $row["messagingContent"]["text"]
+                nl2br($row["messagingContent"]["text"])
                 
             ]
         );
