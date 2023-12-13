@@ -22,7 +22,9 @@
         "ezyang/htmlpurifier": "^4.17",
         "laminas/laminas-code": "^3.4.1",
         "laminas/laminas-navigation": "2.13.0",
-        "laminas/laminas-inputfilter": "^2.10"
+        "laminas/laminas-inputfilter": "^2.10",
+        "olcs/olcs-transfer": "^5.0.0",
+        "olcs/olcs-logging": "^5.0.0"
     },
     "require-dev": {
         "bamarni/composer-bin-plugin": "^1.8",
@@ -32,13 +34,10 @@
         "lm-commons/lmc-rbac-mvc": "^2.6",
         "mikey179/vfsstream": "~v1.6.11",
         "mockery/mockery": "^1.6.7",
-        "olcs/olcs-logging": "^5.0.0",
-        "olcs/olcs-transfer": "^5.0.0",
         "phpunit/phpunit": "^9.6",
-        "soflomo/purifier": "^1.0",
         "symfony/filesystem": "^5.4",
-        "laminas/laminas-serializer": "^2.10",
-        "symfony/lock": "^5.4"
+        "symfony/lock": "^5.4",
+        "laminas/laminas-serializer": "^2.10"
     },
     "autoload": {
         "psr-0": {
@@ -56,7 +55,8 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
-        "allow-plugins": {
+      "sort-packages": true,
+      "allow-plugins": {
             "bamarni/composer-bin-plugin": true,
             "laminas/laminas-dependency-plugin": true
         }
