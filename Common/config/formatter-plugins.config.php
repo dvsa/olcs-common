@@ -111,7 +111,7 @@ use Common\Service\Table\Formatter\CaseLinkFactory;
 use Common\Service\Table\Formatter\Comment;
 use Common\Service\Table\Formatter\CommunityLicenceStatusFactory;
 use Common\Service\Table\Formatter\ConditionsUndertakingsTypeFactory;
-use Common\Service\Table\Formatter\ConversationMessage;
+use Common\Service\Table\Formatter\InternalConversationMessageFactory;
 use Common\Service\Table\Formatter\ConstrainedCountriesListFactory;
 use Common\Service\Table\Formatter\DashboardApplicationLinkFactory;
 use Common\Service\Table\Formatter\DashboardTmActionLinkFactory;
@@ -133,6 +133,7 @@ use Common\Service\Table\Formatter\FeeIdUrlFactory;
 use Common\Service\Table\Formatter\FeeUrlFactory;
 use Common\Service\Table\Formatter\FeeUrlExternalFactory;
 use Common\Service\Table\Formatter\InspectionRequestIdFactory;
+use Common\Service\Table\Formatter\InternalConversationMessage;
 use Common\Service\Table\Formatter\InternalLicenceNumberLinkFactory;
 use Common\Service\Table\Formatter\InternalLicencePermitReferenceFactory;
 use Common\Service\Table\Formatter\IrhpPermitApplicationRefLinkFactory;
@@ -339,6 +340,7 @@ return [
         InternalLicenceNumberLink::class => InternalLicenceNumberLinkFactory::class,
         InternalLicencePermitReference::class => InternalLicencePermitReferenceFactory::class,
         InternalLicenceConversationLink::class => InternalLicenceConversationLinkFactory::class,
+        InternalConversationMessage::class =>  InternalConversationMessageFactory::class,
         IrhpPermitApplicationRefLink::class => IrhpPermitApplicationRefLinkFactory::class,
         IrhpPermitNumberInternal::class => IrhpPermitNumberInternalFactory::class,
         IrhpPermitRangePermitNumber::class => IrhpPermitRangePermitNumberFactory::class,

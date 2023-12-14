@@ -5,10 +5,6 @@
  */
 
 namespace Common\Service\Table\Formatter;
-
-use Common\Service\Helper\UrlHelperService;
-use Common\Util\Escape;
-
 /**
  * Internal conversation message
  */
@@ -25,6 +21,7 @@ class InternalConversationMessage implements FormatterPluginManagerInterface
      */
     public function format($row, $column = null)
     {
+    
         if($row["createdBy"]["team"]) { 
             $sender_name = "Case Worker"; 
         } else if($person = $row["createdBy"]["contactDetails"]["person"]){
@@ -45,8 +42,7 @@ class InternalConversationMessage implements FormatterPluginManagerInterface
                             <p class="govuk-body">%s</p>
                         </div>
                     </div>
-                </div>
-';
+                </div>';
 
         return vsprintf(
             $rowTemplate,
