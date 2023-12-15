@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Common\Auth\Adapter;
 
-use Dvsa\Authentication\Cognito\Client;
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;

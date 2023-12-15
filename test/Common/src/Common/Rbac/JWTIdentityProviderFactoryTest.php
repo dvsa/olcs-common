@@ -1,18 +1,18 @@
 <?php
 declare(strict_types=1);
 
-namespace CommonTest\Rbac;
+namespace CommonTest\Common\Rbac;
 
 use Common\Auth\Service\RefreshTokenService;
 use Common\Auth\SessionFactory;
 use Common\Rbac\JWTIdentityProvider;
 use Common\Rbac\JWTIdentityProviderFactory;
 use Common\Service\Cqrs\Query\QuerySender;
+use Common\Test\MocksServicesTrait;
 use Dvsa\Olcs\Transfer\Service\CacheEncryption;
 use Laminas\Authentication\Storage\Session;
 use Mockery as m;
-use Olcs\TestHelpers\MockeryTestCase;
-use Olcs\TestHelpers\Service\MocksServicesTrait;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 class JWTIdentityProviderFactoryTest extends MockeryTestCase
 {

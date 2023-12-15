@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Form\View\Helper\Extended\Stub;
+namespace CommonTest\Common\Form\View\Helper\Extended\Stub;
 
 use Common\Form\View\Helper\Extended\PrepareAttributesTrait;
 use Laminas\Form\View\Helper\AbstractHelper;

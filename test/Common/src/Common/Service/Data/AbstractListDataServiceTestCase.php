@@ -1,9 +1,8 @@
 <?php
 
-namespace CommonTest\Service\Data;
+namespace CommonTest\Common\Service\Data;
 
 use Common\Service\Data\AbstractListDataServiceServices;
-use CommonTest\Service\Data\AbstractDataServiceTestCase;
 
 /**
  * AbstractListDataServiceTestCase

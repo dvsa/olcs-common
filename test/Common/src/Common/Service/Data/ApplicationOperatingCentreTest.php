@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Service\Data;
+namespace CommonTest\Common\Service\Data;
 
 use Common\Service\Data\Application as ApplicationDataService;
 use Common\Service\Data\ApplicationOperatingCentre;

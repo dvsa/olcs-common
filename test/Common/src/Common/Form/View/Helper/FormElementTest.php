@@ -6,7 +6,7 @@ use Common\Form\Elements\Validators\Messages\FormElementMessageFormatter;
 use Common\Form\View\Helper\FormElement;
 use Common\Form\View\Helper\FormElementErrors;
 use Common\Form\View\Helper\FormPlainText;
-use CommonTest\Util\DummyTranslator;
+use CommonTest\Common\Util\DummyTranslator;
 use Laminas\I18n\View\Helper\Translate;
 use Laminas\View\Helper\Url;
 use Laminas\View\Renderer\PhpRenderer;

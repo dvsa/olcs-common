@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Service\Data;
+namespace CommonTest\Common\Service\Data;
 
 use Common\Service\Data\SectionConfig;
 use Common\Util\LvaRoute;

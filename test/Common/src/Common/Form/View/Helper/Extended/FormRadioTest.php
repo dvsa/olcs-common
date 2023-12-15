@@ -4,8 +4,8 @@ namespace CommonTest\Form\View\Helper\Extended;
 
 use Common\Form\View\Helper\FormRow;
 use Common\View\Helper\UniqidGenerator;
-use CommonTest\Form\View\Helper\Extended\Stub\FormRadioChildContentStub;
-use CommonTest\Form\View\Helper\Extended\Stub\FormRadioStub;
+use CommonTest\Common\Form\View\Helper\Extended\Stub\FormRadioChildContentStub;
+use CommonTest\Common\Form\View\Helper\Extended\Stub\FormRadioStub;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Form\Element\MultiCheckbox;
 use Mockery as m;

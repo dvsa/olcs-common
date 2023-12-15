@@ -1,6 +1,14 @@
 <?php
 
-namespace CommonTest\Data\Object\Search;
+namespace CommonTest\Common\Data\Object\Search;
+
+use Common\Data\Object\Search\Aggregations\DateRange\PublishedDateFrom;
+use Common\Data\Object\Search\Aggregations\DateRange\PublishedDateTo;
+use Common\Data\Object\Search\Aggregations\Terms\LicenceType;
+use Common\Data\Object\Search\Aggregations\Terms\TrafficArea;
+use Common\Data\Object\Search\Aggregations\Terms\GoodsOrPsv;
+use Common\Data\Object\Search\Aggregations\Terms\PublicationType;
+use Common\Data\Object\Search\Aggregations\Terms\PublicationSection;
 
 /**
  * @covers \Common\Data\Object\Search\PublicationSelfserve
@@ -25,8 +33,8 @@ class PublicationSelfserveTest extends SearchAbstractTest
 
         $this->assertCount(2, $dateRanges);
 
-        $this->assertInstanceOf('Common\Data\Object\Search\Aggregations\DateRange\PublishedDateFrom', $dateRanges[0]);
-        $this->assertInstanceOf('Common\Data\Object\Search\Aggregations\DateRange\PublishedDateTo', $dateRanges[1]);
+        $this->assertInstanceOf(PublishedDateFrom::class, $dateRanges[0]);
+        $this->assertInstanceOf(PublishedDateTo::class, $dateRanges[1]);
     }
 
     public function testGetFilters()
@@ -35,10 +43,10 @@ class PublicationSelfserveTest extends SearchAbstractTest
 
         $this->assertCount(5, $filters);
 
-        $this->assertInstanceOf('Common\Data\Object\Search\Aggregations\Terms\LicenceType', $filters[0]);
-        $this->assertInstanceOf('Common\Data\Object\Search\Aggregations\Terms\TrafficArea', $filters[1]);
-        $this->assertInstanceOf('Common\Data\Object\Search\Aggregations\Terms\GoodsOrPsv', $filters[2]);
-        $this->assertInstanceOf('Common\Data\Object\Search\Aggregations\Terms\PublicationType', $filters[3]);
-        $this->assertInstanceOf('Common\Data\Object\Search\Aggregations\Terms\PublicationSection', $filters[4]);
+        $this->assertInstanceOf(LicenceType::class, $filters[0]);
+        $this->assertInstanceOf(TrafficArea::class, $filters[1]);
+        $this->assertInstanceOf(GoodsOrPsv::class, $filters[2]);
+        $this->assertInstanceOf(PublicationType::class, $filters[3]);
+        $this->assertInstanceOf(PublicationSection::class, $filters[4]);
     }
 }

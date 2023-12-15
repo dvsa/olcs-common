@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Controller\Lva\Stubs;
+namespace CommonTest\Common\Controller\Lva\Stubs;
 
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;

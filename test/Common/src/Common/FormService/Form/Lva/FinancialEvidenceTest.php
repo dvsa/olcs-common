@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\FormService\Form\Lva;
+namespace CommonTest\Common\FormService\Form\Lva;
 
 use Common\FormService\Form\Lva\FinancialEvidence;
 use Common\Service\Helper\TranslationHelperService;
@@ -35,7 +35,13 @@ class FinancialEvidenceTest extends MockeryTestCase
         $this->urlHelper = m::mock(UrlHelperService::class);
         $this->translator = m::mock(TranslationHelperService::class);
 
-        $sm = Bootstrap::getServiceManager();
+        $sm = m::mock('\Laminas\ServiceManager\ServiceManager')
+            ->makePartial()
+            ->setAllowOverride(true);
+
+        // inject a real string helper
+        $sm->setService('Helper\String', new \Common\Service\Helper\StringHelperService());
+
         $sm->setService('Helper\Url', $this->urlHelper);
         $sm->setService('Helper\Translation', $this->translator);
 

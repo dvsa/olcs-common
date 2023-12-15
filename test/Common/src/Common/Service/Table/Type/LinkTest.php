@@ -26,7 +26,13 @@ class LinkTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->sm = Bootstrap::getServiceManager();
+        $this->sm = m::mock('\Laminas\ServiceManager\ServiceManager')
+            ->makePartial()
+            ->setAllowOverride(true);
+
+        // inject a real string helper
+        $this->sm->setService('Helper\String', new \Common\Service\Helper\StringHelperService());
+
         $this->table = m::mock();
         $this->table->shouldReceive('getServiceLocator')
             ->andReturn($this->sm);

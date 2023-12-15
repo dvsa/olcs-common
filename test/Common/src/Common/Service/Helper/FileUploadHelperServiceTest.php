@@ -1,11 +1,12 @@
 <?php
 
-namespace CommonTest\Service\Helper;
+namespace CommonTest\Common\Service\Helper;
 
 use Common\Exception\File\InvalidMimeException;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Helper\FileUploadHelperService;
 use Mockery as m;
+use Olcs\Logging\Log\Logger;
 
 /**
  * @covers \Common\Service\Helper\FileUploadHelperService
@@ -32,6 +33,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         $this->sut->setRequest($this->mockRequest);
         $this->sut->setForm($this->mockForm);
         $this->sut->setServiceLocator($this->mockSm);
+        self::setupLogger();
     }
 
     public function testSetGetForm()
@@ -697,5 +699,14 @@ class FileUploadHelperServiceTest extends MockeryTestCase
             );
 
         static::assertEquals(false, $this->sut->process());
+    }
+
+    public static function setupLogger()
+    {
+        $logWriter = new \Laminas\Log\Writer\Mock();
+        $logger = new \Laminas\Log\Logger();
+        $logger->addWriter($logWriter);
+
+        Logger::setLogger($logger);
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace CommonTest\Controller\Lva;
+namespace CommonTest\Common\Controller\Lva;
 
 use CommonTest\Bootstrap;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Olcs\TestHelpers\Controller\Traits\ControllerTestTrait;
+use Mockery as m;
 
 /**
  * Helper functions for testing LVA controllers
@@ -13,10 +13,15 @@ use Olcs\TestHelpers\Controller\Traits\ControllerTestTrait;
  */
 abstract class AbstractLvaControllerTestCase extends MockeryTestCase
 {
-    use ControllerTestTrait;
-
     protected function getServiceManager()
     {
-        return Bootstrap::getServiceManager();
+        $sm = m::mock('\Laminas\ServiceManager\ServiceManager')
+            ->makePartial()
+            ->setAllowOverride(true);
+
+        // inject a real string helper
+        $sm->setService('Helper\String', new \Common\Service\Helper\StringHelperService());
+
+        return $sm;
     }
 }

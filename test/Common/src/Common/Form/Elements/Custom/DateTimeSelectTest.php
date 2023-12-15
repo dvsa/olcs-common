@@ -47,7 +47,7 @@ class DateTimeSelectTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('2016', $this->sut->getYearElement()->getValue());
         $this->assertSame('06', $this->sut->getMonthElement()->getValue());
         $this->assertSame('14', $this->sut->getDayElement()->getValue());
-        $this->assertSame('15', $this->sut->getHourElement()->getValue());
+        $this->assertSame('14', $this->sut->getHourElement()->getValue());
         $this->assertSame('33', $this->sut->getMinuteElement()->getValue());
         $this->assertSame('00', $this->sut->getSecondElement()->getValue());
     }
@@ -77,7 +77,7 @@ class DateTimeSelectTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('2016', $this->sut->getYearElement()->getValue());
         $this->assertSame('06', $this->sut->getMonthElement()->getValue());
         $this->assertSame('14', $this->sut->getDayElement()->getValue());
-        $this->assertSame('15', $this->sut->getHourElement()->getValue());
+        $this->assertSame('14', $this->sut->getHourElement()->getValue());
         $this->assertSame('33', $this->sut->getMinuteElement()->getValue());
         $this->assertSame('00', $this->sut->getSecondElement()->getValue());
     }

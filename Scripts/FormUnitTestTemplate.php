@@ -2,7 +2,7 @@
 
 namespace R_NAMESPACE;
 
-use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
+use CommonTest\Common\Controller\Lva\AbstractFormValidationTestCase;
 
 /**
  * Class R_TEST_CLASS_NAME

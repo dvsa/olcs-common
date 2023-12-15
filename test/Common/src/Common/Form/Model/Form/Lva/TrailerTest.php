@@ -1,9 +1,9 @@
 <?php
 
-namespace CommonTest\Form\Model\Form\Lva;
+namespace CommonTest\Common\Form\Model\Form\Lva;
 
 use Common\Form\Elements\Types\Radio;
-use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
+use CommonTest\Common\Controller\Lva\AbstractFormValidationTestCase;
 use Laminas\I18n\Validator\Alnum;
 
 /**

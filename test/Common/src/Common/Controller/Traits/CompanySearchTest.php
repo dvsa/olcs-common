@@ -7,7 +7,7 @@ use Common\Form\Form;
 use Common\Service\Cqrs\Exception\NotFoundException;
 use Common\Service\Helper\FormHelperService;
 use CommonTest\Bootstrap;
-use CommonTest\Controller\Traits\Stubs\CompanySearchStub;
+use CommonTest\Common\Controller\Traits\Stubs\CompanySearchStub;
 use Dvsa\Olcs\Transfer\Query\CompaniesHouse\ByNumber;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
@@ -29,7 +29,13 @@ class CompanySearchTest extends MockeryTestCase
         $this->sut = new CompanySearchStub();
 
 
-        $this->sm = Bootstrap::getServiceManager();
+        $this->sm = m::mock('\Laminas\ServiceManager\ServiceManager')
+            ->makePartial()
+            ->setAllowOverride(true);
+
+        // inject a real string helper
+        $this->sm->setService('Helper\String', new \Common\Service\Helper\StringHelperService());
+
         $this->mockResp = m::mock(\Laminas\Http\Response::class);
 
         $this->sut->stubResponse = $this->mockResp;

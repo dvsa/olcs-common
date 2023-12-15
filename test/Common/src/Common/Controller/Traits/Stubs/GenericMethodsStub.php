@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Controller\Traits\Stubs;
+namespace CommonTest\Common\Controller\Traits\Stubs;
 
 use Common\Controller\Traits;
 use Common\Service\Helper\FormHelperService;

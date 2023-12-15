@@ -2,40 +2,42 @@
     "name": "olcs/olcs-common",
     "description": "Common library for the OLCS Project",
     "type": "library",
-    "repositories": [
-        {
-            "packagist": false
-        },
-        {
-            "type": "composer",
-            "url": "https://nexus.olcs.dev-dvsacloud.uk/repository/Packagist-Proxy",
-            "only": [
-                "olcs/olcs-logging",
-                "olcs/olcs-utils"
-            ]
-        },
-        {
-            "url": "https://nexus.olcs.dev-dvsacloud.uk/repository/OLCS",
-            "type": "composer"
-        },
-        {
-            "url": "https://nexus.olcs.dev-dvsacloud.uk/repository/Packagist-Proxy",
-            "type": "composer"
-        }
-    ],
     "require": {
-        "php": ">=7.4",
-        "olcs/olcs-laminas": "~2.5.0 || ~3.0.0"
+        "php": "^7.4",
+        "laminas/laminas-authentication": "^2.6",
+        "laminas/laminas-form": "^2.13",
+        "laminas/laminas-servicemanager": "^2.7",
+        "laminas/laminas-cache": "^2.8",
+        "laminas/laminas-eventmanager": "^2.6",
+        "laminas/laminas-http": "^2.8",
+        "laminas/laminas-i18n": "^2.14",
+        "laminas/laminas-modulemanager": "^2.9",
+        "laminas/laminas-mvc": "^2.7",
+        "laminas/laminas-view": "^2.11",
+        "laminas/laminas-validator": "^2.11",
+        "olcs/olcs-utils": "^5.0",
+        "laminas/laminas-stdlib": "^2.7",
+        "container-interop/container-interop": "^1.2",
+        "laminas/laminas-filter": "^2.9",
+        "ezyang/htmlpurifier": "^4.17",
+        "laminas/laminas-code": "^3.4.1",
+        "laminas/laminas-navigation": "2.13.0",
+        "laminas/laminas-inputfilter": "^2.10",
+        "olcs/olcs-transfer": "^5.0.0",
+        "olcs/olcs-logging": "^5.0.0"
     },
     "require-dev": {
+        "bamarni/composer-bin-plugin": "^1.8",
+        "dms/phpunit-arraysubset-asserts": "^0.5.0",
         "doctrine/annotations": "^1.14.2",
-        "olcs/olcs-devtools": "~4.206.0",
-        "olcs/olcs-logging": "^5.0.0",
-        "olcs/olcs-transfer": "~4.206.0",
-        "olcs/olcs-utils": "^5.0.0",
-        "phpstan/phpstan": "^0.12.100",
-        "soflomo/purifier": "^1.0",
-        "symfony/lock": "^5"
+        "johnkary/phpunit-speedtrap": "^4.0",
+        "lm-commons/lmc-rbac-mvc": "^2.6",
+        "mikey179/vfsstream": "~v1.6.11",
+        "mockery/mockery": "^1.6.7",
+        "phpunit/phpunit": "^9.6",
+        "symfony/filesystem": "^5.4",
+        "symfony/lock": "^5.4",
+        "laminas/laminas-serializer": "^2.10"
     },
     "autoload": {
         "psr-0": {
@@ -53,31 +55,32 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
-        "preferred-install": "dist",
-        "secure-http": false,
-        "sort-packages": true,
-        "allow-plugins": {
-            "elendev/composer-push": true,
-            "phpstan/extension-installer": true,
+      "sort-packages": true,
+      "allow-plugins": {
+            "bamarni/composer-bin-plugin": true,
             "laminas/laminas-dependency-plugin": true
         }
     },
     "scripts": {
-        "ut": "vendor/bin/phpunit -c test/phpunit.xml --stop-on-failure",
-        "review": "vendor/bin/review",
-        "cs": "vendor/bin/phpcs --severity=1 --standard=vendor/dvsa/coding-standards/src/Profiles/DVSA/CS/ruleset.xml",
-        "coverage": "vendor/bin/phpunit -c test/phpunit.xml --coverage-html ./test/coverage/html",
-        "sonar": "vendor/bin/phpunit -c test/phpunit.xml --coverage-clover ./test/coverage/coverage-report.clover --log-junit ./test/coverage/log.junit",
-        "update-syms": "vendor/bin/composer-update-syms"
+        "bin": "echo 'bin not installed'",
+        "post-install-cmd": [
+          "@composer bin all install"
+        ],
+        "test": "phpunit",
+        "phpcs": "phpcs",
+        "psalm": "psalm",
+        "phpstan": "phpstan",
+        "all": [
+          "@test",
+          "@phpcs",
+          "@psalm",
+          "@phpstan"
+        ]
     },
     "extra": {
-        "nexus-push": {
-            "url": "https://nexus.olcs.dev-dvsacloud.uk/repository/olcs-common",
-            "ignore": [
-                "composer.phar",
-                "build.xml",
-                "composer-update.sh"
-            ]
-        }
+      "bamarni-bin": {
+        "bin-links": true,
+        "forward-command": true
+      }
     }
 }

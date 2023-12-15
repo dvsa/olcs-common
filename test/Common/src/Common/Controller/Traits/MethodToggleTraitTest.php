@@ -6,10 +6,11 @@
  * Time: 11:19
  */
 
-namespace CommonTest\Controller\Traits;
+namespace CommonTest\Common\Controller\Traits;
 
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
+use CommonTest\Common\Controller\Traits\Stubs\MethodToggleTraitStub;
 
 class MethodToggleTraitTest extends MockeryTestCase
 {
@@ -17,10 +18,9 @@ class MethodToggleTraitTest extends MockeryTestCase
 
     protected function setUp(): void
     {
-        $this->sut = m::mock('CommonTest\Controller\Traits\Stubs\MethodToggleTraitStub')
+        $this->sut = m::mock(MethodToggleTraitStub::class)
             ->makePartial();
     }
-
     public function testTogglableMethodWhenToggleOn()
     {
         $this->sut->shouldReceive('featuresEnabledForMethod')->andReturn(true);

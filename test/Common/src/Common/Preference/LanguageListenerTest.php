@@ -37,7 +37,13 @@ class LanguageListenerTest extends MockeryTestCase
         $this->flashMessenger = m::mock();
         $this->translator = m::mock();
 
-        $sm = Bootstrap::getServiceManager();
+        $sm = m::mock('\Laminas\ServiceManager\ServiceManager')
+            ->makePartial()
+            ->setAllowOverride(true);
+
+        // inject a real string helper
+        $sm->setService('Helper\String', new \Common\Service\Helper\StringHelperService());
+
         $sm->setService('LanguagePreference', $this->languagePref);
         $sm->setService('Helper\FlashMessenger', $this->flashMessenger);
         $sm->setService('translator', $this->translator);

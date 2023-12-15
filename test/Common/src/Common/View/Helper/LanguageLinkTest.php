@@ -29,7 +29,13 @@ class LanguageLinkTest extends MockeryTestCase
 
         $this->viewHelper = new LanguageLink($languagePref);
 
-        $this->sm = Bootstrap::getServiceManager();
+        $this->sm = m::mock('\Laminas\ServiceManager\ServiceManager')
+            ->makePartial()
+            ->setAllowOverride(true);
+
+        // inject a real string helper
+        $this->sm->setService('Helper\String', new \Common\Service\Helper\StringHelperService());
+
     }
 
     public function testInvoke()

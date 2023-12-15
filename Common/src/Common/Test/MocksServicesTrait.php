@@ -2,7 +2,6 @@
 
 namespace Common\Test;
 
-use Common\Test\Builder\ServiceManagerBuilder;
 use Laminas\ServiceManager\AbstractPluginManager;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\ServiceManager\ServiceManager;
