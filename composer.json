@@ -55,8 +55,8 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
-      "sort-packages": true,
-      "allow-plugins": {
+        "sort-packages": true,
+        "allow-plugins": {
             "bamarni/composer-bin-plugin": true,
             "laminas/laminas-dependency-plugin": true
         }
@@ -64,23 +64,23 @@
     "scripts": {
         "bin": "echo 'bin not installed'",
         "post-install-cmd": [
-          "@composer bin all install"
+            "@composer bin all install"
         ],
         "test": "phpunit",
         "phpcs": "phpcs",
         "psalm": "psalm",
         "phpstan": "phpstan",
         "all": [
-          "@test",
-          "@phpcs",
-          "@psalm",
-          "@phpstan"
+            "@test",
+            "@phpcs",
+            "@psalm",
+            "@phpstan"
         ]
     },
     "extra": {
-      "bamarni-bin": {
-        "bin-links": true,
-        "forward-command": true
-      }
+        "bamarni-bin": {
+            "bin-links": true,
+            "forward-command": true
+        }
     }
 }
