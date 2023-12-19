@@ -1,10 +1,10 @@
 <?php
 
-namespace CommonTest\Data\Mapper\Licence\Surrender\Sections;
+namespace CommonTest\Common\Data\Mapper\Licence\Surrender\Sections;
 
 use Common\Data\Mapper\Licence\Surrender\ReviewDetails;
 use Common\Service\Helper\TranslationHelperService;
-use CommonTest\Data\Mapper\Licence\Surrender\ReviewContactDetailsMocksAndExpectationsTrait;
+use CommonTest\Common\Data\Mapper\Licence\Surrender\ReviewContactDetailsMocksAndExpectationsTrait;
 use PHPUnit\Framework\TestCase;
 use Laminas\Mvc\Controller\Plugin\Url;
 

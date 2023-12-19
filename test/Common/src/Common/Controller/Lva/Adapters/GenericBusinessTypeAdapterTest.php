@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Controller\Lva\Adapters;
+namespace CommonTest\Common\Controller\Lva\Adapters;
 
 use Interop\Container\ContainerInterface;
 use Mockery as m;

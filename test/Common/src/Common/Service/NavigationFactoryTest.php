@@ -87,4 +87,5 @@ class NavigationFactoryTest extends TestCase
         $sut = new NavigationFactory($this->serviceManager);
         $this->assertInstanceOf(Navigation::class, $sut->getNavigation([]));
     }
+
 }

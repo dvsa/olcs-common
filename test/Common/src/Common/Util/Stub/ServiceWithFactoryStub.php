@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Util\Stub;
+namespace CommonTest\Common\Util\Stub;
 
 use Interop\Container\ContainerInterface;
 

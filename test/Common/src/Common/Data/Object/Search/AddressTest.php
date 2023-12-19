@@ -1,8 +1,9 @@
 <?php
 
-namespace CommonTest\Data\Object\Search;
+namespace CommonTest\Common\Data\Object\Search;
 
 use Mockery as m;
+use Common\Data\Object\Search\Address;
 
 /**
  * Class AddressTest
@@ -10,5 +11,5 @@ use Mockery as m;
  */
 class AddressTest extends SearchAbstractTest
 {
-    protected $class = 'Common\Data\Object\Search\Address';
+    protected $class = Address::class;
 }

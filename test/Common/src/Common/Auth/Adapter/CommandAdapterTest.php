@@ -1,17 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace CommonTest\Auth\Adapter;
+namespace CommonTest\Common\Auth\Adapter;
 
 use Common\Auth\Adapter\CommandAdapter;
 use Common\Service\Cqrs\Command\CommandSender;
 use Common\Service\Cqrs\Response;
-use Dvsa\Olcs\Transfer\Command\Auth\Login;
+use Common\Test\MocksServicesTrait;
 use Laminas\Authentication\Result;
 use Laminas\ServiceManager\ServiceManager;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
-use Olcs\TestHelpers\MockeryTestCase;
-use Olcs\TestHelpers\Service\MocksServicesTrait;
 use Mockery as m;
 
 /**
@@ -151,5 +150,10 @@ class CommandAdapterTest extends MockeryTestCase
     protected function setupSut(CommandSender $commandSender): CommandAdapter
     {
         return new CommandAdapter($commandSender);
+    }
+
+    protected function setUpDefaultServices(ServiceManager $serviceManager)
+    {
+        $this->serviceManager->setService('CommandSender', m::mock(CommandSender::class));
     }
 }

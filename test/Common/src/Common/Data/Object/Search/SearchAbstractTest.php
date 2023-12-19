@@ -1,7 +1,8 @@
 <?php
 
-namespace CommonTest\Data\Object\Search;
+namespace CommonTest\Common\Data\Object\Search;
 
+use Common\Data\Object\Search\InternalSearchAbstract;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
@@ -12,7 +13,7 @@ abstract class SearchAbstractTest extends MockeryTestCase
 {
     protected $class = '';
 
-    /** @var \Common\Data\Object\Search\InternalSearchAbstract */
+    /** @var InternalSearchAbstract */
     protected $sut;
 
     public function setUp(): void

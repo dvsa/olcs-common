@@ -1,14 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace CommonTest\Rbac;
+namespace CommonTest\Common\Rbac;
 
 use Common\Rbac\IdentityProviderFactory;
 use Common\Rbac\JWTIdentityProvider;
 use Common\Rbac\JWTIdentityProviderFactory;
+use Common\Service\Cqrs\Command\CommandSender;
+use Common\Test\MocksServicesTrait;
+use Laminas\ServiceManager\ServiceManager;
 use Mockery as m;
-use Olcs\TestHelpers\MockeryTestCase;
-use Olcs\TestHelpers\Service\MocksServicesTrait;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 class IdentityProviderFactoryTest extends MockeryTestCase
 {
@@ -150,5 +152,10 @@ class IdentityProviderFactoryTest extends MockeryTestCase
     protected function config(array $config = [])
     {
         $this->serviceManager->setService('config', $config);
+    }
+
+    protected function setUpDefaultServices(ServiceManager $serviceManager)
+    {
+        $this->serviceManager->setService('CommandSender', m::mock(CommandSender::class));
     }
 }

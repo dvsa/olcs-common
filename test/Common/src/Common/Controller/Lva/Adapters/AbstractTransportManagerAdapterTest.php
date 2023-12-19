@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Controller\Lva\Adapters;
+namespace CommonTest\Common\Controller\Lva\Adapters;
 
 use Common\Controller\Lva\Adapters\AbstractTransportManagerAdapter;
 use Common\Service\Cqrs\Command\CommandService;
@@ -17,7 +17,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class AbstractTransportManagerAdapterTest extends MockeryTestCase
 {
-    /** @var  \CommonTest\Controller\Lva\Adapters\StubAbstractTransportManagerAdapter */
+    /** @var  \CommonTest\Common\Controller\Lva\Adapters\StubAbstractTransportManagerAdapter */
     protected $sut;
     /** @var  ContainerInterface|\Mockery\MockInterface */
     protected $container;

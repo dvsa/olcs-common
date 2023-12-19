@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\FormService\Form\Lva\People;
+namespace CommonTest\Common\FormService\Form\Lva\People;
 
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;

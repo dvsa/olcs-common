@@ -1,10 +1,10 @@
 <?php
 
-namespace CommonTest\Service\Data;
+namespace CommonTest\Common\Service\Data;
 
 use Common\Preference\Language as LanguagePreference;
 use Common\Service\Data\RefDataServices;
-use CommonTest\Service\Data\AbstractListDataServiceTestCase;
+use CommonTest\Common\Service\Data\AbstractListDataServiceTestCase;
 use Mockery as m;
 
 /**

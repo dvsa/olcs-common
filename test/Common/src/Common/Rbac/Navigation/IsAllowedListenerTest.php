@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Rbac\Navigation;
+namespace CommonTest\Common\Rbac\Navigation;
 
 use Common\Rbac\Navigation\IsAllowedListener;
 use Mockery as m;

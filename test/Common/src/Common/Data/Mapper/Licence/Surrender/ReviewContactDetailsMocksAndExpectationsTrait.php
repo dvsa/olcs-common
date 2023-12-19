@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Data\Mapper\Licence\Surrender;
+namespace CommonTest\Common\Data\Mapper\Licence\Surrender;
 
 trait ReviewContactDetailsMocksAndExpectationsTrait
 {

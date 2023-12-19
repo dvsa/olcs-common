@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\FormService\Form\Lva\OperatingCentre;
+namespace CommonTest\Common\FormService\Form\Lva\OperatingCentre;
 
 use Common\FormService\Form\Lva\OperatingCentre\CommonOperatingCentre;
 use Mockery as m;

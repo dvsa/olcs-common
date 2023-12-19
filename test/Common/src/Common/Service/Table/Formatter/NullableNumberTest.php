@@ -1,9 +1,9 @@
 <?php
 
-namespace CommonTest\Service\Table\Formatter;
+namespace CommonTest\Common\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\NullableNumber;
-use Olcs\TestHelpers\MockeryTestCase;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
  * Class NullableNumberTest

@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\FormService\Form\Lva\OperatingCentres;
+namespace CommonTest\Common\FormService\Form\Lva\OperatingCentres;
 
 use Common\Form\Elements\Types\Table;
 use Common\FormService\Form\Lva\OperatingCentres\VariationOperatingCentres;

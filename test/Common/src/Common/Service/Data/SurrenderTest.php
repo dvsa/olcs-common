@@ -1,7 +1,7 @@
 <?php
 
 
-namespace CommonTest\Service\Data;
+namespace CommonTest\Common\Service\Data;
 
 use Common\Exception\DataServiceException;
 use Common\Service\Data\Surrender;

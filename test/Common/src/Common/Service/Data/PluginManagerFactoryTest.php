@@ -1,7 +1,7 @@
 <?php
 
 
-namespace CommonTest\Service\Data;
+namespace CommonTest\Common\Service\Data;
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Data\PluginManagerFactory;

@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\FormService\Form\Lva;
+namespace CommonTest\Common\FormService\Form\Lva;
 
 use Mockery as m;
 use Common\FormService\Form\Lva\PsvVehicles;

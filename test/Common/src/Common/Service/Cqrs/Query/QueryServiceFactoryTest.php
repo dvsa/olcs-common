@@ -1,18 +1,18 @@
 <?php
 
-namespace CommonTest\Service\Cqrs\Query;
+namespace CommonTest\Common\Service\Cqrs\Query;
 
 use Common\Auth\Adapter\CommandAdapterFactory;
 use Common\Service\Cqrs\Query\QueryService;
 use Common\Service\Cqrs\Query\QueryServiceFactory;
 use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Test\MocksServicesTrait;
 use Laminas\Http\Client\Adapter\Curl;
 use Laminas\Http\Request;
 use Laminas\Router\RouteInterface;
 use Laminas\ServiceManager\ServiceManager;
 use Mockery as m;
-use Olcs\TestHelpers\MockeryTestCase;
-use Olcs\TestHelpers\Service\MocksServicesTrait;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use RuntimeException;
 
 /**

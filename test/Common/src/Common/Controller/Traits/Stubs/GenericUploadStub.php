@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Controller\Traits\Stubs;
+namespace CommonTest\Common\Controller\Traits\Stubs;
 
 use Common\Controller\Traits\GenericUpload;
 use Laminas\Mvc\Controller\AbstractActionController;

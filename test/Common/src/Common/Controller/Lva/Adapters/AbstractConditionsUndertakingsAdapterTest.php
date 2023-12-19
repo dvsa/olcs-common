@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Controller\Lva\Adapters;
+namespace CommonTest\Common\Controller\Lva\Adapters;
 
 use Common\Controller\Lva\Adapters\AbstractConditionsUndertakingsAdapter;
 use Common\RefData;

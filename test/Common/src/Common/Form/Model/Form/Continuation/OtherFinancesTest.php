@@ -1,9 +1,9 @@
 <?php
 
-namespace CommonTest\Form\Model\Form\Continuation;
+namespace CommonTest\Common\Form\Model\Form\Continuation;
 
 use Dvsa\Olcs\Transfer\Validators\Money;
-use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
+use CommonTest\Common\Controller\Lva\AbstractFormValidationTestCase;
 use Laminas\Validator\GreaterThan;
 use Laminas\Validator\LessThan;
 
@@ -52,7 +52,8 @@ class OtherFinancesTest extends AbstractFormValidationTestCase
         $element = ['finances', 'yesContent', 'detail'];
 
         $this->assertFormElementIsRequired($element, true);
-        $this->assertFormElementAllowEmpty($element, false);
+
+        $this->assertFormElementAllowEmpty($element, true);
 
         $_POST = ['finances' => ['otherFinances' => ['yesNo' => 'Y']]];
         $this->assertFormElementAllowEmpty($element, false);

@@ -11,13 +11,10 @@ use Hamcrest\Core\IsEqual;
 use Mockery as m;
 use CommonTest\Bootstrap;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Olcs\TestHelpers\Controller\Traits\ControllerTestTrait;
-use LmcRbacMvc\Service\AuthorizationService;
+use ZfcRbac\Service\AuthorizationService;
 
 class ChecklistControllerTest extends MockeryTestCase
 {
-    use ControllerTestTrait;
-
     protected function getServiceManager()
     {
         return Bootstrap::getServiceManager();
@@ -45,6 +42,26 @@ class ChecklistControllerTest extends MockeryTestCase
                     return $input;
                 }
             );
+    }
+
+    protected function mockController($className, array $constructorParams = [])
+    {
+        $this->request = m::mock('\Laminas\Http\Request')->makePartial();
+
+        // If constructor params are provided, pass them to the mock, otherwise mock without them
+        if (!empty($constructorParams)) {
+            $this->sut = m::mock($className, $constructorParams)
+                ->makePartial()
+                ->shouldAllowMockingProtectedMethods();
+        } else {
+            $this->sut = m::mock($className)
+                ->makePartial()
+                ->shouldAllowMockingProtectedMethods();
+        }
+
+        $this->sut
+            ->shouldReceive('getRequest')
+            ->andReturn($this->request);
     }
 
     public function testUsersAction()

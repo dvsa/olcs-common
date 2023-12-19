@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
 
-namespace CommonTest\Controller\Traits\Stubs;
+namespace CommonTest\Common\Controller\Traits\Stubs;
 
 use Common\Controller\Traits\CompanySearch;
 use Common\Service\Cqrs\Exception\NotFoundException;

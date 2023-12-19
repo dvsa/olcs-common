@@ -3,7 +3,7 @@
 namespace CommonTest\Controller\Lva;
 
 use Common\Controller\Lva\AbstractControllerFactory;
-use CommonTest\Controller\Lva\Stubs\ControllerWithFactoryStub;
+use CommonTest\Common\Controller\Lva\Stubs\ControllerWithFactoryStub;
 use Laminas\Mvc\Controller\ControllerManager;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;

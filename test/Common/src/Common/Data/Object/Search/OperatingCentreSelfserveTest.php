@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Data\Object\Search;
+namespace CommonTest\Common\Data\Object\Search;
 
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Mockery as m;

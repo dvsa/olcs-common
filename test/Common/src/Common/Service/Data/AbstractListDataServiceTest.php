@@ -1,8 +1,9 @@
 <?php
 
-namespace CommonTest\Service\Data;
+namespace CommonTest\Common\Service\Data;
 
-use CommonTest\Service\Data\Stub\AbstractListDataServiceStub;
+use CommonTest\Common\Service\Data\Stub\AbstractListDataServiceStub;
+use CommonTest\Common\Service\Data\AbstractListDataServiceTestCase;
 
 /**
  * @covers \Common\Service\Data\AbstractListDataService

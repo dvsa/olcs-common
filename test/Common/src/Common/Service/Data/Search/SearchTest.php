@@ -1,12 +1,12 @@
 <?php
 
-namespace CommonTest\Service\Data\Search;
+namespace CommonTest\Common\Service\Data\Search;
 
 use Common\Service\Data\Search\Search;
 use Common\Service\Data\Search\SearchTypeManager;
 use Common\Service\Table\TableFactory;
 use Common\Util\RestClient;
-use CommonTest\Service\Data\Search\Asset\SearchType;
+use CommonTest\Common\Service\Data\Search\Asset\SearchType;
 use Laminas\Http\Request as HttpRequest;
 use Laminas\Stdlib\ArrayObject;
 use Laminas\View\HelperPluginManager as ViewHelperManager;

@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\FormService\Form\Lva\TransportManager;
+namespace CommonTest\Common\FormService\Form\Lva\TransportManager;
 
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;

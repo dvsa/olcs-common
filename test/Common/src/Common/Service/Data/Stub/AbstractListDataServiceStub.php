@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Service\Data\Stub;
+namespace CommonTest\Common\Service\Data\Stub;
 
 use Common\Service\Data\AbstractListDataService;
 

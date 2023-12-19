@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\FormService\Form\Lva\BusinessType;
+namespace CommonTest\Common\FormService\Form\Lva\BusinessType;
 
 use Common\Service\Helper\FormHelperService;
 use Mockery as m;

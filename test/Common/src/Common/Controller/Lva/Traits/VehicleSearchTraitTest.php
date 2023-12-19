@@ -1,9 +1,9 @@
 <?php
 
-namespace CommonTest\Controller\Lva\Traits;
+namespace CommonTest\Common\Controller\Lva\Traits;
 
 use Common\Service\Table\TableBuilder;
-use CommonTest\Controller\Lva\Traits\Stubs\VehicleSearchTraitStub;
+use CommonTest\Common\Controller\Lva\Traits\Stubs\VehicleSearchTraitStub;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 

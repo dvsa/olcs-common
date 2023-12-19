@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Controller\Lva\Traits\Stubs;
+namespace CommonTest\Common\Controller\Lva\Traits\Stubs;
 
 use Common\Controller\Lva\Traits\CrudActionTrait;
 use Common\Service\Helper\FlashMessengerHelperService;

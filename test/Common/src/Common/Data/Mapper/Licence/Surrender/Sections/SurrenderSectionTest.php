@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Data\Mapper\Licence\Surrender\Sections;
+namespace CommonTest\Common\Data\Mapper\Licence\Surrender\Sections;
 
 use Common\Data\Mapper\licence\Surrender\OperatorLicence;
 use Common\Data\Mapper\Licence\Surrender\Sections\SurrenderSection;

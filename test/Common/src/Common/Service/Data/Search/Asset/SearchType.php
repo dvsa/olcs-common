@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Service\Data\Search\Asset;
+namespace CommonTest\Common\Service\Data\Search\Asset;
 
 use Common\Data\Object\Search\SearchAbstract;
 

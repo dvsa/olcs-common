@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\FormService\Form\Lva\BusinessDetails;
+namespace CommonTest\Common\FormService\Form\Lva\BusinessDetails;
 
 use Common\RefData;
 use Mockery as m;

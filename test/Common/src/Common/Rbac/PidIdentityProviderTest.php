@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Rbac;
+namespace CommonTest\Common\Rbac;
 
 use Common\Rbac\User;
 use Common\Rbac\PidIdentityProvider;
@@ -12,6 +12,7 @@ use Laminas\Http\Request;
 use Laminas\Session\Container;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Mockery as m;
+use Olcs\Logging\Log\Logger;
 
 /**
  * Class IdentityProviderTest
@@ -22,6 +23,14 @@ class PidIdentityProviderTest extends TestCase
     const USER_ID = 22;
     const HEADER_PID = '12345abc';
 
+    public function setUp(): void
+    {
+        self::setupLogger();
+    }
+
+    /**
+     * @throws \Exception
+     */
     public function testGetIdentityFromCache()
     {
         $cookie = [
@@ -122,8 +131,7 @@ class PidIdentityProviderTest extends TestCase
         $mockResponse->shouldReceive('getResult')->andReturn($data);
 
         $queryService
-            ->shouldReceive('setRecoverHttpClientException')
-            ->once()
+            ->expects('setRecoverHttpClientException')
             ->with(true)
             ->shouldReceive('send')
             ->once()
@@ -166,6 +174,9 @@ class PidIdentityProviderTest extends TestCase
         ];
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testGetIdentitySetNotIdentifiedUser()
     {
         $queryService = m::mock(QuerySender::class);
@@ -221,5 +232,14 @@ class PidIdentityProviderTest extends TestCase
 
         $sut = new PidIdentityProvider($queryService, $session, $request, $cache);
         $sut->clearSession();
+    }
+
+    public static function setupLogger()
+    {
+        $logWriter = new \Laminas\Log\Writer\Mock();
+        $logger = new \Laminas\Log\Logger();
+        $logger->addWriter($logWriter);
+
+        Logger::setLogger($logger);
     }
 }

@@ -1,6 +1,8 @@
 <?php
 
-namespace CommonTest\Data\Object\Search;
+namespace CommonTest\Common\Data\Object\Search;
+
+use Common\Data\Object\Search\Publication;
 
 /**
  * Class PublicationTest
@@ -8,5 +10,5 @@ namespace CommonTest\Data\Object\Search;
  */
 class PublicationTest extends SearchAbstractTest
 {
-    protected $class = 'Common\Data\Object\Search\Publication';
+    protected $class = Publication::class;
 }

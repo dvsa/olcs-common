@@ -1,8 +1,10 @@
 <?php
 
-namespace CommonTest\Controller\Lva;
+namespace CommonTest\Common\Controller\Lva;
 
+use CommonTest\Common\Controller\Lva\AbstractLvaControllerTestCase;
 use Mockery as m;
+use Common\Controller\Lva\AbstractBusinessTypeController;
 
 /**
  * Test Abstract Business Type Controller
@@ -15,11 +17,31 @@ class AbstractBusinessTypeControllerTest extends AbstractLvaControllerTestCase
     {
         parent::setUp();
 
-        $this->mockController('\Common\Controller\Lva\AbstractBusinessTypeController');
+        $this->mockController(AbstractBusinessTypeController::class);
     }
 
     public function testGetIndexAction()
     {
         $this->assertTrue(true);
+    }
+
+    protected function mockController($className, array $constructorParams = [])
+    {
+        $this->request = m::mock('\Laminas\Http\Request')->makePartial();
+
+        // If constructor params are provided, pass them to the mock, otherwise mock without them
+        if (!empty($constructorParams)) {
+            $this->sut = m::mock($className, $constructorParams)
+                ->makePartial()
+                ->shouldAllowMockingProtectedMethods();
+        } else {
+            $this->sut = m::mock($className)
+                ->makePartial()
+                ->shouldAllowMockingProtectedMethods();
+        }
+
+        $this->sut
+            ->shouldReceive('getRequest')
+            ->andReturn($this->request);
     }
 }

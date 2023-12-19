@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace CommonTest\Auth\Service;
+namespace CommonTest\Common\Auth\Service;
 
 use Common\Auth\Service\AuthenticationService;
 use Common\Auth\Service\AuthenticationServiceFactory;
+use Common\Test\MocksServicesTrait;
 use Laminas\Authentication\Storage\Session;
 use Laminas\ServiceManager\ServiceManager;
-use Olcs\TestHelpers\MockeryTestCase;
-use Olcs\TestHelpers\Service\MocksServicesTrait;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 class AuthenticationServiceFactoryTest extends MockeryTestCase
 {

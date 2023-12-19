@@ -2,7 +2,7 @@
 
 namespace CommonTest\Form\Model\Form;
 
-use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
+use CommonTest\Common\Controller\Lva\AbstractFormValidationTestCase;
 
 /**
  * Class TmPreviousLicencesTest

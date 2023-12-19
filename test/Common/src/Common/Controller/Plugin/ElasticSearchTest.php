@@ -13,6 +13,7 @@ use Laminas\Router\RouteMatch;
 use Laminas\Router\SimpleRouteStack;
 use Laminas\View\Model\ViewModel;
 use Laminas\Navigation\Page\Mvc as NavigationPage;
+use CommonTest\Common\Controller\Plugin\ControllerStub;
 
 /**
  * Class ElasticSearchPluginTest
@@ -51,7 +52,9 @@ class ElasticSearchTest extends MockeryTestCase
 
         $this->event->setRouteMatch($this->routeMatch);
         $this->event->setRequest($this->request);
-        $this->sm = Bootstrap::getServiceManager();
+        $this->sm = m::mock('\Laminas\ServiceManager\ServiceManager')
+            ->makePartial()
+            ->setAllowOverride(true);
 
         $this->pm = m::mock('\Laminas\Mvc\Controller\PluginManager[setInvokableClass]')->makePartial();
         $this->pm->setInvokableClass('ElasticSearch', 'Common\Controller\Plugin\ElasticSearch');

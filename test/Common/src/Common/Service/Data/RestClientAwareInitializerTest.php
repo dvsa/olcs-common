@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Service\Data;
+namespace CommonTest\Common\Service\Data;
 
 use Common\Service\Api\Resolver;
 use Common\Service\Data\RestClientAwareInitializer;

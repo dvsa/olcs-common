@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Controller\Lva;
+namespace CommonTest\Common\Controller\Lva;
 
 use Common\Controller\Lva\AbstractVehiclesDeclarationsController;
 use Common\FormService\FormServiceManager;
@@ -19,6 +19,7 @@ use LmcRbacMvc\Service\AuthorizationService;
  */
 class AbstractVehiclesDeclarationsControllerTest extends AbstractLvaControllerTestCase
 {
+    protected $sut;
     public function setUp(): void
     {
         parent::setUp();
@@ -30,14 +31,18 @@ class AbstractVehiclesDeclarationsControllerTest extends AbstractLvaControllerTe
         $this->mockFormHelper = m::mock(FormHelperService::class);
         $this->mockDataHelper = m::mock(DataHelperService::class);
 
-        $this->mockController(AbstractVehiclesDeclarationsController::class, [
+        $this->sut = m::mock(AbstractVehiclesDeclarationsController::class, [
             $this->mockNiTextTranslationUtil,
             $this->mockAuthService,
             $this->mockFormHelper,
             $this->mockFormServiceManager,
             $this->mockScriptFactory,
             $this->mockDataHelper
-        ]);
+        ])
+            ->makePartial()
+            ->shouldAllowMockingProtectedMethods();
+
+
         $this->mockScriptFactory->shouldReceive('loadFile')->with('vehicle-declarations');
     }
 
@@ -128,5 +133,39 @@ class AbstractVehiclesDeclarationsControllerTest extends AbstractLvaControllerTe
         $this->sut->indexAction();
 
         $this->assertEquals('vehicles_declarations', $this->view);
+    }
+
+    protected function shouldRemoveElements($form, $elements)
+    {
+        $helper = $this->mockFormHelper;
+        foreach ($elements as $e) {
+            $helper->shouldReceive('remove')
+                ->with($form, $e)
+                ->andReturn($helper);
+        }
+    }
+
+    protected function mockRender()
+    {
+        $this->sut->shouldReceive('render')
+            ->once()
+            ->andReturnUsing(
+                function ($view, $form = null) {
+
+                    /**
+                     * assign the view variable so we can interrogate it later
+                     */
+                    $this->view = $view;
+
+                    /*
+                     * but also return it, since that's a closer simulation
+                     * of what 'render' would normally do
+                     */
+
+                    return $this->view;
+                }
+            );
+
+        return $this->sut;
     }
 }
