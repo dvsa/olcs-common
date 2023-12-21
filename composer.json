@@ -59,6 +59,9 @@
       "allow-plugins": {
             "bamarni/composer-bin-plugin": true,
             "laminas/laminas-dependency-plugin": true
+        },
+        "platform": {
+            "ext-redis": "4.3"
         }
     },
     "scripts": {
