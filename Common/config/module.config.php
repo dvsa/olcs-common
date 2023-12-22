@@ -55,6 +55,7 @@ use Common\Service\Translator\TranslationLoader;
 use Common\Service\Translator\TranslationLoaderFactory;
 use Common\View\Helper\Panel;
 use Laminas\Form\Element\Textarea;
+use Laminas\ServiceManager\Factory\InvokableFactory;
 use LmcRbacMvc\Identity\IdentityProviderInterface;
 
 $release = json_decode(file_get_contents(__DIR__ . '/release.json'), true);
@@ -690,7 +691,6 @@ return [
     ],
     'validators' => [
         'invokables' => [
-            'Common\Validator\ValidateIf' => 'Common\Validator\ValidateIf',
             'Common\Validator\ValidateIfMultiple' => 'Common\Validator\ValidateIfMultiple',
             'Common\Validator\DateCompare' => 'Common\Validator\DateCompare',
             'Common\Validator\NumberCompare' => 'Common\Validator\NumberCompare',
@@ -704,7 +704,8 @@ return [
             TableRequiredValidator::class => TableRequiredValidator::class
         ],
         'aliases' => [
-            'ValidateIf' => 'Common\Validator\ValidateIf',
+            'ValidateIf' => Common\Validator\ValidateIf::class,
+            'validateIf' => Common\Validator\ValidateIf::class,
             'ValidateIfMultiple' => 'Common\Validator\ValidateIfMultiple',
             'DateCompare' => 'Common\Validator\DateCompare',
             'NumberCompare' => 'Common\Validator\NumberCompare',
@@ -718,6 +719,7 @@ return [
         'factories' => [
             QaService\DateNotInPastValidator::class => QaService\DateNotInPastValidatorFactory::class,
             QaService\Custom\Common\DateBeforeValidator::class => QaService\Custom\Common\DateBeforeValidatorFactory::class,
+            Common\Validator\ValidateIf::class => InvokableFactory::class,
         ]
     ],
     'filters' => [

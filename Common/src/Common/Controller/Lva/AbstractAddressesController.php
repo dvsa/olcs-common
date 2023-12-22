@@ -100,6 +100,18 @@ abstract class AbstractAddressesController extends AbstractController
             )
             ->setData($formData);
 
+        $searchPostcodeInputFilter = $form->getInputFilter()->get('correspondence_address')->get('searchPostcode');
+        foreach ($searchPostcodeInputFilter->getInputs() as $input) {
+            $input->setRequired(false);
+            $input->setAllowEmpty(true);
+        }
+
+        $searchPostcodeInputFilter = $form->getInputFilter()->get('establishment_address')->get('searchPostcode');
+        foreach ($searchPostcodeInputFilter->getInputs() as $input) {
+            $input->setRequired(false);
+            $input->setAllowEmpty(true);
+        }
+
         $this->alterFormForLva($form);
 
         $hasProcessed = $this->formHelper->processAddressLookupForm($form, $request);

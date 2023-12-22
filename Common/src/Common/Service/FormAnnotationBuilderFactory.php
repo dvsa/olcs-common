@@ -15,7 +15,7 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
  */
 class FormAnnotationBuilderFactory implements FactoryInterface
 {
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): CustomAnnotationBuilder
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         // set up a form factory which can use custom form elements
         $formElementManager = $container->get('FormElementManager');
@@ -34,10 +34,7 @@ class FormAnnotationBuilderFactory implements FactoryInterface
         $annotationBuilder = new AnnotationBuilder();
         $annotationBuilder->setFormFactory($formFactory);
 
-        // Wrap the AnnotationBuilder instance with your custom wrapper
-        $customAnnotationBuilderWrapper = new CustomAnnotationBuilder($annotationBuilder);
-
-        return $customAnnotationBuilderWrapper;
+        return $annotationBuilder;
     }
 
     /**

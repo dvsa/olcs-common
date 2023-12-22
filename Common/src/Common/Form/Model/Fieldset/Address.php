@@ -3,6 +3,7 @@
 namespace Common\Form\Model\Fieldset;
 
 use Laminas\Form\Annotation as Form;
+use Laminas\Form\Annotation;
 
 /**
  * @Form\Name("address")

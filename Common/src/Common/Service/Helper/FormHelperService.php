@@ -2,7 +2,7 @@
 
 namespace Common\Service\Helper;
 
-use Common\Form\Annotation\CustomAnnotationBuilder as FormAnnotationBuilder;
+use Laminas\Form\Annotation\AnnotationBuilder;
 use Common\Form\Elements\Types\Address;
 use Common\Service\Data\AddressDataService;
 use Common\Service\Table\TableFactory;
@@ -39,7 +39,7 @@ class FormHelperService
     public const ALTER_LABEL_APPEND = 1;
     public const ALTER_LABEL_PREPEND = 2;
 
-    /** @var FormAnnotationBuilder */
+    /** @var AnnotationBuilder */
     private $formAnnotationBuilder;
 
     /** @var array */
@@ -64,7 +64,7 @@ class FormHelperService
     private $translationHelper;
 
     public function __construct(
-        FormAnnotationBuilder $formAnnotationBuilder,
+        AnnotationBuilder $formAnnotationBuilder,
         array $config,
         AuthorizationService $authorizationService,
         RendererInterface $viewRenderer,
