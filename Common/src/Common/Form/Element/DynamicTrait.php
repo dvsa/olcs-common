@@ -249,7 +249,7 @@ trait DynamicTrait
      */
     public function getValueOptions(): array
     {
-        if (empty($this->valueOptions) && $this->getContext()) {
+        if (empty($this->valueOptions)) {
             $refDataService = $this->getDataService();
             $this->valueOptions = $refDataService->fetchListOptions($this->getContext(), $this->useGroups());
 

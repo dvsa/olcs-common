@@ -81,9 +81,9 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
         // This is the reason why we use table->rows instead of table->table
         // which it was previously.
 
-      /*  $this->formHelper
-            ->getValidator($form, 'table->rows', TableRequiredValidator::class)
-            ->setMessage('OperatingCentreNoOfOperatingCentres.required', 'required');*/
+        $this->formHelper
+           ->getValidator($form, 'table->rows', TableRequiredValidator::class)
+            ->setMessage('OperatingCentreNoOfOperatingCentres.required', 'required');
 
         $this->alterFormForVehicleType($form, $params);
 
