@@ -433,7 +433,8 @@ class FormServiceAbstractFactory implements AbstractFactoryInterface
                 $authService = $serviceLocator->get(AuthorizationService::class);
                 $translator = $serviceLocator->get(TranslationHelperService::class);
                 $urlHelper = $serviceLocator->get(UrlHelperService::class);
-                return new VariationFinancialEvidence($formHelper, $authService, $translator, $urlHelper);
+                $validatorPluginManager = $serviceLocator->get('ValidatorManager');
+                return new VariationFinancialEvidence($formHelper, $authService, $translator, $urlHelper, $validatorPluginManager);
             case self::FORM_SERVICE_CLASS_ALIASES['lva-application-financial_evidence']:
                 $authService = $serviceLocator->get(AuthorizationService::class);
                 $translator = $serviceLocator->get(TranslationHelperService::class);

@@ -76,14 +76,18 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
             $this->alterFormForGoodsLicences($form, $params);
         }
 
-        // - Modify the validation message for Required on 'rows' field
-        // The validator compares the data against the 'rows' field value.
-        // This is the reason why we use table->rows instead of table->table
-        // which it was previously.
+        $rowsInput = $form->getInputFilter()->get('table')->get('rows');
+        $validatorChain = $rowsInput->getValidatorChain();
 
-        $this->formHelper
-           ->getValidator($form, 'table->rows', TableRequiredValidator::class)
-            ->setMessage('OperatingCentreNoOfOperatingCentres.required', 'required');
+        $validatorExists = array_reduce($validatorChain->getValidators(), function ($found, $item) {
+            return $found || $item['instance'] instanceof TableRequiredValidator;
+        }, false);
+
+        if (!$validatorExists) {
+            $tableRequiredValidator = new TableRequiredValidator(['label' => 'record']);
+            $validatorChain->attach($tableRequiredValidator);
+            $tableRequiredValidator->setMessage('OperatingCentreNoOfOperatingCentres.required', 'required');
+        }
 
         $this->alterFormForVehicleType($form, $params);
 
@@ -114,6 +118,10 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
         } else {
             $this->formHelper->remove($form, 'dataTrafficArea->trafficArea');
             $dataTrafficAreaFieldset->get('trafficAreaSet')->setValue($trafficArea['name']);
+            $dataTrafficAreaInputFilter = $form->getInputFilter()->get('dataTrafficArea');
+            foreach ($dataTrafficAreaInputFilter->getInputs() as $input) {
+                $input->setRequired(false);
+            }
         }
 
         $dataTrafficAreaFieldset->get('enforcementArea')
