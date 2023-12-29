@@ -17,7 +17,7 @@ class QuerySender implements FactoryInterface
      * @var TransferAnnotationBuilder
      */
     private $annotationBuilder;
-    private QueryService $queryService;
+    private CachingQueryService $queryService;
 
     /**
      * Send
@@ -45,7 +45,7 @@ class QuerySender implements FactoryInterface
         return $this->send(IsEnabledQry::create(['ids' => $features]))->getResult()['isEnabled'];
     }
 
-    protected function getQueryService(ContainerInterface $serviceLocator): QueryService
+    protected function getQueryService(ContainerInterface $serviceLocator): CachingQueryService
     {
         return $serviceLocator->get('QueryService');
     }

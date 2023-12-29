@@ -2,8 +2,8 @@
 
 namespace Common\Service\Qa\Custom\Common;
 
-use Common\Form\Annotation\CustomAnnotationBuilder;
 use Common\Form\Model\Fieldset\MultipleFileUpload;
+use Laminas\Form\Annotation\AnnotationBuilder;
 use Laminas\Form\Factory as FormFactory;
 use Laminas\Form\InputFilterProviderFieldset;
 
@@ -12,18 +12,18 @@ class FileUploadFieldsetGenerator
     /** @var FormFactory */
     private $formFactory;
 
-    /** @var CustomAnnotationBuilder */
+    /** @var AnnotationBuilder */
     private $customAnnotationBuilder;
 
     /**
      * Create service instance
      *
      * @param FormFactory $formFactory
-     * @param CustomAnnotationBuilder $customAnnotationBuilder
+     * @param AnnotationBuilder $customAnnotationBuilder
      *
      * @return FileUploadFieldsetGenerator
      */
-    public function __construct(FormFactory $formFactory, CustomAnnotationBuilder $customAnnotationBuilder)
+    public function __construct(FormFactory $formFactory, AnnotationBuilder $customAnnotationBuilder)
     {
         $this->formFactory = $formFactory;
         $this->customAnnotationBuilder = $customAnnotationBuilder;

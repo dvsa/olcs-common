@@ -7,10 +7,9 @@ use Common\Preference\LanguageListener;
 use Common\Service\Cqrs\Exception\AccessDeniedException;
 use Common\Service\Cqrs\Exception\NotFoundException;
 use Common\Service\Helper\TranslationHelperService;
-use Common\Service\Table\Formatter\FormatterPluginManager;
 use Dvsa\Olcs\Utils\Translation\MissingTranslationProcessor;
+use Laminas\ServiceManager\ServiceManager;
 use Olcs\Logging\Log\Logger;
-use Laminas\Cache\Storage\Adapter\Redis;
 use Laminas\EventManager\EventManager;
 use Laminas\Http\Request;
 use Laminas\I18n\Translator\Translator;
@@ -250,7 +249,7 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
      *
      * @return void
      */
-    protected function setUpTranslator(ServiceLocatorInterface $sm, $eventManager)
+    protected function setUpTranslator(ServiceManager $sm, $eventManager)
     {
         /**
          * @var Translator $translator
@@ -326,7 +325,7 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
      *
      * @return void
      */
-    private function setLoggerUser(ServiceLocatorInterface $serviceManager)
+    private function setLoggerUser(ServiceManager $serviceManager)
     {
         $authService = $serviceManager->get(\LmcRbacMvc\Service\AuthorizationService::class);
         $serviceManager->get('LogProcessorManager')->get(\Olcs\Logging\Log\Processor\UserId::class)
