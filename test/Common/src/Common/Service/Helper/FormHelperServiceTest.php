@@ -2,8 +2,14 @@
 
 namespace CommonTest\Service\Helper;
 
+use Common\Service\Data\AddressDataService;
+use Common\Service\Helper\AddressHelperService;
+use Common\Service\Helper\DateHelperService;
 use Common\Service\Helper\FormHelperService;
 use Common\Service\Helper\TranslationHelperService;
+use Laminas\Form\Annotation\AnnotationBuilder;
+use Laminas\View\Renderer\RendererInterface;
+use LmcRbacMvc\Service\AuthorizationService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Form\Element\Select;
@@ -17,32 +23,32 @@ class FormHelperServiceTest extends MockeryTestCase
 {
     /** @var FormHelperService */
     private $sut;
-    /** @var \LmcRbacMvc\Service\AuthorizationService | m\MockInterface */
+    /** @var AuthorizationService | m\MockInterface */
     private $mockAuthSrv;
-    /** @var \Common\Form\Annotation\CustomAnnotationBuilder | m\MockInterface */
+    /** @var AnnotationBuilder | m\MockInterface */
     private $mockBuilder;
-    /** @var  \Common\Service\Helper\AddressHelperService | m\MockInterface */
+    /** @var  AddressHelperService | m\MockInterface */
     private $mockHlpAddr;
-    /** @var  \Common\Service\Helper\DateHelperService | m\MockInterface */
+    /** @var  DateHelperService | m\MockInterface */
     private $mockHlpDate;
-    /** @var  \Laminas\View\Renderer\RendererInterface | m\MockInterface */
+    /** @var  RendererInterface | m\MockInterface */
     private $mockRenderer;
-    /** @var  \Common\Service\Helper\TranslationHelperService | m\MockInterface */
+    /** @var  TranslationHelperService | m\MockInterface */
     private $mockTransSrv;
-    /** @var  \Common\Service\Data\AddressDataService| m\MockInterface */
+    /** @var  AddressDataService| m\MockInterface */
     private $mockDataAddress;
 
     public function setUp(): void
     {
-        $this->mockBuilder = m::mock(\Common\Form\Annotation\CustomAnnotationBuilder::class);
-        $this->mockAuthSrv = m::mock(\LmcRbacMvc\Service\AuthorizationService::class);
+        $this->mockBuilder = m::mock(AnnotationBuilder::class);
+        $this->mockAuthSrv = m::mock(AuthorizationService::class);
 
-        $this->mockTransSrv = m::mock(\Common\Service\Helper\TranslationHelperService::class);
-        $this->mockRenderer = m::mock(\Laminas\View\Renderer\RendererInterface::class);
-        $this->mockHlpAddr = m::mock(\Common\Service\Helper\AddressHelperService::class);
-        $this->mockHlpDate = m::mock(\Common\Service\Helper\DateHelperService::class);
+        $this->mockTransSrv = m::mock(TranslationHelperService::class);
+        $this->mockRenderer = m::mock(RendererInterface::class);
+        $this->mockHlpAddr = m::mock(AddressHelperService::class);
+        $this->mockHlpDate = m::mock(DateHelperService::class);
 
-        $this->mockDataAddress = m::mock(\Common\Service\Data\AddressDataService::class);
+        $this->mockDataAddress = m::mock(AddressDataService::class);
 
         $config = [];
 
