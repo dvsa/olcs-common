@@ -2,12 +2,11 @@
 
 namespace CommonTest\View\Helper;
 
+use Interop\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\View\Helper\PageId;
 use Laminas\Router\Http\RouteMatch;
-use Laminas\ServiceManager\ServiceLocatorInterface;
-use Laminas\View\HelperPluginManager;
 
 /**
  * Page Id Test
@@ -38,7 +37,7 @@ class PageIdTest extends MockeryTestCase
         $routeMatch->shouldReceive('getMatchedRouteName')->andReturn('foo/bar');
         $routeMatch->shouldReceive('getParam')->with('action')->andReturn('someaction');
 
-        $sm = m::mock(ServiceLocatorInterface::class);
+        $sm = m::mock(ContainerInterface::class);
         $sm->shouldReceive('get->getMvcEvent->getRouteMatch')
             ->andReturn($routeMatch);
 

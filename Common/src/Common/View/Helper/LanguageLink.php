@@ -8,8 +8,8 @@
 
 namespace Common\View\Helper;
 
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
+
 use Laminas\View\Helper\AbstractHelper;
 use Common\Preference\Language;
 

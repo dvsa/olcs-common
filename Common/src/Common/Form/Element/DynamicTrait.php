@@ -4,6 +4,7 @@ namespace Common\Form\Element;
 
 use Common\Service\Data\Interfaces\ListData;
 use Common\Service\Data\PluginManager;
+use Interop\Container\ContainerInterface;
 
 trait DynamicTrait
 {
@@ -39,10 +40,7 @@ trait DynamicTrait
 
     protected PluginManager $dataServiceManager;
 
-    /**
-     * @var \Laminas\ServiceManager\ServiceLocatorInterface
-     */
-    protected $serviceLocator;
+    protected ContainerInterface $serviceLocator;
 
     /**
      * Name of the data service to use to fetch list options from
@@ -159,10 +157,7 @@ trait DynamicTrait
         return $this->dataService;
     }
 
-    /**
-     * @return \Laminas\ServiceManager\ServiceLocatorInterface
-     */
-    public function getServiceLocator()
+    public function getServiceLocator(): ContainerInterface
     {
         return $this->serviceLocator;
     }

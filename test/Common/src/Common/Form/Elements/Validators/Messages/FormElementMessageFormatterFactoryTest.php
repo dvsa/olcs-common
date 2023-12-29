@@ -12,7 +12,6 @@ use Common\Test\MocksServicesTrait;
 use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Validator\ValidatorPluginManager;
-use Mockery as m;
 
 /**
  * @see FormElementMessageFormatterFactory
@@ -32,46 +31,6 @@ class FormElementMessageFormatterFactoryTest extends MockeryTestCase
      * @var FormElementMessageFormatterFactory
      */
     protected $sut;
-
-    /**
-     * @test
-     */
-    public function createService_IsCallable()
-    {
-        // Setup
-        $this->sut = $this->setUpSut();
-
-        // Assert
-        $this->assertIsCallable([$this->sut, 'createService']);
-    }
-
-    protected const INVOKE_RESULT = 'RESULT FROM CALLING INVOKE';
-
-    /**
-     * @test
-     * @todo depends createService_IsCallable
-     */
-    public function createService_ShouldReturnInvoke()
-    {
-        // Setup
-        $serviceManager = $this->serviceManager();
-
-        // Don't mock the think you are testing - this is a rare time that i think its okish
-        $this->sut = $this->setUpMockService(FormElementMessageFormatterFactory::class);
-        $this->sut->makePartial();
-
-        // Expect
-        $this->sut->shouldReceive('__invoke')
-            ->with($serviceManager, FormElementMessageFormatter::class)
-            ->once()
-            ->andReturn($expectedResult = m::mock(FormElementMessageFormatter::class));
-
-        // Execute
-        $result = $this->sut->createService($serviceManager);
-
-        // Assert
-        $this->assertSame($expectedResult, $result);
-    }
 
     /**
      * @test

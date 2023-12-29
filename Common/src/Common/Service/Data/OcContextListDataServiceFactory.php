@@ -3,8 +3,7 @@
 namespace Common\Service\Data;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class OcContextListDataServiceFactory implements FactoryInterface
 {
@@ -22,17 +21,5 @@ class OcContextListDataServiceFactory implements FactoryInterface
             $container->get('DataServiceManager')->get(LicenceOperatingCentre::class),
             $container->get('DataServiceManager')->get(ApplicationOperatingCentre::class)
         );
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $services
-     *
-     * @return OcContextListDataService
-     */
-    public function createService(ServiceLocatorInterface $services): OcContextListDataService
-    {
-        return $this($services, OcContextListDataService::class);
     }
 }

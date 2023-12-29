@@ -4,8 +4,7 @@ namespace Common\Service\Qa\Custom\Common;
 
 use Interop\Container\ContainerInterface;
 use Laminas\Form\Factory as FormFactory;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class FileUploadFieldsetGeneratorFactory implements FactoryInterface
 {
@@ -15,13 +14,5 @@ class FileUploadFieldsetGeneratorFactory implements FactoryInterface
             new FormFactory(),
             $container->get('FormAnnotationBuilder')
         );
-    }
-
-    /**
-     * @deprecated
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): FileUploadFieldsetGenerator
-    {
-        return $this->__invoke($serviceLocator, FileUploadFieldsetGenerator::class);
     }
 }

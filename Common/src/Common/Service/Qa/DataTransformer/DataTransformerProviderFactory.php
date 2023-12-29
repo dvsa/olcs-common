@@ -3,8 +3,7 @@
 namespace Common\Service\Qa\DataTransformer;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class DataTransformerProviderFactory implements FactoryInterface
 {
@@ -23,13 +22,5 @@ class DataTransformerProviderFactory implements FactoryInterface
         );
 
         return $dataTransformerProvider;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): DataTransformerProvider
-    {
-        return $this->__invoke($serviceLocator, DataTransformerProvider::class);
     }
 }

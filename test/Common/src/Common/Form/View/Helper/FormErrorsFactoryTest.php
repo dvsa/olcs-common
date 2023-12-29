@@ -26,43 +26,13 @@ class FormErrorsFactoryTest extends MockeryTestCase
     /**
      * @test
      */
-    public function createService_IsCallable()
-    {
-        // Setup
-        $sut = $this->setUpSut();
-
-        // Assert
-        $this->assertIsCallable([$sut, 'createService']);
-    }
-
-    /**
-     * @test
-     * @depends createService_IsCallable
-     */
-    public function createService_ReturnsInstanceOfFormErrors()
-    {
-        // Setup
-        $serviceLocator = $this->setUpServiceLocator();
-        $pluginManager = $this->setUpAbstractPluginManager($serviceLocator);
-        $sut = $this->setUpSut();
-
-        // Execute
-        $result = $sut->createService($pluginManager);
-
-        // Assert
-        $this->assertInstanceOf(FormErrors::class, $result);
-    }
-
-    /**
-     * @test
-     */
     public function __invoke_IsCallable()
     {
         // Setup
         $sut = $this->setUpSut();
 
         // Assert
-        $this->assertIsCallable([$sut, 'createService']);
+        $this->assertIsCallable([$sut, '__invoke']);
     }
 
     /**

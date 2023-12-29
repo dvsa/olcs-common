@@ -7,11 +7,6 @@ use Dvsa\Olcs\Transfer\Command\CommandInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
-/**
- * Command Sender Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class CommandSenderTest extends MockeryTestCase
 {
     protected $sut;
@@ -36,7 +31,7 @@ class CommandSenderTest extends MockeryTestCase
         $sm->setService('CommandService', $this->commandService);
         $sm->setService('TransferAnnotationBuilder', $this->annotationBuilder);
 
-        $service = $this->sut->createService($sm);
+        $service = $this->sut->__invoke($sm, CommandSender::class);
 
         $this->assertSame($service, $this->sut);
     }

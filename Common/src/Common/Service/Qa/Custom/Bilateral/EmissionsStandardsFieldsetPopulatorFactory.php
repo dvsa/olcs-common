@@ -3,8 +3,7 @@
 namespace Common\Service\Qa\Custom\Bilateral;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class EmissionsStandardsFieldsetPopulatorFactory implements FactoryInterface
 {
@@ -16,13 +15,5 @@ class EmissionsStandardsFieldsetPopulatorFactory implements FactoryInterface
             $container->get('QaBilateralYesNoWithMarkupForNoPopulator'),
             $container->get('QaBilateralYesNoValueOptionsGenerator')
         );
-    }
-
-    /**
-     * @deprecated
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): EmissionsStandardsFieldsetPopulator
-    {
-        return $this->__invoke($serviceLocator, EmissionsStandardsFieldsetPopulator::class);
     }
 }

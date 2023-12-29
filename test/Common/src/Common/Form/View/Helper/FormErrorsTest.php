@@ -8,10 +8,10 @@ use Common\Form\Elements\Validators\Messages\FormElementMessageFormatterFactory;
 use Common\Form\Elements\Validators\Messages\GenericValidationMessage;
 use Common\Form\View\Helper\FormErrorsFactory;
 use Common\Test\MocksServicesTrait;
+use Interop\Container\ContainerInterface;
 use Laminas\Form\Form;
 use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Validator\ValidatorPluginManager;
 use Mockery as m;
@@ -933,14 +933,10 @@ class FormErrorsTest extends MockeryTestCase
         $this->sut->setView($this->view);
     }
 
-    /**
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return FormErrors
-     */
-    protected function setUpSut(ServiceLocatorInterface $serviceLocator): FormErrors
+    protected function setUpSut(ContainerInterface $serviceLocator): FormErrors
     {
         $pluginManager = $this->setUpAbstractPluginManager($serviceLocator);
-        return (new FormErrorsFactory())->createService($pluginManager);
+        return (new FormErrorsFactory())->__invoke($pluginManager, FormErrors::class);
     }
 
     /**

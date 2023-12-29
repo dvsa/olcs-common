@@ -2,9 +2,9 @@
 
 namespace Common\Service\Data;
 
+use Interop\Container\ContainerInterface;
 use Laminas\Mvc\Service\AbstractPluginManagerFactory;
 use Laminas\Mvc\Service\ServiceManagerConfig;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * PluginManagerFactory
@@ -13,11 +13,11 @@ class PluginManagerFactory extends AbstractPluginManagerFactory
 {
     const PLUGIN_MANAGER_CLASS = 'Common\Service\Data\PluginManager';
 
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $name, array $options = null)
     {
-        $service = parent::createService($serviceLocator);
+        $service = parent::__invoke($container, $name, $options);
 
-        $config = $serviceLocator->get('Config');
+        $config = $container->get('Config');
 
         if (isset($config['data_services'])) {
             $pluginManagerConfig = new ServiceManagerConfig($config['data_services']);

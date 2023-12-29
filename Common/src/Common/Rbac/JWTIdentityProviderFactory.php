@@ -7,8 +7,7 @@ use Dvsa\Olcs\Transfer\Service\CacheEncryption;
 use Exception;
 use Interop\Container\ContainerInterface;
 use Laminas\Authentication\Storage\Session;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Laminas\Session\Container;
 use RuntimeException;
 
@@ -38,18 +37,5 @@ class JWTIdentityProviderFactory implements FactoryInterface
             $container->get(RefreshTokenService::class),
             $container->get(Session::class)
         );
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return mixed
-     * @throws Exception
-     * @deprecated
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): JWTIdentityProvider
-    {
-        return $this->__invoke($serviceLocator, null);
     }
 }

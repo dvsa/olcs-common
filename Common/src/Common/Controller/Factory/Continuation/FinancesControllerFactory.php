@@ -9,8 +9,7 @@ use Common\Service\Helper\GuidanceHelperService;
 use Common\Service\Helper\TranslationHelperService;
 use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use LmcRbacMvc\Service\AuthorizationService;
 
 class FinancesControllerFactory implements FactoryInterface
@@ -23,7 +22,6 @@ class FinancesControllerFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): FinancesController
     {
-        $container = method_exists($container, 'getServiceLocator') ? $container->getServiceLocator() : $container;
         $niTextTranslationUtil = $container->get(NiTextTranslation::class);
         $authService = $container->get(AuthorizationService::class);
         $formServiceManager = $container->get(FormServiceManager::class);
@@ -31,17 +29,5 @@ class FinancesControllerFactory implements FactoryInterface
         $formHelper = $container->get(FormHelperService::class);
         $guidanceHelper = $container->get(GuidanceHelperService::class);
         return new FinancesController($niTextTranslationUtil, $authService, $formServiceManager, $translationHelper, $formHelper, $guidanceHelper);
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     *
-     * @return FinancesController
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): FinancesController
-    {
-        return $this->__invoke($serviceLocator, FinancesController::class);
     }
 }

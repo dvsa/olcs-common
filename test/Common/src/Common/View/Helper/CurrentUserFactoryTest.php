@@ -4,18 +4,14 @@ namespace CommonTest\View\Helper;
 
 use Common\View\Helper\CurrentUser;
 use Common\View\Helper\CurrentUserFactory;
+use Interop\Container\ContainerInterface;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Mockery as m;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 use LmcRbacMvc\Service\AuthorizationService;
 
-/**
- * Class CurrentUserFactoryTest
- * @package CommonTest\View\Helper
- */
 class CurrentUserFactoryTest extends TestCase
 {
-    public function testCreateService()
+    public function testInvoke(): void
     {
         $mockAuth = m::mock(AuthorizationService::class);
         $config = [
@@ -24,12 +20,11 @@ class CurrentUserFactoryTest extends TestCase
             ],
         ];
 
-        $mockSl = m::mock(ServiceLocatorInterface::class);
-        $mockSl->shouldReceive('getServiceLocator')->andReturnSelf();
+        $mockSl = m::mock(ContainerInterface::class);
         $mockSl->shouldReceive('get')->with(AuthorizationService::class)->andReturn($mockAuth);
         $mockSl->shouldReceive('get')->with('Config')->andReturn($config);
         $sut = new CurrentUserFactory();
-        $service = $sut->createService($mockSl);
+        $service = $sut->__invoke($mockSl, CurrentUser::class);
 
         $this->assertInstanceOf(CurrentUser::class, $service);
     }
@@ -43,10 +38,9 @@ class CurrentUserFactoryTest extends TestCase
             'auth' => [],
         ];
 
-        $mockSl = m::mock(ServiceLocatorInterface::class);
-        $mockSl->shouldReceive('getServiceLocator')->andReturnSelf();
+        $mockSl = m::mock(ContainerInterface::class);
         $mockSl->shouldReceive('get')->with('Config')->andReturn($config);
         $sut = new CurrentUserFactory();
-        $sut->createService($mockSl);
+        $sut->__invoke($mockSl, CurrentUser::class);
     }
 }

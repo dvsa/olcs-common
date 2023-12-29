@@ -48,7 +48,7 @@ class LanguageListenerTest extends MockeryTestCase
         $sm->setService('translator', $this->translator);
 
         $this->sut = new LanguageListener();
-        $this->sut->createService($sm);
+        $this->sut->__invoke($sm, LanguageListener::class);
     }
 
     public function testAttach()

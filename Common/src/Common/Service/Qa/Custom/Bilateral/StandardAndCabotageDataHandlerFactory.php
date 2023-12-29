@@ -3,8 +3,7 @@
 namespace Common\Service\Qa\Custom\Bilateral;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class StandardAndCabotageDataHandlerFactory implements FactoryInterface
 {
@@ -15,13 +14,5 @@ class StandardAndCabotageDataHandlerFactory implements FactoryInterface
             $container->get('QaBilateralStandardAndCabotageIsValidHandler'),
             $container->get('QaCommonWarningAdder')
         );
-    }
-
-    /**
-     * @deprecated
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): StandardAndCabotageDataHandler
-    {
-        return $this->__invoke($serviceLocator, StandardAndCabotageDataHandler::class);
     }
 }

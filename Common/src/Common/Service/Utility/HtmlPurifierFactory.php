@@ -5,8 +5,7 @@ namespace Common\Service\Utility;
 use HTMLPurifier;
 use HTMLPurifier_Config;
 use Psr\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 /**
  * Html Purifier Factory
@@ -18,26 +17,6 @@ class HtmlPurifierFactory implements FactoryInterface
     protected $whiteList =
         'a[href|class|id|target],p[class|style|id],b,i[class|style|id],strong,br,span[class|style|id],h1[class|id],h2[class|id],h3[class|id],h4[class|id],li[class|style|id],ul[class|style|id]';
 
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     *
-     * @return HTMLPurifier
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): HTMLPurifier
-    {
-        $config = $serviceLocator->get('Config');
-        return $this($serviceLocator, HTMLPurifier::class, ['html-purifier-cache-dir' => $config['html-purifier-cache-dir']]);
-    }
-
-    /**
-     * @param ContainerInterface $container
-     * @param string $requestedName
-     * @param array|null $options
-
-     * @return HTMLPurifier
-     */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): HTMLPurifier
     {
         $appConfig = $container->get('config');

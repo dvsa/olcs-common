@@ -7,6 +7,7 @@
  */
 namespace CommonTest\FormService;
 
+use Common\FormService\FormServiceManager;
 use Common\FormService\FormServiceManagerFactory;
 use Mockery as m;
 
@@ -34,7 +35,7 @@ class FormServiceManagerFactoryTest extends \PHPUnit\Framework\TestCase
 
     }
 
-    public function testCreateService()
+    public function testInvoke()
     {
         // Params
         $config = [
@@ -48,9 +49,9 @@ class FormServiceManagerFactoryTest extends \PHPUnit\Framework\TestCase
         // Mocks
         $this->sm->setService('Config', $config);
 
-        $brm = $this->sut->createService($this->sm);
+        $brm = $this->sut->__invoke($this->sm, FormServiceManager::class);
 
-        $this->assertInstanceOf('\Common\FormService\FormServiceManager', $brm);
+        $this->assertInstanceOf(FormServiceManager::class, $brm);
         $this->assertSame($this->sm, $brm->getServiceLocator());
         $this->assertTrue($brm->has('foo'));
         $this->assertFalse($brm->has('bar'));

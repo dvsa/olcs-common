@@ -17,7 +17,7 @@ use Laminas\I18n\Translator\Translator;
 use Laminas\ModuleManager\ModuleEvent;
 use Laminas\Mvc\Application;
 use Laminas\Mvc\MvcEvent;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+
 use Laminas\Http\PhpEnvironment\Response;
 use Laminas\View\Model\ViewModel;
 use Laminas\ModuleManager\Feature\ConfigProviderInterface;

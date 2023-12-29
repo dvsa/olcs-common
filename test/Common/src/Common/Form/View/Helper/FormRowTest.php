@@ -11,12 +11,12 @@ use Common\Form\View\Helper as CommonHelper;
 use Common\Form\View\Helper\FormRow;
 use Common\Test\MockeryTestCase;
 use Common\Test\MocksServicesTrait;
+use Interop\Container\ContainerInterface;
 use Laminas\Form\Element;
 use Laminas\Form\View\Helper as LaminasHelper;
 use Laminas\I18n\Translator\Translator;
 use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\I18n\View\Helper\Translate;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Validator\ValidatorPluginManager;
 use Laminas\View\HelperPluginManager;
@@ -53,7 +53,7 @@ class FormRowTest extends MockeryTestCase
         // Assert
         $this->assertIsCallable([$this->sut, '__invoke']);
     }
-    
+
     /**
      * @test
      * @depends __invoke_IsCallable
@@ -646,14 +646,10 @@ class FormRowTest extends MockeryTestCase
         $this->sut->setTranslator($this->translator());
     }
 
-    /**
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return CommonHelper\FormElementErrors
-     */
-    protected function setUpFormElementErrors(ServiceLocatorInterface $serviceLocator): CommonHelper\FormElementErrors
+    protected function setUpFormElementErrors(ContainerInterface $serviceLocator): CommonHelper\FormElementErrors
     {
         $pluginManager = $this->setUpAbstractPluginManager($serviceLocator);
-        return (new CommonHelper\FormElementErrorsFactory())->createService($pluginManager);
+        return (new CommonHelper\FormElementErrorsFactory())->__invoke($pluginManager, CommonHelper\FormElementErrors::class);
     }
 
     /**

@@ -3,8 +3,7 @@
 namespace Common\Service\Qa;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class TranslateableTextHandlerFactory implements FactoryInterface
 {
@@ -14,13 +13,5 @@ class TranslateableTextHandlerFactory implements FactoryInterface
             $container->get('QaFormattedTranslateableTextParametersGenerator'),
             $container->get('Helper\Translation')
         );
-    }
-
-    /**
-     * @deprecated
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): TranslateableTextHandler
-    {
-        return $this->__invoke($serviceLocator, TranslateableTextHandler::class);
     }
 }

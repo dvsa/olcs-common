@@ -7,7 +7,6 @@ use Common\Util\LvaRoute;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Router\Http\Segment;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Section Config Test

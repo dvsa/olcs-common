@@ -3,13 +3,9 @@
 namespace Common\Service\Helper;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use LmcRbacMvc\Service\AuthorizationService;
 
-/**
- * FormHelperServiceFactory
- */
 class FormHelperServiceFactory implements FactoryInterface
 {
     /**
@@ -32,17 +28,5 @@ class FormHelperServiceFactory implements FactoryInterface
             $container->get('Helper\Date'),
             $container->get('Helper\Translation')
         );
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $services
-     *
-     * @return FormHelperService
-     */
-    public function createService(ServiceLocatorInterface $services): FormHelperService
-    {
-        return $this($services, FormHelperService::class);
     }
 }

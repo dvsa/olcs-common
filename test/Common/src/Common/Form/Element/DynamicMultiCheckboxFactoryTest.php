@@ -1,26 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Form\Element;
 
+use Common\Form\Element\DynamicMultiCheckbox;
 use Common\Form\Element\DynamicMultiCheckboxFactory;
 
-/**
- * Class DynamicMultiCheckboxFactoryTest
- * @package CommonTest\Form\Element
- */
 class DynamicMultiCheckboxFactoryTest extends \PHPUnit\Framework\TestCase
 {
-    public function testCreateService()
+    public function testInvoke()
     {
-
         $mockSl = $this->createMock('\Laminas\Form\FormElementManager');
-        $mockSl->expects($this->any())->method('getServiceLocator')->willReturnSelf();
         $mockSl->expects($this->any())->method('get')->willReturnSelf();
 
         $sut = new DynamicMultiCheckboxFactory();
-        $service = $sut->createService($mockSl);
+        $service = $sut->__invoke($mockSl, DynamicMultiCheckbox::class);
 
-        $this->assertInstanceOf('\Common\Form\Element\DynamicMultiCheckbox', $service);
+        $this->assertInstanceOf(DynamicMultiCheckbox::class, $service);
         $this->assertSame($mockSl, $service->getServiceLocator());
     }
 }

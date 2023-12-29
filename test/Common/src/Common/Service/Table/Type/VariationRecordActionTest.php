@@ -3,6 +3,7 @@
 namespace CommonTest\Service\Table\Type;
 
 use Common\Service\Table\Type\VariationRecordAction;
+use Interop\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
@@ -22,7 +23,7 @@ class VariationRecordActionTest extends MockeryTestCase
     {
         $this->mockTranslator = m::mock(\Laminas\I18n\Translator\TranslatorInterface::class);
 
-        $mockSm = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class);
+        $mockSm = m::mock(ContainerInterface::class);
         $mockSm->shouldReceive('get')->once()->with('translator')->andReturn($this->mockTranslator);
 
         $mockAuthService = m::mock()

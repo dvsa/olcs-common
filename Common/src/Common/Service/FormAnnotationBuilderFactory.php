@@ -2,17 +2,11 @@
 
 namespace Common\Service;
 
-use Common\Form\Annotation\CustomAnnotationBuilder;
 use Laminas\Form\Annotation\AnnotationBuilder;
 use Interop\Container\ContainerInterface;
 use Laminas\Form\Factory;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
-/**
- * Class FormAnnotationBuilderFactory
- * @package Common\Service
- */
 class FormAnnotationBuilderFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
@@ -35,16 +29,5 @@ class FormAnnotationBuilderFactory implements FactoryInterface
         $annotationBuilder->setFormFactory($formFactory);
 
         return $annotationBuilder;
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return mixed
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): CustomAnnotationBuilder
-    {
-        return $this->__invoke($serviceLocator, CustomAnnotationBuilder::class);
     }
 }

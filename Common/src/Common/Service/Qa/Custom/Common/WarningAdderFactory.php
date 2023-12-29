@@ -3,8 +3,7 @@
 namespace Common\Service\Qa\Custom\Common;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class WarningAdderFactory implements FactoryInterface
 {
@@ -14,13 +13,5 @@ class WarningAdderFactory implements FactoryInterface
             $container->get('ViewHelperManager')->get('partial'),
             $container->get('QaCommonHtmlAdder')
         );
-    }
-
-    /**
-     * @deprecated
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): WarningAdder
-    {
-        return $this->__invoke($serviceLocator, null, null);
     }
 }

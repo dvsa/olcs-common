@@ -3,8 +3,7 @@
 namespace Common\Service\Data;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 /**
  * StaticListFactory
@@ -25,17 +24,5 @@ class StaticListFactory implements FactoryInterface
             $container->get(AbstractDataServiceServices::class),
             $container->get('Config')
         );
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $services
-     *
-     * @return StaticList
-     */
-    public function createService(ServiceLocatorInterface $services): StaticList
-    {
-        return $this($services, StaticList::class);
     }
 }

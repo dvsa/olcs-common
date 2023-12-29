@@ -11,11 +11,11 @@ use Common\Form\View\Helper\FormElementErrorsFactory;
 use Common\Test\MockeryTestCase;
 use Common\Test\MocksServicesTrait;
 use HTMLPurifier;
+use Interop\Container\ContainerInterface;
 use Laminas\Form\Element;
 use Laminas\I18n\Translator\Translator;
 use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\I18n\View\Helper\Translate;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Validator\ValidatorPluginManager;
 use Laminas\View\HelperPluginManager;
@@ -103,14 +103,10 @@ class FormElementErrorsTest extends MockeryTestCase
         return $element;
     }
 
-    /**
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return FormElementErrors
-     */
-    protected function setUpSut(ServiceLocatorInterface $serviceLocator): FormElementErrors
+    protected function setUpSut(ContainerInterface $container): FormElementErrors
     {
-        $pluginManager = $this->setUpAbstractPluginManager($serviceLocator);
-        $instance = (new FormElementErrorsFactory())->createService($pluginManager);
+        $pluginManager = $this->setUpAbstractPluginManager($container);
+        $instance = (new FormElementErrorsFactory())->__invoke($pluginManager, FormElementErrors::class);
         return $instance;
     }
 
@@ -126,13 +122,9 @@ class FormElementErrorsTest extends MockeryTestCase
         return $instance;
     }
 
-    /**
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return FormLabel
-     */
-    protected function setUpFormLabel(ServiceLocatorInterface $serviceLocator): FormLabel
+    protected function setUpFormLabel(ContainerInterface $container): FormLabel
     {
-        $instance = (new FormLabelFactory())->createService($serviceLocator);
+        $instance = (new FormLabelFactory())->__invoke($container, FormLabel::class);
         return $instance;
     }
 

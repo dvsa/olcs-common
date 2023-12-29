@@ -1,19 +1,10 @@
 <?php
 
-/**
- * ScriptFactory Test
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
- */
 namespace CommonTest\Service\Script;
 
 use Common\Service\Script\ScriptFactory;
+use Interop\Container\ContainerInterface;
 
-/**
- * ScriptFactory Test
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
- */
 class ScriptFactoryTest extends \PHPUnit\Framework\TestCase
 {
     protected $config = [];
@@ -42,13 +33,13 @@ class ScriptFactoryTest extends \PHPUnit\Framework\TestCase
             array('Config', $this->config),
         );
 
-        $sl = $this->createMock('\Laminas\ServiceManager\ServiceLocatorInterface', ['get', 'has']);
+        $sl = $this->createMock(ContainerInterface::class);
         $sl->expects($this->any())
            ->method('get')
            ->will($this->returnValueMap($valueMap));
 
         $this->service = new ScriptFactory();
-        $this->service->createService($sl);
+        $this->service->__invoke($sl, ScriptFactory::class);
     }
 
     public function testLoadFileWithNonExistentPath()

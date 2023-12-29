@@ -13,8 +13,8 @@ use Laminas\Form\Element\DateSelect;
 use Laminas\Form\Element\Hidden;
 use Laminas\Form\ElementInterface;
 use Laminas\Form\LabelAwareInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
+
 use Common\Form\Elements\Types\AttachFilesButton;
 
 /**

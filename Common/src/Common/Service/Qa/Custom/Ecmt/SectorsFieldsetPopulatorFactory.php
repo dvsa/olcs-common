@@ -2,24 +2,11 @@
 
 namespace Common\Service\Qa\Custom\Ecmt;
 
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Interop\Container\ContainerInterface;
 
 class SectorsFieldsetPopulatorFactory implements FactoryInterface
 {
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     *
-     * @return SectorsFieldsetPopulator
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): SectorsFieldsetPopulator
-    {
-        return $this->__invoke($serviceLocator, SectorsFieldsetPopulator::class);
-    }
-
     /**
      * @param ContainerInterface $container
      * @param $requestedName

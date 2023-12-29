@@ -6,8 +6,7 @@ namespace Common\Controller\Factory\FeatureToggle;
 
 use Common\Service\Cqrs\Query\QuerySender;
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 /**
  * A factory that enables developers to create a controller in two different ways depending on whether a  feature toggle
@@ -39,15 +38,6 @@ abstract class BinaryFeatureToggleAwareControllerFactory implements FactoryInter
     abstract protected function createServiceWhenDisabled(ContainerInterface $container, $requestedName, array $options = null);
 
     /**
-     * @inheritDoc
-     * @deprecated
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
-    {
-        return $this->__invoke($serviceLocator, null, null);
-    }
-
-    /**
      * @param ContainerInterface $container
      * @param mixed $requestedName
      * @param array|null $options
@@ -72,11 +62,7 @@ abstract class BinaryFeatureToggleAwareControllerFactory implements FactoryInter
             return true;
         }
 
-        if (method_exists($container, 'getServiceLocator')) {
-            $querySender = $container->getServiceLocator()->get('QuerySender');
-        } else {
-            $querySender = $container->get('QuerySender');
-        }
+        $querySender = $container->get('QuerySender');
 
         assert($querySender instanceof QuerySender, 'Expected instance of QuerySender');
         return $querySender->featuresEnabled($this->getFeatureToggleNames());

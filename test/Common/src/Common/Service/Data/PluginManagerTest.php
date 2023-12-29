@@ -3,6 +3,7 @@
 namespace CommonTest\Common\Service\Data;
 
 use Common\Service\Data\PluginManager;
+use Interop\Container\ContainerInterface;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 
@@ -29,7 +30,7 @@ class PluginManagerTest extends MockeryTestCase
 
     public function testGetChecksMainSlFirst()
     {
-        $mockSL = m::mock('\Laminas\ServiceManager\ServiceLocatorInterface');
+        $mockSL = m::mock(ContainerInterface::class);
         $mockSL->shouldReceive('has')->with('testService')->andReturn(true);
         $mockSL->shouldReceive('get')->with('testService')->andReturn('service');
 
@@ -42,7 +43,7 @@ class PluginManagerTest extends MockeryTestCase
 
     public function testGet()
     {
-        $mockSL = m::mock('\Laminas\ServiceManager\ServiceLocatorInterface');
+        $mockSL = m::mock(ContainerInterface::class);
         $mockSL->shouldReceive('has')->with('testService')->andReturn(false);
 
         $sut = new PluginManager();

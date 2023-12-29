@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Language Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\Preference;
 
 use Common\Preference\Language;
@@ -14,7 +9,6 @@ use Laminas\Http\Header\Cookie;
 use Laminas\Http\Header\SetCookie;
 use Laminas\Http\Request;
 use Laminas\Http\Response;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Language Test
@@ -28,9 +22,6 @@ class LanguageTest extends MockeryTestCase
      */
     protected $sut;
 
-    /**
-     * @var ServiceLocatorInterface
-     */
     protected $sm;
 
     /**
@@ -75,21 +66,21 @@ class LanguageTest extends MockeryTestCase
         $this->sm->setService('Response', $this->response);
     }
 
-    public function testCreateService()
+    public function testInvoke(): void
     {
         $cookie = m::mock();
 
         $this->request->shouldReceive('getCookie')
             ->andReturn($cookie);
 
-        $this->sut->createService($this->sm);
+        $this->sut->__invoke($this->sm, SetCookie::class);
 
         $this->assertInstanceOf(SetCookie::class, $this->setCookie);
 
         $this->assertEquals('en', $this->setCookie->getValue());
     }
 
-    public function testCreateServiceWithCookie()
+    public function testInvokeWithCookie(): void
     {
         $cookie = m::mock(Cookie::class)->makePartial();
         $cookie['langPref'] = 'cy';
@@ -97,7 +88,7 @@ class LanguageTest extends MockeryTestCase
         $this->request->shouldReceive('getCookie')
             ->andReturn($cookie);
 
-        $this->sut->createService($this->sm);
+        $this->sut->__invoke($this->sm, SetCookie::class);
 
         $this->assertInstanceOf(SetCookie::class, $this->setCookie);
 
@@ -112,7 +103,7 @@ class LanguageTest extends MockeryTestCase
         $this->request->shouldReceive('getCookie')
             ->andReturn($cookie);
 
-        $this->sut->createService($this->sm);
+        $this->sut->__invoke($this->sm, SetCookie::class);
 
         $this->expectException('\Exception');
 
@@ -127,7 +118,7 @@ class LanguageTest extends MockeryTestCase
         $this->request->shouldReceive('getCookie')
             ->andReturn($cookie);
 
-        $this->sut->createService($this->sm);
+        $this->sut->__invoke($this->sm, SetCookie::class);
 
         $this->sut->setPreference('en');
 

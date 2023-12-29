@@ -3,8 +3,7 @@
 namespace Common\Service\Table\Formatter;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
@@ -20,23 +19,10 @@ class FeeUrlFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): FeeUrl
     {
-        $container = method_exists($container, 'getServiceLocator') ? $container->getServiceLocator() : $container;
         $router     = $container->get('router');
         $request    = $container->get('request');
         $urlHelper  = $container->get('Helper\Url');
 
         return new FeeUrl($router, $request, $urlHelper);
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     *
-     * @return FeeUrl
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): FeeUrl
-    {
-        return $this->__invoke($serviceLocator, FeeUrl::class);
     }
 }

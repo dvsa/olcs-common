@@ -3,8 +3,7 @@
 namespace Common\Service\Table\Formatter;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class TransportManagerNameFactory implements FactoryInterface
 {
@@ -16,22 +15,9 @@ class TransportManagerNameFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $container = method_exists($container, 'getServiceLocator') ? $container->getServiceLocator() : $container;
         $translator = $container->get('translator');
         $urlHelper = $container->get('Helper\Url');
 
         return new TransportManagerName($urlHelper, $translator);
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     *
-     * @return TransportManagerName
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): TransportManagerName
-    {
-        return $this->__invoke($serviceLocator, TransportManagerName::class);
     }
 }

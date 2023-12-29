@@ -3,12 +3,8 @@
 namespace Common\Service\Data;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
-/**
- * VenueFactory
- */
 class VenueFactory implements FactoryInterface
 {
     /**
@@ -25,17 +21,5 @@ class VenueFactory implements FactoryInterface
             $container->get('DataServiceManager')->get(AbstractDataServiceServices::class),
             $container->get('DataServiceManager')->get(Licence::class)
         );
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $services
-     *
-     * @return Venue
-     */
-    public function createService(ServiceLocatorInterface $services): Venue
-    {
-        return $this($services, Venue::class);
     }
 }

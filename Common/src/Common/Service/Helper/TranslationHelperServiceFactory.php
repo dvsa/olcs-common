@@ -3,12 +3,8 @@
 namespace Common\Service\Helper;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
-/**
- * TranslationHelperServiceFactory
- */
 class TranslationHelperServiceFactory implements FactoryInterface
 {
     /**
@@ -24,17 +20,5 @@ class TranslationHelperServiceFactory implements FactoryInterface
         return new TranslationHelperService(
             $container->get('translator')
         );
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $services
-     *
-     * @return TranslationHelperService
-     */
-    public function createService(ServiceLocatorInterface $services): TranslationHelperService
-    {
-        return $this($services, TranslationHelperService::class);
     }
 }

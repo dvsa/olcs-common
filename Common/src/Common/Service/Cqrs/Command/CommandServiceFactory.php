@@ -1,32 +1,16 @@
 <?php
 
-/**
- * Command Service Factory
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Service\Cqrs\Command;
 
 use Dvsa\Olcs\Utils\Client\ClientAdapterLoggingWrapper;
 use Interop\Container\ContainerInterface;
 use Laminas\Http\Client;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorAwareInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Laminas\Session\Container;
 use RunTimeException;
 
-/**
- * Command Service Factory
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class CommandServiceFactory implements FactoryInterface
 {
-    /**
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return CommandService
-     */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): CommandService
     {
         $config = $container->get('Config');
@@ -54,15 +38,5 @@ class CommandServiceFactory implements FactoryInterface
             $container->get('Helper\FlashMessenger'),
             new Container($sessionName)
         );
-    }
-
-    /**
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return CommandService
-     * @deprecated
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): CommandService
-    {
-        return $this->__invoke($serviceLocator, null);
     }
 }

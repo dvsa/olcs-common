@@ -3,10 +3,6 @@
 namespace CommonTest\Common\Data\Object\Search;
 
 use Common\Data\Object\Search\People;
-use Common\RefData;
-use Laminas\ServiceManager\ServiceLocatorInterface;
-use Mockery as m;
-use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * @covers \Common\Data\Object\Search\SearchAbstract

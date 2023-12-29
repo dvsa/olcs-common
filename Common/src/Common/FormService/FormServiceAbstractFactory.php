@@ -3,11 +3,9 @@
 namespace Common\FormService;
 
 use Common\FormService\Form\Continuation\ConditionsUndertakings;
-use Common\FormService\Form\Continuation\Declaration;
 use Common\FormService\Form\Continuation\LicenceChecklist;
 use Common\FormService\Form\Continuation\Payment;
 use Common\FormService\Form\Continuation\Start;
-use Common\FormService\Form\Continuation as ContinuationFormService;
 use Common\FormService\Form\Lva\Addresses;
 use Common\FormService\Form\Lva\Application;
 use Common\FormService\Form\Lva\ApplicationGoodsVehicles;
@@ -73,7 +71,6 @@ use Common\Service\Script\ScriptFactory;
 use Common\Service\Table\TableFactory;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
 use Laminas\ServiceManager\Factory\AbstractFactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 use LmcRbacMvc\Service\AuthorizationService;
 
 class FormServiceAbstractFactory implements AbstractFactoryInterface
@@ -222,11 +219,6 @@ class FormServiceAbstractFactory implements AbstractFactoryInterface
         return in_array($requestedName, self::FORM_SERVICE_CLASS_ALIASES);
     }
 
-    public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
-    {
-        return $this->canCreate($serviceLocator, $requestedName);
-    }
-
     public function __invoke($container, $requestedName, array $options = null)
     {
         /** @var FormServiceManager $formServiceLocator */
@@ -239,7 +231,7 @@ class FormServiceAbstractFactory implements AbstractFactoryInterface
         /** @var ScriptFactory $scriptFactory */
         /** @var $tableBuilder */
 
-        $serviceLocator = method_exists($container, 'getServiceLocator') ? $container->getServiceLocator() : $container;
+        $serviceLocator = $container;
         $formHelper = $serviceLocator->get(FormHelperService::class);
 
         switch ($requestedName) {
@@ -516,10 +508,5 @@ class FormServiceAbstractFactory implements AbstractFactoryInterface
             'FormServiceAbstractFactory claimed to be able to supply instance of type "%s", but nothing was returned',
             $requestedName
         ));
-    }
-
-    public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
-    {
-        return $this->__invoke($serviceLocator, $requestedName);
     }
 }

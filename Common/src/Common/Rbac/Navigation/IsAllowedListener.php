@@ -3,19 +3,13 @@
 namespace Common\Rbac\Navigation;
 
 use Laminas\Navigation\Page\Mvc;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
-use LmcRbacMvc\Exception;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use LmcRbacMvc\Guard\GuardInterface;
 use LmcRbacMvc\Service\AuthorizationServiceInterface;
 use LmcRbacMvc\Guard\ProtectionPolicyTrait;
 use Laminas\EventManager\Event;
 use Interop\Container\ContainerInterface;
 
-/**
- * Class IsAllowedListener
- * @package Common\Rbac\Navigation
- */
 class IsAllowedListener implements FactoryInterface
 {
     use ProtectionPolicyTrait;
@@ -114,17 +108,6 @@ class IsAllowedListener implements FactoryInterface
         $event->stopPropagation();
 
         return $this->isGranted($page);
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return mixed
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): IsAllowedListener
-    {
-        return $this->__invoke($serviceLocator, IsAllowedListener::class);
     }
 
     /**

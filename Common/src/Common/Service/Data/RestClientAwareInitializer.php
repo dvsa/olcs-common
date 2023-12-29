@@ -4,8 +4,7 @@ namespace Common\Service\Data;
 
 use Common\Service\Data\Interfaces\RestClientAware;
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\InitializerInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Initializer\InitializerInterface;
 
 /**
  * Class RestClientAwareInitializer
@@ -23,12 +22,10 @@ class RestClientAwareInitializer implements InitializerInterface
     public function __invoke(ContainerInterface $container, $instance)
     {
         if ($instance instanceof RestClientAware) {
-            $serviceLocator = $container->getServiceLocator();
-
             /** @var \Common\Util\ResolveApi $apiResolver */
-            $apiResolver = $serviceLocator->get('ServiceApiResolver');
+            $apiResolver = $container->get('ServiceApiResolver');
             /** @var \Laminas\Mvc\I18n\Translator $translator */
-            $translator = $serviceLocator->get('translator');
+            $translator = $container->get('translator');
 
             $client = $apiResolver->getClient($instance->getServiceName());
             $client->setLanguage($translator->getLocale());
@@ -36,13 +33,5 @@ class RestClientAwareInitializer implements InitializerInterface
         }
 
         return $instance;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function initialize($instance, ServiceLocatorInterface $serviceLocator)
-    {
-        return $this($serviceLocator, $instance);
     }
 }

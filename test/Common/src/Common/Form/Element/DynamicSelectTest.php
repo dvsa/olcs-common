@@ -3,6 +3,7 @@
 namespace CommonTest\Form\Element;
 
 use Common\Form\Element\DynamicSelect;
+use Interop\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
@@ -144,7 +145,7 @@ class DynamicSelectTest extends TestCase
 
         $mockService = $this->createMock('\Common\Service\Data\ListDataInterface');
 
-        $mockSl = $this->createMock('\Laminas\ServiceManager\ServiceLocatorInterface');
+        $mockSl = $this->createMock(ContainerInterface::class);
         $mockSl->expects($this->once())->method('get')->with($this->equalTo($serviceName))->willReturn($mockService);
 
         $sut = new DynamicSelect();
@@ -159,7 +160,7 @@ class DynamicSelectTest extends TestCase
 
         $mockService = $this->createMock('\StdClass');
 
-        $mockSl = $this->createMock('\Laminas\ServiceManager\ServiceLocatorInterface');
+        $mockSl = $this->createMock(ContainerInterface::class);
         $mockSl->expects($this->once())->method('get')->with($this->equalTo($serviceName))->willReturn($mockService);
 
         $sut = new DynamicSelect();

@@ -3,8 +3,7 @@
 namespace Common\View\Helper;
 
 use Common\Module;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Laminas\View\Helper\AbstractHelper;
 use Laminas\I18n\View\Helper\Translate;
 

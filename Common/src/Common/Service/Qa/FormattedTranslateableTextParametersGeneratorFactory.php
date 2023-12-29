@@ -3,8 +3,7 @@
 namespace Common\Service\Qa;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class FormattedTranslateableTextParametersGeneratorFactory implements FactoryInterface
 {
@@ -13,13 +12,5 @@ class FormattedTranslateableTextParametersGeneratorFactory implements FactoryInt
         return new FormattedTranslateableTextParametersGenerator(
             $container->get('QaTranslateableTextParameterHandler')
         );
-    }
-
-    /**
-     * @deprecated
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): FormattedTranslateableTextParametersGenerator
-    {
-        return $this->__invoke($serviceLocator, FormattedTranslateableTextParametersGenerator::class);
     }
 }

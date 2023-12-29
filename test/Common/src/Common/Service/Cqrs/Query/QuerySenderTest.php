@@ -4,9 +4,9 @@ namespace CommonTest\Common\Service\Cqrs\Query;
 
 use Common\Service\Cqrs\Query\QuerySender;
 use Dvsa\Olcs\Transfer\Query\QueryInterface;
+use Interop\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Query Sender Test
@@ -27,11 +27,11 @@ class QuerySenderTest extends MockeryTestCase
         $this->mockQueryService = m::mock();
         $this->mockAnnotationBuilder = m::mock();
 
-        $sm = m::mock(ServiceLocatorInterface::class);
+        $sm = m::mock(ContainerInterface::class);
         $sm->shouldReceive('get')->with('QueryService')->andReturn($this->mockQueryService);
         $sm->shouldReceive('get')->with('TransferAnnotationBuilder')->andReturn($this->mockAnnotationBuilder);
 
-        $this->sut->createService($sm);
+        $this->sut->__invoke($sm, QuerySender::class);
     }
 
     /**

@@ -3,8 +3,7 @@
 namespace Common\Service\Table\Formatter;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
@@ -22,17 +21,5 @@ class FeeNoAndStatusFactory implements FactoryInterface
     {
         $feeStatusFormatter = $container->get(FormatterPluginManager::class)->get(FeeStatus::class);
         return new FeeNoAndStatus($feeStatusFormatter);
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     *
-     * @return FeeNoAndStatus
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): FeeNoAndStatus
-    {
-        return $this->__invoke($serviceLocator, FeeNoAndStatus::class);
     }
 }

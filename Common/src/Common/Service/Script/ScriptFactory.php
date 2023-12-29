@@ -9,8 +9,7 @@
 namespace Common\Service\Script;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use \Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 /**
  * Inline JavaScript loading service
@@ -40,7 +39,6 @@ class ScriptFactory implements FactoryInterface
      */
     protected $viewHelperManager = null;
 
-
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $this->setViewHelperManager($container->get('ViewHelperManager'));
@@ -53,17 +51,6 @@ class ScriptFactory implements FactoryInterface
         $this->setFilePaths($config['local_scripts_path']);
 
         return $this;
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return mixed
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
-    {
-        return $this->__invoke($serviceLocator, ScriptFactory::class);
     }
 
     /**

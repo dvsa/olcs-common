@@ -4,9 +4,9 @@ namespace CommonTest\Controller\Lva;
 
 use Common\Controller\Lva\AbstractControllerFactory;
 use CommonTest\Common\Controller\Lva\Stubs\ControllerWithFactoryStub;
+use Interop\Container\ContainerInterface;
 use Laminas\Mvc\Controller\ControllerManager;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
@@ -21,14 +21,14 @@ class AbstractControllerFactoryTest extends MockeryTestCase
     /** @var  m\MockInterface | ControllerManager */
     protected $mockScm;
 
-    /** @var  m\MockInterface | ServiceLocatorInterface */
+    /** @var  m\MockInterface | ContainerInterface */
     protected $mockSm;
 
     protected function setUp(): void
     {
         $this->sut = new AbstractControllerFactory();
 
-        $this->mockSm = m::mock(ServiceLocatorInterface::class);
+        $this->mockSm = m::mock(ContainerInterface::class);
 
         $this->mockScm = m::mock(ControllerManager::class);
         $this->mockScm->shouldReceive('getServiceLocator')->andReturn($this->mockSm);
@@ -53,9 +53,6 @@ class AbstractControllerFactoryTest extends MockeryTestCase
         $this->mockSm->shouldReceive('get')->with('Config')->andReturn($config);
 
         $this->assertTrue($this->sut->canCreate($this->mockScm, $requestedName));
-
-        // TODO OLCS-28149
-        $this->assertTrue($this->sut->canCreateServiceWithName($this->mockScm, $name, $requestedName));
     }
 
     /**
@@ -77,9 +74,6 @@ class AbstractControllerFactoryTest extends MockeryTestCase
         $this->mockSm->shouldReceive('get')->with('Config')->andReturn($config);
 
         $this->assertFalse($this->sut->canCreate($this->mockScm, $requestedName));
-
-        // TODO OLCS-28149
-        $this->assertFalse($this->sut->canCreateServiceWithName($this->mockScm, $name, $requestedName));
     }
 
     /**
@@ -101,9 +95,6 @@ class AbstractControllerFactoryTest extends MockeryTestCase
         $this->mockSm->shouldReceive('get')->with('Config')->andReturn($config);
 
         $this->assertInstanceOf('\stdClass', ($this->sut)($this->mockScm, $requestedName));
-
-        // TODO OLCS-28149
-        $this->assertInstanceOf('\stdClass', $this->sut->createServiceWithName($this->mockScm, $name, $requestedName));
     }
 
     public function testInvokeUsingFactory()
@@ -122,11 +113,6 @@ class AbstractControllerFactoryTest extends MockeryTestCase
         $this->mockSm->shouldReceive('get')->with('Config')->andReturn($config);
 
         $actual = ($this->sut)($this->mockScm, $requestedName);
-        static::assertInstanceOf(FactoryInterface::class, $actual);
-        static::assertInstanceOf(ControllerWithFactoryStub::class, $actual);
-
-        // TODO OLCS-28149
-        $actual = $this->sut->createServiceWithName($this->mockScm, $name, $requestedName);
         static::assertInstanceOf(FactoryInterface::class, $actual);
         static::assertInstanceOf(ControllerWithFactoryStub::class, $actual);
     }

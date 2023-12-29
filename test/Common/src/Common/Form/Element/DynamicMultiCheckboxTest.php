@@ -3,6 +3,7 @@
 namespace CommonTest\Form\Element;
 
 use Common\Form\Element\DynamicMultiCheckbox;
+use Interop\Container\ContainerInterface;
 
 /**
  * Class DynamicMultiCheckboxTest
@@ -75,7 +76,7 @@ class DynamicMultiCheckboxTest extends \PHPUnit\Framework\TestCase
 
         $mockService = $this->createMock('\Common\Service\Data\ListDataInterface');
 
-        $mockSl = $this->createMock('\Laminas\ServiceManager\ServiceLocatorInterface');
+        $mockSl = $this->createMock(ContainerInterface::class);
         $mockSl->expects($this->once())->method('get')->with($this->equalTo($serviceName))->willReturn($mockService);
 
         $sut = new DynamicMultiCheckbox();
@@ -90,7 +91,7 @@ class DynamicMultiCheckboxTest extends \PHPUnit\Framework\TestCase
 
         $mockService = $this->createMock('\StdClass');
 
-        $mockSl = $this->createMock('\Laminas\ServiceManager\ServiceLocatorInterface');
+        $mockSl = $this->createMock(ContainerInterface::class);
         $mockSl->expects($this->once())->method('get')->with($this->equalTo($serviceName))->willReturn($mockService);
 
         $sut = new DynamicMultiCheckbox();

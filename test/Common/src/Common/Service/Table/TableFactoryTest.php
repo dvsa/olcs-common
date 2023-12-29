@@ -14,10 +14,7 @@ use LmcRbacMvc\Service\AuthorizationService;
 
 class TableFactoryTest extends MockeryTestCase
 {
-    /**
-     * Test createService
-     */
-    public function testCreateService()
+    public function testInvoke(): void
     {
         $mockAuthService = m::mock(AuthorizationService::class);
         $mockTranslator = m::mock(TranslatorDelegator::class);
@@ -34,9 +31,9 @@ class TableFactoryTest extends MockeryTestCase
 
         $tableFactory = new TableFactory();
 
-        $table = $tableFactory->createService($serviceLocator)->getTableBuilder();
+        $table = $tableFactory->__invoke($serviceLocator, TableBuilder::class)->getTableBuilder();
 
-        $this->assertTrue($table instanceof \Common\Service\Table\TableBuilder);
+        $this->assertTrue($table instanceof TableBuilder);
     }
 
     /**
@@ -55,7 +52,7 @@ class TableFactoryTest extends MockeryTestCase
             ->method('buildTable')
             ->with($name, $data, $params, $render);
 
-        $tableFactory = $this->createPartialMock('\Common\Service\Table\TableFactory', array('getTableBuilder'));
+        $tableFactory = $this->createPartialMock(TableFactory::class, array('getTableBuilder'));
 
         $tableFactory->expects($this->once())
             ->method('getTableBuilder')

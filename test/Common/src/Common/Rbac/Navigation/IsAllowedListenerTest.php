@@ -3,11 +3,11 @@
 namespace CommonTest\Common\Rbac\Navigation;
 
 use Common\Rbac\Navigation\IsAllowedListener;
+use Interop\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Mvc\MvcEvent;
 use Laminas\Navigation;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 use LmcRbacMvc\Guard\GuardInterface;
 use LmcRbacMvc\Options\ModuleOptions;
 use LmcRbacMvc\Service\AuthorizationService;
@@ -98,8 +98,9 @@ class IsAllowedListenerTest extends MockeryTestCase
             ->getMock();
 
         $sut = (new IsAllowedListener())
-            ->createService(
-                $this->mockServiceLocator()
+            ->__invoke(
+                $this->mockServiceLocator(),
+                IsAllowedListener::class
             );
 
         static::assertEquals($expect, $sut->isGranted($mockPage));
@@ -152,7 +153,7 @@ class IsAllowedListenerTest extends MockeryTestCase
     }
 
     /**
-     * @return m\MockInterface|ServiceLocatorInterface
+     * @return m\MockInterface|ContainerInterface
      */
     private function mockServiceLocator()
     {
@@ -165,7 +166,7 @@ class IsAllowedListenerTest extends MockeryTestCase
             return $map[$class];
         };
 
-        return m::mock(ServiceLocatorInterface::class)
+        return m::mock(ContainerInterface::class)
             ->shouldReceive('get')
             ->andReturnUsing($closure)
             ->getMock();

@@ -3,12 +3,8 @@
 namespace Common\Service\Data;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
-/**
- * AbstractDataServiceFactory
- */
 class AbstractDataServiceFactory implements FactoryInterface
 {
     /**
@@ -24,22 +20,5 @@ class AbstractDataServiceFactory implements FactoryInterface
         return new $requestedName(
             $container->get(AbstractDataServiceServices::class)
         );
-    }
-
-    /**
-     * Create service method for Laminas v2 compatibility
-     *
-     * @param ServiceLocatorInterface $services
-     *
-     * @return mixed
-     */
-    public function createService(ServiceLocatorInterface $services)
-    {
-        // see Laminas\ServiceManager\ServiceManager line 1091
-        // additional arguments are passed into this method beyond those defined in the interface
-        $args = func_get_args();
-        $requestedName = $args[2];
-
-        return $this($services, $requestedName);
     }
 }

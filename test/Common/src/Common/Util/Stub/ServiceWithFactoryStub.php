@@ -3,17 +3,13 @@
 namespace CommonTest\Common\Util\Stub;
 
 use Interop\Container\ContainerInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 /**
  * @author Dmitry Golubev <dmitrij.golubev@valtech.com>
  */
-class ServiceWithFactoryStub implements \Laminas\ServiceManager\FactoryInterface
+class ServiceWithFactoryStub implements FactoryInterface
 {
-    public function createService(\Laminas\ServiceManager\ServiceLocatorInterface $serviceLocator): ServiceWithFactoryStub
-    {
-        return $this->__invoke($serviceLocator, ServiceWithFactoryStub::class);
-    }
-
     /**
      * @param ContainerInterface $container
      * @param $requestedName

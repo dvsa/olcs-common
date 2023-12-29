@@ -20,23 +20,6 @@ class FormServiceManager extends PluginManager
         return;
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * This method is required to validate plugin for laminas-servicemanager 2.x
-     * https://github.com/laminas/laminas-servicemanager/blob/2.7.11/src/AbstractPluginManager.php#L128
-     *
-     * @todo To be removed as part of OLCS-28149
-     */
-    public function validatePlugin($plugin)
-    {
-        try {
-            $this->validate($plugin);
-        } catch (InvalidServiceException $e) {
-            throw new RuntimeException($e->getMessage(), $e->getCode(), $e);
-        }
-    }
-
     public function __construct($container, array $config = null)
     {
         parent::__construct($container, $config);

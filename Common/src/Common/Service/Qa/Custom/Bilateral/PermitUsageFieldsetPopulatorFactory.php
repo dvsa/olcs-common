@@ -3,8 +3,7 @@
 namespace Common\Service\Qa\Custom\Bilateral;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class PermitUsageFieldsetPopulatorFactory implements FactoryInterface
 {
@@ -15,13 +14,5 @@ class PermitUsageFieldsetPopulatorFactory implements FactoryInterface
             $container->get('Helper\Translation'),
             $container->get('QaCommonHtmlAdder')
         );
-    }
-
-    /**
-     * @deprecated
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): PermitUsageFieldsetPopulator
-    {
-        return $this->__invoke($serviceLocator, PermitUsageFieldsetPopulator::class);
     }
 }

@@ -1,19 +1,16 @@
 <?php
 
-
 namespace CommonTest\Common\Service\Data;
 
+use Common\Service\Data\PluginManager;
+use Interop\Container\ContainerInterface;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Data\PluginManagerFactory;
 use Mockery as m;
 
-/**
- * Class PluginManagerFactoryTest
- * @package CommonTest\Service\Data
- */
 class PluginManagerFactoryTest extends MockeryTestCase
 {
-    public function testCreateService()
+    public function testInvoke(): void
     {
         $config = [
             'data_services' => [
@@ -23,15 +20,15 @@ class PluginManagerFactoryTest extends MockeryTestCase
             ]
         ];
 
-        $mockSl = m::mock('Laminas\ServiceManager\ServiceLocatorInterface');
+        $mockSl = m::mock(ContainerInterface::class);
         $mockSl->shouldReceive('get')->with('Config')->andReturn($config);
         $mockSl->shouldIgnoreMissing();
 
         $sut = new PluginManagerFactory();
 
-        $service = $sut->createService($mockSl);
+        $service = $sut->__invoke($mockSl, PluginManager::class);
 
-        $this->assertInstanceOf('Common\Service\Data\PluginManager', $service);
+        $this->assertInstanceOf(PluginManager::class, $service);
         $this->assertEquals('dataService', $service->get('test'));
     }
 }

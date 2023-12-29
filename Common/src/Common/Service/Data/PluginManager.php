@@ -2,7 +2,6 @@
 
 namespace Common\Service\Data;
 
-use Dvsa\Olcs\Utils\Traits\PluginManagerTrait;
 use Laminas\ServiceManager\AbstractPluginManager;
 
 /**
@@ -11,8 +10,6 @@ use Laminas\ServiceManager\AbstractPluginManager;
  */
 class PluginManager extends AbstractPluginManager
 {
-    //use PluginManagerTrait;
-
     protected $instanceOf = null;
 
     /**

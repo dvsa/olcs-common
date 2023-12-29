@@ -6,13 +6,11 @@ namespace Common\Auth;
 use Exception;
 use Interop\Container\ContainerInterface;
 use Laminas\Authentication\Storage\Session;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use RunTimeException;
 
 class SessionFactory implements FactoryInterface
 {
-
     /**
      * @param ContainerInterface $container
      * @param $requestedName
@@ -28,16 +26,5 @@ class SessionFactory implements FactoryInterface
         }
 
         return new Session($sessionName);
-    }
-
-    /**
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return Session
-     * @throws Exception
-     * @deprecated
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): Session
-    {
-        return $this->__invoke($serviceLocator, null);
     }
 }

@@ -2,14 +2,15 @@
 
 namespace Common\Service\AntiVirus;
 
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Olcs\Logging\Log\Logger;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+
 use Interop\Container\ContainerInterface;
 
 /**
  * AntiVirus Scan a file
  */
-class Scan implements \Laminas\ServiceManager\FactoryInterface
+class Scan implements FactoryInterface
 {
     /**
      * @var string
@@ -20,18 +21,6 @@ class Scan implements \Laminas\ServiceManager\FactoryInterface
      * @var \Common\Filesystem\Shell
      */
     private $shell;
-
-    /**
-     * Factory
-     *
-     * @param ServiceLocatorInterface $serviceLocator Service manager
-     *
-     * @return $this
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): Scan
-    {
-        return $this->__invoke($serviceLocator, Scan::class);
-    }
 
     /**
      * Scan a file for viruses

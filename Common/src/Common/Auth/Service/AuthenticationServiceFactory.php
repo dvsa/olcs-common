@@ -5,8 +5,7 @@ namespace Common\Auth\Service;
 
 use Interop\Container\ContainerInterface;
 use Laminas\Authentication\Storage\Session;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class AuthenticationServiceFactory implements FactoryInterface
 {
@@ -22,15 +21,5 @@ class AuthenticationServiceFactory implements FactoryInterface
         $instance->setStorage($container->get(Session::class));
 
         return $instance;
-    }
-
-    /**
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return AuthenticationService
-     * @deprecated
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): AuthenticationService
-    {
-        return $this->__invoke($serviceLocator, null, null);
     }
 }

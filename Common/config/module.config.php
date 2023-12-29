@@ -768,11 +768,6 @@ return [
             ],
         ],
     ],
-    'rest_services' => [
-        'abstract_factories' => [
-            'Common\Service\Api\AbstractFactory'
-        ]
-    ],
     'service_api_mapping' => [
         'endpoints' => [
             'payments' => 'http://olcspayment.dev/api/',
