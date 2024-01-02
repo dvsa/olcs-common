@@ -15,7 +15,8 @@ class SlaTargetDateFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $dateFormatter = $container->get(Date::class);
+        $formatterPluginManager = $container->get(FormatterPluginManager::class);
+        $dateFormatter = $formatterPluginManager->get(Date::class);
         $router = $container->get('Router');
         $request = $container->get('Request');
         $urlHelper = $container->get('Helper\Url');
