@@ -24,7 +24,7 @@ class InternalConversationMessage implements FormatterPluginManagerInterface
         if($row['createdBy']['team']) {
             $sender_name = "Case Worker";
         } else if($person = $row["createdBy"]["contactDetails"]["person"]){
-            $sender_name = $person["forename"] . " " . $person["familyName"];
+            $sender_name = $person['forename'] . ' ' . $person['familyName'];
         } else {
             $sender_name = $row["createdBy"]["loginId"];
         }
