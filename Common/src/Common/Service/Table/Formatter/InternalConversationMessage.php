@@ -48,7 +48,7 @@ class InternalConversationMessage implements FormatterPluginManagerInterface
             [
                 $sender_name,
                 $date,
-                nl2br($row["messagingContent"]["text"])
+                nl2br($row['messagingContent']['text'])
             ]
         );
     }
