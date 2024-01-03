@@ -22,14 +22,14 @@ class InternalConversationMessage implements FormatterPluginManagerInterface
     public function format($row, $column = null)
     {
         if($row['createdBy']['team']) {
-            $sender_name = "Case Worker";
-        } else if($person = $row["createdBy"]["contactDetails"]["person"]){
+            $sender_name = 'Case Worker';
+        } else if($person = $row['createdBy']['contactDetails']['person']){
             $sender_name = $person['forename'] . ' ' . $person['familyName'];
         } else {
-            $sender_name = $row["createdBy"]["loginId"];
+            $sender_name = $row['createdBy']['loginId'];
         }
 
-        $latestMessageCreatedOn = \DateTimeImmutable::createFromFormat(\DateTimeInterface::ATOM, $row["createdOn"]);
+        $latestMessageCreatedOn = \DateTimeImmutable::createFromFormat(\DateTimeInterface::ATOM, $row['createdOn']);
         $date = $latestMessageCreatedOn->format('l j F Y \a\t H:ia');
 
         $rowTemplate = '<div class="govuk-!-margin-bottom-6">
