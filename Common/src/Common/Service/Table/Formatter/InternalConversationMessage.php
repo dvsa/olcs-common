@@ -5,6 +5,10 @@
  */
 
 namespace Common\Service\Table\Formatter;
+
+use DateTimeImmutable;
+use DateTimeInterface;
+
 /**
  * Internal conversation message
  */
@@ -19,32 +23,33 @@ class InternalConversationMessage implements FormatterPluginManagerInterface
      * @return     string
      * @inheritdoc
      */
-    public function format($row, $column = null)
+    public function format($row, $column = null): string
     {
-        if($row['createdBy']['team']) {
+        if (!empty($row['createdBy']['team'])) {
             $sender_name = 'Case Worker';
-        } else if($person = $row['createdBy']['contactDetails']['person']){
-            $sender_name = $person['forename'] . ' ' . $person['familyName'];
+        } elseif (!empty($row['createdBy']['contactDetails']['person'])) {
+            $person = $row['createdBy']['contactDetails']['person'];
+            $sender_name = $person['forename'] . " " . $person['familyName'];
         } else {
             $sender_name = $row['createdBy']['loginId'];
         }
 
-        $latestMessageCreatedOn = \DateTimeImmutable::createFromFormat(\DateTimeInterface::ATOM, $row['createdOn']);
-        $date = $latestMessageCreatedOn->format('l j F Y \a\t H:ia');
+        $latest_message_created_at = DateTimeImmutable::createFromFormat(DateTimeInterface::ATOM, $row["createdOn"]);
+        $date = $latest_message_created_at->format('l j F Y \a\t H:ia');
 
-        $rowTemplate = '<div class="govuk-!-margin-bottom-6">
-                    <div class="govuk-summary-card">
-                        <div class="govuk-summary-card__title-wrapper">
-                            <h2 class="govuk-summary-card__title">%s</h2> <h2 class="govuk-summary-card__title govuk-summary-card__date">%s</h2>
-                        </div>
-                        <div class="govuk-summary-card__content">
-                            <p class="govuk-body">%s</p>
-                        </div>
+        $row_template = '<div class="govuk-!-margin-bottom-6">
+                <div class="govuk-summary-card">
+                    <div class="govuk-summary-card__title-wrapper">
+                        <h2 class="govuk-summary-card__title">%s</h2> <h2 class="govuk-summary-card__title govuk-summary-card__date">%s</h2>
                     </div>
-                </div>';
+                    <div class="govuk-summary-card__content">
+                        <p class="govuk-body">%s</p>
+                    </div>
+                </div>
+            </div>';
 
         return vsprintf(
-            $rowTemplate,
+            $row_template,
             [
                 $sender_name,
                 $date,
