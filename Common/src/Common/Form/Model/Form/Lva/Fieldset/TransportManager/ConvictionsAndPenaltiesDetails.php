@@ -32,11 +32,11 @@ class ConvictionsAndPenaltiesDetails
      *     "render_delimiters": false
      * })
      * @Form\Type("DateSelect")
-     * @Form\Filter({"name":"DateSelectNullifier"})
+     * @Form\Filter("DateSelectNullifier")
      * @Form\Required(true)
-     * @Form\Validator({"name": "\Common\Validator\Date"})
-     * @Form\Validator({"name":"Date","options":{"format":"Y-m-d"}})
-     * @Form\Validator({"name":"\Common\Form\Elements\Validators\DateNotInFuture"})
+     * @Form\Validator("\Common\Validator\Date")
+     * @Form\Validator("Date", options={"format":"Y-m-d"})
+     * @Form\Validator("\Common\Form\Elements\Validators\DateNotInFuture")
      */
     public $convictionDate = null;
 
@@ -45,7 +45,7 @@ class ConvictionsAndPenaltiesDetails
      * @Form\Options({"label":"transport-manager.convictions-and-penalties.form.offence"})
      * @Form\Type("Text")
      * @Form\Required(true)
-     * @Form\Validator({"name":"Laminas\Validator\StringLength","options":{"min":1,"max":1024}})
+     * @Form\Validator("Laminas\Validator\StringLength", options={"min":1,"max":1024})
      */
     public $categoryText = null;
 
@@ -54,7 +54,7 @@ class ConvictionsAndPenaltiesDetails
      * @Form\Options({"label":"transport-manager.convictions-and-penalties.form.offence-details"})
      * @Form\Type("Textarea")
      * @Form\Required(true)
-     * @Form\Validator({"name":"Laminas\Validator\StringLength","options":{"min":1,"max":4000}})
+     * @Form\Validator("Laminas\Validator\StringLength", options={"min":1,"max":4000})
      */
     public $notes = null;
 
@@ -63,7 +63,7 @@ class ConvictionsAndPenaltiesDetails
      * @Form\Options({"label":"transport-manager.convictions-and-penalties.form.court-fpn"})
      * @Form\Type("Text")
      * @Form\Required(true)
-     * @Form\Validator({"name":"Laminas\Validator\StringLength","options":{"min":1,"max":70}})
+     * @Form\Validator("Laminas\Validator\StringLength", options={"min":1,"max":70})
      */
     public $courtFpn = null;
 
@@ -72,7 +72,7 @@ class ConvictionsAndPenaltiesDetails
      * @Form\Options({"label":"transport-manager.convictions-and-penalties.form.penalty"})
      * @Form\Type("Text")
      * @Form\Required(true)
-     * @Form\Validator({"name":"Laminas\Validator\StringLength","options":{"min":1,"max":255}})
+     * @Form\Validator("Laminas\Validator\StringLength", options={"min":1,"max":255})
      */
     public $penalty = null;
 }

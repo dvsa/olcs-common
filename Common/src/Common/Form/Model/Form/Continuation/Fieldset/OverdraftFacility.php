@@ -27,8 +27,8 @@ class OverdraftFacility
      *     "label": "continuations.finances.overdraftFacility.amount.label",
      * })
      * @Form\Validator({"name": "Laminas\Validator\NotEmpty", "options": {"null"}})
-     * @Form\Validator({"name": "ValidateIf",
-     *      "options":{
+     * @Form\Validator("ValidateIf",
+     *      options={
      *          "context_field": "yesNo",
      *          "context_values": {"Y"},
      *          "validators": {
@@ -65,7 +65,7 @@ class OverdraftFacility
      *              },
      *          }
      *      }
-     * })
+     * )
      */
     public $yesContent = null;
 }

@@ -12,7 +12,7 @@ class HoursOfWeekContentRequired
 {
     /**
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Common\Filter\NullToFloat"})
+     * @Form\Filter("Common\Filter\NullToFloat")
      * @Form\Attributes({
      *     "class": "short",
      *     "pattern": "\d(\.)*",
@@ -24,18 +24,18 @@ class HoursOfWeekContentRequired
      *         "aria-label": "Enter your working hours, Monday"
      *     }
      * })
-     * @Form\Validator({"name":"Laminas\I18n\Validator\IsFloat", "options": {
+     * @Form\Validator("Laminas\I18n\Validator\IsFloat", options={
      *     "messages": {
      *          "notFloat": "Only numbers are allowed"
      *     }
-     * }})
-     * @Form\Validator({"name":"Between", "options": {
+     *})
+     * @Form\Validator("Between", options={
      *     "min": 0,
      *     "max": 24,
      *     "messages": {
      *         "notBetween": "Mon must be between '%min%' and '%max%', inclusively"
      *     }
-     * }})
+     *})
      * @Form\Validator({"name": "Common\Form\Elements\Validators\SumContext", "options": {
      *     "min": 0.1,
      *     "messages": {
@@ -46,7 +46,7 @@ class HoursOfWeekContentRequired
     public $hoursMon = null;
 
     /**
-     * @Form\Filter({"name":"Common\Filter\NullToFloat"})
+     * @Form\Filter("Common\Filter\NullToFloat")
      * @Form\Attributes({
      *     "class": "short",
      *     "pattern": "\d(\.)*",
@@ -58,23 +58,23 @@ class HoursOfWeekContentRequired
      *         "aria-label": "Tuesday"
      *     }
      * })
-     * @Form\Validator({"name":"Laminas\I18n\Validator\IsFloat", "options": {
+     * @Form\Validator("Laminas\I18n\Validator\IsFloat", options={
      *     "messages": {
      *          "notFloat": "Only numbers are allowed"
      *     }
-     * }})
-     * @Form\Validator({"name":"Between", "options": {
+     *})
+     * @Form\Validator("Between", options={
      *     "min": 0,
      *     "max": 24,
      *     "messages": {
      *         "notBetween": "Tue must be between '%min%' and '%max%', inclusively"
      *     }
-     * }})
+     *})
      */
     public $hoursTue = null;
 
     /**
-     * @Form\Filter({"name":"Common\Filter\NullToFloat"})
+     * @Form\Filter("Common\Filter\NullToFloat")
      * @Form\Attributes({
      *     "class": "short",
      *     "pattern": "\d(\.)*",
@@ -86,23 +86,23 @@ class HoursOfWeekContentRequired
      *         "aria-label": "Wednesday"
      *     }
      * })
-     * @Form\Validator({"name":"Laminas\I18n\Validator\IsFloat", "options": {
+     * @Form\Validator("Laminas\I18n\Validator\IsFloat", options={
      *     "messages": {
      *          "notFloat": "Only numbers are allowed"
      *     }
-     * }})
-     * @Form\Validator({"name":"Between", "options": {
+     *})
+     * @Form\Validator("Between", options={
      *     "min": 0,
      *     "max": 24,
      *     "messages": {
      *         "notBetween": "Wed must be between '%min%' and '%max%', inclusively"
      *     }
-     * }})
+     *})
      */
     public $hoursWed = null;
 
     /**
-     * @Form\Filter({"name":"Common\Filter\NullToFloat"})
+     * @Form\Filter("Common\Filter\NullToFloat")
      * @Form\Attributes({
      *     "class": "short",
      *     "pattern": "\d(\.)*",
@@ -114,23 +114,23 @@ class HoursOfWeekContentRequired
      *         "aria-label": "Thursday"
      *     }
      * })
-     * @Form\Validator({"name":"Laminas\I18n\Validator\IsFloat", "options": {
+     * @Form\Validator("Laminas\I18n\Validator\IsFloat", options={
      *     "messages": {
      *          "notFloat": "Only numbers are allowed"
      *     }
-     * }})
-     * @Form\Validator({"name":"Between", "options": {
+     *})
+     * @Form\Validator("Between", options={
      *     "min": 0,
      *     "max": 24,
      *     "messages": {
      *         "notBetween": "Thu must be between '%min%' and '%max%', inclusively"
      *     }
-     * }})
+     *})
      */
     public $hoursThu = null;
 
     /**
-     * @Form\Filter({"name":"Common\Filter\NullToFloat"})
+     * @Form\Filter("Common\Filter\NullToFloat")
      * @Form\Attributes({
      *     "class": "short",
      *     "pattern": "\d(\.)*",
@@ -142,23 +142,23 @@ class HoursOfWeekContentRequired
      *         "aria-label": "Friday"
      *     }
      * })
-     * @Form\Validator({"name":"Laminas\I18n\Validator\IsFloat", "options": {
+     * @Form\Validator("Laminas\I18n\Validator\IsFloat", options={
      *     "messages": {
      *          "notFloat": "Only numbers are allowed"
      *     }
-     * }})
-     * @Form\Validator({"name":"Between", "options": {
+     *})
+     * @Form\Validator("Between", options={
      *     "min": 0,
      *     "max": 24,
      *     "messages": {
      *         "notBetween": "Fri must be between '%min%' and '%max%', inclusively"
      *     }
-     * }})
+     *})
      */
     public $hoursFri = null;
 
     /**
-     * @Form\Filter({"name":"Common\Filter\NullToFloat"})
+     * @Form\Filter("Common\Filter\NullToFloat")
      * @Form\Attributes({
      *     "class": "short",
      *     "pattern": "\d(\.)*",
@@ -170,23 +170,23 @@ class HoursOfWeekContentRequired
      *         "aria-label": "Saturday"
      *     }
      * })
-     * @Form\Validator({"name":"Laminas\I18n\Validator\IsFloat", "options": {
+     * @Form\Validator("Laminas\I18n\Validator\IsFloat", options={
      *     "messages": {
      *          "notFloat": "Only numbers are allowed"
      *     }
-     * }})
-     * @Form\Validator({"name":"Between", "options": {
+     *})
+     * @Form\Validator("Between", options={
      *     "min": 0,
      *     "max": 24,
      *     "messages": {
      *         "notBetween": "Sat must be between '%min%' and '%max%', inclusively"
      *     }
-     * }})
+     *})
      */
     public $hoursSat = null;
 
     /**
-     * @Form\Filter({"name":"Common\Filter\NullToFloat"})
+     * @Form\Filter("Common\Filter\NullToFloat")
      * @Form\Attributes({
      *     "class": "short",
      *     "pattern": "\d(\.)*",
@@ -198,18 +198,18 @@ class HoursOfWeekContentRequired
      *         "aria-label": "Sunday"
      *     }
      * })
-     * @Form\Validator({"name":"Laminas\I18n\Validator\IsFloat", "options": {
+     * @Form\Validator("Laminas\I18n\Validator\IsFloat", options={
      *     "messages": {
      *          "notFloat": "Only numbers are allowed"
      *     }
-     * }})
-     * @Form\Validator({"name":"Between", "options": {
+     *})
+     * @Form\Validator("Between", options={
      *     "min": 0,
      *     "max": 24,
      *     "messages": {
      *         "notBetween": "Sun must be between '%min%' and '%max%', inclusively"
      *     }
-     * }})
+     *})
      */
     public $hoursSun = null;
 }

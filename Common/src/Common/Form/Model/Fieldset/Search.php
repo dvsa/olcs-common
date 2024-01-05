@@ -38,8 +38,8 @@ class Search
      * @Form\Options({"label":"First name(s)"})
      * @Form\Required(false)
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
-     * @Form\Validator({"name":"Laminas\Validator\StringLength","options":{"min":2,"max":35}})
+     * @Form\Filter("Laminas\Filter\StringTrim")
+     * @Form\Validator("Laminas\Validator\StringLength", options={"min":2,"max":35})
      */
     public $forename = null;
 
@@ -48,8 +48,8 @@ class Search
      * @Form\Options({"label":"Last name"})
      * @Form\Required(false)
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
-     * @Form\Validator({"name":"Laminas\Validator\StringLength","options":{"min":2,"max":35}})
+     * @Form\Filter("Laminas\Filter\StringTrim")
+     * @Form\Validator("Laminas\Validator\StringLength", options={"min":2,"max":35})
      */
     public $familyName = null;
 }

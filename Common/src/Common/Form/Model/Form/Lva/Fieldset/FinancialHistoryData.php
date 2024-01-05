@@ -133,8 +133,8 @@ class FinancialHistoryData
      *     }
      * })
      * @Form\Type("TextArea")
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
-     * @Form\Validator({"name": "Dvsa\Olcs\Transfer\Validators\FhAdditionalInfo"})
+     * @Form\Filter("Laminas\Filter\StringTrim")
+     * @Form\Validator("Dvsa\Olcs\Transfer\Validators\FhAdditionalInfo")
      */
     public $insolvencyDetails = null;
 

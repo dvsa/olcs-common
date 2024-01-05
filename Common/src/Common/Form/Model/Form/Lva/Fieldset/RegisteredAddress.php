@@ -42,10 +42,10 @@ class RegisteredAddress
      *     "error-message" : "registeredAddress_addressLine1-error",
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
-     * @Form\Validator({"name":"Laminas\Validator\StringLength", "options":{
+     * @Form\Filter("Laminas\Filter\StringTrim")
+     * @Form\Validator("Laminas\Validator\StringLength", options={
      *     "min": 0, "max": 200
-     * }})
+     *})
      */
     public $addressLine1 = null;
 
@@ -61,9 +61,9 @@ class RegisteredAddress
      * })
      * @Form\Required(false)
      * @Form\Type("Text")
-     * @Form\Validator({"name":"Laminas\Validator\StringLength", "options":{
+     * @Form\Validator("Laminas\Validator\StringLength", options={
      *     "min": 0, "max": 200
-     * }})
+     *})
      */
     public $addressLine2 = null;
 
@@ -79,9 +79,9 @@ class RegisteredAddress
      * })
      * @Form\Required(false)
      * @Form\Type("Text")
-     * @Form\Validator({"name":"Laminas\Validator\StringLength", "options":{
+     * @Form\Validator("Laminas\Validator\StringLength", options={
      *     "min": 0, "max": 200
-     * }})
+     *})
      */
     public $addressLine3 = null;
 
@@ -97,9 +97,9 @@ class RegisteredAddress
      * })
      * @Form\Required(false)
      * @Form\Type("Text")
-     * @Form\Validator({"name":"Laminas\Validator\StringLength", "options":{
+     * @Form\Validator("Laminas\Validator\StringLength", options={
      *     "min": 0, "max": 200
-     * }})
+     *})
      */
     public $addressLine4 = null;
 
@@ -117,9 +117,9 @@ class RegisteredAddress
      * })
      * @Form\Required(false)
      * @Form\Type("Text")
-     * @Form\Validator({"name":"Laminas\Validator\StringLength", "options":{
+     * @Form\Validator("Laminas\Validator\StringLength", options={
      *     "min": 0, "max": 200
-     * }})
+     *})
      */
     public $town = null;
 
@@ -133,8 +133,8 @@ class RegisteredAddress
      * })
      * @Form\Type("Text")
      * @Form\Required(false)
-     * @Form\Filter({"name":"Dvsa\Olcs\Transfer\Filter\Postcode"})
-     * @Form\Validator({"name":"Dvsa\Olcs\Transfer\Validators\Postcode"});
+     * @Form\Filter("Dvsa\Olcs\Transfer\Filter\Postcode")
+     * @Form\Validator("Dvsa\Olcs\Transfer\Validators\Postcode");
      */
     public $postcode = null;
 }

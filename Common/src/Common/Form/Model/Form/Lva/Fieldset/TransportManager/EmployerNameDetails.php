@@ -18,7 +18,7 @@ class EmployerNameDetails
      * })
      * @Form\Type("Text")
      * @Form\Required(true)
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
+     * @Form\Filter("Laminas\Filter\StringTrim")
      * @Form\Validator({
      *     "name":"Laminas\Validator\StringLength",
      *     "options":{

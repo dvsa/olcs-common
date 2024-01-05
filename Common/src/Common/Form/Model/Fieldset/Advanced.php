@@ -16,9 +16,9 @@ class Advanced
      *     "label": "Address"
      * })
      * @Form\Type("\Laminas\Form\Element\Textarea")
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
-     * @Form\Filter({"name":"Laminas\Filter\StringToLower"})
-     * @Form\Validator({"name":"Laminas\Validator\StringLength","options":{"min":10,"max":100}})
+     * @Form\Filter("Laminas\Filter\StringTrim")
+     * @Form\Filter("Laminas\Filter\StringToLower")
+     * @Form\Validator("Laminas\Validator\StringLength", options={"min":10,"max":100})
      */
     public $address = null;
 

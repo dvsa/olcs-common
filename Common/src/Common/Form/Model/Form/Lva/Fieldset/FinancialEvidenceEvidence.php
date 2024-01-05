@@ -21,8 +21,8 @@ class FinancialEvidenceEvidence
      * @Form\Required(true)
      * @Form\Attributes({"required":false, "id":"uploadedFileCount"})
      * @Form\Type("Hidden")
-     * @Form\Validator({"name": "validateIf",
-     *      "options":{
+     * @Form\Validator("ValidateIf",
+     *      options={
      *          "context_field": "uploadNowRadio",
      *          "context_values": {"1"},
      *          "validators": {
@@ -35,7 +35,7 @@ class FinancialEvidenceEvidence
      *              }
      *          }
      *      }
-     * })
+     * )
      */
     public $uploadedFileCount = null;
 

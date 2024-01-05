@@ -34,7 +34,7 @@ class VehiclesDeclarationsSmallVehiclesIntention
      *     "legend-attributes": {"class": "form-element__label"},
      *     "label": "application_vehicle-safety_undertakings.smallVehiclesIntentionDetails.title"
      * })
-     * @Form\Validator({"name": "Common\Form\Elements\Validators\VehicleUndertakingsOperateSmallVehiclesValidator"})
+     * @Form\Validator("Common\Form\Elements\Validators\VehicleUndertakingsOperateSmallVehiclesValidator")
      * @Form\Type("Textarea")
      */
     public $psvSmallVhlNotes = null;

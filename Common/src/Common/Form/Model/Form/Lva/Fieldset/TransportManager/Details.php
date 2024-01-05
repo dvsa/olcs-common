@@ -26,10 +26,10 @@ class Details
      *     "fieldset_attributes":{"id":"details[birthDate]"}
      * })
      * @Form\Type("DateSelect")
-     * @Form\Filter({"name":"DateSelectNullifier"})
-     * @Form\Validator({"name": "\Common\Validator\Date"})
-     * @Form\Validator({"name":"Date","options":{"format":"Y-m-d"}})
-     * @Form\Validator({"name":"\Common\Form\Elements\Validators\DateNotInFuture"})
+     * @Form\Filter("DateSelectNullifier")
+     * @Form\Validator("\Common\Validator\Date")
+     * @Form\Validator("Date", options={"format":"Y-m-d"})
+     * @Form\Validator("\Common\Form\Elements\Validators\DateNotInFuture")
      */
     public $birthDate = null;
 
@@ -41,8 +41,8 @@ class Details
      *     "hint": "lva-tm-email-hint",
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
-     * @Form\Validator({"name":"Dvsa\Olcs\Transfer\Validators\EmailAddress"})
+     * @Form\Filter("Laminas\Filter\StringTrim")
+     * @Form\Validator("Dvsa\Olcs\Transfer\Validators\EmailAddress")
      */
     public $emailAddress = null;
 
@@ -56,7 +56,7 @@ class Details
      *     }
      * })
      * @Form\Type("Text")
-     * @Form\Validator({"name": "\Laminas\Validator\NotEmpty"})
+     * @Form\Validator("\Laminas\Validator\NotEmpty")
      */
     public $birthPlace = null;
 
@@ -96,7 +96,7 @@ class Details
      *     "label_attributes": {"class": "legend"},
      *     "hint": "lva-tm-details-details-lgvAcquiredRightsReferenceNumber-hint",
      * })
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
+     * @Form\Filter("Laminas\Filter\StringTrim")
      * @Form\Validator({
      *     "name": "\Laminas\Validator\StringLength",
      *     "options": {

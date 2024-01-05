@@ -46,8 +46,8 @@ class Person
      *     "error-message": "Enter first name"
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
-     * @Form\Validator({"name":"Laminas\Validator\StringLength","options":{"min":0,"max":35}})
+     * @Form\Filter("Laminas\Filter\StringTrim")
+     * @Form\Validator("Laminas\Validator\StringLength", options={"min":0,"max":35})
      */
     public $forename = null;
 
@@ -59,8 +59,8 @@ class Person
      *     "error-message": "Enter last name"
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
-     * @Form\Validator({"name":"Laminas\Validator\StringLength","options":{"min":0,"max":35}})
+     * @Form\Filter("Laminas\Filter\StringTrim")
+     * @Form\Validator("Laminas\Validator\StringLength", options={"min":0,"max":35})
      */
     public $familyName = null;
 
@@ -72,7 +72,7 @@ class Person
      * })
      * @Form\Required(false)
      * @Form\Type("Text")
-     * @Form\Validator({"name":"Laminas\Validator\StringLength","options":{"min":0,"max":35}})
+     * @Form\Validator("Laminas\Validator\StringLength", options={"min":0,"max":35})
      */
     public $otherName = null;
 
@@ -86,10 +86,10 @@ class Person
      *     "error-message": "Enter date of birth"
      * })
      * @Form\Type("DateSelect")
-     * @Form\Filter({"name": "DateSelectNullifier"})
-     * @Form\Validator({"name": "\Common\Validator\Date"})
-     * @Form\Validator({"name":"Date","options":{"format":"Y-m-d"}})
-     * @Form\Validator({"name": "\Common\Form\Elements\Validators\DateNotInFuture"})
+     * @Form\Filter("DateSelectNullifier")
+     * @Form\Validator("\Common\Validator\Date")
+     * @Form\Validator("Date", options={"format":"Y-m-d"})
+     * @Form\Validator("\Common\Form\Elements\Validators\DateNotInFuture")
      */
     public $birthDate = null;
 }

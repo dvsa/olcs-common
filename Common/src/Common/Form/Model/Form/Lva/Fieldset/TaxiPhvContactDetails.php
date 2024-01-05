@@ -28,7 +28,7 @@ class TaxiPhvContactDetails
      *     "label": "application_taxi-phv_licence-sub-action.contactDetails.description",
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
+     * @Form\Filter("Laminas\Filter\StringTrim")
      */
     public $description = null;
 }

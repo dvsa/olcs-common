@@ -18,9 +18,9 @@ class CommunityLicencesStopDates
      *     "render_delimiters": false
      * })
      * @Form\Type("DateSelect")
-     * @Form\Filter({"name":"DateSelectNullifier"})
-     * @Form\Validator({"name": "\Common\Validator\Date"})
-     * @Form\Validator({"name":"Date","options":{"format":"Y-m-d"}})
+     * @Form\Filter("DateSelectNullifier")
+     * @Form\Validator("\Common\Validator\Date")
+     * @Form\Validator("Date", options={"format":"Y-m-d"})
      * @Form\Validator({
      *      "name": "Dvsa\Olcs\Transfer\Validators\DateInFuture",
      *      "options": {
@@ -39,9 +39,9 @@ class CommunityLicencesStopDates
      *     "render_delimiters": false
      * })
      * @Form\Type("DateSelect")
-     * @Form\Filter({"name":"DateSelectNullifier"})
-     * @Form\Validator({"name": "\Common\Validator\Date"})
-     * @Form\Validator({"name":"Date","options":{"format":"Y-m-d"}})
+     * @Form\Filter("DateSelectNullifier")
+     * @Form\Validator("\Common\Validator\Date")
+     * @Form\Validator("Date", options={"format":"Y-m-d"})
      * @Form\Validator({
      *      "name": "DateCompare",
      *      "options": {

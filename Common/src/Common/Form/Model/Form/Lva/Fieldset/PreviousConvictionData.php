@@ -36,7 +36,7 @@ class PreviousConvictionData
      *     "error-message": "previousConvictionData_forename-error"
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
+     * @Form\Filter("Laminas\Filter\StringTrim")
      */
     public $forename = null;
 
@@ -48,7 +48,7 @@ class PreviousConvictionData
      *     "error-message": "previousConvictionData_familyName-error"
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
+     * @Form\Filter("Laminas\Filter\StringTrim")
      */
     public $familyName = null;
 
@@ -63,10 +63,10 @@ class PreviousConvictionData
      *     "error-message": "previousConvictionData_convictionDate-error"
      * })
      * @Form\Type("DateSelect")
-     * @Form\Filter({"name": "DateSelectNullifier"})
-     * @Form\Validator({"name": "\Common\Validator\Date"})
-     * @Form\Validator({"name":"Date","options":{"format":"Y-m-d"}})
-     * @Form\Validator({"name": "\Common\Form\Elements\Validators\DateNotInFuture"})
+     * @Form\Filter("DateSelectNullifier")
+     * @Form\Validator("\Common\Validator\Date")
+     * @Form\Validator("Date", options={"format":"Y-m-d"})
+     * @Form\Validator("\Common\Form\Elements\Validators\DateNotInFuture")
      */
     public $convictionDate = null;
 
@@ -91,7 +91,7 @@ class PreviousConvictionData
      *     "hint-position": "above"
      * })
      * @Form\Type("TextArea")
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
+     * @Form\Filter("Laminas\Filter\StringTrim")
      */
     public $notes = null;
 
@@ -103,7 +103,7 @@ class PreviousConvictionData
      *     "error-message": "previousConvictionData_courtFpn-error"
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
+     * @Form\Filter("Laminas\Filter\StringTrim")
      */
     public $courtFpn = null;
 
@@ -115,7 +115,7 @@ class PreviousConvictionData
      *     "error-message": "previousConvictionData_penalty-error"
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
+     * @Form\Filter("Laminas\Filter\StringTrim")
      */
     public $penalty = null;
 }

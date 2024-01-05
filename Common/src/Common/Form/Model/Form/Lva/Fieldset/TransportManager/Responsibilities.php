@@ -88,7 +88,7 @@ class Responsibilities
      *     "label_attributes": {"id":"additionalInformation"}
      * })
      * @Form\Required(false)
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
+     * @Form\Filter("Laminas\Filter\StringTrim")
      * @Form\Validator({
      *      "name":"Laminas\Validator\StringLength",
      *      "options":{

@@ -20,7 +20,7 @@ class TaxiPhvLicenceData
      * @Form\Attributes({"class":"","id":""})
      * @Form\Options({"label":"application_taxi-phv_licence-sub-action.data.licNo"})
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
+     * @Form\Filter("Laminas\Filter\StringTrim")
      */
     public $privateHireLicenceNo = null;
 }

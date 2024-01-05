@@ -26,10 +26,10 @@ class BusinessDetails
      *     "label_attributes": {"class": "form-element__question"}
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
-     * @Form\Validator({"name":"Laminas\Validator\StringLength", "options":{
-     *     "min": 0, "max": 200
-     * }})
+     * @Form\Filter("Laminas\Filter\StringTrim")
+     * @Form\Validator("Laminas\Validator\StringLength", options={
+*     "min": 0, "max": 200
+     *})
      */
     public $name = null;
 
@@ -58,9 +58,9 @@ class BusinessDetails
      *         "class": "form-element__question"
      *     }
      * })
-     * @Form\Validator({"name":"Laminas\Validator\StringLength", "options":{
+     * @Form\Validator("Laminas\Validator\StringLength", options={
      *     "min": 0, "max": 200
-     * }})
+     *})
      */
     public $natureOfBusiness = null;
 }

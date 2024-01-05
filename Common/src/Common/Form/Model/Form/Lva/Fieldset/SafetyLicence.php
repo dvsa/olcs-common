@@ -23,7 +23,7 @@ class SafetyLicence
      *     "error-message": "safetyLicence_safetyInsVehicles-error"
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
+     * @Form\Filter("Laminas\Filter\StringTrim")
      * @Form\Validator({"name": "Between", "options": {
      *     "min":1, "max":13,
      *     "messages": {"notBetween": "safetyLicence_safetyInsBetween-error"}
@@ -39,7 +39,7 @@ class SafetyLicence
      *     "error-message": "safetyLicence_safetyInsTrailers-error"
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
+     * @Form\Filter("Laminas\Filter\StringTrim")
      * @Form\Validator({"name": "Between", "options": {
      *     "min":1, "max":13,
      *     "messages": {"notBetween": "safetyLicence_safetyInsBetween-error"}
