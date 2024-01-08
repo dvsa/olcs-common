@@ -97,9 +97,8 @@ class Details
      *     "hint": "lva-tm-details-details-lgvAcquiredRightsReferenceNumber-hint",
      * })
      * @Form\Filter("Laminas\Filter\StringTrim")
-     * @Form\Validator({
-     *     "name": "\Laminas\Validator\StringLength",
-     *     "options": {
+     * @Form\Validator("\Laminas\Validator\StringLength",
+     *     options={
      *         "min": 7,
      *         "max": 7,
      *         "messages": {
@@ -108,7 +107,7 @@ class Details
      *             \Laminas\Validator\StringLength::TOO_LONG: "lva-tm-details-details-lgvAcquiredRightsReferenceNumber-error-length",
      *         }
      *     }
-     * })
+     * )
      */
     public $lgvAcquiredRightsReferenceNumber = null;
 

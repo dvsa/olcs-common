@@ -19,12 +19,11 @@ class EmployerNameDetails
      * @Form\Type("Text")
      * @Form\Required(true)
      * @Form\Filter("Laminas\Filter\StringTrim")
-     * @Form\Validator({
-     *     "name":"Laminas\Validator\StringLength",
-     *     "options":{
+     * @Form\Validator("Laminas\Validator\StringLength",
+     *     options={
      *          "max":90,
      *     },
-     * })
+     * )
      */
     public $employerName = null;
 }

@@ -16,12 +16,11 @@ class CommunityLicencesEditSuspension
      *     "category":"com_lic_sw_reason",
      * })
      * @Form\Type("DynamicSelect")
-     * @Form\Validator({
-     *      "name": "Laminas\Validator\NotEmpty",
-     *      "options": {
+     * @Form\Validator("Laminas\Validator\NotEmpty",
+     *      options={
      *          "messages":{Laminas\Validator\NotEmpty::IS_EMPTY:"internal.community_licence.form.licences_validation"}
      *      }
-     * })
+     * )
      */
     public $reasons = null;
 

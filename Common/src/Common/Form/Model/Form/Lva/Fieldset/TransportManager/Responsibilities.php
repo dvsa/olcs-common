@@ -89,12 +89,11 @@ class Responsibilities
      * })
      * @Form\Required(false)
      * @Form\Filter("Laminas\Filter\StringTrim")
-     * @Form\Validator({
-     *      "name":"Laminas\Validator\StringLength",
-     *      "options":{
+     * @Form\Validator("Laminas\Validator\StringLength",
+     *      options={
      *          "max":4000
      *      }
-     * })
+     * )
      */
     public $additionalInformation;
 

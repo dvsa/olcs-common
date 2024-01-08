@@ -41,7 +41,7 @@ class PsvVehicleData
      * @Form\Required(false)
      * @Form\Filter("Laminas\Filter\StringTrim")
      * @Form\Validator("Laminas\Validator\StringLength",
-     *     options{
+     *     options={
      *          "min":2,
      *          "max":100,
      *     },

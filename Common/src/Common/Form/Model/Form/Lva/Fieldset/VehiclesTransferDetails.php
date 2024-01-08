@@ -17,12 +17,11 @@ class VehiclesTransferDetails
      *     "empty_option": "Please select"
      * })
      * @Form\Type("Select")
-     * @Form\Validator({
-     *      "name": "Laminas\Validator\NotEmpty",
-     *      "options": {
+     * @Form\Validator("Laminas\Validator\NotEmpty",
+     *      options={
      *          "messages":{Laminas\Validator\NotEmpty::IS_EMPTY:"licence.vehicles_transfer.form.message_empty"}
      *      }
-     * })
+     * )
      */
     public $licence = null;
 }
