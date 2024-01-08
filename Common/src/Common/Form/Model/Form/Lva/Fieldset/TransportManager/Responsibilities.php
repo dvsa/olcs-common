@@ -29,9 +29,7 @@ class Responsibilities
      *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"}
      * })
      * @Form\Type("DynamicRadio")
-     * @Form\Validator({
-     *      "name":"Laminas\Validator\NotEmpty"
-     * })
+     * @Form\Validator("Laminas\Validator\NotEmpty")
      */
     public $tmType = null;
 
