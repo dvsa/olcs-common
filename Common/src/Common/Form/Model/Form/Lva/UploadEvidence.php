@@ -22,26 +22,25 @@ class UploadEvidence
     public $financialEvidence = null;
 
     /**
-     * @Form\ComposedObject({
-     *      "target_object":"Common\Form\Model\Form\Lva\Fieldset\UploadEvidenceOperatingCentre",
-     *      "is_collection":true,
-     *      "options":{
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\UploadEvidenceOperatingCentre",
+     *      true,
+     *      options={
      *          "count": 1,
      *          "label":"lva.section.title.upload-evidence.operating-centres",
      *      }
-     * })
+     * )
      * @Form\Name("operatingCentres")
      */
     public $operatingCentres = null;
 
     /**
-     * @Form\ComposedObject({
-     *      "target_object":"Common\Form\Model\Form\Lva\Fieldset\UploadEvidenceSupportingEvidence",
-     *      "options":{
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\UploadEvidenceSupportingEvidence",
+     *     false,
+     *      options={
      *          "count": 1,
      *          "label":"lva.section.title.upload-evidence.supporting-evidence",
      *      }
-     * })
+     * )
      * @Form\Name("supportingEvidence")
      */
     public $supportingEvidence = null;
