@@ -73,9 +73,7 @@ class VehiclesDeclarationsSmallVehiclesIntention
      *     "unchecked_value": "N"
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
-     * @Form\Validator({
-     *     "name": "Common\Form\Elements\Validators\VehicleUndertakingsOperateSmallVehiclesAgreementValidator"
-     * })
+     * @Form\Validator( "Common\Form\Elements\Validators\VehicleUndertakingsOperateSmallVehiclesAgreementValidator")
      */
     public $psvSmallVhlConfirmation = null;
 }
