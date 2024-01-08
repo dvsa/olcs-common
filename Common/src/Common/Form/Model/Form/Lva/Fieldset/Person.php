@@ -92,7 +92,7 @@ class Person
      *     "fieldset-attributes": {"id":"dob_day"}
      * })
      * @Form\Type("DateSelect")
-     * @Form\Filter({"name":"DateSelect", "options":{"null_on_empty":true}})
+     * @Form\Filter("DateSelect", options={"null_on_empty":true})
      * @Form\Validator("NotEmpty", options={"array"})
      * @Form\Validator("\Common\Validator\Date")
      * @Form\Validator("Date", options={"format":"Y-m-d"})

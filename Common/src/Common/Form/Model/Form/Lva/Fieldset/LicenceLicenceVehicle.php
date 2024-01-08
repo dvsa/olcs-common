@@ -52,7 +52,7 @@ class LicenceLicenceVehicle
      * })
      * @Form\Filter("DateTimeSelectNullifier")
      * @Form\Validator("\Common\Validator\Date")
-     * @Form\Validator({"name": "Date", "options": {"format": "Y-m-d H:i:s"}})
+     * @Form\Validator("Date", options={"format": "Y-m-d H:i:s"})
      */
     public $specifiedDate;
 

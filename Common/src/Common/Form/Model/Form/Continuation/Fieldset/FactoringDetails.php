@@ -17,7 +17,7 @@ class FactoringDetails
      *     "label": "continuations.finances.factoring.amount.label",
      *     "hint": "continuations.finances.factoring.amount.hint",
      * })
-     * @Form\Validator({"name": "NotEmpty", "options": {"null"}})
+     * @Form\Validator("NotEmpty", options={"null"})
      * @Form\Validator("ValidateIf",
      *      options={
      *          "context_field": "yesNo",

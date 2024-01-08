@@ -19,10 +19,9 @@ class LicenceHistoryEu
      *     "value_options": {"Y":"Yes", "N":"No"}
      * })
      * @Form\Type("radio")
-     * @Form\Validator({
-     *     "name":"Common\Form\Elements\Validators\LicenceHistoryLicenceValidator",
-     *     "options": {"table": "prevBeenRefused-table"}
-     *})
+     * @Form\Validator("Common\Form\Elements\Validators\LicenceHistoryLicenceValidator",
+     *     options={"table": "prevBeenRefused-table"}
+     *)
      */
     public $prevBeenRefused = null;
 
@@ -46,10 +45,9 @@ class LicenceHistoryEu
      *     "value_options": {"Y":"Yes", "N":"No"}
      * })
      * @Form\Type("radio")
-     * @Form\Validator({
-     *     "name":"Common\Form\Elements\Validators\LicenceHistoryLicenceValidator",
-     *     "options":{"table":"prevBeenRevoked-table"}
-     *})
+     * @Form\Validator("Common\Form\Elements\Validators\LicenceHistoryLicenceValidator",
+     *     options={"table":"prevBeenRevoked-table"}
+     *)
      */
     public $prevBeenRevoked = null;
 

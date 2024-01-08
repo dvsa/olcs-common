@@ -17,7 +17,7 @@ class OtherFinancesDetails
      *     "label": "continuations.finances.otherFinances.amount.label",
      *     "hint": "continuations.finances.otherFinances.amount.hint",
      * })
-     * @Form\Validator({"name": "NotEmpty", "options": {"null"}})
+     * @Form\Validator("NotEmpty", options={"null"})
      * @Form\Validator("ValidateIf",
      *      options={
      *          "context_field": "yesNo",
@@ -66,7 +66,7 @@ class OtherFinancesDetails
      * @Form\Options({
      *     "label": "continuations.finances.otherFinances.detail.label",
      * })
-     * @Form\Validator({"name": "NotEmpty", "options": {"null"}})
+     * @Form\Validator("NotEmpty", options={"null"})
      * @Form\Validator("ValidateIf",
      *      options={
      *          "context_field": "yesNo",

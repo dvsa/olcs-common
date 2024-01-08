@@ -13,10 +13,9 @@ class TableRequiredPeople extends TableRequired
     /**
      * @Form\Required(false)
      * @Form\Type("Hidden")
-     * @Form\Validator({
-     *     "name":"Common\Form\Elements\Validators\TableRequiredValidator",
-     *     "options":{"label":"person", "rowsRequired":1}
-     * })
+     * @Form\Validator("Common\Form\Elements\Validators\TableRequiredValidator",
+     *     options={"label":"person", "rowsRequired":1}
+     * )
      * @Form\Validator("Laminas\Validator\NotEmpty", options={"array"})
      */
     public $rows;

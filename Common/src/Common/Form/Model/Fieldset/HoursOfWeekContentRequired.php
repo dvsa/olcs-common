@@ -36,12 +36,12 @@ class HoursOfWeekContentRequired
      *         "notBetween": "Mon must be between '%min%' and '%max%', inclusively"
      *     }
      *})
-     * @Form\Validator({"name": "Common\Form\Elements\Validators\SumContext", "options": {
+     * @Form\Validator("Common\Form\Elements\Validators\SumContext", options={
      *     "min": 0.1,
      *     "messages": {
      *         "belowMin": "transport-manager-hours-per-week-validation-message"
      *     }
-     * }})
+     *})
      */
     public $hoursMon = null;
 

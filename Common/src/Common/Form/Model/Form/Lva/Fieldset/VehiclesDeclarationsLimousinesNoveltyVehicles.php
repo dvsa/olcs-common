@@ -43,9 +43,8 @@ class VehiclesDeclarationsLimousinesNoveltyVehicles
      *     "unchecked_value": "N"
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
-     * @Form\Validator({
-     *     "name": "Common\Form\Elements\Validators\VehicleUndertakingsNoLimousineConfirmationValidator",
-     *     "options": {"required_context_value": "N"}
+     * @Form\Validator("Common\Form\Elements\Validators\VehicleUndertakingsNoLimousineConfirmationValidator",
+     *     options={"required_context_value": "N"}
      * })
      */
     public $psvNoLimousineConfirmation = null;
@@ -68,12 +67,11 @@ class VehiclesDeclarationsLimousinesNoveltyVehicles
      *     "unchecked_value": "N"
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
-     * @Form\Validator({
-     *     "name": "Common\Form\Elements\Validators\VehicleUndertakingsNoLimousineConfirmationValidator",
-     *     "options": {
+     * @Form\Validator("Common\Form\Elements\Validators\VehicleUndertakingsNoLimousineConfirmationValidator",
+     *     options={
      *         "required_context_value": "Y"
      *     }
-     * })
+     * )
      */
     public $psvOnlyLimousinesConfirmation = null;
 }

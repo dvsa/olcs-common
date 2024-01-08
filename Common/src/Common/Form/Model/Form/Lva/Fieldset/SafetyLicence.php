@@ -24,10 +24,10 @@ class SafetyLicence
      * })
      * @Form\Type("Text")
      * @Form\Filter("Laminas\Filter\StringTrim")
-     * @Form\Validator({"name": "Between", "options": {
+     * @Form\Validator("Between", options={
      *     "min":1, "max":13,
      *     "messages": {"notBetween": "safetyLicence_safetyInsBetween-error"}
-     * }})
+     *})
      */
     public $safetyInsVehicles = null;
 
@@ -40,10 +40,10 @@ class SafetyLicence
      * })
      * @Form\Type("Text")
      * @Form\Filter("Laminas\Filter\StringTrim")
-     * @Form\Validator({"name": "Between", "options": {
+     * @Form\Validator("Between", options={
      *     "min":1, "max":13,
      *     "messages": {"notBetween": "safetyLicence_safetyInsBetween-error"}
-     * }})
+     *})
      */
     public $safetyInsTrailers = null;
 
@@ -87,9 +87,8 @@ class SafetyLicence
      *     "error-message": "You must add at least one safety inspector"
      * })
      * @Form\Type("Text")
-     * @Form\Validator({
-     *      "name": "ValidateIf",
-     *      "options": {
+     * @Form\Validator("ValidateIf",
+     *      options={
      *          "context_field": "tachographIns",
      *          "context_values": {"tach_external"},
      *          "validators": {
@@ -97,7 +96,7 @@ class SafetyLicence
      *              {"name": "StringLength", "options": {"min":"1","max":90}}
      *          }
      *     }
-     * })
+     * )
      */
     public $tachographInsName = null;
 }

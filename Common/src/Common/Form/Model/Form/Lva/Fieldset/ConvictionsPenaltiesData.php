@@ -27,9 +27,9 @@ class ConvictionsPenaltiesData
      *     "value_options": {"Y": "Yes", "N": "No"},
      * })
      * @Form\Type("\Laminas\Form\Element\Radio")
-     * @Form\Validator({"name":"Common\Form\Elements\Validators\LicenceHistoryLicenceValidator",
-     *     "options": {"name": "noConviction"}
-     * })
+     * @Form\Validator("Common\Form\Elements\Validators\LicenceHistoryLicenceValidator",
+     *     options={"name": "noConviction"}
+     * )
      */
     public $question = null;
 

@@ -21,13 +21,12 @@ class CommunityLicencesStopDates
      * @Form\Filter("DateSelectNullifier")
      * @Form\Validator("\Common\Validator\Date")
      * @Form\Validator("Date", options={"format":"Y-m-d"})
-     * @Form\Validator({
-     *      "name": "Dvsa\Olcs\Transfer\Validators\DateInFuture",
-     *      "options": {
+     * @Form\Validator("Dvsa\Olcs\Transfer\Validators\DateInFuture",
+     *      options={
      *          "include_today": true,
      *          "use_time": false
      *      }
-     * })
+     * )
      */
     public $startDate = null;
 
@@ -42,16 +41,15 @@ class CommunityLicencesStopDates
      * @Form\Filter("DateSelectNullifier")
      * @Form\Validator("\Common\Validator\Date")
      * @Form\Validator("Date", options={"format":"Y-m-d"})
-     * @Form\Validator({
-     *      "name": "DateCompare",
-     *      "options": {
+     * @Form\Validator("DateCompare",
+     *      options={
      *          "has_time": false,
      *          "allow_empty": true,
      *          "compare_to":"startDate",
      *          "operator":"gt",
      *          "compare_to_label":"Start date"
      *      }
-     * })
+     * )
      */
     public $endDate = null;
 }

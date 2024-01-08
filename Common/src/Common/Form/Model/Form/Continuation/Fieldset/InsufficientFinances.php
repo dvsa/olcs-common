@@ -13,7 +13,7 @@ class InsufficientFinances
     /**
      * @Form\Type("Common\Form\Elements\Types\RadioYesNo")
      * @Form\ErrorMessage("continuations.insufficient-finances.error")
-     * @Form\Validator({"name": "InArray", "options": {"haystack": {"Y"}}})
+     * @Form\Validator("InArray", options={"haystack": {"Y"}})
      */
     public $yesNo = null;
 

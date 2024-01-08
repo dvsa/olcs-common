@@ -20,8 +20,8 @@ class OperatingCentresTotAuthTrailers
      *     "hint-below-class": "govuk-hint govuk-body govuk-!-font-size-16 govuk-!-margin-top-2"
      * })
      * @Form\Validator("Digits")
-     * @Form\Validator({"name": "Between", "options": {"min":0, "max": 5000}})
-     * @Form\Filter({"name":"\Laminas\Filter\ToNull", "options":{"type":"string"}})
+     * @Form\Validator("Between", options={"min":0, "max": 5000})
+     * @Form\Filter("\Laminas\Filter\ToNull", options={"type":"string"})
      */
     public $totAuthTrailers = null;
 }

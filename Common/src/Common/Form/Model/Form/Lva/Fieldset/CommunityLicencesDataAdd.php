@@ -14,14 +14,12 @@ class CommunityLicencesDataAdd
      * @Form\Attributes({"class":"short","id":"","required":false})
      * @Form\Options({"label":"application.community_licence.form.total_community_licences"})
      * @Form\Validator("Digits")
-     * @Form\Validator({
-     *  "name": "GreaterThan",
-     *  "options": {"min":0, "messages": {"notGreaterThan": "community-licences.add.error-message.min"}}
-     * })
-     * @Form\Validator({
-     *  "name": "LessThan",
-     *  "options": {"max":51, "messages": {"notLessThan": "community-licences.add.error-message.max"}}
-     * })
+     * @Form\Validator("GreaterThan",
+     *  options={"min":0, "messages": {"notGreaterThan": "community-licences.add.error-message.min"}}
+     * )
+     * @Form\Validator("LessThan",
+     *  options={"max":51, "messages": {"notLessThan": "community-licences.add.error-message.max"}}
+     * )
      * @Form\Type("Text")
      */
     public $total = null;
