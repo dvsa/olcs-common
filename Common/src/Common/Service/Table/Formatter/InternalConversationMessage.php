@@ -26,18 +26,18 @@ class InternalConversationMessage implements FormatterPluginManagerInterface
     public function format($row, $column = null): string
     {
         if (!empty($row['createdBy']['team'])) {
-            $sender_name = 'Case Worker';
+            $senderName = 'Case Worker';
         } elseif (!empty($row['createdBy']['contactDetails']['person'])) {
             $person = $row['createdBy']['contactDetails']['person'];
-            $sender_name = $person['forename'] . " " . $person['familyName'];
+            $senderName = $person['forename'] . " " . $person['familyName'];
         } else {
-            $sender_name = $row['createdBy']['loginId'];
+            $senderName = $row['createdBy']['loginId'];
         }
 
-        $latest_message_created_at = DateTimeImmutable::createFromFormat(DateTimeInterface::ATOM, $row["createdOn"]);
-        $date = $latest_message_created_at->format('l j F Y \a\t H:ia');
+        $latestMessageCreatedAt = DateTimeImmutable::createFromFormat(DateTimeInterface::ATOM, $row["createdOn"]);
+        $date = $latestMessageCreatedAt->format('l j F Y \a\t H:ia');
 
-        $row_template = '<div class="govuk-!-margin-bottom-6">
+        $rowTemplate = '<div class="govuk-!-margin-bottom-6">
                 <div class="govuk-summary-card">
                     <div class="govuk-summary-card__title-wrapper">
                         <h2 class="govuk-summary-card__title">%s</h2> <h2 class="govuk-summary-card__title govuk-summary-card__date">%s</h2>
@@ -49,9 +49,9 @@ class InternalConversationMessage implements FormatterPluginManagerInterface
             </div>';
 
         return vsprintf(
-            $row_template,
+            $rowTemplate,
             [
-                $sender_name,
+                $senderName,
                 $date,
                 nl2br($row['messagingContent']['text'])
             ]
