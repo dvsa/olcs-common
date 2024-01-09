@@ -10,7 +10,6 @@ namespace CommonTest\Service\Table\Type;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Table\Type\Link;
-use CommonTest\Bootstrap;
 use Common\Service\Helper\StackHelperService;
 
 /**

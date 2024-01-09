@@ -5,7 +5,6 @@ namespace CommonTest\Common\FormService\Form\Lva;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Lva\ApplicationGoodsVehicles;
-use CommonTest\Bootstrap;
 
 class ApplicationGoodsVehiclesTest extends MockeryTestCase
 {

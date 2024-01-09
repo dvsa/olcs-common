@@ -8,7 +8,6 @@
 namespace CommonTest\Preference;
 
 use Common\Preference\LanguageListener;
-use CommonTest\Bootstrap;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\EventManager\EventManagerInterface;

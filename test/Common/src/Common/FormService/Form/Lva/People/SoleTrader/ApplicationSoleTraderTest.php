@@ -5,7 +5,6 @@ namespace CommonTest\FormService\Form\Lva\People\SoleTrader;
 use Common\FormService\FormServiceInterface;
 use Common\FormService\FormServiceManager;
 use Common\Service\Lva\PeopleLvaService;
-use CommonTest\Bootstrap;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Lva\People\SoleTrader\ApplicationSoleTrader as Sut;

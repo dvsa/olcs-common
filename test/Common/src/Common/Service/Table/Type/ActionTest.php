@@ -3,7 +3,6 @@
 namespace CommonTest\Service\Table\Type;
 
 use Common\Service\Table\Type\Action;
-use CommonTest\Bootstrap;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 

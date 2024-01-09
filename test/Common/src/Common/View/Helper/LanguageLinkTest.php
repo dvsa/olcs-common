@@ -5,7 +5,6 @@ namespace CommonTest\View\Helper;
 use Common\Preference\Language;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use CommonTest\Bootstrap;
 use Common\View\Helper\LanguageLink;
 
 /**
