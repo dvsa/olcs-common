@@ -3,7 +3,6 @@
 namespace CommonTest\Common\Service\Cqrs\Command;
 
 use Common\Service\Cqrs\Command\CommandSender;
-use CommonTest\Bootstrap;
 use Dvsa\Olcs\Transfer\Command\CommandInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;

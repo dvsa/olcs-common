@@ -11,7 +11,6 @@ use Common\Util\Escape;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Table\Type\ActionLinks;
-use CommonTest\Bootstrap;
 use Laminas\Mvc\I18n\Translator;
 
 /**

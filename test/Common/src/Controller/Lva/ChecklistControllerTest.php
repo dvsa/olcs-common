@@ -9,17 +9,11 @@ use Dvsa\Olcs\Transfer\Query\ContinuationDetail\LicenceChecklist;
 use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Hamcrest\Core\IsEqual;
 use Mockery as m;
-use CommonTest\Bootstrap;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use ZfcRbac\Service\AuthorizationService;
 
 class ChecklistControllerTest extends MockeryTestCase
 {
-    protected function getServiceManager()
-    {
-        return Bootstrap::getServiceManager();
-    }
-
     public function setUp(): void
     {
         parent::setUp();

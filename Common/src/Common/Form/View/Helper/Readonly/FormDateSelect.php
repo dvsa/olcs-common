@@ -2,6 +2,7 @@
 
 namespace Common\Form\View\Helper\Readonly;
 
+use Common\Module;
 use Laminas\Form\Element\DateSelect;
 use Laminas\Form\ElementInterface;
 use Laminas\View\Helper\AbstractHelper;
@@ -12,11 +13,6 @@ use Laminas\View\Helper\AbstractHelper;
  */
 class FormDateSelect extends AbstractHelper
 {
-    /**
-     * @var string
-     */
-    protected $format = \DATE_FORMAT;
-
     /**
      * Invoke helper as function
      *
@@ -58,6 +54,6 @@ class FormDateSelect extends AbstractHelper
             (int) $element->getDayElement()->getValue()
         );
 
-        return $dateTime->format($this->format);
+        return $dateTime->format(Module::$dateFormat);
     }
 }

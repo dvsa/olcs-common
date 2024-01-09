@@ -6,7 +6,6 @@ use Common\Controller\Traits\CompanySearch;
 use Common\Form\Form;
 use Common\Service\Cqrs\Exception\NotFoundException;
 use Common\Service\Helper\FormHelperService;
-use CommonTest\Bootstrap;
 use CommonTest\Common\Controller\Traits\Stubs\CompanySearchStub;
 use Dvsa\Olcs\Transfer\Query\CompaniesHouse\ByNumber;
 use Mockery\Adapter\Phpunit\MockeryTestCase;

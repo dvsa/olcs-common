@@ -7,7 +7,6 @@ use Common\Service\Helper\UrlHelperService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Lva\VariationFinancialEvidence;
-use CommonTest\Bootstrap;
 
 /**
  * Variation Financial Evidence Test

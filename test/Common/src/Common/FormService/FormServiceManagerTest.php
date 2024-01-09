@@ -2,7 +2,6 @@
 
 namespace CommonTest\FormService;
 
-use CommonTest\Bootstrap;
 use Common\FormService\FormServiceInterface;
 use Common\FormService\FormServiceManager;
 use Mockery as m;

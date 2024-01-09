@@ -28,6 +28,11 @@ use Laminas\ModuleManager\Feature\ServiceProviderInterface;
  */
 class Module implements ConfigProviderInterface, ServiceProviderInterface
 {
+    public static string $dateFormat = 'd/m/Y';
+    public static string $dateTimeFormat = 'd/m/Y H:i';
+    public static string $dateTimeSecFormat = 'd/m/Y H:i:s';
+    public static string $dbDateFormat = 'Y-m-d';
+
     /**
      * Initialize module
      *
@@ -58,30 +63,11 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
         } else {
             $config = [];
         }
-        if (!defined('DATE_FORMAT')) {
-            define(
-                'DATE_FORMAT',
-                isset($config['date_settings']['date_format']) ?
-                $config['date_settings']['date_format'] : 'd/m/Y'
-            );
-        }
-        if (!defined('DATETIME_FORMAT')) {
-            define(
-                'DATETIME_FORMAT',
-                isset($config['date_settings']['datetime_format']) ?
-                $config['date_settings']['datetime_format'] : 'd/m/Y H:i'
-            );
-        }
-        if (!defined('DATETIMESEC_FORMAT')) {
-            define(
-                'DATETIMESEC_FORMAT',
-                isset($config['date_settings']['datetimesec_format']) ?
-                $config['date_settings']['datetimesec_format'] : 'd/m/Y H:i:s'
-            );
-        }
-        if (!defined('DB_DATE_FORMAT')) {
-            define('DB_DATE_FORMAT', 'Y-m-d');
-        }
+
+        self::$dateFormat = $config['date_settings']['date_format'] ?? self::$dateFormat;
+        self::$dateTimeFormat = $config['date_settings']['datetime_format'] ?? self::$dateTimeFormat;
+        self::$dateTimeSecFormat = $config['date_settings']['datetimesec_format'] ?? self::$dateTimeSecFormat;
+        self::$dbDateFormat = $config['date_settings']['db_date_format'] ?? self::$dbDateFormat;
     }
 
     /**
@@ -253,7 +239,7 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
      */
     public function getConfig()
     {
-        return include __DIR__ . '/config/module.config.php';
+        return include __DIR__ . '/../config/module.config.php';
     }
 
     /**
@@ -353,7 +339,7 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
         return [
             'factories' => [
                 FormatterPluginManager::class => function ($serviceManager) {
-                    $config = include __DIR__ . '/config/formatter-plugins.config.php';
+                    $config = include __DIR__ . '/../config/formatter-plugins.config.php';
                     if (method_exists($serviceManager, 'configure')) {
                         // Should work with laminas 3
                         $pluginManager = new FormatterPluginManager($serviceManager);

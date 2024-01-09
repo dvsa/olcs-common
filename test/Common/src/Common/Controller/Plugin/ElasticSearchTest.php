@@ -6,7 +6,6 @@ use Laminas\View\Helper\Placeholder;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Olcs\TestHelpers\ControllerPluginManagerHelper;
-use CommonTest\Bootstrap;
 use Laminas\Mvc\MvcEvent;
 use Laminas\Mvc\Router\Http\Segment;
 use Laminas\Mvc\Router\RouteMatch;

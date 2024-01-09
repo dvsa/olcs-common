@@ -8,7 +8,6 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Continuation\Payment;
 use Common\Form\Model\Form\Continuation\Payment as PaymentForm;
 use Common\Service\Helper\FormHelperService;
-use CommonTest\Bootstrap;
 use Common\FormService\FormServiceManager;
 
 /**

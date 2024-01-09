@@ -33,24 +33,6 @@ class TableBuilderTest extends MockeryTestCase
         $this->mockFormatterPluginManager = m::mock(FormatterPluginManager::class);
     }
 
-    /**
-     * @todo the Date formatter now appears to rely on global constants defined
-     * in the Common\Module::modulesLoaded method which can cause this test to
-     * fail :(
-     */
-    public static function setUpBeforeClass(): void
-    {
-        parent::setUpBeforeClass();
-        if (!defined('DATE_FORMAT')) {
-            define('DATE_FORMAT', 'd/m/Y');
-        }
-    }
-
-    public function tearDown(): void
-    {
-        m::close();
-    }
-
     private function getConcreteTableBuilder($config = true)
     {
         return new TableBuilder(
