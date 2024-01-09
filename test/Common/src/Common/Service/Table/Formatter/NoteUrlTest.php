@@ -8,6 +8,7 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Module;
 use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Formatter\NoteUrl;
 use Laminas\Http\Request;
@@ -24,14 +25,6 @@ class NoteUrlTest extends MockeryTestCase
     protected $urlHelper;
     protected $sut;
 
-    public static function setUpBeforeClass(): void
-    {
-        parent::setUpBeforeClass();
-        if (!defined('DATE_FORMAT')) {
-            define('DATE_FORMAT', 'd/m/Y');
-        }
-    }
-
     protected function setUp(): void
     {
         $this->urlHelper = m::mock(UrlHelperService::class);
@@ -39,10 +32,6 @@ class NoteUrlTest extends MockeryTestCase
         $this->sut = new NoteUrl($this->request, $this->urlHelper);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
     /**
      * Test the format method
      */
@@ -77,7 +66,7 @@ class NoteUrlTest extends MockeryTestCase
             ->getMock();
 
         $expectedLink = '<a class="govuk-link js-modal-ajax" href="the_url">'
-            . (new \DateTime($data['createdOn']))->format(\DATE_FORMAT) . '</a>';
+            . (new \DateTime($data['createdOn']))->format(Module::$dateFormat) . '</a>';
 
         $this->assertEquals($expectedLink, $this->sut->format($data, []));
     }

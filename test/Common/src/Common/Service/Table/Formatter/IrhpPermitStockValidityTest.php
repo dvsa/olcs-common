@@ -20,14 +20,6 @@ class IrhpPermitStockValidityTest extends \PHPUnit\Framework\TestCase
         $this->sut = new IrhpPermitStockValidity(new Date());
     }
 
-    public static function setUpBeforeClass(): void
-    {
-        parent::setUpBeforeClass();
-        if (!defined('DATE_FORMAT')) {
-            define('DATE_FORMAT', 'd/m/Y');
-        }
-    }
-
     /**
      * Test the format method
      *

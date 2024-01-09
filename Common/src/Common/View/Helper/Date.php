@@ -2,6 +2,7 @@
 
 namespace Common\View\Helper;
 
+use Common\Module;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\View\Helper\AbstractHelper;
@@ -29,8 +30,12 @@ class Date extends AbstractHelper
      * @param string $altIfNull
      * @return string
      */
-    public function __invoke($timestamp = null, $dateFormat = \DATE_FORMAT, $altIfNull = 'Unknown')
+    public function __invoke($timestamp = null, $dateFormat = null, $altIfNull = 'Unknown')
     {
+        if (is_null($dateFormat)) {
+            $dateFormat = Module::$dateFormat;
+        }
+
         if (empty($timestamp)) {
             $translate = $this->translator;
             return $translate($altIfNull);

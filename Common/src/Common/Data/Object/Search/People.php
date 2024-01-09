@@ -4,6 +4,7 @@ namespace Common\Data\Object\Search;
 
 use Common\Data\Object\Search\Aggregations\Terms as Filter;
 use Common\Data\Object\Search\Aggregations\DateRange as DateRange;
+use Common\Module;
 use Common\Service\Table\Formatter\SearchPeopleName;
 use Common\Service\Table\Formatter\SearchPeopleRecord;
 
@@ -138,7 +139,7 @@ class People extends InternalSearchAbstract
                 'formatter' => function ($row) {
 
                     return empty($row['personBirthDate']) ?
-                        'Not known' : date(\DATE_FORMAT, strtotime($row['personBirthDate']));
+                        'Not known' : date(Module::$dateFormat, strtotime($row['personBirthDate']));
                 }
             ],
             [
@@ -146,7 +147,7 @@ class People extends InternalSearchAbstract
                 'name' => 'dateAdded',
                 'formatter' => function ($row) {
 
-                    return empty($row['dateAdded']) ? 'NA' : date(\DATE_FORMAT, strtotime($row['dateAdded']));
+                    return empty($row['dateAdded']) ? 'NA' : date(Module::$dateFormat, strtotime($row['dateAdded']));
                 }
             ],
             [
@@ -154,7 +155,7 @@ class People extends InternalSearchAbstract
                 'name' => 'dateRemoved',
                 'formatter' => function ($row) {
 
-                    return empty($row['dateRemoved']) ? 'NA' : date(\DATE_FORMAT, strtotime($row['dateRemoved']));
+                    return empty($row['dateRemoved']) ? 'NA' : date(Module::$dateFormat, strtotime($row['dateRemoved']));
                 }
             ],
             [

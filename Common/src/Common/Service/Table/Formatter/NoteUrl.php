@@ -8,6 +8,7 @@
 
 namespace Common\Service\Table\Formatter;
 
+use Common\Module;
 use Common\Service\Helper\UrlHelperService;
 use Laminas\Http\Request;
 
@@ -49,6 +50,6 @@ class NoteUrl implements FormatterPluginManagerInterface
         );
 
         return '<a class="govuk-link js-modal-ajax" href="' . $url . '">'
-        . (new \DateTime($row['createdOn']))->format(\DATE_FORMAT) . '</a>';
+        . (new \DateTime($row['createdOn']))->format(Module::$dateFormat) . '</a>';
     }
 }

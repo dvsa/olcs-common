@@ -40,11 +40,11 @@
         "laminas/laminas-serializer": "^2.10"
     },
     "autoload": {
-        "psr-0": {
-            "Common\\": "Common/src/"
+        "psr-4": {
+            "Common\\": "Common/src/Common"
         },
         "classmap": [
-            "./Common/Module.php"
+          "./Common/src/Module.php"
         ]
     },
     "autoload-dev": {

@@ -7,11 +7,11 @@ if (array_key_exists('date', $item)) {
 
         $outputDate = \DateTime::createFromFormat($dateFormat, $item['date']);
         if (!$outputDate instanceof \DateTime) {
-            $outputDate = \DateTime::createFromFormat(\DB_DATE_FORMAT, $item['date']);
+            $outputDate = \DateTime::createFromFormat(\Common\Module::$dbDateFormat, $item['date']);
         }
 
         if ($outputDate instanceof \DateTime) {
-            $item['value'] = $outputDate->format(\DATE_FORMAT);
+            $item['value'] = $outputDate->format(\Common\Module::$dateFormat);
         } else {
             $item['value'] = $item['date'];
         }

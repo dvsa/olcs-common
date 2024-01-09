@@ -2,6 +2,7 @@
 
 namespace Common\Data\Mapper\Continuation;
 
+use Common\Module;
 use Common\Service\Helper\TranslationHelperService;
 use Common\RefData;
 
@@ -700,7 +701,7 @@ class LicenceChecklist
      */
     private static function formatDate($date)
     {
-        return !empty($date) ? date(\DATE_FORMAT, strtotime($date)) : '';
+        return !empty($date) ? date(Module::$dateFormat, strtotime($date)) : '';
     }
 
     private static function mapUsers(array $data, $translator)

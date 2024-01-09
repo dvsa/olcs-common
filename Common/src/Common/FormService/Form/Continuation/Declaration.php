@@ -4,6 +4,7 @@ namespace Common\FormService\Form\Continuation;
 
 use Common\Form\Form;
 use Common\Form\Model\Form\Continuation\Declaration as FormModel;
+use Common\Module;
 use Common\RefData;
 use Common\Service\Helper\FormHelperService;
 use Common\Service\Helper\TranslationHelperService;
@@ -80,7 +81,7 @@ class Declaration
             // Update the form HTML with details name of person who signed
             /** @var \Common\Service\Helper\TranslationHelperService $translator */
             $this->form->get('signatureDetails')->get('signature')->setValue(
-                $this->translator->translateReplace('undertakings_signed', [$signedBy, $signedDate->format(\DATE_FORMAT)])
+                $this->translator->translateReplace('undertakings_signed', [$signedBy, $signedDate->format(Module::$dateFormat)])
             );
             $this->formHelper->remove($this->form, 'form-actions->sign');
             $this->formHelper->remove($this->form, 'content');
