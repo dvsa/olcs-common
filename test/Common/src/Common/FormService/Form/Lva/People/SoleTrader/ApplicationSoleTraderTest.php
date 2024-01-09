@@ -2,13 +2,14 @@
 
 namespace CommonTest\FormService\Form\Lva\People\SoleTrader;
 
+use Common\Form\Form;
 use Common\FormService\FormServiceInterface;
 use Common\FormService\FormServiceManager;
 use Common\Service\Lva\PeopleLvaService;
+use Laminas\Form\ElementInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Lva\People\SoleTrader\ApplicationSoleTrader as Sut;
-use Laminas\Form\Form;
 use LmcRbacMvc\Service\AuthorizationService;
 
 /**
@@ -31,7 +32,6 @@ class ApplicationSoleTraderTest extends MockeryTestCase
         $this->formHelper = m::mock('\Common\Service\Helper\FormHelperService');
         $this->authService = m::mock(AuthorizationService::class);
         $this->peopleLvaService = m::mock(PeopleLvaService::class);
-        $this->mockVariationService = m::mock(FormServiceInterface::class);
         $this->fsl = m::mock(FormServiceManager::class)->makePartial();
 
         $this->mockApplicationService = m::mock(FormServiceInterface::class);
@@ -50,11 +50,11 @@ class ApplicationSoleTraderTest extends MockeryTestCase
     {
         $params['canModify'] = true;
 
-        $formActions = m::mock();
+        $formActions = m::mock(ElementInterface::class);
         $formActions->shouldReceive('has')->with('disqualify')->andReturn(true);
         $formActions->shouldReceive('remove')->once()->with('disqualify');
 
-        $form = m::mock();
+        $form = m::mock(Form::class);
 
         $form->shouldReceive('has')->with('form-actions')->andReturn(true);
         $form->shouldReceive('get')->with('form-actions')->andReturn($formActions);
@@ -76,7 +76,7 @@ class ApplicationSoleTraderTest extends MockeryTestCase
             'disqualifyUrl' => 'foo'
         ];
 
-        $formActions = m::mock();
+        $formActions = m::mock(ElementInterface::class);
         $formActions->shouldReceive('get->setValue')
             ->once()
             ->with('foo');
@@ -104,7 +104,7 @@ class ApplicationSoleTraderTest extends MockeryTestCase
             'orgType' => 'bar'
         ];
 
-        $formActions = m::mock();
+        $formActions = m::mock(ElementInterface::class);
         $formActions->shouldReceive('get->setValue')
             ->once()
             ->with('foo');

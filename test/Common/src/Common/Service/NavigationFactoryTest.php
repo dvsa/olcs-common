@@ -65,7 +65,7 @@ class NavigationFactoryTest extends TestCase
             ),
         );
 
-        $sm = $this->serviceManager = new ServiceManager(new ServiceManagerConfig);
+        $sm = $this->serviceManager = new ServiceManager();
         $sm->setService('ApplicationConfig', $config);
         $sm->get('ModuleManager')->loadModules();
         $sm->get('Application')->bootstrap();

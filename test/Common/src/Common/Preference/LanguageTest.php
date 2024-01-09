@@ -10,11 +10,6 @@ use Laminas\Http\Header\SetCookie;
 use Laminas\Http\Request;
 use Laminas\Http\Response;
 
-/**
- * Language Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class LanguageTest extends MockeryTestCase
 {
     /**

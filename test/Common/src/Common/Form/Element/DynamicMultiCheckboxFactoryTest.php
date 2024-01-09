@@ -6,18 +6,22 @@ namespace CommonTest\Form\Element;
 
 use Common\Form\Element\DynamicMultiCheckbox;
 use Common\Form\Element\DynamicMultiCheckboxFactory;
+use Common\Service\Data\PluginManager;
+use Interop\Container\Containerinterface;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Mockery as m;
 
-class DynamicMultiCheckboxFactoryTest extends \PHPUnit\Framework\TestCase
+class DynamicMultiCheckboxFactoryTest extends MockeryTestCase
 {
     public function testInvoke()
     {
-        $mockSl = $this->createMock('\Laminas\Form\FormElementManager');
-        $mockSl->expects($this->any())->method('get')->willReturnSelf();
+        $pluginManager = m::mock(PluginManager::class);
+        $mockSl = m::mock(ContainerInterface::class);
+        $mockSl->expects('get')->with('DataServiceManager')->andReturn($pluginManager);
 
         $sut = new DynamicMultiCheckboxFactory();
         $service = $sut->__invoke($mockSl, DynamicMultiCheckbox::class);
 
         $this->assertInstanceOf(DynamicMultiCheckbox::class, $service);
-        $this->assertSame($mockSl, $service->getServiceLocator());
     }
 }

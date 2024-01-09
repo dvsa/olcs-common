@@ -2,6 +2,7 @@
 
 namespace CommonTest\Controller\Plugin;
 
+use Laminas\Mvc\Controller\PluginManager;
 use Laminas\View\Helper\Placeholder;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -14,10 +15,6 @@ use Laminas\View\Model\ViewModel;
 use Laminas\Navigation\Page\Mvc as NavigationPage;
 use CommonTest\Common\Controller\Plugin\ControllerStub;
 
-/**
- * Class ElasticSearchPluginTest
- * @package OlcsTest\Mvc\Controller\Plugin
- */
 class ElasticSearchTest extends MockeryTestCase
 {
     protected $sut;
@@ -55,7 +52,7 @@ class ElasticSearchTest extends MockeryTestCase
             ->makePartial()
             ->setAllowOverride(true);
 
-        $this->pm = m::mock('\Laminas\Mvc\Controller\PluginManager[setInvokableClass]')->makePartial();
+        $this->pm = m::mock(PluginManager::class)->makePartial();
         $this->pm->setInvokableClass('ElasticSearch', 'Common\Controller\Plugin\ElasticSearch');
 
         $this->mockPlaceholder = m::mock(Placeholder::class);

@@ -2,12 +2,21 @@
 
 namespace CommonTest\Service\Helper;
 
+use Common\Form\Form;
 use Common\Service\Data\AddressDataService;
 use Common\Service\Helper\AddressHelperService;
 use Common\Service\Helper\DateHelperService;
 use Common\Service\Helper\FormHelperService;
 use Common\Service\Helper\TranslationHelperService;
 use Laminas\Form\Annotation\AnnotationBuilder;
+use Laminas\Form\Element\DateSelect;
+use Laminas\Form\Element\DateTimeSelect;
+use Laminas\Form\ElementInterface;
+use Laminas\Form\Fieldset;
+use Laminas\Http\Request;
+use Laminas\Session\Container;
+use Laminas\Validator\ValidatorChain;
+use Laminas\Validator\ValidatorInterface;
 use Laminas\View\Renderer\RendererInterface;
 use LmcRbacMvc\Service\AuthorizationService;
 use Mockery as m;
@@ -40,7 +49,8 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->mockBuilder = m::mock(AnnotationBuilder::class);
+        $this->mockBuilder = new AnnotationBuilder();
+        //$this->mockBuilder = m::mock($annotationBuilder);
         $this->mockAuthSrv = m::mock(AuthorizationService::class);
 
         $this->mockTransSrv = m::mock(TranslationHelperService::class);
@@ -66,7 +76,7 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testAlterElementLabelWithAppend()
     {
-        $element = m::mock('\stdClass');
+        $element = m::mock(ElementInterface::class);
         $element->shouldReceive('getLabel')->andReturn('My label');
         $element->shouldReceive('setLabel')->with('My labelAppended label');
 
@@ -75,7 +85,7 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testAlterElementLabelWithNoType()
     {
-        $element = m::mock('\stdClass');
+        $element = m::mock(ElementInterface::class);
         $element->shouldReceive('getLabel')->andReturn('My label');
         $element->shouldReceive('setLabel')->with('Replaced label');
 
@@ -84,7 +94,7 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testAlterElementLabelWithPrepend()
     {
-        $element = m::mock('\stdClass');
+        $element = m::mock(ElementInterface::class);
         $element->shouldReceive('getLabel')->andReturn('My label');
         $element->shouldReceive('setLabel')->with('Prepended labelMy label');
 
@@ -224,7 +234,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->shouldReceive('isPost')
             ->andReturn(false);
 
-        $element = m::mock('\stdClass');
+        $element = m::mock(ElementInterface::class);
         $element->shouldReceive('remove')
             ->with('addresses')
             ->shouldReceive('remove')
@@ -271,7 +281,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->shouldReceive('isPost')
             ->andReturn(true);
 
-        $element = m::mock('\stdClass');
+        $element = m::mock(ElementInterface::class);
         $element->shouldReceive('remove')
             ->with('addresses')
             ->shouldReceive('remove')
@@ -327,7 +337,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->shouldReceive('isPost')
             ->andReturn(true);
 
-        $element = m::mock('\stdClass');
+        $element = m::mock(ElementInterface::class);
         $element->shouldReceive('remove')
             ->with('addresses')
             ->shouldReceive('remove')
@@ -392,11 +402,11 @@ class FormHelperServiceTest extends MockeryTestCase
             ->shouldReceive('isPost')
             ->andReturn(true);
 
-        $addressElement = m::mock('\stdClass');
+        $addressElement = m::mock(ElementInterface::class);
         $addressElement->shouldReceive('setValueOptions')
             ->with(['formatted1', 'formatted2']);
 
-        $element = m::mock('\stdClass');
+        $element = m::mock(ElementInterface::class);
         $element->shouldReceive('get')
             ->with('addresses')
             ->andReturn($addressElement);
@@ -450,11 +460,11 @@ class FormHelperServiceTest extends MockeryTestCase
             ->shouldReceive('isPost')
             ->andReturn(true);
 
-        $addressElement = m::mock('\stdClass');
+        $addressElement = m::mock(ElementInterface::class);
         $addressElement->shouldReceive('setValueOptions')
             ->with(['formatted1', 'formatted2']);
 
-        $element = m::mock('\stdClass');
+        $element = m::mock(ElementInterface::class);
         $element->shouldReceive('get')
             ->with('addresses')
             ->andReturn($addressElement);
@@ -512,11 +522,11 @@ class FormHelperServiceTest extends MockeryTestCase
             ->shouldReceive('isPost')
             ->andReturn(true);
 
-        $addressElement = m::mock('\stdClass');
+        $addressElement = m::mock(ElementInterface::class);
         $addressElement->shouldReceive('setValueOptions')
             ->with(['formatted1', 'formatted2']);
 
-        $element = m::mock('\stdClass');
+        $element = m::mock(ElementInterface::class);
         $element->shouldReceive('remove')
             ->with('addresses')
             ->getMock()
@@ -561,7 +571,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->shouldReceive('isPost')
             ->andReturn(true);
 
-        $element = m::mock('\stdClass');
+        $element = m::mock(ElementInterface::class);
         $element->shouldReceive('remove')
             ->with('addresses')
             ->getMock()
@@ -609,7 +619,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->shouldReceive('isPost')
             ->andReturn(true);
 
-        $element = m::mock('\stdClass');
+        $element = m::mock(ElementInterface::class);
         $element->shouldReceive('remove')
             ->with('addresses')
             ->getMock()
@@ -640,7 +650,7 @@ class FormHelperServiceTest extends MockeryTestCase
     {
         $form = m::mock('Laminas\Form\Form');
 
-        $validator = m::mock('\stdClass');
+        $validator = m::mock(ElementInterface::class);
         $validator->shouldReceive('setAllowEmpty')
             ->with(true)
             ->shouldReceive('setRequired')
@@ -655,7 +665,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with('bar')
             ->andReturn($validator);
 
-        $element = m::mock('\stdClass');
+        $element = m::mock(ElementInterface::class);
         $element->shouldReceive('setAttribute')
             ->with('disabled', 'disabled');
 
@@ -680,7 +690,7 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testDisableElementWithDateInput()
     {
-        $validator = m::mock('\stdClass');
+        $validator = m::mock(ElementInterface::class);
         $validator->shouldReceive('setAllowEmpty')
             ->with(true)
             ->shouldReceive('setRequired')
@@ -691,9 +701,9 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with('bar')
             ->andReturn($validator);
 
-        $element = m::mock('Laminas\Form\Element\DateSelect');
+        $element = m::mock(DateSelect::class);
 
-        $subElement = m::mock('\stdClass');
+        $subElement = m::mock(Select::class);
         $subElement->shouldReceive('setAttribute')
             ->times(3)
             ->with('disabled', 'disabled');
@@ -725,9 +735,9 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testDisableDateElement()
     {
-        $element = m::mock('Laminas\Form\Element\DateSelect');
+        $element = m::mock(DateSelect::class);
 
-        $subElement = m::mock('\stdClass');
+        $subElement = m::mock(ElementInterface::class);
         $subElement->shouldReceive('setAttribute')
             ->times(3)
             ->with('disabled', 'disabled');
@@ -746,9 +756,9 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testEnableDateTimeElement()
     {
-        $element = m::mock(\Laminas\Form\Element\DateSelect::class);
+        $element = m::mock(DateTimeSelect::class);
 
-        $subElement = m::mock('\stdClass');
+        $subElement = m::mock(Select::class);
         $subElement->shouldReceive('removeAttribute')
             ->times(5)
             ->with('disabled');
@@ -800,12 +810,12 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testDisableElements()
     {
-        $subElement = m::mock('\stdClass');
+        $subElement = m::mock(ElementInterface::class);
         $subElement->shouldReceive('setAttribute')
             ->times(3)
             ->with('disabled', 'disabled');
 
-        $dateElement = m::mock('Laminas\Form\Element\DateSelect');
+        $dateElement = m::mock(DateSelect::class);
         $dateElement->shouldReceive('getDayElement')
             ->andReturn($subElement)
             ->getMock()
@@ -880,7 +890,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with('fieldset')
             ->andReturnSelf();
 
-        $element = m::mock('\stdClass');
+        $element = m::mock(ElementInterface::class);
         $element->shouldReceive('getValue')
             ->andReturn('');
 
@@ -926,7 +936,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with('fieldset')
             ->andReturnSelf();
 
-        $element = m::mock('\stdClass');
+        $element = m::mock(ElementInterface::class);
 
         $fieldset = m::mock('Laminas\Form\Fieldset');
         $fieldset
@@ -958,7 +968,7 @@ class FormHelperServiceTest extends MockeryTestCase
         $rowInput->shouldReceive('setValue')
             ->with(4);
 
-        $fieldset = m::mock('Laminas\Form\Fieldset');
+        $fieldset = m::mock(Fieldset::class);
         $fieldset->shouldReceive('get')
             ->with('table')
             ->andReturn($tableInput)
@@ -1040,11 +1050,11 @@ class FormHelperServiceTest extends MockeryTestCase
                 $companyProfile
             ]
         ];
-        $nameElement = m::mock()->shouldReceive('setValue')
+        $nameElement = m::mock(ElementInterface::class)->shouldReceive('setValue')
             ->with($expected['name'])
             ->getMock();
 
-        $fieldset = m::mock()->shouldReceive('get')
+        $fieldset = m::mock(ElementInterface::class)->shouldReceive('get')
             ->with('name')
             ->andReturn($nameElement)
             ->getMock();
@@ -1053,12 +1063,12 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with('data')
             ->andReturn($fieldset);
 
-        $addressFieldset = m::mock();
+        $addressFieldset = m::mock(ElementInterface::class);
         foreach ($expected['address'] as $key => $value) {
             $addressFieldset->shouldReceive('get')
                 ->with($key)
                 ->andReturn(
-                    m::mock()->shouldReceive('setValue')->with($value)->getMock()
+                    m::mock(ElementInterface::class)->shouldReceive('setValue')->with($value)->getMock()
                 );
         }
 
@@ -1179,7 +1189,7 @@ class FormHelperServiceTest extends MockeryTestCase
         $this->mockTransSrv
             ->shouldReceive('translate')->with($message)->andReturn($translated);
 
-        $companyNumberElement = m::mock()->shouldReceive('setMessages')
+        $companyNumberElement = m::mock(ElementInterface::class)->shouldReceive('setMessages')
             ->with([
                 'company_number' => [
                     $translated
@@ -1187,7 +1197,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ])
             ->getMock();
 
-        $fieldset = m::mock()->shouldReceive('get')
+        $fieldset = m::mock(ElementInterface::class)->shouldReceive('get')
             ->with('companyNumber')
             ->andReturn($companyNumberElement)
             ->getMock();
@@ -1201,13 +1211,13 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testSetFormActionFromRequestWhenFormHasAction()
     {
-        $form = m::mock()
+        $form = m::mock(Form::class)
             ->shouldReceive('hasAttribute')
             ->with('action')
             ->andReturn(true)
             ->getMock();
 
-        $request = m::mock()
+        $request = m::mock(Request::class)
             ->shouldReceive('getUri')->never()
             ->getMock();
 
@@ -1216,7 +1226,7 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testSetFormActionFromRequest()
     {
-        $form = m::mock()
+        $form = m::mock(Form::class)
             ->shouldReceive('hasAttribute')
             ->with('action')
             ->andReturn(false)
@@ -1224,7 +1234,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with('action', 'URI?QUERY')
             ->getMock();
 
-        $request = m::mock();
+        $request = m::mock(Request::class);
 
         $request->shouldReceive('getUri->getPath')
             ->andReturn('URI');
@@ -1237,7 +1247,7 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testSetFormActionFromRequestWithNoQuery()
     {
-        $form = m::mock()
+        $form = m::mock(Form::class)
             ->shouldReceive('getAttribute')
             ->with('method')
             ->andReturn('POST')
@@ -1248,7 +1258,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with('action', 'URI/ ')
             ->getMock();
 
-        $request = m::mock();
+        $request = m::mock(Request::class);
 
         $request->shouldReceive('getUri->getPath')
             ->andReturn('URI/');
@@ -1367,7 +1377,7 @@ class FormHelperServiceTest extends MockeryTestCase
     {
         $sut = m::mock(FormHelperService::class)->makePartial();
 
-        $form = m::mock();
+        $form = m::mock(Form::class);
 
         $sut->shouldReceive('createForm')
             ->with('MyForm')
@@ -1387,7 +1397,7 @@ class FormHelperServiceTest extends MockeryTestCase
 
         $form = m::mock('Laminas\Form\Form');
         $validator = m::mock($validatorName);
-        $element = m::mock();
+        $element = m::mock(ElementInterface::class);
         $filter = m::mock('\Laminas\InputFilter\InputFilter');
 
         $form->shouldReceive('getInputFilter')->andReturn($filter);
@@ -1395,7 +1405,7 @@ class FormHelperServiceTest extends MockeryTestCase
         $filter->shouldReceive('get')->with('myelement')->andReturn($element);
 
         $element->shouldReceive('getValidatorChain')->andReturn(
-            m::mock()
+            m::mock(ValidatorChain::class)
                 ->shouldReceive('getValidators')
                 ->andReturn(
                     [
@@ -1414,7 +1424,7 @@ class FormHelperServiceTest extends MockeryTestCase
     public function testGetValidatorNotFoundReturnsNull()
     {
         $form = m::mock('Laminas\Form\Form');
-        $element = m::mock();
+        $element = m::mock(ElementInterface::class);
         $filter = m::mock('\Laminas\InputFilter\InputFilter');
 
         $form->shouldReceive('getInputFilter')->andReturn($filter);
@@ -1422,7 +1432,7 @@ class FormHelperServiceTest extends MockeryTestCase
         $filter->shouldReceive('get')->with('myelement')->andReturn($element);
 
         $element->shouldReceive('getValidatorChain')->andReturn(
-            m::mock()
+            m::mock(ValidatorChain::class)
                 ->shouldReceive('getValidators')
                 ->andReturn([])
                 ->getMock()
@@ -1437,8 +1447,8 @@ class FormHelperServiceTest extends MockeryTestCase
         $mockForm = m::mock(FormInterface::class);
         /** @var InputFilterInterface|\Mockery\MockInterface $mockForm */
         $mockInputFilter = m::mock(InputFilterInterface::class);
-        $mockValidator = m::mock();
-        $mockValidatorChain = m::mock();
+        $mockValidator = m::mock(ValidatorInterface::class);
+        $mockValidatorChain = m::mock(ValidatorChain::class);
 
         $mockForm->shouldReceive('getInputFilter')
             ->once()
@@ -1469,7 +1479,7 @@ class FormHelperServiceTest extends MockeryTestCase
     public function testSetDefaultDate()
     {
         // mocks
-        $field = m::mock();
+        $field = m::mock(ElementInterface::class);
         $today = m::mock('\DateTime');
 
         // expectations
@@ -1483,7 +1493,7 @@ class FormHelperServiceTest extends MockeryTestCase
     public function testSetDefaultDateFieldAlreadyHasValue()
     {
         // mocks
-        $field = m::mock();
+        $field = m::mock(ElementInterface::class);
 
         // expectations
         $field->shouldReceive('getValue')->andReturn('2015-04-09');
@@ -1499,7 +1509,7 @@ class FormHelperServiceTest extends MockeryTestCase
 
         $this->sut->saveFormState($mockForm, ['foo' => 'bar']);
 
-        $sessionContainer = new \Laminas\Session\Container('form_state');
+        $sessionContainer = new Container('form_state');
         $this->assertEquals(['foo' => 'bar'], $sessionContainer->offsetGet('FORM_NAME'));
     }
 
@@ -1508,7 +1518,7 @@ class FormHelperServiceTest extends MockeryTestCase
         $mockForm = m::mock('Laminas\Form\Form');
         $mockForm->shouldReceive('getName')->with()->twice()->andReturn('FORM_NAME');
 
-        $sessionContainer = new \Laminas\Session\Container('form_state');
+        $sessionContainer = new Container('form_state');
         $sessionContainer->offsetSet('FORM_NAME', ['an' => 'array']);
         $mockForm->shouldReceive('setData')->with(['an' => 'array'])->once();
 
