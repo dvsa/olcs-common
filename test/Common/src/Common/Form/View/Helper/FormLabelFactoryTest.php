@@ -25,7 +25,7 @@ class FormLabelFactoryTest extends MockeryTestCase
         $sut = $this->setUpSut();
 
         // Assert
-        $this->assertIsCallable([$sut, 'createService']);
+        $this->assertIsCallable([$sut, '__invoke']);
     }
 
     /**

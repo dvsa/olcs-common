@@ -50,7 +50,6 @@ class FormHelperServiceTest extends MockeryTestCase
     public function setUp(): void
     {
         $this->mockBuilder = new AnnotationBuilder();
-        //$this->mockBuilder = m::mock($annotationBuilder);
         $this->mockAuthSrv = m::mock(AuthorizationService::class);
 
         $this->mockTransSrv = m::mock(TranslationHelperService::class);
@@ -737,7 +736,7 @@ class FormHelperServiceTest extends MockeryTestCase
     {
         $element = m::mock(DateSelect::class);
 
-        $subElement = m::mock(ElementInterface::class);
+        $subElement = m::mock(Select::class);
         $subElement->shouldReceive('setAttribute')
             ->times(3)
             ->with('disabled', 'disabled');
@@ -810,7 +809,7 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testDisableElements()
     {
-        $subElement = m::mock(ElementInterface::class);
+        $subElement = m::mock(Select::class);
         $subElement->shouldReceive('setAttribute')
             ->times(3)
             ->with('disabled', 'disabled');
@@ -960,11 +959,11 @@ class FormHelperServiceTest extends MockeryTestCase
         $table->shouldReceive('getRows')
             ->andReturn([1, 2, 3, 4]);
 
-        $tableInput = m::mock('\stdClass');
+        $tableInput = m::mock(ElementInterface::class);
         $tableInput->shouldReceive('setTable')
             ->with($table, 'fieldset');
 
-        $rowInput = m::mock('\stdClass');
+        $rowInput = m::mock(ElementInterface::class);
         $rowInput->shouldReceive('setValue')
             ->with(4);
 
@@ -1013,8 +1012,9 @@ class FormHelperServiceTest extends MockeryTestCase
         $this->sut->lockElement($element, 'message');
     }
 
-    public function testRemoveFieldLiset()
+    public function testRemoveFieldList()
     {
+        self::expectNotToPerformAssertions();
         $form = m::mock('Laminas\Form\Form');
 
         $form->shouldReceive('get')
@@ -1165,18 +1165,21 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testProcessCompanyLookupInvalidData()
     {
+        self::expectNotToPerformAssertions();
         $form = $this->createMockFormForCompanyErrors('company_number.search_no_results.error', 'data');
         $this->sut->processCompanyNumberLookupForm($form, [], 'data', 'registeredAddress');
     }
 
     public function testSetCompanyNotFoundError()
     {
+        self::expectNotToPerformAssertions();
         $form = $this->createMockFormForCompanyErrors('company_number.search_no_results.error', 'data');
         $this->sut->setCompanyNotFoundError($form, 'data');
     }
 
     public function testSetInvalidCompanyNumberErrors()
     {
+        self::expectNotToPerformAssertions();
         $form = $this->createMockFormForCompanyErrors('company_number.length.validation.error', 'data');
         $this->sut->setInvalidCompanyNumberErrors($form, 'data');
     }
@@ -1487,7 +1490,7 @@ class FormHelperServiceTest extends MockeryTestCase
         $this->mockHlpDate->shouldReceive('getDateObject')->andReturn($today);
         $field->shouldReceive('setValue')->with($today);
 
-        $this->sut->setDefaultDate($field);
+        $this->assertEquals($field, $this->sut->setDefaultDate($field));
     }
 
     public function testSetDefaultDateFieldAlreadyHasValue()
@@ -1499,7 +1502,7 @@ class FormHelperServiceTest extends MockeryTestCase
         $field->shouldReceive('getValue')->andReturn('2015-04-09');
         $field->shouldReceive('setValue')->never();
 
-        $this->sut->setDefaultDate($field);
+        $this->assertEquals($field, $this->sut->setDefaultDate($field));
     }
 
     public function testSaveFormState()

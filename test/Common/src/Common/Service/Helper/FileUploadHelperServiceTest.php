@@ -237,7 +237,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
     private function mockVirusScan($file, $isClean)
     {
         $this->mockScan
-            ->shouldReceive('isEnabled')->with()->once()->andReturn(true)
+            ->shouldReceive('isEnabled')->withNoArgs()->andReturnTrue()
             ->shouldReceive('isClean')->with($file)->once()->andReturn($isClean)
             ->getMock();
 

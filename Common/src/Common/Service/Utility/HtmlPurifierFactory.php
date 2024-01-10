@@ -19,7 +19,7 @@ class HtmlPurifierFactory implements FactoryInterface
 
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): HTMLPurifier
     {
-        $appConfig = $container->get('config');
+        $appConfig = $container->get('Config');
         $config = HTMLPurifier_Config::createDefault();
         $config->set('Cache.SerializerPath', $appConfig['html-purifier-cache-dir']);
         $config->set('HTML.Allowed', $this->whiteList);

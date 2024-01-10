@@ -7,6 +7,7 @@ use Common\Service\Cqrs\Query\CachingQueryService;
 use Common\Service\Data\CategoryDataService as Category;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
 use Interop\Container\ContainerInterface;
+use Laminas\Form\ElementInterface;
 use Laminas\Form\Form;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -29,11 +30,11 @@ class ApplicationFinancialEvidenceAdapterTest extends MockeryTestCase
             ->shouldReceive('get')
             ->with('finance')
             ->andReturn(
-                m::mock()
+                m::mock(ElementInterface::class)
                     ->shouldReceive('get')
                     ->with('requiredFinance')
                     ->andReturn(
-                        m::mock()
+                        m::mock(ElementInterface::class)
                             ->shouldReceive('setValue')
                             ->with('markup-required-finance-application')
                             ->once()

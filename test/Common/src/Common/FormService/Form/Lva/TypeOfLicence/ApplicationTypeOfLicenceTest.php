@@ -6,6 +6,8 @@ use Common\FormService\Form\Lva\Application;
 use Common\FormService\FormServiceManager;
 use Common\RefData;
 use Common\Service\Helper\FormHelperService;
+use Laminas\Form\ElementInterface;
+use Laminas\InputFilter\InputFilterInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\InputFilter\InputFilter;
@@ -74,7 +76,7 @@ class ApplicationTypeOfLicenceTest extends MockeryTestCase
             ->with('type-of-licence')
             ->once()
             ->andReturn(
-                m::mock()
+                m::mock(ElementInterface::class)
                 ->shouldReceive('get')
                 ->with('operator-location')
                 ->once()
@@ -118,7 +120,7 @@ class ApplicationTypeOfLicenceTest extends MockeryTestCase
             ->with('type-of-licence')
             ->once()
             ->andReturn(
-                m::mock()
+                m::mock(ElementInterface::class)
                     ->shouldReceive('get')
                     ->with('operator-location')
                     ->once()
@@ -127,15 +129,15 @@ class ApplicationTypeOfLicenceTest extends MockeryTestCase
             )
             ->shouldReceive('getInputFilter')
             ->andReturn(
-                m::mock()
+                m::mock(InputFilterInterface::class)
                 ->shouldReceive('get')
                 ->with('type-of-licence')
                 ->andReturn(
-                    m::mock()
+                    m::mock(ElementInterface::class)
                     ->shouldReceive('get')
                     ->with('operator-type')
                     ->andReturn(
-                        m::mock()
+                        m::mock(ElementInterface::class)
                         ->shouldReceive('setRequired')
                         ->with(false)
                         ->once()

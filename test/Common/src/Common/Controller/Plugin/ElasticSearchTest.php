@@ -14,6 +14,7 @@ use Laminas\Router\SimpleRouteStack;
 use Laminas\View\Model\ViewModel;
 use Laminas\Navigation\Page\Mvc as NavigationPage;
 use CommonTest\Common\Controller\Plugin\ControllerStub;
+use Psr\Container\ContainerInterface;
 
 class ElasticSearchTest extends MockeryTestCase
 {
@@ -52,13 +53,13 @@ class ElasticSearchTest extends MockeryTestCase
             ->makePartial()
             ->setAllowOverride(true);
 
-        $this->pm = m::mock(PluginManager::class)->makePartial();
+        $this->container = m::mock(ContainerInterface::class);
+        $this->pm = new PluginManager($this->container);
         $this->pm->setInvokableClass('ElasticSearch', 'Common\Controller\Plugin\ElasticSearch');
 
         $this->mockPlaceholder = m::mock(Placeholder::class);
         $this->sut = new ControllerStub($this->mockPlaceholder);
         $this->sut->setEvent($this->event);
-        $this->sut->setServiceLocator($this->sm);
         $this->sut->setPluginManager($this->pm);
     }
 

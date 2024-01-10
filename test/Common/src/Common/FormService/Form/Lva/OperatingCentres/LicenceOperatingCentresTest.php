@@ -3,18 +3,18 @@
 namespace CommonTest\Common\FormService\Form\Lva\OperatingCentres;
 
 use Common\Form\Elements\Types\Table;
+use Common\Form\Form;
 use Common\FormService\Form\Lva\OperatingCentres\LicenceOperatingCentres;
 use Common\FormService\Form\Lva\OperatingCentres\VariationOperatingCentres;
 use Common\FormService\FormServiceManager;
 use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Table\TableBuilder;
 use Common\Service\Table\TableFactory;
+use Laminas\Form\ElementInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Form\Element;
 use Laminas\Form\Fieldset;
-use Laminas\Form\Form;
-use Laminas\Http\Request;
 use Common\Service\Helper\FormHelperService;
 use Common\RefData;
 use LmcRbacMvc\Service\AuthorizationService;
@@ -101,7 +101,7 @@ class LicenceOperatingCentresTest extends MockeryTestCase
             ->with('current-authorisation-hint', [12])
             ->andReturn('current-authorisation-hint-12');
 
-        $data = m::mock();
+        $data = m::mock(Form::class);
         $data->shouldReceive('has')
             ->with('totAuthLgvVehiclesFieldset')
             ->andReturn(true)
@@ -117,33 +117,33 @@ class LicenceOperatingCentresTest extends MockeryTestCase
             ->shouldReceive('get')
             ->with('totAuthLgvVehiclesFieldset')
             ->andReturn(
-                m::mock()
+                m::mock(Fieldset::class)
                     ->shouldReceive('get')
                     ->with('totAuthLgvVehicles')
                     ->andReturn(
-                        m::mock()->shouldReceive('setOption')->with('hint-below', 'current-authorisation-hint-10')->getMock()
+                        m::mock(ElementInterface::class)->shouldReceive('setOption')->with('hint-below', 'current-authorisation-hint-10')->getMock()
                     )
                     ->getMock()
             )
             ->shouldReceive('get')
             ->with('totAuthHgvVehiclesFieldset')
             ->andReturn(
-                m::mock()
+                m::mock(Fieldset::class)
                     ->shouldReceive('get')
                     ->with('totAuthHgvVehicles')
                     ->andReturn(
-                        m::mock()->shouldReceive('setOption')->with('hint-below', 'current-authorisation-hint-11')->getMock()
+                        m::mock(ElementInterface::class)->shouldReceive('setOption')->with('hint-below', 'current-authorisation-hint-11')->getMock()
                     )
                     ->getMock()
             )
             ->shouldReceive('get')
             ->with('totAuthTrailersFieldset')
             ->andReturn(
-                m::mock()
+                m::mock(ElementInterface::class)
                     ->shouldReceive('get')
                     ->with('totAuthTrailers')
                     ->andReturn(
-                        m::mock()->shouldReceive('setOption')->with('hint-below', 'current-authorisation-hint-12')->getMock()
+                        m::mock(ElementInterface::class)->shouldReceive('setOption')->with('hint-below', 'current-authorisation-hint-12')->getMock()
                     )
                     ->getMock()
             );
@@ -154,7 +154,7 @@ class LicenceOperatingCentresTest extends MockeryTestCase
         $data->shouldReceive('get')
             ->with('totCommunityLicencesFieldset')
             ->andReturn(
-                m::mock()
+                m::mock(Fieldset::class)
                     ->shouldReceive('get')
                     ->with('totCommunityLicences')
                     ->andReturn(

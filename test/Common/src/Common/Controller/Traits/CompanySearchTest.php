@@ -17,33 +17,19 @@ class CompanySearchTest extends MockeryTestCase
      * @var CompanySearch
      */
     protected $sut;
-
-    protected $sm;
-
     /** @var  m\MockInterface */
     protected $mockResp;
 
     public function setUp(): void
     {
         $this->sut = new CompanySearchStub();
-
-
-        $this->sm = m::mock('\Laminas\ServiceManager\ServiceManager')
-            ->makePartial()
-            ->setAllowOverride(true);
-
-        // inject a real string helper
-        $this->sm->setService('Helper\String', new \Common\Service\Helper\StringHelperService());
-
         $this->mockResp = m::mock(\Laminas\Http\Response::class);
-
         $this->sut->stubResponse = $this->mockResp;
     }
 
     public function testCompanySearch()
     {
         $mockHelperService = m::mock(FormHelperService::class);
-        $data = [];
         $form = new Form();
         $data = [
             'detailsFieldset' => 'detailsFieldset',

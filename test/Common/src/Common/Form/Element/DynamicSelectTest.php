@@ -5,7 +5,6 @@ namespace CommonTest\Form\Element;
 use Common\Form\Element\DynamicSelect;
 use Common\Service\Data\PluginManager;
 use Common\Service\Data\RefData;
-use Interop\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
@@ -17,14 +16,15 @@ class DynamicSelectTest extends TestCase
 {
     private $sut;
     private $mockRefDataService;
+    private $pluginManager;
 
     public function setUp(): void
     {
         $this->mockRefDataService = $this->createMock(RefData::class);
-        $pluginManager = m::mock(PluginManager::class);
-        $pluginManager->shouldReceive('get')->with(RefData::class)->andReturn($this->mockRefDataService);
+        $this->pluginManager = m::mock(PluginManager::class);
+        $this->pluginManager->shouldReceive('get')->with(RefData::class)->andReturn($this->mockRefDataService);
 
-        $this->sut = new DynamicSelect($pluginManager, 'name', []);
+        $this->sut = new DynamicSelect($this->pluginManager, 'name', []);
     }
 
     public function testSetOptions()
@@ -39,7 +39,6 @@ class DynamicSelectTest extends TestCase
 
     public function testBcSetOptions()
     {
-        $this->sut =  new DynamicSelect();
         $this->sut->setOptions(['category' => 'testing']);
 
         $this->assertEquals('testing', $this->sut->getContext());
@@ -145,26 +144,15 @@ class DynamicSelectTest extends TestCase
     public function testGetDataServiceThrows()
     {
         $serviceName = 'testListService';
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage(
+            'Class ' . $serviceName . ' does not implement \Common\Service\Data\ListDataInterface'
+        );
 
         $mockService = $this->createMock('\StdClass');
-
-        $mockSl = $this->createMock(ContainerInterface::class);
-        $mockSl->expects($this->once())->method('get')->with($this->equalTo($serviceName))->willReturn($mockService);
-
-        $this->sut->setServiceLocator($mockSl);
-        $this->sut->setOptions(['service_name'=>$serviceName]);
-
-        $thrown = false;
-
-        try {
-            $this->sut->getDataService();
-        } catch (\Exception $e) {
-            if ('Class testListService does not implement \Common\Service\Data\ListDataInterface' == $e->getMessage()) {
-                $thrown = true;
-            }
-        }
-
-        $this->assertTrue($thrown, 'Expected exception not thrown or message incorrect');
+        $this->pluginManager->expects('get')->with($serviceName)->andReturn($mockService);
+        $this->sut->setServiceName($serviceName);
+        $this->assertEquals($mockService, $this->sut->getDataService());
     }
 
     public function testAddValueOption()
@@ -186,9 +174,14 @@ class DynamicSelectTest extends TestCase
 
     public function testExtraOption()
     {
-        $this->mockRefDataService->shouldReceive('fetchListOptions')->once()->andReturn(['foo' => 'bar']);
+        $this->mockRefDataService
+            ->expects($this->once())
+            ->method('fetchListOptions')
+            ->with('category', false)
+            ->willReturn(['foo' => 'bar']);
 
         $this->sut->setExtraOption(['an' => 'option']);
+        $this->sut->setContext('category');
 
         $this->assertSame(['an' => 'option', 'foo' => 'bar'], $this->sut->getValueOptions());
     }
@@ -196,9 +189,6 @@ class DynamicSelectTest extends TestCase
     public function testExtraSetOption()
     {
         $this->sut->setOptions(['extra_option' => ['an' => 'option']]);
-
-        $this->sut->getExtraOption(['an' => 'option']);
-
         $this->assertSame(['an' => 'option'], $this->sut->getExtraOption());
     }
 }

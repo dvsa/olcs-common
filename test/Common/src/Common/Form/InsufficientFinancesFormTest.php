@@ -1,18 +1,14 @@
 <?php
 
-namespace CommonTest\Form\View\Helper;
+namespace CommonTest\Form;
 
+use Laminas\Form\ElementInterface;
 use Laminas\Form\Fieldset;
 use Laminas\InputFilter\InputFilter;
 use Common\Form\InsufficientFinancesForm;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
-/**
- * InsufficientFinancesFormTest
- *
- * @author Mat Evans <mat.evans@valtech.co.uk>
- */
 class InsufficientFinancesFormTest extends TestCase
 {
     /**
@@ -37,17 +33,17 @@ class InsufficientFinancesFormTest extends TestCase
         $expectFileCountRequired,
         $expectYesNoSetMessage
     ) {
-        $yesNoInput = m::mock();
+        $yesNoInput = m::mock(ElementInterface::class);
         if ($expectYesNoSetMessage) {
             $yesNoInput->shouldReceive('setErrorMessage')->with('continuations.insufficient-finances.no')->once();
         }
 
-        $fileCountInput = m::mock();
+        $fileCountInput = m::mock(ElementInterface::class);
         $fileCountInput->shouldReceive('setRequired')->with($expectFileCountRequired)->once();
         $fileCountInput->shouldReceive('setErrorMessage')->with('continuations.insufficient-finances.upload-files')
             ->once();
 
-        $radioInput = m::mock();
+        $radioInput = m::mock(ElementInterface::class);
         $radioInput->shouldReceive('setRequired')->with($expectRadioRequired)->once();
 
         $this->initForm($radioValue, $yesNoValue, $yesNoInput, $fileCountInput, $radioInput);
@@ -71,26 +67,26 @@ class InsufficientFinancesFormTest extends TestCase
         $insufficientFinancesFieldset = m::mock(Fieldset::class)->makePartial();
         $insufficientFinancesFieldset->setName('insufficientFinances');
         $insufficientFinancesFieldset->shouldReceive('get')->with('yesContent')->once()->andReturn(
-            m::mock()->shouldReceive('get')->with('radio')->once()->andReturn(
-                m::mock()->shouldReceive('getValue')->with()->once()->andReturn($radioValue)->getMock()
+            m::mock(ElementInterface::class)->shouldReceive('get')->with('radio')->once()->andReturn(
+                m::mock(ElementInterface::class)->shouldReceive('getValue')->with()->once()->andReturn($radioValue)->getMock()
             )->getMock()
         );
         $insufficientFinancesFieldset->shouldReceive('get')->with('yesNo')->twice()->andReturn(
-            m::mock()->shouldReceive('getValue')->with()->twice()->andReturn($yesNoValue)->getMock()
+            m::mock(ElementInterface::class)->shouldReceive('getValue')->with()->twice()->andReturn($yesNoValue)->getMock()
         );
 
         $this->sut->setData(['x' => 1]);
         $this->sut->setUseInputFilterDefaults(false);
         $this->sut->add($insufficientFinancesFieldset);
 
-        $uploadContentInput = m::mock();
+        $uploadContentInput = m::mock(ElementInterface::class);
         $uploadContentInput->shouldReceive('get')->with('fileCount')->andReturn($fileCountInput);
 
-        $yesContentInput = m::mock();
+        $yesContentInput = m::mock(ElementInterface::class);
         $yesContentInput->shouldReceive('get')->with('radio')->andReturn($radioInput);
         $yesContentInput->shouldReceive('get')->with('uploadContent')->andReturn($uploadContentInput);
 
-        $insufficientFinancesInput = m::mock();
+        $insufficientFinancesInput = m::mock(ElementInterface::class);
         $insufficientFinancesInput->shouldReceive('get')->with('yesContent')->andReturn($yesContentInput);
         $insufficientFinancesInput->shouldReceive('get')->with('yesNo')->andReturn($yesNoInput);
 

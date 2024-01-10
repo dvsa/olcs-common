@@ -4,6 +4,7 @@ namespace CommonTest\Service\Table\Type;
 
 use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\TableBuilder;
+use Laminas\ServiceManager\ServiceManager;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Table\Type\Link;
@@ -17,15 +18,10 @@ class LinkTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->sm = m::mock('\Laminas\ServiceManager\ServiceManager')
-            ->makePartial()
-            ->setAllowOverride(true);
-
-        // inject a real string helper
-        $this->sm->setService('Helper\String', new \Common\Service\Helper\StringHelperService());
+        $this->sm = new ServiceManager();
 
         $this->table = m::mock(TableBuilder::class);
-        $this->table->shouldReceive('getServiceLocator')
+        $this->table->expects('getServiceLocator')
             ->andReturn($this->sm);
 
         $this->sut = new Link($this->table);

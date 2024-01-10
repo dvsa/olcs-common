@@ -2,16 +2,12 @@
 
 namespace CommonTest\Common\FormService\Form\Lva;
 
+use Laminas\Form\ElementInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Lva\Variation;
 use LmcRbacMvc\Service\AuthorizationService;
 
-/**
- * Variation Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class VariationTest extends MockeryTestCase
 {
     protected $sut;
@@ -33,7 +29,7 @@ class VariationTest extends MockeryTestCase
             ->shouldReceive('get')
             ->with('form-actions')
             ->andReturn(
-                m::mock()
+                m::mock(ElementInterface::class)
                     ->shouldReceive('has')
                     ->with('saveAndContinue')
                     ->andReturn(true)
@@ -43,7 +39,7 @@ class VariationTest extends MockeryTestCase
                     ->shouldReceive('get')
                     ->with('save')
                     ->andReturn(
-                        m::mock()
+                        m::mock(ElementInterface::class)
                             ->shouldReceive('setAttribute')
                             ->once()
                             ->with('class', 'govuk-button')

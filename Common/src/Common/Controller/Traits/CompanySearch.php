@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Common\Controller\Traits;
 
 use Common\Form\Form;
@@ -34,7 +33,6 @@ trait CompanySearch
 
         return $form;
     }
-
 
     public function isValidCompanyNumber($companyNumber)
     {
