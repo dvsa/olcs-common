@@ -12,7 +12,6 @@ use Laminas\Mvc\I18n\Translator;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Table\Type\DeltaActionLinks;
-use CommonTest\Bootstrap;
 
 /**
  * DeltaActionLink Test

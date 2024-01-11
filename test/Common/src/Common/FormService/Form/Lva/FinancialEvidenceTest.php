@@ -7,7 +7,6 @@ use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Helper\UrlHelperService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use CommonTest\Bootstrap;
 use ZfcRbac\Service\AuthorizationService;
 
 /**

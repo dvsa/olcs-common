@@ -2,7 +2,6 @@
 
 namespace CommonTest\Common\Controller\Lva;
 
-use CommonTest\Bootstrap;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 

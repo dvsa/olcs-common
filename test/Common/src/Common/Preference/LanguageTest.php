@@ -8,7 +8,6 @@
 namespace CommonTest\Preference;
 
 use Common\Preference\Language;
-use CommonTest\Bootstrap;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Http\Header\Cookie;

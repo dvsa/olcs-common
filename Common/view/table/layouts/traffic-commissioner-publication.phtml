@@ -40,7 +40,7 @@ $showStatus = isset($settings['show-status']) ? $settings['show-status'] : true;
             <p><b><?php echo $this->translate('search.result.publication');?>:</b> <?php
                     echo htmlentities($row['pubType'] . ' ' . $row['trafficArea'] . '(' . $row['pubNo'] . '), ' .
                 $row['pubSecDesc']); ?></p>
-            <p><b><?php echo $this->translate('search.result.date');?>:</b> <?php echo date(\DATE_FORMAT, strtotime($row['pubDate']));
+            <p><b><?php echo $this->translate('search.result.date');?>:</b> <?php echo date(\Common\Module::$dateFormat, strtotime($row['pubDate']));
                 ?></p>
             <?php
 

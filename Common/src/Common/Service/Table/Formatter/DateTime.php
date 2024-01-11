@@ -8,6 +8,8 @@
 
 namespace Common\Service\Table\Formatter;
 
+use Common\Module;
+
 /**
  * Date and time formatter
  *
@@ -25,7 +27,7 @@ class DateTime implements FormatterPluginManagerInterface
     public function format($data, $column = [])
     {
         if (!isset($column['dateformat'])) {
-            $column['dateformat'] = \DATETIME_FORMAT;
+            $column['dateformat'] = Module::$dateTimeFormat;
         }
 
         if (isset($data[$column['name']]) && !is_null($data[$column['name']])) {

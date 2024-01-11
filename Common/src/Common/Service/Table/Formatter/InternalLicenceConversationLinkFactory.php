@@ -6,7 +6,7 @@ use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
-class InternalLicenceConversationFactory implements FactoryInterface
+class InternalLicenceConversationLinkFactory implements FactoryInterface
 {
     /**
      * @param  ContainerInterface $container
@@ -19,9 +19,8 @@ class InternalLicenceConversationFactory implements FactoryInterface
         $container = method_exists($container, 'getServiceLocator') ? $container->getServiceLocator() : $container;
         $formatterPluginManager = $container->get(FormatterPluginManager::class);
         $refDataStatusFormatter = $formatterPluginManager->get(RefDataStatus::class);
-       // $dateTimeFormatter = $formatterPluginManager->get(DateTime::class);
         $urlHelper = $container->get('Helper\Url');
-        return new InternalLicenceConversationLink($urlHelper,$refDataStatusFormatter);
+        return new InternalLicenceConversationLink($urlHelper, $refDataStatusFormatter);
     }
 
     /**

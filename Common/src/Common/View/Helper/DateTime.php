@@ -2,6 +2,7 @@
 
 namespace Common\View\Helper;
 
+use Common\Module;
 use Laminas\View\Helper\AbstractHelper;
 
 /**
@@ -17,8 +18,12 @@ class DateTime extends AbstractHelper
      *
      * @return string
      */
-    public function __invoke(\DateTime $dateTime, $dateFormat = \DATETIME_FORMAT)
+    public function __invoke(\DateTime $dateTime, $dateFormat = null)
     {
+        if (is_null($dateFormat)) {
+            $dateFormat = Module::$dateTimeFormat;
+        }
+
         // make a clone of the datetime as we will be altering it and it may be used elsewehere
         $localDateTime = clone $dateTime;
         // change the timezone to whatever the app is running

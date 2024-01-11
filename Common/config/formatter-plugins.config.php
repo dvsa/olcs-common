@@ -54,8 +54,8 @@ use Common\Service\Table\Formatter\HideIfClosedRadio;
 use Common\Service\Table\Formatter\InspectionRequestId;
 use Common\Service\Table\Formatter\InterimOcCheckbox;
 use Common\Service\Table\Formatter\InterimVehiclesCheckbox;
-use Common\Service\Table\Formatter\InternalLicenceConversationFactory;
 use Common\Service\Table\Formatter\InternalLicenceConversationLink;
+use Common\Service\Table\Formatter\InternalLicenceConversationLinkFactory;
 use Common\Service\Table\Formatter\InternalLicenceNumberLink;
 use Common\Service\Table\Formatter\InternalLicencePermitReference;
 use Common\Service\Table\Formatter\IrhpPermitApplicationRefLink;
@@ -132,6 +132,7 @@ use Common\Service\Table\Formatter\FeeIdUrlFactory;
 use Common\Service\Table\Formatter\FeeUrlFactory;
 use Common\Service\Table\Formatter\FeeUrlExternalFactory;
 use Common\Service\Table\Formatter\InspectionRequestIdFactory;
+use Common\Service\Table\Formatter\InternalConversationMessage;
 use Common\Service\Table\Formatter\InternalLicenceNumberLinkFactory;
 use Common\Service\Table\Formatter\InternalLicencePermitReferenceFactory;
 use Common\Service\Table\Formatter\IrhpPermitApplicationRefLinkFactory;
@@ -267,6 +268,7 @@ return [
         HideIfClosedRadio::class => HideIfClosedRadio::class,
         InterimOcCheckbox::class => InterimOcCheckbox::class,
         InterimVehiclesCheckbox::class => InterimVehiclesCheckbox::class,
+        InternalConversationMessage::class => InternalConversationMessage::class,
         IrhpPermitJurisdictionPermitNumber::class => IrhpPermitJurisdictionPermitNumber::class,
         IrhpPermitJurisdictionTrafficArea::class => IrhpPermitJurisdictionTrafficArea::class,
         IrhpPermitOrganisationName::class => IrhpPermitOrganisationName::class,
@@ -337,7 +339,7 @@ return [
         InspectionRequestId::class => InspectionRequestIdFactory::class,
         InternalLicenceNumberLink::class => InternalLicenceNumberLinkFactory::class,
         InternalLicencePermitReference::class => InternalLicencePermitReferenceFactory::class,
-        InternalLicenceConversationLink::class => InternalLicenceConversationFactory::class,
+        InternalLicenceConversationLink::class => InternalLicenceConversationLinkFactory::class,
         IrhpPermitApplicationRefLink::class => IrhpPermitApplicationRefLinkFactory::class,
         IrhpPermitNumberInternal::class => IrhpPermitNumberInternalFactory::class,
         IrhpPermitRangePermitNumber::class => IrhpPermitRangePermitNumberFactory::class,

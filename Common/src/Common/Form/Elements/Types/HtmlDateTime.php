@@ -2,6 +2,7 @@
 
 namespace Common\Form\Elements\Types;
 
+use Common\Module;
 use Common\View\Helper\DateTime as DateTimeViewHelper;
 
 /**
@@ -19,7 +20,7 @@ class HtmlDateTime extends Html
     public function setValue($value)
     {
         $this->value = !empty($value)
-            ? (new DateTimeViewHelper())->__invoke(new \DateTime($value), \DATETIMESEC_FORMAT)
+            ? (new DateTimeViewHelper())->__invoke(new \DateTime($value), Module::$dateTimeSecFormat)
             : null;
 
         return $this;

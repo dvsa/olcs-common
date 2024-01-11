@@ -4,7 +4,6 @@ namespace CommonTest\Controller\Traits;
 
 use Common\Exception\File\InvalidMimeException;
 use Common\Util\FileContent;
-use CommonTest\Bootstrap;
 use CommonTest\Common\Controller\Traits\Stubs\GenericUploadStub;
 use Dvsa\Olcs\Transfer\Command as TransferCmd;
 use Dvsa\Olcs\Transfer\Command\Document\DeleteDocument;
