@@ -3,15 +3,11 @@
 namespace CommonTest\View\Helper;
 
 use Common\Preference\Language;
+use Laminas\ServiceManager\ServiceManager;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\View\Helper\LanguageLink;
 
-/**
- * Language Link Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class LanguageLinkTest extends MockeryTestCase
 {
     /**
@@ -28,13 +24,7 @@ class LanguageLinkTest extends MockeryTestCase
 
         $this->viewHelper = new LanguageLink($languagePref);
 
-        $this->sm = m::mock('\Laminas\ServiceManager\ServiceManager')
-            ->makePartial()
-            ->setAllowOverride(true);
-
-        // inject a real string helper
-        $this->sm->setService('Helper\String', new \Common\Service\Helper\StringHelperService());
-
+        $this->sm = new ServiceManager();
     }
 
     public function testInvoke()

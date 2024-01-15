@@ -11,7 +11,6 @@ use Common\Form\View\Helper\FormElementErrorsFactory;
 use Common\Test\MockeryTestCase;
 use Common\Test\MocksServicesTrait;
 use HTMLPurifier;
-use Interop\Container\ContainerInterface;
 use Laminas\Form\Element;
 use Laminas\I18n\Translator\Translator;
 use Laminas\I18n\Translator\TranslatorInterface;
@@ -21,7 +20,7 @@ use Laminas\Validator\ValidatorPluginManager;
 use Laminas\View\HelperPluginManager;
 use Laminas\View\Renderer\PhpRenderer;
 use Mockery\MockInterface;
-
+use Psr\Container\ContainerInterface;
 
 /**
  * @see FormElementErrors
@@ -76,7 +75,8 @@ class FormElementErrorsTest extends MockeryTestCase
         $translateHelper = new Translate();
         $translateHelper->setTranslator($translator);
 
-        $helpers = new HelperPluginManager();
+        $container = m::mock(ContainerInterface::class);
+        $helpers = new HelperPluginManager($container);
         $helpers->setService('translate', $translateHelper);
 
         $view = new PhpRenderer();

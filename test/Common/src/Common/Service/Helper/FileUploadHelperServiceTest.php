@@ -110,6 +110,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
     public function testGetElementFromFormAndSelector()
     {
         $fieldset = m::mock('Laminas\Form\Fieldset');
+        $element = m::mock(ElementInterface::class);
 
         $this->mockForm->shouldReceive('get')
             ->with('foo')
@@ -117,11 +118,11 @@ class FileUploadHelperServiceTest extends MockeryTestCase
 
         $fieldset->shouldReceive('get')
             ->with('bar')
-            ->andReturn('fakeElement');
+            ->andReturn($element);
 
         $this->sut->setSelector('foo->bar');
 
-        $this->assertEquals('fakeElement', $this->sut->getElement());
+        $this->assertEquals($element, $this->sut->getElement());
     }
 
     public function testProcessWithGetRequestAndNoLoadCallback()
@@ -240,9 +241,6 @@ class FileUploadHelperServiceTest extends MockeryTestCase
             ->shouldReceive('isEnabled')->withNoArgs()->andReturnTrue()
             ->shouldReceive('isClean')->with($file)->once()->andReturn($isClean)
             ->getMock();
-
-        $this->mockSm
-            ->shouldReceive('get')->with(Scan::class)->once()->andReturn($this->mockScan);
     }
 
     /**

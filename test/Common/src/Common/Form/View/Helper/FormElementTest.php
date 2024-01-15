@@ -580,6 +580,7 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
         $helpers->setService('formtext', new Helper\FormText());
         $helpers->setService('formfile', new Helper\FormFile());
         $helpers->setService('translate', $translateHelper);
+        $helpers->setService('form_plain_text', $plainTextService);
         $helpers->setService('form', new Helper\Form());
         $helpers->setService('url', $urlHelper);
         $helpers->setService('form_element_errors', $formElementErrors);

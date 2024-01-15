@@ -28,7 +28,7 @@ abstract class AbstractInputSearch extends Fieldset
 
     public function getMessages(?string $elementName = null): array
     {
-        return is_array($current = current($this->messages)) ? $current : [];
+        return is_array($this->messages) ? current($this->messages) : [];
     }
 
     abstract protected function addHint();

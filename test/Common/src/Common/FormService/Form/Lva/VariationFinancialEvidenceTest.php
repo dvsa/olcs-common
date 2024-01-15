@@ -2,8 +2,12 @@
 
 namespace CommonTest\Common\FormService\Form\Lva;
 
+use Common\Form\Form;
 use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Helper\UrlHelperService;
+use Laminas\Form\ElementInterface;
+use Laminas\Form\Fieldset;
+use Laminas\ServiceManager\ServiceManager;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Lva\VariationFinancialEvidence;
@@ -34,12 +38,7 @@ class VariationFinancialEvidenceTest extends MockeryTestCase
         $this->translator = m::mock(TranslationHelperService::class);
         $this->authService = m::mock(\LmcRbacMvc\Service\AuthorizationService::class);
 
-        $sm = m::mock('\Laminas\ServiceManager\ServiceManager')
-            ->makePartial()
-            ->setAllowOverride(true);
-
-        // inject a real string helper
-        $sm->setService('Helper\String', new \Common\Service\Helper\StringHelperService());
+        $sm = new ServiceManager();
 
         $sm->setService('Helper\Url', $this->urlHelper);
         $sm->setService('Helper\Translation', $this->translator);
@@ -69,19 +68,19 @@ class VariationFinancialEvidenceTest extends MockeryTestCase
 
         // Mocks
 
-        $formActions = m::mock();
+        $formActions = m::mock(ElementInterface::class);
         $formActions->shouldReceive('has')->with('saveAndContinue')->andReturn(true);
         $formActions->shouldReceive('remove')->once()->with('saveAndContinue');
 
-        $mockForm = m::mock()
+        $mockForm = m::mock(Form::class)
             ->shouldReceive('get')
             ->with('evidence')
             ->andReturn(
-                m::mock()
+                m::mock(Fieldset::class)
                     ->shouldReceive('get')
                     ->with('uploadNowRadio')
                     ->andReturn(
-                        m::mock()
+                        m::mock(ElementInterface::class)
                             ->shouldReceive('setName')
                             ->with('uploadNow')
                             ->once()
@@ -91,7 +90,7 @@ class VariationFinancialEvidenceTest extends MockeryTestCase
                     ->shouldReceive('get')
                     ->with('uploadLaterRadio')
                     ->andReturn(
-                        m::mock()
+                        m::mock(ElementInterface::class)
                             ->shouldReceive('setName')
                             ->with('uploadNow')
                             ->once()
@@ -101,7 +100,7 @@ class VariationFinancialEvidenceTest extends MockeryTestCase
                     ->shouldReceive('get')
                     ->with('sendByPostRadio')
                     ->andReturn(
-                        m::mock()
+                        m::mock(ElementInterface::class)
                             ->shouldReceive('setName')
                             ->with('uploadNow')
                             ->once()

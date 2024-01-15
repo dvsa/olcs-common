@@ -11,7 +11,6 @@ use Common\Form\View\Helper as CommonHelper;
 use Common\Form\View\Helper\FormRow;
 use Common\Test\MockeryTestCase;
 use Common\Test\MocksServicesTrait;
-use Interop\Container\ContainerInterface;
 use Laminas\Form\Element;
 use Laminas\Form\View\Helper as LaminasHelper;
 use Laminas\I18n\Translator\Translator;
@@ -23,6 +22,7 @@ use Laminas\View\HelperPluginManager;
 use Laminas\View\Renderer\PhpRenderer;
 use Mockery\MockInterface;
 use PHPUnit\Framework\MockObject\MockObject;
+use Psr\Container\ContainerInterface;
 
 /**
  * @covers \Common\Form\View\Helper\FormRow
@@ -683,7 +683,8 @@ class FormRowTest extends MockeryTestCase
     protected function viewHelperPluginManager(): HelperPluginManager
     {
         if (! $this->serviceManager->has(HelperPluginManager::class)) {
-            $instance = new HelperPluginManager();
+            $container = m::mock(ContainerInterface::class);
+            $instance = new HelperPluginManager($container);
             $translateHelper = new Translate();
             $translateHelper->setTranslator($this->translator());
             $instance->setService('translate', $translateHelper);

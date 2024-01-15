@@ -1,21 +1,12 @@
 <?php
 
-/**
- * Form Service Manager Factory Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\FormService;
 
 use Common\FormService\FormServiceManager;
 use Common\FormService\FormServiceManagerFactory;
+use Laminas\ServiceManager\ServiceManager;
 use Mockery as m;
 
-/**
- * Form Service Manager Factory Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class FormServiceManagerFactoryTest extends \PHPUnit\Framework\TestCase
 {
     protected $sut;
@@ -25,14 +16,7 @@ class FormServiceManagerFactoryTest extends \PHPUnit\Framework\TestCase
     public function setUp(): void
     {
         $this->sut = new FormServiceManagerFactory();
-
-        $this->sm = m::mock('\Laminas\ServiceManager\ServiceManager')
-            ->makePartial()
-            ->setAllowOverride(true);
-
-        // inject a real string helper
-        $this->sm->setService('Helper\String', new \Common\Service\Helper\StringHelperService());
-
+        $this->sm = new ServiceManager();
     }
 
     public function testInvoke()
@@ -52,7 +36,6 @@ class FormServiceManagerFactoryTest extends \PHPUnit\Framework\TestCase
         $brm = $this->sut->__invoke($this->sm, FormServiceManager::class);
 
         $this->assertInstanceOf(FormServiceManager::class, $brm);
-        $this->assertSame($this->sm, $brm->getServiceLocator());
         $this->assertTrue($brm->has('foo'));
         $this->assertFalse($brm->has('bar'));
     }

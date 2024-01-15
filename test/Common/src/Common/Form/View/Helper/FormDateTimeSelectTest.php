@@ -13,6 +13,7 @@ use Laminas\I18n\Translator\Translator;
 use Laminas\Mvc\Service\ViewHelperManagerFactory;
 use Laminas\View\HelperPluginManager;
 use Laminas\View\Renderer\PhpRenderer;
+use Psr\Container\ContainerInterface;
 
 /**
  * Form Date Select Test
@@ -35,7 +36,8 @@ class FormDateTimeSelectTest extends MockeryTestCase
             }
         );
 
-        $helpers = new HelperPluginManager();
+        $container = m::mock(ContainerInterface::class);
+        $helpers = new HelperPluginManager($container);
         $helpers->setService('forminput', $formInput);
         $helpers->setService('formselect', $formSelect);
 

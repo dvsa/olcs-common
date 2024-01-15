@@ -7,6 +7,7 @@ use Common\FormService\Form\Lva\Licence;
 use Common\FormService\FormServiceManager;
 use Common\RefData;
 use Common\Service\Helper\FormHelperService;
+use Laminas\Form\ElementInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Form\Element;
@@ -146,7 +147,7 @@ class LicenceTypeOfLicenceTest extends MockeryTestCase
             ->with('type-of-licence')
             ->andReturn($tolFieldset);
 
-        $formActions = m::mock();
+        $formActions = m::mock(ElementInterface::class);
         $formActions->shouldReceive('has')->with('save')->andReturn(true);
         $formActions->shouldReceive('remove')->once()->with('save');
         $formActions->shouldReceive('has')->with('cancel')->andReturn(true);

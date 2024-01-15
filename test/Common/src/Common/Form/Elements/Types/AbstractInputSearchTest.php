@@ -34,10 +34,12 @@ class AbstractInputSearchTest extends TestCase
         };
 
         $sut->setMessages([
-            'vrm' => 'error',
+            0 => [
+                'vrm' => 'error',
+            ],
         ]);
         $messages = $sut->getMessages();
-        $this->assertSame('error', $messages);
+        $this->assertSame(['vrm' => 'error'], $messages);
         $this->assertSame(['class' => 'lookup'], $sut->getAttributes());
         $this->assertSame('hint_is_set', $sut->hint);
         $this->assertSame('input_is_set', $sut->input);

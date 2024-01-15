@@ -94,7 +94,6 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
      */
     public function render(ElementInterface $element): string
     {
-
         foreach ($this->classMap as $class => $helperName) {
             if ($element instanceof $class) {
                 $helper = $this->view->plugin($helperName);

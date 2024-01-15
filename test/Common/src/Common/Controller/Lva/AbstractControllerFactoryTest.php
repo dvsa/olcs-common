@@ -27,11 +27,7 @@ class AbstractControllerFactoryTest extends MockeryTestCase
     protected function setUp(): void
     {
         $this->sut = new AbstractControllerFactory();
-
         $this->mockSm = m::mock(ContainerInterface::class);
-
-        $this->mockScm = m::mock(ControllerManager::class);
-        $this->mockScm->shouldReceive('getServiceLocator')->andReturn($this->mockSm);
     }
 
     /**
@@ -52,7 +48,7 @@ class AbstractControllerFactoryTest extends MockeryTestCase
 
         $this->mockSm->shouldReceive('get')->with('Config')->andReturn($config);
 
-        $this->assertTrue($this->sut->canCreate($this->mockScm, $requestedName));
+        $this->assertTrue($this->sut->canCreate($this->mockSm, $requestedName));
     }
 
     /**
@@ -73,7 +69,7 @@ class AbstractControllerFactoryTest extends MockeryTestCase
 
         $this->mockSm->shouldReceive('get')->with('Config')->andReturn($config);
 
-        $this->assertFalse($this->sut->canCreate($this->mockScm, $requestedName));
+        $this->assertFalse($this->sut->canCreate($this->mockSm, $requestedName));
     }
 
     /**
@@ -94,7 +90,7 @@ class AbstractControllerFactoryTest extends MockeryTestCase
 
         $this->mockSm->shouldReceive('get')->with('Config')->andReturn($config);
 
-        $this->assertInstanceOf('\stdClass', ($this->sut)($this->mockScm, $requestedName));
+        $this->assertInstanceOf('\stdClass', ($this->sut)($this->mockSm, $requestedName));
     }
 
     public function testInvokeUsingFactory()
@@ -112,7 +108,7 @@ class AbstractControllerFactoryTest extends MockeryTestCase
 
         $this->mockSm->shouldReceive('get')->with('Config')->andReturn($config);
 
-        $actual = ($this->sut)($this->mockScm, $requestedName);
+        $actual = ($this->sut)($this->mockSm, $requestedName);
         static::assertInstanceOf(FactoryInterface::class, $actual);
         static::assertInstanceOf(ControllerWithFactoryStub::class, $actual);
     }

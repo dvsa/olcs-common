@@ -3,6 +3,7 @@
 namespace CommonTest\Preference;
 
 use Common\Preference\Language;
+use Laminas\ServiceManager\ServiceManager;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Http\Header\Cookie;
@@ -38,12 +39,7 @@ class LanguageTest extends MockeryTestCase
     {
         $this->sut = new Language();
 
-        $this->sm = m::mock('\Laminas\ServiceManager\ServiceManager')
-            ->makePartial()
-            ->setAllowOverride(true);
-
-        // inject a real string helper
-        $this->sm->setService('Helper\String', new \Common\Service\Helper\StringHelperService());
+        $this->sm = new ServiceManager();
 
         $this->request = m::mock(Request::class);
         $this->response = m::mock(Response::class);
