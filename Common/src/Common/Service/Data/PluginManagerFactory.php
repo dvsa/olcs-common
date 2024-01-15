@@ -15,15 +15,8 @@ class PluginManagerFactory extends AbstractPluginManagerFactory
 
     public function __invoke(ContainerInterface $container, $name, array $options = null)
     {
-        $service = parent::__invoke($container, $name, $options);
-
         $config = $container->get('Config');
 
-        if (isset($config['data_services'])) {
-            $pluginManagerConfig = new ServiceManagerConfig($config['data_services']);
-            $pluginManagerConfig->configureServiceManager($service);
-        }
-
-        return $service;
+        return parent::__invoke($container, $name, $config['data_services']);
     }
 }
