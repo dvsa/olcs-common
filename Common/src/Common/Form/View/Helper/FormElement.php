@@ -183,7 +183,7 @@ class FormElement extends LaminasFormElement
         }
 
         if ($element instanceof Html) {
-            return $element->getValue();
+            return is_string($element->getValue()) ? $element->getValue() : '';
         }
 
         if ($element instanceof Table) {
