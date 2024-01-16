@@ -48,7 +48,7 @@ class AddressOptional
      * })
      * @Form\Required(false)
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
+     * @Form\Filter("Laminas\Filter\StringTrim")
      */
     public $addressLine1 = null;
 
@@ -94,7 +94,7 @@ class AddressOptional
      * })
      * @Form\Required(false)
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
+     * @Form\Filter("Laminas\Filter\StringTrim")
      */
     public $town = null;
 
@@ -108,10 +108,9 @@ class AddressOptional
      * @Form\Type("Text")
      * @Form\Required(false)
      * @Form\Attributes({"id":"postcodeOptional", "required":false})
-     * @Form\Validator({
-     *      "name":"Dvsa\Olcs\Transfer\Validators\Postcode",
-     *      "options": {"allow_empty": true}
-     * });
+     * @Form\Validator("Dvsa\Olcs\Transfer\Validators\Postcode",
+     *      options={"allow_empty": true}
+     * );
      */
     public $postcode = null;
 

@@ -3,12 +3,8 @@
 namespace Common\Service\Helper;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
-/**
- * TransportManagerHelperServiceFactory
- */
 class TransportManagerHelperServiceFactory implements FactoryInterface
 {
     /**
@@ -30,17 +26,5 @@ class TransportManagerHelperServiceFactory implements FactoryInterface
             $container->get('Helper\Url'),
             $container->get('Table')
         );
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $services
-     *
-     * @return TransportManagerHelperService
-     */
-    public function createService(ServiceLocatorInterface $services): TransportManagerHelperService
-    {
-        return $this($services, TransportManagerHelperService::class);
     }
 }

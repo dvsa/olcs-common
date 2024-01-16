@@ -3,8 +3,7 @@
 namespace Common\Service\Table\Formatter;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class SlaTargetDateFactory implements FactoryInterface
 {
@@ -16,23 +15,11 @@ class SlaTargetDateFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $dateFormatter = $container->get(Date::class);
-        $container = method_exists($container, 'getServiceLocator') ? $container->getServiceLocator() : $container;
-        $router = $container->get('router');
-        $request = $container->get('request');
+        $formatterPluginManager = $container->get(FormatterPluginManager::class);
+        $dateFormatter = $formatterPluginManager->get(Date::class);
+        $router = $container->get('Router');
+        $request = $container->get('Request');
         $urlHelper = $container->get('Helper\Url');
         return new SlaTargetDate($router, $request, $urlHelper, $dateFormatter);
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     *
-     * @return SlaTargetDate
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): SlaTargetDate
-    {
-        return $this->__invoke($serviceLocator, SlaTargetDate::class);
     }
 }

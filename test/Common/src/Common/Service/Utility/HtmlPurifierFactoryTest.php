@@ -4,25 +4,23 @@ namespace CommonTest\Service\Helper;
 
 use Common\Service\Utility\HtmlPurifierFactory;
 use HTMLPurifier;
+use Interop\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class HtmlPurifierFactoryTest extends TestCase
 {
-    public function testCreateService()
+    public function testInvoke(): void
     {
-        /** @var ServiceLocatorInterface|m\MockInterface $mockSl */
-        $mockSl = m::mock(ServiceLocatorInterface::class);
+        $container = m::mock(ContainerInterface::class);
 
-        $mockSl->shouldReceive('get')
+        $container->expects('get')
             ->with('Config')
-            ->once()
             ->andReturn(['html-purifier-cache-dir' => 'path']);
 
         static::assertInstanceOf(
-            HtmlPurifier::class,
-            (new HtmlPurifierFactory())->createService($mockSl)
+            HTMLPurifier::class,
+            (new HtmlPurifierFactory())->__invoke($container, HTMLPurifier::class)
         );
     }
 }

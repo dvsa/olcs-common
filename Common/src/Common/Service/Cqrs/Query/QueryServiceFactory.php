@@ -1,29 +1,16 @@
 <?php
 
-/**
- * Query Service Factory
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Service\Cqrs\Query;
 
 use Dvsa\Olcs\Utils\Client\ClientAdapterLoggingWrapper;
 use Interop\Container\ContainerInterface;
 use Laminas\Http\Client;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorAwareInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Laminas\Session\Container;
 use RunTimeException;
 
 class QueryServiceFactory implements FactoryInterface
 {
-    /**
-     * @param ContainerInterface $container
-     * @param $requestedName
-     * @param array|null $options
-     * @return QueryService
-     */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): QueryService
     {
         $config = $container->get('Config');
@@ -51,15 +38,5 @@ class QueryServiceFactory implements FactoryInterface
             $container->get('Helper\FlashMessenger'),
             new Container($sessionName)
         );
-    }
-
-    /**
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return QueryService
-     * @deprecated
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): QueryService
-    {
-        return $this->__invoke($serviceLocator, null);
     }
 }

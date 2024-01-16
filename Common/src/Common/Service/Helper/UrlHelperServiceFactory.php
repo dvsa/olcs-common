@@ -3,12 +3,8 @@
 namespace Common\Service\Helper;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
-/**
- * UrlHelperServiceFactory
- */
 class UrlHelperServiceFactory implements FactoryInterface
 {
     /**
@@ -22,20 +18,8 @@ class UrlHelperServiceFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): UrlHelperService
     {
         return new UrlHelperService(
-            $container->get('viewhelpermanager'),
+            $container->get('ViewHelperManager'),
             $container->get('config')
         );
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $services
-     *
-     * @return UrlHelperService
-     */
-    public function createService(ServiceLocatorInterface $services): UrlHelperService
-    {
-        return $this($services, UrlHelperService::class);
     }
 }

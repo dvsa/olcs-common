@@ -32,7 +32,7 @@ class FormDateSelect extends \Common\Form\View\Helper\Extended\FormDateSelect
      * @throws \Laminas\Form\Exception\DomainException
      * @return string
      */
-    public function render(ElementInterface $element)
+    public function render(ElementInterface $element): string
     {
         if (!$element instanceof DateSelectElement) {
             throw new Exception\InvalidArgumentException(

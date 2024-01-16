@@ -3,12 +3,8 @@
 namespace Common\Service\Data;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
-/**
- * ApplicationOperatingCentreFactory
- */
 class ApplicationOperatingCentreFactory implements FactoryInterface
 {
     /**
@@ -21,22 +17,9 @@ class ApplicationOperatingCentreFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): ApplicationOperatingCentre
     {
-
         return new ApplicationOperatingCentre(
             $container->get('DataServiceManager')->get(AbstractDataServiceServices::class),
             $container->get('DataServiceManager')->get(Application::class)
         );
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $services
-     *
-     * @return ApplicationOperatingCentre
-     */
-    public function createService(ServiceLocatorInterface $services): ApplicationOperatingCentre
-    {
-        return $this($services, ApplicationOperatingCentre::class);
     }
 }

@@ -13,10 +13,9 @@ class TableRequired
      * @Form\Required(true)
      * @Form\Type("Hidden")
      * @Form\Attributes({"value":""})
-     * @Form\Validator({
-     *     "name":"Common\Form\Elements\Validators\TableRequiredValidator",
-     *     "options":{"label":"record"}
-     * })
+     * @Form\Validator("Common\Form\Elements\Validators\TableRequiredValidator",
+     *     options={"label":"record"}
+     * )
      */
     public $rows = null;
 

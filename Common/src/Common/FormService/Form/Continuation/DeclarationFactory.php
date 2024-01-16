@@ -9,8 +9,7 @@ use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Helper\UrlHelperService;
 use Common\Service\Script\ScriptFactory;
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class DeclarationFactory implements FactoryInterface
 {
@@ -24,23 +23,10 @@ class DeclarationFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): Declaration
     {
-        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
-            $container = $container->getServiceLocator();
-        }
         $translationHelper = $container->get(TranslationHelperService::class);
         $formHelper = $container->get(FormHelperService::class);
         $scriptFactory = $container->get(ScriptFactory::class);
         $urlHelper = $container->get(UrlHelperService::class);
         return new Declaration($formHelper, $translationHelper, $scriptFactory, $urlHelper);
-    }
-
-    /**
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return Declaration
-     * @deprecated
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): Declaration
-    {
-        return $this->__invoke($serviceLocator, Declaration::class);
     }
 }

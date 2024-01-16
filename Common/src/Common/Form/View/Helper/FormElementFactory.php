@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Common\Form\View\Helper;
 
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
-use Laminas\ServiceManager\ServiceLocatorAwareInterface;
-use Interop\Container\ContainerInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
+use Psr\Container\ContainerInterface;
 
 /**
  * @see FormElement
@@ -16,16 +14,6 @@ use Interop\Container\ContainerInterface;
 class FormElementFactory implements FactoryInterface
 {
     /**
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return FormElement
-     * @deprecated
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): FormElement
-    {
-        return $this->__invoke($serviceLocator, null);
-    }
-
-    /**
      * @param ContainerInterface $container
      * @param mixed $requestedName
      * @param array|null $options
@@ -33,10 +21,6 @@ class FormElementFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): FormElement
     {
-        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
-            $container = $container->getServiceLocator();
-        }
-
         $instance = new FormElement();
         $config = $container->get('config');
         $map = $config['form']['element']['renderers'] ?? [];

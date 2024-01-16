@@ -28,7 +28,7 @@ use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\View\Model\ViewModel;
 use Olcs\Mvc\Controller\ParameterProvider\GenericList;
 use RuntimeException;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Shared logic between Community Licences controllers

@@ -28,7 +28,7 @@ use Dvsa\Olcs\Transfer\Query\Licence\OperatingCentres as LicOperatingCentres;
 use Dvsa\Olcs\Transfer\Query\LicenceOperatingCentre\LicenceOperatingCentre;
 use Dvsa\Olcs\Transfer\Query\VariationOperatingCentre\VariationOperatingCentre;
 use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Shared logic between Operating Centres controllers

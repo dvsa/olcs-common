@@ -15,7 +15,7 @@ class OperatingCentreData
      *     "label": "application_operating-centres_authorisation-sub-action.data.noOfVehiclesRequired",
      *     "error-message": "Your total number of vehicles"
      * })
-     * @Form\Validator({"name": "Between", "options": {"min":0, "max":1000000}})
+     * @Form\Validator("Between", options={"min":0, "max":1000000})
      */
     public $noOfVehiclesRequired = null;
 
@@ -25,7 +25,7 @@ class OperatingCentreData
      *     "label": "application_operating-centres_authorisation-sub-action.data.noOfTrailersRequired",
      *     "error-message": "Your total number of trailers"
      * })
-     * @Form\Validator({"name": "Between", "options": {"min":0, "max":1000000}})
+     * @Form\Validator("Between", options={"min":0, "max":1000000})
      */
     public $noOfTrailersRequired = null;
 

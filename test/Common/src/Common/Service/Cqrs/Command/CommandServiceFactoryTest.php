@@ -1,30 +1,19 @@
 <?php
 
-/**
- * Command Service Factory Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\Common\Service\Cqrs\Command;
 
-use Common\Auth\Adapter\CommandAdapterFactory;
 use Common\Service\Cqrs\Command\CommandService;
 use Common\Service\Cqrs\Command\CommandServiceFactory;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Test\MocksServicesTrait;
 use Laminas\Http\Client\Adapter\Curl;
 use Laminas\Http\Request;
-use Laminas\Mvc\Router\RouteInterface;
+use Laminas\Router\RouteInterface;
 use Laminas\ServiceManager\ServiceManager;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use RuntimeException;
 
-/**
- * Command Service Factory Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class CommandServiceFactoryTest extends MockeryTestCase
 {
     use MocksServicesTrait;
@@ -37,39 +26,6 @@ class CommandServiceFactoryTest extends MockeryTestCase
     public function setUp(): void
     {
         $this->setUpServiceManager();
-    }
-
-    /**
-     * @test
-     */
-    public function createService_IsCallable()
-    {
-        // Setup
-        $this->setUpSut();
-
-        // Assert
-        $this->assertIsCallable([$this->sut, 'createService']);
-    }
-
-    /**
-     * @test
-     * @depends createService_IsCallable
-     * @depends __invoke_IsCallable
-     */
-    public function createService_CallsInvoke()
-    {
-        // Setup
-        $this->sut = m::mock(CommandAdapterFactory::class)->makePartial();
-
-        // Expectations
-        $this->sut->expects('__invoke')->withArgs(function ($serviceManager, $requestedName) {
-            $this->assertSame($this->serviceManager(), $serviceManager, 'Expected first argument to be the ServiceManager passed to createService');
-            $this->assertSame(null, $requestedName, 'Expected requestedName to be NULL');
-            return true;
-        });
-
-        // Execute
-        $this->sut->createService($this->serviceManager());
     }
 
     /**

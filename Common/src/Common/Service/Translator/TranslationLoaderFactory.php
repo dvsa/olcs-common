@@ -3,8 +3,7 @@
 namespace Common\Service\Translator;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 /**
  * Factory for the translation loader service (front end nodes)
@@ -14,18 +13,6 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
 class TranslationLoaderFactory implements FactoryInterface
 {
     /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     *
-     * @return TranslationLoader
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): TranslationLoader
-    {
-        return $this($serviceLocator, TranslationLoader::class);
-    }
-
-    /**
      * @param ContainerInterface $container
      * @param string             $requestedName
      * @param array|null         $options
@@ -34,10 +21,6 @@ class TranslationLoaderFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): TranslationLoader
     {
-        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
-            $container = $container->getServiceLocator();
-        }
-
         return new TranslationLoader($container->get('QueryService'));
     }
 }

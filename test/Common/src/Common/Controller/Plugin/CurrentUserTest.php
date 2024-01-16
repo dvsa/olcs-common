@@ -6,7 +6,7 @@ use Common\Controller\Plugin\CurrentUser;
 use Common\Rbac\User;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use ZfcRbac\Service\AuthorizationServiceInterface;
+use LmcRbacMvc\Service\AuthorizationServiceInterface;
 
 /**
  * Class CurrentUserTest

@@ -6,10 +6,6 @@ use Common\View\Helper\LicenceChecklist;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\I18n\View\Helper\Translate;
-use Laminas\ServiceManager\ServiceLocatorInterface;
-use Laminas\View\Helper\Placeholder;
-use Laminas\View\Helper\ViewModel;
-use Laminas\View\HelperPluginManager;
 use Common\RefData;
 
 /**

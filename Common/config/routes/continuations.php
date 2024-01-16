@@ -1,6 +1,6 @@
 <?php
 
-use Laminas\Mvc\Router\Http;
+use Laminas\Router\Http;
 
 return [
     'continuation' => [

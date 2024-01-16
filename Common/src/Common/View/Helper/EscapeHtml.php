@@ -30,7 +30,7 @@ class EscapeHtml extends AbstractHelper
      * @param string $toEscape
      * @return string
      */
-    public function __invoke(?string $toEscape): string
+    public function __invoke($toEscape): string
     {
         if (is_null($toEscape)) {
             return '';

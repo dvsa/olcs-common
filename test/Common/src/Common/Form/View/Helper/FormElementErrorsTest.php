@@ -15,13 +15,12 @@ use Laminas\Form\Element;
 use Laminas\I18n\Translator\Translator;
 use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\I18n\View\Helper\Translate;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Validator\ValidatorPluginManager;
 use Laminas\View\HelperPluginManager;
 use Laminas\View\Renderer\PhpRenderer;
 use Mockery\MockInterface;
-
+use Psr\Container\ContainerInterface;
 
 /**
  * @see FormElementErrors
@@ -76,7 +75,8 @@ class FormElementErrorsTest extends MockeryTestCase
         $translateHelper = new Translate();
         $translateHelper->setTranslator($translator);
 
-        $helpers = new HelperPluginManager();
+        $container = m::mock(ContainerInterface::class);
+        $helpers = new HelperPluginManager($container);
         $helpers->setService('translate', $translateHelper);
 
         $view = new PhpRenderer();
@@ -103,14 +103,10 @@ class FormElementErrorsTest extends MockeryTestCase
         return $element;
     }
 
-    /**
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return FormElementErrors
-     */
-    protected function setUpSut(ServiceLocatorInterface $serviceLocator): FormElementErrors
+    protected function setUpSut(ContainerInterface $container): FormElementErrors
     {
-        $pluginManager = $this->setUpAbstractPluginManager($serviceLocator);
-        $instance = (new FormElementErrorsFactory())->createService($pluginManager);
+        $pluginManager = $this->setUpAbstractPluginManager($container);
+        $instance = (new FormElementErrorsFactory())->__invoke($pluginManager, FormElementErrors::class);
         return $instance;
     }
 
@@ -126,13 +122,9 @@ class FormElementErrorsTest extends MockeryTestCase
         return $instance;
     }
 
-    /**
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return FormLabel
-     */
-    protected function setUpFormLabel(ServiceLocatorInterface $serviceLocator): FormLabel
+    protected function setUpFormLabel(ContainerInterface $container): FormLabel
     {
-        $instance = (new FormLabelFactory())->createService($serviceLocator);
+        $instance = (new FormLabelFactory())->__invoke($container, FormLabel::class);
         return $instance;
     }
 

@@ -3,8 +3,7 @@
 namespace Common\Service\Table;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 /**
  * Table Factory
@@ -14,12 +13,7 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
  */
 class TableFactory implements FactoryInterface
 {
-    /**
-     * Holds the service locator
-     *
-     * @var ServiceLocatorInterface
-     */
-    private $serviceLocator;
+    private ContainerInterface $serviceLocator;
 
     /**
      * Create the table factory service
@@ -28,14 +22,6 @@ class TableFactory implements FactoryInterface
     {
         $this->serviceLocator = $container;
         return $this;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
-    {
-        return $this->__invoke($serviceLocator, TableFactory::class);
     }
 
     /**

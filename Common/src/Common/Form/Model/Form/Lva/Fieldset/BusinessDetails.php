@@ -26,25 +26,24 @@ class BusinessDetails
      *     "label_attributes": {"class": "form-element__question"}
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
-     * @Form\Validator({"name":"Laminas\Validator\StringLength", "options":{
-     *     "min": 0, "max": 200
-     * }})
+     * @Form\Filter("Laminas\Filter\StringTrim")
+     * @Form\Validator("Laminas\Validator\StringLength", options={
+*     "min": 0, "max": 200
+     *})
      */
     public $name = null;
 
     /**
      * @Form\Attributes({"class":"add-another"})
-     * @Form\ComposedObject({
-     *      "target_object":"Common\Form\Model\Form\Lva\Fieldset\TradingNames",
-     *      "is_collection":true,
-     *      "options":{
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TradingNames",
+     *      true,
+     *      options={
      *          "count": 1,
      *          "label":"application_your-business_business-details.data.trading_names_optional",
      *          "hint":"markup-trading-name-hint",
      *          "hint-position": "below",
      *      }
-     * })
+     * )
      */
     public $tradingNames = null;
 
@@ -58,9 +57,9 @@ class BusinessDetails
      *         "class": "form-element__question"
      *     }
      * })
-     * @Form\Validator({"name":"Laminas\Validator\StringLength", "options":{
+     * @Form\Validator("Laminas\Validator\StringLength", options={
      *     "min": 0, "max": 200
-     * }})
+     *})
      */
     public $natureOfBusiness = null;
 }

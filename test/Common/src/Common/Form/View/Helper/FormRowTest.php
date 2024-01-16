@@ -16,13 +16,13 @@ use Laminas\Form\View\Helper as LaminasHelper;
 use Laminas\I18n\Translator\Translator;
 use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\I18n\View\Helper\Translate;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Validator\ValidatorPluginManager;
 use Laminas\View\HelperPluginManager;
 use Laminas\View\Renderer\PhpRenderer;
 use Mockery\MockInterface;
 use PHPUnit\Framework\MockObject\MockObject;
+use Psr\Container\ContainerInterface;
 
 /**
  * @covers \Common\Form\View\Helper\FormRow
@@ -53,7 +53,7 @@ class FormRowTest extends MockeryTestCase
         // Assert
         $this->assertIsCallable([$this->sut, '__invoke']);
     }
-    
+
     /**
      * @test
      * @depends __invoke_IsCallable
@@ -646,14 +646,10 @@ class FormRowTest extends MockeryTestCase
         $this->sut->setTranslator($this->translator());
     }
 
-    /**
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return CommonHelper\FormElementErrors
-     */
-    protected function setUpFormElementErrors(ServiceLocatorInterface $serviceLocator): CommonHelper\FormElementErrors
+    protected function setUpFormElementErrors(ContainerInterface $serviceLocator): CommonHelper\FormElementErrors
     {
         $pluginManager = $this->setUpAbstractPluginManager($serviceLocator);
-        return (new CommonHelper\FormElementErrorsFactory())->createService($pluginManager);
+        return (new CommonHelper\FormElementErrorsFactory())->__invoke($pluginManager, CommonHelper\FormElementErrors::class);
     }
 
     /**
@@ -687,7 +683,8 @@ class FormRowTest extends MockeryTestCase
     protected function viewHelperPluginManager(): HelperPluginManager
     {
         if (! $this->serviceManager->has(HelperPluginManager::class)) {
-            $instance = new HelperPluginManager();
+            $container = m::mock(ContainerInterface::class);
+            $instance = new HelperPluginManager($container);
             $translateHelper = new Translate();
             $translateHelper->setTranslator($this->translator());
             $instance->setService('translate', $translateHelper);

@@ -20,9 +20,9 @@ class OperatingCentresTotAuthLgvVehicles
      *     "hint": "application_operating-centres_authorisation.data.totAuthLgvVehicles.hint",
      *     "hint-below-class": "govuk-hint govuk-body govuk-!-font-size-16 govuk-!-margin-top-2"
      * })
-     * @Form\Validator({"name": "Digits", "options": {"break_chain_on_failure": true}})
-     * @Form\Validator({"name": "Between", "options": {"min":0, "max": 5000}})
-     * @Form\Filter({"name":"\Laminas\Filter\ToNull", "options":{"type":"string"}})
+     * @Form\Validator("Digits", options={"break_chain_on_failure": true})
+     * @Form\Validator("Between", options={"min":0, "max": 5000})
+     * @Form\Filter("\Laminas\Filter\ToNull", options={"type":"string"})
      */
     public $totAuthLgvVehicles = null;
 }

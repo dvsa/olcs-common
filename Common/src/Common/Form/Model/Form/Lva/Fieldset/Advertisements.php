@@ -53,8 +53,8 @@ class Advertisements
      * @Form\Required(true)
      * @Form\Attributes({"required":false, "id":"uploadedFileCount"})
      * @Form\Type("Hidden")
-     * @Form\Validator({"name": "ValidateIf",
-     *      "options":{
+     * @Form\Validator("ValidateIf",
+     *      options={
      *          "context_field": "radio",
      *          "context_values": {"adPlaced"},
      *          "validators": {
@@ -67,7 +67,7 @@ class Advertisements
      *              }
      *          }
      *      }
-     * })
+     * )
      */
     public $uploadedFileCount = null;
 }

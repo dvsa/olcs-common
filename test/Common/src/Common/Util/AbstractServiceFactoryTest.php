@@ -4,8 +4,8 @@ namespace CommonTest\Util;
 
 use Common\Util\AbstractServiceFactory;
 use CommonTest\Common\Util\Stub\ServiceWithFactoryStub;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Interop\Container\ContainerInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
@@ -17,7 +17,7 @@ class AbstractServiceFactoryTest extends MockeryTestCase
     /** @var  AbstractServiceFactory | m\MockInterface */
     protected $sut;
 
-    /** @var  m\MockInterface | ServiceLocatorInterface */
+    /** @var  m\MockInterface | ContainerInterface */
     protected $mockSm;
 
     public function setUp(): void
@@ -26,7 +26,7 @@ class AbstractServiceFactoryTest extends MockeryTestCase
             ->makePartial()
             ->shouldAllowMockingProtectedMethods();
 
-        $this->mockSm = m::mock(ServiceLocatorInterface::class);
+        $this->mockSm = m::mock(ContainerInterface::class);
     }
 
     /**
@@ -72,44 +72,6 @@ class AbstractServiceFactoryTest extends MockeryTestCase
         $this->sut->shouldReceive('getClassName')->with($className)->andReturn('\stdClass');
 
         $actual = ($this->sut)($this->mockSm, $className);
-
-        static::assertInstanceOf('\stdClass', $actual);
-    }
-
-    /**
-     * @dataProvider dpTestCanCreate
-     * @todo OLCS-28149
-     */
-    public function testCanCreateServiceWithName($fqcn, $expect)
-    {
-        static::assertEquals($expect, $this->sut->canCreateServiceWithName($this->mockSm, null, $fqcn));
-    }
-
-    /**
-     * @todo OLCS-28149
-     */
-    public function testCreateServiceWithNameUsingFactory()
-    {
-        $className = 'unit_className';
-
-        $this->sut->shouldReceive('getClassName')->with($className)->andReturn(ServiceWithFactoryStub::class);
-
-        $actual = $this->sut->createServiceWithName($this->mockSm, null, $className);
-
-        static::assertInstanceOf(FactoryInterface::class, $actual);
-        static::assertInstanceOf(ServiceWithFactoryStub::class, $actual);
-    }
-
-    /**
-     * @todo OLCS-28149
-     */
-    public function testCreateServiceWithName()
-    {
-        $className = 'unit_className';
-
-        $this->sut->shouldReceive('getClassName')->with($className)->andReturn('\stdClass');
-
-        $actual = $this->sut->createServiceWithName($this->mockSm, null, $className);
 
         static::assertInstanceOf('\stdClass', $actual);
     }

@@ -27,8 +27,8 @@ class PreviousLicencesDetails
      * @Form\Options({"label":"transport-manager.previous-licences.form.lic-no"})
      * @Form\Required(true)
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
-     * @Form\Validator({"name":"Laminas\Validator\StringLength","options":{"min":1,"max":18}})
+     * @Form\Filter("Laminas\Filter\StringTrim")
+     * @Form\Validator("Laminas\Validator\StringLength", options={"min":1,"max":18})
      */
     public $licNo = null;
 
@@ -37,8 +37,8 @@ class PreviousLicencesDetails
      * @Form\Options({"label":"transport-manager.previous-licences.form.holder-name"})
      * @Form\Required(true)
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
-     * @Form\Validator({"name":"Laminas\Validator\StringLength","options":{"min":1,"max":90}})
+     * @Form\Filter("Laminas\Filter\StringTrim")
+     * @Form\Validator("Laminas\Validator\StringLength", options={"min":1,"max":90})
      */
     public $holderName = null;
 }

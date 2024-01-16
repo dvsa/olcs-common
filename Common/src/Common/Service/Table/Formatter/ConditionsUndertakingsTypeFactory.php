@@ -3,8 +3,7 @@
 namespace Common\Service\Table\Formatter;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class ConditionsUndertakingsTypeFactory implements FactoryInterface
 {
@@ -16,20 +15,7 @@ class ConditionsUndertakingsTypeFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $container = method_exists($container, 'getServiceLocator') ? $container->getServiceLocator() : $container;
         $translator = $container->get('translator');
         return new ConditionsUndertakingsType($translator);
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     *
-     * @return ConditionsUndertakingsType
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): ConditionsUndertakingsType
-    {
-        return $this->__invoke($serviceLocator, ConditionsUndertakingsType::class);
     }
 }

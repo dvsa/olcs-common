@@ -3,7 +3,7 @@
 namespace Common\FormService\Form\Lva;
 
 use Common\Service\Helper\FormHelperService;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Licence Taxi Phv

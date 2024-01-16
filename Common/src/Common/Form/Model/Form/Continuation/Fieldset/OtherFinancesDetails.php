@@ -17,9 +17,9 @@ class OtherFinancesDetails
      *     "label": "continuations.finances.otherFinances.amount.label",
      *     "hint": "continuations.finances.otherFinances.amount.hint",
      * })
-     * @Form\Validator({"name": "NotEmpty", "options": {"null"}})
-     * @Form\Validator({"name": "ValidateIf",
-     *      "options":{
+     * @Form\Validator("NotEmpty", options={"null"})
+     * @Form\Validator("ValidateIf",
+     *      options={
      *          "context_field": "yesNo",
      *          "context_values": {"Y"},
      *          "inject_post_data": "finances->otherFinances->yesNo",
@@ -55,7 +55,7 @@ class OtherFinancesDetails
      *              },
      *          }
      *      }
-     * })
+     * )
      */
     public $amount = null;
 
@@ -66,9 +66,9 @@ class OtherFinancesDetails
      * @Form\Options({
      *     "label": "continuations.finances.otherFinances.detail.label",
      * })
-     * @Form\Validator({"name": "NotEmpty", "options": {"null"}})
-     * @Form\Validator({"name": "ValidateIf",
-     *      "options":{
+     * @Form\Validator("NotEmpty", options={"null"})
+     * @Form\Validator("ValidateIf",
+     *      options={
      *          "context_field": "yesNo",
      *          "context_values": {"Y"},
      *          "inject_post_data": "finances->otherFinances->yesNo",
@@ -89,7 +89,7 @@ class OtherFinancesDetails
      *              },
      *          }
      *      }
-     * })
+     * )
      */
     public $detail = null;
 }

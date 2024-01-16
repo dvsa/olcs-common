@@ -16,8 +16,8 @@ use Laminas\Http\Client\Exception\ExceptionInterface as HttpClientExceptionInter
 use Laminas\Http\Header\Authorization;
 use Laminas\Http\Request;
 use Laminas\Http\Response as HttpResponse;
-use Laminas\Mvc\Router\Exception\ExceptionInterface;
-use Laminas\Mvc\Router\RouteInterface;
+use Laminas\Router\Exception\ExceptionInterface;
+use Laminas\Router\RouteInterface;
 use Laminas\Session\Container;
 
 /**

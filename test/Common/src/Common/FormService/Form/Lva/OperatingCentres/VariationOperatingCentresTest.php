@@ -8,21 +8,16 @@ use Common\FormService\FormServiceManager;
 use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Table\TableBuilder;
 use Common\Service\Table\TableFactory;
+use Laminas\InputFilter\InputFilter;
+use Laminas\Validator\ValidatorChain;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Laminas\Form\Element;
 use Laminas\Form\Fieldset;
 use Laminas\Form\Form;
-use Laminas\Http\Request;
 use Common\Service\Helper\FormHelperService;
 use Common\RefData;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
-/**
- * Variation Operating Centres Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class VariationOperatingCentresTest extends MockeryTestCase
 {
     protected $form;
@@ -37,6 +32,7 @@ class VariationOperatingCentresTest extends MockeryTestCase
     protected $tableBuilder;
 
     protected $translator;
+    private $inputFilter;
 
     public function setUp(): void
     {
@@ -46,7 +42,18 @@ class VariationOperatingCentresTest extends MockeryTestCase
 
         $fsm = m::mock(FormServiceManager::class)->makePartial();
 
+        $this->validatorChain = m::mock(ValidatorChain::class);
+        $this->rowsInput = m::mock();
+        $this->rowsInput->expects('get')->with();
+
+        $this->tableElement = m::mock(Table::class);
+        $this->tableElement->expects('get')->with('rows')->andReturn($this->rowsInput);
+
+        $this->inputFilter = m::mock(InputFilter::class);
+        $this->inputFilter->expects('get')->with('table')->andReturn($this->tableElement);
+
         $this->form = m::mock(Form::class);
+        $this->form->expects('getInputFilter')->withNoArgs()->andReturn($this->inputFilter);
 
         $lvaVariation = m::mock(FormServiceInterface::class);
         $lvaVariation->shouldReceive('alterForm')
@@ -150,6 +157,8 @@ class VariationOperatingCentresTest extends MockeryTestCase
         $this->form->shouldReceive('get')
             ->with('data')
             ->andReturn($data);
+
+
 
         $this->mockFormHelper->shouldReceive('disableElement')
             ->with($this->form, 'data->totCommunityLicencesFieldset->totCommunityLicences');

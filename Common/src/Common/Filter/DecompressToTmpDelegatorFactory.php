@@ -4,8 +4,8 @@ namespace Common\Filter;
 
 use Interop\Container\ContainerInterface;
 use Laminas\Filter\Decompress;
-use Laminas\ServiceManager\DelegatorFactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\DelegatorFactoryInterface;
+
 
 /**
  * Class DecompressUploadToTmpFactory
@@ -18,9 +18,7 @@ class DecompressToTmpDelegatorFactory implements DelegatorFactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, callable $callback, array $options = null)
     {
-        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
-            $container = $container->getServiceLocator();
-        }
+
         $config = $container->get('Config');
         $tmpRoot = ($config['tmpDirectory'] ?? sys_get_temp_dir());
         $filter = new Decompress('zip');
@@ -31,14 +29,5 @@ class DecompressToTmpDelegatorFactory implements DelegatorFactoryInterface
         $service->setFileSystem($container->get('Common\Filesystem\Filesystem'));
 
         return $service;
-    }
-
-    /**
-     * {@inheritdoc}
-     * @todo OLCS-28149
-     */
-    public function createDelegatorWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName, $callback)
-    {
-        return $this($serviceLocator, $requestedName, $callback);
     }
 }

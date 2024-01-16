@@ -29,9 +29,9 @@ class AuthorityToOperate
      *     "class": "long js-interim-reason",
      *     "data-container-class": "interimFee",
      * })
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
-     * @Form\Validator({"name": "ValidateIf",
-     *      "options":{
+     * @Form\Filter("Laminas\Filter\StringTrim")
+     * @Form\Validator("ValidateIf",
+     *      options={
      *          "context_field": "goodsApplicationInterim",
      *          "context_values": {"Y"},
      *          "inject_post_data": "interim->goodsApplicationInterim",
@@ -44,7 +44,7 @@ class AuthorityToOperate
      *              }
      *          }
      *      }
-     * })
+     * )
      */
     public $goodsApplicationInterimReason = null;
 

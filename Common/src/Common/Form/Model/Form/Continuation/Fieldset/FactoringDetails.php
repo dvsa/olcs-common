@@ -17,9 +17,9 @@ class FactoringDetails
      *     "label": "continuations.finances.factoring.amount.label",
      *     "hint": "continuations.finances.factoring.amount.hint",
      * })
-     * @Form\Validator({"name": "NotEmpty", "options": {"null"}})
-     * @Form\Validator({"name": "ValidateIf",
-     *      "options":{
+     * @Form\Validator("NotEmpty", options={"null"})
+     * @Form\Validator("ValidateIf",
+     *      options={
      *          "context_field": "yesNo",
      *          "context_values": {"Y"},
      *          "inject_post_data": "finances->factoring->yesNo",
@@ -55,7 +55,7 @@ class FactoringDetails
      *              },
      *          }
      *      }
-     * })
+     * )
      */
     public $amount = null;
 }

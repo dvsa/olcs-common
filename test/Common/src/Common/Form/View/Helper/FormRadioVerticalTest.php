@@ -131,22 +131,6 @@ class FormRadioVerticalTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends render_RendersARadio
-     */
-    public function render_ReturnsARenderedView_UsingCorrectTemplate()
-    {
-        // Setup
-        $this->setUpSut();
-
-        // Expect
-        $this->renderer()->expects('render')->with(static::RADIO_VERTICAL_TEMPLATE, IsAnything::anything());
-
-        // Execute
-        $this->sut->render($this->setUpRadio());
-    }
-
-    /**
-     * @test
      * @depends render_RendersAFieldset
      * @depends render_ReturnsARenderedView
      */
@@ -158,7 +142,7 @@ class FormRadioVerticalTest extends MockeryTestCase
 
         // Expect
         $varsExpectation = IsArrayContainingKeyValuePair::hasKeyValuePair('element', $element);
-        $this->renderer()->expects('render')->with(IsAnything::anything(), $varsExpectation)->andReturn(static::RENDERED_TEMPLATE);
+        $this->renderer()->expects('render')->with(static::RADIO_VERTICAL_TEMPLATE, $varsExpectation)->andReturn(static::RENDERED_TEMPLATE);
 
         // Execute
         $result = $this->sut->render($element);
@@ -356,63 +340,24 @@ class FormRadioVerticalTest extends MockeryTestCase
      * @test
      * @depends render_ReturnsARenderedView
      */
-    public function render_ReturnsARenderedView_WithAHint()
-    {
-        // Setup
-        $this->setUpSut();
-        $element = $this->setUpRadio();
-        $element->setOption(static::HINT, static::AN_ELEMENT_HINT);
-
-        // Execute
-        $this->sut->render($element);
-
-        // Assert
-        $this->renderer()->shouldHaveReceived('render')->withArgs(function ($template, $variables) {
-            $this->assertEquals(static::AN_ELEMENT_HINT, $variables[static::HINT] ?? null);
-            return true;
-        });
-    }
-
-    /**
-     * @test
-     * @depends render_ReturnsARenderedView
-     */
-    public function render_ReturnsARenderedView_WithALabel()
+    public function renderReturnsRenderedViewWithLabelAndHint()
     {
         // Setup
         $this->setUpSut();
         $element = $this->setUpRadio();
         $element->setLabel(static::AN_ELEMENT_LABEL);
-
-        // Execute
-        $this->sut->render($element);
-
-        // Assert
-        $this->renderer()->shouldHaveReceived('render')->withArgs(function ($template, $variables) {
-            $this->assertEquals(static::AN_ELEMENT_LABEL, $variables[static::LABEL] ?? null);
-            return true;
-        });
-    }
-
-    /**
-     * @test
-     * @depends render_ReturnsARenderedView
-     */
-    public function render_ReturnsARenderedView_WithLabelAttributes()
-    {
-        // Setup
-        $this->setUpSut();
-        $element = $this->setUpRadio();
         $element->setLabelAttributes(static::AN_ELEMENT_LABEL_ATTRIBUTES);
-
-        // Execute
-        $this->sut->render($element);
+        $element->setOption(static::HINT, static::AN_ELEMENT_HINT);
 
         // Assert
-        $this->renderer()->shouldHaveReceived('render')->withArgs(function ($template, $variables) {
+        $this->renderer()->expects('render')->withArgs(function ($template, $variables) {
+            $this->assertEquals(static::AN_ELEMENT_LABEL, $variables[static::LABEL] ?? null);
             $this->assertEquals(static::AN_ELEMENT_LABEL_ATTRIBUTES, $variables[static::LABEL_ATTRIBUTES] ?? null);
+            $this->assertEquals(static::AN_ELEMENT_HINT, $variables[static::HINT] ?? null);
             return true;
-        });
+        })->andReturn(self::RENDERED_TEMPLATE);
+
+        $this->sut->render($element);
     }
 
     protected function setUp(): void

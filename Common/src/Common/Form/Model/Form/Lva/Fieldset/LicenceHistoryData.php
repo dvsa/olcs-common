@@ -19,10 +19,9 @@ class LicenceHistoryData
      *     "value_options": {"Y":"Yes", "N":"No"}
      * })
      * @Form\Type("radio")
-     * @Form\Validator({
-     *     "name":"Common\Form\Elements\Validators\LicenceHistoryLicenceValidator",
-     *     "options": {"table": "prevHasLicence-table"}
-     *})
+     * @Form\Validator("Common\Form\Elements\Validators\LicenceHistoryLicenceValidator",
+     *     options={"table": "prevHasLicence-table"}
+     *)
      */
     public $prevHasLicence = null;
 
@@ -46,10 +45,9 @@ class LicenceHistoryData
      *     "value_options": {"Y":"Yes", "N":"No"}
      * })
      * @Form\Type("radio")
-     * @Form\Validator({
-     *     "name":"Common\Form\Elements\Validators\LicenceHistoryLicenceValidator",
-     *     "options": {"table": "prevHadLicence-table"}
-     *})
+     * @Form\Validator("Common\Form\Elements\Validators\LicenceHistoryLicenceValidator",
+     *     options={"table": "prevHadLicence-table"}
+     *)
      */
     public $prevHadLicence = null;
 
@@ -73,10 +71,9 @@ class LicenceHistoryData
      *     "value_options": {"Y":"Yes", "N":"No"}
      * })
      * @Form\Type("radio")
-     * @Form\Validator({
-     *     "name":"Common\Form\Elements\Validators\LicenceHistoryLicenceValidator",
-     *     "options": {"table": "prevBeenDisqualifiedTc-table"}
-     *})
+     * @Form\Validator("Common\Form\Elements\Validators\LicenceHistoryLicenceValidator",
+     *     options={"table": "prevBeenDisqualifiedTc-table"}
+     *)
      */
     public $prevBeenDisqualifiedTc = null;
 

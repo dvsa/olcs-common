@@ -9,26 +9,12 @@ use Common\Service\Cqrs\Command\CommandService;
 use Common\Service\Cqrs\Query\CachingQueryService;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
 class ApplicationTransportManagerAdapterFactory implements FactoryInterface
 {
-    /**
-     * @throws NotFoundExceptionInterface
-     * @throws ContainerExceptionInterface
-     *
-     * @deprecated Laminas 2 compatibility. To be removed after Laminas 3 upgrade.
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): ApplicationTransportManagerAdapter
-    {
-        $container = method_exists($serviceLocator, 'getServiceLocator') ? $serviceLocator->getServiceLocator() : $serviceLocator;
-
-        return $this->__invoke($container, ApplicationTransportManagerAdapter::class);
-    }
-
     /**
      * @throws NotFoundExceptionInterface
      * @throws ContainerExceptionInterface

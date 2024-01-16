@@ -6,21 +6,10 @@ namespace Common\Controller\Lva\Factories\Adapter;
 
 use Common\Controller\Lva\Adapters\ApplicationFinancialEvidenceAdapter;
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class ApplicationFinancialEvidenceAdapterFactory implements FactoryInterface
 {
-    /**
-     * @deprecated Laminas 2 compatibility. To be removed after Laminas 3 upgrade.
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): ApplicationFinancialEvidenceAdapter
-    {
-        $container = method_exists($serviceLocator, 'getServiceLocator') ? $serviceLocator->getServiceLocator() : $serviceLocator;
-
-        return $this->__invoke($container, ApplicationFinancialEvidenceAdapter::class);
-    }
-
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): ApplicationFinancialEvidenceAdapter
     {
         return new ApplicationFinancialEvidenceAdapter($container);

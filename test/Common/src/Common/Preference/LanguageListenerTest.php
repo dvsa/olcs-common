@@ -1,24 +1,15 @@
 <?php
 
-/**
- * Language Listener Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\Preference;
 
 use Common\Preference\LanguageListener;
+use Laminas\ServiceManager\ServiceManager;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\EventManager\EventManagerInterface;
 use Laminas\Http\Request;
 use Laminas\Mvc\MvcEvent;
 
-/**
- * Language Listener Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class LanguageListenerTest extends MockeryTestCase
 {
     protected $languagePref;
@@ -36,19 +27,14 @@ class LanguageListenerTest extends MockeryTestCase
         $this->flashMessenger = m::mock();
         $this->translator = m::mock();
 
-        $sm = m::mock('\Laminas\ServiceManager\ServiceManager')
-            ->makePartial()
-            ->setAllowOverride(true);
-
-        // inject a real string helper
-        $sm->setService('Helper\String', new \Common\Service\Helper\StringHelperService());
+        $sm = new ServiceManager();
 
         $sm->setService('LanguagePreference', $this->languagePref);
         $sm->setService('Helper\FlashMessenger', $this->flashMessenger);
         $sm->setService('translator', $this->translator);
 
         $this->sut = new LanguageListener();
-        $this->sut->createService($sm);
+        $this->sut->__invoke($sm, LanguageListener::class);
     }
 
     public function testAttach()

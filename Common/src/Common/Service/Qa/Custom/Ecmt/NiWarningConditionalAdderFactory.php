@@ -3,8 +3,7 @@
 namespace Common\Service\Qa\Custom\Ecmt;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class NiWarningConditionalAdderFactory implements FactoryInterface
 {
@@ -13,13 +12,5 @@ class NiWarningConditionalAdderFactory implements FactoryInterface
         return new NiWarningConditionalAdder(
             $container->get('QaCommonWarningAdder')
         );
-    }
-
-    /**
-     * @deprecated
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): NiWarningConditionalAdder
-    {
-        return $this->__invoke($serviceLocator, NiWarningConditionalAdder::class);
     }
 }

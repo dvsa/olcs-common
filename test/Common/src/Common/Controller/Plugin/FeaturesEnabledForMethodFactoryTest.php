@@ -5,20 +5,20 @@ namespace CommonTest\Controller\Plugin;
 use Common\Controller\Plugin\FeaturesEnabledForMethod;
 use Common\Controller\Plugin\FeaturesEnabledForMethodFactory;
 use Common\Service\Cqrs\Query\QuerySender;
+use Interop\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class FeaturesEnabledForMethodFactoryTest extends TestCase
 {
-    public function testCreateService()
+    public function testInvoke()
     {
         $mockQuerySender = m::mock(QuerySender::class);
 
-        $mockSl = m::mock(ServiceLocatorInterface::class);
+        $mockSl = m::mock(ContainerInterface::class);
         $mockSl->shouldReceive('get')->with('QuerySender')->andReturn($mockQuerySender);
         $sut = new FeaturesEnabledForMethodFactory();
-        $service = $sut->createService($mockSl);
+        $service = $sut->__invoke($mockSl, FeaturesEnabledForMethod::class);
 
         $this->assertInstanceOf(FeaturesEnabledForMethod::class, $service);
     }

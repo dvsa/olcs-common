@@ -2,6 +2,7 @@
 
 namespace Common\FormService\Form\Lva\OperatingCentres;
 
+use Common\Form\Elements\Validators\TableRequiredValidator;
 use Common\FormService\Form\Lva\AbstractLvaFormService;
 use Common\RefData;
 use Common\Service\Helper\FormHelperService;
@@ -9,7 +10,7 @@ use Common\Service\Table\TableBuilder;
 use Common\Service\Table\TableFactory;
 use Laminas\Form\Form;
 use Laminas\Validator\Between;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * @see \CommonTest\FormService\Form\Lva\OperatingCentres\AbstractOperatingCentresTest
@@ -40,7 +41,6 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
         $table = $this->tableBuilder->prepareTable($this->mainTableConfigName, $params['operatingCentres'], $additionalParams);
 
         $this->formHelper->populateFormTable($form->get('table'), $table);
-
         $this->alterForm($form, $params);
 
         return $form;
@@ -58,7 +58,6 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
     {
         if ($form->has('table')) {
             $table = $form->get('table')->get('table')->getTable();
-
             if (!$params['canHaveSchedule41']) {
                 $table->removeAction('schedule41');
             }
@@ -77,13 +76,18 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
             $this->alterFormForGoodsLicences($form, $params);
         }
 
-        // - Modify the validation message for Required on 'rows' field
-        // The validator compares the data against the 'rows' field value.
-        // This is the reason why we use table->rows instead of table->table
-        // which it was previously.
-        $this->formHelper
-            ->getValidator($form, 'table->rows', 'Common\Form\Elements\Validators\TableRequiredValidator')
-            ->setMessage('OperatingCentreNoOfOperatingCentres.required', 'required');
+        $rowsInput = $form->getInputFilter()->get('table')->get('rows');
+        $validatorChain = $rowsInput->getValidatorChain();
+
+        $validatorExists = array_reduce($validatorChain->getValidators(), function ($found, $item) {
+            return $found || $item['instance'] instanceof TableRequiredValidator;
+        }, false);
+
+        if (!$validatorExists) {
+            $tableRequiredValidator = new TableRequiredValidator(['label' => 'record']);
+            $validatorChain->attach($tableRequiredValidator);
+            $tableRequiredValidator->setMessage('OperatingCentreNoOfOperatingCentres.required', 'required');
+        }
 
         $this->alterFormForVehicleType($form, $params);
 
@@ -114,6 +118,10 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
         } else {
             $this->formHelper->remove($form, 'dataTrafficArea->trafficArea');
             $dataTrafficAreaFieldset->get('trafficAreaSet')->setValue($trafficArea['name']);
+            $dataTrafficAreaInputFilter = $form->getInputFilter()->get('dataTrafficArea');
+            foreach ($dataTrafficAreaInputFilter->getInputs() as $input) {
+                $input->setRequired(false);
+            }
         }
 
         $dataTrafficAreaFieldset->get('enforcementArea')

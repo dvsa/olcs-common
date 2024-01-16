@@ -28,8 +28,8 @@ class Trailer
      *     "label": "licence_goods-trailers_trailer.form.add.trailernumber",
      *     "hint": "licence_goods-trailers_trailer.form.add.trailernumber.hint"
      * })
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
-     * @Form\Validator({"name":"Laminas\I18n\Validator\Alnum"})
+     * @Form\Filter("Laminas\Filter\StringTrim")
+     * @Form\Validator("Laminas\I18n\Validator\Alnum")
      */
     public $trailerNo = null;
 

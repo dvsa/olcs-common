@@ -3,7 +3,7 @@
 namespace Common\Controller\Plugin;
 
 use Laminas\Mvc\Controller\Plugin\AbstractPlugin;
-use ZfcRbac\Service\AuthorizationServiceInterface;
+use LmcRbacMvc\Service\AuthorizationServiceInterface;
 
 /**
  * Class CurrentUser
@@ -12,7 +12,7 @@ use ZfcRbac\Service\AuthorizationServiceInterface;
 class CurrentUser extends AbstractPlugin implements CurrentUserInterface
 {
     /**
-     * @var \ZfcRbac\Service\AuthorizationService
+     * @var \LmcRbacMvc\Service\AuthorizationService
      */
     private $authService;
 

@@ -1,28 +1,18 @@
 <?php
 
-/**
- * Form Date Select Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\Form\View\Helper;
 
 use Common\Form\View\Helper\FormDateSelect;
+use Interop\Container\Containerinterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Form\Element\DateSelect;
 use Laminas\Form\Element\Text;
 use Laminas\Form\View\Helper\FormInput;
 use Laminas\I18n\Translator\Translator;
-use Laminas\Mvc\Service\ViewHelperManagerFactory;
 use Laminas\View\HelperPluginManager;
 use Laminas\View\Renderer\PhpRenderer;
 
-/**
- * Form Date Select Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class FormDateSelectTest extends MockeryTestCase
 {
     private $sut;
@@ -38,7 +28,9 @@ class FormDateSelectTest extends MockeryTestCase
             }
         );
 
-        $helpers = new HelperPluginManager();
+        $container = m::mock(ContainerInterface::class);
+
+        $helpers = new HelperPluginManager($container);
         $helpers->setService('forminput', $formInput);
 
         /** @var PhpRenderer $view */

@@ -4,14 +4,16 @@ namespace CommonTest\Form\View\Helper;
 
 use Common\Form\View\Helper;
 use Common\Form\View\Helper\Form as FormViewHelper;
+use Laminas\Form\Element\Text;
+use Laminas\Stdlib\PriorityList;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Laminas\Form\Element;
 use Laminas\Form\ElementInterface;
 use Laminas\Form\FieldsetInterface;
-use Laminas\Stdlib\PriorityQueue;
 use Laminas\View\HelperPluginManager;
 use Laminas\View\Renderer\PhpRenderer;
+use Psr\Container\ContainerInterface;
 
 /**
  * @covers \Common\Form\View\Helper\Form
@@ -32,10 +34,11 @@ class FormTest extends TestCase
     public function testRenderFormWithoutAction()
     {
         $_SERVER['REQUEST_URI'] = 'bar';
-        $this->form->add(new \Laminas\Form\Element\Text('test'));
+        $this->form->add(new Text('test'));
 
-        $helpers = new HelperPluginManager();
-        $helpers->setService('formRow', new Helper\FormRow([]));
+        $container = m::mock(ContainerInterface::class);
+        $helpers = new HelperPluginManager($container);
+        $helpers->setService('formrow', new Helper\FormRow([]));
         $helpers->setService('formCollection', new Helper\FormCollection());
         $helpers->setService('addTags', new \Common\View\Helper\AddTags());
 
@@ -56,11 +59,12 @@ class FormTest extends TestCase
      */
     public function testRenderFormWithElement()
     {
-        $this->form->add(new \Laminas\Form\Element\Text('test'));
+        $this->form->add(new Text('test'));
         $this->form->setAttribute('action', 'foo');
 
-        $helpers = new HelperPluginManager();
-        $helpers->setService('formRow', new Helper\FormRow([]));
+        $container = m::mock(ContainerInterface::class);
+        $helpers = new HelperPluginManager($container);
+        $helpers->setService('formrow', new Helper\FormRow([]));
         $helpers->setService('formCollection', new Helper\FormCollection());
         $helpers->setService('addTags', new \Common\View\Helper\AddTags());
 
@@ -84,9 +88,10 @@ class FormTest extends TestCase
         $this->form->add(new \Laminas\Form\Fieldset('test'));
         $this->form->setAttribute('action', 'foo');
 
-        $helpers = new HelperPluginManager();
+        $container = m::mock(ContainerInterface::class);
+        $helpers = new HelperPluginManager($container);
         $helpers->setService('formCollection', new Helper\FormCollection());
-        $helpers->setService('formRow', new Helper\FormRow([]));
+        $helpers->setService('formrow', new Helper\FormRow([]));
         $helpers->setService('addTags', new \Common\View\Helper\AddTags());
         $view = new PhpRenderer();
         $view->setHelperPluginManager($helpers);
@@ -107,7 +112,7 @@ class FormTest extends TestCase
         $mockHelper->shouldReceive('setReadOnly')->once()->with(true);
         $mockHelper->shouldReceive('__invoke')->with($mockElement)->andReturn('element');
 
-        $iterator = new PriorityQueue();
+        $iterator = new PriorityList();
         $iterator->insert($mockElement);
 
         $mockForm = m::mock('Laminas\Form\Form');
@@ -139,7 +144,7 @@ class FormTest extends TestCase
         $mockHelper = m::mock(\Common\Form\View\Helper\FormCollection::class)
             ->shouldReceive('setReadOnly')->with(false)->once()->getMock();
 
-        $iterator = new PriorityQueue();
+        $iterator = new PriorityList();
         $iterator->insert($mockFieldsetKeepEmpty);
 
         $mockForm = m::mock(\Laminas\Form\Form::class)
@@ -205,7 +210,7 @@ class FormTest extends TestCase
             ->once()
             ->getMock();
 
-        $iterator = new PriorityQueue();
+        $iterator = new PriorityList();
         $iterator->insert($mockFsWithElement);
         $iterator->insert($mockFsWithSubFs);
         $iterator->insert($mockFsWithHiddenElement);
@@ -259,7 +264,7 @@ class FormTest extends TestCase
             ->once()
             ->getMock();
 
-        $iterator = new PriorityQueue();
+        $iterator = new PriorityList();
         $iterator->insert($mockFsWithTableElement);
 
         $mockForm = m::mock(\Laminas\Form\Form::class)

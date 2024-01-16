@@ -31,7 +31,7 @@ class FormPlainText extends AbstractHelper
      * @param ElementInterface $element
      * @return mixed
      */
-    public function render(ElementInterface $element)
+    public function render(ElementInterface $element): string
     {
         return $element->getValue() ?
             $this->getView()->translate($element->getValue()) : '';

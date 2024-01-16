@@ -5,7 +5,7 @@ namespace CommonTest\Common\FormService\Form\Lva;
 use Laminas\Form\Form;
 use Mockery as m;
 use Common\FormService\Form\Lva\VariationPsvVehicles;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Variation Psv Vehicles Test

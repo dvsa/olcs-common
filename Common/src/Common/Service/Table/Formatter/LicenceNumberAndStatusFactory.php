@@ -2,9 +2,9 @@
 
 namespace Common\Service\Table\Formatter;
 
+use Common\Service\Helper\UrlHelperService;
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class LicenceNumberAndStatusFactory implements FactoryInterface
 {
@@ -16,20 +16,7 @@ class LicenceNumberAndStatusFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $container = method_exists($container, 'getServiceLocator') ? $container->getServiceLocator() : $container;
-        $urlHelper = $container->get('Helper\Url');
+        $urlHelper = $container->get(UrlHelperService::class);
         return new LicenceNumberAndStatus($urlHelper);
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     *
-     * @return LicenceNumberAndStatus
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): LicenceNumberAndStatus
-    {
-        return $this->__invoke($serviceLocator, LicenceNumberAndStatus::class);
     }
 }

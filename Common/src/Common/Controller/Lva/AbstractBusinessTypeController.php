@@ -14,8 +14,8 @@ use Dvsa\Olcs\Transfer\Command\Organisation\UpdateBusinessType;
 use Dvsa\Olcs\Transfer\Query\Organisation\Organisation;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
 use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
-use ZfcRbac\Identity\IdentityProviderInterface;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Identity\IdentityProviderInterface;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Shared logic between Business type controllers

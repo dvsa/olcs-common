@@ -14,7 +14,7 @@ class Text extends LaminasText implements InputProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function getInputSpecification()
+    public function getInputSpecification(): array
     {
          return [
              'id' => 'qaText',

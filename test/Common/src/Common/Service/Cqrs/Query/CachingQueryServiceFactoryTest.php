@@ -7,17 +7,13 @@ use Common\Service\Cqrs\Query\CachingQueryServiceFactory;
 use Common\Service\Cqrs\Query\QueryService;
 use Dvsa\Olcs\Transfer\Service\CacheEncryption;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
+use Interop\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
-/**
- * Class CachingQueryServiceFactoryTest
- * @package CommonTest\Service\Cqrs\Query
- */
 class CachingQueryServiceFactoryTest extends MockeryTestCase
 {
-    public function testCreateService()
+    public function testInvoke(): void
     {
         $config = [
             'query_cache' => [
@@ -28,7 +24,7 @@ class CachingQueryServiceFactoryTest extends MockeryTestCase
             ],
         ];
 
-        $mockSl = m::mock(ServiceLocatorInterface::class);
+        $mockSl = m::mock(ContainerInterface::class);
         $mockSl->shouldReceive('get')->with('Config')->andReturn($config);
         $mockSl->shouldReceive('get')->with('Logger')->andReturn(m::mock(\Laminas\Log\LoggerInterface::class));
         $mockSl->shouldReceive('get')->with('TransferAnnotationBuilder')->andReturn(m::mock(AnnotationBuilder::class));
@@ -36,24 +32,24 @@ class CachingQueryServiceFactoryTest extends MockeryTestCase
         $mockSl->shouldReceive('get')->with(CacheEncryption::class)->andReturn(m::mock(CacheEncryption::class));
 
         $sut = new CachingQueryServiceFactory();
-        $service = $sut->createService($mockSl);
+        $service = $sut->__invoke($mockSl, CachingQueryService::class);
 
         $this->assertInstanceOf(CachingQueryService::class, $service);
     }
 
-    public function testCreateServiceMissingQueryCacheConfig()
+    public function testInvokeMissingQueryCacheConfig(): void
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Query cache config key missing');
 
-        $mockSl = m::mock(ServiceLocatorInterface::class);
+        $mockSl = m::mock(ContainerInterface::class);
         $mockSl->shouldReceive('get')->with('Config')->andReturn([]);
 
         $sut = new CachingQueryServiceFactory();
-        $sut->createService($mockSl);
+        $sut->__invoke($mockSl, CachingQueryService::class);
     }
 
-    public function testCreateServiceMissingQueryCacheEnabledConfig()
+    public function testInvokeMissingQueryCacheEnabledConfig(): void
     {
         $config = [
             'query_cache' => [
@@ -66,10 +62,10 @@ class CachingQueryServiceFactoryTest extends MockeryTestCase
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Query cache enabled/disabled config key missing');
 
-        $mockSl = m::mock(ServiceLocatorInterface::class);
+        $mockSl = m::mock(ContainerInterface::class);
         $mockSl->shouldReceive('get')->with('Config')->andReturn($config);
 
         $sut = new CachingQueryServiceFactory();
-        $sut->createService($mockSl);
+        $sut->__invoke($mockSl, CachingQueryService::class);
     }
 }

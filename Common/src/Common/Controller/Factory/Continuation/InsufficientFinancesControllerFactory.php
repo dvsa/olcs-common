@@ -10,9 +10,8 @@ use Common\Service\Helper\GuidanceHelperService;
 use Common\Service\Helper\TranslationHelperService;
 use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
-use ZfcRbac\Service\AuthorizationService;
+use Laminas\ServiceManager\Factory\FactoryInterface;
+use LmcRbacMvc\Service\AuthorizationService;
 
 class InsufficientFinancesControllerFactory implements FactoryInterface
 {
@@ -24,7 +23,6 @@ class InsufficientFinancesControllerFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): InsufficientFinancesController
     {
-        $container = method_exists($container, 'getServiceLocator') ? $container->getServiceLocator() : $container;
         $niTextTranslationUtil = $container->get(NiTextTranslation::class);
         $authService = $container->get(AuthorizationService::class);
         $formServiceManager = $container->get(FormServiceManager::class);
@@ -41,17 +39,5 @@ class InsufficientFinancesControllerFactory implements FactoryInterface
             $uploadHelper,
             $guidanceHelper
         );
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     *
-     * @return InsufficientFinancesController
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): InsufficientFinancesController
-    {
-        return $this->__invoke($serviceLocator, InsufficientFinancesController::class);
     }
 }

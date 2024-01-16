@@ -2,17 +2,11 @@
 
 namespace Common\Service\Cqrs\Command;
 
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Dvsa\Olcs\Transfer\Command\CommandInterface;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder as TransferAnnotationBuilder;
 use Interop\Container\ContainerInterface;
 
-/**
- * Command Sender
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class CommandSender implements FactoryInterface
 {
     /**
@@ -24,11 +18,6 @@ class CommandSender implements FactoryInterface
      * @var CommandService
      */
     private $commandService;
-
-    public function createService(ServiceLocatorInterface $serviceLocator): CommandSender
-    {
-        return $this->__invoke($serviceLocator, CommandSender::class);
-    }
 
     /**
      * @param CommandInterface $command

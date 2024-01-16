@@ -3,16 +3,21 @@
 namespace CommonTest\Form\Element;
 
 use Common\Form\Element\DynamicMultiCheckbox;
+use Common\Service\Data\PluginManager;
+use Common\Service\Data\RefData;
+use Mockery as m;
 
-/**
- * Class DynamicMultiCheckboxTest
- * @package CommonTest\Form\Element
- */
 class DynamicMultiCheckboxTest extends \PHPUnit\Framework\TestCase
 {
+    private $pluginManager;
+
+    public function setUp(): void{
+        $this->pluginManager = m::mock(PluginManager::class);
+    }
+
     public function testSetOptions()
     {
-        $sut =  new DynamicMultiCheckbox();
+        $sut =  new DynamicMultiCheckbox($this->pluginManager);
         $sut->setOptions(['context' => 'testing', 'use_groups'=>true, 'label' => 'Testing']);
 
         $this->assertEquals('testing', $sut->getContext());
@@ -22,7 +27,7 @@ class DynamicMultiCheckboxTest extends \PHPUnit\Framework\TestCase
 
     public function testBcSetOptions()
     {
-        $sut =  new DynamicMultiCheckbox();
+        $sut =  new DynamicMultiCheckbox($this->pluginManager);
         $sut->setOptions(['category' => 'testing']);
 
         $this->assertEquals('testing', $sut->getContext());
@@ -30,14 +35,15 @@ class DynamicMultiCheckboxTest extends \PHPUnit\Framework\TestCase
 
     public function testGetValueOptions()
     {
-        $mockRefDataService = $this->createMock('\Common\Service\Data\RefData');
+        $mockRefDataService = $this->createMock(RefData::class);
         $mockRefDataService
             ->expects($this->once())
             ->method('fetchListOptions')
             ->with($this->equalTo('category'), $this->equalTo(false))
             ->willReturn(['key'=>'value']);
 
-        $sut = new DynamicMultiCheckbox();
+        $this->pluginManager->expects('get')->with(RefData::class)->andReturn($mockRefDataService);
+        $sut = new DynamicMultiCheckbox($this->pluginManager);
         $sut->setDataService($mockRefDataService);
         $sut->setContext('category');
 
@@ -54,7 +60,7 @@ class DynamicMultiCheckboxTest extends \PHPUnit\Framework\TestCase
      */
     public function testSetValue($value, $expected)
     {
-        $sut = new DynamicMultiCheckbox();
+        $sut = new DynamicMultiCheckbox($this->pluginManager);
         $sut->setValue($value);
 
         $this->assertEquals($expected, $sut->getValue());
@@ -75,11 +81,8 @@ class DynamicMultiCheckboxTest extends \PHPUnit\Framework\TestCase
 
         $mockService = $this->createMock('\Common\Service\Data\ListDataInterface');
 
-        $mockSl = $this->createMock('\Laminas\ServiceManager\ServiceLocatorInterface');
-        $mockSl->expects($this->once())->method('get')->with($this->equalTo($serviceName))->willReturn($mockService);
-
-        $sut = new DynamicMultiCheckbox();
-        $sut->setServiceLocator($mockSl);
+        $this->pluginManager->expects('get')->with($serviceName)->andReturn($mockService);
+        $sut =  new DynamicMultiCheckbox($this->pluginManager);
         $sut->setServiceName($serviceName);
         $this->assertEquals($mockService, $sut->getDataService());
     }
@@ -88,25 +91,16 @@ class DynamicMultiCheckboxTest extends \PHPUnit\Framework\TestCase
     {
         $serviceName = 'testListService';
 
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage(
+            'Class ' . $serviceName . ' does not implement \Common\Service\Data\ListDataInterface'
+        );
+
         $mockService = $this->createMock('\StdClass');
 
-        $mockSl = $this->createMock('\Laminas\ServiceManager\ServiceLocatorInterface');
-        $mockSl->expects($this->once())->method('get')->with($this->equalTo($serviceName))->willReturn($mockService);
-
-        $sut = new DynamicMultiCheckbox();
-        $sut->setServiceLocator($mockSl);
-        $sut->setOptions(['service_name'=>$serviceName]);
-
-        $thrown = false;
-
-        try {
-            $sut->getDataService();
-        } catch (\Exception $e) {
-            if ('Class testListService does not implement \Common\Service\Data\ListDataInterface' == $e->getMessage()) {
-                $thrown = true;
-            }
-        }
-
-        $this->assertTrue($thrown, 'Expected exception not thrown or message incorrect');
+        $this->pluginManager->expects('get')->with($serviceName)->andReturn($mockService);
+        $sut =  new DynamicMultiCheckbox($this->pluginManager);
+        $sut->setOptions(['service_name' => $serviceName]);
+        $sut->getDataService();
     }
 }

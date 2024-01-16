@@ -5,7 +5,7 @@ namespace Common\Service\Table\Formatter;
 use Common\RefData;
 use Common\Service\Helper\UrlHelperService;
 use Common\Util\Escape;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  *

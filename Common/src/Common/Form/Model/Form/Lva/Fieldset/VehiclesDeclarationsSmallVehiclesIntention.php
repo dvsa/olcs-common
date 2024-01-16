@@ -34,7 +34,7 @@ class VehiclesDeclarationsSmallVehiclesIntention
      *     "legend-attributes": {"class": "form-element__label"},
      *     "label": "application_vehicle-safety_undertakings.smallVehiclesIntentionDetails.title"
      * })
-     * @Form\Validator({"name": "Common\Form\Elements\Validators\VehicleUndertakingsOperateSmallVehiclesValidator"})
+     * @Form\Validator("Common\Form\Elements\Validators\VehicleUndertakingsOperateSmallVehiclesValidator")
      * @Form\Type("Textarea")
      */
     public $psvSmallVhlNotes = null;
@@ -73,9 +73,7 @@ class VehiclesDeclarationsSmallVehiclesIntention
      *     "unchecked_value": "N"
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
-     * @Form\Validator({
-     *     "name": "Common\Form\Elements\Validators\VehicleUndertakingsOperateSmallVehiclesAgreementValidator"
-     * })
+     * @Form\Validator( "Common\Form\Elements\Validators\VehicleUndertakingsOperateSmallVehiclesAgreementValidator")
      */
     public $psvSmallVhlConfirmation = null;
 }

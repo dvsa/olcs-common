@@ -51,7 +51,7 @@ return array(
         array(
             'title' => 'markup-table-th-remove-restore', //view partial from olcs-common
             'ariaDescription' => function ($row, $column) {
-                $column['formatter'] = 'Name';
+                $column['formatter'] = Name::class;
                 return $this->callFormatter($column, $row['name']);
             },
             'type' => 'DeltaActionLinks',

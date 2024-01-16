@@ -5,7 +5,7 @@ namespace Common\FormService\Form\Lva\TypeOfLicence;
 use Common\FormService\FormServiceManager;
 use Common\Service\Helper\FormHelperService;
 use Laminas\Form\Form;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Licence Type Of Licence

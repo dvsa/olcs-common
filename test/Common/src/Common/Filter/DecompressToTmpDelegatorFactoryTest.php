@@ -41,33 +41,4 @@ class DecompressToTmpDelegatorFactoryTest extends MockeryTestCase
         $this->assertInstanceOf(Decompress::class, $service->getDecompressFilter());
         $this->assertSame($mockFileSystem, $service->getFileSystem());
     }
-
-    /**
-     * @todo OLCS-28149
-     */
-    public function testCreateDelegatorWithName()
-    {
-        $tmpDir = '/tmp/';
-        $callback = function () {
-            return new DecompressUploadToTmp();
-        };
-
-        $mockFileSystem = m::mock(Filesystem::class);
-
-        $mockSl = m::mock(ServiceManager::class);
-        $mockSl->shouldReceive('get')->with('Config')->andReturn(['tmpDirectory' => $tmpDir]);
-        $mockSl->shouldReceive('get')
-               ->with('Common\Filesystem\Filesystem')
-               ->andReturn($mockFileSystem);
-
-        $sut = new DecompressToTmpDelegatorFactory();
-
-        /** @var DecompressUploadToTmp $service */
-        $service = $sut->createDelegatorWithName($mockSl, '', '', $callback);
-
-        $this->assertInstanceOf(DecompressUploadToTmp::class, $service);
-        $this->assertEquals($tmpDir, $service->getTempRootDir());
-        $this->assertInstanceOf(Decompress::class, $service->getDecompressFilter());
-        $this->assertSame($mockFileSystem, $service->getFileSystem());
-    }
 }

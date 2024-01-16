@@ -19,10 +19,9 @@ class LicenceHistoryPi
      *     "error-message":"licenceHistoryPi_prevBeenAtPi-error"
      * })
      * @Form\Type("radio")
-     * @Form\Validator({
-     *     "name":"Common\Form\Elements\Validators\LicenceHistoryLicenceValidator",
-     *     "options": {"table": "prevBeenAtPi-table"}
-     *})
+     * @Form\Validator("Common\Form\Elements\Validators\LicenceHistoryLicenceValidator",
+     *     options={"table": "prevBeenAtPi-table"}
+     *)
      */
     public $prevBeenAtPi = null;
 

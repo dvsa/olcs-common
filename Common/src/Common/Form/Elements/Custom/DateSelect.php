@@ -4,6 +4,7 @@ namespace Common\Form\Elements\Custom;
 
 use Laminas\Form\Element as LaminasElement;
 use Laminas\Validator\Date as DateValidator;
+use Laminas\Validator\ValidatorInterface;
 
 /**
  * DateSelect
@@ -39,7 +40,7 @@ class DateSelect extends LaminasElement\DateSelect
      *
      * @return array
      */
-    public function getInputSpecification()
+    public function getInputSpecification(): array
     {
         return array(
             'type' => \Common\InputFilter\DateSelect::class,
@@ -72,7 +73,7 @@ class DateSelect extends LaminasElement\DateSelect
      *
      * @return DateValidator
      */
-    protected function getValidator()
+    protected function getValidator(): ValidatorInterface
     {
         if (null === $this->validator) {
             $this->validator = new DateValidator(

@@ -7,7 +7,7 @@
  */
 namespace Common\Util;
 
-use Laminas\Mvc\Router\Http\Segment;
+use Laminas\Router\Http\Segment;
 
 /**
  * Lva Route

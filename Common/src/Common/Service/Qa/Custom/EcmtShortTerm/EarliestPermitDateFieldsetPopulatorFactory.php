@@ -3,8 +3,7 @@
 namespace Common\Service\Qa\Custom\EcmtShortTerm;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class EarliestPermitDateFieldsetPopulatorFactory implements FactoryInterface
 {
@@ -14,13 +13,5 @@ class EarliestPermitDateFieldsetPopulatorFactory implements FactoryInterface
             $container->get('Helper\Translation'),
             $container->get('QaCommonHtmlAdder')
         );
-    }
-
-    /**
-     * @deprecated
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): EarliestPermitDateFieldsetPopulator
-    {
-        return $this->__invoke($serviceLocator, EarliestPermitDateFieldsetPopulator::class);
     }
 }

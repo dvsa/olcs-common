@@ -28,39 +28,6 @@ class CommandAdapterFactoryTest extends MockeryTestCase
     /**
      * @test
      */
-    public function createService_IsCallable()
-    {
-        // Setup
-        $this->setUpSut();
-
-        // Assert
-        $this->assertIsCallable([$this->sut, 'createService']);
-    }
-
-    /**
-     * @test
-     * @depends createService_IsCallable
-     * @depends __invoke_IsCallable
-     */
-    public function createService_CallsInvoke()
-    {
-        // Setup
-        $this->sut = m::mock(CommandAdapterFactory::class)->makePartial();
-
-        // Expectations
-        $this->sut->expects('__invoke')->withArgs(function ($serviceManager, $requestedName) {
-            $this->assertSame($this->serviceManager(), $serviceManager, 'Expected first argument to be the ServiceManager passed to createService');
-            $this->assertSame(null, $requestedName, 'Expected requestedName to be NULL');
-            return true;
-        });
-
-        // Execute
-        $this->sut->createService($this->serviceManager());
-    }
-
-    /**
-     * @test
-     */
     public function __invoke_IsCallable(): void
     {
         // Setup

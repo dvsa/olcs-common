@@ -28,7 +28,7 @@ class ConvictionTextarea extends LaminasElement implements InputProviderInterfac
      *
      * @return array
      */
-    public function getInputSpecification()
+    public function getInputSpecification(): array
     {
         $specification = [
             'name' => $this->getName(),

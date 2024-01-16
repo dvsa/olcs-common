@@ -2,7 +2,9 @@
 
 namespace CommonTest\Common\Controller\Lva\Adapters;
 
+use Common\Form\Form;
 use Interop\Container\ContainerInterface;
+use Laminas\Form\ElementInterface;
 use Laminas\Mvc\Controller\AbstractController;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -26,12 +28,12 @@ class LicenceLvaAdapterTest extends MockeryTestCase
 
     public function testAlterForm()
     {
-        $mockForm = m::mock('\Laminas\Form\Form');
+        $mockForm = m::mock(Form::class);
 
         $mockForm->shouldReceive('get')
             ->with('form-actions')
             ->andReturn(
-                m::mock()
+                m::mock(ElementInterface::class)
                 ->shouldReceive('remove')
                 ->with('saveAndContinue')
                 ->getMock()

@@ -4,7 +4,7 @@ namespace Common\FormService\Form\Lva\ConditionsUndertakings;
 
 use Common\FormService\Form\Lva\AbstractLvaFormService;
 use Common\Service\Helper\FormHelperService;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Abstract Conditions Undertakings

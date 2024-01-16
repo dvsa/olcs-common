@@ -6,13 +6,7 @@ use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\View\Helper\Date;
 use Laminas\I18n\View\Helper\Translate;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
-/**
- * Date Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class DateTest extends MockeryTestCase
 {
     /**

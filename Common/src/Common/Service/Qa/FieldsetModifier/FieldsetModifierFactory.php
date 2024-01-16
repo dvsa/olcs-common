@@ -3,8 +3,7 @@
 namespace Common\Service\Qa\FieldsetModifier;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class FieldsetModifierFactory implements FactoryInterface
 {
@@ -17,13 +16,5 @@ class FieldsetModifierFactory implements FactoryInterface
         );
 
         return $fieldsetModifier;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): FieldsetModifier
-    {
-        return $this->__invoke($serviceLocator, FieldsetModifier::class);
     }
 }

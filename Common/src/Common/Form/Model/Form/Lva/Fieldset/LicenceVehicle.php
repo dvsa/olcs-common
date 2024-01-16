@@ -30,10 +30,10 @@ class LicenceVehicle
      *     "default_date": "now"
      * })
      * @Form\Required(false)
-     * @Form\Filter({"name": "DateSelectNullifier"})
+     * @Form\Filter("DateSelectNullifier")
      * @Form\Type("Common\Form\Elements\Custom\DateSelect")
-     * @Form\Validator({"name": "\Common\Validator\Date"})
-     * @Form\Validator({"name":"Date","options":{"format":"Y-m-d"}})
+     * @Form\Validator("\Common\Validator\Date")
+     * @Form\Validator("Date", options={"format":"Y-m-d"})
      */
     public $receivedDate = null;
 
@@ -55,9 +55,9 @@ class LicenceVehicle
      *     "default_date": "now",
      *     "display_every_minute": true
      * })
-     * @Form\Filter({"name": "DateTimeSelect", "options": {"null_on_empty":true}})
-     * @Form\Validator({"name": "\Common\Validator\Date"})
-     * @Form\Validator({"name": "Date", "options": {"format": "Y-m-d H:i:s"}})
+     * @Form\Filter("DateTimeSelect", options={"null_on_empty":true})
+     * @Form\Validator("\Common\Validator\Date")
+     * @Form\Validator("Date", options={"format": "Y-m-d H:i:s"})
      */
     public $specifiedDate;
 
@@ -72,10 +72,10 @@ class LicenceVehicle
      *     "day_attributes": {"disabled":"disabled"}
      * })
      * @Form\Required(false)
-     * @Form\Filter({"name": "DateSelectNullifier"})
+     * @Form\Filter("DateSelectNullifier")
      * @Form\Type("Common\Form\Elements\Custom\DateSelect")
-     * @Form\Validator({"name": "\Common\Validator\Date"})
-     * @Form\Validator({"name":"Date","options":{"format":"Y-m-d"}})
+     * @Form\Validator("\Common\Validator\Date")
+     * @Form\Validator("Date", options={"format":"Y-m-d"})
      */
     public $removalDate = null;
 

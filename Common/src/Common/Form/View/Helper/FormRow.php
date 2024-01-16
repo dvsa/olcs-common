@@ -13,8 +13,6 @@ use Laminas\Form\Element\DateSelect;
 use Laminas\Form\Element\Hidden;
 use Laminas\Form\ElementInterface;
 use Laminas\Form\LabelAwareInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 use Common\Form\Elements\Types\AttachFilesButton;
 
 /**
@@ -51,7 +49,7 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow
      * @throws \Laminas\Form\Exception\DomainException
      * @return string
      */
-    public function render(ElementInterface $element, $labelPosition = null)
+    public function render(ElementInterface $element, ?string $labelPosition = null): string
     {
         if ($element instanceof Readonly) {
             $class = $element->getAttribute('data-container-class');

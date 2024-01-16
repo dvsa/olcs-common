@@ -10,7 +10,7 @@ namespace Common\Service\Table\Formatter;
 
 use Common\Service\Helper\UrlHelperService;
 use Laminas\Http\Request;
-use Laminas\Mvc\Router\Http\TreeRouteStack;
+use Laminas\Router\Http\TreeRouteStack;
 
 /**
  * Task description formatter

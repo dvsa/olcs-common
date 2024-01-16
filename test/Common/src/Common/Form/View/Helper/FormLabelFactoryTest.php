@@ -19,42 +19,13 @@ class FormLabelFactoryTest extends MockeryTestCase
     /**
      * @test
      */
-    public function createService_IsCallable()
-    {
-        // Setup
-        $sut = $this->setUpSut();
-
-        // Assert
-        $this->assertIsCallable([$sut, 'createService']);
-    }
-
-    /**
-     * @test
-     * @depends createService_IsCallable
-     */
-    public function createService_ReturnsInstanceOfFormLabel()
-    {
-        // Setup
-        $serviceLocator = $this->setUpServiceLocator();
-        $sut = $this->setUpSut();
-
-        // Execute
-        $result = $sut->createService($serviceLocator);
-
-        // Assert
-        $this->assertInstanceOf(FormLabel::class, $result);
-    }
-
-    /**
-     * @test
-     */
     public function __invoke_IsCallable()
     {
         // Setup
         $sut = $this->setUpSut();
 
         // Assert
-        $this->assertIsCallable([$sut, 'createService']);
+        $this->assertIsCallable([$sut, '__invoke']);
     }
 
     /**

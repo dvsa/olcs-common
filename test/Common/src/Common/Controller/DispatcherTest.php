@@ -10,7 +10,7 @@ use Laminas\Mvc\Controller\AbstractPluginManager;
 use Laminas\Mvc\Controller\Plugin\CreateHttpNotFoundModel;
 use Laminas\Mvc\Controller\PluginManager;
 use Laminas\Mvc\MvcEvent;
-use Laminas\Mvc\Router\RouteMatch;
+use Laminas\Router\RouteMatch;
 use Laminas\Stdlib\DispatchableInterface;
 use Laminas\View\Model\ViewModel;
 use Mockery\Adapter\Phpunit\MockeryTestCase;

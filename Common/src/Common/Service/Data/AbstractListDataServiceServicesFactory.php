@@ -3,8 +3,7 @@
 namespace Common\Service\Data;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 /**
  * AbstractListDataServiceServicesFactory
@@ -24,17 +23,5 @@ class AbstractListDataServiceServicesFactory implements FactoryInterface
         return new AbstractListDataServiceServices(
             $container->get(AbstractDataServiceServices::class)
         );
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $services
-     *
-     * @return AbstractListDataServiceServices
-     */
-    public function createService(ServiceLocatorInterface $services): AbstractListDataServiceServices
-    {
-        return $this($services, AbstractListDataServiceServices::class);
     }
 }

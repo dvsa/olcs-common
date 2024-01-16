@@ -21,7 +21,7 @@ class NoOfPermits extends LaminasElement implements InputProviderInterface
     /**
      * @return array
      */
-    public function getInputSpecification()
+    public function getInputSpecification(): array
     {
         return [
             'type' => \Laminas\InputFilter\Input::class,

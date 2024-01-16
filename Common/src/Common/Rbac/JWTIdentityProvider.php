@@ -11,8 +11,8 @@ use Exception;
 use Laminas\Authentication\Storage\Session;
 use Laminas\Http\Response;
 use Laminas\Session\Container;
-use ZfcRbac\Identity\IdentityInterface;
-use ZfcRbac\Identity\IdentityProviderInterface;
+use LmcRbacMvc\Identity\IdentityInterface;
+use LmcRbacMvc\Identity\IdentityProviderInterface;
 
 /**
  * @see JWTIdentityProviderFactory

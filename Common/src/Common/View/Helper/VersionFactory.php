@@ -3,8 +3,7 @@
 namespace Common\View\Helper;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class VersionFactory implements FactoryInterface
 {
@@ -18,23 +17,8 @@ class VersionFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): Version
     {
-        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
-            $container = $container->getServiceLocator();
-        }
         return new Version(
             $container->get('Config')
         );
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $services
-     *
-     * @return Version
-     */
-    public function createService(ServiceLocatorInterface $services)
-    {
-        return $this($services, Version::class);
     }
 }

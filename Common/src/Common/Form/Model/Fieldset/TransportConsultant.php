@@ -40,7 +40,7 @@ class TransportConsultant
      * @Form\Type("Text")
      * @Form\Attributes({"class":"long"})
      * @Form\Options({"label":"application_your-business_business-type.consultant-name.label"})
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
+     * @Form\Filter("Laminas\Filter\StringTrim")
      */
     public $transportConsultantName = null;
 }

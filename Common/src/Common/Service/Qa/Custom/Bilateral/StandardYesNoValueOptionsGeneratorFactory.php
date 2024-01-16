@@ -3,8 +3,7 @@
 namespace Common\Service\Qa\Custom\Bilateral;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class StandardYesNoValueOptionsGeneratorFactory implements FactoryInterface
 {
@@ -13,13 +12,5 @@ class StandardYesNoValueOptionsGeneratorFactory implements FactoryInterface
         return new StandardYesNoValueOptionsGenerator(
             $container->get('QaBilateralYesNoValueOptionsGenerator')
         );
-    }
-
-    /**
-     * @deprecated
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): StandardYesNoValueOptionsGenerator
-    {
-        return $this->__invoke($serviceLocator, StandardYesNoValueOptionsGenerator::class);
     }
 }

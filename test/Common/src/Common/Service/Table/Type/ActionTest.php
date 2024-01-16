@@ -17,20 +17,10 @@ class ActionTest extends MockeryTestCase
     protected $sut;
     /** @var  m\MockInterface */
     protected $table;
-    protected $sm;
 
     public function setUp(): void
     {
-        $this->sm = m::mock('\Laminas\ServiceManager\ServiceManager')
-            ->makePartial()
-            ->setAllowOverride(true);
-
-        // inject a real string helper
-        $this->sm->setService('Helper\String', new \Common\Service\Helper\StringHelperService());
-
-
         $this->table = m::mock();
-
         $this->sut = new Action($this->table);
     }
 

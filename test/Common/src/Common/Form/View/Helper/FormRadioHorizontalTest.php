@@ -22,14 +22,16 @@ class FormRadioHorizontalTest extends TestCase
 
     public function testInvoke()
     {
+        $returnValue = 'string';
         $mockElement = m::mock(ElementInterface::class);
         $mockView = m::mock(RendererInterface::class);
         $mockView->shouldReceive('vars->getArrayCopy')->with()->andReturn(['VAR' => 'FOO']);
         $mockView->shouldReceive('render')
-            ->with('partials/form/radio-horizontal', ['VAR' => 'FOO', 'element' => $mockElement])->once();
+            ->with('partials/form/radio-horizontal', ['VAR' => 'FOO', 'element' => $mockElement])
+            ->andReturn($returnValue);
 
         $this->sut->setView($mockView);
 
-        $this->sut->__invoke($mockElement);
+        self::assertEquals($returnValue, $this->sut->__invoke($mockElement));
     }
 }

@@ -17,9 +17,9 @@ class OperatingCentresTotCommunityLicences
      *     "label": "application_operating-centres_authorisation.data.totCommunityLicences",
      *     "hint": "application_operating-centres_authorisation.data.totCommunityLicences.hint"
      * })
-     * @Form\Validator({"name": "Digits"})
-     * @Form\Validator({"name": "Between", "options": {"min":0, "max": 10000}})
-     * @Form\Filter({"name":"\Laminas\Filter\ToNull", "options": {"type":"string"} })
+     * @Form\Validator("Digits")
+     * @Form\Validator("Between", options={"min":0, "max": 10000})
+     * @Form\Filter("\Laminas\Filter\ToNull", options={"type":"string"})
      */
     public $totCommunityLicences = null;
 }

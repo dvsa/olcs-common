@@ -3,8 +3,7 @@
 namespace Common\Service\Table\Formatter;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class FeeTransactionDateFactory implements FactoryInterface
 {
@@ -19,17 +18,5 @@ class FeeTransactionDateFactory implements FactoryInterface
         $dateFormatter = $container->get(Date::class);
         $stackValueFormatter = $container->get(StackValue::class);
         return new FeeTransactionDate($dateFormatter, $stackValueFormatter);
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     *
-     * @return FeeTransactionDate
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): FeeTransactionDate
-    {
-        return $this->__invoke($serviceLocator, FeeTransactionDate::class);
     }
 }

@@ -3,8 +3,7 @@
 namespace Common\Service\Qa\Custom\Ecmt;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class InternationalJourneysDataHandlerFactory implements FactoryInterface
 {
@@ -14,13 +13,5 @@ class InternationalJourneysDataHandlerFactory implements FactoryInterface
             $container->get('QaCommonIsValidBasedWarningAdder'),
             $container->get('QaEcmtInternationalJourneysIsValidHandler')
         );
-    }
-
-    /**
-     * @deprecated
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): InternationalJourneysDataHandler
-    {
-        return $this->__invoke($serviceLocator, InternationalJourneysDataHandler::class);
     }
 }

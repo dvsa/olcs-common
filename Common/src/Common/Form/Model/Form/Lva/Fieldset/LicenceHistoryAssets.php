@@ -19,10 +19,9 @@ class LicenceHistoryAssets
      *     "value_options": {"Y":"Yes", "N":"No"}
      * })
      * @Form\Type("radio")
-     * @Form\Validator({
-     *     "name":"Common\Form\Elements\Validators\LicenceHistoryLicenceValidator",
-     *     "options": {"table": "prevPurchasedAssets-table"}
-     *})
+     * @Form\Validator("Common\Form\Elements\Validators\LicenceHistoryLicenceValidator",
+     *     options={"table": "prevPurchasedAssets-table"}
+     *)
      */
     public $prevPurchasedAssets = null;
 

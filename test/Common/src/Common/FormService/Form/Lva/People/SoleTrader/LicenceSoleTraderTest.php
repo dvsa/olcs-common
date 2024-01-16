@@ -2,20 +2,16 @@
 
 namespace CommonTest\FormService\Form\Lva\People\SoleTrader;
 
-use Common\FormService\FormServiceInterface;
 use Common\FormService\FormServiceManager;
 use Common\Service\Lva\PeopleLvaService;
+use Common\Service\Lva\VariationLvaService;
+use Laminas\Form\ElementInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Lva\People\SoleTrader\LicenceSoleTrader as Sut;
 use Laminas\Form\Form;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
-/**
- * Licence Sole Trader Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class LicenceSoleTraderTest extends MockeryTestCase
 {
     protected $sut;
@@ -33,19 +29,17 @@ class LicenceSoleTraderTest extends MockeryTestCase
         $this->formHelper = m::mock('\Common\Service\Helper\FormHelperService');
         $this->authService = m::mock(AuthorizationService::class);
         $this->peopleLvaService = m::mock(PeopleLvaService::class);
-        $this->mockVariationService = m::mock(FormServiceInterface::class);
+        $this->mockLicenceService = m::mock(VariationLvaService::class);
         $this->fsl = m::mock(FormServiceManager::class)->makePartial();
-
-        $this->mockLicenceService = m::mock(FormServiceInterface::class);
 
         $this->fsl->shouldReceive('get')
             ->with('lva-licence')
             ->andReturn($this->mockLicenceService);
 
         $this->sut = new Sut(
-            $this->formHelper, 
-            $this->authService, 
-            $this->peopleLvaService, 
+            $this->formHelper,
+            $this->authService,
+            $this->peopleLvaService,
             $this->fsl
         );
     }
@@ -57,7 +51,7 @@ class LicenceSoleTraderTest extends MockeryTestCase
     {
         $params['canModify'] = true;
 
-        $formActions = m::mock();
+        $formActions = m::mock(ElementInterface::class);
         $formActions->shouldReceive('has')->with('disqualify')->andReturn(true);
         $formActions->shouldReceive('remove')->once()->with('disqualify');
 
@@ -87,7 +81,7 @@ class LicenceSoleTraderTest extends MockeryTestCase
             'disqualifyUrl' => 'foo'
         ];
 
-        $formActions = m::mock();
+        $formActions = m::mock(ElementInterface::class);
         $formActions->shouldReceive('get->setValue')
             ->once()
             ->with('foo');
@@ -119,7 +113,7 @@ class LicenceSoleTraderTest extends MockeryTestCase
             'orgType' => 'bar'
         ];
 
-        $formActions = m::mock();
+        $formActions = m::mock(ElementInterface::class);
         $formActions->shouldReceive('get->setValue')
             ->once()
             ->with('foo');

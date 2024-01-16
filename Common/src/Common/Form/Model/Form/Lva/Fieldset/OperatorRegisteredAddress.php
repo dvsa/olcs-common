@@ -34,7 +34,7 @@ class OperatorRegisteredAddress
      * })
      * @Form\Options({"label":"address_addressLines"})
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
+     * @Form\Filter("Laminas\Filter\StringTrim")
      */
     public $addressLine1 = null;
 
@@ -86,8 +86,8 @@ class OperatorRegisteredAddress
      * @Form\Attributes({"id":""})
      * @Form\Options({"label":"address_postcode"})
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Dvsa\Olcs\Transfer\Filter\Postcode"})
-     * @Form\Validator({"name":"Dvsa\Olcs\Transfer\Validators\Postcode"});
+     * @Form\Filter("Dvsa\Olcs\Transfer\Filter\Postcode")
+     * @Form\Validator("Dvsa\Olcs\Transfer\Validators\Postcode");
      */
     public $postcode = null;
 }

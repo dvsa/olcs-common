@@ -4,22 +4,18 @@ namespace CommonTest\Common\FormService\Form\Lva;
 
 use Common\Form\Elements\InputFilters\ActionLink;
 use Common\Form\Model\Form\Lva\Fieldset\ConvictionsPenaltiesData;
-use Common\Form\Model\Form\Lva\Fieldset\ConvictionsPenaltiesReadMoreLink;
 use Common\FormService\Form\Lva\ConvictionsPenalties;
 use Common\RefData;
 use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Helper\UrlHelperService;
+use Hamcrest\Matchers;
 use Laminas\Form\Element;
 use Laminas\Form\Element\Radio;
+use Laminas\Form\ElementInterface;
 use Laminas\Form\Fieldset;
 use Laminas\Form\Form;
 use Mockery as m;
 
-/**
- * Convictions & Penalties Form Service Test
- *
- * @author Dan Eggleston <dan@stolenegg.com>
- */
 class ConvictionsPenaltiesTest extends AbstractLvaFormServiceTestCase
 {
     protected $classToTest = ConvictionsPenalties::class;
@@ -57,11 +53,11 @@ class ConvictionsPenaltiesTest extends AbstractLvaFormServiceTestCase
         $dataTable
             ->shouldReceive('add')
             ->with(
-                \Hamcrest\Matchers::anInstanceOf(Element::class),
-                \Hamcrest\Matchers::hasKeyValuePair('priority', \Hamcrest\Matchers::integerValue())
+                Matchers::anInstanceOf(Element::class),
+                Matchers::hasKeyValuePair('priority', Matchers::integerValue())
             );
 
-        $ConvictionsReadMoreLink = m::mock(ConvictionsPenaltiesReadMoreLink::class);
+        $ConvictionsReadMoreLink = m::mock(ElementInterface::class);
         $ConvictionsReadMoreLink
             ->shouldReceive('get')
             ->with('readMoreLink')->andReturn(

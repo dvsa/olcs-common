@@ -11,7 +11,7 @@ use Dvsa\Olcs\Transfer\Command as TransferCmd;
 use Dvsa\Olcs\Transfer\Query as TransferQry;
 use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\Form\Form;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Shared logic between Addresses controllers
@@ -99,6 +99,18 @@ abstract class AbstractAddressesController extends AbstractController
                 ]
             )
             ->setData($formData);
+
+        $searchPostcodeInputFilter = $form->getInputFilter()->get('correspondence_address')->get('searchPostcode');
+        foreach ($searchPostcodeInputFilter->getInputs() as $input) {
+            $input->setRequired(false);
+            $input->setAllowEmpty(true);
+        }
+
+        $searchPostcodeInputFilter = $form->getInputFilter()->get('establishment_address')->get('searchPostcode');
+        foreach ($searchPostcodeInputFilter->getInputs() as $input) {
+            $input->setRequired(false);
+            $input->setAllowEmpty(true);
+        }
 
         $this->alterFormForLva($form);
 

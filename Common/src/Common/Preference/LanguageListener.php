@@ -6,21 +6,12 @@ use Laminas\EventManager\EventManagerInterface;
 use Laminas\EventManager\ListenerAggregateInterface;
 use Laminas\EventManager\ListenerAggregateTrait;
 use Laminas\Mvc\MvcEvent;
-use Laminas\Mvc\Router;
-use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
 use Laminas\Http\Request as HttpRequest;
-use Laminas\Http\Response;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Laminas\I18n\Translator\Translator;
 use Interop\Container\ContainerInterface;
 
-/**
- * Language Listener
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class LanguageListener implements ListenerAggregateInterface, FactoryInterface
 {
     use ListenerAggregateTrait;
@@ -39,11 +30,6 @@ class LanguageListener implements ListenerAggregateInterface, FactoryInterface
      * @var Translator
      */
     private $translator;
-
-    public function createService(ServiceLocatorInterface $serviceLocator): LanguageListener
-    {
-        return $this->__invoke($serviceLocator, LanguageListener::class);
-    }
 
     public function attach(EventManagerInterface $events, $priority = 1)
     {

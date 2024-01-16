@@ -6,7 +6,7 @@ use Common\FormService\Form\Lva\AbstractLvaFormService;
 use Common\Service\Helper\FormHelperService;
 use Common\Service\Helper\GuidanceHelperService;
 use Laminas\Form\Form;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Abstract Business Type Form

@@ -6,7 +6,6 @@ use Common\Exception\File\InvalidMimeException;
 use Common\Util\FileContent;
 use CommonTest\Common\Controller\Traits\Stubs\GenericUploadStub;
 use Dvsa\Olcs\Transfer\Command as TransferCmd;
-use Dvsa\Olcs\Transfer\Command\Document\DeleteDocument;
 use Dvsa\Olcs\Transfer\Command\Document\Upload;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -18,24 +17,14 @@ class GenericUploadTest extends MockeryTestCase
 {
     /** @var  GenericUploadStub */
     private $sut;
-
-    protected $sm;
     /** @var  m\MockInterface */
     private $mockResp;
 
     public function setUp(): void
     {
-        $this->sm = m::mock('\Laminas\ServiceManager\ServiceManager')
-            ->makePartial()
-            ->setAllowOverride(true);
-
-        // inject a real string helper
-        $this->sm->setService('Helper\String', new \Common\Service\Helper\StringHelperService());
-
         $this->mockResp = m::mock(\Laminas\Http\Response::class);
 
         $this->sut = new GenericUploadStub();
-        $this->sut->setServiceLocator($this->sm);
         $this->sut->stubResponse = $this->mockResp;
     }
 
@@ -138,7 +127,8 @@ class GenericUploadTest extends MockeryTestCase
 
     public function testUploadFileInvalidEbrsMime()
     {
-        $this->expectException(InvalidMimeException::class, 'EXPECT_ERROR_MESSAGE');
+        $this->expectException(InvalidMimeException::class);
+        $this->expectExceptionMessage('EXPECT_ERROR_MESSAGE');
 
         $this->mockResp
             ->shouldReceive('isClientError')->andReturn(true)

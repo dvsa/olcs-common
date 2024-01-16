@@ -22,7 +22,7 @@ class Time extends LaminasElement\Time
      *
      * @return array
      */
-    public function getInputSpecification()
+    public function getInputSpecification(): array
     {
         return array(
             'name' => $this->getName(),
