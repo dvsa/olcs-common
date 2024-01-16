@@ -3,8 +3,8 @@
 namespace Common\Service\Data;
 
 use Common\Service\Data\Interfaces\RestClientAware;
-use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\Initializer\InitializerInterface;
+use Psr\Container\ContainerInterface;
 
 /**
  * Class RestClientAwareInitializer
