@@ -18,7 +18,7 @@ class SendMessageFormActions
      *     "class": "govuk-button"
      * })
      * @Form\Options({"label": "Send Message"})
-     * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
+     * @Form\Type(\Common\Form\Elements\InputFilters\ActionButton::class)
      */
     public $submit = null;
 }
