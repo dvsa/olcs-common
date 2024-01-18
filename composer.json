@@ -23,7 +23,7 @@
         "laminas/laminas-code": "^4.7",
         "laminas/laminas-navigation": "^2.15",
         "laminas/laminas-inputfilter": "^2.10",
-        "olcs/olcs-transfer": "^5.0.0",
+        "olcs/olcs-transfer": "dev-project/messaging",
         "olcs/olcs-logging": "^5.0.0"
     },
     "require-dev": {
