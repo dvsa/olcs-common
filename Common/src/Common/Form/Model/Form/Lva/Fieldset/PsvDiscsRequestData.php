@@ -15,8 +15,8 @@ class PsvDiscsRequestData
      * @Form\Options({
      *     "label": "application_vehicle-safety_discs-psv-sub-action.additionalDiscs"
      * })
-     * @Form\Validator({"name": "Digits"})
-     * @Form\Validator({"name": "GreaterThan", "options": {"min":0}})
+     * @Form\Validator("Digits")
+     * @Form\Validator("GreaterThan", options={"min":0})
      */
     public $additionalDiscs = null;
 }

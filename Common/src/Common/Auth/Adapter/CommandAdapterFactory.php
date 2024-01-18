@@ -4,8 +4,7 @@ declare(strict_types=1);
 namespace Common\Auth\Adapter;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 /**
  * Class CommandAdapterFactory
@@ -23,10 +22,5 @@ class CommandAdapterFactory implements FactoryInterface
     {
         $commandSender = $container->get('CommandSender');
         return new CommandAdapter($commandSender);
-    }
-
-    public function createService(ServiceLocatorInterface $serviceLocator)
-    {
-        return $this->__invoke($serviceLocator, null, null);
     }
 }

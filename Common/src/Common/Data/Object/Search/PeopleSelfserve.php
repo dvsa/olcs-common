@@ -4,6 +4,7 @@ namespace Common\Data\Object\Search;
 
 use Common\Data\Object\Search\Aggregations\Terms as Filter;
 use Common\Service\Table\Formatter\Date;
+use Common\Service\Table\Formatter\Translate;
 
 /**
  * Class People
@@ -88,7 +89,7 @@ class PeopleSelfserve extends InternalSearchAbstract
             [
                 'title' => 'Licence status',
                 'name'=> 'licStatusDesc',
-                'formatter'=> 'Translate',
+                'formatter'=> Translate::class,
             ],
             [
                 'title' => 'Operator name',

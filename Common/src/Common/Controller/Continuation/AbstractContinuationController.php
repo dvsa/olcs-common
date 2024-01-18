@@ -12,7 +12,7 @@ use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\Mvc\Exception;
 use Laminas\Mvc\MvcEvent;
 use Laminas\View\Model\ViewModel;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * AbstractContinuationController

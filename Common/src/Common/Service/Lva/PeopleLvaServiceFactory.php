@@ -3,12 +3,8 @@
 namespace Common\Service\Lva;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
-/**
- * PeopleLvaServiceFactory
- */
 class PeopleLvaServiceFactory implements FactoryInterface
 {
     /**
@@ -24,17 +20,5 @@ class PeopleLvaServiceFactory implements FactoryInterface
         return new PeopleLvaService(
             $container->get('Helper\Form')
         );
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $services
-     *
-     * @return PeopleLvaService
-     */
-    public function createService(ServiceLocatorInterface $services): PeopleLvaService
-    {
-        return $this($services, PeopleLvaService::class);
     }
 }

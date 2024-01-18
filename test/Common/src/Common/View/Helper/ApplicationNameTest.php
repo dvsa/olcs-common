@@ -1,16 +1,8 @@
 <?php
 
-/**
- * Test ApplicationName view helper
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
-
 namespace CommonTest\View\Helper;
 
 use \Common\View\Helper\ApplicationName;
-use Laminas\View\HelperPluginManager;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Test ApplicationName view helper

@@ -3,38 +3,24 @@
 namespace Common\Service\Api;
 
 use Common\Util\RestClient;
-use Interop\Container\ContainerInterface;
 use Laminas\Authentication\Storage\Session;
 use Laminas\Filter\Word\CamelCaseToDash;
 use Laminas\Http\Header\Cookie;
 use Laminas\Http\Request;
-use Laminas\ServiceManager\AbstractFactoryInterface;
-use Laminas\ServiceManager\Exception\InvalidServiceNameException;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
+use Laminas\ServiceManager\Factory\AbstractFactoryInterface;
 use Laminas\Uri\Http;
+use Psr\Container\ContainerInterface;
 
-/**
- * Class AbstractFactory
- * @package Common\Service\Api
- */
 class AbstractFactory implements AbstractFactoryInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function canCreate(ContainerInterface $container, $requestedName)
+    public function canCreate(ContainerInterface $container, $requestedName): bool
     {
         return strpos($requestedName, 'Olcs\\RestService\\') !== false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): RestClient
     {
-        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
-            $container = $container->getServiceLocator();
-        }
         $api = str_replace('Olcs\\RestService\\', '', $requestedName);
 
         $api = explode('\\', $api);
@@ -46,7 +32,7 @@ class AbstractFactory implements AbstractFactoryInterface
 
         $config = $container->get('Config');
         if (!isset($config['service_api_mapping']['endpoints'][$endpoint])) {
-            throw new InvalidServiceNameException('No endpoint defined for: ' . $endpoint);
+            throw new ServiceNotCreatedException('No endpoint defined for: ' . $endpoint);
         }
 
         /** @var \Laminas\Mvc\I18n\Translator $translator */
@@ -87,23 +73,5 @@ class AbstractFactory implements AbstractFactoryInterface
         }
 
         return $rest;
-    }
-
-    /**
-     * {@inheritdoc}
-     * @todo OLCS-28149
-     */
-    public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
-    {
-        return $this->canCreate($serviceLocator, $requestedName);
-    }
-
-    /**
-     * {@inheritdoc}
-     * @todo OLCS-28149
-     */
-    public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
-    {
-        return $this($serviceLocator, $requestedName);
     }
 }

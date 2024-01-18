@@ -3,8 +3,7 @@
 namespace Common\Service\Qa;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class RadioFieldsetPopulatorFactory implements FactoryInterface
 {
@@ -14,13 +13,5 @@ class RadioFieldsetPopulatorFactory implements FactoryInterface
             $container->get('QaRadioFactory'),
             $container->get('QaTranslateableTextHandler')
         );
-    }
-
-    /**
-     * @deprecated
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): RadioFieldsetPopulator
-    {
-        return $this->__invoke($serviceLocator, RadioFieldsetPopulator::class);
     }
 }

@@ -39,14 +39,13 @@ class PsvVehicleData
      * })
      * @Form\Type("Text")
      * @Form\Required(false)
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
-     * @Form\Validator({
-     *     "name":"Laminas\Validator\StringLength",
-     *     "options":{
+     * @Form\Filter("Laminas\Filter\StringTrim")
+     * @Form\Validator("Laminas\Validator\StringLength",
+     *     options={
      *          "min":2,
      *          "max":100,
      *     },
-     * })
+     * )
      */
     public $makeModel = null;
 }

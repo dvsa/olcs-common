@@ -3,18 +3,13 @@
 namespace Common\Service\Cqrs;
 
 use Interop\Container\ContainerInterface;
-use Laminas\Http\Header\Authorization;
 use Laminas\Http\Header\Cookie;
 use Laminas\Http\Headers;
 use Laminas\Http\Header\Accept;
 use Laminas\Http\Header\ContentType;
 use Laminas\Http\Request;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
-/**
- * Request Factory
- */
 class RequestFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): Request
@@ -45,13 +40,5 @@ class RequestFactory implements FactoryInterface
         $request->setHeaders($headers);
 
         return $request;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): Request
-    {
-        return $this->__invoke($serviceLocator, Request::class);
     }
 }

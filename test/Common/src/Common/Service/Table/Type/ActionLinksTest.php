@@ -1,23 +1,15 @@
 <?php
 
-/**
- * ActionLink Test
- *
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
- */
 namespace CommonTest\Service\Table\Type;
 
+use Common\Service\Table\TableBuilder;
 use Common\Util\Escape;
+use Laminas\ServiceManager\ServiceManager;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Table\Type\ActionLinks;
 use Laminas\Mvc\I18n\Translator;
 
-/**
- * ActionLink Test
- *
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
- */
 class ActionLinksTest extends MockeryTestCase
 {
     protected $sut;
@@ -26,15 +18,10 @@ class ActionLinksTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->sm = m::mock('\Laminas\ServiceManager\ServiceManager')
-            ->makePartial()
-            ->setAllowOverride(true);
+        $this->sm = new ServiceManager();
 
-        // inject a real string helper
-        $this->sm->setService('Helper\String', new \Common\Service\Helper\StringHelperService());
-
-        $this->table = m::mock();
-        $this->table->shouldReceive('getServiceLocator')
+        $this->table = m::mock(TableBuilder::class);
+        $this->table->expects('getServiceLocator')
             ->andReturn($this->sm);
 
         $this->sut = new ActionLinks($this->table);

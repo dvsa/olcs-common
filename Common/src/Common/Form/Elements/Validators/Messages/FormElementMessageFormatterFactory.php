@@ -6,8 +6,7 @@ namespace Common\Form\Elements\Validators\Messages;
 
 use Interop\Container\ContainerInterface;
 use Laminas\I18n\Translator\TranslatorInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 /**
  * @see FormElementMessageFormatter
@@ -15,16 +14,6 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
  */
 class FormElementMessageFormatterFactory implements FactoryInterface
 {
-    /**
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return FormElementMessageFormatter
-     * @deprecated
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): FormElementMessageFormatter
-    {
-        return $this($serviceLocator, FormElementMessageFormatter::class);
-    }
-
     /**
      * @param ContainerInterface $container
      * @param mixed $requestedName

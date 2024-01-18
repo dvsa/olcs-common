@@ -26,7 +26,7 @@ class SubsidiaryCompany
      *     "error-message": "subsidiary-company-name-error"
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
+     * @Form\Filter("Laminas\Filter\StringTrim")
      */
     public $name = null;
 

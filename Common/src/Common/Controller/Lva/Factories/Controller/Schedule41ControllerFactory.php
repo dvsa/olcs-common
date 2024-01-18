@@ -8,9 +8,8 @@ use Common\Service\Helper\FormHelperService;
 use Common\Service\Table\TableFactory;
 use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
-use ZfcRbac\Service\AuthorizationService;
+use Laminas\ServiceManager\Factory\FactoryInterface;
+use LmcRbacMvc\Service\AuthorizationService;
 
 class Schedule41ControllerFactory implements FactoryInterface
 {
@@ -22,8 +21,6 @@ class Schedule41ControllerFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): Schedule41Controller
     {
-        $container = method_exists($container, 'getServiceLocator') ? $container->getServiceLocator() : $container;
-
         $niTextTranslationUtil = $container->get(NiTextTranslation::class);
         $authService = $container->get(AuthorizationService::class);
         $formHelper = $container->get(FormHelperService::class);
@@ -37,17 +34,5 @@ class Schedule41ControllerFactory implements FactoryInterface
             $tableFactory,
             $flashMessengerHelpe
         );
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     *
-     * @return Schedule41Controller
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): Schedule41Controller
-    {
-        return $this->__invoke($serviceLocator, Schedule41Controller::class);
     }
 }

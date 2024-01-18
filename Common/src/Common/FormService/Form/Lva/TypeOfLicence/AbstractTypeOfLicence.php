@@ -7,7 +7,7 @@ use Common\FormService\FormServiceInterface;
 use Common\RefData;
 use Common\Service\Helper\FormHelperService;
 use Laminas\Form\Form;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Abstract Type Of Licence Form

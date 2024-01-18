@@ -32,10 +32,10 @@ class AdvertisementsAdPlacedNow
      *          "id":"adPlacedDate_day"
      *      }
      * })
-     * @Form\Filter({"name": "DateSelectNullifier"})
+     * @Form\Filter("DateSelectNullifier")
      * @Form\Type("DateSelect")
-     * @Form\Validator({"name": "\Common\Validator\Date"})
-     * @Form\Validator({"name": "Date","options":{"format":"Y-m-d"}})
+     * @Form\Validator("\Common\Validator\Date")
+     * @Form\Validator("Date", options={"format":"Y-m-d"})
      */
     public $adPlacedDate = null;
 

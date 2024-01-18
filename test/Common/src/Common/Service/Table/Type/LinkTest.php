@@ -1,22 +1,15 @@
 <?php
 
-/**
- * Link Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\Service\Table\Type;
 
+use Common\Service\Helper\UrlHelperService;
+use Common\Service\Table\TableBuilder;
+use Laminas\ServiceManager\ServiceManager;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Table\Type\Link;
 use Common\Service\Helper\StackHelperService;
 
-/**
- * Link Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class LinkTest extends MockeryTestCase
 {
     protected $sut;
@@ -25,15 +18,10 @@ class LinkTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->sm = m::mock('\Laminas\ServiceManager\ServiceManager')
-            ->makePartial()
-            ->setAllowOverride(true);
+        $this->sm = new ServiceManager();
 
-        // inject a real string helper
-        $this->sm->setService('Helper\String', new \Common\Service\Helper\StringHelperService());
-
-        $this->table = m::mock();
-        $this->table->shouldReceive('getServiceLocator')
+        $this->table = m::mock(TableBuilder::class);
+        $this->table->expects('getServiceLocator')
             ->andReturn($this->sm);
 
         $this->sut = new Link($this->table);
@@ -56,7 +44,7 @@ class LinkTest extends MockeryTestCase
         $expected = '<a href="URL">Some Link</a>';
 
         // Mocks
-        $urlHelper = m::mock();
+        $urlHelper = m::mock(UrlHelperService::class);
         $this->sm->setService('Helper\Url', $urlHelper);
         // @NOTE We use the real stack helper here, as it's a useful component test
         // and is only a tiny utility class that is also fully tested elsewhere

@@ -3,6 +3,12 @@
 namespace CommonTest\Common\Service\Helper;
 
 use Common\Exception\File\InvalidMimeException;
+use Common\Service\AntiVirus\Scan;
+use Common\Service\Helper\UrlHelperService;
+use Interop\Container\ContainerInterface;
+use Laminas\Form\ElementInterface;
+use Laminas\Form\Form;
+use Laminas\Http\Request;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Helper\FileUploadHelperService;
 use Mockery as m;
@@ -19,20 +25,21 @@ class FileUploadHelperServiceTest extends MockeryTestCase
     private $mockRequest;
     /** @var  \Laminas\Form\FormInterface | m\MockInterface */
     private $mockForm;
-    /** @var  m\MockInterface | \Laminas\ServiceManager\ServiceLocatorInterface */
-    private $mockSm;
+    private $mockScan;
+    private $mockUrlHelper;
 
     public function setUp(): void
     {
-        $this->mockRequest = m::mock(\Laminas\Http\Request::class);
-        $this->mockForm = m::mock(\Laminas\Form\Form::class);
+        $this->mockRequest = m::mock(Request::class);
+        $this->mockForm = m::mock(Form::class);
+        $this->mockScan = m::mock(Scan::class);
+        $this->mockUrlHelper = m::mock(UrlHelperService::class);
 
-        $this->mockSm = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class);
+        $this->mockSm = m::mock(ContainerInterface::class);
 
-        $this->sut = new FileUploadHelperService();
+        $this->sut = new FileUploadHelperService($this->mockUrlHelper, $this->mockScan);
         $this->sut->setRequest($this->mockRequest);
         $this->sut->setForm($this->mockForm);
-        $this->sut->setServiceLocator($this->mockSm);
         self::setupLogger();
     }
 
@@ -103,6 +110,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
     public function testGetElementFromFormAndSelector()
     {
         $fieldset = m::mock('Laminas\Form\Fieldset');
+        $element = m::mock(ElementInterface::class);
 
         $this->mockForm->shouldReceive('get')
             ->with('foo')
@@ -110,11 +118,11 @@ class FileUploadHelperServiceTest extends MockeryTestCase
 
         $fieldset->shouldReceive('get')
             ->with('bar')
-            ->andReturn('fakeElement');
+            ->andReturn($element);
 
         $this->sut->setSelector('foo->bar');
 
-        $this->assertEquals('fakeElement', $this->sut->getElement());
+        $this->assertEquals($element, $this->sut->getElement());
     }
 
     public function testProcessWithGetRequestAndNoLoadCallback()
@@ -137,27 +145,18 @@ class FileUploadHelperServiceTest extends MockeryTestCase
             }
         );
 
-        $mockUrlHelper = m::mock();
-        $this->sut->setServiceLocator(
-            m::mock('Laminas\ServiceManager\ServiceLocatorInterface')
-                ->shouldReceive('get')
-                ->with('Helper\Url')
-                ->andReturn($mockUrlHelper)
-                ->getMock()
-        );
-
-        $fieldset = m::mock() // multiple file upload fieldset
+        $fieldset = m::mock(ElementInterface::class) // multiple file upload fieldset
         ->shouldReceive('get')
             ->with('list')
             ->andReturn(
-                m::mock()
+                m::mock(ElementInterface::class)
                     ->shouldReceive('setFiles')
-                    ->with(['array-of-files'], $mockUrlHelper)
+                    ->with(['array-of-files'], $this->mockUrlHelper)
                     ->getMock()
             )
             ->getMock();
 
-        $fileCountfield = m::mock()->shouldReceive('setValue')->with(1)->getMock();
+        $fileCountfield = m::mock(ElementInterface::class)->shouldReceive('setValue')->with(1)->getMock();
 
         $this->mockForm
             ->shouldReceive('get')
@@ -238,13 +237,10 @@ class FileUploadHelperServiceTest extends MockeryTestCase
 
     private function mockVirusScan($file, $isClean)
     {
-        $mockScan = m::mock(\Common\Service\AntiVirus\Scan::class)
-            ->shouldReceive('isEnabled')->with()->once()->andReturn(true)
+        $this->mockScan
+            ->shouldReceive('isEnabled')->withNoArgs()->andReturnTrue()
             ->shouldReceive('isClean')->with($file)->once()->andReturn($isClean)
             ->getMock();
-
-        $this->mockSm
-            ->shouldReceive('get')->with(\Common\Service\AntiVirus\Scan::class)->once()->andReturn($mockScan);
     }
 
     /**
@@ -293,7 +289,6 @@ class FileUploadHelperServiceTest extends MockeryTestCase
             );
 
         $this->sut->setSelector('my-file');
-        $this->sut->setServiceLocator($this->mockSm);
         $this->sut->setUploadCallback(
             function () {
             }
@@ -568,18 +563,18 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         $this->mockRequest->shouldReceive('getPost')
             ->andReturn($postData);
 
-        $fieldset = m::mock('Laminas\Form\Fieldset');
+        $fieldset = m::mock(ElementInterface::class);
         $fieldset->shouldReceive('getName')
             ->andReturn('file1');
 
-        $listElement = m::mock('\stdClass');
+        $listElement = m::mock(ElementInterface::class);
         $listElement->shouldReceive('getFieldsets')
             ->andReturn([$fieldset])
             ->getMock()
             ->shouldReceive('remove')
             ->with('file1');
 
-        $element = m::mock('\stdClass');
+        $element = m::mock(ElementInterface::class);
         $element->shouldReceive('get')
             ->with('list')
             ->andReturn($listElement);
@@ -595,7 +590,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
 
         $this->sut->setCountSelector('my-hidden-field');
 
-        $fileCountfield = m::mock()
+        $fileCountfield = m::mock(ElementInterface::class)
             ->shouldReceive('getValue')->andReturn('3')
             ->shouldReceive('setValue')->with(2)
             ->getMock();
@@ -692,7 +687,6 @@ class FileUploadHelperServiceTest extends MockeryTestCase
 
         $this->sut
             ->setSelector('my-file')
-            ->setServiceLocator($this->mockSm)
             ->setUploadCallback(
                 function () {
                 }

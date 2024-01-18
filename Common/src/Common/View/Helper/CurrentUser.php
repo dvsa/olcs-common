@@ -4,7 +4,7 @@ namespace Common\View\Helper;
 
 use Common\Rbac\User;
 use Laminas\View\Helper\AbstractHelper;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 class CurrentUser extends AbstractHelper
 {

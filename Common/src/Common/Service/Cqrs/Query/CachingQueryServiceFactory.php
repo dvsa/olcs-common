@@ -5,13 +5,8 @@ namespace Common\Service\Cqrs\Query;
 use Dvsa\Olcs\Transfer\Service\CacheEncryption as CacheEncryptionService;
 use Exception;
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
-/**
- * Class CachingQueryServiceFactory
- * @package Common\Service\Cqrs\Query
- */
 class CachingQueryServiceFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): CachingQueryService
@@ -37,13 +32,5 @@ class CachingQueryServiceFactory implements FactoryInterface
         $service->setLogger($container->get('Logger'));
 
         return $service;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): CachingQueryService
-    {
-        return $this->__invoke($serviceLocator, CachingQueryService::class);
     }
 }

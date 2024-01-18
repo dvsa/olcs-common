@@ -3,12 +3,8 @@
 namespace Common\Service\Data;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
-/**
- * AbstractDataServiceServicesFactory
- */
 class AbstractDataServiceServicesFactory implements FactoryInterface
 {
     /**
@@ -26,17 +22,5 @@ class AbstractDataServiceServicesFactory implements FactoryInterface
             $container->get('QueryService'),
             $container->get('CommandService')
         );
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $services
-     *
-     * @return AbstractDataServiceServices
-     */
-    public function createService(ServiceLocatorInterface $services): AbstractDataServiceServices
-    {
-        return $this($services, AbstractDataServiceServices::class);
     }
 }

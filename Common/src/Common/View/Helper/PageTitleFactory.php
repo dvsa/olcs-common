@@ -3,10 +3,8 @@
 namespace Common\View\Helper;
 
 use Interop\Container\ContainerInterface;
-use Laminas\Mvc\Router\Http\RouteMatch;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
-use RuntimeException;
+use Laminas\Router\Http\RouteMatch;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class PageTitleFactory implements FactoryInterface
 {
@@ -19,9 +17,6 @@ class PageTitleFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): PageTitle
     {
-        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
-            $container = $container->getServiceLocator();
-        }
         $viewHelperManager = $container->get('ViewHelperManager');
         $translator = $viewHelperManager->get('translate');
         $placeholder = $viewHelperManager->get('placeholder');
@@ -38,17 +33,5 @@ class PageTitleFactory implements FactoryInterface
         }
 
         return new PageTitle($translator, $placeholder, $routeMatchName, $action);
-    }
-
-    /**
-     * @deprecated can be removed following laminas v3 upgrade
-     * @param ServiceLocatorInterface $serviceLocator
-     *
-     * @return CurrentUser
-     * @throws RuntimeException
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): PageTitle
-    {
-        return $this->__invoke($serviceLocator, null);
     }
 }

@@ -32,7 +32,7 @@ class TextFieldset extends Fieldset
         );
     }
 
-    public function getInputSpecification()
+    public function getInputSpecification(): array
     {
         return array();
     }

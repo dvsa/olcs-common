@@ -12,7 +12,7 @@ namespace Common\Service\Table\Formatter;
 use Common\RefData as Ref;
 use Common\Service\Helper\UrlHelperService;
 use Laminas\Http\Request;
-use Laminas\Mvc\Router\Http\TreeRouteStack;
+use Laminas\Router\Http\TreeRouteStack;
 
 /**
  * Transaction Fee Status formatter

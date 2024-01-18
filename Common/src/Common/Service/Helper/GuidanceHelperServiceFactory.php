@@ -3,12 +3,8 @@
 namespace Common\Service\Helper;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
-/**
- * GuidanceHelperServiceFactory
- */
 class GuidanceHelperServiceFactory implements FactoryInterface
 {
     /**
@@ -24,17 +20,5 @@ class GuidanceHelperServiceFactory implements FactoryInterface
         return new GuidanceHelperService(
             $container->get('ViewHelperManager')->get('placeholder')
         );
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $services
-     *
-     * @return GuidanceHelperService
-     */
-    public function createService(ServiceLocatorInterface $services): GuidanceHelperService
-    {
-        return $this($services, GuidanceHelperService::class);
     }
 }

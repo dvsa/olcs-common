@@ -11,10 +11,10 @@ use Common\Form\Elements\Types\RadioVertical;
 use Common\Form\View\Helper\FormCollection as FormCollectionViewHelper;
 use Common\Form\View\Helper\FormCollection;
 use Common\Form\View\Helper\Readonly\FormFieldset;
+use Laminas\View\Helper\Doctype;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Form\Element\Collection;
-use Laminas\Form\Element\Radio;
 use Laminas\Form\Fieldset;
 use Laminas\Form\Form;
 use Laminas\Form\View\Helper;
@@ -24,6 +24,7 @@ use Laminas\Stdlib\PriorityQueue;
 use Laminas\View\HelperPluginManager;
 use Laminas\View\Renderer\JsonRenderer;
 use Laminas\View\Renderer\PhpRenderer;
+use Psr\Container\ContainerInterface;
 
 /**
  * @covers \Common\Form\View\Helper\FormCollection
@@ -80,7 +81,7 @@ class FormCollectionTest extends MockeryTestCase
         echo $viewHelper($this->element, 'formCollection');
 
         $this->expectOutputRegex(
-            '/^<fieldset class="class" data-group="test"><legend>(.*)<\/legend>'
+            '/^<fieldset name="test" class="class" data-group="test"><legend>(.*)<\/legend>'
             . '<span data-template="(.*)"><\/span><p class="hint">(.*)<\/p><\/fieldset>$/'
         );
     }
@@ -97,7 +98,7 @@ class FormCollectionTest extends MockeryTestCase
         echo $viewHelper($this->element, 'formCollection');
 
         $this->expectOutputRegex(
-            '/^<fieldset class="class" data-group="test"><legend>(.*)<\/legend><p class="hint">(.*)<\/p>'
+            '/^<fieldset name="test" class="class" data-group="test"><legend>(.*)<\/legend><p class="hint">(.*)<\/p>'
             . '<span data-template="(.*)"><\/span><\/fieldset>$/'
         );
     }
@@ -114,8 +115,8 @@ class FormCollectionTest extends MockeryTestCase
         echo $viewHelper($this->element, 'formCollection');
 
         $this->expectOutputRegex(
-            '/^<fieldset class="class" data-group="test"><legend>(.*)<\/legend><p class="hint">(.*)<\/p>'
-            . '<fieldset data-group="(.*)"><\/fieldset><span data-template="(.*)"><\/span><\/fieldset>/'
+            '/^<fieldset name="test" class="class" data-group="test"><legend>(.*)<\/legend><p class="hint">(.*)<\/p>'
+            . '<fieldset name="(.*)" data-group="(.*)"><\/fieldset><span data-template="(.*)"><\/span><\/fieldset>/'
         );
     }
 
@@ -131,7 +132,7 @@ class FormCollectionTest extends MockeryTestCase
         echo $viewHelper($this->element, 'formCollection');
 
         $this->expectOutputRegex(
-            '/^<fieldset data-group="postcode">'
+            '/^<fieldset name="postcode" data-group="postcode">'
             . '<label class=\"govuk-visually-hidden\" for=\"postcodeInput([0-9]+)\">Postcode search<\/label>'
             . '<label for=\"selectAddress([0-9]+)\">postcode.select_address.label<\/label>'
             . '<\/fieldset>$/'
@@ -152,7 +153,7 @@ class FormCollectionTest extends MockeryTestCase
 
         $this->expectOutputRegex(
             '/^<div class="validation-wrapper"><ul><li>(.*)<\/li><\/ul>'
-            . '<fieldset data-group="postcode">'
+            . '<fieldset name="postcode" data-group="postcode">'
             . '<label class=\"govuk-visually-hidden\" for=\"postcodeInput([0-9]+)\">Postcode search<\/label>'
             . '<label for=\"selectAddress([0-9]+)\">postcode.select_address.label<\/label>'
             . '<\/fieldset><\/div>$/'
@@ -169,11 +170,14 @@ class FormCollectionTest extends MockeryTestCase
         $translator = new Translator();
         $translateHelper = new Translate();
         $translateHelper->setTranslator($translator);
+        $doctype = m::mock(Doctype::class);
 
-        $helpers = new HelperPluginManager();
-        $helpers->setService('formRow', new Helper\FormRow());
+        $container = m::mock(ContainerInterface::class);
+        $helpers = new HelperPluginManager($container);
+        $helpers->setService('formrow', new Helper\FormRow());
         $helpers->setService('form_element_errors', new Helper\FormElementErrors());
         $helpers->setService('translate', $translateHelper);
+        $helpers->setService('doctype', $doctype);
         $view = new PhpRenderer();
         $view->setHelperPluginManager($helpers);
 
@@ -263,9 +267,9 @@ class FormCollectionTest extends MockeryTestCase
         static::assertEquals(
             '<div class="help__text">' .
             '<h3 class="file__heading">_TRANSL_common.file-upload.table.col.FileName</h3>' .
-            '<ul title="unit_attr1" data-group="files">' .
+            '<ul name="files" title="unit_attr1" data-group="files">' .
             '<p class="hint">_TRANSL_@unit_hint@</p>'.
-            '<li data-group="file1"></li>'.
+            '<li name="file1" data-group="file1"></li>'.
             '</ul>' .
             '</div>',
             $actual
@@ -283,7 +287,7 @@ class FormCollectionTest extends MockeryTestCase
 
         echo $viewHelper($this->element, 'formCollection');
 
-        $this->expectOutputRegex('/^<li data-group="files"><\/li>$/');
+        $this->expectOutputRegex('/^<li name="files" data-group="files"><\/li>$/');
     }
 
     /**
@@ -308,7 +312,7 @@ class FormCollectionTest extends MockeryTestCase
 
         $this->expectOutputRegex(
             '/^<div class="validation-wrapper"><ul><li>(.*)<\/li><\/ul>'
-            . '<fieldset data-group="hpw"><\/fieldset><\/div>$/'
+            . '<fieldset name="hpw" data-group="hpw"><\/fieldset><\/div>$/'
         );
     }
 
@@ -329,7 +333,9 @@ class FormCollectionTest extends MockeryTestCase
                 return "formRadioHorizontal MARKUP";
             }
         );
-
+        $mockView->expects('plugin')->with('doctype')->andReturn(
+            m::mock(Doctype::class)
+        );
         $sut = new FormCollection();
         $sut->setView($mockView);
 
@@ -376,7 +382,7 @@ class FormCollectionTest extends MockeryTestCase
         echo $viewHelper($this->element, 'formCollection');
 
         $this->expectOutputRegex(
-            '/^<fieldset class="class" data-group="test"><legend>(.*)<\/legend>'
+            '/^<fieldset name="test" class="class" data-group="test"><legend>(.*)<\/legend>'
             . '<span data-template="(.*)"><\/span><p class="form-hint">(.*)<\/p><\/fieldset>$/'
         );
     }

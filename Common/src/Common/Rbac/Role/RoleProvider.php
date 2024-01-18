@@ -4,7 +4,7 @@ namespace Common\Rbac\Role;
 
 use Common\Service\Cqrs\Query\QuerySender;
 use Rbac\Role\Role;
-use ZfcRbac\Role\RoleProviderInterface;
+use LmcRbacMvc\Role\RoleProviderInterface;
 use Dvsa\Olcs\Transfer\Query\User\RoleList;
 
 /**

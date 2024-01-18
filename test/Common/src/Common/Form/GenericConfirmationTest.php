@@ -2,6 +2,8 @@
 
 namespace CommonTest\Form\View\Helper;
 
+use Laminas\Form\ElementInterface;
+use Laminas\Form\Fieldset;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
@@ -25,8 +27,8 @@ class GenericConfirmationTest extends TestCase
 
     public function testSetSubmitLabel()
     {
-        $fieldset = m::mock();
-        $element = m::mock();
+        $fieldset = m::mock(Fieldset::class);
+        $element = m::mock(ElementInterface::class);
 
         $this->sut->shouldReceive('get')->with('form-actions')->once()->andReturn($fieldset);
         $fieldset->shouldReceive('get')->with('submit')->once()->andReturn($element);
@@ -37,7 +39,7 @@ class GenericConfirmationTest extends TestCase
 
     public function testRemoveCancel()
     {
-        $fieldset = m::mock();
+        $fieldset = m::mock(Fieldset::class);
 
         $this->sut->shouldReceive('get')->with('form-actions')->once()->andReturn($fieldset);
         $fieldset->shouldReceive('remove')->with('cancel')->once();
@@ -47,8 +49,8 @@ class GenericConfirmationTest extends TestCase
 
     public function testSetMessage()
     {
-        $fieldset = m::mock();
-        $element = m::mock();
+        $fieldset = m::mock(Fieldset::class);
+        $element = m::mock(ElementInterface::class);
 
         $this->sut->shouldReceive('get')->with('messages')->once()->andReturn($fieldset);
         $fieldset->shouldReceive('get')->with('message')->once()->andReturn($element);

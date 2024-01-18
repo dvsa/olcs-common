@@ -7,7 +7,7 @@
  */
 namespace Common\Service\Helper;
 
-use Laminas\Mvc\Controller\Plugin\FlashMessenger;
+use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 
 /**
  * Flash Messenger Helper Service
@@ -76,7 +76,7 @@ class FlashMessengerHelperService
      * Add a success message
      *
      * @param string $message
-     * @return \Laminas\Mvc\Controller\Plugin\FlashMessenger
+     * @return \Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger
      */
     public function addSuccessMessage($message)
     {
@@ -87,7 +87,7 @@ class FlashMessengerHelperService
      * Add a error message
      *
      * @param string $message
-     * @return \Laminas\Mvc\Controller\Plugin\FlashMessenger
+     * @return \Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger
      */
     public function addErrorMessage($message)
     {
@@ -110,7 +110,7 @@ class FlashMessengerHelperService
      * Add a warning message
      *
      * @param string $message
-     * @return \Laminas\Mvc\Controller\Plugin\FlashMessenger
+     * @return \Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger
      */
     public function addWarningMessage($message)
     {
@@ -122,7 +122,7 @@ class FlashMessengerHelperService
      * Add a info message
      *
      * @param string $message
-     * @return \Laminas\Mvc\Controller\Plugin\FlashMessenger
+     * @return \Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger
      */
     public function addInfoMessage($message)
     {
@@ -132,7 +132,7 @@ class FlashMessengerHelperService
     /**
      * Get the flash messenger
      *
-     * @return \Laminas\Mvc\Controller\Plugin\FlashMessenger
+     * @return \Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger
      */
     protected function getFlashMessenger()
     {

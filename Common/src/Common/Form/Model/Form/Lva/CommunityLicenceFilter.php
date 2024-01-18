@@ -14,7 +14,7 @@ class CommunityLicenceFilter
 {
     /**
      * @Form\Options({"category": "com_lic_sts"})
-     * @Form\Type("\Common\Form\Element\DynamicMultiCheckbox")
+     * @Form\Type("DynamicMultiCheckbox")
      */
     public $status = null;
 

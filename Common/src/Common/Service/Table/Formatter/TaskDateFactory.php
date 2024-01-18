@@ -3,8 +3,7 @@
 namespace Common\Service\Table\Formatter;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
@@ -20,23 +19,8 @@ class TaskDateFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
-            $container = $container->getServiceLocator();
-        }
         $formatterPluginManager = $container->get(FormatterPluginManager::class);
         $dateFormatter = $formatterPluginManager->get(Date::class);
         return new TaskDate($dateFormatter);
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     *
-     * @return TaskDate
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): TaskDate
-    {
-        return $this->__invoke($serviceLocator, TaskDate::class);
     }
 }

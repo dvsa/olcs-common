@@ -21,9 +21,9 @@ use Laminas\Form\View\Helper\FormElement as LaminasFormElement;
  */
 class FormElement extends LaminasFormElement
 {
-    const GUIDANCE_WRAPPER = '<div class="article">%s</div>';
-    const TERMS_BOX_WRAPPER = '<div %s>%s</div>';
-    const FILE_CHOOSE_WRAPPER
+    protected const GUIDANCE_WRAPPER = '<div class="article">%s</div>';
+    protected const TERMS_BOX_WRAPPER = '<div %s>%s</div>';
+    protected const FILE_CHOOSE_WRAPPER
         = '<ul class="%s"><li class="%s"><label class="%s">%s %s</label><p class="%s">%s</p></li></ul>';
 
     /**
@@ -52,7 +52,7 @@ class FormElement extends LaminasFormElement
      *
      * @return string
      */
-    public function render(LaminasElementInterface $element)
+    public function render(LaminasElementInterface $element): string
     {
         if (!$element->getAttribute('id')) {
             $element->setAttribute('id', $element->getName());
@@ -183,7 +183,7 @@ class FormElement extends LaminasFormElement
         }
 
         if ($element instanceof Html) {
-            return $element->getValue();
+            return is_string($element->getValue()) ? $element->getValue() : '';
         }
 
         if ($element instanceof Table) {

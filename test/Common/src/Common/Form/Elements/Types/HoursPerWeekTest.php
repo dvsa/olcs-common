@@ -24,7 +24,7 @@ class HoursPerWeekTest extends \PHPUnit\Framework\TestCase
     public function testGetMessages()
     {
         $element = new HoursPerWeek();
-        $element->setMessages('messages');
-        $this->assertEquals('messages', $element->getMessages());
+        $element->setMessages(['messages']);
+        $this->assertEquals(['messages'], $element->getMessages());
     }
 }

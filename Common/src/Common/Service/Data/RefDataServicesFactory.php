@@ -3,8 +3,8 @@
 namespace Common\Service\Data;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
+
 
 /**
  * RefDataServicesFactory
@@ -25,17 +25,5 @@ class RefDataServicesFactory implements FactoryInterface
             $container->get(AbstractListDataServiceServices::class),
             $container->get('LanguagePreference')
         );
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $services
-     *
-     * @return RefDataServices
-     */
-    public function createService(ServiceLocatorInterface $services): RefDataServices
-    {
-        return $this($services, RefDataServices::class);
     }
 }

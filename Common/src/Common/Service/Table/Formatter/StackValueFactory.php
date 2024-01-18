@@ -3,8 +3,7 @@
 namespace Common\Service\Table\Formatter;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class StackValueFactory implements FactoryInterface
 {
@@ -16,20 +15,7 @@ class StackValueFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $container = method_exists($container, 'getServiceLocator') ? $container->getServiceLocator() : $container;
         $stackHelper = $container->get('Helper\Stack');
         return new StackValue($stackHelper);
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     *
-     * @return StackValue
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): StackValue
-    {
-        return $this->__invoke($serviceLocator, StackValue::class);
     }
 }

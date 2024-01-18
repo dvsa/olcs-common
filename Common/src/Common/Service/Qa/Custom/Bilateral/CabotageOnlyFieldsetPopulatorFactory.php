@@ -3,8 +3,7 @@
 namespace Common\Service\Qa\Custom\Bilateral;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class CabotageOnlyFieldsetPopulatorFactory implements FactoryInterface
 {
@@ -15,13 +14,5 @@ class CabotageOnlyFieldsetPopulatorFactory implements FactoryInterface
             $container->get('QaBilateralYesNoWithMarkupForNoPopulator'),
             $container->get('QaBilateralStandardYesNoValueOptionsGenerator')
         );
-    }
-
-    /**
-     * @deprecated
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): CabotageOnlyFieldsetPopulator
-    {
-        return $this->__invoke($serviceLocator, CabotageOnlyFieldsetPopulator::class);
     }
 }

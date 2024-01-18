@@ -37,7 +37,7 @@ class FormTable extends AbstractHelper
      *
      * @return string
      */
-    public function render(ElementInterface $element)
+    public function render(ElementInterface $element): string
     {
         if (!($element instanceof Table)) {
             return '';

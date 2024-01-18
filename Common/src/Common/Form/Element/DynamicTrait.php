@@ -3,6 +3,8 @@
 namespace Common\Form\Element;
 
 use Common\Service\Data\Interfaces\ListData;
+use Common\Service\Data\PluginManager;
+use Interop\Container\ContainerInterface;
 
 trait DynamicTrait
 {
@@ -34,15 +36,11 @@ trait DynamicTrait
      */
     protected $exclude = [];
 
-    /**
-     * @var \Common\Service\Data\Interfaces\ListData
-     */
     protected $dataService;
 
-    /**
-     * @var \Laminas\ServiceManager\ServiceLocatorInterface
-     */
-    protected $serviceLocator;
+    protected PluginManager $dataServiceManager;
+
+    protected ContainerInterface $serviceLocator;
 
     /**
      * Name of the data service to use to fetch list options from
@@ -125,17 +123,13 @@ trait DynamicTrait
     }
 
     /**
-     * @return \Common\Service\Data\RefData
+     * @return string
      */
     public function getServiceName()
     {
         return $this->serviceName;
     }
 
-    /**
-     * @param \Common\Service\Data\Interfaces\ListData $dataService
-     * @return $this
-     */
     public function setDataService($dataService)
     {
         $this->dataService = $dataService;
@@ -149,7 +143,7 @@ trait DynamicTrait
     public function getDataService()
     {
         if (is_null($this->dataService)) {
-            $this->dataService = $this->getServiceLocator()->get($this->getServiceName());
+            $this->dataService = $this->dataServiceManager->get($this->getServiceName());
             if (!($this->dataService instanceof ListData)) {
                 throw new \Exception(
                     sprintf(
@@ -163,20 +157,7 @@ trait DynamicTrait
         return $this->dataService;
     }
 
-    /**
-     * @param \Laminas\ServiceManager\ServiceLocatorInterface $serviceLocator
-     * @return $this
-     */
-    public function setServiceLocator($serviceLocator)
-    {
-        $this->serviceLocator = $serviceLocator;
-        return $this;
-    }
-
-    /**
-     * @return \Laminas\ServiceManager\ServiceLocatorInterface
-     */
-    public function getServiceLocator()
+    public function getServiceLocator(): ContainerInterface
     {
         return $this->serviceLocator;
     }
@@ -261,7 +242,7 @@ trait DynamicTrait
      *
      * @return array
      */
-    public function getValueOptions()
+    public function getValueOptions(): array
     {
         if (empty($this->valueOptions)) {
             $refDataService = $this->getDataService();

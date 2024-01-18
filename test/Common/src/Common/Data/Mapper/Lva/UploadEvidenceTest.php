@@ -2,6 +2,8 @@
 
 namespace CommonTest\Data\Mapper\Lva;
 
+use Laminas\Form\ElementInterface;
+use Laminas\Form\Fieldset;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Data\Mapper\Lva\UploadEvidence;
 use Common\Form\Form;
@@ -110,7 +112,7 @@ class UploadEvidenceTest extends MockeryTestCase
 
         $label = 'bar, cake';
 
-        $fieldset = m::mock()
+        $fieldset = m::mock(Fieldset::class)
             ->shouldReceive('setLabel')
             ->with($label)
             ->once()
@@ -122,7 +124,7 @@ class UploadEvidenceTest extends MockeryTestCase
             ->shouldReceive('get')
             ->with('operatingCentres')
             ->andReturn(
-                m::mock()
+                m::mock(ElementInterface::class)
                 ->shouldReceive('getFieldsets')
                 ->andReturn($fieldsets)
                 ->once()

@@ -15,7 +15,7 @@ class AddTransportManagerDetails
      * @Form\Attributes({"class":"long","id":"", "disabled":"disabled"})
      * @Form\Options({"label":"lva-tm-details-forename"})
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
+     * @Form\Filter("Laminas\Filter\StringTrim")
      */
     public $forename = null;
 
@@ -23,7 +23,7 @@ class AddTransportManagerDetails
      * @Form\Attributes({"class":"long","id":"", "disabled":"disabled"})
      * @Form\Options({"label":"lva-tm-details-familyName"})
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
+     * @Form\Filter("Laminas\Filter\StringTrim")
      */
     public $familyName = null;
 
@@ -32,13 +32,13 @@ class AddTransportManagerDetails
      * @Form\Options({
      *     "label": "dob",
      *     "create_empty_option": false,
-     *     "render_delimiters": "d m y"
+     *     "render_delimiters": true
      * })
      * @Form\Type("DateSelect")
-     * @Form\Filter({"name": "DateSelectNullifier"})
-     * @Form\Validator({"name": "\Common\Validator\Date"})
-     * @Form\Validator({"name":"Date","options":{"format":"Y-m-d"}})
-     * @Form\Validator({"name":"DateNotInFuture"})
+     * @Form\Filter("DateSelectNullifier")
+     * @Form\Validator("\Common\Validator\Date")
+     * @Form\Validator("Date", options={"format":"Y-m-d"})
+     * @Form\Validator("DateNotInFuture")
      */
     public $birthDate = null;
 
@@ -51,8 +51,8 @@ class AddTransportManagerDetails
      *     }
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
-     * @Form\Validator({"name":"Dvsa\Olcs\Transfer\Validators\EmailAddress"})
+     * @Form\Filter("Laminas\Filter\StringTrim")
+     * @Form\Validator("Dvsa\Olcs\Transfer\Validators\EmailAddress")
      */
     public $email = null;
 

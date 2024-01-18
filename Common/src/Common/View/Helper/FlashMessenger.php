@@ -4,7 +4,7 @@ namespace Common\View\Helper;
 
 use Common\Service\Helper\FlashMessengerHelperService;
 use Laminas\View\Helper\FlashMessenger as LaminasFlashMessenger;
-use Laminas\Mvc\Controller\Plugin\FlashMessenger as PluginFlashMessenger;
+use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger as PluginFlashMessenger;
 
 /**
  * Flash messenger view helper (Extends laminas flash messenger)

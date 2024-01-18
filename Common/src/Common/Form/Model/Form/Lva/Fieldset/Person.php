@@ -42,8 +42,8 @@ class Person
      *     "error-message": "person_forename-error"
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
-     * @Form\Validator({"name":"Laminas\Validator\StringLength","options":{"min":0,"max":35}})
+     * @Form\Filter("Laminas\Filter\StringTrim")
+     * @Form\Validator("Laminas\Validator\StringLength", options={"min":0,"max":35})
      */
     public $forename = null;
 
@@ -55,8 +55,8 @@ class Person
      *     "error-message": "person_familyName-error"
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
-     * @Form\Validator({"name":"Laminas\Validator\StringLength","options":{"min":0,"max":35}})
+     * @Form\Filter("Laminas\Filter\StringTrim")
+     * @Form\Validator("Laminas\Validator\StringLength", options={"min":0,"max":35})
      */
     public $familyName = null;
 
@@ -68,7 +68,7 @@ class Person
      * })
      * @Form\Required(false)
      * @Form\Type("Text")
-     * @Form\Validator({"name":"Laminas\Validator\StringLength","options":{"min":0,"max":35}})
+     * @Form\Validator("Laminas\Validator\StringLength", options={"min":0,"max":35})
      */
     public $otherName = null;
 
@@ -76,8 +76,8 @@ class Person
      * @Form\Attributes({"class":"long","id":""})
      * @Form\Options({"label":"application_your-business_people-sub-action-formPosition"})
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
-     * @Form\Validator({"name":"Laminas\Validator\StringLength","options":{"min":0,"max":45}})
+     * @Form\Filter("Laminas\Filter\StringTrim")
+     * @Form\Validator("Laminas\Validator\StringLength", options={"min":0,"max":45})
      */
     public $position = null;
 
@@ -87,16 +87,16 @@ class Person
      * @Form\Options({
      *     "label": "dob",
      *     "create_empty_option": false,
-     *     "render_delimiters": "d m y",
+     *     "render_delimiters": true,
      *     "error-message": "person_birthDate-error",
      *     "fieldset-attributes": {"id":"dob_day"}
      * })
      * @Form\Type("DateSelect")
-     * @Form\Filter({"name":"DateSelect", "options":{"null_on_empty":true}})
-     * @Form\Validator({"name":"NotEmpty", "options": {"array"}})
-     * @Form\Validator({"name": "\Common\Validator\Date"})
-     * @Form\Validator({"name":"Date","options":{"format":"Y-m-d"}})
-     * @Form\Validator({"name":"\Common\Form\Elements\Validators\DateNotInFuture"})
+     * @Form\Filter("DateSelect", options={"null_on_empty":true})
+     * @Form\Validator("NotEmpty", options={"array"})
+     * @Form\Validator("\Common\Validator\Date")
+     * @Form\Validator("Date", options={"format":"Y-m-d"})
+     * @Form\Validator("\Common\Form\Elements\Validators\DateNotInFuture")
      */
     public $birthDate = null;
 }

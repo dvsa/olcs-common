@@ -5,18 +5,16 @@ namespace CommonTest\View\Factory\Helper;
 use Common\View\Factory\Helper\EscapeHtmlFactory;
 use Common\View\Helper\EscapeHtml;
 use HTMLPurifier;
+use Interop\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class EscapeHtmlFactoryTest extends TestCase
 {
-    public function testCreateService()
+    public function testInvoke(): void
     {
-        /** @var ServiceLocatorInterface|m\MockInterface $mockSl */
-        $mockSl = m::mock(ServiceLocatorInterface::class);
-        $mockSl->shouldReceive('getServiceLocator')->andReturnSelf();
-        $mockSl->shouldReceive('get')
+        $container = m::mock(ContainerInterface::class);
+        $container->expects('get')
             ->andReturnUsing(
                 function ($class) {
                     $map = [
@@ -28,7 +26,7 @@ class EscapeHtmlFactoryTest extends TestCase
 
         static::assertInstanceOf(
             EscapeHtml::class,
-            (new EscapeHtmlFactory())->createService($mockSl)
+            (new EscapeHtmlFactory())->__invoke($container, EscapeHtml::class)
         );
     }
 }

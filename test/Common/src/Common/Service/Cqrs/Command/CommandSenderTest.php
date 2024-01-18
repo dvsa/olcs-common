@@ -4,14 +4,10 @@ namespace CommonTest\Common\Service\Cqrs\Command;
 
 use Common\Service\Cqrs\Command\CommandSender;
 use Dvsa\Olcs\Transfer\Command\CommandInterface;
+use Laminas\ServiceManager\ServiceManager;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
-/**
- * Command Sender Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class CommandSenderTest extends MockeryTestCase
 {
     protected $sut;
@@ -26,17 +22,12 @@ class CommandSenderTest extends MockeryTestCase
         $this->commandService = m::mock();
         $this->annotationBuilder = m::mock();
 
-        $sm = m::mock('\Laminas\ServiceManager\ServiceManager')
-            ->makePartial()
-            ->setAllowOverride(true);
-
-        // inject a real string helper
-        $sm->setService('Helper\String', new \Common\Service\Helper\StringHelperService());
+        $sm = new ServiceManager();
 
         $sm->setService('CommandService', $this->commandService);
         $sm->setService('TransferAnnotationBuilder', $this->annotationBuilder);
 
-        $service = $this->sut->createService($sm);
+        $service = $this->sut->__invoke($sm, CommandSender::class);
 
         $this->assertSame($service, $this->sut);
     }

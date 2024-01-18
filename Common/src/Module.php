@@ -7,17 +7,16 @@ use Common\Preference\LanguageListener;
 use Common\Service\Cqrs\Exception\AccessDeniedException;
 use Common\Service\Cqrs\Exception\NotFoundException;
 use Common\Service\Helper\TranslationHelperService;
-use Common\Service\Table\Formatter\FormatterPluginManager;
 use Dvsa\Olcs\Utils\Translation\MissingTranslationProcessor;
+use Laminas\ServiceManager\ServiceManager;
 use Olcs\Logging\Log\Logger;
-use Laminas\Cache\Storage\Adapter\Redis;
 use Laminas\EventManager\EventManager;
 use Laminas\Http\Request;
 use Laminas\I18n\Translator\Translator;
 use Laminas\ModuleManager\ModuleEvent;
 use Laminas\Mvc\Application;
 use Laminas\Mvc\MvcEvent;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+
 use Laminas\Http\PhpEnvironment\Response;
 use Laminas\View\Model\ViewModel;
 use Laminas\ModuleManager\Feature\ConfigProviderInterface;
@@ -95,7 +94,7 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
         );
 
         //  RBAC behaviour if user not authorised
-        $events->attach($sm->get(\ZfcRbac\View\Strategy\RedirectStrategy::class));
+        $events->attach(MvcEvent::EVENT_DISPATCH_ERROR, [$sm->get(\LmcRbacMvc\View\Strategy\RedirectStrategy::class), 'onError']);
         //  CSRF token check
         $events->attach(MvcEvent::EVENT_DISPATCH, [$this, 'validateCsrfToken'], 100);
 
@@ -250,13 +249,12 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
      *
      * @return void
      */
-    protected function setUpTranslator(ServiceLocatorInterface $sm, $eventManager)
+    protected function setUpTranslator(ServiceManager $sm, $eventManager)
     {
         /**
          * @var Translator $translator
-         * @var Redis      $cache
          */
-        $cache = $sm->get(Redis::class);
+        $cache = $sm->get('default-cache');
         $translator = $sm->get('translator');
         $translator->setCache($cache);
 
@@ -327,30 +325,15 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
      *
      * @return void
      */
-    private function setLoggerUser(ServiceLocatorInterface $serviceManager)
+    private function setLoggerUser(ServiceManager $serviceManager)
     {
-        $authService = $serviceManager->get(\ZfcRbac\Service\AuthorizationService::class);
+        $authService = $serviceManager->get(\LmcRbacMvc\Service\AuthorizationService::class);
         $serviceManager->get('LogProcessorManager')->get(\Olcs\Logging\Log\Processor\UserId::class)
             ->setUserId($authService->getIdentity()->getUsername());
     }
 
     public function getServiceConfig()
     {
-        return [
-            'factories' => [
-                FormatterPluginManager::class => function ($serviceManager) {
-                    $config = include __DIR__ . '/../config/formatter-plugins.config.php';
-                    if (method_exists($serviceManager, 'configure')) {
-                        // Should work with laminas 3
-                        $pluginManager = new FormatterPluginManager($serviceManager);
-                        $pluginManager->configure($config);
-                    } else {
-                        // ToDo: This can be removed when we move to 3 from 2.5
-                        $pluginManager = new FormatterPluginManager($serviceManager, $config);
-                    }
-                    return $pluginManager;
-                },
-            ],
-        ];
+        return [];
     }
 }

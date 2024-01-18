@@ -2,22 +2,20 @@
 
 namespace CommonTest\Controller\Plugin;
 
+use Laminas\Mvc\Controller\PluginManager;
 use Laminas\View\Helper\Placeholder;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Olcs\TestHelpers\ControllerPluginManagerHelper;
 use Laminas\Mvc\MvcEvent;
-use Laminas\Mvc\Router\Http\Segment;
-use Laminas\Mvc\Router\RouteMatch;
-use Laminas\Mvc\Router\SimpleRouteStack;
+use Laminas\Router\Http\Segment;
+use Laminas\Router\RouteMatch;
+use Laminas\Router\SimpleRouteStack;
 use Laminas\View\Model\ViewModel;
 use Laminas\Navigation\Page\Mvc as NavigationPage;
 use CommonTest\Common\Controller\Plugin\ControllerStub;
+use Psr\Container\ContainerInterface;
 
-/**
- * Class ElasticSearchPluginTest
- * @package OlcsTest\Mvc\Controller\Plugin
- */
 class ElasticSearchTest extends MockeryTestCase
 {
     protected $sut;
@@ -55,13 +53,13 @@ class ElasticSearchTest extends MockeryTestCase
             ->makePartial()
             ->setAllowOverride(true);
 
-        $this->pm = m::mock('\Laminas\Mvc\Controller\PluginManager[setInvokableClass]')->makePartial();
+        $this->container = m::mock(ContainerInterface::class);
+        $this->pm = new PluginManager($this->container);
         $this->pm->setInvokableClass('ElasticSearch', 'Common\Controller\Plugin\ElasticSearch');
 
         $this->mockPlaceholder = m::mock(Placeholder::class);
         $this->sut = new ControllerStub($this->mockPlaceholder);
         $this->sut->setEvent($this->event);
-        $this->sut->setServiceLocator($this->sm);
         $this->sut->setPluginManager($this->pm);
     }
 

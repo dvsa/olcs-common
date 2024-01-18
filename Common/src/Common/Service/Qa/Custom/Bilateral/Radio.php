@@ -9,7 +9,7 @@ class Radio extends CommonRadio
     /**
      * {@inheritdoc}
      */
-    public function getInputSpecification()
+    public function getInputSpecification(): array
     {
         $spec = $this->callParentGetInputSpecification();
 

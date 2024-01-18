@@ -6,8 +6,7 @@ namespace Common\FormService\Form\Continuation;
 
 use Common\Service\Helper\FormHelperService;
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class ConditionsUndertakingsFactory implements FactoryInterface
 {
@@ -21,20 +20,7 @@ class ConditionsUndertakingsFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): ConditionsUndertakings
     {
-        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
-            $container = $container->getServiceLocator();
-        }
         $formHelper = $container->get(FormHelperService::class);
         return new ConditionsUndertakings($formHelper);
-    }
-
-    /**
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return ConditionsUndertakings
-     * @deprecated
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): ConditionsUndertakings
-    {
-        return $this->__invoke($serviceLocator, ConditionsUndertakings::class);
     }
 }

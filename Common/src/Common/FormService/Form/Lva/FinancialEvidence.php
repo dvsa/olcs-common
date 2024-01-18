@@ -5,7 +5,9 @@ namespace Common\FormService\Form\Lva;
 use Common\Service\Helper\FormHelperService;
 use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Helper\UrlHelperService;
-use ZfcRbac\Service\AuthorizationService;
+use Common\Validator\ValidateIf;
+use Laminas\Validator\ValidatorPluginManager;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * FinancialEvidence Form
@@ -18,17 +20,20 @@ class FinancialEvidence extends AbstractLvaFormService
     protected FormHelperService $formHelper;
     protected TranslationHelperService $translator;
     protected UrlHelperService $urlHelper;
+    protected ValidatorPluginManager $validatorPluginManager;
 
     public function __construct(
         FormHelperService $formHelper,
         AuthorizationService $authService,
         TranslationHelperService $translator,
-        UrlHelperService $urlHelper
+        UrlHelperService $urlHelper,
+        ValidatorPluginManager $validatorPluginManager
     ) {
         $this->authService = $authService;
         $this->formHelper = $formHelper;
         $this->translator = $translator;
         $this->urlHelper = $urlHelper;
+        $this->validatorPluginManager = $validatorPluginManager;
     }
 
     /**
@@ -69,5 +74,31 @@ class FinancialEvidence extends AbstractLvaFormService
             ]
         );
         $evidenceFieldset->setOption('hint', $evidenceHint);
+
+        $inputFilter = $form->getInputFilter();
+
+        $evidenceInputFilter = $inputFilter->get('evidence');
+
+        $evidenceInputFilter->get('uploadNowRadio')->setRequired(false);
+        $evidenceInputFilter->get('uploadLaterRadio')->setRequired(false);
+        $evidenceInputFilter->get('sendByPostRadio')->setRequired(false);
+
+        $uploadedFileCountInput = $evidenceInputFilter->get('uploadedFileCount');
+        $validateIfValidator = $this->validatorPluginManager->get(ValidateIf::class);
+        $validateIfValidator->setOptions([
+            'context_field' => 'uploadNowRadio',
+            'context_values' => ['1'],
+            'validators' => [
+                [
+                    'name' => '\Common\Validator\FileUploadCount',
+                    'options' => [
+                        'min' => 1,
+                        'message' => 'lva-financial-evidence-upload.required',
+                    ],
+                ],
+            ],
+        ]);
+
+        $uploadedFileCountInput->getValidatorChain()->attach($validateIfValidator);
     }
 }

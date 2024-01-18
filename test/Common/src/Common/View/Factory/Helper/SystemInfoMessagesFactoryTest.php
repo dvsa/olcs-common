@@ -6,22 +6,19 @@ use Common\Service\Cqrs\Query\CachingQueryService;
 use Common\View\Factory\Helper\SystemInfoMessagesFactory;
 use Common\View\Helper\SystemInfoMessages;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
+use Interop\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
-use Laminas\ServiceManager\ServiceLocatorInterface;
-use ZfcRbac\Service\AuthorizationService;
 
 /**
  * @covers Common\View\Factory\Helper\SystemInfoMessagesFactory
  */
 class SystemInfoMessagesFactoryTest extends TestCase
 {
-    public function testCreateService()
+    public function testInvoke(): void
     {
-        /** @var ServiceLocatorInterface|m\MockInterface $mockSl */
-        $mockSl = m::mock(ServiceLocatorInterface::class);
-        $mockSl->shouldReceive('getServiceLocator')->andReturnSelf();
-        $mockSl->shouldReceive('get')
+        $container = m::mock(ContainerInterface::class);
+        $container->expects('get')
             ->andReturnUsing(
                 function ($class) {
                     $map = [
@@ -35,7 +32,7 @@ class SystemInfoMessagesFactoryTest extends TestCase
 
         static::assertInstanceOf(
             SystemInfoMessages::class,
-            (new SystemInfoMessagesFactory())->createService($mockSl)
+            (new SystemInfoMessagesFactory())->__invoke($container, SystemInfoMessages::class)
         );
     }
 }

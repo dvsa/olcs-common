@@ -5,9 +5,9 @@ namespace Common\Service\Table;
 use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Exception\MissingFormatterException;
 use Common\Service\Table\Formatter\FormatterPluginManager;
+use Interop\Container\ContainerInterface;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\ServiceManager\ServiceLocatorInterface;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Table Builder
@@ -204,10 +204,7 @@ class TableBuilder
      */
     private $isDisabled = false;
 
-    /**
-     * @var ServiceLocatorInterface
-     */
-    private $serviceLocator;
+    private ContainerInterface $serviceLocator;
 
     /**
      * Authorisation service to allow columns/rows to be hidden depending on permission model
@@ -266,17 +263,10 @@ class TableBuilder
     }
 
     /**
-     * Create service instance
-     *
-     * @param ServiceLocatorInterface $sm
-     * @param AuthorizationService $authService
-     * @param Translator $translator
-     * @param UrlHelperService $urlHelper
-     *
      * @return TableBuilder
      */
     public function __construct(
-        ServiceLocatorInterface $serviceLocator,
+        ContainerInterface $serviceLocator,
         AuthorizationService $authService,
         Translator $translator,
         UrlHelperService $urlHelper,
@@ -2168,12 +2158,7 @@ class TableBuilder
         return $this->translator;
     }
 
-    /**
-     * Get service locator
-     *
-     * @return ServiceLocatorInterface
-     */
-    public function getServiceLocator()
+    public function getServiceLocator(): ContainerInterface
     {
         return $this->serviceLocator;
     }

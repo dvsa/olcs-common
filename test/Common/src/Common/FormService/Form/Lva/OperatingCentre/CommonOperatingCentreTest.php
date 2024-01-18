@@ -3,6 +3,8 @@
 namespace CommonTest\Common\FormService\Form\Lva\OperatingCentre;
 
 use Common\FormService\Form\Lva\OperatingCentre\CommonOperatingCentre;
+use Laminas\Form\ElementInterface;
+use Laminas\Form\Fieldset;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Form\Element;
@@ -10,11 +12,6 @@ use Laminas\Form\Form;
 use Laminas\Http\Request;
 use Common\Service\Helper\FormHelperService;
 
-/**
- * Common Operating Centre Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class CommonOperatingCentreTest extends MockeryTestCase
 {
     protected $form;
@@ -59,7 +56,7 @@ class CommonOperatingCentreTest extends MockeryTestCase
         $this->form->shouldReceive('get')
             ->with('form-actions')
             ->andReturn(
-                m::mock()
+                m::mock(ElementInterface::class)
                 ->shouldReceive('remove')
                 ->once()
                 ->with('addAnother')
@@ -69,11 +66,11 @@ class CommonOperatingCentreTest extends MockeryTestCase
         $this->form->shouldReceive('get')
             ->with('address')
             ->andReturn(
-                m::mock()
+                m::mock(ElementInterface::class)
                 ->shouldReceive('get')
                 ->with('postcode')
                 ->andReturn(
-                    m::mock()
+                    m::mock(ElementInterface::class)
                     ->shouldReceive('setOption')
                     ->with('shouldEscapeMessages', false)
                     ->once()
@@ -102,14 +99,14 @@ class CommonOperatingCentreTest extends MockeryTestCase
             'wouldIncreaseRequireAdditionalAdvertisement' => false
         ];
 
-        $permission = m::mock();
+        $permission = m::mock(ElementInterface::class);
 
-        $dataFieldset = m::mock();
+        $dataFieldset = m::mock(Fieldset::class);
         $dataFieldset
             ->shouldReceive('get')
             ->with('permission')
             ->andReturn(
-                m::mock()
+                m::mock(ElementInterface::class)
                     ->shouldReceive('get')
                     ->with('permission')
                     ->andReturn($permission)
@@ -141,7 +138,7 @@ class CommonOperatingCentreTest extends MockeryTestCase
         $this->form->shouldReceive('get')
             ->with('form-actions')
             ->andReturn(
-                m::mock()
+                m::mock(ElementInterface::class)
                     ->shouldReceive('remove')
                     ->once()
                     ->with('addAnother')
@@ -154,11 +151,11 @@ class CommonOperatingCentreTest extends MockeryTestCase
         $this->form->shouldReceive('get')
             ->with('address')
             ->andReturn(
-                m::mock()
+                m::mock(ElementInterface::class)
                     ->shouldReceive('get')
                     ->with('postcode')
                     ->andReturn(
-                        m::mock()
+                        m::mock(ElementInterface::class)
                             ->shouldReceive('setOption')
                             ->with('shouldEscapeMessages', false)
                             ->once()
@@ -190,7 +187,7 @@ class CommonOperatingCentreTest extends MockeryTestCase
         $this->form->shouldReceive('get')
             ->with('form-actions')
             ->andReturn(
-                m::mock()
+                m::mock(ElementInterface::class)
                     ->shouldReceive('has')
                     ->once()
                     ->with('addAnother')
@@ -207,11 +204,11 @@ class CommonOperatingCentreTest extends MockeryTestCase
         $this->form->shouldReceive('get')
             ->with('address')
             ->andReturn(
-                m::mock()
+                m::mock(ElementInterface::class)
                     ->shouldReceive('get')
                     ->with('postcode')
                     ->andReturn(
-                        m::mock()
+                        m::mock(ElementInterface::class)
                             ->shouldReceive('setOption')
                             ->with('shouldEscapeMessages', false)
                             ->once()
@@ -243,7 +240,7 @@ class CommonOperatingCentreTest extends MockeryTestCase
         $this->form->shouldReceive('get')
             ->with('form-actions')
             ->andReturn(
-                m::mock()
+                m::mock(ElementInterface::class)
                     ->shouldReceive('remove')
                     ->once()
                     ->with('addAnother')
@@ -257,7 +254,7 @@ class CommonOperatingCentreTest extends MockeryTestCase
             ->once()
             ->getMock();
 
-        $addressElement = m::mock();
+        $addressElement = m::mock(ElementInterface::class);
         $addressElement->shouldReceive('remove')
             ->once()
             ->with('searchPostcode')
@@ -307,7 +304,7 @@ class CommonOperatingCentreTest extends MockeryTestCase
         $this->form->shouldReceive('get')
             ->with('form-actions')
             ->andReturn(
-                m::mock()
+                m::mock(ElementInterface::class)
                     ->shouldReceive('remove')
                     ->once()
                     ->with('addAnother')
@@ -325,7 +322,7 @@ class CommonOperatingCentreTest extends MockeryTestCase
         $data->shouldReceive('get')
             ->with('noOfVehiclesRequired')
             ->andReturn(
-                m::mock()
+                m::mock(ElementInterface::class)
                 ->shouldReceive('setAttribute')
                 ->with('data-current', 10)
                 ->getMock()
@@ -334,7 +331,7 @@ class CommonOperatingCentreTest extends MockeryTestCase
         $data->shouldReceive('get')
             ->with('noOfTrailersRequired')
             ->andReturn(
-                m::mock()
+                m::mock(ElementInterface::class)
                     ->shouldReceive('setAttribute')
                     ->with('data-current', 11)
                     ->getMock()
@@ -347,11 +344,11 @@ class CommonOperatingCentreTest extends MockeryTestCase
         $this->form->shouldReceive('get')
             ->with('address')
             ->andReturn(
-                m::mock()
+                m::mock(ElementInterface::class)
                     ->shouldReceive('get')
                     ->with('postcode')
                     ->andReturn(
-                        m::mock()
+                        m::mock(ElementInterface::class)
                             ->shouldReceive('setOption')
                             ->with('shouldEscapeMessages', false)
                             ->once()

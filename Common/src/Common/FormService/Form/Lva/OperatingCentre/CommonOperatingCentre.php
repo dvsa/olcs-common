@@ -76,6 +76,12 @@ class CommonOperatingCentre
         }
 
         $form->get('address')->get('postcode')->setOption('shouldEscapeMessages', false);
+
+        $searchPostcodeInputFilter = $form->getInputFilter()->get('address')->get('searchPostcode');
+        foreach ($searchPostcodeInputFilter->getInputs() as $input) {
+            $input->setRequired(false);
+            $input->setAllowEmpty(true);
+        }
     }
 
     /**

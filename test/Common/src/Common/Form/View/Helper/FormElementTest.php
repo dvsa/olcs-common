@@ -7,7 +7,9 @@ use Common\Form\View\Helper\FormElement;
 use Common\Form\View\Helper\FormElementErrors;
 use Common\Form\View\Helper\FormPlainText;
 use CommonTest\Common\Util\DummyTranslator;
+use Interop\Container\ContainerInterface;
 use Laminas\I18n\View\Helper\Translate;
+use Laminas\View\Helper\Doctype;
 use Laminas\View\Helper\Url;
 use Laminas\View\Renderer\PhpRenderer;
 use Mockery as m;
@@ -15,11 +17,6 @@ use Laminas\View\HelperPluginManager;
 use Laminas\View\Renderer\JsonRenderer;
 use Laminas\Form\View\Helper;
 
-/**
- * FormElement Test
- *
- * @author Jakub Igla <jakub.igla@gmail.com>
- */
 class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
 {
     protected const A_HINT = 'A HINT';
@@ -572,18 +569,22 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
         $urlHelper = m::mock(Url::class);
         $urlHelper->shouldReceive('__invoke')->andReturn('url');
 
+        $docType = m::mock(Doctype::class);
+
         $formElementErrors = new FormElementErrors(new FormElementMessageFormatter($translator), $translator);
         $formElementErrors->setView($view);
 
-        $helpers = new HelperPluginManager();
-        $helpers->setService('form_text', new Helper\FormText());
-        $helpers->setService('form_input', new Helper\FormInput());
-        $helpers->setService('form_file', new Helper\FormFile());
+        $container = m::mock(ContainerInterface::class);
+
+        $helpers = new HelperPluginManager($container);
+        $helpers->setService('formtext', new Helper\FormText());
+        $helpers->setService('formfile', new Helper\FormFile());
         $helpers->setService('translate', $translateHelper);
         $helpers->setService('form_plain_text', $plainTextService);
         $helpers->setService('form', new Helper\Form());
         $helpers->setService('url', $urlHelper);
         $helpers->setService('form_element_errors', $formElementErrors);
+        $helpers->setService('doctype', $docType);
 
         $view->setHelperPluginManager($helpers);
 

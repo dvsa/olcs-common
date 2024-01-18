@@ -36,7 +36,7 @@ class File extends LaminasFile
      *
      * @return array
      */
-    public function getInputSpecification()
+    public function getInputSpecification(): array
     {
         $spec = parent::getInputSpecification();
 

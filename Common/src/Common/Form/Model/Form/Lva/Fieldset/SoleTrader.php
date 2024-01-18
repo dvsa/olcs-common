@@ -39,7 +39,7 @@ class SoleTrader
      *     "label": "application_your-business_people-sub-action-formFirstName",
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
+     * @Form\Filter("Laminas\Filter\StringTrim")
      */
     public $forename = null;
 
@@ -49,7 +49,7 @@ class SoleTrader
      *     "label": "application_your-business_people-sub-action-formSurname",
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
+     * @Form\Filter("Laminas\Filter\StringTrim")
      */
     public $familyName = null;
 
@@ -69,12 +69,12 @@ class SoleTrader
      * @Form\Options({
      *     "label": "application_your-business_people-sub-action-formDateOfBirth",
      *     "create_empty_option": false,
-     *     "render_delimiters": "d m y"
+     *     "render_delimiters": true
      * })
      * @Form\Type("DateSelect")
-     * @Form\Filter({"name": "DateSelectNullifier"})
-     * @Form\Validator({"name": "\Common\Validator\Date"})
-     * @Form\Validator({"name":"Date","options":{"format":"Y-m-d"}})
+     * @Form\Filter("DateSelectNullifier")
+     * @Form\Validator("\Common\Validator\Date")
+     * @Form\Validator("Date", options={"format":"Y-m-d"})
      */
     public $birthDate = null;
 }

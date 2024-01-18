@@ -2,7 +2,7 @@
 
 namespace CommonTest\Controller\Util;
 
-use Laminas\Mvc\Controller\Plugin\FlashMessenger as FlashMessengerPlugin;
+use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger as FlashMessengerPlugin;
 use Mockery as m;
 
 /**

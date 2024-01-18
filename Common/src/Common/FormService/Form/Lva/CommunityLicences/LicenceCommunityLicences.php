@@ -3,7 +3,7 @@
 namespace Common\FormService\Form\Lva\CommunityLicences;
 
 use Common\Service\Helper\FormHelperService;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Licence Community Licences

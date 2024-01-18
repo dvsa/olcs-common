@@ -27,6 +27,8 @@ use Common\Form\Element\DynamicRadioHtmlFactory;
 use Common\Form\Element\DynamicSelect;
 use Common\Form\Element\DynamicSelectFactory;
 use Common\Form\Elements\Custom\OlcsCheckbox;
+use Common\Form\Elements\Validators\TableRequiredValidator;
+use Common\Form\View\Helper\Extended\FormRadio;
 use Common\Form\View\Helper\FormInputSearch;
 use Common\Form\View\Helper\Readonly as ReadonlyFormHelper;
 use Common\FormService\Form\Continuation\ConditionsUndertakings;
@@ -48,10 +50,13 @@ use Common\Service\Helper\DataHelperService;
 use Common\Service\Helper\StringHelperService;
 use Common\Service\Qa as QaService;
 use Common\Service\Review\LicenceConditionsUndertakingsReviewService;
+use Common\Service\Table\Formatter\FormatterPluginManager;
 use Common\Service\Translator\TranslationLoader;
 use Common\Service\Translator\TranslationLoaderFactory;
 use Common\View\Helper\Panel;
-use ZfcRbac\Identity\IdentityProviderInterface;
+use Laminas\Form\Element\Textarea;
+use Laminas\ServiceManager\Factory\InvokableFactory;
+use LmcRbacMvc\Identity\IdentityProviderInterface;
 
 $release = json_decode(file_get_contents(__DIR__ . '/release.json'), true);
 
@@ -101,9 +106,13 @@ return [
         ]
     ],
     'controller_plugins' => [
+        'aliases' => [
+          'prg' => \Laminas\Mvc\Plugin\Prg\PostRedirectGet::class
+        ],
         'invokables' => [
             'redirect' => 'Common\Controller\Plugin\Redirect',
             \Common\Controller\Plugin\Redirect::class => \Common\Controller\Plugin\Redirect::class,
+            \Laminas\Mvc\Plugin\Prg\PostRedirectGet::class => \Laminas\Mvc\Plugin\Prg\PostRedirectGet::class
         ],
         'factories' => [
             'currentUser' => \Common\Controller\Plugin\CurrentUserFactory::class,
@@ -209,6 +218,7 @@ return [
             'VehicleList' => '\Common\Service\VehicleList\VehicleList',
             'postcode' => 'Common\Service\Postcode\Postcode',
             'CompaniesHouseApi' => 'Common\Service\CompaniesHouse\Api',
+            'TableRequired' => 'Common\Form\Elements\Validators\TableRequiredValidator',
             \Common\Service\Table\DataMapper\DashboardTmApplications::class => \Common\Service\Table\DataMapper\DashboardTmApplications::class,
 
             'applicationIdValidator' => 'Common\Form\Elements\Validators\ApplicationIdValidator',
@@ -247,7 +257,7 @@ return [
                 QaService\Custom\Bilateral\StandardAndCabotageSubmittedAnswerGenerator::class,
             'QaDateTimeFactory' => QaService\DateTimeFactory::class,
 
-            'QaRoadworthinessMakeAndModelFieldsetModifier' =>
+            'QaRoadWorthinessMakeAndModelFieldsetModifier' =>
                 QaService\FieldsetModifier\RoadworthinessMakeAndModelFieldsetModifier::class,
 
             'QaEcmtNoOfPermitsSingleDataTransformer' =>
@@ -269,7 +279,7 @@ return [
             \Laminas\View\HelperPluginManager::class => \Laminas\View\HelperPluginManager::class,
             HelperService\DateHelperService::class => HelperService\DateHelperService::class,
             HelperService\ComplaintsHelperService::class => HelperService\ComplaintsHelperService::class,
-            \Laminas\Mvc\Router\Http\TreeRouteStack::class => \Laminas\Mvc\Router\Http\TreeRouteStack::class
+            \Laminas\Router\Http\TreeRouteStack::class => \Laminas\Router\Http\TreeRouteStack::class,
         ],
         'factories' => [
             DataService\AbstractDataServiceServices::class => DataService\AbstractDataServiceServicesFactory::class,
@@ -325,6 +335,7 @@ return [
             'Common\Service\Table\TableBuilderFactory' => 'Common\Service\Table\TableBuilderFactory',
             'ServiceApiResolver' => 'Common\Service\Api\ResolverFactory',
             'navigation' => 'Laminas\Navigation\Service\DefaultNavigationFactory',
+            'Navigation' => 'Laminas\Navigation\Service\DefaultNavigationFactory',
             'SectionService' => '\Common\Controller\Service\SectionServiceFactory',
             'FormAnnotationBuilder' => '\Common\Service\FormAnnotationBuilderFactory',
             'Common\Service\Data\PluginManager' => Common\Service\Data\PluginManagerFactory::class,
@@ -449,8 +460,15 @@ return [
             \Common\Controller\Lva\Adapters\VariationPeopleAdapter::class => \Common\Controller\Lva\Factories\Adapter\VariationPeopleAdapterFactory::class,
             \Common\Controller\Lva\Adapters\VariationTransportManagerAdapter::class => \Common\Controller\Lva\Factories\Adapter\VariationTransportManagerAdapterFactory::class,
             LicenceConditionsUndertakingsReviewService::class => Common\Service\Review\LicenceConditionsUndertakingsReviewServiceFactory::class,
+            'MvcTranslator' => \Laminas\I18n\Translator\TranslatorServiceFactory::class,
+            FormatterPluginManager::class => function ($container) {
+                $config = $container->get('config');
+                $formatterConfig = $config['formatter_plugins'] ?? [];
+                return new FormatterPluginManager($container, $formatterConfig);
+            },
         ],
     ],
+    'formatter_plugins' => include __DIR__ . '/formatter-plugins.config.php',
     'file_uploader' => [
         'default' => 'ContentStore',
         'config' => [
@@ -470,7 +488,7 @@ return [
             'formCheckboxAdvanced' => \Common\Form\View\Helper\FormCheckboxAdvanced::class,
             'formRadioVertical' => \Common\Form\View\Helper\FormRadioVertical::class,
             'form' => 'Common\Form\View\Helper\Form',
-            'formCollection' => Common\Form\View\Helper\FormCollection::class,
+            \Common\Form\View\Helper\FormCollection::class => Common\Form\View\Helper\FormCollection::class,
             'formDateTimeSelect' => 'Common\Form\View\Helper\FormDateTimeSelect',
             'formDateSelect' => \Common\Form\View\Helper\FormDateSelect::class,
             FormInputSearch::class => FormInputSearch::class,
@@ -478,7 +496,7 @@ return [
             'addTags' => 'Common\View\Helper\AddTags',
             'transportManagerApplicationStatus' => 'Common\View\Helper\TransportManagerApplicationStatus',
             'status' => 'Common\View\Helper\Status',
-            'address' => 'Common\View\Helper\Address',
+            'address' => \Common\View\Helper\Address::class,
             'personName' => 'Common\View\Helper\PersonName',
             'dateTime' => \Common\View\Helper\DateTime::class,
             'returnToAddress' => Common\View\Helper\ReturnToAddress::class,
@@ -502,36 +520,36 @@ return [
             'currencyFormatter' => \Common\View\Helper\CurrencyFormatter::class,
 
             // Extended form view helpers, to allow us to use alternative attributes that are not in ZF2's whitelist
-            'formbutton'              => \Common\Form\View\Helper\Extended\FormButton::class,
-            'formcaptcha'             => \Common\Form\View\Helper\Extended\FormCaptcha::class,
-            'formcheckbox'            => \Common\Form\View\Helper\Extended\FormCheckbox::class,
-            'formcolor'               => \Common\Form\View\Helper\Extended\FormColor::class,
-            'formdate'                => \Common\Form\View\Helper\Extended\FormDate::class,
-            'formdatetime'            => \Common\Form\View\Helper\Extended\FormDateTime::class,
+            'formButton'              => \Common\Form\View\Helper\Extended\FormButton::class,
+            'formCaptcha'             => \Common\Form\View\Helper\Extended\FormCaptcha::class,
+            'formCheckbox'            => \Common\Form\View\Helper\Extended\FormCheckbox::class,
+            'formColor'               => \Common\Form\View\Helper\Extended\FormColor::class,
+            'formDate'                => \Common\Form\View\Helper\Extended\FormDate::class,
+            'formDatetime'            => \Common\Form\View\Helper\Extended\FormDateTime::class,
             'formdatetimelocal'       => \Common\Form\View\Helper\Extended\FormDateTimeLocal::class,
-            'formemail'               => \Common\Form\View\Helper\Extended\FormEmail::class,
-            'formfile'                => \Common\Form\View\Helper\Extended\FormFile::class,
-            'formhidden'              => \Common\Form\View\Helper\Extended\FormHidden::class,
-            'formimage'               => \Common\Form\View\Helper\Extended\FormImage::class,
-            'forminput'               => \Common\Form\View\Helper\Extended\FormInput::class,
-            'formlabel'               => \Common\Form\View\Helper\Extended\FormLabel::class,
-            'formmonth'               => \Common\Form\View\Helper\Extended\FormMonth::class,
+            'formEmail'               => \Common\Form\View\Helper\Extended\FormEmail::class,
+            'formFile'                => \Common\Form\View\Helper\Extended\FormFile::class,
+            'formHidden'              => \Common\Form\View\Helper\Extended\FormHidden::class,
+            'formImage'               => \Common\Form\View\Helper\Extended\FormImage::class,
+            'formInput'               => \Common\Form\View\Helper\Extended\FormInput::class,
+            'formLabel'               => \Common\Form\View\Helper\Extended\FormLabel::class,
+            'formMonth'               => \Common\Form\View\Helper\Extended\FormMonth::class,
             'formmonthselect'         => \Common\Form\View\Helper\Extended\FormMonthSelect::class,
             'formmulticheckbox'       => \Common\Form\View\Helper\Extended\FormMultiCheckbox::class,
-            'formnumber'              => \Common\Form\View\Helper\Extended\FormNumber::class,
-            'formpassword'            => \Common\Form\View\Helper\Extended\FormPassword::class,
-            'formradio'               => \Common\Form\View\Helper\Extended\FormRadio::class,
-            'formrange'               => \Common\Form\View\Helper\Extended\FormRange::class,
-            'formreset'               => \Common\Form\View\Helper\Extended\FormReset::class,
-            'formsearch'              => \Common\Form\View\Helper\Extended\FormSearch::class,
-            'formselect'              => \Common\Form\View\Helper\Extended\FormSelect::class,
-            'formsubmit'              => \Common\Form\View\Helper\Extended\FormSubmit::class,
-            'formtel'                 => \Common\Form\View\Helper\Extended\FormTel::class,
-            'formtext'                => \Common\Form\View\Helper\Extended\FormText::class,
-            'formtextarea'            => \Common\Form\View\Helper\Extended\FormTextarea::class,
-            'formtime'                => \Common\Form\View\Helper\Extended\FormTime::class,
-            'formurl'                 => \Common\Form\View\Helper\Extended\FormUrl::class,
-            'formweek'                => \Common\Form\View\Helper\Extended\FormWeek::class,
+            'formNumber'              => \Common\Form\View\Helper\Extended\FormNumber::class,
+            'formPassword'            => \Common\Form\View\Helper\Extended\FormPassword::class,
+            'formRadio'               => \Common\Form\View\Helper\Extended\FormRadio::class,
+            'formRange'               => \Common\Form\View\Helper\Extended\FormRange::class,
+            'formReset'               => \Common\Form\View\Helper\Extended\FormReset::class,
+            'formSearch'              => \Common\Form\View\Helper\Extended\FormSearch::class,
+            'formSelect'              => \Common\Form\View\Helper\Extended\FormSelect::class,
+            'formSubmit'              => \Common\Form\View\Helper\Extended\FormSubmit::class,
+            'formTel'                 => \Common\Form\View\Helper\Extended\FormTel::class,
+            'formText'                => \Common\Form\View\Helper\Extended\FormText::class,
+            'formTextarea'            => \Common\Form\View\Helper\Extended\FormTextarea::class,
+            'formTime'                => \Common\Form\View\Helper\Extended\FormTime::class,
+            'formUrl'                 => \Common\Form\View\Helper\Extended\FormUrl::class,
+            'formWeek'                => \Common\Form\View\Helper\Extended\FormWeek::class,
         ],
         'factories' => [
             'applicationName' => \Common\View\Helper\ApplicationNameFactory::class,
@@ -539,27 +557,85 @@ return [
             'pageId' => \Common\View\Helper\PageIdFactory::class,
             'pageTitle' => \Common\View\Helper\PageTitleFactory::class,
             'LicenceChecklist' => \Common\View\Helper\LicenceChecklistFactory::class,
-            'date' => \Common\View\Helper\DateFactory::class,
-            'formRow' => \Common\Form\View\Helper\FormRowFactory::class,
-            'languageLink' => \Common\View\Helper\LanguageLinkFactory::class,
+            \Common\View\Helper\Date::class => \Common\View\Helper\DateFactory::class,
+            \Common\Form\View\Helper\FormRow::class => \Common\Form\View\Helper\FormRowFactory::class,
+            \Common\View\Helper\LanguageLink::class => \Common\View\Helper\LanguageLinkFactory::class,
             'currentUser' => \Common\View\Helper\CurrentUserFactory::class,
             'systemInfoMessages' => \Common\View\Factory\Helper\SystemInfoMessagesFactory::class,
             'linkBack' => Common\View\Helper\LinkBackFactory::class,
             'translateReplace' => \Common\View\Helper\TranslateReplaceFactory::class,
             'flashMessengerAll' => \Common\View\Factory\Helper\FlashMessengerFactory::class,
-            'escapeHtml' => \Common\View\Factory\Helper\EscapeHtmlFactory::class,
+            \Common\View\Helper\EscapeHtml::class => \Common\View\Factory\Helper\EscapeHtmlFactory::class,
             \Common\Form\View\Helper\FormElementErrors::class => \Common\Form\View\Helper\FormElementErrorsFactory::class,
             \Common\Form\View\Helper\FormErrors::class => \Common\Form\View\Helper\FormErrorsFactory::class,
             \Common\Form\View\Helper\FormElement::class => \Common\Form\View\Helper\FormElementFactory::class,
             \Common\View\Helper\Config::class => \Common\View\Helper\ConfigFactory::class,
+            'IsGranted' => \LmcRbacMvc\Factory\IsGrantedPluginFactory::class
         ],
         'aliases' => [
             'formElement' => \Common\Form\View\Helper\FormElement::class,
+            'FormElement' => \Common\Form\View\Helper\FormElement::class,
+            'formrow' => \Common\Form\View\Helper\FormRow::class,
+            'formcollection' => \Common\Form\View\Helper\FormCollection::class,
+            'formCollection' => Common\Form\View\Helper\FormCollection::class,
+            'form_collection' => \Common\Form\View\Helper\FormCollection::class,
+            'formRow' => \Common\Form\View\Helper\FormRow::class,
+            'formelement' => \Common\Form\View\Helper\FormElement::class,
+            'form_element' => \Common\Form\View\Helper\FormElement::class,
             'formElementErrors' => \Common\Form\View\Helper\FormElementErrors::class,
             'formelementerrors' => \Common\Form\View\Helper\FormElementErrors::class,
+            'form_element_errors' => \Common\Form\View\Helper\FormElementErrors::class,
             'formErrors' => \Common\Form\View\Helper\FormErrors::class,
             'formerrors' => \Common\Form\View\Helper\FormErrors::class,
             'config' => \Common\View\Helper\Config::class,
+            'escapeHtml' => \Common\View\Helper\EscapeHtml::class,
+            'formradio' => FormRadio::class,
+            'formradiooption' => \Common\Form\View\Helper\FormRadioOption::class,
+            'formradiohorizontal' => \Common\Form\View\Helper\FormRadioHorizontal::class,
+            'formcheckboxadvanced' => \Common\Form\View\Helper\FormCheckboxAdvanced::class,
+            'formradiovertical' => \Common\Form\View\Helper\FormRadioVertical::class,
+            'formdatetime' => \Common\Form\View\Helper\FormDateTimeSelect::class,
+            'formdateselect' => \Common\Form\View\Helper\FormDateSelect::class,
+            'forminputsearch' => FormInputSearch::class,
+            'formplaintext' => 'Common\Form\View\Helper\FormPlainText',
+            'form_plain_text' => 'Common\Form\View\Helper\FormPlainText',
+            'addtags' => 'Common\View\Helper\AddTags',
+            'transportmanagerapplicationstatus' => 'Common\View\Helper\TransportManagerApplicationStatus',
+            'status' => 'Common\View\Helper\Status',
+            'address' => 'Common\View\Helper\Address',
+            'personname' => 'Common\View\Helper\PersonName',
+            'Address' => 'Common\View\Helper\Address',
+            'datetime' => \Common\View\Helper\DateTime::class,
+            'returntoaddress' => Common\View\Helper\ReturnToAddress::class,
+            'navigationparentpage' => Common\View\Helper\NavigationParentPage::class,
+            'panel' => Panel::class,
+            'link' => Common\View\Helper\Link::class,
+            'linknewwindow' => Common\View\Helper\LinkNewWindow::class,
+            'linknewwindowexternal' => Common\View\Helper\LinkNewWindowExternal::class,
+            'linkmodal' => Common\View\Helper\LinkModal::class,
+            'readonlyformfieldset' => ReadonlyFormHelper\FormFieldset::class,
+            'readonlyformfileuploadlist' => ReadonlyFormHelper\FormFileUploadList::class,
+            'readonlyformitem' => ReadonlyFormHelper\FormItem::class,
+            'readonlyformselect' => ReadonlyFormHelper\FormSelect::class,
+            'readonlyformdateselect' => ReadonlyFormHelper\FormDateSelect::class,
+            'readonlyformrow' => ReadonlyFormHelper\FormRow::class,
+            'readonlyformtable' => ReadonlyFormHelper\FormTable::class,
+            'readonlyactions' => \Common\View\Helper\ReadOnlyActions::class,
+            'currencyformatter' => \Common\View\Helper\CurrencyFormatter::class,
+            'applicationname' => \Common\View\Helper\ApplicationNameFactory::class,
+            'pageid' => \Common\View\Helper\PageIdFactory::class,
+            'pagetitle' => \Common\View\Helper\PageTitleFactory::class,
+            'licencechecklist' => \Common\View\Helper\LicenceChecklistFactory::class,
+            'date' => \Common\View\Helper\Date::class,
+            'languageLink' => \Common\View\Helper\LanguageLink::class,
+            'languagelink' => \Common\View\Helper\LanguageLink::class,
+            'currentuser' => 'currentUser',
+            'systeminfomessages' => 'systemInfoMessages',
+            'linkback' => 'linkBack',
+            'translatereplace' => 'translateReplace',
+            'flashmessengerall' => 'flashMessengerAll',
+            'escapehtml' => \Common\View\Helper\EscapeHtml::class,
+            'isgranted' => \LmcRbacMvc\Factory\IsGrantedPluginFactory::class
         ],
     ],
     'view_manager' => [
@@ -576,20 +652,25 @@ return [
             'MonthSelect' => 'Common\Form\Elements\Custom\MonthSelect',
             'YearSelect' => 'Common\Form\Elements\Custom\YearSelect',
             'DateTimeSelect' => 'Common\Form\Elements\Custom\DateTimeSelect',
-            'Common\Form\Elements\Custom\OlcsCheckbox' => 'Common\Form\Elements\Custom\OlcsCheckbox'
+            'Common\Form\Elements\Custom\OlcsCheckbox' => 'Common\Form\Elements\Custom\OlcsCheckbox',
+            TextArea::class => TextArea::class,
+
         ],
         'factories' => [
             DynamicSelect::class => DynamicSelectFactory::class,
             DynamicMultiCheckbox::class => DynamicMultiCheckboxFactory::class,
             DynamicRadio::class => DynamicRadioFactory::class,
             DynamicRadioHtml::class => DynamicRadioHtmlFactory::class,
+            Common\Form\Elements\Types\Table::class => Common\Form\Elements\Types\Table::class
         ],
         'aliases' => [
             'DynamicSelect' => DynamicSelect::class,
             'DynamicMultiCheckbox' => DynamicMultiCheckbox::class,
             'DynamicRadio' => DynamicRadio::class,
             'DynamicRadioHtml' => DynamicRadioHtml::class,
-            'OlcsCheckbox' => OlcsCheckbox::class
+            'OlcsCheckbox' => OlcsCheckbox::class,
+            'TextArea' => TextArea::class,
+            'Table' => \Common\Form\Elements\Types\Table::class
         ]
     ],
     'validation' => [
@@ -610,7 +691,6 @@ return [
     ],
     'validators' => [
         'invokables' => [
-            'Common\Validator\ValidateIf' => 'Common\Validator\ValidateIf',
             'Common\Validator\ValidateIfMultiple' => 'Common\Validator\ValidateIfMultiple',
             'Common\Validator\DateCompare' => 'Common\Validator\DateCompare',
             'Common\Validator\NumberCompare' => 'Common\Validator\NumberCompare',
@@ -621,9 +701,11 @@ return [
             'Common\Validator\DateInFuture' => 'Common\Validator\DateInFuture',
             'Common\Validator\DateCompareWithInterval' => 'Common\Validator\DateCompareWithInterval',
             'Common\Validator\FileUploadCount' => 'Common\Validator\FileUploadCount',
+            TableRequiredValidator::class => TableRequiredValidator::class
         ],
         'aliases' => [
-            'ValidateIf' => 'Common\Validator\ValidateIf',
+            'ValidateIf' => Common\Validator\ValidateIf::class,
+            'validateIf' => Common\Validator\ValidateIf::class,
             'ValidateIfMultiple' => 'Common\Validator\ValidateIfMultiple',
             'DateCompare' => 'Common\Validator\DateCompare',
             'NumberCompare' => 'Common\Validator\NumberCompare',
@@ -637,6 +719,7 @@ return [
         'factories' => [
             QaService\DateNotInPastValidator::class => QaService\DateNotInPastValidatorFactory::class,
             QaService\Custom\Common\DateBeforeValidator::class => QaService\Custom\Common\DateBeforeValidatorFactory::class,
+            Common\Validator\ValidateIf::class => InvokableFactory::class,
         ]
     ],
     'filters' => [
@@ -665,6 +748,29 @@ return [
             DataService\Venue::class => DataService\VenueFactory::class,
             DataService\Search\Search::class => DataService\Search\SearchFactory::class,
             SearchType::class => SearchType::class,
+            DataService\AbstractDataServiceServices::class => DataService\AbstractDataServiceServicesFactory::class,
+            DataService\AbstractListDataServiceServices::class => DataService\AbstractListDataServiceServicesFactory::class,
+            DataService\AddressDataService::class => DataService\AbstractDataServiceFactory::class,
+            DataService\Application::class => DataService\AbstractDataServiceFactory::class,
+            DataService\ApplicationPathGroup::class => DataService\AbstractDataServiceFactory::class,
+            DataService\BusRegBrowseListDataService::class => DataService\AbstractDataServiceFactory::class,
+            DataService\BusRegSearchViewListDataService::class => DataService\AbstractDataServiceFactory::class,
+            'category' => DataService\CategoryDataService::class,
+            DataService\ContactDetails::class => DataService\AbstractListDataServiceFactory::class,
+            DataService\Country::class => DataService\AbstractDataServiceFactory::class,
+            'country' => DataService\AbstractDataServiceFactory::class,
+            DataService\FeeType::class => DataService\AbstractDataServiceFactory::class,
+            DataService\FeeTypeDataService::class => DataService\AbstractDataServiceFactory::class,
+            DataService\IrhpPermitType::class => DataService\AbstractDataServiceFactory::class,
+            DataService\Licence::class => DataService\AbstractDataServiceFactory::class,
+            DataService\LocalAuthority::class => DataService\AbstractDataServiceFactory::class,
+            DataService\RefData::class => DataService\RefDataFactory::class,
+            DataService\RefDataServices::class => DataService\RefDataServicesFactory::class,
+            DataService\Role::class => DataService\AbstractDataServiceFactory::class,
+            DataService\SiCategoryType::class => DataService\AbstractDataServiceFactory::class,
+            'staticList' => DataService\StaticListFactory::class,
+            DataService\Surrender::class => DataService\AbstractDataServiceFactory::class,
+            DataService\TrafficArea::class => DataService\AbstractDataServiceFactory::class,
         ]
     ],
     'tables' => [
@@ -697,7 +803,7 @@ return [
             'postcode' => 'http://postcode.cit.olcs.mgt.mtpdvsa/',
         ]
     ],
-    'zfc_rbac' => [
+    'lmc_rbac' => [
         'identity_provider' => IdentityProviderInterface::class,
         'role_provider' => [\Common\Rbac\Role\RoleProvider::class => []],
         'role_provider_manager' => [
@@ -705,7 +811,7 @@ return [
                 \Common\Rbac\Role\RoleProvider::class => \Common\Rbac\Role\RoleProviderFactory::class
             ]
         ],
-        'protection_policy' => \ZfcRbac\Guard\GuardInterface::POLICY_DENY,
+        'protection_policy' => \LmcRbacMvc\Guard\GuardInterface::POLICY_DENY,
     ],
     'form_service_manager' => [
         'abstract_factories' => [

@@ -3,8 +3,7 @@
 namespace Common\Service\Table\Formatter;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class RefDataStatusFactory implements FactoryInterface
 {
@@ -16,21 +15,8 @@ class RefDataStatusFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $refDataFormatter = $container->get(RefData::class);
-        $container = method_exists($container, 'getServiceLocator') ? $container->getServiceLocator() : $container;
+        $refDataFormatter = $container->get(FormatterPluginManager::class)->get(RefData::class);
         $viewHelperManager = $container->get('ViewHelperManager');
         return new RefDataStatus($viewHelperManager, $refDataFormatter);
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     *
-     * @return RefDataStatus
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): RefDataStatus
-    {
-        return $this->__invoke($serviceLocator, RefDataStatus::class);
     }
 }

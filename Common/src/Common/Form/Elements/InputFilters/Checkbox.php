@@ -22,7 +22,7 @@ class Checkbox extends LaminasElement\Checkbox
      *
      * @return array
      */
-    public function getInputSpecification()
+    public function getInputSpecification(): array
     {
         $options = $this->getOptions();
 

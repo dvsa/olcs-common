@@ -3,11 +3,9 @@
 namespace Common\FormService;
 
 use Common\FormService\Form\Continuation\ConditionsUndertakings;
-use Common\FormService\Form\Continuation\Declaration;
 use Common\FormService\Form\Continuation\LicenceChecklist;
 use Common\FormService\Form\Continuation\Payment;
 use Common\FormService\Form\Continuation\Start;
-use Common\FormService\Form\Continuation as ContinuationFormService;
 use Common\FormService\Form\Lva\Addresses;
 use Common\FormService\Form\Lva\Application;
 use Common\FormService\Form\Lva\ApplicationGoodsVehicles;
@@ -71,10 +69,9 @@ use Common\Service\Helper\UrlHelperService;
 use Common\Service\Lva\PeopleLvaService;
 use Common\Service\Script\ScriptFactory;
 use Common\Service\Table\TableFactory;
-use Laminas\ServiceManager\AbstractFactoryInterface;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
-use Laminas\ServiceManager\ServiceLocatorInterface;
-use ZfcRbac\Service\AuthorizationService;
+use Laminas\ServiceManager\Factory\AbstractFactoryInterface;
+use LmcRbacMvc\Service\AuthorizationService;
 
 class FormServiceAbstractFactory implements AbstractFactoryInterface
 {
@@ -210,18 +207,16 @@ class FormServiceAbstractFactory implements AbstractFactoryInterface
         // Continuation forms
         'continuations-checklist' => LicenceChecklist::class,
         'continuations-start' => Start::class,
-        'continuations-payment' => Payment::class
+        'continuations-payment' => Payment::class,
+        'Lva\Application' => Application::class,
+        'Lva\Licence' => Licence::class,
+        'Lva\Variation' => Variation::class,
     ];
 
 
     public function canCreate($container, $requestedName): bool
     {
         return in_array($requestedName, self::FORM_SERVICE_CLASS_ALIASES);
-    }
-
-    public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
-    {
-        return $this->canCreate($serviceLocator, $requestedName);
     }
 
     public function __invoke($container, $requestedName, array $options = null)
@@ -236,7 +231,7 @@ class FormServiceAbstractFactory implements AbstractFactoryInterface
         /** @var ScriptFactory $scriptFactory */
         /** @var $tableBuilder */
 
-        $serviceLocator = method_exists($container, 'getServiceLocator') ? $container->getServiceLocator() : $container;
+        $serviceLocator = $container;
         $formHelper = $serviceLocator->get(FormHelperService::class);
 
         switch ($requestedName) {
@@ -430,12 +425,14 @@ class FormServiceAbstractFactory implements AbstractFactoryInterface
                 $authService = $serviceLocator->get(AuthorizationService::class);
                 $translator = $serviceLocator->get(TranslationHelperService::class);
                 $urlHelper = $serviceLocator->get(UrlHelperService::class);
-                return new VariationFinancialEvidence($formHelper, $authService, $translator, $urlHelper);
+                $validatorPluginManager = $serviceLocator->get('ValidatorManager');
+                return new VariationFinancialEvidence($formHelper, $authService, $translator, $urlHelper, $validatorPluginManager);
             case self::FORM_SERVICE_CLASS_ALIASES['lva-application-financial_evidence']:
                 $authService = $serviceLocator->get(AuthorizationService::class);
                 $translator = $serviceLocator->get(TranslationHelperService::class);
                 $urlHelper = $serviceLocator->get(UrlHelperService::class);
-                return new FinancialEvidence($formHelper, $authService, $translator, $urlHelper);
+                $validatorPluginManager = $serviceLocator->get('ValidatorManager');
+                return new FinancialEvidence($formHelper, $authService, $translator, $urlHelper, $validatorPluginManager);
 
             // Declarations (undertakings) form services
             case self::FORM_SERVICE_CLASS_ALIASES['lva-application-undertakings']:
@@ -511,10 +508,5 @@ class FormServiceAbstractFactory implements AbstractFactoryInterface
             'FormServiceAbstractFactory claimed to be able to supply instance of type "%s", but nothing was returned',
             $requestedName
         ));
-    }
-
-    public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
-    {
-        return $this->__invoke($serviceLocator, $requestedName);
     }
 }

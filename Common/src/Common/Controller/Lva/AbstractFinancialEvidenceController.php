@@ -16,7 +16,7 @@ use Dvsa\Olcs\Transfer\Command\Application\UpdateFinancialEvidence;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
 use Dvsa\Olcs\Utils\Helper\ValueHelper;
 use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Abstract Financial Evidence Controller

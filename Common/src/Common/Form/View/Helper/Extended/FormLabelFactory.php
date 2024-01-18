@@ -6,8 +6,7 @@ namespace Common\Form\View\Helper\Extended;
 
 use Interop\Container\ContainerInterface;
 use Laminas\I18n\Translator\TranslatorInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 /**
  * @see FormLabel
@@ -15,15 +14,6 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
  */
 class FormLabelFactory implements FactoryInterface
 {
-    /**
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return FormLabel
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): FormLabel
-    {
-        return $this($serviceLocator, FormLabel::class);
-    }
-
     /**
      * @param ContainerInterface $container
      * @param $requestedName

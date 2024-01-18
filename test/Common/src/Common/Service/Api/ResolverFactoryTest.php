@@ -3,17 +3,15 @@
 
 namespace CommonTest\Service\Api;
 
+use Common\Service\Api\Resolver;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Api\ResolverFactory;
 use Mockery as m;
+use Psr\Container\ContainerInterface;
 
-/**
- * Class ResolverFactoryTest
- * @package CommonTest\Service\Api
- */
 class ResolverFactoryTest extends MockeryTestCase
 {
-    public function testCreateService()
+    public function testInvoke(): void
     {
         $config = [
             'rest_services' => [
@@ -23,13 +21,13 @@ class ResolverFactoryTest extends MockeryTestCase
             ]
         ];
 
-        $mockSl = m::mock('Laminas\ServiceManager\ServiceLocatorInterface');
-        $mockSl->shouldReceive('get')->with('Config')->andReturn($config);
+        $container = m::mock(ContainerInterface::class);
+        $container->expects('get')->with('Config')->andReturn($config);
 
         $sut = new ResolverFactory();
-        $instance = $sut->createService($mockSl);
+        $instance = $sut->__invoke($container, Resolver::class);
 
-        $this->assertInstanceOf('Common\Service\Api\Resolver', $instance);
+        $this->assertInstanceOf(Resolver::class, $instance);
         $this->assertEquals('testService', $instance->get('test'));
     }
 }

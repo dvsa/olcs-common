@@ -3,8 +3,7 @@
 namespace Common\Service\Table\Formatter;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class TransactionUrlFactory implements FactoryInterface
 {
@@ -16,22 +15,9 @@ class TransactionUrlFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $container = method_exists($container, 'getServiceLocator') ? $container->getServiceLocator() : $container;
-        $router = $container->get('router');
-        $request = $container->get('request');
+        $router = $container->get('Router');
+        $request = $container->get('Request');
         $urlHelper = $container->get('Helper\Url');
         return new TransactionUrl($router, $request, $urlHelper);
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     *
-     * @return TransactionUrl
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): TransactionUrl
-    {
-        return $this->__invoke($serviceLocator, TransactionUrl::class);
     }
 }

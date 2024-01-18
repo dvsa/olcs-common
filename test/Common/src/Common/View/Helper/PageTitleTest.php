@@ -3,14 +3,12 @@
 namespace CommonTest\View\Helper;
 
 use Common\View\Helper\PageTitle;
+use Interop\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\I18n\View\Helper\Translate;
-use Laminas\Mvc\Router\Http\RouteMatch;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\Router\Http\RouteMatch;
 use Laminas\View\Helper\Placeholder;
-use Laminas\View\Helper\ViewModel;
-use Laminas\View\HelperPluginManager;
 
 /**
  * @covers Common\View\Helper\PageTitle
@@ -46,8 +44,8 @@ class PageTitleTest extends MockeryTestCase
         $app = m::mock();
         $app->shouldReceive('getMvcEvent->getRouteMatch')->andReturn($this->routeMatch);
 
-        /** @var ServiceLocatorInterface | m\MockInterface $sm */
-        $sm = m::mock(ServiceLocatorInterface::class);
+        /** @var ContainerInterface | m\MockInterface $sm */
+        $sm = m::mock(ContainerInterface::class);
         $sm->shouldReceive('get')->with('Application')->andReturn($app);
 
         $sut = new PageTitle($this->translate, $this->placeholder, $matchedRouteName, 'someaction');

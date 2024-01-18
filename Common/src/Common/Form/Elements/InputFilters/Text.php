@@ -108,7 +108,7 @@ class Text extends LaminasElement\Text implements InputProviderInterface
      *
      * @return array
      */
-    public function getInputSpecification()
+    public function getInputSpecification(): array
     {
         return [
             'name' => $this->getName(),

@@ -2,8 +2,8 @@
 
 namespace Common\Test;
 
+use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\AbstractPluginManager;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\ServiceManager\ServiceManager;
 use Mockery\MockInterface;
 use Mockery as m;
@@ -57,11 +57,7 @@ trait MocksServicesTrait
         return $this->setUpServiceManager();
     }
 
-    /**
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return MockInterface|AbstractPluginManager
-     */
-    protected function setUpAbstractPluginManager(ServiceLocatorInterface $serviceLocator): MockInterface
+    protected function setUpAbstractPluginManager(ContainerInterface $serviceLocator): MockInterface
     {
         $instance = m::mock(AbstractPluginManager::class);
         $instance->shouldReceive('getServiceLocator')->andReturn($serviceLocator)->byDefault();
@@ -87,12 +83,9 @@ trait MocksServicesTrait
     abstract protected function setUpDefaultServices(ServiceManager $serviceManager);
 
     /**
-     * @param ServiceLocatorInterface $serviceLocator
-     * @param string $name
-     * @return MockInterface
      * @deprecated Use $this->serviceManager()->get($name) instead
      */
-    protected function resolveMockService(ServiceLocatorInterface $serviceLocator, string $name): MockInterface
+    protected function resolveMockService(ContainerInterface $serviceLocator, string $name): MockInterface
     {
         return $serviceLocator->get($name);
     }

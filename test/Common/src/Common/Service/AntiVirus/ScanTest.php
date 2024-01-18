@@ -4,12 +4,10 @@
 namespace CommonTest\Service\AntVirus;
 
 use Common\Service\AntiVirus\Scan;
+use Interop\Container\ContainerInterface;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 
-/**
- * Class ScanTest
- */
 class ScanTest extends MockeryTestCase
 {
     /**
@@ -22,27 +20,27 @@ class ScanTest extends MockeryTestCase
         $this->sut = new Scan();
     }
 
-    public function testCreateService()
+    public function testInvoke(): void
     {
         $config = [
             'antiVirus' => [
                 'cliCommand' => 'scanfile %s'
             ]
         ];
-        $mockServiceManager = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class);
+        $mockServiceManager = m::mock(ContainerInterface::class);
         $mockServiceManager->shouldReceive('get')->with('config')->once()->andReturn($config);
 
-        $object = $this->sut->createService($mockServiceManager);
+        $object = $this->sut->__invoke($mockServiceManager, Scan::class);
 
         $this->assertSame('scanfile %s', $object->getCliCommand());
     }
 
-    public function testCreateServiceNoConfig()
+    public function testInvokeNoConfig()
     {
-        $mockServiceManager = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class);
+        $mockServiceManager = m::mock(ContainerInterface::class);
         $mockServiceManager->shouldReceive('get')->with('config')->once()->andReturn([]);
 
-        $object = $this->sut->createService($mockServiceManager);
+        $object = $this->sut->__invoke($mockServiceManager, Scan::class);
 
         $this->assertSame(null, $object->getCliCommand());
     }

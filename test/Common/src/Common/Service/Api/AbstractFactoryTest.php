@@ -7,20 +7,17 @@ use Laminas\Authentication\Storage\Session;
 use Laminas\Http\Header\Cookie;
 use Laminas\Http\Request;
 use Laminas\I18n\Translator\Translator;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Psr\Container\ContainerInterface;
 
-/**
- * Class AbstractFactoryTest
- * @package CommonTest\Service\Api
- */
 class AbstractFactoryTest extends MockeryTestCase
 {
     /** @var AbstractFactory | m\MockInterface */
     protected $sut;
 
-    /** @var m\MockInterface | ServiceLocatorInterface */
+    /** @var m\MockInterface | ContainerInterface */
     protected $mockSl;
 
     /** @var m\MockInterface | Request */
@@ -38,7 +35,7 @@ class AbstractFactoryTest extends MockeryTestCase
     {
         $this->sut = new AbstractFactory();
 
-        $this->mockSl = m::mock(ServiceLocatorInterface::class);
+        $this->mockSl = m::mock(ContainerInterface::class);
 
         $this->mockRequest = m::mock(Request::class);
 
@@ -50,12 +47,12 @@ class AbstractFactoryTest extends MockeryTestCase
     /**
      * @dataProvider dpTestCanCreate
      */
-    public function testCanCreate($requestedName, $expect)
+    public function testCanCreate($requestedName, $expect): void
     {
         static::assertEquals($expect, $this->sut->canCreate($this->mockSl, $requestedName));
     }
 
-    public function dpTestCanCreate()
+    public function dpTestCanCreate(): array
     {
         return [
             [
@@ -69,16 +66,7 @@ class AbstractFactoryTest extends MockeryTestCase
         ];
     }
 
-    /**
-     * @dataProvider dpTestCanCreate
-     * @todo OLCS-28149
-     */
-    public function testCanCreateServiceWithName($requestedName, $expect)
-    {
-        static::assertEquals($expect, $this->sut->canCreateServiceWithName($this->mockSl, '', $requestedName));
-    }
-
-    public function testCreateService()
+    public function testInvoke(): void
     {
         $config['service_api_mapping']['endpoints']['backend'] = 'http://olcs-backend';
 
@@ -97,54 +85,32 @@ class AbstractFactoryTest extends MockeryTestCase
         $this->assertEquals('olcs-backend', $client->url->getHost());
         $this->assertEquals('/task-type', $client->url->getPath());
         $this->assertEquals('en-ts', $client->getLanguage());
-
-        // TODO OLCS-28149
-        $client = $this->sut->createServiceWithName($this->mockSl, '', 'Olcs\RestService\TaskType');
-        $this->assertEquals('olcs-backend', $client->url->getHost());
-        $this->assertEquals('/task-type', $client->url->getPath());
-        $this->assertEquals('en-ts', $client->getLanguage());
     }
 
-    public function testCreateServiceInvalidMapping()
+    public function testInvokeInvalidMapping(): void
     {
+        $this->expectException(ServiceNotCreatedException::class);
+        $this->expectExceptionMessage('No endpoint defined for: NoService');
+
         $config['service_api_mapping']['endpoints']['backend'] = 'http://olcs-backend';
 
-        $this->mockSl->shouldReceive('get')->with('Config')->andReturn($config);
+        $this->mockSl->expects('get')->with('Config')->andReturn($config);
 
-        $passed = false;
-        try {
-            ($this->sut)($this->mockSl, 'Olcs\RestService\NoService\TaskType');
-        } catch (\Exception $e) {
-            if ($e->getMessage() == 'No endpoint defined for: NoService') {
-                $passed = true;
-            }
-        }
-        $this->assertTrue($passed, 'Expected exception not thrown');
-
-        // TODO OLCS-28149
-        $passed = false;
-        try {
-            $this->sut->createServiceWithName($this->mockSl, '', 'Olcs\RestService\NoService\TaskType');
-        } catch (\Exception $e) {
-            if ($e->getMessage() == 'No endpoint defined for: NoService') {
-                $passed = true;
-            }
-        }
-        $this->assertTrue($passed, 'Expected exception not thrown');
+        ($this->sut)($this->mockSl, 'Olcs\RestService\NoService\TaskType');
     }
 
-    public function testCreateServiceAdditionalEndpointConfig()
+    public function testInvokeAdditionalEndpointConfig(): void
     {
         $config['service_api_mapping']['endpoints']['myapi'] = [
             'url' => 'https://external-api',
-                'options' => [
-                    'sslcapath' => '/etc/ssl/certs',
-                    'sslverifypeer' => false,
-                ],
-                'auth' => [
-                    'username' => 'foo',
-                    'password' => 'bar',
-                ],
+            'options' => [
+                'sslcapath' => '/etc/ssl/certs',
+                'sslverifypeer' => false,
+            ],
+            'auth' => [
+                'username' => 'foo',
+                'password' => 'bar',
+            ],
         ];
 
         $this->mockTranslator->shouldReceive('getLocale')->withNoArgs()->andReturn('en-ts');
@@ -159,12 +125,6 @@ class AbstractFactoryTest extends MockeryTestCase
         $this->mockSl->shouldReceive('get')->with(Session::class)->andReturn($this->mockSession);
 
         $client = ($this->sut)($this->mockSl, 'myapi\\some-resource');
-        $this->assertEquals('external-api', $client->url->getHost());
-        $this->assertEquals('/some-resource', $client->url->getPath());
-        $this->assertEquals('en-ts', $client->getLanguage());
-
-        // TODO OLCS-28149
-        $client = $this->sut->createServiceWithName($this->mockSl, '', 'myapi\\some-resource');
         $this->assertEquals('external-api', $client->url->getHost());
         $this->assertEquals('/some-resource', $client->url->getPath());
         $this->assertEquals('en-ts', $client->getLanguage());

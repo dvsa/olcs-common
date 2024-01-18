@@ -4,12 +4,8 @@ namespace Common\Service\Helper;
 
 use Common\Service\AntiVirus\Scan;
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
-/**
- * FileUploadHelperServiceFactory
- */
 class FileUploadHelperServiceFactory implements FactoryInterface
 {
     /**
@@ -26,17 +22,5 @@ class FileUploadHelperServiceFactory implements FactoryInterface
             $container->get('Helper\Url'),
             $container->get(Scan::class)
         );
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $services
-     *
-     * @return FileUploadHelperService
-     */
-    public function createService(ServiceLocatorInterface $services): FileUploadHelperService
-    {
-        return $this($services, FileUploadHelperService::class);
     }
 }

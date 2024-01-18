@@ -3,6 +3,7 @@
 namespace CommonTest;
 
 use Common\Module;
+use Interop\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Mvc\Application;
@@ -29,7 +30,7 @@ class ModuleTest extends MockeryTestCase
     private $mockReq;
     /** @var  \Laminas\Mvc\MvcEvent | m\MockInterface */
     private $mockEvent;
-    /** @var  \Laminas\ServiceManager\ServiceLocatorInterface | m\MockInterface */
+    /** @var  ContainerInterface | m\MockInterface */
     private $mockSm;
     /** @var  m\MockInterface */
     private $mockApp;
@@ -40,7 +41,7 @@ class ModuleTest extends MockeryTestCase
 
         $this->mockReq = m::mock(\Laminas\Http\Request::class);
 
-        $this->mockSm = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class);
+        $this->mockSm = m::mock(ContainerInterface::class);
         $this->mockSm->shouldReceive('get')->with('config')->andReturn(self::$cfg);
 
         $this->mockApp = m::mock(Application::class);

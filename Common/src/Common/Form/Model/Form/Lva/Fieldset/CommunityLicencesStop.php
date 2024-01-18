@@ -10,7 +10,6 @@ use Laminas\Form\Annotation as Form;
 class CommunityLicencesStop
 {
     /**
-     * @Form\Annotations({"id":""})
      * @Form\Options({
      *     "label": "internal.community_licence.form.change_status_to",
      *     "value_options": {
@@ -29,12 +28,11 @@ class CommunityLicencesStop
      *     "category":"com_lic_sw_reason",
      * })
      * @Form\Type("DynamicSelect")
-     * @Form\Validator({
-     *      "name": "Laminas\Validator\NotEmpty",
-     *      "options": {
+     * @Form\Validator("Laminas\Validator\NotEmpty",
+     *      options={
      *          "messages":{Laminas\Validator\NotEmpty::IS_EMPTY:"internal.community_licence.form.licences_validation"}
      *      }
-     * })
+     * )
      */
     public $reason = null;
 }

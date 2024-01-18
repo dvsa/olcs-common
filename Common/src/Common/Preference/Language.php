@@ -1,25 +1,14 @@
 <?php
 
-/**
- * Language Preference
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Preference;
 
 use Laminas\Http\Request;
 use Laminas\Http\Response;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Laminas\Http\Header\Cookie;
 use Laminas\Http\Header\SetCookie;
 use Interop\Container\ContainerInterface;
 
-/**
- * Language Preference
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class Language implements FactoryInterface
 {
     const OPTION_EN = 'en';
@@ -39,11 +28,6 @@ class Language implements FactoryInterface
     private $preference;
 
     private $key = 'langPref';
-
-    public function createService(ServiceLocatorInterface $serviceLocator): Language
-    {
-        return $this->__invoke($serviceLocator, Language::class);
-    }
 
     public function setPreference($preference)
     {

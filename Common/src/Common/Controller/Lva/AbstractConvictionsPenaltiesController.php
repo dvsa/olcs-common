@@ -14,7 +14,7 @@ use Dvsa\Olcs\Transfer\Command\PreviousConviction\UpdatePreviousConviction;
 use Dvsa\Olcs\Transfer\Query\Application\PreviousConvictions;
 use Dvsa\Olcs\Transfer\Query\PreviousConviction\PreviousConviction;
 use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Shared logic between Convictions Penalties controllers

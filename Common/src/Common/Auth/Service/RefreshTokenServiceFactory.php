@@ -4,8 +4,7 @@ declare(strict_types=1);
 namespace Common\Auth\Service;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class RefreshTokenServiceFactory implements FactoryInterface
 {
@@ -20,15 +19,5 @@ class RefreshTokenServiceFactory implements FactoryInterface
         return new RefreshTokenService(
             $container->get('CommandSender')
         );
-    }
-
-    /**
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return RefreshTokenService
-     * @deprecated
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): RefreshTokenService
-    {
-        return $this->__invoke($serviceLocator, null);
     }
 }

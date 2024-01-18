@@ -3,35 +3,31 @@
 namespace CommonTest\Service\Cqrs;
 
 use Common\Service\Cqrs\RequestFactory;
+use Interop\Container\ContainerInterface;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Mockery as m;
 use Laminas\Http\Request;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Olcs\Logging\Log\Processor\RequestId;
 
-/**
- * Class RequestFactoryTest
- * @package CommonTest\Service\Cqrs
- */
 class RequestFactoryTest extends TestCase
 {
-    public function testCreateServiceWithoutSecureToken()
+    public function testInvokeWithoutSecureToken(): void
     {
         $cookies = [];
 
         $mockLogProcessor = m::mock();
-        $mockLogProcessor->shouldReceive('get')->with(\Olcs\Logging\Log\Processor\RequestId::class)->once()->andReturn(
+        $mockLogProcessor->expects('get')->with(RequestId::class)->andReturn(
             m::mock()->shouldReceive('getIdentifier')->with()->once()->andReturn('IDENT1')->getMock()
         );
 
         $mockRequest = m::mock(Request::class);
         $mockRequest->shouldReceive('getCookie')->andReturn($cookies);
 
-        $mockSl = m::mock(ServiceLocatorInterface::class);
-        $mockSl->shouldReceive('getServiceLocator')->andReturnSelf();
+        $mockSl = m::mock(ContainerInterface::class);
         $mockSl->shouldReceive('get')->with('Request')->andReturn($mockRequest);
         $mockSl->shouldReceive('get')->with('LogProcessorManager')->andReturn($mockLogProcessor);
         $sut = new RequestFactory();
-        $service = $sut->createService($mockSl);
+        $service = $sut->__invoke($mockSl, Request::class);
 
         $this->assertInstanceOf(Request::class, $service);
         $this->assertEquals(
@@ -44,24 +40,23 @@ class RequestFactoryTest extends TestCase
         );
     }
 
-    public function testCreateServiceWithSecureToken()
+    public function testInvokeWithSecureToken(): void
     {
         $cookies = ['secureToken' => 'myToken'];
 
         $mockLogProcessor = m::mock();
-        $mockLogProcessor->shouldReceive('get')->with(\Olcs\Logging\Log\Processor\RequestId::class)->once()->andReturn(
+        $mockLogProcessor->expects('get')->with(RequestId::class)->andReturn(
             m::mock()->shouldReceive('getIdentifier')->with()->once()->andReturn('IDENT1')->getMock()
         );
 
         $mockRequest = m::mock(Request::class);
         $mockRequest->shouldReceive('getCookie')->andReturn($cookies);
 
-        $mockSl = m::mock(ServiceLocatorInterface::class);
-        $mockSl->shouldReceive('getServiceLocator')->andReturnSelf();
+        $mockSl = m::mock(ContainerInterface::class);
         $mockSl->shouldReceive('get')->with('Request')->andReturn($mockRequest);
         $mockSl->shouldReceive('get')->with('LogProcessorManager')->andReturn($mockLogProcessor);
         $sut = new RequestFactory();
-        $service = $sut->createService($mockSl);
+        $service = $sut->__invoke($mockSl, Request::class);
 
         $this->assertInstanceOf(Request::class, $service);
         $this->assertEquals(

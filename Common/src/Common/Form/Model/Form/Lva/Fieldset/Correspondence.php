@@ -31,13 +31,12 @@ class Correspondence
      * })
      * @Form\Required(false)
      * @Form\Type("Text")
-     * @Form\Validator({
-     *     "name":"Laminas\Validator\StringLength",
-     *     "options":{
+     * @Form\Validator("Laminas\Validator\StringLength",
+     *     options={
      *         "min": 0,
      *         "max": 90,
      *     }
-     * })
+     * )
      */
     public $fao = null;
 }

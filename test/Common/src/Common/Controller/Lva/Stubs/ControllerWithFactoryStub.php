@@ -2,20 +2,11 @@
 
 namespace CommonTest\Common\Controller\Lva\Stubs;
 
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Interop\Container\ContainerInterface;
 
-/**
- * @author Dmitry Golubev <dmitrij.golubev@valtech.com>
- */
 class ControllerWithFactoryStub implements FactoryInterface
 {
-    public function createService(ServiceLocatorInterface $serviceLocator): ControllerWithFactoryStub
-    {
-        return $this->__invoke($serviceLocator, ControllerWithFactoryStub::class);
-    }
-
     /**
      * @param ContainerInterface $container
      * @param $requestedName

@@ -3,33 +3,16 @@
 namespace Common\Service\Api;
 
 use Laminas\Mvc\Service\AbstractPluginManagerFactory;
-use Laminas\Mvc\Service\ServiceManagerConfig;
-use Laminas\ServiceManager\AbstractPluginManager;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Psr\Container\ContainerInterface;
 
-/**
- * Class ResolverFactory
- * @package Common\Service\Api
- */
 class ResolverFactory extends AbstractPluginManagerFactory
 {
-    const PLUGIN_MANAGER_CLASS = 'Common\Service\Api\Resolver';
+    const PLUGIN_MANAGER_CLASS = Resolver::class;
 
-    /**
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return AbstractPluginManager
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $name, array $options = null)
     {
-        $service = parent::createService($serviceLocator);
+        $config = $container->get('Config');
 
-        $config = $serviceLocator->get('Config');
-
-        if (isset($config['rest_services'])) {
-            $pluginManagerConfig = new ServiceManagerConfig($config['rest_services']);
-            $pluginManagerConfig->configureServiceManager($service);
-        }
-
-        return $service;
+        return parent::__invoke($container, $name, $config['rest_services']);
     }
 }

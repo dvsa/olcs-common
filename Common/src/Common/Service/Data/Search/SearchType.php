@@ -8,19 +8,14 @@ use Common\Service\Data\Interfaces\ListData as ListDataInterface;
 use Common\Service\NavigationFactory;
 use Laminas\Navigation\Navigation;
 use Laminas\Navigation\Service\AbstractNavigationFactory;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
-use ZfcRbac\Service\RoleService;
+use Laminas\ServiceManager\Factory\FactoryInterface;
+use LmcRbacMvc\Service\RoleService;
 use Interop\Container\ContainerInterface;
 
-/**
- * Class SearchType
- * @package Olcs\Service\Data\Search
- */
 class SearchType implements ListDataInterface, FactoryInterface
 {
     /**
-     * @var ServiceLocatorInterface
+     * @var SearchTypeManager
      */
     protected $searchTypeManager;
 
@@ -130,17 +125,6 @@ class SearchType implements ListDataInterface, FactoryInterface
         }
 
         return $this->getNavigationFactory()->getNavigation($nav);
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return mixed
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): SearchType
-    {
-        return $this->__invoke($serviceLocator, SearchType::class);
     }
 
     /**

@@ -18,7 +18,7 @@ use Dvsa\Olcs\Transfer\Query\Application\LicenceHistory;
 use Dvsa\Olcs\Transfer\Query\OtherLicence\OtherLicence;
 use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\Filter\Word\CamelCaseToDash;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Licence History Trait

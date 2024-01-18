@@ -39,13 +39,12 @@ class TmOtherLicenceDetails
      * @Form\Options({"label":"transport-manager.other-licence.form.lic-no"})
      * @Form\Required(true)
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
-     * @Form\Validator({
-     *     "name":"Laminas\Validator\StringLength",
-     *     "options":{
+     * @Form\Filter("Laminas\Filter\StringTrim")
+     * @Form\Validator("Laminas\Validator\StringLength",
+     *     options={
      *          "max":18,
      *     },
-     * })
+     * )
      */
     public $licNo = null;
 
@@ -67,13 +66,12 @@ class TmOtherLicenceDetails
      * @Form\Options({"label":"transport-manager.other-licence.form.operating-centres"})
      * @Form\Required(true)
      * @Form\Type("Textarea")
-     * @Form\Filter({"name":"Laminas\Filter\StringTrim"})
-     * @Form\Validator({
-     *     "name":"Laminas\Validator\StringLength",
-     *     "options":{
+     * @Form\Filter("Laminas\Filter\StringTrim")
+     * @Form\Validator("Laminas\Validator\StringLength",
+     *     options={
      *          "max":255,
      *     },
-     * })
+     * )
      */
     public $operatingCentres = null;
 
@@ -85,7 +83,7 @@ class TmOtherLicenceDetails
      * })
      * @Form\Options({"label":"transport-manager.other-licence.form.total-auth-vehicles"})
      * @Form\Required(false)
-     * @Form\Validator({"name":"Digits"})
+     * @Form\Validator("Digits")
      * @Form\Type("Text")
      */
     public $totalAuthVehicles = null;
@@ -97,16 +95,15 @@ class TmOtherLicenceDetails
      *     "id":"hoursPerWeek"
      * })
      * @Form\Options({"label":"transport-manager.other-licence.form.hours-per-week"})
-     * @Form\Validator({"name":"Laminas\Validator\LessThan", "options": {"max": 99.9,"inclusive":true}})
-     * @Form\Validator({
-     *     "name": "Laminas\I18n\Validator\IsFloat",
-     *     "options": {
+     * @Form\Validator("Laminas\Validator\LessThan", options={"max": 99.9,"inclusive":true})
+     * @Form\Validator("Laminas\I18n\Validator\IsFloat",
+     *     options={
      *         "allow_empty" : false,
      *         "messages": {
      *             "notFloat": "transport-manager.other-licence.form.hours-per-week.error_msg",
      *         }
      *     }
-     * })
+     * )
      * @Form\Type("Text")
      */
     public $hoursPerWeek = null;

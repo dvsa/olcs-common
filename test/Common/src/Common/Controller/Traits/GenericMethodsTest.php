@@ -3,7 +3,10 @@
 namespace CommonTest\Controller\Traits;
 
 use Common\Controller\Traits\GenericMethods;
+use Common\Service\Helper\FormHelperService;
 use CommonTest\Common\Controller\Traits\Stubs\GenericMethodsStub;
+use Laminas\Form\Form;
+use Laminas\Http\Request;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 
@@ -15,25 +18,21 @@ class GenericMethodsTest extends MockeryTestCase
     /** @var  GenericMethods | m\MockInterface */
     private $sut;
 
-    /** @var  m\MockInterface | \Laminas\ServiceManager\ServiceLocatorInterface */
-    private $mockSm;
-    /** @var  m\MockInterface | \Common\Service\Helper\FormHelperService */
+    /** @var  m\MockInterface | FormHelperService */
     private $mockHlpForm;
 
     public function setUp(): void
     {
-        $this->mockHlpForm = m::mock(\Common\Service\Helper\FormHelperService::class);
-
+        $this->mockHlpForm = m::mock(FormHelperService::class);
         $this->sut = m::mock(GenericMethodsStub::class, [$this->mockHlpForm])->makePartial();
-        $this->sut->shouldReceive('getServiceLocator')->andReturn($this->mockSm);
     }
 
     public function testGetForm()
     {
         $class = 'unit_path_to_class';
 
-        $mockReq = m::mock(\Laminas\Http\Request::class);
-        $mockForm = m::mock(\Laminas\Form\Form::class);
+        $mockReq = m::mock(Request::class);
+        $mockForm = m::mock(Form::class);
 
         $this->sut
             ->shouldReceive('getRequest')->twice()->andReturn($mockReq);
@@ -54,10 +53,10 @@ class GenericMethodsTest extends MockeryTestCase
         $data = ['unit_data'];
         $fieldVals = ['unit_fieldValues'];
 
-        $mockReq = m::mock(\Laminas\Http\Request::class);
+        $mockReq = m::mock(Request::class);
         $mockReq->shouldReceive('isPost')->once()->andReturn(false);
 
-        $mockForm = m::mock(\Laminas\Form\Form::class);
+        $mockForm = m::mock(Form::class);
         $mockForm->shouldReceive('setData')->once()->with($data);
 
         $this->sut

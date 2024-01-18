@@ -13,8 +13,8 @@ use Common\Test\MocksServicesTrait;
 use Common\Test\Translator\MocksTranslatorsTrait;
 use Hamcrest\Matcher;
 use Hamcrest\Text\MatchesPattern;
+use Interop\Container\ContainerInterface;
 use Laminas\I18n\Translator\TranslatorInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Validator\ValidatorPluginManager;
 
@@ -558,11 +558,7 @@ class FormElementMessageFormatterTest extends MockeryTestCase
         $this->setUpServiceManager();
     }
 
-    /**
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return FormElementMessageFormatter
-     */
-    protected function setUpSut(ServiceLocatorInterface $serviceLocator): FormElementMessageFormatter
+    protected function setUpSut(ContainerInterface $serviceLocator): FormElementMessageFormatter
     {
         return (new FormElementMessageFormatterFactory())->__invoke($serviceLocator, FormElementMessageFormatter::class);
     }

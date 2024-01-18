@@ -6,7 +6,7 @@ use Common\FormService\Form\Lva\LicenceTaxiPhv;
 use Common\Service\Helper\FormHelperService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Licence Taxi Phv Test

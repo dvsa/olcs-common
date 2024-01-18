@@ -3,15 +3,9 @@
 namespace Common\Util;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\AbstractFactoryInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\AbstractFactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
-/**
- * Abstract Service Factory
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class AbstractServiceFactory implements AbstractFactoryInterface
 {
     /**
@@ -32,28 +26,10 @@ class AbstractServiceFactory implements AbstractFactoryInterface
         $service = new $serviceClassName();
 
         if ($service instanceof FactoryInterface) {
-            return $service->createService($container);
+            return $service->__invoke($container, $requestedName, $options);
         }
 
         return $service;
-    }
-
-    /**
-     * {@inheritdoc}
-     * @todo OLCS-28149
-     */
-    public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
-    {
-        return $this->canCreate($serviceLocator, $requestedName);
-    }
-
-    /**
-     * {@inheritdoc}
-     * @todo OLCS-28149
-     */
-    public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
-    {
-        return $this($serviceLocator, $requestedName);
     }
 
     /**

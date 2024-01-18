@@ -7,7 +7,7 @@ namespace CommonTest\Service;
 use Common\Service\NavigationFactory;
 use Laminas\Navigation\Navigation;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
-use Laminas\Mvc\Router\RouteMatch;
+use Laminas\Router\RouteMatch;
 use Laminas\Mvc\Service\ServiceManagerConfig;
 use Laminas\ServiceManager\ServiceManager;
 
@@ -65,7 +65,7 @@ class NavigationFactoryTest extends TestCase
             ),
         );
 
-        $sm = $this->serviceManager = new ServiceManager(new ServiceManagerConfig);
+        $sm = $this->serviceManager = new ServiceManager();
         $sm->setService('ApplicationConfig', $config);
         $sm->get('ModuleManager')->loadModules();
         $sm->get('Application')->bootstrap();

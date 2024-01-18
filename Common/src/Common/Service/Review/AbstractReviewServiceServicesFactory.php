@@ -3,8 +3,7 @@
 namespace Common\Service\Review;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class AbstractReviewServiceServicesFactory implements FactoryInterface
 {
@@ -13,13 +12,5 @@ class AbstractReviewServiceServicesFactory implements FactoryInterface
         return new AbstractReviewServiceServices(
             $container->get('Helper\Translation')
         );
-    }
-
-    /**
-     * @deprecated
-     */
-    public function createService(ServiceLocatorInterface $services): AbstractReviewServiceServices
-    {
-        return $this($services, AbstractReviewServiceServices::class);
     }
 }

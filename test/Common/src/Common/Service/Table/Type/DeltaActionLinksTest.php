@@ -1,14 +1,11 @@
 <?php
 
-/**
- * DeltaActionLink Test
- *
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
- */
 namespace CommonTest\Service\Table\Type;
 
+use Common\Service\Table\TableBuilder;
 use Common\Util\Escape;
 use Laminas\Mvc\I18n\Translator;
+use Laminas\ServiceManager\ServiceManager;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Table\Type\DeltaActionLinks;
@@ -26,15 +23,10 @@ class DeltaActionLinksTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->sm = m::mock('\Laminas\ServiceManager\ServiceManager')
-            ->makePartial()
-            ->setAllowOverride(true);
+        $this->sm = new ServiceManager();
 
-        // inject a real string helper
-        $this->sm->setService('Helper\String', new \Common\Service\Helper\StringHelperService());
-
-        $this->table = m::mock();
-        $this->table->shouldReceive('getServiceLocator')
+        $this->table = m::mock(TableBuilder::class);
+        $this->table->expects('getServiceLocator')
             ->andReturn($this->sm);
 
         $this->sut = new DeltaActionLinks($this->table);

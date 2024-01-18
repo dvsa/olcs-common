@@ -2,15 +2,11 @@
 
 namespace CommonTest\Common\FormService\Form\Lva;
 
+use Laminas\Form\ElementInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Lva\Licence;
 
-/**
- * Licence Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class LicenceTest extends MockeryTestCase
 {
     protected $sut;
@@ -22,7 +18,7 @@ class LicenceTest extends MockeryTestCase
     public function setUp(): void
     {
         $this->formHelper = m::mock('\Common\Service\Helper\FormHelperService');
-        $this->authService = m::mock('\ZfcRbac\Service\AuthorizationService');
+        $this->authService = m::mock('\LmcRbacMvc\Service\AuthorizationService');
         $this->sut = new Licence($this->formHelper, $this->authService);
     }
 
@@ -36,7 +32,7 @@ class LicenceTest extends MockeryTestCase
             ->shouldReceive('get')
             ->with('form-actions')
             ->andReturn(
-                m::mock()
+                m::mock(ElementInterface::class)
                     ->shouldReceive('has')
                     ->with('saveAndContinue')
                     ->andReturn(true)
@@ -46,7 +42,7 @@ class LicenceTest extends MockeryTestCase
                     ->shouldReceive('get')
                     ->with('save')
                     ->andReturn(
-                        m::mock()
+                        m::mock(ElementInterface::class)
                             ->shouldReceive('setAttribute')
                             ->once()
                             ->with('class', 'govuk-button')

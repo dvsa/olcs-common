@@ -14,8 +14,8 @@ class MultipleFileUpload
     /**
      * @Form\Required(false)
      * @Form\Type("Hidden")
-     * @Form\Validator({"name": "Laminas\Validator\NotEmpty", "options": {"null"}})
-     * @Form\Validator({"name": "Common\Validator\FileUploadCountV2", "options": {"min": 1}})
+     * @Form\Validator("Laminas\Validator\NotEmpty", options={"null"})
+     * @Form\Validator("Common\Validator\FileUploadCountV2", options={"min": 1})
      */
     public $fileCount = null;
 

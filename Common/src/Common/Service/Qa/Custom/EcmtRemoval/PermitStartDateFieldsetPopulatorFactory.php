@@ -3,8 +3,7 @@
 namespace Common\Service\Qa\Custom\EcmtRemoval;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class PermitStartDateFieldsetPopulatorFactory implements FactoryInterface
 {
@@ -14,13 +13,5 @@ class PermitStartDateFieldsetPopulatorFactory implements FactoryInterface
             $container->get('Helper\Translation'),
             $container->get('QaCommonHtmlAdder')
         );
-    }
-
-    /**
-     * @dataProvider
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): PermitStartDateFieldsetPopulator
-    {
-        return $this->__invoke($serviceLocator, PermitStartDateFieldsetPopulator::class);
     }
 }

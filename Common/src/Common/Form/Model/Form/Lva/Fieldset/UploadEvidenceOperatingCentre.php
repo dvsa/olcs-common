@@ -40,10 +40,10 @@ class UploadEvidenceOperatingCentre
      *          "id":"adPlacedDate_day"
      *      }
      * })
-     * @Form\Filter({"name": "DateSelectNullifier"})
+     * @Form\Filter("DateSelectNullifier")
      * @Form\Type("DateSelect")
-     * @Form\Validator({"name": "\Common\Validator\Date"})
-     * @Form\Validator({"name": "Date","options":{"format":"Y-m-d"}})
+     * @Form\Validator("\Common\Validator\Date")
+     * @Form\Validator("Date", options={"format":"Y-m-d"})
      */
     public $adPlacedDate = null;
 
@@ -61,8 +61,8 @@ class UploadEvidenceOperatingCentre
     /**
      * @Form\Required(true)
      * @Form\Type("Hidden")
-     * @Form\Validator({"name": "Dvsa\Olcs\Transfer\Validators\UploadEvidence"})
-     * @Form\Validator({"name":"Laminas\Validator\NotEmpty","options":{"null"}})
+     * @Form\Validator("Dvsa\Olcs\Transfer\Validators\UploadEvidence")
+     * @Form\Validator("Laminas\Validator\NotEmpty", options={"null"})
      */
     public $uploadFileValidator = '';
 }

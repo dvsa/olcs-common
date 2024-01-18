@@ -3,12 +3,8 @@
 namespace Common\Service\Helper;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
-/**
- * FlashMessengerHelperServiceFactory
- */
 class FlashMessengerHelperServiceFactory implements FactoryInterface
 {
     /**
@@ -24,17 +20,5 @@ class FlashMessengerHelperServiceFactory implements FactoryInterface
         return new FlashMessengerHelperService(
             $container->get('ControllerPluginManager')->get('FlashMessenger')
         );
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $services
-     *
-     * @return FlashMessengerHelperService
-     */
-    public function createService(ServiceLocatorInterface $services): FlashMessengerHelperService
-    {
-        return $this($services, FlashMessengerHelperService::class);
     }
 }

@@ -70,7 +70,7 @@ class FinancialHistoryTest extends MockeryTestCase
 
         $mockDataFieldset = m::mock(Fieldset::class);
         $mockDataFieldset->shouldReceive('get')->with('financialHistoryConfirmation')->andReturn(
-            m::mock()->shouldReceive('get')->with('insolvencyConfirmation')->andReturn($mockConfirmationLabel)
+            m::mock(ElementInterface::class)->shouldReceive('get')->with('insolvencyConfirmation')->andReturn($mockConfirmationLabel)
                 ->getMock()
         );
 

@@ -9,7 +9,7 @@ class StandardAndCabotageYesNoRadio extends QaRadio
     /**
      * {@inheritdoc}
      */
-    public function getInputSpecification()
+    public function getInputSpecification(): array
     {
         $spec = $this->callParentGetInputSpecification();
 

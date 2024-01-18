@@ -3,8 +3,7 @@
 namespace Common\Service\Qa\Custom\Common;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class IsValidBasedWarningAdderFactory implements FactoryInterface
 {
@@ -13,13 +12,5 @@ class IsValidBasedWarningAdderFactory implements FactoryInterface
         return new IsValidBasedWarningAdder(
             $container->get('QaCommonWarningAdder')
         );
-    }
-
-    /**
-     * @deprecated
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): IsValidBasedWarningAdder
-    {
-        return $this->__invoke($serviceLocator, IsValidBasedWarningAdder::class);
     }
 }

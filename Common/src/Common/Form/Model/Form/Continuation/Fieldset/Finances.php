@@ -23,28 +23,28 @@ class Finances
      *     "label_attributes": {"class": "form-element__question"},
      *     "hint-below": "markup-continuation-finances-average-balance",
      * })
-     * @Form\Validator({"name":"NotEmpty", "options": {
+     * @Form\Validator("NotEmpty", options={
      *     "messages": {"isEmpty" : "continuations.finances.averageBalance.empty"},
      *     "break_chain_on_failure": true,
-     * }})
-     * @Form\Validator({"name":"Dvsa\Olcs\Transfer\Validators\Money", "options": {
+     *})
+     * @Form\Validator("Dvsa\Olcs\Transfer\Validators\Money", options={
      *     "allow_negative" : true,
      *     "messages": {
      *          "invalid": "continuations.finances.averageBalance.notNumber"
      *     }
-     * }})
-     * @Form\Validator({"name":"GreaterThan", "options": {
+     *})
+     * @Form\Validator("GreaterThan", options={
      *     "min": -10000000000,
      *     "messages": {
      *         "notGreaterThan": "continuations.finances.averageBalance.notGreaterThan"
      *     }
-     * }})
-     * @Form\Validator({"name":"LessThan", "options": {
+     *})
+     * @Form\Validator("LessThan", options={
      *     "max": 10000000000,
      *     "messages": {
      *         "notLessThan": "continuations.finances.averageBalance.notLessThan"
      *     }
-     * }})
+     *})
      */
     public $averageBalance = null;
 

@@ -12,12 +12,12 @@ use Common\Service\Table\TableBuilder;
 use Hamcrest\Arrays\IsArrayContainingKey;
 use Hamcrest\Arrays\IsArrayContainingKeyValuePair;
 use Hamcrest\Core\IsAnything;
+use Interop\Container\ContainerInterface;
 use Laminas\Mvc\Controller\Plugin\Url;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use ZfcRbac\Service\AuthorizationService;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * @covers \Common\Service\Table\TableBuilder
@@ -3761,7 +3761,7 @@ class TableBuilderTest extends MockeryTestCase
 
     public function testGetServiceLocator()
     {
-        $serviceLocator = m::mock(ServiceLocatorInterface::class);
+        $serviceLocator = m::mock(ContainerInterface::class);
 
         $tableBuilder = new TableBuilder(
             $serviceLocator,

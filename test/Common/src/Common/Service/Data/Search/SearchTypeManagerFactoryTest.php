@@ -5,16 +5,13 @@ namespace OlcsTest\Service\Data\Search;
 use Common\Service\Data\Search\SearchTypeManager;
 use Common\Service\Data\Search\SearchTypeManagerFactory;
 use CommonTest\Common\Service\Data\Search\Asset\SearchType;
+use Interop\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
-/**
- * Class SearchTypeManagerFactoryTest
- * @package OlcsTest\Service\Data\Search
- */
 class SearchTypeManagerFactoryTest extends TestCase
 {
-    public function testCreateService()
+    public function testInvoke(): void
     {
         $search = new SearchType();
 
@@ -22,10 +19,10 @@ class SearchTypeManagerFactoryTest extends TestCase
 
         $sut = new SearchTypeManagerFactory();
 
-        $mockSl = m::mock('Laminas\ServiceManager\ServiceLocatorInterface');
+        $mockSl = m::mock(ContainerInterface::class);
         $mockSl->shouldReceive('get')->with('Config')->andReturn($serviceConfig);
 
-        $service = $sut->createService($mockSl);
+        $service = $sut->__invoke($mockSl, SearchTypeManager::class);
 
         $this->assertInstanceOf(SearchTypeManager::class, $service);
         $this->assertEquals($search, $service->get('testService'));

@@ -31,12 +31,11 @@ class EmploymentDetails
      * })
      * @Form\Type("Text")
      * @Form\Required(true)
-     * @Form\Validator({
-     *     "name":"Laminas\Validator\StringLength",
-     *     "options":{
+     * @Form\Validator("Laminas\Validator\StringLength",
+     *     options={
      *          "max":45,
      *     },
-     * })
+     * )
      */
     public $position = null;
 
@@ -52,12 +51,11 @@ class EmploymentDetails
      * })
      * @Form\Type("Textarea")
      * @Form\Required(true)
-     * @Form\Validator({
-     *     "name":"Laminas\Validator\StringLength",
-     *     "options":{
+     * @Form\Validator("Laminas\Validator\StringLength",
+     *     options={
      *          "max":300,
      *     },
-     * })
+     * )
      */
     public $hoursPerWeek = null;
 

@@ -3,18 +3,12 @@
 namespace Common\Service\Cqrs\Query;
 
 use Common\Service\Cqrs\RecoverHttpClientExceptionTrait;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Dvsa\Olcs\Transfer\Query\FeatureToggle\IsEnabled as IsEnabledQry;
 use Dvsa\Olcs\Transfer\Query\QueryInterface;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder as TransferAnnotationBuilder;
 use Interop\Container\ContainerInterface;
 
-/**
- * Query Sender
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class QuerySender implements FactoryInterface
 {
     use RecoverHttpClientExceptionTrait;
@@ -23,23 +17,7 @@ class QuerySender implements FactoryInterface
      * @var TransferAnnotationBuilder
      */
     private $annotationBuilder;
-
-    /**
-     * @var QueryService
-     */
-    private $queryService;
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator serviceLocator
-     *
-     * @return mixed
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): QuerySender
-    {
-        return $this->__invoke($serviceLocator, QuerySender::class);
-    }
+    private CachingQueryService $queryService;
 
     /**
      * Send
@@ -67,14 +45,7 @@ class QuerySender implements FactoryInterface
         return $this->send(IsEnabledQry::create(['ids' => $features]))->getResult()['isEnabled'];
     }
 
-    /**
-     * Grab the appropriate query service from the service locator
-     *
-     * @param ServiceLocatorInterface $serviceLocator serviceLocator
-     *
-     * @return QueryService
-     */
-    protected function getQueryService(ServiceLocatorInterface $serviceLocator)
+    protected function getQueryService(ContainerInterface $serviceLocator): CachingQueryService
     {
         return $serviceLocator->get('QueryService');
     }
