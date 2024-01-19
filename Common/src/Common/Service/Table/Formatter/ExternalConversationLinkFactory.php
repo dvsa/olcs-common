@@ -6,6 +6,7 @@ namespace Common\Service\Table\Formatter;
 
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Common\Service\Helper\UrlHelperService;
 
 class ExternalConversationLinkFactory implements FactoryInterface
 {
