@@ -18,7 +18,7 @@ class ExternalConversationLinkFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $urlHelper = $container->get('Helper\Url');
+        $urlHelper = $container->get(UrlHelperService::class);
 
         return new ExternalConversationLink($urlHelper);
     }
