@@ -126,6 +126,7 @@ use Common\Service\Table\Formatter\EbsrRegNumberLinkFactory;
 use Common\Service\Table\Formatter\EbsrVariationNumberFactory;
 use Common\Service\Table\Formatter\EventHistoryDescriptionFactory;
 use Common\Service\Table\Formatter\EventHistoryUserFactory;
+use Common\Service\Table\Formatter\ExternalConversationMessage;
 use Common\Service\Table\Formatter\FeatureToggleEditLinkFactory;
 use Common\Service\Table\Formatter\FeeAmountSumFactory;
 use Common\Service\Table\Formatter\FeeIdUrlFactory;
@@ -262,6 +263,7 @@ return [
         Date::class => Date::class,
         DateTime::class => DateTime::class,
         DocumentSubcategory::class => DocumentSubcategory::class,
+        ExternalConversationMessage::class => ExternalConversationMessage::class,
         FeeAmount::class => FeeAmount::class,
         FeeStatus::class => FeeStatus::class,
         FileExtension::class => FileExtension::class,
