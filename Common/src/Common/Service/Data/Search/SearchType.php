@@ -101,7 +101,7 @@ class SearchType implements ListDataInterface, FactoryInterface
 
         $indexes = [];
 
-        foreach (array_merge($services['factories'], $services['invokableClasses']) as $searchIndexName) {
+        foreach ($services as $searchIndexName) {
             $indexes[] = $this->getSearchTypeManager()->get($searchIndexName);
         }
 

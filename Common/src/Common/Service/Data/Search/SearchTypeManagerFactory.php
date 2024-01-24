@@ -2,22 +2,21 @@
 
 namespace Common\Service\Data\Search;
 
-use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\Config as ServiceManagerConfig;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Psr\Container\ContainerInterface;
 
 class SearchTypeManagerFactory implements FactoryInterface
 {
+    PUBLIC CONST MISSING_CONFIG_MESSAGE = 'Search config is missing';
+
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): SearchTypeManager
     {
-        $service = new SearchTypeManager();
-
         $config = $container->get('Config');
-        if (isset($config['search'])) {
-            $configuration = new ServiceManagerConfig($config['search']);
-            $configuration->configureServiceManager($service);
+
+        if(!isset($config['search'])) {
+            throw new \RuntimeException(self::MISSING_CONFIG_MESSAGE);
         }
 
-        return $service;
+        return new SearchTypeManager($container, $config['search']);
     }
 }

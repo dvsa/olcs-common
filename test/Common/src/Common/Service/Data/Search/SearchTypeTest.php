@@ -29,7 +29,7 @@ class SearchTypeTest extends TestCase
             'factories' => [
                 'licence'
             ],
-            'invokableClasses' => [
+            'invokables' => [
                 'application',
                 'user'
             ]
