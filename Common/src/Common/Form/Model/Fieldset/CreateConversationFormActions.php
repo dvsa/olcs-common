@@ -5,11 +5,10 @@ namespace Common\Form\Model\Fieldset;
 use Laminas\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
  * @Form\Name("form-actions")
  * @Form\Attributes({"class":"govuk-button-group"})
  */
-class SendMessageFormActions
+class CreateConversationFormActions
 {
     /**
      * @Form\Attributes({
@@ -17,7 +16,7 @@ class SendMessageFormActions
      *     "type": "submit",
      *     "class": "govuk-button"
      * })
-     * @Form\Options({"label": "Send Message"})
+     * @Form\Options({"label": "Create Conversation"})
      * @Form\Type(\Common\Form\Elements\InputFilters\ActionButton::class)
      */
     public $submit = null;

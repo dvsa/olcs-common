@@ -29,7 +29,7 @@ class InternalLicenceConversationLink implements FormatterPluginManagerInterface
     /**
      * status
      *
-     * @param array $row    Row data
+     * @param array $row Row data
      * @param array $column Column data
      *
      * @return     string
@@ -43,11 +43,10 @@ class InternalLicenceConversationLink implements FormatterPluginManagerInterface
             'licence' => $licence,
             'conversation' => $row['id']
         ];
-        
+
         $statusCSS = '';
 
-        switch($row['userContextStatus'])
-        {
+        switch ($row['userContextStatus']) {
             case "NEW_MESSAGE":
                 $statusCSS = 'govuk-!-font-weight-bold';
                 $tagColor = 'govuk-tag--red';
@@ -60,34 +59,32 @@ class InternalLicenceConversationLink implements FormatterPluginManagerInterface
                 break;
             default:
                 $tagColor = 'govuk-tag--green';
-                break;               
+                break;
         }
 
-        $rows ='<a class="'.'govuk-body govuk-link govuk-!-padding-right-1 '. $statusCSS.'" href="%s">%s: %s</a>
-                <strong class="govuk-tag '.$tagColor.'">
+        $rows = '<a class="' . 'govuk-body govuk-link govuk-!-padding-right-1 ' . $statusCSS . '" href="%s">%s: %s</a>
+                <strong class="govuk-tag ' . $tagColor . '">
                     %s
                 </strong>
                 <br>';
-        $rows = $rows. '<p class="govuk-body govuk-!-margin-1">%s</p>';
-       
+        $rows = $rows . '<p class="govuk-body govuk-!-margin-1">%s</p>';
+
         $latestMessageCreatedOn = \DateTimeImmutable::createFromFormat(\DateTimeInterface::ATOM, $row["createdOn"]);
         $dtOutput = $latestMessageCreatedOn->format('l j F Y \a\t H:ia');
-        
-        if(isset($row['task']['application']['id']))
-        {
-           $idMatrix = Escape::html($row['task']['licence']['licNo'] . " / " . $row['task']['application']['id']);
-        }
-        else{
+
+        if (isset($row['task']['application']['id'])) {
+            $idMatrix = Escape::html($row['task']['licence']['licNo'] . " / " . $row['task']['application']['id']);
+        } else {
             $idMatrix = Escape::html($row['task']['licence']['licNo']);
         }
-        
+
         return vsprintf(
             $rows,
             [
-                $this->urlHelper->fromRoute($route, $params), 
-                $idMatrix,  
+                $this->urlHelper->fromRoute($route, $params),
+                $idMatrix,
                 $row["subject"],
-                str_replace('_',' ',$row['userContextStatus']), 
+                str_replace('_', ' ', $row['userContextStatus']),
                 $dtOutput
             ]
         );
