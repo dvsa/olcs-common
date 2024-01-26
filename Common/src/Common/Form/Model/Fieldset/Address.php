@@ -32,6 +32,7 @@ class Address
      * })
      * @Form\Required(false)
      * @Form\Type("Common\Form\Elements\Types\PostcodeSearch")
+     * @Form\Flags({"priority": 100})
      */
     public $searchPostcode = null;
 
