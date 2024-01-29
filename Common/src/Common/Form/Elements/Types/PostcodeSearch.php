@@ -7,6 +7,7 @@
  */
 namespace Common\Form\Elements\Types;
 
+use Common\Form\Element\OptionalSelect;
 use Laminas\Form\Fieldset;
 use Laminas\Form\Element\Text;
 use Laminas\Form\Element\Button;
@@ -72,7 +73,7 @@ class PostcodeSearch extends Fieldset
 
         $selectAddressId = 'selectAddress' . self::$count;
 
-        $selectAddress = new Select(
+        $selectAddress = new OptionalSelect(
             'addresses',
             array(
                 'label' => 'postcode.select_address.label',

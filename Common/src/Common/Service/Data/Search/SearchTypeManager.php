@@ -3,7 +3,6 @@
 namespace Common\Service\Data\Search;
 
 use Common\Data\Object\Search\SearchAbstract;
-use Dvsa\Olcs\Utils\Traits\PluginManagerTrait;
 use Laminas\ServiceManager\AbstractPluginManager;
 
 /**
@@ -23,4 +22,13 @@ class SearchTypeManager extends AbstractPluginManager
      * @var bool
      */
     protected $autoAddInvokableClass = false;
+
+    /**
+     * previously we had code that (mis)used a debug method within the Laminas service manager to provide this info,
+     * for now we're replicating that behaviour here
+     */
+    public function getRegisteredServices(): array
+    {
+        return array_keys($this->factories);
+    }
 }

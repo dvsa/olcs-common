@@ -9,6 +9,32 @@ use PHPUnit\Framework\TestCase;
 
 class AbstractInputSearchTest extends TestCase
 {
+    public function testEmptyMessages(): void
+    {
+        $sut = new class extends AbstractInputSearch {
+            public $hint;
+            public $input;
+            public $submit;
+
+            protected function addHint()
+            {
+                $this->hint = 'hint_is_set';
+            }
+
+            protected function addInput()
+            {
+                $this->input = 'input_is_set';
+            }
+
+            protected function addSubmit()
+            {
+                $this->submit = 'submit_is_set';
+            }
+        };
+
+        $messages = $sut->getMessages();
+        $this->assertEmpty($messages);
+    }
 
     public function testSetAndGetMessages()
     {

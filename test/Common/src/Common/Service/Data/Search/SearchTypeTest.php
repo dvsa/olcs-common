@@ -26,13 +26,9 @@ class SearchTypeTest extends TestCase
     private function getMockSearchTypeManager(): m\MockInterface
     {
         $servicesArray = [
-            'factories' => [
-                'licence'
-            ],
-            'invokableClasses' => [
-                'application',
-                'user'
-            ]
+            0 => 'application',
+            1 => 'licence',
+            2 => 'user',
         ];
 
         $mockStm = m::mock(ContainerInterface::class);
@@ -92,7 +88,6 @@ class SearchTypeTest extends TestCase
     public function testInvoke(): void
     {
         $mockStm = $this->getMockSearchTypeManager();
-        $mockNav = m::mock(NavigationFactory::class);
         $mockRoleService = m::mock(RoleService::class);
 
         $mockSl = m::mock(ContainerInterface::class);
