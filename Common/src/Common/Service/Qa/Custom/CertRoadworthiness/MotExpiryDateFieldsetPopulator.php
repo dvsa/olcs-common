@@ -68,7 +68,8 @@ class MotExpiryDateFieldsetPopulator implements FieldsetPopulatorInterface
                     'dateMustBeBefore' => $dateWithThresholdOptions['dateThreshold'],
                     'invalidDateKey' => 'qanda.certificate-of-roadworthiness.mot-expiry-date.error.date-invalid',
                     'dateInPastKey' => 'qanda.certificate-of-roadworthiness.mot-expiry-date.error.date-in-past',
-                    'dateNotBeforeKey' => 'qanda.certificate-of-roadworthiness.mot-expiry-date.error.date-too-far'
+                    'dateNotBeforeKey' => 'qanda.certificate-of-roadworthiness.mot-expiry-date.error.date-too-far',
+                    'create_empty_option' => true,
                 ],
                 'attributes' => [
                     'value' => $dateWithThresholdOptions['date']['value']

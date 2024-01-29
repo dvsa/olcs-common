@@ -55,7 +55,8 @@ class PermitStartDateFieldsetPopulator implements FieldsetPopulatorInterface
                     'dateMustBeBefore' => $options['dateThreshold'],
                     'invalidDateKey' => 'qanda.ecmt-removal.permit-start-date.error.date-invalid',
                     'dateInPastKey' => 'qanda.ecmt-removal.permit-start-date.error.date-in-past',
-                    'dateNotBeforeKey' => 'qanda.ecmt-removal.permit-start-date.error.date-too-far'
+                    'dateNotBeforeKey' => 'qanda.ecmt-removal.permit-start-date.error.date-too-far',
+                    'create_empty_option' => true,
                 ],
                 'attributes' => [
                     'value' => $options['date']['value']
