@@ -689,7 +689,7 @@ return [
             DynamicMultiCheckbox::class => DynamicMultiCheckboxFactory::class,
             DynamicRadio::class => DynamicRadioFactory::class,
             DynamicRadioHtml::class => DynamicRadioHtmlFactory::class,
-            Common\Form\Elements\Types\Table::class => Common\Form\Elements\Types\Table::class,
+            Common\Form\Elements\Types\Table::class => Common\Form\Elements\Types\Table::class
         ],
         'aliases' => [
             'DynamicSelect' => DynamicSelect::class,
