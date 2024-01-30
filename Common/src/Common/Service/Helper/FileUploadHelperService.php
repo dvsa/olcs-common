@@ -242,9 +242,7 @@ class FileUploadHelperService extends AbstractHelperService
      */
     public function getElement()
     {
-        if ($this->element === null) {
-            $this->element = $this->findElement($this->getForm(), $this->getSelector());
-        }
+        $this->element = $this->findElement($this->getForm(), $this->getSelector());
 
         return $this->element;
     }
