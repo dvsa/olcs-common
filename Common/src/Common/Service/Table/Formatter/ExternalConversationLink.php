@@ -35,29 +35,15 @@ class ExternalConversationLink implements FormatterPluginManagerInterface
         ];
 
         $statusCSS = '';
-
-        switch ($row['userContextStatus']) {
-            case "NEW_MESSAGE":
-                $statusCSS = 'govuk-!-font-weight-bold';
-                $tagColor = 'govuk-tag--red';
-                break;
-            case "OPEN":
-                $tagColor = 'govuk-tag--blue';
-                break;
-            case "CLOSED":
-                $tagColor = 'govuk-tag--grey';
-                break;
-            default:
-                $tagColor = 'govuk-tag--green';
-                break;
+        if ($row['userContextStatus'] === "NEW_MESSAGE") {
+            $statusCSS = 'govuk-!-font-weight-bold';
         }
 
-        $rows = '<a class="' . 'govuk-body govuk-link govuk-!-padding-right-1 ' . $statusCSS . '" href="%s">%s: %s</a>
-                <strong class="govuk-tag ' . $tagColor . '">
-                    %s
-                </strong>
-                <br>';
-        $rows = $rows . '<p class="govuk-body govuk-!-margin-1">%s</p>';
+        $rows = '
+            <a class="' . 'govuk-body govuk-link govuk-!-padding-right-1 %s" href="%s">%s: %s</a>
+            <br>
+            <p class="govuk-body govuk-!-margin-1">%s</p>
+        ';
 
         $latestMessageCreatedOn = DateTimeImmutable::createFromFormat(DateTimeInterface::ATOM, $row["createdOn"]);
         $dtOutput = $latestMessageCreatedOn->format('l j F Y \a\t H:ia');
@@ -71,10 +57,10 @@ class ExternalConversationLink implements FormatterPluginManagerInterface
         return vsprintf(
             $rows,
             [
+                $statusCSS,
                 $this->urlHelper->fromRoute($route, $params),
                 $idMatrix,
                 $row["subject"],
-                str_replace('_', ' ', $row['userContextStatus']),
                 $dtOutput,
             ],
         );
