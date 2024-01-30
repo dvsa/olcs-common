@@ -22,6 +22,7 @@ class LicenceHistoryEu
      * @Form\Validator("Common\Form\Elements\Validators\LicenceHistoryLicenceValidator",
      *     options={"table": "prevBeenRefused-table"}
      *)
+     * @Form\Flags({"priority": -10})
      */
     public $prevBeenRefused = null;
 
@@ -32,6 +33,7 @@ class LicenceHistoryEu
      *      "id":"prevBeenRefused",
      *      "class": "help__text help__text--removePadding"
      * })
+     * @Form\Flags({"priority": -20})
      */
     public $prevBeenRefusedTable = null;
 
@@ -48,6 +50,7 @@ class LicenceHistoryEu
      * @Form\Validator("Common\Form\Elements\Validators\LicenceHistoryLicenceValidator",
      *     options={"table":"prevBeenRevoked-table"}
      *)
+     * @Form\Flags({"priority": -30})
      */
     public $prevBeenRevoked = null;
 
@@ -58,6 +61,7 @@ class LicenceHistoryEu
      *      "id":"prevBeenRevoked",
      *      "class": "help__text help__text--removePadding"
      * })
+     * @Form\Flags({"priority": -40})
      */
     public $prevBeenRevokedTable = null;
 }

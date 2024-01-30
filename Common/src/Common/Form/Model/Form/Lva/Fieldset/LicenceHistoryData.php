@@ -22,6 +22,7 @@ class LicenceHistoryData
      * @Form\Validator("Common\Form\Elements\Validators\LicenceHistoryLicenceValidator",
      *     options={"table": "prevHasLicence-table"}
      *)
+     * @Form\Flags({"priority": -10})
      */
     public $prevHasLicence = null;
 
@@ -32,6 +33,7 @@ class LicenceHistoryData
      *      "id":"prevHasLicence",
      *      "class": "help__text help__text--removePadding"
      * })
+     * @Form\Flags({"priority": -20})
      */
     public $prevHasLicenceTable = null;
 
@@ -48,6 +50,7 @@ class LicenceHistoryData
      * @Form\Validator("Common\Form\Elements\Validators\LicenceHistoryLicenceValidator",
      *     options={"table": "prevHadLicence-table"}
      *)
+     * @Form\Flags({"priority": -30})
      */
     public $prevHadLicence = null;
 
@@ -58,6 +61,7 @@ class LicenceHistoryData
      *      "id":"prevHadLicence",
      *      "class": "help__text help__text--removePadding"
      * })
+     * @Form\Flags({"priority": -40})
      */
     public $prevHadLicenceTable = null;
 
@@ -74,6 +78,7 @@ class LicenceHistoryData
      * @Form\Validator("Common\Form\Elements\Validators\LicenceHistoryLicenceValidator",
      *     options={"table": "prevBeenDisqualifiedTc-table"}
      *)
+     * @Form\Flags({"priority": -50})
      */
     public $prevBeenDisqualifiedTc = null;
 
@@ -84,6 +89,7 @@ class LicenceHistoryData
      *      "id":"prevBeenDisqualifiedTc",
      *      "class": "help__text help__text--removePadding"
      * })
+     * @Form\Flags({"priority": -60})
      */
     public $prevBeenDisqualifiedTcTable = null;
 }

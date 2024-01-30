@@ -30,6 +30,7 @@ class Responsibilities
      * })
      * @Form\Type("DynamicRadio")
      * @Form\Validator("Laminas\Validator\NotEmpty")
+     * @Form\Flags({"priority": -10})
      */
     public $tmType = null;
 
@@ -42,6 +43,7 @@ class Responsibilities
      * @Form\Required(true)
      * @Form\Attributes({"id":"","placeholder":"", "required":false})
      * @Form\Type("DynamicSelect")
+     * @Form\Flags({"priority": -20})
      */
     public $tmApplicationStatus = null;
 
@@ -55,6 +57,7 @@ class Responsibilities
      *     "hint-class" : "govuk-radios__conditional govuk-body hint hint__below hint__black hintNoOwner",
      * })
      * @Form\Type("Radio")
+     * @Form\Flags({"priority": -30})
      */
     public $isOwner = null;
 
@@ -62,12 +65,14 @@ class Responsibilities
      * @Form\Name("hoursOfWeek")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\HoursOfWeekRequired")
      * @Form\Attributes({"id":"hoursOfWeek"})
+     * @Form\Flags({"priority": -40})
      */
     public $hoursOfWeek = null;
 
     /**
      * @Form\Name("otherLicencesFieldset")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TransportManager\OtherLicencesFieldset")
+     * @Form\Flags({"priority": -50})
      */
     public $otherLicencesFieldset = null;
 
@@ -92,12 +97,14 @@ class Responsibilities
      *          "max":4000
      *      }
      * )
+     * @Form\Flags({"priority": -60})
      */
     public $additionalInformation;
 
     /**
      * @Form\Attributes({"id":"file", "class": "file-upload"})
      * @Form\ComposedObject("\Common\Form\Model\Fieldset\MultipleFileUpload")
+     * @Form\Flags({"priority": -70})
      */
     public $file = null;
 }
