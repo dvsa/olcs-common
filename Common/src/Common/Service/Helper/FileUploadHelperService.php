@@ -236,33 +236,6 @@ class FileUploadHelperService extends AbstractHelperService
     }
 
     /**
-     * Get element
-     *
-     * @return ElementInterface
-     */
-    public function getElement()
-    {
-        if ($this->element === null) {
-            $this->element = $this->findElement($this->getForm(), $this->getSelector());
-        }
-
-        return $this->element;
-    }
-
-    /**
-     * Set element
-     *
-     * @param ElementInterface $element Element
-     *
-     * @return $this
-     */
-    public function setElement($element)
-    {
-        $this->element = $element;
-        return $this;
-    }
-
-    /**
      * Process file uploads/deletions and list population
      *
      * @return boolean
@@ -306,7 +279,7 @@ class FileUploadHelperService extends AbstractHelperService
 
         $files = call_user_func($callback);
 
-        $element = $this->getElement();
+        $element = $this->findElement($this->getForm(), $this->getSelector());
 
         $element->get('list')->setFiles($files, $url);
 
@@ -480,9 +453,11 @@ class FileUploadHelperService extends AbstractHelperService
             return false;
         }
 
-        $element = $this->getElement()->get('list');
+        $element = $this->findElement($this->getForm(), $this->getSelector());
 
-        foreach ($element->getFieldsets() as $listFieldset) {
+        $list = $element->get('list');
+
+        foreach ($list->getFieldsets() as $listFieldset) {
             $name = $listFieldset->getName();
 
             if (isset($postData['list'][$name]['remove'])
@@ -493,7 +468,7 @@ class FileUploadHelperService extends AbstractHelperService
                 );
 
                 if ($success === true) {
-                    $element->remove($name);
+                    $list->remove($name);
                     $this->decrementCount();
                 }
 
@@ -565,7 +540,7 @@ class FileUploadHelperService extends AbstractHelperService
      *
      * @return \Laminas\Form\ElementInterface
      */
-    private function findElement($form, $selector)
+    public function findElement($form, $selector)
     {
         if (strstr($selector, '->')) {
             list($element, $selector) = explode('->', $selector, 2);

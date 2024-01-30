@@ -99,32 +99,6 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         );
     }
 
-    public function testSetGetElement()
-    {
-        $this->assertEquals(
-            'fakeElement',
-            $this->sut->setElement('fakeElement')->getElement()
-        );
-    }
-
-    public function testGetElementFromFormAndSelector()
-    {
-        $fieldset = m::mock('Laminas\Form\Fieldset');
-        $element = m::mock(ElementInterface::class);
-
-        $this->mockForm->shouldReceive('get')
-            ->with('foo')
-            ->andReturn($fieldset);
-
-        $fieldset->shouldReceive('get')
-            ->with('bar')
-            ->andReturn($element);
-
-        $this->sut->setSelector('foo->bar');
-
-        $this->assertEquals($element, $this->sut->getElement());
-    }
-
     public function testProcessWithGetRequestAndNoLoadCallback()
     {
         $this->mockRequest->shouldReceive('isPost')->andReturn(false);
@@ -579,7 +553,6 @@ class FileUploadHelperServiceTest extends MockeryTestCase
             ->with('list')
             ->andReturn($listElement);
 
-        $this->sut->setElement($element);
         $this->sut->setSelector('my-file');
         $this->sut->setDeleteCallback(
             function ($id) {
@@ -598,8 +571,12 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         $this->mockForm
             ->shouldReceive('get')
             ->with('my-hidden-field')
-            ->andReturn($fileCountfield)
-            ->getMock();
+            ->andReturn($fileCountfield);
+
+        $this->mockForm
+            ->shouldReceive('get')
+            ->with('my-file')
+            ->andReturn($element);
 
         $this->assertEquals(true, $this->sut->process());
     }
@@ -629,17 +606,18 @@ class FileUploadHelperServiceTest extends MockeryTestCase
             ->shouldReceive('remove')
             ->with('file1');
 
-        $element = m::mock('\stdClass');
+        $element = m::mock(ElementInterface::class);
         $element->shouldReceive('get')
             ->with('list')
             ->andReturn($listElement);
 
-        $this->sut->setElement($element);
         $this->sut->setSelector('my-file');
         $this->sut->setDeleteCallback(
             function () {
             }
         );
+
+        $this->mockForm->shouldReceive('get')->andReturn($element);
 
         $this->assertEquals(false, $this->sut->process());
     }
