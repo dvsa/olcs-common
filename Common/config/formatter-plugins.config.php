@@ -40,6 +40,8 @@ use Common\Service\Table\Formatter\EventHistoryDescription;
 use Common\Service\Table\Formatter\EventHistoryUser;
 use Common\Service\Table\Formatter\ExternalConversationLink;
 use Common\Service\Table\Formatter\ExternalConversationLinkFactory;
+use Common\Service\Table\Formatter\ExternalConversationStatus;
+use Common\Service\Table\Formatter\ExternalConversationStatusFactory;
 use Common\Service\Table\Formatter\FeatureToggleEditLink;
 use Common\Service\Table\Formatter\FeeAmount;
 use Common\Service\Table\Formatter\FeeAmountSum;
@@ -334,6 +336,7 @@ return [
         EventHistoryDescription::class => EventHistoryDescriptionFactory::class,
         EventHistoryUser::class => EventHistoryUserFactory::class,
         ExternalConversationLink::class => ExternalConversationLinkFactory::class,
+        ExternalConversationStatus::class => ExternalConversationStatusFactory::class,
         FeatureToggleEditLink::class => FeatureToggleEditLinkFactory::class,
         FeeAmountSum::class => FeeAmountSumFactory::class,
         FeeIdUrl::class => FeeIdUrlFactory::class,
