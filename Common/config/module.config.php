@@ -334,8 +334,6 @@ return [
             // Added in a true Laminas Framework V2 compatible factory for TableBuilder, eventually to replace Table above.
             'Common\Service\Table\TableBuilderFactory' => 'Common\Service\Table\TableBuilderFactory',
             'ServiceApiResolver' => 'Common\Service\Api\ResolverFactory',
-            'navigation' => 'Laminas\Navigation\Service\DefaultNavigationFactory',
-            'Navigation' => 'Laminas\Navigation\Service\DefaultNavigationFactory',
             'SectionService' => '\Common\Controller\Service\SectionServiceFactory',
             'FormAnnotationBuilder' => '\Common\Service\FormAnnotationBuilderFactory',
             'Common\Service\Data\PluginManager' => Common\Service\Data\PluginManagerFactory::class,
