@@ -556,7 +556,7 @@ return [
             'version' => \Common\View\Helper\VersionFactory::class,
             'pageId' => \Common\View\Helper\PageIdFactory::class,
             'pageTitle' => \Common\View\Helper\PageTitleFactory::class,
-            'LicenceChecklist' => \Common\View\Helper\LicenceChecklistFactory::class,
+            'licenceChecklist' => \Common\View\Helper\LicenceChecklistFactory::class,
             \Common\View\Helper\Date::class => \Common\View\Helper\DateFactory::class,
             \Common\Form\View\Helper\FormRow::class => \Common\Form\View\Helper\FormRowFactory::class,
             \Common\View\Helper\LanguageLink::class => \Common\View\Helper\LanguageLinkFactory::class,
