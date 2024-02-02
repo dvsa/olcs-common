@@ -487,7 +487,7 @@ return [
             'formRadioVertical' => \Common\Form\View\Helper\FormRadioVertical::class,
             'form' => 'Common\Form\View\Helper\Form',
             \Common\Form\View\Helper\FormCollection::class => Common\Form\View\Helper\FormCollection::class,
-            'formDateTimeSelect' => 'Common\Form\View\Helper\FormDateTimeSelect',
+            'formdatetimeselect' => 'Common\Form\View\Helper\FormDateTimeSelect',
             'formDateSelect' => \Common\Form\View\Helper\FormDateSelect::class,
             FormInputSearch::class => FormInputSearch::class,
             'formPlainText' => 'Common\Form\View\Helper\FormPlainText',
