@@ -13,6 +13,7 @@ class Details
     /**
      * @Form\Options({"label":"lva-tm-details-details-name"})
      * @Form\Type("\Common\Form\Elements\Types\Readonly")
+     * @Form\Flags({"priority": -10})
      */
     public $name = null;
 
@@ -30,6 +31,7 @@ class Details
      * @Form\Validator("\Common\Validator\Date")
      * @Form\Validator("Date", options={"format":"Y-m-d"})
      * @Form\Validator("\Common\Form\Elements\Validators\DateNotInFuture")
+     * @Form\Flags({"priority": -20})
      */
     public $birthDate = null;
 
@@ -43,6 +45,7 @@ class Details
      * @Form\Type("Text")
      * @Form\Filter("Laminas\Filter\StringTrim")
      * @Form\Validator("Dvsa\Olcs\Transfer\Validators\EmailAddress")
+     * @Form\Flags({"priority": -30})
      */
     public $emailAddress = null;
 
@@ -57,12 +60,14 @@ class Details
      * })
      * @Form\Type("Text")
      * @Form\Validator("\Laminas\Validator\NotEmpty")
+     * @Form\Flags({"priority": -40})
      */
     public $birthPlace = null;
 
     /**
      * @Form\Attributes({"value": "markup-lva-tm-details-details-certificateHtml"})
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
+     * @Form\Flags({"priority": -50})
      */
     public $certificateHtml = null;
 
@@ -78,12 +83,14 @@ class Details
      *        "aria-label": "Certificate of professional competence, attach file(s) for upload",
      *    },
      * })
+     * @Form\Flags({"priority": -60})
      */
     public $certificate = null;
 
     /**
      * @Form\Attributes({"value": "markup-lva-tm-details-details-lgvAcquiredRightsHtml"})
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
+     * @Form\Flags({"priority": -70})
      */
     public $lgvAcquiredRightsHtml = null;
 
@@ -108,6 +115,7 @@ class Details
      *         }
      *     }
      * )
+     * @Form\Flags({"priority": -80})
      */
     public $lgvAcquiredRightsReferenceNumber = null;
 
@@ -121,6 +129,7 @@ class Details
      *     "hint-class" : "govuk-radios__conditional govuk-body hint hint__below hint__black hintNoTraining",
      * })
      * @Form\Type("Radio")
+     * @Form\Flags({"priority": -90})
      */
     public $hasUndertakenTraining = null;
 }
