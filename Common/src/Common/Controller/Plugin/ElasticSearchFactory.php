@@ -15,7 +15,7 @@ class ElasticSearchFactory implements FactoryInterface
 
         $searchService = $container->get('DataServiceManager')->get(Search::class);
         $searchTypeService = $container->get('DataServiceManager')->get(SearchType::class);
-        $navigation = $container->get('Navigation');
+        $navigation = $container->get('navigation');
 
         $plugin->setSearchService($searchService);
         $plugin->setSearchTypeService($searchTypeService);

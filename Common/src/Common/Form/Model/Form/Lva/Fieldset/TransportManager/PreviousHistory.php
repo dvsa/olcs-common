@@ -25,6 +25,7 @@ class PreviousHistory
      *     }
      * )
      * @Form\Type("Radio")
+     * @Form\Flags({"priority": -10})
      */
     public $hasConvictions = null;
 
@@ -35,6 +36,7 @@ class PreviousHistory
      *      "id":"previousConvictions",
      *      "class": "help__text help__text--removePadding"
      * })
+     * @Form\Flags({"priority": -20})
      */
     public $convictions = null;
 
@@ -53,6 +55,7 @@ class PreviousHistory
      *     }
      * )
      * @Form\Type("Radio")
+     * @Form\Flags({"priority": -30})
      */
     public $hasPreviousLicences = null;
 
@@ -63,6 +66,7 @@ class PreviousHistory
      *      "id":"previousLicences",
      *      "class": "help__text help__text--removePadding"
      * })
+     * @Form\Flags({"priority": -40})
      */
     public $previousLicences = null;
 }
