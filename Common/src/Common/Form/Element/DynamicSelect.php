@@ -3,6 +3,7 @@
 namespace Common\Form\Element;
 
 use Common\Service\Data\PluginManager;
+use Laminas\Form\Element\Select;
 
 /**
  * Class DynamicSelect
