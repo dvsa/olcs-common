@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Common\Service\Data;
 
 use Common\Exception\DataServiceException;
@@ -7,8 +9,8 @@ use Dvsa\Olcs\Transfer\Query as TransferQry;
 
 class MessagingSubject extends AbstractListDataService
 {
-    protected static $sort = 'description';
-    protected static $order = 'ASC';
+    public const SORT_BY = 'description';
+    public const SORT_ORDER = 'ASC';
 
     /**
      * Fetch list data
@@ -22,14 +24,14 @@ class MessagingSubject extends AbstractListDataService
     {
         $data = (array)$this->getData('subjects');
 
-        if (0 !== count($data)) {
+        if (count($data) !== 0) {
             return $data;
         }
 
         $response = $this->handleQuery(
             TransferQry\Messaging\Subjects\All::create([
-                'sort' => self::$sort,
-                'order' => self::$order,
+                'sort' => static::SORT_BY,
+                'order' => static::SORT_ORDER,
             ])
         );
 
@@ -39,7 +41,7 @@ class MessagingSubject extends AbstractListDataService
 
         $result = $response->getResult();
 
-        $this->setData('subjects', (isset($result['results']) ? $result['results'] : null));
+        $this->setData('subjects', ($result['results'] ?? NULL));
 
         return $this->getData('subjects');
     }
