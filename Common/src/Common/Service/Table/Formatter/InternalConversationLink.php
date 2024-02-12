@@ -39,15 +39,19 @@ class InternalConversationLink implements FormatterPluginManagerInterface
      */
     public function format($row, $column = null)
     {
-        $routePrefix = $this->route->getMatchedRouteName() === 'lva-application/conversation' ? 'lva-application' : 'licence';
-        $route = $routePrefix . '/conversation/view';
-        $licence = $row['task']['licence']['id'];
-        $application = $row['task']['application']['id'];
-        $params = [
-            'licence'      => $licence,
-            'application'  => $application ?? 1,
-            'conversation' => $row['id'],
-        ];
+        if ($this->route->getMatchedRouteName() === 'lva-application/conversation') {
+            $route = 'lva-application/conversation/view';
+            $params = [
+                'application'  => $row['task']['application']['id'],
+                'conversation' => $row['id'],
+            ];
+        } else {
+            $route = 'licence/conversation/view';
+            $params = [
+                'licence'      => $row['task']['licence']['id'],
+                'conversation' => $row['id'],
+            ];
+        }
 
         $statusCSS = '';
 
