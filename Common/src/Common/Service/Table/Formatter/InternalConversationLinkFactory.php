@@ -3,6 +3,8 @@
 namespace Common\Service\Table\Formatter;
 
 use Interop\Container\ContainerInterface;
+use Laminas\Http\Request;
+use Laminas\Router\RouteStackInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class InternalConversationLinkFactory implements FactoryInterface
@@ -12,7 +14,7 @@ class InternalConversationLinkFactory implements FactoryInterface
         $formatterPluginManager = $container->get(FormatterPluginManager::class);
         $refDataStatusFormatter = $formatterPluginManager->get(RefDataStatus::class);
         $urlHelper = $container->get('Helper\Url');
-        $route = $container->get('Router')->match($container->get('Request'));
+        $route = $container->get(RouteStackInterface::class)->match($container->get(Request::class));
 
         return new InternalConversationLink($urlHelper, $refDataStatusFormatter, $route);
     }
