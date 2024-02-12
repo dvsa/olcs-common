@@ -11,7 +11,6 @@ use Common\Util\Escape;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Laminas\Router\Http\RouteMatch;
-use Laminas\Stdlib\DispatchableInterface;
 
 /**
  * Internal licence conversation link
@@ -40,7 +39,7 @@ class InternalConversationLink implements FormatterPluginManagerInterface
      */
     public function format($row, $column = null)
     {
-        $routePrefix = array_key_exists('application', $this->route->getParams()) ? 'lva-application' : 'licence';
+        $routePrefix = $this->route->getMatchedRouteName() === 'application/conversation' ? 'lva-application' : 'licence';
         $route = $routePrefix . '/conversation/view';
         $licence = $row['task']['licence']['id'];
         $application = $row['task']['application']['id'];
