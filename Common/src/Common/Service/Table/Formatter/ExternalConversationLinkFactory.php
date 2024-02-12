@@ -10,12 +10,6 @@ use Common\Service\Helper\UrlHelperService;
 
 class ExternalConversationLinkFactory implements FactoryInterface
 {
-    /**
-     * @param  ContainerInterface $container
-     * @param  $requestedName
-     * @param  array|null         $options
-     * @return InternalLicenceConversationLink
-     */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $urlHelper = $container->get(UrlHelperService::class);

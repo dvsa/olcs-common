@@ -8,22 +8,25 @@ namespace Common\Service\Table\Formatter;
 
 use Common\Service\Helper\UrlHelperService;
 use Common\Util\Escape;
+use DateTimeImmutable;
+use DateTimeInterface;
+use Laminas\Router\Http\RouteMatch;
+use Laminas\Stdlib\DispatchableInterface;
 
 /**
  * Internal licence conversation link
  */
-class InternalLicenceConversationLink implements FormatterPluginManagerInterface
+class InternalConversationLink implements FormatterPluginManagerInterface
 {
     private UrlHelperService $urlHelper;
     private RefDataStatus $refDataStatus;
+    private RouteMatch $route;
 
-    /**
-     * @param UrlHelperService $urlHelper
-     */
-    public function __construct(UrlHelperService $urlHelper, RefDataStatus $refDataStatus)
+    public function __construct(UrlHelperService $urlHelper, RefDataStatus $refDataStatus, RouteMatch $route)
     {
         $this->urlHelper = $urlHelper;
         $this->refDataStatus = $refDataStatus;
+        $this->route = $route;
     }
 
     /**
@@ -37,11 +40,14 @@ class InternalLicenceConversationLink implements FormatterPluginManagerInterface
      */
     public function format($row, $column = null)
     {
-        $route = 'licence/conversation/view';
+        $routePrefix = array_key_exists('application', $this->route->getParams()) ? 'lva-application' : 'licence';
+        $route = $routePrefix . '/conversation/view';
         $licence = $row['task']['licence']['id'];
+        $application = $row['task']['application']['id'];
         $params = [
-            'licence' => $licence,
-            'conversation' => $row['id']
+            'licence'      => $licence,
+            'application'  => $application ?? 1,
+            'conversation' => $row['id'],
         ];
 
         $statusCSS = '';
@@ -62,14 +68,7 @@ class InternalLicenceConversationLink implements FormatterPluginManagerInterface
                 break;
         }
 
-        $rows = '<a class="' . 'govuk-body govuk-link govuk-!-padding-right-1 ' . $statusCSS . '" href="%s">%s: %s</a>
-                <strong class="govuk-tag ' . $tagColor . '">
-                    %s
-                </strong>
-                <br>';
-        $rows = $rows . '<p class="govuk-body govuk-!-margin-1">%s</p>';
-
-        $latestMessageCreatedOn = \DateTimeImmutable::createFromFormat(\DateTimeInterface::ATOM, $row["createdOn"]);
+        $latestMessageCreatedOn = DateTimeImmutable::createFromFormat(DateTimeInterface::ATOM, $row["createdOn"]);
         $dtOutput = $latestMessageCreatedOn->format('l j F Y \a\t H:ia');
 
         if (isset($row['task']['application']['id'])) {
@@ -78,15 +77,22 @@ class InternalLicenceConversationLink implements FormatterPluginManagerInterface
             $idMatrix = Escape::html($row['task']['licence']['licNo']);
         }
 
-        return vsprintf(
-            $rows,
-            [
-                $this->urlHelper->fromRoute($route, $params),
-                $idMatrix,
-                $row["subject"],
-                str_replace('_', ' ', $row['userContextStatus']),
-                $dtOutput
-            ]
+        $html = '
+            <a class="' . 'govuk-body govuk-link govuk-!-padding-right-1 %s" href="%s">%s: %s</a>
+            <strong class="govuk-tag %s">%s</strong>
+            <br>
+            <p class="govuk-body govuk-!-margin-1">%s</p>
+        ';
+
+        return sprintf(
+            $html,
+            $statusCSS,
+            $this->urlHelper->fromRoute($route, $params),
+            $idMatrix,
+            $row["subject"],
+            $tagColor,
+            str_replace('_', ' ', $row['userContextStatus']),
+            $dtOutput,
         );
     }
 }
