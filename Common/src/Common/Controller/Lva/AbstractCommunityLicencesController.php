@@ -505,7 +505,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController
         $ids = explode(',', $this->params('child_id'));
         if (!$request->isPost()) {
             $form = $this->formHelper->createForm('Lva\CommunityLicencesAnnul');
-            $formHelper->setFormActionFromRequest($form, $this->getRequest());
+            $this->formHelper->setFormActionFromRequest($form, $this->getRequest());
 
             $view = new ViewModel(['form' => $form]);
             $view->setTemplate('partials/form');
