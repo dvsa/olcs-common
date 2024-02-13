@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Internal licence conversation link
  */
@@ -81,7 +83,7 @@ class InternalConversationLink implements FormatterPluginManagerInterface
         }
 
         $html = '
-            <a class="' . 'govuk-body govuk-link govuk-!-padding-right-1 %s" href="%s">%s: %s</a>
+            <a class="govuk-body govuk-link govuk-!-padding-right-1 %s" href="%s">%s: %s</a>
             <strong class="govuk-tag %s">%s</strong>
             <br>
             <p class="govuk-body govuk-!-margin-1">%s</p>
