@@ -4,7 +4,7 @@ namespace CommonTest\Util;
 
 use Common\Util\AbstractServiceFactory;
 use CommonTest\Common\Util\Stub\ServiceWithFactoryStub;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;

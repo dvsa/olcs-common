@@ -11,7 +11,7 @@ use Common\RefData;
 use Common\Service\Data\Search\SearchType;
 use Common\Service\Data\Search\SearchTypeManager;
 use Common\Service\NavigationFactory;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Navigation\Navigation;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;

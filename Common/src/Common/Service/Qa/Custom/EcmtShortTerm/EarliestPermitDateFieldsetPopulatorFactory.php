@@ -2,7 +2,7 @@
 
 namespace Common\Service\Qa\Custom\EcmtShortTerm;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class EarliestPermitDateFieldsetPopulatorFactory implements FactoryInterface

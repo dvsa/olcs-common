@@ -5,7 +5,7 @@ namespace CommonTest\Common\Controller\Lva\Adapters;
 use Common\Controller\Lva\Adapters\AbstractConditionsUndertakingsAdapter;
 use Common\RefData;
 use Common\Service\Script\ScriptFactory;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 

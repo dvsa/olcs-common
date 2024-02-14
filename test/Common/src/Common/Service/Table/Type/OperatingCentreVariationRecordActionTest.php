@@ -2,7 +2,7 @@
 
 namespace CommonTest\Service\Table\Type;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Table\Type\OperatingCentreVariationRecordAction;

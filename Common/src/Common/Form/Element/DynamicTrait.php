@@ -4,7 +4,7 @@ namespace Common\Form\Element;
 
 use Common\Service\Data\Interfaces\ListData;
 use Common\Service\Data\PluginManager;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 trait DynamicTrait
 {

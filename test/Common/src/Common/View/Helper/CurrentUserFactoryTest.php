@@ -4,7 +4,7 @@ namespace CommonTest\View\Helper;
 
 use Common\View\Helper\CurrentUser;
 use Common\View\Helper\CurrentUserFactory;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Mockery as m;
 use LmcRbacMvc\Service\AuthorizationService;

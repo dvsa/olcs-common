@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Common\Form\View\Helper\Extended;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 

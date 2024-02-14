@@ -3,7 +3,7 @@
 namespace CommonTest\Service\Cqrs;
 
 use Common\Service\Cqrs\RequestFactory;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Mockery as m;
 use Laminas\Http\Request;

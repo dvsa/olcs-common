@@ -5,7 +5,7 @@ namespace Common\Service\Cqrs\Command;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Dvsa\Olcs\Transfer\Command\CommandInterface;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder as TransferAnnotationBuilder;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 class CommandSender implements FactoryInterface
 {

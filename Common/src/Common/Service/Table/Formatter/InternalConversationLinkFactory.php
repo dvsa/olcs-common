@@ -2,7 +2,7 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Http\Request;
 use Laminas\Router\RouteStackInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;

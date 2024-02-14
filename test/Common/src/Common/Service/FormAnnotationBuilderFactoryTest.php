@@ -2,7 +2,7 @@
 
 namespace CommonTest\Service;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Form\Annotation\AnnotationBuilder;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;

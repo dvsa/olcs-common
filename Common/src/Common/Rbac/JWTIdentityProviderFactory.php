@@ -5,7 +5,7 @@ namespace Common\Rbac;
 use Common\Auth\Service\RefreshTokenService;
 use Dvsa\Olcs\Transfer\Service\CacheEncryption;
 use Exception;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Authentication\Storage\Session;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Laminas\Session\Container;

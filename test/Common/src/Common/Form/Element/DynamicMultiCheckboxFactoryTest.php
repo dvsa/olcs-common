@@ -7,7 +7,7 @@ namespace CommonTest\Form\Element;
 use Common\Form\Element\DynamicMultiCheckbox;
 use Common\Form\Element\DynamicMultiCheckboxFactory;
 use Common\Service\Data\PluginManager;
-use Interop\Container\Containerinterface;
+use Psr\Container\ContainerInterface;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 

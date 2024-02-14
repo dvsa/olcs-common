@@ -5,7 +5,7 @@ namespace CommonTest\Common\Service\Helper;
 use Common\Exception\File\InvalidMimeException;
 use Common\Service\AntiVirus\Scan;
 use Common\Service\Helper\UrlHelperService;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Form\ElementInterface;
 use Laminas\Form\Form;
 use Laminas\Http\Request;

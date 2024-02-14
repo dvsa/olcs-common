@@ -3,7 +3,7 @@
 namespace Common\Service;
 
 use Laminas\Form\Annotation\AnnotationBuilder;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Form\Factory;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 

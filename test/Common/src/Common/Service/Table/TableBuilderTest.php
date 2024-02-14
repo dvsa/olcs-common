@@ -12,7 +12,7 @@ use Common\Service\Table\TableBuilder;
 use Hamcrest\Arrays\IsArrayContainingKey;
 use Hamcrest\Arrays\IsArrayContainingKeyValuePair;
 use Hamcrest\Core\IsAnything;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Mvc\Controller\Plugin\Url;
 use Laminas\Mvc\I18n\Translator;
 use Mockery as m;

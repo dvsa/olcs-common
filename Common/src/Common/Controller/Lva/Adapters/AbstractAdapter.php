@@ -3,7 +3,7 @@
 namespace Common\Controller\Lva\Adapters;
 
 use Common\Controller\Lva\Interfaces\AdapterInterface;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 

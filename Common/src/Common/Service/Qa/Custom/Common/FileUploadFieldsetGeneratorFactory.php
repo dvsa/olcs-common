@@ -2,7 +2,7 @@
 
 namespace Common\Service\Qa\Custom\Common;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Form\Factory as FormFactory;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 

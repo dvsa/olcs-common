@@ -4,7 +4,7 @@
 namespace CommonTest\Service\AntVirus;
 
 use Common\Service\AntiVirus\Scan;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 

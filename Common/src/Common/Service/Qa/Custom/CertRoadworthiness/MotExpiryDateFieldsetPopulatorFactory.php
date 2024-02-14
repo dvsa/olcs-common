@@ -2,7 +2,7 @@
 
 namespace Common\Service\Qa\Custom\CertRoadworthiness;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class MotExpiryDateFieldsetPopulatorFactory implements FactoryInterface

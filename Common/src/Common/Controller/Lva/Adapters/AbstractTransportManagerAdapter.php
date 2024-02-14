@@ -7,7 +7,7 @@ use Common\Service\Cqrs\Command\CommandService;
 use Common\Service\Cqrs\Query\CachingQueryService;
 use Common\Service\Table\TableFactory;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder as TransferAnnotationBuilder;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 abstract class AbstractTransportManagerAdapter extends AbstractControllerAwareAdapter implements
     TransportManagerAdapterInterface

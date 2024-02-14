@@ -3,7 +3,7 @@
 namespace Common\Controller\Lva\Adapters;
 
 use Common\Controller\Lva\Interfaces\BusinessTypeAdapterInterface;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Form\Form;
 
 class GenericBusinessTypeAdapter extends AbstractAdapter implements BusinessTypeAdapterInterface

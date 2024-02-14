@@ -2,7 +2,7 @@
 
 namespace Common\Controller\Lva\Adapters;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 class VariationLvaAdapter extends AbstractLvaAdapter
 {

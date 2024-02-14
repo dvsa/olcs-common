@@ -6,7 +6,7 @@ use Common\Service\Cqrs\Query\CachingQueryService;
 use Common\View\Factory\Helper\SystemInfoMessagesFactory;
 use Common\View\Helper\SystemInfoMessages;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 

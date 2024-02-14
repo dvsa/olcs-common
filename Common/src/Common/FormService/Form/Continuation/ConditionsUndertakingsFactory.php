@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Common\FormService\Form\Continuation;
 
 use Common\Service\Helper\FormHelperService;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class ConditionsUndertakingsFactory implements FactoryInterface

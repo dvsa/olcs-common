@@ -5,7 +5,7 @@ namespace CommonTest\Service\User;
 use Common\Service\Cqrs\Command\CommandSender;
 use Common\Service\User\LastLoginService;
 use Common\Service\User\LastLoginServiceFactory;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 

@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Common\Auth\Service;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Authentication\Storage\Session;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 

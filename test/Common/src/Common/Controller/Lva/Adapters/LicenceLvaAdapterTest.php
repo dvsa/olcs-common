@@ -3,7 +3,7 @@
 namespace CommonTest\Common\Controller\Lva\Adapters;
 
 use Common\Form\Form;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Form\ElementInterface;
 use Laminas\Mvc\Controller\AbstractController;
 use Mockery as m;

@@ -4,7 +4,7 @@ namespace Common\View\Factory\Helper;
 
 use Common\View\Helper\SystemInfoMessages;
 use Laminas\ServiceManager\Factory\FactoryInterface;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 /**
  * Factory for @see Common\View\Helper\SystemInfoMessages
