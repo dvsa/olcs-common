@@ -58,8 +58,8 @@ use Common\Service\Table\Formatter\HideIfClosedRadio;
 use Common\Service\Table\Formatter\InspectionRequestId;
 use Common\Service\Table\Formatter\InterimOcCheckbox;
 use Common\Service\Table\Formatter\InterimVehiclesCheckbox;
-use Common\Service\Table\Formatter\InternalLicenceConversationLink;
-use Common\Service\Table\Formatter\InternalLicenceConversationLinkFactory;
+use Common\Service\Table\Formatter\InternalConversationLink;
+use Common\Service\Table\Formatter\InternalConversationLinkFactory;
 use Common\Service\Table\Formatter\InternalLicenceNumberLink;
 use Common\Service\Table\Formatter\InternalLicencePermitReference;
 use Common\Service\Table\Formatter\IrhpPermitApplicationRefLink;
@@ -337,27 +337,27 @@ return [
         EventHistoryUser::class => EventHistoryUserFactory::class,
         ExternalConversationLink::class => ExternalConversationLinkFactory::class,
         ExternalConversationStatus::class => ExternalConversationStatusFactory::class,
-        FeatureToggleEditLink::class => FeatureToggleEditLinkFactory::class,
-        FeeAmountSum::class => FeeAmountSumFactory::class,
-        FeeIdUrl::class => FeeIdUrlFactory::class,
-        FeeNoAndStatus::class => FeeNoAndStatusFactory::class,
-        FeeTransactionDate::class => FeeTransactionDateFactory::class,
-        FeeUrl::class => FeeUrlFactory::class,
-        FeeUrlExternal::class => FeeUrlExternalFactory::class,
-        InspectionRequestId::class => InspectionRequestIdFactory::class,
-        InternalLicenceNumberLink::class => InternalLicenceNumberLinkFactory::class,
-        InternalLicencePermitReference::class => InternalLicencePermitReferenceFactory::class,
-        InternalLicenceConversationLink::class => InternalLicenceConversationLinkFactory::class,
-        IrhpPermitApplicationRefLink::class => IrhpPermitApplicationRefLinkFactory::class,
-        IrhpPermitNumberInternal::class => IrhpPermitNumberInternalFactory::class,
-        IrhpPermitRangePermitNumber::class => IrhpPermitRangePermitNumberFactory::class,
-        IrhpPermitRangeType::class => IrhpPermitRangeTypeFactory::class,
-        IrhpPermitStockType::class => IrhpPermitStockTypeFactory::class,
-        IrhpPermitStockValidity::class => IrhpPermitStockValidityFactory::class,
-        IrhpPermitTypeWithValidityDate::class => IrhpPermitTypeWithValidityDateFactory::class,
+        FeatureToggleEditLink::class              => FeatureToggleEditLinkFactory::class,
+        FeeAmountSum::class                       => FeeAmountSumFactory::class,
+        FeeIdUrl::class                           => FeeIdUrlFactory::class,
+        FeeNoAndStatus::class                     => FeeNoAndStatusFactory::class,
+        FeeTransactionDate::class                 => FeeTransactionDateFactory::class,
+        FeeUrl::class                             => FeeUrlFactory::class,
+        FeeUrlExternal::class                     => FeeUrlExternalFactory::class,
+        InspectionRequestId::class                => InspectionRequestIdFactory::class,
+        InternalLicenceNumberLink::class          => InternalLicenceNumberLinkFactory::class,
+        InternalLicencePermitReference::class     => InternalLicencePermitReferenceFactory::class,
+        InternalConversationLink::class           => InternalConversationLinkFactory::class,
+        IrhpPermitApplicationRefLink::class       => IrhpPermitApplicationRefLinkFactory::class,
+        IrhpPermitNumberInternal::class           => IrhpPermitNumberInternalFactory::class,
+        IrhpPermitRangePermitNumber::class        => IrhpPermitRangePermitNumberFactory::class,
+        IrhpPermitRangeType::class                => IrhpPermitRangeTypeFactory::class,
+        IrhpPermitStockType::class                => IrhpPermitStockTypeFactory::class,
+        IrhpPermitStockValidity::class            => IrhpPermitStockValidityFactory::class,
+        IrhpPermitTypeWithValidityDate::class     => IrhpPermitTypeWithValidityDateFactory::class,
         IssuedPermitLicencePermitReference::class => IssuedPermitLicencePermitReferenceFactory::class,
-        LicenceApplication::class => LicenceApplicationFactory::class,
-        LicenceNumberAndStatus::class => LicenceNumberAndStatusFactory::class,
+        LicenceApplication::class                 => LicenceApplicationFactory::class,
+        LicenceNumberAndStatus::class             => LicenceNumberAndStatusFactory::class,
         LicenceNumberLink::class => LicenceNumberLinkFactory::class,
         LicencePermitReference::class => LicencePermitReferenceFactory::class,
         LicenceStatusSelfserve::class => LicenceStatusSelfserveFactory::class,
