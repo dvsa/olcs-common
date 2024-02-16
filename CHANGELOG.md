@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.1.0](https://github.com/dvsa/olcs-common/compare/v5.0.0...v5.1.0) (2024-02-16)
+
+
+### Features
+
+* merge `project/messaging` to main ([#41](https://github.com/dvsa/olcs-common/issues/41)) ([8f693f0](https://github.com/dvsa/olcs-common/commit/8f693f0d73e0674afded022cb502392123baccdd))
+
 ## [5.0.0](https://github.com/dvsa/olcs-common/compare/v5.0.0-beta.10...v5.0.0) (2024-02-14)
 
 
