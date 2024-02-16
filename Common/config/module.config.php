@@ -797,6 +797,7 @@ return [
             'staticList' => DataService\StaticListFactory::class,
             DataService\Surrender::class => DataService\AbstractDataServiceFactory::class,
             DataService\TrafficArea::class => DataService\AbstractDataServiceFactory::class,
+            DataService\MessagingSubject::class => DataService\AbstractListDataServiceFactory::class,
         ]
     ],
     'tables' => [
