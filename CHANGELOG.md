@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.1.1](https://github.com/dvsa/olcs-common/compare/v5.1.0...v5.1.1) (2024-02-16)
+
+
+### Bug Fixes
+
+* reverted olcs-transfer version to target ^5.0.0 ([#43](https://github.com/dvsa/olcs-common/issues/43)) ([0870ed9](https://github.com/dvsa/olcs-common/commit/0870ed9a71e536af647784aa4ee44555b31d8651))
+
 ## [5.1.0](https://github.com/dvsa/olcs-common/compare/v5.0.0...v5.1.0) (2024-02-16)
 
 
