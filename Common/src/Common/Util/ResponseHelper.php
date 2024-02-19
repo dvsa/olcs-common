@@ -31,33 +31,33 @@ class ResponseHelper
 
     private $data;
 
-    private $expectedCodes = array(
-        'GET' => array(
+    private $expectedCodes = [
+        'GET' => [
             Response::STATUS_CODE_200,
             Response::STATUS_CODE_404
-        ),
-        'POST' => array(
+        ],
+        'POST' => [
             Response::STATUS_CODE_201,
             Response::STATUS_CODE_202,
             Response::STATUS_CODE_400
-        ),
-        'PUT' => array(
+        ],
+        'PUT' => [
             Response::STATUS_CODE_200,
             Response::STATUS_CODE_400,
             Response::STATUS_CODE_404,
             Response::STATUS_CODE_409
-        ),
-        'PATCH' => array(
+        ],
+        'PATCH' => [
             Response::STATUS_CODE_200,
             Response::STATUS_CODE_400,
             Response::STATUS_CODE_404,
             Response::STATUS_CODE_409
-        ),
-        'DELETE' => array(
+        ],
+        'DELETE' => [
             Response::STATUS_CODE_200,
             Response::STATUS_CODE_404
-        )
-    );
+        ]
+    ];
 
     public function setResponse(Response $response)
     {

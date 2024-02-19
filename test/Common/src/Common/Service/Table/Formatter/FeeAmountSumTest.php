@@ -41,7 +41,7 @@ class FeeAmountSumTest extends \PHPUnit\Framework\TestCase
      */
     public function provider()
     {
-        return array(
+        return [
             [[], [], null],
             [[], ['name' => 'subTotal'], '£0.00'],
             [[['subTotal' => 'A'], ['subTotal' => 'B']], ['name' => 'subTotal'], '£0.00'],
@@ -74,6 +74,6 @@ class FeeAmountSumTest extends \PHPUnit\Framework\TestCase
                 ['name' => 'subTotal'],
                 '£107.45'
             ],
-        );
+        ];
     }
 }

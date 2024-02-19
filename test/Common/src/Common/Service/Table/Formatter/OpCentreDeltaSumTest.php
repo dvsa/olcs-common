@@ -22,9 +22,9 @@ class OpCentreDeltaSumTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormat($data, $expected)
     {
-        $column = array(
+        $column = [
             'name' => 'colName'
-        );
+        ];
 
         $this->assertEquals((new OpCentreDeltaSum())->format($data, $column), $expected);
     }

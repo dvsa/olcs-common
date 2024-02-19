@@ -41,17 +41,17 @@ class VehicleUndertakingsOperateSmallVehiclesValidatorTest extends \PHPUnit\Fram
      */
     public function providerIsValid()
     {
-        return array(
+        return [
             // psvSmallVehicles isn't set - comes back true
-            array(0, array(), true),
+            [0, [], true],
             // psvSmallVehicles = Y, notes=blank - comes back false
-            array(0, array('psvOperateSmallVhl' => 'Y', 'psvSmallVhlNotes' => ''), false),
+            [0, ['psvOperateSmallVhl' => 'Y', 'psvSmallVhlNotes' => ''], false],
             // psvSmallVehicles = Y, notes=something - comes back true
-            array(0, array('psvOperateSmallVhl' => 'Y', 'psvSmallVhlNotes' => 'blah blah'), true),
+            [0, ['psvOperateSmallVhl' => 'Y', 'psvSmallVhlNotes' => 'blah blah'], true],
             // psvSmallVehicles = N, notes=blank - comes back true
-            array(0, array('psvOperateSmallVhl' => 'N', 'psvSmallVhlNotes' => ''), true),
+            [0, ['psvOperateSmallVhl' => 'N', 'psvSmallVhlNotes' => ''], true],
             // psvSmallVehicles = N, notes=something - comes back true (although irrelevant)
-            array(0, array('psvOperateSmallVhl' => 'N', 'psvSmallVhlNotes' => 'foo bar'), true),
-        );
+            [0, ['psvOperateSmallVhl' => 'N', 'psvSmallVhlNotes' => 'foo bar'], true],
+        ];
     }
 }

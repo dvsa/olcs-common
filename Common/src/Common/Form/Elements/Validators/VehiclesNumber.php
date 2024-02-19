@@ -21,11 +21,11 @@ class VehiclesNumber extends AbstractValidator
      *
      * @var array
      */
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         'noOfVehiclesRequired' => 'noOfVehiclesRequiredError',
         'noOfVehiclesRequired-psv' => 'noOfVehiclesRequiredError-psv',
         'noOfTrailersRequired' => 'noOfTrailersRequiredError'
-    );
+    ];
 
     /**
      * Holds the name
@@ -42,7 +42,7 @@ class VehiclesNumber extends AbstractValidator
     public function __construct($name)
     {
         $this->name = $name;
-        parent::__construct(array());
+        parent::__construct([]);
     }
 
     /**

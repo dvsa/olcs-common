@@ -20,12 +20,12 @@ class GenericEditActionTest extends \PHPUnit\Framework\TestCase
     {
         $this->sut = $this->getMockForTrait(
             '\Common\Controller\Traits\GenericEditAction',
-            array(),
+            [],
             '',
             true,
             true,
             true,
-            array('renderSection')
+            ['renderSection']
         );
     }
 

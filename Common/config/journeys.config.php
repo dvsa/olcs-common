@@ -15,9 +15,9 @@ $journeyArray = array_map(
 
 $filter = new \Laminas\Filter\Word\CamelCaseToDash();
 
-$controllers = array();
+$controllers = [];
 
-$journeys = array();
+$journeys = [];
 
 foreach ($journeyArray as $journey) {
     foreach ($journey as $name => $details) {
@@ -29,21 +29,21 @@ foreach ($journeyArray as $journey) {
 
         $controllers[$controller] = $controller;
 
-        $allRoutes[$name] = array(
+        $allRoutes[$name] = [
             'type' => 'segment',
-            'options' => array(
+            'options' => [
                 'route' => '/' . strtolower($filter->filter($name)) . '[/:' . $details['identifier'] . '][/]',
-                'constraints' => array(
+                'constraints' => [
                     $details['identifier'] => '[0-9]+'
-                ),
-                'defaults' => array(
+                ],
+                'defaults' => [
                     'controller' => $controller,
                     'action' => 'index'
-                )
-            ),
+                ]
+            ],
             'may_terminate' => true,
-            'child_routes' => array()
-        );
+            'child_routes' => []
+        ];
 
         foreach ($details['sections'] as $sectionName => $sectionDetails) {
             $namespace = $journeyNamespace . '\\' . $sectionName;
@@ -51,39 +51,39 @@ foreach ($journeyArray as $journey) {
             $controller = $namespace . '\\' . $sectionName . 'Controller';
             $controllers[$controller] = $controller;
 
-            $allRoutes[$name]['child_routes'][$sectionName] = array(
+            $allRoutes[$name]['child_routes'][$sectionName] = [
                 'type' => 'segment',
-                'options' => array(
+                'options' => [
                     'route' => strtolower($filter->filter($sectionName)) . '[/]',
-                    'defaults' => array(
+                    'defaults' => [
                         'controller' => $controller,
                         'action' => 'index'
-                    )
-                ),
+                    ]
+                ],
                 'may_terminate' => true,
-                'child_routes' => array()
-            );
+                'child_routes' => []
+            ];
 
             foreach ($sectionDetails['subSections'] as $subSectionName => $subSectionDetails) {
                 $controller = $namespace . '\\' . $subSectionName . 'Controller';
                 $controllers[$controller] = $controller;
 
-                $allRoutes[$name]['child_routes'][$sectionName]['child_routes'][$subSectionName] = array(
+                $allRoutes[$name]['child_routes'][$sectionName]['child_routes'][$subSectionName] = [
                     'type' => 'segment',
-                    'options' => array(
+                    'options' => [
                         'route' => strtolower($filter->filter($subSectionName)) . '[/:action][/:id][/]',
-                        'constraints' => array(
+                        'constraints' => [
                             'id' => '[0-9]+'
-                        ),
-                        'defaults' => array(
+                        ],
+                        'defaults' => [
                             'controller' => $controller,
                             'action' => 'index'
-                        )
-                    )
-                );
+                        ]
+                    ]
+                ];
             }
         }
     }
 }
 
-return array($allRoutes, $controllers, $journeys);
+return [$allRoutes, $controllers, $journeys];

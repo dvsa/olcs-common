@@ -297,7 +297,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
      */
     protected function processTradingNames($tradingNames, $form)
     {
-        $form->setValidationGroup(array('data' => ['tradingNames']));
+        $form->setValidationGroup(['data' => ['tradingNames']]);
         if ($form->isValid()) {
             $tradingNames[]['name'] = '';
             $form->get('data')->get('tradingNames')->populateValues($tradingNames);

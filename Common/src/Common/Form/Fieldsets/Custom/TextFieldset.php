@@ -16,24 +16,24 @@ use Laminas\Form\Fieldset;
  */
 class TextFieldset extends Fieldset
 {
-    public function __construct($name = null, $options = array())
+    public function __construct($name = null, $options = [])
     {
         parent::__construct($name, $options);
 
-        $this->setOptions(array('wrapElements', false));
+        $this->setOptions(['wrapElements', false]);
 
         $this->add(
-            array(
+            [
                 'name' => 'text',
-                'options' => array(
+                'options' => [
                     //'label' => 'Name of the brand'
-                ),
-            )
+                ],
+            ]
         );
     }
 
     public function getInputSpecification(): array
     {
-        return array();
+        return [];
     }
 }

@@ -25,7 +25,7 @@ class CrudActionTraitStub extends AbstractActionController
     }
 
 
-    public function callGetCrudAction(array $formTables = array())
+    public function callGetCrudAction(array $formTables = [])
     {
         return $this->getCrudAction($formTables);
     }

@@ -55,7 +55,7 @@ class UrlHelperService
      * @param  bool               $reuseMatchedParams Whether to reuse matched parameters
      * @return string
      */
-    public function fromRoute($route = null, $params = array(), $options = array(), $reuseMatchedParams = false)
+    public function fromRoute($route = null, $params = [], $options = [], $reuseMatchedParams = false)
     {
         $url = $this->helperPluginManager->get('url');
 
@@ -65,8 +65,8 @@ class UrlHelperService
     public function fromRouteWithHost(
         $hostKey,
         $route = null,
-        $params = array(),
-        $options = array(),
+        $params = [],
+        $options = [],
         $reuseMatchedParams = false
     ) {
         $hostname = $this->getHostname($hostKey);

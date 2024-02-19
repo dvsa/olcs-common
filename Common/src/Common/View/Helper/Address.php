@@ -20,7 +20,7 @@ class Address extends AbstractHelper
      */
     public function __invoke(array $address, array $fields = null, $glue = ', ')
     {
-        $parts = array();
+        $parts = [];
 
         if (isset($address['countryCode']['id'])) {
             $address['countryCode'] = $address['countryCode']['id'];

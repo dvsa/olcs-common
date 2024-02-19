@@ -18,18 +18,18 @@ class FileUploadCount extends \Laminas\Validator\AbstractValidator
      * Error messages
      * @var array
      */
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         self::TOO_FEW => "Too few files uploaded",
-    );
+    ];
 
     /**
      * Options for this validator
      *
      * @var array
      */
-    protected $options = array(
+    protected $options = [
         'min' => 0
-    );
+    ];
 
     /**
      * Set the min number of file uploads required

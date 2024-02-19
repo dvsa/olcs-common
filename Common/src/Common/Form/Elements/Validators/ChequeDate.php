@@ -31,9 +31,9 @@ class ChequeDate extends AbstractValidator
      * Error messages
      * @var array
      */
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         self::INVALID => "Cheque date cannot be older than 6 months",
-    );
+    ];
 
     /**
      * @param  mixed $value

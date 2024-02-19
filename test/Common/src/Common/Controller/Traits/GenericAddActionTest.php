@@ -20,12 +20,12 @@ class GenericAddActionTest extends \PHPUnit\Framework\TestCase
     {
         $this->sut = $this->getMockForTrait(
             '\Common\Controller\Traits\GenericAddAction',
-            array(),
+            [],
             '',
             true,
             true,
             true,
-            array('renderSection')
+            ['renderSection']
         );
     }
 

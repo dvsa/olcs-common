@@ -16,7 +16,7 @@ use Common\RefData;
  */
 class ConditionsUndertakingsReviewService extends AbstractReviewService
 {
-    public function getConfigFromData(array $data = array())
+    public function getConfigFromData(array $data = [])
     {
         // noop
     }

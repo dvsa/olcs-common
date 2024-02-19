@@ -38,16 +38,16 @@ class TableRequiredValidatorTest extends MockeryTestCase
      */
     public function providerIsValid()
     {
-        return array(
+        return [
             // With action
-            array(null, array('action' => 'foo', 'rows' => 0), true),
-            array(null, array('action' => 'foo', 'rows' => 1), true),
-            array(null, array('action' => 'foo', 'rows' => 10), true),
+            [null, ['action' => 'foo', 'rows' => 0], true],
+            [null, ['action' => 'foo', 'rows' => 1], true],
+            [null, ['action' => 'foo', 'rows' => 10], true],
             // Without action
-            array(null, array('rows' => 0), false),
-            array(null, array('rows' => 1), true),
-            array(null, array('rows' => 10), true)
-        );
+            [null, ['rows' => 0], false],
+            [null, ['rows' => 1], true],
+            [null, ['rows' => 10], true]
+        ];
     }
 
     public function testGetSetRowsRequired()

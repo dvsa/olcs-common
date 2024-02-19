@@ -36,7 +36,7 @@ class RedirectTest extends MockeryTestCase
     public function testToRouteAjaxWithoutAjax()
     {
         $route = 'foo';
-        $params = array('foo' => 'bar');
+        $params = ['foo' => 'bar'];
         $options = ['option_1' => 'val 1'];
 
         $mockController = m::mock();
@@ -58,7 +58,7 @@ class RedirectTest extends MockeryTestCase
     public function testToRouteAjaxWithAjax()
     {
         $route = 'foo';
-        $params = array('foo' => 'bar');
+        $params = ['foo' => 'bar'];
         $options = ['fragment' => 'frag'];
 
         $mockResponse = m::mock('\Laminas\Http\Response');
@@ -91,7 +91,7 @@ class RedirectTest extends MockeryTestCase
         $this->sut->shouldReceive('getController')
             ->andReturn($mockController)
             ->shouldReceive('toRoute')
-            ->with($route, $params, array(), false);
+            ->with($route, $params, [], false);
 
         $this->assertEquals($mockResponse, $this->sut->toRouteAjax($route, $params, $options));
     }

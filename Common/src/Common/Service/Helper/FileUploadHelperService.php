@@ -488,19 +488,19 @@ class FileUploadHelperService extends AbstractHelperService
      */
     private function formatErrorMessageForForm($message)
     {
-        $array = array();
+        $array = [];
         $reference = &$array;
         $selector = $this->getSelector();
 
         while (strstr($selector, '->')) {
             list($index, $selector) = explode('->', $selector, 2);
 
-            $reference[$index] = array();
+            $reference[$index] = [];
 
             $reference = &$reference[$index];
         }
 
-        $reference[$selector]['__messages__'] = array($message);
+        $reference[$selector]['__messages__'] = [$message];
 
         return $array;
     }

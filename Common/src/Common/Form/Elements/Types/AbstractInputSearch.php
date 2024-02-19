@@ -11,7 +11,7 @@ abstract class AbstractInputSearch extends Fieldset
     public const ELEMENT_INPUT_NAME = 'search-value';
     public const ELEMENT_SUBMIT_NAME = 'submit';
 
-    public function __construct($name = null, $options = array())
+    public function __construct($name = null, $options = [])
     {
         parent::__construct($name, $options);
 

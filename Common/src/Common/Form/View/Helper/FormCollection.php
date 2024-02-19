@@ -35,12 +35,12 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
      *
      * @var array
      */
-    protected $classMap = array(
+    protected $classMap = [
         RadioHorizontal::class => 'formRadioHorizontal',
         CheckboxAdvanced::class => 'formCheckboxAdvanced',
         RadioVertical::class => 'formRadioVertical',
         AbstractInputSearch::class => FormInputSearch::class,
-    );
+    ];
 
     private static $htmlFileUploadCntr =
         '<div class="help__text">' .

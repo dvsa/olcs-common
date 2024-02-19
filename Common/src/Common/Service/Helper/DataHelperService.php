@@ -40,7 +40,7 @@ class DataHelperService
      */
     public function arrayRepeat($array, $count)
     {
-        $arrays = array();
+        $arrays = [];
 
         for ($i = 0; $i < $count; $i++) {
             $arrays[] = $array;
@@ -54,7 +54,7 @@ class DataHelperService
      *
      * @param type $data
      */
-    public function processDataMap($oldData, $map = array(), $section = 'main')
+    public function processDataMap($oldData, $map = [], $section = 'main')
     {
         if (empty($map)) {
             return $oldData;
@@ -66,7 +66,7 @@ class DataHelperService
             }
         }
 
-        $data = array();
+        $data = [];
 
         if (isset($map[$section]['mapFrom'])) {
             foreach ($map[$section]['mapFrom'] as $key) {
@@ -78,7 +78,7 @@ class DataHelperService
 
         if (isset($map[$section]['children'])) {
             foreach ($map[$section]['children'] as $child => $options) {
-                $data[$child] = $this->processDataMap($oldData, array($child => $options), $child);
+                $data[$child] = $this->processDataMap($oldData, [$child => $options], $child);
             }
         }
 
@@ -98,7 +98,7 @@ class DataHelperService
     private function processAddressData($data, $addressName = 'address')
     {
         if (!isset($data['addresses'])) {
-            $data['addresses'] = array();
+            $data['addresses'] = [];
         }
 
         unset($data[$addressName]['searchPostcode']);

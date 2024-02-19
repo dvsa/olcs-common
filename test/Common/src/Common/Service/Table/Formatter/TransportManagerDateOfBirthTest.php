@@ -44,20 +44,20 @@ class TransportManagerDateOfBirthTest extends MockeryTestCase
      */
     public function providerFormat()
     {
-        return array(
-            array( // NoLvaNorInternal
-                array
-                (
+        return [
+            [ // NoLvaNorInternal
+                
+                [
                     'data' => [
                         'dob' => '1980-12-01'
                     ],
                     'column' => ['name' => 'dob']
-                ),
+                ],
                 '01/12/1980'
-            ),
-            array( // LvaWithoutInternal
-                array
-                (
+            ],
+            [ // LvaWithoutInternal
+                
+                [
                     'data' => [
                         'dob' => '1980-12-01'
                     ],
@@ -65,12 +65,12 @@ class TransportManagerDateOfBirthTest extends MockeryTestCase
                         'name' => 'dob',
                         'lva' => 'application'
                     ]
-                ),
+                ],
                 '01/12/1980'
-            ),
-            array( // NoLvaWithInternal
-                array
-                (
+            ],
+            [ // NoLvaWithInternal
+                
+                [
                     'data' => [
                         'dob' => '1980-12-01'
                     ],
@@ -78,12 +78,12 @@ class TransportManagerDateOfBirthTest extends MockeryTestCase
                         'name' => 'dob',
                         'internal' => true
                     ]
-                ),
+                ],
                 '01/12/1980'
-            ),
-            array( // ApplicationInternal
-                array
-                (
+            ],
+            [ // ApplicationInternal
+                
+                [
                     'data' => [
                         'dob' => '1980-12-01',
                         'status' => [
@@ -96,12 +96,12 @@ class TransportManagerDateOfBirthTest extends MockeryTestCase
                         'lva' => 'application',
                         'internal' => true,
                     ]
-                ),
+                ],
                 '<span class="nowrap">01/12/1980 <STATUS HTML></span>'
-            ),
-            array( // ApplicationExternal
-                array
-                (
+            ],
+            [ // ApplicationExternal
+                
+                [
                     'data' => [
                         'dob' => '1980-12-01',
                         'status' => [
@@ -114,12 +114,12 @@ class TransportManagerDateOfBirthTest extends MockeryTestCase
                         'lva' => 'application',
                         'internal' => false,
                     ]
-                ),
+                ],
                 '<span class="nowrap">01/12/1980 <STATUS HTML></span>'
-            ),
-            array( // VariationInternal
-                array
-                (
+            ],
+            [ // VariationInternal
+                
+                [
                     'data' => [
                         'dob' => '1980-12-01',
                         'status' => [
@@ -132,12 +132,12 @@ class TransportManagerDateOfBirthTest extends MockeryTestCase
                         'lva' => 'variation',
                         'internal' => true,
                     ]
-                ),
+                ],
                 '<span class="nowrap">01/12/1980 <STATUS HTML></span>'
-            ),
-            array( // VariationExternal
-                array
-                (
+            ],
+            [ // VariationExternal
+                
+                [
                     'data' => [
                         'dob' => '1980-12-01',
                         'status' => [
@@ -150,12 +150,12 @@ class TransportManagerDateOfBirthTest extends MockeryTestCase
                         'lva' => 'variation',
                         'internal' => false,
                     ]
-                ),
+                ],
                 '<span class="nowrap">01/12/1980 <STATUS HTML></span>'
-            ),
-            array( // LicenceInternal
-                array
-                (
+            ],
+            [ // LicenceInternal
+                
+                [
                     'data' => [
                         'dob' => '1980-12-01'
                     ],
@@ -164,12 +164,12 @@ class TransportManagerDateOfBirthTest extends MockeryTestCase
                         'lva' => 'licence',
                         'internal' => true,
                     ]
-                ),
+                ],
                 '01/12/1980'
-            ),
-            array( // LicenceExternal
-                array
-                (
+            ],
+            [ // LicenceExternal
+                
+                [
                     'data' => [
                         'dob' => '1980-12-01'
                     ],
@@ -178,10 +178,10 @@ class TransportManagerDateOfBirthTest extends MockeryTestCase
                         'lva' => 'licence',
                         'internal' => false,
                     ]
-                ),
+                ],
                 '01/12/1980'
-            )
-        );
+            ]
+        ];
     }
 
     /**

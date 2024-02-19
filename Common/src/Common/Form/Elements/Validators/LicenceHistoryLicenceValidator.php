@@ -21,21 +21,21 @@ class LicenceHistoryLicenceValidator extends AbstractValidator
      *
      * @var array
      */
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         'noLicence' => 'oneLicenceRequiredError',
         'noConviction' => 'oneConvictionRequiredError'
-    );
+    ];
 
     private $name;
 
     private $table;
 
-    public function __construct($options = array())
+    public function __construct($options = [])
     {
         $this->name = isset($options['name']) ? $options['name'] : 'noLicence';
         $this->table = isset($options['table']) ? $options['table'] : 'table';
 
-        parent::__construct(array());
+        parent::__construct([]);
     }
 
     /**
@@ -45,7 +45,7 @@ class LicenceHistoryLicenceValidator extends AbstractValidator
      * @param array $context
      * @return bool
      */
-    public function isValid($value, $context = array())
+    public function isValid($value, $context = [])
     {
         if ($context[$this->table]['rows'] < 1 && $value == 'Y') {
             $this->error($this->name);

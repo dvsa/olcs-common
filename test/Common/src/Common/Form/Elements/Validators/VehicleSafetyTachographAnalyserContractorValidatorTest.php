@@ -41,32 +41,32 @@ class VehicleSafetyTachographAnalyserContractorValidatorTest extends \PHPUnit\Fr
      */
     public function providerIsValid()
     {
-        return array(
-            array(
+        return [
+            [
                 null,
-                array('tachographIns' => '', 'tachographInsName' => ''),
+                ['tachographIns' => '', 'tachographInsName' => ''],
                 true
-            ),
-            array(
+            ],
+            [
                 null,
-                array('tachographIns' => 'tach_internal', 'tachographInsName' => ''),
+                ['tachographIns' => 'tach_internal', 'tachographInsName' => ''],
                 true
-            ),
-            array(
+            ],
+            [
                 null,
-                array('tachographIns' => 'tach_internal', 'tachographInsName' => 'abc'),
+                ['tachographIns' => 'tach_internal', 'tachographInsName' => 'abc'],
                 true
-            ),
-            array(
+            ],
+            [
                 null,
-                array('tachographIns' => 'tach_external', 'tachographInsName' => ''),
+                ['tachographIns' => 'tach_external', 'tachographInsName' => ''],
                 false
-            ),
-            array(
+            ],
+            [
                 null,
-                array('tachographIns' => 'tach_external', 'tachographInsName' => 'abc'),
+                ['tachographIns' => 'tach_external', 'tachographInsName' => 'abc'],
                 true
-            )
-        );
+            ]
+        ];
     }
 }

@@ -55,6 +55,6 @@ class InternalLicenceNumberLinkTest extends TestCase
             )
             ->andReturn('LICENCE_URL');
         $expected = '<a class="govuk-link" href="LICENCE_URL" title="Licence details for 1">1</a>';
-        $this->assertEquals($expected, $this->sut->format($licence, array()));
+        $this->assertEquals($expected, $this->sut->format($licence, []));
     }
 }

@@ -41,67 +41,67 @@ class WithdrawnDateValidatorTest extends \PHPUnit\Framework\TestCase
      */
     public function providerIsValid()
     {
-        return array(
-            array(
+        return [
+            [
                 '2014-01-01',
-                array(
+                [
                     'isWithdrawn' => 'Y',
-                    'withdrawnDate' => array(
+                    'withdrawnDate' => [
                         'year' => '2014',
                         'month' => '01',
                         'day' => '01'
-                    )
-                ),
+                    ]
+                ],
                 true
-            ),
-            array(
+            ],
+            [
                 '2014-01-32',
-                array(
+                [
                     'isWithdrawn' => 'Y',
-                    'withdrawnDate' => array(
+                    'withdrawnDate' => [
                         'year' => '2014',
                         'month' => '01',
                         'day' => '32'
-                    )
-                ),
+                    ]
+                ],
                 false
-            ),
-            array(
+            ],
+            [
                 '2014-02-30',
-                array(
+                [
                     'isWithdrawn' => 'Y',
-                    'withdrawnDate' => array(
+                    'withdrawnDate' => [
                         'year' => '2014',
                         'month' => '02',
                         'day' => '30'
-                    )
-                ),
+                    ]
+                ],
                 false
-            ),
-            array(
+            ],
+            [
                 '2100-12-31',
-                array(
+                [
                     'isWithdrawn' => 'Y',
-                    'withdrawnDate' => array(
+                    'withdrawnDate' => [
                         'year' => '2100',
                         'month' => '12',
                         'day' => '31'
-                    )
-                ),
+                    ]
+                ],
                 false
-            ),
-            array(
+            ],
+            [
                 null,
-                array(
+                [
                     'isWithdrawn' => 'N',
-                    'withdrawnDate' => array(
+                    'withdrawnDate' => [
                         'year' => '',
                         'month' => '',
                         'day' => ''
-                    )
-                ),
+                    ]
+                ],
                 true
-            )
-        );
+            ]
+        ];
     }
 }

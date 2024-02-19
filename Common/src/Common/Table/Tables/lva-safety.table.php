@@ -6,50 +6,50 @@ use Common\Service\Table\Formatter\YesNo;
 
 $translationPrefix = 'safety-inspection-providers.table';
 
-return array(
-    'variables' => array(
+return [
+    'variables' => [
         'title' => $translationPrefix . '.title',
         'empty_message' => $translationPrefix . '.hint',
         'required_label' => 'safety inspection provider',
         'within_form' => true
-    ),
-    'settings' => array(
-        'crud' => array(
-            'actions' => array(
-                'add' => array('label' => 'Add safety inspector'),
-            )
-        ),
-        'paginate' => array(
-            'limit' => array(
+    ],
+    'settings' => [
+        'crud' => [
+            'actions' => [
+                'add' => ['label' => 'Add safety inspector'],
+            ]
+        ],
+        'paginate' => [
+            'limit' => [
                 'default' => AbstractSafetyController::DEFAULT_TABLE_RECORDS_COUNT,
-                'options' => array(10, 25, 50),
-            ),
-        ),
-    ),
-    'columns' => array(
-        array(
+                'options' => [10, 25, 50],
+            ],
+        ],
+    ],
+    'columns' => [
+        [
             'title' => $translationPrefix . '.providerName',
             'action' => 'edit',
             'stack' => 'contactDetails->fao',
             'formatter' => StackValue::class,
             'type' => 'Action',
-        ),
-        array(
+        ],
+        [
             'title' => $translationPrefix . '.external',
             'name' => 'isExternal',
             'formatter' => YesNo::class
-        ),
-        array(
+        ],
+        [
             'title' => $translationPrefix . '.address',
             'formatter' => Address::class,
             'name' => 'contactDetails->address'
-        ),
-        array(
+        ],
+        [
             'title' => 'markup-table-th-remove',
             'ariaDescription' => function ($row) {
                 return $row['contactDetails']['fao'] ?? 'safety inspector';
             },
             'type' => 'ActionLinks',
-        ),
-    )
-);
+        ],
+    ]
+];

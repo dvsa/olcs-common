@@ -63,27 +63,27 @@ class RefDataTest extends RefDataTestCase
      */
     protected function getGroupExpected()
     {
-        $expected = array (
-            'parent' => array (
+        $expected =  [
+            'parent' =>  [
                 'label' => 'Parent',
-                'options' => array (),
-            ),
-            'p1' => array (
-                'options' => array (
+                'options' =>  [],
+            ],
+            'p1' =>  [
+                'options' =>  [
                   'val-1' => 'Value 1',
-                ),
-            ),
-            'p2' => array (
-                'options' => array (
+                ],
+            ],
+            'p2' =>  [
+                'options' =>  [
                   'val-2' => 'Value 2',
-                ),
-            ),
-            'p3' => array (
-                'options' => array (
+                ],
+            ],
+            'p3' =>  [
+                'options' =>  [
                   'val-3' => 'Value 3',
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
         return $expected;
     }
 

@@ -12,7 +12,7 @@ use Laminas\Validator as LaminasValidator;
  */
 class Checkbox extends LaminasElement\Checkbox
 {
-    public function __construct($name = null, $options = array())
+    public function __construct($name = null, $options = [])
     {
         parent::__construct($name, $options);
     }
@@ -29,7 +29,7 @@ class Checkbox extends LaminasElement\Checkbox
         if (!isset($options['must_be_value'])
             || $options['must_be_value'] === false
             || $options['must_be_value'] === null) {
-            return array();
+            return [];
         }
 
         $specification = [
@@ -38,15 +38,15 @@ class Checkbox extends LaminasElement\Checkbox
             'validators' => [
                 [
                     'name' => 'Identical',
-                    'options' => array(
+                    'options' => [
                         'token' => $options['must_be_value'],
-                        'messages' => array(
+                        'messages' => [
                             LaminasValidator\Identical::NOT_SAME =>
                                 isset($this->getOptions()['not_checked_message'])
                                     ? $this->getOptions()['not_checked_message']
                                     : 'common.form.validation.checkbox.not_same',
-                        ),
-                    ),
+                        ],
+                    ],
                 ]
             ]
         ];

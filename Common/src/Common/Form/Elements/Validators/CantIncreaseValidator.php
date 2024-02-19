@@ -34,9 +34,9 @@ class CantIncreaseValidator extends AbstractValidator
      *
      * @var array
      */
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         self::CANT_INCREASE => 'cant-increase-validator'
-    );
+    ];
 
     /**
      * Set the message suffix so we can translate it

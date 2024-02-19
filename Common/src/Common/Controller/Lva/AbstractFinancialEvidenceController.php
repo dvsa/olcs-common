@@ -107,9 +107,9 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
         $hasProcessedFiles = $this->processFiles(
             $form,
             'evidence->files',
-            array($this, 'processFinancialEvidenceFileUpload'),
-            array($this, 'deleteFile'),
-            array($this, 'getDocuments'),
+            [$this, 'processFinancialEvidenceFileUpload'],
+            [$this, 'deleteFile'],
+            [$this, 'getDocuments'],
             'evidence->uploadedFileCount'
         );
 

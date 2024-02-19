@@ -39,7 +39,7 @@ class ContentHelper
      *
      * @var array
      */
-    private $partials = array();
+    private $partials = [];
 
     /**
      * @var \Laminas\Mvc\I18n\Translator
@@ -151,7 +151,7 @@ class ContentHelper
      */
     public function renderAttributes($attrs)
     {
-        $attributes = array();
+        $attributes = [];
 
         foreach ($attrs as $name => $value) {
             $attributes[] = $name .= '="' . $value . '"';
@@ -167,7 +167,7 @@ class ContentHelper
      * @param array $vars
      * @return string
      */
-    public function replaceContent($content, $vars = array())
+    public function replaceContent($content, $vars = [])
     {
         $content = $this->replacePartials($content);
 
@@ -189,7 +189,7 @@ class ContentHelper
     private function replacePartials($content)
     {
         if (preg_match_all('/(\{\{\[([a-zA-Z\/]+)\]\}\})/', $content, $matches)) {
-            $partials = array();
+            $partials = [];
 
             foreach ($matches[2] as $match) {
                 $partials[$match] = $match;

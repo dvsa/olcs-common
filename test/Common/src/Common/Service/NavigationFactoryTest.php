@@ -23,47 +23,47 @@ class NavigationFactoryTest extends TestCase
      */
     protected function setUp(): void
     {
-        $config = array(
-            'modules'                 => array(),
-            'module_listener_options' => array(
+        $config = [
+            'modules'                 => [],
+            'module_listener_options' => [
                 'config_cache_enabled' => false,
                 'cache_dir'            => 'data/cache',
-                'module_paths'         => array(),
-                'extra_config'         => array(
-                    'service_manager' => array(
-                        'factories' => array(
+                'module_paths'         => [],
+                'extra_config'         => [
+                    'service_manager' => [
+                        'factories' => [
                             'Config' => function () {
-                                return array(
-                                    'navigation' => array(
+                                return [
+                                    'navigation' => [
                                         'file'    => __DIR__ . '/_files/navigation.xml',
-                                        'default' => array(
-                                            array(
+                                        'default' => [
+                                            [
                                                 'label' => 'Page 1',
                                                 'uri'   => 'page1.html'
-                                            ),
-                                            array(
+                                            ],
+                                            [
                                                 'label' => 'MVC Page',
                                                 'route' => 'foo',
-                                                'pages' => array(
-                                                    array(
+                                                'pages' => [
+                                                    [
                                                         'label' => 'Sub MVC Page',
                                                         'route' => 'foo'
-                                                    )
-                                                )
-                                            ),
-                                            array(
+                                                    ]
+                                                ]
+                                            ],
+                                            [
                                                 'label' => 'Page 3',
                                                 'uri'   => 'page3.html'
-                                            )
-                                        )
-                                    )
-                                );
+                                            ]
+                                        ]
+                                    ]
+                                ];
                             }
-                        )
-                    ),
-                )
-            ),
-        );
+                        ]
+                    ],
+                ]
+            ],
+        ];
 
         $sm = $this->serviceManager = new ServiceManager();
         $sm->setService('ApplicationConfig', $config);
@@ -73,11 +73,11 @@ class NavigationFactoryTest extends TestCase
         $app = $this->serviceManager->get('Application');
         $app->getMvcEvent()->setRouteMatch(
             new RouteMatch(
-                array(
+                [
                     'controller' => 'post',
                     'action'     => 'view',
                     'id'         => '1337',
-                )
+                ]
             )
         );
     }

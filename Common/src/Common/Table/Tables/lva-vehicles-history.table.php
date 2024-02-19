@@ -2,30 +2,30 @@
 
 $translationPrefix = 'application_vehicle-safety_vehicle-history.table';
 
-return array(
-    'variables' => array(
+return [
+    'variables' => [
         'title' => $translationPrefix . '.title'
-    ),
-    'attributes' => array(
-    ),
-    'columns' => array(
-        array(
+    ],
+    'attributes' => [
+    ],
+    'columns' => [
+        [
             'title' => $translationPrefix . '.licence',
             'name' => 'licenceNo'
-        ),
-        array(
+        ],
+        [
             'title' => $translationPrefix . '.specified',
             'name' => 'specifiedDate',
             'formatter' => \Common\Service\Table\Formatter\DateTime::class
-        ),
-        array(
+        ],
+        [
             'title' => $translationPrefix . '.removed',
             'name' => 'removalDate',
             'formatter' => \Common\Service\Table\Formatter\DateTime::class
-        ),
-        array(
+        ],
+        [
             'title' => $translationPrefix . '.disc-no',
             'name' => 'discNo'
-        )
-    )
-);
+        ]
+    ]
+];

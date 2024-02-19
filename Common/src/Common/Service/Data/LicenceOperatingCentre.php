@@ -54,7 +54,7 @@ class LicenceOperatingCentre extends AbstractDataService implements ListDataInte
         $id = $this->getId();
 
         if (is_null($this->getData($id))) {
-            $data = array();
+            $data = [];
             $rawData =  $this->getLicenceService()->fetchOperatingCentreData($this->getId());
 
             if (is_array($rawData['operatingCentres'])) {

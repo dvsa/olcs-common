@@ -27,28 +27,28 @@ class ApplicationTransportManagers extends Fieldset
      * @param string $name
      * @param array $options
      */
-    public function __construct($name = null, $options = array())
+    public function __construct($name = null, $options = [])
     {
         parent::__construct($name, $options);
 
         $application = new Text('application');
         $application->setAttributes(
-            array(
+            [
                 'class' => 'short js-input',
                 'data-container-class' => 'inline'
-            )
+            ]
         );
         $application->setOption('remove_if_readonly', true);
 
         $this->add($application);
 
-        $searchButton = new Button('search', array('label' => 'Find application'));
+        $searchButton = new Button('search', ['label' => 'Find application']);
         $searchButton->setAttributes(
-            array(
+            [
                 'type' => 'submit',
                 'class' => 'govuk-button js-find',
                 'data-container-class' => 'inline'
-            )
+            ]
         );
         $searchButton->setValue('search');
 

@@ -1,36 +1,36 @@
 <?php
 $prefix = 'selfserve-app-subSection-previous-history-previous-licence-';
 
-return array(
-    'variables' => array(
+return [
+    'variables' => [
         'title' => $prefix . 'tableHeader',
         'within_form' => true,
         'empty_message' => false,
-    ),
-    'settings' => array(
-        'crud' => array(
+    ],
+    'settings' => [
+        'crud' => [
             'formName' => 'revoked',
-            'actions' => array(
-                'add' => array('label' => 'Add licence details'),
-            ),
-        )
-    ),
-    'columns' => array(
-        array(
+            'actions' => [
+                'add' => ['label' => 'Add licence details'],
+            ],
+        ]
+    ],
+    'columns' => [
+        [
             'title' => $prefix . 'columnLicNo',
             'name' => 'licNo',
             'type' => 'Action',
             'action' => 'edit'
-        ),
-        array(
+        ],
+        [
             'title' => $prefix . 'columnHolderName',
             'name' => 'holderName',
-        ),
-        array(
+        ],
+        [
             'title' => 'markup-table-th-remove', //this is a view partial from olcs-common
             'ariaDescription' => 'licNo',
             'type' => 'ActionLinks',
             'deleteInputName' => 'eu[prevBeenRevoked-table][action][delete][%d]'
-        )
-    )
-);
+        ]
+    ]
+];

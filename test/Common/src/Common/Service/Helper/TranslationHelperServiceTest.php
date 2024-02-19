@@ -31,10 +31,10 @@ class TranslationHelperServiceTest extends \PHPUnit\Framework\TestCase
      */
     protected function setUp(): void
     {
-        $this->mockTranslator = $this->createPartialMock(Translator::class, array('translate'));
+        $this->mockTranslator = $this->createPartialMock(Translator::class, ['translate']);
         $this->mockTranslator->expects($this->any())
             ->method('translate')
-            ->will($this->returnCallback(array($this, 'translate')));
+            ->will($this->returnCallback([$this, 'translate']));
 
         $this->sut = new TranslationHelperService($this->mockTranslator);
     }
@@ -90,11 +90,11 @@ class TranslationHelperServiceTest extends \PHPUnit\Framework\TestCase
     public function testFormatTranslation()
     {
         $format = 'This is a formatted <div>%s</div> message to %s multiple %s';
-        $translations = array(
+        $translations = [
             'translation',
             'demonstrate',
             'replacements'
-        );
+        ];
         $expected = 'This is a formatted <div>*translation*</div> message to *demonstrate* multiple *replacements*';
 
         $this->assertEquals($expected, $this->sut->formatTranslation($format, $translations));

@@ -26,10 +26,10 @@ class WithdrawnDate extends LaminasValidator\AbstractValidator
      *
      * @var array
      */
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         self::DATE_NOT_VALID   => "Withdrawn date is not valid",
         self::DATE_IN_FUTURE    => "Withdrawn date can't be in the future",
-    );
+    ];
 
     public function isValid($value, $context = null)
     {

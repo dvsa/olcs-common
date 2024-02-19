@@ -18,7 +18,7 @@ class Hidden extends LaminasElement implements InputProviderInterface
     protected $required = false;
     protected $max = null;
 
-    public function __construct($name = null, $options = array())
+    public function __construct($name = null, $options = [])
     {
         parent::__construct($name, $options);
     }

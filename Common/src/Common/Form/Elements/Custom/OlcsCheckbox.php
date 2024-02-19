@@ -14,7 +14,7 @@ use Laminas\Form\LabelAwareInterface;
  */
 class OlcsCheckbox extends LaminasElement\Checkbox implements LabelAwareInterface
 {
-    public function __construct($name = null, $options = array())
+    public function __construct($name = null, $options = [])
     {
         $labelPosition = $this->getLabelOption('label_position');
         if (empty($labelPosition)) {

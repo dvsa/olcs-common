@@ -415,7 +415,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
      */
     protected function formatTableData($results)
     {
-        $final = array();
+        $final = [];
         foreach ($results as $row) {
             // flatten the person's position if it's non null
             if (isset($row['position'])) {
@@ -610,7 +610,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
      */
     private function updateAndFilterTableData($orgData, $applicationData)
     {
-        $data = array();
+        $data = [];
 
         foreach ($orgData as $id => $row) {
             if (!isset($applicationData[$id])) {

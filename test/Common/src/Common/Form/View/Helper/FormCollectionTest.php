@@ -38,7 +38,7 @@ class FormCollectionTest extends MockeryTestCase
     {
         $this->element = new Collection('test');
         $this->element->setOptions(
-            array(
+            [
                 'count' => 1,
                 'target_element' => [
                     'type' => $targetElement
@@ -46,7 +46,7 @@ class FormCollectionTest extends MockeryTestCase
                 'should_create_template' => true,
                 'hint' => 'Hint',
                 'label' => 'Label',
-            )
+            ]
         );
         $this->element->setAttribute('class', 'class');
         $this->element->prepareElement(new Form());

@@ -20,8 +20,8 @@ class FeeExactAmountValidator extends Identical
      * Error messages
      * @var array
      */
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         self::NOT_SAME      => "Value must match the fee(s) due",
         self::MISSING_TOKEN => 'No token was provided to match against',
-    );
+    ];
 }

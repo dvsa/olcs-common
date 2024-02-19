@@ -92,7 +92,7 @@ class User extends InternalSearchAbstract
             'paginate' => [
                 'limit' => [
                     'default' => 25,
-                    'options' => array(10, 25, 50)
+                    'options' => [10, 25, 50]
                 ]
             ]
         ];
@@ -103,39 +103,39 @@ class User extends InternalSearchAbstract
      */
     public function getColumns()
     {
-         return array(
-            array(
+         return [
+            [
                 'title' => 'Username',
                 'formatter' => function ($data) {
                     return '<a class="govuk-link" href="/admin/user-management/users/edit/' . $data['userId']
                      . '">' . $data['loginId'] . '</a>';
                 }
-            ),
-            array(
+            ],
+            [
                 'title' => 'Name',
                 'formatter' => function ($data) {
                     return $data['forename'] . ' ' .
                     $data['familyName'];
                 }
-            ),
-            array(
+            ],
+            [
                 'title' => 'Email address',
                 'name' => 'emailAddress'
-            ),
-            array(
+            ],
+            [
                 'title' => 'Entity',
                 'name' => 'entity'
-            ),
-             array(
+            ],
+             [
                  'title' => 'Licences',
                  'name' => 'licNos'
-             ),
-            array(
+             ],
+            [
                 'title' => '',
                 'width' => 'checkbox',
                 'data-field' => 'userId',
                 'type' => 'CustomSelector',
-            )
-        );
+            ]
+        ];
     }
 }

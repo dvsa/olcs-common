@@ -24,7 +24,7 @@ class MultipleFileUpload extends Fieldset
      * @param string $name
      * @param array $options
      */
-    public function __construct($name = null, $options = array())
+    public function __construct($name = null, $options = [])
     {
         parent::__construct($name, $options);
 
@@ -40,10 +40,10 @@ class MultipleFileUpload extends Fieldset
         $fileControlFieldset = new Fieldset('file-controls');
         $fileControlFieldset->setAttribute('class', 'field');
 
-        $uploader = new File('file', array('render-container' => false));
+        $uploader = new File('file', ['render-container' => false]);
         $uploader->setAttribute('class', 'file-upload');
 
-        $button = new Element\Submit('upload', array('render-container' => false));
+        $button = new Element\Submit('upload', ['render-container' => false]);
         $button->setValue('Upload');
         $button->setAttribute('class', 'govuk-button');
 

@@ -37,14 +37,14 @@ class LicenceNumberLink implements FormatterPluginManagerInterface
     {
         unset($column);
 
-        $permittedLicenceStatuses = array(
+        $permittedLicenceStatuses = [
             RefData::LICENCE_STATUS_VALID,
             RefData::LICENCE_STATUS_CURTAILED,
             RefData::LICENCE_STATUS_SUSPENDED
-        );
+        ];
 
         if (in_array($data['licence']['status'], $permittedLicenceStatuses)) {
-            $url = $this->urlHelper->fromRoute('lva-licence', array('licence' => $data['licence']['id']));
+            $url = $this->urlHelper->fromRoute('lva-licence', ['licence' => $data['licence']['id']]);
 
             return '<a class="govuk-link" href="' . $url . '">' . $data['licence']['licNo'] . '</a>';
         }

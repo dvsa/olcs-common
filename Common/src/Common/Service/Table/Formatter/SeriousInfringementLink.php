@@ -32,7 +32,7 @@ class SeriousInfringementLink implements FormatterPluginManagerInterface
     public function format($data, $column = [])
     {
         unset($column);
-        $url = $this->urlHelper->fromRoute('case_penalty_applied', array('si' => $data['id'], 'action' => 'index'), [], true);
+        $url = $this->urlHelper->fromRoute('case_penalty_applied', ['si' => $data['id'], 'action' => 'index'], [], true);
 
         return '<a class="govuk-link" href="' . $url . '">' . $data['id'] . '</a>';
     }

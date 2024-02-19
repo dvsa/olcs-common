@@ -44,40 +44,40 @@ class TaskIdentifier implements FormatterPluginManagerInterface
         $url = '#';
         switch ($data['linkType']) {
             case 'Licence':
-                $url = $this->urlHelper->fromRoute('lva-licence/overview', array('licence' => $data['linkId']));
+                $url = $this->urlHelper->fromRoute('lva-licence/overview', ['licence' => $data['linkId']]);
                 break;
             case 'Application':
-                $url = $this->urlHelper->fromRoute('lva-application/overview', array('application' => $data['linkId']));
+                $url = $this->urlHelper->fromRoute('lva-application/overview', ['application' => $data['linkId']]);
                 break;
             case 'Transport Manager':
-                $url = $this->urlHelper->fromRoute('transport-manager/details', array('transportManager' => $data['linkId']));
+                $url = $this->urlHelper->fromRoute('transport-manager/details', ['transportManager' => $data['linkId']]);
                 break;
             case 'Case':
-                $url = $this->urlHelper->fromRoute('case', array('case' => $data['linkId']));
+                $url = $this->urlHelper->fromRoute('case', ['case' => $data['linkId']]);
                 break;
             case 'Bus Registration':
                 $url = $this->urlHelper->fromRoute(
                     'licence/bus-details',
-                    array('busRegId' => $data['linkId'], 'licence' => $data['licenceId'])
+                    ['busRegId' => $data['linkId'], 'licence' => $data['licenceId']]
                 );
                 break;
             case 'IRFO Organisation':
-                $url = $this->urlHelper->fromRoute('operator/business-details', array('organisation' => $data['linkId']));
+                $url = $this->urlHelper->fromRoute('operator/business-details', ['organisation' => $data['linkId']]);
                 break;
             case 'Submission':
                 $url = $this->urlHelper->fromRoute(
                     'submission',
-                    array('case' => $data['caseId'], 'submission' => $data['linkId'], 'action' => 'details')
+                    ['case' => $data['caseId'], 'submission' => $data['linkId'], 'action' => 'details']
                 );
                 break;
             case 'Permit Application':
                 $url = $this->urlHelper->fromRoute(
                     'licence/irhp-application/application',
-                    array(
+                    [
                     'irhpAppId' => $data['linkId'],
                     'licence' => $data['licenceId'],
                     'action' => 'edit'
-                    )
+                    ]
                 );
                 break;
             default:

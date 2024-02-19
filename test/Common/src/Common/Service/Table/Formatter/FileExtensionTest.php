@@ -35,16 +35,16 @@ class FileExtensionTest extends \PHPUnit\Framework\TestCase
      */
     public function provider()
     {
-        return array(
-            array(
-                array('documentStoreIdentifier' => 'foo'), array(), ''
-            ),
-            array(
-                array('documentStoreIdentifier' => 'foo.txt'), array(), 'TXT'
-            ),
-            array(
-                array('documentStoreIdentifier' => 'foo.bar.zip'), array(), 'ZIP'
-            ),
-        );
+        return [
+            [
+                ['documentStoreIdentifier' => 'foo'], [], ''
+            ],
+            [
+                ['documentStoreIdentifier' => 'foo.txt'], [], 'TXT'
+            ],
+            [
+                ['documentStoreIdentifier' => 'foo.bar.zip'], [], 'ZIP'
+            ],
+        ];
     }
 }

@@ -42,17 +42,17 @@ class TableFactoryTest extends MockeryTestCase
     public function testBuildTable()
     {
         $name = 'foo';
-        $data = array('foo' => 'var');
-        $params = array('cake' => 'bbar');
+        $data = ['foo' => 'var'];
+        $params = ['cake' => 'bbar'];
         $render = true;
 
-        $mockTable = $this->createPartialMock(TableBuilder::class, array('buildTable'));
+        $mockTable = $this->createPartialMock(TableBuilder::class, ['buildTable']);
 
         $mockTable->expects($this->once())
             ->method('buildTable')
             ->with($name, $data, $params, $render);
 
-        $tableFactory = $this->createPartialMock(TableFactory::class, array('getTableBuilder'));
+        $tableFactory = $this->createPartialMock(TableFactory::class, ['getTableBuilder']);
 
         $tableFactory->expects($this->once())
             ->method('getTableBuilder')

@@ -32,17 +32,17 @@ class DateWithTime extends AbstractValidator
      * Error messages
      * @var array
      */
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         self::MISSING_TIME => "Hearing date requires a valid hearing time",
         self::MISSING_TOKEN => 'No token was provided to match against',
-    );
+    ];
 
     /**
      * @var array
      */
-    protected $messageVariables = array(
+    protected $messageVariables = [
         'token' => 'tokenString'
-    );
+    ];
 
     /**
      * Original token against which to validate
@@ -107,7 +107,7 @@ class DateWithTime extends AbstractValidator
 
         $time = $context[$this->getToken()];
 
-        $date = new DateValidator(array('format' => 'H:i'));
+        $date = new DateValidator(['format' => 'H:i']);
 
         if (!$date->isValid($time)) {
             $this->error(self::MISSING_TIME);

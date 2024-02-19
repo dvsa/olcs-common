@@ -89,14 +89,14 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
             $licNo = $data['licNo'];
         }
 
-        $options = array(
-            'Licence' => array(
+        $options = [
+            'Licence' => [
                 'label' => 'Licence',
-                'options' => array(
+                'options' => [
                     RefData::ATTACHED_TO_LICENCE => 'Licence (' . $licNo . ')'
-                )
-            )
-        );
+                ]
+            ]
+        ];
 
         $operatingCentres = $this->getOperatingCentresForList($data);
         $attachedToOperatingCentres = [];
@@ -106,10 +106,10 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
         }
 
         if (!empty($attachedToOperatingCentres)) {
-            $options['OC'] = array(
+            $options['OC'] = [
                 'label' => 'OC Address',
                 'options' => $attachedToOperatingCentres
-            );
+            ];
         }
 
         $form->get('fields')->get('attachedTo')->setValueOptions($options);
