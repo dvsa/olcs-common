@@ -4,10 +4,10 @@
 
 class Translator
 {
-    const EN = 'EN';
-    const EN_MARKUP = 'EN-MARKUP';
-    const CY = 'CY';
-    const CY_TRANSLATED = 'CY-TRANSLATED';
+    public const EN = 'EN';
+    public const EN_MARKUP = 'EN-MARKUP';
+    public const CY = 'CY';
+    public const CY_TRANSLATED = 'CY-TRANSLATED';
 
     private $translationLocation;
 
