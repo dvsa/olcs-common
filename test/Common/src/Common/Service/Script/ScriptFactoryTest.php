@@ -22,7 +22,7 @@ class ScriptFactoryTest extends \PHPUnit\Framework\TestCase
 
         $this->inlineScript = new \Laminas\View\Helper\InlineScript();
 
-        $vhm = $this->createMock('\Laminas\View\HelperPluginManager', ['get']);
+        $vhm = $this->createMock(\Laminas\View\HelperPluginManager::class);
         $vhm->expects($this->any())
             ->method('get')
             ->with('inlineScript')

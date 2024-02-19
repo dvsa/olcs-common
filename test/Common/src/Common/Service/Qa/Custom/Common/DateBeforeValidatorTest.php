@@ -17,7 +17,7 @@ use Laminas\I18n\View\Helper\DateFormat;
  */
 class DateBeforeValidatorTest extends MockeryTestCase
 {
-    const DATE_MUST_BE_BEFORE_DATE_STRING = '2020-01-03';
+    public const DATE_MUST_BE_BEFORE_DATE_STRING = '2020-01-03';
 
     private $dateFormat;
 

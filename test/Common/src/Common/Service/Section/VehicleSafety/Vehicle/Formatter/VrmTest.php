@@ -33,9 +33,7 @@ class VrmTest extends \PHPUnit\Framework\TestCase
         $mockUrlHelper = m::mock(UrlHelperService::class);
         $mockUrlHelper->shouldReceive('fromRoute')
             ->once()
-            ->andReturnUsing(function ($route, $params, $args, $routeMatch) {
-                return json_encode($params);
-            });
+            ->andReturnUsing(fn($route, $params, $args, $routeMatch) => json_encode($params));
 
         $sut = new Vrm($mockUrlHelper);
         $output = $sut->format($data, $column);

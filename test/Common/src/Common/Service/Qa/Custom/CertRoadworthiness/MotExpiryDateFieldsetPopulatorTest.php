@@ -20,8 +20,8 @@ use Laminas\Form\InputFilterProviderFieldset;
  */
 class MotExpiryDateFieldsetPopulatorTest extends MockeryTestCase
 {
-    const REQUESTED_DATE = '2020-03-15';
-    const DATE_MUST_BE_BEFORE = '2020-05-01';
+    public const REQUESTED_DATE = '2020-03-15';
+    public const DATE_MUST_BE_BEFORE = '2020-05-01';
 
     private $translator;
 

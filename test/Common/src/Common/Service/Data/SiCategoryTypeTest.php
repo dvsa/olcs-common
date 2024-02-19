@@ -83,7 +83,7 @@ class SiCategoryTypeTest extends AbstractDataServiceTestCase
 
         $this->mockHandleQuery($mockResponse);
 
-        $this->assertEquals($results['results'], $this->sut->fetchListData([]));
+        $this->assertEquals($results['results'], $this->sut->fetchListData());
     }
 
     public function testFetchListDataWithException()
@@ -103,7 +103,7 @@ class SiCategoryTypeTest extends AbstractDataServiceTestCase
 
         $this->mockHandleQuery($mockResponse);
 
-        $this->sut->fetchListData([]);
+        $this->sut->fetchListData();
     }
 
     /**

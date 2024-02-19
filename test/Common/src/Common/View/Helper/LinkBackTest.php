@@ -30,9 +30,7 @@ class LinkBackTest extends MockeryTestCase
             ->shouldReceive('translate')
             ->zeroOrMoreTimes()
             ->andReturnUsing(
-                function ($arg) {
-                    return '_TRLTD_' . $arg;
-                }
+                fn($arg) => '_TRLTD_' . $arg
             )
             ->getMock();
 

@@ -368,7 +368,7 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
         $sut = new RestClient(new HttpUri());
         $acceptLanguage = $sut->getAcceptLanguage();
 
-        $this->assertInstanceOf('\Laminas\Http\Header\AcceptLanguage', $acceptLanguage);
+        $this->assertInstanceOf(\Laminas\Http\Header\AcceptLanguage::class, $acceptLanguage);
     }
 
     public function testConstructorWithParams()

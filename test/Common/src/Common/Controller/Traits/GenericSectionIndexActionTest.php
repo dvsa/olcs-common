@@ -19,7 +19,7 @@ class GenericSectionIndexActionTest extends \PHPUnit\Framework\TestCase
     protected function setUp(): void
     {
         $this->sut = $this->getMockForTrait(
-            '\Common\Controller\Traits\GenericSectionIndexAction',
+            \Common\Controller\Traits\GenericSectionIndexAction::class,
             [],
             '',
             true,

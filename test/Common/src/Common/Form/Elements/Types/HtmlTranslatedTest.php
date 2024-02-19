@@ -23,6 +23,6 @@ class HtmlTranslatedTest extends \PHPUnit\Framework\TestCase
     public function testElement()
     {
         $element = new HtmlTranslated();
-        $this->assertInstanceOf('Common\Form\Elements\Types\HtmlTranslated', $element);
+        $this->assertInstanceOf(\Common\Form\Elements\Types\HtmlTranslated::class, $element);
     }
 }

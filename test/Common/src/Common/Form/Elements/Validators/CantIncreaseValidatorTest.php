@@ -53,7 +53,7 @@ class CantIncreaseValidatorTest extends \PHPUnit\Framework\TestCase
 
         $messageObject = current($messages);
 
-        $this->assertInstanceOf('Common\Form\Elements\Validators\Messages\ValidationMessageInterface', $messageObject);
+        $this->assertInstanceOf(\Common\Form\Elements\Validators\Messages\ValidationMessageInterface::class, $messageObject);
 
         $this->assertEquals($message, $messageObject->getMessage());
         $this->assertFalse($messageObject->shouldTranslate());

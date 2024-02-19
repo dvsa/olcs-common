@@ -27,9 +27,7 @@ class VehiclePlatedWeightTest extends MockeryTestCase
                 \Laminas\Validator\Between::class,
             ],
             array_map(
-                function ($item) {
-                    return $item['name'];
-                },
+                fn($item) => $item['name'],
                 $actual['validators']
             )
         );

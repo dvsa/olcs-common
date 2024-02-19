@@ -114,9 +114,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         $this->sut->setSelector('my-files');
 
         $this->sut->setLoadCallback(
-            function () {
-                return ['array-of-files'];
-            }
+            fn() => ['array-of-files']
         );
 
         $fieldset = m::mock(ElementInterface::class) // multiple file upload fieldset

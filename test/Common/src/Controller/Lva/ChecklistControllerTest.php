@@ -32,15 +32,13 @@ class ChecklistControllerTest extends MockeryTestCase
 
         $this->mockTranslationHelper->shouldReceive('translate')
             ->andReturnUsing(
-                function ($input) {
-                    return $input;
-                }
+                fn($input) => $input
             );
     }
 
     protected function mockController($className, array $constructorParams = [])
     {
-        $this->request = m::mock('\Laminas\Http\Request')->makePartial();
+        $this->request = m::mock(\Laminas\Http\Request::class)->makePartial();
 
         // If constructor params are provided, pass them to the mock, otherwise mock without them
         if (!empty($constructorParams)) {

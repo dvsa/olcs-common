@@ -50,9 +50,7 @@ class BusRegStatusTest extends MockeryTestCase
 
         $this->translator->shouldReceive('translate')
             ->andReturnUsing(
-                function ($key) {
-                    return '_TRNSLT_' . $key;
-                }
+                fn($key) => '_TRNSLT_' . $key
             );
 
         $this->viewHelperManager->shouldReceive('get')->with('status')->andReturn($this->statusHelper);

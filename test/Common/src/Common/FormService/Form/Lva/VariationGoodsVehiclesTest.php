@@ -25,11 +25,11 @@ class VariationGoodsVehiclesTest extends MockeryTestCase
     public function setUp(): void
     {
         $this->authService = m::mock(AuthorizationService::class);
-        $this->formHelper = m::mock('\Common\Service\Helper\FormHelperService');
+        $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);
         $this->formHelper->shouldReceive('getServiceLocator')
             ->andReturn($this->sm);
 
-        $this->formService = m::mock('\Common\FormService\FormServiceManager')->makePartial();
+        $this->formService = m::mock(\Common\FormService\FormServiceManager::class)->makePartial();
 
         $this->sut = new VariationGoodsVehicles($this->formHelper, $this->authService, $this->formService);
     }
@@ -37,12 +37,12 @@ class VariationGoodsVehiclesTest extends MockeryTestCase
     public function testGetForm()
     {
         // Params
-        $mockTable = m::mock('\Common\Service\Table\TableBuilder');
+        $mockTable = m::mock(\Common\Service\Table\TableBuilder::class);
         $isCrudPressed = true;
 
         // Mocks
         $mockForm = m::mock();
-        $mockTableElement = m::mock('\Laminas\Form\Fieldset');
+        $mockTableElement = m::mock(\Laminas\Form\Fieldset::class);
         $mockValidator = m::mock();
 
         // Expectations

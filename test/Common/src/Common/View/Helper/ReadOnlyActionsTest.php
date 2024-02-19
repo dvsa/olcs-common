@@ -15,7 +15,7 @@ use Laminas\View\Renderer\RendererInterface;
  */
 class ReadOnlyActionsTest extends MockeryTestCase
 {
-    const BUTTON_LAYOUT = '<input type="submit" name="action" id="%s" class="%s" value="%s">';
+    public const BUTTON_LAYOUT = '<input type="submit" name="action" id="%s" class="%s" value="%s">';
 
     /**
      * @var ReadOnlyActions
@@ -31,9 +31,7 @@ class ReadOnlyActionsTest extends MockeryTestCase
         $this->mockView = m::mock(RendererInterface::class)
             ->shouldReceive('translate')
             ->andReturnUsing(
-                function ($text) {
-                    return $text . '-translated';
-                }
+                fn($text) => $text . '-translated'
             )
             ->getMock();
 

@@ -85,9 +85,7 @@ class FormErrorsTest extends MockeryTestCase
         $form->setMessages(['foo' => $message]);
 
         // Set Expectations
-        $purifier->shouldReceive('purify')->withAnyArgs()->andReturnUsing(function ($val) {
-            return $val;
-        })->never();
+        $purifier->shouldReceive('purify')->withAnyArgs()->andReturnUsing(fn($val) => $val)->never();
 
         // Execute
         $sut->render($form);
@@ -112,7 +110,7 @@ class FormErrorsTest extends MockeryTestCase
      */
     public function __invoke_RenderWithoutMessages()
     {
-        $form = m::mock('\Laminas\Form\Form');
+        $form = m::mock(\Laminas\Form\Form::class);
         $messages = [];
         $expected = '';
 
@@ -153,7 +151,7 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Laminas\Form\Form');
+        $form = m::mock(\Laminas\Form\Form::class);
 
         $element = $this->setUpElement();
 
@@ -208,7 +206,7 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Laminas\Form\Form');
+        $form = m::mock(\Laminas\Form\Form::class);
 
         $element = $this->setUpElement();
         $element->setLabel('foo');
@@ -265,7 +263,7 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Laminas\Form\Form');
+        $form = m::mock(\Laminas\Form\Form::class);
 
         $element = $this->setUpElement();
         $element->setOption('label_attributes', ['id' => 'foo-id']);
@@ -321,7 +319,7 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Laminas\Form\Form');
+        $form = m::mock(\Laminas\Form\Form::class);
 
         $element = $this->setUpElement();
         $element->setOption('fieldset-attributes', ['id' => 'foo-id']);
@@ -375,7 +373,7 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Laminas\Form\Form')->makePartial();
+        $form = m::mock(\Laminas\Form\Form::class)->makePartial();
         $mockFoo = m::mock(PostcodeSearch::class)->makePartial();
 
         // Expectations
@@ -417,7 +415,7 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Laminas\Form\Form')->makePartial();
+        $form = m::mock(\Laminas\Form\Form::class)->makePartial();
         $element = (new DateSelect())->setAttribute('id', 'DS_ID');
         $element->setLabel('Default Label');
 
@@ -451,7 +449,7 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Laminas\Form\Form')->makePartial();
+        $form = m::mock(\Laminas\Form\Form::class)->makePartial();
         $element = $this->setUpElement('NAME');
 
         // Expectations
@@ -485,7 +483,7 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Laminas\Form\Form');
+        $form = m::mock(\Laminas\Form\Form::class);
         $element = $this->setUpElement();
         $element->setOption('error-message', 'foo-error');
 
@@ -548,7 +546,7 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Laminas\Form\Form');
+        $form = m::mock(\Laminas\Form\Form::class);
 
         $element = $this->setUpElement();
         $element->setOption('short-label', 'foo-label');
@@ -607,7 +605,7 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Laminas\Form\Form');
+        $form = m::mock(\Laminas\Form\Form::class);
         $element = $this->setUpElement();
         $element->setOption('short-label', 'foo-label');
 
@@ -665,7 +663,7 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Laminas\Form\Form');
+        $form = m::mock(\Laminas\Form\Form::class);
         $element = $this->setUpElement();
 
         // Expectations
@@ -720,7 +718,7 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Laminas\Form\Form');
+        $form = m::mock(\Laminas\Form\Form::class);
 
         // Expectations
         $form->shouldReceive('hasValidated')
@@ -776,7 +774,7 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Laminas\Form\Form');
+        $form = m::mock(\Laminas\Form\Form::class);
         $element = $this->setUpElement();
         $element->setAttribute('id', 'foo-id');
 
@@ -834,7 +832,7 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Laminas\Form\Form');
+        $form = m::mock(\Laminas\Form\Form::class);
         $element = $this->setUpElement();
         $element->setAttribute('id', 'foo-id');
 
@@ -891,7 +889,7 @@ class FormErrorsTest extends MockeryTestCase
         $sut = $this->sut;
 
         // Mocks
-        $form = m::mock('\Laminas\Form\Form');
+        $form = m::mock(\Laminas\Form\Form::class);
         $element = $this->setUpElement();
         $element->setAttribute('id', 'foo-id');
 
@@ -927,7 +925,7 @@ class FormErrorsTest extends MockeryTestCase
      */
     public function setUp(): void
     {
-        $this->view = m::mock('\Laminas\View\Renderer\RendererInterface');
+        $this->view = m::mock(\Laminas\View\Renderer\RendererInterface::class);
         $serviceLocator = $this->setUpServiceLocator();
         $this->sut = $this->setUpSut($serviceLocator);
         $this->sut->setView($this->view);
@@ -955,9 +953,7 @@ class FormErrorsTest extends MockeryTestCase
     protected function setUpTranslator(): MockInterface
     {
         $instance = $this->setUpMockService(Translator::class);
-        $instance->shouldReceive('translate')->andReturnUsing(function ($key) {
-            return $key . '-translated';
-        })->byDefault();
+        $instance->shouldReceive('translate')->andReturnUsing(fn($key) => $key . '-translated')->byDefault();
         return $instance;
     }
 

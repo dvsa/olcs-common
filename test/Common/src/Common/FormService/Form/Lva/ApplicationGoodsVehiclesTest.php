@@ -16,9 +16,9 @@ class ApplicationGoodsVehiclesTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->formHelper = m::mock('\Common\Service\Helper\FormHelperService');
-        $this->authService = m::mock('\LmcRbacMvc\Service\AuthorizationService');
-        $this->formService = m::mock('\Common\FormService\FormServiceManager')->makePartial();
+        $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);
+        $this->authService = m::mock(\LmcRbacMvc\Service\AuthorizationService::class);
+        $this->formService = m::mock(\Common\FormService\FormServiceManager::class)->makePartial();
 
         $this->sut = new ApplicationGoodsVehicles($this->formHelper, $this->authService, $this->formService);
     }
@@ -26,12 +26,12 @@ class ApplicationGoodsVehiclesTest extends MockeryTestCase
     public function testGetForm()
     {
         // Params
-        $mockTable = m::mock('\Common\Service\Table\TableBuilder');
+        $mockTable = m::mock(\Common\Service\Table\TableBuilder::class);
         $isCrudPressed = true;
 
         // Mocks
         $mockForm = m::mock();
-        $mockTableElement = m::mock('\Laminas\Form\Fieldset');
+        $mockTableElement = m::mock(\Laminas\Form\Fieldset::class);
         $mockValidator = m::mock();
 
         // Expectations

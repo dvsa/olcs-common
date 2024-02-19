@@ -24,7 +24,7 @@ class ValidateIfMultipleTest extends MockeryTestCase
     {
         $errorMessages = empty($errorMessages) ? ['error' => 'message'] : $errorMessages;
 
-        $mockValidatorChain = m::mock('Laminas\Validator\ValidatorChain');
+        $mockValidatorChain = m::mock(\Laminas\Validator\ValidatorChain::class);
         $mockValidatorChain->shouldReceive('isValid')->with($value, $context)->andReturn($chainValid);
         $mockValidatorChain->shouldReceive('getMessages')->andReturn($errorMessages);
 

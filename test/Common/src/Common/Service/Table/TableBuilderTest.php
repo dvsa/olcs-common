@@ -118,8 +118,8 @@ class TableBuilderTest extends MockeryTestCase
 
     private function getMockServiceLocator()
     {
-        $mockSm = $this->createPartialMock('\Laminas\ServiceManager\ServiceManager', ['get']);
-        $mockControllerPluginManager = $this->createPartialMock('\Laminas\Mvc\Controller\PluginManager', ['get']);
+        $mockSm = $this->createPartialMock(\Laminas\ServiceManager\ServiceManager::class, ['get']);
+        $mockControllerPluginManager = $this->createPartialMock(\Laminas\Mvc\Controller\PluginManager::class, ['get']);
 
         $servicesMap = [
             ['ControllerPluginManager', true, $mockControllerPluginManager],
@@ -701,9 +701,7 @@ class TableBuilderTest extends MockeryTestCase
                 'type' => 'th',
                 'colspan' => 2,
                 'content' => 'foo',
-                'formatter' => function () {
-                    return 'ABC';
-                },
+                'formatter' => fn() => 'ABC',
                 'align' => 'right',
             ],
             [
@@ -723,9 +721,7 @@ class TableBuilderTest extends MockeryTestCase
             ->method('replaceContent')
             ->will(
                 $this->returnCallback(
-                    function ($string) {
-                        return $string;
-                    }
+                    fn($string) => $string
                 )
             );
 
@@ -1093,9 +1089,7 @@ class TableBuilderTest extends MockeryTestCase
             ->times(2)
             ->with('{{[elements/actionButton]}}', m::any())
             ->andReturnUsing(
-                function ($content, $details) {
-                    return $details['name'];
-                }
+                fn($content, $details) => $details['name']
             );
         $mockContentHelper
             ->shouldReceive('replaceContent')
@@ -1142,9 +1136,7 @@ class TableBuilderTest extends MockeryTestCase
             ->shouldReceive('replaceContent')
             ->with('{{[elements/actionButton]}}', m::any())
             ->andReturnUsing(
-                function ($content, $details) {
-                    return $details['name'];
-                }
+                fn($content, $details) => $details['name']
             );
         $mockContentHelper
             ->shouldReceive('replaceContent')
@@ -1195,9 +1187,7 @@ class TableBuilderTest extends MockeryTestCase
             ->shouldReceive('replaceContent')
             ->with('{{[elements/actionButton]}}', m::any())
             ->andReturnUsing(
-                function ($content, $details) {
-                    return $details['name'];
-                }
+                fn($content, $details) => $details['name']
             );
         $mockContentHelper
             ->shouldReceive('replaceContent')
@@ -1557,9 +1547,7 @@ class TableBuilderTest extends MockeryTestCase
             ->times(4)
             ->with('{{[elements/actionButton]}}', m::any())
             ->andReturnUsing(
-                function ($content, $details) {
-                    return key($details) . '-' . current($details);
-                }
+                fn($content, $details) => key($details) . '-' . current($details)
             );
         $mockContentHelper
             ->shouldReceive('replaceContent')
@@ -2731,9 +2719,7 @@ class TableBuilderTest extends MockeryTestCase
         ];
 
         $column = [
-            'formatter' => function () {
-                return ['date' => 'Something Else'];
-            },
+            'formatter' => fn() => ['date' => 'Something Else'],
             'name' => 'date'
         ];
 
@@ -2920,9 +2906,7 @@ class TableBuilderTest extends MockeryTestCase
             ->method('translate')
             ->will(
                 $this->returnCallback(
-                    function ($string) {
-                        return $string;
-                    }
+                    fn($string) => $string
                 )
             );
 
@@ -2974,9 +2958,7 @@ class TableBuilderTest extends MockeryTestCase
             ->method('translate')
             ->will(
                 $this->returnCallback(
-                    function ($string) {
-                        return $string;
-                    }
+                    fn($string) => $string
                 )
             );
 
@@ -3154,9 +3136,7 @@ class TableBuilderTest extends MockeryTestCase
     {
         // Stubbed data
         $settings = [
-            'row-disabled-callback' => function ($row) {
-                return $row['disabled'];
-            }
+            'row-disabled-callback' => fn($row) => $row['disabled']
         ];
         $row = [
             'disabled' => $disabled
