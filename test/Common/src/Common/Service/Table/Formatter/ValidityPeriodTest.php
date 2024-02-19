@@ -28,10 +28,6 @@ class ValidityPeriodTest extends MockeryTestCase
         $this->sut = new ValidityPeriod($this->viewHelperManager, $this->translator);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
     public function testFormat()
     {
         $locale = 'cy_GB';

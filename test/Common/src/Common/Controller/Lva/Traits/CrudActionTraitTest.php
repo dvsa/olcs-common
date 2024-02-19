@@ -27,11 +27,6 @@ class CrudActionTraitTest extends MockeryTestCase
             ->shouldAllowMockingProtectedMethods();
     }
 
-    public function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * @dataProvider providerGetCrudAction
      */

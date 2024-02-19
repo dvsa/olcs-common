@@ -12,6 +12,7 @@ namespace CommonTest\Service\Table\Formatter;
 use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Formatter\TaskIdentifier;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
 /**
  * Task identifier formatter tests
@@ -20,7 +21,7 @@ use Mockery as m;
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class TaskIdentifierTest extends \PHPUnit\Framework\TestCase
+class TaskIdentifierTest extends TestCase
 {
     protected $urlHelper;
     protected $sut;
@@ -31,10 +32,6 @@ class TaskIdentifierTest extends \PHPUnit\Framework\TestCase
         $this->sut = new TaskIdentifier($this->urlHelper);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
     /**
      * Test link formatter
      * @group taskIdentifier

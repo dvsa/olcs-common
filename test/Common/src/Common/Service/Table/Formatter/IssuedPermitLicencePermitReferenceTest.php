@@ -22,11 +22,6 @@ class IssuedPermitLicencePermitReferenceTest extends MockeryTestCase
         $this->sut = new IssuedPermitLicencePermitReference($this->urlHelper);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * @dataProvider dpFormatLinkToIssuedPermits
      */

@@ -29,10 +29,6 @@ class PrinterDocumentCategoryTest extends MockeryTestCase
         $this->sut = new PrinterDocumentCategory($this->urlHelper);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
     /**
      * Test formatter
      *

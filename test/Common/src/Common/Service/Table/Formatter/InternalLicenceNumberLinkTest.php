@@ -31,11 +31,6 @@ class InternalLicenceNumberLinkTest extends TestCase
         $this->sut = new InternalLicenceNumberLink($this->urlHelper);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
     public function testFormat()
     {
         $licence = [

@@ -21,10 +21,6 @@ class RefDataTest extends MockeryTestCase
         $this->sut = new RefData($this->translator);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
     /**
      * @dataProvider dpTestFormat
      */

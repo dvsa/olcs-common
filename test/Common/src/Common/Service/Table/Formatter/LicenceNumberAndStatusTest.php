@@ -30,10 +30,6 @@ class LicenceNumberAndStatusTest extends MockeryTestCase
         $this->sut = new LicenceNumberAndStatus($this->urlHelper);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
     /**
      * Test format
      *

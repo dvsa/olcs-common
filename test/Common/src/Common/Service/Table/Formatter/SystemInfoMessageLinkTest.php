@@ -28,12 +28,6 @@ class SystemInfoMessageLinkTest extends TestCase
         $this->sut = new SystemInfoMessageLink($this->urlHelper);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
-
     /**
      * @dataProvider dpTestFormat
      */

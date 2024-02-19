@@ -18,11 +18,6 @@ class DashboardTmApplicationStatusTest extends MockeryTestCase
         $this->sut = new DashboardTmApplicationStatus($this->viewHelperManager);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
     public function testFormat()
     {
         $tmHelper = m::mock();

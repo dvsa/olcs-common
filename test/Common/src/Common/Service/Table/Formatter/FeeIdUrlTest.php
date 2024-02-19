@@ -55,11 +55,6 @@ class FeeIdUrlTest extends MockeryTestCase
             ->getMock();
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * Test the format method
      */

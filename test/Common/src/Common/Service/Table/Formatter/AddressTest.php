@@ -11,13 +11,14 @@ namespace CommonTest\Service\Table\Formatter;
 use Common\Service\Helper\DataHelperService;
 use Common\Service\Table\Formatter\Address;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
 /**
  * Address formatter test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class AddressTest extends \PHPUnit\Framework\TestCase
+class AddressTest extends TestCase
 {
     protected $dataHelper;
 
@@ -25,11 +26,6 @@ class AddressTest extends \PHPUnit\Framework\TestCase
     {
         $this->dataHelper = m::mock(DataHelperService::class);
         $this->sut = new Address($this->dataHelper);
-    }
-
-    protected function tearDown(): void
-    {
-        m::close();
     }
 
     /**

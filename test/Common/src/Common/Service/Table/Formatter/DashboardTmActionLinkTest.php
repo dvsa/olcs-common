@@ -30,11 +30,6 @@ class DashboardTmActionLinkTest extends MockeryTestCase
         $this->sut = new DashboardTmActionLink($this->urlHelper, $this->viewHelperManager, $this->translator);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
     public function dataProviderFormat()
     {
         return [

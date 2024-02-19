@@ -35,11 +35,6 @@ class InspectionRequestIdTest extends MockeryTestCase
         $this->sut = new InspectionRequestId($this->urlHelper, $this->router, $this->request);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * Test formatter
      *

@@ -5,8 +5,9 @@ namespace Common\Service\Table\Formatter;
 use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 use Mockery;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
-class VehicleRegistrationMarkTest extends \PHPUnit\Framework\TestCase
+class VehicleRegistrationMarkTest extends TestCase
 {
     protected $translator;
     protected $sut;
@@ -22,10 +23,6 @@ class VehicleRegistrationMarkTest extends \PHPUnit\Framework\TestCase
             ->andReturn('TEST_INTERIM_TRANSLATION');
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
     /** @var Mockery\MockInterface */
 
     public function testThatNonInterimVrmIsDisplayed()

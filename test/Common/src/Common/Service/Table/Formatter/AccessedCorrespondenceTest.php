@@ -22,10 +22,6 @@ class AccessedCorrespondenceTest extends MockeryTestCase
         $this->translator = m::mock(TranslatorDelegator::class);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
     /**
      * @dataProvider formatProvider
      */

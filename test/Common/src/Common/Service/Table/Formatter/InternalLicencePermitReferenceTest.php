@@ -21,11 +21,6 @@ class InternalLicencePermitReferenceTest extends MockeryTestCase
         $this->sut = new InternalLicencePermitReference($this->urlHelper);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
     public function testFormat()
     {
         $appId = 4;

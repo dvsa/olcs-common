@@ -20,11 +20,6 @@ class VehicleSearchTraitTest extends MockeryTestCase
         $this->sut = new VehicleSearchTraitStub();
     }
 
-    public function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * @dataProvider dpTestAddRemovedVehiclesActions
      */

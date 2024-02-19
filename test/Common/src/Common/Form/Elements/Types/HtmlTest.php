@@ -7,8 +7,9 @@ use Common\Form\Form;
 use Common\Form\View\Helper\FormElement;
 use Mockery;
 use Laminas\View\Renderer\PhpRenderer;
+use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
-class HtmlTest extends \PHPUnit\Framework\TestCase
+class HtmlTest extends TestCase
 {
     public const INITIAL_HTML_PAYLOAD = '<em>TEST</em>';
     public const UPDATED_HTML_PAYLOAD = '<em>TEST 2</em>';

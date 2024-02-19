@@ -27,11 +27,6 @@ class LicenceApplicationTest extends MockeryTestCase
         $this->sut = new LicenceApplication($this->urlHelper, $this->viewHelperManager);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * @dataProvider dpTestFormat
      *

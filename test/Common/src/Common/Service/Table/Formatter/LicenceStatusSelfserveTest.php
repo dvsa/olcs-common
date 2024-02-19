@@ -21,11 +21,6 @@ class LicenceStatusSelfserveTest extends MockeryTestCase
         $this->sut = new LicenceStatusSelfserve($this->translator);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * Test format
      *

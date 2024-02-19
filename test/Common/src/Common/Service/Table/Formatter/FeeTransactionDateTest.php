@@ -34,10 +34,6 @@ class FeeTransactionDateTest extends MockeryTestCase
         $this->sut = new FeeTransactionDate(new StackValue(new StackHelperService()), new Date());
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
     public function testFormat()
     {
         $data = [

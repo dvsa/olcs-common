@@ -26,11 +26,6 @@ class DocumentDescriptionTest extends MockeryTestCase
         $this->sut = new DocumentDescription($this->translator, $this->urlHelper);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
     public function testFormat()
     {
         // Params

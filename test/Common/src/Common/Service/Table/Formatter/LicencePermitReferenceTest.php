@@ -27,10 +27,6 @@ class LicencePermitReferenceTest extends MockeryTestCase
         $this->sut = new LicencePermitReference($this->translator, $this->urlHelper);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
     /**
      * @dataProvider scenariosProvider
      */

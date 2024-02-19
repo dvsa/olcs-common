@@ -29,11 +29,6 @@ class SystemParameterLinkTest extends TestCase
         $this->sut = new SystemParameterLink($this->urlHelper);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
     public function testFormat()
     {
         $data = [

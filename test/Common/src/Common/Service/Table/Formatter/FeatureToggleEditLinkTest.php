@@ -23,11 +23,6 @@ class FeatureToggleEditLinkTest extends MockeryTestCase
         $this->sut = new FeatureToggleEditLink($this->urlHelper);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
     public function testFormat()
     {
         $id = 123;

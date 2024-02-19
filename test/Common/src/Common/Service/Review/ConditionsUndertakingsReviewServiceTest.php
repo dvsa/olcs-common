@@ -14,20 +14,21 @@ use Common\Service\Review\AbstractReviewServiceServices;
 use Common\Service\Review\ConditionsUndertakingsReviewService;
 use Common\Service\Table\Formatter\Address;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
 /**
  * Conditions Undertakings Review Service Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class ConditionsUndertakingsReviewServiceTest extends \PHPUnit\Framework\TestCase
+class ConditionsUndertakingsReviewServiceTest extends TestCase
 {
     protected $sut;
 
     public function setUp(): void
     {
         $mockTranslationHelper = m::mock(TranslationHelperService::class);
-        
+
         $abstractReviewServiceServices = m::mock(AbstractReviewServiceServices::class);
         $abstractReviewServiceServices->shouldReceive('getTranslationHelper')
             ->withNoArgs()

@@ -24,11 +24,6 @@ class YesNoTest extends MockeryTestCase
         $this->sut = new YesNo($this->stackHelper, $this->translator);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * Test the format method
      *

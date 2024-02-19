@@ -42,11 +42,6 @@ class TransactionFeeStatusTest extends MockeryTestCase
             ->andReturn($this->mockRouteMatch);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * Test the format method
      *

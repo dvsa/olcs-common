@@ -26,10 +26,6 @@ class BusRegStatusTest extends MockeryTestCase
         $this->sut = new BusRegStatus($this->translator, $this->viewHelperManager);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
     /**
      * Tests the formatting for the different possible input array formats
      *

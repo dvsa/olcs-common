@@ -35,11 +35,6 @@ class EventHistoryDescriptionTest extends MockeryTestCase
         $this->sut = new EventHistoryDescription($this->router, $this->request, $this->urlHelper);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * Test the format method
      *

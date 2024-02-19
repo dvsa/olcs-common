@@ -27,11 +27,6 @@ class SeriousInfringementLinkTest extends TestCase
         $this->sut = new SeriousInfringementLink($this->urlHelper);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
     public function testFormat()
     {
         $id = 69;

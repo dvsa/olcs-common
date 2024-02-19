@@ -27,11 +27,6 @@ class LicenceNumberLinkTest extends TestCase
         $this->sut = new LicenceNumberLink($this->urlHelper);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * @dataProvider formatProvider
      */

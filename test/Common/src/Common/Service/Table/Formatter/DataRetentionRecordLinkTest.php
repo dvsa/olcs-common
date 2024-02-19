@@ -36,11 +36,6 @@ class DataRetentionRecordLinkTest extends TestCase
         $this->sut = new DataRetentionRecordLink($this->urlHelper, $this->viewHelperManager);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * @param array  $queryData           Query Data
      *

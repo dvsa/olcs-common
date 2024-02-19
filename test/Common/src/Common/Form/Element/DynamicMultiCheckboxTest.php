@@ -6,8 +6,9 @@ use Common\Form\Element\DynamicMultiCheckbox;
 use Common\Service\Data\PluginManager;
 use Common\Service\Data\RefData;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
-class DynamicMultiCheckboxTest extends \PHPUnit\Framework\TestCase
+class DynamicMultiCheckboxTest extends TestCase
 {
     private $pluginManager;
 

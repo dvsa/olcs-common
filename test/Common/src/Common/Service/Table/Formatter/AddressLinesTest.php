@@ -28,11 +28,6 @@ class AddressLinesTest extends MockeryTestCase
         $this->sut =  new AddressLines($this->dataHelper);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * Test the format method
      *

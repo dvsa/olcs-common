@@ -6,11 +6,12 @@ use Common\Service\Helper\DataHelperService;
 use Common\Service\Table\Formatter\Translate;
 use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
 /**
  * @covers Common\Service\Table\Formatter\Translate
  */
-class TranslateTest extends \PHPUnit\Framework\TestCase
+class TranslateTest extends TestCase
 {
     protected $translator;
     protected $dataHelper;
@@ -21,11 +22,6 @@ class TranslateTest extends \PHPUnit\Framework\TestCase
         $this->translator = m::mock(TranslatorDelegator::class);
         $this->dataHelper = m::mock(DataHelperService::class);
         $this->sut = new Translate($this->translator, $this->dataHelper);
-    }
-
-    protected function tearDown(): void
-    {
-        m::close();
     }
 
     /**

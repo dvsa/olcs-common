@@ -246,11 +246,6 @@ class DetailsTest extends MockeryTestCase
         );
     }
 
-    public function tearDown(): void
-    {
-        $this->mockTranslator = null;
-    }
-
     public function dpLgvOnlyApplication()
     {
         return [

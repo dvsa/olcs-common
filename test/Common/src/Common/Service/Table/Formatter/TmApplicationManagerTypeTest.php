@@ -35,11 +35,6 @@ class TmApplicationManagerTypeTest extends MockeryTestCase
         $this->sut = new TmApplicationManagerType($this->application, $this->urlHelper, $this->translator);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * Test formatter
      *

@@ -21,10 +21,6 @@ class EbsrRegNumberLinkTest extends MockeryTestCase
         $this->sut = new EbsrRegNumberLink($this->urlHelper);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
     /**
      * Tests empty string returned if there's no variation number set
      */

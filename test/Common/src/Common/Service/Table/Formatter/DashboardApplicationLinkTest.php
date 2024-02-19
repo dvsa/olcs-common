@@ -21,10 +21,6 @@ class DashboardApplicationLinkTest extends MockeryTestCase
         $this->sut = new DashboardApplicationLink($this->urlHelper);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
     /**
      * Test format
      *

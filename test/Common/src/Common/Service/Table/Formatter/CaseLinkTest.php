@@ -26,11 +26,6 @@ class CaseLinkTest extends TestCase
         $this->sut = new CaseLink($this->urlHelper);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * Test the format method
      *

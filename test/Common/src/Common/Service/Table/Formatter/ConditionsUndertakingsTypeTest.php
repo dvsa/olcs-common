@@ -22,10 +22,6 @@ class ConditionsUndertakingsTypeTest extends TestCase
         $this->sut = new ConditionsUndertakingsType($this->translator);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
     public function testFormatNoS4()
     {
         $data = [

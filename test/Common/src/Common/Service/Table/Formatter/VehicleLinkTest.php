@@ -21,11 +21,6 @@ class VehicleLinkTest extends MockeryTestCase
         $this->sut = new VehicleLink($this->urlHelper);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * Test the format method
      */

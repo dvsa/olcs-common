@@ -10,20 +10,15 @@ namespace CommonTest\Service\Section\VehicleSafety\Vehicle\Formatter;
 use Common\Service\Helper\UrlHelperService;
 use Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
 /**
  * Vrm Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class VrmTest extends \PHPUnit\Framework\TestCase
+class VrmTest extends TestCase
 {
-    /**
-    protected function tearDown(): void
-    {
-    m::close();
-    }
-
     /**
      * @group VrmFormatter
      * @dataProvider provider

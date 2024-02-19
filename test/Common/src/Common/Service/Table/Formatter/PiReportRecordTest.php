@@ -27,10 +27,6 @@ class PiReportRecordTest extends TestCase
         $this->sut = new PiReportRecord($this->urlHelper);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
     /**
      * Test the format method
      *

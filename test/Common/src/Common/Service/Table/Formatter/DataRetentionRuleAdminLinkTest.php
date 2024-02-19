@@ -21,11 +21,6 @@ class DataRetentionRuleAdminLinkTest extends TestCase
         $this->sut = new DataRetentionRuleAdminLink($this->urlHelper);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
     public function testFormat()
     {
         $data = [

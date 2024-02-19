@@ -5,11 +5,12 @@ namespace CommonTest\Service\Table\Formatter;
 use Common\Service\Helper\StackHelperService;
 use Common\Service\Table\Formatter\NumberStackValue;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
 /**
  * NumberStackValue formatter test
  */
-class NumberStackValueTest extends \PHPUnit\Framework\TestCase
+class NumberStackValueTest extends TestCase
 {
     protected $stackHelper;
     protected $sut;
@@ -20,10 +21,6 @@ class NumberStackValueTest extends \PHPUnit\Framework\TestCase
         $this->sut = new NumberStackValue($this->stackHelper);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
     public function testFormatWithoutStack()
     {
         $this->expectException('\InvalidArgumentException');

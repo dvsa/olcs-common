@@ -27,11 +27,6 @@ class OrganisationLinkTest extends TestCase
         $this->sut = new OrganisationLink($this->urlHelper);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
     public function testFormat()
     {
         $data = [

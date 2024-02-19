@@ -30,11 +30,6 @@ class PiReportNameTest extends TestCase
         $this->sut = new PiReportName(new OrganisationLink($this->urlHelper), new Name(new DataHelperService()));
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * Test the format method
      *

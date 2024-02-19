@@ -44,11 +44,6 @@ class DisqualifyUrlTest extends MockeryTestCase
             ->andReturn($this->mockRouteMatch);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * @dataProvider provider
      */

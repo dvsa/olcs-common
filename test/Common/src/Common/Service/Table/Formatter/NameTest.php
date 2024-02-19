@@ -29,10 +29,6 @@ class NameTest extends MockeryTestCase
         $this->sut = new Name($this->dataHelper);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
     /**
      * Test the format method
      *

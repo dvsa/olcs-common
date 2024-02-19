@@ -23,10 +23,6 @@ class EbsrDocumentStatusTest extends MockeryTestCase
         $this->sut = new EbsrDocumentStatus($this->viewHelperManager);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
     /**
      * Tests format
      *

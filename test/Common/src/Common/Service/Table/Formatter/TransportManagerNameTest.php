@@ -25,11 +25,6 @@ class TransportManagerNameTest extends MockeryTestCase
         $this->sut = new TransportManagerName($this->urlHelper, $this->translator);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
     public function testFormatNoLvaLocation()
     {
         $data = [

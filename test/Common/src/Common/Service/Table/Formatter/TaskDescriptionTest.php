@@ -28,10 +28,6 @@ class TaskDescriptionTest extends MockeryTestCase
         $this->sut = new TaskDescription($this->router, $this->request, $this->urlHelper);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
     /**
      * @dataProvider dpTestFormat
      */

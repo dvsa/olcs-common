@@ -29,10 +29,6 @@ class BusRegNumberLinkTest extends MockeryTestCase
         $this->sut = new BusRegNumberLink($this->translator, $this->viewHelperManager, $this->urlHelper);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
     /**
      * Tests the formatting for the different possible input array formats
      *

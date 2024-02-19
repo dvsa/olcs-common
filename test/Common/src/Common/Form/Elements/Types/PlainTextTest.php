@@ -8,8 +8,9 @@ use Common\Form\View\Helper\FormElement;
 use Common\Form\View\Helper\FormPlainText;
 use Mockery;
 use Laminas\View\Renderer\PhpRenderer;
+use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
-class PlainTextTest extends \PHPUnit\Framework\TestCase
+class PlainTextTest extends TestCase
 {
     public const INITIAL_TEXT_PAYLOAD = 'TEST';
     public const UPDATED_TEXT_PAYLOAD = 'TEST 2';

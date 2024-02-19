@@ -23,11 +23,6 @@ class EventHistoryUserTest extends MockeryTestCase
         $this->sut = new EventHistoryUser($this->translator);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * Test the format method
      *

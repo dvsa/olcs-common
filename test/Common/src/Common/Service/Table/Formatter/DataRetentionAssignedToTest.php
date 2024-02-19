@@ -22,10 +22,6 @@ class DataRetentionAssignedToTest extends MockeryTestCase
         $this->sut = new DataRetentionAssignedTo($this->viewHelperManager);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
     /**
      * Tests empty string returned if there's no person information
      */

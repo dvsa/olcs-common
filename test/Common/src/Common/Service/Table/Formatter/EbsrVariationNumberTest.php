@@ -26,11 +26,6 @@ class EbsrVariationNumberTest extends MockeryTestCase
         $this->sut = new EbsrVariationNumber($this->viewHelperManager, $this->translator);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * Tests empty string returned if there's no variation number set
      */

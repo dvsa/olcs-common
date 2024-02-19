@@ -21,11 +21,6 @@ class EbsrDocumentLinkTest extends MockeryTestCase
         $this->sut = new EbsrDocumentLink($this->urlHelper);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * Tests format
      *

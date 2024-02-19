@@ -21,11 +21,6 @@ class DataRetentionRuleLinkTest extends TestCase
         $this->sut = new DataRetentionRuleLink($this->urlHelper);
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
     public function testFormat()
     {
         $data = [

@@ -26,11 +26,6 @@ class RefDataStatusTest extends MockeryTestCase
         $this->sut = new RefDataStatus($this->viewHelperManager, new RefData($this->translator));
     }
 
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * tests formatting of ref data statuses
      */
