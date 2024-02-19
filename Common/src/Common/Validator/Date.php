@@ -17,8 +17,8 @@ use Laminas\Validator\Exception;
  */
 class Date extends AbstractValidator
 {
-    const DATE_ERR_CONTAINS_STRING = 'DATE_ERR_CONTAINS_STRING';
-    const DATE_ERR_YEAR_LENGTH = 'DATE_ERR_YEAR_LENGTH';
+    public const DATE_ERR_CONTAINS_STRING = 'DATE_ERR_CONTAINS_STRING';
+    public const DATE_ERR_YEAR_LENGTH = 'DATE_ERR_YEAR_LENGTH';
 
     protected $messageTemplates = [
         self::DATE_ERR_CONTAINS_STRING => self::DATE_ERR_CONTAINS_STRING,
@@ -34,7 +34,7 @@ class Date extends AbstractValidator
         // If it's a Date Time Select We don't care about the time part, so just grab the date
         $date = explode(' ', $value)[0];
 
-        list($year, $month, $day) = explode('-', $date);
+        [$year, $month, $day] = explode('-', $date);
 
         $errors = [];
 

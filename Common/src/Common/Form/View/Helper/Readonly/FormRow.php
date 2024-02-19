@@ -26,10 +26,10 @@ class FormRow extends AbstractHelper
      * @var array
      */
     protected $classMap = [
-        'Laminas\Form\Element\Radio' => 'readonlyformselect',
-        'Laminas\Form\Element\Select' => 'readonlyformselect',
-        'Laminas\Form\Element\DateSelect' => 'readonlyformdateselect',
-        'Common\Form\Elements\Types\Table' => 'readonlyformtable',
+        \Laminas\Form\Element\Radio::class => 'readonlyformselect',
+        \Laminas\Form\Element\Select::class => 'readonlyformselect',
+        \Laminas\Form\Element\DateSelect::class => 'readonlyformdateselect',
+        \Common\Form\Elements\Types\Table::class => 'readonlyformtable',
     ];
 
     /**

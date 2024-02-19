@@ -11,9 +11,9 @@ use Interop\Container\ContainerInterface;
 
 class Language implements FactoryInterface
 {
-    const OPTION_EN = 'en';
+    public const OPTION_EN = 'en';
 
-    const OPTION_CY = 'cy';
+    public const OPTION_CY = 'cy';
 
     private $options = [
         self::OPTION_EN => 'English',

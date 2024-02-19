@@ -18,10 +18,10 @@ use Laminas\View\Helper\AbstractHelper;
  */
 class LinkNewWindow extends AbstractHelper
 {
-    const NEW_TAB_MESSAGE = 'link.opens-new-window';
-    const HIDDEN_NEW_TAB_SPAN = '<span class="govuk-visually-hidden">%s</span>';
-    const LINK_FORMAT = '<a href="%s" class="%s" target="_blank">%s%s</a>';
-    const LINK_FORMAT_EXTERNAL = '<a href="%s" class="%s" target="_blank" rel="external noreferrer noopener">%s%s</a>';
+    public const NEW_TAB_MESSAGE = 'link.opens-new-window';
+    public const HIDDEN_NEW_TAB_SPAN = '<span class="govuk-visually-hidden">%s</span>';
+    public const LINK_FORMAT = '<a href="%s" class="%s" target="_blank">%s%s</a>';
+    public const LINK_FORMAT_EXTERNAL = '<a href="%s" class="%s" target="_blank" rel="external noreferrer noopener">%s%s</a>';
 
     public function __invoke(
         string $url,

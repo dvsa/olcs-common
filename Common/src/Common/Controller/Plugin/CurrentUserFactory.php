@@ -13,6 +13,6 @@ final class CurrentUserFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): CurrentUser
     {
-        return new CurrentUser($container->get('LmcRbacMvc\Service\AuthorizationService'));
+        return new CurrentUser($container->get(\LmcRbacMvc\Service\AuthorizationService::class));
     }
 }

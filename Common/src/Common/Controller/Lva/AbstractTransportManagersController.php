@@ -357,7 +357,7 @@ abstract class AbstractTransportManagersController extends AbstractController
             if ($form->isValid()) {
                 $data = $form->getData();
 
-                $hasEmail = isset($data['data']['hasEmail']) ? $data['data']['hasEmail'] : null;
+                $hasEmail = $data['data']['hasEmail'] ?? null;
 
                 $command = Command\Tm\CreateNewUser::create(
                     [

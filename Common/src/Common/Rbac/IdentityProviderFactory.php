@@ -9,9 +9,9 @@ use LmcRbacMvc\Identity\IdentityProviderInterface;
 
 class IdentityProviderFactory implements FactoryInterface
 {
-    const MESSAGE_CONFIG_MISSING = 'Missing auth.identity_provider from config';
-    const MESSAGE_UNABLE_TO_CREATE = 'Unable to create requested identity provider';
-    const MESSAGE_DOES_NOT_IMPLEMENT = 'Requested Identity Provider does not implement: ' . IdentityProviderInterface::class;
+    public const MESSAGE_CONFIG_MISSING = 'Missing auth.identity_provider from config';
+    public const MESSAGE_UNABLE_TO_CREATE = 'Unable to create requested identity provider';
+    public const MESSAGE_DOES_NOT_IMPLEMENT = 'Requested Identity Provider does not implement: ' . IdentityProviderInterface::class;
 
     /**
      * @param ContainerInterface $container

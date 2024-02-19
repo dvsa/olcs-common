@@ -63,7 +63,7 @@ class ElasticSearch extends AbstractPlugin
      */
     public function __invoke($options = [])
     {
-        $containerName = isset($options['container_name']) ? $options['container_name'] : 'global_search';
+        $containerName = $options['container_name'] ?? 'global_search';
 
         if (isset($options['page_route'])) {
             $pageRoute = $options['page_route'];
@@ -273,7 +273,7 @@ class ElasticSearch extends AbstractPlugin
         }
 
         // added this line as a quick fix for broken UT
-        $incomingParameters['search'] = isset($incomingParameters['search']) ? $incomingParameters['search'] : '';
+        $incomingParameters['search'] ??= '';
 
         $this->setSearchTerm($incomingParameters['search']);
 

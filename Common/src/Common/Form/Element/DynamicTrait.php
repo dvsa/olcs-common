@@ -47,7 +47,7 @@ trait DynamicTrait
      *
      * @var string
      */
-    protected $serviceName = 'Common\Service\Data\RefData';
+    protected $serviceName = \Common\Service\Data\RefData::class;
 
     /**
      * Extra options to include in the dropdown

@@ -39,7 +39,7 @@ class LicenceTypeShort implements FormatterPluginManagerInterface
     {
         $ref = [];
 
-        $licence = isset($data['licence']) ? $data['licence'] : $data;
+        $licence = $data['licence'] ?? $data;
 
         if (
             isset($licence['goodsOrPsv']['id'])

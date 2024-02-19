@@ -46,7 +46,7 @@ class LicenceConditionsUndertakingsReviewService extends AbstractReviewService
      */
     public function getConfigFromData(array $data = [])
     {
-        list($licConds, $licUnds, $ocConds, $ocUnds) = $this->helper
+        [$licConds, $licUnds, $ocConds, $ocUnds] = $this->helper
             ->splitUpConditionsAndUndertakings($data, false);
 
         $subSections = array_merge(

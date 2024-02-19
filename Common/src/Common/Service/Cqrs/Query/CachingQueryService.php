@@ -22,15 +22,15 @@ class CachingQueryService implements QueryServiceInterface, \Laminas\Log\LoggerA
     use \Laminas\Log\LoggerAwareTrait;
     use RecoverHttpClientExceptionTrait;
 
-    const BACKEND_FAIL_MSG = 'Backend DB failure HTTP code: %s';
-    const CACHE_FAIL_MSG = 'Cache failure: %s';
-    const CACHE_LOCAL_SAVE_MSG = 'Storing in local cache: %s';
-    const CACHE_LOCAL_RETRIEVE_MSG = 'Fetching from local cache: %s';
-    const CACHE_PERSISTENT_SAVE_MSG = 'Storing in persistent cache with TTL of %u seconds: %s';
-    const CACHE_PERSISTENT_RETRIEVE_MSG = 'Fetching from persistent cache: %s';
-    const CACHE_ENCRYPTION_MODE_MSG = 'Using encryption mode: %s';
-    const CACHE_CUSTOM_CONFIG_MISSING_MSG = 'Custom cache config missing for: %s';
-    const MISSING_TTL_INTERFACE_TYPE = 'No TTL value found for this query';
+    public const BACKEND_FAIL_MSG = 'Backend DB failure HTTP code: %s';
+    public const CACHE_FAIL_MSG = 'Cache failure: %s';
+    public const CACHE_LOCAL_SAVE_MSG = 'Storing in local cache: %s';
+    public const CACHE_LOCAL_RETRIEVE_MSG = 'Fetching from local cache: %s';
+    public const CACHE_PERSISTENT_SAVE_MSG = 'Storing in persistent cache with TTL of %u seconds: %s';
+    public const CACHE_PERSISTENT_RETRIEVE_MSG = 'Fetching from persistent cache: %s';
+    public const CACHE_ENCRYPTION_MODE_MSG = 'Using encryption mode: %s';
+    public const CACHE_CUSTOM_CONFIG_MISSING_MSG = 'Custom cache config missing for: %s';
+    public const MISSING_TTL_INTERFACE_TYPE = 'No TTL value found for this query';
 
     /** @var QueryServiceInterface */
     private $queryService;

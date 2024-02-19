@@ -12,10 +12,10 @@ use Laminas\Form\Element\Button;
  */
 class ReadOnlyActions extends AbstractHelper
 {
-    const SECONDARY_CLASS = 'govuk-button govuk-button--secondary';
-    const WRAPPER = '<div class="govuk-button-group">%s</div>';
-    const LINK_WRAPPER = '<a href="%s" class="%s" %s>%s</a>';
-    const ATTRIBUTES = '%s="%s"';
+    public const SECONDARY_CLASS = 'govuk-button govuk-button--secondary';
+    public const WRAPPER = '<div class="govuk-button-group">%s</div>';
+    public const LINK_WRAPPER = '<a href="%s" class="%s" %s>%s</a>';
+    public const ATTRIBUTES = '%s="%s"';
 
     /**
      * Return an actions for the read only header
@@ -26,7 +26,7 @@ class ReadOnlyActions extends AbstractHelper
     {
         $markup = '';
         foreach ($actions as $action) {
-            $class = (isset($action['class']) ? $action['class'] : self::SECONDARY_CLASS);
+            $class = ($action['class'] ?? self::SECONDARY_CLASS);
             if (isset($action['url'])) {
                 $attributeString = ' ';
 

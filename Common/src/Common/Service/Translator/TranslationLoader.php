@@ -16,8 +16,8 @@ use Laminas\I18n\Translator\TextDomain;
  */
 class TranslationLoader implements RemoteLoaderInterface
 {
-    const ERR_UNABLE_TO_LOAD_REPLACEMENTS = 'Replacements could not be loaded: ';
-    const ERR_UNABLE_TO_LOAD = 'Translations could not be loaded: ';
+    public const ERR_UNABLE_TO_LOAD_REPLACEMENTS = 'Replacements could not be loaded: ';
+    public const ERR_UNABLE_TO_LOAD = 'Translations could not be loaded: ';
 
     /** @var CachingQueryService $queryService */
     private $queryService;

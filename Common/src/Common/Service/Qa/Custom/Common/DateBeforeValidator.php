@@ -10,7 +10,7 @@ use Laminas\Validator\AbstractValidator;
 
 class DateBeforeValidator extends AbstractValidator
 {
-    const ERR_DATE_NOT_BEFORE = 'date_not_before';
+    public const ERR_DATE_NOT_BEFORE = 'date_not_before';
 
     /** @var DateFormat */
     private $dateFormat;

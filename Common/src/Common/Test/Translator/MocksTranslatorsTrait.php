@@ -28,9 +28,7 @@ trait MocksTranslatorsTrait
     protected function setUpDefaultTranslator(): MockInterface
     {
         $instance = $this->setUpMockService(Translator::class);
-        $instance->shouldReceive('translate')->andReturnUsing(function ($key) {
-            return $key;
-        })->byDefault();
+        $instance->shouldReceive('translate')->andReturnUsing(fn($key) => $key)->byDefault();
         return $instance;
     }
 }

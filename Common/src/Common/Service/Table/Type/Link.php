@@ -28,7 +28,7 @@ class Link extends AbstractType
      */
     public function render($data, $column, $formattedContent = null)
     {
-        $params = isset($column['params']) ? $column['params'] : [];
+        $params = $column['params'] ?? [];
 
         // Not ideal, but we don't have it injected at the moment
         $sm = $this->getTable()->getServiceLocator();

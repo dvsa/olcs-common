@@ -16,11 +16,11 @@ use Common\RefData;
  */
 class OperatingCentre implements MapperInterface
 {
-    const VALUE_OPTION_AD_PLACED_NOW = 'adPlaced';
-    const VALUE_OPTION_AD_POST = 'adSendByPost';
-    const VALUE_OPTION_AD_UPLOAD_LATER = 'adPlacedLater';
-    const LOC_INTERNAL = 'internal';
-    const LOC_EXTERNAL = 'external';
+    public const VALUE_OPTION_AD_PLACED_NOW = 'adPlaced';
+    public const VALUE_OPTION_AD_POST = 'adSendByPost';
+    public const VALUE_OPTION_AD_UPLOAD_LATER = 'adPlacedLater';
+    public const LOC_INTERNAL = 'internal';
+    public const LOC_EXTERNAL = 'external';
 
     /**
      * Map from result
@@ -74,7 +74,7 @@ class OperatingCentre implements MapperInterface
 
         $mappedData = [
             'version' => $data['version'],
-            'address' => isset($data['address']) ? $data['address'] : null,
+            'address' => $data['address'] ?? null,
             'noOfVehiclesRequired' => null,
             'noOfTrailersRequired' => null,
             'permission' => null,

@@ -109,7 +109,7 @@ class ResponseHelper
             throw new \Exception('Invalid response body, expected json: ' . $body);
         }
 
-        $this->responseData = (isset($data['Response']) ? $data['Response'] : $data);
+        $this->responseData = ($data['Response'] ?? $data);
     }
 
     public function checkForInternalServerError($body)
@@ -147,7 +147,7 @@ class ResponseHelper
         switch ($this->method) {
             case 'GET':
                 if ($this->response->getStatusCode() === Response::STATUS_CODE_200) {
-                    return isset($this->responseData['Data']) ? $this->responseData['Data'] : $this->responseData;
+                    return $this->responseData['Data'] ?? $this->responseData;
                 }
 
                 return false;

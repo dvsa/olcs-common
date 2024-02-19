@@ -7,9 +7,9 @@ use Laminas\View\Helper\AbstractHelper;
 
 class Panel extends AbstractHelper
 {
-    const TYPE_SUCCESS = 'success';
+    public const TYPE_SUCCESS = 'success';
 
-    const TYPE_CSS_CLASS_MAP = [
+    public const TYPE_CSS_CLASS_MAP = [
         'success' => 'govuk-panel--confirmation'
     ];
 

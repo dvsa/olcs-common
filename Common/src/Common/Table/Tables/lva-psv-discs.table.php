@@ -36,9 +36,7 @@ return [
         ],
         'actionFormat' => Common\Service\Table\TableBuilder::ACTION_FORMAT_BUTTONS,
         'collapseAt' => 1,
-        'row-disabled-callback' => function ($row) {
-            return $row['ceasedDate'] !== null;
-        }
+        'row-disabled-callback' => fn($row) => $row['ceasedDate'] !== null
     ],
     'columns' => [
         [
@@ -65,12 +63,8 @@ return [
             'title' => 'markup-table-th-remove-replace', //this is a view partial from olcs-common
             'type' => 'ActionLinks',
             'ariaDescription' => 'discNo',
-            'isRemoveVisible' => function ($data) {
-                return empty($data['ceasedDate']);
-            },
-            'isReplaceVisible' => function ($data) {
-                return empty($data['ceasedDate']);
-            },
+            'isRemoveVisible' => fn($data) => empty($data['ceasedDate']),
+            'isReplaceVisible' => fn($data) => empty($data['ceasedDate']),
             'deleteInputName' => 'table[action][void][%d]',
             'replaceInputName' => 'table[action][replace][%d]'
         ],

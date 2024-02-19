@@ -37,13 +37,13 @@ class Textarea extends LaminasElement implements InputProviderInterface
             'continue_if_empty' => $this->continueIfEmpty,
             'allow_empty' => $this->allowEmpty,
             'filters' => [
-                ['name' => 'Laminas\Filter\StringTrim']
+                ['name' => \Laminas\Filter\StringTrim::class]
             ],
         ];
 
         if (!empty($this->max)) {
             $specification['validators'][] = [
-                'name' => 'Laminas\Validator\StringLength',
+                'name' => \Laminas\Validator\StringLength::class,
                 'options' => ['min' => 5, 'max' => $this->max]
             ];
         }

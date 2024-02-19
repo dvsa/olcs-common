@@ -7,7 +7,7 @@ namespace Common\Validator;
  */
 class DateInFuture extends \Laminas\Validator\AbstractValidator
 {
-    const NOT_IN_FUTURE = 'notInFuture';
+    public const NOT_IN_FUTURE = 'notInFuture';
 
     /**
      * Error messages

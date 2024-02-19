@@ -20,8 +20,8 @@ use Laminas\View\HelperPluginManager;
  */
 class UrlHelperService
 {
-    const EXTERNAL_HOST = 'selfserve';
-    const INTERNAL_HOST = 'internal';
+    public const EXTERNAL_HOST = 'selfserve';
+    public const INTERNAL_HOST = 'internal';
 
     /** @var HelperPluginManager */
     protected $helperPluginManager;

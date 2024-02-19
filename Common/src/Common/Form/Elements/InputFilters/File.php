@@ -17,9 +17,9 @@ use Laminas\Validator\File\FilesSize;
  */
 class File extends LaminasFile
 {
-    const SIZE_KB = 1024;
+    public const SIZE_KB = 1024;
 
-    const SIZE_MB = 1048576;
+    public const SIZE_MB = 1048576;
 
     /**
      * Get the max file size

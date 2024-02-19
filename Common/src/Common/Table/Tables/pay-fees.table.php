@@ -19,9 +19,7 @@ return [
         ],
         [
             'title' => 'pay-fees.reference',
-            'formatter' => function ($row, $col) {
-                return $row['licence']['licNo'];
-            },
+            'formatter' => fn($row, $col) => $row['licence']['licNo'],
         ],
         [
             'title' => 'pay-fees.amountt',

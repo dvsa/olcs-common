@@ -29,12 +29,12 @@ class Email extends LaminasElement implements InputProviderInterface
             'name' => $this->getName(),
             'required' => false,
             'filters' => [
-                ['name' => 'Laminas\Filter\StringTrim'],
+                ['name' => \Laminas\Filter\StringTrim::class],
             ],
             'validators' => [
                 // @NOTE don't know if this is still used but I'll update it anyway
-                ['name' => 'Dvsa\Olcs\Transfer\Validators\EmailAddress'],
-                ['name' => 'Laminas\Validator\StringLength', 'options'=> ['min' => 5, 'max' => 255]],
+                ['name' => \Dvsa\Olcs\Transfer\Validators\EmailAddress::class],
+                ['name' => \Laminas\Validator\StringLength::class, 'options'=> ['min' => 5, 'max' => 255]],
             ]
         ];
 

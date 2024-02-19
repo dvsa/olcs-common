@@ -46,9 +46,7 @@ abstract class AbstractSection
     protected function sortByCreated(array $items): array
     {
         if (count($items) > 1) {
-            usort($items, function ($a, $b) {
-                return strtotime($b['createdOn']) - strtotime($a['createdOn']);
-            });
+            usort($items, fn($a, $b) => strtotime($b['createdOn']) - strtotime($a['createdOn']));
         }
         return $items;
     }

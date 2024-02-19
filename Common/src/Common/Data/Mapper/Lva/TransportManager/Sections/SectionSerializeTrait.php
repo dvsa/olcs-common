@@ -17,9 +17,7 @@ trait SectionSerializeTrait
         $templatePrefix = $this->getTranslationTemplate();
 
         $properties = array_combine(
-            array_map(function ($k) use ($templatePrefix) {
-                return $templatePrefix . $k;
-            },
+            array_map(fn($k) => $templatePrefix . $k,
                 array_keys(get_object_vars($this))),
             get_object_vars($this)
         );

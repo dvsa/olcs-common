@@ -90,7 +90,7 @@ class FinancialEvidence extends AbstractLvaFormService
             'context_values' => ['1'],
             'validators' => [
                 [
-                    'name' => '\Common\Validator\FileUploadCount',
+                    'name' => \Common\Validator\FileUploadCount::class,
                     'options' => [
                         'min' => 1,
                         'message' => 'lva-financial-evidence-upload.required',

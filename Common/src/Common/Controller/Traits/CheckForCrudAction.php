@@ -90,11 +90,7 @@ trait CheckForCrudAction
             return $post['table']['action'];
         }
 
-        if (isset($post['action'])) {
-            return $post['action'];
-        }
-
-        return null;
+        return $post['action'] ?? null;
     }
 
     /**

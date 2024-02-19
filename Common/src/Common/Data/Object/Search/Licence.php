@@ -98,9 +98,7 @@ class Licence extends InternalSearchAbstract
             [
                 'title' => 'Licence number',
                 'name' => 'licNo',
-                'formatter' => function ($data) {
-                    return '<a class="govuk-link" href="/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>';
-                }
+                'formatter' => fn($data) => '<a class="govuk-link" href="/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>'
             ],
             ['title' => 'Licence status', 'name' => 'licStatusDesc'],
             [
@@ -111,9 +109,7 @@ class Licence extends InternalSearchAbstract
             [
                 'title' => 'Trading name',
                 'name' => 'licenceTradingNames',
-                'formatter' => function ($data) {
-                    return str_replace('|', ', <br />', $data['licenceTradingNames']);
-                }
+                'formatter' => fn($data) => str_replace('|', ', <br />', $data['licenceTradingNames'])
             ],
             ['title' => 'Entity type', 'name' => 'orgTypeDesc'],
             ['title' => 'Licence type', 'name' => 'licTypeDesc'],

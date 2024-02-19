@@ -25,12 +25,10 @@ class PsvVehicles implements MapperInterface
                 'version' => $data['version'],
                 // @NOTE: licences don't have this flag, but we haven't defined their behaviour
                 // on PSV pages yet. As such, this just prevents a PHP error
-                'hasEnteredReg' => isset($data['hasEnteredReg']) ? $data['hasEnteredReg'] : 'Y'
+                'hasEnteredReg' => $data['hasEnteredReg'] ?? 'Y'
             ],
             'shareInfo' => [
-                'shareInfo' => isset($data['organisation']['confirmShareVehicleInfo'])
-                    ? $data['organisation']['confirmShareVehicleInfo']
-                    : null
+                'shareInfo' => $data['organisation']['confirmShareVehicleInfo'] ?? null
             ]
         ];
     }

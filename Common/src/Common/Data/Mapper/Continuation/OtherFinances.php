@@ -21,10 +21,10 @@ class OtherFinances implements MapperInterface
         return [
             'version' => $data['version'],
             'finances' => [
-                'yesNo' => isset($data['hasOtherFinances']) ? $data['hasOtherFinances'] : '',
+                'yesNo' => $data['hasOtherFinances'] ?? '',
                 'yesContent' => [
-                    'amount' => isset($data['otherFinancesAmount']) ? $data['otherFinancesAmount'] : '',
-                    'detail' => isset($data['otherFinancesDetails']) ? $data['otherFinancesDetails'] : '',
+                    'amount' => $data['otherFinancesAmount'] ?? '',
+                    'detail' => $data['otherFinancesDetails'] ?? '',
                 ]
             ]
         ];

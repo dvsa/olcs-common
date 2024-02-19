@@ -37,16 +37,14 @@ return [
                 ]
             ]
         ],
-        'row-disabled-callback' => function ($row) {
-            return in_array(
-                $row['status']['id'],
-                [
-                    Common\RefData::COMMUNITY_LICENCE_STATUS_EXPIRED,
-                    Common\RefData::COMMUNITY_LICENCE_STATUS_VOID,
-                    Common\RefData::COMMUNITY_LICENCE_STATUS_RETURNDED
-                ]
-            );
-        },
+        'row-disabled-callback' => fn($row) => in_array(
+            $row['status']['id'],
+            [
+                Common\RefData::COMMUNITY_LICENCE_STATUS_EXPIRED,
+                Common\RefData::COMMUNITY_LICENCE_STATUS_VOID,
+                Common\RefData::COMMUNITY_LICENCE_STATUS_RETURNDED
+            ]
+        ),
         'actionFormat' => Common\Service\Table\TableBuilder::ACTION_FORMAT_BUTTONS,
     ],
     'columns' => [

@@ -6,7 +6,7 @@ use Common\Form\QaForm;
 
 class StandardAndCabotageSubmittedAnswerGenerator
 {
-    const PERMITTED_VALUES = [
+    public const PERMITTED_VALUES = [
         StandardAndCabotageFieldsetPopulator::ANSWER_CABOTAGE_ONLY,
         StandardAndCabotageFieldsetPopulator::ANSWER_STANDARD_AND_CABOTAGE,
         StandardAndCabotageFieldsetPopulator::ANSWER_STANDARD_ONLY,

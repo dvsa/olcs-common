@@ -24,7 +24,7 @@ class Action extends AbstractType
      */
     public function render($data, $column, $formattedContent = null)
     {
-        $class = isset($column['class']) ? $column['class'] : '';
+        $class = $column['class'] ?? '';
 
         if ($formattedContent !== null) {
             $value = $formattedContent;
@@ -45,7 +45,7 @@ class Action extends AbstractType
 
         $name .= '[' . $column['action'] . '][' . $data['id'] . ']';
 
-        $attributes = isset($column['action-attributes']) ? $column['action-attributes'] : [];
+        $attributes = $column['action-attributes'] ?? [];
 
         if (
             $this->isInternalReadOnly()

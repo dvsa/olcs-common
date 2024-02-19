@@ -50,9 +50,7 @@ return [
         ],
         [
             'title' => 'markup-table-th-remove', //this is a view partial from olcs-common
-            'ariaDescription' => function ($row) {
-                return $row['forename'] . ' ' . $row['familyName'];
-            },
+            'ariaDescription' => fn($row) => $row['forename'] . ' ' . $row['familyName'],
             'type' => 'ActionLinks',
             'name' => 'actionLinks'
         ],

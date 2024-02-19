@@ -124,7 +124,7 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
         }
 
         $hint = $element->getOption('hint');
-        $hintClass = $element->getOption('hintClass') ? $element->getOption('hintClass') : self::$hintClass;
+        $hintClass = $element->getOption('hintClass') ?: self::$hintClass;
         if (!empty($hint)) {
             $view = $this->getView();
             $hint = sprintf(self::$hintFormat, $hintClass, $view->translate($hint));

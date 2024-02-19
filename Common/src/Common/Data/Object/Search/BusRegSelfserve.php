@@ -84,9 +84,7 @@ class BusRegSelfserve extends InternalSearchAbstract
             [
                 'title' => 'Operator name',
                 'name' => 'orgName',
-                'formatter' => function ($data) {
-                    return Escape::html($data['orgName']);
-                },
+                'formatter' => fn($data) => Escape::html($data['orgName']),
             ],
             ['title' => 'Service number', 'name' => 'serviceNo'],
             ['title' => 'Start point', 'name' => 'startPoint'],

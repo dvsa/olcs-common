@@ -26,7 +26,7 @@ class DecompressToTmpDelegatorFactory implements DelegatorFactoryInterface
         $service = $callback();
         $service->setDecompressFilter($filter);
         $service->setTempRootDir($tmpRoot);
-        $service->setFileSystem($container->get('Common\Filesystem\Filesystem'));
+        $service->setFileSystem($container->get(\Common\Filesystem\Filesystem::class));
 
         return $service;
     }

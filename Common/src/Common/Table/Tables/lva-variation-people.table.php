@@ -18,9 +18,7 @@ return [
                 'add' => ['label' => 'Add person'],
             ]
         ],
-        'row-disabled-callback' => function ($row) {
-            return in_array($row['action'], ['D', 'C'], true);
-        }
+        'row-disabled-callback' => fn($row) => in_array($row['action'], ['D', 'C'], true)
     ],
     'columns' => [
         [

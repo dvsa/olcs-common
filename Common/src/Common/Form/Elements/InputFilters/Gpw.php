@@ -38,8 +38,8 @@ class Gpw extends LaminasElement implements InputProviderInterface
             'name' => $this->getName(),
             'required' => true,
             'validators' => [
-                ['name' => 'Laminas\Validator\Digits'],
-                ['name' => 'Laminas\Validator\GreaterThan', 'options' =>['min' => 0]],
+                ['name' => \Laminas\Validator\Digits::class],
+                ['name' => \Laminas\Validator\GreaterThan::class, 'options' =>['min' => 0]],
             ]
         ];
 

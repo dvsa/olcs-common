@@ -186,7 +186,7 @@ abstract class AbstractPeopleController extends AbstractController
         ];
 
         if ($this->location === self::LOC_INTERNAL && $personData !== false) {
-            $personId = (isset($personData['person']['id'])) ? $personData['person']['id'] : null;
+            $personId = $personData['person']['id'] ?? null;
 
             $params['disqualifyUrl'] = $this->url()->fromRoute(
                 'operator/disqualify_person',
@@ -412,7 +412,7 @@ abstract class AbstractPeopleController extends AbstractController
         }
 
         $personData = $this->lvaAdapter->getFirstPersonData();
-        $personId = (isset($personData['person']['id'])) ? $personData['person']['id'] : null;
+        $personId = $personData['person']['id'] ?? null;
         // if not internal OR no  person OR already disqualified then hide the disqualify button
 
         //  allow for internal user do not specify DoB
@@ -543,9 +543,7 @@ abstract class AbstractPeopleController extends AbstractController
     {
         return array_filter(
             $data['data'],
-            function ($v) {
-                return $v !== null;
-            }
+            fn($v) => $v !== null
         );
     }
 

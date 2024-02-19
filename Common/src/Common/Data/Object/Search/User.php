@@ -106,17 +106,13 @@ class User extends InternalSearchAbstract
          return [
             [
                 'title' => 'Username',
-                'formatter' => function ($data) {
-                    return '<a class="govuk-link" href="/admin/user-management/users/edit/' . $data['userId']
-                     . '">' . $data['loginId'] . '</a>';
-                }
+                'formatter' => fn($data) => '<a class="govuk-link" href="/admin/user-management/users/edit/' . $data['userId']
+                 . '">' . $data['loginId'] . '</a>'
             ],
             [
                 'title' => 'Name',
-                'formatter' => function ($data) {
-                    return $data['forename'] . ' ' .
-                    $data['familyName'];
-                }
+                'formatter' => fn($data) => $data['forename'] . ' ' .
+                $data['familyName']
             ],
             [
                 'title' => 'Email address',

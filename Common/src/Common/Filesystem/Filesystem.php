@@ -16,7 +16,7 @@ use Symfony\Component\Lock\Store\FlockStore;
  */
 class Filesystem extends BaseFileSystem
 {
-    const MAX_LOCK_ATTEMPTS = 3;
+    public const MAX_LOCK_ATTEMPTS = 3;
 
     /**
      * @param string $path

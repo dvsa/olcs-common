@@ -292,7 +292,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
      */
     public function getFirstPersonData()
     {
-        return (isset($this->getPeople()[0])) ? $this->getPeople()[0] : false;
+        return $this->getPeople()[0] ?? false;
     }
 
     /**
@@ -670,10 +670,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
             RefData::ORG_TYPE_OTHER => 'lva.section.title.add_person',
             RefData::ORG_TYPE_IRFO => 'lva.section.title.add_person'
         ];
-        if (isset($type[$this->getOrganisationType()])) {
-            return $type[$this->getOrganisationType()];
-        }
-        return null;
+        return $type[$this->getOrganisationType()] ?? null;
     }
 
     /**

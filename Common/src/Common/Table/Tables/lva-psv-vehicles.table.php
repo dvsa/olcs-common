@@ -32,9 +32,7 @@ return [
                 ]
             ]
         ],
-        'row-disabled-callback' => function ($row) {
-            return $row['removalDate'] !== null;
-        },
+        'row-disabled-callback' => fn($row) => $row['removalDate'] !== null,
         'paginate' => [
             'limit' => [
                 'options' => [10, 25, 50]
@@ -74,12 +72,8 @@ return [
         [
             'title' => 'markup-table-th-remove', //this is a view partial from olcs-common
             'type' => 'ActionLinks',
-            'ariaDescription' => function ($row) {
-                return $row['vehicle']['vrm'];
-            },
-            'isRemoveVisible' => function ($data) {
-                return empty($data['removalDate']);
-            },
+            'ariaDescription' => fn($row) => $row['vehicle']['vrm'],
+            'isRemoveVisible' => fn($data) => empty($data['removalDate']),
             'deleteInputName' => 'vehicles[action][delete][%d]'
         ],
         [

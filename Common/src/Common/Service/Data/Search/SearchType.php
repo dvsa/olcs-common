@@ -106,9 +106,7 @@ class SearchType implements ListDataInterface, FactoryInterface
         }
 
         if ($this->roleService->matchIdentityRoles([RefData::ROLE_INTERNAL_LIMITED_READ_ONLY])) {
-            $indexes = array_filter($indexes, function ($value, $key) {
-                return !($value instanceof User);
-            }, ARRAY_FILTER_USE_BOTH);
+            $indexes = array_filter($indexes, fn($value, $key) => !($value instanceof User), ARRAY_FILTER_USE_BOTH);
         }
 
         return $indexes;

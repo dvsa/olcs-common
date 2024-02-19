@@ -136,27 +136,18 @@ class People extends InternalSearchAbstract
             [
                 'title' => 'DOB',
                 'name' => 'personBirthDate',
-                'formatter' => function ($row) {
-
-                    return empty($row['personBirthDate']) ?
-                        'Not known' : date(Module::$dateFormat, strtotime($row['personBirthDate']));
-                }
+                'formatter' => fn($row) => empty($row['personBirthDate']) ?
+                    'Not known' : date(Module::$dateFormat, strtotime($row['personBirthDate']))
             ],
             [
                 'title' => 'Date added',
                 'name' => 'dateAdded',
-                'formatter' => function ($row) {
-
-                    return empty($row['dateAdded']) ? 'NA' : date(Module::$dateFormat, strtotime($row['dateAdded']));
-                }
+                'formatter' => fn($row) => empty($row['dateAdded']) ? 'NA' : date(Module::$dateFormat, strtotime($row['dateAdded']))
             ],
             [
                 'title' => 'Date removed',
                 'name' => 'dateRemoved',
-                'formatter' => function ($row) {
-
-                    return empty($row['dateRemoved']) ? 'NA' : date(Module::$dateFormat, strtotime($row['dateRemoved']));
-                }
+                'formatter' => fn($row) => empty($row['dateRemoved']) ? 'NA' : date(Module::$dateFormat, strtotime($row['dateRemoved']))
             ],
             [
                 'title' => 'Disq?',

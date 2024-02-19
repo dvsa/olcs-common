@@ -18,7 +18,7 @@ class TableBuilderFactory implements FactoryInterface
     {
         return new TableBuilder(
             $container,
-            $container->get('LmcRbacMvc\Service\AuthorizationService'),
+            $container->get(\LmcRbacMvc\Service\AuthorizationService::class),
             $container->get('translator'),
             $container->get('Helper\Url'),
             $container->get('Config'),

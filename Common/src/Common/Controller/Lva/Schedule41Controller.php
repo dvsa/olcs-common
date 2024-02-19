@@ -205,7 +205,7 @@ class Schedule41Controller extends AbstractController
                 $command = Schedule41Approve::create(
                     [
                         'id' => $application['id'],
-                        'trueS4' => (isset($data['isTrueS4']) ? $data['isTrueS4'] : null)
+                        'trueS4' => ($data['isTrueS4'] ?? null)
                     ]
                 );
 
@@ -437,17 +437,15 @@ class Schedule41Controller extends AbstractController
     public function formatDataForTable($data)
     {
         $operatingCentres = array_map(
-            function ($operatingCentre) {
-                return [
-                    'id' => $operatingCentre['id'],
-                    'address' => $operatingCentre['operatingCentre']['address'],
-                    'noOfVehiclesRequired' => $operatingCentre['noOfVehiclesRequired'],
-                    'noOfTrailersRequired' => $operatingCentre['noOfTrailersRequired'],
-                    'operatingCentre' => $operatingCentre['operatingCentre'],
-                    'conditions' => $operatingCentre['operatingCentre']['conditionUndertakings'],
-                    'undertakings' => $operatingCentre['operatingCentre']['conditionUndertakings']
-                ];
-            },
+            fn($operatingCentre) => [
+                'id' => $operatingCentre['id'],
+                'address' => $operatingCentre['operatingCentre']['address'],
+                'noOfVehiclesRequired' => $operatingCentre['noOfVehiclesRequired'],
+                'noOfTrailersRequired' => $operatingCentre['noOfTrailersRequired'],
+                'operatingCentre' => $operatingCentre['operatingCentre'],
+                'conditions' => $operatingCentre['operatingCentre']['conditionUndertakings'],
+                'undertakings' => $operatingCentre['operatingCentre']['conditionUndertakings']
+            ],
             $data['operatingCentres']
         );
 

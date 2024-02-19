@@ -25,7 +25,7 @@ class CompanyNumber extends Fieldset
 
         $this->add(
             [
-                'type' => 'Common\Form\Elements\Types\PlainText',
+                'type' => \Common\Form\Elements\Types\PlainText::class,
                 'name' => 'description',
                 'attributes' => [
                     'data-container-class' => 'hint',
@@ -38,7 +38,7 @@ class CompanyNumber extends Fieldset
 
         $this->add(
             [
-                'type' => 'Common\Form\Elements\InputFilters\CompanyNumber',
+                'type' => \Common\Form\Elements\InputFilters\CompanyNumber::class,
                 'name' => 'company_number',
                 'attributes' => [
                     'data-container-class' => 'inline',

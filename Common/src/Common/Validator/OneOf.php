@@ -11,7 +11,7 @@ use Laminas\Validator\Exception;
  */
 class OneOf extends AbstractValidator
 {
-    const PROVIDE_ONE = 'provide_one';
+    public const PROVIDE_ONE = 'provide_one';
 
     /**
      * @var array
