@@ -3,7 +3,7 @@
 namespace CommonTest\View\Helper;
 
 use Common\View\Helper\PageTitle;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\I18n\View\Helper\Translate;

@@ -2,7 +2,7 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 class TranslateFactory
 {

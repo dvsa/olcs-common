@@ -7,7 +7,7 @@ use Common\Form\View\Helper\FormElement;
 use Common\Form\View\Helper\FormElementErrors;
 use Common\Form\View\Helper\FormPlainText;
 use CommonTest\Common\Util\DummyTranslator;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\I18n\View\Helper\Translate;
 use Laminas\View\Helper\Doctype;
 use Laminas\View\Helper\Url;

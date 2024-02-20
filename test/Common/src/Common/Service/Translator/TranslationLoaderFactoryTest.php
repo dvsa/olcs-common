@@ -5,7 +5,7 @@ namespace CommonTest\Service\Translator;
 use Common\Service\Cqrs\Query\CachingQueryService;
 use Common\Service\Translator\TranslationLoader;
 use Common\Service\Translator\TranslationLoaderFactory;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 

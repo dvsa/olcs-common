@@ -2,7 +2,7 @@
 
 namespace Common\Filter;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Filter\Decompress;
 use Laminas\ServiceManager\Factory\DelegatorFactoryInterface;
 

@@ -4,7 +4,7 @@ namespace CommonTest\Controller\Lva;
 
 use Common\Controller\Lva\AbstractControllerFactory;
 use CommonTest\Common\Controller\Lva\Stubs\ControllerWithFactoryStub;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Mvc\Controller\ControllerManager;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Mockery as m;

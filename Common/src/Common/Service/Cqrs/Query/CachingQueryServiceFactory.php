@@ -4,7 +4,7 @@ namespace Common\Service\Cqrs\Query;
 
 use Dvsa\Olcs\Transfer\Service\CacheEncryption as CacheEncryptionService;
 use Exception;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class CachingQueryServiceFactory implements FactoryInterface

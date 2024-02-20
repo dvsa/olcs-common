@@ -4,7 +4,7 @@ namespace Common\Data\Mapper\Lva;
 
 use Common\Service\Table\Formatter\FormatterPluginManager;
 use Common\Service\Table\Formatter\VehicleDiscNo;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class GoodsVehiclesVehicleFactory implements FactoryInterface

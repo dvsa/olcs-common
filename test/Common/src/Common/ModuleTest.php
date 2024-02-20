@@ -3,7 +3,7 @@
 namespace CommonTest;
 
 use Common\Module;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Mvc\Application;

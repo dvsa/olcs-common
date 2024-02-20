@@ -3,7 +3,7 @@
 namespace Common\Service\Cqrs\Query;
 
 use Dvsa\Olcs\Utils\Client\ClientAdapterLoggingWrapper;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Http\Client;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Laminas\Session\Container;

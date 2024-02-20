@@ -5,7 +5,7 @@ namespace CommonTest\Common\Controller\Lva\Adapters;
 use Common\Controller\Lva\AbstractController;
 use Common\Controller\Lva\Adapters\AbstractPeopleAdapter;
 use Common\Service\Table\TableBuilder;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Form\Form;

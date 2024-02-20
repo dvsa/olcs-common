@@ -2,7 +2,7 @@
 
 namespace Common\Service\Section\VehicleSafety\Vehicle\Formatter;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class VrmFactory implements FactoryInterface

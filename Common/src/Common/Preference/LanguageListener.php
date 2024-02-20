@@ -10,7 +10,7 @@ use Laminas\Http\Request as HttpRequest;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Laminas\I18n\Translator\Translator;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 class LanguageListener implements ListenerAggregateInterface, FactoryInterface
 {

@@ -10,7 +10,7 @@ use Laminas\Navigation\Navigation;
 use Laminas\Navigation\Service\AbstractNavigationFactory;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use LmcRbacMvc\Service\RoleService;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 class SearchType implements ListDataInterface, FactoryInterface
 {

@@ -3,7 +3,7 @@
 namespace CommonTest\Form\View\Helper;
 
 use Common\Form\View\Helper\FormDateSelect;
-use Interop\Container\Containerinterface;
+use Psr\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Form\Element\DateSelect;

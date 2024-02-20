@@ -5,7 +5,7 @@ namespace Common\Service\Table;
 use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Exception\MissingFormatterException;
 use Common\Service\Table\Formatter\FormatterPluginManager;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Mvc\I18n\Translator;
 use LmcRbacMvc\Service\AuthorizationService;
 

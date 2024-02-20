@@ -3,7 +3,7 @@
 namespace Common\Controller\Lva\Adapters;
 
 use Common\Controller\Lva\Interfaces\FinancialEvidenceAdapterInterface;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 /**
  * Abstract Financial Evidence Adapter

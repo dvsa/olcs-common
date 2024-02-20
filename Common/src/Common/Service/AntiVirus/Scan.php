@@ -5,7 +5,7 @@ namespace Common\Service\AntiVirus;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Olcs\Logging\Log\Logger;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 /**
  * AntiVirus Scan a file

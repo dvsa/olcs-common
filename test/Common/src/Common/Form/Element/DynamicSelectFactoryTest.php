@@ -5,7 +5,7 @@ namespace CommonTest\Form\Element;
 use Common\Form\Element\DynamicSelect;
 use Common\Form\Element\DynamicSelectFactory;
 use Common\Service\Data\PluginManager;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 

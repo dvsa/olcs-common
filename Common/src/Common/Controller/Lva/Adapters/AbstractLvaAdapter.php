@@ -3,7 +3,7 @@
 namespace Common\Controller\Lva\Adapters;
 
 use Common\Controller\Lva\Interfaces\LvaAdapterInterface;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Form\Form;
 
 abstract class AbstractLvaAdapter extends AbstractControllerAwareAdapter implements LvaAdapterInterface

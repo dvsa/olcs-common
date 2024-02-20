@@ -6,7 +6,7 @@ use Common\Service\Api\Resolver;
 use Common\Service\Data\RestClientAwareInitializer;
 use Common\Service\Data\Interfaces\RestClientAware;
 use Common\Util\RestClient;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 use Laminas\Mvc\I18n\Translator;

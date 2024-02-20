@@ -4,7 +4,7 @@ namespace Common\Controller\Plugin;
 
 use Common\Service\Data\Search\Search;
 use Common\Service\Data\Search\SearchType;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class ElasticSearchFactory implements FactoryInterface

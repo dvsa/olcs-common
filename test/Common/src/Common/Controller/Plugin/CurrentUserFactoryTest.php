@@ -4,7 +4,7 @@ namespace CommonTest\Controller\Plugin;
 
 use Common\Controller\Plugin\CurrentUserFactory;
 use Common\Controller\Plugin\CurrentUserInterface;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Mockery as m;
 use LmcRbacMvc\Service\AuthorizationService;
