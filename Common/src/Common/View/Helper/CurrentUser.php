@@ -179,6 +179,12 @@ class CurrentUser extends AbstractHelper
         return !empty($userData['numberOfVehicles']) ? $userData['numberOfVehicles'] : 0;
     }
 
+    public function getUnreadMessageCount()
+    {
+        $userData = $this->getUserData();
+        return !empty($userData['unreadMessagesCount']) ? $userData['unreadMessagesCount'] : 0;
+    }
+
     /**
      * Is current user internal
      *
