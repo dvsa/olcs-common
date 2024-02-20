@@ -3,7 +3,7 @@
 namespace Common\Service\Table;
 
 use Common\Service\Table\Formatter\FormatterPluginManager;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 /**

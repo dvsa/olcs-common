@@ -4,7 +4,7 @@ namespace CommonTest\Common\Rbac\Role;
 
 use Common\Rbac\Role\RoleProviderFactory;
 use Common\Service\Cqrs\Query\QuerySender;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Mockery as m;
 use LmcRbacMvc\Role\RoleProviderInterface;

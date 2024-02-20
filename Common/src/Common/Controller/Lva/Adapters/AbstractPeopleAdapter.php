@@ -9,7 +9,7 @@ use Common\RefData;
 use Common\Service\Cqrs\Command\CommandService;
 use Common\Service\Table\TableBuilder;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Form\Form;
 use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 

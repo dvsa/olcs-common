@@ -4,7 +4,7 @@ namespace Common\View\Factory\Helper;
 
 use Common\View\Helper\FlashMessenger;
 use Common\Service\Helper\FlashMessengerHelperService;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 /**

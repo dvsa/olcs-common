@@ -2,7 +2,7 @@
 
 namespace Common\Service\Cqrs;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Http\Header\Cookie;
 use Laminas\Http\Headers;
 use Laminas\Http\Header\Accept;

@@ -4,7 +4,7 @@ namespace Common\Controller\Lva\Adapters;
 
 use Common\Service\Script\ScriptFactory;
 use Common\Service\Table\TableBuilder;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 class VariationConditionsUndertakingsAdapter extends AbstractConditionsUndertakingsAdapter
 {

@@ -4,7 +4,7 @@ namespace Common\Controller\Lva\Factories\Controller;
 
 use Common\Controller\Lva\ReviewController;
 use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use LmcRbacMvc\Service\AuthorizationService;
 

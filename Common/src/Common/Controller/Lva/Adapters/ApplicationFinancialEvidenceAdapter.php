@@ -6,7 +6,7 @@ use Common\Service\Cqrs\Query\CachingQueryService;
 use Common\Service\Data\CategoryDataService as Category;
 use Dvsa\Olcs\Transfer\Query\Application\FinancialEvidence;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 /**
  * Application Financial Evidence Adapter

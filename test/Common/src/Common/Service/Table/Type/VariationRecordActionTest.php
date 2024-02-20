@@ -3,7 +3,7 @@
 namespace CommonTest\Service\Table\Type;
 
 use Common\Service\Table\Type\VariationRecordAction;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 

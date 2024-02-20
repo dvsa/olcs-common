@@ -3,7 +3,7 @@
 namespace CommonTest\Service\Script;
 
 use Common\Service\Script\ScriptFactory;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 class ScriptFactoryTest extends \PHPUnit\Framework\TestCase
 {

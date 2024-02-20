@@ -2,7 +2,7 @@
 
 namespace Common\Service\Qa\DataTransformer;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class DataTransformerProviderFactory implements FactoryInterface

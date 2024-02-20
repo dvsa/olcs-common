@@ -2,7 +2,7 @@
 
 namespace CommonTest\Common\Controller\Lva\Adapters;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Controller\Lva\Adapters\GenericBusinessTypeAdapter;

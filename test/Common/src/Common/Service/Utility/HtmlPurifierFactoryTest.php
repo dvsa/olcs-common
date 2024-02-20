@@ -4,7 +4,7 @@ namespace CommonTest\Service\Helper;
 
 use Common\Service\Utility\HtmlPurifierFactory;
 use HTMLPurifier;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 

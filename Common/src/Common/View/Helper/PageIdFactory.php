@@ -2,7 +2,7 @@
 
 namespace Common\View\Helper;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Router\Http\RouteMatch;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 

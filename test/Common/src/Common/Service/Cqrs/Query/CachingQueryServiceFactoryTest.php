@@ -7,7 +7,7 @@ use Common\Service\Cqrs\Query\CachingQueryServiceFactory;
 use Common\Service\Cqrs\Query\QueryService;
 use Dvsa\Olcs\Transfer\Service\CacheEncryption;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 

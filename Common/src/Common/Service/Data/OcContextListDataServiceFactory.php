@@ -2,7 +2,7 @@
 
 namespace Common\Service\Data;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class OcContextListDataServiceFactory implements FactoryInterface

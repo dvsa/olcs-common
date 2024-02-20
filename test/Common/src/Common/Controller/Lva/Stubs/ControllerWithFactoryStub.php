@@ -3,7 +3,7 @@
 namespace CommonTest\Common\Controller\Lva\Stubs;
 
 use Laminas\ServiceManager\Factory\FactoryInterface;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 class ControllerWithFactoryStub implements FactoryInterface
 {

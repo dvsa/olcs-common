@@ -4,7 +4,7 @@ namespace Common\Service\Review;
 
 use Common\Service\Table\Formatter\Address;
 use Common\Service\Table\Formatter\FormatterPluginManager;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class LicenceConditionsUndertakingsReviewServiceFactory implements FactoryInterface

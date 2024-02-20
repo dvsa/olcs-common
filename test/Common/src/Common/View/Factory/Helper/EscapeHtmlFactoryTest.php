@@ -5,7 +5,7 @@ namespace CommonTest\View\Factory\Helper;
 use Common\View\Factory\Helper\EscapeHtmlFactory;
 use Common\View\Helper\EscapeHtml;
 use HTMLPurifier;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 

@@ -2,7 +2,7 @@
 namespace Common\Service\User;
 
 use Common\Service\Cqrs\Command\CommandSender;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 final class LastLoginServiceFactory implements FactoryInterface

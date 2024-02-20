@@ -5,7 +5,7 @@ namespace CommonTest\Controller\Plugin;
 use Common\Controller\Plugin\FeaturesEnabledForMethod;
 use Common\Controller\Plugin\FeaturesEnabledForMethodFactory;
 use Common\Service\Cqrs\Query\QuerySender;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 

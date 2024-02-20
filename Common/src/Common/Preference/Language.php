@@ -7,7 +7,7 @@ use Laminas\Http\Response;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Laminas\Http\Header\Cookie;
 use Laminas\Http\Header\SetCookie;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 class Language implements FactoryInterface
 {

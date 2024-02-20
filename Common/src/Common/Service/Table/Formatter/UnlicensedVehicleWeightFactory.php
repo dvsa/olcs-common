@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Common\Service\Table\Formatter;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class UnlicensedVehicleWeightFactory implements FactoryInterface

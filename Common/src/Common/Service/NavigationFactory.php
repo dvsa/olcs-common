@@ -2,7 +2,7 @@
 
 namespace Common\Service;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Navigation\Navigation;
 use Laminas\Navigation\Service\ConstructedNavigationFactory;
 

@@ -13,7 +13,7 @@ use Common\Test\MocksServicesTrait;
 use Common\Test\Translator\MocksTranslatorsTrait;
 use Hamcrest\Matcher;
 use Hamcrest\Text\MatchesPattern;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Validator\ValidatorPluginManager;

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Common\Controller\Lva\Factories\Adapter;
 
 use Common\Controller\Lva\Adapters\GenericBusinessTypeAdapter;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class GenericBusinessTypeAdapterFactory implements FactoryInterface

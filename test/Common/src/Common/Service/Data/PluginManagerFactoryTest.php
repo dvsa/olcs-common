@@ -3,7 +3,7 @@
 namespace CommonTest\Common\Service\Data;
 
 use Common\Service\Data\PluginManager;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Data\PluginManagerFactory;
 use Mockery as m;

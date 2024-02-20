@@ -8,7 +8,7 @@ use LmcRbacMvc\Guard\GuardInterface;
 use LmcRbacMvc\Service\AuthorizationServiceInterface;
 use LmcRbacMvc\Guard\ProtectionPolicyTrait;
 use Laminas\EventManager\Event;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 class IsAllowedListener implements FactoryInterface
 {

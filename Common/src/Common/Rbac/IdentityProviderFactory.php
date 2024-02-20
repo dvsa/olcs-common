@@ -2,7 +2,7 @@
 
 namespace Common\Rbac;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use RuntimeException;
 use LmcRbacMvc\Identity\IdentityProviderInterface;

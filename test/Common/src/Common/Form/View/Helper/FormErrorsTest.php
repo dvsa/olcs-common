@@ -8,7 +8,7 @@ use Common\Form\Elements\Validators\Messages\FormElementMessageFormatterFactory;
 use Common\Form\Elements\Validators\Messages\GenericValidationMessage;
 use Common\Form\View\Helper\FormErrorsFactory;
 use Common\Test\MocksServicesTrait;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Form\Form;
 use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\Mvc\I18n\Translator;

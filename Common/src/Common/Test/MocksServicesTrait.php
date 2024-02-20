@@ -2,7 +2,7 @@
 
 namespace Common\Test;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\AbstractPluginManager;
 use Laminas\ServiceManager\ServiceManager;
 use Mockery\MockInterface;

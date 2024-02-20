@@ -4,7 +4,7 @@ namespace Common\FormService;
 
 use Laminas\Mvc\Service\AbstractPluginManagerFactory;
 use Laminas\ServiceManager\Config;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 /**
  * Form Service Manager Factory

@@ -5,7 +5,7 @@ namespace CommonTest\Common\Service\Cqrs\Query;
 use Common\Service\Cqrs\Query\CachingQueryService;
 use Common\Service\Cqrs\Query\QuerySender;
 use Dvsa\Olcs\Transfer\Query\QueryInterface;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
