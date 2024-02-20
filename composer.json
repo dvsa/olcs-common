@@ -21,9 +21,9 @@
         "laminas/laminas-stdlib": "^3.0",
         "laminas/laminas-validator": "^2.11",
         "laminas/laminas-view": "^2.11",
-        "olcs/olcs-logging": "^5.0.0",
-        "olcs/olcs-transfer": "^5.0.0",
-        "olcs/olcs-utils": "^5.0",
+        "olcs/olcs-logging": "^6.0",
+        "olcs/olcs-transfer": "^6.0",
+        "olcs/olcs-utils": "^6.0",
         "psr/container": "^1.1|^2"
     },
     "require-dev": {
