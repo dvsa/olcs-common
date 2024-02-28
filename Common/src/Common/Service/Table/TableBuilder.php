@@ -620,6 +620,11 @@ class TableBuilder
         return $this->columns;
     }
 
+    public function shouldHideTitle(): bool
+    {
+        return $this->settings['hide_title'] ?? false;
+    }
+
     /**
      * Get the data rows
      *
