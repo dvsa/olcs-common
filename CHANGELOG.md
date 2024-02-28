@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.1.0](https://github.com/dvsa/olcs-common/compare/v6.0.0...v6.1.0) (2024-02-28)
+
+
+### Features
+
+* Enable/Disable Messaging File Upload ([#49](https://github.com/dvsa/olcs-common/issues/49)) ([11481d2](https://github.com/dvsa/olcs-common/commit/11481d2b34052a81ad0ca601784a7e163f70939c))
+
 ## [6.0.0](https://github.com/dvsa/olcs-common/compare/v5.1.1...v6.0.0) (2024-02-20)
 
 
