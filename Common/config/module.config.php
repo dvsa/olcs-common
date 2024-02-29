@@ -576,6 +576,7 @@ return [
             'formrow' => \Common\Form\View\Helper\FormRow::class,
             'formcollection' => \Common\Form\View\Helper\FormCollection::class,
             'formCollection' => Common\Form\View\Helper\FormCollection::class,
+            'FormCollection' => Common\Form\View\Helper\FormCollection::class,
             'form_collection' => \Common\Form\View\Helper\FormCollection::class,
             'formRow' => \Common\Form\View\Helper\FormRow::class,
             'formelement' => \Common\Form\View\Helper\FormElement::class,
