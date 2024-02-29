@@ -8,22 +8,24 @@
 
 namespace Common\Service\Table\Formatter;
 
+use Common\Rbac\Traits\Permission;
 use Common\Service\Helper\UrlHelperService;
 use Common\Util\Escape;
+use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Internal licence permit reference formatter
  */
 class InternalLicencePermitReference implements FormatterPluginManagerInterface
 {
+    use Permission;
+
     private UrlHelperService $urlHelper;
 
-    /**
-     * @param UrlHelperService $urlHelper
-     */
-    public function __construct(UrlHelperService $urlHelper)
+    public function __construct(UrlHelperService $urlHelper, AuthorizationService $authService)
     {
         $this->urlHelper = $urlHelper;
+        $this->authService = $authService;
     }
 
     /**
@@ -37,6 +39,12 @@ class InternalLicencePermitReference implements FormatterPluginManagerInterface
      */
     public function format($row, $column = null)
     {
+        $applicationRef = Escape::html($row['applicationRef']);
+
+        if ($this->isInternalReadOnly()) {
+            return $applicationRef;
+        }
+
         $route = 'licence/irhp-application/application';
         $params = [
             'licence' => $row['licenceId'],
@@ -48,7 +56,7 @@ class InternalLicencePermitReference implements FormatterPluginManagerInterface
             '<a class="govuk-link" href="%s">%s</a>',
             [
                 $this->urlHelper->fromRoute($route, $params),
-                Escape::html($row['applicationRef'])
+                $applicationRef
             ]
         );
     }

@@ -176,13 +176,13 @@ class FormRowTest extends MockeryTestCase
             ],
             [
                 'element' => m::mock(Elements\InputFilters\ActionButton::class)
-                    ->shouldReceive('getOption')->with('keepForReadonly')->andReturn(true)
+                    ->shouldReceive('getOption')->with('keepForReadOnly')->andReturn(true)
                     ->getMock(),
                 'expected' => self::STANDARD_RENDER_RESULT,
             ],
             [
                 'element' => m::mock(Elements\InputFilters\ActionButton::class)
-                    ->shouldReceive('getOption')->with('keepForReadonly')->andReturn(false)
+                    ->shouldReceive('getOption')->with('keepForReadOnly')->andReturn(false)
                     ->getMock(),
                 'expected' => '',
             ],

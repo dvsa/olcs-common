@@ -6,6 +6,7 @@ use Common\Form\Elements\InputFilters\ActionLink;
 use Common\Form\Elements\InputFilters\Lva\BackToApplicationActionLink;
 use Common\Form\Elements\InputFilters\Lva\BackToLicenceActionLink;
 use Common\Form\Elements\InputFilters\Lva\BackToVariationActionLink;
+use Common\Rbac\Traits\Permission;
 use Common\RefData;
 use Common\Service\Helper\FormHelperService;
 use LmcRbacMvc\Service\AuthorizationService;
@@ -17,8 +18,8 @@ use LmcRbacMvc\Service\AuthorizationService;
  */
 abstract class AbstractLvaFormService
 {
+    use Permission;
     protected FormHelperService $formHelper;
-    protected AuthorizationService $authService;
 
     protected $backToLinkMap = [
         'application' => BackToApplicationActionLink::class,
@@ -72,18 +73,5 @@ abstract class AbstractLvaFormService
         }
 
         $formActions->get($action)->setAttribute('class', 'govuk-button');
-    }
-
-    /**
-     * Return true if the current internal user has read only permissions
-     *
-     * @return bool
-     */
-    protected function isInternalReadOnly()
-    {
-        return (
-            $this->authService->isGranted(RefData::PERMISSION_INTERNAL_USER)
-            && !$this->authService->isGranted(RefData::PERMISSION_INTERNAL_EDIT)
-        );
     }
 }

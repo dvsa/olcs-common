@@ -98,6 +98,7 @@ use Common\Service\Table\Formatter\MarkupTableThRemove;
 use Common\Service\Table\Formatter\Money;
 use Common\Service\Table\Formatter\Name;
 use Common\Service\Table\Formatter\NameActionAndStatus;
+use Common\Service\Table\Formatter\NameActionAndStatusFactory;
 use Common\Service\Table\Formatter\NoteUrl;
 use Common\Service\Table\Formatter\NullableNumber;
 use Common\Service\Table\Formatter\NumberStackValue;
@@ -289,7 +290,6 @@ return [
         IrhpPermitType::class => IrhpPermitType::class,
         LicenceTypeShort::class => LicenceTypeShort::class,
         Money::class => Money::class,
-        NameActionAndStatus::class => NameActionAndStatus::class,
         NullableNumber::class => NullableNumber::class,
         OcComplaints::class => OcComplaints::class,
         OcConditions::class => OcConditions::class,
@@ -362,6 +362,7 @@ return [
         LicencePermitReference::class => LicencePermitReferenceFactory::class,
         LicenceStatusSelfserve::class => LicenceStatusSelfserveFactory::class,
         Name::class => NameFactory::class,
+        NameActionAndStatus::class => NameActionAndStatusFactory::class,
         NumberStackValue::class => NumberStackValueFactory::class,
         NoteUrl::class => NoteUrlFactory::class,
         OrganisationLink::class => OrganisationLinkFactory::class,

@@ -3,6 +3,7 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\NameActionAndStatus;
+use LmcRbacMvc\Service\AuthorizationService;
 
 class NameActionAndStatusTest extends \PHPUnit\Framework\TestCase
 {
@@ -16,7 +17,8 @@ class NameActionAndStatusTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormat($data, $expected)
     {
-        $this->assertEquals($expected, (new NameActionAndStatus())->format($data));
+        $mockAuthService = m::mock(AuthorizationService::class);
+        $this->assertEquals($expected, (new NameActionAndStatus($mockAuthService))->format($data));
     }
 
     public function provider()

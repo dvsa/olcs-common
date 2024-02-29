@@ -6,6 +6,7 @@ use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Formatter\DisqualifyUrl;
 use Laminas\Http\Request;
 use Laminas\Router\Http\TreeRouteStack;
+use LmcRbacMvc\Service\AuthorizationService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
@@ -19,6 +20,7 @@ class DisqualifyUrlTest extends MockeryTestCase
     protected $urlHelper;
     protected $router;
     protected $request;
+    protected $authService;
     protected $mockRouteMatch;
     protected $sut;
 
@@ -27,8 +29,9 @@ class DisqualifyUrlTest extends MockeryTestCase
         $this->urlHelper = m::mock(UrlHelperService::class);
         $this->router = m::mock(TreeRouteStack::class);
         $this->request = m::mock(Request::class);
+        $this->authService = m::mock(AuthorizationService::class);
         $this->mockRouteMatch = m::mock(\Laminas\Router\RouteMatch::class);
-        $this->sut = new DisqualifyUrl($this->urlHelper, $this->router, $this->request);
+        $this->sut = new DisqualifyUrl($this->urlHelper, $this->router, $this->request, $this->authService);
 
         $this->request->shouldReceive('getQuery')
             ->andReturn(

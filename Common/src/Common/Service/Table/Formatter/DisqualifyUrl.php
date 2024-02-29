@@ -2,17 +2,17 @@
 
 namespace Common\Service\Table\Formatter;
 
+use Common\Rbac\Traits\Permission;
 use Common\Service\Helper\UrlHelperService;
+use Common\Util\Escape;
 use Laminas\Http\Request;
 use Laminas\Router\Http\TreeRouteStack;
+use LmcRbacMvc\Service\AuthorizationService;
 
-/**
- * Disqualify URL formatter
- *
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
- */
 class DisqualifyUrl implements FormatterPluginManagerInterface
 {
+    use Permission;
+
     private UrlHelperService $urlHelper;
     private TreeRouteStack $router;
     private Request $request;
@@ -22,12 +22,14 @@ class DisqualifyUrl implements FormatterPluginManagerInterface
      * @param TreeRouteStack   $router
      * @param Request          $request
      */
-    public function __construct(UrlHelperService $urlHelper, TreeRouteStack $router, Request $request)
+    public function __construct(UrlHelperService $urlHelper, TreeRouteStack $router, Request $request, AuthorizationService $authService)
     {
         $this->urlHelper = $urlHelper;
         $this->router = $router;
         $this->request = $request;
+        $this->authService = $authService;
     }
+
     /**
      * Format a disqualify URL
      *
@@ -38,6 +40,12 @@ class DisqualifyUrl implements FormatterPluginManagerInterface
      */
     public function format($row, $column = [])
     {
+        $status = Escape::html($row['disqualificationStatus']);
+
+        if ($this->isInternalReadOnly()) {
+            return $status;
+        }
+
         $routeMatch       = $this->router->match($this->request);
         $matchedRouteName = $routeMatch->getMatchedRouteName();
         $query            = $this->request->getQuery()->toArray();
@@ -45,6 +53,16 @@ class DisqualifyUrl implements FormatterPluginManagerInterface
 
         $url = '';
         switch ($matchedRouteName) {
+            case 'operator/people' :
+                $url = $this->urlHelper->fromRoute(
+                    'operator/disqualify_person',
+                    [
+                        'person' => $row['personId']
+                    ],
+                    ['query' => $query],
+                    true
+                );
+                break;
             case 'lva-variation/people':
                 $url = $this->urlHelper->fromRoute(
                     'disqualify-person/variation',
@@ -84,7 +102,7 @@ class DisqualifyUrl implements FormatterPluginManagerInterface
         return sprintf(
             '<a href="%s" class="govuk-link js-modal-ajax">%s</a>',
             $url,
-            $row['disqualificationStatus']
+            $status
         );
     }
 }

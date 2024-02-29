@@ -2,6 +2,7 @@
 
 namespace Common\Service\Table;
 
+use Common\Rbac\Traits\Permission;
 use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Exception\MissingFormatterException;
 use Common\Service\Table\Formatter\FormatterPluginManager;
@@ -19,6 +20,8 @@ use LmcRbacMvc\Service\AuthorizationService;
  */
 class TableBuilder
 {
+    use Permission;
+
     public const TYPE_DEFAULT = 1;
     public const TYPE_PAGINATE = 2;
     public const TYPE_CRUD = 3;
@@ -205,12 +208,6 @@ class TableBuilder
     private $isDisabled = false;
 
     private ContainerInterface $serviceLocator;
-
-    /**
-     * Authorisation service to allow columns/rows to be hidden depending on permission model
-     * @var AuthorizationService
-     */
-    private $authService;
 
     /**
      * @var Translator
@@ -2075,19 +2072,6 @@ class TableBuilder
         }
 
         $this->variables['dataAttributes'] = '';
-    }
-
-    /**
-     * Return true if the current internal user has read only permissions
-     *
-     * @return bool
-     */
-    protected function isInternalReadOnly()
-    {
-        return (
-            $this->authService->isGranted('internal-user')
-            && !$this->authService->isGranted('internal-edit')
-        );
     }
 
     /**

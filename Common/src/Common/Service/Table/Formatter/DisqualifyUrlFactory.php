@@ -2,6 +2,7 @@
 
 namespace Common\Service\Table\Formatter;
 
+use LmcRbacMvc\Service\AuthorizationService;
 use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
@@ -18,6 +19,7 @@ class DisqualifyUrlFactory implements FactoryInterface
         $urlHelper = $container->get('Helper\Url');
         $router = $container->get('Router');
         $request = $container->get('Request');
-        return new DisqualifyUrl($urlHelper, $router, $request);
+        $authService = $container->get(AuthorizationService::class);
+        return new DisqualifyUrl($urlHelper, $router, $request, $authService);
     }
 }

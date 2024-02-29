@@ -4,6 +4,7 @@ namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Helper\UrlHelperService as UrlHelper;
 use Common\Service\Table\Formatter\InternalLicencePermitReference;
+use LmcRbacMvc\Service\AuthorizationService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
@@ -13,12 +14,14 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class InternalLicencePermitReferenceTest extends MockeryTestCase
 {
     protected $urlHelper;
+    protected $authService;
     protected $sut;
 
     protected function setUp(): void
     {
         $this->urlHelper = m::mock(UrlHelper::class);
-        $this->sut = new InternalLicencePermitReference($this->urlHelper);
+        $this->authService = m::mock(AuthorizationService::class);
+        $this->sut = new InternalLicencePermitReference($this->urlHelper, $this->authService);
     }
 
     protected function tearDown(): void

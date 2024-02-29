@@ -65,7 +65,6 @@ class Action extends AbstractType
      */
     protected function isInternalReadOnly()
     {
-        $authService = $this->table->getAuthService();
-        return ($authService->isGranted('internal-user') && !$authService->isGranted('internal-edit'));
+        return $this->table->isInternalReadOnly();
     }
 }

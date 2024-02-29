@@ -24,6 +24,10 @@ class ApplicationTypeOfLicence extends AbstractTypeOfLicence
     }
     protected function alterForm(Form $form, $params = [])
     {
+        if ($this->isInternalReadOnly()) {
+            $this->disableLicenceType($form);
+        }
+
         parent::alterForm($form, $params);
 
         $this->formServiceLocator->get('lva-application')->alterForm($form);

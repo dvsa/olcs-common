@@ -2,7 +2,6 @@
 
 namespace Common\FormService\Form\Lva;
 
-use Common\FormService\FormServiceInterface;
 use Common\Service\Helper\FormHelperService;
 use LmcRbacMvc\Service\AuthorizationService;
 
@@ -14,7 +13,6 @@ use LmcRbacMvc\Service\AuthorizationService;
 class Application extends AbstractLvaFormService
 {
     protected FormHelperService $formHelper;
-    protected AuthorizationService $authService;
 
     public function __construct(FormHelperService $formHelper, AuthorizationService $authService)
     {
