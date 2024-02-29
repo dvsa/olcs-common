@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.1.1](https://github.com/dvsa/olcs-common/compare/v6.1.0...v6.1.1) (2024-02-29)
+
+
+### Bug Fixes
+
+* add `FormCollection` overwrite to service manager ([#53](https://github.com/dvsa/olcs-common/issues/53)) ([378c106](https://github.com/dvsa/olcs-common/commit/378c106e2d483fb7170f9b74de2784734c92f21b))
+* remove beta badge from phase banner ([#55](https://github.com/dvsa/olcs-common/issues/55)) ([e21adde](https://github.com/dvsa/olcs-common/commit/e21adde6789aa9f1303fecfa372dbd6eb21de5a4))
+
 ## [6.1.0](https://github.com/dvsa/olcs-common/compare/v6.0.0...v6.1.0) (2024-02-28)
 
 
