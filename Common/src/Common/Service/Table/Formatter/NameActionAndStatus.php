@@ -2,20 +2,18 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Common\Rbac\Traits\Permission;
+use Common\Rbac\Service\Permission;
 use Common\Util\Escape;
-use LmcRbacMvc\Service\AuthorizationService;
 
 class NameActionAndStatus implements FormatterPluginManagerInterface
 {
-   use Permission;
-
+    private Permission $permissionService;
     public const BUTTON_FORMAT = '<button data-prevent-double-click="true" class="action-button-link" role="link" '
     . 'data-module="govuk-button" type="submit" name="table[action][edit][%d]">%s</button>';
 
-    public function __construct(AuthorizationService $authService)
+    public function __construct(Permission $permissionService)
     {
-        $this->authService = $authService;
+        $this->permissionService = $permissionService;
     }
 
     /**
@@ -36,7 +34,7 @@ class NameActionAndStatus implements FormatterPluginManagerInterface
             $newMarker = ' <span class="overview__status green">New</span>';
         }
 
-        if ($this->isInternalReadOnly()) {
+        if ($this->permissionService->isInternalReadOnly()) {
             return $name . $newMarker;
         }
 

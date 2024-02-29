@@ -8,24 +8,22 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Common\Rbac\Traits\Permission;
+use Common\Rbac\Service\Permission;
 use Common\Service\Helper\UrlHelperService;
 use Common\Util\Escape;
-use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Internal licence permit reference formatter
  */
 class InternalLicencePermitReference implements FormatterPluginManagerInterface
 {
-    use Permission;
-
     private UrlHelperService $urlHelper;
+    private Permission $permissionService;
 
-    public function __construct(UrlHelperService $urlHelper, AuthorizationService $authService)
+    public function __construct(UrlHelperService $urlHelper, Permission $permissionService)
     {
         $this->urlHelper = $urlHelper;
-        $this->authService = $authService;
+        $this->permissionService = $permissionService;
     }
 
     /**
@@ -41,7 +39,7 @@ class InternalLicencePermitReference implements FormatterPluginManagerInterface
     {
         $applicationRef = Escape::html($row['applicationRef']);
 
-        if ($this->isInternalReadOnly()) {
+        if ($this->permissionService->isInternalReadOnly()) {
             return $applicationRef;
         }
 

@@ -2,32 +2,30 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Common\Rbac\Traits\Permission;
+use Common\Rbac\Service\Permission;
 use Common\Service\Helper\UrlHelperService;
 use Common\Util\Escape;
 use Laminas\Http\Request;
 use Laminas\Router\Http\TreeRouteStack;
-use LmcRbacMvc\Service\AuthorizationService;
 
 class DisqualifyUrl implements FormatterPluginManagerInterface
 {
-    use Permission;
-
     private UrlHelperService $urlHelper;
     private TreeRouteStack $router;
     private Request $request;
+    private Permission $permissionService;
 
     /**
      * @param UrlHelperService $urlHelper
      * @param TreeRouteStack   $router
      * @param Request          $request
      */
-    public function __construct(UrlHelperService $urlHelper, TreeRouteStack $router, Request $request, AuthorizationService $authService)
+    public function __construct(UrlHelperService $urlHelper, TreeRouteStack $router, Request $request, Permission $permissionService)
     {
         $this->urlHelper = $urlHelper;
         $this->router = $router;
         $this->request = $request;
-        $this->authService = $authService;
+        $this->permissionService = $permissionService;
     }
 
     /**
@@ -42,7 +40,7 @@ class DisqualifyUrl implements FormatterPluginManagerInterface
     {
         $status = Escape::html($row['disqualificationStatus']);
 
-        if ($this->isInternalReadOnly()) {
+        if ($this->permissionService->isInternalReadOnly()) {
             return $status;
         }
 

@@ -6,8 +6,6 @@ use Common\Form\Elements\InputFilters\ActionLink;
 use Common\Form\Elements\InputFilters\Lva\BackToApplicationActionLink;
 use Common\Form\Elements\InputFilters\Lva\BackToLicenceActionLink;
 use Common\Form\Elements\InputFilters\Lva\BackToVariationActionLink;
-use Common\Rbac\Traits\Permission;
-use Common\RefData;
 use Common\Service\Helper\FormHelperService;
 use LmcRbacMvc\Service\AuthorizationService;
 
@@ -18,8 +16,8 @@ use LmcRbacMvc\Service\AuthorizationService;
  */
 abstract class AbstractLvaFormService
 {
-    use Permission;
     protected FormHelperService $formHelper;
+    protected AuthorizationService $authService;
 
     protected $backToLinkMap = [
         'application' => BackToApplicationActionLink::class,

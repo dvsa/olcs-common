@@ -3,9 +3,9 @@
 namespace Common\FormService\Form\Lva\TypeOfLicence;
 
 use Common\FormService\FormServiceManager;
+use Common\Rbac\Service\Permission;
 use Common\Service\Helper\FormHelperService;
 use Laminas\Form\Form;
-use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Application Type Of Licence
@@ -13,18 +13,19 @@ use LmcRbacMvc\Service\AuthorizationService;
 class ApplicationTypeOfLicence extends AbstractTypeOfLicence
 {
     protected FormHelperService $formHelper;
-    protected AuthorizationService $authService;
+
+    protected Permission $permissionService;
     protected FormServiceManager $formServiceLocator;
 
-    public function __construct(FormHelperService $formHelper, AuthorizationService $authService, FormServiceManager $formServiceLocator)
+    public function __construct(FormHelperService $formHelper, Permission $permissionService, FormServiceManager $formServiceLocator)
     {
         $this->formHelper = $formHelper;
-        $this->authService = $authService;
+        $this->permissionService = $permissionService;
         $this->formServiceLocator = $formServiceLocator;
     }
     protected function alterForm(Form $form, $params = [])
     {
-        if ($this->isInternalReadOnly()) {
+        if ($this->permissionService->isInternalReadOnly()) {
             $this->disableLicenceType($form);
         }
 

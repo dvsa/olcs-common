@@ -63,7 +63,7 @@ class Action extends AbstractType
      *
      * @return bool
      */
-    protected function isInternalReadOnly()
+    protected function isInternalReadOnly(): bool
     {
         return $this->table->isInternalReadOnly();
     }

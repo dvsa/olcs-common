@@ -2,11 +2,6 @@
 
 namespace Common\Service\Table\Type;
 
-/**
- * Variation Record Action type
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class VariationRecordAction extends Action
 {
     /**
@@ -22,8 +17,7 @@ class VariationRecordAction extends Action
     {
         $prefix = null;
 
-        /** @var \Laminas\I18n\Translator\Translator $translator */
-        $translator = $this->getTable()->getServiceLocator()->get('translator');
+        $translator = $this->getTable()->getTranslator();
 
         if (isset($data['action'])) {
             switch ($data['action']) {

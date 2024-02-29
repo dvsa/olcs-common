@@ -146,7 +146,7 @@ abstract class AbstractTypeOfLicence extends AbstractLvaFormService
         $this->formHelper->lockElement($elmOperLoc, $message);
     }
 
-    public function disableLicenceType(Form $form)
+    public function disableLicenceType(Form $form): void
     {
         $this->formHelper->disableElement($form, 'type-of-licence->licence-type->licence-type');
     }

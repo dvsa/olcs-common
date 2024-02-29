@@ -4,7 +4,7 @@ namespace Common\Controller\Lva;
 
 use Common\Controller\Traits\GenericUpload;
 use Common\Exception\ResourceConflictException;
-use Common\Rbac\Traits\Permission;
+use Common\Rbac\Service\Permission;
 use Common\RefData;
 use Common\Service\Table\TableBuilder;
 use Common\Util;
@@ -39,7 +39,6 @@ abstract class AbstractController extends AbstractActionController
 {
     use Util\FlashMessengerTrait;
     use GenericUpload;
-    use Permission;
 
     public const LVA_LIC = 'licence';
     public const LVA_APP = 'application';
@@ -87,7 +86,12 @@ abstract class AbstractController extends AbstractActionController
     ];
 
     protected NiTextTranslation $niTextTranslationUtil;
+    protected AuthorizationService $authService;
 
+    /**
+     * @param NiTextTranslation $niTextTranslationUtil
+     * @param AuthorizationService $authService
+     */
     public function __construct(NiTextTranslation $niTextTranslationUtil, AuthorizationService $authService)
     {
         $this->niTextTranslationUtil = $niTextTranslationUtil;
@@ -378,8 +382,20 @@ abstract class AbstractController extends AbstractActionController
      *
      * @return bool
      */
-    protected function isExternal()
+    protected function isExternal(): bool
     {
         return $this->location === self::LOC_EXTERNAL;
+    }
+
+    /**
+     * Have left this in place for now as the number of controllers extending it made removal impractical
+     * @see Permission for the preferred way to access this logic via dependency injection
+     */
+    protected function isInternalReadOnly(): bool
+    {
+        return (
+            $this->authService->isGranted(RefData::PERMISSION_INTERNAL_USER)
+            && !$this->authService->isGranted(RefData::PERMISSION_INTERNAL_EDIT)
+        );
     }
 }

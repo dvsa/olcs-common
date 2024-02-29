@@ -2,8 +2,8 @@
 
 namespace Common\Service\Table\Formatter;
 
+use Common\Rbac\Service\Permission;
 use Laminas\ServiceManager\Factory\FactoryInterface;
-use LmcRbacMvc\Service\AuthorizationService;
 use Psr\Container\ContainerInterface;
 
 class InternalLicencePermitReferenceFactory implements FactoryInterface
@@ -17,7 +17,7 @@ class InternalLicencePermitReferenceFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): InternalLicencePermitReference
     {
         $urlHelper = $container->get('Helper\Url');
-        $authService = $container->get(AuthorizationService::class);
-        return new InternalLicencePermitReference($urlHelper, $authService);
+        $permissionService = $container->get(Permission::class);
+        return new InternalLicencePermitReference($urlHelper, $permissionService);
     }
 }
