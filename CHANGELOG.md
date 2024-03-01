@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.2.0](https://github.com/dvsa/olcs-common/compare/v6.1.1...v6.2.0) (2024-03-01)
+
+
+### Features
+
+* TableBuilder hide title ([#51](https://github.com/dvsa/olcs-common/issues/51)) ([c31bb1c](https://github.com/dvsa/olcs-common/commit/c31bb1c4cdba09326543dae6f8820e454b51ac4d))
+
 ## [6.1.1](https://github.com/dvsa/olcs-common/compare/v6.1.0...v6.1.1) (2024-02-29)
 
 
