@@ -45,26 +45,31 @@ class InternalConversationLink implements FormatterPluginManagerInterface
             case 'application':
                 $route = 'lva-application/conversation/view';
                 $params = [
-                    'application'  => $row['task']['application']['id'],
-                    'conversation' => $row['id'],
+                    'application' => $row['task']['application']['id'],
                 ];
                 break;
             case 'licence':
                 $route = 'licence/conversation/view';
                 $params = [
-                    'licence'      => $row['task']['licence']['id'],
-                    'conversation' => $row['id'],
+                    'licence' => $row['task']['licence']['id'],
                 ];
                 break;
             case 'case':
                 $route = 'case_conversation/view';
                 $params = [
-                    'licence'      => $row['task']['licence']['id'],
-                    'case'         => $this->route->getParam('case'),
-                    'conversation' => $row['id'],
+                    'licence' => $row['task']['licence']['id'],
+                    'case'    => $this->route->getParam('case'),
+                ];
+                break;
+            case 'irhp-application':
+                $route = 'licence/irhp-application-conversation/view';
+                $params = [
+                    'licence' => $row['task']['licence']['id'],
                 ];
                 break;
         }
+
+        $params['conversation'] = $row['id'];
 
         $statusCSS = '';
 
