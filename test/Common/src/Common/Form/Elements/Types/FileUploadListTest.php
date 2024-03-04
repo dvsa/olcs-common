@@ -17,50 +17,50 @@ class FileUploadListTest extends \PHPUnit\Framework\TestCase
      */
     public function testElement()
     {
-        $files = array(
-            array(
+        $files = [
+            [
                 'identifier' => 'hgafdjklhaldsf',
                 'filename' => 'someFile.png',
                 'description' => 'someFile',
                 'size' => 50,
                 'id' => 7,
                 'version' => 1
-            ),
-            array(
+            ],
+            [
                 'identifier' => 'hgafdjklhalsdgs',
                 'filename' => 'someOtherFile.png',
                 'description' => 'someOtherFile',
                 'size' => 5000,
                 'id' => 8,
                 'version' => 1
-            ),
-            array(
+            ],
+            [
                 'identifier' => 'hdsfgafdjklhalsdgs',
                 'filename' => 'anotherFile.png',
                 'description' => 'anotherFile',
                 'size' => 50000000,
                 'id' => 9,
                 'version' => 1
-            ),
-            array(
+            ],
+            [
                 'identifier' => 'hdsfgafdjklhalsdgs',
                 'filename' => 'document.pdf',
                 'description' => 'A document that cant be previewed',
                 'size' => 20000000,
                 'id' => 10,
                 'version' => 3
-            ),
-            array(
+            ],
+            [
                 'identifier' => 'bar',
                 'filename' => 'tiffimage.tiff',
                 'description' => 'A document that cant be previewed',
                 'size' => 20000000,
                 'id' => 11,
                 'version' => 3
-            )
-        );
+            ]
+        ];
 
-        $mockUrl = $this->createPartialMock(UrlHelperService::class, array('fromRoute'));
+        $mockUrl = $this->createPartialMock(UrlHelperService::class, ['fromRoute']);
         $mockUrl->expects($this->any())
             ->method('fromRoute')
             ->will($this->returnValue('url'));

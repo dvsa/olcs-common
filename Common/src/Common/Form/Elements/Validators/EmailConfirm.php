@@ -20,8 +20,8 @@ class EmailConfirm extends Identical
      * Error messages
      * @var array
      */
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         self::NOT_SAME      => 'error.form-validator.email-confirm.not-same',
         self::MISSING_TOKEN => 'error.form-validator.email-confirm.missing-token',
-    );
+    ];
 }

@@ -35,31 +35,31 @@ class DocumentSubcategoryTest extends \PHPUnit\Framework\TestCase
      */
     public function provider()
     {
-        return array(
-            array(
-                array(
+        return [
+            [
+                [
                     'documentSubCategoryName' => 'foo',
                     'isExternal' => false,
                     'ciId' => null
-                ),
+                ],
                 'foo'
-            ),
-            array(
-                array(
+            ],
+            [
+                [
                     'documentSubCategoryName' => 'foo',
                     'isExternal' => true,
                     'ciId' => null
-                ),
+                ],
                 'foo (selfserve)'
-            ),
-            array(
-                array(
+            ],
+            [
+                [
                     'documentSubCategoryName' => 'foo',
                     'isExternal' => true,
                     'ciId' => 123
-                ),
+                ],
                 'foo (selfserve) (emailed)'
-            )
-        );
+            ]
+        ];
     }
 }

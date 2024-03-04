@@ -21,9 +21,9 @@ class VehicleUndertakingsOperateSmallVehiclesAgreementValidator extends Abstract
      *
      * @var array
      */
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         'required' => 'You must agree'
-    );
+    ];
 
     /**
      * Custom validation for undertakings checkbox field

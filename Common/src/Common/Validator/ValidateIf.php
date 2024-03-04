@@ -14,9 +14,9 @@ class ValidateIf extends AbstractValidator implements ValidatorPluginManagerAwar
 {
     const NO_CONTEXT = 'no_context';
 
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         self::NO_CONTEXT         => 'Context field was not found in the input',
-    );
+    ];
 
     /**
      * @var string

@@ -137,7 +137,7 @@ abstract class AbstractTransportManagersController extends AbstractController
             $form->getInputFilter()->remove('table');
         }
 
-        $crudAction = $this->getCrudAction(array($data['table']));
+        $crudAction = $this->getCrudAction([$data['table']]);
         if ($crudAction !== null) {
             return $this->handleCrudAction($crudAction);
         }

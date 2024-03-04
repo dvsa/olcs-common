@@ -149,7 +149,7 @@ trait CommonApplicationControllerTrait
             return $this->redirect()
                 ->toRouteAjax(
                     'lva-' . $this->lva . '/' . $sections[$index + 1],
-                    array($this->getIdentifierIndex() => $this->getApplicationId())
+                    [$this->getIdentifierIndex() => $this->getApplicationId()]
                 );
         }
     }

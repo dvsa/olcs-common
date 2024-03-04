@@ -17,14 +17,14 @@ use Laminas\Form\Fieldset;
 class CompanyNumber extends Fieldset
 {
 
-    public function __construct($name = null, $options = array())
+    public function __construct($name = null, $options = [])
     {
         parent::__construct($name, $options);
 
         $this->setAttribute('class', 'lookup');
 
         $this->add(
-            array(
+            [
                 'type' => 'Common\Form\Elements\Types\PlainText',
                 'name' => 'description',
                 'attributes' => [
@@ -33,22 +33,22 @@ class CompanyNumber extends Fieldset
                 'options' => [
                     'value' => 'selfserve-business-registered-company-description'
                 ]
-            )
+            ]
         );
 
         $this->add(
-            array(
+            [
                 'type' => 'Common\Form\Elements\InputFilters\CompanyNumber',
                 'name' => 'company_number',
                 'attributes' => [
                     'data-container-class' => 'inline',
                     'pattern' => '\d*'
                 ],
-            )
+            ]
         );
 
         $this->add(
-            array(
+            [
                 'type' => 'button',
                 'name' => 'submit_lookup_company',
                 'options' => [
@@ -59,7 +59,7 @@ class CompanyNumber extends Fieldset
                     'data-container-class' => 'inline',
                     'type' => 'submit',
                 ],
-            )
+            ]
         );
     }
 

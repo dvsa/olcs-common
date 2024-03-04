@@ -54,7 +54,7 @@ class ApplicationOperatingCentre extends AbstractDataService implements ListData
         $id = $this->getId();
 
         if (is_null($this->getData($id))) {
-            $data = array();
+            $data = [];
             $rawData =  $this->getApplicationService()->fetchOperatingCentreData($this->getId());
 
             if (is_array($rawData['operatingCentres'])) {

@@ -131,7 +131,7 @@ abstract class AbstractPeopleController extends AbstractController
             $postData = (array)$request->getPost();
             $form->setData($postData);
             if ($form->isValid()) {
-                $crudAction = $this->getCrudAction(array($postData['table']));
+                $crudAction = $this->getCrudAction([$postData['table']]);
 
                 if ($crudAction !== null) {
                     return $this->handleCrudAction($crudAction);
@@ -497,7 +497,7 @@ abstract class AbstractPeopleController extends AbstractController
         /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
-        $data = array();
+        $data = [];
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } elseif ($mode === 'edit') {

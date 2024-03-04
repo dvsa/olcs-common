@@ -16,9 +16,9 @@ class OneOf extends AbstractValidator
     /**
      * @var array
      */
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         self::PROVIDE_ONE         => 'Please provide at least one value',
-    );
+    ];
 
     /**
      * @var

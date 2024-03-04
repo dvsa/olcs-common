@@ -76,10 +76,10 @@ class FormRadio extends \Laminas\Form\View\Helper\FormRadio
             $disabled = (isset($inputAttributes['disabled']) && $inputAttributes['disabled']);
 
             if (is_scalar($optionSpec)) {
-                $optionSpec = array(
+                $optionSpec = [
                     'label' => $optionSpec,
                     'value' => $key
-                );
+                ];
             }
 
             $optionSpec = $this->addGovUkRadioStyles($optionSpec);

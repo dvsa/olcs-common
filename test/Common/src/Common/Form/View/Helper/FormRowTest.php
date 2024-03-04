@@ -156,7 +156,7 @@ class FormRowTest extends MockeryTestCase
         $element = $this->setUpElement('Common\Form\Elements\Types\Table');
         $mockTable = $this->getMockBuilder('\Common\Service\Table\TableBuilder')
             ->disableOriginalConstructor()
-            ->setMethods(array('render'))
+            ->setMethods(['render'])
             ->getMock();
         $mockTable->expects($this->any())
             ->method('render')
@@ -619,11 +619,11 @@ class FormRowTest extends MockeryTestCase
         }
 
         $options = array_merge(
-            array(
+            [
                 'type'  => $type,
                 'label' => 'Label',
                 'hint'  => 'Hint',
-            ),
+            ],
             $options
         );
 

@@ -30,7 +30,7 @@ class Vrm implements FormatterPluginManagerInterface
      * @param array $data
      * @param array $column
      */
-    public function format($data, $column = array())
+    public function format($data, $column = [])
     {
         $action = 'edit';
 
@@ -40,11 +40,11 @@ class Vrm implements FormatterPluginManagerInterface
 
         return '<a class="govuk-link" href="' . $this->urlHelper->fromRoute(
             null,
-            array(
+            [
                 'child_id' => $data['id'],
                 'action' => $action
-            ),
-            array(),
+            ],
+            [],
             true
         ) . '">' . $data['vrm'] . '</a>';
     }

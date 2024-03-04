@@ -10,10 +10,10 @@ use Dvsa\Olcs\Api\Entity;
  */
 class Addresses implements MapperInterface
 {
-    protected static $typeMap = array(
+    protected static $typeMap = [
         'phone_t_primary' => 'phone_primary',
         'phone_t_secondary' => 'phone_secondary',
-    );
+    ];
 
     /**
      * Prepare api data for form

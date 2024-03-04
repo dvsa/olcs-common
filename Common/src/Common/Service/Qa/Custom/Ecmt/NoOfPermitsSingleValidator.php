@@ -11,10 +11,10 @@ class NoOfPermitsSingleValidator extends AbstractValidator
 
     const PERMITS_REMAINING_THRESHOLD_TEMPLATE = 'qanda.ecmt.number-of-permits.error.permits-remaining-exceeded.%s';
 
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         self::MAX_PERMITTED_THRESHOLD => 'qanda.ecmt.number-of-permits.error.total-max-exceeded',
         self::PERMITS_REMAINING_THRESHOLD => 'updatedAtRuntime'
-    );
+    ];
 
     protected $messageVariables = [
         'permitsRemaining' => 'permitsRemaining'

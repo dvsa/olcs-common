@@ -62,42 +62,42 @@ class CantIncreaseValidatorTest extends \PHPUnit\Framework\TestCase
 
     public function providerIsValid()
     {
-        return array(
-            array(
+        return [
+            [
                 10,
                 10,
                 true
-            ),
-            array(
+            ],
+            [
                 10,
                 11,
                 false
-            ),
-            array(
+            ],
+            [
                 10,
                 9,
                 true
-            ),
-            array(
+            ],
+            [
                 10,
                 '11',
                 false
-            ),
-            array(
+            ],
+            [
                 10,
                 '9',
                 true
-            ),
-            array(
+            ],
+            [
                 0,
                 1,
                 false
-            ),
-            array(
+            ],
+            [
                 0,
                 0,
                 true
-            )
-        );
+            ]
+        ];
     }
 }

@@ -40,9 +40,9 @@ class File extends LaminasFile
     {
         $spec = parent::getInputSpecification();
 
-        $spec['validators'] = array(
+        $spec['validators'] = [
             new FilesSize($this->getMaxFileSize())
-        );
+        ];
 
         return $spec;
     }

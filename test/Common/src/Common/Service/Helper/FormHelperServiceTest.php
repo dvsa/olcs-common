@@ -123,38 +123,38 @@ class FormHelperServiceTest extends MockeryTestCase
             ->shouldReceive('add')
             ->once()
             ->with(
-                array(
+                [
                     'type' => \Laminas\Form\Element\Csrf::class,
                     'name' => 'security',
-                    'options' => array(
-                        'csrf_options' => array(
-                            'messageTemplates' => array(
+                    'options' => [
+                        'csrf_options' => [
+                            'messageTemplates' => [
                                 'notSame' => 'csrf-message'
-                            ),
+                            ],
                             'timeout' => 9999,
-                        )
-                    ),
-                    'attributes' => array(
+                        ]
+                    ],
+                    'attributes' => [
                         'class' => 'js-csrf-token'
-                    )
-                )
+                    ]
+                ]
             )
             ->shouldReceive('add')
             ->once()
             ->with(
-                array(
+                [
                     'type' => \Laminas\Form\Element\Button::class,
                     'name' => 'form-actions[continue]',
-                    'options' => array(
+                    'options' => [
                         'label' => 'Continue'
-                    ),
-                    'attributes' => array(
+                    ],
+                    'attributes' => [
                         'type' => 'submit',
                         'class' => 'govuk-visually-hidden',
                         'style' => 'display: none;',
                         'id' => 'hidden-continue'
-                    )
-                )
+                    ]
+                ]
             );
 
         $this->mockBuilder->shouldReceive('createForm')->once()->with($formClass)->andReturn($mockForm);
@@ -533,7 +533,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with('select')
             ->getMock()
             ->shouldReceive('setMessages')
-            ->with(array('postcode.error.no-addresses-found'));
+            ->with(['postcode.error.no-addresses-found']);
 
         $fieldset = m::mock('Common\Form\Elements\Types\Address');
         $fieldset->shouldReceive('getName')
@@ -578,7 +578,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with('select')
             ->getMock()
             ->shouldReceive('setMessages')
-            ->with(array('Please enter a postcode'));
+            ->with(['Please enter a postcode']);
 
         $fieldset = m::mock('Common\Form\Elements\Types\Address');
         $fieldset->shouldReceive('getName')
@@ -627,7 +627,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->getMock()
             ->shouldReceive('setMessages')
             ->once()
-            ->with(array('postcode.error.not-available'));
+            ->with(['postcode.error.not-available']);
 
         $fieldset = m::mock('Common\Form\Elements\Types\Address');
         $fieldset->shouldReceive('getName')

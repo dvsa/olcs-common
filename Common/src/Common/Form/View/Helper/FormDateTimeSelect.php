@@ -89,7 +89,7 @@ class FormDateTimeSelect extends \Common\Form\View\Helper\Extended\FormDateTimeS
             $secondElement->setEmptyOption('');
         }
 
-        $data = array();
+        $data = [];
         $data[$pattern['day']]    = $this->renderDayInput($dayElement);
         $data[$pattern['month']]  = $this->renderMonthInput($monthElement);
         $data[$pattern['year']]   = $this->renderYearInput($yearElement);
@@ -193,7 +193,7 @@ class FormDateTimeSelect extends \Common\Form\View\Helper\Extended\FormDateTimeS
             $to = 4;
         }
 
-        $result = array();
+        $result = [];
 
         for ($min = $from; $min <= $to; $min++) {
             $key   = $keyFormatter->format($date);

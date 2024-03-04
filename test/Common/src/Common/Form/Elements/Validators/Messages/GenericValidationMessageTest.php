@@ -70,39 +70,39 @@ class GenericValidationMessageTest extends \PHPUnit\Framework\TestCase
 
     public function shouldProvider()
     {
-        return array(
-            array(
+        return [
+            [
                 true,
                 true
-            ),
-            array(
+            ],
+            [
                 false,
                 false
-            ),
-            array(
+            ],
+            [
                 1,
                 true
-            ),
-            array(
+            ],
+            [
                 0,
                 false
-            ),
-            array(
+            ],
+            [
                 '1',
                 true
-            ),
-            array(
+            ],
+            [
                 '0',
                 false
-            ),
-            array(
+            ],
+            [
                 'string',
                 true
-            ),
-            array(
+            ],
+            [
                 '',
                 false
-            )
-        );
+            ]
+        ];
     }
 }

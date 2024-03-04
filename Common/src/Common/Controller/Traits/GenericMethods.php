@@ -118,8 +118,8 @@ trait GenericMethods
     {
         if (is_callable($callback)) {
             $callback($params);
-        } elseif (is_callable(array($this, $callback))) {
-            call_user_func_array(array($this, $callback), $params);
+        } elseif (is_callable([$this, $callback])) {
+            call_user_func_array([$this, $callback], $params);
         } elseif (!empty($callback)) {
             throw new \Exception('Invalid form callback: ' . $callback);
         }
@@ -135,7 +135,7 @@ trait GenericMethods
      *
      * @return \Laminas\Http\Response
      */
-    public function redirectToRoute($route = null, $params = array(), $options = array(), $reuse = false)
+    public function redirectToRoute($route = null, $params = [], $options = [], $reuse = false)
     {
         return $this->redirect()->toRoute($route, $params, $options, $reuse);
     }
@@ -150,7 +150,7 @@ trait GenericMethods
      *
      * @return \Laminas\Http\Response
      */
-    public function redirectToRouteAjax($route = null, $params = array(), $options = array(), $reuse = false)
+    public function redirectToRouteAjax($route = null, $params = [], $options = [], $reuse = false)
     {
         return $this->redirect()->toRouteAjax($route, $params, $options, $reuse);
     }
@@ -164,7 +164,7 @@ trait GenericMethods
      *
      * @return \Common\Service\Table\TableBuilder
      */
-    public function getTable($table, $results, $data = array())
+    public function getTable($table, $results, $data = [])
     {
         if (!isset($data['url'])) {
             $data['url'] = $this->getPluginManager()->get('url');

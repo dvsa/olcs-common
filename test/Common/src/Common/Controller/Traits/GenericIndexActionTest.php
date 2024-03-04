@@ -20,12 +20,12 @@ class GenericIndexActionTest extends \PHPUnit\Framework\TestCase
     {
         $this->sut = $this->getMockForTrait(
             '\Common\Controller\Traits\GenericIndexAction',
-            array(),
+            [],
             '',
             true,
             true,
             true,
-            array('renderSection')
+            ['renderSection']
         );
     }
 

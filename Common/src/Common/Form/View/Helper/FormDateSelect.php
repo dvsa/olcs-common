@@ -64,7 +64,7 @@ class FormDateSelect extends \Common\Form\View\Helper\Extended\FormDateSelect
         $monthElement->setAttributes(['id'=> $element->getAttribute('id') . '_month', 'pattern' => '\d*']);
         $yearElement->setAttributes(['id'=> $element->getAttribute('id') . '_year', 'pattern' => '\d*']);
 
-        $data = array();
+        $data = [];
         $data[$pattern['day']]   = $this->renderDayInput($dayElement);
         $data[$pattern['month']] = $this->renderMonthInput($monthElement);
         $data[$pattern['year']]  = $this->renderYearInput($yearElement);

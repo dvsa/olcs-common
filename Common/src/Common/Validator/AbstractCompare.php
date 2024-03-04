@@ -29,9 +29,9 @@ abstract class AbstractCompare extends AbstractValidator
     /**
      * @var array
      */
-    protected $messageVariables = array(
+    protected $messageVariables = [
         'compare_to_label' => 'compareToLabel'
-    );
+    ];
 
     /**
      * context field against which to validate
@@ -110,7 +110,7 @@ abstract class AbstractCompare extends AbstractValidator
      *
      * @param  array $options
      */
-    public function setOptions($options = array())
+    public function setOptions($options = [])
     {
         if (isset($options['compare_to'])) {
             $this->setCompareTo($options['compare_to']);

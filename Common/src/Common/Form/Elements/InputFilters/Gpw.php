@@ -22,7 +22,7 @@ use Laminas\I18n\Validator\Alnum;
 class Gpw extends LaminasElement implements InputProviderInterface
 {
 
-    public function __construct($name = null, $options = array())
+    public function __construct($name = null, $options = [])
     {
         parent::__construct($name, $options);
     }

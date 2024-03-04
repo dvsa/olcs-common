@@ -35,7 +35,7 @@ class DashboardApplicationLink implements FormatterPluginManagerInterface
             $route = 'lva-' . $column['lva'];
         }
 
-        $url = $this->urlHelper->fromRoute($route, array('application' => $data['id']));
+        $url = $this->urlHelper->fromRoute($route, ['application' => $data['id']]);
 
         return vsprintf(
             '<a class="govuk-link" href="%s">%s</a>',

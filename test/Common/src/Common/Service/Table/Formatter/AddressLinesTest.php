@@ -53,53 +53,53 @@ class AddressLinesTest extends MockeryTestCase
      */
     public function provider()
     {
-        return array(
-            array(
-                array('addressLine1' => 'foo'), array(), '<p>foo</p>'
-            ),
-            array(
-                array('addressLine1' => 'foo', 'addressLine2' => 'bar'), array(), '<p>foo</p>'
-            ),
-            array(
-                array('addressLine1' => 'foo', 'addressLine2' => 'bar', 'town' => 'cake'),
-                array(),
+        return [
+            [
+                ['addressLine1' => 'foo'], [], '<p>foo</p>'
+            ],
+            [
+                ['addressLine1' => 'foo', 'addressLine2' => 'bar'], [], '<p>foo</p>'
+            ],
+            [
+                ['addressLine1' => 'foo', 'addressLine2' => 'bar', 'town' => 'cake'],
+                [],
                 '<p>foo,<br />cake</p>'
-            ),
-            array(
-                array(
+            ],
+            [
+                [
                     'addressLine1' => 'foo',
                     'addressLine2' => 'bar',
                     'addressLine3' => 'cake',
                     'town' => 'fourth'
-                ),
-                array(),
+                ],
+                [],
                 '<p>foo,<br />fourth</p>'
-            ),
-            array(
-                array('addressLine1' => 'foo', 'addressLine2' => 'bar', 'addressLine3' => 'cake'),
-                array('addressFields' => array('addressLine1', 'addressLine2')),
+            ],
+            [
+                ['addressLine1' => 'foo', 'addressLine2' => 'bar', 'addressLine3' => 'cake'],
+                ['addressFields' => ['addressLine1', 'addressLine2']],
                 '<p>foo,<br />bar</p>'
-            ),
-            array(
-                array('addressLine1' => 'foo', 'addressLine2' => 'bar', 'addressLine3' => 'cake'),
-                array('addressFields' => 'FULL'),
+            ],
+            [
+                ['addressLine1' => 'foo', 'addressLine2' => 'bar', 'addressLine3' => 'cake'],
+                ['addressFields' => 'FULL'],
                 '<p>foo,<br />bar,<br />cake</p>'
-            ),
-            array(
-                array(
-                    'address' => array(
+            ],
+            [
+                [
+                    'address' => [
                         'addressLine1' => 'foo',
                         'addressLine2' => 'bar',
                         'addressLine3' => 'cake',
                         'town' => 'fourth'
-                    )
-                ),
-                array(
+                    ]
+                ],
+                [
                     'name' => 'address'
-                ),
+                ],
                 '<p>foo,<br />fourth</p>'
-            )
-        );
+            ]
+        ];
     }
 
     /**

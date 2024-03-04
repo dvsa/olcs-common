@@ -22,8 +22,8 @@ trait EnabledSectionTrait
     {
         $restrictionHelper = $this->restrictionHelper;
         $filter = $this->stringHelper;
-        $sections = array();
-        $completeSections = array();
+        $sections = [];
+        $completeSections = [];
 
         foreach ($applicationCompletion as $section => $status) {
             if ($status === RefData::APPLICATION_COMPLETION_STATUS_COMPLETE) {
@@ -49,10 +49,10 @@ trait EnabledSectionTrait
 
             $complete = in_array($section, $completeSections);
 
-            $sections[$section] = array(
+            $sections[$section] = [
                 'enabled'  => $enabled,
                 'complete' => $complete
-            );
+            ];
         }
 
         return $sections;
@@ -69,7 +69,7 @@ trait EnabledSectionTrait
             foreach ($prerequisites as $prerequisite) {
                 // recursively handle nested arrays
                 if (is_array($prerequisite)) {
-                    return array($this->removeInaccessible($prerequisite, $accessibleSections));
+                    return [$this->removeInaccessible($prerequisite, $accessibleSections)];
                 }
                 if (in_array($prerequisite, array_keys($accessibleSections))) {
                     $keep[] = $prerequisite;

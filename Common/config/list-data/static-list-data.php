@@ -1,18 +1,18 @@
 <?php
 
-return array(
-    'bus_subsidy' => array(
+return [
+    'bus_subsidy' => [
         'bus_subsidy.no' => 'No',
         'bus_subsidy.yes' => 'Yes',
         'bus_subsidy.in_part' => 'In Part'
-    ),
-    'bus_trc_status' => array(
+    ],
+    'bus_trc_status' => [
         'bus_trc_status.new' => 'New',
         'bus_trc_status.valid' => 'Valid',
         'bus_trc_status.revoked' => 'Revoked',
         'bus_trc_status.refused' => 'Refused'
-    ),
-    'case_categories_compliance' => array(
+    ],
+    'case_categories_compliance' => [
         'case_category.1' => 'Offences (inc. driver hours)',
         'case_category.2' => 'Prohibitions',
         'case_category.3' => 'Convictions',
@@ -22,15 +22,15 @@ return array(
         'case_category.7' => 'Section 9',
         'case_category.8' => 'Section 43',
         'case_category.9' => 'Impounding'
-    ),
-    'case_categories_bus' => array(
-    ),
-    'case_categories_tm' => array(
+    ],
+    'case_categories_bus' => [
+    ],
+    'case_categories_tm' => [
         'case_category.10' => 'Duplicate TM',
         'case_category.11' => 'Repute / professional competence of TM',
         'case_category.12' => 'TM Hours'
-    ),
-    'case_categories_app' => array(
+    ],
+    'case_categories_app' => [
         'case_category.13' => 'Interim with / without submission',
         'case_category.14' => 'Representation',
         'case_category.15' => 'Objection',
@@ -39,8 +39,8 @@ return array(
         'case_category.18' => 'Schedule 4/1',
         'case_category.19' => 'Chargeable variation',
         'case_category.20' => 'New application'
-    ),
-    'case_categories_referral' => array(
+    ],
+    'case_categories_referral' => [
         'case_category.21' => 'Surrender',
         'case_category.22' => 'Non application related maintenance issue',
         'case_category.23' => 'Review complaint',
@@ -49,10 +49,10 @@ return array(
         'case_category.26' => 'Repute fitness of director',
         'case_category.27' => 'Period of grace',
         'case_category.28' => 'In-Office revocation'
-    ),
-    'case_categories_bus' => array(
+    ],
+    'case_categories_bus' => [
         'case_category.29' => 'Yes'
-    ),
+    ],
     'case_stay_outcome' => [
         'stay_status_granted' => 'Granted',
         'stay_status_refused' => 'Refused'
@@ -557,4 +557,4 @@ return array(
             . 'steps with a view to preventing that (ii) Has taken steps '
             . 'with a view to preventing any further such use.'
     ],
-);
+];

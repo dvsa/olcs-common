@@ -1,78 +1,78 @@
 <?php
 
-return array(
-    'application_start' => array(
+return [
+    'application_start' => [
         'type' => 'segment',
-        'options' => array(
+        'options' => [
             'route' => '/application_start_page[/]'
-        )
-    ),
-    'getfile' => array(
+        ]
+    ],
+    'getfile' => [
         'type' => 'segment',
-        'options' => array(
+        'options' => [
             'route' => '/file/:identifier',
-            'defaults' => array(
+            'defaults' => [
                 'controller' => 'Common\Controller\File',
                 'action' => 'download'
-            )
-        )
-    ),
-    'transport_manager_review' => array(
+            ]
+        ]
+    ],
+    'transport_manager_review' => [
         'type' => 'segment',
-        'options' => array(
+        'options' => [
             'route' => '/transport-manager-application/review/:id[/]',
-            'defaults' => array(
+            'defaults' => [
                 'controller' => Common\Controller\TransportManagerReviewController::class,
                 'action' => 'index'
-            )
-        )
-    ),
-    'correspondence_inbox' => array(
+            ]
+        ]
+    ],
+    'correspondence_inbox' => [
         'type' => 'segment',
-        'options' => array(
+        'options' => [
             'route' => '/correspondence[/]'
-        )
-    ),
-    'not-found' => array(
+        ]
+    ],
+    'not-found' => [
         'type' => 'segment',
-        'options' =>  array(
+        'options' =>  [
             'route' => '/404[/]',
-            'defaults' => array(
+            'defaults' => [
                 'controller' => \Common\Controller\ErrorController::class,
                 'action' => 'notFound'
-            )
-        )
-    ),
-    'server-error' => array(
+            ]
+        ]
+    ],
+    'server-error' => [
         'type' => 'segment',
-        'options' =>  array(
+        'options' =>  [
             'route' => '/error[/]',
-            'defaults' => array(
+            'defaults' => [
                 'controller' => \Common\Controller\ErrorController::class,
                 'action' => 'serverError'
-            )
-        )
-    ),
-    'guides' => array(
+            ]
+        ]
+    ],
+    'guides' => [
         'type' => 'segment',
-        'options' =>  array(
+        'options' =>  [
             'route' => '/guides[/]'
-        ),
+        ],
         'may_terminate' => false,
-        'child_routes' => array(
-            'guide' => array(
+        'child_routes' => [
+            'guide' => [
                 'type' => 'segment',
-                'options' =>  array(
+                'options' =>  [
                     'route' => ':guide[/]',
                     'constraints' => [
                         'guide' => '[a-zA-Z\-0-9]+'
                     ],
-                    'defaults' => array(
+                    'defaults' => [
                         'controller' => \Common\Controller\GuidesController::class,
                         'action' => 'index'
-                    )
-                ),
-            ),
-        )
-    ),
-);
+                    ]
+                ],
+            ],
+        ]
+    ],
+];

@@ -27,18 +27,18 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
      */
     protected $element;
 
-    private function prepareElement($type = 'Text', $options = array())
+    private function prepareElement($type = 'Text', $options = [])
     {
         if (strpos($type, '\\') === false) {
             $type = '\Laminas\Form\Element\\' . ucfirst($type);
         }
 
         $options = array_merge(
-            array(
+            [
                 'type' => $type,
                 'label' => 'Label',
                 'hint' => 'Hint',
-            ),
+            ],
             $options
         );
 
@@ -285,7 +285,7 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
 
         $mockTable = $this->getMockBuilder('\Common\Service\Table\TableBuilder')
             ->disableOriginalConstructor()
-            ->setMethods(array('render'))
+            ->setMethods(['render'])
             ->getMock();
 
         $mockTable->expects($this->any())

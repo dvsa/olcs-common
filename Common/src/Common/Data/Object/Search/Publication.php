@@ -108,7 +108,7 @@ class Publication extends InternalSearchAbstract
             'paginate' => [
                 'limit' => [
                     'default' => 25,
-                    'options' => array(10, 25, 50)
+                    'options' => [10, 25, 50]
                 ]
             ],
             'layout' => 'traffic-commissioner-publication',
@@ -123,37 +123,37 @@ class Publication extends InternalSearchAbstract
      */
     public function getColumns()
     {
-        return array(
-            array(
+        return [
+            [
                 'title' => 'Publication No',
                 'name' => 'pubNo'
-            ),
-            array(
+            ],
+            [
                 'title' => 'Traffic area',
                 'name' => 'trafficArea'
-            ),
-            array(
+            ],
+            [
                 'title' => 'Publication type',
                 'name' => 'pubType'
 
-            ),
-            array(
+            ],
+            [
                 'title' => 'Publication status',
                 'name' => 'pubStatusDesc'
-            ),
-            array(
+            ],
+            [
                 'title' => 'Close date',
                 'formatter' => Date::class,
                 'name' => 'pubDate'
-            ),
-            array(
+            ],
+            [
                 'title' => 'Publication section',
                 'name' => 'pubSecDesc'
-            ),
-            array(
+            ],
+            [
                 'title' => 'Publication details',
                 'name' => 'text1'
-            )
-        );
+            ]
+        ];
     }
 }

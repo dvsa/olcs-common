@@ -64,9 +64,9 @@ class InsufficientFinancesController extends AbstractContinuationController
         $hasProcessedFiles = $this->processFiles(
             $form,
             'insufficientFinances->yesContent->uploadContent',
-            array($this, 'processFinancialFileUpload'),
-            array($this, 'deleteFile'),
-            array($this, 'getDocuments')
+            [$this, 'processFinancialFileUpload'],
+            [$this, 'deleteFile'],
+            [$this, 'getDocuments']
         );
 
         if ($this->getRequest()->isPost()) {
@@ -135,14 +135,14 @@ class InsufficientFinancesController extends AbstractContinuationController
         $continuationDetail = $this->getContinuationDetailData();
         $this->uploadFile(
             $file,
-            array(
+            [
                 'continuationDetail' => $this->getContinuationDetailId(),
                 'description' => $file['name'],
                 'category'    => Category::CATEGORY_LICENSING,
                 'subCategory' => Category::DOC_SUB_CATEGORY_CONTINUATIONS_AND_RENEWALS,
                 'licence'     => $continuationDetail['licence']['id'],
                 'isExternal'  => true
-            )
+            ]
         );
 
         $this->getContinuationDetailData(true);

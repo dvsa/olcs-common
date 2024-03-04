@@ -34,7 +34,7 @@ class YearSelect extends LaminasElement\Select
      * @param  null|int|string  $name    Optional name for the element
      * @param  array            $options Optional options for the element
      */
-    public function __construct($name = null, $options = array())
+    public function __construct($name = null, $options = [])
     {
         $this->minYear = date('Y') - 100;
         $this->maxYear = date('Y');

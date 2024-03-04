@@ -18,7 +18,7 @@ use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
 class ConvictionTextarea extends LaminasElement implements InputProviderInterface
 {
 
-    public function __construct($name = null, $options = array())
+    public function __construct($name = null, $options = [])
     {
         parent::__construct($name, $options);
     }

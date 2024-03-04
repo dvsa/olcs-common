@@ -120,7 +120,7 @@ class FormElement extends LaminasFormElement
         if ($element instanceof ActionLink) {
             $route = $element->getOption('route');
             if (!empty($route)) {
-                $url = $this->getView()->url($route, array(), array(), true);
+                $url = $this->getView()->url($route, [], [], true);
             } else {
                 $url = $element->getValue();
             }

@@ -22,17 +22,17 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
      *
      * @var array
      */
-    protected $dataMap = array(
-        'main' => array(
-            'mapFrom' => array(
+    protected $dataMap = [
+        'main' => [
+            'mapFrom' => [
                 'application',
                 'smallVehiclesIntention',
                 'nineOrMore',
                 'mainOccupation',
                 'limousinesNoveltyVehicles'
-            )
-        )
-    );
+            ]
+        ]
+    ];
 
     protected $data;
 
@@ -125,29 +125,29 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
     protected function formatDataForForm($data)
     {
         $psvVehicleSize = $data['psvWhichVehicleSizes']['id'] ?? null;
-        return array(
+        return [
             'version' => $data['version'],
-            'psvVehicleSize' => array(
+            'psvVehicleSize' => [
                 'size' => $psvVehicleSize,
-            ),
-            'smallVehiclesIntention' => array(
+            ],
+            'smallVehiclesIntention' => [
                 'psvOperateSmallVhl' => $data['psvOperateSmallVhl'],
                 'psvSmallVhlNotes' => $data['psvSmallVhlNotes'],
                 'psvSmallVhlConfirmation' => $data['psvSmallVhlConfirmation']
-            ),
-            'nineOrMore' => array(
+            ],
+            'nineOrMore' => [
                 'psvNoSmallVhlConfirmation' => $data['psvNoSmallVhlConfirmation']
-            ),
-            'mainOccupation' => array(
+            ],
+            'mainOccupation' => [
                 'psvMediumVhlConfirmation' => $data['psvMediumVhlConfirmation'],
                 'psvMediumVhlNotes' => $data['psvMediumVhlNotes']
-            ),
-            'limousinesNoveltyVehicles' => array(
+            ],
+            'limousinesNoveltyVehicles' => [
                 'psvLimousines' => $data['psvLimousines'],
                 'psvNoLimousineConfirmation' => $data['psvNoLimousineConfirmation'],
                 'psvOnlyLimousinesConfirmation' => $data['psvOnlyLimousinesConfirmation']
-            )
-        );
+            ]
+        ];
     }
 
     /**

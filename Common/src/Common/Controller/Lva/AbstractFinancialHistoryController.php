@@ -32,13 +32,13 @@ abstract class AbstractFinancialHistoryController extends AbstractController
      *
      * @var array
      */
-    protected $dataMap = array(
-        'main' => array(
-            'mapFrom' => array(
+    protected $dataMap = [
+        'main' => [
+            'mapFrom' => [
                 'data'
-            )
-        )
-    );
+            ]
+        ]
+    ];
 
     protected FormHelperService $formHelper;
     protected FlashMessengerHelperService $flashMessengerHelper;
@@ -104,9 +104,9 @@ abstract class AbstractFinancialHistoryController extends AbstractController
         $hasProcessedFiles = $this->processFiles(
             $form,
             'data->file',
-            array($this, 'processFinancialFileUpload'),
-            array($this, 'deleteFile'),
-            array($this, 'getDocuments')
+            [$this, 'processFinancialFileUpload'],
+            [$this, 'deleteFile'],
+            [$this, 'getDocuments']
         );
 
         if (!$hasProcessedFiles && $request->isPost() && $form->isValid()) {
@@ -222,14 +222,14 @@ abstract class AbstractFinancialHistoryController extends AbstractController
     {
         $this->uploadFile(
             $file,
-            array(
+            [
                 'application' => $this->getApplicationId(),
                 'description' => $file['name'],
                 'category'    => CategoryDataService::CATEGORY_LICENSING,
                 'subCategory' => CategoryDataService::DOC_SUB_CATEGORY_LICENCE_INSOLVENCY_DOCUMENT_DIGITAL,
                 'licence'     => $this->getLicenceId(),
                 'isExternal'  => $this->isExternal()
-            )
+            ]
         );
     }
 

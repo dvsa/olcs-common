@@ -24,7 +24,7 @@ class TableTest extends \PHPUnit\Framework\TestCase
     {
         $fieldset = 'table';
 
-        $mockTable = $this->createPartialMock(TableBuilder::class, array('setFieldset', 'setDisabled'));
+        $mockTable = $this->createPartialMock(TableBuilder::class, ['setFieldset', 'setDisabled']);
 
         $mockTable->expects($this->once())
             ->method('setFieldset')
@@ -42,7 +42,7 @@ class TableTest extends \PHPUnit\Framework\TestCase
     {
         $fieldset = 'table';
 
-        $mockTable = $this->createPartialMock(TableBuilder::class, array('setFieldset', 'setDisabled', 'render'));
+        $mockTable = $this->createPartialMock(TableBuilder::class, ['setFieldset', 'setDisabled', 'render']);
 
         $mockTable->expects($this->once())
             ->method('setFieldset')
@@ -63,7 +63,7 @@ class TableTest extends \PHPUnit\Framework\TestCase
     {
         $fieldset = 'table';
 
-        $mockTable = $this->createPartialMock(TableBuilder::class, array('setFieldset', 'setDisabled', 'render'));
+        $mockTable = $this->createPartialMock(TableBuilder::class, ['setFieldset', 'setDisabled', 'render']);
 
         $mockTable->expects($this->once())
             ->method('setDisabled')
@@ -71,7 +71,7 @@ class TableTest extends \PHPUnit\Framework\TestCase
 
         $table = new Table($fieldset);
 
-        $table->setAttributes(array('disabled' => true));
+        $table->setAttributes(['disabled' => true]);
 
         $table->setTable($mockTable);
     }

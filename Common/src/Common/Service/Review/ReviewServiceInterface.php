@@ -20,5 +20,5 @@ interface ReviewServiceInterface
      * @param array $data
      * @return array
      */
-    public function getConfigFromData(array $data = array());
+    public function getConfigFromData(array $data = []);
 }

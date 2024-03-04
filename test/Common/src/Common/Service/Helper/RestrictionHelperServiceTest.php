@@ -43,259 +43,259 @@ class RestrictionHelperServiceTest extends \PHPUnit\Framework\TestCase
      */
     public function isRestrictionSatisfiedProvider()
     {
-        return array(
+        return [
             // Really simple restrictions
-            array(
+            [
                 // We just need to match the string in the array
                 'foo',
-                array('foo'),
+                ['foo'],
                 true
-            ),
-            array(
+            ],
+            [
                 'foo',
-                array('foo', 'bar'),
+                ['foo', 'bar'],
                 true
-            ),
-            array(
+            ],
+            [
                 'foo',
-                array(),
+                [],
                 false
-            ),
-            array(
+            ],
+            [
                 'foo',
-                array('bar'),
+                ['bar'],
                 false
-            ),
+            ],
             // Simple restrictions
-            array(
+            [
                 // We can match ANY of the items
-                array('foo', 'bar'),
-                array('foo'),
+                ['foo', 'bar'],
+                ['foo'],
                 true
-            ),
-            array(
-                array('foo', 'bar'),
-                array('bar'),
+            ],
+            [
+                ['foo', 'bar'],
+                ['bar'],
                 true
-            ),
-            array(
-                array('foo', 'bar'),
-                array('foo', 'bar'),
+            ],
+            [
+                ['foo', 'bar'],
+                ['foo', 'bar'],
                 true
-            ),
-            array(
-                array('foo', 'bar'),
-                array('foo', 'bar', 'cake'),
+            ],
+            [
+                ['foo', 'bar'],
+                ['foo', 'bar', 'cake'],
                 true
-            ),
-            array(
-                array('foo', 'bar'),
-                array('cake', 'fudge'),
+            ],
+            [
+                ['foo', 'bar'],
+                ['cake', 'fudge'],
                 false
-            ),
-            array(
-                array('foo'),
-                array('bar'),
+            ],
+            [
+                ['foo'],
+                ['bar'],
                 false
-            ),
-            array(
-                array('foo'),
-                array(),
+            ],
+            [
+                ['foo'],
+                [],
                 false
-            ),
+            ],
             // Strict restrictions
-            array(
-                array(
+            [
+                [
                     // We need to match ALL items in the sub array
-                    array('foo', 'bar')
-                ),
-                array('foo', 'bar'),
+                    ['foo', 'bar']
+                ],
+                ['foo', 'bar'],
                 true
-            ),
-            array(
-                array(
-                    array('foo', 'bar', 'cake')
-                ),
-                array('foo', 'bar'),
+            ],
+            [
+                [
+                    ['foo', 'bar', 'cake']
+                ],
+                ['foo', 'bar'],
                 false
-            ),
-            array(
-                array(
-                    array('foo', 'bar', 'cake')
-                ),
-                array(),
+            ],
+            [
+                [
+                    ['foo', 'bar', 'cake']
+                ],
+                [],
                 false
-            ),
+            ],
             // Combination of Strict and Not Strict
-            array(
-                array(
+            [
+                [
                     // We need to match ALL items in the sub array
-                    array('foo', 'bar'),
+                    ['foo', 'bar'],
                     // Or just this one
                     'cake'
-                ),
-                array('foo', 'bar'),
+                ],
+                ['foo', 'bar'],
                 true
-            ),
-            array(
-                array(
-                    array('foo', 'bar'),
+            ],
+            [
+                [
+                    ['foo', 'bar'],
                     'cake'
-                ),
-                array('foo', 'bar', 'cake'),
+                ],
+                ['foo', 'bar', 'cake'],
                 true
-            ),
-            array(
-                array(
-                    array('foo', 'bar'),
+            ],
+            [
+                [
+                    ['foo', 'bar'],
                     'cake'
-                ),
-                array('foo', 'cake'),
+                ],
+                ['foo', 'cake'],
                 true
-            ),
-            array(
-                array(
-                    array('foo', 'bar'),
+            ],
+            [
+                [
+                    ['foo', 'bar'],
                     'cake'
-                ),
-                array('cake'),
+                ],
+                ['cake'],
                 true
-            ),
-            array(
-                array(
-                    array('foo', 'bar'),
+            ],
+            [
+                [
+                    ['foo', 'bar'],
                     'cake'
-                ),
-                array('fudge'),
+                ],
+                ['fudge'],
                 false
-            ),
-            array(
-                array(
-                    array('foo', 'bar'),
+            ],
+            [
+                [
+                    ['foo', 'bar'],
                     'cake'
-                ),
-                array(),
+                ],
+                [],
                 false
-            ),
+            ],
             // Complex rules
-            array(
-                array(
+            [
+                [
                     // Must match ALL of these
-                    array(
+                    [
                         'foo',
                         // This can be satisfied by anything in here
-                        array('fudge', 'bar')
-                    ),
+                        ['fudge', 'bar']
+                    ],
                     // Or this one
                     'cake'
-                ),
-                array('foo', 'fudge'),
+                ],
+                ['foo', 'fudge'],
                 true
-            ),
-            array(
-                array(
-                    array(
+            ],
+            [
+                [
+                    [
                         'foo',
-                        array('fudge', 'bar')
-                    ),
+                        ['fudge', 'bar']
+                    ],
                     'cake'
-                ),
-                array('foo', 'bar'),
+                ],
+                ['foo', 'bar'],
                 true
-            ),
-            array(
-                array(
-                    array(
+            ],
+            [
+                [
+                    [
                         'foo',
-                        array('fudge', 'bar')
-                    ),
+                        ['fudge', 'bar']
+                    ],
                     'cake'
-                ),
-                array('cake'),
+                ],
+                ['cake'],
                 true
-            ),
-            array(
-                array(
-                    array(
+            ],
+            [
+                [
+                    [
                         'foo',
-                        array('fudge', 'bar')
-                    ),
+                        ['fudge', 'bar']
+                    ],
                     'cake'
-                ),
-                array('fudge'),
+                ],
+                ['fudge'],
                 false
-            ),
-            array(
-                array(
-                    array(
+            ],
+            [
+                [
+                    [
                         'foo',
-                        array('fudge', 'bar')
-                    ),
+                        ['fudge', 'bar']
+                    ],
                     'cake'
-                ),
-                array('fudge', 'bar'),
+                ],
+                ['fudge', 'bar'],
                 false
-            ),
-            array(
-                array(
-                    array(
+            ],
+            [
+                [
+                    [
                         'foo',
-                        array('fudge', 'bar')
-                    ),
+                        ['fudge', 'bar']
+                    ],
                     'cake'
-                ),
-                array('foo'),
+                ],
+                ['foo'],
                 false
-            ),
-            array(
-                array(
-                    array(
+            ],
+            [
+                [
+                    [
                         'foo',
-                        array('fudge', 'bar')
-                    ),
+                        ['fudge', 'bar']
+                    ],
                     'cake'
-                ),
-                array(),
+                ],
+                [],
                 false
-            ),
-            array(
-                array(
-                    array(
-                        array('foo', 'whip'),
-                        array('fudge', 'bar')
-                    ),
+            ],
+            [
+                [
+                    [
+                        ['foo', 'whip'],
+                        ['fudge', 'bar']
+                    ],
                     'cake'
-                ),
-                array('foo', 'bar'),
+                ],
+                ['foo', 'bar'],
                 true
-            ),
-            array(
-                array(
-                    array(
-                        array('foo', 'whip'),
-                        array('fudge', 'bar')
-                    ),
+            ],
+            [
+                [
+                    [
+                        ['foo', 'whip'],
+                        ['fudge', 'bar']
+                    ],
                     'cake'
-                ),
-                array('foo'),
+                ],
+                ['foo'],
                 false
-            ),
+            ],
             // Edge cases
-            array(
+            [
                 null,
-                array('foo'),
+                ['foo'],
                 false
-            ),
-            array(
+            ],
+            [
                 null,
-                array(),
+                [],
                 false
-            ),
-            array(
+            ],
+            [
                 null,
-                array(null),
+                [null],
                 false
-            ),
-        );
+            ],
+        ];
     }
 }

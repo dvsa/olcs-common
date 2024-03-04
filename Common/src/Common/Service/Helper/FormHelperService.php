@@ -113,9 +113,9 @@ class FormHelperService
                 ],
                 'options' => [
                     'csrf_options' => [
-                        'messageTemplates' => array(
+                        'messageTemplates' => [
                             'notSame' => 'csrf-message',
-                        ),
+                        ],
                         'timeout' => $this->config['csrf']['timeout'],
                     ],
                 ],
@@ -125,19 +125,19 @@ class FormHelperService
 
         //  add button "Continue" element
         if ($addContinue) {
-            $config = array(
+            $config = [
                 'type' => \Laminas\Form\Element\Button::class,
                 'name' => 'form-actions[continue]',
-                'options' => array(
+                'options' => [
                     'label' => 'Continue',
-                ),
-                'attributes' => array(
+                ],
+                'attributes' => [
                     'type' => 'submit',
                     'class' => 'govuk-visually-hidden',
                     'style' => 'display: none;',
                     'id' => 'hidden-continue',
-                ),
-            );
+                ],
+            ];
             $form->add($config);
         }
 
@@ -336,7 +336,7 @@ class FormHelperService
         if (empty($postcode)) {
             $this->removeAddressSelectFields($fieldset);
 
-            $fieldset->get('searchPostcode')->setMessages(array('Please enter a postcode'));
+            $fieldset->get('searchPostcode')->setMessages(['Please enter a postcode']);
 
             return false;
         }
@@ -345,7 +345,7 @@ class FormHelperService
             $addressList = $this->addressData->getAddressesForPostcode($postcode);
         } catch (\Exception $e) {
             // RestClient / ResponseHelper throw root exceptions :(
-            $fieldset->get('searchPostcode')->setMessages(array('postcode.error.not-available'));
+            $fieldset->get('searchPostcode')->setMessages(['postcode.error.not-available']);
             $this->removeAddressSelectFields($fieldset);
             return false;
         }
@@ -354,7 +354,7 @@ class FormHelperService
         if (empty($addressList)) {
             $this->removeAddressSelectFields($fieldset);
 
-            $fieldset->get('searchPostcode')->setMessages(array('postcode.error.no-addresses-found'));
+            $fieldset->get('searchPostcode')->setMessages(['postcode.error.no-addresses-found']);
 
             return false;
         }
@@ -405,7 +405,7 @@ class FormHelperService
      */
     public function alterElementLabel($element, $label, $type = self::ALTER_LABEL_RESET)
     {
-        if (in_array($type, array(self::ALTER_LABEL_APPEND, self::ALTER_LABEL_PREPEND), false)) {
+        if (in_array($type, [self::ALTER_LABEL_APPEND, self::ALTER_LABEL_PREPEND], false)) {
             $oldLabel = $element->getLabel();
 
             if ($type == self::ALTER_LABEL_APPEND) {
@@ -475,7 +475,7 @@ class FormHelperService
             );
         }
 
-        return array($form, $filter, $elementReference);
+        return [$form, $filter, $elementReference];
     }
 
     /**
@@ -707,7 +707,7 @@ class FormHelperService
     public function lockElement(Element $element, $message)
     {
         $lockView = new ViewModel(
-            array('message' => $this->translationHelper->translate($message))
+            ['message' => $this->translationHelper->translate($message)]
         );
         $lockView->setTemplate('partials/lock');
 
@@ -1007,9 +1007,9 @@ class FormHelperService
     protected function setCompaniesHouseFormMessage($form, $detailsFieldset, string $message)
     {
         $form->get($detailsFieldset)->get('companyNumber')->setMessages(
-            array(
-                'company_number' => array($this->translationHelper->translate($message)),
-            )
+            [
+                'company_number' => [$this->translationHelper->translate($message)],
+            ]
         );
     }
 }

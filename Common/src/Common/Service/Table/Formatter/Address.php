@@ -55,7 +55,7 @@ class Address implements FormatterPluginManagerInterface
 
         $fields = self::getFields($column);
 
-        $parts = array();
+        $parts = [];
 
         if (isset($data['countryCode']['id'])) {
             $data['countryCode'] = $data['countryCode']['id'];
@@ -100,10 +100,10 @@ class Address implements FormatterPluginManagerInterface
                 $fields = $column['addressFields'];
             }
         } else {
-            $fields = array(
+            $fields = [
                 'addressLine1',
                 'town'
-            );
+            ];
         }
         return $fields;
     }

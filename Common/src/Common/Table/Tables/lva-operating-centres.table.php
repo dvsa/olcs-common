@@ -5,25 +5,25 @@ use Common\Service\Table\Formatter\OcComplaints;
 use Common\Service\Table\Formatter\Sum;
 use Common\Service\Table\Formatter\Translate;
 
-return array(
-    'variables' => array(
+return [
+    'variables' => [
         'title' => 'application_operating-centres_authorisation.table.title',
         'empty_message' => 'application_operating-centres_authorisation-tableEmptyMessage',
         'within_form' => true,
-    ),
-    'settings' => array(
-        'crud' => array(
-            'actions' => array(
-                'add' => array('label' => 'Add operating centre'),
-                'schedule41' => array(
+    ],
+    'settings' => [
+        'crud' => [
+            'actions' => [
+                'add' => ['label' => 'Add operating centre'],
+                'schedule41' => [
                     'value' => 'Add schedule 4/1',
                     'requireRows' => false
-                )
-            )
-        )
-    ),
-    'columns' => array(
-        array(
+                ]
+            ]
+        ]
+    ],
+    'columns' => [
+        [
             'title' => 'application_operating-centres_authorisation.table.address',
             'type' => 'OperatingCentreAction',
             'action' => 'edit',
@@ -31,52 +31,52 @@ return array(
             'formatter' => Address::class,
             'addressFields' => 'BRIEF',
             'sort' => 'adr',
-        ),
-        array(
+        ],
+        [
             'title' => 'application_operating-centres_authorisation.table.vehicles',
             'isNumeric' => true,
             'name' => 'noOfVehiclesRequired',
             'sort' => 'noOfVehiclesRequired'
-        ),
-        array(
+        ],
+        [
             'title' => 'application_operating-centres_authorisation.table.trailers',
             'isNumeric' => true,
             'name' => 'noOfTrailersRequired',
             'sort' => 'noOfTrailersRequired'
-        ),
-        array(
+        ],
+        [
             'title' => 'application_operating-centres_authorisation.table.complaints',
             'isNumeric' => true,
             'name' => 'noOfComplaints',
             'formatter' => OcComplaints::class
-        ),
-        array(
+        ],
+        [
             'title' => 'markup-table-th-remove',
             'ariaDescription' => function($row) {
                 return $row['operatingCentre']['address']['addressLine1'];
             },
             'type' => 'ActionLinks'
-        ),
-    ),
-    'footer' => array(
-        'total' => array(
+        ],
+    ],
+    'footer' => [
+        'total' => [
             'type' => 'th',
             'content' => 'application_operating-centres_authorisation.table.footer.total',
             'formatter' => Translate::class,
             'colspan' => 1
-        ),
-        array(
+        ],
+        [
             'formatter' => Sum::class,
             'align' => 'govuk-!-text-align-right',
             'name' => 'noOfVehiclesRequired'
-        ),
-        'trailersCol' => array(
+        ],
+        'trailersCol' => [
             'formatter' => Sum::class,
             'align' => 'govuk-!-text-align-right',
             'name' => 'noOfTrailersRequired'
-        ),
-        'remainingColspan' => array(
+        ],
+        'remainingColspan' => [
             'colspan' => 3
-        )
-    )
-);
+        ]
+    ]
+];
