@@ -61,11 +61,11 @@ class InternalConversationLink implements FormatterPluginManagerInterface
                     'case'    => $this->route->getParam('case'),
                 ];
                 break;
-            case 'bus':
+            case 'busReg':
                 $route = 'licence/bus_conversation/view';
                 $params = [
                     'licence' => $row['task']['licence']['id'],
-                    'bus'    => $this->route->getParam('bus'),
+                    'busRegId' => $this->route->getParam('busRegId'),
                 ];
                 break;
             case 'irhp-application':
