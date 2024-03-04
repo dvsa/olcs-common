@@ -220,6 +220,8 @@ class RefData
     public const ROLE_INTERNAL_READ_ONLY = 'internal-read-only';
     public const ROLE_INTERNAL_CASE_WORKER = 'internal-case-worker';
     public const ROLE_INTERNAL_ADMIN = 'internal-admin';
+    public const ROLE_SYSTEM_ADMIN = 'system-admin';
+    public const ROLE_INTERNAL_IRHP_ADMIN = 'internal-irhp-admin';
     public const ROLE_OPERATOR_ADMIN = 'operator-admin';
     public const ROLE_OPERATOR_USER = 'operator-user';
     public const ROLE_OPERATOR_TM = 'operator-tm';

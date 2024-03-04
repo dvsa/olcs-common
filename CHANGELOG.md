@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.2.1](https://github.com/dvsa/olcs-common/compare/v6.2.0...v6.2.1) (2024-03-04)
+
+
+### Bug Fixes
+
+* Added missed system-admin and internal-irhp-admin as consts to RefData ([#59](https://github.com/dvsa/olcs-common/issues/59)) ([f4dbc1a](https://github.com/dvsa/olcs-common/commit/f4dbc1abd87ed5e315f20d217c631c4da5abfe52))
+
 ## [6.2.0](https://github.com/dvsa/olcs-common/compare/v6.1.1...v6.2.0) (2024-03-01)
 
 
