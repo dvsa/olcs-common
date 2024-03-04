@@ -26,7 +26,7 @@ class DeltaActionLinks extends Selector
         $translator = $this->getTable()->getServiceLocator()->get('translator');
         $ariaDescription = $this->getAriaDescription($data, $column, $translator);
 
-        if ($this->isRestoreVisible($data, $column)) {
+        if ($this->isRestoreVisible($data)) {
             $restore = $translator->translate(self::KEY_ACTION_LINKS_RESTORE);
             $restoreAria = $translator->translate(self::KEY_ACTION_LINKS_RESTORE_ARIA);
             $ariaLabel = sprintf(self::ARIA_LABEL_FORMAT, $restoreAria, $ariaDescription);
@@ -40,7 +40,7 @@ class DeltaActionLinks extends Selector
             );
         }
 
-        if ($this->isRemoveVisible($data, $column)) {
+        if ($this->isRemoveVisible($data)) {
             $remove = $translator->translate(self::KEY_ACTION_LINKS_REMOVE);
             $removeAria = $translator->translate(self::KEY_ACTION_LINKS_REMOVE_ARIA);
             $ariaLabel = sprintf(self::ARIA_LABEL_FORMAT, $removeAria, $ariaDescription);

@@ -9,7 +9,7 @@ use Laminas\Form\Fieldset;
 
 class QaForm extends BaseQaForm
 {
-    const QUESTION_FIELDSET_PREFIX = 'fieldset';
+    public const QUESTION_FIELDSET_PREFIX = 'fieldset';
 
     /** @var array */
     private $applicationStep;

@@ -9,7 +9,7 @@ class DateNotInPastValidatorFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): DateNotInPastValidator
     {
-        $options = $options ?? [];
+        $options ??= [];
 
         return new DateNotInPastValidator(
             $container->get('QaDateTimeFactory'),

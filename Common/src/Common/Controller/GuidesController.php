@@ -7,18 +7,18 @@ use Laminas\View\Model\ViewModel;
 
 class GuidesController extends LaminasAbstractActionController
 {
-    const GUIDE_OC_ADV_GB_NEW = 'advertising-your-operating-centre-gb-new';
-    const GUIDE_OC_ADV_GB_VAR = 'advertising-your-operating-centre-gb-var';
-    const GUIDE_OC_ADV_NI_NEW = 'advertising-your-operating-centre-ni-new';
-    const GUIDE_OC_ADV_NI_VAR = 'advertising-your-operating-centre-ni-var';
-    const GUIDE_PRIVACY_NOTICE = 'privacy-notice';
-    const GUIDE_TERMS_AND_CONDITIONS = 'terms-and-conditions';
-    const GUIDE_FINANCIAL_EVIDENCE = 'financial-evidence';
-    const GUIDE_ACCESSIBILITY_STATEMENT = 'accessibility-statement';
-    const GUIDE_TRAFFIC_AREA = 'traffic-area';
-    const GUIDE_CONVICTIONS_AND_PENALTIES_GUIDANCE_GB = 'convictions-and-penalties-guidance-gb';
-    const GUIDE_CONVICTIONS_AND_PENALTIES_GUIDANCE_NI = 'convictions-and-penalties-guidance-ni';
-    const GUIDE_RIGHT_FIRST_TIME = 'right-first-time';
+    public const GUIDE_OC_ADV_GB_NEW = 'advertising-your-operating-centre-gb-new';
+    public const GUIDE_OC_ADV_GB_VAR = 'advertising-your-operating-centre-gb-var';
+    public const GUIDE_OC_ADV_NI_NEW = 'advertising-your-operating-centre-ni-new';
+    public const GUIDE_OC_ADV_NI_VAR = 'advertising-your-operating-centre-ni-var';
+    public const GUIDE_PRIVACY_NOTICE = 'privacy-notice';
+    public const GUIDE_TERMS_AND_CONDITIONS = 'terms-and-conditions';
+    public const GUIDE_FINANCIAL_EVIDENCE = 'financial-evidence';
+    public const GUIDE_ACCESSIBILITY_STATEMENT = 'accessibility-statement';
+    public const GUIDE_TRAFFIC_AREA = 'traffic-area';
+    public const GUIDE_CONVICTIONS_AND_PENALTIES_GUIDANCE_GB = 'convictions-and-penalties-guidance-gb';
+    public const GUIDE_CONVICTIONS_AND_PENALTIES_GUIDANCE_NI = 'convictions-and-penalties-guidance-ni';
+    public const GUIDE_RIGHT_FIRST_TIME = 'right-first-time';
 
     protected $guideMap = [
         self::GUIDE_OC_ADV_GB_NEW => 'oc_advert',

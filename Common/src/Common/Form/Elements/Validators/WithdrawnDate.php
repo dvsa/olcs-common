@@ -18,8 +18,8 @@ use Laminas\Validator as LaminasValidator;
  */
 class WithdrawnDate extends LaminasValidator\AbstractValidator
 {
-    const DATE_NOT_VALID = 'dateNotValid';
-    const DATE_IN_FUTURE = 'dateInFuture';
+    public const DATE_NOT_VALID = 'dateNotValid';
+    public const DATE_IN_FUTURE = 'dateInFuture';
 
     /**
      * Validation failure message template definitions

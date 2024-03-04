@@ -9,7 +9,7 @@ class DateBeforeValidatorFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): DateBeforeValidator
     {
-        $options = $options ?? [];
+        $options ??= [];
 
         return new DateBeforeValidator(
             $container->get('ViewHelperManager')->get('DateFormat'),

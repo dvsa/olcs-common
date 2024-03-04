@@ -27,7 +27,7 @@ class CommunityLicenceStatusTest extends MockeryTestCase
         $this->request = m::mock(Request::class);
         $this->sut = new CommunityLicenceStatus($this->urlHelper, $this->router, $this->request);
 
-        $this->mockRouteMatch = m::mock('\Laminas\Router\RouteMatch')
+        $this->mockRouteMatch = m::mock(\Laminas\Router\RouteMatch::class)
             ->shouldReceive('getMatchedRouteName')
             ->andReturn('route')
             ->getMock();

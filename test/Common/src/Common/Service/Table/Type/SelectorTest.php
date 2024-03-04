@@ -189,9 +189,7 @@ class SelectorTest extends MockeryTestCase
     {
         $fieldset = 'table';
         $column = [
-            'disabled-callback' => function ($row) {
-                return $row['isExpiredForLicence'];
-            }
+            'disabled-callback' => fn($row) => $row['isExpiredForLicence']
         ];
 
         $this->table
@@ -255,9 +253,7 @@ class SelectorTest extends MockeryTestCase
     {
         $column = [
             'aria-attributes' => [
-                'label' => function () {
-                    return 'Test translated string';
-                }
+                'label' => fn() => 'Test translated string'
             ]
         ];
 

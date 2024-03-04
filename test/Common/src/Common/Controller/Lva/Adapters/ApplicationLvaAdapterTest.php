@@ -17,7 +17,7 @@ class ApplicationLvaAdapterTest extends MockeryTestCase
     {
 
         $this->container = m::mock(ContainerInterface::class);
-        $this->controller = m::mock('\Laminas\Mvc\Controller\AbstractController');
+        $this->controller = m::mock(\Laminas\Mvc\Controller\AbstractController::class);
         $this->sut = new ApplicationLvaAdapter($this->container);
         $this->sut->setController($this->controller);
     }
@@ -26,13 +26,13 @@ class ApplicationLvaAdapterTest extends MockeryTestCase
     {
         // This method should do nothing
         // So we don't really need expectations or assertions
-        $mockForm = m::mock('\Laminas\Form\Form');
+        $mockForm = m::mock(\Laminas\Form\Form::class);
         $this->assertNull($this->sut->alterForm($mockForm));
     }
 
     public function testGetIdentifierThrowsException()
     {
-        $this->expectException('\Exception', 'Can\'t get the application id from this controller');
+        $this->expectException('\Exception');
 
         $id = null;
 

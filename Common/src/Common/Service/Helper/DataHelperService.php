@@ -115,7 +115,7 @@ class DataHelperService
     public function fetchNestedData($data, $search)
     {
         if (strpos($search, '->') !== false) {
-            list($head, $rest) = explode('->', $search, 2);
+            [$head, $rest] = explode('->', $search, 2);
             return $this->fetchNestedData($data[$head], $rest);
         }
 

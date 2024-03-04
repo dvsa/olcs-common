@@ -20,13 +20,13 @@ use Laminas\Form\Form;
  */
 class FieldsetAdderTest extends MockeryTestCase
 {
-    const FIELDSET_NAME = 'fields123';
+    public const FIELDSET_NAME = 'fields123';
 
-    const ELEMENT_TYPE = 'elementType';
+    public const ELEMENT_TYPE = 'elementType';
 
-    const SHORT_NAME = 'Cabotage';
+    public const SHORT_NAME = 'Cabotage';
 
-    const ELEMENT_OPTIONS = [
+    public const ELEMENT_OPTIONS = [
         'elementProperty1' => 'elementValue1',
         'elementProperty2' => 'elementValue2'
     ];

@@ -36,9 +36,7 @@ class LicenceStatusSelfserveTest extends MockeryTestCase
     public function testFormat($data, $expected)
     {
         $this->translator->shouldReceive('translate')->andReturnUsing(
-            function ($message) {
-                return 'TRANSLATED_' . $message;
-            }
+            fn($message) => 'TRANSLATED_' . $message
         );
 
         $this->assertEquals($expected, $this->sut->format($data, []));

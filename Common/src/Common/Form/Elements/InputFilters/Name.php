@@ -29,10 +29,10 @@ class Name extends LaminasElement implements InputProviderInterface
             'name' => $this->getName(),
             'required' => false,
             'filters' => [
-                ['name' => 'Laminas\Filter\StringTrim'],
+                ['name' => \Laminas\Filter\StringTrim::class],
             ],
             'validators' => [
-                ['name' => 'Laminas\Validator\StringLength', 'options' => ['min' => 2, 'max' => 35]]
+                ['name' => \Laminas\Validator\StringLength::class, 'options' => ['min' => 2, 'max' => 35]]
             ]
         ];
 

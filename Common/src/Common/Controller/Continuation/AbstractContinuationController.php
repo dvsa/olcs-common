@@ -208,7 +208,7 @@ abstract class AbstractContinuationController extends AbstractController
             throw new Exception\DomainException('Missing route matches; unsure how to retrieve action');
         }
         $data = $this->getContinuationDetailData();
-        $status = isset($data['status']['id']) ? $data['status']['id'] : null;
+        $status = $data['status']['id'] ?? null;
         $controller = $routeMatch->getParam('controller');
         $action = $routeMatch->getParam('action');
 
@@ -330,7 +330,7 @@ abstract class AbstractContinuationController extends AbstractController
             self::STEP_DECLARATION => ['current' => 3, 'total' => 3],
         ];
 
-        return isset($steps[$path][$step]) ? $steps[$path][$step] : '';
+        return $steps[$path][$step] ?? '';
     }
 
     /**

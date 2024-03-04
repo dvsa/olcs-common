@@ -42,9 +42,7 @@ class Checkbox extends LaminasElement\Checkbox
                         'token' => $options['must_be_value'],
                         'messages' => [
                             LaminasValidator\Identical::NOT_SAME =>
-                                isset($this->getOptions()['not_checked_message'])
-                                    ? $this->getOptions()['not_checked_message']
-                                    : 'common.form.validation.checkbox.not_same',
+                                $this->getOptions()['not_checked_message'] ?? 'common.form.validation.checkbox.not_same',
                         ],
                     ],
                 ]

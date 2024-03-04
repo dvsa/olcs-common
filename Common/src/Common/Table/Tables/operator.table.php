@@ -28,9 +28,7 @@ return [
         ],
         [
             'title' => 'Op/trading name',
-            'formatter' => function ($data) {
-                return $data['trading_as'] ? : $data['name'];
-            },
+            'formatter' => fn($data) => $data['trading_as'] ? : $data['name'],
             'sort' => 'operatorName'
         ],
         [

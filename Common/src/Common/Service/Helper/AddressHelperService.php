@@ -17,7 +17,7 @@ class AddressHelperService
     /**
      * Max length we'll display in the address dropdown before truncating
      */
-    const MAX_DISPLAY_LENGTH = 50;
+    public const MAX_DISPLAY_LENGTH = 50;
 
     /**
      * Holds the template for the details

@@ -13,8 +13,8 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class OperatingCentresTest extends MockeryTestCase
 {
-    const LOCATION = 'EXTERNAL';
-    const TRANSL = '_TRANSL_';
+    public const LOCATION = 'EXTERNAL';
+    public const TRANSL = '_TRANSL_';
 
     /** @var  m\MockInterface | TranslationHelperService*/
     private $mockTranslator;

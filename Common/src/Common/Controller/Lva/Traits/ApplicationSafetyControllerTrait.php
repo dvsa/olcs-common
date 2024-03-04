@@ -67,11 +67,9 @@ trait ApplicationSafetyControllerTrait
             $params = [
                 'id' => $this->getApplicationId()
             ];
-            $params['page'] = isset($query['page']) ? $query['page'] : 1;
+            $params['page'] = $query['page'] ?? 1;
 
-            $params['limit'] = isset($query['limit'])
-                ? $query['limit']
-                : AbstractSafetyController::DEFAULT_TABLE_RECORDS_COUNT;
+            $params['limit'] = $query['limit'] ?? AbstractSafetyController::DEFAULT_TABLE_RECORDS_COUNT;
 
             $response = $this->handleQuery(Safety::create($params));
 

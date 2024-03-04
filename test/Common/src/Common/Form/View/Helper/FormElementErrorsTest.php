@@ -116,9 +116,7 @@ class FormElementErrorsTest extends MockeryTestCase
     protected function setUpTranslator(): MockInterface
     {
         $instance = $this->setUpMockService(Translator::class);
-        $instance->shouldReceive('translate')->andReturnUsing(function ($key) {
-            return $key;
-        })->byDefault();
+        $instance->shouldReceive('translate')->andReturnUsing(fn($key) => $key)->byDefault();
         return $instance;
     }
 

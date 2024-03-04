@@ -11,7 +11,7 @@ use Laminas\View\Helper\AbstractHelper;
  */
 class CurrencyFormatter extends AbstractHelper
 {
-    const PREFIX = '£';
+    public const PREFIX = '£';
 
     /**
      * Return a formatted Monetary Value

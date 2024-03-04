@@ -33,7 +33,7 @@ class TableBuilderFactoryTest extends MockeryTestCase
             ->andReturn($config);
 
         $serviceLocator->shouldReceive('get')
-            ->with('LmcRbacMvc\Service\AuthorizationService')
+            ->with(\LmcRbacMvc\Service\AuthorizationService::class)
             ->andReturn($authService);
 
         $serviceLocator->shouldReceive('get')

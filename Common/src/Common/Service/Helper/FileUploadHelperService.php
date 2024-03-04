@@ -19,9 +19,9 @@ use Laminas\Stdlib\RequestInterface;
  */
 class FileUploadHelperService extends AbstractHelperService
 {
-    const FILE_UPLOAD_ERR_PREFIX = 'message.file-upload-error.';
-    const FILE_UPLOAD_ERR_FILE_LENGTH_TOO_LONG = 'message.file-upload-error.lengthtoolong';
-    const FILE_NAME_MAX_LENGTH = 200;
+    public const FILE_UPLOAD_ERR_PREFIX = 'message.file-upload-error.';
+    public const FILE_UPLOAD_ERR_FILE_LENGTH_TOO_LONG = 'message.file-upload-error.lengthtoolong';
+    public const FILE_NAME_MAX_LENGTH = 200;
 
     /**
      * @var \Laminas\Form\FormInterface
@@ -493,7 +493,7 @@ class FileUploadHelperService extends AbstractHelperService
         $selector = $this->getSelector();
 
         while (strstr($selector, '->')) {
-            list($index, $selector) = explode('->', $selector, 2);
+            [$index, $selector] = explode('->', $selector, 2);
 
             $reference[$index] = [];
 
@@ -516,7 +516,7 @@ class FileUploadHelperService extends AbstractHelperService
     private function findSelectorData($data, $selector)
     {
         if (strstr($selector, '->')) {
-            list($index, $selector) = explode('->', $selector, 2);
+            [$index, $selector] = explode('->', $selector, 2);
 
             if (!isset($data[$index])) {
                 return null;
@@ -543,7 +543,7 @@ class FileUploadHelperService extends AbstractHelperService
     public function findElement($form, $selector)
     {
         if (strstr($selector, '->')) {
-            list($element, $selector) = explode('->', $selector, 2);
+            [$element, $selector] = explode('->', $selector, 2);
             return $this->findElement($form->get($element), $selector);
         }
 

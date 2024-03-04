@@ -246,9 +246,7 @@ class TableBuilder
      */
     public function setUrlParameterNameMap(array $urlParamNameMap): self
     {
-        assert(array_reduce($urlParamNameMap, function ($carry, $mappedValue) {
-            return $carry && is_string($mappedValue);
-        }, true), 'Expected all mapped values to be strings');
+        assert(array_reduce($urlParamNameMap, fn($carry, $mappedValue) => $carry && is_string($mappedValue), true), 'Expected all mapped values to be strings');
         $this->urlParameterNameMap = $urlParamNameMap;
         return $this;
     }
@@ -365,7 +363,7 @@ class TableBuilder
      */
     public function getSetting($name, $default = null)
     {
-        return isset($this->settings[$name]) ? $this->settings[$name] : $default;
+        return $this->settings[$name] ?? $default;
     }
 
     /**
@@ -581,7 +579,7 @@ class TableBuilder
      */
     public function getVariable($name)
     {
-        return (isset($this->variables[$name]) ? $this->variables[$name] : '');
+        return ($this->variables[$name] ?? '');
     }
 
     /**
@@ -819,9 +817,7 @@ class TableBuilder
 
         $this->maybeSetActionFieldName();
 
-        $config['variables']['hidden'] = isset($this->settings['crud']['formName'])
-            ? $this->settings['crud']['formName']
-            : 'default';
+        $config['variables']['hidden'] = $this->settings['crud']['formName'] ?? 'default';
 
         $this->translateTitle($config);
 
@@ -895,9 +891,9 @@ class TableBuilder
             unset($data['Count']);
         }
 
-        $this->setRows(isset($data['results']) ? $data['results'] : $data);
-        $this->setTotal(isset($data['count']) ? $data['count'] : count($this->rows));
-        $this->setUnfilteredTotal(isset($data['count-unfiltered']) ? $data['count-unfiltered'] : $this->getTotal());
+        $this->setRows($data['results'] ?? $data);
+        $this->setTotal($data['count'] ?? count($this->rows));
+        $this->setUnfilteredTotal($data['count-unfiltered'] ?? $this->getTotal());
 
         // if there's only one row and we have a singular title, use it
         if ($this->getTotal() == 1) {
@@ -919,9 +915,7 @@ class TableBuilder
         }
 
         $defaults = [
-            'limit' => isset($this->settings['paginate']['limit']['default'])
-                ? $this->settings['paginate']['limit']['default']
-                : 10,
+            'limit' => $this->settings['paginate']['limit']['default'] ?? 10,
             'page' => self::DEFAULT_PAGE,
             'sort' => '',
             'order' => 'ASC'
@@ -1242,8 +1236,8 @@ class TableBuilder
 
         $crud = $this->getSetting('crud');
 
-        $actions = $this->trimActions(isset($crud['actions']) ? $crud['actions'] : []);
-        $links = $this->trimLinks(isset($crud['links']) ? $crud['links'] : []);
+        $actions = $this->trimActions($crud['actions'] ?? []);
+        $links = $this->trimLinks($crud['links'] ?? []);
 
         if (empty($actions) && empty($links)) {
             return '';
@@ -1339,7 +1333,7 @@ class TableBuilder
             $moreActions = [];
             foreach ($actions as $details) {
                 //  add css class to items
-                $cssClasses = (isset($details['class']) ? $details['class'] : '');
+                $cssClasses = ($details['class'] ?? '');
                 if (0 == preg_match('/(\s|^)more-actions__item($|\s)/', $cssClasses)) {
                     $details['class'] = $cssClasses . ' more-actions__item';
                 }
@@ -1576,7 +1570,7 @@ class TableBuilder
 
             // allow for the fact a formatter may have already set some content
             // which the type should respect
-            $formattedContent = isset($row['content']) ? $row['content'] : null;
+            $formattedContent = $row['content'] ?? null;
             $content = $type->render($row, $column, $formattedContent);
         }
 
@@ -1857,15 +1851,15 @@ class TableBuilder
         $newActions = [];
 
         foreach ($actions as $name => $details) {
-            $value = isset($details['value']) ? $details['value'] : ucwords($name);
+            $value = $details['value'] ?? ucwords($name);
 
             $label = isset($details['label']) ? $this->translator->translate($details['label']) : $value;
 
-            $class = isset($details['class']) ? $details['class'] : 'govuk-button govuk-button--secondary';
+            $class = $details['class'] ?? 'govuk-button govuk-button--secondary';
 
-            $id = isset($details['id']) ? $details['id'] : $name;
+            $id = $details['id'] ?? $name;
 
-            $disabled = isset($details['disabled']) ? $details['disabled'] : '';
+            $disabled = $details['disabled'] ?? '';
             if ($disabled) {
                 $class .= ' js-force-disable';
             }
@@ -1898,16 +1892,16 @@ class TableBuilder
         $newLinks = [];
 
         foreach ($links as $name => $details) {
-            $value = isset($details['value']) ? $details['value'] : ucwords($name);
+            $value = $details['value'] ?? ucwords($name);
 
             $label = isset($details['label']) ? $this->translator->translate($details['label']) : $value;
 
-            $class = isset($details['class']) ? $details['class'] : 'govuk-button govuk-button--secondary';
+            $class = $details['class'] ?? 'govuk-button govuk-button--secondary';
 
-            $route = isset($details['route']['route']) ? $details['route']['route'] : null;
-            $params = isset($details['route']['params']) ? $details['route']['params'] : [];
-            $options = isset($details['route']['options']) ? $details['route']['options'] : [];
-            $reuse = isset($details['route']['reuse']) ? $details['route']['reuse'] : false;
+            $route = $details['route']['route'] ?? null;
+            $params = $details['route']['params'] ?? [];
+            $options = $details['route']['options'] ?? [];
+            $reuse = $details['route']['reuse'] ?? false;
 
             $newLinks[] = [
                 'href' => $this->getUrl()->fromRoute($route, $params, $options, $reuse),
@@ -1960,9 +1954,7 @@ class TableBuilder
 
         return array_filter(
             $items,
-            function (array $item) {
-                return !isset($item['requireRows']) || (bool)$item['requireRows'] === false;
-            }
+            fn(array $item) => !isset($item['requireRows']) || (bool)$item['requireRows'] === false
         );
     }
 
@@ -1981,9 +1973,7 @@ class TableBuilder
 
         return array_filter(
             $items,
-            function (array $item) {
-                return isset($item['keepForReadOnly']) && (bool)$item['keepForReadOnly'] === true;
-            }
+            fn(array $item) => isset($item['keepForReadOnly']) && (bool)$item['keepForReadOnly'] === true
         );
     }
 

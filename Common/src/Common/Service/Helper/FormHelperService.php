@@ -276,7 +276,7 @@ class FormHelperService
         $name = $fieldset->getName();
 
         if (!($fieldset instanceof Address)) {
-            $data = isset($post[$name]) ? $post[$name] : [];
+            $data = $post[$name] ?? [];
             $processed = false;
             $modified = false;
 
@@ -447,7 +447,7 @@ class FormHelperService
      */
     private function removeElement($form, InputFilterInterface $filter, $elementReference)
     {
-        list($form, $filter, $name) = $this->getElementAndInputParents($form, $filter, $elementReference);
+        [$form, $filter, $name] = $this->getElementAndInputParents($form, $filter, $elementReference);
 
         $form->remove($name);
         $filter->remove($name);
@@ -466,7 +466,7 @@ class FormHelperService
     public function getElementAndInputParents($form, InputFilterInterface $filter, $elementReference)
     {
         if (false !== strpos($elementReference, '->')) {
-            list($container, $elementReference) = explode('->', $elementReference, 2);
+            [$container, $elementReference] = explode('->', $elementReference, 2);
 
             return $this->getElementAndInputParents(
                 $form->get($container),
@@ -525,7 +525,7 @@ class FormHelperService
     public function disableEmptyValidationOnElement($form, $reference)
     {
         /** @var InputFilterInterface $filter */
-        list(, $filter, $name) = $this->getElementAndInputParents($form, $form->getInputFilter(), $reference);
+        [, $filter, $name] = $this->getElementAndInputParents($form, $form->getInputFilter(), $reference);
         $filter->get($name)->setRequired(false);
     }
 
@@ -552,7 +552,7 @@ class FormHelperService
         }
 
         if (false !== strpos($reference, '->')) {
-            list($index, $reference) = explode('->', $reference, 2);
+            [$index, $reference] = explode('->', $reference, 2);
 
             return $this->disableElement($form->get($index), $reference, $filter->get($index));
         }
@@ -840,7 +840,7 @@ class FormHelperService
     public function removeValidator(FormInterface $form, $reference, $validatorClass)
     {
         /** @var InputFilterInterface $filter */
-        list(, $filter, $field) = $this->getElementAndInputParents($form, $form->getInputFilter(), $reference);
+        [, $filter, $field] = $this->getElementAndInputParents($form, $form->getInputFilter(), $reference);
 
         /** @var ValidatorChain $validatorChain */
         $validatorChain = $filter->get($field)->getValidatorChain();
@@ -867,7 +867,7 @@ class FormHelperService
     public function attachValidator(FormInterface $form, $reference, $validator)
     {
         /** @var InputFilterInterface $filter */
-        list(, $filter, $field) = $this->getElementAndInputParents($form, $form->getInputFilter(), $reference);
+        [, $filter, $field] = $this->getElementAndInputParents($form, $form->getInputFilter(), $reference);
 
         /** @var ValidatorChain $validatorChain */
         $validatorChain = $filter->get($field)->getValidatorChain();
@@ -887,7 +887,7 @@ class FormHelperService
     public function getValidator(FormInterface $form, $reference, $validatorClass)
     {
         /** @var InputFilterInterface $filter */
-        list(, $filter, $field) = $this->getElementAndInputParents($form, $form->getInputFilter(), $reference);
+        [, $filter, $field] = $this->getElementAndInputParents($form, $form->getInputFilter(), $reference);
 
         /** @var ValidatorChain $validatorChain */
         $validatorChain = $filter->get($field)->getValidatorChain();

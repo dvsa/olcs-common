@@ -20,7 +20,7 @@ class AggregateInterfaceTest extends \PHPUnit\Framework\TestCase
      */
     public function testAggregateInterfaceMethodsExist()
     {
-        $interface = $this->createMock('Common\Crud\AggregateInterface');
+        $interface = $this->createMock(\Common\Crud\AggregateInterface::class);
 
         $this->assertTrue(method_exists($interface, 'create'));
         $this->assertTrue(method_exists($interface, 'get'));

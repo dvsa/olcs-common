@@ -21,13 +21,13 @@ class Selector extends AbstractType
      * translation keys
      * used by the extending ActionLinks and DeltaActionLinks classes
      */
-    const ARIA_LABEL_FORMAT = '%s (%s)';
-    const KEY_ACTION_LINKS_REMOVE = 'action_links.remove';
-    const KEY_ACTION_LINKS_REMOVE_ARIA = 'action_links.remove.aria';
-    const KEY_ACTION_LINKS_REPLACE = 'action_links.replace';
-    const KEY_ACTION_LINKS_REPLACE_ARIA = 'action_links.replace.aria';
-    const KEY_ACTION_LINKS_RESTORE = 'action_links.restore';
-    const KEY_ACTION_LINKS_RESTORE_ARIA = 'action_links.restore.aria';
+    public const ARIA_LABEL_FORMAT = '%s (%s)';
+    public const KEY_ACTION_LINKS_REMOVE = 'action_links.remove';
+    public const KEY_ACTION_LINKS_REMOVE_ARIA = 'action_links.remove.aria';
+    public const KEY_ACTION_LINKS_REPLACE = 'action_links.replace';
+    public const KEY_ACTION_LINKS_REPLACE_ARIA = 'action_links.replace.aria';
+    public const KEY_ACTION_LINKS_RESTORE = 'action_links.restore';
+    public const KEY_ACTION_LINKS_RESTORE_ARIA = 'action_links.restore.aria';
 
     protected $format = '<input type="radio" name="%s" value="%s" %s />';
 

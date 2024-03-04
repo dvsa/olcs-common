@@ -64,9 +64,7 @@ class Application extends InternalSearchAbstract
             [
                 'title' => 'Application id',
                 'name' => 'appId',
-                'formatter' => function ($data) {
-                    return '<a class="govuk-link" href="/application/' . $data['appId'] . '">' . $data['appId'] . '</a>';
-                }
+                'formatter' => fn($data) => '<a class="govuk-link" href="/application/' . $data['appId'] . '">' . $data['appId'] . '</a>'
             ],
             ['title' => 'Application status', 'name' => 'appStatusDesc'],
             [

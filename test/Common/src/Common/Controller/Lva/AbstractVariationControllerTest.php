@@ -50,7 +50,7 @@ class AbstractVariationControllerTest extends MockeryTestCase
             ->andReturn('sometext');
 
         $mockRequest = m::mock();
-        $mockForm = m::mock('\Laminas\Form\Form');
+        $mockForm = m::mock(\Laminas\Form\Form::class);
 
         // Expectations
         $this->sut->shouldReceive('getRequest')
@@ -84,7 +84,7 @@ class AbstractVariationControllerTest extends MockeryTestCase
         ];
 
         $mockRequest = m::mock();
-        $mockForm = m::mock('\Laminas\Form\Form');
+        $mockForm = m::mock(\Laminas\Form\Form::class);
 
         // Expectations
         $this->sut->shouldReceive('getRequest')

@@ -12,7 +12,7 @@ namespace Common\Validator;
  */
 class FileUploadCount extends \Laminas\Validator\AbstractValidator
 {
-    const TOO_FEW = 'fileCountTooFew';
+    public const TOO_FEW = 'fileCountTooFew';
 
     /**
      * Error messages

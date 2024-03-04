@@ -632,8 +632,8 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $defaultSort = $this->lva == 'variation' ? 'lastModifiedOn' : 'createdOn';
         $params = [
             'id' => $this->getIdentifier(),
-            'sort'  => isset($query['sort']) ? $query['sort'] : $defaultSort,
-            'order' => isset($query['order']) ? $query['order'] : 'DESC',
+            'sort'  => $query['sort'] ?? $defaultSort,
+            'order' => $query['order'] ?? 'DESC',
         ];
 
         $response = $this->handleQuery($queryDtoClass::create($params));

@@ -57,8 +57,8 @@ class TransportManagerDateOfBirth extends Date
     {
         $viewHelper = $this->viewHelperManager->get('transportManagerApplicationStatus');
 
-        $id = (isset($data['status']['id'])) ? $data['status']['id'] : '';
-        $description = (isset($data['status']['description'])) ? $data['status']['description'] : '';
+        $id = $data['status']['id'] ?? '';
+        $description = $data['status']['description'] ?? '';
 
         return $viewHelper->render($id, $description);
     }

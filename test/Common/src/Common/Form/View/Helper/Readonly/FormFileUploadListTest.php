@@ -19,7 +19,7 @@ class FormFileUploadListTest extends MockeryTestCase
 {
     public function testRenderInvalidElement()
     {
-        $this->expectException(\Exception::class, 'Parameter must be instance of ' . FileUploadList::class);
+        $this->expectException(\Exception::class);
 
         $sut = new FormFileUploadList();
         $sut->render(m::mock(FieldsetInterface::class));
@@ -66,9 +66,7 @@ class FormFileUploadListTest extends MockeryTestCase
         $mockView
             ->shouldReceive('plugin')->with('readonlyformitem')->andReturn($mockFormItem)
             ->shouldReceive('translate')->andReturnUsing(
-                function ($arg) {
-                    return '_TRANSL_' . $arg;
-                }
+                fn($arg) => '_TRANSL_' . $arg
             );
 
         $sut = new FormFileUploadList();

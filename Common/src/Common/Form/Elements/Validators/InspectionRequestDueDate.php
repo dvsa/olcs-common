@@ -20,7 +20,7 @@ class InspectionRequestDueDate extends AbstractValidator
      * Error codes
      * @const string
      */
-    const NOT_SAME_OR_MORE = 'notSameOrMore';
+    public const NOT_SAME_OR_MORE = 'notSameOrMore';
 
     /**
      * Error messages

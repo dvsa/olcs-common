@@ -105,24 +105,24 @@ class FormTest extends TestCase
 
     public function testReadonly()
     {
-        $mockElement = m::mock('Laminas\Form\ElementInterface');
+        $mockElement = m::mock(\Laminas\Form\ElementInterface::class);
         $mockElement->shouldReceive('getName')->andReturn('name');
 
-        $mockHelper = m::mock('Common\Form\View\Helper\FormCollection');
+        $mockHelper = m::mock(\Common\Form\View\Helper\FormCollection::class);
         $mockHelper->shouldReceive('setReadOnly')->once()->with(true);
         $mockHelper->shouldReceive('__invoke')->with($mockElement)->andReturn('element');
 
         $iterator = new PriorityList();
         $iterator->insert($mockElement);
 
-        $mockForm = m::mock('Laminas\Form\Form');
+        $mockForm = m::mock(\Laminas\Form\Form::class);
         $mockForm->shouldReceive('prepare');
         $mockForm->shouldReceive('getIterator')->andReturn($iterator);
         $mockForm->shouldReceive('getOption')->with('readonly')->andReturn(true);
         $mockForm->shouldReceive('getAttributes')->andReturn([]);
         $mockForm->shouldReceive('getAttribute')->with('action')->once()->andReturn('foo');
 
-        $mockView = m::mock('Laminas\View\Renderer\RendererInterface');
+        $mockView = m::mock(\Laminas\View\Renderer\RendererInterface::class);
         $mockView->shouldReceive('formCollection')->andReturn($mockHelper);
         $mockView->shouldReceive('plugin')->with('readonlyformrow')->andReturn($mockHelper);
 
@@ -204,7 +204,7 @@ class FormTest extends TestCase
             ->shouldReceive('has')->once()->with('rows')->andReturn(false)
             ->getMock();
 
-        $mockHelper = m::mock('Common\Form\View\Helper\FormCollection')
+        $mockHelper = m::mock(\Common\Form\View\Helper\FormCollection::class)
             ->shouldReceive('setReadOnly')
             ->with(false)
             ->once()
@@ -258,7 +258,7 @@ class FormTest extends TestCase
             ->shouldReceive('get')->once()->with('table')->andReturn($mockTableElement)
             ->getMock();
 
-        $mockHelper = m::mock('Common\Form\View\Helper\FormCollection')
+        $mockHelper = m::mock(\Common\Form\View\Helper\FormCollection::class)
             ->shouldReceive('setReadOnly')
             ->with(false)
             ->once()

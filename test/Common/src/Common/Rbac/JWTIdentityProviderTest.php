@@ -22,7 +22,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
 {
     use MocksServicesTrait;
 
-    const DATA_WITH_ROLES = [
+    public const DATA_WITH_ROLES = [
         'userType' => 'user_type',
         'loginId' => 'login_id',
         'id' => 1,
@@ -32,13 +32,13 @@ class JWTIdentityProviderTest extends MockeryTestCase
             ['role' => 'role3'],
         ]
     ];
-    const DATA_WITHOUT_ROLES = [
+    public const DATA_WITHOUT_ROLES = [
         'userType' => 'user_type',
         'loginId' => 'login_id',
         'id' => 1
     ];
 
-    const TOKEN_SESSION_DATA = [
+    public const TOKEN_SESSION_DATA = [
         'Token' => [
             'refreshToken' => 'abc1234'
         ],

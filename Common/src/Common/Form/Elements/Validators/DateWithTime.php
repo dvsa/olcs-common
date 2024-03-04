@@ -25,8 +25,8 @@ class DateWithTime extends AbstractValidator
      * Error codes
      * @const string
      */
-    const MISSING_TIME = 'missingTime';
-    const MISSING_TOKEN = 'missingToken';
+    public const MISSING_TIME = 'missingTime';
+    public const MISSING_TOKEN = 'missingToken';
 
     /**
      * Error messages

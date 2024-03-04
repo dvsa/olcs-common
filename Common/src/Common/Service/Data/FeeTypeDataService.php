@@ -13,10 +13,10 @@ use Dvsa\Olcs\Transfer\Query\Fee\GetLatestFeeType;
  */
 class FeeTypeDataService extends AbstractDataService
 {
-    const FEE_TYPE_APP = 'APP';
-    const FEE_TYPE_VAR = 'VAR';
-    const FEE_TYPE_CONT = 'CONT';
-    const FEE_TYPE_GRANTINT = 'GRANTINT';
-    const FEE_TYPE_BUSAPP = 'BUSAPP';
-    const FEE_TYPE_BUSVAR = 'BUSVAR';
+    public const FEE_TYPE_APP = 'APP';
+    public const FEE_TYPE_VAR = 'VAR';
+    public const FEE_TYPE_CONT = 'CONT';
+    public const FEE_TYPE_GRANTINT = 'GRANTINT';
+    public const FEE_TYPE_BUSAPP = 'BUSAPP';
+    public const FEE_TYPE_BUSVAR = 'BUSVAR';
 }

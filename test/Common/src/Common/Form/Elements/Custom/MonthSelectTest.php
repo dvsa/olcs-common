@@ -31,7 +31,7 @@ class MonthSelectTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(null, $spec['required']);
         $this->assertCount(1, $spec['validators']);
         $this->assertCount(1, $spec['filters']);
-        $this->assertInstanceOf('\Laminas\Validator\Regex', $spec['validators'][0]);
+        $this->assertInstanceOf(\Laminas\Validator\Regex::class, $spec['validators'][0]);
 
         // Test the filter
         $this->assertNull($spec['filters'][0]['options']['callback']('foo'));

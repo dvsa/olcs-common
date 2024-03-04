@@ -28,11 +28,11 @@ class DecompressToTmpTest extends MockeryTestCase
             eval('namespace Common\Filter; function register_shutdown_function ($callback) { $callback(); }');
         }
 
-        $mockFilter = m::mock('\Laminas\Filter\Decompress');
+        $mockFilter = m::mock(\Laminas\Filter\Decompress::class);
         $mockFilter->shouldReceive('filter')->with($filename)->andReturn($filePath);
         $mockFilter->shouldReceive('setTarget')->with($extractDir);
 
-        $mockFileSystem = m::mock('Common\Filesystem\Filesystem');
+        $mockFileSystem = m::mock(\Common\Filesystem\Filesystem::class);
         $mockFileSystem->shouldReceive('createTmpDir')->with($tmpDir, 'zip')->andReturn($extractDir);
         $mockFileSystem->shouldReceive('remove')->with($extractDir);
 

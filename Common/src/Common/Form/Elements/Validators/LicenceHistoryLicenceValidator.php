@@ -32,8 +32,8 @@ class LicenceHistoryLicenceValidator extends AbstractValidator
 
     public function __construct($options = [])
     {
-        $this->name = isset($options['name']) ? $options['name'] : 'noLicence';
-        $this->table = isset($options['table']) ? $options['table'] : 'table';
+        $this->name = $options['name'] ?? 'noLicence';
+        $this->table = $options['table'] ?? 'table';
 
         parent::__construct([]);
     }

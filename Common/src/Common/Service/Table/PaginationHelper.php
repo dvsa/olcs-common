@@ -12,8 +12,8 @@ namespace Common\Service\Table;
  */
 class PaginationHelper
 {
-    const ELLIPSE = '…';
-    const CLASS_PAGINATION_ITEM_CURRENT = 'govuk-pagination__item--current';
+    public const ELLIPSE = '…';
+    public const CLASS_PAGINATION_ITEM_CURRENT = 'govuk-pagination__item--current';
 
     /**
      * Current page

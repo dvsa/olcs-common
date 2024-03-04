@@ -27,7 +27,7 @@ class AbstractBusinessTypeControllerTest extends AbstractLvaControllerTestCase
 
     protected function mockController($className, array $constructorParams = [])
     {
-        $this->request = m::mock('\Laminas\Http\Request')->makePartial();
+        $this->request = m::mock(\Laminas\Http\Request::class)->makePartial();
 
         // If constructor params are provided, pass them to the mock, otherwise mock without them
         if (!empty($constructorParams)) {

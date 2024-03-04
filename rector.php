@@ -6,8 +6,8 @@ use Rector\Config\RectorConfig;
 
 return RectorConfig::configure()
     ->withPaths([
-        __DIR__ . '/Common',
-        //__DIR__ . '/Scripts',
-        // __DIR__ . '/test',
+        // __DIR__ . '/Common',
+        // __DIR__ . '/Scripts',
+        __DIR__ . '/test',
     ])
     ->withPhpSets();

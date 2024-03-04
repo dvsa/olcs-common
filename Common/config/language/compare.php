@@ -72,7 +72,7 @@ if ($argv[1] === 'u') {
             echo sprintf(
                 "|%s|%s|%s|\n",
                 $key,
-                isset($english[$key]) ? $english[$key] : '',
+                $english[$key] ?? '',
                 $value
             );
         }
@@ -92,7 +92,7 @@ if ($argv[1] === 'us') {
             echo sprintf(
                 "|%s|%s|%s|\n",
                 $key,
-                isset($english[$key]) ? $english[$key] : '',
+                $english[$key] ?? '',
                 $value
             );
         }

@@ -22,7 +22,7 @@ class DateNotInFuture extends DateRequired implements InputProviderInterface
     {
         return [
             ['name' => 'Date', 'options' => ['format' => 'Y-m-d']],
-            ['name' => '\Common\Form\Elements\Validators\DateNotInFuture']
+            ['name' => \Common\Form\Elements\Validators\DateNotInFuture::class]
         ];
     }
 }

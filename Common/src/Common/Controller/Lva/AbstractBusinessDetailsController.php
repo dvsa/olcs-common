@@ -143,7 +143,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         }
 
         // We'll re-use this in a few places, so cache the lookup just for the sake of legibility
-        $tradingNames = isset($data['data']['tradingNames']) ? $data['data']['tradingNames'] : [];
+        $tradingNames = $data['data']['tradingNames'] ?? [];
 
         // If we are interacting with the trading names collection element
         if (isset($data['data']['submit_add_trading_name'])) {
@@ -174,7 +174,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
                 'tradingNames' => $this->flattenTradingNames($tradingNames),
                 'natureOfBusiness' => $data['data']['natureOfBusiness'] ?? null,
                 'companyOrLlpNo' => $data['data']['companyNumber']['company_number'] ?? null,
-                'registeredAddress' => isset($data['registeredAddress']) ? $data['registeredAddress'] : null,
+                'registeredAddress' => $data['registeredAddress'] ?? null,
                 'partial' => $crudAction !== null,
                 'allowEmail' => $data['allow-email']['allowEmail'] ?? null,
             ];

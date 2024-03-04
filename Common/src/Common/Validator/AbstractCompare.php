@@ -18,13 +18,13 @@ abstract class AbstractCompare extends AbstractValidator
      * Error codes
      * @const string
      */
-    const NOT_GTE = 'notGreaterThanOrEqual';
-    const NOT_GT = 'notGreaterThan';
-    const NOT_LTE = 'notLessThanOrEqual';
-    const NOT_LT = 'notLessThan';
-    const INVALID_OPERATOR = 'invalidOperator';
-    const INVALID_FIELD = 'invalidField';
-    const NO_COMPARE = 'noCompare';
+    public const NOT_GTE = 'notGreaterThanOrEqual';
+    public const NOT_GT = 'notGreaterThan';
+    public const NOT_LTE = 'notLessThanOrEqual';
+    public const NOT_LT = 'notLessThan';
+    public const INVALID_OPERATOR = 'invalidOperator';
+    public const INVALID_FIELD = 'invalidField';
+    public const NO_COMPARE = 'noCompare';
 
     /**
      * @var array

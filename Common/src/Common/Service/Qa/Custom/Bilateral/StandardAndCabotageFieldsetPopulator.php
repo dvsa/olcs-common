@@ -8,11 +8,11 @@ use Laminas\Form\Fieldset;
 
 class StandardAndCabotageFieldsetPopulator implements FieldsetPopulatorInterface
 {
-    const ANSWER_CABOTAGE_ONLY = 'qanda.bilaterals.cabotage.answer.cabotage-only';
-    const ANSWER_STANDARD_AND_CABOTAGE = 'qanda.bilaterals.cabotage.answer.standard-and-cabotage';
-    const ANSWER_STANDARD_ONLY = 'qanda.bilaterals.cabotage.answer.standard-only';
+    public const ANSWER_CABOTAGE_ONLY = 'qanda.bilaterals.cabotage.answer.cabotage-only';
+    public const ANSWER_STANDARD_AND_CABOTAGE = 'qanda.bilaterals.cabotage.answer.standard-and-cabotage';
+    public const ANSWER_STANDARD_ONLY = 'qanda.bilaterals.cabotage.answer.standard-only';
 
-    const CABOTAGE_VALUE_OPTIONS = [
+    public const CABOTAGE_VALUE_OPTIONS = [
         self::ANSWER_CABOTAGE_ONLY => self::ANSWER_CABOTAGE_ONLY,
         self::ANSWER_STANDARD_AND_CABOTAGE => self::ANSWER_STANDARD_AND_CABOTAGE
     ];

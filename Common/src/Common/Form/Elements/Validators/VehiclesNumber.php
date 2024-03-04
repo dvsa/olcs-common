@@ -59,9 +59,9 @@ class VehiclesNumber extends AbstractValidator
 
         $total = 0;
 
-        $total += (isset($context['noOfVehiclesRequired']) ? $context['noOfVehiclesRequired'] : 0);
+        $total += ($context['noOfVehiclesRequired'] ?? 0);
 
-        $total += (isset($context['noOfTrailersRequired']) ? $context['noOfTrailersRequired'] : 0);
+        $total += ($context['noOfTrailersRequired'] ?? 0);
 
         if ($total < 1) {
             if (!isset($context['noOfTrailersRequired'])) {

@@ -14,8 +14,8 @@ class DateLessThanOrEqual extends AbstractValidator
      * Error codes
      * @const string
      */
-    const NOT_LESS_THAN_OR_EQUAL = 'notLessThanOrEqual';
-    const MISSING_TOKEN = 'missingToken';
+    public const NOT_LESS_THAN_OR_EQUAL = 'notLessThanOrEqual';
+    public const MISSING_TOKEN = 'missingToken';
 
     /**
      * Error messages

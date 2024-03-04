@@ -190,11 +190,11 @@ class FormCollectionTest extends MockeryTestCase
 
     public function testReadOnly()
     {
-        $mockElement = m::mock('Laminas\Form\ElementInterface');
+        $mockElement = m::mock(\Laminas\Form\ElementInterface::class);
         $mockElement->shouldReceive('getOption')->with('hint')->andReturnNull();
         $mockElement->shouldReceive('getOption')->with('remove_if_readonly')->andReturnNull();
 
-        $mockHelper = m::mock('Common\Form\View\Helper\Readonly\FormRow');
+        $mockHelper = m::mock(\Common\Form\View\Helper\Readonly\FormRow::class);
         $mockHelper->shouldReceive('__invoke')->with($mockElement)->andReturn('element');
 
         $mockFieldsetHlpr = m::mock(\Common\Form\View\Helper\Readonly\FormFieldset::class)->makePartial();
@@ -202,7 +202,7 @@ class FormCollectionTest extends MockeryTestCase
         $iterator = new PriorityQueue();
         $iterator->insert($mockElement);
 
-        $mockFieldset = m::mock('Laminas\Form\FieldsetInterface');
+        $mockFieldset = m::mock(\Laminas\Form\FieldsetInterface::class);
         $mockFieldset->shouldReceive('getMessages')->andReturn([]);
         $mockFieldset->shouldReceive('getAttribute')->with('class')->andReturn('unit_CssClass');
         $mockFieldset->shouldReceive('getAttributes')->andReturn([]);
@@ -256,9 +256,7 @@ class FormCollectionTest extends MockeryTestCase
         $mockView = m::mock($viewHelper->getView())->makePartial();
         $mockView
             ->shouldReceive('translate')->andReturnUsing(
-                function ($arg) {
-                    return '_TRANSL_' . $arg;
-                }
+                fn($arg) => '_TRANSL_' . $arg
             );
         $viewHelper->setView($mockView);
 
@@ -329,9 +327,7 @@ class FormCollectionTest extends MockeryTestCase
             m::mock(Helper\AbstractHelper::class)->shouldReceive('render')->getMock()
         );
         $mockView->shouldReceive('plugin')->with('formRadioHorizontal')->once()->andReturn(
-            function () {
-                return "formRadioHorizontal MARKUP";
-            }
+            fn() => "formRadioHorizontal MARKUP"
         );
         $mockView->expects('plugin')->with('doctype')->andReturn(
             m::mock(Doctype::class)
@@ -351,9 +347,7 @@ class FormCollectionTest extends MockeryTestCase
     {
         $mockView = m::mock(PhpRenderer::class);
         $mockView->shouldReceive('plugin')->with('formRadioVertical')->once()->andReturn(
-            function () {
-                return "formRadioVertical MARKUP";
-            }
+            fn() => "formRadioVertical MARKUP"
         );
 
         $sut = new FormCollection();

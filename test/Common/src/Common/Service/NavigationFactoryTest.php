@@ -32,33 +32,31 @@ class NavigationFactoryTest extends TestCase
                 'extra_config'         => [
                     'service_manager' => [
                         'factories' => [
-                            'Config' => function () {
-                                return [
-                                    'navigation' => [
-                                        'file'    => __DIR__ . '/_files/navigation.xml',
-                                        'default' => [
-                                            [
-                                                'label' => 'Page 1',
-                                                'uri'   => 'page1.html'
-                                            ],
-                                            [
-                                                'label' => 'MVC Page',
-                                                'route' => 'foo',
-                                                'pages' => [
-                                                    [
-                                                        'label' => 'Sub MVC Page',
-                                                        'route' => 'foo'
-                                                    ]
+                            'Config' => fn() => [
+                                'navigation' => [
+                                    'file'    => __DIR__ . '/_files/navigation.xml',
+                                    'default' => [
+                                        [
+                                            'label' => 'Page 1',
+                                            'uri'   => 'page1.html'
+                                        ],
+                                        [
+                                            'label' => 'MVC Page',
+                                            'route' => 'foo',
+                                            'pages' => [
+                                                [
+                                                    'label' => 'Sub MVC Page',
+                                                    'route' => 'foo'
                                                 ]
-                                            ],
-                                            [
-                                                'label' => 'Page 3',
-                                                'uri'   => 'page3.html'
                                             ]
+                                        ],
+                                        [
+                                            'label' => 'Page 3',
+                                            'uri'   => 'page3.html'
                                         ]
                                     ]
-                                ];
-                            }
+                                ]
+                            ]
                         ]
                     ],
                 ]

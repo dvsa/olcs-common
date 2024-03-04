@@ -4,7 +4,7 @@ namespace Common\Form\Elements\Validators;
 
 class EcmtCandidatePermitSelectionValidator
 {
-    const CANDIDATE_VALUE_PREFIX = 'candidate-';
+    public const CANDIDATE_VALUE_PREFIX = 'candidate-';
 
     /**
      * Verify that at least one checkbox has been ticked amongst all candidate permit checkboxes

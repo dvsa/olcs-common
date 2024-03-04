@@ -11,8 +11,8 @@ class LicenceOperatingCentre extends AbstractDataService implements ListDataInte
 {
     use LicenceServiceTrait;
 
-    const OUTPUT_TYPE_FULL = 1;
-    const OUTPUT_TYPE_PARTIAL = 2;
+    public const OUTPUT_TYPE_FULL = 1;
+    public const OUTPUT_TYPE_PARTIAL = 2;
 
     /**
      * @var int

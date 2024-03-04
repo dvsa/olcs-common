@@ -17,7 +17,7 @@ class DateCompareWithInterval extends DateCompare
      * Error codes
      * @const string
      */
-    const INVALID_INTERVAL = 'invalidInterval';
+    public const INVALID_INTERVAL = 'invalidInterval';
 
     /**
      * Error messages

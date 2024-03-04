@@ -137,7 +137,7 @@ class FileControllerTest extends TestCase
 
         $this->sut->shouldReceive('handleQuery')->once()->andReturn($mockResp);
 
-        static::expectException(\RuntimeException::class, 'Error downloading file');
+        static::expectException(\RuntimeException::class);
 
         static::assertEquals('EXPECTED_ERR_NOT_FOUND', $this->sut->downloadAction());
     }

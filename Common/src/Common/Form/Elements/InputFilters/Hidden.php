@@ -45,7 +45,7 @@ class Hidden extends LaminasElement implements InputProviderInterface
             'name' => $this->getName(),
             'required' => $this->required,
             'filters' => [
-                ['name' => 'Laminas\Filter\StringTrim']
+                ['name' => \Laminas\Filter\StringTrim::class]
             ],
             'validators' => [
                 [
@@ -59,7 +59,7 @@ class Hidden extends LaminasElement implements InputProviderInterface
 
         if (!empty($this->max)) {
             $specification['validators'][] = [
-                'name' => 'Laminas\Validator\StringLength',
+                'name' => \Laminas\Validator\StringLength::class,
                 'options' => ['min' => 2, 'max' => $this->max]
             ];
         }

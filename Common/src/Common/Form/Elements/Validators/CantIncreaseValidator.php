@@ -20,7 +20,7 @@ class CantIncreaseValidator extends AbstractValidator
     /**
      * Message key constants
      */
-    const CANT_INCREASE = 1;
+    public const CANT_INCREASE = 1;
 
     /**
      * Holds the previous value

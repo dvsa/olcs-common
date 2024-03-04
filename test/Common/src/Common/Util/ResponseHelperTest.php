@@ -30,7 +30,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
         }
 
         return $this->createPartialMock(
-            '\Common\Util\ResponseHelper',
+            \Common\Util\ResponseHelper::class,
             $methods
         );
     }
@@ -40,7 +40,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
      */
     public function testSetResponse()
     {
-        $mock = $this->createMock('\Common\Util\ResponseHelper', null);
+        $mock = $this->createMock(\Common\Util\ResponseHelper::class);
         $response = new \Laminas\Http\Response;
         $mock->setResponse($response);
     }
@@ -50,7 +50,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
      */
     public function testGetResponse()
     {
-        $mock = $this->createMock('\Common\Util\ResponseHelper', null);
+        $mock = $this->createMock(\Common\Util\ResponseHelper::class);
         $mock->response = new \Laminas\Http\Response;
         $mock->getResponse();
     }
@@ -60,7 +60,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
      */
     public function testSetMethod()
     {
-        $mock = $this->createMock('\Common\Util\ResponseHelper', null);
+        $mock = $this->createMock(\Common\Util\ResponseHelper::class);
         $mock->setMethod('blah');
     }
 
@@ -69,7 +69,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
      */
     public function testSetParams()
     {
-        $mock = $this->createMock('\Common\Util\ResponseHelper', null);
+        $mock = $this->createMock(\Common\Util\ResponseHelper::class);
         $mock->setParams([1, 2, 3]);
     }
 
@@ -78,7 +78,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
      */
     public function testSetData()
     {
-        $mock = $this->createMock('\Common\Util\ResponseHelper', null);
+        $mock = $this->createMock(\Common\Util\ResponseHelper::class);
         $mock->getData([1, 2, 3]);
     }
 

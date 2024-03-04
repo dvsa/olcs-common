@@ -49,9 +49,7 @@ return [
         ],
         [
             'title' => 'lva-conditions-undertakings-table-status',
-            'formatter' => function ($data) {
-                return $data['isDraft'] == 'Y' ? 'Draft' : 'Approved';
-            },
+            'formatter' => fn($data) => $data['isDraft'] == 'Y' ? 'Draft' : 'Approved',
         ],
         [
             'title' => 'lva-conditions-undertakings-table-attached-to',

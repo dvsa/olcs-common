@@ -33,9 +33,7 @@ class RefDataTest extends MockeryTestCase
         $this->translator
             ->shouldReceive('translate')
             ->andReturnUsing(
-                function ($text) {
-                    return '_TRNSLT_' . $text;
-                }
+                fn($text) => '_TRNSLT_' . $text
             );
 
         $col = [

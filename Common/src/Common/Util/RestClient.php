@@ -114,7 +114,7 @@ class RestClient
      */
     public function url($path = null)
     {
-        list($path) = $this->pathOrParams($path);
+        [$path] = $this->pathOrParams($path);
         return $this->url->toString() . $path;
     }
 
@@ -143,7 +143,7 @@ class RestClient
      */
     public function post($path = null, array $params = [])
     {
-        list($path, $params) = $this->pathOrParams($path, $params);
+        [$path, $params] = $this->pathOrParams($path, $params);
         return $this->request('POST', $path, $params);
     }
 
@@ -169,7 +169,7 @@ class RestClient
      */
     public function get($path = null, array $params = [])
     {
-        list($path, $params) = $this->pathOrParams($path, $params);
+        [$path, $params] = $this->pathOrParams($path, $params);
         return $this->request('GET', $path, $params);
     }
 
@@ -197,7 +197,7 @@ class RestClient
      */
     public function put($path = null, array $params = [])
     {
-        list($path, $params) = $this->pathOrParams($path, $params);
+        [$path, $params] = $this->pathOrParams($path, $params);
         return $this->request('PUT', $path, $params);
     }
 
@@ -213,7 +213,7 @@ class RestClient
      */
     public function patch($path = null, array $params = [])
     {
-        list($path, $params) = $this->pathOrParams($path, $params);
+        [$path, $params] = $this->pathOrParams($path, $params);
         return $this->request('PATCH', $path, $params);
     }
 
@@ -226,7 +226,7 @@ class RestClient
      */
     public function delete($path = null, array $params = [])
     {
-        list($path, $params) = $this->pathOrParams($path, $params);
+        [$path, $params] = $this->pathOrParams($path, $params);
         return $this->request('DELETE', $path, $params);
     }
 

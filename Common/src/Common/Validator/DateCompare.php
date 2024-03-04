@@ -14,8 +14,8 @@ use Common\Filter\DateTimeSelectNullifier;
  */
 class DateCompare extends AbstractCompare
 {
-    const DATE_FORMAT = 'Y-m-d';
-    const DATETIME_FORMAT = 'Y-m-d H:i:s';
+    public const DATE_FORMAT = 'Y-m-d';
+    public const DATETIME_FORMAT = 'Y-m-d H:i:s';
 
     /**
      * Error messages

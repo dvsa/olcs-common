@@ -16,7 +16,7 @@ class NumberCompare extends AbstractCompare
      * Error codes
      * @const string
      */
-    const MAX_DIFF_EXCEEDED = 'maxDiffExceeded';
+    public const MAX_DIFF_EXCEEDED = 'maxDiffExceeded';
 
     /**
      * @var array

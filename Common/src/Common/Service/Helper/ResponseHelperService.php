@@ -27,14 +27,14 @@ class ResponseHelperService
     public function tableToCsv(Response $response, TableBuilder $table, $fileName)
     {
         foreach ($table->getColumns() as $column) {
-            $name = (isset($column['name']) ? $column['name'] : null);
+            $name = ($column['name'] ?? null);
             if (in_array($name, self::$ignoreColumnsByName, true)) {
                 $table->removeColumn($name);
 
                 continue;
             }
 
-            $type = (isset($column['type']) ? $column['type'] : null);
+            $type = ($column['type'] ?? null);
             if (in_array($type, self::$ignoreColumnsByType, true)) {
                 $table->removeColumn($name);
 

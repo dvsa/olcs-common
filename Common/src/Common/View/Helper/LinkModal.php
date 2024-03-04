@@ -14,7 +14,7 @@ use Laminas\View\Helper\AbstractHelper;
  */
 class LinkModal extends AbstractHelper
 {
-    const EXTRA_MODAL_CLASS = 'js-modal-ajax';
+    public const EXTRA_MODAL_CLASS = 'js-modal-ajax';
 
     public function __invoke(string $url, string $linkText, string $class = 'govuk-link'): string
     {

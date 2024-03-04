@@ -36,7 +36,7 @@ class FlashMessengerTest extends MockeryTestCase
         $this->mockPluginManager = m::mock('\Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger');
         $this->flashMessengerHelperService = m::mock(FlashMessengerHelperService::class);
 
-        $mockTranslator = m::mock('\Laminas\I18n\Translator\Translator');
+        $mockTranslator = m::mock(\Laminas\I18n\Translator\Translator::class);
         $mockTranslator->shouldReceive('translate')
             ->andReturnUsing([$this, 'translate']);
 

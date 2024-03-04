@@ -23,7 +23,7 @@ class CaseEntityName implements FormatterPluginManagerInterface
             }
 
             $person = $data['transportManager']['homeCd']['person'];
-            $title = (isset($person['title']) ? $person['title'] : null);
+            $title = ($person['title'] ?? null);
 
             return implode(
                 ' ',

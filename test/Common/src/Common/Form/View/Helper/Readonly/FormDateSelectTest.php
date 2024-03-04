@@ -20,7 +20,7 @@ class FormDateSelectTest extends TestCase
     public function testInvoke($element, $expected)
     {
         $sut = new FormDateSelect();
-        $expected = (($expected !== null) ? $expected : $sut);
+        $expected ??= $sut;
         $this->assertEquals($expected, $sut($element));
     }
 
@@ -29,19 +29,19 @@ class FormDateSelectTest extends TestCase
      */
     public function provideTestInvoke()
     {
-        $mockDs = m::mock('Laminas\Form\Element\DateSelect');
+        $mockDs = m::mock(\Laminas\Form\Element\DateSelect::class);
         $mockDs->shouldReceive('getYearElement->getValue')->andReturn('2014');
         $mockDs->shouldReceive('getMonthElement->getValue')->andReturn('11');
         $mockDs->shouldReceive('getDayElement->getValue')->andReturn('28');
 
-        $mockDsEmpty = m::mock('Laminas\Form\Element\DateSelect');
+        $mockDsEmpty = m::mock(\Laminas\Form\Element\DateSelect::class);
         $mockDsEmpty->shouldReceive('getYearElement->getValue')->andReturn(null);
 
         return [
             [$mockDs, '28/11/2014'],
             [$mockDsEmpty, ''],
             [null, null],
-            [m::mock('Laminas\Form\ElementInterface'), '']
+            [m::mock(\Laminas\Form\ElementInterface::class), '']
         ];
     }
 }

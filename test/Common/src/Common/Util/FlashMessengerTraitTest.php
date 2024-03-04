@@ -18,7 +18,7 @@ class FlashMessengerTraitTest extends m\Adapter\Phpunit\MockeryTestCase
     public function setUp(): void
     {
         $this->sut = $this->getMockForTrait(
-            '\Common\Util\FlashMessengerTrait',
+            \Common\Util\FlashMessengerTrait::class,
             [],
             '',
             true,
@@ -37,7 +37,7 @@ class FlashMessengerTraitTest extends m\Adapter\Phpunit\MockeryTestCase
     public function testGetFlashMessenger()
     {
         $this->sut = $this->getMockForTrait(
-            '\Common\Util\FlashMessengerTrait',
+            \Common\Util\FlashMessengerTrait::class,
             [],
             '',
             true,

@@ -27,11 +27,11 @@ class CompanyNumberTest extends \PHPUnit\Framework\TestCase
             'name' => null,
             'required' => true,
             'filters' => [
-                ['name' => 'Laminas\Filter\StringTrim'],
+                ['name' => \Laminas\Filter\StringTrim::class],
             ],
             'validators' => [
                 [
-                    'name' => 'Laminas\Validator\StringLength',
+                    'name' => \Laminas\Validator\StringLength::class,
                     'options'=> [
                         'min' => 1,
                         'max' => 8,

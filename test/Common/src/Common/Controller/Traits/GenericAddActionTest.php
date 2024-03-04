@@ -19,7 +19,7 @@ class GenericAddActionTest extends \PHPUnit\Framework\TestCase
     protected function setUp(): void
     {
         $this->sut = $this->getMockForTrait(
-            '\Common\Controller\Traits\GenericAddAction',
+            \Common\Controller\Traits\GenericAddAction::class,
             [],
             '',
             true,

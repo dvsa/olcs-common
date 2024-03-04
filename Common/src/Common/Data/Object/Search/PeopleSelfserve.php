@@ -82,9 +82,7 @@ class PeopleSelfserve extends InternalSearchAbstract
             [
                 'title' => 'Licence number',
                 'name'=> 'licNo',
-                'formatter' => function ($data) {
-                    return '<a class="govuk-link" href="/view-details/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>';
-                }
+                'formatter' => fn($data) => '<a class="govuk-link" href="/view-details/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>'
             ],
             [
                 'title' => 'Licence status',
@@ -101,9 +99,7 @@ class PeopleSelfserve extends InternalSearchAbstract
             ],
             [
                 'title' => 'Name',
-                'formatter' => function ($row) {
-                    return $row['personFullname'];
-                }
+                'formatter' => fn($row) => $row['personFullname']
             ],
             [
                 'permissionRequisites' => ['partner-user', 'partner-admin'],

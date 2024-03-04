@@ -66,7 +66,7 @@ trait CrudActionTrait
             $data['id'] = array_keys($data['action'][$action])[0];
         }
 
-        $routeParams = ['action' => isset($data['routeAction']) ? $data['routeAction'] : $action];
+        $routeParams = ['action' => $data['routeAction'] ?? $action];
 
         if (!in_array($action, $rowsNotRequired, true)) {
             if (!isset($data['id'])) {

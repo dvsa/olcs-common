@@ -4,7 +4,7 @@ namespace Common\Form;
 
 class BaseQaForm extends Form
 {
-    const QA_FIELDSET_NAME = 'qa';
+    public const QA_FIELDSET_NAME = 'qa';
 
     /**
      * Allow validators to run by filling in missing keys in input data

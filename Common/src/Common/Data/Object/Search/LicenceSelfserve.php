@@ -80,9 +80,7 @@ class LicenceSelfserve extends InternalSearchAbstract
             [
                 'title' => 'Licence number',
                 'name'=> 'licNo',
-                'formatter' => function ($data) {
-                    return '<a class="govuk-link" href="/view-details/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>';
-                }
+                'formatter' => fn($data) => '<a class="govuk-link" href="/view-details/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>'
             ],
             [
                 'title' => 'Licence status',
@@ -92,16 +90,12 @@ class LicenceSelfserve extends InternalSearchAbstract
             [
                 'title' => 'Operator name',
                 'name'=> 'orgName',
-                'formatter' => function ($data) {
-                    return $data['orgName'] . ($data['noOfLicencesHeld'] > 1 ? ' (MLH)' : '');
-                },
+                'formatter' => fn($data) => $data['orgName'] . ($data['noOfLicencesHeld'] > 1 ? ' (MLH)' : ''),
             ],
             [
                 'title' => 'Trading name',
                 'name'=> 'licenceTradingNames',
-                'formatter' => function ($data) {
-                    return str_replace('|', ', <br />', $data['licenceTradingNames']);
-                }
+                'formatter' => fn($data) => str_replace('|', ', <br />', $data['licenceTradingNames'])
             ]
         ];
     }
