@@ -72,6 +72,7 @@ class InternalConversationLink implements FormatterPluginManagerInterface
                 $route = 'licence/irhp-application-conversation/view';
                 $params = [
                     'licence' => $row['task']['licence']['id'],
+                    'irhpAppId' => $this->route->getParam('irhpAppId'),
                 ];
                 break;
         }
