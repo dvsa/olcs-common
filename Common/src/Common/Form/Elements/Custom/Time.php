@@ -24,9 +24,9 @@ class Time extends LaminasElement\Time
      */
     public function getInputSpecification(): array
     {
-        return array(
+        return [
             'name' => $this->getName(),
             'required' => false,
-        );
+        ];
     }
 }

@@ -69,7 +69,7 @@ trait GenericUpload
             }
         }
 
-        $mimeType = (isset($fileData['type']) ? $fileData['type'] : null);
+        $mimeType = ($fileData['type'] ?? null);
         $data['content'] = new FileContent($fileData['tmp_name'], $mimeType);
 
         /** @var \Common\Service\Cqrs\Response $response */

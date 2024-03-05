@@ -327,7 +327,7 @@ abstract class AbstractDiscsController extends AbstractController
             $data = $result['psvDiscs'];
             $this->spacesRemaining = $result['remainingSpacesPsv'];
 
-            $this->formTableData = array();
+            $this->formTableData = [];
 
             foreach ($data as $disc) {
                 $disc['discNo'] = $this->getDiscNumberFromDisc($disc);

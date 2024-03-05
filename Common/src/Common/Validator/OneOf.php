@@ -11,14 +11,14 @@ use Laminas\Validator\Exception;
  */
 class OneOf extends AbstractValidator
 {
-    const PROVIDE_ONE = 'provide_one';
+    public const PROVIDE_ONE = 'provide_one';
 
     /**
      * @var array
      */
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         self::PROVIDE_ONE         => 'Please provide at least one value',
-    );
+    ];
 
     /**
      * @var

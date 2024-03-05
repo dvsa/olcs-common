@@ -109,6 +109,6 @@ class RoleTest extends AbstractDataServiceTestCase
 
         $this->mockHandleQuery($mockResponse);
 
-        $this->sut->fetchListData([]);
+        $this->sut->fetchListData();
     }
 }

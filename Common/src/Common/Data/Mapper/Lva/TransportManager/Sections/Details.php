@@ -155,8 +155,8 @@ class Details extends AbstractSection
         }
         $formattedAddress['country'] = $data['countryCode']['countryDesc'];
 
-        $formattedAddress = array_diff($formattedAddress, array(''))
-            + array_intersect($formattedAddress, array(''));
+        $formattedAddress = array_diff($formattedAddress, [''])
+            + array_intersect($formattedAddress, ['']);
         return $formattedAddress;
     }
 }

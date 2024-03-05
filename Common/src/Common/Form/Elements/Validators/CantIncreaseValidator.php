@@ -20,7 +20,7 @@ class CantIncreaseValidator extends AbstractValidator
     /**
      * Message key constants
      */
-    const CANT_INCREASE = 1;
+    public const CANT_INCREASE = 1;
 
     /**
      * Holds the previous value
@@ -34,9 +34,9 @@ class CantIncreaseValidator extends AbstractValidator
      *
      * @var array
      */
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         self::CANT_INCREASE => 'cant-increase-validator'
-    );
+    ];
 
     /**
      * Set the message suffix so we can translate it

@@ -6,7 +6,7 @@
  */
 class CreateFromUnitTests
 {
-    const UT_TEMPLATE_FILE_NAME = 'FormUnitTestTemplate.php';
+    public const UT_TEMPLATE_FILE_NAME = 'FormUnitTestTemplate.php';
 
     private $path;
 

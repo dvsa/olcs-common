@@ -31,7 +31,7 @@ class DateSelectTest extends \PHPUnit\Framework\TestCase
 
         $validator = $spec['validators'][0];
 
-        $this->assertInstanceOf('Laminas\Validator\Date', $validator);
+        $this->assertInstanceOf(\Laminas\Validator\Date::class, $validator);
         $this->assertEquals('Y-m-d', $validator->getFormat());
 
         $validatorMessageTemplates = $validator->getMessageTemplates();

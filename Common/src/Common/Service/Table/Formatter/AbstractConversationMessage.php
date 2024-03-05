@@ -85,6 +85,6 @@ abstract class AbstractConversationMessage implements FormatterPluginManagerInte
         $base = log($bytes) / log(1024);
         $suffixes = ['B', 'KB', 'MB', 'GB', 'TB'];
 
-        return round(pow(1024, $base - floor($base)), 2) . $suffixes[floor($base)];
+        return round(1024 ** ($base - floor($base)), 2) . $suffixes[floor($base)];
     }
 }

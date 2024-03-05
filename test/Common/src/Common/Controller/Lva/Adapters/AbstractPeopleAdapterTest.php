@@ -118,7 +118,6 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
 
         $this->sut->shouldReceive('getOrganisationType')
             ->andReturn($type)
-            ->twice()
             ->getMock();
 
         $this->sut->alterFormForOrganisation(m::mock(Form::class), $mockTable);
@@ -162,7 +161,6 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
     {
         $this->sut->shouldReceive('getOrganisationType')
             ->andReturn($type)
-            ->twice()
             ->getMock();
         $this->assertEquals($expected, $this->sut->getAddLabelTextForOrganisation());
     }
@@ -183,7 +181,6 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
 
         $this->sut->shouldReceive('getOrganisationType')
             ->andReturn($type)
-            ->twice()
             ->getMock();
 
         $mockTable = m::mock(TableBuilder::class)

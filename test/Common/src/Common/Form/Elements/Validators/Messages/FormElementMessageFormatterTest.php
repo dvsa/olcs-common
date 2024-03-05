@@ -90,9 +90,7 @@ class FormElementMessageFormatterTest extends MockeryTestCase
     {
         // Setup
         $this->sut = $this->setUpSut($this->serviceManager());
-        $defaultMessageProvider = function ($val) {
-            return $val;
-        };
+        $defaultMessageProvider = fn($val) => $val;
 
         // Execute
         $this->sut->enableReplacementOfMessage(static::MESSAGE_KEY, $defaultMessageProvider);

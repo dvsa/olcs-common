@@ -3,18 +3,13 @@
 
 include_once(__DIR__ . '/../vendor/autoload.php');
 
-$testDirectories = array(
-    'common' => realpath(__DIR__ . '/../test'),
-    'backend' => realpath(__DIR__ . '/../../olcs-backend/test'),
-    'internal' => realpath(__DIR__ . '/../../olcs-internal/test'),
-    'selfserve' => realpath(__DIR__ . '/../../olcs-selfserve/test')
-);
+$testDirectories = ['common' => realpath(__DIR__ . '/../test'), 'backend' => realpath(__DIR__ . '/../../olcs-backend/test'), 'internal' => realpath(__DIR__ . '/../../olcs-internal/test'), 'selfserve' => realpath(__DIR__ . '/../../olcs-selfserve/test')];
 
 $commonDir = realpath(__DIR__ . '/../');
 
 $coverageDir = realpath(__DIR__ . '/../coverage/');
 
-$coverageObjects = array();
+$coverageObjects = [];
 
 foreach ($testDirectories as $key => $dir) {
     $fileName = $coverageDir . '/' . $key . '.cov';

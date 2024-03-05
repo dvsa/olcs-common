@@ -79,9 +79,7 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
         $rowsInput = $form->getInputFilter()->get('table')->get('rows');
         $validatorChain = $rowsInput->getValidatorChain();
 
-        $validatorExists = array_reduce($validatorChain->getValidators(), function ($found, $item) {
-            return $found || $item['instance'] instanceof TableRequiredValidator;
-        }, false);
+        $validatorExists = array_reduce($validatorChain->getValidators(), fn($found, $item) => $found || $item['instance'] instanceof TableRequiredValidator, false);
 
         if (!$validatorExists) {
             $tableRequiredValidator = new TableRequiredValidator(['label' => 'record']);

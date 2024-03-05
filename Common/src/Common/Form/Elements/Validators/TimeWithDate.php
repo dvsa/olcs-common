@@ -25,24 +25,24 @@ class TimeWithDate extends AbstractValidator
      * Error codes
      * @const string
      */
-    const MISSING_DATE = 'missingDate';
-    const MISSING_TOKEN = 'missingToken';
+    public const MISSING_DATE = 'missingDate';
+    public const MISSING_TOKEN = 'missingToken';
 
     /**
      * Error messages
      * @var array
      */
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         self::MISSING_DATE => "Hearing time requires a valid hearing date",
         self::MISSING_TOKEN => 'No token was provided to match against',
-    );
+    ];
 
     /**
      * @var array
      */
-    protected $messageVariables = array(
+    protected $messageVariables = [
         'token' => 'tokenString'
-    );
+    ];
 
     /**
      * Original token against which to validate
@@ -108,7 +108,7 @@ class TimeWithDate extends AbstractValidator
         $c = $context[$this->getToken()];
         $compareValue = implode('-', [$c['year'], $c['month'], $c['day']]);
 
-        $date = new DateValidator(array('format' => 'Y-m-d'));
+        $date = new DateValidator(['format' => 'Y-m-d']);
 
         if (!$date->isValid($compareValue)) {
             $this->error(self::MISSING_DATE);

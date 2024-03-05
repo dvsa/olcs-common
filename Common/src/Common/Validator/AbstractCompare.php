@@ -18,20 +18,20 @@ abstract class AbstractCompare extends AbstractValidator
      * Error codes
      * @const string
      */
-    const NOT_GTE = 'notGreaterThanOrEqual';
-    const NOT_GT = 'notGreaterThan';
-    const NOT_LTE = 'notLessThanOrEqual';
-    const NOT_LT = 'notLessThan';
-    const INVALID_OPERATOR = 'invalidOperator';
-    const INVALID_FIELD = 'invalidField';
-    const NO_COMPARE = 'noCompare';
+    public const NOT_GTE = 'notGreaterThanOrEqual';
+    public const NOT_GT = 'notGreaterThan';
+    public const NOT_LTE = 'notLessThanOrEqual';
+    public const NOT_LT = 'notLessThan';
+    public const INVALID_OPERATOR = 'invalidOperator';
+    public const INVALID_FIELD = 'invalidField';
+    public const NO_COMPARE = 'noCompare';
 
     /**
      * @var array
      */
-    protected $messageVariables = array(
+    protected $messageVariables = [
         'compare_to_label' => 'compareToLabel'
-    );
+    ];
 
     /**
      * context field against which to validate
@@ -110,7 +110,7 @@ abstract class AbstractCompare extends AbstractValidator
      *
      * @param  array $options
      */
-    public function setOptions($options = array())
+    public function setOptions($options = [])
     {
         if (isset($options['compare_to'])) {
             $this->setCompareTo($options['compare_to']);

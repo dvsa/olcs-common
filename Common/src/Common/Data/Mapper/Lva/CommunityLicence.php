@@ -31,10 +31,10 @@ class CommunityLicence implements MapperInterface
 
         if (isset($suspension)) {
             $dates['startDate'] = $suspension['startDate'];
-            $dates['endDate'] = isset($suspension['endDate']) ? $suspension['endDate'] : null;
+            $dates['endDate'] = $suspension['endDate'] ?? null;
             $resData['id'] = $suspension['id'];
             $resData['version'] = $suspension['version'];
-            $resData['reasons'] = isset($suspension['reasons']) ? $suspension['reasons'] : null;
+            $resData['reasons'] = $suspension['reasons'] ?? null;
         }
 
         $resData['status'] = $data['status']['id'];

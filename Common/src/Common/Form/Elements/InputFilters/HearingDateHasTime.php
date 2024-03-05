@@ -27,10 +27,10 @@ class HearingDateHasTime extends LaminasDateSelect implements InputProviderInter
         $specification = [
             'name' => $this->getName(),
             'required' => false,
-            'filters' => array(
-                array(
+            'filters' => [
+                [
                     'name'    => 'Callback',
-                    'options' => array(
+                    'options' => [
                         'callback' => function ($date) {
                         // Convert the date to a specific format
                             if (!is_array($date) || empty($date['year']) ||
@@ -40,11 +40,11 @@ class HearingDateHasTime extends LaminasDateSelect implements InputProviderInter
 
                             return $date['year'] . '-' . $date['month'] . '-' . $date['day'];
                         }
-                    )
-                )
-            ),
+                    ]
+                ]
+            ],
             'validators' => [
-                new DateValidator(array('format' => 'Y-m-d')),
+                new DateValidator(['format' => 'Y-m-d']),
                 new \Common\Form\Elements\Validators\DateWithTime('hearingTime')
             ]
         ];

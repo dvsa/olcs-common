@@ -68,7 +68,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
         if ($request->isPost()) {
             $data = (array)$request->getPost();
 
-            $crudAction = $this->getCrudAction(array($data['table']));
+            $crudAction = $this->getCrudAction([$data['table']]);
 
             if ($crudAction !== null) {
                 return $this->handleCrudAction($crudAction);
@@ -342,6 +342,6 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
      */
     protected function getRenderVariables()
     {
-        return array();
+        return [];
     }
 }

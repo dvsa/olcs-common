@@ -39,7 +39,7 @@ class AddressHelperServiceTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormatPostalAddressWithSimpleParts()
     {
-        $address = array(
+        $address = [
             'organisation_name' => 'My Company Ltd',
             'address_line1' => '60 Burley Road',
             'address_line2' => 'Awesome House Street Name',
@@ -47,9 +47,9 @@ class AddressHelperServiceTest extends \PHPUnit\Framework\TestCase
             'address_line4' => '',
             'post_town' => 'Some Town',
             'postcode' => 'AB1 1AB',
-        );
+        ];
 
-        $expectedAddress = array(
+        $expectedAddress = [
             'organisationName' => 'My Company Ltd',
             'addressLine1' => '60 Burley Road',
             'addressLine2' => 'Awesome House Street Name',
@@ -58,7 +58,7 @@ class AddressHelperServiceTest extends \PHPUnit\Framework\TestCase
             'town' => 'Some Town',
             'postcode' => 'AB1 1AB',
             'countryCode' => 'GB'
-        );
+        ];
 
         $addressDetails = $this->service->formatPostalAddress($address);
 
@@ -73,8 +73,8 @@ class AddressHelperServiceTest extends \PHPUnit\Framework\TestCase
      */
     public function testFormatAddressesForSelect()
     {
-        $list = array(
-            array(
+        $list = [
+            [
                 'uprn' => 123,
                 'organisation_name' => 'My Company Ltd',
                 'address_line1' => '123 Really Awesome House Street Name',
@@ -83,8 +83,8 @@ class AddressHelperServiceTest extends \PHPUnit\Framework\TestCase
                 'address_line4' => '',
                 'post_town' => 'Some Town',
                 'postcode' => 'AB1 1AB',
-            ),
-            array(
+            ],
+            [
                 'uprn' => 234,
                 'organisation_name' => '',
                 'address_line1' => 'My Company Ltd',
@@ -93,8 +93,8 @@ class AddressHelperServiceTest extends \PHPUnit\Framework\TestCase
                 'address_line4' => '',
                 'post_town' => 'Some Town',
                 'postcode' => 'AB1 1AB',
-            ),
-            array(
+            ],
+            [
                 'uprn' => 345,
                 'organisation_name' => '',
                 'address_line1' => 'My Company Ltd',
@@ -103,14 +103,14 @@ class AddressHelperServiceTest extends \PHPUnit\Framework\TestCase
                 'address_line4' => '',
                 'post_town' => 'Some Town',
                 'postcode' => 'AB1 1AB',
-            )
-        );
+            ]
+        ];
 
-        $expectedResult = array(
+        $expectedResult = [
             123 => 'My Company Ltd, 123 Really Awesome House Street N…',
             234 => 'My Company Ltd, 234 Awesome House Street Name, So…',
             345 => 'My Company Ltd, 345 Awesome House Street Name, So…',
-        );
+        ];
 
         $result = $this->service->formatAddressesForSelect($list);
 

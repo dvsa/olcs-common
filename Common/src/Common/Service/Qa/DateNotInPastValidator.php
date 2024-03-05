@@ -7,7 +7,7 @@ use Laminas\Validator\AbstractValidator;
 
 class DateNotInPastValidator extends AbstractValidator
 {
-    const ERR_DATE_IN_PAST = 'date_in_past';
+    public const ERR_DATE_IN_PAST = 'date_in_past';
 
     /** @var array */
     protected $messageTemplates = [

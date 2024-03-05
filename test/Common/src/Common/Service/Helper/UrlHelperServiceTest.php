@@ -36,9 +36,9 @@ class UrlHelperServiceTest extends MockeryTestCase
      */
     protected function setUp(): void
     {
-        $this->mockUrlViewHelper = $this->createPartialMock(Url::class, array('__invoke'));
+        $this->mockUrlViewHelper = $this->createPartialMock(Url::class, ['__invoke']);
 
-        $this->mockViewHelperManager = $this->createPartialMock(HelperPluginManager::class, array('get'));
+        $this->mockViewHelperManager = $this->createPartialMock(HelperPluginManager::class, ['get']);
         $this->mockViewHelperManager->expects($this->any())
             ->method('get')
             ->will($this->returnValue($this->mockUrlViewHelper));
@@ -53,8 +53,8 @@ class UrlHelperServiceTest extends MockeryTestCase
     public function testFromRoute()
     {
         $route = 'foo/bar';
-        $params = array('foo' => 'bar');
-        $options = array('this' => 'that');
+        $params = ['foo' => 'bar'];
+        $options = ['this' => 'that'];
         $reuseMatchedParams = true;
         $builtUrl = 'some/url';
 
@@ -77,7 +77,7 @@ class UrlHelperServiceTest extends MockeryTestCase
 
         $this->mockUrlViewHelper->expects($this->once())
             ->method('__invoke')
-            ->with($route, array(), array(), false)
+            ->with($route, [], [], false)
             ->will($this->returnValue($builtUrl));
 
         $this->assertEquals($builtUrl, $this->sut->fromRoute($route));

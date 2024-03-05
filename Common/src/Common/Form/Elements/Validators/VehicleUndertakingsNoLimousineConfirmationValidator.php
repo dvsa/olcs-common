@@ -21,9 +21,9 @@ class VehicleUndertakingsNoLimousineConfirmationValidator extends AbstractValida
      *
      * @var array
      */
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         'required' => 'application_vehicle-safety_undertakings.limousines.required'
-    );
+    ];
 
     /**
      * Custom validation for undertakings checkbox field

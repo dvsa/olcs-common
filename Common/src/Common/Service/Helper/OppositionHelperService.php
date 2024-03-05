@@ -24,8 +24,8 @@ class OppositionHelperService
     public function sortOpenClosed($oppositions)
     {
         // sort the results so that open cases are first but still in date order
-        $openOppositions = array();
-        $closedOppositions = array();
+        $openOppositions = [];
+        $closedOppositions = [];
         foreach ($oppositions as $row) {
             if ($row['case']['closedDate']) {
                 $closedOppositions[] = $row;

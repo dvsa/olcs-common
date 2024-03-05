@@ -9,7 +9,7 @@ namespace Common\Service\Table\Formatter;
  */
 class PublicHolidayArea implements FormatterPluginManagerInterface
 {
-    const NO_AREA = 'none';
+    public const NO_AREA = 'none';
 
     /**
      * Format
@@ -28,9 +28,7 @@ class PublicHolidayArea implements FormatterPluginManagerInterface
             'isNi' => 'Northern Ireland',
         ];
 
-        $fncFilter = function ($key) use ($data) {
-            return (isset($data[$key]) && $data[$key] === 'Y');
-        };
+        $fncFilter = fn($key) => isset($data[$key]) && $data[$key] === 'Y';
 
         $result = array_keys(array_filter(array_flip($map), $fncFilter));
         //  #TODO enable it after moving to PHP 5.6

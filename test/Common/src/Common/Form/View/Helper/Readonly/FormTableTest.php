@@ -27,7 +27,7 @@ class FormTableTest extends TestCase
 
         $sut->setView($mockView);
 
-        $expected = (($expected !== null) ? $expected : $sut);
+        $expected ??= $sut;
         $this->assertEquals($expected, $sut($element));
     }
 
@@ -35,20 +35,20 @@ class FormTableTest extends TestCase
     {
         //need tests for Select, TextArea
 
-        $mockHidden = m::mock('Laminas\Form\ElementInterface');
+        $mockHidden = m::mock(\Laminas\Form\ElementInterface::class);
         $mockHidden->shouldReceive('getAttribute')->with('type')->andReturn('hidden');
 
-        $mockRemoveIfReadOnly = m::mock('Laminas\Form\ElementInterface');
+        $mockRemoveIfReadOnly = m::mock(\Laminas\Form\ElementInterface::class);
         $mockRemoveIfReadOnly->shouldReceive('getAttribute')->with('type')->andReturnNull();
         $mockRemoveIfReadOnly->shouldReceive('getOption')->with('remove_if_readonly')->andReturn(true);
 
-        $mockText = m::mock('Laminas\Form\ElementInterface');
+        $mockText = m::mock(\Laminas\Form\ElementInterface::class);
         $mockText->shouldReceive('getAttribute')->with('type')->andReturn('textarea');
         $mockText->shouldReceive('getLabel')->andReturn('Label');
         $mockText->shouldReceive('getValue')->andReturn('Value');
         $mockText->shouldReceive('getOption')->with('remove_if_readonly')->andReturnNull();
 
-        $mockSelect = m::mock('Laminas\Form\Element\Select');
+        $mockSelect = m::mock(\Laminas\Form\Element\Select::class);
         $mockSelect->shouldReceive('getAttribute')->with('type')->andReturn('select');
         $mockSelect->shouldReceive('getLabel')->andReturn('Label');
         $mockSelect->shouldReceive('getValue')->andReturn('Value');
@@ -71,12 +71,12 @@ class FormTableTest extends TestCase
             ]
         ];
 
-        $mockTableBuilder = m::mock('Common\Service\Table\TableBuilder');
+        $mockTableBuilder = m::mock(\Common\Service\Table\TableBuilder::class);
         $mockTableBuilder->shouldReceive('setDisabled')->with(true);
         $mockTableBuilder->shouldReceive('getColumns')->andReturn($columns);
         $mockTableBuilder->shouldReceive('setColumns')->with($newColumns);
 
-        $mockTable = m::mock('Common\Form\Elements\Types\Table');
+        $mockTable = m::mock(\Common\Form\Elements\Types\Table::class);
         $mockTable->shouldReceive('getTable')->andReturn($mockTableBuilder);
         $mockTable->shouldReceive('render')->andReturn('<table></table>');
 

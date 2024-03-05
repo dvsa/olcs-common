@@ -67,17 +67,13 @@ class OperatingCentre extends InternalSearchAbstract
             [
                 'title' => 'Licence number',
                 'name'=> 'licNo',
-                'formatter' => function ($data) {
-                    return '<a class="govuk-link" href="/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>/'
-                    . '<br />' . $data['licStatusDesc'];
-                }
+                'formatter' => fn($data) => '<a class="govuk-link" href="/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>/'
+                . '<br />' . $data['licStatusDesc']
             ],
             [
                 'title' => 'Operator name',
                 'name'=> 'orgName',
-                'formatter' => function ($data) {
-                    return '<a class="govuk-link" href="/operator/' . $data['orgId'] . '">' . $data['orgName'] . '</a>';
-                }
+                'formatter' => fn($data) => '<a class="govuk-link" href="/operator/' . $data['orgId'] . '">' . $data['orgName'] . '</a>'
             ],
             [
                 'title' => 'Address',

@@ -23,9 +23,9 @@ class Time extends DateValidator
      *
      * @var array
      */
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         self::INVALID        => "Invalid type given. A time of format hh:mm was expected",
         self::INVALID_DATE   => "The input does not appear to be a valid time, expected format hh:mm",
         self::FALSEFORMAT    => "The input does not fit the time format hh:mm",
-    );
+    ];
 }

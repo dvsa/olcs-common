@@ -21,9 +21,9 @@ class VehicleSafetyTachographAnalyserContractorValidator extends AbstractValidat
      *
      * @var array
      */
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         'required' => 'Value is required and can\'t be empty'
-    );
+    ];
 
     /**
      * Custom validation for tachograph analyser

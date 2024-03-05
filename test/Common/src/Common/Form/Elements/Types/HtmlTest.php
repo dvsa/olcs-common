@@ -10,9 +10,9 @@ use Laminas\View\Renderer\PhpRenderer;
 
 class HtmlTest extends \PHPUnit\Framework\TestCase
 {
-    const INITIAL_HTML_PAYLOAD = '<em>TEST</em>';
-    const UPDATED_HTML_PAYLOAD = '<em>TEST 2</em>';
-    const MALICIOUS_HTML_PAYLOAD = '<script>alert("TEST")</script>';
+    public const INITIAL_HTML_PAYLOAD = '<em>TEST</em>';
+    public const UPDATED_HTML_PAYLOAD = '<em>TEST 2</em>';
+    public const MALICIOUS_HTML_PAYLOAD = '<script>alert("TEST")</script>';
 
     /** @var Html */
     private $htmlElement;

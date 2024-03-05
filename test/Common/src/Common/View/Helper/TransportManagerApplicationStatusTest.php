@@ -51,9 +51,7 @@ class TransportManagerApplicationStatusTest extends MockeryTestCase
             ->shouldReceive('translate')
             ->once()
             ->andReturnUsing(
-                function ($desciption) {
-                    return '_TRANSL_' . $desciption;
-                }
+                fn($desciption) => '_TRANSL_' . $desciption
             );
 
         static::assertEquals(

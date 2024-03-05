@@ -79,7 +79,7 @@ class DynamicMultiCheckboxTest extends \PHPUnit\Framework\TestCase
     {
         $serviceName = 'testListService';
 
-        $mockService = $this->createMock('\Common\Service\Data\ListDataInterface');
+        $mockService = $this->createMock(\Common\Service\Data\ListDataInterface::class);
 
         $this->pluginManager->expects('get')->with($serviceName)->andReturn($mockService);
         $sut =  new DynamicMultiCheckbox($this->pluginManager);

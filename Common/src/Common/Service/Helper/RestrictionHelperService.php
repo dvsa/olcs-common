@@ -19,7 +19,7 @@ class RestrictionHelperService
      *
      * @return boolean
      */
-    public function isRestrictionSatisfied($restrictions, array $accessKeys = array(), $reference = null)
+    public function isRestrictionSatisfied($restrictions, array $accessKeys = [], $reference = null)
     {
         return $this->checkRestriction($restrictions, $accessKeys, false, $reference);
     }
@@ -32,7 +32,7 @@ class RestrictionHelperService
      * @param type $strict
      * @return boolean
      */
-    private function checkRestriction($restrictions, array $accessKeys = array(), $strict = true, $reference = null)
+    private function checkRestriction($restrictions, array $accessKeys = [], $strict = true, $reference = null)
     {
         // Check for a callable first
         if (is_callable($restrictions)) {

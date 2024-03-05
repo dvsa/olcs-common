@@ -46,9 +46,7 @@ class MenuRbac extends Menu
         $container->setPages(
             array_filter(
                 $container->getPages(),
-                function (AbstractPage $item) {
-                    return $this->accept($item, false);
-                }
+                fn(AbstractPage $item) => $this->accept($item, false)
             )
         );
 

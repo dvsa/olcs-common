@@ -113,9 +113,9 @@ class FormHelperService
                 ],
                 'options' => [
                     'csrf_options' => [
-                        'messageTemplates' => array(
+                        'messageTemplates' => [
                             'notSame' => 'csrf-message',
-                        ),
+                        ],
                         'timeout' => $this->config['csrf']['timeout'],
                     ],
                 ],
@@ -125,19 +125,19 @@ class FormHelperService
 
         //  add button "Continue" element
         if ($addContinue) {
-            $config = array(
+            $config = [
                 'type' => \Laminas\Form\Element\Button::class,
                 'name' => 'form-actions[continue]',
-                'options' => array(
+                'options' => [
                     'label' => 'Continue',
-                ),
-                'attributes' => array(
+                ],
+                'attributes' => [
                     'type' => 'submit',
                     'class' => 'govuk-visually-hidden',
                     'style' => 'display: none;',
                     'id' => 'hidden-continue',
-                ),
-            );
+                ],
+            ];
             $form->add($config);
         }
 
@@ -276,7 +276,7 @@ class FormHelperService
         $name = $fieldset->getName();
 
         if (!($fieldset instanceof Address)) {
-            $data = isset($post[$name]) ? $post[$name] : [];
+            $data = $post[$name] ?? [];
             $processed = false;
             $modified = false;
 
@@ -336,7 +336,7 @@ class FormHelperService
         if (empty($postcode)) {
             $this->removeAddressSelectFields($fieldset);
 
-            $fieldset->get('searchPostcode')->setMessages(array('Please enter a postcode'));
+            $fieldset->get('searchPostcode')->setMessages(['Please enter a postcode']);
 
             return false;
         }
@@ -345,7 +345,7 @@ class FormHelperService
             $addressList = $this->addressData->getAddressesForPostcode($postcode);
         } catch (\Exception $e) {
             // RestClient / ResponseHelper throw root exceptions :(
-            $fieldset->get('searchPostcode')->setMessages(array('postcode.error.not-available'));
+            $fieldset->get('searchPostcode')->setMessages(['postcode.error.not-available']);
             $this->removeAddressSelectFields($fieldset);
             return false;
         }
@@ -354,7 +354,7 @@ class FormHelperService
         if (empty($addressList)) {
             $this->removeAddressSelectFields($fieldset);
 
-            $fieldset->get('searchPostcode')->setMessages(array('postcode.error.no-addresses-found'));
+            $fieldset->get('searchPostcode')->setMessages(['postcode.error.no-addresses-found']);
 
             return false;
         }
@@ -405,7 +405,7 @@ class FormHelperService
      */
     public function alterElementLabel($element, $label, $type = self::ALTER_LABEL_RESET)
     {
-        if (in_array($type, array(self::ALTER_LABEL_APPEND, self::ALTER_LABEL_PREPEND), false)) {
+        if (in_array($type, [self::ALTER_LABEL_APPEND, self::ALTER_LABEL_PREPEND], false)) {
             $oldLabel = $element->getLabel();
 
             if ($type == self::ALTER_LABEL_APPEND) {
@@ -447,7 +447,7 @@ class FormHelperService
      */
     private function removeElement($form, InputFilterInterface $filter, $elementReference)
     {
-        list($form, $filter, $name) = $this->getElementAndInputParents($form, $filter, $elementReference);
+        [$form, $filter, $name] = $this->getElementAndInputParents($form, $filter, $elementReference);
 
         $form->remove($name);
         $filter->remove($name);
@@ -466,7 +466,7 @@ class FormHelperService
     public function getElementAndInputParents($form, InputFilterInterface $filter, $elementReference)
     {
         if (false !== strpos($elementReference, '->')) {
-            list($container, $elementReference) = explode('->', $elementReference, 2);
+            [$container, $elementReference] = explode('->', $elementReference, 2);
 
             return $this->getElementAndInputParents(
                 $form->get($container),
@@ -475,7 +475,7 @@ class FormHelperService
             );
         }
 
-        return array($form, $filter, $elementReference);
+        return [$form, $filter, $elementReference];
     }
 
     /**
@@ -525,7 +525,7 @@ class FormHelperService
     public function disableEmptyValidationOnElement($form, $reference)
     {
         /** @var InputFilterInterface $filter */
-        list(, $filter, $name) = $this->getElementAndInputParents($form, $form->getInputFilter(), $reference);
+        [, $filter, $name] = $this->getElementAndInputParents($form, $form->getInputFilter(), $reference);
         $filter->get($name)->setRequired(false);
     }
 
@@ -552,7 +552,7 @@ class FormHelperService
         }
 
         if (false !== strpos($reference, '->')) {
-            list($index, $reference) = explode('->', $reference, 2);
+            [$index, $reference] = explode('->', $reference, 2);
 
             return $this->disableElement($form->get($index), $reference, $filter->get($index));
         }
@@ -707,7 +707,7 @@ class FormHelperService
     public function lockElement(Element $element, $message)
     {
         $lockView = new ViewModel(
-            array('message' => $this->translationHelper->translate($message))
+            ['message' => $this->translationHelper->translate($message)]
         );
         $lockView->setTemplate('partials/lock');
 
@@ -840,7 +840,7 @@ class FormHelperService
     public function removeValidator(FormInterface $form, $reference, $validatorClass)
     {
         /** @var InputFilterInterface $filter */
-        list(, $filter, $field) = $this->getElementAndInputParents($form, $form->getInputFilter(), $reference);
+        [, $filter, $field] = $this->getElementAndInputParents($form, $form->getInputFilter(), $reference);
 
         /** @var ValidatorChain $validatorChain */
         $validatorChain = $filter->get($field)->getValidatorChain();
@@ -867,7 +867,7 @@ class FormHelperService
     public function attachValidator(FormInterface $form, $reference, $validator)
     {
         /** @var InputFilterInterface $filter */
-        list(, $filter, $field) = $this->getElementAndInputParents($form, $form->getInputFilter(), $reference);
+        [, $filter, $field] = $this->getElementAndInputParents($form, $form->getInputFilter(), $reference);
 
         /** @var ValidatorChain $validatorChain */
         $validatorChain = $filter->get($field)->getValidatorChain();
@@ -887,7 +887,7 @@ class FormHelperService
     public function getValidator(FormInterface $form, $reference, $validatorClass)
     {
         /** @var InputFilterInterface $filter */
-        list(, $filter, $field) = $this->getElementAndInputParents($form, $form->getInputFilter(), $reference);
+        [, $filter, $field] = $this->getElementAndInputParents($form, $form->getInputFilter(), $reference);
 
         /** @var ValidatorChain $validatorChain */
         $validatorChain = $filter->get($field)->getValidatorChain();
@@ -1007,9 +1007,9 @@ class FormHelperService
     protected function setCompaniesHouseFormMessage($form, $detailsFieldset, string $message)
     {
         $form->get($detailsFieldset)->get('companyNumber')->setMessages(
-            array(
-                'company_number' => array($this->translationHelper->translate($message)),
-            )
+            [
+                'company_number' => [$this->translationHelper->translate($message)],
+            ]
         );
     }
 }

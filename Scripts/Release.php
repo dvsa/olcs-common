@@ -13,17 +13,17 @@ class Runner
     /**
      * Release types
      */
-    const TYPE_MINOR = 1;
-    const TYPE_MAJOR = 2;
+    public const TYPE_MINOR = 1;
+    public const TYPE_MAJOR = 2;
 
     /**
      * Message types
      */
-    const MESSAGE_DEFAULT = "\e[39m";
-    const MESSAGE_OK = "\e[34m";
-    const MESSAGE_ERROR = "\e[31m";
-    const MESSAGE_SUCCESS = "\e[32m";
-    const MESSAGE_INFO = "\e[33m";
+    public const MESSAGE_DEFAULT = "\e[39m";
+    public const MESSAGE_OK = "\e[34m";
+    public const MESSAGE_ERROR = "\e[31m";
+    public const MESSAGE_SUCCESS = "\e[32m";
+    public const MESSAGE_INFO = "\e[33m";
 
     /**
      * Release type
@@ -37,7 +37,7 @@ class Runner
      *
      * @var array
      */
-    private $nextRelease = array();
+    private $nextRelease = [];
 
     /**
      * Holds the version
@@ -225,7 +225,7 @@ class Runner
      */
     private function getRepos()
     {
-        return array(
+        return [
             new Repo(__DIR__ . '/../../olcs-common', $this),
             new Repo(__DIR__ . '/../../olcs-backend', $this),
             //new Repo(__DIR__ . '/../../olcs-entities', $this),
@@ -233,9 +233,7 @@ class Runner
             new Repo(__DIR__ . '/../../olcs-selfserve', $this),
             new Repo(__DIR__ . '/../../olcs-config', $this),
             new Repo(__DIR__ . '/../../olcs-static', $this),
-            //new Repo(__DIR__ . '/../../olcs-postcode', $this),
-            //new Repo(__DIR__ . '/../../olcs-document', $this)
-        );
+        ];
     }
 
     /**
@@ -246,7 +244,7 @@ class Runner
     private function getNextRelease()
     {
         if (empty($this->nextRelease)) {
-            list($lastMajor, $lastMinor) = $this->getLastTag();
+            [$lastMajor, $lastMinor] = $this->getLastTag();
 
             switch($this->getType()) {
                 case self::TYPE_MINOR:
@@ -259,7 +257,7 @@ class Runner
                     break;
             }
 
-            $this->nextRelease = array((string)$newMajor, (string)$newMinor);
+            $this->nextRelease = [(string)$newMajor, (string)$newMinor];
         }
 
         return $this->nextRelease;

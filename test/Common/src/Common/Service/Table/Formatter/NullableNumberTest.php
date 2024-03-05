@@ -29,19 +29,19 @@ class NullableNumberTest extends MockeryTestCase
 
     public function provider()
     {
-        return array(
-            array(
+        return [
+            [
                 [
                     'permitsRequired' => null,
                     'expected' => 0
                 ],
-            ),
-            array(
+            ],
+            [
                 [
                     'permitsRequired' => 3,
                     'expected' => 3
                 ],
-            ),
-        );
+            ],
+        ];
     }
 }

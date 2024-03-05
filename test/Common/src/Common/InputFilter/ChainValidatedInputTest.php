@@ -1347,9 +1347,7 @@ class ChainValidatedInputTest extends MockeryTestCase
     protected function filterChainThatConvertsAllValuesTo($val): FilterChain
     {
         $filterChain = new FilterChain();
-        $filterChain->attach(function () use ($val) {
-            return $val;
-        });
+        $filterChain->attach(fn() => $val);
         return $filterChain;
     }
 
@@ -1360,9 +1358,7 @@ class ChainValidatedInputTest extends MockeryTestCase
     protected function filterChainThatAddsSuffix(string $suffix): FilterChain
     {
         $filterChain = new FilterChain();
-        $filterChain->attach(function ($val) use ($suffix) {
-            return ($val ?? '') . $suffix;
-        });
+        $filterChain->attach(fn($val) => ($val ?? '') . $suffix);
         return $filterChain;
     }
 

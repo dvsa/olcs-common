@@ -220,8 +220,8 @@ abstract class AbstractController extends AbstractActionController
         return [
             'version' => $data['version'],
             'niFlag' => $data['niFlag'],
-            'licenceType' => isset($data['licenceType']['id']) ? $data['licenceType']['id'] : null,
-            'goodsOrPsv' => isset($data['goodsOrPsv']['id']) ? $data['goodsOrPsv']['id'] : null
+            'licenceType' => $data['licenceType']['id'] ?? null,
+            'goodsOrPsv' => $data['goodsOrPsv']['id'] ?? null
         ];
     }
 

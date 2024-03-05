@@ -53,25 +53,25 @@ class NameTest extends MockeryTestCase
      */
     public function provider()
     {
-        return array(
-            array(
-                array(
+        return [
+            [
+                [
                     'forename' => 'A',
                     'familyName' => 'Person',
-                    'title' => array(
+                    'title' => [
                         'description' => 'Mr'
-                    )
-                ),
+                    ]
+                ],
                 'Mr A Person'
-            ),
-            array(
-                array(
+            ],
+            [
+                [
                     'forename' => 'A',
                     'familyName' => 'Person',
-                ),
+                ],
                 'A Person'
-            )
-        );
+            ]
+        ];
     }
 
     public function testFormatNestedData()

@@ -119,7 +119,7 @@ class FormRowTest extends MockeryTestCase
     {
         // Setup
         $this->setUpSut();
-        $element = $this->setUpElement('Common\Form\Elements\InputFilters\ActionButton');
+        $element = $this->setUpElement(\Common\Form\Elements\InputFilters\ActionButton::class);
 
         // Execute
         $result = $this->sut->__invoke($element);
@@ -136,7 +136,7 @@ class FormRowTest extends MockeryTestCase
     {
         // Setup
         $this->setUpSut();
-        $element = $this->setUpElement('Common\Form\Elements\InputFilters\NoRender');
+        $element = $this->setUpElement(\Common\Form\Elements\InputFilters\NoRender::class);
 
         // Execute
         $result = $this->sut->__invoke($element);
@@ -153,10 +153,10 @@ class FormRowTest extends MockeryTestCase
     {
         // Setup
         $this->setUpSut();
-        $element = $this->setUpElement('Common\Form\Elements\Types\Table');
-        $mockTable = $this->getMockBuilder('\Common\Service\Table\TableBuilder')
+        $element = $this->setUpElement(\Common\Form\Elements\Types\Table::class);
+        $mockTable = $this->getMockBuilder(\Common\Service\Table\TableBuilder::class)
             ->disableOriginalConstructor()
-            ->setMethods(array('render'))
+            ->setMethods(['render'])
             ->getMock();
         $mockTable->expects($this->any())
             ->method('render')
@@ -178,7 +178,7 @@ class FormRowTest extends MockeryTestCase
     {
         // Setup
         $this->setUpSut();
-        $element = $this->setUpElement('Common\Form\Elements\InputFilters\SingleCheckbox');
+        $element = $this->setUpElement(\Common\Form\Elements\InputFilters\SingleCheckbox::class);
         $element->setLabelOption('always_wrap', true);
 
         // Execute
@@ -197,7 +197,7 @@ class FormRowTest extends MockeryTestCase
         // Setup
         $this->setUpSut();
         $element = $this->setUpElement(
-            'Common\Form\Elements\InputFilters\Checkbox',
+            \Common\Form\Elements\InputFilters\Checkbox::class,
             [
                 'label_options' => [
                     'label_position' => 'append',
@@ -413,7 +413,7 @@ class FormRowTest extends MockeryTestCase
         // Setup
         $this->setUpSut();
         $element = $this->setUpElement(
-            'Common\Form\Elements\Types\Readonly',
+            \Common\Form\Elements\Types\Readonly::class,
             [
                 'name'  => 'readonly',
                 'label' => 'Foo',
@@ -619,11 +619,11 @@ class FormRowTest extends MockeryTestCase
         }
 
         $options = array_merge(
-            array(
+            [
                 'type'  => $type,
                 'label' => 'Label',
                 'hint'  => 'Hint',
-            ),
+            ],
             $options
         );
 

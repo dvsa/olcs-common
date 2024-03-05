@@ -26,8 +26,8 @@ class ComplaintsHelperService
     public function sortCasesOpenClosed($cases)
     {
         // sort the results so that open cases are first but still in date order
-        $openComplaints = array();
-        $closedComplaints = array();
+        $openComplaints = [];
+        $closedComplaints = [];
         foreach ($cases as $row) {
             if ($row['status']['id'] === RefData::COMPLAIN_STATUS_CLOSED) {
                 $closedComplaints[] = $row;

@@ -10,10 +10,10 @@ use Dvsa\Olcs\Api\Entity;
  */
 class Addresses implements MapperInterface
 {
-    protected static $typeMap = array(
+    protected static $typeMap = [
         'phone_t_primary' => 'phone_primary',
         'phone_t_secondary' => 'phone_secondary',
-    );
+    ];
 
     /**
      * Prepare api data for form
@@ -67,10 +67,10 @@ class Addresses implements MapperInterface
     public static function mapFromForm(array $data)
     {
         $consultant = array_filter(
-            (isset($data['consultant']) ? $data['consultant'] : []) +
+            ($data['consultant'] ?? []) +
             [
-                'address' => (isset($data['consultantAddress']) ? $data['consultantAddress'] : null),
-                'contact' => (isset($data['consultantContact']) ? $data['consultantContact'] : null),
+                'address' => ($data['consultantAddress'] ?? null),
+                'contact' => ($data['consultantContact'] ?? null),
             ]
         );
 
@@ -78,12 +78,10 @@ class Addresses implements MapperInterface
             [
                 'correspondence' => $data['correspondence'],
                 'correspondenceAddress' => $data['correspondence_address'],
-                'contact' => (isset($data['contact']) ? $data['contact'] : null),
-                'establishment' => (isset($data['establishment']) ? $data['establishment'] : null),
+                'contact' => ($data['contact'] ?? null),
+                'establishment' => ($data['establishment'] ?? null),
                 'establishmentAddress' => (
-                    isset($data['establishment_address'])
-                    ? $data['establishment_address']
-                    : null
+                    $data['establishment_address'] ?? null
                 ),
                 'consultant' => $consultant,
             ]
@@ -103,9 +101,7 @@ class Addresses implements MapperInterface
 
         foreach ($data['phoneContacts'] as $phoneContact) {
             $phoneType = (
-                isset(self::$typeMap[$phoneContact['phoneContactType']['id']])
-                ? self::$typeMap[$phoneContact['phoneContactType']['id']]
-                : ''
+                self::$typeMap[$phoneContact['phoneContactType']['id']] ?? ''
             );
 
             $contacts += [

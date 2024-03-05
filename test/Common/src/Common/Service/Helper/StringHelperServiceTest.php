@@ -53,23 +53,23 @@ class StringHelperServiceTest extends \PHPUnit\Framework\TestCase
 
     public function provider()
     {
-        return array(
-            array(
+        return [
+            [
                 'this-that',
                 'ThisThat'
-            ),
-            array(
+            ],
+            [
                 'foo-bar-baz',
                 'FooBarBaz'
-            ),
-            array(
+            ],
+            [
                 'foo',
                 'Foo'
-            ),
-            array(
+            ],
+            [
                 'foo cake this-that',
                 'Foo cake thisThat'
-            )
-        );
+            ]
+        ];
     }
 }

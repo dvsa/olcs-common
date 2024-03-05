@@ -12,8 +12,8 @@ namespace Common\Service\Table;
  */
 class PaginationHelper
 {
-    const ELLIPSE = '…';
-    const CLASS_PAGINATION_ITEM_CURRENT = 'govuk-pagination__item--current';
+    public const ELLIPSE = '…';
+    public const CLASS_PAGINATION_ITEM_CURRENT = 'govuk-pagination__item--current';
 
     /**
      * Current page
@@ -184,10 +184,10 @@ class PaginationHelper
         $lowerRangeCheck = ($this->page >= ($totalPages - 2) ? (2 - ($totalPages - $this->page)) : 0);
 
         return max(
-            array(
+            [
                 2,
                 ($this->page - $this->pageDeviation) - $lowerRangeCheck
-            )
+            ]
         );
     }
 
@@ -200,10 +200,10 @@ class PaginationHelper
     private function calculateUpperRange($totalPages)
     {
         return min(
-            array(
+            [
                 ($totalPages - 1),
                 ($this->page + $this->pageDeviation) + ($this->page <= 2 ? (3 - $this->page) : 0)
-            )
+            ]
         );
     }
 
@@ -231,12 +231,12 @@ class PaginationHelper
      */
     private function formatPageOption($page, $label = null)
     {
-        $array = array(
+        $array = [
             'page' => is_null($page) ? null : (string)$page,
             'label' => (is_null($label) ? (string)$page : $label),
             'class' => null,
             'ariaCurrent' => '',
-        );
+        ];
 
         if ($this->page == $page) {
             $array['class'] = self::CLASS_PAGINATION_ITEM_CURRENT;

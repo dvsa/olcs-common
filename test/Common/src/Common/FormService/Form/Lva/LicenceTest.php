@@ -17,14 +17,14 @@ class LicenceTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->formHelper = m::mock('\Common\Service\Helper\FormHelperService');
-        $this->authService = m::mock('\LmcRbacMvc\Service\AuthorizationService');
+        $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);
+        $this->authService = m::mock(\LmcRbacMvc\Service\AuthorizationService::class);
         $this->sut = new Licence($this->formHelper, $this->authService);
     }
 
     public function testAlterForm()
     {
-        $form = m::mock('\Laminas\Form\Form');
+        $form = m::mock(\Laminas\Form\Form::class);
 
         $form->shouldReceive('has')
             ->with('form-actions')

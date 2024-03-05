@@ -11,7 +11,7 @@ use Laminas\Form\Fieldset;
 
 class MotExpiryDateFieldsetPopulator implements FieldsetPopulatorInterface
 {
-    const UPLOAD_HINT_PRIORITY = 100;
+    public const UPLOAD_HINT_PRIORITY = 100;
 
     /** @var TranslationHelperService */
     private $translator;

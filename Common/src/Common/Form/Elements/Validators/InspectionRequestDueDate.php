@@ -20,15 +20,15 @@ class InspectionRequestDueDate extends AbstractValidator
      * Error codes
      * @const string
      */
-    const NOT_SAME_OR_MORE = 'notSameOrMore';
+    public const NOT_SAME_OR_MORE = 'notSameOrMore';
 
     /**
      * Error messages
      * @var array
      */
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         self::NOT_SAME_OR_MORE => "Due date should be the same or after date requested"
-    );
+    ];
 
     /**
      * Validate due date against requested date

@@ -44,7 +44,7 @@ class FormElementErrors extends LaminasFormElementErrors
      * @throws Exception\DomainException
      * @return string
      */
-    public function render(ElementInterface $element, array $attributes = array()): string
+    public function render(ElementInterface $element, array $attributes = []): string
     {
         $messages = $element->getMessages();
 
@@ -73,7 +73,7 @@ class FormElementErrors extends LaminasFormElementErrors
         $escaper = $this->getEscapeHtmlHelper();
 
         // Flatten message array
-        $messagesToPrint = array();
+        $messagesToPrint = [];
         array_walk_recursive($messages, function ($item, $itemKey) use (&$messagesToPrint, $elementShouldEscape, $element, $escaper) {
             $shouldEscape = true;
             if ($item instanceof ValidationMessageInterface) {

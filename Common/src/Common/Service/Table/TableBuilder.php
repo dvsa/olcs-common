@@ -70,49 +70,49 @@ class TableBuilder
      *
      * @var array
      */
-    private $applicationConfig = array();
+    private $applicationConfig = [];
 
     /**
      * Table settings
      *
      * @var array
      */
-    private $settings = array();
+    private $settings = [];
 
     /**
      * Footer settings
      *
      * @var array
      */
-    private $footer = array();
+    private $footer = [];
 
     /**
      * Table variables
      *
      * @var array
      */
-    private $variables = array();
+    private $variables = [];
 
     /**
      * Table attributes
      *
      * @var array
      */
-    private $attributes = array();
+    private $attributes = [];
 
     /**
      * Table column settings
      *
      * @var array
      */
-    private $columns = array();
+    private $columns = [];
 
     /**
      * Pre-defined widths
      *
      * @var array
      */
-    private $widths = array('checkbox' => '20px');
+    private $widths = ['checkbox' => '20px'];
 
     /**
      * Total count of results
@@ -133,7 +133,7 @@ class TableBuilder
      *
      * @var array
      */
-    private $rows = array();
+    private $rows = [];
 
     /**
      * Table type
@@ -242,9 +242,7 @@ class TableBuilder
      */
     public function setUrlParameterNameMap(array $urlParamNameMap): self
     {
-        assert(array_reduce($urlParamNameMap, function ($carry, $mappedValue) {
-            return $carry && is_string($mappedValue);
-        }, true), 'Expected all mapped values to be strings');
+        assert(array_reduce($urlParamNameMap, fn($carry, $mappedValue) => $carry && is_string($mappedValue), true), 'Expected all mapped values to be strings');
         $this->urlParameterNameMap = $urlParamNameMap;
         return $this;
     }
@@ -347,7 +345,7 @@ class TableBuilder
      *
      * @param array $settings
      */
-    public function setSettings($settings = array())
+    public function setSettings($settings = [])
     {
         $this->settings = $settings;
     }
@@ -361,7 +359,7 @@ class TableBuilder
      */
     public function getSetting($name, $default = null)
     {
-        return isset($this->settings[$name]) ? $this->settings[$name] : $default;
+        return $this->settings[$name] ?? $default;
     }
 
     /**
@@ -410,7 +408,7 @@ class TableBuilder
      *
      * @param array $footer
      */
-    public function setFooter($footer = array())
+    public function setFooter($footer = [])
     {
         $this->footer = $footer;
     }
@@ -543,7 +541,7 @@ class TableBuilder
      *
      * @param array $variables
      */
-    public function setVariables($variables = array())
+    public function setVariables($variables = [])
     {
         $this->variables = $variables;
     }
@@ -577,7 +575,7 @@ class TableBuilder
      */
     public function getVariable($name)
     {
-        return (isset($this->variables[$name]) ? $this->variables[$name] : '');
+        return ($this->variables[$name] ?? '');
     }
 
     /**
@@ -587,7 +585,7 @@ class TableBuilder
      */
     public function setColumns($columns)
     {
-        $this->columns = array();
+        $this->columns = [];
 
         foreach ($columns as $key => $column) {
             if (!is_string($key)) {
@@ -752,7 +750,7 @@ class TableBuilder
     }
 
 
-    public function prepareTable($config, array $data = array(), array $params = array())
+    public function prepareTable($config, array $data = [], array $params = [])
     {
         $this->loadConfig($config);
 
@@ -776,7 +774,7 @@ class TableBuilder
      * @param boolean $render
      * @return string
      */
-    public function buildTable($config, $data = array(), $params = array(), $render = true)
+    public function buildTable($config, $data = [], $params = [], $render = true)
     {
         $this->prepareTable($config, $data, $params);
 
@@ -800,12 +798,12 @@ class TableBuilder
         }
 
         $config = array_merge(
-            array(
-                'settings' => array(),
-                'attributes' => array(),
-                'columns' => array(),
-                'footer' => array()
-            ),
+            [
+                'settings' => [],
+                'attributes' => [],
+                'columns' => [],
+                'footer' => []
+            ],
             $config
         );
 
@@ -815,9 +813,7 @@ class TableBuilder
 
         $this->maybeSetActionFieldName();
 
-        $config['variables']['hidden'] = isset($this->settings['crud']['formName'])
-            ? $this->settings['crud']['formName']
-            : 'default';
+        $config['variables']['hidden'] = $this->settings['crud']['formName'] ?? 'default';
 
         $this->translateTitle($config);
 
@@ -844,10 +840,10 @@ class TableBuilder
     private function setPaginationDefaults()
     {
         if ($this->shouldPaginate() && !isset($this->settings['paginate']['limit'])) {
-            $this->settings['paginate']['limit'] = array(
+            $this->settings['paginate']['limit'] = [
                 'default' => 10,
-                'options' => array(10, 25, 50)
-            );
+                'options' => [10, 25, 50]
+            ];
         }
     }
 
@@ -879,7 +875,7 @@ class TableBuilder
      *
      * @param array $data
      */
-    public function loadData($data = array())
+    public function loadData($data = [])
     {
         if (isset($data['Results'])) {
             $data['results'] = $data['Results'];
@@ -891,9 +887,9 @@ class TableBuilder
             unset($data['Count']);
         }
 
-        $this->setRows(isset($data['results']) ? $data['results'] : $data);
-        $this->setTotal(isset($data['count']) ? $data['count'] : count($this->rows));
-        $this->setUnfilteredTotal(isset($data['count-unfiltered']) ? $data['count-unfiltered'] : $this->getTotal());
+        $this->setRows($data['results'] ?? $data);
+        $this->setTotal($data['count'] ?? count($this->rows));
+        $this->setUnfilteredTotal($data['count-unfiltered'] ?? $this->getTotal());
 
         // if there's only one row and we have a singular title, use it
         if ($this->getTotal() == 1) {
@@ -908,20 +904,18 @@ class TableBuilder
      *
      * @param array $array
      */
-    public function loadParams($array = array())
+    public function loadParams($array = [])
     {
         if (!isset($array['url'])) {
             $array['url'] = $this->urlHelper;
         }
 
-        $defaults = array(
-            'limit' => isset($this->settings['paginate']['limit']['default'])
-                ? $this->settings['paginate']['limit']['default']
-                : 10,
+        $defaults = [
+            'limit' => $this->settings['paginate']['limit']['default'] ?? 10,
             'page' => self::DEFAULT_PAGE,
             'sort' => '',
             'order' => 'ASC'
-        );
+        ];
 
         $array = array_merge(
             $defaults,
@@ -1042,7 +1036,7 @@ class TableBuilder
             return '';
         }
 
-        $columns = array();
+        $columns = [];
 
         foreach ($this->footer as $column) {
             $columns[] = $this->renderTableFooterColumn($column);
@@ -1050,7 +1044,7 @@ class TableBuilder
 
         $content = $this->renderTableFooterColumns($columns);
 
-        return $this->replaceContent('{{[elements/tableFooter]}}', array('content' => $content));
+        return $this->replaceContent('{{[elements/tableFooter]}}', ['content' => $content]);
     }
 
     /**
@@ -1062,15 +1056,15 @@ class TableBuilder
     private function renderTableFooterColumn($column)
     {
         $column = array_merge(
-            array(
+            [
                 'type' => 'td',
                 'colspan' => '',
                 'align' => '',
-            ),
+            ],
             $column
         );
 
-        $details = array('content' => '');
+        $details = ['content' => ''];
 
         if (isset($column['content'])) {
             $details['content'] = $column['content'];
@@ -1208,7 +1202,7 @@ class TableBuilder
 
         $total = $this->total;
 
-        return $this->replaceContent(' {{[elements/total]}}', array('total' => $total));
+        return $this->replaceContent(' {{[elements/total]}}', ['total' => $total]);
     }
 
     public function renderCaption()
@@ -1225,11 +1219,11 @@ class TableBuilder
     {
         $hasActions = in_array(
             $this->type,
-            array(
+            [
                 self::TYPE_CRUD,
                 self::TYPE_HYBRID,
                 self::TYPE_FORM_TABLE
-            )
+            ]
         );
 
         if ($this->isDisabled || !$hasActions) {
@@ -1238,8 +1232,8 @@ class TableBuilder
 
         $crud = $this->getSetting('crud');
 
-        $actions = $this->trimActions(isset($crud['actions']) ? $crud['actions'] : []);
-        $links = $this->trimLinks(isset($crud['links']) ? $crud['links'] : []);
+        $actions = $this->trimActions($crud['actions'] ?? []);
+        $links = $this->trimLinks($crud['links'] ?? []);
 
         if (empty($actions) && empty($links)) {
             return '';
@@ -1261,7 +1255,7 @@ class TableBuilder
      * @param array $actions
      * @return string
      */
-    public function renderDropdownActions($actions = array(), $links = [])
+    public function renderDropdownActions($actions = [], $links = [])
     {
         $options = '';
 
@@ -1277,7 +1271,7 @@ class TableBuilder
 
         $content .= $this->replaceContent(
             '{{[elements/actionSelect]}}',
-            array('option' => $options, 'action_field_name' => $this->getActionFieldName())
+            ['option' => $options, 'action_field_name' => $this->getActionFieldName()]
         );
 
         return $content;
@@ -1291,7 +1285,7 @@ class TableBuilder
      * a 'more actions' dropdown
      * @return string
      */
-    public function renderButtonActions($actions = array(), $collapseAt = 0, $links = [])
+    public function renderButtonActions($actions = [], $collapseAt = 0, $links = [])
     {
         $content = '';
 
@@ -1335,7 +1329,7 @@ class TableBuilder
             $moreActions = [];
             foreach ($actions as $details) {
                 //  add css class to items
-                $cssClasses = (isset($details['class']) ? $details['class'] : '');
+                $cssClasses = ($details['class'] ?? '');
                 if (0 == preg_match('/(\s|^)more-actions__item($|\s)/', $cssClasses)) {
                     $details['class'] = $cssClasses . ' more-actions__item';
                 }
@@ -1404,16 +1398,16 @@ class TableBuilder
             if ($option == $this->getLimit()) {
                 $class = PaginationHelper::CLASS_PAGINATION_ITEM_CURRENT;
             }
-                $details = array(
+                $details = [
                     'option' => $option,
                     'link' => $this->generatePaginationUrl([
                         $this->mapUrlParameterName('page') => 1,
                         $this->mapUrlParameterName('limit') => $option
                     ]),
-                );
+                ];
                 $option = $this->replaceContent('{{[elements/limitLink]}}', $details);
 
-                $limitDetails = array('class' => $class, 'option' => $option);
+                $limitDetails = ['class' => $class, 'option' => $option];
 
                 $content .= $this->replaceContent('{{[elements/limitOption]}}', $limitDetails);
         }
@@ -1448,7 +1442,7 @@ class TableBuilder
             $details['link'] = $this->getPageLink($details['page']);
             $details['option'] = $this->replaceContent('{{[elements/paginationLink]}}', $details);
 
-            $details = array_merge(array('class' => ''), $details);
+            $details = array_merge(['class' => ''], $details);
 
             $content .= $this->replaceContent('{{[elements/paginationItem]}}', $details);
         }
@@ -1516,10 +1510,10 @@ class TableBuilder
             $column['aria'] = $this->translator->translate($sortAria);
 
             $column['link'] = $this->generatePaginationUrl(
-                array(
+                [
                     $this->mapUrlParameterName('sort') => $column['sort'],
                     $this->mapUrlParameterName('order') => $column['order']
-                )
+                ]
             );
 
             $column['title'] = $this->replaceContent('{{[elements/sortColumn]}}', $column);
@@ -1572,7 +1566,7 @@ class TableBuilder
 
             // allow for the fact a formatter may have already set some content
             // which the type should respect
-            $formattedContent = isset($row['content']) ? $row['content'] : null;
+            $formattedContent = $row['content'] ?? null;
             $content = $type->render($row, $column, $formattedContent);
         }
 
@@ -1666,10 +1660,10 @@ class TableBuilder
                 $message = $this->getEmptyMessage();
             }
 
-            $vars = array(
+            $vars = [
                 'colspan' => count($columns),
                 'message' => $message
-            );
+            ];
 
             $content .= $this->replaceContent('{{[elements/emptyRow]}}', $vars);
         }
@@ -1738,7 +1732,7 @@ class TableBuilder
      * @param array $attrs
      * @return string
      */
-    public function renderAttributes($attrs = array())
+    public function renderAttributes($attrs = [])
     {
         return $this->getContentHelper()->renderAttributes($attrs);
     }
@@ -1750,7 +1744,7 @@ class TableBuilder
      * @param array $vars
      * @return string
      */
-    public function replaceContent($content, $vars = array())
+    public function replaceContent($content, $vars = [])
     {
         return $this->getContentHelper()->replaceContent($content, $vars);
     }
@@ -1761,7 +1755,7 @@ class TableBuilder
      * @param array $data
      * @return string
      */
-    private function generateUrl($data = array(), $route = null, $options = [], $reuseMatchedParams = true)
+    private function generateUrl($data = [], $route = null, $options = [], $reuseMatchedParams = true)
     {
         if (is_bool($options)) {
             $reuseMatchedParams = $options;
@@ -1789,7 +1783,7 @@ class TableBuilder
      * @param string $route
      * @return string
      */
-    private function generatePaginationUrl($data = array(), $route = null)
+    private function generatePaginationUrl($data = [], $route = null)
     {
 
         /** @var \Laminas\Mvc\Controller\Plugin\Url $url */
@@ -1850,25 +1844,25 @@ class TableBuilder
      */
     private function formatActions($actions)
     {
-        $newActions = array();
+        $newActions = [];
 
         foreach ($actions as $name => $details) {
-            $value = isset($details['value']) ? $details['value'] : ucwords($name);
+            $value = $details['value'] ?? ucwords($name);
 
             $label = isset($details['label']) ? $this->translator->translate($details['label']) : $value;
 
-            $class = isset($details['class']) ? $details['class'] : 'govuk-button govuk-button--secondary';
+            $class = $details['class'] ?? 'govuk-button govuk-button--secondary';
 
-            $id = isset($details['id']) ? $details['id'] : $name;
+            $id = $details['id'] ?? $name;
 
-            $disabled = isset($details['disabled']) ? $details['disabled'] : '';
+            $disabled = $details['disabled'] ?? '';
             if ($disabled) {
                 $class .= ' js-force-disable';
             }
 
             $actionFieldName = $this->getActionFieldName();
 
-            $newActions[] = array(
+            $newActions[] = [
                 'name' => $name,
                 'id' => $id,
                 'value' => $value,
@@ -1876,7 +1870,7 @@ class TableBuilder
                 'class' => $class,
                 'action_field_name' => $actionFieldName,
                 'disabled' => $disabled,
-            );
+            ];
         }
 
         return $newActions;
@@ -1891,26 +1885,26 @@ class TableBuilder
      */
     private function formatLinks($links)
     {
-        $newLinks = array();
+        $newLinks = [];
 
         foreach ($links as $name => $details) {
-            $value = isset($details['value']) ? $details['value'] : ucwords($name);
+            $value = $details['value'] ?? ucwords($name);
 
             $label = isset($details['label']) ? $this->translator->translate($details['label']) : $value;
 
-            $class = isset($details['class']) ? $details['class'] : 'govuk-button govuk-button--secondary';
+            $class = $details['class'] ?? 'govuk-button govuk-button--secondary';
 
-            $route = isset($details['route']['route']) ? $details['route']['route'] : null;
-            $params = isset($details['route']['params']) ? $details['route']['params'] : [];
-            $options = isset($details['route']['options']) ? $details['route']['options'] : [];
-            $reuse = isset($details['route']['reuse']) ? $details['route']['reuse'] : false;
+            $route = $details['route']['route'] ?? null;
+            $params = $details['route']['params'] ?? [];
+            $options = $details['route']['options'] ?? [];
+            $reuse = $details['route']['reuse'] ?? false;
 
-            $newLinks[] = array(
+            $newLinks[] = [
                 'href' => $this->getUrl()->fromRoute($route, $params, $options, $reuse),
                 'value' => $value,
                 'label' => $label,
                 'class' => $class
-            );
+            ];
         }
 
         return $newLinks;
@@ -1956,9 +1950,7 @@ class TableBuilder
 
         return array_filter(
             $items,
-            function (array $item) {
-                return !isset($item['requireRows']) || (bool)$item['requireRows'] === false;
-            }
+            fn(array $item) => !isset($item['requireRows']) || (bool)$item['requireRows'] === false
         );
     }
 
@@ -1977,9 +1969,7 @@ class TableBuilder
 
         return array_filter(
             $items,
-            function (array $item) {
-                return isset($item['keepForReadOnly']) && (bool)$item['keepForReadOnly'] === true;
-            }
+            fn(array $item) => isset($item['keepForReadOnly']) && (bool)$item['keepForReadOnly'] === true
         );
     }
 

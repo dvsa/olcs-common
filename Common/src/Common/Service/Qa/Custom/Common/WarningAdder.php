@@ -7,7 +7,7 @@ use Laminas\View\Helper\Partial;
 
 class WarningAdder
 {
-    const DEFAULT_PRIORITY = 10;
+    public const DEFAULT_PRIORITY = 10;
 
     /** @var Partial */
     private $partial;

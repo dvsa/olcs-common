@@ -33,7 +33,7 @@ class ElasticSearchTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->request = m::mock('\Laminas\Http\Request');
+        $this->request = m::mock(\Laminas\Http\Request::class);
 
         $this->routeMatch = new RouteMatch(['controller' => 'index', 'action' => 'index', 'index' => 'SEARCHINDEX']);
         $this->routeMatch->setMatchedRouteName('testindex');
@@ -49,13 +49,13 @@ class ElasticSearchTest extends MockeryTestCase
 
         $this->event->setRouteMatch($this->routeMatch);
         $this->event->setRequest($this->request);
-        $this->sm = m::mock('\Laminas\ServiceManager\ServiceManager')
+        $this->sm = m::mock(\Laminas\ServiceManager\ServiceManager::class)
             ->makePartial()
             ->setAllowOverride(true);
 
         $this->container = m::mock(ContainerInterface::class);
         $this->pm = new PluginManager($this->container);
-        $this->pm->setInvokableClass('ElasticSearch', 'Common\Controller\Plugin\ElasticSearch');
+        $this->pm->setInvokableClass('ElasticSearch', \Common\Controller\Plugin\ElasticSearch::class);
 
         $this->mockPlaceholder = m::mock(Placeholder::class);
         $this->sut = new ControllerStub($this->mockPlaceholder);
@@ -86,7 +86,7 @@ class ElasticSearchTest extends MockeryTestCase
 
     public function testProcessSearchData()
     {
-        $mockForm = m::mock('Laminas\Form\Form');
+        $mockForm = m::mock(\Laminas\Form\Form::class);
         $mockForm->shouldReceive('setAttribute')->with(
             'action',
             m::type('string')
@@ -96,7 +96,7 @@ class ElasticSearchTest extends MockeryTestCase
         $mockForm->shouldReceive('isValid')->andReturn(true);
         $mockForm->shouldReceive('getData')->andReturn(['index' => 'SEARCHINDEX']);
 
-        $mockContainer = m::mock('Laminas\View\Helper\Placeholder\Container');
+        $mockContainer = m::mock(\Laminas\View\Helper\Placeholder\Container::class);
         $mockContainer->shouldReceive('getValue')->andReturn($mockForm);
 
         $this->mockPlaceholder->shouldReceive('getContainer')->with('headerSearch')->andReturn($mockContainer);
@@ -108,14 +108,14 @@ class ElasticSearchTest extends MockeryTestCase
 
     public function testGetSearchForm()
     {
-        $mockForm = m::mock('Laminas\Form\Form');
+        $mockForm = m::mock(\Laminas\Form\Form::class);
         $mockForm->shouldReceive('setAttribute')->with(
             'action',
             m::type('string')
         );
         $mockForm->shouldReceive('setData');
 
-        $mockContainer = m::mock('Laminas\View\Helper\Placeholder\Container');
+        $mockContainer = m::mock(\Laminas\View\Helper\Placeholder\Container::class);
         $mockContainer->shouldReceive('getValue')->andReturn($mockForm);
 
         $this->mockPlaceholder->shouldReceive('getContainer')->with('headerSearch')->andReturn($mockContainer);
@@ -129,14 +129,14 @@ class ElasticSearchTest extends MockeryTestCase
 
     public function testGetFiltersForm()
     {
-        $mockForm = m::mock('Laminas\Form\Form');
+        $mockForm = m::mock(\Laminas\Form\Form::class);
         $mockForm->shouldReceive('setAttribute')->with(
             'action',
             m::type('string')
         );
         $mockForm->shouldReceive('setData');
 
-        $mockContainer = m::mock('Laminas\View\Helper\Placeholder\Container');
+        $mockContainer = m::mock(\Laminas\View\Helper\Placeholder\Container::class);
         $mockContainer->shouldReceive('getValue')->andReturn($mockForm);
 
         $this->mockPlaceholder->shouldReceive('getContainer')->with('searchFilter')->andReturn($mockContainer);
@@ -150,7 +150,7 @@ class ElasticSearchTest extends MockeryTestCase
 
     public function testSearchAction()
     {
-        $mockForm = m::mock('Laminas\Form\Form');
+        $mockForm = m::mock(\Laminas\Form\Form::class);
         $mockForm->shouldReceive('getObject')->andReturn($this->getMockSearchObjectArray());
         $mockForm->shouldReceive('setAttribute')->with(
             'action',
@@ -177,11 +177,11 @@ class ElasticSearchTest extends MockeryTestCase
         $mockRequest->shouldReceive('setIndex')->with('SEARCHINDEX')->andReturn($mockIndex);
         $mockIndex->shouldReceive('setSearch')->with('SEARCH')->andReturnSelf();
 
-        $mockSearchService = m::mock('Common\Service\Data\Search\Search');
+        $mockSearchService = m::mock(\Common\Service\Data\Search\Search::class);
         $mockSearchService->shouldReceive('setQuery')->with(m::type('object'))->andReturn($mockQuery);
         $mockSearchService->shouldReceive('fetchResultsTable')->andReturn($results);
 
-        $mockContainer = m::mock('Laminas\View\Helper\Placeholder\Container');
+        $mockContainer = m::mock(\Laminas\View\Helper\Placeholder\Container::class);
         $mockContainer->shouldReceive('getValue')->andReturn($mockForm);
 
         $this->mockPlaceholder->shouldReceive('getContainer')->with('searchFilter')->andReturn($mockContainer);
@@ -203,7 +203,7 @@ class ElasticSearchTest extends MockeryTestCase
         $plugin = $this->sut->getPlugin();
         $plugin->navigationId = 'home';
 
-        $mockNavigationService = m::mock('Common\Service\Data\Search\Search');
+        $mockNavigationService = m::mock(\Common\Service\Data\Search\Search::class);
         $mockNavigationService->shouldReceive('findOneBy')->with('id', 'home')->andReturnSelf();
         $mockNavigationService->shouldReceive('setActive');
         $plugin->setNavigationService($mockNavigationService);
@@ -224,9 +224,9 @@ class ElasticSearchTest extends MockeryTestCase
     public function testConfigureNavigation()
     {
         $mockSearchTypeService = m::mock('Olcs\Service\Data\Search\SearchType');
-        $mockSearchService = m::mock('Common\Service\Data\Search\Search');
+        $mockSearchService = m::mock(\Common\Service\Data\Search\Search::class);
 
-        $mi = m::mock('Laminas\Navigation\Navigation');
+        $mi = m::mock(\Laminas\Navigation\Navigation::class);
         $mi->shouldReceive('findOneBy')->with('id', 'search-da')->andReturnSelf();
         $mi->shouldReceive('setActive')->with(true)->andReturnNull();
 
@@ -261,16 +261,16 @@ class ElasticSearchTest extends MockeryTestCase
 
     public function testGenerateResults()
     {
-        $mockForm = m::mock('Laminas\Form\Form');
+        $mockForm = m::mock(\Laminas\Form\Form::class);
         $mockForm->shouldReceive('getObject')->andReturn($this->getMockSearchObjectArray());
 
-        $mockContainer = m::mock('Laminas\View\Helper\Placeholder\Container');
+        $mockContainer = m::mock(\Laminas\View\Helper\Placeholder\Container::class);
         $mockContainer->shouldReceive('getValue')->andReturn($mockForm);
 
         $this->mockPlaceholder->shouldReceive('getContainer')->with('headerSearch')->andReturn($mockContainer);
 
         $mockSearchTypeService = m::mock('Olcs\Service\Data\Search\SearchType');
-        $mockSearchService = m::mock('Common\Service\Data\Search\Search');
+        $mockSearchService = m::mock(\Common\Service\Data\Search\Search::class);
 
         $mockQuery = m::mock();
         $mockRequest = m::mock();

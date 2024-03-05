@@ -14,8 +14,8 @@ use Laminas\View\Helper\AbstractHelper;
  */
 class SystemInfoMessages extends AbstractHelper
 {
-    const HTML_BLOCK = '<div class="system-messages">%s</div>';
-    const HTML_ITEM = '<div class="system-messages__wrapper"><p>%s</p></div>';
+    public const HTML_BLOCK = '<div class="system-messages">%s</div>';
+    public const HTML_ITEM = '<div class="system-messages__wrapper"><p>%s</p></div>';
 
     /** @var AnnotationBuilder */
     protected $annotationBuilder;

@@ -40,9 +40,7 @@ class ConstrainedCountriesListTest extends MockeryTestCase
         ];
 
         $this->translator->shouldReceive('translate')->andReturnUsing(
-            function ($key) {
-                return '_TRNSLT_' . $key;
-            }
+            fn($key) => '_TRNSLT_' . $key
         );
         $this->assertEquals(
             '_TRNSLT_United Kingdom, _TRNSLT_Trinidad &amp; Tobago, _TRNSLT_&quot;Third&quot; country',
@@ -68,9 +66,7 @@ class ConstrainedCountriesListTest extends MockeryTestCase
             ]
         ];
         $this->translator->shouldReceive('translate')->andReturnUsing(
-            function ($key) {
-                return '_TRNSLT_' . $key;
-            }
+            fn($key) => '_TRNSLT_' . $key
         );
         $this->assertEquals(
             '_TRNSLT_United Kingdom, _TRNSLT_Trinidad &amp; Tobago, _TRNSLT_&quot;Third&quot; country',
@@ -84,9 +80,7 @@ class ConstrainedCountriesListTest extends MockeryTestCase
             'constrainedCountries' => []
         ];
         $this->translator->shouldReceive('translate')->andReturnUsing(
-            function ($key) {
-                return '_TRNSLT_' . $key;
-            }
+            fn($key) => '_TRNSLT_' . $key
         );
         $this->assertEquals(
             '_TRNSLT_no.constrained.countries',

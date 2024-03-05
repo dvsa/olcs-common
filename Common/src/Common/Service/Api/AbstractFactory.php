@@ -28,7 +28,7 @@ class AbstractFactory implements AbstractFactoryInterface
             array_unshift($api, 'backend');
         }
 
-        list($endpoint, $uri) = $api;
+        [$endpoint, $uri] = $api;
 
         $config = $container->get('Config');
         if (!isset($config['service_api_mapping']['endpoints'][$endpoint])) {
@@ -48,7 +48,7 @@ class AbstractFactory implements AbstractFactoryInterface
         if (is_array($endpointConfig)) {
             $url =  $url->resolve($endpointConfig['url']);
             $options = $endpointConfig['options'];
-            $auth = isset($endpointConfig['auth']) ? $endpointConfig['auth'] : [];
+            $auth = $endpointConfig['auth'] ?? [];
         } else {
             $url =  $url->resolve($endpointConfig);
         }

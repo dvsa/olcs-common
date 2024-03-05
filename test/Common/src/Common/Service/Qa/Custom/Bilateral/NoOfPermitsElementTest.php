@@ -17,7 +17,7 @@ use Laminas\Validator\StringLength;
  */
 class NoOfPermitsElementTest extends MockeryTestCase
 {
-    const ELEMENT_NAME = 'elementName';
+    public const ELEMENT_NAME = 'elementName';
 
     private $noOfPermitsElement;
 

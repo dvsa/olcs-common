@@ -34,7 +34,7 @@ class FinancialEvidenceTest extends MockeryTestCase
         $this->urlHelper = m::mock(UrlHelperService::class);
         $this->translator = m::mock(TranslationHelperService::class);
 
-        $sm = m::mock('\Laminas\ServiceManager\ServiceManager')
+        $sm = m::mock(\Laminas\ServiceManager\ServiceManager::class)
             ->makePartial()
             ->setAllowOverride(true);
 

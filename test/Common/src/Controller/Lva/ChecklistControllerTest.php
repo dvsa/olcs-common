@@ -32,15 +32,13 @@ class ChecklistControllerTest extends MockeryTestCase
 
         $this->mockTranslationHelper->shouldReceive('translate')
             ->andReturnUsing(
-                function ($input) {
-                    return $input;
-                }
+                fn($input) => $input
             );
     }
 
     protected function mockController($className, array $constructorParams = [])
     {
-        $this->request = m::mock('\Laminas\Http\Request')->makePartial();
+        $this->request = m::mock(\Laminas\Http\Request::class)->makePartial();
 
         // If constructor params are provided, pass them to the mock, otherwise mock without them
         if (!empty($constructorParams)) {
@@ -75,62 +73,62 @@ class ChecklistControllerTest extends MockeryTestCase
         $userSectionView = $view->getChildren()[0];
         $this->assertEquals('pages/continuation-section', $userSectionView->getTemplate());
 
-        $expected = array (
+        $expected =  [
             'licNo' => '1234',
             'data' =>
-                array (
+                 [
                     0 =>
-                        array (
+                         [
                             0 =>
-                                array (
+                                 [
                                     'value' => 'continuations.users-section.table.name',
                                     'header' => true,
-                                ),
+                                ],
                             1 =>
-                                array (
+                                 [
                                     'value' => 'continuations.users-section.table.email',
                                     'header' => true,
-                                ),
+                                ],
                             2 =>
-                                array (
+                                 [
                                     'value' => 'continuations.users-section.table.permission',
                                     'header' => true,
-                                ),
-                        ),
+                                ],
+                        ],
                     1 =>
-                        array (
+                         [
                             0 =>
-                                array (
+                                 [
                                     'value' => 'Test1 Test1',
-                                ),
+                                ],
                             1 =>
-                                array (
+                                 [
                                     'value' => 'test1@test.com',
-                                ),
+                                ],
                             2 =>
-                                array (
+                                 [
                                     'value' => 'role.operator',
-                                ),
-                        ),
+                                ],
+                        ],
                     2 =>
-                        array (
+                         [
                             0 =>
-                                array (
+                                 [
                                     'value' => 'Test2 Test2',
-                                ),
+                                ],
                             1 =>
-                                array (
+                                 [
                                     'value' => 'test2@test.com',
-                                ),
+                                ],
                             2 =>
-                                array (
+                                 [
                                     'value' => 'role.operator',
-                                ),
-                        ),
-                ),
+                                ],
+                        ],
+                ],
             'totalMessage' => 'continuations.users-section-header',
             'totalCount' => 2,
-        );
+        ];
 
         $this->assertEquals($expected, $userSectionView->getVariables());
     }

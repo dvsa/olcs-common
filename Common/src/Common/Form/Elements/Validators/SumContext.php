@@ -16,8 +16,8 @@ use Laminas\Validator\AbstractValidator;
  */
 class SumContext extends AbstractValidator
 {
-    const BELOW_MIN = 'belowMin';
-    const ABOVE_MAX = 'aboveMax';
+    public const BELOW_MIN = 'belowMin';
+    public const ABOVE_MAX = 'aboveMax';
 
     /**
      * @var int

@@ -18,7 +18,7 @@ class VariationLvaAdapterTest extends MockeryTestCase
     {
         $this->container = m::mock(ContainerInterface::class);
 
-        $this->controller = m::mock('\Laminas\Mvc\Controller\AbstractController');
+        $this->controller = m::mock(\Laminas\Mvc\Controller\AbstractController::class);
 
         $this->sut = new VariationLvaAdapter($this->container);
         $this->sut->setController($this->controller);

@@ -10,7 +10,7 @@ use Laminas\Filter\AbstractFilter;
  */
 class NotPopulatedStringToZero extends AbstractFilter
 {
-    const ZERO = '0';
+    public const ZERO = '0';
 
     /**
      * Filter

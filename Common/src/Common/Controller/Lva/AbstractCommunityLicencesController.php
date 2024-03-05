@@ -592,9 +592,9 @@ abstract class AbstractCommunityLicencesController extends AbstractController
                     'communityLicenceIds' => explode(',', $this->params('child_id')),
                     'type' => $type,
                     'startDate' =>
-                        isset($formattedData['dates']['startDate']) ? $formattedData['dates']['startDate'] : null,
+                        $formattedData['dates']['startDate'] ?? null,
                     'endDate' =>
-                        isset($formattedData['dates']['endDate']) ? $formattedData['dates']['endDate'] : null,
+                        $formattedData['dates']['endDate'] ?? null,
                     'reasons' => $formattedData['data']['reason']
                 ];
 

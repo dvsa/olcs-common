@@ -16,21 +16,21 @@ class NumberCompare extends AbstractCompare
      * Error codes
      * @const string
      */
-    const MAX_DIFF_EXCEEDED = 'maxDiffExceeded';
+    public const MAX_DIFF_EXCEEDED = 'maxDiffExceeded';
 
     /**
      * @var array
      */
-    protected $messageVariables = array(
+    protected $messageVariables = [
         'compare_to_label' => 'compareToLabel',
         'max_diff' => 'maxDiff',
-    );
+    ];
 
     /**
      * Error messages
      * @var array
      */
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         self::NOT_GTE => "This number must be greater than or equal to '%compare_to_label%'",
         self::NOT_GT => "This number must be greater than '%compare_to_label%'",
         self::NOT_LTE => "This number must be less than or equal to '%compare_to_label%'",
@@ -40,7 +40,7 @@ class NumberCompare extends AbstractCompare
         self::INVALID_OPERATOR => "Invalid operator",
         self::INVALID_FIELD => "Input field being compared to doesn't exist",
         self::NO_COMPARE => "Unable to compare with '%compare_to_label%'"
-    );
+    ];
 
     /**
      * Max difference between the compared numbers which makes it valid
@@ -72,7 +72,7 @@ class NumberCompare extends AbstractCompare
      * @param  array $options
      * @return NumberCompare
      */
-    public function setOptions($options = array())
+    public function setOptions($options = [])
     {
         if (isset($options['max_diff'])) {
             $this->setMaxDiff($options['max_diff']);

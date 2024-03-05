@@ -11,7 +11,7 @@ use Laminas\View\Helper\AbstractHelper;
  */
 class Link extends AbstractHelper
 {
-    const LINK_FORMAT = '<a href="%s" class="%s">%s</a>';
+    public const LINK_FORMAT = '<a href="%s" class="%s">%s</a>';
 
     public function __invoke(string $url, string $linkText, string $class = 'govuk-link'): string
     {

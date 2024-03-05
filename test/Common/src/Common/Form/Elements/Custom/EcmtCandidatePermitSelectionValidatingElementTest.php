@@ -16,7 +16,7 @@ use Laminas\Validator\Callback;
  */
 class EcmtCandidatePermitSelectionValidatingElementTest extends MockeryTestCase
 {
-    const ELEMENT_NAME = 'elementName123';
+    public const ELEMENT_NAME = 'elementName123';
 
     private $ecmtCandidatePermitSelectionValidatingElement;
 

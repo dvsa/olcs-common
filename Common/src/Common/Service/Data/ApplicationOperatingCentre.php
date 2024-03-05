@@ -11,8 +11,8 @@ class ApplicationOperatingCentre extends AbstractDataService implements ListData
 {
     use ApplicationServiceTrait;
 
-    const OUTPUT_TYPE_FULL = 1;
-    const OUTPUT_TYPE_PARTIAL = 2;
+    public const OUTPUT_TYPE_FULL = 1;
+    public const OUTPUT_TYPE_PARTIAL = 2;
 
     /**
      * @var integer
@@ -54,7 +54,7 @@ class ApplicationOperatingCentre extends AbstractDataService implements ListData
         $id = $this->getId();
 
         if (is_null($this->getData($id))) {
-            $data = array();
+            $data = [];
             $rawData =  $this->getApplicationService()->fetchOperatingCentreData($this->getId());
 
             if (is_array($rawData['operatingCentres'])) {

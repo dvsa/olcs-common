@@ -12,8 +12,8 @@ use Common\Util\Escape;
  */
 class ActionLinks extends Selector
 {
-    const DEFAULT_INPUT_NAME = 'table[action][delete][%d]';
-    const BUTTON_MARKUP = '<button data-prevent-double-click="true" data-module="govuk-button" type="submit" class="%s" name="%s" aria-label="%s">%s</button>';
+    public const DEFAULT_INPUT_NAME = 'table[action][delete][%d]';
+    public const BUTTON_MARKUP = '<button data-prevent-double-click="true" data-module="govuk-button" type="submit" class="%s" name="%s" aria-label="%s">%s</button>';
 
     /**
      * Render
@@ -51,11 +51,7 @@ class ActionLinks extends Selector
      */
     private function getInputName($column, $setting)
     {
-        if (isset($column[$setting])) {
-            return $column[$setting];
-        }
-
-        return self::DEFAULT_INPUT_NAME;
+        return $column[$setting] ?? self::DEFAULT_INPUT_NAME;
     }
 
     /**

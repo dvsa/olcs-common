@@ -17,12 +17,12 @@ class AddressHelperService
     /**
      * Max length we'll display in the address dropdown before truncating
      */
-    const MAX_DISPLAY_LENGTH = 50;
+    public const MAX_DISPLAY_LENGTH = 50;
 
     /**
      * Holds the template for the details
      */
-    private $details = array(
+    private $details = [
         'addressLine1' => '',
         'addressLine2' => '',
         'addressLine3' => '',
@@ -31,7 +31,7 @@ class AddressHelperService
         'postcode' => '',
         'countryCode' => 'GB',
         'organisationName' => ''
-    );
+    ];
 
     /**
      * Format an address
@@ -62,12 +62,12 @@ class AddressHelperService
      */
     public function formatAddressesForSelect($list)
     {
-        $options  = array();
+        $options  = [];
         foreach ($list as $item) {
             $address = $this->formatPostalAddress($item);
 
-            $allowedParts = array('organisationName', 'addressLine1', 'addressLine2', 'addressLine3', 'town');
-            $parts = array();
+            $allowedParts = ['organisationName', 'addressLine1', 'addressLine2', 'addressLine3', 'town'];
+            $parts = [];
 
             foreach ($allowedParts as $part) {
                 if (array_key_exists($part, $address) && !empty($address[$part])) {

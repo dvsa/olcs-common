@@ -14,7 +14,7 @@ use Common\Helper\Str;
  */
 class FormElementMessageFormatter
 {
-    const FIELD_LABEL_PLACEHOLDER = '{{fieldLabel}}';
+    public const FIELD_LABEL_PLACEHOLDER = '{{fieldLabel}}';
 
     /**
      * @var TranslatorInterface
@@ -41,9 +41,7 @@ class FormElementMessageFormatter
     public function enableReplacementOfMessage(string $messageKey, $defaultMessageOrProvider)
     {
         if (is_string($defaultMessageOrProvider)) {
-            $defaultMessageOrProvider = function () use ($defaultMessageOrProvider) {
-                return $defaultMessageOrProvider;
-            };
+            $defaultMessageOrProvider = fn() => $defaultMessageOrProvider;
         }
         assert(is_callable($defaultMessageOrProvider), 'Expected default message provider to be callable or string');
         $this->messagesReplacementProviders[$messageKey] = $defaultMessageOrProvider;
@@ -125,7 +123,7 @@ class FormElementMessageFormatter
     protected function getElementShortLabel(ElementInterface $element): string
     {
         $label = $element->getOption('short-label');
-        return $label ? $label : '';
+        return $label ?: '';
     }
 
     /**

@@ -15,11 +15,11 @@ use Laminas\Form\Fieldset;
  */
 class HtmlAdderTest extends MockeryTestCase
 {
-    const ELEMENT_NAME = 'elementName';
+    public const ELEMENT_NAME = 'elementName';
 
-    const MARKUP = '<h1>markup</h1>';
+    public const MARKUP = '<h1>markup</h1>';
 
-    const EXPECTED_PARAMS = [
+    public const EXPECTED_PARAMS = [
         'name' => self::ELEMENT_NAME,
         'type' => Html::class,
         'attributes' => [

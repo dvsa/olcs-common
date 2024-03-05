@@ -24,7 +24,7 @@ class TaskDescriptionTest extends MockeryTestCase
         $this->urlHelper = m::mock(UrlHelperService::class);
         $this->router = m::mock(TreeRouteStack::class);
         $this->request = m::mock(Request::class);
-        $this->mockRouteMatch = m::mock('\Laminas\Router\RouteMatch');
+        $this->mockRouteMatch = m::mock(\Laminas\Router\RouteMatch::class);
         $this->sut = new TaskDescription($this->router, $this->request, $this->urlHelper);
     }
 

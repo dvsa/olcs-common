@@ -12,11 +12,11 @@ use Laminas\Validator\ValidatorPluginManager;
  */
 class ValidateIf extends AbstractValidator implements ValidatorPluginManagerAwareInterface
 {
-    const NO_CONTEXT = 'no_context';
+    public const NO_CONTEXT = 'no_context';
 
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         self::NO_CONTEXT         => 'Context field was not found in the input',
-    );
+    ];
 
     /**
      * @var string
@@ -187,8 +187,8 @@ class ValidateIf extends AbstractValidator implements ValidatorPluginManagerAwar
             foreach ($this->getValidators() as $validator) {
                 $this->validatorChain->attachByName(
                     $validator['name'],
-                    isset($validator['options']) ? $validator['options'] : [],
-                    isset($validator['break_chain_on_failure']) ? $validator['break_chain_on_failure'] : false
+                    $validator['options'] ?? [],
+                    $validator['break_chain_on_failure'] ?? false
                 );
             }
         }

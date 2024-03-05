@@ -60,11 +60,9 @@ class BusReg extends InternalSearchAbstract
             [
                 'title' => 'Registration number',
                 'name' => 'regNo',
-                'formatter' => function ($data) {
-                    return '<a class="govuk-link" href="/licence/'
-                    . $data['licId'] . '/bus/' . $data['busregId']
-                    . '/details">' . $data['regNo'] . '</a>';
-                }
+                'formatter' => fn($data) => '<a class="govuk-link" href="/licence/'
+                . $data['licId'] . '/bus/' . $data['busregId']
+                . '/details">' . $data['regNo'] . '</a>'
             ],
             [
                 'title' => 'Operator name',

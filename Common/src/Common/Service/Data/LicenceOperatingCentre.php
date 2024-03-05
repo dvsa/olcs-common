@@ -11,8 +11,8 @@ class LicenceOperatingCentre extends AbstractDataService implements ListDataInte
 {
     use LicenceServiceTrait;
 
-    const OUTPUT_TYPE_FULL = 1;
-    const OUTPUT_TYPE_PARTIAL = 2;
+    public const OUTPUT_TYPE_FULL = 1;
+    public const OUTPUT_TYPE_PARTIAL = 2;
 
     /**
      * @var int
@@ -54,7 +54,7 @@ class LicenceOperatingCentre extends AbstractDataService implements ListDataInte
         $id = $this->getId();
 
         if (is_null($this->getData($id))) {
-            $data = array();
+            $data = [];
             $rawData =  $this->getLicenceService()->fetchOperatingCentreData($this->getId());
 
             if (is_array($rawData['operatingCentres'])) {

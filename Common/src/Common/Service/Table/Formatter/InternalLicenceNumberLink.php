@@ -33,7 +33,7 @@ class InternalLicenceNumberLink implements FormatterPluginManagerInterface
     public function format($data, $column = [])
     {
         $licenceNo = $data['licence']['licNo'];
-        $url = $this->urlHelper->fromRoute('lva-licence', array('licence' => $data['licence']['id']));
+        $url = $this->urlHelper->fromRoute('lva-licence', ['licence' => $data['licence']['id']]);
 
         return '<a class="govuk-link" href="' . $url . '" title="Licence details for ' . $licenceNo . '">' . $licenceNo . '</a>';
     }

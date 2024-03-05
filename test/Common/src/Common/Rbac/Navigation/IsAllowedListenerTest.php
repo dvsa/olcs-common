@@ -85,7 +85,7 @@ class IsAllowedListenerTest extends MockeryTestCase
             ->shouldReceive('getGuards')
             ->andReturn(
                 [
-                    'LmcRbacMvc\Guard\RoutePermissionsGuard' => $rules,
+                    \LmcRbacMvc\Guard\RoutePermissionsGuard::class => $rules,
                 ]
             )
             ->getMock();

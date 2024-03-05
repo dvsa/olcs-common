@@ -123,38 +123,38 @@ class FormHelperServiceTest extends MockeryTestCase
             ->shouldReceive('add')
             ->once()
             ->with(
-                array(
+                [
                     'type' => \Laminas\Form\Element\Csrf::class,
                     'name' => 'security',
-                    'options' => array(
-                        'csrf_options' => array(
-                            'messageTemplates' => array(
+                    'options' => [
+                        'csrf_options' => [
+                            'messageTemplates' => [
                                 'notSame' => 'csrf-message'
-                            ),
+                            ],
                             'timeout' => 9999,
-                        )
-                    ),
-                    'attributes' => array(
+                        ]
+                    ],
+                    'attributes' => [
                         'class' => 'js-csrf-token'
-                    )
-                )
+                    ]
+                ]
             )
             ->shouldReceive('add')
             ->once()
             ->with(
-                array(
+                [
                     'type' => \Laminas\Form\Element\Button::class,
                     'name' => 'form-actions[continue]',
-                    'options' => array(
+                    'options' => [
                         'label' => 'Continue'
-                    ),
-                    'attributes' => array(
+                    ],
+                    'attributes' => [
                         'type' => 'submit',
                         'class' => 'govuk-visually-hidden',
                         'style' => 'display: none;',
                         'id' => 'hidden-continue'
-                    )
-                )
+                    ]
+                ]
             );
 
         $this->mockBuilder->shouldReceive('createForm')->once()->with($formClass)->andReturn($mockForm);
@@ -225,9 +225,9 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testProcessAddressLookupWithNoPostcodeOrAddressSelected()
     {
-        $form = m::mock('Laminas\Form\Form');
+        $form = m::mock(\Laminas\Form\Form::class);
 
-        $request = m::mock('Laminas\Http\Request');
+        $request = m::mock(\Laminas\Http\Request::class);
         $request->shouldReceive('getPost')
             ->andReturn([])
             ->shouldReceive('isPost')
@@ -239,7 +239,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->shouldReceive('remove')
             ->with('select');
 
-        $fieldset = m::mock('Common\Form\Elements\Types\Address');
+        $fieldset = m::mock(\Common\Form\Elements\Types\Address::class);
         $fieldset->shouldReceive('getName')
             ->andReturn('address')
             ->shouldReceive('get')
@@ -265,7 +265,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with('address_1234')
             ->andReturn('formatted1');
 
-        $request = m::mock('Laminas\Http\Request');
+        $request = m::mock(\Laminas\Http\Request::class);
         $request->shouldReceive('getPost')
             ->andReturn(
                 [
@@ -286,14 +286,14 @@ class FormHelperServiceTest extends MockeryTestCase
             ->shouldReceive('remove')
             ->with('select');
 
-        $fieldset = m::mock('Common\Form\Elements\Types\Address');
+        $fieldset = m::mock(\Common\Form\Elements\Types\Address::class);
         $fieldset->shouldReceive('getName')
             ->andReturn('address')
             ->shouldReceive('get')
             ->with('searchPostcode')
             ->andReturn($element);
 
-        $form = m::mock('Laminas\Form\Form');
+        $form = m::mock(\Laminas\Form\Form::class);
         $form->shouldReceive('getFieldsets')
             ->once()
             ->andReturn([$fieldset])
@@ -342,14 +342,14 @@ class FormHelperServiceTest extends MockeryTestCase
             ->shouldReceive('remove')
             ->with('select');
 
-        $fieldset = m::mock('Common\Form\Elements\Types\Address');
+        $fieldset = m::mock(\Common\Form\Elements\Types\Address::class);
         $fieldset->shouldReceive('getName')
             ->andReturn('address')
             ->shouldReceive('get')
             ->with('searchPostcode')
             ->andReturn($element);
 
-        $topFieldset = m::mock('Laminas\Form\Fieldset');
+        $topFieldset = m::mock(\Laminas\Form\Fieldset::class);
         $topFieldset->shouldReceive('getName')
             ->andReturn('top-level')
             ->shouldReceive('getFieldsets')
@@ -384,9 +384,9 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with(['address1', 'address2'])
             ->andReturn(['formatted1', 'formatted2']);
 
-        $form = m::mock('Laminas\Form\Form');
+        $form = m::mock(\Laminas\Form\Form::class);
 
-        $request = m::mock('Laminas\Http\Request');
+        $request = m::mock(\Laminas\Http\Request::class);
         $request->shouldReceive('getPost')
             ->andReturn(
                 [
@@ -410,7 +410,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with('addresses')
             ->andReturn($addressElement);
 
-        $fieldset = m::mock('Common\Form\Elements\Types\Address');
+        $fieldset = m::mock(\Common\Form\Elements\Types\Address::class);
         $fieldset->shouldReceive('getName')
             ->andReturn('address')
             ->shouldReceive('get')
@@ -435,9 +435,9 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with(['address1', 'address2'])
             ->andReturn(['formatted1', 'formatted2']);
 
-        $form = m::mock('Laminas\Form\Form');
+        $form = m::mock(\Laminas\Form\Form::class);
 
-        $request = m::mock('Laminas\Http\Request');
+        $request = m::mock(\Laminas\Http\Request::class);
         $request->shouldReceive('getPost')
             ->andReturn(
                 [
@@ -468,20 +468,20 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with('addresses')
             ->andReturn($addressElement);
 
-        $fieldset = m::mock('Common\Form\Elements\Types\Address');
+        $fieldset = m::mock(\Common\Form\Elements\Types\Address::class);
         $fieldset->shouldReceive('getName')
             ->andReturn('address')
             ->shouldReceive('get')
             ->with('searchPostcode')
             ->andReturn($element);
 
-        $topFieldset = m::mock('Laminas\Form\Fieldset');
+        $topFieldset = m::mock(\Laminas\Form\Fieldset::class);
         $topFieldset->shouldReceive('getName')
             ->andReturn('deeply')
             ->shouldReceive('getFieldsets')
             ->andReturn(
                 [
-                    m::mock('Laminas\Form\Fieldset')
+                    m::mock(\Laminas\Form\Fieldset::class)
                         ->shouldReceive('getName')
                         ->andReturn('nested')
                         ->shouldReceive('getFieldsets')
@@ -504,9 +504,9 @@ class FormHelperServiceTest extends MockeryTestCase
         $this->mockDataAddress->shouldReceive('getAddressesForPostcode')
             ->andReturn([]);
 
-        $form = m::mock('Laminas\Form\Form');
+        $form = m::mock(\Laminas\Form\Form::class);
 
-        $request = m::mock('Laminas\Http\Request');
+        $request = m::mock(\Laminas\Http\Request::class);
         $request->shouldReceive('getPost')
             ->andReturn(
                 [
@@ -533,9 +533,9 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with('select')
             ->getMock()
             ->shouldReceive('setMessages')
-            ->with(array('postcode.error.no-addresses-found'));
+            ->with(['postcode.error.no-addresses-found']);
 
-        $fieldset = m::mock('Common\Form\Elements\Types\Address');
+        $fieldset = m::mock(\Common\Form\Elements\Types\Address::class);
         $fieldset->shouldReceive('getName')
             ->andReturn('address')
             ->shouldReceive('get')
@@ -553,9 +553,9 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testProcessAddressLookupWithEmptyPostcodeSearch()
     {
-        $form = m::mock('Laminas\Form\Form');
+        $form = m::mock(\Laminas\Form\Form::class);
 
-        $request = m::mock('Laminas\Http\Request');
+        $request = m::mock(\Laminas\Http\Request::class);
         $request->shouldReceive('getPost')
             ->andReturn(
                 [
@@ -578,9 +578,9 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with('select')
             ->getMock()
             ->shouldReceive('setMessages')
-            ->with(array('Please enter a postcode'));
+            ->with(['Please enter a postcode']);
 
-        $fieldset = m::mock('Common\Form\Elements\Types\Address');
+        $fieldset = m::mock(\Common\Form\Elements\Types\Address::class);
         $fieldset->shouldReceive('getName')
             ->andReturn('address')
             ->shouldReceive('get')
@@ -601,9 +601,9 @@ class FormHelperServiceTest extends MockeryTestCase
         $this->mockDataAddress->shouldReceive('getAddressesForPostcode')
             ->andThrow(new \Exception('fail'));
 
-        $form = m::mock('Laminas\Form\Form');
+        $form = m::mock(\Laminas\Form\Form::class);
 
-        $request = m::mock('Laminas\Http\Request');
+        $request = m::mock(\Laminas\Http\Request::class);
         $request->shouldReceive('getPost')
             ->andReturn(
                 [
@@ -627,9 +627,9 @@ class FormHelperServiceTest extends MockeryTestCase
             ->getMock()
             ->shouldReceive('setMessages')
             ->once()
-            ->with(array('postcode.error.not-available'));
+            ->with(['postcode.error.not-available']);
 
-        $fieldset = m::mock('Common\Form\Elements\Types\Address');
+        $fieldset = m::mock(\Common\Form\Elements\Types\Address::class);
         $fieldset->shouldReceive('getName')
             ->andReturn('address')
             ->shouldReceive('get')
@@ -647,7 +647,7 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testDisableElementWithNestedSelector()
     {
-        $form = m::mock('Laminas\Form\Form');
+        $form = m::mock(\Laminas\Form\Form::class);
 
         $validator = m::mock(ElementInterface::class);
         $validator->shouldReceive('setAllowEmpty')
@@ -655,7 +655,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->shouldReceive('setRequired')
             ->with(false);
 
-        $filter = m::mock('Laminas\InputFilter\InputFilter');
+        $filter = m::mock(\Laminas\InputFilter\InputFilter::class);
         $filter->shouldReceive('get')
             ->with('foo')
             ->andReturnSelf()
@@ -668,7 +668,7 @@ class FormHelperServiceTest extends MockeryTestCase
         $element->shouldReceive('setAttribute')
             ->with('disabled', 'disabled');
 
-        $fieldset = m::mock('Laminas\Form\Fieldset');
+        $fieldset = m::mock(\Laminas\Form\Fieldset::class);
         $fieldset->shouldReceive('get')
             ->with('bar')
             ->andReturn($element);
@@ -695,7 +695,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->shouldReceive('setRequired')
             ->with(false);
 
-        $filter = m::mock('Laminas\InputFilter\InputFilter');
+        $filter = m::mock(\Laminas\InputFilter\InputFilter::class);
         $filter->shouldReceive('get')
             ->with('bar')
             ->andReturn($validator);
@@ -716,12 +716,12 @@ class FormHelperServiceTest extends MockeryTestCase
             ->shouldReceive('getYearElement')
             ->andReturn($subElement);
 
-        $fieldset = m::mock('Laminas\Form\Fieldset');
+        $fieldset = m::mock(\Laminas\Form\Fieldset::class);
         $fieldset->shouldReceive('get')
             ->with('bar')
             ->andReturn($element);
 
-        $form = m::mock('Laminas\Form\Form');
+        $form = m::mock(\Laminas\Form\Form::class);
         $form->shouldReceive('getInputFilter')
             ->andReturn($filter)
             ->getMock()
@@ -784,7 +784,7 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testRemove()
     {
-        $form = m::mock('Laminas\Form\Form');
+        $form = m::mock(\Laminas\Form\Form::class);
 
         $form->shouldReceive('get')
             ->with('foo')
@@ -793,7 +793,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->shouldReceive('remove')
             ->with('bar');
 
-        $filter = m::mock('Laminas\InputFilter\InputFilter');
+        $filter = m::mock(\Laminas\InputFilter\InputFilter::class);
         $filter->shouldReceive('get')
             ->with('foo')
             ->andReturnSelf()
@@ -824,13 +824,13 @@ class FormHelperServiceTest extends MockeryTestCase
             ->shouldReceive('getYearElement')
             ->andReturn($subElement);
 
-        $element = m::mock('Laminas\Form\Element');
+        $element = m::mock(\Laminas\Form\Element::class);
         $element->shouldReceive('setAttribute')
             ->with('disabled', 'disabled');
 
-        $form = m::mock('Laminas\Form\Form');
+        $form = m::mock(\Laminas\Form\Form::class);
 
-        $fieldset = m::mock('Laminas\Form\Fieldset');
+        $fieldset = m::mock(\Laminas\Form\Fieldset::class);
         $fieldset->shouldReceive('getElements')
             ->andReturn([$dateElement])
             ->getMock()
@@ -848,7 +848,7 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testDisableValidation()
     {
-        $input = m::mock('Laminas\InputFilter\Input');
+        $input = m::mock(\Laminas\InputFilter\Input::class);
         $input->shouldReceive('setAllowEmpty')
             ->with(true)
             ->getMock()
@@ -857,7 +857,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->getMock()
             ->shouldReceive('setValidatorChain');
 
-        $filter = m::mock('Laminas\InputFilter\InputFilter');
+        $filter = m::mock(\Laminas\InputFilter\InputFilter::class);
         $filter->shouldReceive('getInputs')
             ->andReturn([$input]);
 
@@ -866,7 +866,7 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testDisableEmptyValidation()
     {
-        $input = m::mock('Laminas\InputFilter\Input');
+        $input = m::mock(\Laminas\InputFilter\Input::class);
         $input->shouldReceive('setAllowEmpty')
             ->with(true)
             ->andReturnSelf()
@@ -877,7 +877,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->getMock()
             ->shouldReceive('setValidatorChain');
 
-        $filter = m::mock('Laminas\InputFilter\InputFilter');
+        $filter = m::mock(\Laminas\InputFilter\InputFilter::class);
         $filter->shouldReceive('get')
             ->with('foo')
             ->andReturn($input)
@@ -893,7 +893,7 @@ class FormHelperServiceTest extends MockeryTestCase
         $element->shouldReceive('getValue')
             ->andReturn('');
 
-        $fieldset = m::mock('Laminas\Form\Fieldset');
+        $fieldset = m::mock(\Laminas\Form\Fieldset::class);
         $fieldset->shouldReceive('getName')
             ->andReturn('fieldset')
             ->getMock()
@@ -903,7 +903,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->shouldReceive('getElements')
             ->andReturn([]);
 
-        $form = m::mock('Laminas\Form\Form');
+        $form = m::mock(\Laminas\Form\Form::class);
         $form->shouldReceive('getInputFilter')
             ->andReturn($filter)
             ->getMock()
@@ -918,7 +918,7 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testDisableEmptyValidationOnElement()
     {
-        $input = m::mock('Laminas\InputFilter\Input');
+        $input = m::mock(\Laminas\InputFilter\Input::class);
         $input->shouldReceive('setAllowEmpty')
             ->with(true)
             ->andReturnSelf()
@@ -927,7 +927,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->andReturnSelf()
             ->shouldReceive('setValidatorChain');
 
-        $filter = m::mock('Laminas\InputFilter\InputFilter');
+        $filter = m::mock(\Laminas\InputFilter\InputFilter::class);
         $filter->shouldReceive('get')
             ->with('foo')
             ->andReturn($input)
@@ -937,13 +937,13 @@ class FormHelperServiceTest extends MockeryTestCase
 
         $element = m::mock(ElementInterface::class);
 
-        $fieldset = m::mock('Laminas\Form\Fieldset');
+        $fieldset = m::mock(\Laminas\Form\Fieldset::class);
         $fieldset
             ->shouldReceive('get')
             ->with('foo')
             ->andReturn($element);
 
-        $form = m::mock('Laminas\Form\Form');
+        $form = m::mock(\Laminas\Form\Form::class);
         $form->shouldReceive('getInputFilter')
             ->andReturn($filter)
             ->shouldReceive('get')
@@ -955,7 +955,7 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testPopulateFormTable()
     {
-        $table = m::mock('Common\Service\Table\TableBuilder');
+        $table = m::mock(\Common\Service\Table\TableBuilder::class);
         $table->shouldReceive('getRows')
             ->andReturn([1, 2, 3, 4]);
 
@@ -988,7 +988,7 @@ class FormHelperServiceTest extends MockeryTestCase
         $this->mockRenderer->shouldReceive('render')
             ->andReturn('template');
 
-        $element = m::mock('Laminas\Form\Element');
+        $element = m::mock(\Laminas\Form\Element::class);
         $element->shouldReceive('getLabel')
             ->andReturn('label')
             ->getMock()
@@ -1015,7 +1015,7 @@ class FormHelperServiceTest extends MockeryTestCase
     public function testRemoveFieldList()
     {
         self::expectNotToPerformAssertions();
-        $form = m::mock('Laminas\Form\Form');
+        $form = m::mock(\Laminas\Form\Form::class);
 
         $form->shouldReceive('get')
             ->with('foo')
@@ -1024,7 +1024,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->shouldReceive('remove')
             ->with('bar');
 
-        $filter = m::mock('Laminas\InputFilter\InputFilter');
+        $filter = m::mock(\Laminas\InputFilter\InputFilter::class);
         $filter->shouldReceive('get')
             ->with('foo')
             ->andReturnSelf()
@@ -1043,7 +1043,7 @@ class FormHelperServiceTest extends MockeryTestCase
      */
     public function testProcessCompanyLookupValidData($companyProfile, $expected)
     {
-        $form = m::mock('Laminas\Form\Form');
+        $form = m::mock(\Laminas\Form\Form::class);
 
         $data = [
             'results' => [
@@ -1186,7 +1186,7 @@ class FormHelperServiceTest extends MockeryTestCase
 
     protected function createMockFormForCompanyErrors(string $message, $fieldset)
     {
-        $form = m::mock('Laminas\Form\Form');
+        $form = m::mock(\Laminas\Form\Form::class);
         $translated = $message . '_TRANSLATED';
 
         $this->mockTransSrv
@@ -1396,12 +1396,12 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testGetValidator()
     {
-        $validatorName = '\Laminas\Validator\GreaterThan';
+        $validatorName = \Laminas\Validator\GreaterThan::class;
 
-        $form = m::mock('Laminas\Form\Form');
+        $form = m::mock(\Laminas\Form\Form::class);
         $validator = m::mock($validatorName);
         $element = m::mock(ElementInterface::class);
-        $filter = m::mock('\Laminas\InputFilter\InputFilter');
+        $filter = m::mock(\Laminas\InputFilter\InputFilter::class);
 
         $form->shouldReceive('getInputFilter')->andReturn($filter);
 
@@ -1426,9 +1426,9 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testGetValidatorNotFoundReturnsNull()
     {
-        $form = m::mock('Laminas\Form\Form');
+        $form = m::mock(\Laminas\Form\Form::class);
         $element = m::mock(ElementInterface::class);
-        $filter = m::mock('\Laminas\InputFilter\InputFilter');
+        $filter = m::mock(\Laminas\InputFilter\InputFilter::class);
 
         $form->shouldReceive('getInputFilter')->andReturn($filter);
 
@@ -1507,7 +1507,7 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testSaveFormState()
     {
-        $mockForm = m::mock('Laminas\Form\Form');
+        $mockForm = m::mock(\Laminas\Form\Form::class);
         $mockForm->shouldReceive('getName')->with()->once()->andReturn('FORM_NAME');
 
         $this->sut->saveFormState($mockForm, ['foo' => 'bar']);
@@ -1518,7 +1518,7 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testRestoreFormState()
     {
-        $mockForm = m::mock('Laminas\Form\Form');
+        $mockForm = m::mock(\Laminas\Form\Form::class);
         $mockForm->shouldReceive('getName')->with()->twice()->andReturn('FORM_NAME');
 
         $sessionContainer = new Container('form_state');

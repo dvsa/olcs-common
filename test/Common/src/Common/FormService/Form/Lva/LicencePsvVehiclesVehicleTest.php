@@ -21,8 +21,8 @@ class LicencePsvVehiclesVehicleTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->formHelper = m::mock('\Common\Service\Helper\FormHelperService');
-        $this->formService = m::mock('\Common\FormService\FormServiceManager')->makePartial();
+        $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);
+        $this->formService = m::mock(\Common\FormService\FormServiceManager::class)->makePartial();
 
         $this->sut = new LicencePsvVehiclesVehicle($this->formHelper, $this->formService);
     }

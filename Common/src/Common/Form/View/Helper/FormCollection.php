@@ -35,12 +35,12 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
      *
      * @var array
      */
-    protected $classMap = array(
+    protected $classMap = [
         RadioHorizontal::class => 'formRadioHorizontal',
         CheckboxAdvanced::class => 'formCheckboxAdvanced',
         RadioVertical::class => 'formRadioVertical',
         AbstractInputSearch::class => FormInputSearch::class,
-    );
+    ];
 
     private static $htmlFileUploadCntr =
         '<div class="help__text">' .
@@ -124,7 +124,7 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
         }
 
         $hint = $element->getOption('hint');
-        $hintClass = $element->getOption('hintClass') ? $element->getOption('hintClass') : self::$hintClass;
+        $hintClass = $element->getOption('hintClass') ?: self::$hintClass;
         if (!empty($hint)) {
             $view = $this->getView();
             $hint = sprintf(self::$hintFormat, $hintClass, $view->translate($hint));

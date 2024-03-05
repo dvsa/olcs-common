@@ -292,7 +292,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
      */
     public function getFirstPersonData()
     {
-        return (isset($this->getPeople()[0])) ? $this->getPeople()[0] : false;
+        return $this->getPeople()[0] ?? false;
     }
 
     /**
@@ -415,7 +415,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
      */
     protected function formatTableData($results)
     {
-        $final = array();
+        $final = [];
         foreach ($results as $row) {
             // flatten the person's position if it's non null
             if (isset($row['position'])) {
@@ -610,7 +610,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
      */
     private function updateAndFilterTableData($orgData, $applicationData)
     {
-        $data = array();
+        $data = [];
 
         foreach ($orgData as $id => $row) {
             if (!isset($applicationData[$id])) {
@@ -670,10 +670,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
             RefData::ORG_TYPE_OTHER => 'lva.section.title.add_person',
             RefData::ORG_TYPE_IRFO => 'lva.section.title.add_person'
         ];
-        if (isset($type[$this->getOrganisationType()])) {
-            return $type[$this->getOrganisationType()];
-        }
-        return null;
+        return $type[$this->getOrganisationType()] ?? null;
     }
 
     /**

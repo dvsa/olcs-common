@@ -68,10 +68,6 @@ abstract class AbstractData implements RestClientAware
      */
     public function getData($key)
     {
-        if (isset($this->data[$key])) {
-            return $this->data[$key];
-        }
-
-        return null;
+        return $this->data[$key] ?? null;
     }
 }

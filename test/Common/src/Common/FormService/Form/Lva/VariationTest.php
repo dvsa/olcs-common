@@ -15,13 +15,13 @@ class VariationTest extends MockeryTestCase
     public function setUp(): void
     {
         $this->authService = m::mock(AuthorizationService::class);
-        $this->formHelper = m::mock('\Common\Service\Helper\FormHelperService');
+        $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);
         $this->sut = new Variation($this->formHelper, $this->authService);
     }
 
     public function testAlterForm()
     {
-        $form = m::mock('\Laminas\Form\Form');
+        $form = m::mock(\Laminas\Form\Form::class);
 
         $form->shouldReceive('has')
             ->with('form-actions')

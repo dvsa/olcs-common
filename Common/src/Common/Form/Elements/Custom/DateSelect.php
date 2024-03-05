@@ -42,14 +42,14 @@ class DateSelect extends LaminasElement\DateSelect
      */
     public function getInputSpecification(): array
     {
-        return array(
+        return [
             'type' => \Common\InputFilter\DateSelect::class,
             'name' => $this->getName(),
             'required' => $this->getOption('required'),
-            'filters' => array(
-                array(
+            'filters' => [
+                [
                     'name'    => 'Callback',
-                    'options' => array(
+                    'options' => [
                         'callback' => function ($date) {
                             // Convert the date to a specific format
                             if (!is_array($date) || empty($date['year']) ||
@@ -59,13 +59,13 @@ class DateSelect extends LaminasElement\DateSelect
 
                             return $date['year'] . '-' . $date['month'] . '-' . $date['day'];
                         }
-                    )
-                )
-            ),
-            'validators' => array(
+                    ]
+                ]
+            ],
+            'validators' => [
                 $this->getValidator(),
-            )
-        );
+            ]
+        ];
     }
 
     /**

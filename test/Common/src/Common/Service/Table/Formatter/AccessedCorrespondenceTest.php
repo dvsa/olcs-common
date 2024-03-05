@@ -35,9 +35,9 @@ class AccessedCorrespondenceTest extends MockeryTestCase
         $this->urlHelper->shouldReceive('fromRoute')
             ->with(
                 'correspondence/access',
-                array(
+                [
                     'correspondenceId' => $data['correspondence']['id'],
-                )
+                ]
             )
             ->andReturn('LICENCE_URL');
 

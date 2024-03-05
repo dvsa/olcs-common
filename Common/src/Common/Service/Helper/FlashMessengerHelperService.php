@@ -16,7 +16,7 @@ use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
  */
 class FlashMessengerHelperService
 {
-    const NAMESPACE_PROMINENT_ERROR = 'prominent-error';
+    public const NAMESPACE_PROMINENT_ERROR = 'prominent-error';
 
     protected $currentMessages = [
         'default' => [],

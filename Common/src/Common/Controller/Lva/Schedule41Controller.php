@@ -63,9 +63,9 @@ class Schedule41Controller extends AbstractController
             if ($this->isButtonPressed('cancel')) {
                 return $this->redirect()->toRoute(
                     'lva-application/overview',
-                    array(
+                    [
                         'application' => $this->params('application')
-                    )
+                    ]
                 );
             }
 
@@ -77,10 +77,10 @@ class Schedule41Controller extends AbstractController
                 if ($valid === true) {
                     return $this->redirect()->toRoute(
                         'lva-application/schedule41/transfer',
-                        array(
+                        [
                             'application' => $this->params('application'),
                             'licNo' => $form->getData()['licence-number']['licenceNumber']
-                        )
+                        ]
                     );
                 }
 
@@ -113,9 +113,9 @@ class Schedule41Controller extends AbstractController
             if (isset($postData['cancel'])) {
                 return $this->redirect()->toRoute(
                     'lva-application/overview',
-                    array(
+                    [
                         'application' => $this->params('application')
-                    )
+                    ]
                 );
             }
 
@@ -125,10 +125,10 @@ class Schedule41Controller extends AbstractController
 
                 return $this->redirect()->toRoute(
                     'lva-application/schedule41/transfer',
-                    array(
+                    [
                         'application' => $this->params('application'),
                         'licNo' => $this->params('licNo')
-                    )
+                    ]
                 );
             }
 
@@ -149,9 +149,9 @@ class Schedule41Controller extends AbstractController
 
                 return $this->redirect()->toRouteAjax(
                     'lva-application/operating_centres',
-                    array(
+                    [
                         'application' => $this->params('application')
-                    )
+                    ]
                 );
             }
         }
@@ -205,7 +205,7 @@ class Schedule41Controller extends AbstractController
                 $command = Schedule41Approve::create(
                     [
                         'id' => $application['id'],
-                        'trueS4' => (isset($data['isTrueS4']) ? $data['isTrueS4'] : null)
+                        'trueS4' => ($data['isTrueS4'] ?? null)
                     ]
                 );
 
@@ -217,9 +217,9 @@ class Schedule41Controller extends AbstractController
 
                     return $this->redirect()->toRouteAjax(
                         'lva-application/overview',
-                        array(
+                        [
                             'application' => $this->params('application')
-                        )
+                        ]
                     );
                 }
             }
@@ -283,9 +283,9 @@ class Schedule41Controller extends AbstractController
 
                     return $this->redirect()->toRouteAjax(
                         'lva-application/overview',
-                        array(
+                        [
                             'application' => $this->params('application')
-                        )
+                        ]
                     );
                 }
             }
@@ -329,9 +329,9 @@ class Schedule41Controller extends AbstractController
 
                     return $this->redirect()->toRouteAjax(
                         'lva-application/overview',
-                        array(
+                        [
                             'application' => $this->params('application')
-                        )
+                        ]
                     );
                 }
             }
@@ -366,11 +366,11 @@ class Schedule41Controller extends AbstractController
         $licence = $response->getResult();
 
         // Licence not valid.
-        $allowed = array(
+        $allowed = [
             RefData::LICENCE_STATUS_VALID,
             RefData::LICENCE_STATUS_SUSPENDED,
             RefData::LICENCE_STATUS_CURTAILED
-        );
+        ];
 
         $errors = [];
         if (!in_array($licence['status']['id'], $allowed)) {
@@ -403,9 +403,9 @@ class Schedule41Controller extends AbstractController
 
         return $this->redirect()->toRoute(
             'lva-application/schedule41',
-            array(
+            [
                 'application' => $this->params('application')
-            )
+            ]
         );
     }
 
@@ -437,17 +437,15 @@ class Schedule41Controller extends AbstractController
     public function formatDataForTable($data)
     {
         $operatingCentres = array_map(
-            function ($operatingCentre) {
-                return array(
-                    'id' => $operatingCentre['id'],
-                    'address' => $operatingCentre['operatingCentre']['address'],
-                    'noOfVehiclesRequired' => $operatingCentre['noOfVehiclesRequired'],
-                    'noOfTrailersRequired' => $operatingCentre['noOfTrailersRequired'],
-                    'operatingCentre' => $operatingCentre['operatingCentre'],
-                    'conditions' => $operatingCentre['operatingCentre']['conditionUndertakings'],
-                    'undertakings' => $operatingCentre['operatingCentre']['conditionUndertakings']
-                );
-            },
+            fn($operatingCentre) => [
+                'id' => $operatingCentre['id'],
+                'address' => $operatingCentre['operatingCentre']['address'],
+                'noOfVehiclesRequired' => $operatingCentre['noOfVehiclesRequired'],
+                'noOfTrailersRequired' => $operatingCentre['noOfTrailersRequired'],
+                'operatingCentre' => $operatingCentre['operatingCentre'],
+                'conditions' => $operatingCentre['operatingCentre']['conditionUndertakings'],
+                'undertakings' => $operatingCentre['operatingCentre']['conditionUndertakings']
+            ],
             $data['operatingCentres']
         );
 

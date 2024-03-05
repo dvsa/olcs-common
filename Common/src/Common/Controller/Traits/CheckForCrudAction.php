@@ -20,7 +20,7 @@ trait CheckForCrudAction
      *
      * @return boolean|Response
      */
-    protected function checkForCrudAction($route = null, $params = array(), $itemIdParam = 'id')
+    protected function checkForCrudAction($route = null, $params = [], $itemIdParam = 'id')
     {
         $action = $this->getCrudActionFromPost();
 
@@ -38,9 +38,9 @@ trait CheckForCrudAction
             return $response;
         }
 
-        $params = array_merge($params, array('action' => $action));
+        $params = array_merge($params, ['action' => $action]);
 
-        $options = array();
+        $options = [];
 
         $action = $this->getActionFromFullActionName($action);
 
@@ -64,11 +64,11 @@ trait CheckForCrudAction
 
             // If we have an array of id's we need to use a query string param rather than the route
             if (is_array($id)) {
-                $options = array(
-                    'query' => array(
+                $options = [
+                    'query' => [
                         $itemIdParam => $id
-                    )
-                );
+                    ]
+                ];
             } else {
                 $params[$itemIdParam] = $id;
             }
@@ -90,11 +90,7 @@ trait CheckForCrudAction
             return $post['table']['action'];
         }
 
-        if (isset($post['action'])) {
-            return $post['action'];
-        }
-
-        return null;
+        return $post['action'] ?? null;
     }
 
     /**
@@ -136,7 +132,7 @@ trait CheckForCrudAction
      */
     protected function getNoActionIdentifierRequired()
     {
-        return array('add');
+        return ['add'];
     }
 
     /**

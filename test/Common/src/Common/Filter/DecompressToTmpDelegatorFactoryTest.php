@@ -19,16 +19,14 @@ class DecompressToTmpDelegatorFactoryTest extends MockeryTestCase
     public function testInvoke()
     {
         $tmpDir = '/tmp/';
-        $callback = function () {
-            return new DecompressUploadToTmp();
-        };
+        $callback = fn() => new DecompressUploadToTmp();
 
         $mockFileSystem = m::mock(Filesystem::class);
 
         $mockSl = m::mock(ServiceManager::class);
         $mockSl->shouldReceive('get')->with('Config')->andReturn(['tmpDirectory' => $tmpDir]);
         $mockSl->shouldReceive('get')
-               ->with('Common\Filesystem\Filesystem')
+               ->with(\Common\Filesystem\Filesystem::class)
                ->andReturn($mockFileSystem);
 
         $sut = new DecompressToTmpDelegatorFactory();

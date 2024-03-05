@@ -18,9 +18,9 @@ class SurrenderSection
 {
     use MakeSectionTrait;
 
-    const DISC_SECTION = 'current-discs';
-    const OPERATORLICENCE_SECTION = 'operator-licence';
-    const COMMUNITYLICENCE_SECTION = 'community-licence';
+    public const DISC_SECTION = 'current-discs';
+    public const OPERATORLICENCE_SECTION = 'operator-licence';
+    public const COMMUNITYLICENCE_SECTION = 'community-licence';
 
     private $heading;
 

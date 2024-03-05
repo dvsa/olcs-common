@@ -22,7 +22,7 @@ use Laminas\Form\Form;
  */
 class StandardAndCabotageFieldsetPopulatorTest extends MockeryTestCase
 {
-    const STANDARD_YES_NO_VALUE_OPTIONS = [
+    public const STANDARD_YES_NO_VALUE_OPTIONS = [
         'key1' => 'value1',
         'key2' => 'value2'
     ];

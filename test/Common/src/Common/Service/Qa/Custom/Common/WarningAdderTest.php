@@ -16,11 +16,11 @@ use Laminas\View\Helper\Partial;
  */
 class WarningAdderTest extends MockeryTestCase
 {
-    const WARNING_KEY = 'warning.key';
+    public const WARNING_KEY = 'warning.key';
 
-    const PRIORITY = 25;
+    public const PRIORITY = 25;
 
-    const ELEMENT_NAME = 'xyzWarning';
+    public const ELEMENT_NAME = 'xyzWarning';
 
     public function testAdd()
     {

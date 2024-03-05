@@ -43,7 +43,7 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
     {
         /** @var EventManager $events */
         $events = $moduleManager->getEventManager();
-        $events->attach('loadModules.post', array($this, 'modulesLoaded'));
+        $events->attach('loadModules.post', [$this, 'modulesLoaded']);
     }
 
     /**

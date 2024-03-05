@@ -14,7 +14,7 @@ abstract class AbstractLvaControllerTestCase extends MockeryTestCase
 {
     protected function getServiceManager()
     {
-        $sm = m::mock('\Laminas\ServiceManager\ServiceManager')
+        $sm = m::mock(\Laminas\ServiceManager\ServiceManager::class)
             ->makePartial()
             ->setAllowOverride(true);
 

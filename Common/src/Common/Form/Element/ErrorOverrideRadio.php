@@ -10,7 +10,7 @@ use Laminas\Form\Element\Radio;
  */
 class ErrorOverrideRadio extends Radio
 {
-    const INPUT_CLASS_KEY = 'input_class';
+    public const INPUT_CLASS_KEY = 'input_class';
 
     public function getInputSpecification(): array
     {

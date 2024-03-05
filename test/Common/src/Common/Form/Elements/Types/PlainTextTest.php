@@ -11,9 +11,9 @@ use Laminas\View\Renderer\PhpRenderer;
 
 class PlainTextTest extends \PHPUnit\Framework\TestCase
 {
-    const INITIAL_TEXT_PAYLOAD = 'TEST';
-    const UPDATED_TEXT_PAYLOAD = 'TEST 2';
-    const MALICIOUS_HTML_PAYLOAD = '<script>alert("TEST")</script>';
+    public const INITIAL_TEXT_PAYLOAD = 'TEST';
+    public const UPDATED_TEXT_PAYLOAD = 'TEST 2';
+    public const MALICIOUS_HTML_PAYLOAD = '<script>alert("TEST")</script>';
 
     /** @var PlainText */
     private $plainTextElement;
@@ -32,9 +32,7 @@ class PlainTextTest extends \PHPUnit\Framework\TestCase
         $mockRenderer = Mockery::mock(PhpRenderer::class);
         $mockRenderer->shouldReceive('plugin')->with('form_plain_text')->andReturn($formPlainText);
         $mockRenderer->shouldReceive('translate')->andReturnUsing(
-            function ($arg) {
-                return $arg;
-            }
+            fn($arg) => $arg
         );
         $formPlainText->setView($mockRenderer);
 

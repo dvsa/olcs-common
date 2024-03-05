@@ -14,7 +14,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class YesNoRadioOptionsApplierTest extends MockeryTestCase
 {
-    const STANDARD_ATTRIBUTES = [
+    public const STANDARD_ATTRIBUTES = [
         'id' => 'yesNoRadio',
         'radios_wrapper_attributes' => [
             'id' => 'yesNoRadio',
@@ -23,7 +23,7 @@ class YesNoRadioOptionsApplierTest extends MockeryTestCase
         ]
     ];
 
-    const VALUE_OPTIONS = [
+    public const VALUE_OPTIONS = [
         'yes' => [
             'label' => 'Yes',
             'value' => 'Y',
@@ -34,9 +34,9 @@ class YesNoRadioOptionsApplierTest extends MockeryTestCase
         ]
     ];
 
-    const NOT_SELECTED_MESSAGE = 'not.selected.message';
+    public const NOT_SELECTED_MESSAGE = 'not.selected.message';
 
-    const RADIO_VALUE = 'radioValue';
+    public const RADIO_VALUE = 'radioValue';
 
     public function testApplyTo()
     {

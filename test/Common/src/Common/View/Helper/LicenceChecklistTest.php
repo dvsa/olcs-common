@@ -32,9 +32,7 @@ class LicenceChecklistTest extends MockeryTestCase
         $this->translator
             ->shouldReceive('__invoke')
             ->andReturnUsing(
-                function ($arg) {
-                    return $arg . '_translated';
-                }
+                fn($arg) => $arg . '_translated'
             );
 
         $this->assertEquals($this->sut->__invoke($type, $data), $expected);

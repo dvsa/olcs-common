@@ -16,8 +16,8 @@ class PasswordConfirm extends Identical
      * Error messages
      * @var array
      */
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         self::NOT_SAME      => 'error.form-validator.password-confirm.not-same',
         self::MISSING_TOKEN => 'error.form-validator.password-confirm.missing-token',
-    );
+    ];
 }

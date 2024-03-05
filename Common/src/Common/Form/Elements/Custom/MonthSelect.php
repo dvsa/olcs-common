@@ -20,13 +20,13 @@ class MonthSelect extends LaminasElement\MonthSelect
 
     public function getInputSpecification(): array
     {
-        return array(
+        return [
             'name' => $this->getName(),
             'required' => $this->getOption('required'),
-            'filters' => array(
-                array(
+            'filters' => [
+                [
                     'name'    => 'Callback',
-                    'options' => array(
+                    'options' => [
                         'callback' => function ($date) {
                             // Convert the date to a specific format
                             if (!is_array($date) || empty($date['year']) || empty($date['month'])) {
@@ -35,12 +35,12 @@ class MonthSelect extends LaminasElement\MonthSelect
 
                             return $date['year'] . '-' . $date['month'];
                         }
-                    )
-                )
-            ),
-            'validators' => array(
+                    ]
+                ]
+            ],
+            'validators' => [
                 $this->getValidator(),
-            )
-        );
+            ]
+        ];
     }
 }

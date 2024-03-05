@@ -22,9 +22,7 @@ class DateTest extends MockeryTestCase
         $mockTranslator = m::mock(Translate::class);
         $mockTranslator->shouldReceive('__invoke')
             ->andReturnUsing(
-                function ($text) {
-                    return $text . '-translated';
-                }
+                fn($text) => $text . '-translated'
             );
 
         $this->sut = new Date($mockTranslator);
