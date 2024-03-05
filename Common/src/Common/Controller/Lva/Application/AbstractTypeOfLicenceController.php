@@ -75,8 +75,6 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
             return $this->notFoundAction();
         }
 
-        $isInternalReadOnly = $this->isInternalReadOnly();
-
         // If we have no data (not posted)
         if ($prg === false) {
             $form->setData(TypeOfLicenceMapper::mapFromResult($applicationData));

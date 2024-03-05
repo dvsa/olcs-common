@@ -4,7 +4,6 @@ namespace Common\Controller\Lva;
 
 use Common\Controller\Traits\GenericUpload;
 use Common\Exception\ResourceConflictException;
-use Common\Rbac\Service\Permission;
 use Common\RefData;
 use Common\Service\Table\TableBuilder;
 use Common\Util;
@@ -388,8 +387,8 @@ abstract class AbstractController extends AbstractActionController
     }
 
     /**
-     * Have left this in place for now as the number of controllers extending it made removal impractical
-     * @see Permission for the preferred way to access this logic via dependency injection
+     * @deprecated Have left this in place for now as the number of controllers extending it made removal impractical
+     * @see \Common\Rbac\Service\Permission for the preferred way to access this logic via dependency injection
      */
     protected function isInternalReadOnly(): bool
     {
