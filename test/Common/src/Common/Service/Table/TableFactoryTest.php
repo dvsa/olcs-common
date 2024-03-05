@@ -2,6 +2,7 @@
 
 namespace CommonTest\Service\Table;
 
+use Common\Rbac\Service\Permission;
 use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Formatter\FormatterPluginManager;
 use Common\Service\Table\TableBuilder;
@@ -10,13 +11,12 @@ use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 use Laminas\ServiceManager\ServiceManager;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
-use LmcRbacMvc\Service\AuthorizationService;
 
 class TableFactoryTest extends MockeryTestCase
 {
     public function testInvoke(): void
     {
-        $mockAuthService = m::mock(AuthorizationService::class);
+        $mockPermissionService = m::mock(Permission::class);
         $mockTranslator = m::mock(TranslatorDelegator::class);
         $urlHelperService = m::mock(UrlHelperService::class);
         $formatterPluginManager = m::mock(FormatterPluginManager::class);
@@ -24,7 +24,7 @@ class TableFactoryTest extends MockeryTestCase
 
         $serviceLocator = m::mock(ServiceManager::class);
         $serviceLocator->expects('get')->with('Config')->andReturn($config);
-        $serviceLocator->expects('get')->with(AuthorizationService::class)->andReturn($mockAuthService);
+        $serviceLocator->expects('get')->with(Permission::class)->andReturn($mockPermissionService);
         $serviceLocator->expects('get')->with('translator')->andReturn($mockTranslator);
         $serviceLocator->expects('get')->with('Helper\Url')->andReturn($urlHelperService);
         $serviceLocator->expects('get')->with(FormatterPluginManager::class)->andReturn($formatterPluginManager);

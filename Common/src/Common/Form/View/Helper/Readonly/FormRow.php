@@ -89,7 +89,7 @@ class FormRow extends AbstractHelper
         if ($element instanceof LaminasElement\Csrf
             || (
                 $element instanceof Elements\InputFilters\ActionButton
-                && $element->getOption('keepForReadonly') === true
+                && $element->getOption('keepForReadOnly') === true
             )
         ) {
             return $defElmHlpr->render($element);

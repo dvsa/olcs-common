@@ -30,7 +30,7 @@ class FormEditCrudActions
      * })
      * @Form\Options({
      *     "label": "Cancel",
-     *     "keepForReadonly": true,
+     *     "keepForReadOnly": true,
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */

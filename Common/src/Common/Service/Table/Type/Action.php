@@ -63,9 +63,8 @@ class Action extends AbstractType
      *
      * @return bool
      */
-    protected function isInternalReadOnly()
+    protected function isInternalReadOnly(): bool
     {
-        $authService = $this->table->getAuthService();
-        return ($authService->isGranted('internal-user') && !$authService->isGranted('internal-edit'));
+        return $this->table->isInternalReadOnly();
     }
 }

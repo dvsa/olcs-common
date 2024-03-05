@@ -2,6 +2,7 @@
 
 namespace Common\Service\Table;
 
+use Common\Rbac\Service\Permission;
 use Common\Service\Table\Formatter\FormatterPluginManager;
 use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
@@ -18,7 +19,7 @@ class TableBuilderFactory implements FactoryInterface
     {
         return new TableBuilder(
             $container,
-            $container->get('LmcRbacMvc\Service\AuthorizationService'),
+            $container->get(Permission::class),
             $container->get('translator'),
             $container->get('Helper\Url'),
             $container->get('Config'),

@@ -2,9 +2,12 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Rbac\Service\Permission;
 use Common\Service\Table\Formatter\NameActionAndStatus;
+use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
-class NameActionAndStatusTest extends \PHPUnit\Framework\TestCase
+class NameActionAndStatusTest extends MockeryTestCase
 {
     private const TEST_ID = 12345;
     private const TEST_TITLE = 'TEST_TITLE';
@@ -14,12 +17,14 @@ class NameActionAndStatusTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider provider
      */
-    public function testFormat($data, $expected)
+    public function testFormat($data, $isInternalReadOnly, $expected): void
     {
-        $this->assertEquals($expected, (new NameActionAndStatus())->format($data));
+        $mockPermissionService = m::mock(Permission::class);
+        $mockPermissionService->expects('isInternalReadOnly')->withNoArgs()->andReturn($isInternalReadOnly);
+        $this->assertEquals($expected, (new NameActionAndStatus($mockPermissionService))->format($data));
     }
 
-    public function provider()
+    public function provider(): array
     {
         return [
             [
@@ -32,6 +37,7 @@ class NameActionAndStatusTest extends \PHPUnit\Framework\TestCase
                     ],
                     'status' => null
                 ],
+                false,
                 sprintf(
                     NameActionAndStatus::BUTTON_FORMAT,
                     self::TEST_ID,
@@ -48,6 +54,7 @@ class NameActionAndStatusTest extends \PHPUnit\Framework\TestCase
                     ],
                     'status' => null
                 ],
+                false,
                 sprintf(
                     NameActionAndStatus::BUTTON_FORMAT,
                     self::TEST_ID,
@@ -64,11 +71,39 @@ class NameActionAndStatusTest extends \PHPUnit\Framework\TestCase
                     ],
                     'status' => 'new'
                 ],
+                false,
                 sprintf(
                     NameActionAndStatus::BUTTON_FORMAT,
                     self::TEST_ID,
                     self::TEST_TITLE . ' ' . self::TEST_FORENAME . ' ' . self::TEST_FAMILY_NAME
                 ) . ' <span class="overview__status green">New</span>'
+            ],
+            [
+                [
+                    'id' => self::TEST_ID,
+                    'forename' => self::TEST_FORENAME,
+                    'familyName' => self::TEST_FAMILY_NAME,
+                    'title' => [
+                        'description' => self::TEST_TITLE
+                    ],
+                    'status' => null
+                ],
+                true,
+                self::TEST_TITLE . ' ' . self::TEST_FORENAME . ' ' . self::TEST_FAMILY_NAME,
+            ],
+            [
+                [
+                    'id' => self::TEST_ID,
+                    'forename' => self::TEST_FORENAME,
+                    'familyName' => self::TEST_FAMILY_NAME,
+                    'title' => [
+                        'description' => self::TEST_TITLE
+                    ],
+                    'status' => 'new'
+                ],
+                true,
+                self::TEST_TITLE . ' ' . self::TEST_FORENAME . ' ' . self::TEST_FAMILY_NAME
+                . ' <span class="overview__status green">New</span>'
             ]
         ];
     }
