@@ -19,11 +19,11 @@ class ReceivedAmount extends \Laminas\Validator\GreaterThan
      *
      * @var array
      */
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         self::NOT_GREATER_INCLUSIVE => "Part payments are permitted but the amount entered is insufficient to
             allocate any payment to one or more of the selected fees.",
         self::NOT_GREATER => "The input is not greater than '%min%'",
-    );
+    ];
 
     public function isValid($value, $context = null)
     {

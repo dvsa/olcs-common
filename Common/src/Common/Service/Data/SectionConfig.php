@@ -18,226 +18,226 @@ class SectionConfig
      *
      * @var array
      */
-    private $sections = array(
-        'type_of_licence' => array(),
+    private $sections = [
+        'type_of_licence' => [],
 
-        'business_type' => array(
-            'prerequisite' => array(
+        'business_type' => [
+            'prerequisite' => [
                 'type_of_licence'
-            )
-        ),
-        'business_details' => array(
-            'prerequisite' => array(
-                array(
+            ]
+        ],
+        'business_details' => [
+            'prerequisite' => [
+                [
                     'type_of_licence',
                     'business_type'
-                )
-            )
-        ),
-        'addresses' => array(
-            'prerequisite' => array(
+                ]
+            ]
+        ],
+        'addresses' => [
+            'prerequisite' => [
                 'business_type'
-            )
-        ),
-        'people' => array(
-            'prerequisite' => array(
+            ]
+        ],
+        'people' => [
+            'prerequisite' => [
                 'business_type'
-            )
-        ),
-        'taxi_phv' => array(
-            'restricted' => array(
+            ]
+        ],
+        'taxi_phv' => [
+            'restricted' => [
                 RefData::LICENCE_TYPE_SPECIAL_RESTRICTED
-            )
-        ),
-        'operating_centres' => array(
-            'restricted' => array(
+            ]
+        ],
+        'operating_centres' => [
+            'restricted' => [
                 RefData::LICENCE_TYPE_RESTRICTED,
                 RefData::LICENCE_TYPE_STANDARD_NATIONAL,
                 RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
-            )
-        ),
-        'financial_evidence' => array(
-            'prerequisite' => array(
+            ]
+        ],
+        'financial_evidence' => [
+            'prerequisite' => [
                 'operating_centres'
-            ),
-            'restricted' => array(
-                array(
-                    array(
+            ],
+            'restricted' => [
+                [
+                    [
                         'application'
-                    ),
-                    array(
+                    ],
+                    [
                         RefData::LICENCE_TYPE_RESTRICTED,
                         RefData::LICENCE_TYPE_STANDARD_NATIONAL,
                         RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
-                    )
-                )
-            )
-        ),
-        'transport_managers' => array(
-            'restricted' => array(
+                    ]
+                ]
+            ]
+        ],
+        'transport_managers' => [
+            'restricted' => [
                 RefData::LICENCE_TYPE_STANDARD_NATIONAL,
                 RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
-            )
-        ),
-        'vehicles' => array(
-            'restricted' => array(
-                array(
+            ]
+        ],
+        'vehicles' => [
+            'restricted' => [
+                [
                     RefData::LICENCE_CATEGORY_GOODS_VEHICLE,
-                    array(
+                    [
                         RefData::LICENCE_TYPE_RESTRICTED,
                         RefData::LICENCE_TYPE_STANDARD_NATIONAL,
                         RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
-                    )
-                )
-            )
-        ),
-        'vehicles_psv' => array(
-            'prerequisite' => array(
+                    ]
+                ]
+            ]
+        ],
+        'vehicles_psv' => [
+            'prerequisite' => [
                 'operating_centres'
-            ),
-            'restricted' => array(
-                array(
+            ],
+            'restricted' => [
+                [
                     RefData::LICENCE_CATEGORY_PSV,
-                    array(
+                    [
                         RefData::LICENCE_TYPE_RESTRICTED,
                         RefData::LICENCE_TYPE_STANDARD_NATIONAL,
                         RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
-                    )
-                )
-            )
-        ),
-        'vehicles_declarations' => array(
-            'prerequisite' => array(
+                    ]
+                ]
+            ]
+        ],
+        'vehicles_declarations' => [
+            'prerequisite' => [
                 'operating_centres'
-            ),
-            'restricted' => array(
-                array(
+            ],
+            'restricted' => [
+                [
                     'application',
                     RefData::LICENCE_CATEGORY_PSV,
-                    array(
+                    [
                         RefData::LICENCE_TYPE_RESTRICTED,
                         RefData::LICENCE_TYPE_STANDARD_NATIONAL,
                         RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
-                    )
-                )
-            )
-        ),
-        'trailers' => array(
-            'restricted' => array(
-                array(
+                    ]
+                ]
+            ]
+        ],
+        'trailers' => [
+            'restricted' => [
+                [
                     'external',
                     'licence',
                     RefData::LICENCE_CATEGORY_GOODS_VEHICLE
-                )
-            )
-        ),
-        'discs' => array(
-            'restricted' => array(
-                array(
-                    array(
+                ]
+            ]
+        ],
+        'discs' => [
+            'restricted' => [
+                [
+                    [
                         'licence',
                         'variation'
-                    ),
+                    ],
                     RefData::LICENCE_CATEGORY_PSV,
-                    array(
+                    [
                         RefData::LICENCE_TYPE_RESTRICTED,
                         RefData::LICENCE_TYPE_STANDARD_NATIONAL,
                         RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
-                    )
-                )
-            )
-        ),
-        'community_licences' => array(
-            'restricted' => array(
-                array(
+                    ]
+                ]
+            ]
+        ],
+        'community_licences' => [
+            'restricted' => [
+                [
                     // Only shown internally
-                    array(
+                    [
                         'internal'
-                    ),
+                    ],
                     // and must be either
-                    array(
+                    [
                         // standard international
                         RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL,
                         // or
-                        array(
+                        [
                             // PSV
                             RefData::LICENCE_CATEGORY_PSV,
                             // and restricted
                             RefData::LICENCE_TYPE_RESTRICTED
-                        )
-                    )
-                )
-            )
-        ),
-        'safety' => array(
-            'restricted' => array(
+                        ]
+                    ]
+                ]
+            ]
+        ],
+        'safety' => [
+            'restricted' => [
                 RefData::LICENCE_TYPE_RESTRICTED,
                 RefData::LICENCE_TYPE_STANDARD_NATIONAL,
                 RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
-            )
-        ),
-        'conditions_undertakings' => array(
-            'restricted' => array(
-                array(
+            ]
+        ],
+        'conditions_undertakings' => [
+            'restricted' => [
+                [
                     // Must be one of these licence types
-                    array(
+                    [
                         RefData::LICENCE_TYPE_RESTRICTED,
                         RefData::LICENCE_TYPE_STANDARD_NATIONAL,
                         RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
-                    ),
+                    ],
                     // and...
-                    array(
+                    [
                         // either internal
                         'internal',
                         // or...
-                        array(
+                        [
                             // external
                             'external',
                             // with conditions to show
                             'hasConditions',
                             // for licences
                             'licence',
-                        )
-                    )
-                )
-            )
-        ),
-        'financial_history' => array(
-            'restricted' => array(
-                array(
+                        ]
+                    ]
+                ]
+            ]
+        ],
+        'financial_history' => [
+            'restricted' => [
+                [
                     'application',
-                    array(
+                    [
                         RefData::LICENCE_TYPE_RESTRICTED,
                         RefData::LICENCE_TYPE_STANDARD_NATIONAL,
                         RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
-                    )
-                )
-            )
-        ),
-        'licence_history' => array(
-            'restricted' => array(
-                array(
+                    ]
+                ]
+            ]
+        ],
+        'licence_history' => [
+            'restricted' => [
+                [
                     'application',
-                    array(
+                    [
                         RefData::LICENCE_TYPE_RESTRICTED,
                         RefData::LICENCE_TYPE_STANDARD_NATIONAL,
                         RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
-                    )
-                )
-            )
-        ),
-        'convictions_penalties' => array(
-            'restricted' => array(
-                array(
+                    ]
+                ]
+            ]
+        ],
+        'convictions_penalties' => [
+            'restricted' => [
+                [
                     'application',
-                    array(
+                    [
                         RefData::LICENCE_TYPE_RESTRICTED,
                         RefData::LICENCE_TYPE_STANDARD_NATIONAL,
                         RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
-                    )
-                )
-            )
-        ),
+                    ]
+                ]
+            ]
+        ],
 
         // external decalrations
         'undertakings' => [
@@ -268,7 +268,7 @@ class SectionConfig
                 ]
             ],
         ],
-    );
+    ];
 
     /**
      * Return all section references
@@ -292,44 +292,44 @@ class SectionConfig
         $dashFilter = new UnderscoreToDash();
         $camelFilter = new UnderscoreToCamelCase();
 
-        $types = array(
-            'application' => array(
+        $types = [
+            'application' => [
                 'identifier' => 'application'
-            ),
-            'licence' => array(
+            ],
+            'licence' => [
                 'identifier' => 'licence'
-            ),
-            'variation' => array(
+            ],
+            'variation' => [
                 'identifier' => 'application'
-            ),
-            'director_change' => array(
+            ],
+            'director_change' => [
                 'identifier' => 'application'
-            ),
-        );
+            ],
+        ];
 
-        $routes = array();
+        $routes = [];
 
         foreach ($types as $type => $options) {
             $typeController = 'Lva' . $camelFilter->filter($type);
             $baseRouteName = 'lva-' . $type;
 
-            $routes[$baseRouteName] = array(
+            $routes[$baseRouteName] = [
                 'type' => 'segment',
-                'options' => array(
+                'options' => [
                     'route' => sprintf('/%s/:%s[/]', $dashFilter->filter($type), $options['identifier']),
-                    'constraints' => array(
+                    'constraints' => [
                         $options['identifier'] => '[0-9]+'
-                    ),
-                    'defaults' => array(
+                    ],
+                    'defaults' => [
                         'controller' => $typeController,
                         'action' => 'index'
-                    )
-                ),
+                    ]
+                ],
                 'may_terminate' => true,
-                'child_routes' => array()
-            );
+                'child_routes' => []
+            ];
 
-            $childRoutes = array();
+            $childRoutes = [];
             foreach ($sections as $section) {
                 $routeKey = $dashFilter->filter($section);
                 $sectionController = $camelFilter($section);

@@ -549,9 +549,7 @@ class LicenceChecklist extends AbstractHelper
                     'header' => true
                 ],
                 [
-                    'value' => isset($data['safetyInsVehicles'])
-                        ? $data['safetyInsVehicles']
-                        : $this->translator->__invoke('continuations.safety-section.table.not-known'),
+                    'value' => $data['safetyInsVehicles'] ?? $this->translator->__invoke('continuations.safety-section.table.not-known'),
                 ]
             ]
         ];
@@ -563,9 +561,7 @@ class LicenceChecklist extends AbstractHelper
                     'header' => true
                 ],
                 [
-                    'value' => isset($data['safetyInsTrailers'])
-                        ? $data['safetyInsTrailers']
-                        : $this->translator->__invoke('continuations.safety-section.table.not-known'),
+                    'value' => $data['safetyInsTrailers'] ?? $this->translator->__invoke('continuations.safety-section.table.not-known'),
                 ]
             ];
         }
@@ -581,9 +577,7 @@ class LicenceChecklist extends AbstractHelper
                 'header' => true
             ],
             [
-                'value' => isset($data['safetyInsVaries'])
-                    ? $data['safetyInsVaries']
-                    : $this->translator->__invoke('continuations.safety-section.table.not-known'),
+                'value' => $data['safetyInsVaries'] ?? $this->translator->__invoke('continuations.safety-section.table.not-known'),
             ]
         ];
 
@@ -593,9 +587,7 @@ class LicenceChecklist extends AbstractHelper
                 'header' => true
             ],
             [
-                'value' => isset($data['tachographIns'])
-                    ? $data['tachographIns']
-                    : $this->translator->__invoke('continuations.safety-section.table.not-known'),
+                'value' => $data['tachographIns'] ?? $this->translator->__invoke('continuations.safety-section.table.not-known'),
             ]
         ];
 

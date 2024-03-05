@@ -33,19 +33,19 @@ class FileUploadList extends Fieldset
      *
      * @return void
      */
-    public function setFiles($fileData = array(), $url = null)
+    public function setFiles($fileData = [], $url = null)
     {
         /** (VOL-2693) this code is used everywhere but we don't seem to be provided an array in all cases */
         if (!is_array($fileData)) {
             return;
         }
 
-        $units = array('B', 'KB', 'MB', 'GB', 'TB');
+        $units = ['B', 'KB', 'MB', 'GB', 'TB'];
 
         foreach ($fileData as $file) {
             $file['url'] = $url->fromRoute(
                 'getfile',
-                array('identifier' => $file['id'])
+                ['identifier' => $file['id']]
             );
 
             $size = $file['size'];
@@ -67,14 +67,14 @@ class FileUploadList extends Fieldset
             $version = new Hidden('version');
             $version->setValue($file['version']);
 
-            $html = new Html('link', array('render-container' => false));
+            $html = new Html('link', ['render-container' => false]);
             $html->setAttribute('data-container-class', 'file-upload');
             $html->setValue(
                 '<a class="govuk-link" href="' . $file['url'] . '">'
                 . $file['description'] . '</a> <span>' . $file['size'] . '</span>'
             );
 
-            $remove = new Submit('remove', array('render-container' => false));
+            $remove = new Submit('remove', ['render-container' => false]);
             $remove->setValue('Remove');
             $remove->setAttribute('class', 'file__remove action-button-link');
             $remove->setAttribute('data-container-class', 'file-upload');
@@ -87,7 +87,7 @@ class FileUploadList extends Fieldset
             if ($this->getOption('preview_images') === true) {
                 // show image previews if permitted
                 if ($this->isPreviewableImage($file)) {
-                    $imagePreview = new Html('preview', array('render-container' => false));
+                    $imagePreview = new Html('preview', ['render-container' => false]);
                     $imagePreview->setValue(
                         '<div class="file__image-container"><img src="' . $file['url'] . '" /></div>'
                     );

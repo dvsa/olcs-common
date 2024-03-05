@@ -25,7 +25,7 @@ class RedirectTest extends MockeryTestCase
      */
     protected function setUp(): void
     {
-        $this->sut = m::mock('\Common\Controller\Plugin\Redirect')->makePartial();
+        $this->sut = m::mock(\Common\Controller\Plugin\Redirect::class)->makePartial();
 
         $this->mockResponse = m::mock();
     }
@@ -36,7 +36,7 @@ class RedirectTest extends MockeryTestCase
     public function testToRouteAjaxWithoutAjax()
     {
         $route = 'foo';
-        $params = array('foo' => 'bar');
+        $params = ['foo' => 'bar'];
         $options = ['option_1' => 'val 1'];
 
         $mockController = m::mock();
@@ -58,17 +58,17 @@ class RedirectTest extends MockeryTestCase
     public function testToRouteAjaxWithAjax()
     {
         $route = 'foo';
-        $params = array('foo' => 'bar');
+        $params = ['foo' => 'bar'];
         $options = ['fragment' => 'frag'];
 
-        $mockResponse = m::mock('\Laminas\Http\Response');
+        $mockResponse = m::mock(\Laminas\Http\Response::class);
         $mockResponse->shouldReceive('getHeaders->addHeaders')
             ->with(['Content-Type' => 'application/json']);
 
         $mockResponse->shouldReceive('setContent')
             ->with('{"status":302,"location":"URI"}');
 
-        $mockController = m::mock('\Laminas\Mvc\Controller\AbstractActionController');
+        $mockController = m::mock(\Laminas\Mvc\Controller\AbstractActionController::class);
         $mockController->shouldReceive('getRequest->isXmlHttpRequest')
             ->andReturn(true);
 
@@ -81,7 +81,7 @@ class RedirectTest extends MockeryTestCase
                 }
             );
 
-        $mockEvent = m::mock('\Laminas\Mvc\MvcEvent');
+        $mockEvent = m::mock(\Laminas\Mvc\MvcEvent::class);
         $mockEvent->shouldReceive('getResponse')
             ->andReturn($mockResponse);
 
@@ -91,7 +91,7 @@ class RedirectTest extends MockeryTestCase
         $this->sut->shouldReceive('getController')
             ->andReturn($mockController)
             ->shouldReceive('toRoute')
-            ->with($route, $params, array(), false);
+            ->with($route, $params, [], false);
 
         $this->assertEquals($mockResponse, $this->sut->toRouteAjax($route, $params, $options));
     }

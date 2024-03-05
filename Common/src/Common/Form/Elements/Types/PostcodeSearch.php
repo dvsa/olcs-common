@@ -30,7 +30,7 @@ class PostcodeSearch extends Fieldset
      * @param null|int|string $name    Optional name for the element
      * @param array           $options Optional options for the element
      */
-    public function __construct($name = null, $options = array())
+    public function __construct($name = null, $options = [])
     {
         parent::__construct($name, $options);
 
@@ -40,11 +40,11 @@ class PostcodeSearch extends Fieldset
 
         $postcodeSearch = new Text('postcode');
         $postcodeSearch->setAttributes(
-            array(
+            [
                 'class' => 'short js-input',
                 'data-container-class' => 'inline',
                 'id' => $postcodeSearchId,
-            )
+            ]
         );
         $postcodeSearch->setOptions(
             [
@@ -59,13 +59,13 @@ class PostcodeSearch extends Fieldset
 
         $this->add($postcodeSearch);
 
-        $searchButton = new Button('search', array('label' => 'Find address'));
+        $searchButton = new Button('search', ['label' => 'Find address']);
         $searchButton->setAttributes(
-            array(
+            [
                 'type' => 'submit',
                 'class' => 'govuk-button js-find',
                 'data-container-class' => 'inline'
-            )
+            ]
         );
         $searchButton->setValue('search');
 
@@ -75,30 +75,30 @@ class PostcodeSearch extends Fieldset
 
         $selectAddress = new OptionalSelect(
             'addresses',
-            array(
+            [
                 'label' => 'postcode.select_address.label',
-                'label_attributes' => array(
+                'label_attributes' => [
                     'for' => $selectAddressId,
-                ),
+                ],
                 'empty_option' => 'Please select'
-            )
+            ]
         );
         $selectAddress->setAttributes(
-            array(
+            [
                 'id' => $selectAddressId,
                 'data-container-class' => 'compound address__select'
-            )
+            ]
         );
 
         $this->add($selectAddress);
 
-        $selectButton = new Button('select', array('label' => 'Select'));
+        $selectButton = new Button('select', ['label' => 'Select']);
         $selectButton->setAttributes(
-            array(
+            [
                 'type' => 'submit',
                 'class' => 'govuk-button js-select',
                 'data-container-class' => 'js-hidden'
-            )
+            ]
         );
         $selectButton->setValue('select');
 
@@ -110,9 +110,9 @@ class PostcodeSearch extends Fieldset
         );
         $manualLink->setTokens(['postcode.error.not-available', 'postcode.address.manual_entry']);
         $manualLink->setAttributes(
-            array(
+            [
                 'data-container-class' => 'js-visible'
-            )
+            ]
         );
         $manualLink->setOption('remove_if_readonly', true);
 

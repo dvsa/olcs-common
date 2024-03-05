@@ -12,7 +12,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class ActionTest extends MockeryTestCase
 {
-    const ID = 9999;
+    public const ID = 9999;
 
     /** @var Action */
     protected $sut;

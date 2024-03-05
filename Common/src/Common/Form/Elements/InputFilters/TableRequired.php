@@ -40,9 +40,9 @@ class TableRequired extends Table implements InputProviderInterface
             'filters' => [
 
             ],
-            'validators' => array(
-                new TableRequiredValidator(array('label' => $label))
-            )
+            'validators' => [
+                new TableRequiredValidator(['label' => $label])
+            ]
         ];
 
         return $specification;

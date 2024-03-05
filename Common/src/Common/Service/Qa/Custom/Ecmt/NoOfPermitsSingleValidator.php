@@ -6,15 +6,15 @@ use Laminas\Validator\AbstractValidator;
 
 class NoOfPermitsSingleValidator extends AbstractValidator
 {
-    const MAX_PERMITTED_THRESHOLD = 'maxPermittedThreshold';
-    const PERMITS_REMAINING_THRESHOLD = 'permitsRemainingThreshold';
+    public const MAX_PERMITTED_THRESHOLD = 'maxPermittedThreshold';
+    public const PERMITS_REMAINING_THRESHOLD = 'permitsRemainingThreshold';
 
-    const PERMITS_REMAINING_THRESHOLD_TEMPLATE = 'qanda.ecmt.number-of-permits.error.permits-remaining-exceeded.%s';
+    public const PERMITS_REMAINING_THRESHOLD_TEMPLATE = 'qanda.ecmt.number-of-permits.error.permits-remaining-exceeded.%s';
 
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         self::MAX_PERMITTED_THRESHOLD => 'qanda.ecmt.number-of-permits.error.total-max-exceeded',
         self::PERMITS_REMAINING_THRESHOLD => 'updatedAtRuntime'
-    );
+    ];
 
     protected $messageVariables = [
         'permitsRemaining' => 'permitsRemaining'

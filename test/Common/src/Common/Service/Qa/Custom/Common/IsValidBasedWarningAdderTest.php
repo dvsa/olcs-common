@@ -18,9 +18,9 @@ use Laminas\Form\Fieldset;
  */
 class IsValidBasedWarningAdderTest extends MockeryTestCase
 {
-    const WARNING_KEY = 'warning.key';
+    public const WARNING_KEY = 'warning.key';
 
-    const PRIORITY = 25;
+    public const PRIORITY = 25;
 
     private $qaForm;
 

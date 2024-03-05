@@ -15,7 +15,7 @@ use Mockery as m;
  */
 class LastLoginServiceTest extends MockeryTestCase
 {
-    const TOKEN = "exampleToken";
+    public const TOKEN = "exampleToken";
 
     /** @var LastLoginService */
     private $sut;

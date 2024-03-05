@@ -29,7 +29,7 @@ class ApplicationSoleTraderTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->formHelper = m::mock('\Common\Service\Helper\FormHelperService');
+        $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);
         $this->authService = m::mock(AuthorizationService::class);
         $this->peopleLvaService = m::mock(PeopleLvaService::class);
         $this->fsl = m::mock(FormServiceManager::class)->makePartial();

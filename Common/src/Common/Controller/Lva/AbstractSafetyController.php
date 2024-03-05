@@ -39,32 +39,32 @@ abstract class AbstractSafetyController extends AbstractController
      *
      * @var array
      */
-    protected $safetyProvidersActionDataMap = array(
-        '_addresses' => array(
+    protected $safetyProvidersActionDataMap = [
+        '_addresses' => [
             'address'
-        ),
-        'main' => array(
-            'children' => array(
-                'workshop' => array(
-                    'mapFrom' => array(
+        ],
+        'main' => [
+            'children' => [
+                'workshop' => [
+                    'mapFrom' => [
                         'data'
-                    )
-                ),
-                'contactDetails' => array(
-                    'mapFrom' => array(
+                    ]
+                ],
+                'contactDetails' => [
+                    'mapFrom' => [
                         'contactDetails'
-                    ),
-                    'children' => array(
-                        'addresses' => array(
-                            'mapFrom' => array(
+                    ],
+                    'children' => [
+                        'addresses' => [
+                            'mapFrom' => [
                                 'addresses'
-                            )
-                        )
-                    )
-                )
-            )
-        )
-    );
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ];
 
     protected $canHaveTrailers;
     protected $isShowTrailers;
@@ -307,8 +307,8 @@ abstract class AbstractSafetyController extends AbstractController
     {
         /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
-        $safetyProviderData = array();
-        $data = array();
+        $safetyProviderData = [];
+        $data = [];
         $id = $this->params('child_id');
 
         if ($mode !== 'add') {
@@ -430,10 +430,10 @@ abstract class AbstractSafetyController extends AbstractController
     protected function formatCrudDataForForm($data, $mode)
     {
         if ($mode === 'edit') {
-            $data['data'] = array(
+            $data['data'] = [
                 'version' => $data['version'],
                 'isExternal' => $data['isExternal']
-            );
+            ];
 
             $data['address'] = $data['contactDetails']['address'];
             $data['address']['countryCode'] = $data['address']['countryCode']['id'];
@@ -506,11 +506,11 @@ abstract class AbstractSafetyController extends AbstractController
             $data['licence']['tachographIns'] = $data['licence']['tachographIns']['id'];
         }
 
-        $data['application'] = array(
+        $data['application'] = [
             'version' => $data['version'],
             'safetyConfirmation' => $data['safetyConfirmation'],
             'isMaintenanceSuitable' => $data['isMaintenanceSuitable']
-        );
+        ];
 
         unset($data['version']);
         unset($data['safetyConfirmation']);

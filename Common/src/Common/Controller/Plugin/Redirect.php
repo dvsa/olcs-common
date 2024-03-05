@@ -25,7 +25,7 @@ class Redirect extends LaminasRedirect
      */
     public function refreshAjax()
     {
-        return $this->toRouteAjax(null, array(), array(), true);
+        return $this->toRouteAjax(null, [], [], true);
     }
 
     /**
@@ -38,7 +38,7 @@ class Redirect extends LaminasRedirect
      *
      * @return \Laminas\Http\Response
      */
-    public function toRouteAjax($route = null, $params = array(), $options = array(), $reuseMatchedParams = false)
+    public function toRouteAjax($route = null, $params = [], $options = [], $reuseMatchedParams = false)
     {
         $controller = $this->getController();
 

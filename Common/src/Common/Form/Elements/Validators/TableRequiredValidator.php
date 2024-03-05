@@ -21,18 +21,18 @@ class TableRequiredValidator extends AbstractValidator
      *
      * @var array
      */
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         'required' => 'Please add a %label%'
-    );
+    ];
 
     /**
      * Message variables
      *
      * @var array
      */
-    protected $messageVariables = array(
+    protected $messageVariables = [
         'label' => 'label'
-    );
+    ];
 
     /**
      * Holds the label

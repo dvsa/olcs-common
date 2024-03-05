@@ -34,7 +34,7 @@ class FeeUrlTest extends MockeryTestCase
         $this->request = m::mock(Request::class);
         $this->sut = new FeeUrl($this->router, $this->request, $this->urlHelper);
 
-        $this->mockRouteMatch = m::mock('\Laminas\Router\RouteMatch');
+        $this->mockRouteMatch = m::mock(\Laminas\Router\RouteMatch::class);
         $this->mockUrlHelper = m::mock();
         $this->request
             ->shouldReceive('getQuery')

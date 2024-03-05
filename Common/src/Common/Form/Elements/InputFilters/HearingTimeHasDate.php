@@ -31,7 +31,7 @@ class HearingTimeHasDate extends LaminasTimeSelect implements InputProviderInter
 
             'validators' => [
                 new \Common\Form\Elements\Validators\TimeWithDate('hearingDate'),
-                new TimeValidator(array("format" => 'H:i'))
+                new TimeValidator(["format" => 'H:i'])
             ]
         ];
 

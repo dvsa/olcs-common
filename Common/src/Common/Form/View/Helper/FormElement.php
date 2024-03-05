@@ -73,7 +73,7 @@ class FormElement extends LaminasFormElement
                 if (isset($value['html_elements'])) {
                     $theExtras = '';
                     foreach ($value['html_elements'] as $tag => $option) {
-                        $class = isset($option['class']) ? $option['class'] : '';
+                        $class = $option['class'] ?? '';
                         $theExtras .= sprintf(
                             '<%s class="%s">%s</%s>',
                             $tag,
@@ -120,7 +120,7 @@ class FormElement extends LaminasFormElement
         if ($element instanceof ActionLink) {
             $route = $element->getOption('route');
             if (!empty($route)) {
-                $url = $this->getView()->url($route, array(), array(), true);
+                $url = $this->getView()->url($route, [], [], true);
             } else {
                 $url = $element->getValue();
             }
@@ -248,7 +248,7 @@ class FormElement extends LaminasFormElement
         $hint = $this->getView()->translate($element->getOption('hint'));
         $position = $element->getOption('hint-position');
         $customClass = $element->getOption('hint-class');
-        $class = ($customClass === null) ? $this->hintClass : $customClass;
+        $class = $customClass ?? $this->hintClass;
 
         if ($position === 'below') {
             return sprintf(self::$format, $markup, $class, $hint);
@@ -275,7 +275,7 @@ class FormElement extends LaminasFormElement
 
         $hint = $this->getView()->translate($element->getOption('hint-below'));
         $customClass = $element->getOption('hint-below-class') ?? $element->getOption('hint-class');
-        $class = ($customClass === null) ? $this->hintClass : $customClass;
+        $class = $customClass ?? $this->hintClass;
         return sprintf(self::$format, $markup, $class, $hint);
     }
 }

@@ -30,8 +30,8 @@ class DateRequired extends LaminasDateSelect implements InputProviderInterface
         $specification = [
             'name' => $this->getName(),
             'required' => $this->required,
-            'filters' => array(['name' => 'DateSelectNullifier']
-            ),
+            'filters' => [['name' => 'DateSelectNullifier']
+            ],
             'validators' => $this->getValidators()
         ];
 
@@ -40,8 +40,8 @@ class DateRequired extends LaminasDateSelect implements InputProviderInterface
 
     public function getValidators()
     {
-        return array(
-            ['name' => 'Date', 'options'=>array('format' => 'Y-m-d')]
-        );
+        return [
+            ['name' => 'Date', 'options'=>['format' => 'Y-m-d']]
+        ];
     }
 }

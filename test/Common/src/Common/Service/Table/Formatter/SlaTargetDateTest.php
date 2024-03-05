@@ -38,7 +38,7 @@ class SlaTargetDateTest extends TestCase
         $this->request = m::mock(Request::class);
         $this->sut = new SlaTargetDate($this->router, $this->request, $this->urlHelper, new Date());
 
-        $this->mockRouteMatch = m::mock('\Laminas\Router\RouteMatch');
+        $this->mockRouteMatch = m::mock(\Laminas\Router\RouteMatch::class);
 
         $this->router
             ->shouldReceive('match')

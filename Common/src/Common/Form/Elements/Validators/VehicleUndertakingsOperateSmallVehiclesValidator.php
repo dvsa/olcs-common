@@ -21,9 +21,9 @@ class VehicleUndertakingsOperateSmallVehiclesValidator extends AbstractValidator
      *
      * @var array
      */
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         'required' => 'Value is required and can\'t be empty'
-    );
+    ];
 
     /**
      * Custom validation for undertakings text field

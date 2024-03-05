@@ -49,7 +49,7 @@ class AbstractConditionsUndertakingsAdapterTest extends MockeryTestCase
 
     public function testAlterTable()
     {
-        $table = m::mock('\Common\Service\Table\TableBuilder');
+        $table = m::mock(\Common\Service\Table\TableBuilder::class);
         $table->shouldReceive('removeAction')->with('restore');
 
         $this->sut->alterTable($table);

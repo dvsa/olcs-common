@@ -239,13 +239,13 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow
         }
 
         if ($this->partial) {
-            $vars = array(
+            $vars = [
                 'element'           => $element,
                 'label'             => $label,
                 'labelAttributes'   => $this->labelAttributes,
                 'labelPosition'     => $this->labelPosition,
                 'renderErrors'      => $this->renderErrors,
-            );
+            ];
 
             return $this->view->render($this->partial, $vars);
         }

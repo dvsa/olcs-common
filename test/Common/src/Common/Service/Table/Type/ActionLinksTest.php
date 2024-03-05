@@ -36,12 +36,8 @@ class ActionLinksTest extends MockeryTestCase
         $column = [
             'deleteInputName' => 'table[action][delete][%d]',
             'replaceInputName' => 'table[action][replace][%d]',
-            'isRemoveVisible' => function ($data) {
-                return true;
-            },
-            'isReplaceVisible' => function ($data) {
-                return true;
-            },
+            'isRemoveVisible' => fn($data) => true,
+            'isReplaceVisible' => fn($data) => true,
         ];
         $data = [
             'id' => 123

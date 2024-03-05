@@ -23,9 +23,7 @@ class FormDateSelectTest extends MockeryTestCase
 
         $translator = m::mock(Translator::class);
         $translator->shouldReceive('translate')->andReturnUsing(
-            function ($key) {
-                return 'translated-' . $key;
-            }
+            fn($key) => 'translated-' . $key
         );
 
         $container = m::mock(ContainerInterface::class);

@@ -50,7 +50,7 @@ class ContactDetails extends AbstractListDataService
 
         $result = $response->getResult();
 
-        $this->setData('ContactDetails', (isset($result['results']) ? $result['results'] : null));
+        $this->setData('ContactDetails', ($result['results'] ?? null));
 
         return $this->getData('ContactDetails');
     }

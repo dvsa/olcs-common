@@ -25,11 +25,11 @@ use Mockery as m;
  */
 class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
 {
-    public $handleReponseMethods = array(
+    public $handleReponseMethods = [
         'checkForValidResponseBody',
         'checkForInternalServerError',
         'checkForUnexpectedResponseCode'
-    );
+    ];
 
     public function getSutMock($methods = null)
     {
@@ -42,11 +42,11 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
 
     public function testUrl()
     {
-        $mock = $this->getSutMock(array('pathOrParams'));
+        $mock = $this->getSutMock(['pathOrParams']);
         $mock->expects($this->once())
             ->method('pathOrParams')
             ->with('/licence');
-        $toString = $this->createPartialMock(HttpUri::class, array('toString'));
+        $toString = $this->createPartialMock(HttpUri::class, ['toString']);
         $toString->expects($this->once())
             ->method('toString');
         $mock->url = $toString;
@@ -55,101 +55,101 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
 
     public function testCreate()
     {
-        $mock = $this->getSutMock(array('post'));
+        $mock = $this->getSutMock(['post']);
         $mock->expects($this->once())
             ->method('post')
-            ->with('/licence', array('id' => 7));
-        $mock->create('/licence', array('id' => 7));
+            ->with('/licence', ['id' => 7]);
+        $mock->create('/licence', ['id' => 7]);
     }
 
     public function testPost()
     {
-        $mock = $this->getSutMock(array('request'));
+        $mock = $this->getSutMock(['request']);
 
         $mock->expects($this->once())
             ->method('request')
-            ->with('POST', null, array('id' => 7));
+            ->with('POST', null, ['id' => 7]);
 
-        $mock->post(null, array('id' => 7));
+        $mock->post(null, ['id' => 7]);
     }
 
     public function testRead()
     {
-        $mock = $this->getSutMock(array('get'));
+        $mock = $this->getSutMock(['get']);
 
         $mock->expects($this->once())
             ->method('get')
-            ->with(null, array('id' => 7));
+            ->with(null, ['id' => 7]);
 
-        $mock->read(null, array('id' => 7));
+        $mock->read(null, ['id' => 7]);
     }
 
     public function testGet()
     {
-        $mock = $this->getSutMock(array('request'));
+        $mock = $this->getSutMock(['request']);
 
         $mock->expects($this->once())
             ->method('request')
-            ->with('GET', '/licence', array());
+            ->with('GET', '/licence', []);
 
-        $mock->get('licence', array());
+        $mock->get('licence', []);
     }
 
     public function testUpdate()
     {
-        $mock = $this->getSutMock(array('put'));
+        $mock = $this->getSutMock(['put']);
 
         $mock->expects($this->once())
             ->method('put')
-            ->with(null, array('id' => 7));
+            ->with(null, ['id' => 7]);
 
-        $mock->update(null, array('id' => 7));
+        $mock->update(null, ['id' => 7]);
     }
 
     public function testPut()
     {
-        $mock = $this->getSutMock(array('request'));
+        $mock = $this->getSutMock(['request']);
 
         $mock->expects($this->once())
             ->method('request')
-            ->with('PUT', null, array('id' => 7));
+            ->with('PUT', null, ['id' => 7]);
 
-        $mock->put(null, array('id' => 7));
+        $mock->put(null, ['id' => 7]);
     }
 
     public function testPatch()
     {
-        $mock = $this->getSutMock(array('request'));
+        $mock = $this->getSutMock(['request']);
 
         $mock->expects($this->once())
             ->method('request')
-            ->with('PATCH', null, array('id' => 7));
+            ->with('PATCH', null, ['id' => 7]);
 
-        $mock->patch(null, array('id' => 7));
+        $mock->patch(null, ['id' => 7]);
     }
 
     public function testDelete()
     {
-        $mock = $this->getSutMock(array('request'));
+        $mock = $this->getSutMock(['request']);
 
         $mock->expects($this->once())
             ->method('request')
-            ->with('DELETE', null, array('id' => 7));
+            ->with('DELETE', null, ['id' => 7]);
 
-        $mock->delete(null, array('id' => 7));
+        $mock->delete(null, ['id' => 7]);
     }
 
     public function testRequest()
     {
-        $mock = $this->getSutMock(array('prepareRequest', 'getResponseHelper'));
+        $mock = $this->getSutMock(['prepareRequest', 'getResponseHelper']);
 
         $mock->expects($this->once())
             ->method('prepareRequest')
-            ->with('GET', 'licence', array('id' => 7));
+            ->with('GET', 'licence', ['id' => 7]);
 
         $httpResponse = m::mock(Response::class);
 
-        $send = $this->createPartialMock(HttpClient::class, array('send'));
+        $send = $this->createPartialMock(HttpClient::class, ['send']);
         $send->expects($this->once())
             ->method('send')
             ->will($this->returnValue($httpResponse));
@@ -157,7 +157,7 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
 
         $responseHelper = $this->createPartialMock(
             ResponseHelper::class,
-            array('setMethod', 'setResponse', 'setParams', 'handleResponse')
+            ['setMethod', 'setResponse', 'setParams', 'handleResponse']
         );
         $responseHelper->expects($this->once())
             ->method('setMethod')
@@ -167,7 +167,7 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
             ->with($httpResponse);
         $responseHelper->expects($this->once())
             ->method('setParams')
-            ->with(array('id' => 7));
+            ->with(['id' => 7]);
         $responseHelper->expects($this->once())
             ->method('handleResponse');
 
@@ -175,7 +175,7 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
             ->method('getResponseHelper')
             ->will($this->returnValue($responseHelper));
 
-        $mock->request('GET', 'licence', array('id' => 7));
+        $mock->request('GET', 'licence', ['id' => 7]);
     }
 
     /**
@@ -189,11 +189,11 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
 
     public function testPrepareRequest()
     {
-        $mock = $this->getSutMock(array('getClientRequest', 'getAccept', 'getAcceptLanguage'));
+        $mock = $this->getSutMock(['getClientRequest', 'getAccept', 'getAcceptLanguage']);
 
         $mock->setAuthHeader('auth_header');
 
-        $accept = $this->createPartialMock(Accept::class, array('addMediaType'));
+        $accept = $this->createPartialMock(Accept::class, ['addMediaType']);
         $accept->expects($this->once())
             ->method('addMediaType')
             ->with('application/json');
@@ -202,7 +202,7 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
             ->method('getAccept')
             ->will($this->returnValue($accept));
 
-        $acceptLanguage = $this->createPartialMock(AcceptLanguage::class, array('addLanguage'));
+        $acceptLanguage = $this->createPartialMock(AcceptLanguage::class, ['addLanguage']);
         $acceptLanguage->expects($this->once())
             ->method('addLanguage')
             ->with('en-gb');
@@ -213,10 +213,10 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
 
         $client = $this->createPartialMock(
             HttpClient::class,
-            array(
+            [
                 'setRequest', 'setUri', 'setHeaders', 'setMethod', 'setEncType', 'setRawBody', 'getRequest',
                 'resetParameters'
-            )
+            ]
         );
 
         $request = m::mock(Request::class);
@@ -228,7 +228,7 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
             ->method('setUri')
             ->with('licence');
 
-        $toString = $this->createPartialMock(HttpUri::class, array('toString'));
+        $toString = $this->createPartialMock(HttpUri::class, ['toString']);
         $toString->expects($this->once())
             ->method('toString');
         $mock->url = $toString;
@@ -244,7 +244,7 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
             ->with('application/json');
         $client->expects($this->once())
             ->method('setRawBody')
-            ->with(json_encode(array('id' => 7)));
+            ->with(json_encode(['id' => 7]));
         $mock->client = $client;
 
         $mock->expects($this->once())
@@ -254,7 +254,7 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
         $client->expects($this->once())
              ->method('resetParameters');
 
-        $mock->prepareRequest('POST', 'licence', array('id' => 7));
+        $mock->prepareRequest('POST', 'licence', ['id' => 7]);
     }
 
     /**
@@ -263,9 +263,9 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
      */
     public function testPrepareGetRequest()
     {
-        $mock = $this->getSutMock(array('getClientRequest', 'getAccept', 'getAcceptLanguage'));
+        $mock = $this->getSutMock(['getClientRequest', 'getAccept', 'getAcceptLanguage']);
 
-        $accept = $this->createPartialMock(Accept::class, array('addMediaType'));
+        $accept = $this->createPartialMock(Accept::class, ['addMediaType']);
         $accept->expects($this->once())
             ->method('addMediaType')
             ->with('application/json');
@@ -274,7 +274,7 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
             ->method('getAccept')
             ->will($this->returnValue($accept));
 
-        $acceptLanguage = $this->createPartialMock(AcceptLanguage::class, array('addLanguage'));
+        $acceptLanguage = $this->createPartialMock(AcceptLanguage::class, ['addLanguage']);
         $acceptLanguage->expects($this->once())
             ->method('addLanguage')
             ->with('en-gb');
@@ -285,14 +285,14 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
 
         $client = $this->createPartialMock(
             HttpClient::class,
-            array(
+            [
                 'setRequest',
                 'setUri',
                 'setHeaders',
                 'setMethod',
                 'getRequest',
                 'resetParameters'
-            )
+            ]
         );
 
         $request = m::mock(Request::class);
@@ -305,7 +305,7 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
             ->method('setUri')
             ->with('licence');
 
-        $toString = $this->createPartialMock(HttpUri::class, array('toString'));
+        $toString = $this->createPartialMock(HttpUri::class, ['toString']);
         $toString->expects($this->once())
             ->method('toString');
         $mock->url = $toString;
@@ -321,7 +321,7 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
             ->will($this->returnValue($request));
         $request->expects('getQuery')->andReturn($parameters);
         $parameters->expects('fromArray')
-            ->with(array('id' => 7));
+            ->with(['id' => 7]);
 
         $mock->client = $client;
 
@@ -329,7 +329,7 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
             ->method('getClientRequest')
             ->will($this->returnValue($request));
 
-        $mock->prepareRequest('GET', 'licence', array('id' => 7));
+        $mock->prepareRequest('GET', 'licence', ['id' => 7]);
     }
 
     /**
@@ -368,7 +368,7 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
         $sut = new RestClient(new HttpUri());
         $acceptLanguage = $sut->getAcceptLanguage();
 
-        $this->assertInstanceOf('\Laminas\Http\Header\AcceptLanguage', $acceptLanguage);
+        $this->assertInstanceOf(\Laminas\Http\Header\AcceptLanguage::class, $acceptLanguage);
     }
 
     public function testConstructorWithParams()

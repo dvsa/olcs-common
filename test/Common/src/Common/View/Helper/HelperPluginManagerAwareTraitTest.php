@@ -9,7 +9,7 @@ class HelperPluginManagerAwareTraitTest extends \PHPUnit\Framework\TestCase
 {
     public function testTrait()
     {
-        $trait = $this->getMockForTrait('Common\View\Helper\PluginManagerAwareTrait');
+        $trait = $this->getMockForTrait(\Common\View\Helper\PluginManagerAwareTrait::class);
 
         $viewHelperManager = new \Laminas\View\HelperPluginManager;
 

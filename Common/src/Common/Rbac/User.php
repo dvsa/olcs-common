@@ -9,13 +9,13 @@ use LmcRbacMvc\Identity\IdentityInterface;
  */
 class User implements IdentityInterface
 {
-    const USER_TYPE_INTERNAL = 'internal';
-    const USER_TYPE_ANON = 'anon';
-    const USER_TYPE_LOCAL_AUTHORITY = 'local-authority';
-    const USER_TYPE_OPERATOR = 'operator';
-    const USER_TYPE_PARTNER = 'partner';
-    const USER_TYPE_TRANSPORT_MANAGER = 'transport-manager';
-    const USER_TYPE_NOT_IDENTIFIED = 'not-identified';
+    public const USER_TYPE_INTERNAL = 'internal';
+    public const USER_TYPE_ANON = 'anon';
+    public const USER_TYPE_LOCAL_AUTHORITY = 'local-authority';
+    public const USER_TYPE_OPERATOR = 'operator';
+    public const USER_TYPE_PARTNER = 'partner';
+    public const USER_TYPE_TRANSPORT_MANAGER = 'transport-manager';
+    public const USER_TYPE_NOT_IDENTIFIED = 'not-identified';
 
     /**
      * @var int

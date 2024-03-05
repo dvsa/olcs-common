@@ -5,89 +5,83 @@ use Common\Service\Table\Formatter\StackValue;
 
 $translationPrefix = 'application_vehicle-safety_vehicle-psv.table';
 
-return array(
-    'variables' => array(
+return [
+    'variables' => [
         'title' => $translationPrefix . '.title',
         'titleSingular' => $translationPrefix . '.title.singular',
         'empty_message' => $translationPrefix . '.empty_message',
         'required_label' => 'vehicle',
         'within_form' => true
-    ),
-    'settings' => array(
-        'crud' => array(
-            'actions' => array(
-                'add' => array(
+    ],
+    'settings' => [
+        'crud' => [
+            'actions' => [
+                'add' => [
                     'id' => 'addSmall'
-                ),
-                'delete' => array(
+                ],
+                'delete' => [
                     'label' => 'action_links.remove',
                     'class' => ' more-actions__item govuk-button govuk-button--secondary',
                     'requireRows' => true
-                ),
-                'transfer' => array(
+                ],
+                'transfer' => [
                     'label' => 'Transfer',
                     'class' => ' more-actions__item js-require--multiple govuk-button govuk-button--secondary',
                     'requireRows' => true,
                     'id' => 'transferSmall'
-                )
-            )
-        ),
-        'row-disabled-callback' => function ($row) {
-            return $row['removalDate'] !== null;
-        },
-        'paginate' => array(
-            'limit' => array(
-                'options' => array(10, 25, 50)
-            )
-        ),
+                ]
+            ]
+        ],
+        'row-disabled-callback' => fn($row) => $row['removalDate'] !== null,
+        'paginate' => [
+            'limit' => [
+                'options' => [10, 25, 50]
+            ]
+        ],
         'actionFormat' => Common\Service\Table\TableBuilder::ACTION_FORMAT_BUTTONS,
         'collapseAt' => 1
-    ),
-    'attributes' => array(
-    ),
-    'columns' => array(
-        array(
+    ],
+    'attributes' => [
+    ],
+    'columns' => [
+        [
             'title' => $translationPrefix . '.vrm',
             'stack' => 'vehicle->vrm',
             'formatter' => StackValue::class,
             'action' => 'edit',
             'type' => 'Action',
             'sort' => 'v.vrm',
-        ),
-        array(
+        ],
+        [
             'title' => $translationPrefix . '.make',
             'stack' => 'vehicle->makeModel',
             'formatter' => StackValue::class,
-        ),
-        array(
+        ],
+        [
             'title' => $translationPrefix . '.specified',
             'name' => 'specifiedDate',
             'formatter' => Date::class,
             'sort' => 'specifiedDate'
-        ),
-        array(
+        ],
+        [
             'title' => $translationPrefix . '.removed',
             'name' => 'removalDate',
             'formatter' => Date::class,
             'sort' => 'removalDate'
-        ),
-        array(
+        ],
+        [
             'title' => 'markup-table-th-remove', //this is a view partial from olcs-common
             'type' => 'ActionLinks',
-            'ariaDescription' => function ($row) {
-                return $row['vehicle']['vrm'];
-            },
-            'isRemoveVisible' => function ($data) {
-                return empty($data['removalDate']);
-            },
+            'ariaDescription' => fn($row) => $row['vehicle']['vrm'],
+            'isRemoveVisible' => fn($data) => empty($data['removalDate']),
             'deleteInputName' => 'vehicles[action][delete][%d]'
-        ),
-        array(
+        ],
+        [
             'markup-table-th-action', //this is a view partial from olcs-common
             'name' => 'action',
             'width' => 'checkbox',
             'type' => 'Checkbox',
             'disableIfRowIsDisabled' => true
-        )
-    )
-);
+        ]
+    ]
+];

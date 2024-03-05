@@ -120,12 +120,12 @@ class IsAllowedListener implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): IsAllowedListener
     {
-        $this->setAuthorizationService($container->get('LmcRbacMvc\Service\AuthorizationService'));
-        $options = $container->get('LmcRbacMvc\Options\ModuleOptions');
+        $this->setAuthorizationService($container->get(\LmcRbacMvc\Service\AuthorizationService::class));
+        $options = $container->get(\LmcRbacMvc\Options\ModuleOptions::class);
         $this->setProtectionPolicy($options->getProtectionPolicy());
         $guardsOptions = $options->getGuards();
-        if (isset($guardsOptions['LmcRbacMvc\Guard\RoutePermissionsGuard'])) {
-            $this->setRules($guardsOptions['LmcRbacMvc\Guard\RoutePermissionsGuard']);
+        if (isset($guardsOptions[\LmcRbacMvc\Guard\RoutePermissionsGuard::class])) {
+            $this->setRules($guardsOptions[\LmcRbacMvc\Guard\RoutePermissionsGuard::class]);
         }
         return $this;
     }

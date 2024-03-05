@@ -20,20 +20,20 @@ class ChequeDate extends AbstractValidator
      * Error codes
      * @const string
      */
-    const INVALID = 'invalid';
+    public const INVALID = 'invalid';
 
     /**
      * @const string
      */
-    const MIN_INTERVAL = '-6 months';
+    public const MIN_INTERVAL = '-6 months';
 
     /**
      * Error messages
      * @var array
      */
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         self::INVALID => "Cheque date cannot be older than 6 months",
-    );
+    ];
 
     /**
      * @param  mixed $value

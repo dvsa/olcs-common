@@ -49,7 +49,7 @@ class AbstractDataServiceTestCase extends MockeryTestCase
 
     public function mockHandleQuery($mockResponse, $query = null)
     {
-        $query = $query ?? $this->query;
+        $query ??= $this->query;
 
         $this->queryService->shouldReceive('send')
             ->with($query)

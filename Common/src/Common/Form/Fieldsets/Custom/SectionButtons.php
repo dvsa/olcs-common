@@ -17,18 +17,18 @@ use Common\Form\Elements\InputFilters\ActionButton;
  */
 class SectionButtons extends Fieldset
 {
-    public function __construct($name = '', $options = array())
+    public function __construct($name = '', $options = [])
     {
         parent::__construct('form-actions', $options);
 
-        $this->setAttributes(array('class' => 'govuk-button-group'));
+        $this->setAttributes(['class' => 'govuk-button-group']);
 
         $submit = new ActionButton('save');
         $submit->setAttributes(
-            array(
+            [
                 'class' => 'govuk-button',
                 'type' => 'submit'
-            )
+            ]
         );
         $submit->setLabel('Save');
 
@@ -36,10 +36,10 @@ class SectionButtons extends Fieldset
 
         $cancel = new ActionButton('cancel');
         $cancel->setAttributes(
-            array(
+            [
                 'class' => 'govuk-button govuk-button--secondary',
                 'type' => 'submit'
-            )
+            ]
         );
         $cancel->setLabel('Cancel');
 

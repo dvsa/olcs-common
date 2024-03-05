@@ -7,15 +7,15 @@ namespace Common\Validator;
  */
 class DateInFuture extends \Laminas\Validator\AbstractValidator
 {
-    const NOT_IN_FUTURE = 'notInFuture';
+    public const NOT_IN_FUTURE = 'notInFuture';
 
     /**
      * Error messages
      * @var array
      */
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         self::NOT_IN_FUTURE => "The date must be in the future",
-    );
+    ];
 
     /**
      * is the value valid

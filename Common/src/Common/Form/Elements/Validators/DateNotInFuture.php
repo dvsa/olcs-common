@@ -22,15 +22,15 @@ class DateNotInFuture extends AbstractValidator
      * Error codes
      * @const string
      */
-    const IN_FUTURE = 'inFuture';
+    public const IN_FUTURE = 'inFuture';
 
     /**
      * Error messages
      * @var array
      */
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         self::IN_FUTURE => "This date is not allowed to be in the future",
-    );
+    ];
 
     /**
      * Returns true if the date is not in the future

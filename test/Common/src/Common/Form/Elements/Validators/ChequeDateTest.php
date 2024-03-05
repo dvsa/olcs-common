@@ -33,23 +33,23 @@ class ChequeDateTest extends \PHPUnit\Framework\TestCase
 
     public function providerIsValid()
     {
-        return array(
-            array(
+        return [
+            [
                 date('Y-m-d'),
                 true
-            ),
-            array(
+            ],
+            [
                 date('Y-m-d', strtotime('-1 month')),
                 true
-            ),
-            array(
+            ],
+            [
                 date('Y-m-d', strtotime('-6 months')),
                 true
-            ),
-            array(
+            ],
+            [
                 date('Y-m-d', strtotime('-7 months')),
                 false
-            )
-        );
+            ]
+        ];
     }
 }

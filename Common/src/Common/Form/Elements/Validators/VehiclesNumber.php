@@ -21,11 +21,11 @@ class VehiclesNumber extends AbstractValidator
      *
      * @var array
      */
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         'noOfVehiclesRequired' => 'noOfVehiclesRequiredError',
         'noOfVehiclesRequired-psv' => 'noOfVehiclesRequiredError-psv',
         'noOfTrailersRequired' => 'noOfTrailersRequiredError'
-    );
+    ];
 
     /**
      * Holds the name
@@ -42,7 +42,7 @@ class VehiclesNumber extends AbstractValidator
     public function __construct($name)
     {
         $this->name = $name;
-        parent::__construct(array());
+        parent::__construct([]);
     }
 
     /**
@@ -59,9 +59,9 @@ class VehiclesNumber extends AbstractValidator
 
         $total = 0;
 
-        $total += (isset($context['noOfVehiclesRequired']) ? $context['noOfVehiclesRequired'] : 0);
+        $total += ($context['noOfVehiclesRequired'] ?? 0);
 
-        $total += (isset($context['noOfTrailersRequired']) ? $context['noOfTrailersRequired'] : 0);
+        $total += ($context['noOfTrailersRequired'] ?? 0);
 
         if ($total < 1) {
             if (!isset($context['noOfTrailersRequired'])) {

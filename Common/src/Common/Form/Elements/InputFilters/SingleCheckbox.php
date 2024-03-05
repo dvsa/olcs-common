@@ -14,7 +14,7 @@ namespace Common\Form\Elements\InputFilters;
  */
 class SingleCheckbox extends Checkbox
 {
-    public function __construct($name = null, $options = array())
+    public function __construct($name = null, $options = [])
     {
         parent::__construct($name, $options);
     }

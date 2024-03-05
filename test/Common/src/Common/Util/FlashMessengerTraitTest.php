@@ -18,15 +18,15 @@ class FlashMessengerTraitTest extends m\Adapter\Phpunit\MockeryTestCase
     public function setUp(): void
     {
         $this->sut = $this->getMockForTrait(
-            '\Common\Util\FlashMessengerTrait',
-            array(),
+            \Common\Util\FlashMessengerTrait::class,
+            [],
             '',
             true,
             true,
             true,
-            array(
+            [
                 'getFlashMessenger'
-            )
+            ]
         );
     }
 
@@ -37,18 +37,18 @@ class FlashMessengerTraitTest extends m\Adapter\Phpunit\MockeryTestCase
     public function testGetFlashMessenger()
     {
         $this->sut = $this->getMockForTrait(
-            '\Common\Util\FlashMessengerTrait',
-            array(),
+            \Common\Util\FlashMessengerTrait::class,
+            [],
             '',
             true,
             true,
             true,
-            array(
+            [
                 'plugin'
-            )
+            ]
         );
 
-        $pluginManager = $this->createPartialMock(FlashMessengerPlugin::class, array('getNamespace'));
+        $pluginManager = $this->createPartialMock(FlashMessengerPlugin::class, ['getNamespace']);
 
         $this->sut->expects($this->once())
             ->method('plugin')
@@ -65,7 +65,7 @@ class FlashMessengerTraitTest extends m\Adapter\Phpunit\MockeryTestCase
     {
         $message = 'foo';
 
-        $chainMock = $this->createPartialMock(FlashMessengerPlugin::class, array('addInfoMessage'));
+        $chainMock = $this->createPartialMock(FlashMessengerPlugin::class, ['addInfoMessage']);
         $chainMock->expects($this->once())
             ->method('addInfoMessage')
             ->with($message);
@@ -85,7 +85,7 @@ class FlashMessengerTraitTest extends m\Adapter\Phpunit\MockeryTestCase
     {
         $message = 'foo';
 
-        $chainMock = $this->createPartialMock(FlashMessengerPlugin::class, array('addErrorMessage'));
+        $chainMock = $this->createPartialMock(FlashMessengerPlugin::class, ['addErrorMessage']);
         $chainMock->expects($this->once())
             ->method('addErrorMessage')
             ->with($message);
@@ -105,7 +105,7 @@ class FlashMessengerTraitTest extends m\Adapter\Phpunit\MockeryTestCase
     {
         $message = 'foo';
 
-        $chainMock = $this->createPartialMock(FlashMessengerPlugin::class, array('addSuccessMessage'));
+        $chainMock = $this->createPartialMock(FlashMessengerPlugin::class, ['addSuccessMessage']);
         $chainMock->expects($this->once())
             ->method('addSuccessMessage')
             ->with($message);
@@ -125,7 +125,7 @@ class FlashMessengerTraitTest extends m\Adapter\Phpunit\MockeryTestCase
     {
         $message = 'foo';
 
-        $chainMock = $this->createPartialMock(FlashMessengerPlugin::class, array('addWarningMessage'));
+        $chainMock = $this->createPartialMock(FlashMessengerPlugin::class, ['addWarningMessage']);
         $chainMock->expects($this->once())
             ->method('addWarningMessage')
             ->with($message);

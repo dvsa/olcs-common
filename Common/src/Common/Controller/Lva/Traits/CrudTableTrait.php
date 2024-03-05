@@ -28,9 +28,9 @@ trait CrudTableTrait
         // we can't just opt-in to all existing route params because
         // we might have a child ID if we're editing; if so we *don't*
         // want that in the redirect or we'll end up back on the same page
-        $routeParams = array(
+        $routeParams = [
             $this->getIdentifierIndex() => $this->getIdentifier()
-        );
+        ];
 
         if ($this->isButtonPressed('addAnother')) {
             $routeParams['action'] = ($prefix !== null ? $prefix . '-add' : 'add');

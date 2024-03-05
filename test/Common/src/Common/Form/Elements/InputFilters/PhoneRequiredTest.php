@@ -39,9 +39,7 @@ class PhoneRequiredTest extends MockeryTestCase
                 \Laminas\Validator\StringLength::class,
             ],
             array_map(
-                function ($item) {
-                    return $item['name'];
-                },
+                fn($item) => $item['name'],
                 $actual['validators']
             )
         );

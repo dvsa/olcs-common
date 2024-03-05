@@ -33,19 +33,19 @@ class DateNotInFutureTest extends \PHPUnit\Framework\TestCase
 
     public function providerIsValid()
     {
-        return array(
-            array(
+        return [
+            [
                 date('Y-m-d'),
                 true
-            ),
-            array(
+            ],
+            [
                 date('Y-m-d', strtotime('+1 day')),
                 false
-            ),
-            array(
+            ],
+            [
                 date('Y-m-d', strtotime('-1 day')),
                 true
-            )
-        );
+            ]
+        ];
     }
 }

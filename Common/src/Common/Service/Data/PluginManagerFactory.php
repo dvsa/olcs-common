@@ -10,7 +10,7 @@ use Laminas\Mvc\Service\AbstractPluginManagerFactory;
  */
 class PluginManagerFactory extends AbstractPluginManagerFactory
 {
-    const PLUGIN_MANAGER_CLASS = 'Common\Service\Data\PluginManager';
+    public const PLUGIN_MANAGER_CLASS = 'Common\Service\Data\PluginManager';
 
     public function __invoke(ContainerInterface $container, $name, array $options = null)
     {

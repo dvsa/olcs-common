@@ -15,7 +15,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class NoOfPermitsBaseInsetTextGeneratorTest extends MockeryTestCase
 {
-    const FORMAT = '<div class="container">%s</div>';
+    public const FORMAT = '<div class="container">%s</div>';
 
     private $translator;
 

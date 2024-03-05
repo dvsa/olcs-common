@@ -11,12 +11,12 @@ class YesNoTableRequiredValidator extends AbstractValidator
 
     private $table;
 
-    public function __construct($options = array())
+    public function __construct($options = [])
     {
         $this->table = $options['table'];
         $this->messageTemplates['error'] = $options['message'];
 
-        parent::__construct(array());
+        parent::__construct([]);
     }
 
     /**
@@ -24,7 +24,7 @@ class YesNoTableRequiredValidator extends AbstractValidator
      * @param array $context
      * @return bool
      */
-    public function isValid($value, $context = array())
+    public function isValid($value, $context = [])
     {
         if ($context[$this->table]['rows'] == 0 && $value === 'Y') {
             $this->error('error');

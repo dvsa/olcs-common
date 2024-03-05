@@ -62,7 +62,7 @@ class TextTest extends \PHPUnit\Framework\TestCase
     public function testStringTrimFilterIsUsed()
     {
         $this->assertEquals(
-            [['name' => 'Laminas\Filter\StringTrim']],
+            [['name' => \Laminas\Filter\StringTrim::class]],
             $this->getSpecificationElement('filters')
         );
     }

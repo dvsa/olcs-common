@@ -73,7 +73,7 @@ class FinancialEvidence implements MapperInterface
         $uploadLater = null;
         $sendByPost = null;
 
-        $postUploadNow = (int) (isset($data['evidence']['uploadNow']) ? $data['evidence']['uploadNow'] : 0);
+        $postUploadNow = (int) ($data['evidence']['uploadNow'] ?? 0);
         if ($postUploadNow === RefData::AD_UPLOAD_NOW) {
             $uploadNow = RefData::AD_UPLOAD_NOW;
         } elseif ($postUploadNow === RefData::AD_POST) {

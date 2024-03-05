@@ -19,13 +19,13 @@ class GenericDeleteActionTest extends \PHPUnit\Framework\TestCase
     protected function setUp(): void
     {
         $this->sut = $this->getMockForTrait(
-            '\Common\Controller\Traits\GenericDeleteAction',
-            array(),
+            \Common\Controller\Traits\GenericDeleteAction::class,
+            [],
             '',
             true,
             true,
             true,
-            array('delete')
+            ['delete']
         );
     }
 

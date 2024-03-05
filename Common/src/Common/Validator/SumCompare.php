@@ -15,15 +15,15 @@ class SumCompare extends AbstractCompare
     /**
      * @var array
      */
-    protected $messageVariables = array(
+    protected $messageVariables = [
         'compare_to_label' => 'compareToLabel',
-    );
+    ];
 
     /**
      * Error messages
      * @var array
      */
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         self::NOT_GTE => "The sum must be greater than or equal to '%compare_to_label%'",
         self::NOT_GT => "The sum must be greater than '%compare_to_label%'",
         self::NOT_LTE => "The sum must be less than or equal to '%compare_to_label%'",
@@ -31,7 +31,7 @@ class SumCompare extends AbstractCompare
         self::INVALID_OPERATOR => "Invalid operator",
         self::INVALID_FIELD => "Input field being compared to doesn't exist",
         self::NO_COMPARE => "Unable to compare with '%compare_to_label%'"
-    );
+    ];
 
 
     /**
@@ -82,7 +82,7 @@ class SumCompare extends AbstractCompare
      * @param  array $options
      * @return NumberCompare
      */
-    public function setOptions($options = array())
+    public function setOptions($options = [])
     {
         if (isset($options['sum_with'])) {
             $this->setSumWith($options['sum_with']);

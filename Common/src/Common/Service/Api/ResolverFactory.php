@@ -7,7 +7,7 @@ use Psr\Container\ContainerInterface;
 
 class ResolverFactory extends AbstractPluginManagerFactory
 {
-    const PLUGIN_MANAGER_CLASS = Resolver::class;
+    public const PLUGIN_MANAGER_CLASS = Resolver::class;
 
     public function __invoke(ContainerInterface $container, $name, array $options = null)
     {

@@ -14,14 +14,14 @@ use Common\Filter\DateTimeSelectNullifier;
  */
 class DateCompare extends AbstractCompare
 {
-    const DATE_FORMAT = 'Y-m-d';
-    const DATETIME_FORMAT = 'Y-m-d H:i:s';
+    public const DATE_FORMAT = 'Y-m-d';
+    public const DATETIME_FORMAT = 'Y-m-d H:i:s';
 
     /**
      * Error messages
      * @var array
      */
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         self::NOT_GTE => "This date must be after or the same as '%compare_to_label%'",
         self::NOT_GT => "This date must be after '%compare_to_label%'",
         self::NOT_LTE => "This date must be before or the same as '%compare_to_label%'",
@@ -29,7 +29,7 @@ class DateCompare extends AbstractCompare
         self::INVALID_OPERATOR => "Invalid operator",
         self::INVALID_FIELD => "Input field being compared to doesn't exist",
         self::NO_COMPARE => "Unable to compare with '%compare_to_label%'"
-    );
+    ];
 
     /**
      * Whether we're comparing the time also
@@ -90,7 +90,7 @@ class DateCompare extends AbstractCompare
      * @param  array $options
      * @return DateCompare
      */
-    public function setOptions($options = array())
+    public function setOptions($options = [])
     {
         if (isset($options['has_time'])) {
             $this->setHasTime($options['has_time']);

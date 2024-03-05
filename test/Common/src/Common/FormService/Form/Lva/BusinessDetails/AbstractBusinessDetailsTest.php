@@ -20,9 +20,9 @@ class AbstractBusinessDetailsTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->formHelper = m::mock('\Common\Service\Helper\FormHelperService');
+        $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);
 
-        $this->sut = m::mock('\Common\FormService\Form\Lva\BusinessDetails\AbstractBusinessDetails')->makePartial();
+        $this->sut = m::mock(\Common\FormService\Form\Lva\BusinessDetails\AbstractBusinessDetails::class)->makePartial();
         $this->sut->__construct($this->formHelper);
     }
 

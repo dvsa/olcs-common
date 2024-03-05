@@ -37,14 +37,14 @@ class DataHelperServiceTest extends \PHPUnit\Framework\TestCase
      */
     public function testArrayRepeat()
     {
-        $input = array(
+        $input = [
             'foo' => 'bar',
-            'cake' => array(
+            'cake' => [
                 'nested' => true
-            )
-        );
+            ]
+        ];
 
-        $expected = array($input, $input, $input);
+        $expected = [$input, $input, $input];
 
         $this->assertEquals($expected, $this->sut->arrayRepeat($input, 3));
     }
@@ -55,9 +55,9 @@ class DataHelperServiceTest extends \PHPUnit\Framework\TestCase
      */
     public function testProcessDataMapWithoutMap()
     {
-        $input = array(
+        $input = [
             'foo' => 'bar'
-        );
+        ];
 
         $output = $this->sut->processDataMap($input);
 
@@ -70,44 +70,44 @@ class DataHelperServiceTest extends \PHPUnit\Framework\TestCase
      */
     public function testProcessDataMap()
     {
-        $input = array(
-            'foo' => array(
+        $input = [
+            'foo' => [
                 'a' => 'A',
                 'b' => 'B'
-            ),
-            'bar' => array(
+            ],
+            'bar' => [
                 'c' => 'C',
                 'd' => 'D'
-            ),
-            'bob' => array(
+            ],
+            'bob' => [
                 'e' => 'E',
                 'f' => 'F'
-            )
-        );
+            ]
+        ];
 
-        $map = array(
-            'main' => array(
-                'mapFrom' => array('foo', 'bar'),
-                'values' => array('cake' => 'cats'),
-                'children' => array(
-                    'bobs' => array(
-                        'mapFrom' => array('bob')
-                    )
-                )
-            )
-        );
+        $map = [
+            'main' => [
+                'mapFrom' => ['foo', 'bar'],
+                'values' => ['cake' => 'cats'],
+                'children' => [
+                    'bobs' => [
+                        'mapFrom' => ['bob']
+                    ]
+                ]
+            ]
+        ];
 
-        $expected = array(
+        $expected = [
             'a' => 'A',
             'b' => 'B',
             'c' => 'C',
             'd' => 'D',
             'cake' => 'cats',
-            'bobs' => array(
+            'bobs' => [
                 'e' => 'E',
                 'f' => 'F'
-            )
-        );
+            ]
+        ];
 
         $output = $this->sut->processDataMap($input, $map);
 
@@ -120,43 +120,43 @@ class DataHelperServiceTest extends \PHPUnit\Framework\TestCase
      */
     public function testProcessDataMapWithAddress()
     {
-        $input = array(
-            'foo' => array(
+        $input = [
+            'foo' => [
                 'a' => 'A',
                 'b' => 'B'
-            ),
-            'bar' => array(
+            ],
+            'bar' => [
                 'c' => 'C',
                 'd' => 'D'
-            ),
-            'someAddress' => array(
+            ],
+            'someAddress' => [
                 'addressLine1' => '123',
                 'addressLine2' => '456',
                 'searchPostcode' => 'foo',
                 'countryCode' => 'uk'
-            )
-        );
+            ]
+        ];
 
-        $map = array(
-            '_addresses' => array(
+        $map = [
+            '_addresses' => [
                 'someAddress'
-            ),
-            'main' => array(
-                'mapFrom' => array('foo', 'bar', 'addresses'),
-            )
-        );
+            ],
+            'main' => [
+                'mapFrom' => ['foo', 'bar', 'addresses'],
+            ]
+        ];
 
-        $expected = array(
+        $expected = [
             'a' => 'A',
             'b' => 'B',
             'c' => 'C',
             'd' => 'D',
-            'someAddress' => array(
+            'someAddress' => [
                 'addressLine1' => '123',
                 'addressLine2' => '456',
                 'countryCode' => 'uk'
-            )
-        );
+            ]
+        ];
 
         $output = $this->sut->processDataMap($input, $map);
 

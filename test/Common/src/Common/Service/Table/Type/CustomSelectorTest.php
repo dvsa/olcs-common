@@ -123,9 +123,9 @@ class CustomSelectorTest extends MockeryTestCase
             'action' => 'blap'
         ];
         $column = [
-            'data-attributes' => array(
+            'data-attributes' => [
                 'action'
-            )
+            ]
         ];
 
         $this->table->shouldReceive('getFieldset')
@@ -152,9 +152,9 @@ class CustomSelectorTest extends MockeryTestCase
             'action' => ['id' => 'blap']
         ];
         $column = [
-            'data-attributes' => array(
+            'data-attributes' => [
                 'action'
-            )
+            ]
         ];
 
         $this->table->shouldReceive('getFieldset')

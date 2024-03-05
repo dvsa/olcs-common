@@ -35,9 +35,7 @@ class TranslateTest extends \PHPUnit\Framework\TestCase
     {
         $this->translator->shouldReceive('translate')
             ->andReturnUsing(
-                function ($string) {
-                    return strtoupper($string);
-                }
+                fn($string) => strtoupper($string)
             );
 
         $this->dataHelper->shouldReceive('fetchNestedData')->andReturn($expected);

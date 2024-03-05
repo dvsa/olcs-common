@@ -766,10 +766,10 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
     protected function formatFilters($query)
     {
         $filters = [
-            'page'  => (isset($query['page']) ? $query['page'] : self::DEF_TABLE_FIRST_PAGE_NR),
-            'limit' => (isset($query['limit']) ? $query['limit'] : self::DEF_TABLE_ITEMS_COUNT),
-            'sort'  => isset($query['sort']) ? $query['sort'] : 'createdOn',
-            'order' => isset($query['order']) ? $query['order'] : 'DESC',
+            'page'  => ($query['page'] ?? self::DEF_TABLE_FIRST_PAGE_NR),
+            'limit' => ($query['limit'] ?? self::DEF_TABLE_ITEMS_COUNT),
+            'sort'  => $query['sort'] ?? 'createdOn',
+            'order' => $query['order'] ?? 'DESC',
         ];
 
         if (isset($query['vehicleSearch']['vrm']) && !isset($query['vehicleSearch']['clearSearch'])) {

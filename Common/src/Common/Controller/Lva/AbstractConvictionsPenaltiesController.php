@@ -87,7 +87,7 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
         $this->alterFormForLva($form);
 
         if ($request->isPost()) {
-            $crudAction = $this->getCrudAction(array($data['data']['table']));
+            $crudAction = $this->getCrudAction([$data['data']['table']]);
 
             if ($crudAction !== null) {
                 $this->formHelper->disableEmptyValidation($form);
@@ -135,15 +135,15 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
      */
     protected function getFormData($data)
     {
-        return array(
-            'data' => array(
+        return [
+            'data' => [
                 'version' => $data['version'],
                 'question' => $data['prevConviction']
-            ),
-            'convictionsConfirmation' => array(
+            ],
+            'convictionsConfirmation' => [
                 'convictionsConfirmation' => $data['convictionsConfirmation']
-            )
-        );
+            ]
+        ];
     }
 
     /**

@@ -106,7 +106,7 @@ return [
           'prg' => \Laminas\Mvc\Plugin\Prg\PostRedirectGet::class
         ],
         'invokables' => [
-            'redirect' => 'Common\Controller\Plugin\Redirect',
+            'redirect' => \Common\Controller\Plugin\Redirect::class,
             \Common\Controller\Plugin\Redirect::class => \Common\Controller\Plugin\Redirect::class,
             \Laminas\Mvc\Plugin\Prg\PostRedirectGet::class => \Laminas\Mvc\Plugin\Prg\PostRedirectGet::class
         ],
@@ -146,7 +146,7 @@ return [
             ]
         ]
     ],
-    'version' => (isset($release['version']) ? $release['version'] : ''),
+    'version' => ($release['version'] ?? ''),
     'service_manager' => [
         'shared' => [
             'Helper\FileUpload' => false,
@@ -155,15 +155,15 @@ return [
             'CqrsRequest' => false
         ],
         'abstract_factories' => [
-            'Common\Util\AbstractServiceFactory'
+            \Common\Util\AbstractServiceFactory::class
         ],
         'aliases' => [
-            'Cache' => 'Laminas\Cache\Storage\StorageInterface',
-            'DataServiceManager' => 'Common\Service\Data\PluginManager',
+            'Cache' => \Laminas\Cache\Storage\StorageInterface::class,
+            'DataServiceManager' => \Common\Service\Data\PluginManager::class,
             'translator' => 'MvcTranslator',
             'Laminas\Log' => 'Logger',
-            'TableBuilder' => 'Common\Service\Table\TableBuilderFactory',
-            'NavigationFactory' => 'Common\Service\NavigationFactory',
+            'TableBuilder' => \Common\Service\Table\TableBuilderFactory::class,
+            'NavigationFactory' => \Common\Service\NavigationFactory::class,
             'QueryService' => \Common\Service\Cqrs\Query\CachingQueryService::class,
             'CommandService' => \Common\Service\Cqrs\Command\CommandService::class,
             'CommandSender' => CommandSender::class,
@@ -207,20 +207,20 @@ return [
             'QuerySender' => \Common\Service\Cqrs\Query\QuerySender::class,
         ],
         'invokables' => [
-            'Common\Service\NavigationFactory' => 'Common\Service\NavigationFactory',
-            'SectionConfig' => 'Common\Service\Data\SectionConfig',
-            'CantIncreaseValidator' => 'Common\Form\Elements\Validators\CantIncreaseValidator',
-            'Common\Filesystem\Filesystem' => 'Common\Filesystem\Filesystem',
+            \Common\Service\NavigationFactory::class => \Common\Service\NavigationFactory::class,
+            'SectionConfig' => \Common\Service\Data\SectionConfig::class,
+            'CantIncreaseValidator' => \Common\Form\Elements\Validators\CantIncreaseValidator::class,
+            \Common\Filesystem\Filesystem::class => \Common\Filesystem\Filesystem::class,
             'VehicleList' => '\Common\Service\VehicleList\VehicleList',
             'postcode' => 'Common\Service\Postcode\Postcode',
             'CompaniesHouseApi' => 'Common\Service\CompaniesHouse\Api',
-            'TableRequired' => 'Common\Form\Elements\Validators\TableRequiredValidator',
+            'TableRequired' => \Common\Form\Elements\Validators\TableRequiredValidator::class,
             \Common\Service\Table\DataMapper\DashboardTmApplications::class => \Common\Service\Table\DataMapper\DashboardTmApplications::class,
 
             'applicationIdValidator' => 'Common\Form\Elements\Validators\ApplicationIdValidator',
             'totalVehicleAuthorityValidator' => 'Common\Form\Elements\Validators\Lva\TotalVehicleAuthorityValidator',
             'section.vehicle-safety.vehicle.formatter.vrm' =>
-                'Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm',
+                \Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm::class,
             'Common\Rbac\UserProvider' => 'Common\Rbac\UserProvider',
             'QaCheckboxFactory' => QaService\CheckboxFactory::class,
             'QaTextFactory' => QaService\TextFactory::class,
@@ -325,15 +325,15 @@ return [
             \Common\Service\Cqrs\Command\CommandService::class => \Common\Service\Cqrs\Command\CommandServiceFactory::class,
             \Common\Service\Script\ScriptFactory::class => \Common\Service\Script\ScriptFactory::class,
             FormServiceManager::class => Common\FormService\FormServiceManagerFactory::class,
-            'Table' => '\Common\Service\Table\TableFactory',
+            'Table' => \Common\Service\Table\TableFactory::class,
             \Common\Service\Table\TableFactory::class => \Common\Service\Table\TableFactory::class,
             // Added in a true Laminas Framework V2 compatible factory for TableBuilder, eventually to replace Table above.
-            'Common\Service\Table\TableBuilderFactory' => 'Common\Service\Table\TableBuilderFactory',
-            'ServiceApiResolver' => 'Common\Service\Api\ResolverFactory',
+            \Common\Service\Table\TableBuilderFactory::class => \Common\Service\Table\TableBuilderFactory::class,
+            'ServiceApiResolver' => \Common\Service\Api\ResolverFactory::class,
             'SectionService' => '\Common\Controller\Service\SectionServiceFactory',
-            'FormAnnotationBuilder' => '\Common\Service\FormAnnotationBuilderFactory',
-            'Common\Service\Data\PluginManager' => Common\Service\Data\PluginManagerFactory::class,
-            'Laminas\Cache\Storage\StorageInterface' => 'Laminas\Cache\Service\StorageCacheFactory',
+            'FormAnnotationBuilder' => \Common\Service\FormAnnotationBuilderFactory::class,
+            \Common\Service\Data\PluginManager::class => Common\Service\Data\PluginManagerFactory::class,
+            \Laminas\Cache\Storage\StorageInterface::class => \Laminas\Cache\Service\StorageCacheFactory::class,
             \Common\Rbac\Navigation\IsAllowedListener::class => Common\Rbac\Navigation\IsAllowedListener::class,
             \Common\Rbac\Service\Permission::class => \Common\Rbac\Service\PermissionFactory::class,
             \Common\Service\Data\Search\SearchTypeManager::class =>
@@ -482,17 +482,17 @@ return [
             'formRadioHorizontal' => \Common\Form\View\Helper\FormRadioHorizontal::class,
             'formCheckboxAdvanced' => \Common\Form\View\Helper\FormCheckboxAdvanced::class,
             'formRadioVertical' => \Common\Form\View\Helper\FormRadioVertical::class,
-            'form' => 'Common\Form\View\Helper\Form',
+            'form' => \Common\Form\View\Helper\Form::class,
             \Common\Form\View\Helper\FormCollection::class => Common\Form\View\Helper\FormCollection::class,
-            'formdatetimeselect' => 'Common\Form\View\Helper\FormDateTimeSelect',
+            'formdatetimeselect' => \Common\Form\View\Helper\FormDateTimeSelect::class,
             'formDateSelect' => \Common\Form\View\Helper\FormDateSelect::class,
             FormInputSearch::class => FormInputSearch::class,
-            'formPlainText' => 'Common\Form\View\Helper\FormPlainText',
-            'addTags' => 'Common\View\Helper\AddTags',
-            'transportManagerApplicationStatus' => 'Common\View\Helper\TransportManagerApplicationStatus',
-            'status' => 'Common\View\Helper\Status',
+            'formPlainText' => \Common\Form\View\Helper\FormPlainText::class,
+            'addTags' => \Common\View\Helper\AddTags::class,
+            'transportManagerApplicationStatus' => \Common\View\Helper\TransportManagerApplicationStatus::class,
+            'status' => \Common\View\Helper\Status::class,
             'address' => \Common\View\Helper\Address::class,
-            'personName' => 'Common\View\Helper\PersonName',
+            'personName' => \Common\View\Helper\PersonName::class,
             'dateTime' => \Common\View\Helper\DateTime::class,
             'returnToAddress' => Common\View\Helper\ReturnToAddress::class,
             'navigationParentPage' => Common\View\Helper\NavigationParentPage::class,
@@ -593,14 +593,14 @@ return [
             'formdatetime' => \Common\Form\View\Helper\FormDateTimeSelect::class,
             'formdateselect' => \Common\Form\View\Helper\FormDateSelect::class,
             'forminputsearch' => FormInputSearch::class,
-            'formplaintext' => 'Common\Form\View\Helper\FormPlainText',
-            'form_plain_text' => 'Common\Form\View\Helper\FormPlainText',
-            'addtags' => 'Common\View\Helper\AddTags',
-            'transportmanagerapplicationstatus' => 'Common\View\Helper\TransportManagerApplicationStatus',
-            'status' => 'Common\View\Helper\Status',
-            'address' => 'Common\View\Helper\Address',
-            'personname' => 'Common\View\Helper\PersonName',
-            'Address' => 'Common\View\Helper\Address',
+            'formplaintext' => \Common\Form\View\Helper\FormPlainText::class,
+            'form_plain_text' => \Common\Form\View\Helper\FormPlainText::class,
+            'addtags' => \Common\View\Helper\AddTags::class,
+            'transportmanagerapplicationstatus' => \Common\View\Helper\TransportManagerApplicationStatus::class,
+            'status' => \Common\View\Helper\Status::class,
+            'address' => \Common\View\Helper\Address::class,
+            'personname' => \Common\View\Helper\PersonName::class,
+            'Address' => \Common\View\Helper\Address::class,
             'datetime' => \Common\View\Helper\DateTime::class,
             'returntoaddress' => Common\View\Helper\ReturnToAddress::class,
             'navigationparentpage' => Common\View\Helper\NavigationParentPage::class,
@@ -672,11 +672,11 @@ return [
     'forms_path' => __DIR__ . '/../../Common/src/Common/Form/Forms/',
     'form_elements' => [
         'invokables' => [
-            'DateSelect' => 'Common\Form\Elements\Custom\DateSelect',
-            'MonthSelect' => 'Common\Form\Elements\Custom\MonthSelect',
-            'YearSelect' => 'Common\Form\Elements\Custom\YearSelect',
-            'DateTimeSelect' => 'Common\Form\Elements\Custom\DateTimeSelect',
-            'Common\Form\Elements\Custom\OlcsCheckbox' => 'Common\Form\Elements\Custom\OlcsCheckbox',
+            'DateSelect' => \Common\Form\Elements\Custom\DateSelect::class,
+            'MonthSelect' => \Common\Form\Elements\Custom\MonthSelect::class,
+            'YearSelect' => \Common\Form\Elements\Custom\YearSelect::class,
+            'DateTimeSelect' => \Common\Form\Elements\Custom\DateTimeSelect::class,
+            \Common\Form\Elements\Custom\OlcsCheckbox::class => \Common\Form\Elements\Custom\OlcsCheckbox::class,
             TextArea::class => TextArea::class,
 
         ],
@@ -715,30 +715,30 @@ return [
     ],
     'validators' => [
         'invokables' => [
-            'Common\Validator\ValidateIfMultiple' => 'Common\Validator\ValidateIfMultiple',
-            'Common\Validator\DateCompare' => 'Common\Validator\DateCompare',
-            'Common\Validator\NumberCompare' => 'Common\Validator\NumberCompare',
-            'Common\Validator\SumCompare' => 'Common\Validator\SumCompare',
-            'Common\Form\Elements\Validators\DateNotInFuture' => 'Common\Form\Elements\Validators\DateNotInFuture',
-            'Common\Validator\OneOf' => 'Common\Validator\OneOf',
-            'Common\Form\Elements\Validators\Date' => 'Common\Form\Elements\Validators\Date',
-            'Common\Validator\DateInFuture' => 'Common\Validator\DateInFuture',
-            'Common\Validator\DateCompareWithInterval' => 'Common\Validator\DateCompareWithInterval',
-            'Common\Validator\FileUploadCount' => 'Common\Validator\FileUploadCount',
+            \Common\Validator\ValidateIfMultiple::class => \Common\Validator\ValidateIfMultiple::class,
+            \Common\Validator\DateCompare::class => \Common\Validator\DateCompare::class,
+            \Common\Validator\NumberCompare::class => \Common\Validator\NumberCompare::class,
+            \Common\Validator\SumCompare::class => \Common\Validator\SumCompare::class,
+            \Common\Form\Elements\Validators\DateNotInFuture::class => \Common\Form\Elements\Validators\DateNotInFuture::class,
+            \Common\Validator\OneOf::class => \Common\Validator\OneOf::class,
+            \Common\Form\Elements\Validators\Date::class => \Common\Form\Elements\Validators\Date::class,
+            \Common\Validator\DateInFuture::class => \Common\Validator\DateInFuture::class,
+            \Common\Validator\DateCompareWithInterval::class => \Common\Validator\DateCompareWithInterval::class,
+            \Common\Validator\FileUploadCount::class => \Common\Validator\FileUploadCount::class,
             TableRequiredValidator::class => TableRequiredValidator::class
         ],
         'aliases' => [
             'ValidateIf' => Common\Validator\ValidateIf::class,
             'validateIf' => Common\Validator\ValidateIf::class,
-            'ValidateIfMultiple' => 'Common\Validator\ValidateIfMultiple',
-            'DateCompare' => 'Common\Validator\DateCompare',
-            'NumberCompare' => 'Common\Validator\NumberCompare',
-            'SumCompare' => 'Common\Validator\SumCompare',
-            'DateNotInFuture' => 'Common\Form\Elements\Validators\DateNotInFuture',
-            'OneOf' => 'Common\Validator\OneOf',
-            'Date' => 'Common\Form\Elements\Validators\Date',
-            'DateInFuture' => 'Common\Validator\DateInFuture',
-            'DateCompareWithInterval' => 'Common\Validator\DateCompareWithInterval',
+            'ValidateIfMultiple' => \Common\Validator\ValidateIfMultiple::class,
+            'DateCompare' => \Common\Validator\DateCompare::class,
+            'NumberCompare' => \Common\Validator\NumberCompare::class,
+            'SumCompare' => \Common\Validator\SumCompare::class,
+            'DateNotInFuture' => \Common\Form\Elements\Validators\DateNotInFuture::class,
+            'OneOf' => \Common\Validator\OneOf::class,
+            'Date' => \Common\Form\Elements\Validators\Date::class,
+            'DateInFuture' => \Common\Validator\DateInFuture::class,
+            'DateCompareWithInterval' => \Common\Validator\DateCompareWithInterval::class,
         ],
         'factories' => [
             QaService\DateNotInPastValidator::class => QaService\DateNotInPastValidatorFactory::class,
@@ -748,20 +748,20 @@ return [
     ],
     'filters' => [
         'invokables' => [
-            'Common\Filter\DateSelectNullifier' => 'Common\Filter\DateSelectNullifier',
-            'Common\Filter\DateTimeSelectNullifier' => 'Common\Filter\DateTimeSelectNullifier',
-            'Common\Filter\DecompressUploadToTmp' => 'Common\Filter\DecompressUploadToTmp',
-            'Common\Filter\DecompressToTmp' => 'Common\Filter\DecompressToTmp'
+            \Common\Filter\DateSelectNullifier::class => \Common\Filter\DateSelectNullifier::class,
+            \Common\Filter\DateTimeSelectNullifier::class => \Common\Filter\DateTimeSelectNullifier::class,
+            \Common\Filter\DecompressUploadToTmp::class => \Common\Filter\DecompressUploadToTmp::class,
+            \Common\Filter\DecompressToTmp::class => \Common\Filter\DecompressToTmp::class
         ],
         'delegators' => [
-            'Common\Filter\DecompressUploadToTmp' => ['Common\Filter\DecompressToTmpDelegatorFactory'],
-            'Common\Filter\DecompressToTmp' => ['Common\Filter\DecompressToTmpDelegatorFactory']
+            \Common\Filter\DecompressUploadToTmp::class => [\Common\Filter\DecompressToTmpDelegatorFactory::class],
+            \Common\Filter\DecompressToTmp::class => [\Common\Filter\DecompressToTmpDelegatorFactory::class]
         ],
         'aliases' => [
-            'DateSelectNullifier' => 'Common\Filter\DateSelectNullifier',
-            'DateTimeSelectNullifier' => 'Common\Filter\DateTimeSelectNullifier',
-            'DecompressUploadToTmp' => 'Common\Filter\DecompressUploadToTmp',
-            'DecompressToTmp' => 'Common\Filter\DecompressToTmp'
+            'DateSelectNullifier' => \Common\Filter\DateSelectNullifier::class,
+            'DateTimeSelectNullifier' => \Common\Filter\DateTimeSelectNullifier::class,
+            'DecompressUploadToTmp' => \Common\Filter\DecompressUploadToTmp::class,
+            'DecompressToTmp' => \Common\Filter\DecompressToTmp::class
         ]
     ],
     'data_services' => [
@@ -818,7 +818,7 @@ return [
     ],
     'rest_services' => [
         'abstract_factories' => [
-            'Common\Service\Api\AbstractFactory'
+            \Common\Service\Api\AbstractFactory::class
         ]
     ],
     'service_api_mapping' => [

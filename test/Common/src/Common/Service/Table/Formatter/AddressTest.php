@@ -52,38 +52,38 @@ class AddressTest extends \PHPUnit\Framework\TestCase
      */
     public function provider()
     {
-        return array(
-            array(
-                array('addressLine1' => 'foo'), array(), 'foo'
-            ),
-            array(
-                array('addressLine1' => 'foo', 'addressLine2' => 'bar'), array(), 'foo'
-            ),
-            array(
-                array('addressLine1' => 'foo', 'addressLine2' => 'bar', 'town' => 'cake'), array(), 'foo, cake'
-            ),
-            array(
-                array(
+        return [
+            [
+                ['addressLine1' => 'foo'], [], 'foo'
+            ],
+            [
+                ['addressLine1' => 'foo', 'addressLine2' => 'bar'], [], 'foo'
+            ],
+            [
+                ['addressLine1' => 'foo', 'addressLine2' => 'bar', 'town' => 'cake'], [], 'foo, cake'
+            ],
+            [
+                [
                     'addressLine1' => 'foo',
                     'addressLine2' => 'bar',
                     'addressLine3' => 'cake',
                     'town' => 'fourth'
-                ),
-                array(),
+                ],
+                [],
                 'foo, fourth'
-            ),
-            array(
-                array('addressLine1' => 'foo', 'addressLine2' => 'bar', 'addressLine3' => 'cake'),
-                array('addressFields' => array('addressLine1', 'addressLine2')),
+            ],
+            [
+                ['addressLine1' => 'foo', 'addressLine2' => 'bar', 'addressLine3' => 'cake'],
+                ['addressFields' => ['addressLine1', 'addressLine2']],
                 'foo, bar'
-            ),
-            array(
-                array('addressLine1' => 'foo', 'addressLine2' => 'bar', 'addressLine3' => 'cake'),
-                array('addressFields' => 'FULL'),
+            ],
+            [
+                ['addressLine1' => 'foo', 'addressLine2' => 'bar', 'addressLine3' => 'cake'],
+                ['addressFields' => 'FULL'],
                 'foo, bar, cake'
-            ),
-            "BRIEF with postCode" => array(
-                array(
+            ],
+            "BRIEF with postCode" => [
+                [
                     'addressLine1' => 'foo',
                     'addressLine2' => 'bar',
                     'addressLine3' => 'cake',
@@ -91,12 +91,12 @@ class AddressTest extends \PHPUnit\Framework\TestCase
                     'town' => 'spam',
                     'postcode' => 'eggs',
                     'countryCode' => 'ham',
-                ),
-                array('addressFields' => 'BRIEF'),
+                ],
+                ['addressFields' => 'BRIEF'],
                 'foo, spam, eggs'
-            ),
-            "BRIEF with blank postCode" => array(
-                array(
+            ],
+            "BRIEF with blank postCode" => [
+                [
                     'addressLine1' => 'foo',
                     'addressLine2' => 'bar',
                     'addressLine3' => 'cake',
@@ -104,37 +104,37 @@ class AddressTest extends \PHPUnit\Framework\TestCase
                     'town' => 'spam',
                     'postcode' => '',
                     'countryCode' => 'ham',
-                ),
-                array('addressFields' => 'BRIEF'),
+                ],
+                ['addressFields' => 'BRIEF'],
                 'foo, spam'
-            ),
-            "BRIEF without postCode" => array(
-                array(
+            ],
+            "BRIEF without postCode" => [
+                [
                     'addressLine1' => 'foo',
                     'addressLine2' => 'bar',
                     'addressLine3' => 'cake',
                     'addressLine4' => 'baz',
                     'town' => 'spam',
                     'countryCode' => 'ham',
-                ),
-                array('addressFields' => 'BRIEF'),
+                ],
+                ['addressFields' => 'BRIEF'],
                 'foo, spam'
-            ),
-            array(
-                array(
-                    'address' => array(
+            ],
+            [
+                [
+                    'address' => [
                         'addressLine1' => 'foo',
                         'addressLine2' => 'bar',
                         'addressLine3' => 'cake',
                         'town' => 'fourth'
-                    )
-                ),
-                array(
+                    ]
+                ],
+                [
                     'name' => 'address'
-                ),
+                ],
                 'foo, fourth'
-            )
-        );
+            ]
+        ];
     }
 
     /**

@@ -46,7 +46,7 @@ class TaskIdentifierTest extends \PHPUnit\Framework\TestCase
         $routeName,
         $param,
         $expected,
-        $routeParams = array()
+        $routeParams = []
     ) {
         $routeParams = array_merge($routeParams, [$param => $data['linkId']]);
 
@@ -66,284 +66,284 @@ class TaskIdentifierTest extends \PHPUnit\Framework\TestCase
      */
     public function provider()
     {
-        return array(
+        return [
             // Licence
-            0 => array(
-                array(
+            0 => [
+                [
                     'linkDisplay' => 'Unlinked',
                     'linkType' => 'Licence',
                     'linkId' => null
-                ),
-                array(),
+                ],
+                [],
                 'lva-licence/overview',
                 'licence',
                 'Unlinked'
-            ),
-            1 => array(
-                array(
+            ],
+            1 => [
+                [
                     'linkDisplay' => 'P1234',
                     'linkType' => 'Licence',
                     'linkId' => 1,
-                ),
-                array(),
+                ],
+                [],
                 'lva-licence/overview',
                 'licence',
                 '<a class="govuk-link" href="correctUrl">P1234</a>'
-            ),
-            3 => array(
-                array(
+            ],
+            3 => [
+                [
                     'linkDisplay' => 'P1234',
                     'linkType' => 'Licence',
                     'linkId' => 1,
-                ),
-                array(),
+                ],
+                [],
                 'lva-licence/overview',
                 'licence',
                 '<a class="govuk-link" href="correctUrl">P1234</a>'
-            ),
-            4 => array(
-                array(
+            ],
+            4 => [
+                [
                     'linkDisplay' => 'P1234',
                     'linkType' => '',
                     'linkId' => 1,
-                ),
-                array(),
+                ],
+                [],
                 'lva-licence/overview',
                 'licence',
                 '<a class="govuk-link" href="#">P1234</a>'
-            ),
+            ],
             // Application
-            5 => array(
-                array(
+            5 => [
+                [
                     'linkDisplay' => 'Unlinked',
                     'linkType' => 'Application',
                     'linkId' => null
-                ),
-                array(),
+                ],
+                [],
                 'lva-application/overview',
                 'application',
                 'Unlinked'
-            ),
-            6 => array(
-                array(
+            ],
+            6 => [
+                [
                     'linkDisplay' => 'P1234',
                     'linkType' => 'Application',
                     'linkId' => 1,
-                ),
-                array(),
+                ],
+                [],
                 'lva-application/overview',
                 'application',
                 '<a class="govuk-link" href="correctUrl">P1234</a>'
-            ),
-            7 => array(
-                array(
+            ],
+            7 => [
+                [
                     'linkDisplay' => 'P1234',
                     'linkType' => '',
                     'linkId' => 1,
-                ),
-                array(),
+                ],
+                [],
                 'lva-application/overview',
                 'application',
                 '<a class="govuk-link" href="#">P1234</a>'
-            ),
+            ],
             // Transport Manager
-            8 => array(
-                array(
+            8 => [
+                [
                     'linkDisplay' => 'Unlinked',
                     'linkType' => 'Transport Manager',
                     'linkId' => null,
-                ),
-                array(),
+                ],
+                [],
                 'lva-application/overview',
                 'application',
                 'Unlinked'
-            ),
-            9 => array(
-                array(
+            ],
+            9 => [
+                [
                     'linkDisplay' => '1234',
                     'linkType' => 'Transport Manager',
                     'linkId' => 1,
-                ),
-                array(),
+                ],
+                [],
                 'transport-manager/details',
                 'transportManager',
                 '<a class="govuk-link" href="correctUrl">1234</a>'
-            ),
-            10 => array(
-                array(
+            ],
+            10 => [
+                [
                     'linkDisplay' => '1234',
                     'linkType' => '',
                     'linkId' => 1,
-                ),
-                array(),
+                ],
+                [],
                 'transport-manager/details',
                 'transportManager',
                 '<a class="govuk-link" href="#">1234</a>'
-            ),
+            ],
             // Bus Registration
-            11 => array(
-                array(
+            11 => [
+                [
                     'linkDisplay' => 'Unlinked',
                     'linkType' => 'Bus Registration',
                     'linkId' => null,
-                ),
-                array(),
+                ],
+                [],
                 'licence/bus-details',
                 'busRegId',
                 'Unlinked'
-            ),
-            12 => array(
-                array(
+            ],
+            12 => [
+                [
                     'linkDisplay' => 'P1234/123',
                     'linkType' => 'Bus Registration',
                     'linkId' => 99,
                     'licenceId' => 110
-                ),
-                array(),
+                ],
+                [],
                 'licence/bus-details',
                 'busRegId',
                 '<a class="govuk-link" href="correctUrl">P1234/123</a>',
-                array('licence' => 110) // additional route param needed
-            ),
-            13 => array(
-                array(
+                ['licence' => 110] // additional route param needed
+            ],
+            13 => [
+                [
                     'linkDisplay' => 'P1234/123',
                     'linkType' => '',
                     'linkId' => 99,
                     'licenceId' => 110
-                ),
-                array(),
+                ],
+                [],
                 'licence/bus-details',
                 'busRegId',
                 '<a class="govuk-link" href="#">P1234/123</a>',
-                array('licence' => 110)
-            ),
+                ['licence' => 110]
+            ],
             // Case
-            14 => array(
-                array(
+            14 => [
+                [
                     'linkDisplay' => 'Unlinked',
                     'linkType' => 'Case',
                     'linkId' => null,
-                ),
-                array(),
+                ],
+                [],
                 'case',
                 'case',
                 'Unlinked'
-            ),
-            15 => array(
-                array(
+            ],
+            15 => [
+                [
                     'linkDisplay' => '1234',
                     'linkType' => 'Case',
                     'linkId' => 99,
-                ),
-                array(),
+                ],
+                [],
                 'case',
                 'case',
                 '<a class="govuk-link" href="correctUrl">1234</a>',
-            ),
-            16 => array(
-                array(
+            ],
+            16 => [
+                [
                     'linkDisplay' => '1234',
                     'linkType' => '',
                     'linkId' => 99,
-                ),
-                array(),
+                ],
+                [],
                 'case',
                 'case',
                 '<a class="govuk-link" href="#">1234</a>',
-            ),
+            ],
             // IRFO Organisation
-            17 => array(
-                array(
+            17 => [
+                [
                     'linkDisplay' => 'Unlinked',
                     'linkType' => 'IRFO Organisation',
                     'linkId' => null,
-                ),
-                array(),
+                ],
+                [],
                 'operator/business-details',
                 'organisation',
                 'Unlinked'
-            ),
-            18 => array(
-                array(
+            ],
+            18 => [
+                [
                     'linkDisplay' => '1234',
                     'linkType' => 'IRFO Organisation',
                     'linkId' => 99,
-                ),
-                array(),
+                ],
+                [],
                 'operator/business-details',
                 'organisation',
                 '<a class="govuk-link" href="correctUrl">1234</a>',
-            ),
-            19 => array(
-                array(
+            ],
+            19 => [
+                [
                     'linkDisplay' => '1234',
                     'linkType' => '',
                     'linkId' => 99,
-                ),
-                array(),
+                ],
+                [],
                 'operator/business-details',
                 'organisation',
                 '<a class="govuk-link" href="#">1234</a>',
-            ),
+            ],
             // Submission
-            20 => array(
-                array(
+            20 => [
+                [
                     'linkDisplay' => 'Unlinked',
                     'linkType' => 'Submission',
                     'linkId' => null,
                     'caseId' => 5
-                ),
-                array(),
+                ],
+                [],
                 'submission',
                 'submission',
                 'Unlinked',
-                array('case' => 5, 'action' => 'details')
-            ),
-            21 => array(
-                array(
+                ['case' => 5, 'action' => 'details']
+            ],
+            21 => [
+                [
                     'linkDisplay' => '1234/5',
                     'linkType' => 'Submission',
                     'linkId' => 99,
                     'caseId' => 5
-                ),
-                array(),
+                ],
+                [],
                 'submission',
                 'submission',
                 '<a class="govuk-link" href="correctUrl">1234/5</a>',
-                array('case' => 5, 'action' => 'details')
-            ),
-            22 => array(
-                array(
+                ['case' => 5, 'action' => 'details']
+            ],
+            22 => [
+                [
                     'linkDisplay' => '1234/5',
                     'linkType' => '',
                     'linkId' => 99,
                     'caseId' => 5
-                ),
-                array(),
+                ],
+                [],
                 'submission',
                 'submission',
                 '<a class="govuk-link" href="#">1234/5</a>',
-                array('case' => 5, 'action' => 'details')
-            ),
+                ['case' => 5, 'action' => 'details']
+            ],
             // Permits
-            23 => array(
-                array(
+            23 => [
+                [
                     'linkDisplay' => 'OG4569803/6',
                     'linkType' => 'Permit Application',
                     'linkId' => 6,
                     'licenceId' => 106,
-                ),
-                array(),
+                ],
+                [],
                 'licence/irhp-application/application',
                 'irhpAppId',
                 '<a class="govuk-link" href="correctUrl">OG4569803/6</a>',
-                array(
+                [
                     'irhpAppId' => 6,
                     'licence' => 106,
                     'action' => 'edit'
-                )
-            ),
-        );
+                ]
+            ],
+        ];
     }
 }

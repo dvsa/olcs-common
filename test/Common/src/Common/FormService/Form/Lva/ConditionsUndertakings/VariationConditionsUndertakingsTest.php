@@ -23,8 +23,8 @@ class VariationConditionsUndertakingsTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->formHelper = m::mock('\Common\Service\Helper\FormHelperService');
-        $this->fsm = m::mock('\Common\FormService\FormServiceManager')->makePartial();
+        $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);
+        $this->fsm = m::mock(\Common\FormService\FormServiceManager::class)->makePartial();
         $this->authService = m::mock(AuthorizationService::class);
 
         $this->sut = new Sut($this->formHelper, $this->authService);

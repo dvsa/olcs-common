@@ -27,7 +27,7 @@ class NoOfPermits extends LaminasElement implements InputProviderInterface
             'type' => \Laminas\InputFilter\Input::class,
             'name' => $this->getName(),
             'filters' => [
-                ['name' => 'Laminas\Filter\StringTrim']
+                ['name' => \Laminas\Filter\StringTrim::class]
             ],
             'required' => true,
             'validators' => [

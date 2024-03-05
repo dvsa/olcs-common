@@ -67,9 +67,9 @@ class AbstractVehiclesDeclarationsControllerTest extends AbstractLvaControllerTe
             ->with(
                 [
                     'version' => 1,
-                    'psvVehicleSize' => array(
+                    'psvVehicleSize' => [
                         'size' => 'PSV_SIZE',
-                    ),
+                    ],
                     'smallVehiclesIntention' => [
                         'psvOperateSmallVhl' => 'x',
                         'psvSmallVhlNotes' => '',

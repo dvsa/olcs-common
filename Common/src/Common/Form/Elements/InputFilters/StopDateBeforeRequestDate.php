@@ -17,10 +17,10 @@ class StopDateBeforeRequestDate extends DateRequired implements InputProviderInt
 
     public function getValidators()
     {
-        return array(
+        return [
             new \Common\Form\Elements\Validators\DateNotInFuture(),
             new \Common\Form\Elements\Validators\DateLessThanOrEqual('requestedDate'),
-            new DateValidator(array('format' => 'Y-m-d'))
-        );
+            new DateValidator(['format' => 'Y-m-d'])
+        ];
     }
 }

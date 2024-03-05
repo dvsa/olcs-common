@@ -6,13 +6,13 @@ use Laminas\Validator\AbstractValidator;
 
 class NoOfPermitsBothValidator extends AbstractValidator
 {
-    const PERMITS_REMAINING_THRESHOLD = 'permitsRemainingThreshold';
+    public const PERMITS_REMAINING_THRESHOLD = 'permitsRemainingThreshold';
 
-    const PERMITS_REMAINING_THRESHOLD_TEMPLATE = 'qanda.ecmt.number-of-permits.error.permits-remaining-exceeded.%s';
+    public const PERMITS_REMAINING_THRESHOLD_TEMPLATE = 'qanda.ecmt.number-of-permits.error.permits-remaining-exceeded.%s';
 
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         self::PERMITS_REMAINING_THRESHOLD => 'updatedAtRuntime'
-    );
+    ];
 
     protected $messageVariables = [
         'permitsRemaining' => 'permitsRemaining'

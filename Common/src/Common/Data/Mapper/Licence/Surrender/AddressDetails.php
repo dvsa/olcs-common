@@ -6,10 +6,10 @@ use Common\Data\Mapper\MapperInterface;
 
 class AddressDetails implements MapperInterface
 {
-    private static $typeMap = array(
+    private static $typeMap = [
         'phone_t_primary' => 'phone_primary',
         'phone_t_secondary' => 'phone_secondary',
-    );
+    ];
 
     /**
      * Prepare api data for form

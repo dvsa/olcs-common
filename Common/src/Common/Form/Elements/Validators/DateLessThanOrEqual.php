@@ -14,24 +14,24 @@ class DateLessThanOrEqual extends AbstractValidator
      * Error codes
      * @const string
      */
-    const NOT_LESS_THAN_OR_EQUAL = 'notLessThanOrEqual';
-    const MISSING_TOKEN = 'missingToken';
+    public const NOT_LESS_THAN_OR_EQUAL = 'notLessThanOrEqual';
+    public const MISSING_TOKEN = 'missingToken';
 
     /**
      * Error messages
      * @var array
      */
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         self::NOT_LESS_THAN_OR_EQUAL => "This is after a corresponding date, it must be the same date or before",
         self::MISSING_TOKEN => 'No token was provided to match against',
-    );
+    ];
 
     /**
      * @var array
      */
-    protected $messageVariables = array(
+    protected $messageVariables = [
         'token' => 'tokenString'
-    );
+    ];
 
     /**
      * Original token against which to validate

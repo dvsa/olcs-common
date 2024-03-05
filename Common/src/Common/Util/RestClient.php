@@ -114,7 +114,7 @@ class RestClient
      */
     public function url($path = null)
     {
-        list($path) = $this->pathOrParams($path);
+        [$path] = $this->pathOrParams($path);
         return $this->url->toString() . $path;
     }
 
@@ -128,7 +128,7 @@ class RestClient
      * @return mixed       Returns the body of a successful request or false if not found
      * @throws Exception   Whenever the request fails
      */
-    public function create($path = null, array $params = array())
+    public function create($path = null, array $params = [])
     {
         return $this->post($path, $params);
     }
@@ -141,9 +141,9 @@ class RestClient
      * @return mixed       Returns the body of a successful request or false if not found
      * @throws Exception   Whenever the request fails
      */
-    public function post($path = null, array $params = array())
+    public function post($path = null, array $params = [])
     {
-        list($path, $params) = $this->pathOrParams($path, $params);
+        [$path, $params] = $this->pathOrParams($path, $params);
         return $this->request('POST', $path, $params);
     }
 
@@ -154,7 +154,7 @@ class RestClient
      * @param array        $params The parameters of the request
      * @return mixed       Returns the body of a successful request or false if not found
      */
-    public function read($path = null, array $params = array())
+    public function read($path = null, array $params = [])
     {
         return $this->get($path, $params);
     }
@@ -167,9 +167,9 @@ class RestClient
      * @return mixed       Returns the body of a successful request or false if not found
      * @throws Exception   Whenever the request fails
      */
-    public function get($path = null, array $params = array())
+    public function get($path = null, array $params = [])
     {
-        list($path, $params) = $this->pathOrParams($path, $params);
+        [$path, $params] = $this->pathOrParams($path, $params);
         return $this->request('GET', $path, $params);
     }
 
@@ -180,7 +180,7 @@ class RestClient
      * @param array        $params The parameters of the request
      * @return mixed       Returns the body of a successful request or false if not found
      */
-    public function update($path = null, array $params = array())
+    public function update($path = null, array $params = [])
     {
         return $this->put($path, $params);
     }
@@ -195,9 +195,9 @@ class RestClient
      * @return mixed       Returns the body of a successful request or false if not found
      * @throws Exception   Whenever the request fails
      */
-    public function put($path = null, array $params = array())
+    public function put($path = null, array $params = [])
     {
-        list($path, $params) = $this->pathOrParams($path, $params);
+        [$path, $params] = $this->pathOrParams($path, $params);
         return $this->request('PUT', $path, $params);
     }
 
@@ -211,9 +211,9 @@ class RestClient
      * @return mixed       Returns the body of a successful request or false if not found
      * @throws Exception   Whenever the request fails
      */
-    public function patch($path = null, array $params = array())
+    public function patch($path = null, array $params = [])
     {
-        list($path, $params) = $this->pathOrParams($path, $params);
+        [$path, $params] = $this->pathOrParams($path, $params);
         return $this->request('PATCH', $path, $params);
     }
 
@@ -224,9 +224,9 @@ class RestClient
      * @param array        $params The parameters of the request
      * @return mixed       Returns the body of a successful request or false if not found
      */
-    public function delete($path = null, array $params = array())
+    public function delete($path = null, array $params = [])
     {
-        list($path, $params) = $this->pathOrParams($path, $params);
+        [$path, $params] = $this->pathOrParams($path, $params);
         return $this->request('DELETE', $path, $params);
     }
 
@@ -239,7 +239,7 @@ class RestClient
      * @return mixed          Returns the body of a successful request or false if not found
      * @throws Exception      Whenever the request fails
      */
-    public function request($method, $path, array $params = array())
+    public function request($method, $path, array $params = [])
     {
         $this->prepareRequest($method, $path, $params);
 
@@ -271,7 +271,7 @@ class RestClient
      *
      * @see RestClient::request()
      */
-    public function prepareRequest($method, $path, array $params = array())
+    public function prepareRequest($method, $path, array $params = [])
     {
         $method = strtoupper($method);
 

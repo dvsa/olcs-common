@@ -35,7 +35,7 @@ class ContentHelperTest extends TestCase
     {
         $translatorMock = $this->createMock(\Laminas\Mvc\I18n\Translator::class);
 
-        $mock = $this->createPartialMock(ContentHelper::class, array('getTranslator'));
+        $mock = $this->createPartialMock(ContentHelper::class, ['getTranslator']);
 
         $mock->expects($this->once())
             ->method('getTranslator')
@@ -90,11 +90,11 @@ class ContentHelperTest extends TestCase
      */
     public function attributesProvider()
     {
-        return array(
-            array(array('name' => 'bob', 'id' => 123, 'type' => 'test'), 'name="bob" id="123" type="test"'),
-            array(array('name' => null, 'id' => 123, 'type' => 'test'), 'name="" id="123" type="test"'),
-            array(array(), '')
-        );
+        return [
+            [['name' => 'bob', 'id' => 123, 'type' => 'test'], 'name="bob" id="123" type="test"'],
+            [['name' => null, 'id' => 123, 'type' => 'test'], 'name="" id="123" type="test"'],
+            [[], '']
+        ];
     }
 
     /**
@@ -114,12 +114,12 @@ class ContentHelperTest extends TestCase
      */
     public function replaceContentProvider()
     {
-        return array(
-            array('<p>No Variables</p>', array(), '<p>No Variables</p>'),
-            array('<p>Foo {{bar}}</p>', array('bar' => 'BOB'), '<p>Foo BOB</p>'),
-            array('<p>Foo {{bar}} {{cake}}</p>', array('bar' => 'BOB'), '<p>Foo BOB </p>'),
-            array('{{[paragraph]}}', array('content' => 'FOO'), '<p>FOO</p>'),
-            array('{{[paragraph]}}{{[paragraph]}}', array('content' => 'FOO'), '<p>FOO</p><p>FOO</p>')
-        );
+        return [
+            ['<p>No Variables</p>', [], '<p>No Variables</p>'],
+            ['<p>Foo {{bar}}</p>', ['bar' => 'BOB'], '<p>Foo BOB</p>'],
+            ['<p>Foo {{bar}} {{cake}}</p>', ['bar' => 'BOB'], '<p>Foo BOB </p>'],
+            ['{{[paragraph]}}', ['content' => 'FOO'], '<p>FOO</p>'],
+            ['{{[paragraph]}}{{[paragraph]}}', ['content' => 'FOO'], '<p>FOO</p><p>FOO</p>']
+        ];
     }
 }

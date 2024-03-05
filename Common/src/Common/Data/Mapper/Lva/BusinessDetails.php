@@ -24,21 +24,21 @@ class BusinessDetails implements MapperInterface
             $tradingNames[]['name'] = $tradingName['name'];
         }
 
-        return array(
+        return [
             'version' => $data['version'],
-            'data' => array(
-                'companyNumber' => array(
+            'data' => [
+                'companyNumber' => [
                     'company_number' => $data['companyOrLlpNo']
-                ),
+                ],
                 'tradingNames' => $tradingNames,
                 'name' => $data['name'],
                 'type' => $data['type']['id'],
                 'natureOfBusiness' => $data['natureOfBusiness']
-            ),
+            ],
             'registeredAddress' => $data['contactDetails']['address'],
             'allow-email' => [
                 'allowEmail' => $data['allowEmail']
             ]
-        );
+        ];
     }
 }

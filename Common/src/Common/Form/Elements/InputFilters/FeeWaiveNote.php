@@ -23,11 +23,11 @@ class FeeWaiveNote extends TexareatMax255Min5 implements InputProviderInterface
             'name' => $this->getName(),
             'required' => true,
             'filters' => [
-                ['name' => 'Laminas\Filter\StringTrim'],
+                ['name' => \Laminas\Filter\StringTrim::class],
             ],
             'validators' => [
                 [
-                    'name' => '\Laminas\Validator\StringLength',
+                    'name' => \Laminas\Validator\StringLength::class,
                     'options'=> [
                         'min' => 5,
                         'max' => 255,
@@ -38,7 +38,7 @@ class FeeWaiveNote extends TexareatMax255Min5 implements InputProviderInterface
                     ]
                 ],
                 [
-                    'name' => '\Laminas\Validator\NotEmpty',
+                    'name' => \Laminas\Validator\NotEmpty::class,
                     'options'=> [
                         'type' => \Laminas\Validator\NotEmpty::NULL
                     ]

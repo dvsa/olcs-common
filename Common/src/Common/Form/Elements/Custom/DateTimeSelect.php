@@ -49,13 +49,13 @@ class DateTimeSelect extends LaminasElement\DateTimeSelect
             $this->setMaxYear($maxYear);
         }
 
-        return array(
+        return [
             'name' => $this->getName(),
             'required' => $this->getOption('required'),
-            'filters' => array(
-                array(
+            'filters' => [
+                [
                     'name'    => 'Callback',
-                    'options' => array(
+                    'options' => [
                         'callback' => function ($date) {
                             // Convert the date to a specific format
                             if (is_array($date)) {
@@ -75,13 +75,13 @@ class DateTimeSelect extends LaminasElement\DateTimeSelect
 
                             return $date;
                         }
-                    )
-                )
-            ),
-            'validators' => array(
+                    ]
+                ]
+            ],
+            'validators' => [
                 $this->getValidator(),
-            )
-        );
+            ]
+        ];
     }
 
     /**

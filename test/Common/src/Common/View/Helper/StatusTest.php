@@ -26,7 +26,7 @@ class StatusTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
     {
         $this->sut = new Status();
 
-        $this->mockView = \Mockery::mock('Laminas\View\Renderer\PhpRenderer');
+        $this->mockView = \Mockery::mock(\Laminas\View\Renderer\PhpRenderer::class);
         $this->sut->setView($this->mockView);
     }
 

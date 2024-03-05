@@ -3,55 +3,53 @@
 use Common\Service\Table\Formatter\TransportManagerDateOfBirth;
 use Common\Service\Table\Formatter\TransportManagerName;
 
-return array(
-    'variables' => array(
+return [
+    'variables' => [
         'title' => '',
         'within_form' => true,
-    ),
-    'settings' => array(
-        'crud' => array(
-            'actions' => array(
-                'add' => array(),
-                'delete' => array(
+    ],
+    'settings' => [
+        'crud' => [
+            'actions' => [
+                'add' => [],
+                'delete' => [
                     'label' => 'action_links.remove',
                     'requireRows' => true
-                ),
-                'restore' => array(
+                ],
+                'restore' => [
                     'requireRows' => true
-                ),
-            )
-        ),
-        'row-disabled-callback' => function ($row) {
-            return isset($row['action']) && in_array($row['action'], ['D', 'C']);
-        }
-    ),
-    'attributes' => array(
-    ),
-    'columns' => array(
-        array(
+                ],
+            ]
+        ],
+        'row-disabled-callback' => fn($row) => isset($row['action']) && in_array($row['action'], ['D', 'C'])
+    ],
+    'attributes' => [
+    ],
+    'columns' => [
+        [
             'title' => 'Name',
             'formatter' => TransportManagerName::class,
             'internal' => true,
             'lva' => 'variation'
-        ),
-        array(
+        ],
+        [
             'title' => 'Email',
             'name' => 'email'
-        ),
-        array(
+        ],
+        [
             'title' => 'DOB',
             'name' => 'dob',
             'formatter' => TransportManagerDateOfBirth::class,
             'internal' => true,
             'lva' => 'variation'
-        ),
-        array(
+        ],
+        [
             'name' => 'select',
             'width' => 'checkbox',
             'type' => 'Checkbox',
-            'data-attributes' => array(
+            'data-attributes' => [
                 'action'
-            )
-        )
-    )
-);
+            ]
+        ]
+    ]
+];

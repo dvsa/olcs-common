@@ -28,7 +28,7 @@ class Form extends \Laminas\Form\View\Helper\Form
             $form->prepare();
         }
 
-        $fieldsets = $elements = array();
+        $fieldsets = $elements = [];
         $hiddenSubmitElement = '';
 
         /** @var \Laminas\View\Renderer\PhpRenderer $view */

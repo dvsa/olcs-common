@@ -111,7 +111,7 @@ class QueryServiceTest extends MockeryTestCase
             ->once()
             ->andThrow(new \Laminas\Router\Exception\RuntimeException('unit_ExcMsg'));
 
-        $this->expectException(Exception::class, 'unit_ExcMsg', HttpResponse::STATUS_CODE_404);
+        $this->expectException(Exception::class);
         $this->sut->send($this->mockQueryCntr);
     }
 
@@ -133,7 +133,7 @@ class QueryServiceTest extends MockeryTestCase
             ->once()
             ->andThrow(new \Laminas\Http\Client\Exception\RuntimeException('unit_ExcMsg'));
 
-        $this->expectException(Exception::class, 'unit_ExcMsg', HttpResponse::STATUS_CODE_500);
+        $this->expectException(Exception::class);
         $this->sut->send($this->mockQueryCntr);
     }
 
@@ -240,7 +240,7 @@ class QueryServiceTest extends MockeryTestCase
             ->shouldReceive('setStream')->once()->with('unit_IsStream')
             ->shouldReceive('send')->once()->with($this->mockRequest)->andReturn($mockResp);
 
-        $this->expectException(Exception\NotFoundException::class, 'API responded with a 404 Not Found : '. $uri);
+        $this->expectException(Exception\NotFoundException::class);
         $this->sut->send($this->mockQueryCntr);
     }
 
@@ -280,7 +280,7 @@ class QueryServiceTest extends MockeryTestCase
             ->shouldReceive('setStream')->once()->with('unit_IsStream')
             ->shouldReceive('send')->once()->with($this->mockRequest)->andReturn($mockResp);
 
-        $this->expectException(Exception\AccessDeniedException::class, 'BODY : '. $uri);
+        $this->expectException(Exception\AccessDeniedException::class);
         $this->sut->send($this->mockQueryCntr);
     }
 
@@ -320,7 +320,7 @@ class QueryServiceTest extends MockeryTestCase
             ->shouldReceive('setStream')->once()->with('unit_IsStream')
             ->shouldReceive('send')->once()->with($this->mockRequest)->andReturn($mockResp);
 
-        $this->expectException(Exception::class, 'BODY : '. $uri);
+        $this->expectException(Exception::class);
         $this->sut->send($this->mockQueryCntr);
     }
 

@@ -185,9 +185,7 @@ class LicenceChecklist
         }
         usort(
             $people,
-            function ($a, $b) {
-                return strcmp($a['name'], $b['name']);
-            }
+            fn($a, $b) => strcmp($a['name'], $b['name'])
         );
         return [
             'persons' => $people,
@@ -230,9 +228,7 @@ class LicenceChecklist
         }
         usort(
             $peopleDetails,
-            function ($a, $b) {
-                return strcmp($a[0]['value'], $b[0]['value']);
-            }
+            fn($a, $b) => strcmp($a[0]['value'], $b[0]['value'])
         );
 
         return [
@@ -262,9 +258,7 @@ class LicenceChecklist
         }
         usort(
             $vehicles,
-            function ($a, $b) {
-                return strcmp($a['vrm'], $b['vrm']);
-            }
+            fn($a, $b) => strcmp($a['vrm'], $b['vrm'])
         );
 
         return [
@@ -308,9 +302,7 @@ class LicenceChecklist
         }
         usort(
             $vehicles,
-            function ($a, $b) {
-                return strcmp($a[0]['value'], $b[0]['value']);
-            }
+            fn($a, $b) => strcmp($a[0]['value'], $b[0]['value'])
         );
         return [
             'vehicles' => array_merge($header, $vehicles),
@@ -355,9 +347,7 @@ class LicenceChecklist
 
         usort(
             $userData,
-            function ($a, $b) {
-                return strcmp($a[0]['value'], $b[0]['value']);
-            }
+            fn($a, $b) => strcmp($a[0]['value'], $b[0]['value'])
         );
         return [
             'users' => array_merge([$header], $userData),
@@ -393,9 +383,7 @@ class LicenceChecklist
         }
         usort(
             $operatingCentres,
-            function ($a, $b) {
-                return strcmp($a['name'], $b['name']);
-            }
+            fn($a, $b) => strcmp($a['name'], $b['name'])
         );
         $result = [
             'ocVehiclesColumnHeader' => $ocVehiclesColumnHeader,
@@ -471,9 +459,7 @@ class LicenceChecklist
         }
         usort(
             $operatingCentres,
-            function ($a, $b) {
-                return strcmp($a[0]['value'], $b[0]['value']);
-            }
+            fn($a, $b) => strcmp($a[0]['value'], $b[0]['value'])
         );
         return [
             'operatingCentres' => array_merge($header, $operatingCentres),
@@ -500,7 +486,7 @@ class LicenceChecklist
                     implode(
                         ' ',
                         [
-                            isset($person['title']['description']) ? $person['title']['description'] : '',
+                            $person['title']['description'] ?? '',
                             $person['forename'],
                             $person['familyName']
                         ]
@@ -511,9 +497,7 @@ class LicenceChecklist
         }
         usort(
             $transportManagers,
-            function ($a, $b) {
-                return strcmp($a['name'], $b['name']);
-            }
+            fn($a, $b) => strcmp($a['name'], $b['name'])
         );
         return [
             'transportManagers' => $transportManagers,
@@ -547,7 +531,7 @@ class LicenceChecklist
                         implode(
                             ' ',
                             [
-                                isset($person['title']['description']) ? $person['title']['description'] : '',
+                                $person['title']['description'] ?? '',
                                 $person['forename'],
                                 $person['familyName']
                             ]
@@ -559,9 +543,7 @@ class LicenceChecklist
         }
         usort(
             $transportManagers,
-            function ($a, $b) {
-                return strcmp($a[0]['value'], $b[0]['value']);
-            }
+            fn($a, $b) => strcmp($a[0]['value'], $b[0]['value'])
         );
         return [
             'transportManagers' => array_merge($header, $transportManagers),
@@ -598,9 +580,7 @@ class LicenceChecklist
         }
         usort(
             $safetyInspectors,
-            function ($a, $b) {
-                return strcmp($a['name'], $b['name']);
-            }
+            fn($a, $b) => strcmp($a['name'], $b['name'])
         );
 
         $safetyInsVehicles = null;
@@ -682,9 +662,7 @@ class LicenceChecklist
         }
         usort(
             $safetyInspectors,
-            function ($a, $b) {
-                return strcmp($a[0]['value'], $b[0]['value']);
-            }
+            fn($a, $b) => strcmp($a[0]['value'], $b[0]['value'])
         );
         return [
             'safetyInspectors' => array_merge($header, $safetyInspectors),
@@ -719,9 +697,7 @@ class LicenceChecklist
                 $user['permission'] = implode(
                     ',',
                     array_map(
-                        function ($role) use ($translator) {
-                            return $translator->translate('role.'.$role['role']);
-                        },
+                        fn($role) => $translator->translate('role.'.$role['role']),
                         $userData['roles']
                     )
                 );
@@ -732,9 +708,7 @@ class LicenceChecklist
 
         usort(
             $users,
-            function ($a, $b) {
-                return strcmp($a['name'], $b['name']);
-            }
+            fn($a, $b) => strcmp($a['name'], $b['name'])
         );
 
         return [

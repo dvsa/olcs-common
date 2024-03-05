@@ -17,7 +17,7 @@ trait CrudActionTrait
      *
      * @return array
      */
-    protected function getCrudAction(array $formTables = array())
+    protected function getCrudAction(array $formTables = [])
     {
         foreach ($formTables as $table) {
             if (isset($table['action'])) {
@@ -66,7 +66,7 @@ trait CrudActionTrait
             $data['id'] = array_keys($data['action'][$action])[0];
         }
 
-        $routeParams = array('action' => isset($data['routeAction']) ? $data['routeAction'] : $action);
+        $routeParams = ['action' => $data['routeAction'] ?? $action];
 
         if (!in_array($action, $rowsNotRequired, true)) {
             if (!isset($data['id'])) {

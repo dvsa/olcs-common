@@ -22,7 +22,7 @@ trait MockDateTrait
     protected function mockDate($date)
     {
 
-        $mockDateHelper = m::mock('Common\Service\Helper\DateHelperService')->makePartial();
+        $mockDateHelper = m::mock(\Common\Service\Helper\DateHelperService::class)->makePartial();
 
         $mockDateHelper->shouldReceive('getDate')->andReturn($date);
 

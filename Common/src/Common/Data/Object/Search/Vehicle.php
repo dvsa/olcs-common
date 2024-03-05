@@ -56,20 +56,20 @@ class Vehicle extends InternalSearchAbstract
         return array_merge(
             $settings,
             [
-                'crud' => array(
-                    'actions' => array(
-                        'vehicleSet26' => array(
+                'crud' => [
+                    'actions' => [
+                        'vehicleSet26' => [
                             'class' => 'govuk-button govuk-button--secondary js-require--multiple',
                             'requireRows' => true,
                             'label' => 'Set Sec26',
-                        ),
-                        'vehicleRemove26' => array(
+                        ],
+                        'vehicleRemove26' => [
                             'class' => 'govuk-button govuk-button--secondary js-require--multiple',
                             'requireRows' => true,
                             'label' => 'Remove section 26'
-                        ),
-                    )
-                ),
+                        ],
+                    ]
+                ],
             ]
         );
     }
@@ -83,9 +83,7 @@ class Vehicle extends InternalSearchAbstract
             [
                 'title' => 'Licence number',
                 'name' => 'licNo',
-                'formatter' => function ($data) {
-                    return '<a class="govuk-link" href="/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>';
-                }
+                'formatter' => fn($data) => '<a class="govuk-link" href="/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>'
             ],
             ['title' => 'Licence status', 'name' => 'licStatusDesc'],
             [

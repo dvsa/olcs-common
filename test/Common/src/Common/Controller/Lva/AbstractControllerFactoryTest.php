@@ -38,13 +38,13 @@ class AbstractControllerFactoryTest extends MockeryTestCase
         $name = 'bar';
         $requestedName = 'foo';
 
-        $config = array(
-            'controllers' => array(
-                'lva_controllers' => array(
+        $config = [
+            'controllers' => [
+                'lva_controllers' => [
                     'foo' => 'bar'
-                )
-            )
-        );
+                ]
+            ]
+        ];
 
         $this->mockSm->shouldReceive('get')->with('Config')->andReturn($config);
 
@@ -59,13 +59,13 @@ class AbstractControllerFactoryTest extends MockeryTestCase
         $name = 'foo';
         $requestedName = 'bar';
 
-        $config = array(
-            'controllers' => array(
-                'lva_controllers' => array(
+        $config = [
+            'controllers' => [
+                'lva_controllers' => [
                     'blap' => 'bar'
-                )
-            )
-        );
+                ]
+            ]
+        ];
 
         $this->mockSm->shouldReceive('get')->with('Config')->andReturn($config);
 
@@ -80,13 +80,13 @@ class AbstractControllerFactoryTest extends MockeryTestCase
         $name = 'bar';
         $requestedName = 'foo';
 
-        $config = array(
-            'controllers' => array(
-                'lva_controllers' => array(
+        $config = [
+            'controllers' => [
+                'lva_controllers' => [
                     'foo' => '\stdClass'
-                )
-            )
-        );
+                ]
+            ]
+        ];
 
         $this->mockSm->shouldReceive('get')->with('Config')->andReturn($config);
 

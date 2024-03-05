@@ -13,7 +13,7 @@ use Laminas\Form\Element as LaminasElement;
  */
 class FormRowTest extends MockeryTestCase
 {
-    const STANDARD_RENDER_RESULT = 'STANDARD-RENDER-RESULT';
+    public const STANDARD_RENDER_RESULT = 'STANDARD-RENDER-RESULT';
 
     protected function tearDown(): void
     {
@@ -30,16 +30,12 @@ class FormRowTest extends MockeryTestCase
         $mockHtmlHelper
             ->shouldReceive('__invoke')
             ->andReturnUsing(
-                function ($v) {
-                    return ($v === null ? $v : '@' . $v . '@');
-                }
+                fn($v) => $v === null ? $v : '@' . $v . '@'
             );
 
         $mockElementHelper = m::mock(\Common\Form\View\Helper\Readonly\FormItem::class);
         $mockElementHelper->shouldReceive('__invoke')->andReturnUsing(
-            function ($v) {
-                return $v->getValue();
-            }
+            fn($v) => $v->getValue()
         );
 
         $mockTableHelper = m::mock(\Common\Form\View\Helper\Readonly\FormTable::class);
@@ -49,15 +45,13 @@ class FormRowTest extends MockeryTestCase
         $mockTranslater
             ->shouldReceive('translate')
             ->andReturnUsing(
-                function ($v) {
-                    return '_' . $v . '_';
-                }
+                fn($v) => '_' . $v . '_'
             );
 
         $mockFormElm = m::mock(\Laminas\Form\ElementInterface::class);
         $mockFormElm->shouldReceive('render')->andReturn(self::STANDARD_RENDER_RESULT);
 
-        $mockView = m::mock('Laminas\View\Renderer\PhpRenderer');
+        $mockView = m::mock(\Laminas\View\Renderer\PhpRenderer::class);
         $mockView->shouldReceive('plugin')->with('FormElement')->andReturn($mockFormElm);
         $mockView->shouldReceive('plugin')->with('escapehtml')->andReturn($mockHtmlHelper);
         $mockView->shouldReceive('plugin')->with('readonlyformitem')->andReturn($mockElementHelper);
@@ -69,7 +63,7 @@ class FormRowTest extends MockeryTestCase
         $sut->setView($mockView);
         $sut->setTranslator($mockTranslater);
 
-        $expected = (($expected !== null) ? $expected : $sut);
+        $expected ??= $sut;
         $this->assertEquals($expected, $sut($element));
     }
 

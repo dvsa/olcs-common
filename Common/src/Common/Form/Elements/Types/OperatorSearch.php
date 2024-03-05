@@ -25,67 +25,67 @@ class OperatorSearch extends Fieldset
      * @param string $name
      * @param array $options
      */
-    public function __construct($name = null, $options = array())
+    public function __construct($name = null, $options = [])
     {
         parent::__construct($name, $options);
 
         $operatorSearch = new Text('operatorSearch');
         $operatorSearch->setAttributes(
-            array(
+            [
                 'class' => 'short',
                 'data-container-class' => 'inline'
-            )
+            ]
         );
 
         $this->add($operatorSearch);
 
-        $searchButton = new Button('search', array('label' => 'Find operator'));
+        $searchButton = new Button('search', ['label' => 'Find operator']);
         $searchButton->setAttributes(
-            array(
+            [
                 'type' => 'submit',
                 'class' => 'govuk-button govuk-button--secondary'
-            )
+            ]
         );
         $searchButton->setValue('search');
 
         $this->add($searchButton);
 
-        $selectList = new Select('entity-list', array('label' => '', 'empty_option' => 'Please select'));
+        $selectList = new Select('entity-list', ['label' => '', 'empty_option' => 'Please select']);
         $selectList->setAttributes(
-            array(
+            [
                 'data-container-class' => 'inline'
-            )
+            ]
         );
 
         $this->add($selectList);
 
-        $selectButton = new Button('select', array('label' => 'Select'));
+        $selectButton = new Button('select', ['label' => 'Select']);
         $selectButton->setAttributes(
-            array(
+            [
                 'type' => 'submit',
                 'class' => 'govuk-button'
-            )
+            ]
         );
         $selectButton->setValue('select');
 
         $this->add($selectButton);
 
-        $operatorName = new \Common\Form\Elements\InputFilters\Name('operatorName', array('label' => 'operator-name'));
+        $operatorName = new \Common\Form\Elements\InputFilters\Name('operatorName', ['label' => 'operator-name']);
         $operatorName->setAttributes(
-            array(
+            [
                 'id' => 'operatorName',
                 'class' => 'long',
                 'placeholder' => ''
-            )
+            ]
         );
         $this->add($operatorName);
 
-        $addNewButton = new Button('addNew', array('label' => 'Add new'));
+        $addNewButton = new Button('addNew', ['label' => 'Add new']);
         $addNewButton->setAttributes(
-            array(
+            [
                 'type' => 'submit',
                 'class' => 'govuk-button govuk-button--secondary'
-            )
+            ]
         );
         $addNewButton->setValue('addNew');
 

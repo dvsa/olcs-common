@@ -21,15 +21,15 @@ class Finances implements MapperInterface
         return [
             'finances' => [
                 'version' => $data['version'],
-                'averageBalance' => isset($data['averageBalanceAmount']) ? $data['averageBalanceAmount'] : '',
+                'averageBalance' => $data['averageBalanceAmount'] ?? '',
                 'overdraftFacility' => [
-                    'yesNo' => isset($data['hasOverdraft']) ? $data['hasOverdraft'] : '',
-                    'yesContent' => isset($data['overdraftAmount']) ? $data['overdraftAmount'] : '',
+                    'yesNo' => $data['hasOverdraft'] ?? '',
+                    'yesContent' => $data['overdraftAmount'] ?? '',
                 ],
                 'factoring' => [
-                    'yesNo' => isset($data['hasFactoring']) ? $data['hasFactoring'] : '',
+                    'yesNo' => $data['hasFactoring'] ?? '',
                     'yesContent' => [
-                        'amount' => isset($data['factoringAmount']) ? $data['factoringAmount'] : '',
+                        'amount' => $data['factoringAmount'] ?? '',
                     ]
                 ]
             ]

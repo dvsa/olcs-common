@@ -96,7 +96,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
         $this->alterFormForLva($form);
 
         if ($request->isPost()) {
-            $crudAction = $this->getCrudAction(array($data['table']));
+            $crudAction = $this->getCrudAction([$data['table']]);
 
             if ($crudAction !== null) {
                 if ($this->isInternalReadOnly()) {
@@ -248,13 +248,13 @@ abstract class AbstractTaxiPhvController extends AbstractController
         if ($this->tableData === null) {
             $data = $this->getPrivateHireLicences();
 
-            $newData = array();
+            $newData = [];
             foreach ($data as $row) {
-                $newRow = array(
+                $newRow = [
                     'id' => $row['id'],
                     'privateHireLicenceNo' => $row['privateHireLicenceNo'],
                     'councilName' => $row['contactDetails']['description']
-                );
+                ];
 
                 unset($row['contactDetails']['address']['id']);
                 unset($row['contactDetails']['address']['version']);
@@ -340,7 +340,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
         /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
-        $data = array();
+        $data = [];
 
         if ($request->isPost()) {
             $data = (array)$request->getPost();

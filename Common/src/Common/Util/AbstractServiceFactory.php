@@ -51,7 +51,7 @@ class AbstractServiceFactory implements AbstractFactoryInterface
         ];
 
         if (strstr($name, '\\')) {
-            list($type, $name) = explode('\\', $name, 2);
+            [$type, $name] = explode('\\', $name, 2);
 
             foreach ($namespaces as $namespace) {
                 $className = $namespace . $type . '\\' . $name . $type . 'Service';

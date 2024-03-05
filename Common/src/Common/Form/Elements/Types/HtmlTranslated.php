@@ -17,7 +17,7 @@ class HtmlTranslated extends Html
     /**
      * @var array
      */
-    protected $tokens = array();
+    protected $tokens = [];
 
     /**
      * Set the tokens to be translated

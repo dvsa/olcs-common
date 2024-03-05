@@ -17,28 +17,28 @@ class DateCompareWithInterval extends DateCompare
      * Error codes
      * @const string
      */
-    const INVALID_INTERVAL = 'invalidInterval';
+    public const INVALID_INTERVAL = 'invalidInterval';
 
     /**
      * Error messages
      * @var array
      */
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         self::NOT_GT => "This date must be %interval_label% after the '%compare_to_label%'",
         self::NOT_LT => "This date must be %interval_label% before '%compare_to_label%'",
         self::INVALID_OPERATOR => "Invalid operator",
         self::INVALID_INTERVAL => "Invalid interval",
         self::INVALID_FIELD => "Input field being compared to doesn't exist",
         self::NO_COMPARE => "Unable to compare with '%compare_to_label%'"
-    );
+    ];
 
     /**
      * @var array
      */
-    protected $messageVariables = array(
+    protected $messageVariables = [
         'compare_to_label' => 'compareToLabel',
         'interval_label' => 'intervalLabel'
-    );
+    ];
 
     /**
      * Label of interval field to use in error message
@@ -94,7 +94,7 @@ class DateCompareWithInterval extends DateCompare
      * @param  array $options
      * @return DateCompare
      */
-    public function setOptions($options = array())
+    public function setOptions($options = [])
     {
         if (isset($options['date_interval'])) {
             $this->setDateInterval($options['date_interval']);

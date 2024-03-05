@@ -4,47 +4,45 @@ use Common\Service\Table\Formatter\Name;
 use Common\Service\Table\Formatter\TransportManagerDateOfBirth;
 use Common\Service\Table\Formatter\TransportManagerName;
 
-return array(
-    'variables' => array(
+return [
+    'variables' => [
         'title' => 'list-of-transport-managers',
         'within_form' => true,
         'empty_message' => 'lva-transport-manager-table-empty-message'
-    ),
-    'settings' => array(
-        'crud' => array(
-            'actions' => array()
-        ),
-        'row-disabled-callback' => function ($row) {
-            return isset($row['action']) && in_array($row['action'], ['D', 'C']);
-        }
-    ),
-    'attributes' => array(
-    ),
-    'columns' => array(
-        array(
+    ],
+    'settings' => [
+        'crud' => [
+            'actions' => []
+        ],
+        'row-disabled-callback' => fn($row) => isset($row['action']) && in_array($row['action'], ['D', 'C'])
+    ],
+    'attributes' => [
+    ],
+    'columns' => [
+        [
             'title' => 'Name',
             'formatter' => TransportManagerName::class,
             'internal' => true,
             'lva' => 'variation'
-        ),
-        array(
+        ],
+        [
             'title' => 'Email',
             'name' => 'email'
-        ),
-        array(
+        ],
+        [
             'title' => 'DOB',
             'name' => 'dob',
             'formatter' => TransportManagerDateOfBirth::class,
             'internal' => true,
             'lva' => 'variation',
-        ),
-        array(
+        ],
+        [
             'title' => 'markup-table-th-remove-restore', //view partial from olcs-common
             'ariaDescription' => function ($row, $column) {
                 $column['formatter'] = Name::class;
                 return $this->callFormatter($column, $row['name']);
             },
             'type' => 'DeltaActionLinks',
-        ),
-    )
-);
+        ],
+    ]
+];

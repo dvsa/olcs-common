@@ -28,10 +28,10 @@ class WithdrawnDate extends LaminasDateSelect implements InputProviderInterface
         $specification = [
             'name' => $this->getName(),
             'continue_if_empty' => true,
-            'filters' => array(
-                array(
+            'filters' => [
+                [
                     'name'    => 'Callback',
-                    'options' => array(
+                    'options' => [
                         'callback' => function ($date) {
                             // Convert the date to a specific format
                             if (!is_array($date) || empty($date['year']) ||
@@ -41,9 +41,9 @@ class WithdrawnDate extends LaminasDateSelect implements InputProviderInterface
 
                             return $date['year'] . '-' . $date['month'] . '-' . $date['day'];
                         }
-                    )
-                )
-            ),
+                    ]
+                ]
+            ],
             'validators' => $this->getValidators()
         ];
 
@@ -52,8 +52,8 @@ class WithdrawnDate extends LaminasDateSelect implements InputProviderInterface
 
     public function getValidators()
     {
-        return array(
+        return [
             new \Common\Form\Elements\Validators\WithdrawnDate()
-        );
+        ];
     }
 }

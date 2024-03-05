@@ -119,9 +119,7 @@ class InputTest extends MockeryTestCase
     protected function aFilterChainThatReturns($value): FilterChain
     {
         $chain = new FilterChain();
-        $chain->attach(function () use ($value) {
-            return $value;
-        });
+        $chain->attach(fn() => $value);
         return $chain;
     }
 }

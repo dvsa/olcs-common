@@ -29,7 +29,7 @@ class LicenceBusinessTypeTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->fsm = m::mock('\Common\FormService\FormServiceManager')->makePartial();
+        $this->fsm = m::mock(\Common\FormService\FormServiceManager::class)->makePartial();
         $this->fh = m::mock(FormHelperService::class)->makePartial();
         $this->authService = m::mock(AuthorizationService::class);
         $this->guidanceService = m::mock(\Common\Service\Helper\GuidanceHelperService::class);
