@@ -381,17 +381,16 @@ abstract class AbstractController extends AbstractActionController
      *
      * @return bool
      */
-    protected function isExternal()
+    protected function isExternal(): bool
     {
         return $this->location === self::LOC_EXTERNAL;
     }
 
     /**
-     * Return true if the current internal user has read only permissions
-     *
-     * @return bool
+     * @deprecated Have left this in place for now as the number of controllers extending it made removal impractical
+     * @see \Common\Rbac\Service\Permission for the preferred way to access this logic via dependency injection
      */
-    protected function isInternalReadOnly()
+    protected function isInternalReadOnly(): bool
     {
         return (
             $this->authService->isGranted(RefData::PERMISSION_INTERNAL_USER)

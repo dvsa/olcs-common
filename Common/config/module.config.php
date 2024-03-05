@@ -35,16 +35,12 @@ use Common\FormService\Form\Continuation\ConditionsUndertakings;
 use Common\FormService\Form\Continuation\ConditionsUndertakingsFactory;
 use Common\FormService\Form\Continuation\Declaration;
 use Common\FormService\Form\Continuation\DeclarationFactory;
-use Common\FormService\Form\Lva\Application;
-use Common\FormService\Form\Lva\BusinessDetails\ApplicationBusinessDetails;
 use Common\FormService\FormServiceAbstractFactory;
 use Common\FormService\FormServiceManager;
 use Common\Service\Cqrs\Command\CommandSender;
 use Common\Service\Cqrs\Query\QuerySender;
 use Common\Service\Data as DataService;
 use Common\Service\Data\Search\SearchType;
-use Common\FormService\Form\Lva as LvaFormService;
-use Common\FormService\Form\Continuation as ContinuationFormService;
 use Common\Service\Helper as HelperService;
 use Common\Service\Helper\DataHelperService;
 use Common\Service\Helper\StringHelperService;
@@ -339,6 +335,7 @@ return [
             \Common\Service\Data\PluginManager::class => Common\Service\Data\PluginManagerFactory::class,
             \Laminas\Cache\Storage\StorageInterface::class => \Laminas\Cache\Service\StorageCacheFactory::class,
             \Common\Rbac\Navigation\IsAllowedListener::class => Common\Rbac\Navigation\IsAllowedListener::class,
+            \Common\Rbac\Service\Permission::class => \Common\Rbac\Service\PermissionFactory::class,
             \Common\Service\Data\Search\SearchTypeManager::class =>
                 \Common\Service\Data\Search\SearchTypeManagerFactory::class,
             \Common\Rbac\PidIdentityProvider::class => \Common\Rbac\PidIdentityProviderFactory::class,

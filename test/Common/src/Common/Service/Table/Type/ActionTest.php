@@ -2,6 +2,7 @@
 
 namespace CommonTest\Service\Table\Type;
 
+use Common\Service\Table\TableBuilder;
 use Common\Service\Table\Type\Action;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -20,32 +21,21 @@ class ActionTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->table = m::mock();
+        $this->table = m::mock(TableBuilder::class);
         $this->sut = new Action($this->table);
     }
 
     /**
      * @dataProvider dpTestRender
      */
-    public function testRender($isFieldset, $data, $column, $content, $expect, $internalEdit)
+    public function testRender($isFieldset, $data, $column, $content, $expect, $isInternalReadOnly): void
     {
-        $mockAuthService = m::mock()
-            ->shouldReceive('isGranted')
-            ->with('internal-user')
-            ->andReturn(true)
-            ->shouldReceive('isGranted')
-            ->with('internal-edit')
-            ->andReturn($internalEdit)
-            ->getMock();
-
         $this->table
-            ->shouldReceive('getAuthService')
-            ->andReturn($mockAuthService)
-            ->once()
-            ->shouldReceive('getFieldset')
-            ->once()
-            ->andReturn($isFieldset ? 'unit_Fieldset' : null)
-            ->shouldReceive('replaceContent')
+            ->expects('isInternalReadOnly')
+            ->andReturn($isInternalReadOnly);
+        $this->table->expects('getFieldset')
+            ->andReturn($isFieldset ? 'unit_Fieldset' : null);
+        $this->table->shouldReceive('replaceContent')
             ->andReturn('unit_ValueFormat');
 
         $data['id'] = self::ID;
@@ -56,7 +46,7 @@ class ActionTest extends MockeryTestCase
         );
     }
 
-    public function dpTestRender()
+    public function dpTestRender(): array
     {
         return [
             [
@@ -75,7 +65,7 @@ class ActionTest extends MockeryTestCase
                     '<button data-prevent-double-click="true" data-module="govuk-button" role="link" type="submit"' .
                     ' class="action-button-link unit_Class" name="unit_Fieldset[action][unit_Action][' . self::ID . ']"' .
                     ' attrA attrB>unit_Content</button>',
-                true,
+                false,
             ],
             [
                 'isFieldSet' => false,
@@ -89,7 +79,7 @@ class ActionTest extends MockeryTestCase
                     '<button data-prevent-double-click="true" data-module="govuk-button" role="link" type="submit"' .
                     ' class="action-button-link " name="action[unit_Action][' . self::ID . ']"' .
                     ' >unit_Text</button>',
-                true,
+                false,
             ],
             [
                 'isFieldSet' => false,
@@ -105,7 +95,7 @@ class ActionTest extends MockeryTestCase
                     '<button data-prevent-double-click="true" data-module="govuk-button" role="link" type="submit"' .
                     ' class="action-button-link " name="action[unit_Action][' . self::ID . ']"' .
                     ' >unit_FldVal</button>',
-                true,
+                false,
             ],
             [
                 'isFieldSet' => false,
@@ -121,7 +111,7 @@ class ActionTest extends MockeryTestCase
                     '<button data-prevent-double-click="true" data-module="govuk-button" role="link" type="submit"' .
                     ' class="action-button-link " name="action[unit_Action][' . self::ID . ']"' .
                     ' >unit_ValueFormat</button>',
-                true,
+                false,
             ],
             [
                 'isFieldSet' => false,
@@ -135,7 +125,7 @@ class ActionTest extends MockeryTestCase
                 ],
                 'content' => null,
                 'expect' => 'unit_ValueFormat',
-                false,
+                true,
             ],
         ];
     }

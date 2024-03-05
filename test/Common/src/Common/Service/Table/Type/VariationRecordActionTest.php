@@ -2,8 +2,8 @@
 
 namespace CommonTest\Service\Table\Type;
 
+use Common\Service\Table\TableBuilder;
 use Common\Service\Table\Type\VariationRecordAction;
-use Psr\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
@@ -23,26 +23,9 @@ class VariationRecordActionTest extends MockeryTestCase
     {
         $this->mockTranslator = m::mock(\Laminas\I18n\Translator\TranslatorInterface::class);
 
-        $mockSm = m::mock(ContainerInterface::class);
-        $mockSm->shouldReceive('get')->once()->with('translator')->andReturn($this->mockTranslator);
-
-        $mockAuthService = m::mock()
-            ->shouldReceive('isGranted')
-            ->with('internal-user')
-            ->andReturn(true)
-            ->shouldReceive('isGranted')
-            ->with('internal-edit')
-            ->andReturn(true)
-            ->getMock();
-
-        $this->table = m::mock(\Common\Service\Table\TableBuilder::class)
-            ->shouldReceive('getServiceLocator')
-            ->once()
-            ->andReturn($mockSm)
-            ->shouldReceive('getAuthService')
-            ->andReturn($mockAuthService)
-            ->once()
-            ->getMock();
+        $this->table = m::mock(TableBuilder::class);
+        $this->table->expects('isInternalReadOnly')->andReturnFalse();
+        $this->table->expects('getTranslator')->withNoArgs()->andReturn($this->mockTranslator);
 
         $this->sut = new VariationRecordAction($this->table);
     }

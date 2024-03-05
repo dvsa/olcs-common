@@ -31,6 +31,7 @@ return [
             'formatter' => Address::class,
             'addressFields' => 'BRIEF',
             'sort' => 'adr',
+            'keepForReadOnly' => true,
         ],
         [
             'title' => 'application_operating-centres_authorisation.table.vehicles',

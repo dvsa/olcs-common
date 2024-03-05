@@ -2,6 +2,7 @@
 
 namespace CommonTest\Service\Table\Type;
 
+use Common\Service\Table\TableBuilder;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Table\Type\OperatingCentreAction;
@@ -18,20 +19,8 @@ class OperatingCentreActionTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $mockAuthService = m::mock()
-            ->shouldReceive('isGranted')
-            ->with('internal-user')
-            ->andReturn(true)
-            ->shouldReceive('isGranted')
-            ->with('internal-edit')
-            ->andReturn(true)
-            ->getMock();
-
-        $this->table = m::mock()
-            ->shouldReceive('getAuthService')
-            ->andReturn($mockAuthService)
-            ->once()
-            ->getMock();
+        $this->table = m::mock(TableBuilder::class);
+        $this->table->expects('isInternalReadOnly')->andReturnFalse();
 
         $this->sut = new OperatingCentreAction($this->table);
     }

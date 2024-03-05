@@ -4,6 +4,7 @@ namespace Common\FormService\Form\Lva\TypeOfLicence;
 
 use Common\FormService\Form\Lva\Application;
 use Common\FormService\FormServiceManager;
+use Common\Rbac\Service\Permission;
 use Common\RefData;
 use Common\Service\Helper\FormHelperService;
 use Laminas\Form\ElementInterface;
@@ -14,7 +15,6 @@ use Laminas\InputFilter\InputFilter;
 use Laminas\Form\Element;
 use Laminas\Form\Fieldset;
 use Laminas\Form\Form;
-use LmcRbacMvc\Service\AuthorizationService;
 
 class ApplicationTypeOfLicenceTest extends MockeryTestCase
 {
@@ -30,18 +30,43 @@ class ApplicationTypeOfLicenceTest extends MockeryTestCase
     {
         $this->fsm = m::mock(FormServiceManager::class)->makePartial();
         $this->fh = m::mock(FormHelperService::class)->makePartial();
-        $this->authService = m::mock(AuthorizationService::class);
-        $this->sut = new ApplicationTypeOfLicence($this->fh, $this->authService, $this->fsm);
+        $this->permissionService = m::mock(Permission::class);
+        $this->sut = new ApplicationTypeOfLicence($this->fh, $this->permissionService, $this->fsm);
     }
 
     public function testGetForm()
     {
+        $this->permissionService->expects('isInternalReadOnly')->withNoArgs()->andReturnFalse();
         $mockForm = m::mock(Form::class);
 
         $this->fh->shouldReceive('createForm')
             ->once()
             ->with('Lva\TypeOfLicence')
             ->andReturn($mockForm);
+
+        $appService = m::mock(Application::class);
+        $this->fsm->setService('lva-application', $appService);
+
+        $appService->shouldReceive('alterForm')
+            ->once()
+            ->with($mockForm);
+
+        $form = $this->sut->getForm([]);
+
+        $this->assertSame($mockForm, $form);
+    }
+
+    public function testGetFormInternalReadOnly()
+    {
+        $this->permissionService->expects('isInternalReadOnly')->withNoArgs()->andReturnTrue();
+        $mockForm = m::mock(Form::class);
+
+        $this->fh->shouldReceive('createForm')
+            ->once()
+            ->with('Lva\TypeOfLicence')
+            ->andReturn($mockForm);
+
+        $this->fh->expects('disableElement')->with($mockForm, 'type-of-licence->licence-type->licence-type');
 
         $appService = m::mock(Application::class);
         $this->fsm->setService('lva-application', $appService);

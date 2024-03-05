@@ -25,6 +25,7 @@ return [
             'title' => 'selfserve-app-subSection-your-business-people-columnName',
             'type' => 'VariationRecordAction',
             'action' => 'edit',
+            'keepForReadOnly' => true,
             'formatter' => Name::class
         ],
         [
