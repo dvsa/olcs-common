@@ -2,23 +2,24 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Rbac\Service\Permission;
 use Common\Service\Helper\UrlHelperService as UrlHelper;
 use Common\Service\Table\Formatter\InternalLicencePermitReference;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
-/**
- * InternalLicencePermitReference test
- */
 class InternalLicencePermitReferenceTest extends MockeryTestCase
 {
     protected $urlHelper;
+    protected $permissionService;
     protected $sut;
 
     protected function setUp(): void
     {
         $this->urlHelper = m::mock(UrlHelper::class);
-        $this->sut = new InternalLicencePermitReference($this->urlHelper);
+        $this->permissionService = m::mock(Permission::class);
+
+        $this->sut = new InternalLicencePermitReference($this->urlHelper, $this->permissionService);
     }
 
     protected function tearDown(): void
@@ -26,7 +27,7 @@ class InternalLicencePermitReferenceTest extends MockeryTestCase
         m::close();
     }
 
-    public function testFormat()
+    public function testFormat(): void
     {
         $appId = 4;
         $licenceId = 200;
@@ -49,10 +50,27 @@ class InternalLicencePermitReferenceTest extends MockeryTestCase
             ->once()
             ->andReturn('INTERNAL_IRHP_URL');
 
+        $this->permissionService->expects('isInternalReadOnly')->withNoArgs()->andReturnFalse();
 
         $this->assertEquals(
             $expectedOutput,
-            $this->sut->format($row, null)
+            $this->sut->format($row)
+        );
+    }
+
+    public function testFormatInternalReadOnly(): void
+    {
+        $expectedOutput = 'OB1234567/4&gt;'; //escaped as proved by &gt;
+
+        $row = [
+            'applicationRef' => 'OB1234567/4>',
+        ];
+
+        $this->permissionService->expects('isInternalReadOnly')->withNoArgs()->andReturnTrue();
+
+        $this->assertEquals(
+            $expectedOutput,
+            $this->sut->format($row)
         );
     }
 }

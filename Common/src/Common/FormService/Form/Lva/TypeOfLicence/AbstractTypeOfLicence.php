@@ -5,9 +5,7 @@ namespace Common\FormService\Form\Lva\TypeOfLicence;
 use Common\FormService\Form\Lva\AbstractLvaFormService;
 use Common\FormService\FormServiceInterface;
 use Common\RefData;
-use Common\Service\Helper\FormHelperService;
 use Laminas\Form\Form;
-use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * Abstract Type Of Licence Form
@@ -146,6 +144,11 @@ abstract class AbstractTypeOfLicence extends AbstractLvaFormService
 
         $this->formHelper->disableElement($form, 'type-of-licence->operator-location');
         $this->formHelper->lockElement($elmOperLoc, $message);
+    }
+
+    public function disableLicenceType(Form $form): void
+    {
+        $this->formHelper->disableElement($form, 'type-of-licence->licence-type->licence-type');
     }
 
     /**

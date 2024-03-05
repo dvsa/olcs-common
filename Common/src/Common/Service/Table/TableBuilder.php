@@ -2,6 +2,7 @@
 
 namespace Common\Service\Table;
 
+use Common\Rbac\Service\Permission;
 use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Exception\MissingFormatterException;
 use Common\Service\Table\Formatter\FormatterPluginManager;
@@ -207,12 +208,6 @@ class TableBuilder
     private ContainerInterface $serviceLocator;
 
     /**
-     * Authorisation service to allow columns/rows to be hidden depending on permission model
-     * @var AuthorizationService
-     */
-    private $authService;
-
-    /**
      * @var Translator
      */
     private $translator;
@@ -231,6 +226,7 @@ class TableBuilder
     private $urlParameterNameMap = [];
 
     private FormatterPluginManager $formatterPluginManager;
+    private Permission $permissionService;
 
     /**
      * @return array<string,string>
@@ -267,14 +263,14 @@ class TableBuilder
      */
     public function __construct(
         ContainerInterface $serviceLocator,
-        AuthorizationService $authService,
+        Permission $permissionService,
         Translator $translator,
         UrlHelperService $urlHelper,
         array $applicationConfig,
         FormatterPluginManager $formatterPluginManager
     ) {
         $this->serviceLocator = $serviceLocator;
-        $this->authService = $authService;
+        $this->permissionService = $permissionService;
         $this->translator = $translator;
         $this->urlHelper = $urlHelper;
         $this->applicationConfig = $applicationConfig;
@@ -2019,7 +2015,7 @@ class TableBuilder
     {
         if (isset($column['permissionRequisites'])) {
             foreach ((array) $column['permissionRequisites'] as $permission) {
-                if ($this->authService->isGranted($permission)) {
+                if ($this->permissionService->isGranted($permission)) {
                     return true;
                 }
             }
@@ -2078,19 +2074,6 @@ class TableBuilder
     }
 
     /**
-     * Return true if the current internal user has read only permissions
-     *
-     * @return bool
-     */
-    protected function isInternalReadOnly()
-    {
-        return (
-            $this->authService->isGranted('internal-user')
-            && !$this->authService->isGranted('internal-edit')
-        );
-    }
-
-    /**
      * If internal user has read only permissions remove columns with particular types
      *
      * @return void
@@ -2144,16 +2127,6 @@ class TableBuilder
     }
 
     /**
-     * Get authorization service
-     *
-     * @return AuthorizationService
-     */
-    public function getAuthService()
-    {
-        return $this->authService;
-    }
-
-    /**
      * Get translator service
      *
      * @return Translator
@@ -2166,5 +2139,10 @@ class TableBuilder
     public function getServiceLocator(): ContainerInterface
     {
         return $this->serviceLocator;
+    }
+
+    public function isInternalReadOnly(): bool
+    {
+        return $this->permissionService->isInternalReadOnly();
     }
 }

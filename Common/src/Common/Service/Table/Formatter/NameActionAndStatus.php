@@ -1,23 +1,20 @@
 <?php
 
-/**
- * Name Action And Status formatter
- */
-
 namespace Common\Service\Table\Formatter;
 
+use Common\Rbac\Service\Permission;
 use Common\Util\Escape;
 
-/**
- * Name Action And Status formatter
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
- */
 class NameActionAndStatus implements FormatterPluginManagerInterface
 {
-
+    private Permission $permissionService;
     public const BUTTON_FORMAT = '<button data-prevent-double-click="true" class="action-button-link" role="link" '
     . 'data-module="govuk-button" type="submit" name="table[action][edit][%d]">%s</button>';
+
+    public function __construct(Permission $permissionService)
+    {
+        $this->permissionService = $permissionService;
+    }
 
     /**
      * Format a name with default edit action & associated status
@@ -30,16 +27,17 @@ class NameActionAndStatus implements FormatterPluginManagerInterface
     public function format($data, $column = [])
     {
         $title = !empty($data['title']['description']) ? $data['title']['description'] . ' ' : '';
-        $return = sprintf(
-            self::BUTTON_FORMAT,
-            intval($data['id']),
-            Escape::html($title . $data['forename'] . ' ' . $data['familyName'])
-        );
+        $name = Escape::html($title . $data['forename'] . ' ' . $data['familyName']);
+        $newMarker = '';
 
         if (isset($data['status']) && ($data['status'] == 'new')) {
-            $return .= ' <span class="overview__status green">New</span>';
+            $newMarker = ' <span class="overview__status green">New</span>';
         }
 
-        return $return;
+        if ($this->permissionService->isInternalReadOnly()) {
+            return $name . $newMarker;
+        }
+
+        return sprintf(self::BUTTON_FORMAT, intval($data['id']), $name) . $newMarker;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace CommonTest\Service\Table;
 
+use Common\Rbac\Service\Permission;
 use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\ContentHelper;
 use Common\Service\Table\Exception\MissingFormatterException;
@@ -37,7 +38,7 @@ class TableBuilderTest extends MockeryTestCase
     {
         return new TableBuilder(
             $this->getMockServiceLocator(),
-            $this->getMockAuthService(),
+            $this->getMockPermissionService(),
             $this->getMockTranslator(),
             $this->getMockUrlHelperService(),
             $this->getMockConfig($config),
@@ -55,7 +56,7 @@ class TableBuilderTest extends MockeryTestCase
         if (is_null($constructorArgs)) {
             $constructorArgs = [
                 $this->getMockServiceLocator(),
-                $this->getMockAuthService(),
+                $this->getMockPermissionService(),
                 $this->getMockTranslator(),
                 $this->getMockUrlHelperService(),
                 $this->getMockConfig(),
@@ -87,9 +88,9 @@ class TableBuilderTest extends MockeryTestCase
         return $mockTranslator;
     }
 
-    private function getMockAuthService()
+    private function getMockPermissionService()
     {
-        return $this->createPartialMock(AuthorizationService::class, array('isGranted'));
+        return $this->createPartialMock(Permission::class, array('isGranted', 'isInternalReadOnly'));
     }
 
     private function getMockUrlHelperService()
@@ -2362,7 +2363,7 @@ class TableBuilderTest extends MockeryTestCase
         $mockContentHelper->expects($this->once())
             ->method('replaceContent');
 
-        $mockAuthService = $this->createPartialMock(AuthorizationService::class, array('isGranted'));
+        $mockAuthService = $this->createPartialMock(Permission::class, array('isGranted'));
         $mockAuthService->expects($this->once())
             ->method('isGranted')
             ->willReturn(true);
@@ -2400,7 +2401,7 @@ class TableBuilderTest extends MockeryTestCase
         $mockContentHelper->expects($this->once())
             ->method('replaceContent');
 
-        $mockAuthService = $this->createPartialMock(AuthorizationService::class, array('isGranted'));
+        $mockAuthService = $this->createPartialMock(Permission::class, array('isGranted'));
         $mockAuthService->expects($this->once())
             ->method('isGranted')
             ->willReturn(true);
@@ -2928,7 +2929,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $constructorArgs = [
             $this->getMockServiceLocator(),
-            $this->getMockAuthService(),
+            $this->getMockPermissionService(),
             $mockTranslator,
             $this->getMockUrlHelperService(),
             $this->getMockConfig(),
@@ -2982,7 +2983,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $constructorArgs = [
             $this->getMockServiceLocator(),
-            $this->getMockAuthService(),
+            $this->getMockPermissionService(),
             $mockTranslator,
             $this->getMockUrlHelperService(),
             $this->getMockConfig(),
@@ -3126,7 +3127,7 @@ class TableBuilderTest extends MockeryTestCase
         $settings = [];
         $row = [];
 
-        $mockAuthService = m::mock(AuthorizationService::class);
+        $mockAuthService = m::mock(Permission::class);
         $mockAuthService->shouldReceive('isGranted')
             ->with(m::type('string'))
             ->andReturn(true);
@@ -3162,7 +3163,7 @@ class TableBuilderTest extends MockeryTestCase
             'disabled' => $disabled
         ];
 
-        $mockAuthService = m::mock(AuthorizationService::class);
+        $mockAuthService = m::mock(Permission::class);
         $mockAuthService->shouldReceive('isGranted')
             ->with(m::type('string'))
             ->andReturn(true);
@@ -3264,7 +3265,7 @@ class TableBuilderTest extends MockeryTestCase
                 ]
             ]
         ];
-        $mockAuthService = m::mock(AuthorizationService::class);
+        $mockAuthService = m::mock(Permission::class);
         $mockAuthService->shouldReceive('isGranted')
             ->with(m::type('string'))
             ->andReturn(true);
@@ -3354,20 +3355,15 @@ class TableBuilderTest extends MockeryTestCase
             ->with(m::type('string'))
             ->andReturn('foo');
 
-        $mockAuthService = m::mock(AuthorizationService::class);
-        $mockAuthService->shouldReceive('isGranted')
-            ->with('internal-user')
-            ->andReturn(true)
-            ->once()
-            ->shouldReceive('isGranted')
-            ->with('internal-edit')
-            ->andReturn(false)
-            ->once()
+        $mockPermissionService = m::mock(Permission::class);
+        $mockPermissionService->shouldReceive('isInternalReadOnly')
+            ->withNoArgs()
+            ->andReturnTrue()
             ->getMock();
 
         $sut = new TableBuilder(
             $this->getMockServiceLocator(),
-            $mockAuthService,
+            $mockPermissionService,
             $mockTranslator,
             $this->getMockUrlHelperService(),
             $this->getMockConfig(),
@@ -3721,32 +3717,13 @@ class TableBuilderTest extends MockeryTestCase
         return $sut;
     }
 
-    public function testGetAuthService()
-    {
-        $authService = m::mock(AuthorizationService::class);
-
-        $tableBuilder = new TableBuilder(
-            $this->getMockServiceLocator(),
-            $authService,
-            $this->getMockTranslator(),
-            $this->getMockUrlHelperService(),
-            $this->getMockConfig(),
-            $this->mockFormatterPluginManager
-        );
-
-        $this->assertSame(
-            $authService,
-            $tableBuilder->getAuthService()
-        );
-    }
-
     public function testGetTranslator()
     {
         $translator = m::mock(Translator::class);
 
         $tableBuilder = new TableBuilder(
             $this->getMockServiceLocator(),
-            $this->getMockAuthService(),
+            $this->getMockPermissionService(),
             $translator,
             $this->getMockUrlHelperService(),
             $this->getMockConfig(),
@@ -3765,7 +3742,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $tableBuilder = new TableBuilder(
             $serviceLocator,
-            $this->getMockAuthService(),
+            $this->getMockPermissionService(),
             $this->getMockTranslator(),
             $this->getMockUrlHelperService(),
             $this->getMockConfig(),

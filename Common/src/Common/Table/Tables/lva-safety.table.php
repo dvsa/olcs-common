@@ -33,6 +33,7 @@ return array(
             'stack' => 'contactDetails->fao',
             'formatter' => StackValue::class,
             'type' => 'Action',
+            'keepForReadOnly' => true,
         ),
         array(
             'title' => $translationPrefix . '.external',

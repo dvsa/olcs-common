@@ -2,8 +2,9 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Psr\Container\ContainerInterface;
+use Common\Rbac\Service\Permission;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Psr\Container\ContainerInterface;
 
 class InternalLicencePermitReferenceFactory implements FactoryInterface
 {
@@ -13,9 +14,10 @@ class InternalLicencePermitReferenceFactory implements FactoryInterface
      * @param  array|null         $options
      * @return InternalLicencePermitReference
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): InternalLicencePermitReference
     {
         $urlHelper = $container->get('Helper\Url');
-        return new InternalLicencePermitReference($urlHelper);
+        $permissionService = $container->get(Permission::class);
+        return new InternalLicencePermitReference($urlHelper, $permissionService);
     }
 }

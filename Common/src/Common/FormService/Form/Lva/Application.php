@@ -2,7 +2,6 @@
 
 namespace Common\FormService\Form\Lva;
 
-use Common\FormService\FormServiceInterface;
 use Common\Service\Helper\FormHelperService;
 use LmcRbacMvc\Service\AuthorizationService;
 
