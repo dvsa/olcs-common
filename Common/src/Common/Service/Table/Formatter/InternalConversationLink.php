@@ -12,6 +12,7 @@ use Common\Service\Helper\UrlHelperService;
 use Common\Util\Escape;
 use DateTimeImmutable;
 use DateTimeInterface;
+use DomainException;
 use Laminas\Router\Http\RouteMatch;
 
 /**
@@ -75,6 +76,8 @@ class InternalConversationLink implements FormatterPluginManagerInterface
                     'irhpAppId' => $this->route->getParam('irhpAppId'),
                 ];
                 break;
+            default:
+                throw new DomainException('Invalid route type');
         }
 
         $params['conversation'] = $row['id'];
