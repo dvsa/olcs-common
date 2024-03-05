@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.2.2](https://github.com/dvsa/olcs-common/compare/v6.2.1...v6.2.2) (2024-03-05)
+
+
+### Bug Fixes
+
+* VOL-5103 limit the access of read only users to certain data and  actions ([#52](https://github.com/dvsa/olcs-common/issues/52)) ([d4a40a4](https://github.com/dvsa/olcs-common/commit/d4a40a49aa8ae1149a6cf7f62a654b2608173cb7))
+
 ## [6.2.1](https://github.com/dvsa/olcs-common/compare/v6.2.0...v6.2.1) (2024-03-04)
 
 
