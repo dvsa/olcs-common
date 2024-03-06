@@ -1,5 +1,17 @@
 # Changelog
 
+## [6.3.0](https://github.com/dvsa/olcs-common/compare/v6.2.2...v6.3.0) (2024-03-06)
+
+
+### Features
+
+* Messaging enable across all sections ([#57](https://github.com/dvsa/olcs-common/issues/57)) ([8b30557](https://github.com/dvsa/olcs-common/commit/8b30557bcfb33e926e16f3c1c073dc55bc709430))
+
+
+### Bug Fixes
+
+* apply PHP 7.4 Rector set ([#58](https://github.com/dvsa/olcs-common/issues/58)) ([da2e828](https://github.com/dvsa/olcs-common/commit/da2e82822bc9af5ebd446ddbbf75e1ad108ebfc7))
+
 ## [6.2.2](https://github.com/dvsa/olcs-common/compare/v6.2.1...v6.2.2) (2024-03-05)
 
 
