@@ -12,6 +12,7 @@ use Common\Service\Helper\UrlHelperService;
 use Common\Util\Escape;
 use DateTimeImmutable;
 use DateTimeInterface;
+use DomainException;
 use Laminas\Router\Http\RouteMatch;
 
 /**
@@ -41,19 +42,45 @@ class InternalConversationLink implements FormatterPluginManagerInterface
      */
     public function format($row, $column = null)
     {
-        if ($this->route->getMatchedRouteName() === 'lva-application/conversation') {
-            $route = 'lva-application/conversation/view';
-            $params = [
-                'application'  => $row['task']['application']['id'],
-                'conversation' => $row['id'],
-            ];
-        } else {
-            $route = 'licence/conversation/view';
-            $params = [
-                'licence'      => $row['task']['licence']['id'],
-                'conversation' => $row['id'],
-            ];
+        switch ($this->route->getParam('type')) {
+            case 'application':
+                $route = 'lva-application/conversation/view';
+                $params = [
+                    'application' => $row['task']['application']['id'],
+                ];
+                break;
+            case 'licence':
+                $route = 'licence/conversation/view';
+                $params = [
+                    'licence' => $row['task']['licence']['id'],
+                ];
+                break;
+            case 'case':
+                $route = 'case_conversation/view';
+                $params = [
+                    'licence' => $row['task']['licence']['id'],
+                    'case'    => $this->route->getParam('case'),
+                ];
+                break;
+            case 'busReg':
+                $route = 'licence/bus_conversation/view';
+                $params = [
+                    'licence' => $row['task']['licence']['id'],
+                    'busRegId' => $this->route->getParam('busRegId'),
+                ];
+                break;
+            case 'irhp-application':
+                $route = 'licence/irhp-application-conversation/view';
+                $params = [
+                    'licence' => $row['task']['licence']['id'],
+                    'irhpAppId' => $this->route->getParam('irhpAppId'),
+                ];
+                break;
+            default:
+                throw new DomainException('Invalid route type');
         }
+
+        $params['conversation'] = $row['id'];
 
         $statusCSS = '';
 
