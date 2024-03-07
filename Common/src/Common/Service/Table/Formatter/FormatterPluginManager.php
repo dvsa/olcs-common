@@ -33,10 +33,4 @@ class FormatterPluginManager extends PluginManager
             ));
         }
     }
-
-    // Since Laminas 3, we also typically add the `validate()` method as a proxy to the `validatePlugin()` for BC reasons.
-    public function validatePlugin($plugin)
-    {
-        $this->validate($plugin);
-    }
 }
