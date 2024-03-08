@@ -62,6 +62,7 @@ use Common\FormService\Form\Lva\VariationFinancialEvidence;
 use Common\FormService\Form\Lva\VariationGoodsVehicles;
 use Common\FormService\Form\Lva\VariationPsvVehicles;
 use Common\FormService\Form\Lva\VehiclesDeclarations;
+use Common\Rbac\Service\Permission;
 use Common\Service\Helper\FormHelperService;
 use Common\Service\Helper\GuidanceHelperService;
 use Common\Service\Helper\TranslationHelperService;
@@ -355,9 +356,9 @@ class FormServiceAbstractFactory implements AbstractFactoryInterface
                 $formServiceLocator = $serviceLocator->get(FormServiceManager::class);
                 return new LicenceTypeOfLicence($formHelper, $authService, $formServiceLocator);
             case self::FORM_SERVICE_CLASS_ALIASES['lva-application-type-of-licence']:
-                $authService = $serviceLocator->get(AuthorizationService::class);
+                $permissionService = $serviceLocator->get(Permission::class);
                 $formServiceLocator = $serviceLocator->get(FormServiceManager::class);
-                return new ApplicationTypeOfLicence($formHelper, $authService, $formServiceLocator);
+                return new ApplicationTypeOfLicence($formHelper, $permissionService, $formServiceLocator);
             case self::FORM_SERVICE_CLASS_ALIASES['lva-variation-type-of-licence']:
                 $authService = $serviceLocator->get(AuthorizationService::class);
                 $formServiceLocator = $serviceLocator->get(FormServiceManager::class);
