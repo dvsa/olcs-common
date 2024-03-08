@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.3.1](https://github.com/dvsa/olcs-common/compare/v6.3.0...v6.3.1) (2024-03-08)
+
+
+### Bug Fixes
+
+* VOL-5103 change abstract factory to pass in permission service to application type of licence controller ([#64](https://github.com/dvsa/olcs-common/issues/64)) ([520f621](https://github.com/dvsa/olcs-common/commit/520f621277eed0dfba8972235a596e34aa787f36))
+
 ## [6.3.0](https://github.com/dvsa/olcs-common/compare/v6.2.2...v6.3.0) (2024-03-06)
 
 
