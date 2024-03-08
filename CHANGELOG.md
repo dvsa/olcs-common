@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.3.2](https://github.com/dvsa/olcs-common/compare/v6.3.1...v6.3.2) (2024-03-08)
+
+
+### Miscellaneous Chores
+
+* Tidy up laminas 2 3 compatibility vol 3761 ([#63](https://github.com/dvsa/olcs-common/issues/63)) ([d795d54](https://github.com/dvsa/olcs-common/commit/d795d54886d20c25a3d572c4572db94531644147))
+
 ## [6.3.1](https://github.com/dvsa/olcs-common/compare/v6.3.0...v6.3.1) (2024-03-08)
 
 
