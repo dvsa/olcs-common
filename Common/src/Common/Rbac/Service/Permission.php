@@ -29,4 +29,17 @@ class Permission
     {
         return $this->authService->isGranted($permission, $context);
     }
+
+    public function isSelf(string $userId): bool
+    {
+        $userData = $this->authService->getIdentity()->getUserData();
+
+        $currentUserId = $userData['id'] ?? null;
+
+        if ($currentUserId === null) {
+            return false;
+        }
+
+        return strval($currentUserId) === $userId;
+    }
 }
