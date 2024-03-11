@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.3.3](https://github.com/dvsa/olcs-common/compare/v6.3.2...v6.3.3) (2024-03-11)
+
+
+### Bug Fixes
+
+* add `isSelf` to `Permission` service ([#67](https://github.com/dvsa/olcs-common/issues/67)) ([73273eb](https://github.com/dvsa/olcs-common/commit/73273eb8dd9439402df87dd37908bcb4889f9c4f))
+
 ## [6.3.2](https://github.com/dvsa/olcs-common/compare/v6.3.1...v6.3.2) (2024-03-08)
 
 
