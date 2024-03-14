@@ -5,6 +5,7 @@ namespace Common\Form\Elements\InputFilters;
 use Laminas\Form\Element\Select as LaminasElement;
 use Laminas\Validator as LaminasValidator;
 use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\Validator\NotEmpty;
 
 /**
  * @deprecated Unused Custom InputFilter.  Need to remove in OLCS-15198
@@ -27,15 +28,31 @@ class SelectEmpty extends LaminasElement implements InputProviderInterface
      */
     public function getInputSpecification(): array
     {
-        $specification = [
-            'required' => $this->required,
-            'validators' => [
+        $validators = [
                 [
                     'name' => LaminasValidator\NotEmpty::class,
                     'options' => [
                         'type' => LaminasValidator\NotEmpty::EMPTY_ARRAY,
                     ],
                 ],
+            ]
+        ];
+
+        if (!empty($this->getOptions()['notEmpty_validation_error_message'])) {
+            $specification['validators'][] = [
+                'name' => NotEmpty::class,
+                'options' => [
+                    'messages' => [
+                        NotEmpty::IS_EMPTY =>
+                            $this->getOptions()['notEmpty_validation_error_message']
+                    ],
+                ]
+            ];
+        }
+
+        $specification = [
+            'required' => $this->required,
+            'validators' => $validators
             ]
         ];
 

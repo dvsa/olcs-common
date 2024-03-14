@@ -4,6 +4,9 @@ namespace Common\Form\Elements\InputFilters;
 use Laminas\Form\Element\Textarea as LaminasElement;
 use Laminas\Validator as LaminasValidator;
 use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\Validator\Identical;
+use Laminas\Validator\NotEmpty;
+use Laminas\Validator\StringLength;
 
 /**
  * @deprecated This only gets used once in \Olcs\Form\Model\Fieldset\ReverseTransactionDetails
@@ -42,9 +45,35 @@ class Textarea extends LaminasElement implements InputProviderInterface
         ];
 
         if (!empty($this->max)) {
+            $validators = [
+                'name' => StringLength::class,
+                'options' => [
+                    'min' => 5,
+                    'max' => $this->max,
+                ]
+            ];
+
+            if (!empty($this->getOptions()['minLength_validation_error_message'])) {
+                $validators['options']['messages'][StringLength::TOO_SHORT] =
+                    $this->getOptions()['minLength_validation_error_message'];
+            }
+            if (!empty($this->getOptions()['maxLength_validation_error_message'])) {
+                $validators['options']['messages'][StringLength::TOO_SHORT] =
+                    $this->getOptions()['maxLength_validation_error_message'];
+            }
+
+            $specification['validators'][] = $validators;
+        }
+
+        if (!$this->allowEmpty && !empty($this->getOptions()['notEmpty_validation_error_message'])) {
             $specification['validators'][] = [
-                'name' => \Laminas\Validator\StringLength::class,
-                'options' => ['min' => 5, 'max' => $this->max]
+                'name' => NotEmpty::class,
+                'options' => [
+                    'messages' => [
+                        NotEmpty::IS_EMPTY =>
+                            $this->getOptions()['notEmpty_validation_error_message']
+                    ],
+                ]
             ];
         }
 
