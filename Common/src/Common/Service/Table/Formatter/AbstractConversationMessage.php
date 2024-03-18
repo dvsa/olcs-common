@@ -66,7 +66,7 @@ abstract class AbstractConversationMessage implements FormatterPluginManagerInte
             </div>
         ';
 
-        $firstReadyBy = $this->getFirstReadBy($row);
+        $firstReadBy = $this->getFirstReadBy($row);
 
         return vsprintf(
             $rowTemplate,
@@ -75,7 +75,7 @@ abstract class AbstractConversationMessage implements FormatterPluginManagerInte
                 $date,
                 nl2br($row['messagingContent']['text']),
                 $fileList ?: '',
-                $firstReadyBy,
+                $firstReadBy,
             ],
         );
     }
