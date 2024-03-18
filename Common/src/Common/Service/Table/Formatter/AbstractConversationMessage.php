@@ -60,10 +60,13 @@ abstract class AbstractConversationMessage implements FormatterPluginManagerInte
                     <div class="govuk-summary-card__content">
                         <p class="govuk-body">%s</p>
                         %s
+                        %s
                     </div>
                 </div>
             </div>
         ';
+
+        $firstReadBy = $this->getFirstReadBy($row);
 
         return vsprintf(
             $rowTemplate,
@@ -72,6 +75,7 @@ abstract class AbstractConversationMessage implements FormatterPluginManagerInte
                 $date,
                 nl2br($row['messagingContent']['text']),
                 $fileList ?: '',
+                $firstReadBy,
             ],
         );
     }
@@ -86,5 +90,30 @@ abstract class AbstractConversationMessage implements FormatterPluginManagerInte
         $suffixes = ['B', 'KB', 'MB', 'GB', 'TB'];
 
         return round(1024 ** ($base - floor($base)), 2) . $suffixes[floor($base)];
+    }
+
+    public function getFirstReadBy(array $row): string
+    {
+        if (count($row['userMessageReads']) === 0) {
+            return '';
+        }
+
+        $firstRead = array_pop($row['userMessageReads']);
+        $firstReadOn = DateTimeImmutable::createFromFormat(DateTimeInterface::ATOM, $firstRead["createdOn"]);
+
+        if (isset($firstRead['user']['contactDetails']['person'])) {
+            $firstReadBy = $firstRead['user']['contactDetails']['person']['forename'] . ' ' .
+                           $firstRead['user']['contactDetails']['person']['familyName'];
+        } elseif (isset($firstRead['user']['contactDetails']['emailAddress'])) {
+            $firstReadBy = $firstRead['user']['contactDetails']['emailAddress'];
+        } else {
+            $firstReadBy = $firstRead['user']['loginId'];
+        }
+
+        return sprintf(
+            '<hr/><p><em>First read by %s on %s</em></p>',
+            $firstReadBy,
+            $firstReadOn->format('l j F Y \a\t H:ia'),
+        );
     }
 }
