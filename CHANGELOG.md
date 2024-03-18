@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.4.0](https://github.com/dvsa/olcs-common/compare/v6.3.3...v6.4.0) (2024-03-18)
+
+
+### Features
+
+* Message footer showing operator first read ([#69](https://github.com/dvsa/olcs-common/issues/69)) ([9782b09](https://github.com/dvsa/olcs-common/commit/9782b09514f977b17c56ed94989954dea7df03d7))
+
 ## [6.3.3](https://github.com/dvsa/olcs-common/compare/v6.3.2...v6.3.3) (2024-03-11)
 
 
