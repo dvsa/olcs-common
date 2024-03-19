@@ -38,8 +38,8 @@ abstract class AbstractConversationMessage implements FormatterPluginManagerInte
             '{senderName}' => $senderName,
             '{messageDate}' => $date,
             '{messageBody}' => nl2br($row['messagingContent']['text']),
-            '{caseworkerFooter}' => $internalCaseworkerTeam ?: '',
-            '{fileList}' => $fileList ?: '',
+            '{caseworkerFooter}' => $internalCaseworkerTeam,
+            '{fileList}' => $fileList,
             '{firstReadBy}' => $firstReadBy,
         ]);
     }
