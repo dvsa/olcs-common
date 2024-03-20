@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.5.0](https://github.com/dvsa/olcs-common/compare/v6.4.0...v6.5.0) (2024-03-20)
+
+
+### Features
+
+* ConversationMessage Formatter Refactor & Caseworker Name Reveal and Footer ([#72](https://github.com/dvsa/olcs-common/issues/72)) ([45d6a95](https://github.com/dvsa/olcs-common/commit/45d6a95c2527fb3e2e4a4b41d763381b7f2b55a4))
+
 ## [6.4.0](https://github.com/dvsa/olcs-common/compare/v6.3.3...v6.4.0) (2024-03-18)
 
 
