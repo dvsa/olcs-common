@@ -213,6 +213,12 @@ class RefData
     public const PERMISSION_SELFSERVE_EBSR_UPLOAD = 'selfserve-ebsr-upload';
     public const PERMISSION_SELFSERVE_EBSR_DOCUMENTS = 'selfserve-ebsr-documents';
     public const PERMISSION_CAN_LIST_CONVERSATIONS = 'can-list-conversations';
+    public const PERMISSION_CAN_LIST_MESSAGES = 'can-list-messages';
+    public const PERMISSION_CAN_REPLY_TO_CONVERSATIONS = 'can-reply-to-conversation';
+    public const PERMISSION_CAN_CREATE_CONVERSATION = 'can-create-conversation';
+    public const PERMISSION_CAN_DISABLE_MESSAGING = 'can-disable-messaging';
+    public const PERMISSION_CAN_ENABLE_MESSAGING = 'can-enable-messaging';
+    public const PERMISSION_CAN_CLOSE_CONVERSATION = 'can-close-conversation';
 
     /**
      * User Roles
