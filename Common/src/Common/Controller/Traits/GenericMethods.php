@@ -119,7 +119,7 @@ trait GenericMethods
         if (is_callable($callback)) {
             $callback($params);
         } elseif (is_callable([$this, $callback])) {
-            call_user_func_array([$this, $callback], $params);
+            call_user_func([$this, $callback], $params);
         } elseif (!empty($callback)) {
             throw new \Exception('Invalid form callback: ' . $callback);
         }
