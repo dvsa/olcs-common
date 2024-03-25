@@ -1,13 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Form\Element;
 
 use Common\Form\Element\DynamicMultiCheckbox;
 use Common\Service\Data\PluginManager;
 use Common\Service\Data\RefData;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
-class DynamicMultiCheckboxTest extends \PHPUnit\Framework\TestCase
+class DynamicMultiCheckboxTest extends MockeryTestCase
 {
     private $pluginManager;
 
@@ -42,7 +45,6 @@ class DynamicMultiCheckboxTest extends \PHPUnit\Framework\TestCase
             ->with($this->equalTo('category'), $this->equalTo(false))
             ->willReturn(['key'=>'value']);
 
-        $this->pluginManager->expects('get')->with(RefData::class)->andReturn($mockRefDataService);
         $sut = new DynamicMultiCheckbox($this->pluginManager);
         $sut->setDataService($mockRefDataService);
         $sut->setContext('category');

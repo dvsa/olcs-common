@@ -9,7 +9,6 @@ use Laminas\Form\ElementInterface;
 use Laminas\Form\View\Helper\AbstractHelper;
 use Laminas\Form\FormInterface;
 use Laminas\Form\Fieldset;
-use Common\Form\Elements\Validators\Messages\ValidationMessageInterface;
 use Laminas\I18n\Translator\TranslatorInterface;
 
 /**
@@ -147,9 +146,6 @@ class FormErrors extends AbstractHelper
     {
         $elementShouldEscape = $element->getOption('shouldEscapeMessages');
         $shouldEscape = true;
-        if ($message instanceof ValidationMessageInterface) {
-            $shouldEscape = $message->shouldEscape();
-        }
         $message = $this->messageFormatter->formatElementMessage($element, $message, $messageKey);
         if ($shouldEscape && $elementShouldEscape !== false) {
             $message = call_user_func($this->getEscapeHtmlHelper(), $message);

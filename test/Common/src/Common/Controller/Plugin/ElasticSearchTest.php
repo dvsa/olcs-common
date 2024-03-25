@@ -86,6 +86,8 @@ class ElasticSearchTest extends MockeryTestCase
 
     public function testProcessSearchData()
     {
+        self::expectNotToPerformAssertions();
+
         $mockForm = m::mock(\Laminas\Form\Form::class);
         $mockForm->shouldReceive('setAttribute')->with(
             'action',

@@ -35,6 +35,8 @@ class CqrsTraitTest extends MockeryTestCase
 
     public function testShowApiMessagesFromResponseStream()
     {
+        self::expectNotToPerformAssertions();
+
         $mockCqrsResp = m::mock(Response::class)
             ->shouldReceive('getHttpResponse')->andReturn(m::mock(HttpResponse\Stream::class))
             ->getMock();

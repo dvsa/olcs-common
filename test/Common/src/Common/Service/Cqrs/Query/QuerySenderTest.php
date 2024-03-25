@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Common\Service\Cqrs\Query;
 
 use Common\Service\Cqrs\Query\CachingQueryService;
 use Common\Service\Cqrs\Query\QuerySender;
+use Dvsa\Olcs\Transfer\Query\QueryContainerInterface;
 use Dvsa\Olcs\Transfer\Query\QueryInterface;
 use Psr\Container\ContainerInterface;
 use Mockery as m;
@@ -30,14 +33,10 @@ class QuerySenderTest extends MockeryTestCase
         $this->sut->__invoke($sm, QuerySender::class);
     }
 
-    /**
-     * @param QueryInterface $query
-     * @return \Common\Service\Cqrs\Response
-     */
-    public function testSend()
+    public function testSend(): void
     {
         $query = m::mock(QueryInterface::class);
-        $constructedQuery = m::mock();
+        $constructedQuery = m::mock(QueryContainerInterface::class);
 
         $this->mockAnnotationBuilder->shouldReceive('createQuery')
             ->once()

@@ -6,9 +6,7 @@ namespace CommonTest\Form\Elements\Validators\Messages;
 
 use Common\Form\Elements\Validators\Messages\FormElementMessageFormatter;
 use Common\Form\Elements\Validators\Messages\FormElementMessageFormatterFactory;
-use Common\Form\Elements\Validators\Messages\GenericValidationMessage;
 use Common\Test\Form\Element\ElementBuilder;
-use Common\Test\MockeryTestCase;
 use Common\Test\MocksServicesTrait;
 use Common\Test\Translator\MocksTranslatorsTrait;
 use Hamcrest\Matcher;
@@ -17,6 +15,8 @@ use Psr\Container\ContainerInterface;
 use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Validator\ValidatorPluginManager;
+use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
  * @see FormElementMessageFormatter
@@ -375,30 +375,6 @@ class FormElementMessageFormatterTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends formatElementMessage_TranslatesCustomMessages
-     */
-    public function formatElementMessage_DoesNotTranslateCustomMessages_IfTranslationDisabledUsingMessageInterface()
-    {
-        // Setup
-        $this->sut = $this->setUpSut($this->serviceManager());
-        $element = ElementBuilder::anElement()->build();
-        $message = new GenericValidationMessage();
-        $message->setMessage(static::MESSAGE_WITHOUT_PLACEHOLDER);
-        $message->setShouldTranslate(false);
-        $this->resolveMockService($this->serviceManager(), TranslatorInterface::class)
-            ->shouldReceive('translate')
-            ->with(static::MESSAGE_WITHOUT_PLACEHOLDER)
-            ->andReturn(static::MESSAGE_WITHOUT_PLACEHOLDER_TRANSLATED);
-
-        // Execute
-        $formattedMessage = $this->sut->formatElementMessage($element, $message, static::MESSAGE_KEY);
-
-        // Assert
-        $this->assertEquals(static::MESSAGE_WITHOUT_PLACEHOLDER, $formattedMessage);
-    }
-
-    /**
-     * @test
      * @depends formatElementMessage_ReplacesDefaultMessage_IfElementTypeIsNotSet
      */
     public function formatElementMessage_UsesOriginalMessage_WhenReplacementIsNotEnabledForAMessageKey()
@@ -567,7 +543,7 @@ class FormElementMessageFormatterTest extends MockeryTestCase
     protected function setUpDefaultServices(ServiceManager $serviceManager)
     {
         $serviceManager->setService(TranslatorInterface::class, $this->setUpDefaultTranslator());
-        $serviceManager->setService(static::VALIDATOR_MANAGER, new ValidatorPluginManager());
+        $serviceManager->setService(static::VALIDATOR_MANAGER, m::mock(ValidatorPluginManager::class));
         $serviceManager->setFactory(FormElementMessageFormatter::class, new FormElementMessageFormatterFactory());
     }
 }

@@ -8,9 +8,6 @@ use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
-/**
- * IrhpPermitRangeType test
- */
 class IrhpPermitRangeTypeTest extends MockeryTestCase
 {
     protected $translator;

@@ -30,6 +30,8 @@ class VehicleSearchTraitTest extends MockeryTestCase
      */
     public function testAddRemovedVehiclesActions($filters, $actionParams)
     {
+        self::expectNotToPerformAssertions();
+
         /** @var TableBuilder | m\MockInterface $mockTbl */
         $mockTbl = m::mock(TableBuilder::class);
 

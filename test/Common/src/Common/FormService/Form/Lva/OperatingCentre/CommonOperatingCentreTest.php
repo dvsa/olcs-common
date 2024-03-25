@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Common\FormService\Form\Lva\OperatingCentre;
 
 use Common\FormService\Form\Lva\OperatingCentre\CommonOperatingCentre;
@@ -314,7 +316,7 @@ class CommonOperatingCentreTest extends MockeryTestCase
         $this->form->shouldReceive('getInputFilter->get->get->setRequired')
             ->with(false);
 
-        $data = m::mock();
+        $data = m::mock(ElementInterface::class);
         $data->shouldReceive('has')
             ->with('noOfTrailersRequired')
             ->andReturn(true);

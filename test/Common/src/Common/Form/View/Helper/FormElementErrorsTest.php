@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Form\View\Helper;
 
 use Common\Form\Elements\Validators\Messages\FormElementMessageFormatter;
@@ -17,8 +19,10 @@ use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\I18n\View\Helper\Translate;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Validator\ValidatorPluginManager;
+use Laminas\View\Helper\Doctype;
 use Laminas\View\HelperPluginManager;
 use Laminas\View\Renderer\PhpRenderer;
+use Mockery as m;
 use Mockery\MockInterface;
 use Psr\Container\ContainerInterface;
 
@@ -74,10 +78,12 @@ class FormElementErrorsTest extends MockeryTestCase
         $translator = new Translator();
         $translateHelper = new Translate();
         $translateHelper->setTranslator($translator);
+        $doctype = m::mock(Doctype::class);
 
         $container = m::mock(ContainerInterface::class);
         $helpers = new HelperPluginManager($container);
         $helpers->setService('translate', $translateHelper);
+        $helpers->setService(Doctype::class, $doctype);
 
         $view = new PhpRenderer();
         $view->setHelperPluginManager($helpers);
@@ -105,8 +111,7 @@ class FormElementErrorsTest extends MockeryTestCase
 
     protected function setUpSut(ContainerInterface $container): FormElementErrors
     {
-        $pluginManager = $this->setUpAbstractPluginManager($container);
-        $instance = (new FormElementErrorsFactory())->__invoke($pluginManager, FormElementErrors::class);
+        $instance = (new FormElementErrorsFactory())->__invoke($container, FormElementErrors::class);
         return $instance;
     }
 
@@ -135,6 +140,6 @@ class FormElementErrorsTest extends MockeryTestCase
         $serviceManager->setService(HTMLPurifier::class, new HTMLPurifier());
         $serviceManager->setFactory(FormLabel::class, new FormLabelFactory());
         $serviceManager->setFactory(FormElementMessageFormatter::class, new FormElementMessageFormatterFactory());
-        $serviceManager->setService(static::VALIDATOR_MANAGER, new ValidatorPluginManager());
+        $serviceManager->setService(static::VALIDATOR_MANAGER, m::mock(ValidatorPluginManager::class));
     }
 }

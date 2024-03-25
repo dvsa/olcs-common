@@ -8,10 +8,6 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 use Common\Service\FormAnnotationBuilderFactory;
 
-/**
- * Class FormAnnotationBuilderFactoryTest
- * @package CommonTest\Service
- */
 class FormAnnotationBuilderFactoryTest extends MockeryTestCase
 {
     public function testInvoke(): void
@@ -26,6 +22,9 @@ class FormAnnotationBuilderFactoryTest extends MockeryTestCase
         $mockServiceLocator->shouldReceive('get')->with('FilterManager')->andReturn($mockFilterManager);
 
         $sut = new FormAnnotationBuilderFactory();
-        $sut->__invoke($mockServiceLocator, AnnotationBuilder::class);
+        $this->assertInstanceOf(
+            AnnotationBuilder::class,
+            $sut->__invoke($mockServiceLocator, AnnotationBuilder::class)
+        );
     }
 }

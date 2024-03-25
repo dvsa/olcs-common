@@ -34,7 +34,7 @@ class Dispatcher extends AbstractOlcsController
      *
      * @return mixed
      */
-    protected function callAction()
+    public function callAction()
     {
         $event = $this->getEvent();
         $request = $event->getRequest();

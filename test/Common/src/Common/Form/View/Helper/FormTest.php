@@ -4,8 +4,11 @@ namespace CommonTest\Form\View\Helper;
 
 use Common\Form\View\Helper;
 use Common\Form\View\Helper\Form as FormViewHelper;
+use Common\Form\View\Helper\FormCollection;
 use Laminas\Form\Element\Text;
 use Laminas\Stdlib\PriorityList;
+use Laminas\View\Helper\Doctype;
+use Laminas\View\Renderer\RendererInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Laminas\Form\Element;
@@ -26,6 +29,7 @@ class FormTest extends TestCase
     public function setUp(): void
     {
         $this->form = new \Laminas\Form\Form('test');
+        $this->docType = m::mock(Doctype::class);
     }
 
     /**
@@ -35,12 +39,15 @@ class FormTest extends TestCase
     {
         $_SERVER['REQUEST_URI'] = 'bar';
         $this->form->add(new Text('test'));
+        $this->docType->expects('getDoctype')->andReturn('doctype');
 
         $container = m::mock(ContainerInterface::class);
+
         $helpers = new HelperPluginManager($container);
         $helpers->setService('formrow', new Helper\FormRow([]));
-        $helpers->setService('formCollection', new Helper\FormCollection());
+        $helpers->setService('formCollection', new FormCollection());
         $helpers->setService('addTags', new \Common\View\Helper\AddTags());
+        $helpers->setService(Doctype::class, $this->docType);
 
         $view = new PhpRenderer();
         $view->setHelperPluginManager($helpers);
@@ -61,12 +68,14 @@ class FormTest extends TestCase
     {
         $this->form->add(new Text('test'));
         $this->form->setAttribute('action', 'foo');
+        $this->docType->expects('getDoctype')->andReturn('doctype');
 
         $container = m::mock(ContainerInterface::class);
         $helpers = new HelperPluginManager($container);
         $helpers->setService('formrow', new Helper\FormRow([]));
-        $helpers->setService('formCollection', new Helper\FormCollection());
+        $helpers->setService('formCollection', new FormCollection());
         $helpers->setService('addTags', new \Common\View\Helper\AddTags());
+        $helpers->setService(Doctype::class, $this->docType);
 
         $view = new PhpRenderer();
         $view->setHelperPluginManager($helpers);
@@ -87,12 +96,14 @@ class FormTest extends TestCase
     {
         $this->form->add(new \Laminas\Form\Fieldset('test'));
         $this->form->setAttribute('action', 'foo');
+        $this->docType->expects('getDoctype')->andReturn('doctype');
 
         $container = m::mock(ContainerInterface::class);
         $helpers = new HelperPluginManager($container);
-        $helpers->setService('formCollection', new Helper\FormCollection());
+        $helpers->setService('formCollection', new FormCollection());
         $helpers->setService('formrow', new Helper\FormRow([]));
         $helpers->setService('addTags', new \Common\View\Helper\AddTags());
+        $helpers->setService(Doctype::class, $this->docType);
         $view = new PhpRenderer();
         $view->setHelperPluginManager($helpers);
 
@@ -108,12 +119,12 @@ class FormTest extends TestCase
         $mockElement = m::mock(\Laminas\Form\ElementInterface::class);
         $mockElement->shouldReceive('getName')->andReturn('name');
 
-        $mockHelper = m::mock(\Common\Form\View\Helper\FormCollection::class);
+        $mockHelper = m::mock(FormCollection::class);
         $mockHelper->shouldReceive('setReadOnly')->once()->with(true);
         $mockHelper->shouldReceive('__invoke')->with($mockElement)->andReturn('element');
 
         $iterator = new PriorityList();
-        $iterator->insert($mockElement);
+        $iterator->insert('array_key', $mockElement);
 
         $mockForm = m::mock(\Laminas\Form\Form::class);
         $mockForm->shouldReceive('prepare');
@@ -122,7 +133,7 @@ class FormTest extends TestCase
         $mockForm->shouldReceive('getAttributes')->andReturn([]);
         $mockForm->shouldReceive('getAttribute')->with('action')->once()->andReturn('foo');
 
-        $mockView = m::mock(\Laminas\View\Renderer\RendererInterface::class);
+        $mockView = m::mock(RendererInterface::class);
         $mockView->shouldReceive('formCollection')->andReturn($mockHelper);
         $mockView->shouldReceive('plugin')->with('readonlyformrow')->andReturn($mockHelper);
 
@@ -141,11 +152,11 @@ class FormTest extends TestCase
             ->shouldReceive('count')->once()->andReturn(0)
             ->getMock();
 
-        $mockHelper = m::mock(\Common\Form\View\Helper\FormCollection::class)
+        $mockHelper = m::mock(FormCollection::class)
             ->shouldReceive('setReadOnly')->with(false)->once()->getMock();
 
         $iterator = new PriorityList();
-        $iterator->insert($mockFieldsetKeepEmpty);
+        $iterator->insert('array_key', $mockFieldsetKeepEmpty);
 
         $mockForm = m::mock(\Laminas\Form\Form::class)
             ->shouldReceive('prepare')->once()->andReturnNull()
@@ -155,8 +166,8 @@ class FormTest extends TestCase
             ->shouldReceive('getAttribute')->with('action')->once()->andReturn('foo')
             ->getMock();
 
-        /** @var \Laminas\View\Renderer\RendererInterface|m\MockInterface $mockView */
-        $mockView = m::mock(\Laminas\View\Renderer\RendererInterface::class)
+        /** @var RendererInterface|m\MockInterface $mockView */
+        $mockView = m::mock(RendererInterface::class)
             ->shouldReceive('formCollection')->once()->andReturn($mockHelper)
             ->shouldReceive('plugin')->once()->with('formrow')->andReturn($mockHelper)
             ->shouldReceive('addTags')->never()
@@ -204,16 +215,16 @@ class FormTest extends TestCase
             ->shouldReceive('has')->once()->with('rows')->andReturn(false)
             ->getMock();
 
-        $mockHelper = m::mock(\Common\Form\View\Helper\FormCollection::class)
+        $mockHelper = m::mock(FormCollection::class)
             ->shouldReceive('setReadOnly')
             ->with(false)
             ->once()
             ->getMock();
 
         $iterator = new PriorityList();
-        $iterator->insert($mockFsWithElement);
-        $iterator->insert($mockFsWithSubFs);
-        $iterator->insert($mockFsWithHiddenElement);
+        $iterator->insert('array_key1', $mockFsWithElement);
+        $iterator->insert('array_key2', $mockFsWithSubFs);
+        $iterator->insert('array_key3', $mockFsWithHiddenElement);
 
         $mockForm = m::mock(\Laminas\Form\Form::class)
             ->shouldReceive('prepare')->once()->andReturnNull()
@@ -223,8 +234,8 @@ class FormTest extends TestCase
             ->shouldReceive('getAttribute')->with('action')->once()->andReturn('foo')
             ->getMock();
 
-        /** @var \Laminas\View\Renderer\RendererInterface|m\MockInterface $mockView */
-        $mockView = m::mock(\Laminas\View\Renderer\RendererInterface::class)
+        /** @var RendererInterface|m\MockInterface $mockView */
+        $mockView = m::mock(RendererInterface::class)
             ->shouldReceive('formCollection')->times(4)->andReturn($mockHelper)
             ->shouldReceive('plugin')->once()->with('formrow')->andReturn($mockHelper)
             ->shouldReceive('addTags')->times(3)
@@ -258,14 +269,14 @@ class FormTest extends TestCase
             ->shouldReceive('get')->once()->with('table')->andReturn($mockTableElement)
             ->getMock();
 
-        $mockHelper = m::mock(\Common\Form\View\Helper\FormCollection::class)
+        $mockHelper = m::mock(FormCollection::class)
             ->shouldReceive('setReadOnly')
             ->with(false)
             ->once()
             ->getMock();
 
         $iterator = new PriorityList();
-        $iterator->insert($mockFsWithTableElement);
+        $iterator->insert('array_key', $mockFsWithTableElement);
 
         $mockForm = m::mock(\Laminas\Form\Form::class)
             ->shouldReceive('prepare')->once()->andReturnNull()
@@ -275,8 +286,8 @@ class FormTest extends TestCase
             ->shouldReceive('getAttribute')->with('action')->once()->andReturn('foo')
             ->getMock();
 
-        /** @var \Laminas\View\Renderer\RendererInterface|m\MockInterface $mockView */
-        $mockView = m::mock(\Laminas\View\Renderer\RendererInterface::class)
+        /** @var RendererInterface|m\MockInterface $mockView */
+        $mockView = m::mock(RendererInterface::class)
             ->shouldReceive('formCollection')->times(2)->andReturn($mockHelper)
             ->shouldReceive('plugin')->once()->with('formrow')->andReturn($mockHelper)
             ->shouldReceive('addTags')->times(1)

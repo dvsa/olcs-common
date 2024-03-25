@@ -50,6 +50,8 @@ class StandardAndCabotageDataHandlerTest extends MockeryTestCase
 
     public function testSetDataIsValidDoNothing()
     {
+        self::expectNotToPerformAssertions();
+
         $this->standardAndCabotageIsValidHandler->shouldReceive('isValid')
             ->with($this->qaForm)
             ->andReturnTrue();

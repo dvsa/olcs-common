@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Service\Qa\Custom\Bilateral;
 
 use Common\Service\Qa\Custom\Bilateral\YesNoRadioOptionsApplier;
@@ -7,11 +9,6 @@ use Common\Service\Qa\Custom\Bilateral\Radio;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
-/**
- * YesNoRadioOptionsApplierTest
- *
- * @author Jonathan Thomas <jonathan@opalise.co.uk>
- */
 class YesNoRadioOptionsApplierTest extends MockeryTestCase
 {
     public const STANDARD_ATTRIBUTES = [
