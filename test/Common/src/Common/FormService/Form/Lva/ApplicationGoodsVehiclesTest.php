@@ -8,13 +8,17 @@ use Common\FormService\Form\Lva\ApplicationGoodsVehicles;
 
 class ApplicationGoodsVehiclesTest extends MockeryTestCase
 {
+    /**
+     * @var \Mockery\LegacyMockInterface
+     */
+    public $authService;
     protected $sut;
 
     protected $formHelper;
 
     protected $formService;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);
         $this->authService = m::mock(\LmcRbacMvc\Service\AuthorizationService::class);
@@ -23,7 +27,7 @@ class ApplicationGoodsVehiclesTest extends MockeryTestCase
         $this->sut = new ApplicationGoodsVehicles($this->formHelper, $this->authService, $this->formService);
     }
 
-    public function testGetForm()
+    public function testGetForm(): void
     {
         // Params
         $mockTable = m::mock(\Common\Service\Table\TableBuilder::class);

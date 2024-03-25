@@ -14,7 +14,9 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class YesNoTest extends MockeryTestCase
 {
     protected $stackHelper;
+
     protected $translator;
+
     protected $sut;
 
     protected function setUp(): void
@@ -37,7 +39,7 @@ class YesNoTest extends MockeryTestCase
      *
      * @dataProvider dpTestFormatByName
      */
-    public function testFormatByName($data, $column, $expected)
+    public function testFormatByName($data, $column, $expected): void
     {
         $this->translator
             ->shouldReceive('translate')->once()->with('common.table.' . $expected)->andReturn('EXPECT');
@@ -81,7 +83,7 @@ class YesNoTest extends MockeryTestCase
         ];
     }
 
-    public function testFormatBySlack()
+    public function testFormatBySlack(): void
     {
         $data = ['data'];
         $column = [

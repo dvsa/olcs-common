@@ -12,7 +12,7 @@ class Finances
     /**
      * @Form\Type("hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\Type("Text")
@@ -46,16 +46,16 @@ class Finances
      *     }
      *})
      */
-    public $averageBalance = null;
+    public $averageBalance;
 
     /**
      * @Form\ComposedObject("Common\Form\Model\Form\Continuation\Fieldset\OverdraftFacility")
      */
-    public $overdraftFacility = null;
+    public $overdraftFacility;
 
     /**
      * @Form\ComposedObject("Common\Form\Model\Form\Continuation\Fieldset\FinancesFactoring")
      * @Form\Options({"label": "continuations.finances.factoring.label"})
      */
-    public $factoring = null;
+    public $factoring;
 }

@@ -11,18 +11,19 @@ use Mockery as m;
 class DetailsTest extends MockeryTestCase
 {
     private $sut;
+
     private $mockTranslator;
 
     /**
      * setUp
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->mockTranslator = m::mock(TranslationHelperService::class);
         $this->sut = new Details($this->mockTranslator);
     }
 
-    public function testObjectPopulated()
+    public function testObjectPopulated(): void
     {
         $this->mockTranslator->shouldReceive(
             'translateReplace'
@@ -77,7 +78,7 @@ class DetailsTest extends MockeryTestCase
         ], $actual->sectionSerialize());
     }
 
-    public function testFormatAddress()
+    public function testFormatAddress(): void
     {
         $data = [
             'application' => [
@@ -148,7 +149,7 @@ class DetailsTest extends MockeryTestCase
         ], $this->sut->populate($data)->sectionSerialize());
     }
 
-    public function testCertificateNotAdded()
+    public function testCertificateNotAdded(): void
     {
         $data = [
             'application' => [
@@ -193,7 +194,7 @@ class DetailsTest extends MockeryTestCase
         $this->assertContains('lva-tmverify-details-checkanswer-noCertificatesAttached', $actual->sectionSerialize());
     }
 
-    public function testCertificateAdded()
+    public function testCertificateAdded(): void
     {
         $data = [
             'application' => [
@@ -246,7 +247,7 @@ class DetailsTest extends MockeryTestCase
         );
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         $this->mockTranslator = null;
     }
@@ -268,7 +269,7 @@ class DetailsTest extends MockeryTestCase
     /**
      * @dataProvider dpLgvOnlyApplication
      */
-    public function testLgvOnlyApplication($lgvAcquiredRightsReferenceNumber, $expected)
+    public function testLgvOnlyApplication($lgvAcquiredRightsReferenceNumber, $expected): void
     {
         $this->mockTranslator->shouldReceive(
             'translateReplace'

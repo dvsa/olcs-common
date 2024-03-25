@@ -30,25 +30,21 @@ abstract class AbstractTaxiPhvController extends AbstractController
     protected $tableData;
 
     protected $section = 'taxi_phv';
+
     protected string $baseRoute = 'lva-%s/taxi_phv';
 
     protected FormHelperService $formHelper;
+
     protected FlashMessengerHelperService $flashMessengerHelper;
+
     protected FormServiceManager $formServiceManager;
+
     protected ScriptFactory $scriptFactory;
+
     protected TableFactory $tableFactory;
+
     protected TranslationHelperService $translationHelper;
 
-    /**
-     * @param NiTextTranslation $niTextTranslationUtil
-     * @param AuthorizationService $authService
-     * @param FormHelperService $formHelper
-     * @param FormServiceManager $formServiceManager
-     * @param FlashMessengerHelperService $flashMessengerHelper
-     * @param TableFactory $tableFactory
-     * @param ScriptFactory $scriptFactory
-     * @param TranslationHelperService $translationHelper
-     */
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
@@ -78,18 +74,14 @@ abstract class AbstractTaxiPhvController extends AbstractController
     {
         try {
             $this->loadData();
-        } catch (\RuntimeException $ex) {
+        } catch (\RuntimeException $runtimeException) {
             return $this->notFoundAction();
         }
 
         /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
-        if ($request->isPost()) {
-            $data = (array)$request->getPost();
-        } else {
-            $data = $this->getFormData();
-        }
+        $data = $request->isPost() ? (array)$request->getPost() : $this->getFormData();
 
         $form = $this->getForm()->setData($data);
 
@@ -410,16 +402,16 @@ abstract class AbstractTaxiPhvController extends AbstractController
         if (!$trafficArea && $form->get('form-actions')->has('addAnother')) {
             $form->get('form-actions')->remove('addAnother');
         }
+
         return $form;
     }
 
     /**
      * Delete licence
      *
-     * @return CqrsResponse
      * @throws \RuntimeException
      */
-    public function delete()
+    public function delete(): void
     {
         $ids = explode(',', $this->params('child_id'));
 
@@ -432,6 +424,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
                 ['id' => $this->getIdentifier(), 'ids' => $ids, 'licence' => $this->getLicenceId(), 'lva' => $this->lva]
             );
         }
+
         $response = $this->handleCommand($command);
         if (!$response->isOk()) {
             throw new \RuntimeException('Failed to delete PrivateHireLicence');
@@ -483,11 +476,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
      */
     protected function saveLicence($data)
     {
-        if (is_numeric($data['contactDetails']['id'])) {
-            $response = $this->update($data);
-        } else {
-            $response = $this->create($data);
-        }
+        $response = is_numeric($data['contactDetails']['id']) ? $this->update($data) : $this->create($data);
 
         if ($response->isClientError()) {
             return $response->getResult()['messages'];
@@ -543,10 +532,12 @@ abstract class AbstractTaxiPhvController extends AbstractController
         if (key($message) === 'PHL_INVALID_TA') {
             return $message;
         }
+
         $result = current($message);
         if (!is_array($result)) {
             $result = [$result];
         }
+
         return $this->translationHelper->translateReplace(key($message) . '_' . strtoupper($this->location), $result);
     }
 
@@ -592,11 +583,10 @@ abstract class AbstractTaxiPhvController extends AbstractController
     /**
      * Load Taxi/PHV data, this is required for subsequent calls
      *
-     * @return array
      * @throws \Exception
      * @throws \RuntimeException
      */
-    private function loadData()
+    private function loadData(): void
     {
         if ($this->lva === 'licence') {
             $query = \Dvsa\Olcs\Transfer\Query\Licence\TaxiPhv::create(['id' => $this->getIdentifier()]);
@@ -650,6 +640,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
                 return $phl;
             }
         }
+
         return false;
     }
 

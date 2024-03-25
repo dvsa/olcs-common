@@ -21,17 +21,13 @@ use LmcRbacMvc\Service\AuthorizationService;
 abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicenceController
 {
     protected FlashMessengerHelperService $flashMessengerHelper;
+
     protected ScriptFactory $scriptFactory;
+
     protected FormServiceManager $formServiceManager;
+
     protected VariationLvaService $variationLvaService;
 
-    /**
-     * @param NiTextTranslation $niTextTranslationUtil
-     * @param AuthorizationService $authService
-     * @param FlashMessengerHelperService $flashMessengerHelper
-     * @param ScriptFactory $scriptFactory
-     * @param FormServiceManager $formServiceManager
-     */
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,

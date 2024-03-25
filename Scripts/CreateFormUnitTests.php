@@ -26,10 +26,8 @@ class CreateFromUnitTests
 
     /**
      * Create missing form unit tests
-     *
-     * @return void
      */
-    public function exec()
+    public function exec(): void
     {
         // load the template
         $template = file_get_contents(__DIR__ . '/'. self::UT_TEMPLATE_FILE_NAME);
@@ -39,7 +37,7 @@ class CreateFromUnitTests
         $formsList = $this->getDirContents($pathToForms);
 
         foreach($formsList as $formPath) {
-            print "Form: $formPath\n";
+            print sprintf('Form: %s%s', $formPath, PHP_EOL);
 
             // set test path
             $testPath = strtr(
@@ -50,7 +48,7 @@ class CreateFromUnitTests
                     '.php' => 'Test.php',
                 ]
             );
-            print "Test: $testPath\n";
+            print sprintf('Test: %s%s', $testPath, PHP_EOL);
 
             // set test dir path
             $testDirPath = dirname($testPath);
@@ -112,7 +110,7 @@ class CreateFromUnitTests
 
             if(!is_dir($path)) {
                 $results[] = $path;
-            } elseif($value != "." && $value != "..") {
+            } elseif($value !== "." && $value !== "..") {
                 $this->getDirContents($path, $results);
             }
         }

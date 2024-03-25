@@ -15,13 +15,13 @@ class EmploymentDetails
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $id = null;
+    public $id;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\Attributes({"class":"long"})
@@ -37,7 +37,7 @@ class EmploymentDetails
      *     },
      * )
      */
-    public $position = null;
+    public $position;
 
     /**
      * @Form\Attributes({
@@ -57,7 +57,7 @@ class EmploymentDetails
      *     },
      * )
      */
-    public $hoursPerWeek = null;
+    public $hoursPerWeek;
 
     /**
      * @Form\Attributes({
@@ -67,7 +67,7 @@ class EmploymentDetails
      * @Form\Options({"tokens":{"transportManager.data.availability.availabilityGuidance"}})
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $availabilityGuidance = null;
+    public $availabilityGuidance;
 
     /**
      * @Form\Name("understood-availability-agreement-confirmation")
@@ -83,5 +83,5 @@ class EmploymentDetails
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      */
-    public $understoodAvailabilityAgreementConfirmation = null;
+    public $understoodAvailabilityAgreementConfirmation;
 }

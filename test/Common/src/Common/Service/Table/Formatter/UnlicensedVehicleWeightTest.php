@@ -20,7 +20,7 @@ class UnlicensedVehicleWeightTest extends TestCase
     /**
      * @dataProvider formatProvider
      */
-    public function testFormat($data, $expected)
+    public function testFormat($data, $expected): void
     {
         $column = [
             'title' => 'some.translation.key',

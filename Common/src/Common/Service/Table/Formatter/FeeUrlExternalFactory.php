@@ -10,7 +10,6 @@ use Psr\Container\NotFoundExceptionInterface;
 class FeeUrlExternalFactory implements FactoryInterface
 {
     /**
-     * @param  ContainerInterface $container
      * @param  $requestedName
      * @param  array|null         $options
      * @return FeeUrlExternal

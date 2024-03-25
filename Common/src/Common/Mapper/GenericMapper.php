@@ -75,7 +75,7 @@ class GenericMapper
 
             $keyData = $data[$explodedKey[0]];
 
-            for ($i = 1; $i < $levelsDeep; $i ++) {
+            for ($i = 1; $i < $levelsDeep; ++$i) {
                 if (isset($keyData[$explodedKey[$i]])) {
                     $keyData = $keyData[$explodedKey[$i]];
                 } else {
@@ -88,11 +88,7 @@ class GenericMapper
                 $lastKey = end($explodedKey);
 
                 //if the field is an id field, we actually need the previous key
-                if ($lastKey == 'id') {
-                    $levelsBack = 2;
-                } else {
-                    $levelsBack = 1;
-                }
+                $levelsBack = $lastKey == 'id' ? 2 : 1;
 
                 $formData[$formFieldset][$explodedKey[$levelsDeep - $levelsBack]] = $keyData;
             }

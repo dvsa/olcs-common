@@ -18,7 +18,7 @@ class EqualSumTest extends \PHPUnit\Framework\TestCase
 {
     protected $sut;
 
-    public function testIsValidWhenValid()
+    public function testIsValidWhenValid(): void
     {
         $options = [
             'errorPrefix' => 'prefix',
@@ -40,7 +40,7 @@ class EqualSumTest extends \PHPUnit\Framework\TestCase
         $this->assertEmpty($this->sut->getMessages());
     }
 
-    public function testIsValidWhenInValid()
+    public function testIsValidWhenInValid(): void
     {
         $options = [
             'errorPrefix' => 'prefix-',
@@ -66,7 +66,7 @@ class EqualSumTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('prefix-foo-bar', current($messages));
     }
 
-    public function testIsValidWhenInValidWithMissingContext()
+    public function testIsValidWhenInValidWithMissingContext(): void
     {
         $options = [
             'errorPrefix' => 'prefix-',

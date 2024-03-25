@@ -18,12 +18,12 @@ class AddTransportManager
      * })
      * @Form\Type("Select")
      */
-    public $registeredUser = null;
+    public $registeredUser;
 
     /**
      * @Form\Attributes({"id":"addUser","type":"submit","class":"govuk-button"})
      * @Form\Options({"label": "transport-manager-add"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $addUser = null;
+    public $addUser;
 }

@@ -18,14 +18,18 @@ class AdditionalInformation extends AbstractSection implements TransportManagerS
         $this->additionalInformation = empty($additionalInfo) ? 'None Added' : 'Details added';
         $documents = $transportManagerApplication['transportManager']['documents'];
         foreach ($documents as $document) {
-            if ($document['category']['id'] === \Common\Category::CATEGORY_TRANSPORT_MANAGER &&
-                $document['subCategory']['id'] ===
-                \Common\Category::DOC_SUB_CATEGORY_TRANSPORT_MANAGER_TM1_ASSISTED_DIGITAL &&
-                $document['application']['id'] === $transportManagerApplication['application']['id']
-            ) {
-                $files++;
+            if ($document['category']['id'] !== \Common\Category::CATEGORY_TRANSPORT_MANAGER) {
+                continue;
             }
+            if ($document['subCategory']['id'] !== \Common\Category::DOC_SUB_CATEGORY_TRANSPORT_MANAGER_TM1_ASSISTED_DIGITAL) {
+                continue;
+            }
+            if ($document['application']['id'] !== $transportManagerApplication['application']['id']) {
+                continue;
+            }
+            ++$files;
         }
+
         $this->files = $files;
         return $this;
     }

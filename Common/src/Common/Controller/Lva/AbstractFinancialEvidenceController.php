@@ -26,27 +26,27 @@ use LmcRbacMvc\Service\AuthorizationService;
 abstract class AbstractFinancialEvidenceController extends AbstractController
 {
     protected FormHelperService $formHelper;
+
     protected FlashMessengerHelperService $flashMessengerHelper;
+
     protected FormServiceManager $formServiceManager;
+
     protected ScriptFactory $scriptFactory;
+
     protected TableFactory $tableFactory;
+
     protected GuidanceHelperService $guidanceHelper;
+
     protected AnnotationBuilder $transferAnnotationBuilder;
+
     protected CommandService $commandService;
-    protected $lvaAdapter;  //TODO: Use Union Type when PHP 8 is available
+
+    protected $lvaAdapter;
+      //TODO: Use Union Type when PHP 8 is available
     protected FileUploadHelperService $uploadHelper;
 
     /**
-     * @param NiTextTranslation $niTextTranslationUtil
-     * @param AuthorizationService $authService
-     * @param FlashMessengerHelperService $flashMessengerHelper
-     * @param FormServiceManager $formServiceManager
-     * @param ScriptFactory $scriptFactory
-     * @param TableFactory $tableFactory
-     * @param AnnotationBuilder $transferAnnotationBuilder
-     * @param CommandService $commandService
      * @param $lvaAdapter
-     * @param FileUploadHelperService $uploadHelper
      */
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
@@ -107,17 +107,17 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
         $hasProcessedFiles = $this->processFiles(
             $form,
             'evidence->files',
-            [$this, 'processFinancialEvidenceFileUpload'],
-            [$this, 'deleteFile'],
-            [$this, 'getDocuments'],
+            function (array $file) : void {
+                $this->processFinancialEvidenceFileUpload($file);
+            },
+            fn(int $id): bool => $this->deleteFile($id),
+            fn(): array => $this->getDocuments(),
             'evidence->uploadedFileCount'
         );
 
-        if (!$hasProcessedFiles && $request->isPost() && $form->isValid()) {
-            // update application record and redirect
-            if ($this->saveFinancialEvidence($formData)) {
-                return $this->completeSection('financial_evidence');
-            }
+        // update application record and redirect
+        if (!$hasProcessedFiles && $request->isPost() && $form->isValid() && $this->saveFinancialEvidence($formData)) {
+            return $this->completeSection('financial_evidence');
         }
 
         // load scripts
@@ -140,11 +140,10 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
      *
      * @param array $file File data
      *
-     * @return void
      * @throws \Common\Exception\File\InvalidMimeException
      * @throws \Exception
      */
-    public function processFinancialEvidenceFileUpload($file)
+    public function processFinancialEvidenceFileUpload($file): void
     {
         /** @var \Common\Controller\Lva\Adapters\AbstractFinancialEvidenceAdapter $adapter */
         $adapter = $this->lvaAdapter;

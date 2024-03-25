@@ -14,10 +14,11 @@ class OperatingCentreVariationRecordActionTest extends MockeryTestCase
 {
     /** @var  OperatingCentreVariationRecordAction */
     protected $sut;
+
     /** @var  m\MockInterface */
     protected $table;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $mockTranslator = m::mock(\Laminas\I18n\Translator\TranslatorInterface::class);
 
@@ -28,7 +29,7 @@ class OperatingCentreVariationRecordActionTest extends MockeryTestCase
         $this->sut = new OperatingCentreVariationRecordAction($this->table);
     }
 
-    public function testRenderNoS4()
+    public function testRenderNoS4(): void
     {
         $this->table->shouldReceive('getFieldset')->with()->once()->andReturn(null);
 
@@ -38,7 +39,7 @@ class OperatingCentreVariationRecordActionTest extends MockeryTestCase
         $this->assertStringNotContainsString('(Schedule 4/1)', $this->sut->render($data, $column));
     }
 
-    public function testRenderWithS4()
+    public function testRenderWithS4(): void
     {
         $this->table->shouldReceive('getFieldset')->with()->once()->andReturn(null);
 

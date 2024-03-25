@@ -14,8 +14,11 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class BusRegStatusTest extends MockeryTestCase
 {
+    public $sut;
     protected $translator;
+
     protected $viewHelperManager;
+
     protected $statusHelper;
 
     protected function setUp(): void
@@ -30,6 +33,7 @@ class BusRegStatusTest extends MockeryTestCase
     {
         m::close();
     }
+
     /**
      * Tests the formatting for the different possible input array formats
      *
@@ -37,7 +41,7 @@ class BusRegStatusTest extends MockeryTestCase
      *
      * @param $data
      */
-    public function testFormat($data)
+    public function testFormat($data): void
     {
         $regStatus = 'status id';
         $regStatusDesc = 'status description';
@@ -50,7 +54,7 @@ class BusRegStatusTest extends MockeryTestCase
 
         $this->translator->shouldReceive('translate')
             ->andReturnUsing(
-                fn($key) => '_TRNSLT_' . $key
+                static fn($key) => '_TRNSLT_' . $key
             );
 
         $this->viewHelperManager->shouldReceive('get')->with('status')->andReturn($this->statusHelper);

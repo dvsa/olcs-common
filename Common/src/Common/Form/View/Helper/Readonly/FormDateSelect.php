@@ -23,17 +23,13 @@ class FormDateSelect extends AbstractHelper
      */
     public function __invoke(ElementInterface $element = null)
     {
-        if (!$element) {
+        if (!$element instanceof \Laminas\Form\ElementInterface) {
             return $this;
         }
 
         return $this->render($element);
     }
 
-    /**
-     * @param ElementInterface $element
-     * @return string
-     */
     public function render(ElementInterface $element): string
     {
         if (!($element instanceof DateSelect)) {

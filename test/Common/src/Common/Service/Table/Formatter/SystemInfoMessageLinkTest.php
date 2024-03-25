@@ -13,13 +13,19 @@ use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 class SystemInfoMessageLinkTest extends TestCase
 {
     private const EXPECT_URL = 'unit_Url';
+
     private const ID = 9999;
 
     protected $urlHelper;
+
     protected $translator;
+
     protected $viewHelperManager;
+
     protected $router;
+
     protected $request;
+
     protected $sut;
 
     protected function setUp(): void
@@ -37,7 +43,7 @@ class SystemInfoMessageLinkTest extends TestCase
     /**
      * @dataProvider dpTestFormat
      */
-    public function testFormat($data, $expect)
+    public function testFormat($data, $expect): void
     {
         $data['id'] = self::ID;
 

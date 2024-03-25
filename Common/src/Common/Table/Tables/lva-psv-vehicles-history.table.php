@@ -12,7 +12,7 @@ return [
         [
             'title' => $translationPrefix . '.licence',
             'name' => 'licenceNo',
-            'formatter' => fn($data) => isset($data['licence']) ? $data['licence']['licNo'] : ''
+            'formatter' => static fn($data) => isset($data['licence']) ? $data['licence']['licNo'] : ''
         ],
         [
             'title' => $translationPrefix . '.specified',

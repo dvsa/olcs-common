@@ -12,7 +12,7 @@ use Laminas\Form\Element\Button;
 class VehicleTableSearchTest extends TestCase
 {
 
-    public function testVehicleTableSearchCreate()
+    public function testVehicleTableSearchCreate(): void
     {
         $sut = new VehicleTableSearch();
 

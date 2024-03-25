@@ -11,7 +11,7 @@ use Mockery as m;
 
 class UploadEvidenceTest extends MockeryTestCase
 {
-    public function testMapFromResult()
+    public function testMapFromResult(): void
     {
         $input = [
             'operatingCentres' => [
@@ -51,7 +51,7 @@ class UploadEvidenceTest extends MockeryTestCase
         $this->assertEquals(['supportingEvidence' => false], UploadEvidence::mapFromForm([]));
     }
 
-    public function testMapFromForm()
+    public function testMapFromForm(): void
     {
         $input = [
             'operatingCentres' => [
@@ -78,7 +78,7 @@ class UploadEvidenceTest extends MockeryTestCase
         $this->assertEquals($expected, $output);
     }
 
-    public function testMapFromResultForm()
+    public function testMapFromResultForm(): void
     {
         $data = [
             'operatingCentres' => [
@@ -138,6 +138,7 @@ class UploadEvidenceTest extends MockeryTestCase
 
         UploadEvidence::mapFromResultForm($data, $mockForm);
     }
+
 /**
  * @dataProvider dpSupportingEvidenceProvider
  */

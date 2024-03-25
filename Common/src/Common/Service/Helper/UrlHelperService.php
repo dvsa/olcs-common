@@ -21,6 +21,7 @@ use Laminas\View\HelperPluginManager;
 class UrlHelperService
 {
     public const EXTERNAL_HOST = 'selfserve';
+
     public const INTERNAL_HOST = 'internal';
 
     /** @var HelperPluginManager */
@@ -32,8 +33,6 @@ class UrlHelperService
     /**
      * Create service instance
      *
-     * @param HelperPluginManager $helperPluginManager
-     * @param array $config
      *
      * @return UrlHelperService
      */
@@ -80,8 +79,9 @@ class UrlHelperService
     {
         $config = $this->config['hostnames'];
         if (!isset($config[$key])) {
-            throw new \RuntimeException('Hostname for \'' . $key . '\' not found');
+            throw new \RuntimeException("Hostname for '" . $key . "' not found");
         }
+
         return $config[$key];
     }
 }

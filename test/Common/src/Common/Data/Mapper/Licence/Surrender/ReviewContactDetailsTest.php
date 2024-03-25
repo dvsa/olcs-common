@@ -14,7 +14,7 @@ class ReviewContactDetailsTest extends MockeryTestCase
 {
     use ReviewContactDetailsMocksAndExpectationsTrait;
 
-    public function testMakeSections()
+    public function testMakeSections(): void
     {
         $mockTranslator = m::mock(TranslationHelperService::class);
         $mockUrlHelper = m::mock(Url::class);

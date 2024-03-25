@@ -8,7 +8,6 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
 class TransportManagerDateOfBirthFactory implements FactoryInterface
 {
     /**
-     * @param  ContainerInterface $container
      * @param  $requestedName
      * @param  array|null         $options
      * @return TransportManagerDateOfBirth

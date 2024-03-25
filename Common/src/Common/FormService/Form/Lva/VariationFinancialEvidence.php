@@ -16,9 +16,13 @@ use LmcRbacMvc\Service\AuthorizationService;
 class VariationFinancialEvidence extends FinancialEvidence
 {
     protected FormHelperService $formHelper;
+
     protected AuthorizationService $authService;
+
     protected UrlHelperService $urlHelper;
+
     protected TranslationHelperService $translator;
+
     protected ValidatorPluginManager $validatorPluginManager;
 
 

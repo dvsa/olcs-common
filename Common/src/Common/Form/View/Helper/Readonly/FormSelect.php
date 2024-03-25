@@ -51,7 +51,7 @@ class FormSelect extends AbstractHelper
      */
     public function __invoke(ElementInterface $element = null)
     {
-        if (!$element) {
+        if (!$element instanceof \Laminas\Form\ElementInterface) {
             return $this;
         }
 
@@ -88,8 +88,6 @@ class FormSelect extends AbstractHelper
      * Renders the element
      *
      * @param ElementInterface $element the element
-     *
-     * @return string
      */
     public function render(ElementInterface $element): string
     {

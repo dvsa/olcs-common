@@ -11,7 +11,7 @@ use Common\Controller\Lva\Adapters\AbstractTransportManagerAdapter;
  */
 class StubAbstractTransportManagerAdapter extends AbstractTransportManagerAdapter
 {
-    protected $tableSortMethod = null;
+    protected $tableSortMethod;
 
     public function mapResultForTable(array $applicationTms, array $licenceTms = [])
     {

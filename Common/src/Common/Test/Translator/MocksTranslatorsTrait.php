@@ -9,9 +9,6 @@ use Mockery\MockInterface;
 
 trait MocksTranslatorsTrait
 {
-    /**
-     * @return ServiceManager
-     */
     abstract protected function serviceManager(): ServiceManager;
 
     /**
@@ -28,7 +25,7 @@ trait MocksTranslatorsTrait
     protected function setUpDefaultTranslator(): MockInterface
     {
         $instance = $this->setUpMockService(Translator::class);
-        $instance->shouldReceive('translate')->andReturnUsing(fn($key) => $key)->byDefault();
+        $instance->shouldReceive('translate')->andReturnUsing(static fn($key) => $key)->byDefault();
         return $instance;
     }
 }

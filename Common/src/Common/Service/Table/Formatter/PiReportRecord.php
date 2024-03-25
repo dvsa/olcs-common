@@ -15,13 +15,11 @@ class PiReportRecord implements FormatterPluginManagerInterface
 {
     private UrlHelperService $urlHelper;
 
-    /**
-     * @param UrlHelperService $urlHelper
-     */
     public function __construct(UrlHelperService $urlHelper)
     {
         $this->urlHelper = $urlHelper;
     }
+
     /**
      * Format a PI Report Record
      *
@@ -44,7 +42,8 @@ class PiReportRecord implements FormatterPluginManagerInterface
                 $data['pi']['case']['licence']['licNo'],
                 $data['pi']['case']['licence']['status']['description']
             );
-        } elseif (!empty($data['pi']['case']['transportManager'])) {
+        }
+        if (!empty($data['pi']['case']['transportManager'])) {
             return sprintf(
                 '<a class="govuk-link" href="%s">TM %s</a> (%s)',
                 $this->urlHelper->fromRoute(
@@ -57,6 +56,7 @@ class PiReportRecord implements FormatterPluginManagerInterface
                 $data['pi']['case']['transportManager']['tmStatus']['description']
             );
         }
+
         return '';
     }
 }

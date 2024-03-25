@@ -22,6 +22,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 class PiReportNameTest extends TestCase
 {
     protected $urlHelper;
+
     protected $sut;
 
     protected function setUp(): void
@@ -40,7 +41,7 @@ class PiReportNameTest extends TestCase
      *
      * @dataProvider provider
      */
-    public function testFormat($data, $expected)
+    public function testFormat($data, $expected): void
     {
         $this->urlHelper
             ->shouldReceive('fromRoute')

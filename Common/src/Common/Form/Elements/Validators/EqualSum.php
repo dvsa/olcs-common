@@ -40,7 +40,7 @@ class EqualSum extends AbstractValidator
 
         $message .= implode('-', $fields);
 
-        if ((int)$value != $sum) {
+        if ((int)$value !== $sum) {
             $this->setMessage($message, 'error');
 
             $this->error('error');

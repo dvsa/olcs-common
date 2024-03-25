@@ -24,14 +24,14 @@ class FormDateTimeSelectTest extends MockeryTestCase
 {
     private $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $formInput = m::mock(FormInput::class)->makePartial();
         $formSelect = m::mock(FormSelect::class)->makePartial();
 
         $translator = m::mock(Translator::class);
         $translator->shouldReceive('translate')->andReturnUsing(
-            fn($key) => 'translated-' . $key
+            static fn($key) => 'translated-' . $key
         );
 
         $container = m::mock(ContainerInterface::class);
@@ -48,15 +48,14 @@ class FormDateTimeSelectTest extends MockeryTestCase
         $this->sut->setTranslator($translator);
     }
 
-    public function testRender()
+    public function testRender(): void
     {
         $element = new DateTimeSelect('date');
         $element->setOption('pattern', "d MMMM y 'at' HH:mm:ss");
 
         $markup = $this->sut->render($element);
 
-        $expected = '<div class="field inline-text">'
-            . '<label for="_day">translated-date-Day</label>'
+        $expected = '<div class="field inline-text"><label for="_day">translated-date-Day</label>'
             . '<input type="select" name="day" id="_day" maxlength="2" value="">'
         . '</div> '
         . '<div class="field inline-text">'
@@ -103,7 +102,7 @@ class FormDateTimeSelectTest extends MockeryTestCase
         $this->assertEquals($expected, str_replace("\n", '', $markup));
     }
 
-    public function testRenderWithAllMinutes()
+    public function testRenderWithAllMinutes(): void
     {
         $element = new DateTimeSelect('date');
         $element->setOption('pattern', "d MMMM y 'at' HH:mm:ss");
@@ -111,8 +110,7 @@ class FormDateTimeSelectTest extends MockeryTestCase
 
         $markup = $this->sut->render($element);
 
-        $expected = '<div class="field inline-text">'
-            . '<label for="_day">translated-date-Day</label>'
+        $expected = '<div class="field inline-text"><label for="_day">translated-date-Day</label>'
             . '<input type="select" name="day" id="_day" maxlength="2" value="">'
             . '</div> '
             . '<div class="field inline-text">'
@@ -151,16 +149,17 @@ class FormDateTimeSelectTest extends MockeryTestCase
             . '</select>'
             . ':<select name="minute" id="_minute">';
 
-        for ($i = 0; $i <= 59; $i++) {
+        for ($i = 0; $i <= 59; ++$i) {
             $minute = str_pad($i, 2, '0', STR_PAD_LEFT);
             $expected .= '<option value="' . $minute . '">' . $minute. '</option>';
         }
+
         $expected .= '</select>';
 
         $this->assertEquals($expected, str_replace("\n", '', $markup));
     }
 
-    public function testRenderShouldCreateEmptyWithSeconds()
+    public function testRenderShouldCreateEmptyWithSeconds(): void
     {
         $element = new DateTimeSelect('date');
         $element->setShouldCreateEmptyOption(true);
@@ -169,8 +168,7 @@ class FormDateTimeSelectTest extends MockeryTestCase
 
         $markup = $this->sut->render($element);
 
-        $expected = '<div class="field inline-text">'
-            . '<label for="_day">translated-date-Day</label>'
+        $expected = '<div class="field inline-text"><label for="_day">translated-date-Day</label>'
             . '<input type="select" name="day" id="_day" maxlength="2" value="">'
             . '</div> '
             . '<div class="field inline-text">'
@@ -282,7 +280,7 @@ class FormDateTimeSelectTest extends MockeryTestCase
         $this->assertEquals($expected, str_replace("\n", '', $markup));
     }
 
-    public function testRenderWrongElement()
+    public function testRenderWrongElement(): void
     {
         $this->expectException(\Laminas\Form\Exception\InvalidArgumentException::class);
 
@@ -291,7 +289,7 @@ class FormDateTimeSelectTest extends MockeryTestCase
         $this->sut->render($element);
     }
 
-    public function testRenderElementWithNoName()
+    public function testRenderElementWithNoName(): void
     {
         $this->expectException(\Laminas\Form\Exception\DomainException::class);
 

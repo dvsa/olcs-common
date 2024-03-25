@@ -14,13 +14,13 @@ class DeclarationContent
      * @Form\Options({"tokens": {"application.review-declarations.review.director"}})
      * @Form\Attributes({"value": "markup-continuation-declaration-review"})
      */
-    public $review = null;
+    public $review;
 
     /**
      * @Form\Attributes({"value": "SET IN FORM SERVICE"})
      * @Form\Type("Common\Form\Elements\Types\GuidanceTranslated")
      */
-    public $declaration = null;
+    public $declaration;
 
     /**
      * @Form\Attributes({"id":"","placeholder":""})
@@ -36,23 +36,23 @@ class DeclarationContent
      * })
      * @Form\Type("\Laminas\Form\Element\Radio")
      */
-    public $signatureOptions = null;
+    public $signatureOptions;
 
     /**
      * @Form\Attributes({"value": "markup-signature-disabled-text"})
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $disabledReview = null;
+    public $disabledReview;
 
     /**
      * @Form\Attributes({"id":"declarationDownload"})
      * @Form\Type("\Common\Form\Elements\Types\Html")
      */
-    public $declarationDownload = null;
+    public $declarationDownload;
 
     /**
      * @Form\Attributes({"value": "markup-declaration-for-verify","data-container-class":"declarationForVerify"})
      * @Form\Type("Common\Form\Elements\Types\GuidanceTranslated")
      */
-    public $declarationForVerify = null;
+    public $declarationForVerify;
 }

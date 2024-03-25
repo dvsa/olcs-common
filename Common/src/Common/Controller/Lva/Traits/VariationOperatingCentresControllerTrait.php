@@ -37,7 +37,7 @@ trait VariationOperatingCentresControllerTrait
         if ($response->isServerError()) {
             $hlpFlashMsgr->addUnknownError();
         } else {
-            $hlpFlashMsgr->addErrorMessage('Can\'t restore this record');
+            $hlpFlashMsgr->addErrorMessage("Can't restore this record");
         }
 
         return $this->redirect()->toRouteAjax(null, ['action' => null, 'child_id' => null], [], true);

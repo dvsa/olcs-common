@@ -8,7 +8,6 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
 class IrhpPermitNumberInternalFactory implements FactoryInterface
 {
     /**
-     * @param  ContainerInterface $container
      * @param  $requestedName
      * @param  array|null         $options
      * @return IrhpPermitNumberInternal

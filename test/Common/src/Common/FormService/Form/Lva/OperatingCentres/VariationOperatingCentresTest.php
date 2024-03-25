@@ -26,6 +26,12 @@ use LmcRbacMvc\Service\AuthorizationService;
 
 class VariationOperatingCentresTest extends MockeryTestCase
 {
+    /**
+     * @var \Mockery\LegacyMockInterface
+     */
+    public $authService;
+    public $rowsInput;
+    public $tableElement;
     protected $form;
 
     /**
@@ -38,10 +44,12 @@ class VariationOperatingCentresTest extends MockeryTestCase
     protected $tableBuilder;
 
     protected $translator;
+
     private $inputFilter;
+
     private $validatorChain;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->tableBuilder = m::mock(TableFactory::class);
         $this->authService = m::mock(AuthorizationService::class);

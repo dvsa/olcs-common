@@ -31,7 +31,7 @@ class AbstractFactoryTest extends MockeryTestCase
      */
     private $mockSession;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = new AbstractFactory();
 

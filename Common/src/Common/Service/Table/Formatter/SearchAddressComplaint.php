@@ -15,9 +15,6 @@ class SearchAddressComplaint implements FormatterPluginManagerInterface
 {
     protected UrlHelperService $urlHelper;
 
-    /**
-     * @param UrlHelperService    $urlHelper
-     */
     public function __construct(UrlHelperService $urlHelper)
     {
         $this->urlHelper = $urlHelper;

@@ -25,15 +25,11 @@ class InterimVehiclesCheckbox implements FormatterPluginManagerInterface
     public function format($data, $column = [])
     {
         $format = '<input type="checkbox" value="' . $data['id'] . '" name="vehicles[id][]" %s>';
-        if (
-            isset($data['interimApplication'])
-            && isset($data['interimApplication']['id'])
-        ) {
-            $result = sprintf($format, 'checked');
-        } else {
-            $result = sprintf($format, '');
+        if (isset($data['interimApplication'])
+        && isset($data['interimApplication']['id'])) {
+            return sprintf($format, 'checked');
         }
 
-        return $result;
+        return sprintf($format, '');
     }
 }

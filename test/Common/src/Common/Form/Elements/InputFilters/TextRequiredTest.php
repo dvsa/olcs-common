@@ -16,12 +16,11 @@ use Common\Form\Elements\InputFilters;
  */
 class TextRequiredTest extends \PHPUnit\Framework\TestCase
 {
+    public $filter;
     /**
      * test setup
-     *
-     * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->filter = new InputFilters\TextRequired("text-required");
     }
@@ -40,30 +39,24 @@ class TextRequiredTest extends \PHPUnit\Framework\TestCase
 
     /**
      * test basic name
-     *
-     * @return void
      */
-    public function testGetInputSpecificationReturnsCorrectName()
+    public function testGetInputSpecificationReturnsCorrectName(): void
     {
         $this->assertEquals('text-required', $this->getSpecificationElement('name'));
     }
 
     /**
      * ensure fields are required by default
-     *
-     * @return void
      */
-    public function testTextIsRequired()
+    public function testTextIsRequired(): void
     {
         $this->assertTrue($this->getSpecificationElement('required'));
     }
 
     /**
      * ensure we trim all input strings
-     *
-     * @return void
      */
-    public function testStringTrimFilterIsUsed()
+    public function testStringTrimFilterIsUsed(): void
     {
         $this->assertEquals(
             [['name' => \Laminas\Filter\StringTrim::class]],

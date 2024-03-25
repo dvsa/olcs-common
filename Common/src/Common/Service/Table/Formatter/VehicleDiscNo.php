@@ -27,7 +27,7 @@ class VehicleDiscNo implements FormatterPluginManagerInterface
         // if has some goods discs
         if (isset($data['goodsDiscs']) && is_array($data['goodsDiscs'])) {
             // get the latest disc
-            $newestDisc = self::getNewestDisc($data['goodsDiscs']);
+            $newestDisc = $this->getNewestDisc($data['goodsDiscs']);
 
             // if not ceased
             if (empty($newestDisc['ceasedDate'])) {
@@ -50,7 +50,7 @@ class VehicleDiscNo implements FormatterPluginManagerInterface
      *
      * @return array Newist disc array data
      */
-    private static function getNewestDisc(array $discs)
+    private function getNewestDisc(array $discs)
     {
         $latestDisc = null;
         foreach ($discs as $disc) {

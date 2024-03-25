@@ -18,7 +18,7 @@ class InternationalJourneysIsValidHandlerTest extends MockeryTestCase
     /**
      * @dataProvider dpIsValid
      */
-    public function testIsValid($qaElementValue, $warningVisibleValue, $expectedIsValid)
+    public function testIsValid($qaElementValue, $warningVisibleValue, $expectedIsValid): void
     {
         $questionFieldsetData = [
             'qaElement' => $qaElementValue,

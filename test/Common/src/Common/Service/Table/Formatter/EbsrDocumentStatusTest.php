@@ -15,6 +15,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class EbsrDocumentStatusTest extends MockeryTestCase
 {
     protected $viewHelperManager;
+
     protected $sut;
 
     protected function setUp(): void
@@ -27,6 +28,7 @@ class EbsrDocumentStatusTest extends MockeryTestCase
     {
         m::close();
     }
+
     /**
      * Tests format
      *
@@ -35,10 +37,8 @@ class EbsrDocumentStatusTest extends MockeryTestCase
      * @param string $ebsrStatus
      * @param string $colour
      * @param string $label
-     *
-     * @return void
      */
-    public function testFormat($ebsrStatus, $colour, $label)
+    public function testFormat($ebsrStatus, $colour, $label): void
     {
         $statusLabel = 'status label';
         $statusArray = [

@@ -13,7 +13,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class RadioTest extends MockeryTestCase
 {
-    public function testGetInputSpecification()
+    public function testGetInputSpecification(): void
     {
         $radio = m::mock(Radio::class)->makePartial()
             ->shouldAllowMockingProtectedMethods();

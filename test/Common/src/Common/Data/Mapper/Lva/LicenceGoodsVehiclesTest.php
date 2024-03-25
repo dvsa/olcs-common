@@ -16,7 +16,7 @@ use Common\Data\Mapper\Lva\LicenceGoodsVehicles;
  */
 class LicenceGoodsVehiclesTest extends \PHPUnit\Framework\TestCase
 {
-    public function testMapFromResult()
+    public function testMapFromResult(): void
     {
         $data = [
             'organisation' => [

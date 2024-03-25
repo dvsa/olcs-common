@@ -20,7 +20,7 @@ class FileControllerTest extends TestCase
     /** @var  m\MockInterface */
     private $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->mockParams = m::mock(Plugin\Params::class . '[fromRoute, fromQuery]');
 
@@ -28,7 +28,7 @@ class FileControllerTest extends TestCase
         $this->sut->shouldReceive('params')->andReturn($this->mockParams);
     }
 
-    public function testDownloadOk()
+    public function testDownloadOk(): void
     {
         $id = '99999';
 
@@ -54,13 +54,11 @@ class FileControllerTest extends TestCase
             ->shouldReceive('handleQuery')
             ->once()
             ->andReturnUsing(
-                function ($arg) use ($id, $mockResp) {
+                static function ($arg) use ($id, $mockResp) {
                     static::assertInstanceOf(TransferQry\Document\Download ::class, $arg);
-
                     /** @var TransferQry\Document\Download $arg */
                     static::assertEquals($id, $arg->getIdentifier());
                     static::assertTrue($arg->isInline());
-
                     return $mockResp;
                 }
             );
@@ -75,7 +73,7 @@ class FileControllerTest extends TestCase
         static::assertSame('CONTENT', $response->getContent());
     }
 
-    public function testDownloadGuideOk()
+    public function testDownloadGuideOk(): void
     {
         $identifier = 'ABCDE12345';
 
@@ -101,14 +99,12 @@ class FileControllerTest extends TestCase
             ->shouldReceive('handleQuery')
             ->once()
             ->andReturnUsing(
-                function ($arg) use ($identifier, $mockResp) {
+                static function ($arg) use ($identifier, $mockResp) {
                     static::assertInstanceOf(TransferQry\Document\DownloadGuide::class, $arg);
-
                     /** @var TransferQry\Document\DownloadGuide $arg */
                     static::assertEquals($identifier, $arg->getIdentifier());
                     static::assertFalse($arg->isInline());
                     static::assertTrue($arg->getIsSlug());
-
                     return $mockResp;
                 }
             );
@@ -123,7 +119,7 @@ class FileControllerTest extends TestCase
         static::assertSame('CONTENT', $response->getContent());
     }
 
-    public function testFailExceptionErrDownload()
+    public function testFailExceptionErrDownload(): void
     {
         $identifier = '8999';
 

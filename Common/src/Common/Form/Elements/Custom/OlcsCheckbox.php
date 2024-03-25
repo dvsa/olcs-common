@@ -4,7 +4,7 @@ namespace Common\Form\Elements\Custom;
 
 use Laminas\Form\Element as LaminasElement;
 use Laminas\Validator as LaminasValidator;
-use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\InputFilter\InputProviderInterface;
 use Laminas\Form\LabelAwareInterface;
 
 /**

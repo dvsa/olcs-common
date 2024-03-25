@@ -27,10 +27,8 @@ class FormDateSelect extends \Common\Form\View\Helper\Extended\FormDateSelect
     /**
      * Render a date element that is composed of three selects
      *
-     * @param  ElementInterface $element
      * @throws \Laminas\Form\Exception\InvalidArgumentException
      * @throws \Laminas\Form\Exception\DomainException
-     * @return string
      */
     public function render(ElementInterface $element): string
     {

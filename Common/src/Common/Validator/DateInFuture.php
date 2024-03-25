@@ -33,6 +33,7 @@ class DateInFuture extends \Laminas\Validator\AbstractValidator
             $this->error(self::NOT_IN_FUTURE);
             return false;
         }
+
         return true;
     }
 

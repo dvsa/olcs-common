@@ -20,7 +20,6 @@ class NoOfPermits
     /**
      * Create service instance
      *
-     * @param TranslationHelperService $translator
      *
      * @return NoOfPermits
      */
@@ -30,14 +29,12 @@ class NoOfPermits
     }
 
     /**
-     * @param array $data
      * @param $form
      * @param string $irhpApplicationDataKey
      * @param string $maxPermitsByStockDataKey
      * @param string $feePerPermitDataKey
      *
      * @throws RuntimeException
-     *
      * @return array
      */
     public function mapForFormOptions(
@@ -67,6 +64,7 @@ class NoOfPermits
 
         $fieldset = new Fieldset('fields');
         $fieldset->add($permitsRequiredFieldset);
+
         $form->add($fieldset);
 
         $data = $this->postProcessData(
@@ -83,7 +81,7 @@ class NoOfPermits
         }
 
         if ($availableStockCount == 0) {
-            $data = $this->applyMaxAllowableChanges($data, $form);
+            return $this->applyMaxAllowableChanges($data, $form);
         }
 
         return $data;
@@ -91,9 +89,6 @@ class NoOfPermits
 
     /**
      * Populates a fieldset object with form elements in accordance with permit availabilty
-     *
-     * @param Fieldset $fieldset
-     * @param array $years
      */
     protected function populateYearFieldset(Fieldset $fieldset, array $years)
     {
@@ -140,9 +135,7 @@ class NoOfPermits
     /**
      * Creates and returns a NoOfPermitsElement object corresponding to the provided year attributes
      *
-     * @param array $yearAttributes
      *
-     * @return NoOfPermitsElement
      */
     private function createNoOfPermitsElement(array $yearAttributes): NoOfPermitsElement
     {
@@ -195,9 +188,7 @@ class NoOfPermits
     /**
      * Creates and returns a Html object corresponding to the provided year attributes
      *
-     * @param array $yearAttributes
      *
-     * @return Html
      */
     private function createHtmlElement(array $yearAttributes): Html
     {
@@ -218,9 +209,7 @@ class NoOfPermits
     /**
      * Apply changes to the data and form to reflect the fact that no more permits can be applied for
      *
-     * @param array $data
      * @param mixed $form
-     *
      * @return array
      */
     protected function applyMaxAllowableChanges(array $data, $form)
@@ -282,9 +271,6 @@ class NoOfPermits
      * Returns an array, each element of which represents a single line within the guidance message. Will return an
      * empty array if the guidance message is not applicable
      *
-     * @param array $feesPerPermit
-     * @param array $irhpPermitApplications
-     * @param array $maxPermitsByStock
      *
      * @return array
      */
@@ -304,10 +290,11 @@ class NoOfPermits
                 $guidanceItems[$validFromYear] = $feesPerPermit[$irhpPermitApplication['id']];
             }
         }
+
         ksort($guidanceItems);
 
         $guidanceLines = [];
-        if (count($guidanceItems) > 0) {
+        if ($guidanceItems !== []) {
             $guidanceLines [] = $this->translator->translate('permits.page.multilateral.no-of-permits.permit-fees');
 
             foreach ($guidanceItems as $validFromYear => $feePerPermit) {
@@ -329,8 +316,6 @@ class NoOfPermits
     /**
      * Gets the total number of stocks available for entry (i.e. the number of visible input boxes)
      *
-     * @param array $irhpPermitApplications
-     * @param array $maxPermitsByStock
      *
      * @return int
      */
@@ -343,7 +328,7 @@ class NoOfPermits
             $maxPermits = $maxPermitsByStock[$stockId];
 
             if ($maxPermits > 0) {
-                $availableStockCount++;
+                ++$availableStockCount;
             }
         }
 

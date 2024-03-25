@@ -22,7 +22,7 @@ return [
                 ]
             ]
         ],
-        'row-disabled-callback' => fn($row) => in_array($row['action'], ['D', 'C'])
+        'row-disabled-callback' => static fn($row) => in_array($row['action'], ['D', 'C'])
     ],
     'attributes' => [],
     'columns' => [
@@ -55,7 +55,7 @@ return [
         ],
         [
             'title' => 'markup-table-th-remove-restore', //view partial from olcs-common
-            'ariaDescription' => fn($row) => $row['operatingCentre']['address']['addressLine1'],
+            'ariaDescription' => static fn($row) => $row['operatingCentre']['address']['addressLine1'],
             'type' => 'DeltaActionLinks'
         ],
     ],

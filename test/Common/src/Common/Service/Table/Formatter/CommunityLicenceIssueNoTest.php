@@ -21,7 +21,7 @@ class CommunityLicenceIssueNoTest extends MockeryTestCase
     /**
      * @dataProvider formatProvider
      */
-    public function testFormat($data, $column, $expected)
+    public function testFormat($data, $column, $expected): void
     {
         $sut = new CommunityLicenceIssueNo();
         $this->assertEquals($expected, $sut->format($data, $column));

@@ -16,12 +16,12 @@ class People
      * @Form\Name("table")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TableRequiredPeople")
      */
-    public $table = null;
+    public $table;
 
     /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
      * @Form\Attributes({"class":"govuk-button-group"})
      */
-    public $formActions = null;
+    public $formActions;
 }

@@ -16,6 +16,7 @@ use LmcRbacMvc\Service\AuthorizationService;
 class SearchPeopleRecord implements FormatterPluginManagerInterface
 {
     private AuthorizationService $authService;
+
     private UrlHelperService $urlHelper;
 
     public function __construct(AuthorizationService $authService, UrlHelperService $urlHelper)
@@ -34,7 +35,6 @@ class SearchPeopleRecord implements FormatterPluginManagerInterface
     public function format($data, $column = [])
     {
         $showAsText = $this->authService->isGranted(RefData::PERMISSION_INTERNAL_IRHP_ADMIN);
-
         if (!empty($data['applicationId']) && !empty($data['licNo'])) {
             if ($showAsText) {
                 return sprintf(
@@ -43,14 +43,14 @@ class SearchPeopleRecord implements FormatterPluginManagerInterface
                     Escape::html($data['applicationId'])
                 );
             }
-
             return sprintf(
                 '%s / <a class="govuk-link" href="%s">%s</a>',
                 $this->formatCellLicNo($data, $showAsText),
                 $this->urlHelper->fromRoute('lva-application', ['application' => $data['applicationId']]),
                 Escape::html($data['applicationId'])
             );
-        } elseif (!empty($data['tmId']) && $data['foundAs'] !== People::FOUND_AS_HISTORICAL_TM) {
+        }
+        if (!empty($data['tmId']) && $data['foundAs'] !== People::FOUND_AS_HISTORICAL_TM) {
             if ($showAsText) {
                 $tmLink = sprintf('TM %s', Escape::html($data['tmId']));
             } else {
@@ -60,14 +60,13 @@ class SearchPeopleRecord implements FormatterPluginManagerInterface
                     Escape::html($data['tmId'])
                 );
             }
-
             if (!empty($data['licNo'])) {
                 $licenceLink = $this->formatCellLicNo($data, $showAsText);
                 return $tmLink . ' / ' . $licenceLink;
             }
-
             return $tmLink;
-        } elseif (!empty($data['licTypeDesc']) && !empty($data['licStatusDesc'])) {
+        }
+        if (!empty($data['licTypeDesc']) && !empty($data['licStatusDesc'])) {
             if ($showAsText) {
                 return sprintf(
                     '%s, %s<br />%s',
@@ -76,7 +75,6 @@ class SearchPeopleRecord implements FormatterPluginManagerInterface
                     Escape::html($data['licStatusDesc'])
                 );
             }
-
             return sprintf(
                 '<a class="govuk-link" href="%s">%s</a>, %s<br />%s',
                 $this->urlHelper->fromRoute('licence', ['licence' => $data['licId']]),
@@ -84,9 +82,12 @@ class SearchPeopleRecord implements FormatterPluginManagerInterface
                 Escape::html($data['licTypeDesc']),
                 Escape::html($data['licStatusDesc'])
             );
-        } elseif (!empty($data['licNo'])) {
+        }
+        if (!empty($data['licNo'])) {
             return $this->formatCellLicNo($data, $showAsText);
-        } elseif (!empty($data['applicationId'])) {
+        }
+
+        if (!empty($data['applicationId'])) {
             if ($showAsText) {
                 return sprintf(
                     '%s, %s',
@@ -94,7 +95,6 @@ class SearchPeopleRecord implements FormatterPluginManagerInterface
                     Escape::html($data['appStatusDesc'])
                 );
             }
-
             return sprintf(
                 '<a class="govuk-link" href="%s">%s</a>, %s',
                 $this->urlHelper->fromRoute('lva-application', ['application' => $data['applicationId']]),
@@ -102,6 +102,7 @@ class SearchPeopleRecord implements FormatterPluginManagerInterface
                 Escape::html($data['appStatusDesc'])
             );
         }
+
         return '';
     }
 

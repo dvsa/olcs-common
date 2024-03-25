@@ -17,5 +17,5 @@ class FeeStoredCards
      * })
      * @Form\Type("Select")
      */
-    public $card = null;
+    public $card;
 }

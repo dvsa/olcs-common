@@ -16,10 +16,8 @@ use LmcRbacMvc\Service\AuthorizationService;
 class InsufficientFinancesControllerFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
-     * @return InsufficientFinancesController
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): InsufficientFinancesController
     {

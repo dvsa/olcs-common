@@ -13,5 +13,5 @@ class LongerSemiTrailerWarning
      * @Form\Attributes({"value": "markup-lva-trailers-longerSemiTrailersWarningHtml"})
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $longerSemiTrailerWarning = null;
+    public $longerSemiTrailerWarning;
 }

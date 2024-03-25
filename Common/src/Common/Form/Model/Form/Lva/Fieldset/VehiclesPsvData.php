@@ -15,7 +15,7 @@ class VehiclesPsvData
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\Attributes({"id":"","placeholder":"","class":"js-enabled"})
@@ -26,5 +26,5 @@ class VehiclesPsvData
      * })
      * @Form\Type("\Laminas\Form\Element\Radio")
      */
-    public $hasEnteredReg = null;
+    public $hasEnteredReg;
 }

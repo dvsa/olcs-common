@@ -11,15 +11,16 @@ use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 class ConvictionsPenaltiesTest extends TestCase
 {
     private $sut;
+
     private $mockTranslator;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->mockTranslator = m::mock(TranslationHelperService::class);
         $this->sut = new ConvictionsPenalties($this->mockTranslator);
     }
 
-    public function testObjectPopulated()
+    public function testObjectPopulated(): void
     {
         $this->mockTranslator->shouldReceive(
             'translateReplace'

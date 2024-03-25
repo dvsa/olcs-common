@@ -25,26 +25,24 @@ use LmcRbacMvc\Service\AuthorizationService;
 abstract class AbstractBusinessTypeController extends AbstractController
 {
     protected FormHelperService $formHelper;
+
     protected FlashMessengerHelperService $flashMessengerHelper;
+
     protected FormServiceManager $formServiceManager;
+
     protected ScriptFactory $scriptFactory;
+
     protected IdentityProviderInterface $identityProvider;
+
     protected TranslationHelperService $translationHelper;
+
     protected AnnotationBuilder $transferAnnotationBuilder;
+
     protected QueryService $queryService;
+
     protected GenericBusinessTypeAdapter $lvaAdapter;
 
     /**
-     * @param NiTextTranslation $niTextTranslationUtil
-     * @param AuthorizationService $authService
-     * @param FormHelperService $formHelper
-     * @param FlashMessengerHelperService $flashMessengerHelper
-     * @param FormServiceManager $formServiceManager
-     * @param ScriptFactory $scriptFactory
-     * @param IdentityProviderInterface $identityProvider
-     * @param TranslationHelperService $translationHelper
-     * @param AnnotationBuilder $transferAnnotationBuilder
-     * @param QueryService $queryService
      * @param GenericBusinessTypeAdapter $lvaAdapter
      */
     public function __construct(

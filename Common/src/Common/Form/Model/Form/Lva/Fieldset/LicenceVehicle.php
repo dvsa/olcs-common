@@ -13,13 +13,13 @@ class LicenceVehicle
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $id = null;
+    public $id;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\Attributes({})
@@ -35,7 +35,7 @@ class LicenceVehicle
      * @Form\Validator("\Common\Validator\Date")
      * @Form\Validator("Date", options={"format":"Y-m-d"})
      */
-    public $receivedDate = null;
+    public $receivedDate;
 
     /**
      * @Form\Required(false)
@@ -77,7 +77,7 @@ class LicenceVehicle
      * @Form\Validator("\Common\Validator\Date")
      * @Form\Validator("Date", options={"format":"Y-m-d"})
      */
-    public $removalDate = null;
+    public $removalDate;
 
     /**
      * @Form\Attributes({"disabled":"disabled"})
@@ -87,5 +87,5 @@ class LicenceVehicle
      * @Form\Required(false)
      * @Form\Type("Text")
      */
-    public $discNo = null;
+    public $discNo;
 }

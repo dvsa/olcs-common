@@ -1,22 +1,12 @@
 <?php
 
-/**
- * Content Helper Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
+declare(strict_types=1);
 
 namespace CommonTest\Service\Table;
 
 use Common\Service\Table\ContentHelper;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Laminas\Http\Response;
-
-/**
- * Content Helper Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 
 class ContentHelperTest extends TestCase
 {
@@ -31,7 +21,7 @@ class ContentHelperTest extends TestCase
     /**
      * Test translator set correctly
      */
-    public function testTranslatorSet()
+    public function testTranslatorSet(): void
     {
         $translatorMock = $this->createMock(\Laminas\Mvc\I18n\Translator::class);
 
@@ -48,19 +38,19 @@ class ContentHelperTest extends TestCase
      * Test renderLayout with missing partial
      *
      */
-    public function testRenderLayoutWithMissingPartial()
+    public function testRenderLayoutWithMissingPartial(): void
     {
         $this->expectException(\Exception::class);
 
-        $this->contentHelper = $this->getContentHelper(null);
+        $contentHelper = $this->getContentHelper(null);
 
-        $this->contentHelper->renderLayout('MissinPartial');
+        $contentHelper->renderLayout('MissinPartial');
     }
 
     /**
      * Test renderLayout with partial, with object call
      */
-    public function testRenderLayoutWithPartial()
+    public function testRenderLayoutWithPartial(): void
     {
         $mock = $this->createMock(Response::class);
 
@@ -68,9 +58,9 @@ class ContentHelperTest extends TestCase
             ->method('getContent')
             ->will($this->returnValue('SomeContent'));
 
-        $this->contentHelper = $this->getContentHelper($mock);
+        $contentHelper = $this->getContentHelper($mock);
 
-        $this->assertEquals('<p>SomeContent</p>', $this->contentHelper->renderLayout('OutputContent'));
+        $this->assertEquals('<p>SomeContent</p>', $contentHelper->renderLayout('OutputContent'));
     }
 
     /**
@@ -78,11 +68,11 @@ class ContentHelperTest extends TestCase
      *
      * @dataProvider attributesProvider
      */
-    public function testRenderAttributes($attrs, $expected)
+    public function testRenderAttributes($attrs, $expected): void
     {
-        $this->contentHelper = $this->getContentHelper(null);
+        $contentHelper = $this->getContentHelper(null);
 
-        $this->assertEquals($expected, $this->contentHelper->renderAttributes($attrs));
+        $this->assertEquals($expected, $contentHelper->renderAttributes($attrs));
     }
 
     /**
@@ -102,11 +92,11 @@ class ContentHelperTest extends TestCase
      *
      * @dataProvider replaceContentProvider
      */
-    public function testReplaceContent($content, $vars, $expected)
+    public function testReplaceContent($content, $vars, $expected): void
     {
-        $this->contentHelper = $this->getContentHelper(null);
+        $contentHelper = $this->getContentHelper(null);
 
-        $this->assertEquals($expected, $this->contentHelper->replaceContent($content, $vars));
+        $this->assertEquals($expected, $contentHelper->replaceContent($content, $vars));
     }
 
     /**

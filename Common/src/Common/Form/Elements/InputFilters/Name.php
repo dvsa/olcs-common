@@ -9,7 +9,7 @@ namespace Common\Form\Elements\InputFilters;
 
 use Laminas\Form\Element as LaminasElement;
 use Laminas\Validator as LaminasValidator;
-use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\InputFilter\InputProviderInterface;
 
 /**
  * Name Filter
@@ -20,12 +20,10 @@ class Name extends LaminasElement implements InputProviderInterface
 {
     /**
      * Provide default input rules for this element.
-     *
-     * @return array
      */
     public function getInputSpecification(): array
     {
-        $specification = [
+        return [
             'name' => $this->getName(),
             'required' => false,
             'filters' => [
@@ -35,7 +33,5 @@ class Name extends LaminasElement implements InputProviderInterface
                 ['name' => \Laminas\Validator\StringLength::class, 'options' => ['min' => 2, 'max' => 35]]
             ]
         ];
-
-        return $specification;
     }
 }

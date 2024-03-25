@@ -24,7 +24,7 @@ class CommandAdapter extends AbstractAdapter
      *
      * @var string|null
      */
-    protected $realm = null;
+    protected $realm;
 
     /**
      * CognitoAdapter constructor.

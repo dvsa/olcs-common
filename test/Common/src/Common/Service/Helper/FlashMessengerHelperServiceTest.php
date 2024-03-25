@@ -32,7 +32,7 @@ class FlashMessengerHelperServiceTest extends MockeryTestCase
      */
     protected function setUp(): void
     {
-        $this->mockFlashMessenger = m::mock('\Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger');
+        $this->mockFlashMessenger = m::mock(\Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger::class);
 
         $this->sut = new FlashMessengerHelperService($this->mockFlashMessenger);
     }
@@ -41,7 +41,7 @@ class FlashMessengerHelperServiceTest extends MockeryTestCase
      * @group helper_service
      * @group flash_messenger_helper_service
      */
-    public function testAddErrorMessage()
+    public function testAddErrorMessage(): void
     {
         $message = 'foo';
 
@@ -57,7 +57,7 @@ class FlashMessengerHelperServiceTest extends MockeryTestCase
      * @group helper_service
      * @group flash_messenger_helper_service
      */
-    public function testAddProminentErrorMessage()
+    public function testAddProminentErrorMessage(): void
     {
         $message = 'foo';
 
@@ -73,7 +73,7 @@ class FlashMessengerHelperServiceTest extends MockeryTestCase
      * @group helper_service
      * @group flash_messenger_helper_service
      */
-    public function testAddSuccessMessage()
+    public function testAddSuccessMessage(): void
     {
         $message = 'foo';
 
@@ -89,7 +89,7 @@ class FlashMessengerHelperServiceTest extends MockeryTestCase
      * @group helper_service
      * @group flash_messenger_helper_service
      */
-    public function testAddWarningMessage()
+    public function testAddWarningMessage(): void
     {
         $message = 'foo';
 
@@ -105,7 +105,7 @@ class FlashMessengerHelperServiceTest extends MockeryTestCase
      * @group helper_service
      * @group flash_messenger_helper_service
      */
-    public function testAddInfoMessage()
+    public function testAddInfoMessage(): void
     {
         $message = 'foo';
 
@@ -117,7 +117,7 @@ class FlashMessengerHelperServiceTest extends MockeryTestCase
         $this->assertSame($this->mockFlashMessenger, $this->sut->addInfoMessage($message));
     }
 
-    public function testCurrentMessages()
+    public function testCurrentMessages(): void
     {
         $this->sut->addCurrentInfoMessage('info message');
         $this->sut->addCurrentInfoMessage('info message 2');
@@ -133,7 +133,7 @@ class FlashMessengerHelperServiceTest extends MockeryTestCase
         $this->assertEquals(['warning message'], $this->sut->getCurrentMessages('warning'));
     }
 
-    public function testAddUnknownError()
+    public function testAddUnknownError(): void
     {
         $this->mockFlashMessenger->shouldReceive('addErrorMessage')
             ->once()
@@ -143,7 +143,7 @@ class FlashMessengerHelperServiceTest extends MockeryTestCase
         $this->assertSame($this->mockFlashMessenger, $this->sut->addUnknownError());
     }
 
-    public function testAddConflictError()
+    public function testAddConflictError(): void
     {
         $this->mockFlashMessenger->shouldReceive('addErrorMessage')
             ->once()

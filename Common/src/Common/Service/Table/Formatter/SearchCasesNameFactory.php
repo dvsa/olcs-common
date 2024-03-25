@@ -9,10 +9,8 @@ use LmcRbacMvc\Service\AuthorizationService;
 class SearchCasesNameFactory implements FactoryInterface
 {
     /**
-     * @param  ContainerInterface $container
      * @param  $requestedName
      * @param  array|null         $options
-     * @return SearchCasesName
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): SearchCasesName
     {

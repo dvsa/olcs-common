@@ -15,8 +15,6 @@ class AddressDetails implements MapperInterface
      * Prepare api data for form
      *
      * @param array $data Api data
-     *
-     * @return array
      */
     public static function mapFromResult(array $data): array
     {
@@ -33,6 +31,7 @@ class AddressDetails implements MapperInterface
             ];
             $mappedData['contact'] = static::mapContactsFromResult($data);
         }
+
         return $mappedData;
     }
 
@@ -40,8 +39,6 @@ class AddressDetails implements MapperInterface
      * Prepare contacts data from API data to Form data
      *
      * @param array $data Api data
-     *
-     * @return array
      */
     private static function mapContactsFromResult(array $data): array
     {

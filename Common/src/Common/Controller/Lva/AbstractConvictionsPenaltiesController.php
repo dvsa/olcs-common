@@ -26,23 +26,19 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
     use Traits\CrudTableTrait;
 
     protected $section = 'convictions_penalties';
+
     protected string $baseRoute = 'lva-%s/convictions_penalties';
 
     protected FormHelperService $formHelper;
+
     protected FlashMessengerHelperService $flashMessengerHelper;
+
     protected FormServiceManager $formServiceManager;
+
     protected ScriptFactory $scriptFactory;
+
     protected TableFactory $tableFactory;
 
-    /**
-     * @param NiTextTranslation $niTextTranslationUtil
-     * @param AuthorizationService $authService
-     * @param FormHelperService $formHelper
-     * @param FlashMessengerHelperService $flashMessengerHelper
-     * @param FormServiceManager $formServiceManager
-     * @param TableFactory $tableFactory
-     * @param ScriptFactory $scriptFactory
-     */
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
@@ -76,11 +72,7 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
 
         $result = $response->getResult();
 
-        if ($request->isPost()) {
-            $data = (array)$request->getPost();
-        } else {
-            $data = $this->getFormData($result);
-        }
+        $data = $request->isPost() ? (array)$request->getPost() : $this->getFormData($result);
 
         $form = $this->getConvictionsPenaltiesForm($result)->setData($data);
 
@@ -112,6 +104,7 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
                     if ($crudAction !== null) {
                         return $this->handleCrudAction($crudAction);
                     }
+
                     return $this->completeSection('convictions_penalties');
                 }
 

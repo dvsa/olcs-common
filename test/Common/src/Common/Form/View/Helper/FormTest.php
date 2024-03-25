@@ -23,10 +23,11 @@ use Psr\Container\ContainerInterface;
  */
 class FormTest extends TestCase
 {
+    public $docType;
     /** @var \Laminas\Form\Form */
     protected $form;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->form = new \Laminas\Form\Form('test');
         $this->docType = m::mock(Doctype::class);
@@ -35,7 +36,7 @@ class FormTest extends TestCase
     /**
      * @outputBuffering disabled
      */
-    public function testRenderFormWithoutAction()
+    public function testRenderFormWithoutAction(): void
     {
         $_SERVER['REQUEST_URI'] = 'bar';
         $this->form->add(new Text('test'));
@@ -64,7 +65,7 @@ class FormTest extends TestCase
     /**
      * @outputBuffering disabled
      */
-    public function testRenderFormWithElement()
+    public function testRenderFormWithElement(): void
     {
         $this->form->add(new Text('test'));
         $this->form->setAttribute('action', 'foo');
@@ -92,7 +93,7 @@ class FormTest extends TestCase
     /**
      * @outputBuffering disabled
      */
-    public function testRenderFormWithFieldset()
+    public function testRenderFormWithFieldset(): void
     {
         $this->form->add(new \Laminas\Form\Fieldset('test'));
         $this->form->setAttribute('action', 'foo');
@@ -104,6 +105,7 @@ class FormTest extends TestCase
         $helpers->setService('formrow', new Helper\FormRow([]));
         $helpers->setService('addTags', new \Common\View\Helper\AddTags());
         $helpers->setService(Doctype::class, $this->docType);
+
         $view = new PhpRenderer();
         $view->setHelperPluginManager($helpers);
 
@@ -114,7 +116,7 @@ class FormTest extends TestCase
         $this->expectOutputRegex('/^<form action="(.*)" method="(POST|GET)" name="test" id="test"><\/form>$/');
     }
 
-    public function testReadonly()
+    public function testReadonly(): void
     {
         $mockElement = m::mock(\Laminas\Form\ElementInterface::class);
         $mockElement->shouldReceive('getName')->andReturn('name');
@@ -143,7 +145,7 @@ class FormTest extends TestCase
         $sut($mockForm);
     }
 
-    public function testRenderKeepEmptyFields()
+    public function testRenderKeepEmptyFields(): void
     {
         //  check keepEmptyFieldset element
         $mockFieldsetKeepEmpty = m::mock(FieldsetInterface::class)
@@ -179,7 +181,7 @@ class FormTest extends TestCase
         $sut($mockForm);
     }
 
-    public function testRenderFieldsetsWithHidden()
+    public function testRenderFieldsetsWithHidden(): void
     {
         $mockElmHidden = m::mock(Element\Hidden::class);
         $mockElm = m::mock(ElementInterface::class);
@@ -247,7 +249,7 @@ class FormTest extends TestCase
         $sut($mockForm);
     }
 
-    public function testRenderFieldsetsWithTable()
+    public function testRenderFieldsetsWithTable(): void
     {
         // Mock rows element
         $mockRowsElm = m::mock(ElementInterface::class)

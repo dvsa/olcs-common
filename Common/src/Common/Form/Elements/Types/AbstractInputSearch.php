@@ -8,7 +8,9 @@ use Laminas\Form\Fieldset;
 abstract class AbstractInputSearch extends Fieldset
 {
     public const ELEMENT_HINT_NAME = 'hint';
+
     public const ELEMENT_INPUT_NAME = 'search-value';
+
     public const ELEMENT_SUBMIT_NAME = 'submit';
 
     public function __construct($name = null, $options = [])
@@ -21,7 +23,7 @@ abstract class AbstractInputSearch extends Fieldset
         $this->addSubmit();
     }
 
-    public function setMessages($messages)
+    public function setMessages($messages): void
     {
         $this->messages = $messages;
     }
@@ -32,6 +34,8 @@ abstract class AbstractInputSearch extends Fieldset
     }
 
     abstract protected function addHint();
+
     abstract protected function addInput();
+
     abstract protected function addSubmit();
 }

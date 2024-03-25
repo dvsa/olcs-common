@@ -21,6 +21,7 @@ class VariationGoodsVehicles extends AbstractGoodsVehicles
         $this->authService = $authService;
         $this->formServiceLocator = $formServiceLocator;
     }
+
     protected function alterForm($form)
     {
         $this->removeStandardFormActions($form);

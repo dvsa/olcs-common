@@ -56,7 +56,7 @@ class DateCompareWithInterval extends DateCompare
      * @param string $interval_spec
      * @link http://php.net/manual/en/dateinterval.construct.php
      */
-    public function setDateInterval($dateInterval)
+    public function setDateInterval($dateInterval): void
     {
         $this->dateInterval = $dateInterval;
     }
@@ -148,16 +148,18 @@ class DateCompareWithInterval extends DateCompare
     {
         switch ($this->getOperator()) {
             case 'gt':
-                if (!($value >= $compareToValue)) {
+                if ($value < $compareToValue) {
                     $this->error(self::NOT_GT);
                     return false;
                 }
+
                 break;
             case 'lt':
-                if (!($value <= $compareToValue)) {
+                if ($value > $compareToValue) {
                     $this->error(self::NOT_LT);
                     return false;
                 }
+
                 break;
             default:
                 $this->error(self::INVALID_OPERATOR);

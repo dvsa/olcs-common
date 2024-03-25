@@ -13,13 +13,13 @@ class OtherFinances
     /**
      * @Form\Type("hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\ComposedObject("Common\Form\Model\Form\Continuation\Fieldset\OtherFinances")
      * @Form\Options({"label":"continuations.finances.otherFinances.label"})
      */
-    public $finances = null;
+    public $finances;
 
     /**
      * @Form\Attributes({
@@ -30,5 +30,5 @@ class OtherFinances
      * @Form\Options({"label":"Continue"})
      * @Form\Type("\Laminas\Form\Element\Button")
      */
-    public $submit = null;
+    public $submit;
 }

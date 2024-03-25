@@ -16,6 +16,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class IrhpPermitRangePermitNumberTest extends MockeryTestCase
 {
     protected $urlHelper;
+
     protected $sut;
 
     protected function setUp(): void
@@ -23,6 +24,7 @@ class IrhpPermitRangePermitNumberTest extends MockeryTestCase
         $this->urlHelper = m::mock(UrlHelper::class);
         $this->sut = new IrhpPermitRangePermitNumber($this->urlHelper);
     }
+
     /**
      * Test the format method
      *
@@ -31,7 +33,7 @@ class IrhpPermitRangePermitNumberTest extends MockeryTestCase
      *
      * @dataProvider formatProvider
      */
-    public function testFormat($data, $expected)
+    public function testFormat($data, $expected): void
     {
 
         $this->urlHelper->shouldReceive('fromRoute')

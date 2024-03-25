@@ -17,14 +17,15 @@ use Olcs\Logging\Log\Logger;
  */
 class TranslationLoaderTest extends MockeryTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         self::setupLogger();
     }
+
     /**
      * test loading translations from the cache
      */
-    public function testLoadTranslationsFromCache()
+    public function testLoadTranslationsFromCache(): void
     {
         $locale = 'en_GB';
         $textDomain = 'default';
@@ -52,7 +53,7 @@ class TranslationLoaderTest extends MockeryTestCase
     /**
      * test loading translations with exception
      */
-    public function testLoadTranslationsException()
+    public function testLoadTranslationsException(): void
     {
         $initialExceptionMsg = 'initial message';
         $this->expectException(\Exception::class);
@@ -74,7 +75,7 @@ class TranslationLoaderTest extends MockeryTestCase
     /**
      * test loading replacements from the cache
      */
-    public function testLoadReplacementsFromCache()
+    public function testLoadReplacementsFromCache(): void
     {
         $cacheIdentifier = CacheEncryption::TRANSLATION_REPLACEMENT_IDENTIFIER;
         $replacements = ['replacements'];
@@ -91,7 +92,7 @@ class TranslationLoaderTest extends MockeryTestCase
     /**
      * replacements aren't absolutely critical so if an exception is thrown an empty array is produced
      */
-    public function testUnableToLoadReplacements()
+    public function testUnableToLoadReplacements(): void
     {
         $cacheIdentifier = CacheEncryption::TRANSLATION_REPLACEMENT_IDENTIFIER;
 
@@ -103,7 +104,8 @@ class TranslationLoaderTest extends MockeryTestCase
         $loader = new TranslationLoader($mockCache);
         self::assertSame([], $loader->loadReplacements());
     }
-    public static function setupLogger()
+
+    public static function setupLogger(): void
     {
         $logWriter = new \Laminas\Log\Writer\Mock();
         $logger = new \Laminas\Log\Logger();

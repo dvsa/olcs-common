@@ -16,12 +16,12 @@ class PsvDiscs
      * @Form\Name("table")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\TableRequired")
      */
-    public $table = null;
+    public $table;
 
     /**
      * @Form\Name("form-actions")
      * @Form\Type("Laminas\Form\Fieldset")
      * @Form\Attributes({"class":"govuk-button-group"})
      */
-    public $formActions = null;
+    public $formActions;
 }

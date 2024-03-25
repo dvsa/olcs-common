@@ -13,10 +13,11 @@ use Laminas\Mvc\Controller\Plugin\Url;
 class SurrenderSectionTest extends MockeryTestCase
 {
     protected $mockTranslator;
+
     protected $mockUrlHelper;
 
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->mockTranslator = m::mock(TranslationHelperService::class);
         $this->mockUrlHelper = m::mock(Url::class);
@@ -25,7 +26,7 @@ class SurrenderSectionTest extends MockeryTestCase
     /**
      * @dataProvider  surrenderDiscs
      */
-    public function testDiscsSurrenderSection($data, $expected)
+    public function testDiscsSurrenderSection($data, $expected): void
     {
         $mockSurrender = ['surrender' => $data];
         $this->mockTranslator->shouldReceive('translate')->with('DISCHEADING')->andReturn('DISCHEADING');
@@ -42,6 +43,7 @@ class SurrenderSectionTest extends MockeryTestCase
         );
         $sut->setHeading('DISCHEADING');
         $sut->setDisplayChangeLinkInHeading(true);
+
         $expected = [
             'sectionHeading' => 'DISCHEADING',
             'changeLinkInHeading' => true,
@@ -261,7 +263,7 @@ class SurrenderSectionTest extends MockeryTestCase
     /**
      * @dataProvider operatorLicenceSection
      */
-    public function testOperatorLicence($data, $expected)
+    public function testOperatorLicence($data, $expected): void
     {
         $mockSurrender = ['surrender' => $data];
         $this->mockTranslator->shouldReceive('translate')->with('DOCUMENTHEADING')->andReturn('DOCUMENTHEADING');
@@ -285,6 +287,7 @@ class SurrenderSectionTest extends MockeryTestCase
 
         $sut->setHeading('DOCUMENTHEADING');
         $sut->setDisplayChangeLinkInHeading(true);
+
         $expected = [
             'sectionHeading' => 'DOCUMENTHEADING',
             'changeLinkInHeading' => true,
@@ -383,7 +386,7 @@ class SurrenderSectionTest extends MockeryTestCase
     /**
      * @dataProvider communityLicenceSection
      */
-    public function testCommunityLicence($data, $expected)
+    public function testCommunityLicence($data, $expected): void
     {
         $mockSurrender = ['surrender' => $data];
         $this->mockTranslator->shouldReceive('translate')->with('DOCUMENTHEADING')->andReturn('DOCUMENTHEADING');
@@ -407,6 +410,7 @@ class SurrenderSectionTest extends MockeryTestCase
 
         $sut->setHeading('DOCUMENTHEADING');
         $sut->setDisplayChangeLinkInHeading(true);
+
         $expected = [
             'sectionHeading' => 'DOCUMENTHEADING',
             'changeLinkInHeading' => true,

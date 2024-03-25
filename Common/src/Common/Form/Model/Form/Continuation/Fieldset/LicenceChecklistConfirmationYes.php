@@ -13,7 +13,7 @@ class LicenceChecklistConfirmationYes
      * @Form\Attributes({"value": "markup-continuation-licence-checklist-confirmation-yes"})
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $checklistConfirmText = null;
+    public $checklistConfirmText;
 
     /**
      * @Form\Attributes({
@@ -24,5 +24,5 @@ class LicenceChecklistConfirmationYes
      * @Form\Options({"label":"continuations.checklist.confirmation.yes-button"})
      * @Form\Type("\Laminas\Form\Element\Button")
      */
-    public $submit = null;
+    public $submit;
 }

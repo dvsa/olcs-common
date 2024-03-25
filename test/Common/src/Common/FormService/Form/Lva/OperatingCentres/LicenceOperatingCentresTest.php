@@ -31,6 +31,14 @@ use LmcRbacMvc\Service\AuthorizationService;
  */
 class LicenceOperatingCentresTest extends MockeryTestCase
 {
+    /**
+     * @var \Mockery\LegacyMockInterface
+     */
+    public $authService;
+    public $validatorChain;
+    public $rowsInput;
+    public $tableElement;
+    public $inputFilter;
     protected $form;
 
     /**
@@ -44,7 +52,7 @@ class LicenceOperatingCentresTest extends MockeryTestCase
 
     protected $translator;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->tableBuilder = m::mock(TableFactory::class);
         $this->authService = m::mock(AuthorizationService::class);
@@ -87,7 +95,7 @@ class LicenceOperatingCentresTest extends MockeryTestCase
         $this->sut = new LicenceOperatingCentres($this->mockFormHelper, $this->authService, $this->tableBuilder, $fsm);
     }
 
-    public function testGetForm()
+    public function testGetForm(): void
     {
         $params = [
             'operatingCentres' => [],

@@ -19,7 +19,7 @@ class DateTimeTest extends MockeryTestCase
     /**
      * Setup the view helper
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = new \Common\View\Helper\DateTime();
     }
@@ -27,11 +27,10 @@ class DateTimeTest extends MockeryTestCase
     /**
      * @dataProvider provider
      *
-     * @param \DateTime $dateTime
      * @param $format
      * @param $expected
      */
-    public function testInvoke(\DateTime $dateTime, $format, $expected)
+    public function testInvoke(\DateTime $dateTime, $format, $expected): void
     {
         $sut = $this->sut;
         $this->assertEquals($expected, $sut($dateTime, $format));

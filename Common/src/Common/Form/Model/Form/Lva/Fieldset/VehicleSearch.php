@@ -17,7 +17,7 @@ class VehicleSearch
      * @Form\Type("\Laminas\Form\Element\Text")
      * @Form\Required(true)
      */
-    public $vrm = null;
+    public $vrm;
 
     /**
      * @Form\Attributes({"type":"submit","class":"govuk-button"})
@@ -26,7 +26,7 @@ class VehicleSearch
      * })
      * @Form\Type("\Laminas\Form\Element\Button")
      */
-    public $filter = null;
+    public $filter;
 
     /**
      * @Form\Attributes({"type":"submit","class":"govuk-button govuk-button--secondary","id":"clearSearch"})
@@ -35,5 +35,5 @@ class VehicleSearch
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $clearSearch = null;
+    public $clearSearch;
 }

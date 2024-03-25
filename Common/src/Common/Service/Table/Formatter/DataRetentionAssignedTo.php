@@ -11,13 +11,11 @@ class DataRetentionAssignedTo implements FormatterPluginManagerInterface
 {
     private HelperPluginManager $viewHelperManager;
 
-    /**
-     * @param HelperPluginManager $viewHelperManager
-     */
     public function __construct(HelperPluginManager $viewHelperManager)
     {
         $this->viewHelperManager = $viewHelperManager;
     }
+
     /**
      * Format column value
      *

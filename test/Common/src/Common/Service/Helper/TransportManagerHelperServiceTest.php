@@ -50,7 +50,7 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
     /** @var QueryContainerInterface */
     private $query;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->transferAnnotationBuilder = m::mock(TransferAnnotationBuilder::class);
         $this->queryService = m::mock(QueryService::class);
@@ -72,7 +72,7 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
         );
     }
 
-    public function testGetCertificateFileData()
+    public function testGetCertificateFileData(): void
     {
         $tmId = 111;
         $file = ['name' => 'foo.txt'];
@@ -94,7 +94,7 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
         $this->assertEquals($expected, $response);
     }
 
-    public function testRemoveTmTypeBothOption()
+    public function testRemoveTmTypeBothOption(): void
     {
         /** @var Element $mockTmTypeField */
         $mockTmTypeField = m::mock(Element::class);
@@ -104,7 +104,7 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
         $this->sut->removeTmTypeBothOption($mockTmTypeField);
     }
 
-    public function testPopulateOtherLicencesTable()
+    public function testPopulateOtherLicencesTable(): void
     {
         /** @var TableBuilder $otherLicencesTable */
         $otherLicencesTable = m::mock(TableBuilder::class);
@@ -119,7 +119,7 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
         $this->sut->populateOtherLicencesTable($mockOtherLicenceField, $otherLicencesTable);
     }
 
-    public function testGetResponsibilityFileData()
+    public function testGetResponsibilityFileData(): void
     {
         $tmId = 111;
 
@@ -141,7 +141,7 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
         $this->assertEquals($expected, $data);
     }
 
-    public function testGetConvictionsAndPenaltiesTable()
+    public function testGetConvictionsAndPenaltiesTable(): void
     {
         $tmId = 111;
 
@@ -153,7 +153,7 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
         $this->assertSame($mockTable, $this->sut->getConvictionsAndPenaltiesTable($tmId));
     }
 
-    public function testGetPreviousLicencesTable()
+    public function testGetPreviousLicencesTable(): void
     {
         $tmId = 111;
 
@@ -165,7 +165,7 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
         $this->assertSame($mockTable, $this->sut->getPreviousLicencesTable($tmId));
     }
 
-    public function testAlterPreviousHistoryFieldsetTm()
+    public function testAlterPreviousHistoryFieldsetTm(): void
     {
         $fieldset = m::mock(\Laminas\Form\Fieldset::class);
         $hasConvictions = m::mock(\Laminas\Form\Fieldset::class);
@@ -224,7 +224,7 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
         $this->sut->alterPreviousHistoryFieldsetTm($fieldset, $tm);
     }
 
-    public function testAlterPreviousHistoryFieldset()
+    public function testAlterPreviousHistoryFieldset(): void
     {
         $fieldset = m::mock(\Laminas\Form\Fieldset::class);
         $hasConvictions = m::mock(\Laminas\Form\Fieldset::class);

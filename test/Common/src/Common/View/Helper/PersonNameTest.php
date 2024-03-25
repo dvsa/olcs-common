@@ -17,10 +17,11 @@ use \Common\View\Helper\PersonName;
  */
 class PersonNameTest extends \PHPUnit\Framework\TestCase
 {
+    public $viewHelper;
     /**
      * Setup the view helper
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->viewHelper = new PersonName();
     }
@@ -29,7 +30,7 @@ class PersonNameTest extends \PHPUnit\Framework\TestCase
      * Test invoke
      * @dataProvider personNameDataProvider
      */
-    public function testInvokeDefaultFields($input, $expected)
+    public function testInvokeDefaultFields($input, $expected): void
     {
         if (!empty($input['fields'])) {
             // specified fields to return

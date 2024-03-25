@@ -15,12 +15,12 @@ class FormInputSearchTest extends TestCase
      */
     protected $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = new FormInputSearch();
     }
 
-    public function testInvoke()
+    public function testInvoke(): void
     {
         $returnedValue = 'string';
 

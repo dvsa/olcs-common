@@ -14,7 +14,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class DataTransformerProviderTest extends MockeryTestCase
 {
-    public function testGetTransformer()
+    public function testGetTransformer(): void
     {
         $slug = 'no-of-permits';
         $dataTransformer = m::mock(DataTransformerInterface::class);

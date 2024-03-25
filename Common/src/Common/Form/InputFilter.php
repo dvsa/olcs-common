@@ -58,11 +58,7 @@ class InputFilter extends LaminasInputFilter
     {
         foreach ($data as &$input) {
             if (is_array($input)) {
-                if (!array_filter($input) && 3 == count($input)) {
-                    $input = null;
-                } else {
-                    $input = $this->setEmptyDataselectArraysToNull($input);
-                }
+                $input = array_filter($input) === [] && 3 == count($input) ? null : $this->setEmptyDataselectArraysToNull($input);
             }
         }
 

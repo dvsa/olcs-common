@@ -7,7 +7,7 @@
 
 namespace Common\Form\Elements\InputFilters;
 
-use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\InputFilter\InputProviderInterface;
 use Laminas\Form\Element\DateSelect as LaminasDateSelect;
 
 /**
@@ -20,25 +20,22 @@ class WithdrawnDate extends LaminasDateSelect implements InputProviderInterface
 
     /**
      * Provide default input rules for this element.
-     *
-     * @return array
      */
     public function getInputSpecification(): array
     {
-        $specification = [
+        return [
             'name' => $this->getName(),
             'continue_if_empty' => true,
             'filters' => [
                 [
                     'name'    => 'Callback',
                     'options' => [
-                        'callback' => function ($date) {
+                        'callback' => static function ($date) {
                             // Convert the date to a specific format
                             if (!is_array($date) || empty($date['year']) ||
                                 empty($date['month']) || empty($date['day'])) {
                                 return null;
                             }
-
                             return $date['year'] . '-' . $date['month'] . '-' . $date['day'];
                         }
                     ]
@@ -46,8 +43,6 @@ class WithdrawnDate extends LaminasDateSelect implements InputProviderInterface
             ],
             'validators' => $this->getValidators()
         ];
-
-        return $specification;
     }
 
     public function getValidators()

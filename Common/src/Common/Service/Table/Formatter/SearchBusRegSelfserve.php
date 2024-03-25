@@ -15,11 +15,9 @@ use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 class SearchBusRegSelfserve implements FormatterPluginManagerInterface
 {
     private UrlHelperService $urlHelper;
+
     private TranslatorDelegator $translator;
 
-    /**
-     * @param UrlHelperService $urlHelper
-     */
     public function __construct(UrlHelperService $urlHelper, TranslatorDelegator $translator)
     {
         $this->urlHelper = $urlHelper;

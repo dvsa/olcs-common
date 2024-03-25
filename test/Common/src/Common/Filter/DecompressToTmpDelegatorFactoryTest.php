@@ -16,10 +16,10 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class DecompressToTmpDelegatorFactoryTest extends MockeryTestCase
 {
-    public function testInvoke()
+    public function testInvoke(): void
     {
         $tmpDir = '/tmp/';
-        $callback = fn() => new DecompressUploadToTmp();
+        $callback = static fn() => new DecompressUploadToTmp();
 
         $mockFileSystem = m::mock(Filesystem::class);
 

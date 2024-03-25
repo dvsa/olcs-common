@@ -27,7 +27,7 @@ class LicenceTaxiPhvTest extends MockeryTestCase
      */
     private $formHelper;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->formHelper = m::mock(FormHelperService::class);
         $this->authService = m::mock(AuthorizationService::class);
@@ -35,7 +35,7 @@ class LicenceTaxiPhvTest extends MockeryTestCase
         $this->sut = new LicenceTaxiPhv($this->formHelper, $this->authService);
     }
 
-    public function testGetForm()
+    public function testGetForm(): void
     {
         $formActions = m::mock();
         $formActions->shouldReceive('has')->with('save')->andReturn(true);

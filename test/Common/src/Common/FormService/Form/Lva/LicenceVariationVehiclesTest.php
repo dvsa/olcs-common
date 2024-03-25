@@ -17,14 +17,14 @@ class LicenceVariationVehiclesTest extends MockeryTestCase
 
     protected $formHelper;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);
 
         $this->sut = new LicenceVariationVehicles($this->formHelper);
     }
 
-    public function testAlterForm()
+    public function testAlterForm(): void
     {
         $mockForm = m::mock();
 

@@ -17,13 +17,13 @@ class FormDateSelectTest extends MockeryTestCase
 {
     private $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $formInput = m::mock(FormInput::class)->makePartial();
 
         $translator = m::mock(Translator::class);
         $translator->shouldReceive('translate')->andReturnUsing(
-            fn($key) => 'translated-' . $key
+            static fn($key) => 'translated-' . $key
         );
 
         $container = m::mock(ContainerInterface::class);
@@ -40,7 +40,7 @@ class FormDateSelectTest extends MockeryTestCase
         $this->sut->setTranslator($translator);
     }
 
-    public function testRender()
+    public function testRender(): void
     {
         $element = new DateSelect('date');
         $markup = $this->sut->render($element);
@@ -50,7 +50,7 @@ class FormDateSelectTest extends MockeryTestCase
         $this->assertEquals($expected, $markup);
     }
 
-    public function testRenderWrongElement()
+    public function testRenderWrongElement(): void
     {
         $this->expectException(\Laminas\Form\Exception\InvalidArgumentException::class);
 
@@ -59,7 +59,7 @@ class FormDateSelectTest extends MockeryTestCase
         $this->sut->render($element);
     }
 
-    public function testRenderElementWithNoName()
+    public function testRenderElementWithNoName(): void
     {
         $this->expectException(\Laminas\Form\Exception\DomainException::class);
 

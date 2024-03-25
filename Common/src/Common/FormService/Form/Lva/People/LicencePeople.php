@@ -14,6 +14,7 @@ use LmcRbacMvc\Service\AuthorizationService;
 class LicencePeople extends AbstractPeople
 {
     protected FormHelperService $formHelper;
+
     protected AuthorizationService $authService;
 
     public function __construct(FormHelperService $formHelper, AuthorizationService $authService)
@@ -21,6 +22,7 @@ class LicencePeople extends AbstractPeople
         $this->formHelper = $formHelper;
         $this->authService = $authService;
     }
+
     /**
      * Alter licence people form
      *

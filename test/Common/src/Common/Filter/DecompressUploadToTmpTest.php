@@ -17,7 +17,7 @@ use Mockery as m;
  */
 class DecompressUploadToTmpTest extends MockeryTestCase
 {
-    public function testFilter()
+    public function testFilter(): void
     {
         $filename = 'testFile.zip';
         $tmpDir = '/tmp/';

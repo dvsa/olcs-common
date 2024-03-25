@@ -23,7 +23,7 @@ class NoOfPermitsBaseInsetTextGeneratorTest extends MockeryTestCase
 
     private $noOfPermitsBaseInsetTextGenerator;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->translator = m::mock(TranslationHelperService::class);
 
@@ -35,7 +35,7 @@ class NoOfPermitsBaseInsetTextGeneratorTest extends MockeryTestCase
         );
     }
 
-    public function testGenerate()
+    public function testGenerate(): void
     {
         $applicationFee = '10.00';
         $issueFee = '17.00';
@@ -64,7 +64,7 @@ class NoOfPermitsBaseInsetTextGeneratorTest extends MockeryTestCase
         );
     }
 
-    public function testGenerateIssueFeeNotApplicable()
+    public function testGenerateIssueFeeNotApplicable(): void
     {
         $options = [
             'applicationFee' => '10.00',

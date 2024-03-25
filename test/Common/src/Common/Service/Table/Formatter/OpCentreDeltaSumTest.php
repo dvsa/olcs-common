@@ -20,7 +20,7 @@ class OpCentreDeltaSumTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider dpFormatDataProvider
      */
-    public function testFormat($data, $expected)
+    public function testFormat($data, $expected): void
     {
         $column = [
             'name' => 'colName'

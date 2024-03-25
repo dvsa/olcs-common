@@ -15,7 +15,7 @@ class DateSelectNullifierTest extends \PHPUnit\Framework\TestCase
      * @param $input
      * @param $output
      */
-    public function testFilter($input, $output)
+    public function testFilter($input, $output): void
     {
         $sut = new DateSelectNullifier();
         $this->assertEquals($output, $sut->filter($input));

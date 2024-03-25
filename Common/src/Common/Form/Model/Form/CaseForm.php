@@ -17,18 +17,18 @@ class CaseForm
      * @Form\ComposedObject("Common\Form\Model\Fieldset\SubmissionSections")
      * @Form\Options({"label":"Select one or more categories"})
      */
-    public $submissionSections = null;
+    public $submissionSections;
 
     /**
      * @Form\Name("fields")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Fields")
      */
-    public $fields = null;
+    public $fields;
 
     /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\CaseFormActions")
      * @Form\Attributes({"class":"govuk-button-group"})
      */
-    public $formActions = null;
+    public $formActions;
 }

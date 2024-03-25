@@ -20,7 +20,7 @@ class TransportManagerDetails
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TransportManager\Details")
      * @Form\Flags({"priority": -10})
      */
-    public $details = null;
+    public $details;
 
     /**
      * @Form\Name("homeAddress")
@@ -34,7 +34,7 @@ class TransportManagerDetails
      * })
      * @Form\Flags({"priority": -20})
      */
-    public $homeAddress = null;
+    public $homeAddress;
 
     /**
      * @Form\Name("workAddress")
@@ -44,7 +44,7 @@ class TransportManagerDetails
      * })
      * @Form\Flags({"priority": -30})
      */
-    public $workAddress = null;
+    public $workAddress;
 
     /**
      * @Form\Name("responsibilities")
@@ -52,21 +52,21 @@ class TransportManagerDetails
      * @Form\Options({"label":"lva-tm-details-details-responsibilities"})
      * @Form\Flags({"priority": -40})
      */
-    public $responsibilities = null;
+    public $responsibilities;
 
     /**
      * @Form\Name("otherEmployments")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TransportManager\OtherEmployments")
      * @Form\Flags({"priority": -50})
      */
-    public $otherEmployments = null;
+    public $otherEmployments;
 
     /**
      * @Form\Name("previousHistory")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TransportManager\PreviousHistory")
      * @Form\Flags({"priority": -60})
      */
-    public $previousHistory = null;
+    public $previousHistory;
 
     /**
      * @Form\Name("form-actions")
@@ -74,5 +74,5 @@ class TransportManagerDetails
      * @Form\Attributes({"class":"govuk-button-group"})
      * @Form\Flags({"priority": -70})
      */
-    public $formActions = null;
+    public $formActions;
 }

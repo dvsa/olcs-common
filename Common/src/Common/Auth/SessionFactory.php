@@ -12,10 +12,8 @@ use RunTimeException;
 class SessionFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
-     * @return Session
      * @throws Exception
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): Session

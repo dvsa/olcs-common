@@ -10,7 +10,7 @@ use Laminas\ServiceManager\AbstractPluginManager;
  */
 class PluginManager extends AbstractPluginManager
 {
-    protected $instanceOf = null;
+    protected $instanceOf;
 
     /**
      * @inheritdoc

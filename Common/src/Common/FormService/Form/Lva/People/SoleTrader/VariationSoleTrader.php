@@ -15,8 +15,11 @@ use LmcRbacMvc\Service\AuthorizationService;
 class VariationSoleTrader extends AbstractSoleTrader
 {
     protected FormHelperService $formHelper;
+
     protected AuthorizationService $authService;
+
     protected PeopleLvaService $peopleLvaService;
+
     protected FormServiceManager $formServiceLocator;
 
     public function __construct(

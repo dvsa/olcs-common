@@ -17,6 +17,10 @@ use Mockery as m;
  */
 class RedirectTest extends MockeryTestCase
 {
+    /**
+     * @var \Mockery\LegacyMockInterface
+     */
+    public $mockResponse;
     protected $sut;
 
     /**
@@ -33,7 +37,7 @@ class RedirectTest extends MockeryTestCase
     /**
      * @group controller_plugin
      */
-    public function testToRouteAjaxWithoutAjax()
+    public function testToRouteAjaxWithoutAjax(): void
     {
         $route = 'foo';
         $params = ['foo' => 'bar'];
@@ -55,7 +59,7 @@ class RedirectTest extends MockeryTestCase
     /**
      * @group controller_plugin
      */
-    public function testToRouteAjaxWithAjax()
+    public function testToRouteAjaxWithAjax(): void
     {
         $route = 'foo';
         $params = ['foo' => 'bar'];
@@ -99,7 +103,7 @@ class RedirectTest extends MockeryTestCase
     /**
      * @group controller_plugin
      */
-    public function testRefreshAjax()
+    public function testRefreshAjax(): void
     {
         $this->sut->shouldReceive('toRouteAjax')
             ->with(null, [], [], true)

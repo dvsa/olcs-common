@@ -21,7 +21,7 @@ use Laminas\Form\Form;
  */
 class NoOfPermitsBothFieldsetPopulatorTest extends MockeryTestCase
 {
-    public function testPopulate()
+    public function testPopulate(): void
     {
         $maxCanApplyFor = 35;
         $maxPermitted = 50;
@@ -37,8 +37,7 @@ class NoOfPermitsBothFieldsetPopulatorTest extends MockeryTestCase
         $euro6PermitsRemaining = 10;
         $euro6Value = 10;
 
-        $expectedInsetAndBlurbMarkup = '<div class="govuk-inset-text">base inset text<br><br>' .
-            'translated inset supplement</div>' .
+        $expectedInsetAndBlurbMarkup = '<div class="govuk-inset-text">base inset text<br><br>translated inset supplement</div>' .
             '<p class="govuk-body"><strong>translated caption</strong><br>' .
             '<span class="hint">translated hint, maxPermitted = 35</span></p>';
 

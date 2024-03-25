@@ -12,12 +12,12 @@ class FormCheckboxAdvancedTest extends MockeryTestCase
 {
     protected FormCheckboxAdvanced $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = new FormCheckboxAdvanced();
     }
 
-    public function testInvoke()
+    public function testInvoke(): void
     {
         $viewContent = 'view content';
 

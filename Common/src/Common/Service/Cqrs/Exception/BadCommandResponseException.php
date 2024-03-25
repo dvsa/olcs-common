@@ -22,9 +22,6 @@ class BadCommandResponseException extends Exception
     protected $response;
 
     /**
-     * @param string $message
-     * @param CommandInterface $command
-     * @param Response $response
      * @param Throwable|null $previous
      */
     public function __construct(string $message, CommandInterface $command, Response $response, Throwable $previous = null)

@@ -18,10 +18,12 @@ use Common\Service\Table\Type\DeltaActionLinks;
 class DeltaActionLinksTest extends MockeryTestCase
 {
     protected $sut;
+
     protected $table;
+
     protected $sm;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sm = new ServiceManager();
 
@@ -35,7 +37,7 @@ class DeltaActionLinksTest extends MockeryTestCase
     /**
      * @dataProvider tableDataProvider
      */
-    public function testRender($data, $expected)
+    public function testRender($data, $expected): void
     {
         $mockTranslate = $this->getTranslator($data['action'] ?? null);
 

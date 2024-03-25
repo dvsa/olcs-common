@@ -17,7 +17,7 @@ class AddTransportManagerDetails
      * @Form\Type("Text")
      * @Form\Filter("Laminas\Filter\StringTrim")
      */
-    public $forename = null;
+    public $forename;
 
     /**
      * @Form\Attributes({"class":"long","id":"", "disabled":"disabled"})
@@ -25,7 +25,7 @@ class AddTransportManagerDetails
      * @Form\Type("Text")
      * @Form\Filter("Laminas\Filter\StringTrim")
      */
-    public $familyName = null;
+    public $familyName;
 
     /**
      * @Form\Attributes({"id":"dob"})
@@ -40,7 +40,7 @@ class AddTransportManagerDetails
      * @Form\Validator("Date", options={"format":"Y-m-d"})
      * @Form\Validator("DateNotInFuture")
      */
-    public $birthDate = null;
+    public $birthDate;
 
     /**
      * @Form\Attributes({"class":"medium", "disabled":"disabled"})
@@ -54,11 +54,11 @@ class AddTransportManagerDetails
      * @Form\Filter("Laminas\Filter\StringTrim")
      * @Form\Validator("Dvsa\Olcs\Transfer\Validators\EmailAddress")
      */
-    public $email = null;
+    public $email;
 
     /**
      * @Form\Attributes({"value": "markup-lva-tm-add-tm-details-guidance"})
      * @Form\Type("\Common\Form\Elements\Types\GuidanceTranslated")
      */
-    public $guidance = null;
+    public $guidance;
 }

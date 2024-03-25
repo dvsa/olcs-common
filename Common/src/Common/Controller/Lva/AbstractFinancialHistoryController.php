@@ -41,21 +41,17 @@ abstract class AbstractFinancialHistoryController extends AbstractController
     ];
 
     protected FormHelperService $formHelper;
+
     protected FlashMessengerHelperService $flashMessengerHelper;
+
     protected FormServiceManager $formServiceManager;
+
     protected ScriptFactory $scriptFactory;
+
     protected DataHelperService $dataHelper;
+
     protected FileUploadHelperService $uploadHelper;
 
-    /**
-     * @param NiTextTranslation $niTextTranslationUtil
-     * @param AuthorizationService $authService
-     * @param FlashMessengerHelperService $flashMessengerHelper
-     * @param FormServiceManager $formServiceManager
-     * @param ScriptFactory $scriptFactory
-     * @param DataHelperService $dataHelper
-     * @param FileUploadHelperService $uploadHelper
-     */
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
@@ -84,11 +80,7 @@ abstract class AbstractFinancialHistoryController extends AbstractController
         /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
-        if ($request->isPost()) {
-            $data = (array)$request->getPost();
-        } else {
-            $data = $this->getFormData();
-        }
+        $data = $request->isPost() ? (array)$request->getPost() : $this->getFormData();
 
         $formParameters = [
             'lva' => $this->lva,
@@ -104,9 +96,11 @@ abstract class AbstractFinancialHistoryController extends AbstractController
         $hasProcessedFiles = $this->processFiles(
             $form,
             'data->file',
-            [$this, 'processFinancialFileUpload'],
-            [$this, 'deleteFile'],
-            [$this, 'getDocuments']
+            function (array $file) : void {
+                $this->processFinancialFileUpload($file);
+            },
+            fn(int $id): bool => $this->deleteFile($id),
+            fn(): array => $this->getDocuments()
         );
 
         if (!$hasProcessedFiles && $request->isPost() && $form->isValid()) {
@@ -184,6 +178,7 @@ abstract class AbstractFinancialHistoryController extends AbstractController
             $mappedResults = $mapper->mapFromResult($response->getResult());
             $this->financialHistoryDocuments = $mappedResults['data']['documents'];
         }
+
         return $mappedResults;
     }
 
@@ -208,6 +203,7 @@ abstract class AbstractFinancialHistoryController extends AbstractController
             // need this just to populate documents list after upload
             $this->getFormData();
         }
+
         return $this->financialHistoryDocuments;
     }
 
@@ -215,10 +211,8 @@ abstract class AbstractFinancialHistoryController extends AbstractController
      * Handle the file upload
      *
      * @param array $file File
-     *
-     * @return void
      */
-    public function processFinancialFileUpload($file)
+    public function processFinancialFileUpload($file): void
     {
         $this->uploadFile(
             $file,
@@ -303,7 +297,7 @@ abstract class AbstractFinancialHistoryController extends AbstractController
             }
         }
 
-        if (!empty($errors)) {
+        if ($errors !== []) {
             $fm = $this->flashMessengerHelper;
 
             foreach ($errors as $error) {

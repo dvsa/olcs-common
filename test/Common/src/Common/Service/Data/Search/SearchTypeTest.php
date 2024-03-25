@@ -66,6 +66,7 @@ class SearchTypeTest extends TestCase
         $sut = new SearchType();
         $sut->setSearchTypeManager($this->getMockSearchTypeManager());
         $sut->setRoleService($mockRoleService);
+
         $options = $sut->fetchListOptions(null);
 
 
@@ -79,6 +80,7 @@ class SearchTypeTest extends TestCase
         $sut = new SearchType();
         $sut->setSearchTypeManager($this->getMockSearchTypeManager());
         $sut->setRoleService($mockRoleService);
+
         $options = $sut->fetchListOptions(null);
 
 

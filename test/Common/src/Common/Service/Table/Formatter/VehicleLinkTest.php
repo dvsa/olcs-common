@@ -13,6 +13,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class VehicleLinkTest extends MockeryTestCase
 {
     protected $urlHelper;
+
     protected $sut;
 
     protected function setUp(): void
@@ -29,7 +30,7 @@ class VehicleLinkTest extends MockeryTestCase
     /**
      * Test the format method
      */
-    public function testFormat()
+    public function testFormat(): void
     {
 
         $this->urlHelper

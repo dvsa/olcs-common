@@ -23,7 +23,7 @@ class NoOfPermitsSingleValidatorTest extends MockeryTestCase
         $emissionsCategory,
         $expectedMessages,
         $expectedIsValid
-    ) {
+    ): void {
         $options = [
             'permitsRemaining' => $permitsRemaining,
             'maxPermitted' => $maxPermitted,

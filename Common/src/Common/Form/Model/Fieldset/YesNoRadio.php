@@ -19,5 +19,5 @@ class YesNoRadio
      *     "value_options": {"Y": "Yes", "N": "No"},
      * })
      */
-    public $yesNo = null;
+    public $yesNo;
 }

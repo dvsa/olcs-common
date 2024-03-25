@@ -7,14 +7,14 @@ use Psr\Container\ContainerInterface;
 
 class ScriptFactoryTest extends \PHPUnit\Framework\TestCase
 {
+    public $inlineScript;
+    public $service;
     protected $config = [];
 
     /**
      * test before hook
-     *
-     * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->config = [
             'local_scripts_path' => [__DIR__ . '/TestResources/']
@@ -42,19 +42,19 @@ class ScriptFactoryTest extends \PHPUnit\Framework\TestCase
         $this->service->__invoke($sl, ScriptFactory::class);
     }
 
-    public function testLoadFileWithNonExistentPath()
+    public function testLoadFileWithNonExistentPath(): void
     {
         try {
             $this->service->loadFile('/foo/bar');
-        } catch (\Exception $e) {
-            $this->assertEquals('Attempted to load invalid script file "/foo/bar"', $e->getMessage());
+        } catch (\Exception $exception) {
+            $this->assertEquals('Attempted to load invalid script file "/foo/bar"', $exception->getMessage());
             return;
         }
 
         $this->fail('Expected exception not thrown');
     }
 
-    public function testLoadFileWithExistentPath()
+    public function testLoadFileWithExistentPath(): void
     {
         $this->service->loadFile('stub');
         $jsArray = [];
@@ -71,21 +71,21 @@ class ScriptFactoryTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testLoadFilesWhereOneOrMoreDoesNotExist()
+    public function testLoadFilesWhereOneOrMoreDoesNotExist(): void
     {
         try {
             $this->service->loadFiles(['stub', 'foo']);
-        } catch (\Exception $e) {
-            $this->assertEquals('Attempted to load invalid script file "foo"', $e->getMessage());
+        } catch (\Exception $exception) {
+            $this->assertEquals('Attempted to load invalid script file "foo"', $exception->getMessage());
             return;
         }
 
         $this->fail('Expected exception not thrown');
     }
 
-    public function testLoadFilesWhereAllFilesExist()
+    public function testLoadFilesWhereAllFilesExist(): void
     {
-        $scripts = $this->service->loadFiles(['stub', 'another_stub']);
+        $this->service->loadFiles(['stub', 'another_stub']);
 
         $jsArray = [];
 

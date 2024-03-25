@@ -16,22 +16,22 @@ class PsvVehicles
      * @Form\Name("data")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\VehiclesPsvData")
      */
-    public $data = null;
+    public $data;
 
     /**
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\PsvVehicles")
      */
-    public $vehicles = null;
+    public $vehicles;
 
     /**
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\ShareInfo")
      */
-    public $shareInfo = null;
+    public $shareInfo;
 
     /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
      * @Form\Attributes({"class":"govuk-button-group"})
      */
-    public $formActions = null;
+    public $formActions;
 }

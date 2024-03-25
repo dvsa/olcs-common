@@ -18,10 +18,8 @@ class LicenceLvaAdapter extends AbstractLvaAdapter
 
     /**
      * Alter the form based on the LVA rules
-     *
-     * @param \Laminas\Form\Form $form
      */
-    public function alterForm(Form $form)
+    public function alterForm(Form $form): void
     {
         $form->get('form-actions')->remove('saveAndContinue');
     }

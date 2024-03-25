@@ -19,6 +19,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 class SeriousInfringementLinkTest extends TestCase
 {
     protected $urlHelper;
+
     protected $sut;
 
     protected function setUp(): void
@@ -32,7 +33,7 @@ class SeriousInfringementLinkTest extends TestCase
         m::close();
     }
 
-    public function testFormat()
+    public function testFormat(): void
     {
         $id = 69;
         $inputData = ['id' => $id];

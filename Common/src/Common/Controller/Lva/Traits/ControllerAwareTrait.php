@@ -8,7 +8,7 @@ trait ControllerAwareTrait
 {
     protected $controller;
 
-    public function setController(AbstractController $controller)
+    public function setController(AbstractController $controller): void
     {
         $this->controller = $controller;
     }

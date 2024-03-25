@@ -8,10 +8,8 @@ use Psr\Container\ContainerInterface;
 class ControllerWithFactoryStub implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
-     * @return $this
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

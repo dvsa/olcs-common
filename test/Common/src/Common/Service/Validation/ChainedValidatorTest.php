@@ -23,7 +23,7 @@ class ChainedValidatorTest extends TestCase
      * @param $validator
      * @param $expected
      */
-    public function testValidate($command, $validator, $expected)
+    public function testValidate($command, $validator, $expected): void
     {
         $sut = new ChainedValidator();
         $sut->addValidationChain($validator);

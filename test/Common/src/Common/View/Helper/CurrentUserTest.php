@@ -14,7 +14,7 @@ use LmcRbacMvc\Service\AuthorizationService;
  */
 class CurrentUserTest extends MockeryTestCase
 {
-    public function testGetFullNameEmpty()
+    public function testGetFullNameEmpty(): void
     {
         $identity = new User();
 
@@ -25,7 +25,7 @@ class CurrentUserTest extends MockeryTestCase
         $this->assertEquals('Not logged in', $sut->getFullName());
     }
 
-    public function testGetFullNameAnon()
+    public function testGetFullNameAnon(): void
     {
         $userData = [
             'userType' => User::USER_TYPE_ANON
@@ -41,7 +41,7 @@ class CurrentUserTest extends MockeryTestCase
         $this->assertEquals('Not logged in', $sut->getFullName());
     }
 
-    public function testGetFullName()
+    public function testGetFullName(): void
     {
         $person = ['forename' => 'Terry', 'familyName' => 'Barret-Edgecombe'];
 
@@ -69,7 +69,7 @@ class CurrentUserTest extends MockeryTestCase
         $this->assertEquals('Terry Barret-Edgecombe', $sut->getFullName());
     }
 
-    public function testGetFullNameUsername()
+    public function testGetFullNameUsername(): void
     {
         $userData = [
             'userType' => User::USER_TYPE_OPERATOR,
@@ -101,7 +101,7 @@ class CurrentUserTest extends MockeryTestCase
      * @param $userData
      * @param $expected
      */
-    public function testGetOperatorName($userData, $expected)
+    public function testGetOperatorName($userData, $expected): void
     {
         $identity = new User();
         $identity->setUserData($userData);
@@ -147,7 +147,7 @@ class CurrentUserTest extends MockeryTestCase
      * @param $userData
      * @param $expected
      */
-    public function testIsLoggedIn($userData, $expected)
+    public function testIsLoggedIn($userData, $expected): void
     {
         $identity = new User();
         $identity->setUserData($userData);
@@ -174,7 +174,7 @@ class CurrentUserTest extends MockeryTestCase
      * @param $userData
      * @param $expected
      */
-    public function testIsOperator($userData, $expected)
+    public function testIsOperator($userData, $expected): void
     {
         $identity = new User();
         $identity->setUserData($userData);
@@ -202,7 +202,7 @@ class CurrentUserTest extends MockeryTestCase
     /**
      * @dataProvider provideIsLocalAuthority
      */
-    public function testIsLocalAuthority($userData, $expected)
+    public function testIsLocalAuthority($userData, $expected): void
     {
         $identity = new User();
         $identity->setUserData($userData);
@@ -230,7 +230,7 @@ class CurrentUserTest extends MockeryTestCase
     /**
      * @dataProvider provideIsPartner
      */
-    public function testIsPartner($userData, $expected)
+    public function testIsPartner($userData, $expected): void
     {
         $identity = new User();
         $identity->setUserData($userData);
@@ -260,7 +260,7 @@ class CurrentUserTest extends MockeryTestCase
      * @param $userData
      * @param $expected
      */
-    public function testIsTransportManager($userData, $expected)
+    public function testIsTransportManager($userData, $expected): void
     {
         $identity = new User();
         $identity->setUserData($userData);
@@ -290,7 +290,7 @@ class CurrentUserTest extends MockeryTestCase
      * @param $userData
      * @param $expected
      */
-    public function testGetUniqueId($userData, $expected)
+    public function testGetUniqueId($userData, $expected): void
     {
         $identity = new User();
         $identity->setUserData($userData);
@@ -312,7 +312,7 @@ class CurrentUserTest extends MockeryTestCase
         ];
     }
 
-    public function testGetNumberOfVehicles()
+    public function testGetNumberOfVehicles(): void
     {
         $userData = [
             'numberOfVehicles' => 25
@@ -328,7 +328,7 @@ class CurrentUserTest extends MockeryTestCase
         $this->assertEquals(25, $sut->getNumberOfVehicles());
     }
 
-    public function testIsInternalUser()
+    public function testIsInternalUser(): void
     {
         $mockAuthService = m::mock(AuthorizationService::class);
         $mockAuthService->shouldReceive('getIdentity')->andReturn(new User());

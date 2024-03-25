@@ -29,6 +29,6 @@ class OcComplaints implements FormatterPluginManagerInterface
     {
         unset($column);
 
-        return !empty($data['operatingCentre']['complaints']) ? count($data['operatingCentre']['complaints']) : 0;
+        return empty($data['operatingCentre']['complaints']) ? 0 : count($data['operatingCentre']['complaints']);
     }
 }

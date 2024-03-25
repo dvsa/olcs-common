@@ -14,6 +14,14 @@ use Laminas\Mvc\Controller\AbstractActionController;
  */
 class EnabledSectionTraitStub extends AbstractActionController
 {
+    /**
+     * @var \Common\Service\Helper\RestrictionHelperService
+     */
+    public $restrictionHelper;
+    /**
+     * @var \Common\Service\Helper\StringHelperService
+     */
+    public $stringHelper;
     use EnabledSectionTrait;
 
     public function __construct(RestrictionHelperService $restrictionHelper, StringHelperService $stringHelper)

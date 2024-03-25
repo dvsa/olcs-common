@@ -23,12 +23,12 @@ class FinancialEvidenceRequired
      * })
      * @Form\ErrorMessage("continuations.financial-evidence-required.error")
      */
-    public $radio = null;
+    public $radio;
 
     /**
      * @Form\ComposedObject("\Common\Form\Model\Fieldset\MultipleFileUpload")
      */
-    public $uploadContent = null;
+    public $uploadContent;
 
     /**
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
@@ -36,7 +36,7 @@ class FinancialEvidenceRequired
      *     "value": "markup-continuation-insufficient-finances-send-by-post",
      * })
      */
-    public $sendContent = null;
+    public $sendContent;
 
     /**
      * @Form\Attributes({
@@ -47,5 +47,5 @@ class FinancialEvidenceRequired
      * @Form\Options({"label":"Continue"})
      * @Form\Type("\Laminas\Form\Element\Button")
      */
-    public $submit = null;
+    public $submit;
 }

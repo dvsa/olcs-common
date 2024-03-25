@@ -33,6 +33,7 @@ class Address implements FormatterPluginManagerInterface
             'postcode',
         ]
     ];
+
     private DataHelperService $dataHelper;
 
     /**
@@ -57,16 +58,16 @@ class Address implements FormatterPluginManagerInterface
 
         $parts = [];
 
-        if (isset($data['countryCode']['id'])) {
-            $data['countryCode'] = $data['countryCode']['id'];
-        } else {
-            $data['countryCode'] = null;
-        }
+        $data['countryCode'] = $data['countryCode']['id'] ?? null;
 
         foreach ($fields as $item) {
-            if (isset($data[$item]) && !empty($data[$item])) {
-                $parts[] = $data[$item];
+            if (!isset($data[$item])) {
+                continue;
             }
+            if (empty($data[$item])) {
+                continue;
+            }
+            $parts[] = $data[$item];
         }
 
         return static::formatAddress($parts);
@@ -94,7 +95,7 @@ class Address implements FormatterPluginManagerInterface
     private function getFields($column)
     {
         if (isset($column['addressFields'])) {
-            if (is_string($column['addressFields']) and array_key_exists($column['addressFields'], $this->formats)) {
+            if (is_string($column['addressFields']) && array_key_exists($column['addressFields'], $this->formats)) {
                 $fields = $this->formats[$column['addressFields']];
             } else {
                 $fields = $column['addressFields'];
@@ -105,12 +106,10 @@ class Address implements FormatterPluginManagerInterface
                 'town'
             ];
         }
+
         return $fields;
     }
 
-    /**
-     * @param DataHelperService $dataHelper
-     */
     public function __construct(DataHelperService $dataHelper)
     {
         $this->dataHelper = $dataHelper;

@@ -14,10 +14,6 @@ use LmcRbacMvc\Service\AuthorizationService;
  */
 class ReviewController extends AbstractController
 {
-    /**
-     * @param NiTextTranslation $niTextTranslationUtil
-     * @param AuthorizationService $authService
-     */
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService
@@ -36,6 +32,7 @@ class ReviewController extends AbstractController
         if ($response->isForbidden()) {
             return $this->notFoundAction();
         }
+
         $data = $response->getResult();
 
         $view = new ViewModel(['content' => $data['markup']]);

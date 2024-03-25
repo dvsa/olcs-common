@@ -19,10 +19,15 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class DisqualifyUrlTest extends MockeryTestCase
 {
     protected $urlHelper;
+
     protected $router;
+
     protected $request;
+
     protected $permissionService;
+
     protected $mockRouteMatch;
+
     protected $sut;
 
     protected function setUp(): void

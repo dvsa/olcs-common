@@ -9,7 +9,7 @@ class LicenceSelfserveTest extends SearchAbstractTest
 {
     protected $class = \Common\Data\Object\Search\LicenceSelfserve::class;
 
-    public function testOrgNameFormatter()
+    public function testOrgNameFormatter(): void
     {
         $col = $this->sut->getColumns()[2];
 

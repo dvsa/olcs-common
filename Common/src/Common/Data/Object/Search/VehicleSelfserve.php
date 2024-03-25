@@ -16,6 +16,7 @@ class VehicleSelfserve extends InternalSearchAbstract
      * @var string
      */
     protected $title = 'Vehicle';
+
     /**
      * @var string
      */
@@ -80,7 +81,7 @@ class VehicleSelfserve extends InternalSearchAbstract
             [
                 'title' => 'Licence number',
                 'name'=> 'licNo',
-                'formatter' => fn($data) => '<a class="govuk-link" href="/view-details/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>'
+                'formatter' => static fn($data) => '<a class="govuk-link" href="/view-details/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>'
             ],
             [
                 'title' => 'Licence status',

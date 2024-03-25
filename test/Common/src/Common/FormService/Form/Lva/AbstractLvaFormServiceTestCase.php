@@ -25,7 +25,7 @@ abstract class AbstractLvaFormServiceTestCase extends MockeryTestCase
 
     protected $classArgs = [];
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);
         $this->fsm = m::mock(\Common\FormService\FormServiceManager::class)->makePartial();
@@ -34,7 +34,7 @@ abstract class AbstractLvaFormServiceTestCase extends MockeryTestCase
         $this->sut = $reflector->newInstanceArgs($this->classArgs);
     }
 
-    public function testGetForm()
+    public function testGetForm(): void
     {
         // Mocks
         $mockForm = m::mock(Form::class)->shouldReceive('get')->withAnyArgs()->getMock();

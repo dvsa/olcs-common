@@ -24,7 +24,7 @@ class NoOfPermitsTest extends TestCase
 
     private $noOfPermits;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $submitButton = new Submit();
         $submitButton->setName('SubmitButton');
@@ -45,7 +45,7 @@ class NoOfPermitsTest extends TestCase
         $this->noOfPermits = new NoOfPermits($this->translationHelperService);
     }
 
-    public function testMapForFormOptions()
+    public function testMapForFormOptions(): void
     {
         $form = $this->form;
 
@@ -307,7 +307,7 @@ class NoOfPermitsTest extends TestCase
         );
     }
 
-    public function testAllAllowablePermitsIssued()
+    public function testAllAllowablePermitsIssued(): void
     {
         $form = $this->form;
 
@@ -467,7 +467,7 @@ class NoOfPermitsTest extends TestCase
         $this->assertArrayNotHasKey('banner', $data);
     }
 
-    public function testExceptionOnIncorrectPermitType()
+    public function testExceptionOnIncorrectPermitType(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Permit type 7 is not supported by this mapper');
@@ -482,7 +482,7 @@ class NoOfPermitsTest extends TestCase
 
         $form = new Form();
 
-        $data = $this->noOfPermits->mapForFormOptions(
+        $this->noOfPermits->mapForFormOptions(
             $data,
             $form,
             'application',

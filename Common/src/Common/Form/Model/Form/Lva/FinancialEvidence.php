@@ -16,7 +16,7 @@ class FinancialEvidence
      * @Form\Name("finance")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FinancialEvidenceFinance")
      */
-    public $finance = null;
+    public $finance;
 
     /**
      * @Form\Name("evidence")
@@ -26,24 +26,24 @@ class FinancialEvidence
      *    "hint": "lva-financial-evidence-evidence.hint"
      * })
      */
-    public $evidence = null;
+    public $evidence;
 
     /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
      * @Form\Attributes({"class":"govuk-button-group"})
      */
-    public $formActions = null;
+    public $formActions;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $id = null;
+    public $id;
 }

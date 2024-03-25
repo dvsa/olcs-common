@@ -47,7 +47,7 @@ class EcmtNoOfPermitsCombinedTotalValidator
             if ((substr($name, 0, 4) == 'euro') && is_string($value)) {
                 $trimmedValue = trim($value);
                 if (ctype_digit($trimmedValue)) {
-                    $total += intval($value);
+                    $total += (int) $value;
                 }
             }
         }

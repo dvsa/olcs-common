@@ -19,6 +19,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 class LicenceNumberLinkTest extends TestCase
 {
     protected $urlHelper;
+
     protected $sut;
 
     protected function setUp(): void
@@ -35,7 +36,7 @@ class LicenceNumberLinkTest extends TestCase
     /**
      * @dataProvider formatProvider
      */
-    public function testFormat($data, $expected)
+    public function testFormat($data, $expected): void
     {
         $this->urlHelper
             ->shouldReceive('fromRoute')

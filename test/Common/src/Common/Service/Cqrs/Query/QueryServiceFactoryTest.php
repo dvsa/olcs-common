@@ -27,7 +27,7 @@ class QueryServiceFactoryTest extends MockeryTestCase
      */
     protected $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->setUpServiceManager();
     }
@@ -41,7 +41,7 @@ class QueryServiceFactoryTest extends MockeryTestCase
         $this->setUpSut();
 
         // Assert
-        $this->assertIsCallable([$this->sut, '__invoke']);
+        $this->assertIsCallable(fn(\Psr\Container\ContainerInterface $container, string $requestedName, ?array $options = null): \Common\Service\Cqrs\Query\QueryService => $this->sut->__invoke($container, $requestedName, $options));
     }
 
     /**

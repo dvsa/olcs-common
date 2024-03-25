@@ -10,7 +10,7 @@ class NoOfPermitsMoroccoFieldsetPopulator implements FieldsetPopulatorInterface
     /**
      * {@inheritdoc}
      */
-    public function populate($form, Fieldset $fieldset, array $options)
+    public function populate($form, Fieldset $fieldset, array $options): void
     {
         $fieldset->add(
             [

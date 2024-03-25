@@ -10,13 +10,13 @@ use Laminas\Form\Element\Radio;
 
 class FormRadioOptionTest extends TestCase
 {
-    public function testInvokeNull()
+    public function testInvokeNull(): void
     {
         $sut = new FormRadioOption();
         $this->assertSame($sut, $sut->__invoke());
     }
 
-    public function testInvoke()
+    public function testInvoke(): void
     {
         $idGenerator = m::mock(UniqidGenerator::class);
         $idGenerator->shouldReceive('generateId')->twice()->andReturn('generated_id');

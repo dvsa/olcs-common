@@ -8,6 +8,7 @@ use Common\Util\Escape;
 class NameActionAndStatus implements FormatterPluginManagerInterface
 {
     private Permission $permissionService;
+
     public const BUTTON_FORMAT = '<button data-prevent-double-click="true" class="action-button-link" role="link" '
     . 'data-module="govuk-button" type="submit" name="table[action][edit][%d]">%s</button>';
 
@@ -26,7 +27,7 @@ class NameActionAndStatus implements FormatterPluginManagerInterface
      */
     public function format($data, $column = [])
     {
-        $title = !empty($data['title']['description']) ? $data['title']['description'] . ' ' : '';
+        $title = empty($data['title']['description']) ? '' : $data['title']['description'] . ' ';
         $name = Escape::html($title . $data['forename'] . ' ' . $data['familyName']);
         $newMarker = '';
 
@@ -38,6 +39,6 @@ class NameActionAndStatus implements FormatterPluginManagerInterface
             return $name . $newMarker;
         }
 
-        return sprintf(self::BUTTON_FORMAT, intval($data['id']), $name) . $newMarker;
+        return sprintf(self::BUTTON_FORMAT, (int) $data['id'], $name) . $newMarker;
     }
 }

@@ -34,10 +34,8 @@ class PublicationNumber implements FormatterPluginManagerInterface
         $uriPattern = '/file/%s';
         $url = sprintf($uriPattern, $data['document']['id']);
         $linkPattern = '<a class="govuk-link" href="%s">%s</a>';
-        $link = sprintf($linkPattern, Escape::html($url), Escape::html($data['publicationNo']));
-
         if ($data['pubStatus']['id'] === 'pub_s_generated') {
-            $link = sprintf(
+            return sprintf(
                 '<a class="govuk-link" href="%s" data-file-url="%s" target="blank">%s</a>',
                 htmlentities($data['webDavUrl'], ENT_QUOTES, 'utf-8'),
                 htmlentities($data['webDavUrl'], ENT_QUOTES, 'utf-8'),
@@ -45,6 +43,6 @@ class PublicationNumber implements FormatterPluginManagerInterface
             );
         }
 
-        return $link;
+        return sprintf($linkPattern, Escape::html($url), Escape::html($data['publicationNo']));
     }
 }

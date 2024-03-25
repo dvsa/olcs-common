@@ -20,12 +20,12 @@ use Laminas\Form\Form;
  */
 class NewTmUserTest extends MockeryTestCase
 {
-    public function testMapFromResult()
+    public function testMapFromResult(): void
     {
         $this->assertEquals(['foo' => 'bar'], NewTmUser::mapFromResult(['foo' => 'bar']));
     }
 
-    public function testMapFormErrors()
+    public function testMapFormErrors(): void
     {
         $form = m::mock(Form::class);
         $fm = m::mock(FlashMessengerHelperService::class);
@@ -59,12 +59,12 @@ class NewTmUserTest extends MockeryTestCase
         NewTmUser::mapFormErrors($form, $messages, $fm);
     }
 
-    public static function mapFormErrors(Form $form, array $errors, FlashMessengerHelperService $fm)
+    public static function mapFormErrors(Form $form, array $errors, FlashMessengerHelperService $fm): void
     {
         $formMessages = [];
 
         if (isset($errors['username'])) {
-            foreach ($errors['username'] as $key => $message) {
+            foreach ($errors['username'] as $message) {
                 $formMessages['data']['username'][] = $message;
             }
 
@@ -72,17 +72,15 @@ class NewTmUserTest extends MockeryTestCase
         }
 
         if (isset($errors['emailAddress'])) {
-            foreach ($errors['emailAddress'] as $key => $message) {
+            foreach ($errors['emailAddress'] as $message) {
                 $formMessages['data']['emailAddress'][] = $message;
             }
 
             unset($errors['emailAddress']);
         }
 
-        if (!empty($errors)) {
-            foreach ($errors as $error) {
-                $fm->addCurrentErrorMessage($error);
-            }
+        foreach ($errors as $error) {
+            $fm->addCurrentErrorMessage($error);
         }
 
         $form->setMessages($formMessages);

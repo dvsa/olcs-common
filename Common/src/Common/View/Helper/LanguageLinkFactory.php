@@ -8,11 +8,9 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
 class LanguageLinkFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
      *
-     * @return LanguageLink
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): LanguageLink
     {

@@ -9,9 +9,6 @@ use Dvsa\Olcs\Transfer\Query\Surrender\ByLicence;
 class Surrender extends AbstractDataService
 {
     /**
-     * @param int $licenceId
-     *
-     * @return array
      * @throws DataServiceException
      */
     public function fetchSurrenderData(int $licenceId): array
@@ -24,6 +21,7 @@ class Surrender extends AbstractDataService
         if ($response->isOk()) {
             return $response->getResult();
         }
+
         throw new DataServiceException('unknown-error');
     }
 }

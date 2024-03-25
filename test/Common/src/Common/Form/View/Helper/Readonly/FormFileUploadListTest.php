@@ -17,7 +17,7 @@ use Laminas\Form\FieldsetInterface;
  */
 class FormFileUploadListTest extends MockeryTestCase
 {
-    public function testRenderInvalidElement()
+    public function testRenderInvalidElement(): void
     {
         $this->expectException(\Exception::class);
 
@@ -25,14 +25,14 @@ class FormFileUploadListTest extends MockeryTestCase
         $sut->render(m::mock(FieldsetInterface::class));
     }
 
-    public function testRenderNotItems()
+    public function testRenderNotItems(): void
     {
         $sut = new FormFileUploadList();
 
         static::assertEquals('', $sut(new FileUploadList()));
     }
 
-    public function testRender()
+    public function testRender(): void
     {
         /** @var Element | m\MockInterface $mockUplElmChildItem */
         $mockUplElmChildItem = m::mock(Element::class)->makePartial();
@@ -66,7 +66,7 @@ class FormFileUploadListTest extends MockeryTestCase
         $mockView
             ->shouldReceive('plugin')->with('readonlyformitem')->andReturn($mockFormItem)
             ->shouldReceive('translate')->andReturnUsing(
-                fn($arg) => '_TRANSL_' . $arg
+                static fn($arg) => '_TRANSL_' . $arg
             );
 
         $sut = new FormFileUploadList();

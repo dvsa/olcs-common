@@ -19,16 +19,24 @@ use Olcs\Logging\Log\Logger;
  */
 class FileUploadHelperServiceTest extends MockeryTestCase
 {
+    /**
+     * @var \Mockery\LegacyMockInterface
+     */
+    public $mockSm;
     /** @var  FileUploadHelperService */
     private $sut;
+
     /** @var  m\MockInterface */
     private $mockRequest;
+
     /** @var  \Laminas\Form\FormInterface | m\MockInterface */
     private $mockForm;
+
     private $mockScan;
+
     private $mockUrlHelper;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->mockRequest = m::mock(Request::class);
         $this->mockForm = m::mock(Form::class);
@@ -43,7 +51,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         self::setupLogger();
     }
 
-    public function testSetGetForm()
+    public function testSetGetForm(): void
     {
         $this->assertEquals(
             'fakeForm',
@@ -51,7 +59,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         );
     }
 
-    public function testSetGetSelector()
+    public function testSetGetSelector(): void
     {
         $this->assertEquals(
             'fakeSelector',
@@ -59,7 +67,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         );
     }
 
-    public function testSetGetCountSelector()
+    public function testSetGetCountSelector(): void
     {
         $this->assertEquals(
             'fakeCountSelector',
@@ -67,7 +75,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         );
     }
 
-    public function testSetGetUploadCallback()
+    public function testSetGetUploadCallback(): void
     {
         $this->assertEquals(
             'fakeUploadCallback',
@@ -75,7 +83,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         );
     }
 
-    public function testSetGetDeleteCallback()
+    public function testSetGetDeleteCallback(): void
     {
         $this->assertEquals(
             'fakeDeleteCallback',
@@ -83,7 +91,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         );
     }
 
-    public function testSetGetLoadCallback()
+    public function testSetGetLoadCallback(): void
     {
         $this->assertEquals(
             'fakeLoadCallback',
@@ -91,7 +99,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         );
     }
 
-    public function testSetGetRequest()
+    public function testSetGetRequest(): void
     {
         $this->assertEquals(
             'fakeRequest',
@@ -99,14 +107,14 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         );
     }
 
-    public function testProcessWithGetRequestAndNoLoadCallback()
+    public function testProcessWithGetRequestAndNoLoadCallback(): void
     {
         $this->mockRequest->shouldReceive('isPost')->andReturn(false);
 
         $this->assertFalse($this->sut->process());
     }
 
-    public function testProcessWithGetRequestPopulatesFileCount()
+    public function testProcessWithGetRequestPopulatesFileCount(): void
     {
         $this->mockRequest->shouldReceive('isPost')->andReturn(false);
 
@@ -114,7 +122,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         $this->sut->setSelector('my-files');
 
         $this->sut->setLoadCallback(
-            fn() => ['array-of-files']
+            static fn() => ['array-of-files']
         );
 
         $fieldset = m::mock(ElementInterface::class) // multiple file upload fieldset
@@ -142,7 +150,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         $this->assertFalse($this->sut->process());
     }
 
-    public function testProcessWithGetRequestAndNotCallableLoadCallback()
+    public function testProcessWithGetRequestAndNotCallableLoadCallback(): void
     {
         $this->mockRequest->shouldReceive('isPost')->andReturn(false);
 
@@ -150,14 +158,15 @@ class FileUploadHelperServiceTest extends MockeryTestCase
 
         try {
             $this->sut->process();
-        } catch (\Common\Exception\ConfigurationException $ex) {
-            $this->assertEquals('Load data callback is not callable', $ex->getMessage());
+        } catch (\Common\Exception\ConfigurationException $configurationException) {
+            $this->assertEquals('Load data callback is not callable', $configurationException->getMessage());
             return;
         }
+
         $this->fail('Expected exception not raised');
     }
 
-    public function testProcessWithPostAndValidFileUpload()
+    public function testProcessWithPostAndValidFileUpload(): void
     {
         $file = tempnam(sys_get_temp_dir(), "fuhs");
         touch($file);
@@ -207,7 +216,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         unlink($file);
     }
 
-    private function mockVirusScan($file, $isClean)
+    private function mockVirusScan($file, $isClean): void
     {
         $this->mockScan
             ->shouldReceive('isEnabled')->withNoArgs()->andReturnTrue()
@@ -218,7 +227,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
     /**
      * @dataProvider fileUploadProvider
      */
-    public function testProcessWithPostAndInvalidFileUpload($error, $message)
+    public function testProcessWithPostAndInvalidFileUpload($error, $message): void
     {
         $file = tempnam("/tmp", "fuhs");
         touch($file);
@@ -262,7 +271,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
 
         $this->sut->setSelector('my-file');
         $this->sut->setUploadCallback(
-            function () {
+            static function () {
             }
         );
 
@@ -281,7 +290,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         ];
     }
 
-    public function testProcessWithPostFileMissing()
+    public function testProcessWithPostFileMissing(): void
     {
         $file = 'foo';
 
@@ -335,7 +344,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         $this->assertEquals(false, $this->sut->process());
     }
 
-    public function testProcessWithPostFileLengthTooLong()
+    public function testProcessWithPostFileLengthTooLong(): void
     {
         $file = 'foo';
 
@@ -392,7 +401,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         $this->assertEquals(false, $this->sut->process());
     }
 
-    public function testProcessWithPostFileWithVirus()
+    public function testProcessWithPostFileWithVirus(): void
     {
         $file = __FILE__;
 
@@ -451,7 +460,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
     /**
      * @dataProvider dpTestProcessWithPostFileUploadExpection
      */
-    public function testProcessWithPostFileUploadExpection($exception, $expectErrMsg)
+    public function testProcessWithPostFileUploadExpection($exception, $expectErrMsg): void
     {
         $file = __FILE__;
 
@@ -495,7 +504,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         $this->sut
             ->setSelector('my-file')
             ->setUploadCallback(
-                function () use ($exception) {
+                static function () use ($exception) {
                     throw $exception;
                 }
             );
@@ -517,7 +526,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         ];
     }
 
-    public function testProcessWithPostAndFileDeletions()
+    public function testProcessWithPostAndFileDeletions(): void
     {
         $this->mockRequest->shouldReceive('isPost')->andReturn(true);
 
@@ -579,7 +588,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         $this->assertEquals(true, $this->sut->process());
     }
 
-    public function testProcessWithPostAndFileDeletionsWithNoDeletionsToDelete()
+    public function testProcessWithPostAndFileDeletionsWithNoDeletionsToDelete(): void
     {
         $this->mockRequest->shouldReceive('isPost')->andReturn(true);
 
@@ -611,7 +620,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
 
         $this->sut->setSelector('my-file');
         $this->sut->setDeleteCallback(
-            function () {
+            static function () {
             }
         );
 
@@ -620,7 +629,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         $this->assertEquals(false, $this->sut->process());
     }
 
-    public function testProcessWithPostAndFileDeletionsWithNoList()
+    public function testProcessWithPostAndFileDeletionsWithNoList(): void
     {
         $this->mockRequest->shouldReceive('isPost')->andReturn(true);
 
@@ -633,7 +642,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
 
         $this->sut->setSelector('my-file');
         $this->sut->setDeleteCallback(
-            function () {
+            static function () {
             }
         );
 
@@ -643,7 +652,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
     /**
      * Test upload big files. When post to big size then post and files are empty.
      */
-    public function testProcessWithEmptyPostAndFiles()
+    public function testProcessWithEmptyPostAndFiles(): void
     {
         $this->mockRequest
             ->shouldReceive('isPost')->andReturn(true)
@@ -664,14 +673,14 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         $this->sut
             ->setSelector('my-file')
             ->setUploadCallback(
-                function () {
+                static function () {
                 }
             );
 
         static::assertEquals(false, $this->sut->process());
     }
 
-    public static function setupLogger()
+    public static function setupLogger(): void
     {
         $logWriter = new \Laminas\Log\Writer\Mock();
         $logger = new \Laminas\Log\Logger();

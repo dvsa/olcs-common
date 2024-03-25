@@ -15,18 +15,21 @@ use Laminas\View\HelperPluginManager;
 class BusRegNumberLink implements FormatterPluginManagerInterface
 {
     private const LINK_PATTERN = '<a class="govuk-link" href="%s">%s</a>';
-    public const URL_ROUTE = 'licence/bus-details/service'; //internal bus reg service details page
+
+    public const URL_ROUTE = 'licence/bus-details/service';
+     //internal bus reg service details page
     public const LABEL_TRANSLATION_KEY = 'ebsr-link-label';
+
     public const LABEL_COLOUR = 'orange';
 
     protected TranslatorDelegator $translator;
+
     protected $viewHelperManager;
+
     protected UrlHelperService $urlHelper;
 
     /**
-     * @param TranslatorDelegator $translator
      * @param $viewHelperManager
-     * @param UrlHelperService    $urlHelper
      */
     public function __construct(TranslatorDelegator $translator, HelperPluginManager $viewHelperManager, UrlHelperService $urlHelper)
     {

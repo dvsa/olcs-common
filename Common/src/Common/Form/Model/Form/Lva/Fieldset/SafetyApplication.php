@@ -13,7 +13,7 @@ class SafetyApplication
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\Attributes({"id":"","placeholder":""})
@@ -27,7 +27,7 @@ class SafetyApplication
      * })
      * @Form\Type("\Laminas\Form\Element\Radio")
      */
-    public $isMaintenanceSuitable = null;
+    public $isMaintenanceSuitable;
 
     /**
      * @Form\Attributes({
@@ -43,5 +43,5 @@ class SafetyApplication
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      */
-    public $safetyConfirmation = null;
+    public $safetyConfirmation;
 }

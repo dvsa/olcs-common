@@ -16,6 +16,7 @@ use Common\Form\Elements\Validators\DateNotInFuture;
  */
 class DateNotInFutureTest extends \PHPUnit\Framework\TestCase
 {
+    public $sut;
     protected function setUp(): void
     {
         $this->sut = new DateNotInFuture();
@@ -26,7 +27,7 @@ class DateNotInFutureTest extends \PHPUnit\Framework\TestCase
      * @group date_validators
      * @dataProvider providerIsValid
      */
-    public function testIsValid($input, $expected)
+    public function testIsValid($input, $expected): void
     {
         $this->assertEquals($expected, $this->sut->isValid($input));
     }

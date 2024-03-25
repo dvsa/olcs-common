@@ -9,10 +9,11 @@ class AddressesDetailsTest extends MockeryTestCase
 {
     /** @var  array */
     private $apiData;
+
     /** @var  array */
     private $formData;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->apiData = [
 
@@ -161,7 +162,7 @@ class AddressesDetailsTest extends MockeryTestCase
         ];
     }
 
-    public function testMapFromResult()
+    public function testMapFromResult(): void
     {
         static::assertEquals(
             $this->formData,
@@ -169,7 +170,7 @@ class AddressesDetailsTest extends MockeryTestCase
         );
     }
 
-    public function testMapFromResultEmptyApiData()
+    public function testMapFromResultEmptyApiData(): void
     {
         static::assertEquals(
             [],

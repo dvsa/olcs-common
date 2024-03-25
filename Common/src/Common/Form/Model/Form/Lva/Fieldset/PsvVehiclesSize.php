@@ -21,5 +21,5 @@ class PsvVehiclesSize
      * })
      * @Form\Type("DynamicRadio")
      */
-    public $size = null;
+    public $size;
 }

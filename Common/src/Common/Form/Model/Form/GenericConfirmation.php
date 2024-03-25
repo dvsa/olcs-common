@@ -23,5 +23,5 @@ class GenericConfirmation
      * @Form\ComposedObject("Common\Form\Model\Fieldset\ConfirmButtons")
      * @Form\Attributes({"class":"govuk-button-group"})
      */
-    public $formActions = null;
+    public $formActions;
 }

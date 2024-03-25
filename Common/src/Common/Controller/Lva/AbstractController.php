@@ -40,18 +40,19 @@ abstract class AbstractController extends AbstractActionController
     use GenericUpload;
 
     public const LVA_LIC = 'licence';
+
     public const LVA_APP = 'application';
+
     public const LVA_VAR = 'variation';
 
     public const LOC_INTERNAL = 'internal';
+
     public const LOC_EXTERNAL = 'external';
 
     public const FLASH_MESSENGER_CREATED_PERSON_NAMESPACE = 'createPerson';
 
     /**
      * Internal/External
-     *
-     * @var string
      */
     protected string $location;
 
@@ -62,13 +63,10 @@ abstract class AbstractController extends AbstractActionController
      */
     protected $lva;
 
-    /** @var  string */
     protected string $baseRoute;
 
     /**
      * Current messages
-     *
-     * @var array
      */
     protected array $currentMessages = [
         'default' => [],
@@ -85,12 +83,9 @@ abstract class AbstractController extends AbstractActionController
     ];
 
     protected NiTextTranslation $niTextTranslationUtil;
+
     protected AuthorizationService $authService;
 
-    /**
-     * @param NiTextTranslation $niTextTranslationUtil
-     * @param AuthorizationService $authService
-     */
     public function __construct(NiTextTranslation $niTextTranslationUtil, AuthorizationService $authService)
     {
         $this->niTextTranslationUtil = $niTextTranslationUtil;
@@ -110,12 +105,14 @@ abstract class AbstractController extends AbstractActionController
         if (!$routeMatch) {
             throw new Exception\DomainException('Missing route matches; unsure how to retrieve action');
         }
+
         $this->maybeTranslateForNi();
         $action = $routeMatch->getParam('action', 'not-found');
         $method = static::getMethodFromAction($action);
         if (!method_exists($this, $method)) {
             $method = 'notFoundAction';
         }
+
         if ($routeMatch->getParam('skipPreDispatch', false) || ($actionResponse = $this->preDispatch()) === null) {
             try {
                 $actionResponse = $this->$method();
@@ -124,6 +121,7 @@ abstract class AbstractController extends AbstractActionController
                 $actionResponse = $this->reload();
             }
         }
+
         $e->setResult($actionResponse);
         return $actionResponse;
     }
@@ -184,7 +182,7 @@ abstract class AbstractController extends AbstractActionController
         $sections = $data['sections'];
 
         if ($keysOnly) {
-            $sections = array_keys($sections);
+            return array_keys($sections);
         }
 
         return $sections;
@@ -269,13 +267,12 @@ abstract class AbstractController extends AbstractActionController
         // If there is no next section
         if (!isset($sections[$index + 1])) {
             return $this->goToOverview($this->getApplicationId());
-        } else {
-            return $this->redirect()
-                ->toRoute(
-                    'lva-' . $this->lva . '/' . $sections[$index + 1],
-                    [$this->getIdentifierIndex() => $this->getApplicationId()]
-                );
         }
+        return $this->redirect()
+            ->toRoute(
+                'lva-' . $this->lva . '/' . $sections[$index + 1],
+                [$this->getIdentifierIndex() => $this->getApplicationId()]
+            );
     }
 
     /**
@@ -378,8 +375,6 @@ abstract class AbstractController extends AbstractActionController
 
     /**
      * Is External
-     *
-     * @return bool
      */
     protected function isExternal(): bool
     {

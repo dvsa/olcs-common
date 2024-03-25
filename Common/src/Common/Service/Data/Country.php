@@ -70,14 +70,13 @@ class Country extends AbstractDataService implements ListData
         $field = ('ecmtConstraint' === $category) ? 'constraints' : $category;
 
         foreach ($data as $state) {
-            if (isset($state[$field])
-                && (
-                    ($category === 'isMemberState' && trim($state[$field]) == 'Y')
-                    || ($category !== 'isMemberState' && !empty($state[$field]))
-                )
-            ) {
-                $filtered[] = $state;
+            if (!isset($state[$field])) {
+                continue;
             }
+            if (!($category === 'isMemberState' && trim($state[$field]) === 'Y') && !($category !== 'isMemberState' && !empty($state[$field]))) {
+                continue;
+            }
+            $filtered[] = $state;
         }
 
         return $filtered;

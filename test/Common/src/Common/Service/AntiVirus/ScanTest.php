@@ -15,7 +15,7 @@ class ScanTest extends MockeryTestCase
      */
     private $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = new Scan();
     }
@@ -35,7 +35,7 @@ class ScanTest extends MockeryTestCase
         $this->assertSame('scanfile %s', $object->getCliCommand());
     }
 
-    public function testInvokeNoConfig()
+    public function testInvokeNoConfig(): void
     {
         $mockServiceManager = m::mock(ContainerInterface::class);
         $mockServiceManager->shouldReceive('get')->with('config')->once()->andReturn([]);
@@ -45,20 +45,20 @@ class ScanTest extends MockeryTestCase
         $this->assertSame(null, $object->getCliCommand());
     }
 
-    public function testIsEnabled()
+    public function testIsEnabled(): void
     {
         $this->assertSame(false, $this->sut->isEnabled());
         $this->sut->setCliCommand('XXX');
         $this->assertSame(true, $this->sut->isEnabled());
     }
 
-    public function testIsCleanMissingCommand()
+    public function testIsCleanMissingCommand(): void
     {
         $this->expectException(\Common\Exception\ConfigurationException::class);
         $this->sut->isClean('foo.bar');
     }
 
-    public function testIsCleanMissingCommandReplacement()
+    public function testIsCleanMissingCommandReplacement(): void
     {
         $this->sut->setCliCommand('XXX');
         $this->expectException(
@@ -67,21 +67,21 @@ class ScanTest extends MockeryTestCase
         $this->sut->isClean('foo.bar');
     }
 
-    public function testIsCleanFileNotString()
+    public function testIsCleanFileNotString(): void
     {
         $this->sut->setCliCommand('scan %s');
         $this->expectException(\InvalidArgumentException::class);
         $this->sut->isClean(1);
     }
 
-    public function testIsCleanFileNotExists()
+    public function testIsCleanFileNotExists(): void
     {
         $this->sut->setCliCommand('scan %s');
         $this->expectException(\InvalidArgumentException::class);
         $this->sut->isClean('foo.bar');
     }
 
-    public function testIsCleanOk()
+    public function testIsCleanOk(): void
     {
         $mockShell = m::mock(\Common\Filesystem\Shell::class);
         $mockShell->shouldReceive('fileperms')->with(__FILE__)->once()->andReturn(octdec(600));
@@ -91,11 +91,12 @@ class ScanTest extends MockeryTestCase
         $this->sut->setShell($mockShell);
 
         $this->sut->setCliCommand('scan %s');
+
         $result = $this->sut->isClean(__FILE__);
         $this->assertSame(true, $result);
     }
 
-    public function testIsCleanFailed()
+    public function testIsCleanFailed(): void
     {
         $mockShell = m::mock(\Common\Filesystem\Shell::class);
         $mockShell->shouldReceive('fileperms')->with(__FILE__)->once()->andReturn(octdec(644));
@@ -105,6 +106,7 @@ class ScanTest extends MockeryTestCase
         $this->sut->setShell($mockShell);
 
         $this->sut->setCliCommand('scan %s');
+
         $result = $this->sut->isClean(__FILE__);
         $this->assertSame(false, $result);
     }

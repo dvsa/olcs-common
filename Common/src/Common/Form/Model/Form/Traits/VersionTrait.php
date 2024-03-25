@@ -18,5 +18,5 @@ trait VersionTrait
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 }

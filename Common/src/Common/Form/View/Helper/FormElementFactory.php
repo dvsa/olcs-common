@@ -14,10 +14,8 @@ use Psr\Container\ContainerInterface;
 class FormElementFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param mixed $requestedName
      * @param array|null $options
-     * @return FormElement
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): FormElement
     {

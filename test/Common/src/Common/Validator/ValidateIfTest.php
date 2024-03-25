@@ -15,7 +15,7 @@ class ValidateIfTest extends MockeryTestCase
     /**
      *
      */
-    public function testSetOptions()
+    public function testSetOptions(): void
     {
         $sut = new ValidateIf();
         $sut->setOptions(
@@ -36,7 +36,7 @@ class ValidateIfTest extends MockeryTestCase
     /**
      *
      */
-    public function testGetValidatorChain()
+    public function testGetValidatorChain(): void
     {
         $mockValidator = m::mock(\Laminas\Validator\NotEmpty::class);
 
@@ -63,7 +63,7 @@ class ValidateIfTest extends MockeryTestCase
      * @param $chainValid
      * @param array $errorMessages
      */
-    public function testIsValid($expected, $options, $value, $context, $chainValid, $errorMessages = [])
+    public function testIsValid($expected, $options, $value, $context, $chainValid, $errorMessages = []): void
     {
         $errorMessages = empty($errorMessages) ? ['error' => 'message'] : $errorMessages;
 
@@ -114,7 +114,7 @@ class ValidateIfTest extends MockeryTestCase
         ];
     }
 
-    public function testIsValidInjecttPost()
+    public function testIsValidInjecttPost(): void
     {
         $mockValidatorChain = m::mock(\Laminas\Validator\ValidatorChain::class);
         $mockValidatorChain->shouldReceive('isValid')->with('XXX', ['bar' => 'VALUE'])->andReturn(true);

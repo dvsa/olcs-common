@@ -23,7 +23,10 @@ class ConvictionsPenalties extends AbstractSection implements TransportManagerSe
                 ]
             );
         }
-        empty($this->convictions) ? $this->convictions = "None Added":null;
+
+        if (empty($this->convictions)) {
+            $this->convictions = "None Added";
+        }
         return $this;
     }
 }

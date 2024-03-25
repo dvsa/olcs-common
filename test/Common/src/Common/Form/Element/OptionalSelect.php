@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 
 class OptionalSelect extends TestCase
 {
-    public function testSelectNotRequired()
+    public function testSelectNotRequired(): void
     {
         $select = new \Common\Form\Element\OptionalSelect();
 

@@ -17,7 +17,9 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class LicenceApplicationTest extends MockeryTestCase
 {
     protected $urlHelper;
+
     protected $viewHelperManager;
+
     protected $sut;
 
     protected function setUp(): void
@@ -39,7 +41,7 @@ class LicenceApplicationTest extends MockeryTestCase
      * @param $appTimes
      * @param $extraRowData
      */
-    public function testFormat($expected, $extraRowData, $appTimes)
+    public function testFormat($expected, $extraRowData, $appTimes): void
     {
         $licStatus = 'lic status';
         $licStatusDesc = 'lic status desc';

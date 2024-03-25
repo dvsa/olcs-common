@@ -23,8 +23,11 @@ class Declaration
     private $continuationDetailData = [];
 
     private TranslationHelperService $translator;
+
     private ScriptFactory $scriptFactory;
+
     private UrlHelperService $urlHelper;
+
     protected FormHelperService $formHelper;
 
     public function __construct(
@@ -64,10 +67,8 @@ class Declaration
 
     /**
      * Update form with signature details
-     *
-     * @return void
      */
-    private function updateFormSignature()
+    private function updateFormSignature(): void
     {
         // if form signed, then display signature details
         if (
@@ -95,20 +96,16 @@ class Declaration
 
     /**
      * Populate the form with values
-     *
-     * @return void
      */
-    private function populateForm()
+    private function populateForm(): void
     {
         $this->form->get('version')->setValue($this->continuationDetailData['version']);
     }
 
     /**
      * Update the form actions
-     *
-     * @return void
      */
-    private function updateFormActions()
+    private function updateFormActions(): void
     {
         if ($this->continuationDetailData['disableSignatures'] === true) {
             $this->formHelper->remove($this->form, 'form-actions->sign');
@@ -123,10 +120,8 @@ class Declaration
 
     /**
      * Update the declaration section
-     *
-     * @return void
      */
-    private function updateDeclarationElement()
+    private function updateDeclarationElement(): void
     {
         // set the declaration bullet point content from API data
         $this->form->get('content')->get('declaration')->setValue($this->continuationDetailData['declarations']);
@@ -143,14 +138,13 @@ class Declaration
 
     /**
      * Update the review section
-     *
-     * @return void
      */
-    private function updateReviewElement()
+    private function updateReviewElement(): void
     {
         if (!isset($this->continuationDetailData['organisationTypeId'])) {
             return;
         }
+
         // Chnage the review text dependant on organisation type
         $map = [
             RefData::ORG_TYPE_SOLE_TRADER => 'application.review-declarations.review.business-owner',
@@ -164,10 +158,8 @@ class Declaration
 
     /**
      * Update the form dependant on whether Verify is enabled
-     *
-     * @return void
      */
-    private function updateFormBasedOnDisableSignatureSetting()
+    private function updateFormBasedOnDisableSignatureSetting(): void
     {
         if ($this->continuationDetailData['disableSignatures'] === true) {
             // remove options radio, sign button, checkbox, enable print sign and return fieldset
@@ -182,10 +174,8 @@ class Declaration
      * Update the review section text with the correct name
      *
      * @param string $name Name/key to use as the review text token
-     *
-     * @return void
      */
-    private function updateReviewPersonName($name)
+    private function updateReviewPersonName($name): void
     {
         /** @var \Common\Form\Elements\Types\HtmlTranslated $element */
         $element = $this->form->get('content')->get('review');

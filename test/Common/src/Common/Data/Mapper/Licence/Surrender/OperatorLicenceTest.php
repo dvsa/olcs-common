@@ -10,7 +10,7 @@ class OperatorLicenceTest extends MockeryTestCase
 {
     private $operatorLicence;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->operatorLicence = new OperatorLicence();
     }
@@ -18,7 +18,7 @@ class OperatorLicenceTest extends MockeryTestCase
     /**
      * @dataProvider dpTestMapFromForm
      */
-    public function testMapFromForm($formData, $mappedData)
+    public function testMapFromForm($formData, $mappedData): void
     {
         static::assertEquals(
             $mappedData,
@@ -29,7 +29,7 @@ class OperatorLicenceTest extends MockeryTestCase
     /**
      * @dataProvider dpTestMapFromResult
      */
-    public function testMapFromResult($mappedApiData, $apiData)
+    public function testMapFromResult($mappedApiData, $apiData): void
     {
         static::assertEquals(
             $mappedApiData,

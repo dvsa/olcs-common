@@ -12,15 +12,17 @@ class CqrsTraitTest extends MockeryTestCase
 {
     /** @var  m\MockInterface */
     private $mockHttpResp;
+
     /** @var  m\MockInterface */
     private $mockCqrsResp;
+
     /** @var  m\MockInterface */
     private $mockFlashMsngr;
 
     /** @var  CqrsTraitStub */
     private $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->mockHttpResp = m::mock(HttpResponse::class);
 
@@ -33,7 +35,7 @@ class CqrsTraitTest extends MockeryTestCase
         $this->sut->setFlashMessenger($this->mockFlashMsngr);
     }
 
-    public function testShowApiMessagesFromResponseStream()
+    public function testShowApiMessagesFromResponseStream(): void
     {
         self::expectNotToPerformAssertions();
 
@@ -44,7 +46,7 @@ class CqrsTraitTest extends MockeryTestCase
         $this->sut->testShowApiMessagesFromResponse($mockCqrsResp);
     }
 
-    public function testShowApiMessagesFromResponseMssg()
+    public function testShowApiMessagesFromResponseMssg(): void
     {
         $messages = [
             'messages' => ['EXPECT', 'EXPECT2'],

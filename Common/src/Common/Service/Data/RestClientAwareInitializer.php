@@ -14,7 +14,6 @@ use Psr\Container\ContainerInterface;
 class RestClientAwareInitializer implements InitializerInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param mixed $instance
      *
      * return mixed

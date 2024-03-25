@@ -103,7 +103,7 @@ class ContentHelper
     /**
      * @param \Laminas\Mvc\I18n\Translator $translator
      */
-    public function setTranslator($translator)
+    public function setTranslator($translator): void
     {
         $this->translator = $translator;
     }

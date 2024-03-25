@@ -5,13 +5,17 @@
 class Translator
 {
     public const EN = 'EN';
+
     public const EN_MARKUP = 'EN-MARKUP';
+
     public const CY = 'CY';
+
     public const CY_TRANSLATED = 'CY-TRANSLATED';
 
     private $translationLocation;
 
     private $enTranslations;
+
     private $cyTranslations = [];
 
     private $usedTranslations = [];
@@ -25,19 +29,15 @@ class Translator
         self::EN_MARKUP => 'partials/en_GB'
     ];
 
-    public function __construct($translationLocation)
+    public function __construct()
     {
         die('Not required anymore' . PHP_EOL);
-
-        $this->translationLocation = $translationLocation;
-        $this->enTranslations = include($this->getFilename(self::EN));
-        $this->cyTranslations = include($this->getFilename(self::CY_TRANSLATED));
     }
 
     /**
      * Run the translator
      */
-    public function run()
+    public function run(): void
     {
         $this->translateTextTranslations();
 
@@ -112,7 +112,7 @@ class Translator
      */
     protected function outputEnContent()
     {
-        $this->outputContent(self::EN, [$this, 'formatEnRow']);
+        $this->outputContent(self::EN, fn($key, $value): string => $this->formatEnRow($key, $value));
     }
 
     /**
@@ -120,7 +120,7 @@ class Translator
      */
     protected function outputCyContent()
     {
-        $this->outputContent(self::CY, [$this, 'formatCyRow']);
+        $this->outputContent(self::CY, fn($key, $value): string => $this->formatCyRow($key, $value));
     }
 
     /**
@@ -144,11 +144,7 @@ class Translator
      */
     protected function formatCyRow($key, $value)
     {
-        if (isset($this->cyTranslations[$key])) {
-            $value = $this->cyTranslations[$key];
-        } else {
-            $value = '{WELSH} ' . $value;
-        }
+        $value = $this->cyTranslations[$key] ?? '{WELSH} ' . $value;
 
         return $this->formatEnRow($key, $value);
     }

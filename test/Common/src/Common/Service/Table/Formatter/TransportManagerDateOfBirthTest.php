@@ -11,6 +11,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class TransportManagerDateOfBirthTest extends MockeryTestCase
 {
     protected $viewHelperManager;
+
     protected $sut;
 
     protected function setUp(): void
@@ -46,7 +47,7 @@ class TransportManagerDateOfBirthTest extends MockeryTestCase
     {
         return [
             [ // NoLvaNorInternal
-                
+
                 [
                     'data' => [
                         'dob' => '1980-12-01'
@@ -56,7 +57,7 @@ class TransportManagerDateOfBirthTest extends MockeryTestCase
                 '01/12/1980'
             ],
             [ // LvaWithoutInternal
-                
+
                 [
                     'data' => [
                         'dob' => '1980-12-01'
@@ -69,7 +70,7 @@ class TransportManagerDateOfBirthTest extends MockeryTestCase
                 '01/12/1980'
             ],
             [ // NoLvaWithInternal
-                
+
                 [
                     'data' => [
                         'dob' => '1980-12-01'
@@ -82,7 +83,7 @@ class TransportManagerDateOfBirthTest extends MockeryTestCase
                 '01/12/1980'
             ],
             [ // ApplicationInternal
-                
+
                 [
                     'data' => [
                         'dob' => '1980-12-01',
@@ -100,7 +101,7 @@ class TransportManagerDateOfBirthTest extends MockeryTestCase
                 '<span class="nowrap">01/12/1980 <STATUS HTML></span>'
             ],
             [ // ApplicationExternal
-                
+
                 [
                     'data' => [
                         'dob' => '1980-12-01',
@@ -118,7 +119,7 @@ class TransportManagerDateOfBirthTest extends MockeryTestCase
                 '<span class="nowrap">01/12/1980 <STATUS HTML></span>'
             ],
             [ // VariationInternal
-                
+
                 [
                     'data' => [
                         'dob' => '1980-12-01',
@@ -136,7 +137,7 @@ class TransportManagerDateOfBirthTest extends MockeryTestCase
                 '<span class="nowrap">01/12/1980 <STATUS HTML></span>'
             ],
             [ // VariationExternal
-                
+
                 [
                     'data' => [
                         'dob' => '1980-12-01',
@@ -154,7 +155,7 @@ class TransportManagerDateOfBirthTest extends MockeryTestCase
                 '<span class="nowrap">01/12/1980 <STATUS HTML></span>'
             ],
             [ // LicenceInternal
-                
+
                 [
                     'data' => [
                         'dob' => '1980-12-01'
@@ -168,7 +169,7 @@ class TransportManagerDateOfBirthTest extends MockeryTestCase
                 '01/12/1980'
             ],
             [ // LicenceExternal
-                
+
                 [
                     'data' => [
                         'dob' => '1980-12-01'
@@ -187,7 +188,7 @@ class TransportManagerDateOfBirthTest extends MockeryTestCase
     /**
      * @dataProvider providerFormat
      */
-    public function testFormat($testData, $expected)
+    public function testFormat($testData, $expected): void
     {
         if (isset($testData['data']['status'])) {
             $this->mockGetStatusHtml($testData['data']['status']['id'], $testData['data']['status']['description']);

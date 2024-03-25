@@ -14,6 +14,7 @@ use LmcRbacMvc\Service\AuthorizationService;
 class LicencePsvVehiclesVehicle extends AbstractPsvVehiclesVehicle
 {
     protected FormServiceManager $formServiceLocator;
+
     protected FormHelperService $formHelper;
 
     public function __construct(FormHelperService $formHelper, FormServiceManager $formServiceLocator)

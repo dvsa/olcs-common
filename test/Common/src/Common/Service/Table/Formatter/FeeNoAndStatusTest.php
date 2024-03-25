@@ -26,7 +26,7 @@ class FeeNoAndStatusTest extends \PHPUnit\Framework\TestCase
      *
      * @dataProvider provider
      */
-    public function testFormat($data, $expected)
+    public function testFormat($data, $expected): void
     {
         $this->assertEquals($expected, (new FeeNoAndStatus(new FeeStatus()))->format($data));
     }

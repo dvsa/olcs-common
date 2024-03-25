@@ -6,6 +6,10 @@ use Common\Service\Helper\TranslationHelperService;
 
 abstract class AbstractSection
 {
+    /**
+     * @var mixed[]
+     */
+    public $licence;
     use MakeSectionTrait;
 
     protected $heading;

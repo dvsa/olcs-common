@@ -21,7 +21,7 @@ if ($handle = opendir($directory)) {
 
                 $branch = trim(str_replace('*', '', $branch));
 
-                if (empty($branch)) {
+                if ($branch === '' || $branch === '0') {
 
                     unset($branches[$key]);
 
@@ -40,7 +40,7 @@ if ($handle = opendir($directory)) {
             if (strstr($status, 'nothing to commit')) {
 
                 // If the branch is not up to date
-                if (!strstr($status, 'Your branch is up-to-date')) {
+                if (strstr($status, 'Your branch is up-to-date') === '' || strstr($status, 'Your branch is up-to-date') === '0' || strstr($status, 'Your branch is up-to-date') === false) {
 
                     echo "\n" . 'Update the current branch' . "\n";
                     echo shell_exec('cd ' . $directory . '/' . $entry . ' && git pull origin ' . $oldBranch);

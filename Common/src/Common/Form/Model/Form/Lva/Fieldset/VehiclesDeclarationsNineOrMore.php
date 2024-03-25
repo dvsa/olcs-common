@@ -16,7 +16,7 @@ class VehiclesDeclarationsNineOrMore
      * @Form\Options({"label":"application_vehicle-safety_undertakings.nineOrMore.label"})
      * @Form\Type("\Common\Form\Elements\Types\Html")
      */
-    public $psvNoSmallVhlConfirmationLabel = null;
+    public $psvNoSmallVhlConfirmationLabel;
 
     /**
      * @Form\Attributes({"id":"","placeholder":""})
@@ -29,5 +29,5 @@ class VehiclesDeclarationsNineOrMore
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      */
-    public $psvNoSmallVhlConfirmation = null;
+    public $psvNoSmallVhlConfirmation;
 }

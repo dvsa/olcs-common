@@ -17,10 +17,8 @@ class Phone extends LaminasElement implements InputProviderInterface
 
     /**
      * Initialise the form
-     *
-     * @return void
      */
-    public function init()
+    public function init(): void
     {
         $this->setAttribute('pattern', '\d(\+|\-|\(|\))*');
         $this->setLabel('contact-number-optional');
@@ -29,12 +27,10 @@ class Phone extends LaminasElement implements InputProviderInterface
 
     /**
      * Provide default input rules for this element.
-     *
-     * @return array
      */
     public function getInputSpecification(): array
     {
-        $specification = [
+        return [
             'name' => $this->getName(),
             'required' => $this->required,
             'filters' => [
@@ -68,7 +64,5 @@ class Phone extends LaminasElement implements InputProviderInterface
                 ],
             ],
         ];
-
-        return $specification;
     }
 }

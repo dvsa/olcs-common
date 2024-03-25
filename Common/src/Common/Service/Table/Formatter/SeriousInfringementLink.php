@@ -22,6 +22,7 @@ class SeriousInfringementLink implements FormatterPluginManagerInterface
     {
         $this->urlHelper = $urlHelper;
     }
+
     /**
      * Return a the serious infringement URL for a table.
      *

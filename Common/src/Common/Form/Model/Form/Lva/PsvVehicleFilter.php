@@ -23,7 +23,7 @@ class PsvVehicleFilter
      * })
      * @Form\Type("\Laminas\Form\Element\Select")
      */
-    public $vrm = null;
+    public $vrm;
 
     /**
      * @Form\Attributes({"id":"specified","placeholder":""})
@@ -34,7 +34,7 @@ class PsvVehicleFilter
      * })
      * @Form\Type("\Laminas\Form\Element\Select")
      */
-    public $specified = null;
+    public $specified;
 
     /**
      * @Form\Attributes({"id":"disc","placeholder":""})
@@ -45,7 +45,7 @@ class PsvVehicleFilter
      * })
      * @Form\Type("\Laminas\Form\Element\Select")
      */
-    public $disc = null;
+    public $disc;
 
     /**
      * @Form\Attributes({"id":"includeRemoved","placeholder":""})
@@ -58,7 +58,7 @@ class PsvVehicleFilter
      * })
      * @Form\Type("OlcsCheckbox")
      */
-    public $includeRemoved = null;
+    public $includeRemoved;
 
     /**
      * @Form\Attributes({
@@ -70,10 +70,10 @@ class PsvVehicleFilter
      * @Form\Options({"label": "internal-vehicle-filter-filter"})
      * @Form\Type("\Laminas\Form\Element\Button")
      */
-    public $filter = null;
+    public $filter;
 
     /**
      * @Form\Type("Hidden")
      */
-    public $limit = null;
+    public $limit;
 }

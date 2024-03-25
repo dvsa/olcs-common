@@ -16,7 +16,7 @@ class AuthorityToOperate
      * @Form\Options({"tokens":{"application_type-of-licence_licence-type.data.restrictedGuidance"}})
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $interimGuidanceText = null;
+    public $interimGuidanceText;
 
     /**
      * @Form\Required(true)
@@ -46,11 +46,11 @@ class AuthorityToOperate
      *      }
      * )
      */
-    public $goodsApplicationInterimReason = null;
+    public $goodsApplicationInterimReason;
 
     /**
      * @Form\Attributes({"value": "markup-interim-fee","data-container-class": "interimFee", "id" : "interimFee"})
      * @Form\Type("\Common\Form\Elements\Types\GuidanceTranslated")
      */
-    public $interimFee = null;
+    public $interimFee;
 }

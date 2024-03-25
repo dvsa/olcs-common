@@ -17,11 +17,15 @@ use Mockery as m;
  */
 class PsvDiscsTest extends AbstractLvaFormServiceTestCase
 {
+    /**
+     * @var \Mockery\LegacyMockInterface
+     */
+    public $authService;
     protected $classToTest = PsvDiscs::class;
 
     protected $formName = 'Lva\PsvDiscs';
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->authService = m::mock(AuthorizationService::class);
         $this->classArgs = [$this->authService];

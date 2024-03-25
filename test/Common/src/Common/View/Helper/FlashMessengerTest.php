@@ -27,14 +27,14 @@ class FlashMessengerTest extends MockeryTestCase
 
     private $mockPluginManager;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
-        $this->mockPluginManager = m::mock('\Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger');
+        $this->mockPluginManager = m::mock(\Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger::class);
         $this->flashMessengerHelperService = m::mock(FlashMessengerHelperService::class);
 
         $mockTranslator = m::mock(\Laminas\I18n\Translator\Translator::class);
         $mockTranslator->shouldReceive('translate')
-            ->andReturnUsing([$this, 'translate']);
+            ->andReturnUsing(fn(string $message): string => $this->translate($message));
 
         $this->sut = new FlashMessenger($this->flashMessengerHelperService);
         $this->sut->setPluginFlashMessenger($this->mockPluginManager);
@@ -52,7 +52,7 @@ class FlashMessengerTest extends MockeryTestCase
         return '*' . $message . '*';
     }
 
-    public function testGetMessagesFromNamespace()
+    public function testGetMessagesFromNamespace(): void
     {
         $namespace = 'foo';
 
@@ -63,7 +63,7 @@ class FlashMessengerTest extends MockeryTestCase
         $this->assertEquals(['foo', 'bar'], $this->sut->getMessagesFromNamespace($namespace));
     }
 
-    public function testInvokeNoRender()
+    public function testInvokeNoRender(): void
     {
         $sut = $this->sut;
 
@@ -74,7 +74,7 @@ class FlashMessengerTest extends MockeryTestCase
      * @group view_helper
      * @group flash_messenger_view_helper
      */
-    public function testRenderWithoutMessages()
+    public function testRenderWithoutMessages(): void
     {
         $this->flashMessengerHelperService->shouldReceive('getCurrentMessages')
             ->andReturn([]);
@@ -93,7 +93,7 @@ class FlashMessengerTest extends MockeryTestCase
      * @group view_helper
      * @group flash_messenger_view_helper
      */
-    public function testInvokeWithoutMessages()
+    public function testInvokeWithoutMessages(): void
     {
         $this->flashMessengerHelperService->shouldReceive('getCurrentMessages')
             ->andReturn([]);
@@ -114,7 +114,7 @@ class FlashMessengerTest extends MockeryTestCase
      * @group view_helper
      * @group flash_messenger_view_helper
      */
-    public function testRenderWithMessages()
+    public function testRenderWithMessages(): void
     {
         $this->flashMessengerHelperService->shouldReceive('getCurrentMessages')
             ->andReturn(['foo']);
@@ -124,8 +124,7 @@ class FlashMessengerTest extends MockeryTestCase
             ->shouldReceive('getCurrentMessagesFromNamespace')
             ->andReturn(['baz']);
 
-        $expected = '<div class="notice-container">'
-            . '<div class="notice--danger"><p role="alert">*bar*</p></div>'
+        $expected = '<div class="notice-container"><div class="notice--danger"><p role="alert">*bar*</p></div>'
             . '<div class="notice--danger"><p role="alert">*baz*</p></div>'
             . '<div class="notice--danger"><p role="alert">*foo*</p></div>'
             . '<div class="notice--success"><p role="alert">*bar*</p></div>'

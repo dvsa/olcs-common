@@ -16,10 +16,11 @@ class ActionTest extends MockeryTestCase
 
     /** @var Action */
     protected $sut;
+
     /** @var  m\MockInterface */
     protected $table;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->table = m::mock(TableBuilder::class);
         $this->sut = new Action($this->table);

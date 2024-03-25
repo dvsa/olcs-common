@@ -23,6 +23,7 @@ use Mockery as m;
 class TaskIdentifierTest extends \PHPUnit\Framework\TestCase
 {
     protected $urlHelper;
+
     protected $sut;
 
     protected function setUp(): void
@@ -35,6 +36,7 @@ class TaskIdentifierTest extends \PHPUnit\Framework\TestCase
     {
         m::close();
     }
+
     /**
      * Test link formatter
      * @group taskIdentifier
@@ -47,7 +49,7 @@ class TaskIdentifierTest extends \PHPUnit\Framework\TestCase
         $param,
         $expected,
         $routeParams = []
-    ) {
+    ): void {
         $routeParams = array_merge($routeParams, [$param => $data['linkId']]);
 
         $this->urlHelper->shouldReceive('fromRoute')

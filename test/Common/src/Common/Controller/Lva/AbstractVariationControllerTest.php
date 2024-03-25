@@ -20,9 +20,23 @@ use LmcRbacMvc\Service\AuthorizationService;
  */
 class AbstractVariationControllerTest extends MockeryTestCase
 {
+    /**
+     * @var \Mockery\LegacyMockInterface
+     */
+    public $mockNiTextTranslationUtil;
+    /**
+     * @var \Mockery\LegacyMockInterface
+     */
+    public $mockAuthService;
+    public $mockTranslationHelper;
+    public $mockProcessingCreateVariation;
+    /**
+     * @var \Mockery\LegacyMockInterface
+     */
+    public $mockFlashMessengerHelper;
     protected $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->mockNiTextTranslationUtil = m::mock(NiTextTranslation::class);
         $this->mockAuthService = m::mock(AuthorizationService::class);
@@ -43,7 +57,7 @@ class AbstractVariationControllerTest extends MockeryTestCase
     /**
      * @dataProvider indexActionConditionalProvider
      */
-    public function testIndexAction($conditional)
+    public function testIndexAction($conditional): void
     {
         // Mocks
         $this->mockTranslationHelper->shouldReceive('translate')
@@ -77,7 +91,7 @@ class AbstractVariationControllerTest extends MockeryTestCase
         $this->assertEquals('RENDER', $this->sut->indexAction());
     }
 
-    public function testIndexActionWithPost()
+    public function testIndexActionWithPost(): void
     {
         $formData = [
             'foo' => 'bar'
@@ -123,16 +137,15 @@ class AbstractVariationControllerTest extends MockeryTestCase
     {
         return [
             [
-                function ($mockRequest) {
+                static function ($mockRequest) {
                     $mockRequest->shouldReceive('isPost')
                         ->andReturn(false);
                 }
             ],
             [
-                function ($mockRequest, $mockForm) {
+                static function ($mockRequest, $mockForm) {
                     $mockRequest->shouldReceive('isPost')
                         ->andReturn(true);
-
                     $mockForm->shouldReceive('isValid')
                         ->andReturn(false);
                 }

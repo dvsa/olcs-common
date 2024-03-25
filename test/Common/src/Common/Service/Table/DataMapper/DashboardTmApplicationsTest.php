@@ -17,12 +17,13 @@ use Common\Service\Table\DataMapper\DashboardTmApplications;
  */
 class DashboardTmApplicationsTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
 {
-    public function setUp(): void
+    public $sut;
+    protected function setUp(): void
     {
         $this->sut = new DashboardTmApplications();
     }
 
-    public function testMap()
+    public function testMap(): void
     {
         $data = [
             [

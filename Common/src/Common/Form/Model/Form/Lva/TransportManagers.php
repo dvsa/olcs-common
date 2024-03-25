@@ -16,12 +16,12 @@ class TransportManagers
      * @Form\Name("table")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\TableRequiredTransportManager")
      */
-    public $table = null;
+    public $table;
 
     /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
      * @Form\Attributes({"class":"govuk-button-group"})
      */
-    public $formActions = null;
+    public $formActions;
 }

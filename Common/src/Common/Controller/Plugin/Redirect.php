@@ -62,8 +62,7 @@ class Redirect extends LaminasRedirect
             $this->getResponse()->getHeaders()->addHeaders(['Content-Type' => 'application/json']);
             $this->getResponse()->setContent(Json::encode($data));
             return $this->getResponse();
-        } else {
-            return $this->toRoute($route, $params, $options, $reuseMatchedParams);
         }
+        return $this->toRoute($route, $params, $options, $reuseMatchedParams);
     }
 }

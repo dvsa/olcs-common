@@ -24,7 +24,7 @@ class ConditionsUndertakingsReviewServiceTest extends \PHPUnit\Framework\TestCas
 {
     protected $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $mockTranslationHelper = m::mock(TranslationHelperService::class);
         
@@ -36,12 +36,12 @@ class ConditionsUndertakingsReviewServiceTest extends \PHPUnit\Framework\TestCas
         $this->sut = new ConditionsUndertakingsReviewService($abstractReviewServiceServices, new Address(new DataHelperService()));
     }
 
-    public function testGetConfigFromData()
+    public function testGetConfigFromData(): void
     {
         $this->assertNull($this->sut->getConfigFromData([]));
     }
 
-    public function testFormatLicencesSubSection()
+    public function testFormatLicencesSubSection(): void
     {
         // Params
         $list = [
@@ -73,7 +73,7 @@ class ConditionsUndertakingsReviewServiceTest extends \PHPUnit\Framework\TestCas
         );
     }
 
-    public function testFormatOcSubSection()
+    public function testFormatOcSubSection(): void
     {
         // Params
         $list = [
@@ -137,7 +137,7 @@ class ConditionsUndertakingsReviewServiceTest extends \PHPUnit\Framework\TestCas
         );
     }
 
-    public function testFormatConditionsList()
+    public function testFormatConditionsList(): void
     {
         // Params
         $conditions = [
@@ -149,7 +149,7 @@ class ConditionsUndertakingsReviewServiceTest extends \PHPUnit\Framework\TestCas
         $this->assertEquals($expected, $this->sut->formatConditionsList($conditions));
     }
 
-    public function testSplitUpConditionsAndUndertakingsWithEmptyLists()
+    public function testSplitUpConditionsAndUndertakingsWithEmptyLists(): void
     {
         // Params
         $data = [
@@ -168,7 +168,7 @@ class ConditionsUndertakingsReviewServiceTest extends \PHPUnit\Framework\TestCas
         $this->assertEquals($expectedOcUnds, $ocUnds);
     }
 
-    public function testSplitUpConditionsAndUndertakings()
+    public function testSplitUpConditionsAndUndertakings(): void
     {
         // Params
         $data = [
@@ -648,7 +648,7 @@ class ConditionsUndertakingsReviewServiceTest extends \PHPUnit\Framework\TestCas
         $this->assertEquals($expectedOcUnds, $ocUnds);
     }
 
-    public function testSplitUpConditionsAndUndertakingsWithoutAction()
+    public function testSplitUpConditionsAndUndertakingsWithoutAction(): void
     {
         // Params
         $data = [

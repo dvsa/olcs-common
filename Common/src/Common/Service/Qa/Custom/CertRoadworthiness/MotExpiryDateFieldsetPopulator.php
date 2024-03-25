@@ -25,8 +25,6 @@ class MotExpiryDateFieldsetPopulator implements FieldsetPopulatorInterface
     /**
      * Create service instance
      *
-     * @param TranslationHelperService $translator
-     * @param HtmlAdder $htmlAdder
      * @param FileUploadFieldsetGenerator
      *
      * @return MotExpiryDateFieldsetPopulator
@@ -45,10 +43,8 @@ class MotExpiryDateFieldsetPopulator implements FieldsetPopulatorInterface
      * Populate the fieldset with elements based on the supplied options array
      *
      * @param mixed $form
-     * @param Fieldset $fieldset
-     * @param array $options
      */
-    public function populate($form, Fieldset $fieldset, array $options)
+    public function populate($form, Fieldset $fieldset, array $options): void
     {
         $markup = sprintf(
             '<legend class="govuk-heading-m">%s</legend><div class="govuk-hint">%s</div>',

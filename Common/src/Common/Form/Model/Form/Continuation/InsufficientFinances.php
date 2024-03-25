@@ -13,15 +13,15 @@ class InsufficientFinances
     /**
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\ComposedObject("Common\Form\Model\Form\Continuation\Fieldset\InsufficientFinancesSummary")
      */
-    public $insufficientFinancesSummary = null;
+    public $insufficientFinancesSummary;
 
     /**
      * @Form\ComposedObject("Common\Form\Model\Form\Continuation\Fieldset\InsufficientFinances")
      */
-    public $insufficientFinances = null;
+    public $insufficientFinances;
 }

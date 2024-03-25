@@ -27,7 +27,7 @@ class NoOfPermitsBothValidator extends AbstractValidator
     public function isValid($value)
     {
         $this->permitsRemaining = $this->getOption('permitsRemaining');
-        $permitsRequired = intval($value);
+        $permitsRequired = (int) $value;
 
         if ($permitsRequired > $this->permitsRemaining) {
             $this->abstractOptions['messageTemplates'][self::PERMITS_REMAINING_THRESHOLD] = sprintf(

@@ -31,9 +31,6 @@ class DateBeforeValidator extends AbstractValidator
     /**
      * Create service instance
      *
-     * @param DateFormat $dateFormat
-     * @param DateTimeFactory $dateTimeFactory
-     * @param array $options
      *
      * @return DateBeforeValidator
      */

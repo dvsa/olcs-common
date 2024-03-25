@@ -15,8 +15,6 @@ class TranslateableTextHandler
     /**
      * Create service instance
      *
-     * @param FormattedTranslateableTextParametersGenerator $formattedTranslateableTextParametersGenerator
-     * @param TranslationHelperService $translationHelper
      *
      * @return TranslateableTextHandler
      */
@@ -31,7 +29,6 @@ class TranslateableTextHandler
     /**
      * Derive a translated string from a translatable text array representation
      *
-     * @param array $translateableText
      *
      * @return string
      */

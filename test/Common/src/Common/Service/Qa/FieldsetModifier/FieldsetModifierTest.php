@@ -15,7 +15,7 @@ use Laminas\Form\Fieldset;
  */
 class FieldsetModifierTest extends MockeryTestCase
 {
-    public function testModify()
+    public function testModify(): void
     {
         $fieldset = m::mock(Fieldset::class);
 

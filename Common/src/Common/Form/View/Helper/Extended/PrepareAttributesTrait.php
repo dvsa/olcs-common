@@ -23,8 +23,6 @@ trait PrepareAttributesTrait
      * Removes any invalid attributes
      *
      * @param array $attributes Attributes
-     *
-     * @return array
      */
     protected function prepareAttributes(array $attributes): array
     {

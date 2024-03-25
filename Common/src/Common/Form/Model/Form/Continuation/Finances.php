@@ -13,7 +13,7 @@ class Finances
     /**
      * @Form\ComposedObject("Common\Form\Model\Form\Continuation\Fieldset\Finances")
      */
-    public $finances = null;
+    public $finances;
 
     /**
      * @Form\Attributes({
@@ -24,5 +24,5 @@ class Finances
      * @Form\Options({"label":"Continue"})
      * @Form\Type("\Laminas\Form\Element\Button")
      */
-    public $submit = null;
+    public $submit;
 }

@@ -13,6 +13,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 class DataRetentionRuleAdminLinkTest extends TestCase
 {
     protected $urlHelper;
+
     protected $sut;
 
     protected function setUp(): void
@@ -26,7 +27,7 @@ class DataRetentionRuleAdminLinkTest extends TestCase
         m::close();
     }
 
-    public function testFormat()
+    public function testFormat(): void
     {
         $data = [
             'id' => 1,

@@ -16,7 +16,7 @@ class ContinuationDetailFilter
      * @Form\Name("filters")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\ContinuationDetailFilter")
      */
-    public $filters = null;
+    public $filters;
 
     /**
      * @Form\Attributes({
@@ -30,5 +30,5 @@ class ContinuationDetailFilter
      * })
      * @Form\Type("\Laminas\Form\Element\Button")
      */
-    public $filter = null;
+    public $filter;
 }

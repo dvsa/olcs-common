@@ -21,13 +21,13 @@ class GenericMethodsTest extends MockeryTestCase
     /** @var  m\MockInterface | FormHelperService */
     private $mockHlpForm;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->mockHlpForm = m::mock(FormHelperService::class);
         $this->sut = m::mock(GenericMethodsStub::class, [$this->mockHlpForm])->makePartial();
     }
 
-    public function testGetForm()
+    public function testGetForm(): void
     {
         $class = 'unit_path_to_class';
 
@@ -45,10 +45,10 @@ class GenericMethodsTest extends MockeryTestCase
         static::assertSame($mockForm, $this->sut->getForm($class));
     }
 
-    public function testGenerateFormWithData()
+    public function testGenerateFormWithData(): void
     {
         $class = 'unit_path_to_class';
-        $callback = function () {
+        $callback = static function () {
         };
         $data = ['unit_data'];
         $fieldVals = ['unit_fieldValues'];

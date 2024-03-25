@@ -55,7 +55,7 @@ class ApplicationTransportManagers extends Fieldset
         $this->add($searchButton);
     }
 
-    public function setMessages($messages)
+    public function setMessages($messages): void
     {
         $this->messages = $messages;
     }

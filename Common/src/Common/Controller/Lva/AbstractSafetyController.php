@@ -32,6 +32,7 @@ abstract class AbstractSafetyController extends AbstractController
     public const DEFAULT_TABLE_RECORDS_COUNT = 10;
 
     protected $section = 'safety';
+
     protected string $baseRoute = 'lva-%s/safety';
 
     /**
@@ -67,6 +68,7 @@ abstract class AbstractSafetyController extends AbstractController
     ];
 
     protected $canHaveTrailers;
+
     protected $isShowTrailers;
 
     protected $workshops;
@@ -83,25 +85,20 @@ abstract class AbstractSafetyController extends AbstractController
         'variation' => ApplicationUpdateWorkshop::class,
     ];
 
-    protected $safetyData = null;
+    protected $safetyData;
 
     protected FormHelperService $formHelper;
+
     protected FlashMessengerHelperService $flashMessengerHelper;
+
     protected FormServiceManager $formServiceManager;
+
     protected ScriptFactory $scriptFactory;
+
     protected TableFactory $tableFactory;
+
     protected TranslationHelperService $translationHelper;
 
-    /**
-     * @param NiTextTranslation $niTextTranslationUtil
-     * @param AuthorizationService $authService
-     * @param FormHelperService $formHelper
-     * @param FormServiceManager $formServiceManager
-     * @param FlashMessengerHelperService $flashMessengerHelper
-     * @param TableFactory $tableFactory
-     * @param ScriptFactory $scriptFactory
-     * @param TranslationHelperService $translationHelper
-     */
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
@@ -166,35 +163,23 @@ abstract class AbstractSafetyController extends AbstractController
             return $result;
         }
 
-        if ($request->isPost()) {
-            $data = (array)$request->getPost();
-        } else {
-            $data = $this->formatDataForForm($result);
-        }
+        $data = $request->isPost() ? (array)$request->getPost() : $this->formatDataForForm($result);
 
         $form = $this->alterForm($this->getSafetyForm())->setData($data);
 
         if ($request->isPost()) {
             $crudAction = $this->getCrudAction([$data['table']]);
             $haveCrudAction = ($crudAction !== null);
-
-            if ($haveCrudAction) {
-                if ($this->isInternalReadOnly()) {
-                    return $this->handleCrudAction($crudAction);
-                }
-
-                $this->formHelper->disableEmptyValidation($form);
+            if ($this->isInternalReadOnly()) {
+                return $this->handleCrudAction($crudAction);
             }
+            $this->formHelper->disableEmptyValidation($form);
 
             if ($form->isValid()) {
                 $response = $this->save($data, $haveCrudAction);
 
                 if ($response->isOk()) {
-                    if ($haveCrudAction) {
-                        return $this->handleCrudAction($crudAction);
-                    }
-
-                    return $this->completeSection('safety');
+                    return $this->handleCrudAction($crudAction);
                 }
 
                 if ($response->isServerError()) {
@@ -238,7 +223,7 @@ abstract class AbstractSafetyController extends AbstractController
             unset($errors['tachographInsName']);
         }
 
-        if (!empty($errors)) {
+        if ($errors !== []) {
             $fm = $this->flashMessengerHelper;
 
             foreach ($errors as $error) {
@@ -390,6 +375,7 @@ abstract class AbstractSafetyController extends AbstractController
             // load application/variation data
             $dto = \Dvsa\Olcs\Transfer\Query\Application\Application::create(['id' => $this->getIdentifier()]);
         }
+
         // load application/variation data
         $response = $this->handleQuery($dto);
         if ($response->isOk()) {

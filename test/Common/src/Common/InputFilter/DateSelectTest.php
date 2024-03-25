@@ -13,7 +13,7 @@ class DateSelectTest extends TestCase
     /**
      * @dataProvider dataProviderTestGetValue
      */
-    public function testGetRawValue($value, $expected)
+    public function testGetRawValue($value, $expected): void
     {
         $sut = new \Common\InputFilter\DateSelect();
         $sut->setValue($value);

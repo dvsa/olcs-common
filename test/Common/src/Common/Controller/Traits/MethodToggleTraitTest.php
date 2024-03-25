@@ -21,7 +21,8 @@ class MethodToggleTraitTest extends MockeryTestCase
         $this->sut = m::mock(MethodToggleTraitStub::class)
             ->makePartial();
     }
-    public function testTogglableMethodWhenToggleOn()
+
+    public function testTogglableMethodWhenToggleOn(): void
     {
         $this->sut->shouldReceive('featuresEnabledForMethod')->andReturn(true);
         $this->sut->togglableMethod($this->sut, 'someMethod');
@@ -29,7 +30,7 @@ class MethodToggleTraitTest extends MockeryTestCase
         $this->assertEquals($this->sut->someMethodString, 'method was called');
     }
 
-    public function testTogglableMethodWhenToggleOff()
+    public function testTogglableMethodWhenToggleOff(): void
     {
         $this->sut->shouldReceive('featuresEnabledForMethod')->andReturn(false);
         $this->sut->togglableMethod($this->sut, 'someMethod');

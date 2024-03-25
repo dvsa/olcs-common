@@ -23,10 +23,8 @@ class Radio extends ErrorOverrideRadio
      * Set element name, override to set id
      *
      * @param string $name Name of radio element
-     *
-     * @return void
      */
-    public function setName($name)
+    public function setName($name): void
     {
         parent::setName($name);
 
@@ -39,10 +37,8 @@ class Radio extends ErrorOverrideRadio
      * Override parent to set attributes required
      *
      * @param array $options Options
-     *
-     * @return void
      */
-    public function setValueOptions(array $options)
+    public function setValueOptions(array $options): void
     {
         foreach ($options as $key => &$optionSpec) {
             if (is_scalar($optionSpec)) {
@@ -60,7 +56,7 @@ class Radio extends ErrorOverrideRadio
 
             $defaultAttributes = [
                 'id' => $id,
-                'data-show-element' => "#${id}_content",
+                'data-show-element' => sprintf('#%s_content', $id),
             ];
 
             $optionSpec['attributes'] = array_merge($defaultAttributes, $optionSpec['attributes']);

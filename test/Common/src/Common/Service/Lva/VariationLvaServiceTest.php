@@ -32,7 +32,7 @@ class VariationLvaServiceTest extends MockeryTestCase
     /** @var UrlHelperService */
     private $urlHelper;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->translationHelper = m::mock(TranslationHelperService::class);
         $this->guidanceHelper = m::mock(GuidanceHelperService::class);
@@ -45,7 +45,7 @@ class VariationLvaServiceTest extends MockeryTestCase
         );
     }
 
-    public function testAddVariationMessage()
+    public function testAddVariationMessage(): void
     {
         $licenceId = 123;
 

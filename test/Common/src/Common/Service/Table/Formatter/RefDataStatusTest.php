@@ -16,7 +16,9 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class RefDataStatusTest extends MockeryTestCase
 {
     protected $viewHelperManager;
+
     protected $translator;
+
     protected $sut;
 
     protected function setUp(): void
@@ -34,7 +36,7 @@ class RefDataStatusTest extends MockeryTestCase
     /**
      * tests formatting of ref data statuses
      */
-    public function testFormat()
+    public function testFormat(): void
     {
         $outputStatus = 'output status';
         $description = 'start description';

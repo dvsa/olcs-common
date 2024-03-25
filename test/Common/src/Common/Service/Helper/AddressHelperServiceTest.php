@@ -26,7 +26,7 @@ class AddressHelperServiceTest extends \PHPUnit\Framework\TestCase
     /**
      * Setup the service
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->service = new AddressHelperService();
     }
@@ -37,7 +37,7 @@ class AddressHelperServiceTest extends \PHPUnit\Framework\TestCase
      * @group helper_service
      * @group address_helper_service
      */
-    public function testFormatPostalAddressWithSimpleParts()
+    public function testFormatPostalAddressWithSimpleParts(): void
     {
         $address = [
             'organisation_name' => 'My Company Ltd',
@@ -71,7 +71,7 @@ class AddressHelperServiceTest extends \PHPUnit\Framework\TestCase
      * @group helper_service
      * @group address_helper_service
      */
-    public function testFormatAddressesForSelect()
+    public function testFormatAddressesForSelect(): void
     {
         $list = [
             [

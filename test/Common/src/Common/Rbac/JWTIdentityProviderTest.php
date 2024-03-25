@@ -32,6 +32,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
             ['role' => 'role3'],
         ]
     ];
+
     public const DATA_WITHOUT_ROLES = [
         'userType' => 'user_type',
         'loginId' => 'login_id',
@@ -75,8 +76,11 @@ class JWTIdentityProviderTest extends MockeryTestCase
     ];
 
     private int $defaultUserId = 999;
+
     private string $defaultLoginId = 'usr999';
+
     private string $defaultUserType = 'user_type';
+
     private array $defaultUserData = [
         'id' => 999,
         'loginId' => 'usr999',
@@ -228,12 +232,12 @@ class JWTIdentityProviderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getIdentity_ShouldRetriveDataFromCache_WhenShouldntUpdateAndCacheExists()
+    public function getIdentity_ShouldRetriveDataFromCache_WhenShouldntUpdateAndCacheExists(): void
     {
         $this->setupSut();
 
         $session = $this->identitySession();
-        $session->allows('offsetGet')->with('identity')->andReturnUsing(function () {
+        $session->allows('offsetGet')->with('identity')->andReturnUsing(static function () {
             $user = new User();
             $user->setId(1);
             return $user;
@@ -251,7 +255,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getIdentity_ShouldRetriveDataFromDB_WhenIdentityIsNotInstanceOfUser()
+    public function getIdentity_ShouldRetriveDataFromDB_WhenIdentityIsNotInstanceOfUser(): void
     {
         // Setup
         $this->setupSut();
@@ -270,7 +274,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getIdentity_ShouldRetriveDataFromDB_WhenIdentityHasNoId()
+    public function getIdentity_ShouldRetriveDataFromDB_WhenIdentityHasNoId(): void
     {
         // Setup
         $this->setupSut();
@@ -289,13 +293,13 @@ class JWTIdentityProviderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getIdentity_ShouldRetriveDataFromDB_WhenCacheDoesntExist()
+    public function getIdentity_ShouldRetriveDataFromDB_WhenCacheDoesntExist(): void
     {
         // Setup
         $this->setupSut();
 
         $session = $this->identitySession();
-        $session->allows('offsetGet')->with('identity')->andReturnUsing(function () {
+        $session->allows('offsetGet')->with('identity')->andReturnUsing(static function () {
             $user = new User();
             $user->setId(1);
             return $user;
@@ -315,7 +319,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getIdentity_ShouldStoreIdentityInTheSession()
+    public function getIdentity_ShouldStoreIdentityInTheSession(): void
     {
         // Setup
         $this->setupSut();
@@ -331,7 +335,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getIdentity_ShouldReturnInstanceofUser()
+    public function getIdentity_ShouldReturnInstanceofUser(): void
     {
         // Setup
         $this->setupSut();
@@ -346,7 +350,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getIdentity_ShouldReturnInstanceofUser_WithRoles()
+    public function getIdentity_ShouldReturnInstanceofUser_WithRoles(): void
     {
         // Setup
         $this->setupSut();
@@ -365,7 +369,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getIdentity_ShouldRefreshTokens_WhenRequired()
+    public function getIdentity_ShouldRefreshTokens_WhenRequired(): void
     {
         // Setup
         $this->setupSut();
@@ -386,7 +390,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getIdentity_ShouldNotRefreshTokens_WhenTokenSessionIsEmpty()
+    public function getIdentity_ShouldNotRefreshTokens_WhenTokenSessionIsEmpty(): void
     {
         // Setup
         $this->setupSut();
@@ -407,7 +411,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getIdentity_ShouldReturnExistingIdentity_WhenPresent()
+    public function getIdentity_ShouldReturnExistingIdentity_WhenPresent(): void
     {
         // Setup
         $this->setupSut();
@@ -433,7 +437,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
         $this->sut->clearSession();
     }
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->setUpServiceManager();
     }
@@ -466,8 +470,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
             $instance = $this->setUpMockService(CacheEncryption::class);
             $this->serviceManager->setService(CacheEncryption::class, $instance);
         }
-        $instance = $this->serviceManager->get(CacheEncryption::class);
-        return $instance;
+        return $this->serviceManager->get(CacheEncryption::class);
     }
 
     /**
@@ -480,8 +483,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
             $instance->allows('send')->andReturn($this->response())->byDefault();
             $this->serviceManager->setService(QuerySender::class, $instance);
         }
-        $instance = $this->serviceManager->get(QuerySender::class);
-        return $instance;
+        return $this->serviceManager->get(QuerySender::class);
     }
 
     private function identity(): MockInterface
@@ -517,8 +519,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
             $instance = $this->setUpMockService(Container::class);
             $this->serviceManager->setService(Container::class, $instance);
         }
-        $instance = $this->serviceManager->get(Container::class);
-        return $instance;
+        return $this->serviceManager->get(Container::class);
     }
 
     /**
@@ -530,6 +531,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
             $instance = $this->setUpMockService(RefreshTokenService::class);
             $this->serviceManager->setService(RefreshTokenService::class, $instance);
         }
+
         return $this->serviceManager->get(RefreshTokenService::class);
     }
 
@@ -542,6 +544,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
             $instance = $this->setUpMockService(Session::class);
             $this->serviceManager->setService(Session::class, $instance);
         }
+
         return $this->serviceManager->get(Session::class);
     }
 

@@ -25,6 +25,7 @@ class StackValueReplacer implements FormatterPluginManagerInterface
     {
         $this->stackValueFormatter = $stackValueFormatter;
     }
+
     /**
      * Retrieve a nested value
      *
@@ -45,6 +46,7 @@ class StackValueReplacer implements FormatterPluginManagerInterface
                 );
             }
         }
+
         return $stringFormat;
     }
 }

@@ -25,12 +25,12 @@ class TypeOfLicence
      * @Form\Name("type-of-licence")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TypeOfLicence")
      */
-    public $typeOfLicence = null;
+    public $typeOfLicence;
 
     /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
      * @Form\Attributes({"class":"govuk-button-group"})
      */
-    public $formActions = null;
+    public $formActions;
 }

@@ -14,9 +14,10 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class PermissionTest extends MockeryTestCase
 {
     private $sut;
+
     private $authService;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->authService = m::mock(AuthorizationService::class);
         $this->sut = new Permission($this->authService);

@@ -25,18 +25,18 @@ class ApplicationTest extends AbstractDataServiceTestCase
         $this->sut = new Application($this->abstractDataServiceServices);
     }
 
-    public function testSetId()
+    public function testSetId(): void
     {
         $this->sut->setId(78);
         $this->assertEquals(78, $this->sut->getId());
     }
 
-    public function testGetId()
+    public function testGetId(): void
     {
         $this->assertNull($this->sut->getId());
     }
 
-    public function testFetchData()
+    public function testFetchData(): void
     {
         $id = 1;
         $data = ['id' => 99];
@@ -54,13 +54,13 @@ class ApplicationTest extends AbstractDataServiceTestCase
      * @param array $application
      * @param int $expectedResult
      */
-    public function testCanHaveCases($application, $expectedResult)
+    public function testCanHaveCases($application, $expectedResult): void
     {
         $this->sut->setData($application['id'], $application);
         $this->assertEquals($expectedResult, $this->sut->canHaveCases($application['id']));
     }
 
-    public function testFetchOperatingCentreData()
+    public function testFetchOperatingCentreData(): void
     {
         $application = [
             'id' => 78,
@@ -98,7 +98,7 @@ class ApplicationTest extends AbstractDataServiceTestCase
         $this->assertEquals($application, $this->sut->fetchOperatingCentreData(78));
     }
 
-    public function testFetchOperatingCentreDataWithException()
+    public function testFetchOperatingCentreDataWithException(): void
     {
         $this->expectException(DataServiceException::class);
 
@@ -159,7 +159,7 @@ class ApplicationTest extends AbstractDataServiceTestCase
         ];
     }
 
-    public function testFetchApplicationData()
+    public function testFetchApplicationData(): void
     {
         $application = ['foo' => 'bar'];
 
@@ -192,7 +192,7 @@ class ApplicationTest extends AbstractDataServiceTestCase
         $this->assertEquals($application, $this->sut->fetchApplicationData(78));
     }
 
-    public function testFetchApplicationDataWithException()
+    public function testFetchApplicationDataWithException(): void
     {
         $this->expectException(DataServiceException::class);
 

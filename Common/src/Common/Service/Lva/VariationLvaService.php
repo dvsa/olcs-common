@@ -43,10 +43,8 @@ class VariationLvaService
      * @param int         $licenceId     licence id
      * @param null|string $redirectRoute route for redirect
      * @param string      $msgKey        message key
-     *
-     * @return void
      */
-    public function addVariationMessage($licenceId, $redirectRoute = null, $msgKey = 'variation-message')
+    public function addVariationMessage($licenceId, $redirectRoute = null, $msgKey = 'variation-message'): void
     {
         $link = $this->getVariationLink($licenceId, $redirectRoute);
 

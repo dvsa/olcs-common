@@ -23,7 +23,7 @@ class LicenceHistoryPi
      *     options={"table": "prevBeenAtPi-table"}
      *)
      */
-    public $prevBeenAtPi = null;
+    public $prevBeenAtPi;
 
     /**
      * @Form\Name("prevBeenAtPi-table")
@@ -33,5 +33,5 @@ class LicenceHistoryPi
      *      "class": "help__text help__text--removePadding"
      * })
      */
-    public $prevBeenAtPiTable = null;
+    public $prevBeenAtPiTable;
 }

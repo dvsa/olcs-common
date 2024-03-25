@@ -7,7 +7,7 @@ namespace CommonTest\Service\Table\Formatter;
  */
 class DataRetentionRuleIsEnabledTest extends \PHPUnit\Framework\TestCase
 {
-    public function testIsEnabledFalse()
+    public function testIsEnabledFalse(): void
     {
         $data = [
             "actionType" => [
@@ -37,7 +37,7 @@ class DataRetentionRuleIsEnabledTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('No', (new \Common\Service\Table\Formatter\DataRetentionRuleIsEnabled())->format($data));
     }
 
-    public function testIsEnabledtrue()
+    public function testIsEnabledtrue(): void
     {
         $data = [
             "actionType" => [

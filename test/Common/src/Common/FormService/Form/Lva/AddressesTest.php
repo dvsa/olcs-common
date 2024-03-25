@@ -14,17 +14,18 @@ class AddressesTest extends MockeryTestCase
 {
     /** @var  Addresses */
     protected $sut;
+
     /** @var  m\MockInterface */
     private $formHelper;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);
 
         $this->sut = new Addresses($this->formHelper);
     }
 
-    public function testAlterForm()
+    public function testAlterForm(): void
     {
         $form = m::mock(\Laminas\Form\Form::class);
 

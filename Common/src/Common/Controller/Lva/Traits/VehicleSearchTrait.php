@@ -62,9 +62,11 @@ trait VehicleSearchTrait
             if (!isset($query['limit']) || !is_numeric($query['limit'])) {
                 $query['limit'] = 10;
             }
+
             if (isset($query['vehicleSearch']['clearSearch'])) {
                 unset($query['vehicleSearch']);
             }
+
             $searchForm->setData($query);
             if (isset($query['vehicleSearch']['filter']) && !$searchForm->isValid()) {
                 $message = [
@@ -74,8 +76,10 @@ trait VehicleSearchTrait
                 ];
                 $searchForm->setMessages($message);
             }
+
             $searchForm->setAttribute('action', '');
         }
+
         return $searchForm;
     }
 
@@ -95,9 +99,11 @@ trait VehicleSearchTrait
             $query['vehicleSearch'] = null;
             unset($query['vehicleSearch']);
         }
+
         if (isset($query['includeRemoved']) && !$query['includeRemoved']) {
             unset($query['includeRemoved']);
         }
+
         return $query;
     }
 

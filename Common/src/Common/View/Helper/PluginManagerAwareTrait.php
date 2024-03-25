@@ -14,7 +14,6 @@ trait PluginManagerAwareTrait
     protected $viewHelperManager;
 
     /**
-     * @param ViewHelperManager $viewHelperManager
      * @return $this
      */
     public function setViewHelperManager(ViewHelperManager $viewHelperManager)

@@ -22,7 +22,7 @@ class VehicleSafetyTachographAnalyserContractorValidator extends AbstractValidat
      * @var array
      */
     protected $messageTemplates = [
-        'required' => 'Value is required and can\'t be empty'
+        'required' => "Value is required and can't be empty"
     ];
 
     /**

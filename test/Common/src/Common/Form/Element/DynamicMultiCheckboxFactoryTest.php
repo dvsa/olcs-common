@@ -13,7 +13,7 @@ use Mockery as m;
 
 class DynamicMultiCheckboxFactoryTest extends MockeryTestCase
 {
-    public function testInvoke()
+    public function testInvoke(): void
     {
         $pluginManager = m::mock(PluginManager::class);
         $mockSl = m::mock(ContainerInterface::class);

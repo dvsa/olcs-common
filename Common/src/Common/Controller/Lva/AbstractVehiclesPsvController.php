@@ -38,6 +38,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     public const SEARCH_VEHICLES_COUNT = 20;
 
     protected $section = 'vehicles_psv';
+
     protected string $baseRoute = 'lva-%s/vehicles_psv';
 
     private $queryMap = [
@@ -59,28 +60,23 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     ];
 
     protected UrlHelperService $urlHelper;
+
     protected ScriptFactory $scriptFactory;
+
     protected FormServiceManager $formServiceManager;
+
     protected FormHelperService $formHelper;
+
     protected FlashMessengerHelperService $flashMessengerHelper;
+
     protected ResponseHelperService $responseHelper;
+
     protected TableFactory $tableFactory;
+
     protected TranslationHelperService $translationHelper;
+
     protected GuidanceHelperService $guidanceHelper;
 
-    /**
-     * @param NiTextTranslation $niTextTranslationUtil
-     * @param AuthorizationService $authService
-     * @param FormHelperService $formHelper
-     * @param FormServiceManager $formServiceManager
-     * @param FlashMessengerHelperService $flashMessengerHelper
-     * @param ScriptFactory $scriptFactory
-     * @param UrlHelperService $urlHelper
-     * @param ResponseHelperService $responseHelper
-     * @param TableFactory $tableFactory
-     * @param TranslationHelperService $translationHelper
-     * @param GuidanceHelperService $guidanceHelper
-     */
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
@@ -153,12 +149,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
                 if ($response !== null) {
                     return $response;
                 }
-
-                if ($haveCrudAction) {
-                    return $this->handleCrudAction($crudAction);
-                }
-
-                return $this->completeSection('vehicles_psv');
+                return $this->handleCrudAction($crudAction);
             }
         }
 
@@ -272,15 +263,13 @@ abstract class AbstractVehiclesPsvController extends AbstractController
             RefData::LICENCE_TYPE_STANDARD_NATIONAL,
             RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
         ];
-
-        if (
-            in_array($resultData['licenceType']['id'], $acceptedLicenceTypes, true)
-            && $total === $toDelete
-        ) {
-            return 'deleting.all.vehicles.message';
+        if (!in_array($resultData['licenceType']['id'], $acceptedLicenceTypes, true)) {
+            return 'delete.confirmation.text';
         }
-
-        return 'delete.confirmation.text';
+        if ($total !== $toDelete) {
+            return 'delete.confirmation.text';
+        }
+        return 'deleting.all.vehicles.message';
     }
 
     /**
@@ -453,6 +442,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
                     [$this->getIdentifierIndex() => $this->getIdentifier()]
                 );
             }
+
             $data = $response->getResult();
 
             return $this->responseHelper
@@ -470,11 +460,10 @@ abstract class AbstractVehiclesPsvController extends AbstractController
      * Alter Table
      *
      * @param \Common\Service\Table\TableBuilder $table   Table
-     * @param array                              $filters Filters
      *
      * @return \Common\Service\Table\TableBuilder
      */
-    private function alterTable($table, array $filters = [])
+    private function alterTable($table)
     {
         // if licence on external then add an "Export" action
         if ($this->lva === 'licence' && $this->location === 'external') {
@@ -525,10 +514,8 @@ abstract class AbstractVehiclesPsvController extends AbstractController
 
     /**
      * Add Guidance
-     *
-     * @return void
      */
-    private function addGuidance()
+    private function addGuidance(): void
     {
         $message = 'psv-vehicles-' . $this->lva . '-missing-breakdown';
 
@@ -590,7 +577,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
      */
     private function getTable($tableData, $readOnly = false)
     {
-        return $this->alterTable($this->getTableBasic($tableData, $readOnly), $this->getFilters());
+        return $this->alterTable($this->getTableBasic($tableData, $readOnly));
     }
 
     /**
@@ -607,6 +594,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         if ($readOnly) {
             $tableName .= '-readonly';
         }
+
         $query = $this->removeUnusedParametersFromQuery(
             (array) $this->getRequest()->getQuery()
         );
@@ -634,6 +622,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
             $params['searchForm'] = $searchForm;
             $files[] = 'forms/vehicle-search';
         }
+
         $this->scriptFactory->loadFiles($files);
         return $this->render($section, $form, $params);
     }
@@ -652,6 +641,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         if ($response->isForbidden()) {
             return null;
         }
+
         return $response->getResult();
     }
 
@@ -678,11 +668,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
-        if ($request->isPost()) {
-            $query = $request->getPost('query');
-        } else {
-            $query = $request->getQuery();
-        }
+        $query = $request->isPost() ? $request->getPost('query') : $request->getQuery();
 
         return $this->formatFilters((array)$query);
     }
@@ -705,6 +691,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         if (isset($query['vehicleSearch']['vrm']) && !isset($query['vehicleSearch']['clearSearch'])) {
             $filters['vrm'] = $query['vehicleSearch']['vrm'];
         }
+
         return $filters;
     }
 

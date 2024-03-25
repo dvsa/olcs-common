@@ -125,7 +125,7 @@ class PersonSearch extends Fieldset
         $this->add($addNewButton);
     }
 
-    public function setMessages($messages)
+    public function setMessages($messages): void
     {
         $this->messages = $messages;
     }

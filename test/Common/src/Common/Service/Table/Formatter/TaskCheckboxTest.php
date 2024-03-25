@@ -20,6 +20,7 @@ use Mockery as m;
 class TaskCheckboxTest extends \PHPUnit\Framework\TestCase
 {
     protected $tableBuilder;
+
     protected $sut;
 
     protected function setUp(): void
@@ -31,7 +32,7 @@ class TaskCheckboxTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider notClosedProvider
      */
-    public function testFormatNotClosed($data)
+    public function testFormatNotClosed($data): void
     {
         $column = [];
 
@@ -65,7 +66,7 @@ class TaskCheckboxTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
-    public function testFormatClosed()
+    public function testFormatClosed(): void
     {
         $data = [
             'id' => 69,

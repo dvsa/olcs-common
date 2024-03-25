@@ -36,7 +36,7 @@ class StringHelperServiceTest extends \PHPUnit\Framework\TestCase
      * @group helper_service
      * @group string_helper_service
      */
-    public function testDashToCamel($dash, $camel)
+    public function testDashToCamel($dash, $camel): void
     {
         $this->assertEquals($camel, $this->sut->dashToCamel($dash));
     }
@@ -46,7 +46,7 @@ class StringHelperServiceTest extends \PHPUnit\Framework\TestCase
      * @group helper_service
      * @group string_helper_service
      */
-    public function testCamelToDash($dash, $camel)
+    public function testCamelToDash($dash, $camel): void
     {
         $this->assertEquals($dash, $this->sut->camelToDash($camel));
     }

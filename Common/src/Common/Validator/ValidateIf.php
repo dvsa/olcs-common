@@ -133,7 +133,6 @@ class ValidateIf extends AbstractValidator implements ValidatorPluginManagerAwar
     }
 
     /**
-     * @param array $validators
      * @return $this
      */
     public function setValidators(array $validators)
@@ -161,17 +160,9 @@ class ValidateIf extends AbstractValidator implements ValidatorPluginManagerAwar
     }
 
     /**
-     * @return string
-     */
-    private function getInjectPostData()
-    {
-        return $this->injectPostData;
-    }
-
-    /**
      * @param string $injectPostData
      */
-    private function setInjectPostData($injectPostData)
+    private function setInjectPostData($injectPostData): void
     {
         $this->injectPostData = $injectPostData;
     }
@@ -197,7 +188,6 @@ class ValidateIf extends AbstractValidator implements ValidatorPluginManagerAwar
     }
 
     /**
-     * @param ValidatorPluginManager $validatorPluginManager
      * @return $this
      */
     public function setValidatorPluginManager(ValidatorPluginManager $validatorPluginManager)
@@ -231,7 +221,7 @@ class ValidateIf extends AbstractValidator implements ValidatorPluginManagerAwar
         $this->injectPostData($context);
 
         if (array_key_exists($this->getContextField(), $context)) {
-            if (!(in_array($context[$this->getContextField()], $this->getContextValues()) ^ $this->getContextTruth())) {
+            if ((in_array($context[$this->getContextField()], $this->getContextValues()) ^ $this->getContextTruth()) === 0) {
                 if ($this->allowEmpty() && empty($value)) {
                     return true;
                 }
@@ -242,9 +232,8 @@ class ValidateIf extends AbstractValidator implements ValidatorPluginManagerAwar
                 }
 
                 return $result;
-            } else {
-                return true;
             }
+            return true;
         }
 
         $this->error(self::NO_CONTEXT);
@@ -255,15 +244,13 @@ class ValidateIf extends AbstractValidator implements ValidatorPluginManagerAwar
      * Inject some POST data into the context
      *
      * @param array $context Context, POST data is inserted into
-     *
-     * @return void
      */
-    private function injectPostData(&$context = null)
+    private function injectPostData(&$context = null): void
     {
-        if (!empty($this->getInjectPostData())) {
+        if (!empty($this->injectPostData)) {
             // insert data from POST into context
             $tmpPost = $_POST;
-            $inputs = explode('->', $this->getInjectPostData());
+            $inputs = explode('->', $this->injectPostData);
             // set default value for context, in case it doesn't exists in POST data
             $context[end($inputs)] = null;
             foreach ($inputs as $name) {

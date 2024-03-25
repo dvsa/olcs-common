@@ -15,7 +15,7 @@ class EcmtCandidatePermitSelectionValidatorTest extends MockeryTestCase
     /**
      * @dataProvider dpValidate
      */
-    public function testValidate($firstValue, $secondValue, $thirdValue, $expected)
+    public function testValidate($firstValue, $secondValue, $thirdValue, $expected): void
     {
         $context = [
             'candidate-123' => $firstValue,

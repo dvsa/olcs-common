@@ -16,17 +16,25 @@ use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter implements PeopleAdapterInterface
 {
     public const ACTION_ADDED = 'A';
+
     public const ACTION_EXISTING = 'E';
+
     public const ACTION_CURRENT = 'C';
+
     public const ACTION_UPDATED = 'U';
+
     public const ACTION_DELETED = 'D';
+
     public const SOURCE_APPLICATION = 'A';
+
     public const SOURCE_ORGANISATION = 'O';
 
     protected $tableData = [];
 
     private $licence;
+
     private $data;
+
     private $application;
 
     public function __construct(ContainerInterface $container)
@@ -49,6 +57,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         } else {
             $this->loadPeopleDataForApplication($id);
         }
+
         return true;
     }
 
@@ -67,9 +76,11 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         if (!$response->isOk()) {
             throw new \RuntimeException('Failed to load people data');
         }
+
         $data = $response->getResult();
 
         $this->data = $data;
+
         $this->licence = $data;
     }
 
@@ -88,9 +99,11 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         if (!$response->isOk()) {
             throw new \RuntimeException('Failed to load people data');
         }
+
         $data = $response->getResult();
 
         $this->data = $data;
+
         $this->application = $data;
         $this->licence = $data['licence'];
     }
@@ -309,10 +322,8 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
      *
      * @param Form         $form  form
      * @param TableBuilder $table table
-     *
-     * @return void
      */
-    public function alterFormForOrganisation(Form $form, $table)
+    public function alterFormForOrganisation(Form $form, $table): void
     {
         $labelTextForOrganisation = $this->getAddLabelTextForOrganisation();
 
@@ -359,6 +370,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         if ($this->getOrganisationType() === RefData::ORG_TYPE_REGISTERED_COMPANY) {
             $table->setEmptyMessage('selfserve-app-subSection-your-business-people-ltd.table.empty-message');
         }
+
         return $table;
     }
 
@@ -394,11 +406,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         $newTableData = [];
 
         foreach ($tableData as $key => $person) {
-            if (in_array($person['id'], $newPersonIDs)) {
-                $person['status'] = 'new';
-            } else {
-                $person['status'] = null;
-            }
+            $person['status'] = in_array($person['id'], $newPersonIDs) ? 'new' : null;
 
             $newTableData[$key] = $person;
         }
@@ -421,12 +429,15 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
             if (isset($row['position'])) {
                 $row['person']['position'] = $row['position'];
             }
+
             // ... and action too
             if (isset($row['action'])) {
                 $row['person']['action'] = $row['action'];
             }
+
             $final[] = $row['person'];
         }
+
         return $final;
     }
 
@@ -623,9 +634,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
             }
         }
 
-        $data = array_merge($data, $applicationData);
-
-        return $data;
+        return array_merge($data, $applicationData);
     }
 
     /**
@@ -643,11 +652,8 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         foreach ($data as $value) {
             // if we've got a link to an original person then that
             // trumps any other relation
-            if (isset($value['originalPerson']['id'])) {
-                $id = $value['originalPerson']['id'];
-            } else {
-                $id = $value['person']['id'];
-            }
+            $id = $value['originalPerson']['id'] ?? $value['person']['id'];
+
             $value['person']['source'] = $key;
             $indexed[$id] = $value;
         }

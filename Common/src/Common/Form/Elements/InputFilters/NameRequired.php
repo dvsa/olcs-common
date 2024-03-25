@@ -1,7 +1,7 @@
 <?php
 namespace Common\Form\Elements\InputFilters;
 
-use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\InputFilter\InputProviderInterface;
 
 /**
  * Name Required
@@ -17,8 +17,6 @@ class NameRequired extends Name implements InputProviderInterface
 
     /**
      * Provide default input rules for this element.
-     *
-     * @return array
      */
     public function getInputSpecification(): array
     {

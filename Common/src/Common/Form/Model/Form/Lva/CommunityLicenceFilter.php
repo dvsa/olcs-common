@@ -16,13 +16,13 @@ class CommunityLicenceFilter
      * @Form\Options({"category": "com_lic_sts"})
      * @Form\Type("DynamicMultiCheckbox")
      */
-    public $status = null;
+    public $status;
 
     /**
      * @Form\Attributes({"value":1})
      * @Form\Type("Hidden")
      */
-    public $isFiltered = null;
+    public $isFiltered;
 
     /**
      * @Form\Attributes({
@@ -35,5 +35,5 @@ class CommunityLicenceFilter
      * })
      * @Form\Type("\Laminas\Form\Element\Button")
      */
-    public $filter = null;
+    public $filter;
 }

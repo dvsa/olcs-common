@@ -15,10 +15,12 @@ use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 class DynamicSelectTest extends TestCase
 {
     private $sut;
+
     private $mockRefDataService;
+
     private $pluginManager;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->mockRefDataService = $this->createMock(RefData::class);
         $this->pluginManager = m::mock(PluginManager::class);
@@ -27,7 +29,7 @@ class DynamicSelectTest extends TestCase
         $this->sut = new DynamicSelect($this->pluginManager, 'name', []);
     }
 
-    public function testSetOptions()
+    public function testSetOptions(): void
     {
         $this->sut->setOptions(['context' => 'testing', 'use_groups'=>true, 'other_option'=>true, 'label' => 'Testing']);
 
@@ -37,14 +39,14 @@ class DynamicSelectTest extends TestCase
         $this->assertEquals('Testing', $this->sut->getLabel());
     }
 
-    public function testBcSetOptions()
+    public function testBcSetOptions(): void
     {
         $this->sut->setOptions(['category' => 'testing']);
 
         $this->assertEquals('testing', $this->sut->getContext());
     }
 
-    public function testGetValueOptions()
+    public function testGetValueOptions(): void
     {
         $this->mockRefDataService
             ->expects($this->once())
@@ -61,7 +63,7 @@ class DynamicSelectTest extends TestCase
         $this->sut->getValueOptions();
     }
 
-    public function testGetValueOptionsWithOtherOption()
+    public function testGetValueOptionsWithOtherOption(): void
     {
         $this->mockRefDataService
             ->expects($this->once())
@@ -79,7 +81,7 @@ class DynamicSelectTest extends TestCase
         $this->sut->getValueOptions();
     }
 
-    public function testGetValueOptionsWithExclude()
+    public function testGetValueOptionsWithExclude(): void
     {
         $this->mockRefDataService
             ->expects($this->once())
@@ -97,7 +99,7 @@ class DynamicSelectTest extends TestCase
         $this->sut->getValueOptions();
     }
 
-    public function testGetValueOptionsWithEmptyOption()
+    public function testGetValueOptionsWithEmptyOption(): void
     {
         $this->mockRefDataService
             ->expects($this->once())
@@ -121,7 +123,7 @@ class DynamicSelectTest extends TestCase
      * @param $expected
      * @dataProvider provideSetValue
      */
-    public function testSetValue($value, $expected, $multiple = false)
+    public function testSetValue($value, $expected, $multiple = false): void
     {
         $this->sut->setAttribute('multiple', $multiple);
         $this->sut->setValue($value);
@@ -141,7 +143,7 @@ class DynamicSelectTest extends TestCase
         ];
     }
 
-    public function testGetDataServiceThrows()
+    public function testGetDataServiceThrows(): void
     {
         $serviceName = 'testListService';
         $this->expectException(\Exception::class);
@@ -155,7 +157,7 @@ class DynamicSelectTest extends TestCase
         $this->assertEquals($mockService, $this->sut->getDataService());
     }
 
-    public function testAddValueOption()
+    public function testAddValueOption(): void
     {
         $original = [
             1 => 2,
@@ -172,7 +174,7 @@ class DynamicSelectTest extends TestCase
         $this->assertEquals($this->sut->getValueOptions(), array_merge($original, $additional));
     }
 
-    public function testExtraOption()
+    public function testExtraOption(): void
     {
         $this->mockRefDataService
             ->expects($this->once())
@@ -186,7 +188,7 @@ class DynamicSelectTest extends TestCase
         $this->assertSame(['an' => 'option', 'foo' => 'bar'], $this->sut->getValueOptions());
     }
 
-    public function testExtraSetOption()
+    public function testExtraSetOption(): void
     {
         $this->sut->setOptions(['extra_option' => ['an' => 'option']]);
         $this->assertSame(['an' => 'option'], $this->sut->getExtraOption());

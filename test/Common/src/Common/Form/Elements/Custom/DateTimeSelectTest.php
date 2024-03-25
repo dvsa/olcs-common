@@ -14,12 +14,12 @@ class DateTimeSelectTest extends \PHPUnit\Framework\TestCase
      */
     protected $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = new DateTimeSelect();
     }
 
-    public function testSetValueNull()
+    public function testSetValueNull(): void
     {
         $this->sut->setValue(null);
         $this->assertSame(null, $this->sut->getYearElement()->getValue());
@@ -30,7 +30,7 @@ class DateTimeSelectTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(null, $this->sut->getSecondElement()->getValue());
     }
 
-    public function testSetValueString()
+    public function testSetValueString(): void
     {
         $this->sut->setValue('2016-06-14 14:33');
         $this->assertSame('2016', $this->sut->getYearElement()->getValue());
@@ -41,7 +41,7 @@ class DateTimeSelectTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('00', $this->sut->getSecondElement()->getValue());
     }
 
-    public function testSetValueStringUtc()
+    public function testSetValueStringUtc(): void
     {
         $this->sut->setValue('2016-06-14 14:33+00:00');
         $this->assertSame('2016', $this->sut->getYearElement()->getValue());
@@ -52,7 +52,7 @@ class DateTimeSelectTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('00', $this->sut->getSecondElement()->getValue());
     }
 
-    public function testSetValueStringInvalid()
+    public function testSetValueStringInvalid(): void
     {
         $this->expectException(\Laminas\Form\Exception\InvalidArgumentException::class);
 
@@ -60,7 +60,7 @@ class DateTimeSelectTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(null, $this->sut->getYearElement()->getValue());
     }
 
-    public function testSetValueDateTime()
+    public function testSetValueDateTime(): void
     {
         $this->sut->setValue(new \DateTime('2016-06-14 14:33'));
         $this->assertSame('2016', $this->sut->getYearElement()->getValue());
@@ -71,7 +71,7 @@ class DateTimeSelectTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('00', $this->sut->getSecondElement()->getValue());
     }
 
-    public function testSetValueDateTimeUtc()
+    public function testSetValueDateTimeUtc(): void
     {
         $this->sut->setValue(new \DateTime('2016-06-14 14:33+00:00'));
         $this->assertSame('2016', $this->sut->getYearElement()->getValue());

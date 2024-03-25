@@ -12,7 +12,6 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
 class RefDataFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
      *

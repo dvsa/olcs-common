@@ -21,9 +21,11 @@ class DateSelectNullifier extends AbstractFilter
     {
         if (empty($date)) {
             return null;
-        } elseif (is_string($date)) {
+        }
+        if (is_string($date)) {
             return $date;
-        } elseif (!is_array($date) || empty($date['year']) || empty($date['month']) || empty($date['day'])) {
+        }
+        if (!is_array($date) || empty($date['year']) || empty($date['month']) || empty($date['day'])) {
             return null;
         }
 

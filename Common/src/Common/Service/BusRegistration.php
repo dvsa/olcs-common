@@ -9,13 +9,21 @@ namespace Common\Service;
 class BusRegistration
 {
     public const STATUS_NEW = 'breg_s_new';
+
     public const STATUS_VAR = 'breg_s_var';
+
     public const STATUS_CANCEL = 'breg_s_cancellation';
+
     public const STATUS_ADMIN = 'breg_s_admin';
+
     public const STATUS_REGISTERED = 'breg_s_registered';
+
     public const STATUS_REFUSED = 'breg_s_refused';
+
     public const STATUS_WITHDRAWN = 'breg_s_withdrawn';
+
     public const STATUS_CNS = 'breg_s_cns';
+
     public const STATUS_CANCELLED = 'breg_s_cancelled';
 
     /**

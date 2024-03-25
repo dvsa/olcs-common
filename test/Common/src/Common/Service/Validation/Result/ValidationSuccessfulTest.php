@@ -13,7 +13,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
  */
 class ValidationSuccessfulTest extends TestCase
 {
-    public function testObject()
+    public function testObject(): void
     {
         $command  = m::mock(CommandInterface::class);
         $sut = new ValidationSuccessful($command, ['results' => 'Something valid'], ['some' => 'context']);

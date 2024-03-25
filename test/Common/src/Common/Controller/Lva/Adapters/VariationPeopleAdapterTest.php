@@ -10,16 +10,17 @@ use Common\Controller\Lva\Adapters\VariationPeopleAdapter;
 class VariationPeopleAdapterTest extends MockeryTestCase
 {
     protected $sut;
+
     protected $container;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->container = m::mock(ContainerInterface::class);
 
         $this->sut = new VariationPeopleAdapter($this->container);
     }
 
-    public function testCanModify()
+    public function testCanModify(): void
     {
         $this->assertTrue($this->sut->canModify(123));
     }

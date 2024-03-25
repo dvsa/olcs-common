@@ -9,11 +9,8 @@ use LmcRbacMvc\Service\AuthorizationService;
 class FormHelperServiceFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
-     *
-     * @return FormHelperService
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): FormHelperService

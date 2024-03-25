@@ -13,8 +13,6 @@ class FieldsetPopulator
     /**
      * Create service instance
      *
-     * @param FieldsetAdder $fieldsetAdder
-     * @param ValidatorsAdder $validatorsAdder
      *
      * @return FieldsetPopulator
      */
@@ -28,10 +26,9 @@ class FieldsetPopulator
      * Populate the specified form with content and validators represented by the supplied application steps array
      *
      * @param mixed $form
-     * @param array $applicationSteps
      * @param string $usageContext
      */
-    public function populate($form, array $applicationSteps, $usageContext)
+    public function populate($form, array $applicationSteps, $usageContext): void
     {
         foreach ($applicationSteps as $applicationStep) {
             $this->fieldsetAdder->add($form, $applicationStep, $usageContext);

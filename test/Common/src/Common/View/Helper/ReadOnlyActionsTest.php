@@ -22,16 +22,14 @@ class ReadOnlyActionsTest extends MockeryTestCase
      */
     private $sut;
 
-    private $wrapper = '<div class="govuk-button-group">%s</div>';
-
     private $mockView;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->mockView = m::mock(RendererInterface::class)
             ->shouldReceive('translate')
             ->andReturnUsing(
-                fn($text) => $text . '-translated'
+                static fn($text) => $text . '-translated'
             )
             ->getMock();
 
@@ -39,7 +37,7 @@ class ReadOnlyActionsTest extends MockeryTestCase
         $this->sut->setView($this->mockView);
     }
 
-    public function testInvokeWithUrl()
+    public function testInvokeWithUrl(): void
     {
         $url = 'http://foo.com';
         $label = 'Bar';
@@ -66,7 +64,7 @@ class ReadOnlyActionsTest extends MockeryTestCase
         $this->assertEquals($markup, $this->sut->__invoke($actions));
     }
 
-    public function testInvokeWithoutUrl()
+    public function testInvokeWithoutUrl(): void
     {
         $label = 'Bar';
         $class = 'large';

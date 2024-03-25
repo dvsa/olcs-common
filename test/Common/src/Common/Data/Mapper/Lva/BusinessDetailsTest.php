@@ -16,7 +16,7 @@ use Common\Data\Mapper\Lva\BusinessDetails;
  */
 class BusinessDetailsTest extends \PHPUnit\Framework\TestCase
 {
-    public function testMapFromResult()
+    public function testMapFromResult(): void
     {
         $input = [
             'name' => 'Foo ltd',

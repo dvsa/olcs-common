@@ -26,7 +26,7 @@ class MockeryTestCase extends \Mockery\Adapter\Phpunit\MockeryTestCase
     /**
      * @var bool|null
      */
-    private $originalAllowMockingNonExistingMethods = null;
+    private $originalAllowMockingNonExistingMethods;
 
     protected function mockeryTestSetUp()
     {
@@ -45,7 +45,7 @@ class MockeryTestCase extends \Mockery\Adapter\Phpunit\MockeryTestCase
      *
      * Any configuration applied will be reset to the original value when tearing down a test case.
      */
-    private function configureMockeryGlobalConfiguration()
+    private function configureMockeryGlobalConfiguration(): void
     {
         $globalMockeryConfig = m::getConfiguration();
 
@@ -57,7 +57,7 @@ class MockeryTestCase extends \Mockery\Adapter\Phpunit\MockeryTestCase
     /**
      * Restores any global configuration back to the settings that were present before a test case run.
      */
-    private function restoreMockeryGlobalConfiguration()
+    private function restoreMockeryGlobalConfiguration(): void
     {
         $globalMockeryConfig = m::getConfiguration();
         if (null !== $this->originalAllowMockingNonExistingMethods) {

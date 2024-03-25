@@ -71,10 +71,12 @@ trait EnabledSectionTrait
                 if (is_array($prerequisite)) {
                     return [$this->removeInaccessible($prerequisite, $accessibleSections)];
                 }
+
                 if (in_array($prerequisite, array_keys($accessibleSections))) {
                     $keep[] = $prerequisite;
                 }
             }
+
             return $keep;
         }
     }

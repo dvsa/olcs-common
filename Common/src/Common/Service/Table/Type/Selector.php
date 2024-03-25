@@ -22,11 +22,17 @@ class Selector extends AbstractType
      * used by the extending ActionLinks and DeltaActionLinks classes
      */
     public const ARIA_LABEL_FORMAT = '%s (%s)';
+
     public const KEY_ACTION_LINKS_REMOVE = 'action_links.remove';
+
     public const KEY_ACTION_LINKS_REMOVE_ARIA = 'action_links.remove.aria';
+
     public const KEY_ACTION_LINKS_REPLACE = 'action_links.replace';
+
     public const KEY_ACTION_LINKS_REPLACE_ARIA = 'action_links.replace.aria';
+
     public const KEY_ACTION_LINKS_RESTORE = 'action_links.restore';
+
     public const KEY_ACTION_LINKS_RESTORE_ARIA = 'action_links.restore.aria';
 
     protected $format = '<input type="radio" name="%s" value="%s" %s />';
@@ -69,6 +75,7 @@ class Selector extends AbstractType
                 if (is_callable($attrValue)) {
                     $attrValue = $attrValue($data, $this->getTable()->getTranslator());
                 }
+
                 $attributes[] = 'aria-' . $attrName . '="' . Escape::html($attrValue) . '"';
             }
         }

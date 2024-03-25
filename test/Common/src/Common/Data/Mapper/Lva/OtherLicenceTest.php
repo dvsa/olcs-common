@@ -16,7 +16,7 @@ use Common\Data\Mapper\Lva\OtherLicence;
  */
 class OtherLicenceTest extends \PHPUnit\Framework\TestCase
 {
-    public function testMapFromResult()
+    public function testMapFromResult(): void
     {
         $input = [
             'id' => 'id',

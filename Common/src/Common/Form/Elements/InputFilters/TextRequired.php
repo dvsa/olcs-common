@@ -10,5 +10,6 @@ namespace Common\Form\Elements\InputFilters;
 class TextRequired extends Text
 {
     protected $isRequired = true;
+
     protected $isAllowEmpty = false;
 }

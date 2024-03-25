@@ -31,12 +31,12 @@ class LanguageListener implements ListenerAggregateInterface, FactoryInterface
      */
     private $translator;
 
-    public function attach(EventManagerInterface $events, $priority = 1)
+    public function attach(EventManagerInterface $events, $priority = 1): void
     {
         $this->listeners[] = $events->attach(MvcEvent::EVENT_ROUTE, [$this, 'onRoute'], $priority);
     }
 
-    public function onRoute(MvcEvent $e)
+    public function onRoute(MvcEvent $e): void
     {
         $request = $e->getRequest();
         if (!($request instanceof HttpRequest)) {
@@ -57,10 +57,8 @@ class LanguageListener implements ListenerAggregateInterface, FactoryInterface
     }
 
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
-     * @return $this
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

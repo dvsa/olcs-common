@@ -14,7 +14,7 @@ class MethodToggleTraitStub
 
     public $someMethodString = 'method was not called';
 
-    public function someMethod()
+    public function someMethod(): void
     {
         $this->someMethodString = 'method was called';
     }

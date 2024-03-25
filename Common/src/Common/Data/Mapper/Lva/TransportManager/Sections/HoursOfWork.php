@@ -8,11 +8,17 @@ class HoursOfWork extends AbstractSection implements TransportManagerSectionInte
     use SectionSerializeTrait;
 
     private $hoursMon;
+
     private $hoursTue;
+
     private $hoursWed;
+
     private $hoursThu;
+
     private $hoursFri;
+
     private $hoursSat;
+
     private $hoursSun;
 
     /**

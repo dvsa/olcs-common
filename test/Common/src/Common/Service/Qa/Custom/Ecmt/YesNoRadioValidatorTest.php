@@ -18,7 +18,7 @@ class YesNoRadioValidatorTest extends MockeryTestCase
 
     private $yesNoRadioValidator;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->yesContentElement = m::mock(RestrictedCountriesMultiCheckbox::class);
 
@@ -28,7 +28,7 @@ class YesNoRadioValidatorTest extends MockeryTestCase
     /**
      * @dataProvider dpIsValidTrue
      */
-    public function testIsValidTrue($value, $context)
+    public function testIsValidTrue($value, $context): void
     {
         $this->assertTrue(
             $this->yesNoRadioValidator->isValid($value, $context)
@@ -53,7 +53,7 @@ class YesNoRadioValidatorTest extends MockeryTestCase
         ];
     }
 
-    public function testIsValidFalseSetMessages()
+    public function testIsValidFalseSetMessages(): void
     {
         $value = 'Y';
         $context = ['yesContent' => ''];

@@ -50,27 +50,23 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     ];
 
     protected $section = 'licence_history';
+
     protected string $baseRoute = 'lva-%s/licence_history';
 
     protected $otherLicences = [];
 
     protected FormHelperService $formHelper;
+
     protected FlashMessengerHelperService $flashMessengerHelper;
+
     protected FormServiceManager $formServiceManager;
+
     protected ScriptFactory $scriptFactory;
+
     protected TableFactory $tableFactory;
+
     protected StringHelperService $stringHelper;
 
-    /**
-     * @param NiTextTranslation $niTextTranslationUtil
-     * @param AuthorizationService $authService
-     * @param FlashMessengerHelperService $flashMessengerHelper
-     * @param FormServiceManager $formServiceManager
-     * @param ScriptFactory $scriptFactory
-     * @param StringHelperService $stringHelper
-     * @param TableFactory $tableFactory
-     * @param FormHelperService $formHelper
-     */
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
@@ -96,11 +92,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
-        if ($request->isPost()) {
-            $data = (array)$request->getPost();
-        } else {
-            $data = $this->formatDataForForm($this->getFormData());
-        }
+        $data = $request->isPost() ? (array)$request->getPost() : $this->formatDataForForm($this->getFormData());
 
         $form = $this->getLicenceHistoryForm()->setData($data);
 
@@ -132,7 +124,6 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     /**
      * Override the get crud action method
      *
-     * @param array $formTables
      * @return array
      */
     protected function getCrudAction(array $formTables = [])
@@ -215,7 +206,6 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
     /**
      * @param \Common\Form\Form $form
-     * @param array $errors
      */
     protected function mapErrorsForLicenceHistory($form, array $errors)
     {
@@ -234,10 +224,8 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         }
 
         $fm = $this->flashMessengerHelper;
-        if (!empty($errors)) {
-            foreach ($errors as $error) {
-                $fm->addCurrentErrorMessage($error);
-            }
+        foreach ($errors as $error) {
+            $fm->addCurrentErrorMessage($error);
         }
 
         $form->setMessages($formMessages);
@@ -340,9 +328,10 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
     protected function getTableData($which)
     {
-        if (!count($this->otherLicences)) {
+        if (count($this->otherLicences) === 0) {
             $this->getFormData();
         }
+
         return $this->otherLicences[$which];
     }
 
@@ -605,6 +594,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         if ($response->isOk()) {
             $mappedResults = OtherLicenceMapper::mapFromResult($response->getResult());
         }
+
         return $mappedResults;
     }
 
@@ -716,6 +706,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         if ($response->isServerError()) {
             $this->flashMessengerHelper->addErrorMessage('unknown-error');
         }
+
         return false;
     }
 
@@ -736,7 +727,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         $fm = $this->flashMessengerHelper;
         if (!empty($errors['application'])) {
             $fm->addCurrentErrorMessage($errors['application']);
-        } elseif (!empty($errors)) {
+        } elseif ($errors !== []) {
             foreach ($errors as $error) {
                 $fm->addCurrentErrorMessage($error);
             }

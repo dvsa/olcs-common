@@ -15,6 +15,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class FeatureToggleEditLinkTest extends MockeryTestCase
 {
     protected $urlHelper;
+
     protected $sut;
 
     protected function setUp(): void
@@ -28,7 +29,7 @@ class FeatureToggleEditLinkTest extends MockeryTestCase
         m::close();
     }
 
-    public function testFormat()
+    public function testFormat(): void
     {
         $id = 123;
         $friendlyName = 'friendly name';

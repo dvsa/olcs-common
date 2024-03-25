@@ -10,7 +10,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class EscapeTest extends MockeryTestCase
 {
-    public function testHtml()
+    public function testHtml(): void
     {
         $actual = Escape::html('Aa &amp; <script');
 

@@ -18,6 +18,16 @@ use Psr\Container\ContainerInterface;
 
 class ElasticSearchTest extends MockeryTestCase
 {
+    public $request;
+    public $routeMatch;
+    public $event;
+    public $sm;
+    /**
+     * @var \Mockery\LegacyMockInterface
+     */
+    public $container;
+    public $pm;
+    public $mockPlaceholder;
     protected $sut;
 
     protected $controller;
@@ -31,12 +41,13 @@ class ElasticSearchTest extends MockeryTestCase
      */
     protected $pluginManagerHelper;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->request = m::mock(\Laminas\Http\Request::class);
 
         $this->routeMatch = new RouteMatch(['controller' => 'index', 'action' => 'index', 'index' => 'SEARCHINDEX']);
         $this->routeMatch->setMatchedRouteName('testindex');
+
         $this->event = new MvcEvent();
 
         $routeStack = new SimpleRouteStack();
@@ -49,6 +60,7 @@ class ElasticSearchTest extends MockeryTestCase
 
         $this->event->setRouteMatch($this->routeMatch);
         $this->event->setRequest($this->request);
+
         $this->sm = m::mock(\Laminas\ServiceManager\ServiceManager::class)
             ->makePartial()
             ->setAllowOverride(true);
@@ -63,7 +75,7 @@ class ElasticSearchTest extends MockeryTestCase
         $this->sut->setPluginManager($this->pm);
     }
 
-    public function testInvokeOptionsSet()
+    public function testInvokeOptionsSet(): void
     {
         $options = [
             'container_name' => 'testcontainer',
@@ -76,7 +88,7 @@ class ElasticSearchTest extends MockeryTestCase
         $this->assertEquals($result->getPageRoute(), $options['page_route']);
     }
 
-    public function testInvokeDefaultOptions()
+    public function testInvokeDefaultOptions(): void
     {
         $result = $this->sut->pluginInvoke([]);
 
@@ -84,7 +96,7 @@ class ElasticSearchTest extends MockeryTestCase
         $this->assertEquals($result->getPageRoute(), 'testindex');
     }
 
-    public function testProcessSearchData()
+    public function testProcessSearchData(): void
     {
         self::expectNotToPerformAssertions();
 
@@ -108,7 +120,7 @@ class ElasticSearchTest extends MockeryTestCase
         $plugin->processSearchData();
     }
 
-    public function testGetSearchForm()
+    public function testGetSearchForm(): void
     {
         $mockForm = m::mock(\Laminas\Form\Form::class);
         $mockForm->shouldReceive('setAttribute')->with(
@@ -129,7 +141,7 @@ class ElasticSearchTest extends MockeryTestCase
         $this->assertSame($result, $mockForm);
     }
 
-    public function testGetFiltersForm()
+    public function testGetFiltersForm(): void
     {
         $mockForm = m::mock(\Laminas\Form\Form::class);
         $mockForm->shouldReceive('setAttribute')->with(
@@ -150,7 +162,7 @@ class ElasticSearchTest extends MockeryTestCase
         $this->assertSame($result, $mockForm);
     }
 
-    public function testSearchAction()
+    public function testSearchAction(): void
     {
         $mockForm = m::mock(\Laminas\Form\Form::class);
         $mockForm->shouldReceive('getObject')->andReturn($this->getMockSearchObjectArray());
@@ -200,7 +212,7 @@ class ElasticSearchTest extends MockeryTestCase
         $this->assertEquals($resultView->results, $results);
     }
 
-    public function testSetNavigationCurrentLocation()
+    public function testSetNavigationCurrentLocation(): void
     {
         $plugin = $this->sut->getPlugin();
         $plugin->navigationId = 'home';
@@ -213,7 +225,7 @@ class ElasticSearchTest extends MockeryTestCase
         $this->assertTrue($plugin->setNavigationCurrentLocation());
     }
 
-    public function testExtractSearchData()
+    public function testExtractSearchData(): void
     {
         $plugin = $this->sut->getPlugin();
 
@@ -223,7 +235,7 @@ class ElasticSearchTest extends MockeryTestCase
         $this->assertEquals($result['index'], 'SEARCHINDEX');
     }
 
-    public function testConfigureNavigation()
+    public function testConfigureNavigation(): void
     {
         $mockSearchTypeService = m::mock('Olcs\Service\Data\Search\SearchType');
         $mockSearchService = m::mock(\Common\Service\Data\Search\Search::class);
@@ -249,7 +261,7 @@ class ElasticSearchTest extends MockeryTestCase
         $plugin->setSearchService($mockSearchService);
         $plugin->setSearchData(['search' => 'foo', 'index' => 'da']);
 
-        $view = new ViewModel();
+        new ViewModel();
         $plugin->configureNavigation(['remove-id']);
     }
 
@@ -261,7 +273,7 @@ class ElasticSearchTest extends MockeryTestCase
         ];
     }
 
-    public function testGenerateResults()
+    public function testGenerateResults(): void
     {
         $mockForm = m::mock(\Laminas\Form\Form::class);
         $mockForm->shouldReceive('getObject')->andReturn($this->getMockSearchObjectArray());
@@ -295,7 +307,7 @@ class ElasticSearchTest extends MockeryTestCase
         $this->assertEquals($result->results, 'RESULTS');
     }
 
-    public function testGetSetContainerName()
+    public function testGetSetContainerName(): void
     {
         $plugin = $this->sut->pluginInvoke([]);
 
@@ -303,7 +315,7 @@ class ElasticSearchTest extends MockeryTestCase
         $this->assertEquals('testContainerName', $plugin->getContainerName());
     }
 
-    public function testGetSetSearchData()
+    public function testGetSetSearchData(): void
     {
         $plugin = $this->sut->pluginInvoke([]);
 
@@ -311,7 +323,7 @@ class ElasticSearchTest extends MockeryTestCase
         $this->assertEquals('testsearchdata', $plugin->getSearchData());
     }
 
-    public function testGetSetPageRoute()
+    public function testGetSetPageRoute(): void
     {
         $plugin = $this->sut->pluginInvoke([]);
 

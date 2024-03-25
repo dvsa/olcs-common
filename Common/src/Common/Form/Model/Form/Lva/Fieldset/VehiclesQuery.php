@@ -13,17 +13,17 @@ class VehiclesQuery
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $vrm = null;
+    public $vrm;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $disc = null;
+    public $disc;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $includeRemoved = null;
+    public $includeRemoved;
 }

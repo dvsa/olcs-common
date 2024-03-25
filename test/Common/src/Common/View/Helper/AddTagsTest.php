@@ -20,7 +20,7 @@ class AddTagsTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider provideStrings
      */
-    public function testInvoke($input, $expected)
+    public function testInvoke($input, $expected): void
     {
         $helper = new AddTags();
         $output = $helper->__invoke($input);

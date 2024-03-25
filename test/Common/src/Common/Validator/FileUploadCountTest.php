@@ -11,7 +11,7 @@ use Common\Validator\FileUploadCount;
  */
 class FileUploadCountTest extends MockeryTestCase
 {
-    public function testSetOptions()
+    public function testSetOptions(): void
     {
         $sut = new FileUploadCount(['min' => '23']);
         $this->assertEquals(23, $sut->getMin());
@@ -25,7 +25,7 @@ class FileUploadCountTest extends MockeryTestCase
      *
      * @dataProvider dataProviderTestIsValid
      */
-    public function testIsValid($expected, $min, $context)
+    public function testIsValid($expected, $min, $context): void
     {
         $sut = new FileUploadCount(['min' => $min]);
 
@@ -46,7 +46,7 @@ class FileUploadCountTest extends MockeryTestCase
         ];
     }
 
-    public function testSetMin()
+    public function testSetMin(): void
     {
         $sut = new FileUploadCount(['min' => 1]);
         $sut->setMin(4);
@@ -54,7 +54,7 @@ class FileUploadCountTest extends MockeryTestCase
         $this->assertSame(4, $sut->getMin());
     }
 
-    public function testSetMinInvalid()
+    public function testSetMinInvalid(): void
     {
         $sut = new FileUploadCount(['min' => 1]);
         $this->expectException(\Laminas\Validator\Exception\InvalidArgumentException::class);

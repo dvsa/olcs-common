@@ -14,13 +14,13 @@ class Responsibilities
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $id = null;
+    public $id;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\Options({
@@ -32,7 +32,7 @@ class Responsibilities
      * @Form\Validator("Laminas\Validator\NotEmpty")
      * @Form\Flags({"priority": -10})
      */
-    public $tmType = null;
+    public $tmType;
 
     /**
      * @Form\Options({
@@ -45,7 +45,7 @@ class Responsibilities
      * @Form\Type("DynamicSelect")
      * @Form\Flags({"priority": -20})
      */
-    public $tmApplicationStatus = null;
+    public $tmApplicationStatus;
 
     /**
      * @Form\Options({
@@ -59,7 +59,7 @@ class Responsibilities
      * @Form\Type("Radio")
      * @Form\Flags({"priority": -30})
      */
-    public $isOwner = null;
+    public $isOwner;
 
     /**
      * @Form\Name("hoursOfWeek")
@@ -67,14 +67,14 @@ class Responsibilities
      * @Form\Attributes({"id":"hoursOfWeek"})
      * @Form\Flags({"priority": -40})
      */
-    public $hoursOfWeek = null;
+    public $hoursOfWeek;
 
     /**
      * @Form\Name("otherLicencesFieldset")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TransportManager\OtherLicencesFieldset")
      * @Form\Flags({"priority": -50})
      */
-    public $otherLicencesFieldset = null;
+    public $otherLicencesFieldset;
 
     /**
      * @Form\Type("TextArea")
@@ -106,5 +106,5 @@ class Responsibilities
      * @Form\ComposedObject("\Common\Form\Model\Fieldset\MultipleFileUpload")
      * @Form\Flags({"priority": -70})
      */
-    public $file = null;
+    public $file;
 }

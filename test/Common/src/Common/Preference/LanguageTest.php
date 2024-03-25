@@ -35,7 +35,7 @@ class LanguageTest extends MockeryTestCase
      */
     protected $setCookie;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = new Language();
 
@@ -86,7 +86,7 @@ class LanguageTest extends MockeryTestCase
         $this->assertEquals('cy', $this->setCookie->getValue());
     }
 
-    public function testSetPreferenceException()
+    public function testSetPreferenceException(): void
     {
         $cookie = m::mock(Cookie::class)->makePartial();
         $cookie['langPref'] = 'cy';
@@ -101,7 +101,7 @@ class LanguageTest extends MockeryTestCase
         $this->sut->setPreference('XX');
     }
 
-    public function testSetPreference()
+    public function testSetPreference(): void
     {
         $cookie = m::mock(Cookie::class)->makePartial();
         $cookie['langPref'] = 'cy';

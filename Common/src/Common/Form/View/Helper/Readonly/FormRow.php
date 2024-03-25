@@ -36,6 +36,7 @@ class FormRow extends AbstractHelper
      * @var string
      */
     private static $format = '<li class="%s"><dt>%s</dt><dd>%s</dd></li>';
+
     private static $formatWithoutLabel = '<li class="%s">%s</li>';
 
     /**
@@ -49,7 +50,7 @@ class FormRow extends AbstractHelper
      */
     public function __invoke(ElementInterface $element = null)
     {
-        if (!$element) {
+        if (!$element instanceof \Laminas\Form\ElementInterface) {
             return $this;
         }
 
@@ -78,8 +79,6 @@ class FormRow extends AbstractHelper
      * Render element
      *
      * @param ElementInterface $element Element
-     *
-     * @return string
      */
     public function render(ElementInterface $element): string
     {
@@ -122,7 +121,7 @@ class FormRow extends AbstractHelper
         $label = $element->getLabel();
 
         $translator = $this->getTranslator();
-        if ($translator !== null && !empty($label)) {
+        if ($translator !== null && ($label !== null && $label !== '' && $label !== '0')) {
             $label = $translator->translate($label, $this->getTranslatorTextDomain());
         }
 
@@ -130,11 +129,7 @@ class FormRow extends AbstractHelper
             $label = $escapeHtmlHelper($label);
         }
 
-        if ($element instanceof Html) {
-            $value = $defElmHlpr->render($element);
-        } else {
-            $value = $elementHelper($element);
-        }
+        $value = $element instanceof Html ? $defElmHlpr->render($element) : $elementHelper($element);
 
         if ($translator !== null) {
             if ($element instanceof HtmlTranslated) {

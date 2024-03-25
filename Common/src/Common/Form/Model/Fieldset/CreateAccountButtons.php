@@ -19,5 +19,5 @@ class CreateAccountButtons
      * @Form\Options({"label": "user-registration.form-actions.create-account.label"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $submit = null;
+    public $submit;
 }

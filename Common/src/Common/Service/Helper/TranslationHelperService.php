@@ -22,7 +22,6 @@ class TranslationHelperService
     /**
      * Create service instance
      *
-     * @param TranslatorInterface $translator
      *
      * @return TranslationHelperService
      */
@@ -36,7 +35,6 @@ class TranslationHelperService
      * Allows you to replace variables after the string is translated
      *
      * @param string $translationKey
-     * @param array  $arguments
      * @param string $translateToWelsh 'Y' or 'N', Force the translation into welsh
      * @return string
      */

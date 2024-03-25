@@ -43,10 +43,7 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
     ];
 
     private static $htmlFileUploadCntr =
-        '<div class="help__text">' .
-            '<h3 class="file__heading">%s</h3>' .
-            '<ul%s>%s%s</ul>' .
-        '</div>';
+        '<div class="help__text"><h3 class="file__heading">%s</h3><ul%s>%s%s</ul></div>';
 
     /**
      * @var bool
@@ -89,8 +86,6 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
      * Render a collection by iterating through all fieldsets and elements
      *
      * @param ElementInterface $element Element
-     *
-     * @return string
      */
     public function render(ElementInterface $element): string
     {
@@ -103,18 +98,16 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
 
         $messages = $element->getMessages();
 
-        if ($element instanceof HoursPerWeek) {
-            if (isset($messages['hoursPerWeekContent'])) {
-                $tmpMessages = [];
-                foreach ($messages['hoursPerWeekContent'] as $field => $fieldMessages) {
-                    foreach ($fieldMessages as $fieldMessage) {
-                        $tmpMessages[] = $fieldMessage;
-                    }
+        if ($element instanceof HoursPerWeek && isset($messages['hoursPerWeekContent'])) {
+            $tmpMessages = [];
+            foreach ($messages['hoursPerWeekContent'] as $fieldMessages) {
+                foreach ($fieldMessages as $fieldMessage) {
+                    $tmpMessages[] = $fieldMessage;
                 }
-                unset($messages['hoursPerWeekContent']);
-
-                $messages = array_merge($messages, $tmpMessages);
             }
+            
+            unset($messages['hoursPerWeekContent']);
+            $messages = array_merge($messages, $tmpMessages);
         }
 
         $renderer = $this->getView();
@@ -159,7 +152,7 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
             $templateMarkup = $this->renderTemplate($element);
         }
 
-        if ($element instanceof CompanyNumber && !empty($messages)) {
+        if ($element instanceof CompanyNumber && $messages !== []) {
             $attributes['class'] = '';
         }
 
@@ -181,7 +174,7 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
         }
 
         if ($readOnly) {
-            if ($markup == '') {
+            if ($markup === '') {
                 return '';
             }
 
@@ -189,7 +182,7 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
         }
 
         // If $templateMarkup is not empty, use it for simplify adding new element in JavaScript
-        if (!empty($templateMarkup)) {
+        if ($templateMarkup !== '' && $templateMarkup !== '0') {
             $markup .= $templateMarkup;
         }
 
@@ -198,7 +191,7 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
             $label = $element->getLabel();
             $legend = '';
 
-            if (!empty($label)) {
+            if ($label !== null && $label !== '' && $label !== '0') {
                 if (null !== ($translator = $this->getTranslator())) {
                     $label = $translator->translate(
                         $label,
@@ -213,7 +206,7 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
 
                 $legendAttributesString = $this->createAttributesString($element->getLabelAttributes());
 
-                if (!empty($legendAttributesString)) {
+                if ($legendAttributesString !== '' && $legendAttributesString !== '0') {
                     $legendAttributesString = ' ' . $legendAttributesString;
                 }
 
@@ -232,12 +225,12 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
             }
 
             $attributesString = $this->createAttributesString($attributes);
-            if (!empty($attributesString)) {
+            if ($attributesString !== '' && $attributesString !== '0') {
                 $attributesString = ' ' . $attributesString;
             }
 
             if ($element instanceof FileUploadList) {
-                if (!empty($markup)) {
+                if ($markup !== '' && $markup !== '0') {
                     $markup = sprintf(
                         self::$htmlFileUploadCntr,
                         $this->view->translate('common.file-upload.table.col.FileName'),
@@ -250,16 +243,14 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
                 }
             } elseif ($element instanceof FileUploadListItem) {
                 $markup = sprintf('<li%s>%s%s</li>', $attributesString, $hint, $markup);
+            } elseif ($element->getOption('hint-position') === 'below') {
+                $markup = sprintf('<fieldset%s>%s%s%s</fieldset>', $attributesString, $legend, $markup, $hint);
             } else {
-                if ($element->getOption('hint-position') === 'below') {
-                    $markup = sprintf('<fieldset%s>%s%s%s</fieldset>', $attributesString, $legend, $markup, $hint);
-                } else {
-                    $markup = sprintf('<fieldset%s>%s%s%s</fieldset>', $attributesString, $legend, $hint, $markup);
-                }
+                $markup = sprintf('<fieldset%s>%s%s%s</fieldset>', $attributesString, $legend, $hint, $markup);
             }
         }
 
-        if (empty($messages)) {
+        if ($messages === []) {
             return $markup;
         }
 
@@ -272,8 +263,6 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
 
         $elementErrors = $this->view->plugin('form_element_errors')->render($element);
 
-        $markup = sprintf('<div class="validation-wrapper">%s%s</div>', $elementErrors, $markup);
-
-        return $markup;
+        return sprintf('<div class="validation-wrapper">%s%s</div>', $elementErrors, $markup);
     }
 }

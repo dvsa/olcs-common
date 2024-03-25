@@ -25,7 +25,7 @@ class TrafficArea
      * })
      * @Form\Type("\Laminas\Form\Element\Select")
      */
-    public $trafficArea = null;
+    public $trafficArea;
 
     /**
      *
@@ -39,7 +39,7 @@ class TrafficArea
      *     "hint-position" : "below",
      * })
      */
-    public $trafficAreaSet = null;
+    public $trafficAreaSet;
 
     /**
      * @Form\Attributes({"id":"","placeholder":""})
@@ -54,5 +54,5 @@ class TrafficArea
      * })
      * @Form\Type("\Laminas\Form\Element\Select")
      */
-    public $enforcementArea = null;
+    public $enforcementArea;
 }

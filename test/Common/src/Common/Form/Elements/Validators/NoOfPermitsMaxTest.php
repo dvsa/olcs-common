@@ -17,10 +17,11 @@ use Laminas\Validator\LessThan;
  */
 class NoOfPermitsMaxTest extends \PHPUnit\Framework\TestCase
 {
+    public $validator;
     /**
      * Set up the validator
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->validator = new NoOfPermitsMax(15);
     }
@@ -30,12 +31,12 @@ class NoOfPermitsMaxTest extends \PHPUnit\Framework\TestCase
      *
      * @dataProvider providerIsValid
      */
-    public function testIsValid($value, $expected)
+    public function testIsValid($value, $expected): void
     {
         $this->assertEquals($expected, $this->validator->isValid($value, null));
     }
 
-    public function testMessageTemplates()
+    public function testMessageTemplates(): void
     {
         $expectedValue = [
             LessThan::NOT_LESS_INCLUSIVE => 'permits.page.no-of-permits.error.max-exceeded'

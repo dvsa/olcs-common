@@ -15,19 +15,16 @@ use Laminas\Router\Http\TreeRouteStack;
 class FeeUrlExternal extends FeeUrl
 {
     private Request $request;
+
     private UrlHelperService $urlHelper;
 
-    /**
-     * @param TreeRouteStack   $router
-     * @param Request          $request
-     * @param UrlHelperService $urlHelper
-     */
     public function __construct(TreeRouteStack $router, Request $request, UrlHelperService $urlHelper)
     {
         $this->request = $request;
         $this->urlHelper = $urlHelper;
         parent::__construct($router, $request, $urlHelper);
     }
+
     /**
      * Format a fee amount
      *
@@ -43,6 +40,7 @@ class FeeUrlExternal extends FeeUrl
             $url = $this->urlHelper->fromRoute('fees/late', ['fee' => $row['id']], ['query' => $query], true);
             return '<a class="govuk-link" href="' . $url . '">' . Escape::html($row['description']) . '</a>';
         }
+
         return parent::format($row, $column);
     }
 }

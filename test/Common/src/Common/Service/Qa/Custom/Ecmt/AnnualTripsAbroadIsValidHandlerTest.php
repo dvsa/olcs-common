@@ -17,7 +17,7 @@ class AnnualTripsAbroadIsValidHandlerTest extends MockeryTestCase
     /**
      * @dataProvider dpIsValid
      */
-    public function testIsValid($permitsRequired, $intensityWarningThreshold, $warningVisibleValue, $expectedIsValid)
+    public function testIsValid($permitsRequired, $intensityWarningThreshold, $warningVisibleValue, $expectedIsValid): void
     {
         $applicationStep = [
             'element' => [

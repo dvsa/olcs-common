@@ -13,10 +13,8 @@ class PhoneRequired extends Phone
 
     /**
      * Initialise the form
-     *
-     * @return void
      */
-    public function init()
+    public function init(): void
     {
         parent::init();
         $this->setLabel('contact-number');

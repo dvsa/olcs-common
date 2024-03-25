@@ -20,7 +20,9 @@ use Laminas\Mvc\Application;
 class TmApplicationManagerType implements FormatterPluginManagerInterface
 {
     private Application $application;
+
     private UrlHelperService $urlHelper;
+
     private TranslatorDelegator $translator;
 
     public function __construct(Application $application, UrlHelperService $urlHelper, TranslatorDelegator $translator)
@@ -61,6 +63,7 @@ class TmApplicationManagerType implements FormatterPluginManagerInterface
             default:
                 $status = '';
         }
+
         return $row['action'] === 'D' ? trim($row['tmType']['description']  . ' ' . $status) :
             '<a class="govuk-link" href="' . $url . '">' . trim($row['tmType']['description']  . ' ' . $status) . '</a>';
     }

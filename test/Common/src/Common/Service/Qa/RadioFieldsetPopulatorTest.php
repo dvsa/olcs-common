@@ -18,7 +18,7 @@ use Laminas\Form\Form;
  */
 class RadioFieldsetPopulatorTest extends MockeryTestCase
 {
-    public function testPopulate()
+    public function testPopulate(): void
     {
         $valueOptions = [
             [

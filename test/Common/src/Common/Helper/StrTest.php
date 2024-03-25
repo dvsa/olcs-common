@@ -13,21 +13,22 @@ use Common\Test\MockeryTestCase;
 class StrTest extends MockeryTestCase
 {
     protected const STRING_WITH_ANCHOR_TAG = '<a>Foo</a>';
+
     protected const STRING_WITH_NO_HTML = 'foo bar baz';
 
     /**
      * @test
      */
-    public function containsHtml_IsCallable()
+    public function containsHtml_IsCallable(): void
     {
-        $this->assertIsCallable([Str::class, 'containsHtml']);
+        $this->assertIsCallable(static fn(string $str): bool => \Common\Helper\Str::containsHtml($str));
     }
 
     /**
      * @test
      * @depends containsHtml_IsCallable
      */
-    public function containsHtml_ReturnsFalseIfStringDoesNotContainHtml()
+    public function containsHtml_ReturnsFalseIfStringDoesNotContainHtml(): void
     {
         $this->assertFalse(Str::containsHtml(static::STRING_WITH_NO_HTML));
     }
@@ -36,7 +37,7 @@ class StrTest extends MockeryTestCase
      * @test
      * @depends containsHtml_IsCallable
      */
-    public function containsHtml_ReturnsTrueIfStringContainsAnAnchor()
+    public function containsHtml_ReturnsTrueIfStringContainsAnAnchor(): void
     {
         $this->assertTrue(Str::containsHtml(static::STRING_WITH_ANCHOR_TAG));
     }

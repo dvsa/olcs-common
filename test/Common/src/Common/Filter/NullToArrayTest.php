@@ -17,7 +17,7 @@ class NullToArrayTest extends \PHPUnit\Framework\TestCase
      * @param $input    value to be passed into filter
      * @param $expected expected value to be returned from filter
      */
-    public function testFilter($input, $expected)
+    public function testFilter($input, $expected): void
     {
         $filter = new NullToArray();
         $this->assertEquals($expected, $filter->filter($input));

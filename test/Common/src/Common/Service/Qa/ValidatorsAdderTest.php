@@ -21,14 +21,14 @@ class ValidatorsAdderTest extends MockeryTestCase
 
     private $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->form = m::mock(Form::class);
 
         $this->sut = new ValidatorsAdder();
     }
 
-    public function testAdd()
+    public function testAdd(): void
     {
         $fieldsetName = 'fields123';
 
@@ -94,12 +94,12 @@ class ValidatorsAdderTest extends MockeryTestCase
             ->withNoArgs()
             ->andReturn($formInputFilter);
 
-        $qaElementInput = m::mock(InputInterface::class);
+        m::mock(InputInterface::class);
 
         $this->sut->add($this->form, $options);
     }
 
-    public function testAddWithNoValidators()
+    public function testAddWithNoValidators(): void
     {
         $options = [
             'validators' => []

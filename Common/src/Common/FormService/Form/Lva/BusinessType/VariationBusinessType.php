@@ -18,8 +18,11 @@ class VariationBusinessType extends AbstractBusinessType
     protected $lva = 'variation';
 
     protected FormHelperService $formHelper;
+
     protected AuthorizationService $authService;
+
     protected GuidanceHelperService $guidanceHelper;
+
     protected FormServiceManager $formServiceLocator;
 
     public function __construct(

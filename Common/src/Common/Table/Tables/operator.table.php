@@ -28,7 +28,7 @@ return [
         ],
         [
             'title' => 'Op/trading name',
-            'formatter' => fn($data) => $data['trading_as'] ? : $data['name'],
+            'formatter' => static fn($data) => $data['trading_as'] ? : $data['name'],
             'sort' => 'operatorName'
         ],
         [
@@ -43,14 +43,13 @@ return [
         ],
         [
             'title' => 'Correspondence address',
-            'formatter' => function ($data) {
+            'formatter' => static function ($data) {
                 $parts = [];
                 foreach (['address_line1', 'address_line2', 'address_line3', 'postcode'] as $item) {
                     if (!empty($data[$item])) {
                         $parts[] = $data[$item];
                     }
                 }
-
                 return implode(', ', $parts);
             },
             'sort' => 'correspondenceAddress'
@@ -64,12 +63,11 @@ return [
                         'licence_case_list/pagination',
                         false
                     ) . '">' . $data['caseCount'] . '</a>';
-                } else {
-                    return '<a class="govuk-link" href="' . $this->generateUrl(
-                        ['licence' => $data['licenceId'], 'action' => 'add'],
-                        'licence_case_action'
-                    ) . '">[Add Case]</a>';
                 }
+                return '<a class="govuk-link" href="' . $this->generateUrl(
+                    ['licence' => $data['licenceId'], 'action' => 'add'],
+                    'licence_case_action'
+                ) . '">[Add Case]</a>';
             }
         ],
         [

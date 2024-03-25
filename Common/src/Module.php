@@ -28,40 +28,37 @@ use Laminas\ModuleManager\Feature\ServiceProviderInterface;
 class Module implements ConfigProviderInterface, ServiceProviderInterface
 {
     public static string $dateFormat = 'd/m/Y';
+
     public static string $dateTimeFormat = 'd/m/Y H:i';
+
     public static string $dateTimeSecFormat = 'd/m/Y H:i:s';
+
     public static string $dbDateFormat = 'Y-m-d';
 
     /**
      * Initialize module
      *
      * @param \Laminas\ModuleManager\ModuleManager $moduleManager Module manager
-     *
-     * @return void
      */
-    public function init($moduleManager)
+    public function init($moduleManager): void
     {
         /** @var EventManager $events */
         $events = $moduleManager->getEventManager();
-        $events->attach('loadModules.post', [$this, 'modulesLoaded']);
+        $events->attach('loadModules.post', function (\Laminas\ModuleManager\ModuleEvent $e) : void {
+            $this->modulesLoaded($e);
+        });
     }
 
     /**
      * Modules loaded event
      *
      * @param ModuleEvent $e Module event
-     *
-     * @return void
      */
-    public function modulesLoaded(ModuleEvent $e)
+    public function modulesLoaded(ModuleEvent $e): void
     {
         $moduleManager = $e->getTarget();
 
-        if ($moduleManager->getModule('Olcs')) {
-            $config = $moduleManager->getModule('Olcs')->getConfig();
-        } else {
-            $config = [];
-        }
+        $config = $moduleManager->getModule('Olcs') ? $moduleManager->getModule('Olcs')->getConfig() : [];
 
         self::$dateFormat = $config['date_settings']['date_format'] ?? self::$dateFormat;
         self::$dateTimeFormat = $config['date_settings']['datetime_format'] ?? self::$dateTimeFormat;
@@ -73,10 +70,8 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
      * Bootstrap
      *
      * @param MvcEvent $e MVC Event
-     *
-     * @return void
      */
-    public function onBootstrap(MvcEvent $e)
+    public function onBootstrap(MvcEvent $e): void
     {
         $app = $e->getApplication();
         $sm = $app->getServiceManager();
@@ -96,12 +91,14 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
         //  RBAC behaviour if user not authorised
         $events->attach(MvcEvent::EVENT_DISPATCH_ERROR, [$sm->get(\LmcRbacMvc\View\Strategy\RedirectStrategy::class), 'onError']);
         //  CSRF token check
-        $events->attach(MvcEvent::EVENT_DISPATCH, [$this, 'validateCsrfToken'], 100);
+        $events->attach(MvcEvent::EVENT_DISPATCH, function (\Laminas\Mvc\MvcEvent $e) : void {
+            $this->validateCsrfToken($e);
+        }, 100);
 
         // On dispatch error ot certain CQRS exceptions then change page to a 404
         $events->attach(
             MvcEvent::EVENT_DISPATCH_ERROR,
-            function (MvcEvent $e) {
+            static function (MvcEvent $e) {
                 // If Backend Not found or access denied then display error as a 404 not found
                 if ($e->getParam('exception') instanceof NotFoundException
                     || $e->getParam('exception') instanceof AccessDeniedException
@@ -126,7 +123,7 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
 
         $events->attach(
             MvcEvent::EVENT_RENDER,
-            function (MvcEvent $e) use ($identifier) {
+            static function (MvcEvent $e) use ($identifier) {
                 // Inject the log correlation ID into the view
                 if ($e->getResult() instanceof ViewModel) {
                     $e->getResult()->setVariable('correlationId', $identifier);
@@ -150,34 +147,30 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
      *
      * @return void;
      */
-    public function onFatalError($identifier)
+    public function onFatalError($identifier): void
     {
         // Handle fatal errors //
         register_shutdown_function(
-            function () use ($identifier) {
+            static function () use ($identifier) {
                 // get error
                 $error = error_get_last();
-
                 $minorErrors = [
                     E_WARNING, E_NOTICE, E_USER_NOTICE, E_DEPRECATED, E_USER_DEPRECATED
                 ];
                 if (null === $error || (isset($error['type']) && in_array($error['type'], $minorErrors))) {
                     return null;
                 }
-
                 // check and allow only errors
                 // clean any previous output from buffer
                 while (ob_get_level() > 0) {
                     ob_end_clean();
                 }
-
                 /** @var Response $response */
                 $response = new Response();
                 $response->getHeaders()
                     ->addHeaderLine('Location', '/error?correlationId='. $identifier .'&src=shutdown');
                 $response->setStatusCode(Response::STATUS_CODE_302);
                 $response->sendHeaders();
-
                 return $response;
             }
         );
@@ -188,10 +181,8 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
      * Validate the CSRF token
      *
      * @param MvcEvent $e MVC event
-     *
-     * @return void
      */
-    public function validateCsrfToken(MvcEvent $e)
+    public function validateCsrfToken(MvcEvent $e): void
     {
         /** @var \Laminas\Http\PhpEnvironment\Request $request */
         $request = $e->getRequest();
@@ -220,7 +211,6 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
             return;
         }
 
-        /** @var TranslationHelperService $translator */
         $hlpFlashMsgr = $sm->get('Helper\FlashMessenger');
         $hlpFlashMsgr->addErrorMessage('csrf-message');
 
@@ -251,9 +241,6 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
      */
     protected function setUpTranslator(ServiceManager $sm, $eventManager)
     {
-        /**
-         * @var Translator $translator
-         */
         $cache = $sm->get('default-cache');
         $translator = $sm->get('translator');
         $translator->setCache($cache);
@@ -274,10 +261,8 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
      * If the request is coming through a proxy then update the host name on the request
      *
      * @param \Laminas\Stdlib\RequestInterface $request Request
-     *
-     * @return void
      */
-    private function setupRequestForProxyHost(\Laminas\Stdlib\RequestInterface $request)
+    private function setupRequestForProxyHost(\Laminas\Stdlib\RequestInterface $request): void
     {
         if (!$request instanceof \Laminas\Http\PhpEnvironment\Request) {
             // if request is not \Laminas\Http\PhpEnvironment\Request we must be running from CLI so do nothing
@@ -322,10 +307,8 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
      * Set the user ID in the log processor so that it can be included in the log files
      *
      * @param ServiceLocatorInterface $serviceManager Service manager
-     *
-     * @return void
      */
-    private function setLoggerUser(ServiceManager $serviceManager)
+    private function setLoggerUser(ServiceManager $serviceManager): void
     {
         $authService = $serviceManager->get(\LmcRbacMvc\Service\AuthorizationService::class);
         $serviceManager->get('LogProcessorManager')->get(\Olcs\Logging\Log\Processor\UserId::class)

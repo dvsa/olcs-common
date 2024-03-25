@@ -25,7 +25,7 @@ class FieldsetPopulatorTest extends MockeryTestCase
     /**
      * @dataProvider dpTestPopulate
      */
-    public function testPopulate($usageContext)
+    public function testPopulate($usageContext): void
     {
         $applicationStep1 = [
             'step1Attribute1' => 'step1Value1',

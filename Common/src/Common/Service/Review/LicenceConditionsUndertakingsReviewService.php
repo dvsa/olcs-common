@@ -24,9 +24,7 @@ class LicenceConditionsUndertakingsReviewService extends AbstractReviewService
     /**
      * Create service instance
      *
-     * @param AbstractReviewServiceServices $abstractReviewServiceServices
      * @param ComditionsUndertakingsReviewService $helper
-     *
      * @return LicenceConditionsUndertakingsReviewService
      */
     public function __construct(
@@ -41,7 +39,6 @@ class LicenceConditionsUndertakingsReviewService extends AbstractReviewService
     /**
      * Format the readonly config from the given data
      *
-     * @param array $data
      * @return array
      */
     public function getConfigFromData(array $data = [])

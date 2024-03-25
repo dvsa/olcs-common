@@ -17,7 +17,7 @@ class OperatingCentreData
      * })
      * @Form\Validator("Between", options={"min":0, "max":1000000})
      */
-    public $noOfVehiclesRequired = null;
+    public $noOfVehiclesRequired;
 
     /**
      * @Form\Attributes({"class":"tiny","pattern":"\d*","id":"noOfTrailersRequired"})
@@ -27,17 +27,17 @@ class OperatingCentreData
      * })
      * @Form\Validator("Between", options={"min":0, "max":1000000})
      */
-    public $noOfTrailersRequired = null;
+    public $noOfTrailersRequired;
 
     /**
      * @Form\Name("permission")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\OperatingCentrePermission")
      * @Form\Options({"label":"lva-operating-centre-newspaper-permission"})
      */
-    public $permission = null;
+    public $permission;
 
     /**
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $guidance = null;
+    public $guidance;
 }

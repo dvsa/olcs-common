@@ -15,15 +15,14 @@ use Laminas\View\Helper\Placeholder;
  */
 class PageTitleTest extends MockeryTestCase
 {
-    /**
-     * @var PageTitle
-     */
-    private $sut;
-
-    public function setUp(): void
+    public $placeholder;
+    public $translate;
+    public $routeMatch;
+    protected function setUp(): void
     {
         $placeholder = m::mock(Placeholder::class);
         $this->placeholder = $placeholder;
+
         $translate = m::mock(Translate::class);
         $routeMatch = m::mock(RouteMatch::class);
         $this->translate = $translate;
@@ -33,7 +32,7 @@ class PageTitleTest extends MockeryTestCase
     /**
      * @dataProvider providerInvoke
      */
-    public function testInvoke($pageTitlePlaceholder, $matchedRouteName, $keyToTranslate)
+    public function testInvoke($pageTitlePlaceholder, $matchedRouteName, $keyToTranslate): void
     {
         $this->routeMatch->shouldReceive('getMatchedRouteName')->andReturn($matchedRouteName);
         $this->routeMatch->shouldReceive('getParam')->with('action')->andReturn('someaction');

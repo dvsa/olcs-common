@@ -16,19 +16,14 @@ class FeaturesEnabledForMethod extends AbstractPlugin
      */
     private $querySender;
 
-    /**
-     * @param QuerySender $sender
-     */
     public function __construct(QuerySender $sender)
     {
         $this->querySender = $sender;
     }
 
     /**
-     * @param array  $toggleConfig
      * @param string $method
      *
-     * @return bool
      */
     public function __invoke(array $toggleConfig, $method): bool
     {
@@ -40,6 +35,7 @@ class FeaturesEnabledForMethod extends AbstractPlugin
 
             return true;
         }
+
         return false;
     }
 }

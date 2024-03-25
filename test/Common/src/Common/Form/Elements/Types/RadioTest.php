@@ -12,14 +12,14 @@ use Mockery as m;
  */
 class RadioTest extends MockeryTestCase
 {
-    public function testSetName()
+    public function testSetName(): void
     {
         $sut = new Radio();
         $sut->setName('FOO');
         $this->assertSame('FOO', $sut->getAttribute('id'));
     }
 
-    public function testSetNameIdAlreadySet()
+    public function testSetNameIdAlreadySet(): void
     {
         $sut = new Radio();
         $sut->setAttribute('id', 'NOT-FOO');
@@ -27,7 +27,7 @@ class RadioTest extends MockeryTestCase
         $this->assertSame('NOT-FOO', $sut->getAttribute('id'));
     }
 
-    public function testSetValueOptions()
+    public function testSetValueOptions(): void
     {
         $idGenerator = m::mock(UniqidGenerator::class);
         $idGenerator->shouldReceive('generateId')->twice()->andReturn('generated_id');

@@ -8,10 +8,8 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
 class SearchIrfoOrganisationOperatorNoFactory implements FactoryInterface
 {
     /**
-     * @param  ContainerInterface $container
      * @param  $requestedName
      * @param  array|null         $options
-     * @return SearchIrfoOrganisationOperatorNo
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): SearchIrfoOrganisationOperatorNo
     {

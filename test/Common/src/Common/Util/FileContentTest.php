@@ -9,7 +9,7 @@ use Common\Util\FileContent;
  */
 class FileContentTest extends \PHPUnit\Framework\TestCase
 {
-    public function testFileContent()
+    public function testFileContent(): void
     {
         $mimeType = 'mimeType';
 

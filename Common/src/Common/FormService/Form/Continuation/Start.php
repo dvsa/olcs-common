@@ -27,8 +27,6 @@ class Start
      */
     public function getForm()
     {
-        $form = $this->formHelper->createForm(StartForm::class);
-
-        return $form;
+        return $this->formHelper->createForm(StartForm::class);
     }
 }

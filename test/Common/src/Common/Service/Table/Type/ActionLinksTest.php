@@ -13,10 +13,12 @@ use Laminas\Mvc\I18n\Translator;
 class ActionLinksTest extends MockeryTestCase
 {
     protected $sut;
+
     protected $table;
+
     protected $sm;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sm = new ServiceManager();
 
@@ -36,8 +38,8 @@ class ActionLinksTest extends MockeryTestCase
         $column = [
             'deleteInputName' => 'table[action][delete][%d]',
             'replaceInputName' => 'table[action][replace][%d]',
-            'isRemoveVisible' => fn($data) => true,
-            'isReplaceVisible' => fn($data) => true,
+            'isRemoveVisible' => static fn($data) => true,
+            'isReplaceVisible' => static fn($data) => true,
         ];
         $data = [
             'id' => 123

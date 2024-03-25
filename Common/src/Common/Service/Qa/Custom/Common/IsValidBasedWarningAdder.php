@@ -13,7 +13,6 @@ class IsValidBasedWarningAdder
     /**
      * Create service instance
      *
-     * @param WarningAdder $warningAdder
      *
      * @return IsValidBasedWarningAdder
      */
@@ -25,8 +24,6 @@ class IsValidBasedWarningAdder
     /**
      * Add a warning partial to the form if the is valid handler returns false
      *
-     * @param IsValidHandlerInterface $isValidHandler
-     * @param QaForm $form
      * @param string $warningKey
      * @param int $priority
      */
@@ -35,7 +32,7 @@ class IsValidBasedWarningAdder
         QaForm $form,
         $warningKey,
         $priority = WarningAdder::DEFAULT_PRIORITY
-    ) {
+    ): void {
         if ($isValidHandler->isValid($form)) {
             return;
         }

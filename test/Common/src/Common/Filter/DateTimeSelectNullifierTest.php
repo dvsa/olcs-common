@@ -16,7 +16,7 @@ class DateTimeSelectNullifierTest extends \PHPUnit\Framework\TestCase
      * @group date_time_select_nullifier_filter
      * @dataProvider provideFilter
      */
-    public function testFilter($input, $output)
+    public function testFilter($input, $output): void
     {
         $sut = new DateTimeSelectNullifier();
         $this->assertEquals($output, $sut->filter($input));

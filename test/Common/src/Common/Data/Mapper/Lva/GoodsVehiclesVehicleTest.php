@@ -23,7 +23,7 @@ use Laminas\Form\FormInterface;
  */
 class GoodsVehiclesVehicleTest extends MockeryTestCase
 {
-    public function testMapFromResult()
+    public function testMapFromResult(): void
     {
         $input = [
             'bar' => 'foo',
@@ -69,7 +69,7 @@ class GoodsVehiclesVehicleTest extends MockeryTestCase
         $this->assertEquals($expected, $output);
     }
 
-    public function testMapFromErrors()
+    public function testMapFromErrors(): void
     {
         $errors = [
             'vrm' => [

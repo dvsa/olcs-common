@@ -7,17 +7,7 @@ use RuntimeException;
 class FieldsetPopulatorProvider
 {
     /** @var array */
-    private $fieldsetPopulators;
-
-    /**
-     * Create service instance
-     *
-     * @return FieldsetPopulatorProvider
-     */
-    public function __construct()
-    {
-        $this->fieldsetPopulators = [];
-    }
+    private $fieldsetPopulators = [];
 
     /**
      * Get an implementation of FieldsetPopulatorInterface corresponding to the supplied form control type
@@ -39,9 +29,8 @@ class FieldsetPopulatorProvider
      * Add an implementation of FieldsetPopulatorInterface corresponding to the supplied form control type
      *
      * @param string $type
-     * @param FieldsetPopulatorInterface $fieldsetPopulator
      */
-    public function registerPopulator($type, FieldsetPopulatorInterface $fieldsetPopulator)
+    public function registerPopulator($type, FieldsetPopulatorInterface $fieldsetPopulator): void
     {
         $this->fieldsetPopulators[$type] = $fieldsetPopulator;
     }

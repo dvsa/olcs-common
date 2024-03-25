@@ -11,10 +11,8 @@ class OneOfTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test setOptions
-     *
-     * @return void
      */
-    public function testSetOptions()
+    public function testSetOptions(): void
     {
         $sut = new OneOf();
         $sut->setOptions(
@@ -37,10 +35,8 @@ class OneOfTest extends \PHPUnit\Framework\TestCase
      * @param bool  $expected expected result
      * @param array $options  options
      * @param array $context  context
-     *
-     * @return void
      */
-    public function testIsValid($expected, $options, $context)
+    public function testIsValid($expected, $options, $context): void
     {
         $sut = new OneOf();
         $sut->setOptions($options);

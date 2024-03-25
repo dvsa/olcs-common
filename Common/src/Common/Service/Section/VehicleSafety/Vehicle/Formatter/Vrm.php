@@ -17,7 +17,7 @@ use Common\Service\Table\Formatter\FormatterPluginManagerInterface;
  */
 class Vrm implements FormatterPluginManagerInterface
 {
-    private UrlHelperService $viewHelperManager;
+    public $urlHelper;
 
     public function __construct(UrlHelperService $urlHelper)
     {

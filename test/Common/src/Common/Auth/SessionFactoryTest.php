@@ -20,7 +20,7 @@ class SessionFactoryTest extends MockeryTestCase
      */
     protected $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->setUpServiceManager();
     }
@@ -34,14 +34,14 @@ class SessionFactoryTest extends MockeryTestCase
         $this->setUpSut();
 
         // Assert
-        $this->assertIsCallable([$this->sut, '__invoke']);
+        $this->assertIsCallable(fn(\Psr\Container\ContainerInterface $container, string $requestedName, ?array $options = null): \Laminas\Authentication\Storage\Session => $this->sut->__invoke($container, $requestedName, $options));
     }
 
     /**
      * @test
      * @depends __invoke_IsCallable
      */
-    public function __invoke_ReturnsAnInstanceOfSessionFactory()
+    public function __invoke_ReturnsAnInstanceOfSessionFactory(): void
     {
         // Setup
         $this->setUpSut();
@@ -58,7 +58,7 @@ class SessionFactoryTest extends MockeryTestCase
      * @test
      * @depends __invoke_IsCallable
      */
-    public function __invoke_ThrowsException_WhenConfigIsMissing()
+    public function __invoke_ThrowsException_WhenConfigIsMissing(): void
     {
         // Setup
         $this->setUpSut();

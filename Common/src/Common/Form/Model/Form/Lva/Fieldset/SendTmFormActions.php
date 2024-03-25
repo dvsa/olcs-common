@@ -19,7 +19,7 @@ class SendTmFormActions
      * @Form\Options({"label": "send-form.button"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $send = null;
+    public $send;
 
     /**
      * @Form\Attributes({
@@ -31,5 +31,5 @@ class SendTmFormActions
      * @Form\Options({"label": "cancel.button"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $cancel = null;
+    public $cancel;
 }

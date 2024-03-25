@@ -19,7 +19,9 @@ class SurrenderSection
     use MakeSectionTrait;
 
     public const DISC_SECTION = 'current-discs';
+
     public const OPERATORLICENCE_SECTION = 'operator-licence';
+
     public const COMMUNITYLICENCE_SECTION = 'community-licence';
 
     private $heading;
@@ -28,14 +30,17 @@ class SurrenderSection
      * @var array
      */
     private $data;
+
     /**
      * @var Url
      */
     private $urlHelper;
+
     /**
      * @var TranslationHelperService
      */
     private $translator;
+
     private $section;
 
 
@@ -60,9 +65,6 @@ class SurrenderSection
         $this->heading = $heading;
     }
 
-    /**
-     * @return array
-     */
     protected function makeQuestions(): array
     {
         return $this->getDataForSection($this->section);
@@ -70,8 +72,6 @@ class SurrenderSection
 
     /**
      * @param $section
-     *
-     * @return array
      */
     private function getDataForSection($section): array
     {
@@ -92,6 +92,7 @@ class SurrenderSection
                 $questions = $this->createDocumentQuestions($data);
                 break;
         }
+
         return $questions;
     }
 
@@ -107,8 +108,9 @@ class SurrenderSection
         if ($this->section !== self::DISC_SECTION && !is_null($label)) {
             $changeLink = 'licence/surrender/' . $returnRoutes[$label] . '/review/GET';
         } elseif (is_null($label)) {
-            return $this->makeChangeLink(array_search($this->section, $returnRoutes));
+            return $this->makeChangeLink(array_search($this->section, $returnRoutes, true));
         }
+
         return [
             'sectionLink' => $this->urlHelper->fromRoute($changeLink, [], [], true)
         ];
@@ -116,8 +118,6 @@ class SurrenderSection
 
     /**
      * @param       $data
-     *
-     * @return array
      */
     private function createDocumentQuestions(array $data): array
     {
@@ -130,14 +130,13 @@ class SurrenderSection
                 'change' => $this->makeChangeLink($k)
             ];
         }
+
         return $questions;
     }
 
     /**
-     * @param array $discInformation
      * @param array $questions
      *
-     * @return array
      */
     private function createDiscSection(array $discInformation): array
     {
@@ -152,6 +151,7 @@ class SurrenderSection
                 'change' => $this->makeChangeLink()
             ];
         }
+
         return $questions;
     }
 }

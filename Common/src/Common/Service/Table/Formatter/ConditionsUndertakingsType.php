@@ -13,13 +13,11 @@ class ConditionsUndertakingsType implements FormatterPluginManagerInterface
 {
     private TranslatorDelegator $translator;
 
-    /**
-     * @param TranslatorDelegator $translator
-     */
     public function __construct(TranslatorDelegator $translator)
     {
         $this->translator = $translator;
     }
+
     /**
      * Get the condition undertaking type and add Schedule 4/1 text if applicable
      *

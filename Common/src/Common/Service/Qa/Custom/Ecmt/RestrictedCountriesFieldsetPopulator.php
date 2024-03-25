@@ -16,8 +16,6 @@ class RestrictedCountriesFieldsetPopulator implements FieldsetPopulatorInterface
     /**
      * Create service instance
      *
-     * @param YesNoRadioFactory $yesNoRadioFactory
-     * @param RestrictedCountriesMultiCheckboxFactory $restrictedCountriesMultiCheckboxFactory
      *
      * @return RestrictedCountriesFieldsetPopulator
      */
@@ -33,11 +31,9 @@ class RestrictedCountriesFieldsetPopulator implements FieldsetPopulatorInterface
      * Populate the fieldset with elements based on the supplied options array
      *
      * @param mixed $form
-     * @param Fieldset $fieldset
-     * @param array $options
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function populate($form, Fieldset $fieldset, array $options)
+    public function populate($form, Fieldset $fieldset, array $options): void
     {
         $yesNoRadio = $this->yesNoRadioFactory->create('restrictedCountries');
         $yesNoRadio->setStandardValueOptions();
@@ -54,7 +50,7 @@ class RestrictedCountriesFieldsetPopulator implements FieldsetPopulatorInterface
             ];
         }
 
-        if (count($valueOptions)) {
+        if ($valueOptions !== []) {
             $valueOptions[0]['attributes'] = [
                 'id' => 'RestrictedCountriesList'
             ];
@@ -62,6 +58,7 @@ class RestrictedCountriesFieldsetPopulator implements FieldsetPopulatorInterface
 
         $restrictedCountries = $this->restrictedCountriesMultiCheckboxFactory->create('yesContent');
         $restrictedCountries->setValueOptions($valueOptions);
+
         $yesNoRadio->setOption('yesContentElement', $restrictedCountries);
 
         $fieldset->add($yesNoRadio);

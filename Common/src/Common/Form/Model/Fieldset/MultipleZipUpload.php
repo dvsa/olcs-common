@@ -22,7 +22,7 @@ class MultipleZipUpload
      * })
      * @Form\Type("\Common\Form\Elements\Types\AttachFilesButton")
      */
-    public $controls = null;
+    public $controls;
 
     /**
      * @Form\Attributes({
@@ -31,7 +31,7 @@ class MultipleZipUpload
      * @Form\Options({"preview_images": "false"})
      * @Form\Type("\Common\Form\Elements\Types\FileUploadList")
      */
-    public $list = null;
+    public $list;
 
     /**
      * @Form\Name("__messages__")
@@ -39,7 +39,7 @@ class MultipleZipUpload
      * @Form\Options({})
      * @Form\Type("Hidden")
      */
-    public $messages = null;
+    public $messages;
 
     /**
      * @Form\Attributes({
@@ -52,5 +52,5 @@ class MultipleZipUpload
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $upload = null;
+    public $upload;
 }

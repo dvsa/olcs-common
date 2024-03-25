@@ -13,6 +13,7 @@ use Laminas\View\Model\ViewModel;
  */
 class ElasticSearch extends AbstractPlugin
 {
+    public $navigationId;
     /**
      * Session container name
      * @var string
@@ -119,7 +120,7 @@ class ElasticSearch extends AbstractPlugin
         );
     }
 
-    public function processSearchData()
+    public function processSearchData(): void
     {
         $incomingParameters = [];
 
@@ -131,7 +132,7 @@ class ElasticSearch extends AbstractPlugin
             $incomingParameters += $postParams;
         }
 
-        if ($queryParams = (array) $this->getController()->getRequest()->getQuery()) {
+        if (($queryParams = (array) $this->getController()->getRequest()->getQuery()) !== []) {
             $incomingParameters = array_merge($incomingParameters, $queryParams);
         }
 
@@ -166,11 +167,9 @@ class ElasticSearch extends AbstractPlugin
      */
     public function getSearchForm()
     {
-        $form = $this->getController()->getPlaceholder()
+        return $this->getController()->getPlaceholder()
             ->getContainer('headerSearch')
             ->getValue();
-
-        return $form;
     }
 
     /**
@@ -264,11 +263,11 @@ class ElasticSearch extends AbstractPlugin
             $incomingParameters += $routeParams;
         }
 
-        if ($queryParams = (array) $this->getController()->params()->fromQuery()) {
+        if (($queryParams = (array) $this->getController()->params()->fromQuery()) !== []) {
             $incomingParameters = array_merge($incomingParameters, $queryParams);
         }
 
-        if ($postParams = (array) $this->getController()->params()->fromPost()) {
+        if (($postParams = (array) $this->getController()->params()->fromPost()) !== []) {
             $incomingParameters = array_merge($incomingParameters, $postParams);
         }
 
@@ -285,7 +284,7 @@ class ElasticSearch extends AbstractPlugin
         return $incomingParameters;
     }
 
-    public function configureNavigation($removeNavIds = [])
+    public function configureNavigation($removeNavIds = []): void
     {
         $sd = $this->getSearchData();
 
@@ -346,7 +345,7 @@ class ElasticSearch extends AbstractPlugin
     /**
      * @param string $searchTerm
      */
-    public function setSearchTerm($searchTerm)
+    public function setSearchTerm($searchTerm): void
     {
         $this->searchTerm = $searchTerm;
     }
@@ -424,7 +423,7 @@ class ElasticSearch extends AbstractPlugin
     /**
      * @param \Laminas\Navigation\Navigation $navigationService
      */
-    public function setNavigationService($navigationService)
+    public function setNavigationService($navigationService): void
     {
         $this->navigationService = $navigationService;
     }
@@ -437,7 +436,7 @@ class ElasticSearch extends AbstractPlugin
         return $this->navigationService;
     }
 
-    public function resetSearchSession($term)
+    public function resetSearchSession($term): void
     {
         // A bit fudgy way to clear session container.
 

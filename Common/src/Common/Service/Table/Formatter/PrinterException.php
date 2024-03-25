@@ -31,6 +31,7 @@ class PrinterException implements FormatterPluginManagerInterface
                 $data['user']['contactDetails']['person']['forename'] . ' ' .
                 $data['user']['contactDetails']['person']['familyName'] : $data['user']['loginId'];
         }
+
         return $exception;
     }
 }

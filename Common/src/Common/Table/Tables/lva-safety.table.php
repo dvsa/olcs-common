@@ -47,7 +47,7 @@ return [
         ],
         [
             'title' => 'markup-table-th-remove',
-            'ariaDescription' => fn($row) => $row['contactDetails']['fao'] ?? 'safety inspector',
+            'ariaDescription' => static fn($row) => $row['contactDetails']['fao'] ?? 'safety inspector',
             'type' => 'ActionLinks',
         ],
     ]

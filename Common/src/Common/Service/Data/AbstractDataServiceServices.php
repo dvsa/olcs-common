@@ -23,9 +23,6 @@ class AbstractDataServiceServices
     /**
      * Create service instance
      *
-     * @param TransferAnnotationBuilder $transferAnnotationBuilder
-     * @param QueryService $queryService
-     * @param CommandService $commandService
      *
      * @return AbstractDataServiceServices
      */
@@ -41,8 +38,6 @@ class AbstractDataServiceServices
 
     /**
      * Return the transfer annotation builder service
-     *
-     * @return TransferAnnotationBuilder
      */
     public function getTransferAnnotationBuilder(): TransferAnnotationBuilder
     {
@@ -51,8 +46,6 @@ class AbstractDataServiceServices
 
     /**
      * Return the query service
-     *
-     * @return QueryService
      */
     public function getQueryService(): QueryService
     {
@@ -61,8 +54,6 @@ class AbstractDataServiceServices
 
     /**
      * Return the command service
-     *
-     * @return CommandService
      */
     public function getCommandService(): CommandService
     {

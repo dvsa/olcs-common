@@ -19,7 +19,7 @@ class StandardAndCabotageIsValidHandlerTest extends MockeryTestCase
     /**
      * @dataProvider dpIsValid
      */
-    public function testIsValid($storedAnswerValue, $submittedAnswerValue, $warningVisibleValue, $expectedIsValid)
+    public function testIsValid($storedAnswerValue, $submittedAnswerValue, $warningVisibleValue, $expectedIsValid): void
     {
         $questionFieldsetData = [
             'warningVisible' => $warningVisibleValue

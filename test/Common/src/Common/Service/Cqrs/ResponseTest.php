@@ -18,14 +18,14 @@ class ResponseTest extends MockeryTestCase
     /** @var  m\MockInterface|HttpResponse */
     private $mockHttpResp;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->mockHttpResp = m::mock(HttpResponse::class);
 
         $this->sut = new Response($this->mockHttpResp);
     }
 
-    public function testGetSet()
+    public function testGetSet(): void
     {
         $expectResult = ['foo' => 'unit_Val'];
         $expectBody = json_encode($expectResult);
@@ -55,8 +55,8 @@ class ResponseTest extends MockeryTestCase
 
         //  test to string
         static::assertEquals(
-            "Status = unit_Code unit_Phrase\n" .
-            "Response = unit_Result",
+            'Status = unit_Code unit_Phrase
+Response = unit_Result',
             (string)$this->sut
         );
     }
@@ -64,7 +64,7 @@ class ResponseTest extends MockeryTestCase
     /**
      * @dataProvider dpTestGetResult
      */
-    public function testGetResult($body, $expect)
+    public function testGetResult($body, $expect): void
     {
         $this->mockHttpResp
             ->shouldReceive('getBody')->once()->andReturn($body);
@@ -86,7 +86,7 @@ class ResponseTest extends MockeryTestCase
         ];
     }
 
-    public function testIsForbidden()
+    public function testIsForbidden(): void
     {
         $this->mockHttpResp->shouldReceive('getStatusCode')->andReturn(403)->once()->getMock();
         static::assertTrue($this->sut->isForbidden());

@@ -38,7 +38,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
     /**
      * @doesNotPerformAssertions
      */
-    public function testSetResponse()
+    public function testSetResponse(): void
     {
         $mock = $this->createMock(\Common\Util\ResponseHelper::class);
         $response = new \Laminas\Http\Response;
@@ -48,7 +48,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
     /**
      * @doesNotPerformAssertions
      */
-    public function testGetResponse()
+    public function testGetResponse(): void
     {
         $mock = $this->createMock(\Common\Util\ResponseHelper::class);
         $mock->response = new \Laminas\Http\Response;
@@ -58,7 +58,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
     /**
      * @doesNotPerformAssertions
      */
-    public function testSetMethod()
+    public function testSetMethod(): void
     {
         $mock = $this->createMock(\Common\Util\ResponseHelper::class);
         $mock->setMethod('blah');
@@ -67,7 +67,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
     /**
      * @doesNotPerformAssertions
      */
-    public function testSetParams()
+    public function testSetParams(): void
     {
         $mock = $this->createMock(\Common\Util\ResponseHelper::class);
         $mock->setParams([1, 2, 3]);
@@ -76,13 +76,13 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
     /**
      * @doesNotPerformAssertions
      */
-    public function testSetData()
+    public function testSetData(): void
     {
         $mock = $this->createMock(\Common\Util\ResponseHelper::class);
         $mock->getData([1, 2, 3]);
     }
 
-    public function testHandleResponseGet()
+    public function testHandleResponseGet(): void
     {
         $mock = $this->getSutMock($this->handleReponseMethods);
 
@@ -110,7 +110,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
         $mock->handleResponse();
     }
 
-    public function testHandleInvalidResponseGet()
+    public function testHandleInvalidResponseGet(): void
     {
         $mock = $this->getSutMock($this->handleReponseMethods);
 
@@ -138,7 +138,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
         $mock->handleResponse();
     }
 
-    public function testHandleResponsePost()
+    public function testHandleResponsePost(): void
     {
         $mock = $this->getSutMock($this->handleReponseMethods);
 
@@ -166,7 +166,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
         $mock->handleResponse();
     }
 
-    public function testHandleInvalidResponsePost()
+    public function testHandleInvalidResponsePost(): void
     {
         $mock = $this->getSutMock($this->handleReponseMethods);
 
@@ -194,7 +194,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
         $mock->handleResponse();
     }
 
-    public function testHandleResponsePut()
+    public function testHandleResponsePut(): void
     {
         $mock = $this->getSutMock($this->handleReponseMethods);
 
@@ -222,7 +222,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
         $mock->handleResponse();
     }
 
-    public function testHandleInvalidResponsePut()
+    public function testHandleInvalidResponsePut(): void
     {
         $mock = $this->getSutMock($this->handleReponseMethods);
 
@@ -250,7 +250,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
         $mock->handleResponse();
     }
 
-    public function testHandleResponseDelete()
+    public function testHandleResponseDelete(): void
     {
         $mock = $this->getSutMock($this->handleReponseMethods);
 
@@ -278,7 +278,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
         $mock->handleResponse();
     }
 
-    public function testHandleInvalidResponseDelete()
+    public function testHandleInvalidResponseDelete(): void
     {
         $mock = $this->getSutMock($this->handleReponseMethods);
 
@@ -306,7 +306,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
         $mock->handleResponse();
     }
 
-    public function testHandleInvalidResponseMethod()
+    public function testHandleInvalidResponseMethod(): void
     {
         $mock = $this->getSutMock($this->handleReponseMethods);
 
@@ -334,13 +334,13 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
     /**
      * @doesNotPerformAssertions
      */
-    public function testCheckForValidResponseBody()
+    public function testCheckForValidResponseBody(): void
     {
         $mock = $this->getSutMock([]);
         $mock->checkForValidResponseBody('{}');
     }
 
-    public function testCheckForInvalidResponseBodyString()
+    public function testCheckForInvalidResponseBodyString(): void
     {
         $this->expectException(\Exception::class);
 
@@ -348,7 +348,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
         $mock->checkForValidResponseBody(55);
     }
 
-    public function testCheckForInvalidResponseBodyJson()
+    public function testCheckForInvalidResponseBodyJson(): void
     {
         $this->expectException(\Exception::class);
 
@@ -356,7 +356,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
         $mock->checkForValidResponseBody('blah');
     }
 
-    public function testCheckForInternalServerError()
+    public function testCheckForInternalServerError(): void
     {
         $this->expectException(\Exception::class);
 
@@ -369,7 +369,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
         $mock->checkForInternalServerError('{}');
     }
 
-    public function testCheckForNoInternalServerError()
+    public function testCheckForNoInternalServerError(): void
     {
         $mock = $this->getSutMock(null);
         $response = $this->createPartialMock(HttpResponse::class, ['getStatusCode']);
@@ -380,7 +380,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
         $mock->checkForInternalServerError('{}');
     }
 
-    public function testCheckForUnexpectedResponseCode()
+    public function testCheckForUnexpectedResponseCode(): void
     {
         $this->expectException(\Exception::class);
 
@@ -394,7 +394,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
         $mock->checkForUnexpectedResponseCode('{}');
     }
 
-    public function testCheckForExpectedResponseCode()
+    public function testCheckForExpectedResponseCode(): void
     {
         $mock = $this->getSutMock(null);
         $response = $this->createPartialMock(HttpResponse::class, ['getStatusCode']);

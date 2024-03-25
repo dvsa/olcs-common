@@ -31,41 +31,41 @@ abstract class AbstractTransportManagersController extends AbstractController
     use Traits\CrudTableTrait;
 
     protected $section = 'transport_managers';
+
     protected $lva = 'application';
+
     protected string $location = 'external';
 
     /** @var  AbstractTransportManagerAdapter */
     protected $adapter;
+
     protected string $baseRoute = 'lva-%s/transport_managers';
 
     /** @var  \Common\Service\Helper\FormHelperService */
     protected $hlpForm;
-    /** @var  \Common\Service\Helper\TransportManagerHelperService */
-
 
     protected TransportManagerHelperService $transportManagerHelper;
-    protected FormHelperService $formHelper;
-    protected FlashMessengerHelperService $flashMessengerHelper;
-    protected FormServiceManager $formServiceManager;
-    protected ScriptFactory $scriptFactory;
-    protected TableFactory $tableFactory;
-    protected QuerySender $querySender;
-    protected QueryService $queryService;
-    protected CommandService $commandService;
-    protected AnnotationBuilder $transferAnnotationBuilder;
-    protected $lvaAdapter; //ToDo: Use Union Type Hint when available in php 8.0
 
+    protected FormHelperService $formHelper;
+
+    protected FlashMessengerHelperService $flashMessengerHelper;
+
+    protected FormServiceManager $formServiceManager;
+
+    protected ScriptFactory $scriptFactory;
+
+    protected TableFactory $tableFactory;
+
+    protected QuerySender $querySender;
+
+    protected QueryService $queryService;
+
+    protected CommandService $commandService;
+
+    protected AnnotationBuilder $transferAnnotationBuilder;
+
+    protected $lvaAdapter; //ToDo: Use Union Type Hint when available in php 8.0
     /**
-     * @param NiTextTranslation $niTextTranslationUtil
-     * @param AuthorizationService $authService
-     * @param FormHelperService $formHelper
-     * @param FormServiceManager $formServiceManager
-     * @param FlashMessengerHelperService $flashMessengerHelper
-     * @param ScriptFactory $scriptFactory
-     * @param QueryService $queryService
-     * @param CommandService $commandService
-     * @param AnnotationBuilder $transferAnnotationBuilder
-     * @param TransportManagerHelperService $transportManagerHelper
      * @param $lvaAdapter
      */
     public function __construct(
@@ -114,6 +114,7 @@ abstract class AbstractTransportManagersController extends AbstractController
         if ($tableData === null) {
             return $this->notFoundAction();
         }
+
         $table->loadData($tableData);
         $form->get('table')->get('table')->setTable($table);
         $form->get('table')->get('rows')->setValue(count($table->getRows()));
@@ -252,6 +253,7 @@ abstract class AbstractTransportManagersController extends AbstractController
                     true
                 );
             }
+
             return $this->redirect()->toRoute(
                 null,
                 [
@@ -377,14 +379,8 @@ abstract class AbstractTransportManagersController extends AbstractController
                 $fm = $this->flashMessengerHelper;
 
                 if ($response->isOk()) {
-                    if ($hasEmail === 'Y') {
-                        $successMessage = 'tm-add-user-success-message';
-                    } else {
-                        $successMessage = 'tm-add-user-success-message-no-email';
-                    }
-
+                    $successMessage = $hasEmail === 'Y' ? 'tm-add-user-success-message' : 'tm-add-user-success-message-no-email';
                     $fm->addSuccessMessage($successMessage);
-
                     return $this->redirect()->toRouteAjax($this->getBaseRoute(), ['action' => null], [], true);
                 }
 
@@ -458,11 +454,13 @@ abstract class AbstractTransportManagersController extends AbstractController
         $options = [];
         foreach ($response->getResult()['results'] as $user) {
             $name = $user['contactDetails']['person']['forename'] . ' ' . $user['contactDetails']['person']['familyName'];
-            if (empty(trim($name))) {
+            if (trim($name) === '' || trim($name) === '0') {
                 $name = 'User ID ' . $user['id'];
             }
+
             $options[$user['id']] = $name;
         }
+
         asort($options);
 
         return $options;
@@ -512,14 +510,8 @@ abstract class AbstractTransportManagersController extends AbstractController
      */
     protected function isLastTmLicence()
     {
-        if (
-            $this->lva === 'licence'
-            && $this->lvaAdapter->getNumberOfRows($this->getIdentifier(), $this->getLicenceId()) === 1
-        ) {
-            return true;
-        }
-
-        return false;
+        return $this->lva === 'licence'
+        && $this->lvaAdapter->getNumberOfRows($this->getIdentifier(), $this->getLicenceId()) === 1;
     }
 
     /**
@@ -544,16 +536,13 @@ abstract class AbstractTransportManagersController extends AbstractController
                 $tmaIdsToDelete[] = $id;
             }
         }
-
-        if (!empty($tmaIdsToDelete)) {
-            $command = $this->transferAnnotationBuilder
-                ->createCommand(
-                    Command\TransportManagerApplication\Delete::create(
-                        ['ids' => array_unique($tmaIdsToDelete)]
-                    )
-                );
-            $this->commandService->send($command);
-        }
+        $command = $this->transferAnnotationBuilder
+            ->createCommand(
+                Command\TransportManagerApplication\Delete::create(
+                    ['ids' => array_unique($tmaIdsToDelete)]
+                )
+            );
+        $this->commandService->send($command);
 
         return $this->redirect()->toRouteAjax($this->getBaseRoute(), [], [], true);
     }

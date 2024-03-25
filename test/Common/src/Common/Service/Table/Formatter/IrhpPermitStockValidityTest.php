@@ -28,7 +28,7 @@ class IrhpPermitStockValidityTest extends \PHPUnit\Framework\TestCase
      *
      * @dataProvider provider
      */
-    public function testFormat($data, $column, $expected)
+    public function testFormat($data, $column, $expected): void
     {
         $this->assertEquals($expected, $this->sut->format($data, $column));
     }

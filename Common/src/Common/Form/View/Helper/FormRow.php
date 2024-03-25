@@ -20,24 +20,27 @@ use Common\Form\Elements\Types\AttachFilesButton;
  */
 class FormRow extends \Common\Form\View\Helper\Extended\FormRow
 {
-    private $config;
-
     /**
      * The form row output format.
      *
      * @var string
      */
     private static $format = '<div class="field %s">%s</div>';
-    private static $formatNoDivClass = '<div class="%s">%s</div>';
-    private static $readonlyFormat = '<div class="field read-only %s"><p>%s<br><b>%s</b></p></div>';
-    private static $errorClass = '<div class="validation-wrapper">%s</div>';
-    protected $fieldsetWrapper = '<fieldset%4$s>%2$s%1$s%3$s</fieldset>';
-    protected $fieldsetLabelWrapper = '<legend>%s</legend>';
-    protected $fieldsetHintFormat = "<p class=\"hint\">%s</p>";
 
-    public function __construct(array $config)
+    private static $formatNoDivClass = '<div class="%s">%s</div>';
+
+    private static $readonlyFormat = '<div class="field read-only %s"><p>%s<br><b>%s</b></p></div>';
+
+    private static $errorClass = '<div class="validation-wrapper">%s</div>';
+
+    protected $fieldsetWrapper = '<fieldset%4$s>%2$s%1$s%3$s</fieldset>';
+
+    protected $fieldsetLabelWrapper = '<legend>%s</legend>';
+
+    protected $fieldsetHintFormat = '<p class="hint">%s</p>';
+
+    public function __construct()
     {
-        $this->config = $config;
     }
 
     /**
@@ -47,7 +50,6 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow
      * @param null|string      $labelPosition Label Position
      *
      * @throws \Laminas\Form\Exception\DomainException
-     * @return string
      */
     public function render(ElementInterface $element, ?string $labelPosition = null): string
     {
@@ -84,11 +86,7 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow
 
             $renderAsFieldset = $element->getOption('render_as_fieldset');
 
-            if ($renderAsFieldset) {
-                $markup = $this->renderFieldset($element);
-            } else {
-                $markup = $this->renderRow($element);
-            }
+            $markup = $renderAsFieldset ? $this->renderFieldset($element) : $this->renderRow($element);
 
             if ($element instanceof SingleCheckbox) {
                 $this->labelPosition = self::LABEL_PREPEND;
@@ -105,12 +103,7 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow
         }
 
         if (! ($element instanceof Hidden) && $wrap) {
-            if (!empty($element->getMessages())) {
-                $class = '';
-            } else {
-                $class = $element->getAttribute('data-container-class');
-            }
-
+            $class = $element->getMessages() === [] ? $element->getAttribute('data-container-class') : '';
             if (strpos($element->getAttribute('class'), 'govuk-visually-hidden') === 0) {
                 $markup = sprintf(self::$format, 'govuk-visually-hidden', $markup);
             } elseif ($element->getOption('render-container') !== false) {
@@ -126,7 +119,7 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow
             }
         }
 
-        if (!empty($element->getMessages())) {
+        if ($element->getMessages() !== []) {
             $markup = sprintf(self::$errorClass, $markup);
         }
 
@@ -164,7 +157,7 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow
             $markup = $hint . $this->renderRow($element);
         }
 
-        if (!empty($label)) {
+        if ($label !== null && $label !== '' && $label !== '0') {
             $translator = $this->getTranslator();
 
             if ($translator !== null) {
@@ -220,20 +213,18 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow
         $label           = $element->getLabel();
         $inputErrorClass = $this->getInputErrorClass();
 
-        if (isset($label) && '' !== $label) {
-            // Translate the label
-            if (null !== ($translator = $this->getTranslator())) {
-                $label = $translator->translate(
-                    $label,
-                    $this->getTranslatorTextDomain()
-                );
-            }
+        // Translate the label
+        if (isset($label) && '' !== $label && null !== ($translator = $this->getTranslator())) {
+            $label = $translator->translate(
+                $label,
+                $this->getTranslatorTextDomain()
+            );
         }
 
         // Does this element have errors ?
-        if (count($element->getMessages()) > 0 && !empty($inputErrorClass)) {
+        if ($element->getMessages() !== [] && ($inputErrorClass !== '' && $inputErrorClass !== '0')) {
             $classAttributes = ($element->hasAttribute('class') ? $element->getAttribute('class') . ' ' : '');
-            $classAttributes = $classAttributes . $inputErrorClass;
+            $classAttributes .= $inputErrorClass;
 
             $element->setAttribute('class', $classAttributes);
         }
@@ -284,6 +275,7 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow
                 if (is_array($fieldsetAttributes)) {
                     $attributesString = ' ' . $this->createAttributesString($fieldsetAttributes);
                 }
+
                 $singleRadio = $element->getOption('single-radio');
                 if ($singleRadio) {
                     $markup = $elementString;
@@ -311,7 +303,9 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow
 
                 // Button element is a special case, because label is always rendered inside it
                 if ($element instanceof Button) {
-                    $labelOpen = $labelClose = $label = '';
+                    $labelOpen = '';
+                    $labelClose = '';
+                    $label = '';
                 }
 
                 $labelPosition = $this->labelPosition;

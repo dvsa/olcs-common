@@ -19,12 +19,12 @@ class GoodsVehicles
      *   "class": "govuk-visually-hidden"
      * })
      */
-    public $query = null;
+    public $query;
 
     /**
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\VehiclesData")
      */
-    public $data = null;
+    public $data;
 
     /**
      * @Form\Name("table")
@@ -33,17 +33,17 @@ class GoodsVehicles
      *   "class": "table"
      * })
      */
-    public $table = null;
+    public $table;
 
     /**
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\ShareInfo")
      */
-    public $shareInfo = null;
+    public $shareInfo;
 
     /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
      * @Form\Attributes({"class":"govuk-button-group"})
      */
-    public $formActions = null;
+    public $formActions;
 }

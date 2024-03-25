@@ -19,7 +19,7 @@ class DeclarationFormActions
      * @Form\Options({"label": "application.review-declarations.sign-button"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $sign = null;
+    public $sign;
 
     /**
      * @Form\Attributes({
@@ -31,7 +31,7 @@ class DeclarationFormActions
      * @Form\Options({"label": "continue-to-payment.button"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $submitAndPay = null;
+    public $submitAndPay;
 
     /**
      * @Form\Attributes({
@@ -43,5 +43,5 @@ class DeclarationFormActions
      * @Form\Options({"label": "continue.button"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $submit = null;
+    public $submit;
 }

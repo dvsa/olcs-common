@@ -13,7 +13,6 @@ class AbstractListDataServiceServices
     /**
      * Create service instance
      *
-     * @param AbstractDataServiceServices $abstractDataServiceServices
      *
      * @return AbstractListDataServiceServices
      */
@@ -24,8 +23,6 @@ class AbstractListDataServiceServices
 
     /**
      * Return the AbstractDataServiceServices
-     *
-     * @return AbstractDataServiceServices
      */
     public function getAbstractDataServiceServices(): AbstractDataServiceServices
     {

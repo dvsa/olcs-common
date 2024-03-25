@@ -7,7 +7,7 @@
  */
 namespace Common\Form\Elements\Validators;
 
-use Laminas\Validator\AbstractValidator as AbstractValidator;
+use Laminas\Validator\AbstractValidator;
 
 /**
  * Checks a date for a cheque payment is valid

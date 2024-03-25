@@ -13,17 +13,15 @@ use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 class YesNo implements FormatterPluginManagerInterface
 {
     private StackHelperService $stackHelper;
+
     private TranslatorDelegator $translator;
 
-    /**
-     * @param StackHelperService  $stackHelper
-     * @param TranslatorDelegator $translator
-     */
     public function __construct(StackHelperService $stackHelper, TranslatorDelegator $translator)
     {
         $this->stackHelper = $stackHelper;
         $this->translator = $translator;
     }
+
     /**
      * Format a address
      *

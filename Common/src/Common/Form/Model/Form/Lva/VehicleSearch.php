@@ -16,15 +16,15 @@ class VehicleSearch
      * @Form\Name("vehicleSearch")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\VehicleSearch")
      */
-    public $vehiclesSearch = null;
+    public $vehiclesSearch;
 
     /**
      * @Form\Type("Hidden")
      */
-    public $limit = null;
+    public $limit;
 
     /**
      * @Form\Type("Hidden")
      */
-    public $includeRemoved = null;
+    public $includeRemoved;
 }

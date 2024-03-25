@@ -16,15 +16,25 @@ use Mockery;
 class ButtonTest extends MockeryTestCase
 {
     protected const TYPE_ATTRIBUTE = 'type';
+
     protected const A_BUTTON_NAME = 'A BUTTON NAME';
+
     protected const A_BUTTON_LABEL = 'A BUTTON LABEL';
+
     protected const CLASS_ATTRIBUTE = 'class';
+
     protected const AN_INVALID_BUTTON_TYPE = 'AN INVALID BUTTON TYPE';
+
     protected const INVALID_BUTTON_TYPE_MESSAGE = 'Invalid type';
+
     protected const EMPTY_ARRAY = [];
+
     protected const AN_INVALID_BUTTON_SIZE = 'AN INVALID BUTTON SIZE';
+
     protected const INVALID_BUTTON_SIZE_MESSAGE = 'Invalid button size';
+
     protected const AN_INVALID_THEME = 'AN INVALID THEME';
+
     protected const INVALID_BUTTON_THEME_MESSAGE = 'Invalid button theme';
 
     /**
@@ -35,7 +45,7 @@ class ButtonTest extends MockeryTestCase
     /**
      * @test
      */
-    public function __construct_SetsTypeAttributeToButton()
+    public function __construct_SetsTypeAttributeToButton(): void
     {
         // Setup
         $this->setUpSut(static::A_BUTTON_NAME, static::A_BUTTON_LABEL);
@@ -47,7 +57,7 @@ class ButtonTest extends MockeryTestCase
     /**
      * @test
      */
-    public function __construct_SetsClassToClassList()
+    public function __construct_SetsClassToClassList(): void
     {
         // Setup
         $this->setUpSut(static::A_BUTTON_NAME, static::A_BUTTON_LABEL);
@@ -59,7 +69,7 @@ class ButtonTest extends MockeryTestCase
     /**
      * @test
      */
-    public function __construct_SetsName()
+    public function __construct_SetsName(): void
     {
         // Setup
         $this->setUpSut(static::A_BUTTON_NAME, static::A_BUTTON_LABEL);
@@ -71,7 +81,7 @@ class ButtonTest extends MockeryTestCase
     /**
      * @test
      */
-    public function __construct_SetsLabel()
+    public function __construct_SetsLabel(): void
     {
         // Setup
         $this->setUpSut(static::A_BUTTON_NAME, static::A_BUTTON_LABEL);
@@ -83,7 +93,7 @@ class ButtonTest extends MockeryTestCase
     /**
      * @test
      */
-    public function __construct_SetsSizeToLarge()
+    public function __construct_SetsSizeToLarge(): void
     {
         // Setup
         $this->setUpSut(static::A_BUTTON_NAME, static::A_BUTTON_LABEL);
@@ -95,7 +105,7 @@ class ButtonTest extends MockeryTestCase
     /**
      * @test
      */
-    public function setAttribute_IsCallable()
+    public function setAttribute_IsCallable(): void
     {
         // Setup
         $this->setUpSut(static::A_BUTTON_NAME, static::A_BUTTON_LABEL);
@@ -108,7 +118,7 @@ class ButtonTest extends MockeryTestCase
      * @test
      * @depends setAttribute_IsCallable
      */
-    public function setAttribute_ThrowsExceptionIfButtonTypeIsInvalid()
+    public function setAttribute_ThrowsExceptionIfButtonTypeIsInvalid(): void
     {
         // Setup
         $this->setUpSut(static::A_BUTTON_NAME, static::A_BUTTON_LABEL);
@@ -121,9 +131,6 @@ class ButtonTest extends MockeryTestCase
         $this->sut->setAttribute(static::TYPE_ATTRIBUTE, static::AN_INVALID_BUTTON_TYPE);
     }
 
-    /**
-     * @return array
-     */
     public function validButtonTypesDataProvider(): array
     {
         return [
@@ -134,12 +141,11 @@ class ButtonTest extends MockeryTestCase
     }
 
     /**
-     * @param string $buttonType
      * @test
      * @depends setAttribute_IsCallable
      * @dataProvider validButtonTypesDataProvider
      */
-    public function setAttribute_AcceptsValidButtonTypes(string $buttonType)
+    public function setAttribute_AcceptsValidButtonTypes(string $buttonType): void
     {
         // Setup
         $this->setUpSut(static::A_BUTTON_NAME, static::A_BUTTON_LABEL);
@@ -152,15 +158,18 @@ class ButtonTest extends MockeryTestCase
     }
 
     protected const A_CLASS = 'A_CLASS';
+
     protected const B_CLASS = 'B_CLASS';
+
     protected const AB_STRING_CLASS_LIST = self::A_CLASS . ' ' . self::B_CLASS;
+
     protected const AB_ARRAY_CLASS_LIST = [self::A_CLASS, self::B_CLASS];
 
     /**
      * @test
      * @depends setAttribute_IsCallable
      */
-    public function setAttribute_ConvertsClassValuesToClassLists_WhenSettingAStringClassList()
+    public function setAttribute_ConvertsClassValuesToClassLists_WhenSettingAStringClassList(): void
     {
         // Setup
         $this->setUpSut(static::A_BUTTON_NAME, static::A_BUTTON_LABEL);
@@ -178,7 +187,7 @@ class ButtonTest extends MockeryTestCase
      * @test
      * @depends setAttribute_IsCallable
      */
-    public function setAttribute_ConvertsClassValuesToClassLists_WhenSettingAnArrayClassList()
+    public function setAttribute_ConvertsClassValuesToClassLists_WhenSettingAnArrayClassList(): void
     {
         // Setup
         $this->setUpSut(static::A_BUTTON_NAME, static::A_BUTTON_LABEL);
@@ -196,7 +205,7 @@ class ButtonTest extends MockeryTestCase
      * @test
      * @depends setAttribute_IsCallable
      */
-    public function setAttribute_KeepsClassLists_WhenSettingAClassList()
+    public function setAttribute_KeepsClassLists_WhenSettingAClassList(): void
     {
         // Setup
         $this->setUpSut(static::A_BUTTON_NAME, static::A_BUTTON_LABEL);
@@ -212,7 +221,7 @@ class ButtonTest extends MockeryTestCase
     /**
      * @test
      */
-    public function setSize_IsCallable()
+    public function setSize_IsCallable(): void
     {
         // Setup
         $this->setUpSut(static::A_BUTTON_NAME, static::A_BUTTON_LABEL);
@@ -225,7 +234,7 @@ class ButtonTest extends MockeryTestCase
      * @test
      * @depends setSize_IsCallable
      */
-    public function setSize_ThrowsExceptionIfSizeValueIsInvalid()
+    public function setSize_ThrowsExceptionIfSizeValueIsInvalid(): void
     {
         // Setup
         $this->setUpSut(static::A_BUTTON_NAME, static::A_BUTTON_LABEL);
@@ -250,7 +259,7 @@ class ButtonTest extends MockeryTestCase
      * @depends setSize_IsCallable
      * @dataProvider validButtonSizeDataProvider
      */
-    public function setSize_AcceptsValidSizes(string $val)
+    public function setSize_AcceptsValidSizes(string $val): void
     {
         // Setup
         $this->setUpSut(static::A_BUTTON_NAME, static::A_BUTTON_LABEL);
@@ -266,7 +275,7 @@ class ButtonTest extends MockeryTestCase
      * @test
      * @depends setSize_AcceptsValidSizes
      */
-    public function setSize_SetsSizeAsClass()
+    public function setSize_SetsSizeAsClass(): void
     {
         // Setup
         $this->setUpSut(static::A_BUTTON_NAME, static::A_BUTTON_LABEL);
@@ -282,7 +291,7 @@ class ButtonTest extends MockeryTestCase
      * @test
      * @depends setSize_AcceptsValidSizes
      */
-    public function setSize_RemovesAnyExistingSizeClassesFromClassList()
+    public function setSize_RemovesAnyExistingSizeClassesFromClassList(): void
     {
         // Setup
         $this->setUpSut(static::A_BUTTON_NAME, static::A_BUTTON_LABEL);
@@ -299,7 +308,7 @@ class ButtonTest extends MockeryTestCase
     /**
      * @test
      */
-    public function setTheme_IsCallable()
+    public function setTheme_IsCallable(): void
     {
         // Setup
         $this->setUpSut(static::A_BUTTON_NAME, static::A_BUTTON_LABEL);
@@ -311,7 +320,7 @@ class ButtonTest extends MockeryTestCase
     /**
      * @test
      */
-    public function setTheme_ThrowsExceptionIfThemeIsInvalid()
+    public function setTheme_ThrowsExceptionIfThemeIsInvalid(): void
     {
         // Setup
         $this->setUpSut(static::A_BUTTON_NAME, static::A_BUTTON_LABEL);
@@ -336,12 +345,11 @@ class ButtonTest extends MockeryTestCase
     }
 
     /**
-     * @param string $theme
      * @test
      * @depends setTheme_IsCallable
      * @dataProvider validThemesDataProvider
      */
-    public function setTheme_AcceptsValidThemes(string $theme)
+    public function setTheme_AcceptsValidThemes(string $theme): void
     {
         // Setup
         $this->setUpSut(static::A_BUTTON_NAME, static::A_BUTTON_LABEL);
@@ -357,7 +365,7 @@ class ButtonTest extends MockeryTestCase
      * @test
      * @depends setTheme_IsCallable
      */
-    public function setTheme_RemovesAnyExistingThemes()
+    public function setTheme_RemovesAnyExistingThemes(): void
     {
         // Setup
         $this->setUpSut(static::A_BUTTON_NAME, static::A_BUTTON_LABEL);

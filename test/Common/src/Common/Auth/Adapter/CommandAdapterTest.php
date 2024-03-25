@@ -29,7 +29,7 @@ class CommandAdapterTest extends MockeryTestCase
     /**
      * @test
      */
-    public function authenticate_ReturnsFailureWhen_CommandReturnsNotOk()
+    public function authenticate_ReturnsFailureWhen_CommandReturnsNotOk(): void
     {
         // Setup
         $cmdResult = [
@@ -57,7 +57,7 @@ class CommandAdapterTest extends MockeryTestCase
      * @test
      * @dataProvider commandResultDataProvider
      */
-    public function authenticate_ReturnsResultObject_FromCommandResult(int $code, ?array $identity, ?array $messages)
+    public function authenticate_ReturnsResultObject_FromCommandResult(int $code, ?array $identity, ?array $messages): void
     {
         // Setup
         $cmdResult = [
@@ -115,8 +115,6 @@ class CommandAdapterTest extends MockeryTestCase
     }
 
     /**
-     * @param bool $isOk
-     * @param array $result
      * @return Response|MockInterface
      */
     protected function response(bool $isOk, array $result)
@@ -145,7 +143,6 @@ class CommandAdapterTest extends MockeryTestCase
 
     /**
      * @param $commandSender
-     * @return CommandAdapter
      */
     protected function setupSut(CommandSender $commandSender): CommandAdapter
     {

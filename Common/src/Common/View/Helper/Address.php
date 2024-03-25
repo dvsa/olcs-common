@@ -14,7 +14,6 @@ class Address extends AbstractHelper
     /**
      * Get the HTML to render an address array
      *
-     * @param array $address
      *
      * @return string HTML
      */
@@ -22,11 +21,7 @@ class Address extends AbstractHelper
     {
         $parts = [];
 
-        if (isset($address['countryCode']['id'])) {
-            $address['countryCode'] = $address['countryCode']['id'];
-        } else {
-            $address['countryCode'] = null;
-        }
+        $address['countryCode'] = $address['countryCode']['id'] ?? null;
 
         if (!isset($fields)) {
             $fields = [
@@ -40,9 +35,13 @@ class Address extends AbstractHelper
         }
 
         foreach ($fields as $item) {
-            if (isset($address[$item]) && !empty($address[$item])) {
-                $parts[] = htmlspecialchars($address[$item]);
+            if (!isset($address[$item])) {
+                continue;
             }
+            if (empty($address[$item])) {
+                continue;
+            }
+            $parts[] = htmlspecialchars($address[$item]);
         }
 
         return implode($glue, $parts);

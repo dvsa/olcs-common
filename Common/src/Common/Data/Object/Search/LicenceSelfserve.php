@@ -14,6 +14,7 @@ class LicenceSelfserve extends InternalSearchAbstract
      * @var string
      */
     protected $title = 'Licence';
+
     /**
      * @var string
      */
@@ -80,7 +81,7 @@ class LicenceSelfserve extends InternalSearchAbstract
             [
                 'title' => 'Licence number',
                 'name'=> 'licNo',
-                'formatter' => fn($data) => '<a class="govuk-link" href="/view-details/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>'
+                'formatter' => static fn($data) => '<a class="govuk-link" href="/view-details/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>'
             ],
             [
                 'title' => 'Licence status',
@@ -90,12 +91,12 @@ class LicenceSelfserve extends InternalSearchAbstract
             [
                 'title' => 'Operator name',
                 'name'=> 'orgName',
-                'formatter' => fn($data) => $data['orgName'] . ($data['noOfLicencesHeld'] > 1 ? ' (MLH)' : ''),
+                'formatter' => static fn($data) => $data['orgName'] . ($data['noOfLicencesHeld'] > 1 ? ' (MLH)' : ''),
             ],
             [
                 'title' => 'Trading name',
                 'name'=> 'licenceTradingNames',
-                'formatter' => fn($data) => str_replace('|', ', <br />', $data['licenceTradingNames'])
+                'formatter' => static fn($data) => str_replace('|', ', <br />', $data['licenceTradingNames'])
             ]
         ];
     }

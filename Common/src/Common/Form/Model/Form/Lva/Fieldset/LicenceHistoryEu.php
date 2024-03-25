@@ -24,7 +24,7 @@ class LicenceHistoryEu
      *)
      * @Form\Flags({"priority": -10})
      */
-    public $prevBeenRefused = null;
+    public $prevBeenRefused;
 
     /**
      * @Form\Name("prevBeenRefused-table")
@@ -35,7 +35,7 @@ class LicenceHistoryEu
      * })
      * @Form\Flags({"priority": -20})
      */
-    public $prevBeenRefusedTable = null;
+    public $prevBeenRefusedTable;
 
     /**
      * @Form\Attributes({"id":""})
@@ -52,7 +52,7 @@ class LicenceHistoryEu
      *)
      * @Form\Flags({"priority": -30})
      */
-    public $prevBeenRevoked = null;
+    public $prevBeenRevoked;
 
     /**
      * @Form\Name("prevBeenRevoked-table")
@@ -63,5 +63,5 @@ class LicenceHistoryEu
      * })
      * @Form\Flags({"priority": -40})
      */
-    public $prevBeenRevokedTable = null;
+    public $prevBeenRevokedTable;
 }

@@ -16,7 +16,7 @@ class ValidPermitCountTest extends MockeryTestCase
     /**
      * @dataProvider dpFormat
      */
-    public function testFormat($irhpPermitTypeId, $expectedValidPermitCount)
+    public function testFormat($irhpPermitTypeId, $expectedValidPermitCount): void
     {
         $row = [
             'typeId' => $irhpPermitTypeId,

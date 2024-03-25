@@ -16,12 +16,12 @@ abstract class SearchAbstractTest extends MockeryTestCase
     /** @var InternalSearchAbstract */
     protected $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = new $this->class;
     }
 
-    public function testGetTableConfig()
+    public function testGetTableConfig(): void
     {
         $this->assertIsArray($this->sut->getTableConfig());
         $this->assertArrayHasKey('variables', $this->sut->getTableConfig());
@@ -30,7 +30,7 @@ abstract class SearchAbstractTest extends MockeryTestCase
         $this->assertArrayHasKey('columns', $this->sut->getTableConfig());
     }
 
-    public function testGetNavigation()
+    public function testGetNavigation(): void
     {
         $this->assertIsArray($this->sut->getNavigation());
         $this->assertArrayHasKey('label', $this->sut->getNavigation());
@@ -38,27 +38,27 @@ abstract class SearchAbstractTest extends MockeryTestCase
         $this->assertArrayHasKey('params', $this->sut->getNavigation());
     }
 
-    public function testGetTitle()
+    public function testGetTitle(): void
     {
         $this->assertIsString($this->sut->getTitle());
     }
 
-    public function testGetKey()
+    public function testGetKey(): void
     {
         $this->assertIsString($this->sut->getKey());
     }
 
-    public function testGetSearchIndices()
+    public function testGetSearchIndices(): void
     {
         $this->assertIsString($this->sut->getSearchIndices());
     }
 
-    public function testGetDisplayGroup()
+    public function testGetDisplayGroup(): void
     {
         $this->assertIsString($this->sut->getDisplayGroup());
     }
 
-    public function testGetFilters()
+    public function testGetFilters(): void
     {
         $this->assertIsArray($this->sut->getFilters());
     }

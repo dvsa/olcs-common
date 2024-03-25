@@ -24,10 +24,6 @@ class EmissionsStandardsFieldsetPopulator implements FieldsetPopulatorInterface
     /**
      * Create service instance
      *
-     * @param WarningAdder $warningAdder
-     * @param TranslationHelperService $translator
-     * @param YesNoWithMarkupForNoPopulator $yesNoWithMarkupForNoPopulator
-     * @param YesNoValueOptionsGenerator $yesNoValueOptionsGenerator
      *
      * @return EmissionsStandardsFieldsetPopulator
      */
@@ -46,7 +42,7 @@ class EmissionsStandardsFieldsetPopulator implements FieldsetPopulatorInterface
     /**
      * {@inheritdoc}
      */
-    public function populate($form, Fieldset $fieldset, array $options)
+    public function populate($form, Fieldset $fieldset, array $options): void
     {
         $valueOptions = $this->yesNoValueOptionsGenerator->generate(
             'qanda.bilaterals.emissions-standards.euro3-or-euro4',

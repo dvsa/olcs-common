@@ -30,7 +30,7 @@ class AddressDataService extends AbstractDataService
         /** @var Response $response */
         $response = $this->handleQuery($dtoData);
 
-        if (!$response->isOk() || !count($response->getResult()['results'])) {
+        if (!$response->isOk() || count($response->getResult()['results']) === 0) {
             throw new DataServiceException('unknown-error');
         }
 

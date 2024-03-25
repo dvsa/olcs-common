@@ -8,11 +8,8 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
 class GuidanceHelperServiceFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
-     *
-     * @return GuidanceHelperService
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): GuidanceHelperService

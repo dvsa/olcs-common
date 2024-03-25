@@ -23,8 +23,11 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class InspectionRequestIdTest extends MockeryTestCase
 {
     protected $urlHelper;
+
     protected $router;
+
     protected $request;
+
     protected $sut;
 
     protected function setUp(): void
@@ -58,7 +61,7 @@ class InspectionRequestIdTest extends MockeryTestCase
         $expectedUrlParams,
         $expectedUrl,
         $expectedOutput
-    ) {
+    ): void {
 
         // expectations
         $this->urlHelper

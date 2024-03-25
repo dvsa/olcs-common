@@ -32,7 +32,6 @@ class FlashMessengerHelperService
     /**
      * Create service instance
      *
-     * @param FlashMessenger $flashMessenger
      *
      * @return FlashMessengerHelperService
      */
@@ -42,7 +41,7 @@ class FlashMessengerHelperService
         $this->flashMessenger = $flashMessenger;
     }
 
-    public function addCurrentMessage($namespace, $message)
+    public function addCurrentMessage($namespace, $message): void
     {
         $this->currentMessages[$namespace][] = $message;
     }
@@ -52,22 +51,22 @@ class FlashMessengerHelperService
         return $this->currentMessages[$namespace];
     }
 
-    public function addCurrentSuccessMessage($message)
+    public function addCurrentSuccessMessage($message): void
     {
         $this->addCurrentMessage('success', $message);
     }
 
-    public function addCurrentErrorMessage($message)
+    public function addCurrentErrorMessage($message): void
     {
         $this->addCurrentMessage('error', $message);
     }
 
-    public function addCurrentWarningMessage($message)
+    public function addCurrentWarningMessage($message): void
     {
         $this->addCurrentMessage('warning', $message);
     }
 
-    public function addCurrentInfoMessage($message)
+    public function addCurrentInfoMessage($message): void
     {
         $this->addCurrentMessage('info', $message);
     }
@@ -149,7 +148,7 @@ class FlashMessengerHelperService
         return $this->addErrorMessage('conflict-error');
     }
 
-    public function addCurrentUnknownError()
+    public function addCurrentUnknownError(): void
     {
         $this->addCurrentErrorMessage('unknown-error');
     }

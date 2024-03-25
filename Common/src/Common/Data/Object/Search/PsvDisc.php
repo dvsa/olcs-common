@@ -15,6 +15,7 @@ class PsvDisc extends InternalSearchAbstract
      * @var string
      */
     protected $title = 'Psv Disc';
+
     /**
      * @var string
      */
@@ -39,7 +40,7 @@ class PsvDisc extends InternalSearchAbstract
      */
     public function getFilters()
     {
-        if (empty($this->filters)) {
+        if ($this->filters === []) {
             $this->filters = [
                 new Filter\LicenceStatus(),
             ];
@@ -57,7 +58,7 @@ class PsvDisc extends InternalSearchAbstract
             [
                 'title' => 'Licence number',
                 'name' => 'licNo',
-                'formatter' => fn($data) => '<a class="govuk-link" href="/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>'
+                'formatter' => static fn($data) => '<a class="govuk-link" href="/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>'
             ],
             ['title' => 'Licence status', 'name' => 'licStatusDesc'],
             [

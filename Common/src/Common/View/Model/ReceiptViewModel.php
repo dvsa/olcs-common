@@ -17,5 +17,6 @@ use Laminas\View\Model\ViewModel;
 class ReceiptViewModel extends ViewModel
 {
     protected $terminate = true;
+
     protected $template = 'pages/fees/payment-success-print';
 }

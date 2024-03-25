@@ -16,7 +16,9 @@ use Laminas\View\HelperPluginManager;
 class LicenceApplication implements FormatterPluginManagerInterface
 {
     private const LINK_WITH_STATUS = '<a class="govuk-link" href="%s">%s</a>%s';
+
     private UrlHelper $urlHelper;
+
     private HelperPluginManager $viewHelperManager;
 
     public function __construct(UrlHelperService $urlHelper, HelperPluginManager $viewHelperManager)

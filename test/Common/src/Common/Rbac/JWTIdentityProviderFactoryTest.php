@@ -23,7 +23,7 @@ class JWTIdentityProviderFactoryTest extends MockeryTestCase
      */
     protected $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->setUpServiceManager();
     }
@@ -37,14 +37,14 @@ class JWTIdentityProviderFactoryTest extends MockeryTestCase
         $this->setUpSut();
 
         // Assert
-        $this->assertIsCallable([$this->sut, '__invoke']);
+        $this->assertIsCallable(fn(\Psr\Container\ContainerInterface $container, string $requestedName, ?array $options = null): \Common\Rbac\JWTIdentityProvider => $this->sut->__invoke($container, $requestedName, $options));
     }
 
     /**
      * @test
      * @depends __invoke_IsCallable
      */
-    public function __invoke_ReturnsAnInstanceOfJWTIdentityProvider()
+    public function __invoke_ReturnsAnInstanceOfJWTIdentityProvider(): void
     {
         // Setup
         $this->setUpSut();
@@ -61,7 +61,7 @@ class JWTIdentityProviderFactoryTest extends MockeryTestCase
      * @test
      * @depends __invoke_IsCallable
      */
-    public function __invoke_ThrowsException_WhenConfigIsMissing()
+    public function __invoke_ThrowsException_WhenConfigIsMissing(): void
     {
         // Setup
         $this->setUpSut();

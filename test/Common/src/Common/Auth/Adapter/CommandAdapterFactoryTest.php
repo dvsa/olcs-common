@@ -20,7 +20,7 @@ class CommandAdapterFactoryTest extends MockeryTestCase
      */
     protected $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->setUpServiceManager();
     }
@@ -34,14 +34,14 @@ class CommandAdapterFactoryTest extends MockeryTestCase
         $this->setUpSut();
 
         // Assert
-        $this->assertIsCallable([$this->sut, '__invoke']);
+        $this->assertIsCallable(fn(\Psr\Container\ContainerInterface $container, string $requestedName, ?array $options = null): \Common\Auth\Adapter\CommandAdapter => $this->sut->__invoke($container, $requestedName, $options));
     }
 
     /**
      * @test
      * @depends __invoke_IsCallable
      */
-    public function __invoke_ReturnsAnInstanceOfCommandAdapter()
+    public function __invoke_ReturnsAnInstanceOfCommandAdapter(): void
     {
         // Setup
         $this->setUpSut();

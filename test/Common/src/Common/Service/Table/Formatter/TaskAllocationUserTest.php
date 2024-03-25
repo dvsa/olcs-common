@@ -17,7 +17,7 @@ class TaskAllocationUserTest extends \PHPUnit\Framework\TestCase
      *
      * @dataProvider provider
      */
-    public function testFormat($expected, $data)
+    public function testFormat($expected, $data): void
     {
         $sut = new TaskAllocationUser(new DataHelperService());
 

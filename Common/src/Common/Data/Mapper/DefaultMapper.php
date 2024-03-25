@@ -13,8 +13,6 @@ class DefaultMapper implements MapperInterface
      * Should map data from a result array into an array suitable for a form
      *
      * @param array $data Data from command
-     *
-     * @return array
      */
     public static function mapFromResult(array $data): array
     {
@@ -25,8 +23,6 @@ class DefaultMapper implements MapperInterface
      * Should map form data back into a command data structure
      *
      * @param array $data Data from form
-     *
-     * @return array
      */
     public function mapFromForm(array $data): array
     {
@@ -39,8 +35,6 @@ class DefaultMapper implements MapperInterface
      *
      * @param FormInterface $form   Form interface
      * @param array         $errors array response from errors
-     *
-     * @return array
      */
     public function mapFromErrors(FormInterface $form, array $errors): array
     {

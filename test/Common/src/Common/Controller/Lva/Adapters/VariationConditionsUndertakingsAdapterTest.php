@@ -11,20 +11,21 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class VariationConditionsUndertakingsAdapterTest extends MockeryTestCase
 {
     protected $sut;
+
     protected $container;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->container = m::mock(ContainerInterface::class);
         $this->sut = new VariationConditionsUndertakingsAdapter($this->container);
     }
 
-    public function testGetTableName()
+    public function testGetTableName(): void
     {
         $this->assertEquals('lva-variation-conditions-undertakings', $this->sut->getTableName());
     }
 
-    public function testAttachMainScripts()
+    public function testAttachMainScripts(): void
     {
         $mockScript = m::mock();
         $this->container->expects('get')->with(ScriptFactory::class)->andReturn($mockScript);

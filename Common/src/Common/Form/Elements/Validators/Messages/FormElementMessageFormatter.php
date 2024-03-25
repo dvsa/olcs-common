@@ -26,29 +26,25 @@ class FormElementMessageFormatter
      */
     protected $messagesReplacementProviders = [];
 
-    /**
-     * @param TranslatorInterface $translator
-     */
     public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }
 
     /**
-     * @param string $messageKey
      * @param string|callable|Closure $defaultMessageOrProvider
      */
-    public function enableReplacementOfMessage(string $messageKey, $defaultMessageOrProvider)
+    public function enableReplacementOfMessage(string $messageKey, $defaultMessageOrProvider): void
     {
         if (is_string($defaultMessageOrProvider)) {
-            $defaultMessageOrProvider = fn() => $defaultMessageOrProvider;
+            $defaultMessageOrProvider = static fn() => $defaultMessageOrProvider;
         }
+
         assert(is_callable($defaultMessageOrProvider), 'Expected default message provider to be callable or string');
         $this->messagesReplacementProviders[$messageKey] = $defaultMessageOrProvider;
     }
 
     /**
-     * @param string $messageKey
      * @return callable|Closure|null
      */
     public function getReplacementFor(string $messageKey)
@@ -57,15 +53,13 @@ class FormElementMessageFormatter
     }
 
     /**
-     * @param ElementInterface $element
      * @param string $message
      * @param mixed $messageKey
-     * @return string
      */
     public function formatElementMessage(ElementInterface $element, $message, $messageKey = null): string
     {
         $label = $this->getElementShortLabel($element);
-        if (empty($label)) {
+        if ($label === '' || $label === '0') {
             $message = $this->replaceDefaultValidationMessages($element, $messageKey, $message);
             $message = $this->translator->translate($message);
             $message = $this->replaceMessageVariables($element, $message);
@@ -106,9 +100,6 @@ class FormElementMessageFormatter
 
     /**
      * Get the short label for an element if it exists
-     *
-     * @param ElementInterface $element
-     * @return string
      */
     protected function getElementShortLabel(ElementInterface $element): string
     {
@@ -116,11 +107,6 @@ class FormElementMessageFormatter
         return $label ?: '';
     }
 
-    /**
-     * @param ElementInterface $element
-     * @param string $message
-     * @return string
-     */
     protected function replaceMessageVariables(ElementInterface $element, string $message): string
     {
         $labelText = $this->getFieldLabelForElement($element);
@@ -133,29 +119,23 @@ class FormElementMessageFormatter
 
     /**
      * Determines whether an element has values for each message variable used in a message.
-     *
-     * @param ElementInterface $element
-     * @param string $message
-     * @return bool
      */
     protected function elementHasVariablesInMessage(ElementInterface $element, string $message): bool
     {
         if (str_contains($message, static::FIELD_LABEL_PLACEHOLDER)) {
             $elementLabel = $this->getFieldLabelForElement($element);
-            if (empty($elementLabel)) {
+            if ($elementLabel === '' || $elementLabel === '0') {
                 return false;
             }
+
             if (Str::containsHtml($elementLabel)) {
                 return false;
             }
         }
+
         return true;
     }
 
-    /**
-     * @param ElementInterface $element
-     * @return string
-     */
     protected function getFieldLabelForElement(ElementInterface $element): string
     {
         $label = $element->getLabel();
@@ -164,7 +144,7 @@ class FormElementMessageFormatter
         }
 
         $label = trim($label);
-        if (empty($label)) {
+        if ($label === '' || $label === '0') {
             return '';
         }
 
@@ -172,10 +152,7 @@ class FormElementMessageFormatter
     }
 
     /**
-     * @param ElementInterface $element
      * @param mixed $messageKey
-     * @param string $message
-     * @return string
      */
     protected function replaceDefaultValidationMessages(ElementInterface $element, $messageKey, string $message): string
     {
@@ -191,11 +168,11 @@ class FormElementMessageFormatter
                 return $replacementMessage;
             }
         }
+
         return $message;
     }
 
     /**
-     * @param ElementInterface $element
      * @param $messageKey
      * @param string|null $elementType
      * @return false|string
@@ -211,13 +188,12 @@ class FormElementMessageFormatter
         if ($replacementMessage !== $translationKey && $this->elementHasVariablesInMessage($element, $replacementMessage)) {
             return $translationKey;
         }
+
         return false;
     }
 
     /**
      * @param $messageKey
-     * @param string $message
-     * @return bool
      */
     protected function isDefaultMessageForKey($messageKey, string $message): bool
     {
@@ -232,10 +208,6 @@ class FormElementMessageFormatter
         }
 
         $translatedDefaultMessage = $this->translator->translate($defaultMessage);
-        if ($translatedDefaultMessage === $message) {
-            return true;
-        }
-
-        return false;
+        return $translatedDefaultMessage === $message;
     }
 }

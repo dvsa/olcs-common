@@ -26,12 +26,12 @@ class BailOutListenerTest extends MockeryTestCase
      */
     protected $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = new BailOutListener();
     }
 
-    public function testAttach()
+    public function testAttach(): void
     {
         $events = m::mock(EventManagerInterface::class);
 
@@ -42,7 +42,7 @@ class BailOutListenerTest extends MockeryTestCase
         $this->sut->attach($events);
     }
 
-    public function testOnDispatchErrorWithoutBailOutException()
+    public function testOnDispatchErrorWithoutBailOutException(): void
     {
         $ex = m::mock(\Exception::class);
 
@@ -55,7 +55,7 @@ class BailOutListenerTest extends MockeryTestCase
         $this->assertNull($this->sut->onDispatchError($e));
     }
 
-    public function testOnDispatchError()
+    public function testOnDispatchError(): void
     {
         $ex = m::mock(BailOutException::class);
         $ex->shouldReceive('getResponse')

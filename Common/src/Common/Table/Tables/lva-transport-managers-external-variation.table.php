@@ -16,7 +16,7 @@ return [
                 'add' => ['label' => 'Add Transport Manager'],
             ]
         ],
-        'row-disabled-callback' => fn($row) => isset($row['action']) && in_array($row['action'], ['D', 'C'])
+        'row-disabled-callback' => static fn($row) => isset($row['action']) && in_array($row['action'], ['D', 'C'])
     ],
     'attributes' => [
     ],

@@ -9,7 +9,6 @@ interface FieldsetModifierInterface
     /**
      * Whether the specified fieldset needs to be modified by this fieldset modifier
      *
-     * @param Fieldset $fieldset
      *
      * @return bool
      */
@@ -17,8 +16,6 @@ interface FieldsetModifierInterface
 
     /**
      * Make the required changes to the fieldset when shouldModify has returned true
-     *
-     * @param Fieldset $fieldset
      */
     public function modify(Fieldset $fieldset);
 }

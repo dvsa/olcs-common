@@ -32,9 +32,7 @@ class ControllerStub extends LaminasAbstractActionController
      */
     public function pluginInvoke($options)
     {
-        $plugin = $this->ElasticSearch($options);
-
-        return $plugin;
+        return $this->ElasticSearch($options);
     }
 
     /**
@@ -43,9 +41,7 @@ class ControllerStub extends LaminasAbstractActionController
      */
     public function getPlugin()
     {
-        $plugin = $this->ElasticSearch();
-
-        return $plugin;
+        return $this->ElasticSearch();
     }
 
     /**

@@ -17,9 +17,13 @@ class EcmtCandidatePermitSelectionValidator
     public static function validate($value, $context)
     {
         foreach ($context as $name => $value) {
-            if (strpos($name, self::CANDIDATE_VALUE_PREFIX) === 0 && $value == '1') {
-                return true;
+            if (strpos($name, self::CANDIDATE_VALUE_PREFIX) !== 0) {
+                continue;
             }
+            if ($value != '1') {
+                continue;
+            }
+            return true;
         }
 
         return false;

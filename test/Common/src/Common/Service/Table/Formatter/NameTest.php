@@ -21,6 +21,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class NameTest extends MockeryTestCase
 {
     protected $dataHelper;
+
     protected $sut;
 
     protected function setUp(): void
@@ -33,6 +34,7 @@ class NameTest extends MockeryTestCase
     {
         m::close();
     }
+
     /**
      * Test the format method
      *
@@ -41,7 +43,7 @@ class NameTest extends MockeryTestCase
      *
      * @dataProvider provider
      */
-    public function testFormat($data, $expected)
+    public function testFormat($data, $expected): void
     {
         $this->assertEquals($expected, (new Name(new DataHelperService()))->format($data, []));
     }
@@ -74,7 +76,7 @@ class NameTest extends MockeryTestCase
         ];
     }
 
-    public function testFormatNestedData()
+    public function testFormatNestedData(): void
     {
         $data = [
             'foo' => [
@@ -85,7 +87,7 @@ class NameTest extends MockeryTestCase
         $this->assertEquals('John Smith', (new Name(new DataHelperService()))->format($data, ['name' => 'foo']));
     }
 
-    public function testEscapedName()
+    public function testEscapedName(): void
     {
         $data = [
             'foo' => [
@@ -96,7 +98,7 @@ class NameTest extends MockeryTestCase
         $this->assertEquals('John&quot; Smith', (new Name(new DataHelperService()))->format($data, ['name' => 'foo']));
     }
 
-    public function testFormatDeepNestedData()
+    public function testFormatDeepNestedData(): void
     {
         $data = [
             'foo' => [
