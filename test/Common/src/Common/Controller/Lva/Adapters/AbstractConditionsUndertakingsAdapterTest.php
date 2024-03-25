@@ -27,6 +27,7 @@ class AbstractConditionsUndertakingsAdapterTest extends MockeryTestCase
 
     public function testAttachMainScripts()
     {
+        self::expectNotToPerformAssertions();
         $mockScript = m::mock();
 
         $this->container->shouldReceive('get')->with(ScriptFactory::class)->andReturn($mockScript);
@@ -50,9 +51,9 @@ class AbstractConditionsUndertakingsAdapterTest extends MockeryTestCase
     public function testAlterTable()
     {
         $table = m::mock(\Common\Service\Table\TableBuilder::class);
-        $table->shouldReceive('removeAction')->with('restore');
+        $table->shouldReceive('removeAction')->with('restore')->andReturnNull();
 
-        $this->sut->alterTable($table);
+        $this->assertNull($this->sut->alterTable($table));
     }
 
     public function testProcessDataForSave()

@@ -81,7 +81,6 @@ class OperatingCentres implements MapperInterface
             unset($mappedData['totAuthHgvVehiclesFieldset']);
         }
 
-
         if (isset($data['data']['totAuthLgvVehiclesFieldset'])) {
             $mappedData['totAuthLgvVehicles'] = $data['data']['totAuthLgvVehiclesFieldset']['totAuthLgvVehicles'];
             unset($mappedData['totAuthLgvVehiclesFieldset']);
@@ -95,14 +94,6 @@ class OperatingCentres implements MapperInterface
         if (isset($data['data']['totCommunityLicencesFieldset'])) {
             $mappedData['totCommunityLicences'] = $data['data']['totCommunityLicencesFieldset']['totCommunityLicences'];
             unset($mappedData['totCommunityLicencesFieldset']);
-        }
-
-        if ($data['data']['totAuthHgvVehiclesFieldset']['totAuthHgvVehicles'] === '') {
-            $mappedData['totAuthHgvVehicles'] = null;
-        }
-
-        if ($data['data']['totAuthLgvVehiclesFieldset']['totAuthLgvVehicles'] === '') {
-            $mappedData['totAuthLgvVehicles'] = null;
         }
 
         return $mappedData;

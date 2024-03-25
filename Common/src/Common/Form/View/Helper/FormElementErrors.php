@@ -8,7 +8,6 @@ use Laminas\I18n\Translator\TranslatorInterface;
 use Traversable;
 use Laminas\Form\ElementInterface;
 use Laminas\Form\Exception;
-use Common\Form\Elements\Validators\Messages\ValidationMessageInterface;
 
 /**
  * @see FormElementErrorsFactory
@@ -76,9 +75,6 @@ class FormElementErrors extends LaminasFormElementErrors
         $messagesToPrint = [];
         array_walk_recursive($messages, function ($item, $itemKey) use (&$messagesToPrint, $elementShouldEscape, $element, $escaper) {
             $shouldEscape = true;
-            if ($item instanceof ValidationMessageInterface) {
-                $shouldEscape = $item->shouldEscape();
-            }
             $message = $this->messageFormatter->formatElementMessage($element, $item, $itemKey);
             if ($shouldEscape && $elementShouldEscape !== false) {
                 $message = call_user_func($escaper, $message);

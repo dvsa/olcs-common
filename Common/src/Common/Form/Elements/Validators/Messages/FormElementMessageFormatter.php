@@ -58,30 +58,20 @@ class FormElementMessageFormatter
 
     /**
      * @param ElementInterface $element
-     * @param string|ValidationMessageInterface $message
+     * @param string $message
      * @param mixed $messageKey
      * @return string
      */
     public function formatElementMessage(ElementInterface $element, $message, $messageKey = null): string
     {
-        $shouldTranslate = true;
-        if ($message instanceof ValidationMessageInterface) {
-            $shouldTranslate = $message->shouldTranslate();
-            $message = $message->getMessage();
-        }
-
         $label = $this->getElementShortLabel($element);
         if (empty($label)) {
             $message = $this->replaceDefaultValidationMessages($element, $messageKey, $message);
-            if ($shouldTranslate) {
-                $message = $this->translator->translate($message);
-            }
+            $message = $this->translator->translate($message);
             $message = $this->replaceMessageVariables($element, $message);
         } else {
             $label = $this->translator->translate($label) . ': ';
-            if ($shouldTranslate) {
-                $message = $this->translator->translate($message);
-            }
+            $message = $this->translator->translate($message);
             $message = $this->translator->translate($label . $message);
         }
 

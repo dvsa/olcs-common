@@ -189,6 +189,8 @@ class ApplicationTypeOfLicenceTest extends MockeryTestCase
         $licenceTypeValue,
         $vehicleTypeValue
     ) {
+        self::expectNotToPerformAssertions();
+
         $licenceType = m::mock(Element::class);
         $licenceType->shouldReceive('getValue')
             ->withNoArgs()

@@ -5,9 +5,6 @@ namespace Common\Service\Helper;
 use Laminas\Form\Annotation\AnnotationBuilder;
 use Common\Form\Elements\Types\Address;
 use Common\Service\Data\AddressDataService;
-use Common\Service\Table\TableFactory;
-use Dvsa\Olcs\CompaniesHouse\Service\Exception\ServiceException;
-use Dvsa\Olcs\Transfer\Query\CompaniesHouse\ByNumber;
 use Laminas\Form\Element;
 use Laminas\Form\Element\Checkbox;
 use Laminas\Form\Element\DateSelect;
@@ -22,11 +19,10 @@ use Laminas\InputFilter\InputFilterInterface;
 use Laminas\Validator\ValidatorChain;
 use Laminas\View\Model\ViewModel;
 use Laminas\View\Renderer\RendererInterface;
-use Laminas\Validator\ValidatorInterface;
 use LmcRbacMvc\Service\AuthorizationService;
 
 /**
- * @internal All validations to do with empty fields must be done as a validator
+ *           All validations to do with empty fields must be done as a validator
  *           within the fieldsets.  AllowEmpty is deprecated, so we use the NotEmpty
  *           validator.  All instances of AllowEmpty have been removed here for this
  *           primary reason.

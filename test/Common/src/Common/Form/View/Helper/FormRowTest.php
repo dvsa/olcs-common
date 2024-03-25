@@ -18,9 +18,11 @@ use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\I18n\View\Helper\Translate;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Validator\ValidatorPluginManager;
+use Laminas\View\Helper\Doctype;
 use Laminas\View\HelperPluginManager;
 use Laminas\View\Renderer\PhpRenderer;
 use Mockery\MockInterface;
+use Mockery as m;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Container\ContainerInterface;
 
@@ -648,8 +650,7 @@ class FormRowTest extends MockeryTestCase
 
     protected function setUpFormElementErrors(ContainerInterface $serviceLocator): CommonHelper\FormElementErrors
     {
-        $pluginManager = $this->setUpAbstractPluginManager($serviceLocator);
-        return (new CommonHelper\FormElementErrorsFactory())->__invoke($pluginManager, CommonHelper\FormElementErrors::class);
+        return (new CommonHelper\FormElementErrorsFactory())->__invoke($serviceLocator, CommonHelper\FormElementErrors::class);
     }
 
     /**
@@ -691,6 +692,7 @@ class FormRowTest extends MockeryTestCase
             $instance->setService('form_label', new LaminasHelper\FormLabel());
             $instance->setService('form_element', new CommonHelper\FormElement());
             $instance->setService('form_text', new LaminasHelper\FormText());
+            $instance->setService(Doctype::class, m::mock(Doctype::class));
 
             $formElementErrors = $this->setUpFormElementErrors($this->serviceManager);
             $formElementErrors->setView($this->phpRenderer());
@@ -722,6 +724,6 @@ class FormRowTest extends MockeryTestCase
      */
     protected function setUpValidatorPluginManager(): ValidatorPluginManager
     {
-        return new ValidatorPluginManager();
+        return m::mock(ValidatorPluginManager::class);
     }
 }

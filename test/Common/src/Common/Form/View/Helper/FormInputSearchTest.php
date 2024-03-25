@@ -22,14 +22,17 @@ class FormInputSearchTest extends TestCase
 
     public function testInvoke()
     {
+        $returnedValue = 'string';
+
         $mockElement = m::mock(ElementInterface::class);
         $mockView = m::mock(RendererInterface::class);
         $mockView->shouldReceive('vars->getArrayCopy')->withNoArgs()->andReturn(['VAR' => 'FOO']);
-        $mockView->shouldReceive('render')
-            ->with('partials/form/input-search', ['VAR' => 'FOO', 'fieldsetElement' => $mockElement])->once();
+        $mockView->expects('render')
+            ->with('partials/form/input-search', ['VAR' => 'FOO', 'fieldsetElement' => $mockElement])
+            ->andReturn($returnedValue);
 
         $this->sut->setView($mockView);
 
-        $this->sut->__invoke($mockElement);
+        $this->assertEquals($returnedValue, $this->sut->__invoke($mockElement));
     }
 }

@@ -50,6 +50,8 @@ class LanguageListenerTest extends MockeryTestCase
 
     public function testOnRoute()
     {
+        self::expectNotToPerformAssertions();
+
         $request = m::mock();
 
         $e = m::mock(MvcEvent::class);

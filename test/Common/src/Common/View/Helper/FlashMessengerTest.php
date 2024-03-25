@@ -1,10 +1,6 @@
 <?php
 
-/**
- * Flash Messenger View Helper Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
+declare(strict_types=1);
 
 namespace CommonTest\View\Helper;
 

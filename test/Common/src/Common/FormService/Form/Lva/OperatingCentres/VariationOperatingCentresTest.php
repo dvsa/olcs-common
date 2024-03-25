@@ -1,13 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Common\FormService\Form\Lva\OperatingCentres;
 
 use Common\Form\Elements\Types\Table;
+use Common\Form\Elements\Validators\TableRequiredValidator;
 use Common\FormService\Form\Lva\OperatingCentres\VariationOperatingCentres;
 use Common\FormService\FormServiceManager;
+use Common\FormService\Form\Lva\Variation as VariationFormService;
 use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Table\TableBuilder;
 use Common\Service\Table\TableFactory;
+use Laminas\Form\ElementInterface;
+use Laminas\InputFilter\Input;
 use Laminas\InputFilter\InputFilter;
 use Laminas\Validator\ValidatorChain;
 use Mockery as m;
@@ -33,6 +39,7 @@ class VariationOperatingCentresTest extends MockeryTestCase
 
     protected $translator;
     private $inputFilter;
+    private $validatorChain;
 
     public function setUp(): void
     {
@@ -42,9 +49,16 @@ class VariationOperatingCentresTest extends MockeryTestCase
 
         $fsm = m::mock(FormServiceManager::class)->makePartial();
 
+        $validators = [
+            0 => [
+                'instance' => m::mock(TableRequiredValidator::class),
+            ],
+        ];
+
         $this->validatorChain = m::mock(ValidatorChain::class);
-        $this->rowsInput = m::mock();
-        $this->rowsInput->expects('get')->with();
+        $this->validatorChain->expects('getValidators')->andReturn($validators);
+        $this->rowsInput = m::mock(Input::class);
+        $this->rowsInput->expects('getValidatorChain')->withNoArgs()->andReturn($this->validatorChain);
 
         $this->tableElement = m::mock(Table::class);
         $this->tableElement->expects('get')->with('rows')->andReturn($this->rowsInput);
@@ -55,7 +69,7 @@ class VariationOperatingCentresTest extends MockeryTestCase
         $this->form = m::mock(Form::class);
         $this->form->expects('getInputFilter')->withNoArgs()->andReturn($this->inputFilter);
 
-        $lvaVariation = m::mock(FormServiceInterface::class);
+        $lvaVariation = m::mock(VariationFormService::class);
         $lvaVariation->shouldReceive('alterForm')
             ->once()
             ->with($this->form);
@@ -71,7 +85,7 @@ class VariationOperatingCentresTest extends MockeryTestCase
         $this->sut = new VariationOperatingCentres($this->mockFormHelper, $this->authService, $this->tableBuilder, $fsm, $this->translator);
     }
 
-    public function testGetForm()
+    public function testGetForm(): void
     {
         $params = [
             'operatingCentres' => [],
@@ -107,7 +121,7 @@ class VariationOperatingCentresTest extends MockeryTestCase
             ->with('current-authorisation-hint', [12])
             ->andReturn('current-authorisation-hint-12');
 
-        $data = m::mock();
+        $data = m::mock(ElementInterface::class);
         $data->shouldReceive('has')
             ->with('totAuthLgvVehiclesFieldset')
             ->andReturn(true)

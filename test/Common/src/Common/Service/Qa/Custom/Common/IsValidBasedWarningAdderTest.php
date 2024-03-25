@@ -45,8 +45,9 @@ class IsValidBasedWarningAdderTest extends MockeryTestCase
     {
         $this->isValidHandler->shouldReceive('isValid')
             ->andReturn(true);
-
-        $this->isValidBasedWarningAdder->add($this->isValidHandler, $this->qaForm, self::WARNING_KEY, self::PRIORITY);
+        $this->assertNull(
+            $this->isValidBasedWarningAdder->add($this->isValidHandler, $this->qaForm, self::WARNING_KEY, self::PRIORITY)
+        );
     }
 
     public function testSetDataModifyForm()

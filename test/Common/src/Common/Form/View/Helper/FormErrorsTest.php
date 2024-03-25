@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Form\View\Helper;
 
 use Common\Form\Elements\Types\PostcodeSearch;
 use Common\Form\Elements\Validators\Messages\FormElementMessageFormatter;
 use Common\Form\Elements\Validators\Messages\FormElementMessageFormatterFactory;
-use Common\Form\Elements\Validators\Messages\GenericValidationMessage;
 use Common\Form\View\Helper\FormErrorsFactory;
 use Common\Test\MocksServicesTrait;
+use Laminas\Form\ElementInterface;
 use Psr\Container\ContainerInterface;
 use Laminas\Form\Form;
 use Laminas\I18n\Translator\TranslatorInterface;
@@ -65,30 +67,6 @@ class FormErrorsTest extends MockeryTestCase
 
         // Assert
         $this->assertStringNotContainsString('<a>', $result);
-    }
-
-    /**
-     * @test
-     * @depends __invoke_IsCallable
-     */
-    public function __invoke_DoesNotPurifyMessageHtml_WhenMessageInterfaceHasEscapingDisabled()
-    {
-        // Setup
-        $serviceLocator = $this->setUpServiceLocator();
-        $purifier = $this->setUpMockService(HTMLPurifier::class);
-        $serviceLocator->setService(HTMLPurifier::class, $purifier);
-        $sut = $this->setUpSut($serviceLocator);
-        $message = new GenericValidationMessage();
-        $message->setMessage('bar');
-        $message->setShouldEscape(false);
-        $form = new Form();
-        $form->setMessages(['foo' => $message]);
-
-        // Set Expectations
-        $purifier->shouldReceive('purify')->withAnyArgs()->andReturnUsing(fn($val) => $val)->never();
-
-        // Execute
-        $sut->render($form);
     }
 
     /**
@@ -386,7 +364,7 @@ class FormErrorsTest extends MockeryTestCase
         $mockFoo
             ->shouldReceive('has')->once()->andReturn()
             ->shouldReceive('get')->with('postcode')->twice()->andReturn(
-                m::mock()->shouldReceive('getAttribute')->with('id')->twice()->andReturn('PC_ID')->getMock()
+                m::mock(ElementInterface::class)->shouldReceive('getAttribute')->with('id')->twice()->andReturn('PC_ID')->getMock()
             )
             ->shouldReceive('getLabel')->andReturn('Default Label');
 
@@ -608,63 +586,6 @@ class FormErrorsTest extends MockeryTestCase
         $form = m::mock(\Laminas\Form\Form::class);
         $element = $this->setUpElement();
         $element->setOption('short-label', 'foo-label');
-
-        // Expectations
-        $form->shouldReceive('hasValidated')
-            ->andReturn(true)
-            ->shouldReceive('isValid')
-            ->andReturn(false)
-            ->shouldReceive('getMessages')
-            ->andReturn($messages)
-            ->shouldReceive('has')
-            ->once()
-            ->with('foo')
-            ->andReturn(true)
-            ->shouldReceive('getOption')
-            ->once()
-            ->with('formErrorsTitle')
-            ->andReturn(null)
-            ->shouldReceive('getOption')
-            ->once()
-            ->with('formErrorsParagraph')
-            ->andReturn(null);
-
-        $form->shouldReceive('get')
-            ->with('foo')
-            ->andReturn($element);
-
-        $this->assertMatchesRegularExpression($expected, $sut($form));
-    }
-
-    /**
-     * @test
-     * @depends __invoke_IsCallable
-     */
-    public function __invoke_RenderWithMessageObjet()
-    {
-        $mockValidationMessage = new GenericValidationMessage();
-        $mockValidationMessage->setMessage('bar');
-        $mockValidationMessage->setShouldTranslate(true);
-
-        $messages = [
-            'foo' => [
-                $mockValidationMessage
-            ]
-        ];
-        $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h2 class="govuk-heading-m">form-errors-translated<\/h2>(\s+)?'
-            . '<p><\/p>(\s+)?'
-            . '<ol class="validation-summary__list">(\s+)?'
-            . '<li class="validation-summary__item">(\s+)?Bar-translated(\s+)?'
-            . '<\/li>(\s+)?'
-            . '<\/ol>(\s+)?'
-            . '<\/div>/';
-
-        $sut = $this->sut;
-
-        // Mocks
-        $form = m::mock(\Laminas\Form\Form::class);
-        $element = $this->setUpElement();
 
         // Expectations
         $form->shouldReceive('hasValidated')
@@ -933,8 +854,8 @@ class FormErrorsTest extends MockeryTestCase
 
     protected function setUpSut(ContainerInterface $serviceLocator): FormErrors
     {
-        $pluginManager = $this->setUpAbstractPluginManager($serviceLocator);
-        return (new FormErrorsFactory())->__invoke($pluginManager, FormErrors::class);
+        //$pluginManager = $this->setUpAbstractPluginManager($serviceLocator);
+        return (new FormErrorsFactory())->__invoke($serviceLocator, FormErrors::class);
     }
 
     /**
@@ -944,7 +865,7 @@ class FormErrorsTest extends MockeryTestCase
     {
         $serviceManager->setService(TranslatorInterface::class, $this->setUpTranslator());
         $serviceManager->setFactory(FormElementMessageFormatter::class, new FormElementMessageFormatterFactory());
-        $serviceManager->setService(static::VALIDATOR_MANAGER, new ValidatorPluginManager());
+        $serviceManager->setService(static::VALIDATOR_MANAGER, m::mock(ValidatorPluginManager::class));
     }
 
     /**

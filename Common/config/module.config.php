@@ -150,7 +150,6 @@ return [
     'service_manager' => [
         'shared' => [
             'Helper\FileUpload' => false,
-            'CantIncreaseValidator' => false,
             // Create a new request each time
             'CqrsRequest' => false
         ],
@@ -209,7 +208,6 @@ return [
         'invokables' => [
             \Common\Service\NavigationFactory::class => \Common\Service\NavigationFactory::class,
             'SectionConfig' => \Common\Service\Data\SectionConfig::class,
-            'CantIncreaseValidator' => \Common\Form\Elements\Validators\CantIncreaseValidator::class,
             \Common\Filesystem\Filesystem::class => \Common\Filesystem\Filesystem::class,
             'VehicleList' => '\Common\Service\VehicleList\VehicleList',
             'postcode' => 'Common\Service\Postcode\Postcode',

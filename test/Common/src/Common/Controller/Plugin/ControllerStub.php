@@ -2,7 +2,6 @@
 
 namespace CommonTest\Common\Controller\Plugin;
 
-use Common\Controller\Traits\ViewHelperManagerAware;
 use Laminas\Mvc\Controller\AbstractActionController as LaminasAbstractActionController;
 use Laminas\View\Helper\Placeholder;
 
