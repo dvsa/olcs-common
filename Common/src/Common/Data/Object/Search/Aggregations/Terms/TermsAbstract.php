@@ -18,6 +18,14 @@ abstract class TermsAbstract extends AggregationsAbstract
      */
     protected $options = [];
 
+    public const TYPE_DYNAMIC = 'DYNAMIC';
+    public const TYPE_NULLCHECK = 'NULLCHECK';
+
+    public function getType(): string
+    {
+        return self::TYPE_DYNAMIC;
+    }
+
     /**
      * @return array
      */
