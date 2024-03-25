@@ -212,7 +212,7 @@ class RefData
     public const PERMISSION_CAN_MANAGE_USER_INTERNAL = 'can-manage-user-internal';
     public const PERMISSION_SELFSERVE_EBSR_UPLOAD = 'selfserve-ebsr-upload';
     public const PERMISSION_SELFSERVE_EBSR_DOCUMENTS = 'selfserve-ebsr-documents';
-    public const PERMISSIONS_CAN_LIST_CONVERSATIONS = 'can-list-conversations';
+    public const PERMISSION_CAN_LIST_CONVERSATIONS = 'can-list-conversations';
 
     /**
      * User Roles
