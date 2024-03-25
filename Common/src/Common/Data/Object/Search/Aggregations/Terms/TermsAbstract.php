@@ -19,7 +19,7 @@ abstract class TermsAbstract extends AggregationsAbstract
     protected $options = [];
 
     public const TYPE_DYNAMIC = 'DYNAMIC';
-    public const TYPE_NULLCHECK = 'NULLCHECK';
+    public const TYPE_BOOLEAN = 'BOOLEAN';
 
     public function getType(): string
     {
