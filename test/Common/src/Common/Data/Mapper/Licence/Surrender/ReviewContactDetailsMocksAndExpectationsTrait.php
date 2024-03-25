@@ -6,7 +6,7 @@ trait ReviewContactDetailsMocksAndExpectationsTrait
 {
     protected function mockLicence(): array
     {
-        $mockLicence = [
+        return [
             'licNo' => 'AB12345',
             'organisation' => [
                 'name' => 'Organisation name',
@@ -40,14 +40,13 @@ trait ReviewContactDetailsMocksAndExpectationsTrait
                 ]
             ]
         ];
-        return $mockLicence;
     }
 
     protected function expectedForContactDetails(): array
     {
         $mockLicence = $this->mockLicence();
         $changeLinkInHeading = true;
-        $expected = [
+        return [
             'sectionHeading' => 'contact details',
             'changeLinkInHeading' => $changeLinkInHeading,
             'change' => [
@@ -71,15 +70,13 @@ trait ReviewContactDetailsMocksAndExpectationsTrait
                 ]
             ],
         ];
-        return $expected;
     }
 
     protected function expectedForLicenceDetails(): array
     {
         $mockLicence = $this->mockLicence();
         $changeLinkInHeading = true;
-
-        $expected = [
+        return [
             'sectionHeading' => 'licence details',
             'changeLinkInHeading' => $changeLinkInHeading,
             'change' => false,
@@ -101,7 +98,6 @@ trait ReviewContactDetailsMocksAndExpectationsTrait
                 ]
             ],
         ];
-        return $expected;
     }
 
     protected function expectedForCorrespondenceAddress(): array
@@ -113,8 +109,7 @@ trait ReviewContactDetailsMocksAndExpectationsTrait
             . '<br>' . $mockLicence['correspondenceCd']['address']['addressLine2']
             . '<br>' . $mockLicence['correspondenceCd']['address']['addressLine3']
             . '<br>' . $mockLicence['correspondenceCd']['address']['addressLine4'];
-
-        $expected = [
+        return [
             'sectionHeading' => 'correspondence address',
             'changeLinkInHeading' => $changeLinkInHeading,
             'change' => [
@@ -138,7 +133,6 @@ trait ReviewContactDetailsMocksAndExpectationsTrait
                 ]
             ],
         ];
-        return $expected;
     }
 
     protected function mockTranslatorForContactDetails($mockTranslator): void

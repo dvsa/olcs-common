@@ -19,5 +19,5 @@ class Start
      * @Form\Options({"label":"continuations.start-page.review-licence-label"})
      * @Form\Type("\Laminas\Form\Element\Button")
      */
-    public $submit = null;
+    public $submit;
 }

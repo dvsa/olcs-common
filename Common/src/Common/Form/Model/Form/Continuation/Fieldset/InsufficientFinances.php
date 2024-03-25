@@ -15,16 +15,16 @@ class InsufficientFinances
      * @Form\ErrorMessage("continuations.insufficient-finances.error")
      * @Form\Validator("InArray", options={"haystack": {"Y"}})
      */
-    public $yesNo = null;
+    public $yesNo;
 
     /**
      * @Form\ComposedObject("Common\Form\Model\Form\Continuation\Fieldset\FinancialEvidenceRequired")
      */
-    public $yesContent = null;
+    public $yesContent;
 
     /**
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      * @Form\Attributes({"value": "markup-continuation-insufficient-finances"})
      */
-    public $noContent = null;
+    public $noContent;
 }

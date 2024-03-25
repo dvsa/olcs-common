@@ -16,6 +16,7 @@ class Cases extends InternalSearchAbstract
      * @var string
      */
     protected $title = 'Case';
+
     /**
      * @var string
      */
@@ -68,31 +69,29 @@ class Cases extends InternalSearchAbstract
             [
                 'title' => 'Licence number',
                 'name' => 'licNo',
-                'formatter' => fn($data) => '<a class="govuk-link" href="/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>'
+                'formatter' => static fn($data) => '<a class="govuk-link" href="/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>'
             ],
             ['title' => 'Licence status', 'name' => 'licStatusDesc'],
             [
                 'title' => 'Application Id',
                 'name' => 'appId',
-                'formatter' => function ($data) {
+                'formatter' => static function ($data) {
                     if (!empty($data['appId'])) {
                         return '<a class="govuk-link" href="/application/' . $data['appId'] . '">'
                         . $data['appId']
                         . '</a>';
-                    } else {
-                        return 'N/a';
                     }
+                    return 'N/a';
                 }
             ],
             [
                 'title' => 'Application Status',
                 'name' => 'appStatusDesc',
-                'formatter' => function ($data) {
+                'formatter' => static function ($data) {
                     if (!empty($data['appStatusDesc'])) {
                         return $data['appStatusDesc'];
-                    } else {
-                        return 'N/a';
                     }
+                    return 'N/a';
                 }
             ],
             [

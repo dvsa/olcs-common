@@ -19,25 +19,25 @@ class Addresses
      *     "hint": "application_correspondence-address.hint"
      * })
      */
-    public $correspondence = null;
+    public $correspondence;
 
     /**
      * @Form\Name("correspondence_address")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Address")
      */
-    public $correspondenceAddress = null;
+    public $correspondenceAddress;
 
     /**
      * @Form\Name("contact")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\Contact")
      */
-    public $contact = null;
+    public $contact;
 
     /**
      * @Form\Name("establishment")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\Establishment")
      */
-    public $establishment = null;
+    public $establishment;
 
     /**
      * @Form\Name("establishment_address")
@@ -47,31 +47,31 @@ class Addresses
      *     "hint": "application_your-business_business-type.establishment.hint"
      *  })
      */
-    public $establishmentAddress = null;
+    public $establishmentAddress;
 
     /**
      * @Form\Name("consultant")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\TransportConsultant")
      * @Form\Options({"label":"application_your-business_business-type.transport-consultant.label"})
      */
-    public $transportConsultant = null;
+    public $transportConsultant;
 
     /**
      * @Form\Name("consultantAddress")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Address")
      */
-    public $transportConsultantAddress = null;
+    public $transportConsultantAddress;
 
     /**
      * @Form\Name("consultantContact")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\ContactOptional")
      */
-    public $transportConsultantContact = null;
+    public $transportConsultantContact;
 
     /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
      * @Form\Attributes({"class":"govuk-button-group"})
      */
-    public $formActions = null;
+    public $formActions;
 }

@@ -34,8 +34,6 @@ class Responsibilities extends AbstractSection implements TransportManagerSectio
 
     /**
      * populate
-     *
-     * @param array $transportManagerApplication
      */
     public function populate(array $transportManagerApplication)
     {

@@ -18,7 +18,7 @@ use Laminas\Form\Fieldset;
  */
 class HoursPerWeek extends Fieldset
 {
-    public function setMessages($messages)
+    public function setMessages($messages): void
     {
         $this->messages = $messages;
     }

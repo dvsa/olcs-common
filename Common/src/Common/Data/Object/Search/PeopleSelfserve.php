@@ -82,7 +82,7 @@ class PeopleSelfserve extends InternalSearchAbstract
             [
                 'title' => 'Licence number',
                 'name'=> 'licNo',
-                'formatter' => fn($data) => '<a class="govuk-link" href="/view-details/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>'
+                'formatter' => static fn($data) => '<a class="govuk-link" href="/view-details/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>'
             ],
             [
                 'title' => 'Licence status',
@@ -92,14 +92,11 @@ class PeopleSelfserve extends InternalSearchAbstract
             [
                 'title' => 'Operator name',
                 'name'=> 'orgName',
-                'formatter' => function ($data) {
-                    $orgName = $data['orgName'];
-                    return $orgName;
-                }
+                'formatter' => static fn($data) => $data['orgName']
             ],
             [
                 'title' => 'Name',
-                'formatter' => fn($row) => $row['personFullname']
+                'formatter' => static fn($row) => $row['personFullname']
             ],
             [
                 'permissionRequisites' => ['partner-user', 'partner-admin'],

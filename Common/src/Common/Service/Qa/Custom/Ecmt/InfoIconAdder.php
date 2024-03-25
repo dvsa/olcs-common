@@ -17,8 +17,6 @@ class InfoIconAdder
     /**
      * Create service instance
      *
-     * @param TranslationHelperService $translator
-     * @param HtmlAdder $htmlAdder
      *
      * @return InfoIconAdder
      */
@@ -31,10 +29,9 @@ class InfoIconAdder
     /**
      * Add a blue info icon and the text represented by the supplied translation key to the specified fieldset
      *
-     * @param Fieldset $fieldset
      * @param string $translationKey
      */
-    public function add(Fieldset $fieldset, $translationKey)
+    public function add(Fieldset $fieldset, $translationKey): void
     {
         $markup = sprintf(
             '<p class="govuk-!-margin-top-7 info-box__icon-wrapper info-box__text">' .

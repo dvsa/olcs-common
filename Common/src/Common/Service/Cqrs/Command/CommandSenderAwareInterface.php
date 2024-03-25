@@ -16,8 +16,6 @@ interface CommandSenderAwareInterface
 {
     /**
      * Set Command sender
-     *
-     * @param CommandSender $CommandSender
      */
     public function setCommandSender(CommandSender $CommandSender);
 

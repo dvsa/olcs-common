@@ -21,7 +21,7 @@ class FormCrudActionsPerson
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $submit = null;
+    public $submit;
 
     /**
      * @Form\Attributes({
@@ -33,7 +33,7 @@ class FormCrudActionsPerson
      * @Form\Options({"label": "cancel.button"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $cancel = null;
+    public $cancel;
 
     /**
      * @Form\Attributes({
@@ -45,7 +45,7 @@ class FormCrudActionsPerson
      * @Form\Options({"label": "Disqualify person"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionLink")
      */
-    public $disqualify = null;
+    public $disqualify;
 
     /**
      * @Form\Attributes({
@@ -56,5 +56,5 @@ class FormCrudActionsPerson
      * @Form\Options({"label": "Save and add another"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $addAnother = null;
+    public $addAnother;
 }

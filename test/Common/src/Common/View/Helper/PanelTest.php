@@ -17,7 +17,7 @@ class PanelTest extends MockeryTestCase
     /**
      * @dataProvider dpTestInvoke
      */
-    public function testInvoke($params, $expect, $expected_css_class)
+    public function testInvoke($params, $expect, $expected_css_class): void
     {
         $this->mockView = m::mock(\Laminas\View\Renderer\RendererInterface::class)
             ->shouldReceive('render')

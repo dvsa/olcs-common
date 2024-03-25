@@ -20,13 +20,13 @@ class RegisteredAddress
      * })
      * @Form\Type("Hidden")
      */
-    public $id = null;
+    public $id;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\Attributes({
@@ -47,7 +47,7 @@ class RegisteredAddress
      *     "min": 0, "max": 200
      *})
      */
-    public $addressLine1 = null;
+    public $addressLine1;
 
     /**
      * @Form\Attributes({
@@ -65,7 +65,7 @@ class RegisteredAddress
      *     "min": 0, "max": 200
      *})
      */
-    public $addressLine2 = null;
+    public $addressLine2;
 
     /**
      * @Form\Attributes({
@@ -83,7 +83,7 @@ class RegisteredAddress
      *     "min": 0, "max": 200
      *})
      */
-    public $addressLine3 = null;
+    public $addressLine3;
 
     /**
      * @Form\Attributes({
@@ -101,7 +101,7 @@ class RegisteredAddress
      *     "min": 0, "max": 200
      *})
      */
-    public $addressLine4 = null;
+    public $addressLine4;
 
     /**
      * @Form\Attributes({
@@ -121,7 +121,7 @@ class RegisteredAddress
      *     "min": 0, "max": 200
      *})
      */
-    public $town = null;
+    public $town;
 
     /**
      * @Form\Attributes({"id":""})
@@ -136,5 +136,5 @@ class RegisteredAddress
      * @Form\Filter("Dvsa\Olcs\Transfer\Filter\Postcode")
      * @Form\Validator("Dvsa\Olcs\Transfer\Validators\Postcode");
      */
-    public $postcode = null;
+    public $postcode;
 }

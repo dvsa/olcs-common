@@ -9,7 +9,6 @@ interface IsValidHandlerInterface
     /**
      * Perform any form validation operations specific to this custom type
      *
-     * @param QaForm $form
      *
      * @return bool
      */

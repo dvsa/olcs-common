@@ -16,7 +16,7 @@ use Common\Data\Mapper\Lva\BusinessType;
  */
 class BusinessTypeTest extends \PHPUnit\Framework\TestCase
 {
-    public function testMapFromResult()
+    public function testMapFromResult(): void
     {
         $input = [
             'version' => 111,

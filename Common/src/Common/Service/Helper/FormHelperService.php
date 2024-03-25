@@ -32,7 +32,9 @@ use LmcRbacMvc\Service\AuthorizationService;
 class FormHelperService
 {
     public const ALTER_LABEL_RESET = 0;
+
     public const ALTER_LABEL_APPEND = 1;
+
     public const ALTER_LABEL_PREPEND = 2;
 
     /** @var AnnotationBuilder */
@@ -90,11 +92,7 @@ class FormHelperService
      */
     public function createForm($formName, $addCsrf = true, $addContinue = true)
     {
-        if (class_exists($formName)) {
-            $class = $formName;
-        } else {
-            $class = $this->findForm($formName);
-        }
+        $class = class_exists($formName) ? $formName : $this->findForm($formName);
 
         /** @var \Common\Form\Form $form */
         $form = $this->formAnnotationBuilder->createForm($class);
@@ -137,10 +135,8 @@ class FormHelperService
             $form->add($config);
         }
 
-        if ($this->authorizationService->isGranted('internal-user')) {
-            if (!$this->authorizationService->isGranted('internal-edit') && !$form->getOption('bypass_auth')) {
-                $form->setOption('readonly', true);
-            }
+        if ($this->authorizationService->isGranted('internal-user') && (!$this->authorizationService->isGranted('internal-edit') && !$form->getOption('bypass_auth'))) {
+            $form->setOption('readonly', true);
         }
 
         return $form;
@@ -151,10 +147,8 @@ class FormHelperService
      *
      * @param \Laminas\Form\FormInterface $form    Form
      * @param \Laminas\Http\Request       $request Request
-     *
-     * @return void
      */
-    public function setFormActionFromRequest($form, $request)
+    public function setFormActionFromRequest($form, $request): void
     {
         if (!$form->hasAttribute('action')) {
             $url = $request->getUri()->getPath();
@@ -286,9 +280,11 @@ class FormHelperService
                     }
                 }
             }
+
             if ($modified) {
                 return $post;
             }
+
             return $processed;
         }
 
@@ -329,7 +325,7 @@ class FormHelperService
         $postcode = trim($post[$name]['searchPostcode']['postcode']);
 
         // If we haven't entered a postcode
-        if (empty($postcode)) {
+        if ($postcode === '' || $postcode === '0') {
             $this->removeAddressSelectFields($fieldset);
 
             $fieldset->get('searchPostcode')->setMessages(['Please enter a postcode']);
@@ -339,7 +335,7 @@ class FormHelperService
 
         try {
             $addressList = $this->addressData->getAddressesForPostcode($postcode);
-        } catch (\Exception $e) {
+        } catch (\Exception $exception) {
             // RestClient / ResponseHelper throw root exceptions :(
             $fieldset->get('searchPostcode')->setMessages(['postcode.error.not-available']);
             $this->removeAddressSelectFields($fieldset);
@@ -381,10 +377,8 @@ class FormHelperService
      * Remove address select fields
      *
      * @param \Laminas\Form\Fieldset $fieldset Fieldset
-     *
-     * @return void
      */
-    private function removeAddressSelectFields($fieldset)
+    private function removeAddressSelectFields($fieldset): void
     {
         $fieldset->get('searchPostcode')->remove('addresses');
         $fieldset->get('searchPostcode')->remove('select');
@@ -396,19 +390,13 @@ class FormHelperService
      * @param \Laminas\Form\Element $element Element
      * @param string             $label   Label text
      * @param int                $type    Alter type
-     *
-     * @return void
      */
-    public function alterElementLabel($element, $label, $type = self::ALTER_LABEL_RESET)
+    public function alterElementLabel($element, $label, $type = self::ALTER_LABEL_RESET): void
     {
         if (in_array($type, [self::ALTER_LABEL_APPEND, self::ALTER_LABEL_PREPEND], false)) {
             $oldLabel = $element->getLabel();
 
-            if ($type == self::ALTER_LABEL_APPEND) {
-                $label = $oldLabel . $label;
-            } else {
-                $label = $label . $oldLabel;
-            }
+            $label = $type == self::ALTER_LABEL_APPEND ? $oldLabel . $label : $label . $oldLabel;
         }
 
         $element->setLabel($label);
@@ -438,10 +426,8 @@ class FormHelperService
      * @param \Laminas\Form\FormInterface $form             Form
      * @param InputFilterInterface     $filter           Filter
      * @param string                   $elementReference Element ref
-     *
-     * @return void
      */
-    private function removeElement($form, InputFilterInterface $filter, $elementReference)
+    private function removeElement($form, InputFilterInterface $filter, $elementReference): void
     {
         [$form, $filter, $name] = $this->getElementAndInputParents($form, $filter, $elementReference);
 
@@ -479,12 +465,10 @@ class FormHelperService
      *
      * @param \Laminas\Form\Fieldset|\Laminas\Form\FormInterface $form   Form fieldset
      * @param InputFilter                                  $filter Filter
-     *
-     * @return void
      */
-    public function disableEmptyValidation(Fieldset $form, InputFilter $filter = null)
+    public function disableEmptyValidation(Fieldset $form, InputFilter $filter = null): void
     {
-        if ($filter === null) {
+        if (!$filter instanceof \Laminas\InputFilter\InputFilter) {
             $filter = $form->getInputFilter();
         }
 
@@ -501,11 +485,9 @@ class FormHelperService
             }
         }
 
-        if ($form instanceof Fieldset) {
-            foreach ($form->getFieldsets() as $fieldset) {
-                if ($filter->has($fieldset->getName())) {
-                    $this->disableEmptyValidation($fieldset, $filter->get($fieldset->getName()));
-                }
+        foreach ($form->getFieldsets() as $fieldset) {
+            if ($filter->has($fieldset->getName())) {
+                $this->disableEmptyValidation($fieldset, $filter->get($fieldset->getName()));
             }
         }
     }
@@ -515,10 +497,8 @@ class FormHelperService
      *
      * @param \Laminas\Form\FormInterface $form      Form
      * @param string                   $reference Element Ref
-     *
-     * @return void
      */
-    public function disableEmptyValidationOnElement($form, $reference)
+    public function disableEmptyValidationOnElement($form, $reference): void
     {
         /** @var InputFilterInterface $filter */
         [, $filter, $name] = $this->getElementAndInputParents($form, $form->getInputFilter(), $reference);
@@ -526,7 +506,7 @@ class FormHelperService
     }
 
 
-    public function populateFormTable(Fieldset $fieldset, $table, $tableFieldsetName = null)
+    public function populateFormTable(Fieldset $fieldset, $table, $tableFieldsetName = null): void
     {
         $fieldset->get('table')->setTable($table, $tableFieldsetName);
         $fieldset->get('rows')->setValue(count($table->getRows()));
@@ -570,10 +550,8 @@ class FormHelperService
      * Disable date element
      *
      * @param \Laminas\Form\Element\DateSelect $element Element
-     *
-     * @return void
      */
-    public function disableDateElement($element)
+    public function disableDateElement($element): void
     {
         $element->getDayElement()->setAttribute('disabled', 'disabled');
         $element->getMonthElement()->setAttribute('disabled', 'disabled');
@@ -584,10 +562,8 @@ class FormHelperService
      * Enable date element
      *
      * @param \Laminas\Form\Element\DateSelect $element Element
-     *
-     * @return void
      */
-    public function enableDateElement($element)
+    public function enableDateElement($element): void
     {
         $element->getDayElement()->removeAttribute('disabled');
         $element->getMonthElement()->removeAttribute('disabled');
@@ -598,10 +574,8 @@ class FormHelperService
      * Enable DateTime element
      *
      * @param \Laminas\Form\Element\DateTimeSelect $element Element
-     *
-     * @return void
      */
-    public function enableDateTimeElement($element)
+    public function enableDateTimeElement($element): void
     {
         $element->getDayElement()->removeAttribute('disabled');
         $element->getMonthElement()->removeAttribute('disabled');
@@ -614,10 +588,8 @@ class FormHelperService
      * Disable all elements recursively
      *
      * @param \Laminas\Form\Fieldset $elements Elements
-     *
-     * @return void
      */
-    public function disableElements($elements)
+    public function disableElements($elements): void
     {
         if ($elements instanceof Fieldset) {
             foreach ($elements->getElements() as $element) {
@@ -627,6 +599,7 @@ class FormHelperService
             foreach ($elements->getFieldsets() as $fieldset) {
                 $this->disableElements($fieldset);
             }
+
             return;
         }
 
@@ -644,10 +617,8 @@ class FormHelperService
      * Enable all elements recursively
      *
      * @param \Laminas\Form\Fieldset $elements Elements
-     *
-     * @return void
      */
-    public function enableElements($elements)
+    public function enableElements($elements): void
     {
         if ($elements instanceof Fieldset) {
             foreach ($elements->getElements() as $element) {
@@ -657,6 +628,7 @@ class FormHelperService
             foreach ($elements->getFieldsets() as $fieldset) {
                 $this->enableElements($fieldset);
             }
+
             return;
         }
 
@@ -674,15 +646,14 @@ class FormHelperService
      * Disable field validation
      *
      * @param \Laminas\InputFilter\InputFilter $inputFilter Input Filter
-     *
-     * @return void
      */
-    public function disableValidation($inputFilter)
+    public function disableValidation($inputFilter): void
     {
         if ($inputFilter instanceof InputFilter) {
             foreach ($inputFilter->getInputs() as $input) {
                 $this->disableValidation($input);
             }
+
             return;
         }
 
@@ -697,10 +668,8 @@ class FormHelperService
      *
      * @param \Laminas\Form\Element $element Element
      * @param string             $message Message
-     *
-     * @return void
      */
-    public function lockElement(Element $element, $message)
+    public function lockElement(Element $element, $message): void
     {
         $lockView = new ViewModel(
             ['message' => $this->translationHelper->translate($message)]
@@ -727,10 +696,8 @@ class FormHelperService
      * @param \Laminas\Form\FormInterface $form     Form
      * @param string                   $fieldset Name of Fieldset
      * @param array                    $fields   Names of Fields
-     *
-     * @return void
      */
-    public function removeFieldList(Form $form, $fieldset, array $fields)
+    public function removeFieldList(Form $form, $fieldset, array $fields): void
     {
         foreach ($fields as $field) {
             $this->remove($form, $fieldset . '->' . $field);
@@ -748,10 +715,8 @@ class FormHelperService
      * @NOTE Doesn't quite adhere to the same interface as the other process*LookupForm
      * methods as it already expects the presence of a company number field to have been
      * determined, and it expects an array of data rather than a request
-     *
-     * @return void
      */
-    public function processCompanyNumberLookupForm(Form $form, $data, $detailsFieldset, $addressFieldset = null)
+    public function processCompanyNumberLookupForm(Form $form, $data, $detailsFieldset, $addressFieldset = null): void
     {
         if (empty($data) && !isset($data['results'])) {
             $this->setCompanyNotFoundError($form, $detailsFieldset);
@@ -760,22 +725,25 @@ class FormHelperService
 
         $result = $data['results'][0];
         $form->get($detailsFieldset)->get('name')->setValue($result['company_name'] ?? '');
-
-        if ($addressFieldset && isset($result['registered_office_address'])) {
-            $this->populateRegisteredAddressFieldset(
-                $form->get($addressFieldset),
-                $result['registered_office_address']
-            );
+        if (!$addressFieldset) {
+            return;
         }
+        if (!isset($result['registered_office_address'])) {
+            return;
+        }
+        $this->populateRegisteredAddressFieldset(
+            $form->get($addressFieldset),
+            $result['registered_office_address']
+        );
     }
 
-    public function setCompanyNotFoundError($form, $detailsFieldset)
+    public function setCompanyNotFoundError($form, $detailsFieldset): void
     {
         $message = 'company_number.search_no_results.error';
         $this->setCompaniesHouseFormMessage($form, $detailsFieldset, $message);
     }
 
-    public function setInvalidCompanyNumberErrors($form, $detailsFieldset)
+    public function setInvalidCompanyNumberErrors($form, $detailsFieldset): void
     {
         $message = 'company_number.length.validation.error';
         $this->setCompaniesHouseFormMessage($form, $detailsFieldset, $message);
@@ -786,10 +754,8 @@ class FormHelperService
      *
      * @param \Laminas\Form\Element\(Select|Radio) $element Select element or a Radio group
      * @param string $index Index
-     *
-     * @return void
      */
-    public function removeOption(Element $element, $index)
+    public function removeOption(Element $element, $index): void
     {
         $options = $element->getValueOptions();
 
@@ -804,10 +770,8 @@ class FormHelperService
      *
      * @param \Laminas\Form\Element\(Select|Radio) $element Select element or a Radio group
      * @param string $index Index
-     *
-     * @return void
      */
-    public function setCurrentOption(Element $element, $index)
+    public function setCurrentOption(Element $element, $index): void
     {
         $options = $element->getValueOptions();
 
@@ -830,10 +794,8 @@ class FormHelperService
      * @param \Laminas\Form\FormInterface $form           Form
      * @param string                   $reference      Field Ref
      * @param string                   $validatorClass Validator Class
-     *
-     * @return void
      */
-    public function removeValidator(FormInterface $form, $reference, $validatorClass)
+    public function removeValidator(FormInterface $form, $reference, $validatorClass): void
     {
         /** @var InputFilterInterface $filter */
         [, $filter, $field] = $this->getElementAndInputParents($form, $form->getInputFilter(), $reference);
@@ -857,10 +819,8 @@ class FormHelperService
      * @param \Laminas\Form\FormInterface           $form      Form
      * @param string                             $reference Field Ref
      * @param \Laminas\Validator\ValidatorInterface $validator Validator Class
-     *
-     * @return void
      */
-    public function attachValidator(FormInterface $form, $reference, $validator)
+    public function attachValidator(FormInterface $form, $reference, $validator): void
     {
         /** @var InputFilterInterface $filter */
         [, $filter, $field] = $this->getElementAndInputParents($form, $form->getInputFilter(), $reference);
@@ -909,7 +869,7 @@ class FormHelperService
         // default to the current date if it is not set
         $currentValue = $field->getValue();
         $currentValue = trim($currentValue, '-'); // date element returns '--' when empty!
-        if (empty($currentValue)) {
+        if ($currentValue === '' || $currentValue === '0') {
             $today = $this->dateHelper->getDateObject();
             $field->setValue($today);
         }
@@ -954,10 +914,8 @@ class FormHelperService
      *
      * @param \Laminas\Form\FormInterface $form Form
      * @param array                    $data The form data to save
-     *
-     * @return void
      */
-    public function saveFormState(Form $form, $data)
+    public function saveFormState(Form $form, $data): void
     {
         $sessionContainer = new \Laminas\Session\Container('form_state');
         $sessionContainer->offsetSet($form->getName(), $data);
@@ -967,10 +925,8 @@ class FormHelperService
      * Restore form state
      *
      * @param \Laminas\Form\FormInterface $form Form
-     *
-     * @return void
      */
-    public function restoreFormState(Form $form)
+    public function restoreFormState(Form $form): void
     {
         $sessionContainer = new \Laminas\Session\Container('form_state');
         if ($sessionContainer->offsetExists($form->getName())) {
@@ -983,10 +939,8 @@ class FormHelperService
      *
      * @param \Laminas\Form\Element\(Select|Radio) $element Element (Select|Radio)
      * @param string $key Key
-     *
-     * @return void
      */
-    public function removeValueOption(Element $element, $key)
+    public function removeValueOption(Element $element, $key): void
     {
         $options = $element->getValueOptions();
 
@@ -998,7 +952,6 @@ class FormHelperService
     /**
      * @param        $form
      * @param        $detailsFieldset
-     * @param string $message
      */
     protected function setCompaniesHouseFormMessage($form, $detailsFieldset, string $message)
     {

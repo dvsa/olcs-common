@@ -23,13 +23,21 @@ class CachingQueryService implements QueryServiceInterface, \Laminas\Log\LoggerA
     use RecoverHttpClientExceptionTrait;
 
     public const BACKEND_FAIL_MSG = 'Backend DB failure HTTP code: %s';
+
     public const CACHE_FAIL_MSG = 'Cache failure: %s';
+
     public const CACHE_LOCAL_SAVE_MSG = 'Storing in local cache: %s';
+
     public const CACHE_LOCAL_RETRIEVE_MSG = 'Fetching from local cache: %s';
+
     public const CACHE_PERSISTENT_SAVE_MSG = 'Storing in persistent cache with TTL of %u seconds: %s';
+
     public const CACHE_PERSISTENT_RETRIEVE_MSG = 'Fetching from persistent cache: %s';
+
     public const CACHE_ENCRYPTION_MODE_MSG = 'Using encryption mode: %s';
+
     public const CACHE_CUSTOM_CONFIG_MISSING_MSG = 'Custom cache config missing for: %s';
+
     public const MISSING_TTL_INTERFACE_TYPE = 'No TTL value found for this query';
 
     /** @var QueryServiceInterface */
@@ -135,7 +143,6 @@ class CachingQueryService implements QueryServiceInterface, \Laminas\Log\LoggerA
     /**
      * Feed a DTO through the annotation builder and then send the query
      *
-     * @param QueryInterface $dto
      *
      * @return \Common\Service\Cqrs\Response
      */
@@ -148,8 +155,6 @@ class CachingQueryService implements QueryServiceInterface, \Laminas\Log\LoggerA
     /**
      * Retrieve data that is not found in the usual CQRS cache
      *
-     * @param string $identifier
-     * @param string $uniqueId
      *
      * @return mixed|null
      * @throws \Exception
@@ -160,9 +165,9 @@ class CachingQueryService implements QueryServiceInterface, \Laminas\Log\LoggerA
             if ($this->cacheService->hasCustomItem($identifier, $uniqueId)) {
                 return $this->getCustomCache($identifier, $uniqueId);
             }
-        } catch (\Exception $e) {
+        } catch (\Exception $exception) {
             //error has occurred with the cache - log the error and retrieve fresh from the backend
-            $this->logError(sprintf(self::CACHE_FAIL_MSG, $e->getMessage()));
+            $this->logError(sprintf(self::CACHE_FAIL_MSG, $exception->getMessage()));
         }
 
         $queryParams = [
@@ -183,8 +188,6 @@ class CachingQueryService implements QueryServiceInterface, \Laminas\Log\LoggerA
     /**
      * Retrieve data that is not found in the usual CQRS cache
      *
-     * @param string $identifier
-     * @param string $uniqueId
      *
      * @return mixed|null
      * @throws \Exception
@@ -221,9 +224,7 @@ class CachingQueryService implements QueryServiceInterface, \Laminas\Log\LoggerA
     /**
      * Check if the local cache has the item
      *
-     * @param string $cacheIdentifier
      *
-     * @return bool
      */
     private function localCacheHasItem(string $cacheIdentifier): bool
     {
@@ -233,8 +234,6 @@ class CachingQueryService implements QueryServiceInterface, \Laminas\Log\LoggerA
     /**
      * Retrieve a record from the local cache
      *
-     * @param string $cacheIdentifier
-     * @param string $dtoClassName
      *
      * @return mixed
      */
@@ -247,11 +246,8 @@ class CachingQueryService implements QueryServiceInterface, \Laminas\Log\LoggerA
     /**
      * Retrieve a record from the local cache
      *
-     * @param string $cacheIdentifier
-     * @param string $dtoClassName
      * @param mixed  $result
      *
-     * @return void
      */
     private function storeLocalCache(string $cacheIdentifier, string $dtoClassName, $result): void
     {
@@ -316,10 +312,8 @@ class CachingQueryService implements QueryServiceInterface, \Laminas\Log\LoggerA
     /**
      * Get the cache ttl depending on the query type
      *
-     * @param QueryContainerInterface $query
      *
      * @throws CacheTtlException
-     * @return int
      */
     private function getCacheTtl(QueryContainerInterface $query): int
     {
@@ -338,10 +332,8 @@ class CachingQueryService implements QueryServiceInterface, \Laminas\Log\LoggerA
      * Log a message to the injected logger
      *
      * @param string $message Message to log
-     *
-     * @return void
      */
-    private function logMessage($message)
+    private function logMessage($message): void
     {
         if ($this->getLogger()) {
             $this->getLogger()->debug($message);
@@ -352,8 +344,6 @@ class CachingQueryService implements QueryServiceInterface, \Laminas\Log\LoggerA
      * Log error to the injected logger
      *
      * @param string $error Error to log
-     *
-     * @return void
      */
     private function logError(string $error): void
     {

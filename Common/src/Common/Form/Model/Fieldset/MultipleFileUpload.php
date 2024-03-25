@@ -17,7 +17,7 @@ class MultipleFileUpload
      * @Form\Validator("Laminas\Validator\NotEmpty", options={"null"})
      * @Form\Validator("Common\Validator\FileUploadCountV2", options={"min": 1})
      */
-    public $fileCount = null;
+    public $fileCount;
 
     /**
      * @Form\Name("file")
@@ -30,7 +30,7 @@ class MultipleFileUpload
      * })
      * @Form\Type("\Common\Form\Elements\Types\AttachFilesButton")
      */
-    public $controls = null;
+    public $controls;
 
     /**
      * @Form\Attributes({
@@ -39,7 +39,7 @@ class MultipleFileUpload
      * @Form\Options({"preview_images": "true"})
      * @Form\Type("\Common\Form\Elements\Types\FileUploadList")
      */
-    public $list = null;
+    public $list;
 
     /**
      * @Form\Name("__messages__")
@@ -47,7 +47,7 @@ class MultipleFileUpload
      * @Form\Options({})
      * @Form\Type("Hidden")
      */
-    public $messages = null;
+    public $messages;
 
     /**
      * @Form\Attributes({
@@ -58,5 +58,5 @@ class MultipleFileUpload
      * @Form\Options({"label": "Upload"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $upload = null;
+    public $upload;
 }

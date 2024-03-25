@@ -38,7 +38,7 @@ class PageTitle extends AbstractHelper
         // get pageTitle placeholder value
         $pageTitle = (string)$this->placeholder->getContainer('pageTitle');
 
-        if (empty($pageTitle) && !empty($this->routeMatchName)) {
+        if (($pageTitle === '' || $pageTitle === '0') && !empty($this->routeMatchName)) {
             // try page title based on routing
             $pageTitleRouteKey = implode('.', array_filter(['page.title', $this->routeMatchName, $this->action]));
 

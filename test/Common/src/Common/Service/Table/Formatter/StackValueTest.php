@@ -18,7 +18,7 @@ use Common\Service\Table\Formatter\StackValue;
  */
 class StackValueTest extends \PHPUnit\Framework\TestCase
 {
-    public function testFormatWithoutStack()
+    public function testFormatWithoutStack(): void
     {
         $this->expectException('\InvalidArgumentException');
         $data = [];
@@ -27,7 +27,7 @@ class StackValueTest extends \PHPUnit\Framework\TestCase
         (new StackValue(new StackHelperService()))->format($data, $column);
     }
 
-    public function testFormatWithString()
+    public function testFormatWithString(): void
     {
         $data = [
             'foo' => [
@@ -44,7 +44,7 @@ class StackValueTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, (new StackValue(new StackHelperService()))->format($data, $column));
     }
 
-    public function testFormat()
+    public function testFormat(): void
     {
         $data = [
             'foo' => [

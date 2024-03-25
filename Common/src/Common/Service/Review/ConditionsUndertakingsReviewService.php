@@ -16,7 +16,7 @@ use Common\RefData;
  */
 class ConditionsUndertakingsReviewService extends AbstractReviewService
 {
-    public function getConfigFromData(array $data = [])
+    public function getConfigFromData(array $data = []): void
     {
         // noop
     }
@@ -92,14 +92,12 @@ class ConditionsUndertakingsReviewService extends AbstractReviewService
      */
     public function splitUpConditionsAndUndertakings($data, $filterByAction = true)
     {
-        $licConds = $licUnds = $ocConds = $ocUnds = [];
-
+        $licConds = [];
+        $licUnds = [];
+        $ocConds = [];
+        $ocUnds = [];
         foreach ($data['conditionUndertakings'] as $condition) {
-            if ($filterByAction) {
-                $index = $condition['action'];
-            } else {
-                $index = 'list';
-            }
+            $index = $filterByAction ? $condition['action'] : 'list';
 
             // Decide which list to push onto
             switch (true) {

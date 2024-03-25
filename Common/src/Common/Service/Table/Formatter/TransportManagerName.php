@@ -13,12 +13,9 @@ use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 class TransportManagerName extends Name
 {
     private UrlHelperService $urlHelper;
+
     private TranslatorDelegator $translator;
 
-    /**
-     * @param UrlHelperService    $urlHelperService
-     * @param TranslatorDelegator $translator
-     */
     public function __construct(UrlHelperService $urlHelperService, TranslatorDelegator $translator)
     {
         $this->urlHelper = $urlHelperService;
@@ -84,6 +81,7 @@ class TransportManagerName extends Name
                             $name
                         );
                     }
+
                     break;
                 case 'application':
                     $html = sprintf(
@@ -109,9 +107,8 @@ class TransportManagerName extends Name
     protected function getExternalUrl($data, $lva)
     {
         $route = 'lva-' . $lva . '/transport_manager_details';
-        $url = $this->urlHelper->fromRoute($route, ['action' => null, 'child_id' => $data['id']], [], true);
 
-        return $url;
+        return $this->urlHelper->fromRoute($route, ['action' => null, 'child_id' => $data['id']], [], true);
     }
 
     /**
@@ -124,14 +121,13 @@ class TransportManagerName extends Name
     protected function getInternalUrl($data)
     {
         $transportManagerId = $data['transportManager']['id'];
-        $url = $this->urlHelper->fromRoute(
+
+        return $this->urlHelper->fromRoute(
             'transport-manager/details',
             ['transportManager' => $transportManagerId],
             [],
             true
         );
-
-        return $url;
     }
 
     /**

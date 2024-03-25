@@ -16,7 +16,7 @@ use Common\Data\Mapper\LetterGenerationDocument;
  */
 class LetterGenerationDocumentTest extends \PHPUnit\Framework\TestCase
 {
-    public function testMapFromResult()
+    public function testMapFromResult(): void
     {
         $data = [
             'metadata' => '{"bookmarks":[1,2,3],"details":{"documentTemplate":"Foo"}}',

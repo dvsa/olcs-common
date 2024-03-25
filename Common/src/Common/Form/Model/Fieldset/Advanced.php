@@ -20,7 +20,7 @@ class Advanced
      * @Form\Filter("Laminas\Filter\StringToLower")
      * @Form\Validator("Laminas\Validator\StringLength", options={"min":10,"max":100})
      */
-    public $address = null;
+    public $address;
 
     /**
      * @Form\Attributes({"class":"long","id":""})
@@ -28,7 +28,7 @@ class Advanced
      * @Form\Required(false)
      * @Form\Type("Text")
      */
-    public $town = null;
+    public $town;
 
     /**
      * @Form\Attributes({"class":"medium","id":""})
@@ -36,7 +36,7 @@ class Advanced
      * @Form\Required(false)
      * @Form\Type("Text")
      */
-    public $caseNumber = null;
+    public $caseNumber;
 
     /**
      * @Form\Attributes({"class":"medium","id":""})
@@ -44,7 +44,7 @@ class Advanced
      * @Form\Required(false)
      * @Form\Type("Text")
      */
-    public $transportManagerId = null;
+    public $transportManagerId;
 
     /**
      * @Form\Attributes({"class":"medium","id":""})
@@ -52,7 +52,7 @@ class Advanced
      * @Form\Required(false)
      * @Form\Type("Text")
      */
-    public $operatorId = null;
+    public $operatorId;
 
     /**
      * @Form\Attributes({"class":"medium","id":""})
@@ -60,7 +60,7 @@ class Advanced
      * @Form\Required(false)
      * @Form\Type("Text")
      */
-    public $vehicleRegMark = null;
+    public $vehicleRegMark;
 
     /**
      * @Form\Attributes({"class":"medium","id":""})
@@ -68,7 +68,7 @@ class Advanced
      * @Form\Required(false)
      * @Form\Type("Text")
      */
-    public $diskSerialNumber = null;
+    public $diskSerialNumber;
 
     /**
      * @Form\Attributes({"class":"medium","id":""})
@@ -76,7 +76,7 @@ class Advanced
      * @Form\Required(false)
      * @Form\Type("Text")
      */
-    public $fabsRef = null;
+    public $fabsRef;
 
     /**
      * @Form\Attributes({"class":"medium","id":""})
@@ -84,5 +84,5 @@ class Advanced
      * @Form\Required(false)
      * @Form\Type("Text")
      */
-    public $companyNo = null;
+    public $companyNo;
 }

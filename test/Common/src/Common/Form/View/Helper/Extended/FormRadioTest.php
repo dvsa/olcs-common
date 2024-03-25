@@ -17,7 +17,7 @@ class FormRadioTest extends MockeryTestCase
     /**
      * @dataProvider renderOptionsProvider
      */
-    public function testRenderOptions($options, $selectedOptions, $attributes, $globalAttributes, $labelPosition, $expected)
+    public function testRenderOptions($options, $selectedOptions, $attributes, $globalAttributes, $labelPosition, $expected): void
     {
         $_SERVER['REQUEST_URI'] = '/test/uri';
         $idGenerator = null;
@@ -25,16 +25,19 @@ class FormRadioTest extends MockeryTestCase
             $idGenerator = m::mock(UniqidGenerator::class);
             $idGenerator->shouldReceive('generateId')->once()->andReturn('generated_id');
         }
+
         $sut = new FormRadioStub($idGenerator);
         $translator = m::mock(TranslatorInterface::class);
-        $translator->shouldReceive('translate')->andReturnUsing(fn($string, $domain) => $domain.'-translated-'.$string);
+        $translator->shouldReceive('translate')->andReturnUsing(static fn($string, $domain) => $domain.'-translated-'.$string);
         $sut->setTranslator($translator);
         if (!is_null($globalAttributes)) {
             $sut->setLabelAttributes($globalAttributes);
         }
+
         if (!is_null($labelPosition)) {
             $sut->setLabelPosition($labelPosition);
         }
+
         $renderer = m::mock(\Laminas\View\Renderer\RendererInterface::class);
         $formCollection = m::mock(FormCollection::class);
         $formCollection->shouldReceive('setReadOnly');

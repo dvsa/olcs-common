@@ -14,6 +14,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class IrhpPermitApplicationRefLinkTest extends MockeryTestCase
 {
     protected $urlHelper;
+
     protected $sut;
 
     protected function setUp(): void
@@ -29,7 +30,7 @@ class IrhpPermitApplicationRefLinkTest extends MockeryTestCase
      *
      * @dataProvider provider
      */
-    public function testFormat($data, $expected)
+    public function testFormat($data, $expected): void
     {
         $this->urlHelper->shouldReceive('fromRoute')
             ->with(

@@ -80,6 +80,7 @@ class OneOf extends AbstractValidator
         if (isset($options['fields'])) {
             $this->setFields($options['fields']);
         }
+
         if (isset($options['allowZero'])) {
             $this->setAllowZero($options['allowZero']);
         }
@@ -111,6 +112,7 @@ class OneOf extends AbstractValidator
             if (!isset($context[$field])) {
                 continue;
             }
+
             if ((!empty($context[$field])) || ($context[$field] == 0 && $this->getAllowZero())
             ) {
                 $valid = true;

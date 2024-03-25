@@ -14,6 +14,7 @@ class SearchType extends SearchAbstract
      * @var string
      */
     protected $title = 'SearchType';
+
     /**
      * @var string
      */

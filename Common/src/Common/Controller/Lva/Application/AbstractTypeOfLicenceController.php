@@ -23,18 +23,13 @@ use LmcRbacMvc\Service\AuthorizationService;
 abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicenceController
 {
     protected FlashMessengerHelperService $flashMessengerHelper;
+
     protected ScriptFactory $scriptFactory;
+
     protected FormServiceManager $formServiceManager;
+
     protected FormHelperService $formHelper;
 
-    /**
-     * @param NiTextTranslation $niTextTranslationUtil
-     * @param AuthorizationService $authService
-     * @param FlashMessengerHelperService $flashMessengerHelper
-     * @param ScriptFactory $scriptFactory
-     * @param FormServiceManager $formServiceManager
-     * @param FormHelperService $formHelper
-     */
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
@@ -64,6 +59,7 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         if ($prg instanceof Response) {
             return $prg;
         }
+
         /** @var TypeOfLicenceFormService $tolFormService */
         $tolFormService = $this->formServiceManager->get('lva-application-type-of-licence');
         /** @var \Laminas\Form\FormInterface $form */
@@ -81,6 +77,7 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
             if (isset($applicationData['allowedOperatorLocation'])) {
                 $tolFormService->setAndLockOperatorLocation($form, $applicationData['allowedOperatorLocation']);
             }
+
             return $this->renderIndex($form);
         }
 
@@ -186,8 +183,10 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
             } elseif ($data['allowedOperatorLocation'] === TypeOfLicenceFormService::ALLOWED_OPERATOR_LOCATION_GB) {
                 $operatorLocation = 'N';
             }
+
             return $operatorLocation;
         }
+
         return $formData['type-of-licence']['operator-location'];
     }
 

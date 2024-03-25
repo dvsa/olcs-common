@@ -12,6 +12,7 @@ use Laminas\Validator\StringLength;
 class NoOfPermitsElement extends Text implements InputProviderInterface
 {
     public const MAX_LENGTH = '4';
+
     public const ERROR_KEY = 'qanda.bilaterals.number-of-permits.error.enter-permits-required';
 
     protected $attributes = [

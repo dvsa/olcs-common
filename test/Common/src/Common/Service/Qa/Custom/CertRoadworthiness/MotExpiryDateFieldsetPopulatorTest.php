@@ -17,6 +17,7 @@ use Laminas\Form\Form;
 class MotExpiryDateFieldsetPopulatorTest extends MockeryTestCase
 {
     public const REQUESTED_DATE = '2020-03-15';
+
     public const DATE_MUST_BE_BEFORE = '2020-05-01';
 
     private $translator;
@@ -31,7 +32,7 @@ class MotExpiryDateFieldsetPopulatorTest extends MockeryTestCase
 
     private $motExpiryDateFieldsetPopulator;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->translator = m::mock(TranslationHelperService::class);
         $this->translator->shouldReceive('translate')

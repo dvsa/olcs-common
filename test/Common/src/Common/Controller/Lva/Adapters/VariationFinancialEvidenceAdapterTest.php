@@ -9,7 +9,7 @@ use Common\Controller\Lva\Adapters\VariationFinancialEvidenceAdapter;
 
 class VariationFinancialEvidenceAdapterTest extends MockeryTestCase
 {
-    public function testAlterFormForLva()
+    public function testAlterFormForLva(): void
     {
         $container = m::mock(ContainerInterface::class);
         $sut = new VariationFinancialEvidenceAdapter($container);

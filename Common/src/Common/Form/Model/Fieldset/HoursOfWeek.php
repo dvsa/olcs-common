@@ -16,5 +16,5 @@ class HoursOfWeek
      *     "label": "transport-manager.responsibilities.hours-per-week-subtitle"
      * })
      */
-    public $hoursPerWeekContent = null;
+    public $hoursPerWeekContent;
 }

@@ -19,6 +19,7 @@ use Laminas\Http\Request;
 class FinancialHistory
 {
     protected TranslationHelperService $translator;
+
     protected FormHelperService $formHelper;
 
     public function __construct(

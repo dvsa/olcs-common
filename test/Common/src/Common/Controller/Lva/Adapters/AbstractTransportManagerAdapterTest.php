@@ -19,6 +19,7 @@ class AbstractTransportManagerAdapterTest extends MockeryTestCase
 {
     /** @var  \CommonTest\Common\Controller\Lva\Adapters\StubAbstractTransportManagerAdapter */
     protected $sut;
+
     /** @var  ContainerInterface|\Mockery\MockInterface */
     protected $container;
 
@@ -41,12 +42,12 @@ class AbstractTransportManagerAdapterTest extends MockeryTestCase
         );
     }
 
-    public function testGetNumberOfRows()
+    public function testGetNumberOfRows(): void
     {
         $this->assertEquals(2, $this->sut->getNumberOfRows(888, 999));
     }
 
-    public function testGetTable()
+    public function testGetTable(): void
     {
         $mockTable = m::mock(\stdClass::class);
         $this->container->shouldReceive('get->prepareTable')->once()->with('template')->andReturn($mockTable);
@@ -54,7 +55,7 @@ class AbstractTransportManagerAdapterTest extends MockeryTestCase
         static::assertEquals($mockTable, $this->sut->getTable('template'));
     }
 
-    public function testMustHaveAtLeastOneTm()
+    public function testMustHaveAtLeastOneTm(): void
     {
         static::assertFalse($this->sut->mustHaveAtLeastOneTm());
     }
@@ -62,7 +63,7 @@ class AbstractTransportManagerAdapterTest extends MockeryTestCase
     /**
      * @doesNotPerformAssertions
      */
-    public function testAddMessages()
+    public function testAddMessages(): void
     {
         // no assertion as its a no op
         $this->sut->addMessages(99);
@@ -71,7 +72,7 @@ class AbstractTransportManagerAdapterTest extends MockeryTestCase
     /**
      * @dataProvider dataProviderTestMapResultForTable
      */
-    public function testMapResultForTable($licTms, $appTms, $expect)
+    public function testMapResultForTable($licTms, $appTms, $expect): void
     {
         $actual = $this->sut->mapResultForTable($appTms, $licTms);
 
@@ -149,7 +150,6 @@ class AbstractTransportManagerAdapterTest extends MockeryTestCase
                 'appTms' => [
                     [
                         'id' => 101,
-                        'action' => 'unit_Action',
                         'tmid' => 8888,
                         'tmasid' => 'unit_TmAppStatusId',
                         'tmasdesc' => 'unit_TmAppStatusDesc',
@@ -196,7 +196,6 @@ class AbstractTransportManagerAdapterTest extends MockeryTestCase
                 'appTms' => [
                     [
                         'id' => 101,
-                        'action' => 'unit_Action',
                         'tmid' => 8888,
                         'tmasid' => 'unit_TmAppStatusId',
                         'tmasdesc' => 'unit_TmAppStatusDesc',
@@ -225,7 +224,7 @@ class AbstractTransportManagerAdapterTest extends MockeryTestCase
     /**
      * @dataProvider dataProviderTestSortResultForTable
      */
-    public function testSortResultForTable($method, $data, $expect)
+    public function testSortResultForTable($method, $data, $expect): void
     {
         $actual = $this->sut->sortResultForTable($data, $method);
 

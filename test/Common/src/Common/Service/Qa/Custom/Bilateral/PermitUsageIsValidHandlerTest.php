@@ -17,7 +17,7 @@ class PermitUsageIsValidHandlerTest extends MockeryTestCase
     /**
      * @dataProvider dpIsValid
      */
-    public function testIsValid($storedAnswerValue, $qaElementValue, $warningVisibleValue, $expectedIsValid)
+    public function testIsValid($storedAnswerValue, $qaElementValue, $warningVisibleValue, $expectedIsValid): void
     {
         $questionFieldsetData = [
             'qaElement' => $qaElementValue,

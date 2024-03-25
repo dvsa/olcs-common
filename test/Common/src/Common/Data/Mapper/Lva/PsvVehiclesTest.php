@@ -20,7 +20,7 @@ use Laminas\Form\Form;
  */
 class PsvVehiclesTest extends MockeryTestCase
 {
-    public function testMapFromResult()
+    public function testMapFromResult(): void
     {
         $data = [
             'version' => 1,
@@ -43,7 +43,7 @@ class PsvVehiclesTest extends MockeryTestCase
         $this->assertEquals($expected, PsvVehicles::mapFromResult($data));
     }
 
-    public function testMapFormErrors()
+    public function testMapFormErrors(): void
     {
         $form = m::mock(Form::class);
         $fm = m::mock(FlashMessengerHelperService::class);

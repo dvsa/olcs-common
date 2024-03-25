@@ -13,10 +13,12 @@ use Common\Service\Helper\StackHelperService;
 class LinkTest extends MockeryTestCase
 {
     protected $sut;
+
     protected $table;
+
     protected $sm;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sm = new ServiceManager();
 
@@ -27,7 +29,7 @@ class LinkTest extends MockeryTestCase
         $this->sut = new Link($this->table);
     }
 
-    public function testRender()
+    public function testRender(): void
     {
         $data = [
             'some' => [

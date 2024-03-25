@@ -51,9 +51,6 @@ class ChainValidatedInput implements InputInterface
      */
     protected $value;
 
-    /**
-     * @param string $name
-     */
     public function __construct(string $name)
     {
         $this->validatorChain = new ValidatorChain();
@@ -61,9 +58,6 @@ class ChainValidatedInput implements InputInterface
         $this->setName($name);
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
@@ -71,29 +65,22 @@ class ChainValidatedInput implements InputInterface
 
     /**
      * @param  string $name
-     * @return self
      */
     public function setName($name): self
     {
         if (! is_string($name)) {
             throw new InvalidArgumentException('Expected string');
         }
+
         $this->name = $name;
         return $this;
     }
 
-    /**
-     * @return ValidatorChain
-     */
     public function getValidatorChain(): ValidatorChain
     {
         return $this->validatorChain;
     }
 
-    /**
-     * @param ValidatorChain $validatorChain
-     * @return self
-     */
     public function setValidatorChain(ValidatorChain $validatorChain): self
     {
         $this->validatorChain = $validatorChain;
@@ -101,7 +88,6 @@ class ChainValidatedInput implements InputInterface
     }
 
     /**
-     * @return bool
      * @deprecated Add NotEmpty validator to the ValidatorChain and check for its presence
      */
     public function allowEmpty(): bool
@@ -111,7 +97,6 @@ class ChainValidatedInput implements InputInterface
 
     /**
      * @param  bool $allowEmpty
-     * @return self
      * @deprecated Add NotEmpty validator to the ValidatorChain
      */
     public function setAllowEmpty($allowEmpty): self
@@ -126,15 +111,12 @@ class ChainValidatedInput implements InputInterface
         } elseif (! $this->validatorChainHasNotEmptyValidator($validatorChain)) {
             $validatorChain->attach(new NotEmpty());
         }
+
         $this->setValidatorChain($validatorChain);
 
         return $this;
     }
 
-    /**
-     * @param ValidatorChain $unfilteredValidatorChain
-     * @return ValidatorChain
-     */
     protected function extractValidatorChainWithoutNotEmptyValidators(ValidatorChain $unfilteredValidatorChain): ValidatorChain
     {
         $filteredValidatorChain = new ValidatorChain();
@@ -143,19 +125,17 @@ class ChainValidatedInput implements InputInterface
             if ($validatorConfig['instance'] instanceof NotEmpty) {
                 continue;
             }
+
             $filteredValidatorChain->attach(
                 $validatorConfig['instance'],
                 $validatorConfig['breakChainOnFailure'] ?? false,
                 $validatorConfig['priority'] ?? ValidatorChain::DEFAULT_PRIORITY
             );
         }
+
         return $filteredValidatorChain;
     }
 
-    /**
-     * @param ValidatorChain $validatorChain
-     * @return bool
-     */
     protected function validatorChainHasNotEmptyValidator(ValidatorChain $validatorChain): bool
     {
         foreach ($this->getValidatorChain()->getValidators() as $validatorConfig) {
@@ -163,6 +143,7 @@ class ChainValidatedInput implements InputInterface
                 return true;
             }
         }
+
         return false;
     }
 
@@ -170,8 +151,6 @@ class ChainValidatedInput implements InputInterface
      * {@inheritDoc}
      *
      * This has no effect on the validation chain.
-     *
-     * @return bool
      */
     public function isRequired(): bool
     {
@@ -184,20 +163,17 @@ class ChainValidatedInput implements InputInterface
      * This has no effect on the validation chain.
      *
      * @param  bool $required
-     * @return self
      */
     public function setRequired($required): self
     {
         if (! is_bool($required)) {
             throw new InvalidArgumentException('Expected bool');
         }
+
         $this->required = $required;
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function breakOnFailure(): bool
     {
         return $this->breakOnFailure;
@@ -205,20 +181,17 @@ class ChainValidatedInput implements InputInterface
 
     /**
      * @param  bool $breakOnFailure
-     * @return self
      */
     public function setBreakOnFailure($breakOnFailure): self
     {
         if (! is_bool($breakOnFailure)) {
             throw new InvalidArgumentException('Expected bool');
         }
+
         $this->breakOnFailure = $breakOnFailure;
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getErrorMessage(): ?string
     {
         return $this->errorMessage;
@@ -226,7 +199,6 @@ class ChainValidatedInput implements InputInterface
 
     /**
      * @param  string|null $errorMessage
-     * @return self
      */
     public function setErrorMessage($errorMessage): self
     {
@@ -234,18 +206,11 @@ class ChainValidatedInput implements InputInterface
         return $this;
     }
 
-    /**
-     * @return FilterChain
-     */
     public function getFilterChain(): FilterChain
     {
         return $this->filterChain;
     }
 
-    /**
-     * @param  FilterChain $filterChain
-     * @return self
-     */
     public function setFilterChain(FilterChain $filterChain): self
     {
         $this->filterChain = $filterChain;
@@ -272,7 +237,6 @@ class ChainValidatedInput implements InputInterface
      * Set the input value.
      *
      * @param  mixed $value
-     * @return self
      */
     public function setValue($value): self
     {
@@ -282,7 +246,6 @@ class ChainValidatedInput implements InputInterface
 
     /**
      * @param  mixed $context Extra "context" to provide the validator
-     * @return bool
      */
     public function isValid($context = null): bool
     {
@@ -297,10 +260,6 @@ class ChainValidatedInput implements InputInterface
         return null === $this->errorMessage ? $this->getValidatorChain()->getMessages() : [$this->errorMessage];
     }
 
-    /**
-     * @param InputInterface $input
-     * @return self
-     */
     public function merge(InputInterface $input): self
     {
         $this->setBreakOnFailure($input->breakOnFailure());
@@ -310,6 +269,7 @@ class ChainValidatedInput implements InputInterface
         if (! $input instanceof Input || $input->hasValue()) {
             $this->setValue($input->getRawValue());
         }
+
         $this->getFilterChain()->merge($input->getFilterChain());
         $this->getValidatorChain()->merge($input->getValidatorChain());
         return $this;

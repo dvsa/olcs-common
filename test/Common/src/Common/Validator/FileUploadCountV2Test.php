@@ -19,7 +19,7 @@ class FileUploadCountV2Test extends MockeryTestCase
      *
      * @dataProvider dataProviderTestIsValid
      */
-    public function testIsValid($expected, $min, $context)
+    public function testIsValid($expected, $min, $context): void
     {
         $sut = new FileUploadCountV2(['min' => $min]);
 

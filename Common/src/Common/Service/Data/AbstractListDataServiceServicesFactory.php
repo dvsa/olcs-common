@@ -11,11 +11,8 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
 class AbstractListDataServiceServicesFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
-     *
-     * @return AbstractListDataServiceServices
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): AbstractListDataServiceServices

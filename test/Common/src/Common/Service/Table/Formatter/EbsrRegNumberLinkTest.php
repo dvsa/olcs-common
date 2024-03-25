@@ -13,6 +13,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class EbsrRegNumberLinkTest extends MockeryTestCase
 {
     protected $urlHelper;
+
     protected $sut;
 
     protected function setUp(): void
@@ -25,10 +26,11 @@ class EbsrRegNumberLinkTest extends MockeryTestCase
     {
         m::close();
     }
+
     /**
      * Tests empty string returned if there's no variation number set
      */
-    public function testFormatWithNoId()
+    public function testFormatWithNoId(): void
     {
         $this->assertEquals('', $this->sut->format([]));
     }
@@ -40,7 +42,7 @@ class EbsrRegNumberLinkTest extends MockeryTestCase
      *
      * @param $data
      */
-    public function testFormat($data)
+    public function testFormat($data): void
     {
         $id = 1234;
         $regNo = 5678;

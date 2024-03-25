@@ -11,7 +11,7 @@ use LmcRbacMvc\Service\AuthorizationService;
 
 class CurrentUserFactoryTest extends TestCase
 {
-    public function testInvoke()
+    public function testInvoke(): void
     {
         $mockAuth = m::mock(AuthorizationService::class);
 

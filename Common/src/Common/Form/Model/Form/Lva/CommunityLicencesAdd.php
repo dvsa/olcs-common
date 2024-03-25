@@ -16,12 +16,12 @@ class CommunityLicencesAdd
      * @Form\Name("data")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\CommunityLicencesDataAdd")
      */
-    public $data = null;
+    public $data;
 
     /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\OkCancelActions")
      * @Form\Attributes({"class":"govuk-button-group"})
      */
-    public $formActions = null;
+    public $formActions;
 }

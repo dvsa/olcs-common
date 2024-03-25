@@ -21,7 +21,6 @@ abstract class AbstractControllerAwareAdapter extends AbstractAdapter implements
      * We override the parent method here, so we can pass in the controller
      *
      * @param string|null $lva
-     * @return AbstractLvaAdapter
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */

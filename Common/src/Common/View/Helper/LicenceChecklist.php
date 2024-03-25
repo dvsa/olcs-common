@@ -64,6 +64,7 @@ class LicenceChecklist extends AbstractHelper
                 $preparedData = $this->prepareSafetyDetails($data['safety']);
                 break;
         }
+
         return $preparedData;
     }
 
@@ -150,12 +151,14 @@ class LicenceChecklist extends AbstractHelper
                 ]
             ];
         }
+
         if (isset($data['companyName'])) {
             $businessDetailsData[] = [
                 ['value' => $data['organisationLabel'], 'header' => true],
                 ['value' => $data['companyName']]
             ];
         }
+
         if (isset($data['tradingNames'])) {
             $businessDetailsData[] = [
                 [
@@ -167,6 +170,7 @@ class LicenceChecklist extends AbstractHelper
                 ]
             ];
         }
+
         return $businessDetailsData;
     }
 
@@ -214,6 +218,7 @@ class LicenceChecklist extends AbstractHelper
                 ];
             }
         }
+
         if (isset($data['primaryNumber'])) {
             $addressesData[] = [
                 [
@@ -225,6 +230,7 @@ class LicenceChecklist extends AbstractHelper
                 ]
             ];
         }
+
         if (isset($data['secondaryNumber'])) {
             $addressesData[] = [
                 [
@@ -286,6 +292,7 @@ class LicenceChecklist extends AbstractHelper
                 ['value' => count($persons)]
             ];
         }
+
         return $peopleData;
     }
 
@@ -311,6 +318,7 @@ class LicenceChecklist extends AbstractHelper
                     'header' => true
                 ];
             }
+
             $vehicleData[] = $header;
             foreach ($vehicles as $vehicle) {
                 $row = [];
@@ -318,6 +326,7 @@ class LicenceChecklist extends AbstractHelper
                 if ($data['isGoods']) {
                     $row[] = ['value' => $vehicle['weight']];
                 }
+
                 $vehicleData[] = $row;
             }
         } else {
@@ -326,6 +335,7 @@ class LicenceChecklist extends AbstractHelper
                 ['value' => count($vehicles)]
             ];
         }
+
         return $vehicleData;
     }
 
@@ -368,6 +378,7 @@ class LicenceChecklist extends AbstractHelper
                 ['value' => count($users)]
             ];
         }
+
         return $userData;
     }
 
@@ -399,6 +410,7 @@ class LicenceChecklist extends AbstractHelper
                     'header' => true
                 ];
             }
+
             $ocData[] = $header;
             foreach ($operatingCentres as $oc) {
                 $row = [
@@ -408,6 +420,7 @@ class LicenceChecklist extends AbstractHelper
                 if ($data['canHaveTrailers']) {
                     $row[] = ['value' => $oc['trailers']];
                 }
+
                 $ocData[] = $row;
             }
         } else {
@@ -416,6 +429,7 @@ class LicenceChecklist extends AbstractHelper
                 ['value' => $data['totalOperatingCentres']]
             ];
         }
+
         return $ocData;
     }
 
@@ -489,6 +503,7 @@ class LicenceChecklist extends AbstractHelper
                 ['value' => $data['totalTransportManagers']]
             ];
         }
+
         return $tmData;
     }
 
@@ -530,6 +545,7 @@ class LicenceChecklist extends AbstractHelper
                 ['value' => $data['totalSafetyInspectors']]
             ];
         }
+
         return $siData;
     }
 
@@ -598,9 +614,9 @@ class LicenceChecklist extends AbstractHelper
                     'header' => true
                 ],
                 [
-                    'value' => !empty($data['tachographInsName'])
-                        ? $data['tachographInsName']
-                        : $this->translator->__invoke('continuations.safety-section.table.not-known'),
+                    'value' => empty($data['tachographInsName'])
+                        ? $this->translator->__invoke('continuations.safety-section.table.not-known')
+                        : $data['tachographInsName'],
                 ]
             ];
         }

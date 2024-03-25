@@ -12,6 +12,7 @@ class DashboardTmApplicationStatus implements FormatterPluginManagerInterface
     {
         $this->viewHelperManager = $viewHelperManager;
     }
+
     /**
      * Generate the HTML to display the TM Application status
      *

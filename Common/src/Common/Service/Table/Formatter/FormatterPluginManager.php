@@ -20,10 +20,9 @@ class FormatterPluginManager extends PluginManager
      * Throws exception if it is invalid.
      *
      * @param mixed $plugin
-     * @return void
      * @throws InvalidServiceException If plugin is invalid.
      */
-    public function validate($plugin)
+    public function validate($plugin): void
     {
         if (!($plugin instanceof $this->instanceOf)) {
             throw new InvalidServiceException(sprintf(

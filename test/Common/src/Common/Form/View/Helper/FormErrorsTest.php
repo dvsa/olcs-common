@@ -40,21 +40,21 @@ class FormErrorsTest extends MockeryTestCase
     /**
      * @test
      */
-    public function __invoke_IsCallable()
+    public function __invoke_IsCallable(): void
     {
         // Setup
         $serviceLocator = $this->setUpServiceLocator();
         $sut = $this->setUpSut($serviceLocator);
 
         // Assert
-        $this->assertIsCallable([$sut, '__invoke']);
+        $this->assertIsCallable(static fn(?\Laminas\Form\FormInterface $form = null, bool $ignoreValidation = false): string => $sut->__invoke($form, $ignoreValidation));
     }
 
     /**
      * @test
      * @depends __invoke_IsCallable
      */
-    public function __invoke_EscapesHtmlInMessage()
+    public function __invoke_EscapesHtmlInMessage(): void
     {
         // Setup
         $serviceLocator = $this->setUpServiceLocator();
@@ -73,7 +73,7 @@ class FormErrorsTest extends MockeryTestCase
      * @test
      * @depends __invoke_IsCallable
      */
-    public function __invoke_WithoutForm()
+    public function __invoke_WithoutForm(): void
     {
         $form = null;
 
@@ -86,7 +86,7 @@ class FormErrorsTest extends MockeryTestCase
      * @test
      * @depends __invoke_IsCallable
      */
-    public function __invoke_RenderWithoutMessages()
+    public function __invoke_RenderWithoutMessages(): void
     {
         $form = m::mock(\Laminas\Form\Form::class);
         $messages = [];
@@ -109,7 +109,7 @@ class FormErrorsTest extends MockeryTestCase
      * @test
      * @depends __invoke_IsCallable
      */
-    public function __invoke_RenderWithMessagesWithoutLabelOrAnchor()
+    public function __invoke_RenderWithMessagesWithoutLabelOrAnchor(): void
     {
         $messages = [
             'foo' => [
@@ -164,7 +164,7 @@ class FormErrorsTest extends MockeryTestCase
      * @test
      * @depends __invoke_IsCallable
      */
-    public function __invoke_RenderWithMessagesWithAnchor()
+    public function __invoke_RenderWithMessagesWithAnchor(): void
     {
         $messages = [
             'foo' => [
@@ -221,7 +221,7 @@ class FormErrorsTest extends MockeryTestCase
      * @test
      * @depends __invoke_IsCallable
      */
-    public function __invoke_RenderWithMessagesWithAnchor2()
+    public function __invoke_RenderWithMessagesWithAnchor2(): void
     {
         $messages = [
             'foo' => [
@@ -277,7 +277,7 @@ class FormErrorsTest extends MockeryTestCase
      * @test
      * @depends __invoke_IsCallable
      */
-    public function __invoke_RenderWithMessagesWithAnchor3()
+    public function __invoke_RenderWithMessagesWithAnchor3(): void
     {
         $messages = [
             'foo' => [
@@ -333,7 +333,7 @@ class FormErrorsTest extends MockeryTestCase
      * @test
      * @depends __invoke_IsCallable
      */
-    public function __invoke_RenderWithMessagesWithAnchorPostcodeSearch()
+    public function __invoke_RenderWithMessagesWithAnchorPostcodeSearch(): void
     {
         $messages = [
             'foo' => [
@@ -375,7 +375,7 @@ class FormErrorsTest extends MockeryTestCase
      * @test
      * @depends __invoke_IsCallable
      */
-    public function __invoke_RenderWithMessagesWithAnchorDateSelect()
+    public function __invoke_RenderWithMessagesWithAnchorDateSelect(): void
     {
         $messages = [
             'foo' => [
@@ -409,7 +409,7 @@ class FormErrorsTest extends MockeryTestCase
      * @test
      * @depends __invoke_IsCallable
      */
-    public function __invoke_RenderWithMessagesWithAnchorUsingName()
+    public function __invoke_RenderWithMessagesWithAnchorUsingName(): void
     {
         $messages = [
             'foo' => [
@@ -443,7 +443,7 @@ class FormErrorsTest extends MockeryTestCase
      * @testdox Test when a form element has been setup with a custom error message
      * @depends __invoke_IsCallable
      */
-    public function __invoke_RenderWithCustomErrorMessage()
+    public function __invoke_RenderWithCustomErrorMessage(): void
     {
         $messages = [
             'foo' => [
@@ -500,7 +500,7 @@ class FormErrorsTest extends MockeryTestCase
      * @test
      * @depends __invoke_IsCallable
      */
-    public function __invoke_RenderWithShortLabelAndAnchor()
+    public function __invoke_RenderWithShortLabelAndAnchor(): void
     {
         $messages = [
             'foo' => [
@@ -561,7 +561,7 @@ class FormErrorsTest extends MockeryTestCase
      * @test
      * @depends __invoke_IsCallable
      */
-    public function __invoke_RenderWithShortLabelWithoutAnchor()
+    public function __invoke_RenderWithShortLabelWithoutAnchor(): void
     {
         $messages = [
             'foo' => [
@@ -619,7 +619,7 @@ class FormErrorsTest extends MockeryTestCase
      * @testdox Test when a form element has been setup as a fieldset
      * @depends __invoke_IsCallable
      */
-    public function __invoke_RenderWithMessageObjectElementAsFieldset()
+    public function __invoke_RenderWithMessageObjectElementAsFieldset(): void
     {
         $messages = [
             'foo' => [
@@ -673,7 +673,7 @@ class FormErrorsTest extends MockeryTestCase
      * @test
      * @depends __invoke_IsCallable
      */
-    public function __invoke_RenderWithMessagesWithAnchorAndCustomTitle()
+    public function __invoke_RenderWithMessagesWithAnchorAndCustomTitle(): void
     {
         $messages = [
             'foo' => [
@@ -730,7 +730,7 @@ class FormErrorsTest extends MockeryTestCase
      * @test
      * @depends __invoke_IsCallable
      */
-    public function __invoke_RenderWithMessagesWithAnchorAndCustomTitleAndParagraph()
+    public function __invoke_RenderWithMessagesWithAnchorAndCustomTitleAndParagraph(): void
     {
         $messages = [
             'foo' => [
@@ -788,7 +788,7 @@ class FormErrorsTest extends MockeryTestCase
      * @test
      * @depends __invoke_IsCallable
      */
-    public function __invoke_RenderWithMessagesWithAnchorAndCustomParagraph()
+    public function __invoke_RenderWithMessagesWithAnchorAndCustomParagraph(): void
     {
         $messages = [
             'foo' => [
@@ -844,7 +844,7 @@ class FormErrorsTest extends MockeryTestCase
     /**
      * @inheritDoc
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->view = m::mock(\Laminas\View\Renderer\RendererInterface::class);
         $serviceLocator = $this->setUpServiceLocator();
@@ -858,9 +858,6 @@ class FormErrorsTest extends MockeryTestCase
         return (new FormErrorsFactory())->__invoke($serviceLocator, FormErrors::class);
     }
 
-    /**
-     * @param ServiceManager $serviceManager
-     */
     protected function setUpDefaultServices(ServiceManager $serviceManager)
     {
         $serviceManager->setService(TranslatorInterface::class, $this->setUpTranslator());
@@ -874,13 +871,12 @@ class FormErrorsTest extends MockeryTestCase
     protected function setUpTranslator(): MockInterface
     {
         $instance = $this->setUpMockService(Translator::class);
-        $instance->shouldReceive('translate')->andReturnUsing(fn($key) => $key . '-translated')->byDefault();
+        $instance->shouldReceive('translate')->andReturnUsing(static fn($key) => $key . '-translated')->byDefault();
         return $instance;
     }
 
     /**
      * @param string|null $name
-     * @return Element
      */
     protected function setUpElement(string $name = null): Element
     {

@@ -25,13 +25,13 @@ class LastLoginServiceTest extends MockeryTestCase
      */
     private $commandSender;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->commandSender = m::mock(CommandSender::class);
         $this->sut = new LastLoginService($this->commandSender);
     }
 
-    public function testCommandIsInstantiatedWithToken()
+    public function testCommandIsInstantiatedWithToken(): void
     {
         $this->commandSender
             ->shouldReceive('send')

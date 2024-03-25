@@ -40,29 +40,25 @@ abstract class AbstractTrailersController extends AbstractController
      * @var string $section
      */
     protected $section = 'trailers';
+
     protected string $baseRoute = 'lva-%s/trailers';
 
     private $isLongerSemiTrailersFeatureToggleEnabled;
 
     protected FormHelperService $formHelper;
+
     protected FlashMessengerHelperService $flashMessengerHelper;
+
     protected FormServiceManager $formServiceManager;
+
     protected ScriptFactory $scriptFactory;
+
     protected TableFactory $tableFactory;
+
     protected DateHelperService $dateHelper;
+
     protected QuerySender $querySender;
 
-    /**
-     * @param NiTextTranslation $niTextTranslationUtil
-     * @param AuthorizationService $authService
-     * @param FormHelperService $formHelper
-     * @param FormServiceManager $formServiceManager
-     * @param FlashMessengerHelperService $flashMessengerHelper
-     * @param TableFactory $tableFactory
-     * @param ScriptFactory $scriptFactory
-     * @param DateHelperService $dateHelper
-     * @param QuerySender $querySender
-     */
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
@@ -102,11 +98,7 @@ abstract class AbstractTrailersController extends AbstractController
 
         $result = $response->getResult();
 
-        if ($request->isPost()) {
-            $data = (array)$request->getPost();
-        } else {
-            $data = \Common\Data\Mapper\Lva\Trailers::mapFromResult($result);
-        }
+        $data = $request->isPost() ? (array)$request->getPost() : \Common\Data\Mapper\Lva\Trailers::mapFromResult($result);
 
         $form = $this->getForm($request, $this->getTable($result['trailers']));
         $form->setData($data);
@@ -114,14 +106,10 @@ abstract class AbstractTrailersController extends AbstractController
         if ($request->isPost()) {
             $crudAction = $this->getCrudAction([$data['table']]);
             $haveCrudAction = ($crudAction !== null);
-
-            if ($haveCrudAction) {
-                if ($this->isInternalReadOnly()) {
-                    return $this->handleCrudAction($crudAction);
-                }
-
-                $this->formHelper->disableValidation($form->getInputFilter());
+            if ($this->isInternalReadOnly()) {
+                return $this->handleCrudAction($crudAction);
             }
+            $this->formHelper->disableValidation($form->getInputFilter());
 
             if ($form->isValid()) {
                 $formData = (array)$form->getData();
@@ -136,11 +124,7 @@ abstract class AbstractTrailersController extends AbstractController
                 $response = $this->handleCommand($cmd);
 
                 if ($response->isOk()) {
-                    if ($haveCrudAction) {
-                        return $this->handleCrudAction($crudAction);
-                    }
-
-                    return $this->completeSection('trailers');
+                    return $this->handleCrudAction($crudAction);
                 }
 
                 if ($response->isServerError()) {
@@ -319,10 +303,8 @@ abstract class AbstractTrailersController extends AbstractController
      * Alter form
      *
      * @param Form $form Form
-     *
-     * @return void
      */
-    private function alterForm(Form $form)
+    private function alterForm(Form $form): void
     {
         if (!$this->isLongerSemiTrailersFeatureToggleEnabled()) {
             $this->formHelper->remove($form, 'data->longerSemiTrailer');
@@ -331,12 +313,10 @@ abstract class AbstractTrailersController extends AbstractController
 
     /**
      * Is longer semi-trailers feature toggle enabled
-     *
-     * @return bool
      */
     private function isLongerSemiTrailersFeatureToggleEnabled(): bool
     {
-        if (!isset($this->isLongerSemiTrailersFeatureToggleEnabled)) {
+        if ($this->isLongerSemiTrailersFeatureToggleEnabled === null) {
             $this->isLongerSemiTrailersFeatureToggleEnabled
                 = $this->querySender->featuresEnabled([FeatureToggle::LONGER_SEMI_TRAILERS]);
         }

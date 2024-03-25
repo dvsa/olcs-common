@@ -29,10 +29,6 @@ class FormErrors extends AbstractHelper
      */
     protected $messageFormatter;
 
-    /**
-     * @param FormElementMessageFormatter $messageFormatter
-     * @param TranslatorInterface $translator
-     */
     public function __construct(FormElementMessageFormatter $messageFormatter, TranslatorInterface $translator)
     {
         $this->messageFormatter = $messageFormatter;
@@ -49,9 +45,10 @@ class FormErrors extends AbstractHelper
      */
     public function __invoke(FormInterface $form = null, $ignoreValidation = false)
     {
-        if (!$form) {
+        if (!$form instanceof \Laminas\Form\FormInterface) {
             return $this;
         }
+
         $this->ignoreValidation = (bool) $ignoreValidation;
 
         return $this->render($form);
@@ -68,7 +65,7 @@ class FormErrors extends AbstractHelper
     {
         $messages = $form->getMessages();
 
-        if (empty($messages)) {
+        if ($messages === []) {
             return '';
         }
 
@@ -112,11 +109,7 @@ class FormErrors extends AbstractHelper
 
         foreach ($messages as $field => $message) {
             if ($fieldset instanceof Fieldset) {
-                if ($fieldset->has($field)) {
-                    $element = $fieldset->get($field);
-                } else {
-                    $element = $fieldset;
-                }
+                $element = $fieldset->has($field) ? $fieldset->get($field) : $fieldset;
             } else {
                 $element = $fieldset;
             }
@@ -137,10 +130,8 @@ class FormErrors extends AbstractHelper
     /**
      * Format a message
      *
-     * @param ElementInterface $element
      * @param string $message
      * @param mixed $messageKey
-     * @return string
      */
     protected function formatMessage(ElementInterface $element, $message, $messageKey): string
     {

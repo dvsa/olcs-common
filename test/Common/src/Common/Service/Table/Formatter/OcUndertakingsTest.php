@@ -22,7 +22,7 @@ class OcUndertakingsTest extends TestCase
     /**
      * @dataProvider dpFormatDataProvider
      */
-    public function testFormat($data, $conditions)
+    public function testFormat($data, $conditions): void
     {
         $this->assertEquals((new OcUndertakings())->format($data), $conditions);
     }

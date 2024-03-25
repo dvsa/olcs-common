@@ -20,7 +20,7 @@ class AbstractServiceFactoryTest extends MockeryTestCase
     /** @var  m\MockInterface | ContainerInterface */
     protected $mockSm;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = m::mock(AbstractServiceFactory::class)
             ->makePartial()
@@ -32,7 +32,7 @@ class AbstractServiceFactoryTest extends MockeryTestCase
     /**
      * @dataProvider dpTestCanCreate
      */
-    public function testCanCreate($requestedName, $expect)
+    public function testCanCreate($requestedName, $expect): void
     {
         static::assertEquals($expect, $this->sut->canCreate($this->mockSm, $requestedName));
     }
@@ -53,7 +53,7 @@ class AbstractServiceFactoryTest extends MockeryTestCase
         ];
     }
 
-    public function testInvokeUsingFactory()
+    public function testInvokeUsingFactory(): void
     {
         $className = 'unit_className';
 
@@ -65,7 +65,7 @@ class AbstractServiceFactoryTest extends MockeryTestCase
         static::assertInstanceOf(ServiceWithFactoryStub::class, $actual);
     }
 
-    public function testInvoke()
+    public function testInvoke(): void
     {
         $className = 'unit_className';
 

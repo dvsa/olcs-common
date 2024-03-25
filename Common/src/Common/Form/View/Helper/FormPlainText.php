@@ -19,7 +19,6 @@ use Laminas\Form\ElementInterface;
 class FormPlainText extends AbstractHelper
 {
     /**
-     * @param ElementInterface $element
      * @return mixed
      */
     public function __invoke(ElementInterface $element = null)
@@ -27,10 +26,6 @@ class FormPlainText extends AbstractHelper
         return $this->render($element);
     }
 
-    /**
-     * @param ElementInterface $element
-     * @return mixed
-     */
     public function render(ElementInterface $element): string
     {
         return $element->getValue() ?

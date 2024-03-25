@@ -14,13 +14,13 @@ class TaxiPhvContactDetails
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $id = null;
+    public $id;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\Attributes({"class":"long","id":""})
@@ -30,5 +30,5 @@ class TaxiPhvContactDetails
      * @Form\Type("Text")
      * @Form\Filter("Laminas\Filter\StringTrim")
      */
-    public $description = null;
+    public $description;
 }

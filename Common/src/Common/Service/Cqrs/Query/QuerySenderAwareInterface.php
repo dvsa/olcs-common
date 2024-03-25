@@ -16,8 +16,6 @@ interface QuerySenderAwareInterface
 {
     /**
      * Set query sender
-     *
-     * @param QuerySender $querySender
      */
     public function setQuerySender(QuerySender $querySender);
 

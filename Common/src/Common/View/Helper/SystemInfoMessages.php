@@ -15,10 +15,12 @@ use Laminas\View\Helper\AbstractHelper;
 class SystemInfoMessages extends AbstractHelper
 {
     public const HTML_BLOCK = '<div class="system-messages">%s</div>';
+
     public const HTML_ITEM = '<div class="system-messages__wrapper"><p>%s</p></div>';
 
     /** @var AnnotationBuilder */
     protected $annotationBuilder;
+
     /** @var QueryService */
     protected $queryService;
 

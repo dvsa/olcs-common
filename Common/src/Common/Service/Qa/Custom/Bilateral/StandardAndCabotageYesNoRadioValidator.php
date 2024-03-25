@@ -12,7 +12,6 @@ class StandardAndCabotageYesNoRadioValidator extends AbstractValidator
     /**
      * Create service instance
      *
-     * @param Radio $yesContentElement
      *
      * @return StandardAndCabotageYesNoRadioValidator
      */

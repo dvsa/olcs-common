@@ -19,20 +19,20 @@ class FormLabelFactoryTest extends MockeryTestCase
     /**
      * @test
      */
-    public function __invoke_IsCallable()
+    public function __invoke_IsCallable(): void
     {
         // Setup
         $sut = $this->setUpSut();
 
         // Assert
-        $this->assertIsCallable([$sut, '__invoke']);
+        $this->assertIsCallable(static fn(\Psr\Container\ContainerInterface $container, string $requestedName, ?array $options = null): \Common\Form\View\Helper\Extended\FormLabel => $sut->__invoke($container, $requestedName, $options));
     }
 
     /**
      * @test
      * @depends __invoke_IsCallable
      */
-    public function __invoke_ReturnsInstanceOfFormLabel()
+    public function __invoke_ReturnsInstanceOfFormLabel(): void
     {
         // Setup
         $serviceLocator = $this->setUpServiceLocator();
@@ -45,17 +45,11 @@ class FormLabelFactoryTest extends MockeryTestCase
         $this->assertInstanceOf(FormLabel::class, $result);
     }
 
-    /**
-     * @return FormLabelFactory
-     */
     protected function setUpSut(): FormLabelFactory
     {
         return new FormLabelFactory();
     }
 
-    /**
-     * @param ServiceManager $serviceManager
-     */
     protected function setUpDefaultServices(ServiceManager $serviceManager)
     {
         $serviceManager->setService(TranslatorInterface::class, $this->setUpMockService(TranslatorInterface::class));

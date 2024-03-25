@@ -21,7 +21,7 @@ class YesNoWithMarkupForNoPopulatorTest extends MockeryTestCase
     /**
      * @dataProvider dpPopulate
      */
-    public function testPopulate($yesNo, $expectedYesNoValue)
+    public function testPopulate($yesNo, $expectedYesNoValue): void
     {
         $notSelectedMessage = 'not.selected.message';
 

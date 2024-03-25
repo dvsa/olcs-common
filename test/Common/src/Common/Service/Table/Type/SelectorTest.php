@@ -15,9 +15,10 @@ use Common\Service\Table\Type\Selector;
 class SelectorTest extends MockeryTestCase
 {
     protected $sut;
+
     protected $table;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->table = m::mock();
         $this->table->shouldIgnoreMissing();
@@ -28,7 +29,7 @@ class SelectorTest extends MockeryTestCase
     /**
      * @group checkboxTest
      */
-    public function testRender()
+    public function testRender(): void
     {
         $fieldset = 'table';
         $data = [
@@ -52,7 +53,7 @@ class SelectorTest extends MockeryTestCase
      *
      * @group checkboxTest
      */
-    public function testRenderWithDisabledAttribute()
+    public function testRenderWithDisabledAttribute(): void
     {
         $fieldset = 'table';
         $data = [
@@ -80,7 +81,7 @@ class SelectorTest extends MockeryTestCase
     /**
      * @group checkboxTest
      */
-    public function testRenderWithoutFieldet()
+    public function testRenderWithoutFieldet(): void
     {
         $fieldset = null;
         $data = [
@@ -102,7 +103,7 @@ class SelectorTest extends MockeryTestCase
     /**
      * @group checkboxTest
      */
-    public function testRenderWithDataAttributes()
+    public function testRenderWithDataAttributes(): void
     {
         $fieldset = null;
         $data = [
@@ -131,7 +132,7 @@ class SelectorTest extends MockeryTestCase
      *
      * @group checkboxTest
      */
-    public function testRenderWithDataAttributesArray()
+    public function testRenderWithDataAttributesArray(): void
     {
         $fieldset = null;
         $data = [
@@ -158,7 +159,7 @@ class SelectorTest extends MockeryTestCase
     /**
      * @group checkboxTest
      */
-    public function testRenderWithDataIdxSet()
+    public function testRenderWithDataIdxSet(): void
     {
         $fieldset = null;
         $data = [
@@ -185,11 +186,11 @@ class SelectorTest extends MockeryTestCase
      * @group checkboxTest
      * @dataProvider disabledCallbackProvider
      */
-    public function testRenderWithDisabledCallback($row, $expected)
+    public function testRenderWithDisabledCallback($row, $expected): void
     {
         $fieldset = 'table';
         $column = [
-            'disabled-callback' => fn($row) => $row['isExpiredForLicence']
+            'disabled-callback' => static fn($row) => $row['isExpiredForLicence']
         ];
 
         $this->table
@@ -206,7 +207,7 @@ class SelectorTest extends MockeryTestCase
      * @test
      * @group tableSelectorAriaSupport
      */
-    public function render_WithAriaAttribute_LiteralStringDefinition_Single()
+    public function render_WithAriaAttribute_LiteralStringDefinition_Single(): void
     {
         $column = [
             'aria-attributes' => [
@@ -227,7 +228,7 @@ class SelectorTest extends MockeryTestCase
      * @depends render_WithAriaAttribute_LiteralStringDefinition_Single
      * @group tableSelectorAriaSupport
      */
-    public function render_WithAriaAttribute_LiteralStringDefinition_Multiple()
+    public function render_WithAriaAttribute_LiteralStringDefinition_Multiple(): void
     {
         $column = [
             'aria-attributes' => [
@@ -249,11 +250,11 @@ class SelectorTest extends MockeryTestCase
      * @test
      * @group tableSelectorAriaSupport
      */
-    public function render_WithAriaAttribute_AsCallback()
+    public function render_WithAriaAttribute_AsCallback(): void
     {
         $column = [
             'aria-attributes' => [
-                'label' => fn() => 'Test translated string'
+                'label' => static fn() => 'Test translated string'
             ]
         ];
 
@@ -270,7 +271,7 @@ class SelectorTest extends MockeryTestCase
      * @depends render_WithAriaAttribute_AsCallback
      * @group tableSelectorAriaSupport
      */
-    public function render_WithAriaAttribute_AsCallback_TranslatorIsPassedToCallable()
+    public function render_WithAriaAttribute_AsCallback_TranslatorIsPassedToCallable(): void
     {
         $translatorMock = m::mock(Translator::class);
         $this->table
@@ -295,7 +296,7 @@ class SelectorTest extends MockeryTestCase
      * @depends render_WithAriaAttribute_AsCallback
      * @group tableSelectorAriaSupport
      */
-    public function render_WithAriaAttribute_AsCallback_DataIsPassedToCallable()
+    public function render_WithAriaAttribute_AsCallback_DataIsPassedToCallable(): void
     {
         $expectedData = ['id' => 7];
 
@@ -316,7 +317,7 @@ class SelectorTest extends MockeryTestCase
      * @test
      * @group tableSelectorAriaSupport
      */
-    public function render_WithAriaAttribute_HtmlIsEscaped()
+    public function render_WithAriaAttribute_HtmlIsEscaped(): void
     {
         $column = [
             'aria-attributes' => [

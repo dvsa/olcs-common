@@ -17,8 +17,6 @@ class CheckEcmtNeededFieldsetPopulator implements FieldsetPopulatorInterface
     /**
      * Create service instance
      *
-     * @param CheckboxFieldsetPopulator $checkboxFieldsetPopulator
-     * @param InfoIconAdder $infoIconAdder
      *
      * @return CheckEcmtNeededFieldsetPopulator
      */
@@ -32,10 +30,8 @@ class CheckEcmtNeededFieldsetPopulator implements FieldsetPopulatorInterface
      * Populate the fieldset with elements based on the supplied options array
      *
      * @param mixed $form
-     * @param Fieldset $fieldset
-     * @param array $options
      */
-    public function populate($form, Fieldset $fieldset, array $options)
+    public function populate($form, Fieldset $fieldset, array $options): void
     {
         $this->checkboxFieldsetPopulator->populate($form, $fieldset, $options);
 

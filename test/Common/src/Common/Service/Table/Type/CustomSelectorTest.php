@@ -19,9 +19,10 @@ use Common\Service\Table\Type\CustomSelector;
 class CustomSelectorTest extends MockeryTestCase
 {
     protected $sut;
+
     protected $table;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->table = m::mock();
 
@@ -31,7 +32,7 @@ class CustomSelectorTest extends MockeryTestCase
     /**
      * @group checkboxTest
      */
-    public function testRender()
+    public function testRender(): void
     {
         $fieldset = 'table';
         $data = [
@@ -56,7 +57,7 @@ class CustomSelectorTest extends MockeryTestCase
      *
      * @group checkboxTest
      */
-    public function testRenderWithDisabledAttribute()
+    public function testRenderWithDisabledAttribute(): void
     {
         $fieldset = 'table';
         $data = [
@@ -65,7 +66,6 @@ class CustomSelectorTest extends MockeryTestCase
         ];
         $column = [
             'name' => 'someName',
-            'data-field' => 'someDataKey',
             'disableIfRowIsDisabled' => true,
             'data-field' => 'someDataKey'
         ];
@@ -88,7 +88,7 @@ class CustomSelectorTest extends MockeryTestCase
     /**
      * @group checkboxTest
      */
-    public function testRenderWithoutFieldet()
+    public function testRenderWithoutFieldet(): void
     {
         $fieldset = null;
         $data = [
@@ -115,7 +115,7 @@ class CustomSelectorTest extends MockeryTestCase
     /**
      * @group checkboxTest
      */
-    public function testRenderWithDataAttributes()
+    public function testRenderWithDataAttributes(): void
     {
         $fieldset = null;
         $data = [
@@ -144,7 +144,7 @@ class CustomSelectorTest extends MockeryTestCase
      *
      * @group checkboxTest
      */
-    public function testRenderWithDataAttributesArray()
+    public function testRenderWithDataAttributesArray(): void
     {
         $fieldset = null;
         $data = [

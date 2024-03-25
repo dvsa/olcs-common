@@ -36,10 +36,9 @@ class FileUploadCount extends \Laminas\Validator\AbstractValidator
      *
      * @param int $min Min number required
      *
-     * @return void
      * @throws \Laminas\Validator\Exception\InvalidArgumentException
      */
-    public function setMin($min)
+    public function setMin($min): void
     {
         if (!is_numeric($min)) {
             throw new \Laminas\Validator\Exception\InvalidArgumentException('Invalid options to validator provided');
@@ -71,6 +70,7 @@ class FileUploadCount extends \Laminas\Validator\AbstractValidator
         if ($this->getNumberOfFilesUploaded($context) >= $this->getMin()) {
             return true;
         }
+
         $this->error(self::TOO_FEW);
 
         return false;

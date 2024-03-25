@@ -22,7 +22,6 @@ class HtmlTranslated extends Html
     /**
      * Set the tokens to be translated
      *
-     * @param array $tokens
      * @return Element|ElementInterface
      */
     public function setTokens(array $tokens)

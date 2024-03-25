@@ -10,6 +10,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class DashboardTmApplicationStatusTest extends MockeryTestCase
 {
     protected $sut;
+
     protected $viewHelperManager;
 
     protected function setUp(): void
@@ -23,7 +24,7 @@ class DashboardTmApplicationStatusTest extends MockeryTestCase
         m::close();
     }
 
-    public function testFormat()
+    public function testFormat(): void
     {
         $tmHelper = m::mock();
         $this->viewHelperManager->shouldReceive('get')->with('transportManagerApplicationStatus')->once()->andReturn($tmHelper);

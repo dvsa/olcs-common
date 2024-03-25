@@ -23,6 +23,7 @@ class ReviewDetails
             SurrenderSection::DISC_SECTION
         );
         $discDetails->setHeading('licence.surrender.review.discs.heading');
+
         $operatorLicenceDetails = new SurrenderSection(
             $surrender,
             $urlHelper,
@@ -48,8 +49,9 @@ class ReviewDetails
             );
             $communityLicenceDetails->setHeading('licence.surrender.review.documents.communitylicence.heading');
             $communityLicenceDetails->setDisplayChangeLinkInHeading(true);
-            array_push($sections, $communityLicenceDetails->makeSection());
+            $sections[] = $communityLicenceDetails->makeSection();
         }
+
         return $sections;
     }
 }

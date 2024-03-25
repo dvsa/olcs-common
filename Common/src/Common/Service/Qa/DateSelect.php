@@ -13,7 +13,7 @@ class DateSelect extends LaminasDateSelect
     /**
      * {@inheritdoc}
      */
-    public function setValue($value)
+    public function setValue($value): void
     {
         // in order to redisplay an invalid date value back to the user, we have to convert it back to an array
         // otherwise, Laminas will throw an exception when trying to parse the string into a DateTime object

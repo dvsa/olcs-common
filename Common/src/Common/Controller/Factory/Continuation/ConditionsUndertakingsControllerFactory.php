@@ -13,10 +13,8 @@ use LmcRbacMvc\Service\AuthorizationService;
 class ConditionsUndertakingsControllerFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
-     * @return ConditionsUndertakingsController
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): ConditionsUndertakingsController
     {

@@ -23,9 +23,6 @@ class NoOfPermitsSingleFieldsetPopulator implements FieldsetPopulatorInterface
     /**
      * Create service instance
      *
-     * @param TranslationHelperService $translator
-     * @param NoOfPermitsBaseInsetTextGenerator $noOfPermitsBaseInsetTextGenerator
-     * @param HtmlAdder $htmlAdder
      *
      * @return NoOfPermitsSingleFieldsetPopulator
      */
@@ -43,11 +40,9 @@ class NoOfPermitsSingleFieldsetPopulator implements FieldsetPopulatorInterface
      * Populate the fieldset with elements based on the supplied options array
      *
      * @param mixed $form
-     * @param Fieldset $fieldset
-     * @param array $options
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function populate($form, Fieldset $fieldset, array $options)
+    public function populate($form, Fieldset $fieldset, array $options): void
     {
         $emissionsCategory = $options['emissionsCategories'][0];
         $emissionsCategoryType = $emissionsCategory['type'];

@@ -9,7 +9,6 @@ class BaseQaForm extends Form
     /**
      * Allow validators to run by filling in missing keys in input data
      *
-     * @param array $data
      *
      * @return $data
      */
@@ -24,6 +23,7 @@ class BaseQaForm extends Form
             if (!array_key_exists($fieldsetName, $data[self::QA_FIELDSET_NAME])) {
                 $data[self::QA_FIELDSET_NAME][$fieldsetName] = [];
             }
+
             foreach ($fieldset->getElements() as $element) {
                 $elementName = $element->getName();
                 if (!array_key_exists($elementName, $data[self::QA_FIELDSET_NAME][$fieldsetName])) {

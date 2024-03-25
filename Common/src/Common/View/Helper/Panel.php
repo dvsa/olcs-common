@@ -15,11 +15,6 @@ class Panel extends AbstractHelper
 
     /**
      * Renders a GOV UK Panel.
-     *
-     * @param string $type
-     * @param string $title
-     * @param string $body
-     * @return string
      */
     public function __invoke(string $type, string $title, string $body = ''): string
     {

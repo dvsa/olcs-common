@@ -13,9 +13,10 @@ class VehicleSearchTraitStub
     use VehicleSearchTrait;
 
     public $baseRoute;
+
     public $lva;
 
-    public function callAddRemovedVehiclesActions($filters, TableBuilder $table)
+    public function callAddRemovedVehiclesActions($filters, TableBuilder $table): void
     {
         $this->addRemovedVehiclesActions($filters, $table);
     }

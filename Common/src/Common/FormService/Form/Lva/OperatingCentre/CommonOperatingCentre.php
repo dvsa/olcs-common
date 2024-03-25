@@ -13,6 +13,7 @@ use Laminas\Http\Request;
  */
 class CommonOperatingCentre
 {
+    public $formHelper;
     public function __construct(FormHelperService $formHelper)
     {
         $this->formHelper = $formHelper;

@@ -13,7 +13,7 @@ use Laminas\Validator\NotEmpty;
  */
 class VehicleVrmTest extends MockeryTestCase
 {
-    public function testValidators()
+    public function testValidators(): void
     {
         /** @var VehicleVrm $sut */
         $sut = m::mock(VehicleVrm::class)->makePartial()

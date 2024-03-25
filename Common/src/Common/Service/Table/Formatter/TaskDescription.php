@@ -20,20 +20,18 @@ use Laminas\Router\Http\TreeRouteStack;
 class TaskDescription implements FormatterPluginManagerInterface
 {
     private TreeRouteStack $router;
+
     private Request $request;
+
     private UrlHelperService $urlHelper;
 
-    /**
-     * @param TreeRouteStack   $router
-     * @param Request          $request
-     * @param UrlHelperService $urlHelper
-     */
     public function __construct(TreeRouteStack $router, Request $request, UrlHelperService $urlHelper)
     {
         $this->router = $router;
         $this->request = $request;
         $this->urlHelper = $urlHelper;
     }
+
     /**
      * Format a task description
      *
@@ -87,6 +85,7 @@ class TaskDescription implements FormatterPluginManagerInterface
                 $routeParams = [];
                 break;
         }
+
         $url = $this->urlHelper->fromRoute(
             'task_action',
             array_merge(

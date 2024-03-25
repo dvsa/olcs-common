@@ -18,8 +18,11 @@ use LmcRbacMvc\Service\AuthorizationService;
 class VariationOperatingCentres extends AbstractOperatingCentres
 {
     protected AuthorizationService $authService;
+
     protected $tableBuilder;
+
     protected FormServiceManager $formServiceLocator;
+
     private TranslationHelperService $translator;
 
     public function __construct(
@@ -35,6 +38,7 @@ class VariationOperatingCentres extends AbstractOperatingCentres
         $this->translator = $translator;
         parent::__construct($formHelper);
     }
+
     protected $mainTableConfigName = 'lva-variation-operating-centres';
 
     protected function alterForm(Form $form, array $params)

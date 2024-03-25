@@ -13,12 +13,12 @@ class DateSelectTest extends \PHPUnit\Framework\TestCase
     /** @var  DateSelect */
     private $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = new DateSelect('foo');
     }
 
-    public function testGetInputSpecification()
+    public function testGetInputSpecification(): void
     {
         $this->sut->setOptions([]);
 
@@ -52,7 +52,7 @@ class DateSelectTest extends \PHPUnit\Framework\TestCase
         static::assertEquals('date-hint', $this->sut->getOption('hint'));
     }
 
-    public function testSetOptionsMinAndMaxYear()
+    public function testSetOptionsMinAndMaxYear(): void
     {
         $options = [
             'max_year_delta' => '+5',
@@ -67,7 +67,7 @@ class DateSelectTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(($year - 5), $this->sut->getMinYear());
     }
 
-    public function testSetOptionsMaxYear()
+    public function testSetOptionsMaxYear(): void
     {
         $options = [
             'max_year_delta' => '+5'
@@ -81,7 +81,7 @@ class DateSelectTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($year, $this->sut->getMinYear());
     }
 
-    public function testSetOptionsMinYear()
+    public function testSetOptionsMinYear(): void
     {
         $options = [
             'min_year_delta' => '-5'
@@ -95,7 +95,7 @@ class DateSelectTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(($year - 5), $this->sut->getMinYear());
     }
 
-    public function testSetOptionsDefaultDateNow()
+    public function testSetOptionsDefaultDateNow(): void
     {
         $options = [
             'hint' => 'unit_Hint',
@@ -108,7 +108,7 @@ class DateSelectTest extends \PHPUnit\Framework\TestCase
         static::assertEquals('unit_Hint', $this->sut->getOption('hint'));
     }
 
-    public function testSetOptionsDefaultDate()
+    public function testSetOptionsDefaultDate(): void
     {
         $options = [
             'default_date' => '+3 months'

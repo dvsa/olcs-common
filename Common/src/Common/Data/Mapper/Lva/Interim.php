@@ -87,15 +87,13 @@ class Interim implements MapperInterface
      * @param Form                        $form   form
      * @param array                       $errors array of errors
      * @param FlashMessengerHelperService $fm     flash messenger
-     *
-     * @return void
      */
-    public static function mapFormErrors(Form $form, array $errors, FlashMessengerHelperService $fm)
+    public static function mapFormErrors(Form $form, array $errors, FlashMessengerHelperService $fm): void
     {
         $formMessages = [];
 
         if (isset($errors['reason'])) {
-            foreach ($errors['reason'] as $key => $message) {
+            foreach ($errors['reason'] as $message) {
                 $formMessages['data']['interimReason'][] = $message;
             }
 
@@ -103,7 +101,7 @@ class Interim implements MapperInterface
         }
 
         if (isset($errors['startDate'])) {
-            foreach ($errors['startDate'] as $key => $message) {
+            foreach ($errors['startDate'] as $message) {
                 $formMessages['data']['interimStart'][] = $message;
             }
 
@@ -111,7 +109,7 @@ class Interim implements MapperInterface
         }
 
         if (isset($errors['endDate'])) {
-            foreach ($errors['endDate'] as $key => $message) {
+            foreach ($errors['endDate'] as $message) {
                 $formMessages['data']['interimEnd'][] = $message;
             }
 
@@ -119,7 +117,7 @@ class Interim implements MapperInterface
         }
 
         if (isset($errors['authHgvVehicles'])) {
-            foreach ($errors['authHgvVehicles'] as $key => $message) {
+            foreach ($errors['authHgvVehicles'] as $message) {
                 $formMessages['data']['interimAuthHgvVehicles'][] = $message;
             }
 
@@ -127,7 +125,7 @@ class Interim implements MapperInterface
         }
 
         if (isset($errors['authLgvVehicles'])) {
-            foreach ($errors['authLgvVehicles'] as $key => $message) {
+            foreach ($errors['authLgvVehicles'] as $message) {
                 $formMessages['data']['interimAuthLgvVehicles'][] = $message;
             }
 
@@ -135,17 +133,15 @@ class Interim implements MapperInterface
         }
 
         if (isset($errors['authTrailers'])) {
-            foreach ($errors['authTrailers'] as $key => $message) {
+            foreach ($errors['authTrailers'] as $message) {
                 $formMessages['data']['interimAuthTrailers'][] = $message;
             }
 
             unset($errors['authTrailers']);
         }
 
-        if (!empty($errors)) {
-            foreach ($errors as $error) {
-                $fm->addCurrentErrorMessage($error);
-            }
+        foreach ($errors as $error) {
+            $fm->addCurrentErrorMessage($error);
         }
 
         $form->setMessages($formMessages);

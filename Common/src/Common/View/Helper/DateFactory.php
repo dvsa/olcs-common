@@ -8,11 +8,9 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
 class DateFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
      *
-     * @return Date
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): Date
     {

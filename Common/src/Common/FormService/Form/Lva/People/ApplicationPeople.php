@@ -16,6 +16,7 @@ class ApplicationPeople extends AbstractPeople
     protected $lva = 'application';
 
     protected FormHelperService $formHelper;
+
     protected AuthorizationService $authService;
 
     public function __construct(FormHelperService $formHelper, AuthorizationService $authService)

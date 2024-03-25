@@ -21,8 +21,11 @@ use Laminas\Router\Http\TreeRouteStack;
 class SlaTargetDate implements FormatterPluginManagerInterface
 {
     private TreeRouteStack $router;
+
     private Request $request;
+
     private UrlHelperService $urlHelper;
+
     private Date $dateFormatter;
 
     public function __construct(TreeRouteStack $router, Request $request, UrlHelperService $urlHelper, Date $dateFormatter)
@@ -32,6 +35,7 @@ class SlaTargetDate implements FormatterPluginManagerInterface
         $this->urlHelper = $urlHelper;
         $this->dateFormatter = $dateFormatter;
     }
+
     /**
      * Format an SlaTargetDate
      *
@@ -58,30 +62,26 @@ class SlaTargetDate implements FormatterPluginManagerInterface
                 true
             );
             return '<a href="' . $url . '" class="govuk-link js-modal-ajax">Not set</a>';
-        } else {
-            $url = $this->urlHelper->fromRoute(
-                $matchedRouteName . '/edit-sla',
-                [
-                    'entityType' => 'document',
-                    'entityId' => $data['id']
-                ],
-                [],
-                true
-            );
-
-            // if target date is not set, show not set but link to the record to edit
-            if (empty($data['targetDate'])) {
-                return '<a href="' . $url . '" class="govuk-link js-modal-ajax">Not set</a> ';
-            }
-
-            $statusHtml = '<span class="status red">Fail</span>';
-
-            if ($data['targetDate'] >= $data['sentDate']) {
-                $statusHtml = '<span class="status green">Pass</span>';
-            }
-            $targetDate = $this->dateFormatter->format($data, ['name' => 'targetDate']);
-
-            return '<a href="' . $url . '" class="govuk-link js-modal-ajax">' . $targetDate . '</a> ' . $statusHtml;
         }
+        $url = $this->urlHelper->fromRoute(
+            $matchedRouteName . '/edit-sla',
+            [
+                'entityType' => 'document',
+                'entityId' => $data['id']
+            ],
+            [],
+            true
+        );
+        // if target date is not set, show not set but link to the record to edit
+        if (empty($data['targetDate'])) {
+            return '<a href="' . $url . '" class="govuk-link js-modal-ajax">Not set</a> ';
+        }
+        $statusHtml = '<span class="status red">Fail</span>';
+        if ($data['targetDate'] >= $data['sentDate']) {
+            $statusHtml = '<span class="status green">Pass</span>';
+        }
+
+        $targetDate = $this->dateFormatter->format($data, ['name' => 'targetDate']);
+        return '<a href="' . $url . '" class="govuk-link js-modal-ajax">' . $targetDate . '</a> ' . $statusHtml;
     }
 }

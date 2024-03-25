@@ -23,9 +23,8 @@ class GenericVehiclesVehicle
      *
      * @param \Laminas\Form\Form $form
      * @param array $params
-     * @return \Laminas\Form\Form
      */
-    public function alterForm($form, $params)
+    public function alterForm($form, $params): void
     {
         if ($params['mode'] === 'edit') {
             $this->formHelper->disableElement($form, 'data->vrm');

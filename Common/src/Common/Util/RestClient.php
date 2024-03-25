@@ -54,7 +54,6 @@ class RestClient
     private ?string $authHeader = null;
 
     /**
-     * @param \Laminas\Uri\Http $url
      * @param array $options options passed to HttpClient
      * @param array $auth authentication username/password
      * @internal param \Common\Util\The $HttpUri URL of the resource that this client is meant to act on
@@ -81,7 +80,7 @@ class RestClient
             );
         }
 
-        if ($cookie === null) {
+        if (!$cookie instanceof \Laminas\Http\Header\Cookie) {
             $cookie = new Cookie();
         }
 
@@ -263,6 +262,7 @@ class RestClient
         if (null === $this->responseHelper) {
             $this->setResponseHelper(new ResponseHelper());
         }
+
         return $this->responseHelper;
     }
 
@@ -271,7 +271,7 @@ class RestClient
      *
      * @see RestClient::request()
      */
-    public function prepareRequest($method, $path, array $params = [])
+    public function prepareRequest($method, $path, array $params = []): void
     {
         $method = strtoupper($method);
 
@@ -280,6 +280,7 @@ class RestClient
 
         $acceptLanguage = $this->getAcceptLanguage();
         $acceptLanguage->addLanguage($this->getLanguage());
+
         $this->client->resetParameters(true);
         $this->client->setRequest($this->getClientRequest());
 
@@ -289,11 +290,12 @@ class RestClient
         if (!is_null($this->authHeader)) {
             $headers[] = $this->authHeader;
         }
+
         $this->client->setHeaders($headers);
 
         $this->client->setMethod($method);
 
-        if ($method == 'POST' || $method == 'PUT' || $method == 'PATCH') {
+        if ($method === 'POST' || $method === 'PUT' || $method === 'PATCH') {
             $this->client->setEncType('application/json');
             $this->client->setRawBody(json_encode($params));
         } else {
@@ -339,6 +341,7 @@ class RestClient
         } elseif ($args[0][0] !== '/') {
             $args[0] = '/' . $path;
         }
+
         return $args;
     }
 }

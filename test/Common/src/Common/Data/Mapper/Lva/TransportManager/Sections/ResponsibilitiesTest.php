@@ -11,15 +11,16 @@ use Mockery as m;
 class ResponsibilitiesTest extends MockeryTestCase
 {
     private $mockTranslator;
+
     private $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->mockTranslator = m::mock(TranslationHelperService::class);
         $this->sut = new Responsibilities($this->mockTranslator);
     }
 
-    public function testObjectPopulated()
+    public function testObjectPopulated(): void
     {
         $this->mockTranslator->shouldNotReceive(
             'translateReplace'

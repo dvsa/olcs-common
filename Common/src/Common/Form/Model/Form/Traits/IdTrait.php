@@ -18,5 +18,5 @@ trait IdTrait
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $id = null;
+    public $id;
 }

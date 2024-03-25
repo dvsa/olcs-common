@@ -37,22 +37,24 @@ use LmcRbacMvc\Service\AuthorizationService;
  */
 abstract class AbstractCommunityLicencesController extends AbstractController
 {
+    public $totActiveCommunityLicences;
     use Traits\CrudTableTrait;
 
     // See OLCS-16655, pagination is to be 50 per page only
     public const TABLE_RESULTS_PER_PAGE = 50;
 
     protected $section = 'community_licences';
+
     protected string $baseRoute = 'lva-%s/community_licences';
 
-    protected $officeCopy = null;
+    protected $officeCopy;
 
     private $licenceData;
 
     /**
      * @var int|null
      */
-    protected $totalActiveCommunityLicences = null;
+    protected $totalActiveCommunityLicences;
 
     protected $defaultFilters = [
         'status' => [
@@ -64,23 +66,19 @@ abstract class AbstractCommunityLicencesController extends AbstractController
     ];
 
     protected $filters = [];
+
     protected FormHelperService $formHelper;
+
     protected FlashMessengerHelperService $flashMessengerHelper;
+
     protected FormServiceManager $formServiceManager;
+
     protected ScriptFactory $scriptFactory;
+
     protected AnnotationBuilder $transferAnnotationBuilder;
+
     protected CommandService $commandService;
 
-    /**
-     * @param NiTextTranslation $niTextTranslationUtil
-     * @param AuthorizationService $authService
-     * @param FormHelperService $formHelper
-     * @param FlashMessengerHelperService $flashMessengerHelper
-     * @param FormServiceManager $formServiceManager
-     * @param ScriptFactory $scriptFactory
-     * @param AnnotationBuilder $transferAnnotationBuilder
-     * @param CommandService $commandService
-     */
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
@@ -154,7 +152,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController
     /**
      * Alter form for goods or psv
      */
-    private function alterFormForGoodsOrPsv(Form $form)
+    private function alterFormForGoodsOrPsv(Form $form): void
     {
         if ($this->getGoodsOrPsv() == RefData::LICENCE_CATEGORY_PSV) {
             $activeLicencesElement = $form->get('data')->get('totalActiveCommunityLicences');
@@ -190,7 +188,6 @@ abstract class AbstractCommunityLicencesController extends AbstractController
     /**
      * Return the data associated with the current application from the array returned by the call to the Licence query
      *
-     * @param array $licence
      *
      * @return array
      */
@@ -358,6 +355,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController
         if ($officeCopy) {
             $table->removeAction('office-licence-add');
         }
+
         if (
             !$this->checkTableForLicences(
                 $table,
@@ -371,6 +369,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController
         ) {
             $table->removeAction('void');
         }
+
         if (
             !$this->checkTableForLicences(
                 $table,
@@ -382,6 +381,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController
         ) {
             $table->removeAction('restore');
         }
+
         if (!$this->checkTableForLicences($table, [RefData::COMMUNITY_LICENCE_STATUS_ACTIVE])) {
             $table->removeAction('stop');
             $table->removeAction('reprint');
@@ -406,6 +406,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController
                 return true;
             }
         }
+
         return false;
     }
 
@@ -428,6 +429,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController
             ];
             $dto = ApplicationCreateOfficeCopy::create($create);
         }
+
         return $this->processDto($dto, 'internal.community_licence.office_copy_created');
     }
 
@@ -486,9 +488,11 @@ abstract class AbstractCommunityLicencesController extends AbstractController
                     ];
                     $dto = ApplicationCreateCommunityLic::create($create);
                 }
+
                 return $this->processDto($dto, 'internal.community_licence.licences_created');
             }
         }
+
         return $this->render($view);
     }
 
@@ -529,6 +533,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController
                 'internal.community_licence.licences_annulled'
             );
         }
+
         return $this->redirectToIndex();
     }
 
@@ -549,6 +554,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController
             $view->setTemplate('partials/form');
             return $this->render($view);
         }
+
         if (!$this->isButtonPressed('cancel')) {
             $restore = [
                 'licence' => $this->getLicenceId(),
@@ -556,6 +562,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController
             ];
             return $this->processDto(RestoreDto::create($restore), 'internal.community_licence.licences_restored');
         }
+
         return $this->redirectToIndex();
     }
 
@@ -569,6 +576,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController
         if ($this->isButtonPressed('cancel')) {
             return $this->redirectToIndex();
         }
+
         /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
@@ -584,7 +592,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController
             if ($form->isValid()) {
                 $formattedData = $form->getData();
                 $type = $formattedData['data']['type'] === 'N' ? 'withdrawal' : 'suspension';
-                $message = ($type == 'withdrawal') ? 'internal.community_licence.licences_withdrawn' :
+                $message = ($type === 'withdrawal') ? 'internal.community_licence.licences_withdrawn' :
                     'internal.community_licence.licences_suspended';
 
                 $stop = [
@@ -650,10 +658,13 @@ abstract class AbstractCommunityLicencesController extends AbstractController
                     $successMessage = $result['messages'][0];
                     $this->addSuccessMessage($successMessage);
                 }
+
                 return $this->redirectToIndex();
             }
+
             $this->displayErrors($response);
         }
+
         $this->placeholder()->setPlaceholder('contentTitle', 'Community licence suspension details');
 
         return $this->render($view);
@@ -715,6 +726,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController
         if ($response->isOk()) {
             $result = CommunityLicMapper::mapFromResult($response->getResult());
         }
+
         return $result;
     }
 
@@ -768,6 +780,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController
                 // If reprinting on an Application with an Interim, then need to pass application ID
                 $reprint['application'] = $this->getApplicationId();
             }
+
             return $this->processDto(ReprintDto::create($reprint), 'internal.community_licence.licences_reprinted');
         }
 
@@ -826,7 +839,6 @@ abstract class AbstractCommunityLicencesController extends AbstractController
     protected function sendCommand($dto)
     {
         $command = $this->transferAnnotationBuilder->createCommand($dto);
-        /** @var \Common\Service\Cqrs\Response $response */
         return $this->commandService->send($command);
     }
 

@@ -14,6 +14,10 @@ use LmcRbacMvc\Service\AuthorizationService;
  */
 class LicenceGoodsVehiclesTest extends MockeryTestCase
 {
+    /**
+     * @var \Mockery\LegacyMockInterface
+     */
+    public $authService;
     protected $sut;
 
     protected $formHelper;
@@ -22,7 +26,7 @@ class LicenceGoodsVehiclesTest extends MockeryTestCase
 
     protected $sm;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);
         $this->formHelper->shouldReceive('getServiceLocator')
@@ -33,7 +37,7 @@ class LicenceGoodsVehiclesTest extends MockeryTestCase
         $this->sut = new LicenceGoodsVehicles($this->formHelper, $this->authService, $this->formService);
     }
 
-    public function testGetForm()
+    public function testGetForm(): void
     {
         // Params
         $mockTable = m::mock(\Common\Service\Table\TableBuilder::class);

@@ -12,7 +12,6 @@ class FormattedTranslateableTextParametersGenerator
     /**
      * Create service instance
      *
-     * @param TranslateableTextParameterHandler $translateableTextParameterHandler
      *
      * @return FormattedTranslateableTextParametersGenerator
      */

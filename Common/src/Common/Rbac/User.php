@@ -10,11 +10,17 @@ use LmcRbacMvc\Identity\IdentityInterface;
 class User implements IdentityInterface
 {
     public const USER_TYPE_INTERNAL = 'internal';
+
     public const USER_TYPE_ANON = 'anon';
+
     public const USER_TYPE_LOCAL_AUTHORITY = 'local-authority';
+
     public const USER_TYPE_OPERATOR = 'operator';
+
     public const USER_TYPE_PARTNER = 'partner';
+
     public const USER_TYPE_TRANSPORT_MANAGER = 'transport-manager';
+
     public const USER_TYPE_NOT_IDENTIFIED = 'not-identified';
 
     /**
@@ -61,10 +67,8 @@ class User implements IdentityInterface
      * Set id.
      *
      * @param int $id id
-     *
-     * @return int
      */
-    public function setId($id)
+    public function setId($id): void
     {
         $this->id = (int) $id;
     }
@@ -83,10 +87,8 @@ class User implements IdentityInterface
      * Set pid.
      *
      * @param string $pid pid
-     *
-     * @return string
      */
-    public function setPid($pid)
+    public function setPid($pid): void
     {
         $this->pid = $pid;
     }
@@ -105,10 +107,8 @@ class User implements IdentityInterface
      * Set user type.
      *
      * @param string $userType user type
-     *
-     * @return string
      */
-    public function setUserType($userType)
+    public function setUserType($userType): void
     {
         $this->userType = $userType;
     }
@@ -127,10 +127,8 @@ class User implements IdentityInterface
      * Set username.
      *
      * @param string $username username
-     *
-     * @return string
      */
-    public function setUsername($username)
+    public function setUsername($username): void
     {
         $this->username = $username;
     }
@@ -149,10 +147,8 @@ class User implements IdentityInterface
      * Set Roles
      *
      * @param array $roles roles
-     *
-     * @return array
      */
-    public function setRoles($roles)
+    public function setRoles($roles): void
     {
         $this->roles = $roles;
     }
@@ -171,10 +167,8 @@ class User implements IdentityInterface
      * Set user data
      *
      * @param array $userData user data
-     *
-     * @return void
      */
-    public function setUserData($userData)
+    public function setUserData($userData): void
     {
         $this->userData = $userData;
     }
@@ -211,11 +205,6 @@ class User implements IdentityInterface
 
     public function hasRole($role)
     {
-        foreach ($this->getRoles() as $userRole) {
-            if ($role === $userRole) {
-                return true;
-            }
-        }
-        return false;
+        return in_array($role, $this->getRoles(), true);
     }
 }

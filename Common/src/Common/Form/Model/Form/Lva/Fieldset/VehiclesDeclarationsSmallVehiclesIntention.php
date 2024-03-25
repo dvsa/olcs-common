@@ -25,7 +25,7 @@ class VehiclesDeclarationsSmallVehiclesIntention
      * })
      * @Form\Type("\Laminas\Form\Element\Radio")
      */
-    public $psvOperateSmallVhl = null;
+    public $psvOperateSmallVhl;
 
     /**
      * @Form\Attributes({"id":"","class":"long"})
@@ -37,7 +37,7 @@ class VehiclesDeclarationsSmallVehiclesIntention
      * @Form\Validator("Common\Form\Elements\Validators\VehicleUndertakingsOperateSmallVehiclesValidator")
      * @Form\Type("Textarea")
      */
-    public $psvSmallVhlNotes = null;
+    public $psvSmallVhlNotes;
 
     /**
      * @Form\Attributes({
@@ -48,7 +48,7 @@ class VehiclesDeclarationsSmallVehiclesIntention
      * })
      * @Form\Type("Common\Form\Elements\Types\TermsBox")
      */
-    public $psvSmallVhlScotland = null;
+    public $psvSmallVhlScotland;
 
     /**
      * @Form\Attributes({
@@ -59,7 +59,7 @@ class VehiclesDeclarationsSmallVehiclesIntention
      * })
      * @Form\Type("Common\Form\Elements\Types\TermsBox")
      */
-    public $psvSmallVhlUndertakings = null;
+    public $psvSmallVhlUndertakings;
 
     /**
      * @Form\Attributes({"id":"","placeholder":""})
@@ -75,5 +75,5 @@ class VehiclesDeclarationsSmallVehiclesIntention
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      * @Form\Validator( "Common\Form\Elements\Validators\VehicleUndertakingsOperateSmallVehiclesAgreementValidator")
      */
-    public $psvSmallVhlConfirmation = null;
+    public $psvSmallVhlConfirmation;
 }

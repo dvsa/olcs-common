@@ -20,14 +20,11 @@ use Laminas\Router\Http\TreeRouteStack;
 class EventHistoryDescription implements FormatterPluginManagerInterface
 {
     private TreeRouteStack $router;
+
     private Request $request;
+
     private UrlHelperService $urlHelper;
 
-    /**
-     * @param TreeRouteStack   $router
-     * @param Request          $request
-     * @param UrlHelperService $urlHelper
-     */
     public function __construct(TreeRouteStack $router, Request $request, UrlHelperService $urlHelper)
     {
         $this->router = $router;
@@ -49,7 +46,7 @@ class EventHistoryDescription implements FormatterPluginManagerInterface
         $routeMatch = $this->router->match($this->request);
         $matchedRouteName = $routeMatch->getMatchedRouteName();
 
-        $entity = self::getEntityName($data);
+        $entity = $this->getEntityName($data);
         // special case for busReg!
         if ($entity === 'busReg') {
             $entity = 'busRegId';
@@ -69,11 +66,7 @@ class EventHistoryDescription implements FormatterPluginManagerInterface
             true
         );
 
-        if (isset($data['eventHistoryType']['description'])) {
-            $text = $data['eventHistoryType']['description'];
-        } else {
-            $text = '';
-        }
+        $text = $data['eventHistoryType']['description'] ?? '';
 
         return sprintf(
             '<a class="govuk-link js-modal-ajax" href="%s">%s</a>',
@@ -90,7 +83,7 @@ class EventHistoryDescription implements FormatterPluginManagerInterface
      * @return string Entity name
      * @throws \Exception
      */
-    private static function getEntityName($data)
+    private function getEntityName($data)
     {
         $possibleEntities = ['application', 'licence', 'busReg', 'transportManager', 'organisation', 'case', 'irhpApplication'];
 

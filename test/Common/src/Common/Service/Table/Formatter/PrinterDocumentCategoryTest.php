@@ -21,6 +21,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class PrinterDocumentCategoryTest extends MockeryTestCase
 {
     protected $urlHelper;
+
     protected $sut;
 
     protected function setUp(): void
@@ -33,6 +34,7 @@ class PrinterDocumentCategoryTest extends MockeryTestCase
     {
         m::close();
     }
+
     /**
      * Test formatter
      *
@@ -40,7 +42,7 @@ class PrinterDocumentCategoryTest extends MockeryTestCase
      * @param array $data
      * @param string $expected
      */
-    public function testFormat($data, $expected)
+    public function testFormat($data, $expected): void
     {
         $params = [
             'rule' => $data['id'],

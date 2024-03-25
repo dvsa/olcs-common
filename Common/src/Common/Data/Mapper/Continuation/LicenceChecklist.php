@@ -89,14 +89,17 @@ class LicenceChecklist
             $businessDetails['companyName'] = $organisation['name'];
             $businessDetails['organisationLabel'] = $organisationLabels[$organisationTypeId];
         }
+
         if ($organisationTypeId !== RefData::ORG_TYPE_OTHER) {
             $businessDetails['tradingNames'] = count($data['tradingNames']) !== 0
                 ? implode(', ', array_column($data['tradingNames'], 'name'))
                 : $translator->translate('continuations.business-details.trading-names.none-added');
         }
+
         if (in_array($organisationTypeId, $limitedCompanyTypes)) {
             $businessDetails['companyNumber'] = $organisation['companyOrLlpNo'];
         }
+
         return $businessDetails;
     }
 
@@ -113,19 +116,23 @@ class LicenceChecklist
         if (isset($licenceData['correspondenceCd']['address'])) {
             $addresses['correspondenceAddress'] = self::formatAddress($licenceData['correspondenceCd']['address']);
         }
+
         if (isset($licenceData['establishmentCd']['address'])) {
             $addresses['establishmentAddress'] = self::formatAddress($licenceData['establishmentCd']['address']);
         }
+
         if (isset($licenceData['correspondenceCd']['phoneContacts'])) {
             foreach ($licenceData['correspondenceCd']['phoneContacts'] as $pc) {
                 if ($pc['phoneContactType']['id'] === RefData::PHONE_TYPE_PRIMARY) {
                     $addresses['primaryNumber'] = $pc['phoneNumber'];
                 }
+
                 if ($pc['phoneContactType']['id'] === RefData::PHONE_TYPE_SECONDARY) {
                     $addresses['secondaryNumber'] = $pc['phoneNumber'];
                 }
             }
         }
+
         $addresses['showEstablishmentAddress'] = in_array(
             $licenceData['licenceType']['id'],
             [RefData::LICENCE_TYPE_STANDARD_NATIONAL, RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL]
@@ -134,6 +141,7 @@ class LicenceChecklist
         if (isset($licenceData['correspondenceCd']['emailAddress'])) {
             $addresses['correspondenceEmail'] = $licenceData['correspondenceCd']['emailAddress'];
         }
+
         return $addresses;
     }
 
@@ -150,10 +158,14 @@ class LicenceChecklist
         $outputAddress = '';
         array_walk(
             $fields,
-            function ($item) use ($inputAddress, &$outputAddress) {
-                if (isset($inputAddress[$item]) && !empty($inputAddress[$item])) {
-                    $outputAddress .= $inputAddress[$item] . ', ';
+            static function ($item) use ($inputAddress, &$outputAddress) {
+                if (!isset($inputAddress[$item])) {
+                    return;
                 }
+                if (empty($inputAddress[$item])) {
+                    return;
+                }
+                $outputAddress .= $inputAddress[$item] . ', ';
             }
         );
         $outputAddress = trim($outputAddress, ', ');
@@ -183,9 +195,10 @@ class LicenceChecklist
                 'birthDate' => self::formatDate($person['birthDate'])
             ];
         }
+
         usort(
             $people,
-            fn($a, $b) => strcmp($a['name'], $b['name'])
+            static fn($a, $b) => strcmp($a['name'], $b['name'])
         );
         return [
             'persons' => $people,
@@ -226,9 +239,10 @@ class LicenceChecklist
                 ]
             ];
         }
+
         usort(
             $peopleDetails,
-            fn($a, $b) => strcmp($a[0]['value'], $b[0]['value'])
+            static fn($a, $b) => strcmp($a[0]['value'], $b[0]['value'])
         );
 
         return [
@@ -256,9 +270,10 @@ class LicenceChecklist
                 'weight' => $licenceVehicle['vehicle']['platedWeight'] . 'kg',
             ];
         }
+
         usort(
             $vehicles,
-            fn($a, $b) => strcmp($a['vrm'], $b['vrm'])
+            static fn($a, $b) => strcmp($a['vrm'], $b['vrm'])
         );
 
         return [
@@ -298,11 +313,13 @@ class LicenceChecklist
                 // no need to translate, the same in Welsh
                 $row[] = ['value' => $licenceVehicle['vehicle']['platedWeight']  . 'kg'];
             }
+
             $vehicles[] = $row;
         }
+
         usort(
             $vehicles,
-            fn($a, $b) => strcmp($a[0]['value'], $b[0]['value'])
+            static fn($a, $b) => strcmp($a[0]['value'], $b[0]['value'])
         );
         return [
             'vehicles' => array_merge($header, $vehicles),
@@ -347,7 +364,7 @@ class LicenceChecklist
 
         usort(
             $userData,
-            fn($a, $b) => strcmp($a[0]['value'], $b[0]['value'])
+            static fn($a, $b) => strcmp($a[0]['value'], $b[0]['value'])
         );
         return [
             'users' => array_merge([$header], $userData),
@@ -381,9 +398,10 @@ class LicenceChecklist
                 'trailers' => $loc['noOfTrailersRequired'],
             ];
         }
+
         usort(
             $operatingCentres,
-            fn($a, $b) => strcmp($a['name'], $b['name'])
+            static fn($a, $b) => strcmp($a['name'], $b['name'])
         );
         $result = [
             'ocVehiclesColumnHeader' => $ocVehiclesColumnHeader,
@@ -455,11 +473,13 @@ class LicenceChecklist
             if ($canHaveTrailers) {
                 $row[] = ['value' => $loc['noOfTrailersRequired']];
             }
+
             $operatingCentres[] = $row;
         }
+
         usort(
             $operatingCentres,
-            fn($a, $b) => strcmp($a[0]['value'], $b[0]['value'])
+            static fn($a, $b) => strcmp($a[0]['value'], $b[0]['value'])
         );
         return [
             'operatingCentres' => array_merge($header, $operatingCentres),
@@ -495,9 +515,10 @@ class LicenceChecklist
                 'dob' => self::formatDate($person['birthDate']),
             ];
         }
+
         usort(
             $transportManagers,
-            fn($a, $b) => strcmp($a['name'], $b['name'])
+            static fn($a, $b) => strcmp($a['name'], $b['name'])
         );
         return [
             'transportManagers' => $transportManagers,
@@ -541,9 +562,10 @@ class LicenceChecklist
                 ['value' => self::formatDate($person['birthDate'])]
             ];
         }
+
         usort(
             $transportManagers,
-            fn($a, $b) => strcmp($a[0]['value'], $b[0]['value'])
+            static fn($a, $b) => strcmp($a[0]['value'], $b[0]['value'])
         );
         return [
             'transportManagers' => array_merge($header, $transportManagers),
@@ -578,9 +600,10 @@ class LicenceChecklist
                 'address' => implode(', ', [$address['addressLine1'], $address['town']])
             ];
         }
+
         usort(
             $safetyInspectors,
-            fn($a, $b) => strcmp($a['name'], $b['name'])
+            static fn($a, $b) => strcmp($a['name'], $b['name'])
         );
 
         $safetyInsVehicles = null;
@@ -595,6 +618,7 @@ class LicenceChecklist
                     : $translator->translate('continuations.safety-section.table.weeks')
                 );
         }
+
         if (!empty($data['safetyInsTrailers'])) {
             $safetyInsTrailers = $data['safetyInsTrailers']
                 . ' '
@@ -604,6 +628,7 @@ class LicenceChecklist
                     : $translator->translate('continuations.safety-section.table.weeks')
                 );
         }
+
         if ($data['safetyInsVaries'] !== null) {
             $safetyInsVaries = ($data['safetyInsVaries'] === 'Y')
                 ? $translator->translate('Yes')
@@ -660,9 +685,10 @@ class LicenceChecklist
                 ['value' => implode(', ', [$address['addressLine1'], $address['town']])]
             ];
         }
+
         usort(
             $safetyInspectors,
-            fn($a, $b) => strcmp($a[0]['value'], $b[0]['value'])
+            static fn($a, $b) => strcmp($a[0]['value'], $b[0]['value'])
         );
         return [
             'safetyInspectors' => array_merge($header, $safetyInspectors),
@@ -679,7 +705,7 @@ class LicenceChecklist
      */
     private static function formatDate($date)
     {
-        return !empty($date) ? date(Module::$dateFormat, strtotime($date)) : '';
+        return empty($date) ? '' : date(Module::$dateFormat, strtotime($date));
     }
 
     private static function mapUsers(array $data, $translator)
@@ -697,7 +723,7 @@ class LicenceChecklist
                 $user['permission'] = implode(
                     ',',
                     array_map(
-                        fn($role) => $translator->translate('role.'.$role['role']),
+                        static fn($role) => $translator->translate('role.'.$role['role']),
                         $userData['roles']
                     )
                 );
@@ -708,7 +734,7 @@ class LicenceChecklist
 
         usort(
             $users,
-            fn($a, $b) => strcmp($a['name'], $b['name'])
+            static fn($a, $b) => strcmp($a['name'], $b['name'])
         );
 
         return [

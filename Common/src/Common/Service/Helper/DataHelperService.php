@@ -42,7 +42,7 @@ class DataHelperService
     {
         $arrays = [];
 
-        for ($i = 0; $i < $count; $i++) {
+        for ($i = 0; $i < $count; ++$i) {
             $arrays[] = $array;
         }
 
@@ -83,7 +83,7 @@ class DataHelperService
         }
 
         if (isset($map[$section]['values'])) {
-            $data = array_merge($data, $map[$section]['values']);
+            return array_merge($data, $map[$section]['values']);
         }
 
         return $data;

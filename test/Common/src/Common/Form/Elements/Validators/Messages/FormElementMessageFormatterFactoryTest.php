@@ -19,15 +19,17 @@ use Psr\Container\ContainerInterface;
 class FormElementMessageFormatterFactoryTest extends MockeryTestCase
 {
     protected const VALIDATOR_MANAGER = 'ValidatorManager';
+
     protected const MESSAGE_KEY = 'MESSAGE KEY';
+
     protected const VALIDATOR_NAME = 'VALIDATOR NAME';
+
     protected const CONFIG_SERVICE = 'config';
+
     protected const VALIDATION_CONFIG_NAMESPACE = 'validation';
+
     protected const DEFAULT_MESSAGE_TEMPLATES_TO_REPLACE_VARIABLE = 'default_message_templates_to_replace';
 
-    /**
-     * @var FormElementMessageFormatterFactory
-     */
     protected FormElementMessageFormatterFactory $sut;
 
     public function testInvoke(): void

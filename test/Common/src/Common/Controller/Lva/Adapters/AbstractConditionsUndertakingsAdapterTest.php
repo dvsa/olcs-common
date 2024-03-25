@@ -12,9 +12,10 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class AbstractConditionsUndertakingsAdapterTest extends MockeryTestCase
 {
     protected $sut;
+
     protected $container;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->container = m::mock(ContainerInterface::class);
 
@@ -25,7 +26,7 @@ class AbstractConditionsUndertakingsAdapterTest extends MockeryTestCase
             ->shouldAllowMockingProtectedMethods();
     }
 
-    public function testAttachMainScripts()
+    public function testAttachMainScripts(): void
     {
         self::expectNotToPerformAssertions();
         $mockScript = m::mock();
@@ -38,17 +39,17 @@ class AbstractConditionsUndertakingsAdapterTest extends MockeryTestCase
         $this->sut->attachMainScripts();
     }
 
-    public function testCanEditRecord()
+    public function testCanEditRecord(): void
     {
         $this->assertTrue($this->sut->canEditRecord(1, 2));
     }
 
-    public function testGetTableName()
+    public function testGetTableName(): void
     {
         $this->assertEquals('lva-conditions-undertakings', $this->sut->getTableName());
     }
 
-    public function testAlterTable()
+    public function testAlterTable(): void
     {
         $table = m::mock(\Common\Service\Table\TableBuilder::class);
         $table->shouldReceive('removeAction')->with('restore')->andReturnNull();
@@ -56,7 +57,7 @@ class AbstractConditionsUndertakingsAdapterTest extends MockeryTestCase
         $this->assertNull($this->sut->alterTable($table));
     }
 
-    public function testProcessDataForSave()
+    public function testProcessDataForSave(): void
     {
         $id = 123;
         $data = [
@@ -76,7 +77,7 @@ class AbstractConditionsUndertakingsAdapterTest extends MockeryTestCase
         $this->assertEquals($expected, $return);
     }
 
-    public function testProcessDataForSaveWithOperatingCentre()
+    public function testProcessDataForSaveWithOperatingCentre(): void
     {
         $id = 123;
         $data = [

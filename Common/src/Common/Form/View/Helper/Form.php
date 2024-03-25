@@ -19,16 +19,14 @@ class Form extends \Laminas\Form\View\Helper\Form
      *
      * @param LaminasFormInterface $form            Form
      * @param bool              $includeFormTags Is include form tags
-     *
-     * @return string
      */
     public function render(LaminasFormInterface $form, $includeFormTags = true): string
     {
         if (method_exists($form, 'prepare')) {
             $form->prepare();
         }
-
-        $fieldsets = $elements = [];
+        $fieldsets = [];
+        $elements = [];
         $hiddenSubmitElement = '';
 
         /** @var \Laminas\View\Renderer\PhpRenderer $view */
@@ -51,9 +49,7 @@ class Form extends \Laminas\Form\View\Helper\Form
         /** @var \Laminas\Form\ElementInterface|FieldsetInterface $element */
         foreach ($form as $element) {
             if ($element instanceof FieldsetInterface) {
-                $canKeepEmptyFieldset = $element->hasAttribute('keepEmptyFieldset')
-                    ? (bool)$element->getAttribute('keepEmptyFieldset')
-                    : false;
+                $canKeepEmptyFieldset = $element->hasAttribute('keepEmptyFieldset') && (bool)$element->getAttribute('keepEmptyFieldset');
 
                 // do not display empty fieldsets as per OLCS-12318
                 if (!$element->count() && !$canKeepEmptyFieldset) {
@@ -68,12 +64,10 @@ class Form extends \Laminas\Form\View\Helper\Form
                 // Not the best method, but the table element is treated as a fieldset.
                 // So InputFilter does not set messages on isValid().
                 // Now the validation is done, we manipulate where the messages are shown.
-                if ($element->has('rows')) {
-                    if ($element->get('rows')->getMessages()) {
-                        $errors = $element->get('rows')->getMessages();
-                        $element->get('rows')->setMessages([]);
-                        $element->get('table')->setMessages($errors);
-                    }
+                if ($element->has('rows') && $element->get('rows')->getMessages()) {
+                    $errors = $element->get('rows')->getMessages();
+                    $element->get('rows')->setMessages([]);
+                    $element->get('table')->setMessages($errors);
                 }
 
                 $fieldsets[] = $view->addTags(

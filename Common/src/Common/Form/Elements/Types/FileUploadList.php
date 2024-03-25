@@ -30,10 +30,8 @@ class FileUploadList extends Fieldset
      *
      * @param array  $fileData Array of file data
      * @param object $url      UrlHelperService
-     *
-     * @return void
      */
-    public function setFiles($fileData = [], $url = null)
+    public function setFiles($fileData = [], $url = null): void
     {
         /** (VOL-2693) this code is used everywhere but we don't seem to be provided an array in all cases */
         if (!is_array($fileData)) {
@@ -52,8 +50,8 @@ class FileUploadList extends Fieldset
             $unit = 0;
 
             while ($size > 1024) {
-                $size = $size / 1024;
-                $unit++;
+                $size /= 1024;
+                ++$unit;
             }
 
             $file['size'] = round($size, 1) . $units[$unit];
@@ -99,6 +97,7 @@ class FileUploadList extends Fieldset
                     $fileItem->add($noPreview);
                 }
             }
+
             $this->add($fileItem);
         }
     }
@@ -112,13 +111,10 @@ class FileUploadList extends Fieldset
      */
     private function isPreviewableImage($file)
     {
-        if (in_array(
+        return in_array(
             strtolower(pathinfo($file['filename'], PATHINFO_EXTENSION)),
             $this->getPreviewableExtensions()
-        )) {
-            return true;
-        }
-        return false;
+        );
     }
 
     /**

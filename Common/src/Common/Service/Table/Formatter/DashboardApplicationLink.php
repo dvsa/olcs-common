@@ -19,6 +19,7 @@ class DashboardApplicationLink implements FormatterPluginManagerInterface
     {
         $this->urlHelper = $urlHelper;
     }
+
     /**
      * Format column value
      *

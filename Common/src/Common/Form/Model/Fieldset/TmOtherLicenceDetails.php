@@ -14,25 +14,25 @@ class TmOtherLicenceDetails
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $id = null;
+    public $id;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $redirectAction = null;
+    public $redirectAction;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $redirectId = null;
+    public $redirectId;
 
     /**
      * @Form\Attributes({"class":"medium","id":"licNo"})
@@ -46,7 +46,7 @@ class TmOtherLicenceDetails
      *     },
      * )
      */
-    public $licNo = null;
+    public $licNo;
 
     /**
      * @Form\Attributes({"id":"","placeholder":""})
@@ -59,7 +59,7 @@ class TmOtherLicenceDetails
      * })
      * @Form\Type("DynamicSelect")
      */
-    public $role = null;
+    public $role;
 
     /**
      * @Form\Attributes({"class":"long","id":"operatingCentres"})
@@ -73,7 +73,7 @@ class TmOtherLicenceDetails
      *     },
      * )
      */
-    public $operatingCentres = null;
+    public $operatingCentres;
 
     /**
      * @Form\Attributes({
@@ -86,7 +86,7 @@ class TmOtherLicenceDetails
      * @Form\Validator("Digits")
      * @Form\Type("Text")
      */
-    public $totalAuthVehicles = null;
+    public $totalAuthVehicles;
 
     /**
      * @Form\Attributes({
@@ -106,5 +106,5 @@ class TmOtherLicenceDetails
      * )
      * @Form\Type("Text")
      */
-    public $hoursPerWeek = null;
+    public $hoursPerWeek;
 }

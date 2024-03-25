@@ -18,7 +18,7 @@ class ReceivedAmountTest extends \PHPUnit\Framework\TestCase
 {
     protected $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = new Sut();
     }
@@ -26,7 +26,7 @@ class ReceivedAmountTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider isValidProvider
      */
-    public function testIsValid($value, $context, $expected)
+    public function testIsValid($value, $context, $expected): void
     {
         $this->assertEquals($expected, $this->sut->isValid($value, $context));
     }

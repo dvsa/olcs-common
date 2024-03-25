@@ -21,7 +21,7 @@ class HoursPerWeekTest extends \PHPUnit\Framework\TestCase
      *
      * @group hoursPerWeekType
      */
-    public function testGetMessages()
+    public function testGetMessages(): void
     {
         $element = new HoursPerWeek();
         $element->setMessages(['messages']);

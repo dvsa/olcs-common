@@ -15,6 +15,7 @@ use Common\Filter\DateTimeSelectNullifier;
 class DateCompare extends AbstractCompare
 {
     public const DATE_FORMAT = 'Y-m-d';
+
     public const DATETIME_FORMAT = 'Y-m-d H:i:s';
 
     /**
@@ -95,6 +96,7 @@ class DateCompare extends AbstractCompare
         if (isset($options['has_time'])) {
             $this->setHasTime($options['has_time']);
         }
+
         if (isset($options['allow_empty'])) {
             $this->setAllowEmpty($options['allow_empty']);
         }
@@ -109,7 +111,6 @@ class DateCompare extends AbstractCompare
      * or compareTo date is empty
      *
      * @param  mixed $value
-     * @param  array $context
      * @return bool
      */
     public function isValid($value, array $context = null)
@@ -117,6 +118,7 @@ class DateCompare extends AbstractCompare
         if (empty($value) && $this->getAllowEmpty()) {
             return true;
         }
+
         if (empty($value)) {
             $this->error(self::INVALID_FIELD); //@TO~DO~
             return false;
@@ -127,6 +129,7 @@ class DateCompare extends AbstractCompare
         if (empty($compareToDate) && $this->getAllowEmpty()) {
             return true;
         }
+
         if ($compareToDate === false) {
             return false;
         }

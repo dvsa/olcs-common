@@ -16,18 +16,18 @@ class CommunityLicences
      * @Form\Name("data")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\CommunityLicencesData")
      */
-    public $data = null;
+    public $data;
 
     /**
      * @Form\Name("table")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
      */
-    public $table = null;
+    public $table;
 
     /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
      * @Form\Attributes({"class":"govuk-button-group"})
      */
-    public $formActions = null;
+    public $formActions;
 }

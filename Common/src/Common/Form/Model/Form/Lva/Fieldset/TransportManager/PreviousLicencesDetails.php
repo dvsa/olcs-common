@@ -14,13 +14,13 @@ class PreviousLicencesDetails
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $id = null;
+    public $id;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\Attributes({"class":"long","id":"lic-no"})
@@ -30,7 +30,7 @@ class PreviousLicencesDetails
      * @Form\Filter("Laminas\Filter\StringTrim")
      * @Form\Validator("Laminas\Validator\StringLength", options={"min":1,"max":18})
      */
-    public $licNo = null;
+    public $licNo;
 
     /**
      * @Form\Attributes({"class":"long","id":"holderName"})
@@ -40,5 +40,5 @@ class PreviousLicencesDetails
      * @Form\Filter("Laminas\Filter\StringTrim")
      * @Form\Validator("Laminas\Validator\StringLength", options={"min":1,"max":90})
      */
-    public $holderName = null;
+    public $holderName;
 }

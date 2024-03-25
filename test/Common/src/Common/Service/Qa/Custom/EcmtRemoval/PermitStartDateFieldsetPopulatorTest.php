@@ -13,7 +13,7 @@ use Laminas\Form\Form;
 
 class PermitStartDateFieldsetPopulatorTest extends MockeryTestCase
 {
-    public function testPopulate()
+    public function testPopulate(): void
     {
         $requestedDate = '2020-03-15';
         $dateMustBeBefore = '2020-05-01';
@@ -30,8 +30,7 @@ class PermitStartDateFieldsetPopulatorTest extends MockeryTestCase
 
         $fieldset = m::mock(Fieldset::class);
 
-        $expectedMarkup = '<div class="govuk-hint">Choose any date up to 60 days ahead.<br>' .
-            'For example, 10 12 2019.</div>';
+        $expectedMarkup = '<div class="govuk-hint">Choose any date up to 60 days ahead.<br>For example, 10 12 2019.</div>';
 
         $htmlAdder = m::mock(HtmlAdder::class);
         $htmlAdder->shouldReceive('add')

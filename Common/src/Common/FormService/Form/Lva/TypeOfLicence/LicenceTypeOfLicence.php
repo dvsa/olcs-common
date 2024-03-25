@@ -13,7 +13,9 @@ use LmcRbacMvc\Service\AuthorizationService;
 class LicenceTypeOfLicence extends AbstractTypeOfLicence
 {
     protected FormHelperService $formHelper;
+
     protected AuthorizationService $authService;
+
     protected FormServiceManager $formServiceLocator;
 
     public function __construct(FormHelperService $formHelper, AuthorizationService $authService, FormServiceManager $formServiceLocator)
@@ -22,6 +24,7 @@ class LicenceTypeOfLicence extends AbstractTypeOfLicence
         $this->authService = $authService;
         $this->formServiceLocator = $formServiceLocator;
     }
+
     protected function alterForm(Form $form, $params = [])
     {
         parent::alterForm($form, $params);

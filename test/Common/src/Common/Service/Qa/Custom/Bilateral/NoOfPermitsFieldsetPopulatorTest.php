@@ -16,7 +16,7 @@ use Laminas\Form\Form;
  */
 class NoOfPermitsFieldsetPopulatorTest extends MockeryTestCase
 {
-    public function testPopulate()
+    public function testPopulate(): void
     {
         $text1Name = 'text1_name';
         $text1Label = 'text 1 label';

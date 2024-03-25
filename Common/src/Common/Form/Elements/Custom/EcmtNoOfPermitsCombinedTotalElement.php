@@ -21,10 +21,7 @@ class EcmtNoOfPermitsCombinedTotalElement extends Hidden implements InputProvide
                 [
                     'name' => Callback::class,
                     'options' => [
-                        'callback' => [
-                            EcmtNoOfPermitsCombinedTotalValidator::class,
-                            'validateMax'
-                        ],
+                        'callback' => static fn($value, array $context, int $maxValue): bool => \Common\Form\Elements\Validators\EcmtNoOfPermitsCombinedTotalValidator::validateMax($value, $context, $maxValue),
                         'callbackOptions' => [$this->options['maxPermitted']],
                         'messages' => [
                             Callback::INVALID_VALUE => 'qanda.ecmt.number-of-permits.error.total-max-exceeded'
@@ -35,10 +32,7 @@ class EcmtNoOfPermitsCombinedTotalElement extends Hidden implements InputProvide
                 [
                     'name' => Callback::class,
                     'options' => [
-                        'callback' => [
-                            EcmtNoOfPermitsCombinedTotalValidator::class,
-                            'validateMin'
-                        ],
+                        'callback' => static fn($value, array $context): bool => \Common\Form\Elements\Validators\EcmtNoOfPermitsCombinedTotalValidator::validateMin($value, $context),
                         'messages' => [
                             Callback::INVALID_VALUE => 'qanda.ecmt.number-of-permits.error.total-min-exceeded'
                         ]

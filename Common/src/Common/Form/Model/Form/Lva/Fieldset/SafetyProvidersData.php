@@ -13,7 +13,7 @@ class SafetyProvidersData
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\Attributes({"id":"","placeholder":""})
@@ -27,5 +27,5 @@ class SafetyProvidersData
      * })
      * @Form\Type("\Laminas\Form\Element\Radio")
      */
-    public $isExternal = null;
+    public $isExternal;
 }

@@ -10,6 +10,7 @@ use Common\View\Helper\LanguageLink;
 
 class LanguageLinkTest extends MockeryTestCase
 {
+    public $languagePref;
     /**
      * @var LanguageLink
      */
@@ -17,7 +18,7 @@ class LanguageLinkTest extends MockeryTestCase
 
     protected $sm;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $languagePref = m::mock(Language::class);
         $this->languagePref = $languagePref;
@@ -27,7 +28,7 @@ class LanguageLinkTest extends MockeryTestCase
         $this->sm = new ServiceManager();
     }
 
-    public function testInvoke()
+    public function testInvoke(): void
     {
         $this->languagePref->shouldReceive('getPreference')
             ->andReturn(Language::OPTION_CY);
@@ -35,7 +36,7 @@ class LanguageLinkTest extends MockeryTestCase
         $this->assertEquals('<a class="govuk-footer__link" href="?lang=en">English</a>', $this->viewHelper->__invoke());
     }
 
-    public function testInvokeEnglish()
+    public function testInvokeEnglish(): void
     {
         $this->languagePref->shouldReceive('getPreference')
             ->andReturn(Language::OPTION_EN);

@@ -13,13 +13,13 @@ class GenericBusinessTypeAdapterTest extends MockeryTestCase
 
     protected $container;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->container = m::mock(ContainerInterface::class);
         $this->sut = new GenericBusinessTypeAdapter($this->container);
     }
 
-    public function testAlterFormIsNoOp()
+    public function testAlterFormIsNoOp(): void
     {
         $this->assertNull($this->sut->alterFormForOrganisation(m::mock(\Laminas\Form\Form::class), 123));
     }

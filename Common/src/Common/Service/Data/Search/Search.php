@@ -56,9 +56,6 @@ class Search extends AbstractData
     /**
      * Create service instance
      *
-     * @param TableFactory $tableService
-     * @param ViewHelperManager $viewHelperManager
-     * @param SearchTypeManager $searchTypeManager
      *
      * @return Search
      */
@@ -81,9 +78,6 @@ class Search extends AbstractData
         return $this->request;
     }
 
-    /**
-     * @param HttpRequest $request
-     */
     public function setRequest(HttpRequest $request)
     {
         $this->request = $request;
@@ -253,12 +247,10 @@ class Search extends AbstractData
 
     public function fetchFiltersFormObject()
     {
-        $form = $this->viewHelperManager
+        return $this->viewHelperManager
              ->get('placeholder')
              ->getContainer('searchFilter')
              ->getValue();
-
-        return $form;
     }
 
     public function populateFiltersFormOptions()
@@ -305,10 +297,8 @@ class Search extends AbstractData
 
     /**
      * Updates selected values of the selected filters.
-     *
-     * @return null
      */
-    public function updateDateRangeValuesFromPost()
+    public function updateDateRangeValuesFromPost(): void
     {
         $post = array_merge(
             (array)$this->getRequest()->getPost(),
@@ -316,13 +306,14 @@ class Search extends AbstractData
         );
 
         foreach ($this->getDateRanges() as $filterClass) {
-
             /** @var \Common\Data\Object\Search\Aggregations\DateRange\DateRangeAbstract $filterClass */
-            if (isset($post['dateRanges'][$filterClass->getKey()]) &&
-                !empty($post['dateRanges'][$filterClass->getKey()])
-            ) {
-                $filterClass->setValue($post['dateRanges'][$filterClass->getKey()]);
+            if (!isset($post['dateRanges'][$filterClass->getKey()])) {
+                continue;
             }
+            if (empty($post['dateRanges'][$filterClass->getKey()])) {
+                continue;
+            }
+            $filterClass->setValue($post['dateRanges'][$filterClass->getKey()]);
         }
     }
 
@@ -342,10 +333,8 @@ class Search extends AbstractData
 
     /**
      * Updates selected values of the selected filters.
-     *
-     * @return null
      */
-    public function updateFilterValuesFromForm()
+    public function updateFilterValuesFromForm(): void
     {
         $post = array_merge(
             (array)$this->getRequest()->getPost(),
@@ -353,9 +342,14 @@ class Search extends AbstractData
         );
 
         foreach ($this->getFilters() as $filterClass) {
-            if (isset($post['filter'][$filterClass->getKey()]) && $post['filter'][$filterClass->getKey()] !== '') {
-                $filterClass->setValue($post['filter'][$filterClass->getKey()]);
+            /** @var \Common\Data\Object\Search\Aggregations\Terms\TermsAbstract $filterClass */
+            if (!isset($post['filter'][$filterClass->getKey()])) {
+                continue;
             }
+            if (empty($post['filter'][$filterClass->getKey()])) {
+                continue;
+            }
+            $filterClass->setValue($post['filter'][$filterClass->getKey()]);
         }
     }
 
@@ -419,7 +413,7 @@ class Search extends AbstractData
      *
      * @param array $filters
      */
-    public function setFilterOptionValues(array $filterValues)
+    public function setFilterOptionValues(array $filterValues): void
     {
         foreach ($this->getFilters() as $filterClass) {
             /** @var $filterClass TermsAbstract */

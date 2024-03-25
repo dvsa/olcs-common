@@ -16,7 +16,7 @@ class FormFieldsetTest extends MockeryTestCase
     /**
      * @dataProvider dpTestInvoke
      */
-    public function testInvoke($element, $expect)
+    public function testInvoke($element, $expect): void
     {
         $mockFormCollection = m::mock(Helper\FormCollection::class);
         $mockFormCollection->shouldReceive('render')->andReturn('FORM_COLLECTION_RENDER_RESULT');

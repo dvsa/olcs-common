@@ -24,7 +24,6 @@ class ExternalConversationLink implements FormatterPluginManagerInterface
      * @param array $row Row data
      * @param array $column Column data
      *
-     * @return     string
      * @inheritdoc
      */
     public function format($row, $column = null): string

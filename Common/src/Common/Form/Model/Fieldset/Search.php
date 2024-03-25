@@ -15,7 +15,7 @@ class Search
      * @Form\Required(false)
      * @Form\Type("Text")
      */
-    public $licNo = null;
+    public $licNo;
 
     /**
      * @Form\Attributes({"class":"medium","id":""})
@@ -23,7 +23,7 @@ class Search
      * @Form\Required(false)
      * @Form\Type("Text")
      */
-    public $operatorName = null;
+    public $operatorName;
 
     /**
      * @Form\Attributes({"class":"short","id":""})
@@ -31,7 +31,7 @@ class Search
      * @Form\Required(false)
      * @Form\Type("Text")
      */
-    public $postcode = null;
+    public $postcode;
 
     /**
      * @Form\Attributes({"placeholder":"","class":"long"})
@@ -41,7 +41,7 @@ class Search
      * @Form\Filter("Laminas\Filter\StringTrim")
      * @Form\Validator("Laminas\Validator\StringLength", options={"min":2,"max":35})
      */
-    public $forename = null;
+    public $forename;
 
     /**
      * @Form\Attributes({"placeholder":"","class":"long"})
@@ -51,5 +51,5 @@ class Search
      * @Form\Filter("Laminas\Filter\StringTrim")
      * @Form\Validator("Laminas\Validator\StringLength", options={"min":2,"max":35})
      */
-    public $familyName = null;
+    public $familyName;
 }

@@ -14,7 +14,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class AbstractReviewServiceServicesTest extends MockeryTestCase
 {
-    public function testGetTranslationHelper()
+    public function testGetTranslationHelper(): void
     {
         $translationHelper = m::mock(TranslationHelperService::class);
 

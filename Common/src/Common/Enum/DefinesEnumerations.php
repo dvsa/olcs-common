@@ -8,8 +8,6 @@ interface DefinesEnumerations
 {
     /**
      * Gets the enumerations for an enum.
-     *
-     * @return array
      */
     public function getEnumerations(): array;
 }

@@ -16,10 +16,11 @@ use Common\Form\Elements\Validators\InspectionRequestDueDate;
  */
 class InspectionRequestDueDateValidatorTest extends \PHPUnit\Framework\TestCase
 {
+    public $validator;
     /**
      * Set up the validator
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->validator = new InspectionRequestDueDate();
     }
@@ -30,7 +31,7 @@ class InspectionRequestDueDateValidatorTest extends \PHPUnit\Framework\TestCase
      * @group inspectionRequestDueDateValidator
      * @dataProvider providerIsValid
      */
-    public function testIsValid($value, $context, $expected)
+    public function testIsValid($value, $context, $expected): void
     {
         $this->assertEquals($expected, $this->validator->isValid($value, $context));
     }

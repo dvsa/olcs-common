@@ -14,11 +14,11 @@ class DynamicMultiCheckboxTest extends MockeryTestCase
 {
     private $pluginManager;
 
-    public function setUp(): void{
+    protected function setUp(): void{
         $this->pluginManager = m::mock(PluginManager::class);
     }
 
-    public function testSetOptions()
+    public function testSetOptions(): void
     {
         $sut =  new DynamicMultiCheckbox($this->pluginManager);
         $sut->setOptions(['context' => 'testing', 'use_groups'=>true, 'label' => 'Testing']);
@@ -28,7 +28,7 @@ class DynamicMultiCheckboxTest extends MockeryTestCase
         $this->assertEquals('Testing', $sut->getLabel());
     }
 
-    public function testBcSetOptions()
+    public function testBcSetOptions(): void
     {
         $sut =  new DynamicMultiCheckbox($this->pluginManager);
         $sut->setOptions(['category' => 'testing']);
@@ -36,7 +36,7 @@ class DynamicMultiCheckboxTest extends MockeryTestCase
         $this->assertEquals('testing', $sut->getContext());
     }
 
-    public function testGetValueOptions()
+    public function testGetValueOptions(): void
     {
         $mockRefDataService = $this->createMock(RefData::class);
         $mockRefDataService
@@ -60,7 +60,7 @@ class DynamicMultiCheckboxTest extends MockeryTestCase
      * @param $expected
      * @dataProvider provideSetValue
      */
-    public function testSetValue($value, $expected)
+    public function testSetValue($value, $expected): void
     {
         $sut = new DynamicMultiCheckbox($this->pluginManager);
         $sut->setValue($value);
@@ -77,7 +77,7 @@ class DynamicMultiCheckboxTest extends MockeryTestCase
         ];
     }
 
-    public function testGetDataService()
+    public function testGetDataService(): void
     {
         $serviceName = 'testListService';
 
@@ -89,7 +89,7 @@ class DynamicMultiCheckboxTest extends MockeryTestCase
         $this->assertEquals($mockService, $sut->getDataService());
     }
 
-    public function testGetDataServiceThrows()
+    public function testGetDataServiceThrows(): void
     {
         $serviceName = 'testListService';
 

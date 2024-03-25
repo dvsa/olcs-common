@@ -23,7 +23,7 @@ class LicenceHistoryAssets
      *     options={"table": "prevPurchasedAssets-table"}
      *)
      */
-    public $prevPurchasedAssets = null;
+    public $prevPurchasedAssets;
 
     /**
      * @Form\Name("prevPurchasedAssets-table")
@@ -33,5 +33,5 @@ class LicenceHistoryAssets
      *      "class": "help__text help__text--removePadding"
      * })
      */
-    public $prevPurchasedAssetsTable = null;
+    public $prevPurchasedAssetsTable;
 }

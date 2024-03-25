@@ -21,10 +21,8 @@ trait QuerySenderAwareTrait
 
     /**
      * Set query sender
-     *
-     * @param QuerySender $querySender
      */
-    public function setQuerySender(QuerySender $querySender)
+    public function setQuerySender(QuerySender $querySender): void
     {
         $this->querySender = $querySender;
     }

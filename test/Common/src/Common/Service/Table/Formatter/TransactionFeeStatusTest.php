@@ -23,9 +23,13 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class TransactionFeeStatusTest extends MockeryTestCase
 {
+    public $mockRouteMatch;
     protected $urlHelper;
+
     protected $router;
+
     protected $request;
+
     protected $sut;
 
     protected function setUp(): void
@@ -55,7 +59,7 @@ class TransactionFeeStatusTest extends MockeryTestCase
      *
      * @dataProvider provider
      */
-    public function testFormat($data, $route, $expectedRouteParams, $expectedOutput)
+    public function testFormat($data, $route, $expectedRouteParams, $expectedOutput): void
     {
         $this->mockRouteMatch
             ->shouldReceive('getMatchedRouteName')

@@ -15,22 +15,17 @@ trait MocksServicesTrait
      */
     private $serviceManager;
 
-    /**
-     * @return ServiceManager
-     */
     protected function serviceManager(): ServiceManager
     {
         assert(null !== $this->serviceManager, 'Expected service manager to be set. Hint: You may need to call `setUpServiceManager` before trying to get a service manager');
         return $this->serviceManager;
     }
 
-    /**
-     * @return ServiceManager
-     */
     protected function setUpServiceManager(): ServiceManager
     {
         $this->serviceManager = new ServiceManager();
         $this->serviceManager->setAllowOverride(true);
+
         $services = $this->setUpDefaultServices($this->serviceManager);
 
         // Maintain support for deprecated way of registering services via an array of services. Instead, services
@@ -49,7 +44,6 @@ trait MocksServicesTrait
     }
 
     /**
-     * @return ServiceManager
      * @deprecated Please use MocksServicesTrait::setUpServiceManager instead.
      */
     protected function setUpServiceLocator(): ServiceManager
@@ -64,10 +58,6 @@ trait MocksServicesTrait
         return $instance;
     }
 
-    /**
-     * @param string $class
-     * @return MockInterface
-     */
     protected function setUpMockService(string $class): MockInterface
     {
         $instance = m::mock($class);
@@ -77,8 +67,6 @@ trait MocksServicesTrait
 
     /**
      * Sets up default services.
-     *
-     * @param ServiceManager $serviceManager
      */
     abstract protected function setUpDefaultServices(ServiceManager $serviceManager);
 

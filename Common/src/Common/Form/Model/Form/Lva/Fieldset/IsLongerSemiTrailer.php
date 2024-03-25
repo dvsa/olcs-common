@@ -23,10 +23,10 @@ class IsLongerSemiTrailer
      * })
      * @Form\Type("\Common\Form\Elements\Types\Radio")
      */
-    public $isLongerSemiTrailer = null;
+    public $isLongerSemiTrailer;
 
     /**
      * @Form\ComposedObject("\Common\Form\Model\Form\Lva\Fieldset\LongerSemiTrailerWarning")
      */
-    public $YContent = null;
+    public $YContent;
 }

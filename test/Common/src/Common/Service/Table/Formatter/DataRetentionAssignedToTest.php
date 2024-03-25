@@ -14,6 +14,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class DataRetentionAssignedToTest extends MockeryTestCase
 {
     protected $viewHelperManager;
+
     protected $sut;
 
     protected function setUp(): void
@@ -26,10 +27,11 @@ class DataRetentionAssignedToTest extends MockeryTestCase
     {
         m::close();
     }
+
     /**
      * Tests empty string returned if there's no person information
      */
-    public function testFormatUnassigned()
+    public function testFormatUnassigned(): void
     {
         $this->assertEquals('', $this->sut->format([]));
     }
@@ -37,7 +39,7 @@ class DataRetentionAssignedToTest extends MockeryTestCase
     /**
      * Tests the formatter calls the person helper correctly
      */
-    public function testFormat()
+    public function testFormat(): void
     {
         $person = [
             'forename' => 'forename',

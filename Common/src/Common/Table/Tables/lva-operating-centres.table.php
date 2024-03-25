@@ -53,7 +53,7 @@ return [
         ],
         [
             'title' => 'markup-table-th-remove',
-            'ariaDescription' => fn($row) => $row['operatingCentre']['address']['addressLine1'],
+            'ariaDescription' => static fn($row) => $row['operatingCentre']['address']['addressLine1'],
             'type' => 'ActionLinks'
         ],
     ],

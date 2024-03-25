@@ -16,13 +16,9 @@ final class ChainedValidator
     /**
      * @var array
      */
-    protected $validationChains = [];
+    private $validationChains = [];
 
-    /**
-     * @param InputInterface $chain
-     * @return $this
-     */
-    public function addValidationChain(InputInterface $chain)
+    public function addValidationChain(InputInterface $chain): void
     {
         $this->validationChains[] = $chain;
     }
@@ -45,7 +41,7 @@ final class ChainedValidator
         $value = $command->getValue();
         $outputs = [];
 
-        foreach ($this->getValidationChains() as $chain) {
+        foreach ($this->validationChains as $chain) {
             /** @var InputInterface $chain */
             $chain->setValue($value);
 

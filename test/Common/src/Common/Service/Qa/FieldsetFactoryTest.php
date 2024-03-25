@@ -16,12 +16,12 @@ class FieldsetFactoryTest extends MockeryTestCase
 {
     private $fieldsetFactory;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->fieldsetFactory = new FieldsetFactory();
     }
 
-    public function testCreateForEcmtShortTermRestrictedCountries()
+    public function testCreateForEcmtShortTermRestrictedCountries(): void
     {
         $name = 'fieldset45';
         $fieldset = $this->fieldsetFactory->create($name, 'ecmt_st_restricted_countries');
@@ -29,7 +29,7 @@ class FieldsetFactoryTest extends MockeryTestCase
         $this->assertEquals($name, $fieldset->getName());
     }
 
-    public function testCreateForOther()
+    public function testCreateForOther(): void
     {
         $name = 'fieldset62';
         $fieldset = $this->fieldsetFactory->create($name, 'radio');

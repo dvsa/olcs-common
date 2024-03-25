@@ -22,7 +22,7 @@ class VersionTest extends MockeryTestCase
     /**
      * Test render without version
      */
-    public function testRenderWithoutVersion()
+    public function testRenderWithoutVersion(): void
     {
         $config = [];
         $sut = new Version($config);
@@ -33,7 +33,7 @@ class VersionTest extends MockeryTestCase
     /**
      * Test render with version
      */
-    public function testRenderWithVersion()
+    public function testRenderWithVersion(): void
     {
         $config = [
             'version' => [
@@ -57,7 +57,7 @@ class VersionTest extends MockeryTestCase
     /**
      * Test render with version
      */
-    public function testRenderWithoutDetails()
+    public function testRenderWithoutDetails(): void
     {
         $config = [
             'version' => [

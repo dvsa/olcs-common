@@ -27,7 +27,6 @@ abstract class AbstractData implements RestClientAware
     protected $data = [];
 
     /**
-     * @param \Common\Util\RestClient $restClient
      * @return $this
      */
     public function setRestClient(RestClient $restClient)

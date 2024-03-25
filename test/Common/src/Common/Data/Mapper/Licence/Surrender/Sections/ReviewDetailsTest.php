@@ -13,7 +13,7 @@ class ReviewDetailsTest extends TestCase
     use ReviewContactDetailsMocksAndExpectationsTrait;
     protected $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = new ReviewDetails();
     }
@@ -21,7 +21,7 @@ class ReviewDetailsTest extends TestCase
     /**
      * @dataProvider  dpReviewDetails
      */
-    public function testMakeSectionsLicence($licence, $surrender)
+    public function testMakeSectionsLicence($licence, $surrender): void
     {
         $mockTranslator = \Mockery::mock(TranslationHelperService::class);
         $mockUrlHelper = \Mockery::mock(Url::class);
@@ -47,8 +47,9 @@ class ReviewDetailsTest extends TestCase
             $mockSurrender['surrender']['isInternationalLicence'] = true;
             $this->mockUrlHelperFromRoute($mockUrlHelper, 'licence/surrender/community-licence/review/GET', 2);
             $this->mockTranslatorForCommunityLicence($mockTranslator);
-            array_push($expected, $this->expectedCommunityLicence());
+            $expected[] = $this->expectedCommunityLicence();
         }
+
         $sections = ReviewDetails::makeSections($mockLicence, $mockUrlHelper, $mockTranslator, $mockSurrender);
 
         $this->assertSame($expected, $sections);
@@ -144,7 +145,7 @@ class ReviewDetailsTest extends TestCase
             ];
     }
 
-    private function mockTranslatorForCurrentDiscs($mockTranslator)
+    private function mockTranslatorForCurrentDiscs($mockTranslator): void
     {
         $mockTranslator->shouldReceive('translate')->with('licence.surrender.review.discs.heading')->once()->andReturn('DiscHeading');
         $mockTranslator->shouldReceive('translate')->with('licence.surrender.review.label.discs.possession')->once()->andReturn('Number to be destroyed');
@@ -152,14 +153,14 @@ class ReviewDetailsTest extends TestCase
         $mockTranslator->shouldReceive('translate')->with('licence.surrender.review.label.discs.stolen')->once()->andReturn('Number stolen');
     }
 
-    private function mockTranslatorForOperatorLicence($mockTranslator)
+    private function mockTranslatorForOperatorLicence($mockTranslator): void
     {
         $mockTranslator->shouldReceive('translate')->with('surrender.review.label.documents.operatorLicenceDocument')->once()->andReturn('OperatorLicenceLabel');
         $mockTranslator->shouldReceive('translate')->with('licence.surrender.review.label.documents.answerpossession')->once()->andReturn('OperatorLicenceAnswer');
         $mockTranslator->shouldReceive('translate')->with('licence.surrender.review.documents.operatorlicence.heading')->once()->andReturn('OperatorLicenceHeading');
     }
 
-    private function mockTranslatorForCommunityLicence($mockTranslator)
+    private function mockTranslatorForCommunityLicence($mockTranslator): void
     {
         $mockTranslator->shouldReceive('translate')->with('surrender.review.label.documents.communityLicenceDocument')->once()->andReturn('CommunityLicenceLabel');
         $mockTranslator->shouldReceive('translate')->with('licence.surrender.review.label.documents.answerpossession')->once()->andReturn('CommunityLicenceAnswer');

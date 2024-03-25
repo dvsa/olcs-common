@@ -13,10 +13,11 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class TableRequiredValidatorTest extends MockeryTestCase
 {
+    public $validator;
     /**
      * Set up the validator
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->validator = new TableRequiredValidator();
     }
@@ -26,7 +27,7 @@ class TableRequiredValidatorTest extends MockeryTestCase
      *
      * @dataProvider providerIsValid
      */
-    public function testIsValid($value, $context, $expected)
+    public function testIsValid($value, $context, $expected): void
     {
         $this->assertEquals($expected, $this->validator->isValid($value, $context));
     }
@@ -50,7 +51,7 @@ class TableRequiredValidatorTest extends MockeryTestCase
         ];
     }
 
-    public function testGetSetRowsRequired()
+    public function testGetSetRowsRequired(): void
     {
         $validator = new TableRequiredValidator(['rowsRequired' => 2]);
 

@@ -19,7 +19,7 @@ class CommunityLicencesStop
      * })
      * @Form\Type("radio")
      */
-    public $type = null;
+    public $type;
 
     /**
      * @Form\Attributes({"id":"","placeholder":"","class":"chosen-select-medium",  "multiple" : true})
@@ -34,5 +34,5 @@ class CommunityLicencesStop
      *      }
      * )
      */
-    public $reason = null;
+    public $reason;
 }

@@ -13,9 +13,10 @@ class CommandSenderTest extends MockeryTestCase
     protected $sut;
 
     protected $commandService;
+
     protected $annotationBuilder;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = new CommandSender();
 
@@ -32,7 +33,7 @@ class CommandSenderTest extends MockeryTestCase
         $this->assertSame($service, $this->sut);
     }
 
-    public function testSend()
+    public function testSend(): void
     {
         $command = m::mock(CommandInterface::class);
         $constructedCommand = m::mock();

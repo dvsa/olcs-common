@@ -12,10 +12,8 @@ use Psr\Container\ContainerInterface;
 class SystemInfoMessagesFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
-     * @return SystemInfoMessages
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

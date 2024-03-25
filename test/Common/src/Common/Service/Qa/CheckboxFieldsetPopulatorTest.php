@@ -21,7 +21,7 @@ class CheckboxFieldsetPopulatorTest extends MockeryTestCase
     /**
      * @dataProvider dpTestPopulate
      */
-    public function testPopulate($checked)
+    public function testPopulate($checked): void
     {
         $notCheckedMessageOptions = [
             'key' => 'notCheckedMessageKey',

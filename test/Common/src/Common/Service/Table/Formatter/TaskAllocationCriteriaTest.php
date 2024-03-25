@@ -16,7 +16,7 @@ class TaskAllocationCriteriaTest extends \PHPUnit\Framework\TestCase
      *
      * @dataProvider provider
      */
-    public function testFormat($expected, $data)
+    public function testFormat($expected, $data): void
     {
         $sut = new TaskAllocationCriteria();
 

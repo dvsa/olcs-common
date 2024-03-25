@@ -13,12 +13,13 @@ use Common\RefData;
  */
 class LicenceChecklistTest extends MockeryTestCase
 {
+    public $translator;
     /**
      * @var LicenceChecklist
      */
     private $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->translator = m::mock(Translate::class);
         $this->sut = new LicenceChecklist($this->translator);
@@ -27,12 +28,12 @@ class LicenceChecklistTest extends MockeryTestCase
     /**
      * @dataProvider providerInvoke
      */
-    public function testInvoke($type, $data, $expected)
+    public function testInvoke($type, $data, $expected): void
     {
         $this->translator
             ->shouldReceive('__invoke')
             ->andReturnUsing(
-                fn($arg) => $arg . '_translated'
+                static fn($arg) => $arg . '_translated'
             );
 
         $this->assertEquals($this->sut->__invoke($type, $data), $expected);

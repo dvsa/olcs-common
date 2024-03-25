@@ -32,7 +32,7 @@ class PermitUsageFieldsetPopulatorTest extends MockeryTestCase
 
     private $permitUsageFieldsetPopulator;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->form = m::mock(Form::class);
 
@@ -65,7 +65,7 @@ class PermitUsageFieldsetPopulatorTest extends MockeryTestCase
     /**
      * @dataProvider dpPopulateSingleItem
      */
-    public function testPopulateSingleItem($firstOptionValue, $expectedTranslationKey)
+    public function testPopulateSingleItem($firstOptionValue, $expectedTranslationKey): void
     {
         $options = [
             'options' => [
@@ -126,7 +126,7 @@ class PermitUsageFieldsetPopulatorTest extends MockeryTestCase
         ];
     }
 
-    public function testPopulateTwoItems()
+    public function testPopulateTwoItems(): void
     {
         $firstOptionValue = 'journey_multiple';
         $secondOptionValue = 'journey_single';

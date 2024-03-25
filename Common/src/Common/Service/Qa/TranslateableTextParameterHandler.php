@@ -9,22 +9,11 @@ use Laminas\View\Helper\AbstractHelper;
 class TranslateableTextParameterHandler
 {
     /** @var array */
-    private $formatters;
-
-    /**
-     * Create service instance
-     *
-     * @return TranslateableTextParameterHandler
-     */
-    public function __construct()
-    {
-        $this->formatters = [];
-    }
+    private $formatters = [];
 
     /**
      * Resolve a final parameter value using a value and optional formatter function
      *
-     * @param array $translateableTextParameter
      *
      * @return string
      */
@@ -51,9 +40,8 @@ class TranslateableTextParameterHandler
      * Register an formatter corresponding to the supplied name
      *
      * @param string $name
-     * @param AbstractHelper $formatter
      */
-    public function registerFormatter($name, AbstractHelper $formatter)
+    public function registerFormatter($name, AbstractHelper $formatter): void
     {
         $this->formatters[$name] = $formatter;
     }

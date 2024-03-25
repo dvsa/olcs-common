@@ -17,9 +17,6 @@ class Str
      * in the future to check the string using regular expressions and an expanded test suite. For now though, this
      * gives a rough idea of whether a string contains html. For example, if a string contains "I <3 PHP" this will
      * be "stripped" to only contain  "I " and thus will show as containing html.
-     *
-     * @param string $str
-     * @return bool
      */
     public static function containsHtml(string $str): bool
     {

@@ -20,13 +20,11 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
         parent::__construct($container);
     }
 
-    protected $applicationData = null; // cache
-
+    protected $applicationData; // cache
     /**
      * @param Common\Form\Form
-     * @return void
      */
-    public function alterFormForLva($form)
+    public function alterFormForLva($form): void
     {
         $form->get('finance')->get('requiredFinance')
             ->setValue('markup-required-finance-application');
@@ -75,6 +73,7 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
 
             $this->applicationData = $response->getResult();
         }
+
         return $this->applicationData;
     }
 }

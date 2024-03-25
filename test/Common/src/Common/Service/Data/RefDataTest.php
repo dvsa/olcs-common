@@ -23,7 +23,7 @@ class RefDataTest extends RefDataTestCase
         $this->sut = new RefData($this->refDataServices);
     }
 
-    public function testFormatData()
+    public function testFormatData(): void
     {
         $source = $this->getSingleSource();
         $expected = $this->getSingleExpected();
@@ -31,7 +31,7 @@ class RefDataTest extends RefDataTestCase
         $this->assertEquals($expected, $this->sut->formatData($source));
     }
 
-    public function testFormatDataForGroups()
+    public function testFormatDataForGroups(): void
     {
         $source = $this->getGroupSource();
         $expected = $this->getGroupExpected();
@@ -42,7 +42,7 @@ class RefDataTest extends RefDataTestCase
     /**
      * @dataProvider provideFetchListOptions
      */
-    public function testFetchListOptions($source, $expected, $useGroups)
+    public function testFetchListOptions($source, $expected, $useGroups): void
     {
         $this->sut->setData('test', $source);
 
@@ -63,7 +63,7 @@ class RefDataTest extends RefDataTestCase
      */
     protected function getGroupExpected()
     {
-        $expected =  [
+        return [
             'parent' =>  [
                 'label' => 'Parent',
                 'options' =>  [],
@@ -84,7 +84,6 @@ class RefDataTest extends RefDataTestCase
                 ],
             ],
         ];
-        return $expected;
     }
 
     /**
@@ -92,12 +91,11 @@ class RefDataTest extends RefDataTestCase
      */
     protected function getSingleExpected()
     {
-        $expected = [
+        return [
             'val-1' => 'Value 1',
             'val-2' => 'Value 2',
             'val-3' => 'Value 3',
         ];
-        return $expected;
     }
 
     /**
@@ -105,26 +103,24 @@ class RefDataTest extends RefDataTestCase
      */
     protected function getSingleSource()
     {
-        $source = [
+        return [
             ['id' => 'val-1', 'description' => 'Value 1'],
             ['id' => 'val-2', 'description' => 'Value 2'],
             ['id' => 'val-3', 'description' => 'Value 3'],
         ];
-        return $source;
     }
 
     protected function getGroupSource()
     {
-        $source = [
+        return [
             ['id' => 'parent', 'description' => 'Parent'],
             ['id' => 'val-1', 'description' => 'Value 1', 'parent' => ['id'=>'p1', 'description'=>'d1']],
             ['id' => 'val-2', 'description' => 'Value 2', 'parent' => ['id'=>'p2', 'description'=>'d2']],
             ['id' => 'val-3', 'description' => 'Value 3', 'parent' => ['id'=>'p3', 'description'=>'d3']],
         ];
-        return $source;
     }
 
-    public function testFetchListData()
+    public function testFetchListData(): void
     {
         $results = ['results' => 'results'];
         $params = [
@@ -163,7 +159,7 @@ class RefDataTest extends RefDataTestCase
         $this->assertEquals($results['results'], $this->sut->fetchListData('cat'));
     }
 
-    public function testFetchListDataWithException()
+    public function testFetchListDataWithException(): void
     {
         $this->expectException(DataServiceException::class);
 

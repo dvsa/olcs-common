@@ -16,7 +16,7 @@ use Laminas\Form\Form;
  */
 class NoOfPermitsMoroccoFieldsetPopulatorTest extends MockeryTestCase
 {
-    public function testPopulate()
+    public function testPopulate(): void
     {
         $label = 'textbox.label';
         $value = '45';

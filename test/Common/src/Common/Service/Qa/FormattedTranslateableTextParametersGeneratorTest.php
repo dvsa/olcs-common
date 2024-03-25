@@ -14,7 +14,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class FormattedTranslateableTextParametersGeneratorTest extends MockeryTestCase
 {
-    public function testGenerate()
+    public function testGenerate(): void
     {
         $parameter1 = [
             'value' => '12',

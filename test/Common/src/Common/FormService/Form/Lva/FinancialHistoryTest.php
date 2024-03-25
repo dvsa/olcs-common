@@ -18,6 +18,7 @@ use Laminas\Http\Request;
 
 class FinancialHistoryTest extends MockeryTestCase
 {
+    public $translator;
     /** @var  FinancialHistory */
     protected $sut;
 
@@ -27,7 +28,7 @@ class FinancialHistoryTest extends MockeryTestCase
     /** @var FormServiceManager|m\Mock */
     protected $fsm;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->formHelper = m::mock(FormHelperService::class);
         $this->translator = m::mock(TranslationHelperService::class);
@@ -36,7 +37,7 @@ class FinancialHistoryTest extends MockeryTestCase
         $this->sut = new FinancialHistory($this->formHelper, $this->translator);
     }
 
-    public function testGetForm()
+    public function testGetForm(): void
     {
         /** @var Request|m\Mock $request */
         $request = m::mock(Request::class);
@@ -57,7 +58,7 @@ class FinancialHistoryTest extends MockeryTestCase
      *
      * @param $lva
      */
-    public function testGetFormWithNiFlagSetToY($lva)
+    public function testGetFormWithNiFlagSetToY($lva): void
     {
         /** @var Request|m\Mock $request */
         $request = m::mock(Request::class);
@@ -111,7 +112,7 @@ class FinancialHistoryTest extends MockeryTestCase
      * @param string $organisationType one of RefData::ORG_TYPE_*
      * @param string $personDescription the type of person ("Person", "Director", "Partner")
      */
-    public function testGetFormForDirectorChange($organisationType, $personDescription)
+    public function testGetFormForDirectorChange($organisationType, $personDescription): void
     {
         /** @var Request|m\Mock $request */
         $request = m::mock(Request::class);

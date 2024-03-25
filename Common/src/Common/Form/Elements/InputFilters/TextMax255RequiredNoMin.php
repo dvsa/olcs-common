@@ -10,6 +10,8 @@ namespace Common\Form\Elements\InputFilters;
 class TextMax255RequiredNoMin extends TextMax255
 {
     protected $isRequired = true;
+
     protected $isAllowEmpty = false;
-    protected $min = null;
+
+    protected $min;
 }

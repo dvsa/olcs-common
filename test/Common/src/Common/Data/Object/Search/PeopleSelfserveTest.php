@@ -11,7 +11,7 @@ class PeopleSelfserveTest extends SearchAbstractTest
 {
     protected $class = \Common\Data\Object\Search\PeopleSelfserve::class;
 
-    public function testNameFormatter()
+    public function testNameFormatter(): void
     {
         $row = [
             'personFullname' => 'Bob Smith',

@@ -19,7 +19,7 @@ class SubmissionSections
      * @Form\Required(false)
      * @Form\Type("DynamicSelect")
      */
-    public $compliance = null;
+    public $compliance;
 
     /**
      * @Form\Attributes({})
@@ -30,7 +30,7 @@ class SubmissionSections
      * @Form\Required(false)
      * @Form\Type("DynamicSelect")
      */
-    public $tm = null;
+    public $tm;
 
     /**
      * @Form\Attributes({})
@@ -41,7 +41,7 @@ class SubmissionSections
      * @Form\Required(false)
      * @Form\Type("DynamicSelect")
      */
-    public $app = null;
+    public $app;
 
     /**
      * @Form\Attributes({})
@@ -52,7 +52,7 @@ class SubmissionSections
      * @Form\Required(false)
      * @Form\Type("DynamicSelect")
      */
-    public $referral = null;
+    public $referral;
 
     /**
      * @Form\Attributes({})
@@ -63,5 +63,5 @@ class SubmissionSections
      * @Form\Required(false)
      * @Form\Type("DynamicSelect")
      */
-    public $bus = null;
+    public $bus;
 }

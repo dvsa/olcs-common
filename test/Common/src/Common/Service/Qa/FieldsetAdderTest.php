@@ -37,7 +37,7 @@ class FieldsetAdderTest extends MockeryTestCase
 
     private $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->fieldset = m::mock(Fieldset::class);
 
@@ -83,7 +83,7 @@ class FieldsetAdderTest extends MockeryTestCase
     /**
      * @dataProvider dpEnabled
      */
-    public function testAddSelfserve($enabled, $expectedDataEnabledAttribute)
+    public function testAddSelfserve($enabled, $expectedDataEnabledAttribute): void
     {
         $options = [
             'fieldsetName' => self::FIELDSET_NAME,
@@ -103,7 +103,7 @@ class FieldsetAdderTest extends MockeryTestCase
     /**
      * @dataProvider dpEnabled
      */
-    public function testAddInternal($enabled, $expectedDataEnabledAttribute)
+    public function testAddInternal($enabled, $expectedDataEnabledAttribute): void
     {
         $options = [
             'fieldsetName' => self::FIELDSET_NAME,

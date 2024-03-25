@@ -34,7 +34,7 @@ trait StoredCardsTrait
             }
         }
 
-        if (empty($options)) {
+        if ($options === []) {
             // if no stored cards then hide the select element
             $form->get('storedCards')->remove('card');
         } else {

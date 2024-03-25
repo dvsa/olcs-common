@@ -29,7 +29,7 @@ class StandardAndCabotageDataHandlerTest extends MockeryTestCase
 
     private $standardAndCabotageDataHandler;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->qaForm = m::mock(QaForm::class);
 
@@ -48,7 +48,7 @@ class StandardAndCabotageDataHandlerTest extends MockeryTestCase
         );
     }
 
-    public function testSetDataIsValidDoNothing()
+    public function testSetDataIsValidDoNothing(): void
     {
         self::expectNotToPerformAssertions();
 
@@ -59,7 +59,7 @@ class StandardAndCabotageDataHandlerTest extends MockeryTestCase
         $this->standardAndCabotageDataHandler->setData($this->qaForm);
     }
 
-    public function testSetDataIsNotValidAddWarning()
+    public function testSetDataIsNotValidAddWarning(): void
     {
         $this->standardAndCabotageIsValidHandler->shouldReceive('isValid')
             ->with($this->qaForm)

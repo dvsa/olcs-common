@@ -11,7 +11,7 @@ use Mockery as m;
 
 class DynamicSelectFactoryTest extends MockeryTestCase
 {
-    public function testInvoke()
+    public function testInvoke(): void
     {
         $pluginManager = m::mock(PluginManager::class);
         $mockSl = m::mock(ContainerInterface::class);

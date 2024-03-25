@@ -37,6 +37,7 @@ class TransportManagerApplication
                 unset($errors[$field]);
             }
         }
+
         $form->setMessages($formMessages);
         return $errors;
     }

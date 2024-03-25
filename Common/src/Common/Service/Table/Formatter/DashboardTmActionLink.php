@@ -16,20 +16,18 @@ use Laminas\View\HelperPluginManager;
 class DashboardTmActionLink implements FormatterPluginManagerInterface
 {
     private UrlHelperService $urlHelper;
+
     private TranslatorDelegator $translator;
+
     private HelperPluginManager $viewHelperManager;
 
-    /**
-     * @param UrlHelperService    $urlHelper
-     * @param HelperPluginManager $viewHelperManager
-     * @param TranslatorDelegator $translator
-     */
     public function __construct(UrlHelperService $urlHelper, HelperPluginManager $viewHelperManager, TranslatorDelegator $translator)
     {
         $this->urlHelper = $urlHelper;
         $this->translator = $translator;
         $this->viewHelperManager = $viewHelperManager;
     }
+
     /**
      * Generate the HTML to display the Action link
      *
@@ -83,13 +81,11 @@ class DashboardTmActionLink implements FormatterPluginManagerInterface
         $lva = ($isVariation) ? 'variation' : 'application';
         $route = 'lva-' . $lva . '/transport_manager_details';
 
-        $url = $this->urlHelper->fromRoute(
+        return $this->urlHelper->fromRoute(
             $route,
             ['action' => null, 'application' => $applicationId, 'child_id' => $transportManagerApplicationId],
             [],
             true
         );
-
-        return $url;
     }
 }

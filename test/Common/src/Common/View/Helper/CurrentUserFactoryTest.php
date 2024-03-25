@@ -29,7 +29,7 @@ class CurrentUserFactoryTest extends TestCase
         $this->assertInstanceOf(CurrentUser::class, $service);
     }
 
-    public function testMissingConfig()
+    public function testMissingConfig(): void
     {
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage(CurrentUserFactory::MSG_MISSING_ANALYTICS_CONFIG);

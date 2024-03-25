@@ -16,10 +16,15 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class DashboardTmActionLinkTest extends MockeryTestCase
 {
+    public $sut;
     protected $urlHelper;
+
     protected $translator;
+
     protected $viewHelperManager;
+
     protected $router;
+
     protected $request;
 
     protected function setUp(): void
@@ -69,7 +74,7 @@ class DashboardTmActionLinkTest extends MockeryTestCase
     /**
      * @dataProvider dataProviderFormat
      */
-    public function testFormat($statusId, $isVariation, $expectTextKey)
+    public function testFormat($statusId, $isVariation, $expectTextKey): void
     {
         $this->translator->expects('translate')
             ->with('dashboard.tm-applications.table.action.' . $expectTextKey)

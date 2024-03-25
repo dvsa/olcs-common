@@ -12,7 +12,7 @@ class DummyTranslator implements \Laminas\I18n\Translator\TranslatorInterface
 {
     protected $map = [];
 
-    public function setMap(array $map)
+    public function setMap(array $map): void
     {
         $this->map = $map;
     }
@@ -30,6 +30,7 @@ class DummyTranslator implements \Laminas\I18n\Translator\TranslatorInterface
         if (array_key_exists($message, $this->map)) {
             return $this->map[$message];
         }
+
         return $message;
     }
 

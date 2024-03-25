@@ -19,12 +19,10 @@ class ReviewContactDetails
         $correspondenceAddress = new CorrespondenceAddress($licence, $urlHelper, $translator);
         $contactDetails = new ContactDetails($licence, $urlHelper, $translator);
 
-        $sections = [
+        return [
             $licenceDetails->makeSection(),
             $correspondenceAddress->makeSection(),
             $contactDetails->makeSection()
         ];
-
-        return $sections;
     }
 }

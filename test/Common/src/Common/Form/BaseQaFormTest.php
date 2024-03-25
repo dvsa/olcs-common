@@ -17,7 +17,7 @@ class BaseQaFormTest extends MockeryTestCase
 {
     private $form;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $qaFieldset12 = new Fieldset('fieldset12');
         $qaFieldset12->add(new Text('qaElement'));
@@ -38,7 +38,7 @@ class BaseQaFormTest extends MockeryTestCase
         $this->form->add($qaFieldset);
     }
 
-    public function testUpdateDataForQaElementPresent()
+    public function testUpdateDataForQaElementPresent(): void
     {
         $unprocessedData = [
             'qa' => [
@@ -66,7 +66,7 @@ class BaseQaFormTest extends MockeryTestCase
         $this->assertEquals($expectedProcessedData, $processedData);
     }
 
-    public function testUpdateDataForQaElementNotPresent()
+    public function testUpdateDataForQaElementNotPresent(): void
     {
         $unprocessedData = [];
 

@@ -13,23 +13,23 @@ class Table
      * @Form\Options({"label":"row"})
      * @Form\Type("\Common\Form\Elements\Types\Table")
      */
-    public $table = null;
+    public $table;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("\Common\Form\Elements\InputFilters\NoRender")
      */
-    public $action = null;
+    public $action;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $rows = null;
+    public $rows;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("\Common\Form\Elements\InputFilters\NoRender")
      */
-    public $id = null;
+    public $id;
 }

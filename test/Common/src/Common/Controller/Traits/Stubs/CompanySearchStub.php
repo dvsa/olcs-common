@@ -6,6 +6,7 @@ use Common\Controller\Traits\CompanySearch;
 
 class CompanySearchStub
 {
+    public $form;
     use CompanySearch;
 
     public $stubResponse;

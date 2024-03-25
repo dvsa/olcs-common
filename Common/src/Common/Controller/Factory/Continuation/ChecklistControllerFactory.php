@@ -13,10 +13,8 @@ use LmcRbacMvc\Service\AuthorizationService;
 class ChecklistControllerFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
-     * @return ChecklistController
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): ChecklistController
     {

@@ -13,7 +13,9 @@ use Mockery as m;
 class TranslateTest extends \PHPUnit\Framework\TestCase
 {
     protected $translator;
+
     protected $dataHelper;
+
     protected $sut;
 
     protected function setUp(): void
@@ -31,11 +33,11 @@ class TranslateTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider provider
      */
-    public function testFormat($data, $column, $expected)
+    public function testFormat($data, $column, $expected): void
     {
         $this->translator->shouldReceive('translate')
             ->andReturnUsing(
-                fn($string) => strtoupper($string)
+                static fn($string) => strtoupper($string)
             );
 
         $this->dataHelper->shouldReceive('fetchNestedData')->andReturn($expected);

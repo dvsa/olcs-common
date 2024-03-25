@@ -25,7 +25,7 @@ class RoadworthinessMakeAndModelFieldsetModifier implements FieldsetModifierInte
     /**
      * {@inheritdoc}
      */
-    public function modify(Fieldset $fieldset)
+    public function modify(Fieldset $fieldset): void
     {
         $qaElement = $fieldset->get('qaElement');
 

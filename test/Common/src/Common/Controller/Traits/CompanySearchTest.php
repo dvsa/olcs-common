@@ -17,17 +17,18 @@ class CompanySearchTest extends MockeryTestCase
      * @var CompanySearch
      */
     protected $sut;
+
     /** @var  m\MockInterface */
     protected $mockResp;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = new CompanySearchStub();
         $this->mockResp = m::mock(\Laminas\Http\Response::class);
         $this->sut->stubResponse = $this->mockResp;
     }
 
-    public function testCompanySearch()
+    public function testCompanySearch(): void
     {
         $mockHelperService = m::mock(FormHelperService::class);
         $form = new Form();
@@ -52,7 +53,7 @@ class CompanySearchTest extends MockeryTestCase
         $this->assertSame($actual, $form);
     }
 
-    public function testCompanySearchNoDataReturned()
+    public function testCompanySearchNoDataReturned(): void
     {
         $mockHelperService = m::mock(FormHelperService::class);
         $data = [];
@@ -77,7 +78,7 @@ class CompanySearchTest extends MockeryTestCase
         $this->assertSame($actual, $form);
     }
 
-    public function testCompanySearchNotFound()
+    public function testCompanySearchNotFound(): void
     {
         $mockHelperService = m::mock(FormHelperService::class);
         $data = [];
@@ -107,7 +108,7 @@ class CompanySearchTest extends MockeryTestCase
     /**
      * @dataProvider dpCompanyNumbers
      */
-    public function testisValidCompanyNumber($comanyNumber, $expected)
+    public function testisValidCompanyNumber($comanyNumber, $expected): void
     {
         $this->assertEquals($expected, $this->sut->isValidCompanyNumber($comanyNumber));
     }

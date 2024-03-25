@@ -20,7 +20,7 @@ class HtmlTranslatedTest extends \PHPUnit\Framework\TestCase
      * Placeholder
      *
      */
-    public function testElement()
+    public function testElement(): void
     {
         $element = new HtmlTranslated();
         $this->assertInstanceOf(\Common\Form\Elements\Types\HtmlTranslated::class, $element);

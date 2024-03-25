@@ -16,10 +16,11 @@ use Common\Service\Helper\RestrictionHelperService;
  */
 class RestrictionHelperServiceTest extends \PHPUnit\Framework\TestCase
 {
+    public $helper;
     /**
      * Setup the helper
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->helper = new RestrictionHelperService();
     }
@@ -31,7 +32,7 @@ class RestrictionHelperServiceTest extends \PHPUnit\Framework\TestCase
      * @group helper_service
      * @group restriction_helper_service
      */
-    public function testIsRestrictionSatisfied($restrictions, $accessKeys, $expected)
+    public function testIsRestrictionSatisfied($restrictions, $accessKeys, $expected): void
     {
         $this->assertEquals($expected, $this->helper->isRestrictionSatisfied($restrictions, $accessKeys));
     }

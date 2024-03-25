@@ -18,7 +18,7 @@ class AbstractBusinessDetailsTest extends MockeryTestCase
 
     protected $formHelper;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);
 
@@ -26,7 +26,7 @@ class AbstractBusinessDetailsTest extends MockeryTestCase
         $this->sut->__construct($this->formHelper);
     }
 
-    public function testAlterFormRegisteredCompany()
+    public function testAlterFormRegisteredCompany(): void
     {
         // Params
         $orgType = RefData::ORG_TYPE_REGISTERED_COMPANY;
@@ -46,7 +46,7 @@ class AbstractBusinessDetailsTest extends MockeryTestCase
         $this->assertSame($mockForm, $form);
     }
 
-    public function testAlterFormLlp()
+    public function testAlterFormLlp(): void
     {
         // Params
         $orgType = RefData::ORG_TYPE_LLP;
@@ -66,7 +66,7 @@ class AbstractBusinessDetailsTest extends MockeryTestCase
         $this->assertSame($mockForm, $form);
     }
 
-    public function testAlterFormSoleTrader()
+    public function testAlterFormSoleTrader(): void
     {
         // Params
         $orgType = RefData::ORG_TYPE_SOLE_TRADER;
@@ -98,7 +98,7 @@ class AbstractBusinessDetailsTest extends MockeryTestCase
         $this->assertSame($mockForm, $form);
     }
 
-    public function testAlterFormPartnership()
+    public function testAlterFormPartnership(): void
     {
         // Params
         $orgType = RefData::ORG_TYPE_PARTNERSHIP;
@@ -134,7 +134,7 @@ class AbstractBusinessDetailsTest extends MockeryTestCase
         $this->assertSame($mockForm, $form);
     }
 
-    public function testAlterFormOther()
+    public function testAlterFormOther(): void
     {
         // Params
         $orgType = RefData::ORG_TYPE_OTHER;

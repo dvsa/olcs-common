@@ -16,13 +16,13 @@ class PsvVehiclesVehicle
      * @Form\Name("data")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\PsvVehicleData")
      */
-    public $data = null;
+    public $data;
 
     /**
      * @Form\Name("licence-vehicle")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\LicenceVehicle")
      */
-    public $licenceVehicle = null;
+    public $licenceVehicle;
 
     /**
      * @Form\Name("vehicle-history-table")
@@ -35,5 +35,5 @@ class PsvVehiclesVehicle
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormCrudActions")
      * @Form\Attributes({"class":"govuk-button-group"})
      */
-    public $formActions = null;
+    public $formActions;
 }

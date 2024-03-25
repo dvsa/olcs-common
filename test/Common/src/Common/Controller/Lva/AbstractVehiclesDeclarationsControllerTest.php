@@ -19,8 +19,25 @@ use LmcRbacMvc\Service\AuthorizationService;
  */
 class AbstractVehiclesDeclarationsControllerTest extends AbstractLvaControllerTestCase
 {
+    /**
+     * @var \Mockery\LegacyMockInterface
+     */
+    public $mockNiTextTranslationUtil;
+    /**
+     * @var \Mockery\LegacyMockInterface
+     */
+    public $mockAuthService;
+    public $mockScriptFactory;
+    public $mockFormServiceManager;
+    public $mockFormHelper;
+    /**
+     * @var \Mockery\LegacyMockInterface
+     */
+    public $mockDataHelper;
+    public $view;
     protected $sut;
-    public function setUp(): void
+
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -46,7 +63,7 @@ class AbstractVehiclesDeclarationsControllerTest extends AbstractLvaControllerTe
         $this->mockScriptFactory->shouldReceive('loadFile')->with('vehicle-declarations');
     }
 
-    public function testGetIndexAction()
+    public function testGetIndexAction(): void
     {
         $form = m::mock(\Common\Form\Form::class);
         $mockFormService = m::mock();

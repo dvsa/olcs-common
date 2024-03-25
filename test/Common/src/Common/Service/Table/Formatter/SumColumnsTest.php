@@ -25,7 +25,7 @@ class SumColumnsTest extends \PHPUnit\Framework\TestCase
      *
      * @dataProvider provider
      */
-    public function testFormat($data, $column, $expected)
+    public function testFormat($data, $column, $expected): void
     {
         $this->assertSame($expected, (new SumColumns())->format($data, $column));
     }

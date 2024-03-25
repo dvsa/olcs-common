@@ -37,7 +37,7 @@ class ScriptFactory implements FactoryInterface
      *
      * @var unknown
      */
-    protected $viewHelperManager = null;
+    protected $viewHelperManager;
 
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
@@ -48,6 +48,7 @@ class ScriptFactory implements FactoryInterface
         if (!isset($config['local_scripts_path'])) {
             throw new \LogicException('local_scripts_path was not set in the module config');
         }
+
         $this->setFilePaths($config['local_scripts_path']);
 
         return $this;
@@ -57,10 +58,8 @@ class ScriptFactory implements FactoryInterface
      * load an array of files
      *
      * @param array $files - the files to load
-     *
-     * @return array
      */
-    public function loadFiles($files = [])
+    public function loadFiles($files = []): void
     {
         foreach ($files as $file) {
             $this->loadFile($file);
@@ -71,10 +70,8 @@ class ScriptFactory implements FactoryInterface
      * add an array of files
      *
      * @param array $files - the files to load
-     *
-     * @return array
      */
-    public function appendFiles($files = [])
+    public function appendFiles($files = []): void
     {
         foreach ($files as $file) {
             $this->appendFile($file);
@@ -86,10 +83,8 @@ class ScriptFactory implements FactoryInterface
      *
      * @param string $file - the file to load
      * @throws \Exception
-     *
-     * @return string
      */
-    public function loadFile($file)
+    public function loadFile($file): void
     {
         $paths = $this->getFilePaths();
 
@@ -115,7 +110,7 @@ class ScriptFactory implements FactoryInterface
      *
      * @param string $file - the file to load
      */
-    public function appendFile($fileName)
+    public function appendFile($fileName): void
     {
         $assetPath = $this->getViewHelperManager()->get('assetPath');
         $this->getViewHelperManager()->get('inlineScript')->appendFile($assetPath($fileName));

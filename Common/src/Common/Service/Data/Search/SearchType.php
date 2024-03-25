@@ -40,7 +40,7 @@ class SearchType implements ListDataInterface, FactoryInterface
     /**
      * @param mixed $searchTypeManager
      */
-    public function setSearchTypeManager($searchTypeManager)
+    public function setSearchTypeManager($searchTypeManager): void
     {
         $this->searchTypeManager = $searchTypeManager;
     }
@@ -56,7 +56,7 @@ class SearchType implements ListDataInterface, FactoryInterface
     /**
      * @param mixed $navigationFactory
      */
-    public function setNavigationFactory($navigationFactory)
+    public function setNavigationFactory($navigationFactory): void
     {
         $this->navigationFactory = $navigationFactory;
     }
@@ -66,7 +66,7 @@ class SearchType implements ListDataInterface, FactoryInterface
         return $this->roleService;
     }
 
-    public function setRoleService(RoleService $authorizationService)
+    public function setRoleService(RoleService $authorizationService): void
     {
         $this->roleService = $authorizationService;
     }
@@ -106,7 +106,7 @@ class SearchType implements ListDataInterface, FactoryInterface
         }
 
         if ($this->roleService->matchIdentityRoles([RefData::ROLE_INTERNAL_LIMITED_READ_ONLY])) {
-            $indexes = array_filter($indexes, fn($value, $key) => !($value instanceof User), ARRAY_FILTER_USE_BOTH);
+            return array_filter($indexes, static fn($value, $key) => !($value instanceof User), ARRAY_FILTER_USE_BOTH);
         }
 
         return $indexes;
@@ -126,10 +126,8 @@ class SearchType implements ListDataInterface, FactoryInterface
     }
 
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
-     * @return $this
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

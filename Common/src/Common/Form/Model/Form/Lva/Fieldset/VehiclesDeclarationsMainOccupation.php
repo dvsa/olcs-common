@@ -22,7 +22,7 @@ class VehiclesDeclarationsMainOccupation
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      */
-    public $psvMediumVhlConfirmation = null;
+    public $psvMediumVhlConfirmation;
 
     /**
      * @Form\Attributes({"id":"","class":"long"})
@@ -32,5 +32,5 @@ class VehiclesDeclarationsMainOccupation
      * @Form\Type("Textarea")
      * @Form\Validator("Laminas\Validator\StringLength", options={"min": 10, "max": 1000})
      */
-    public $psvMediumVhlNotes = null;
+    public $psvMediumVhlNotes;
 }

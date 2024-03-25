@@ -20,7 +20,7 @@ class VehiclesTransferActions
      * @Form\Options({"label": "transfer.button"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $transfer = null;
+    public $transfer;
 
     /**
      * @Form\Attributes({
@@ -32,5 +32,5 @@ class VehiclesTransferActions
      * @Form\Options({"label": "cancel.button"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $cancel = null;
+    public $cancel;
 }

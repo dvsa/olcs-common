@@ -19,9 +19,9 @@ class HtmlDateTime extends Html
      */
     public function setValue($value)
     {
-        $this->value = !empty($value)
-            ? (new DateTimeViewHelper())->__invoke(new \DateTime($value), Module::$dateTimeSecFormat)
-            : null;
+        $this->value = empty($value)
+            ? null
+            : (new DateTimeViewHelper())->__invoke(new \DateTime($value), Module::$dateTimeSecFormat);
 
         return $this;
     }

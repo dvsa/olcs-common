@@ -12,16 +12,15 @@ use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 class IrhpPermitTypeWithValidityDate implements FormatterPluginManagerInterface
 {
     private Date $dateFormatter;
+
     private TranslatorDelegator $translator;
 
-    /**
-     * @param Date $dateFormatter
-     */
     public function __construct(Date $dateFormatter, TranslatorDelegator $translator)
     {
         $this->dateFormatter = $dateFormatter;
         $this->translator = $translator;
     }
+
     /**
      * Format data
      *

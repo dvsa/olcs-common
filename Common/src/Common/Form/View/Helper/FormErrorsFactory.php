@@ -16,10 +16,8 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
 class FormErrorsFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param mixed $requestedName
      * @param array|null $options
-     * @return FormErrors
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): FormErrors
     {

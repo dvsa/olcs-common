@@ -22,5 +22,5 @@ class CommunityLicencesDataAdd
      * )
      * @Form\Type("Text")
      */
-    public $total = null;
+    public $total;
 }

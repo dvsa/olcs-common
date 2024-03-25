@@ -21,10 +21,8 @@ trait CommandSenderAwareTrait
 
     /**
      * Set Command sender
-     *
-     * @param CommandSender $commandSender
      */
-    public function setCommandSender(CommandSender $commandSender)
+    public function setCommandSender(CommandSender $commandSender): void
     {
         $this->commandSender = $commandSender;
     }

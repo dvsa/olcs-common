@@ -17,13 +17,13 @@ class Person
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $id = null;
+    public $id;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\Attributes({"id":"title","placeholder":""})
@@ -36,7 +36,7 @@ class Person
      * @Form\Type("DynamicSelect")
      * @Form\Required(true)
      */
-    public $title = null;
+    public $title;
 
     /**
      * @Form\Attributes({"class":"long","id":"forename"})
@@ -49,7 +49,7 @@ class Person
      * @Form\Filter("Laminas\Filter\StringTrim")
      * @Form\Validator("Laminas\Validator\StringLength", options={"min":0,"max":35})
      */
-    public $forename = null;
+    public $forename;
 
     /**
      * @Form\Attributes({"class":"long","id":"familyname"})
@@ -62,7 +62,7 @@ class Person
      * @Form\Filter("Laminas\Filter\StringTrim")
      * @Form\Validator("Laminas\Validator\StringLength", options={"min":0,"max":35})
      */
-    public $familyName = null;
+    public $familyName;
 
     /**
      * @Form\Attributes({"class":"long","id":""})
@@ -74,7 +74,7 @@ class Person
      * @Form\Type("Text")
      * @Form\Validator("Laminas\Validator\StringLength", options={"min":0,"max":35})
      */
-    public $otherName = null;
+    public $otherName;
 
     /**
      * @Form\Required(true)
@@ -91,5 +91,5 @@ class Person
      * @Form\Validator("Date", options={"format":"Y-m-d"})
      * @Form\Validator("\Common\Form\Elements\Validators\DateNotInFuture")
      */
-    public $birthDate = null;
+    public $birthDate;
 }

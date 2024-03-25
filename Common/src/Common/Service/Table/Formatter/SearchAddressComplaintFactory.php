@@ -8,10 +8,8 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
 class SearchAddressComplaintFactory implements FactoryInterface
 {
     /**
-     * @param  ContainerInterface $container
      * @param  $requestedName
      * @param  array|null         $options
-     * @return SearchAddressComplaint
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): SearchAddressComplaint
     {

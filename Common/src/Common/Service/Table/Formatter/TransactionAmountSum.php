@@ -24,6 +24,7 @@ class TransactionAmountSum implements FormatterPluginManagerInterface
     {
         $this->moneyFormatter = $moneyFormatter;
     }
+
     /**
      * Sums the data of a specific column and formats the result as a fee amount
      *

@@ -20,7 +20,7 @@ class FormCrudActionsShort
      * @Form\Options({"label": "Save"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $submit = null;
+    public $submit;
 
     /**
      * @Form\Attributes({
@@ -34,5 +34,5 @@ class FormCrudActionsShort
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $cancel = null;
+    public $cancel;
 }

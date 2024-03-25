@@ -23,7 +23,7 @@ class ConditionsUndertakings
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      */
-    public $confirmation = null;
+    public $confirmation;
 
     /**
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
@@ -31,7 +31,7 @@ class ConditionsUndertakings
      *     "value": "continuations.conditions-undertakings.summary",
      * })
      */
-    public $summary = null;
+    public $summary;
 
     /**
      * @Form\Attributes({
@@ -42,5 +42,5 @@ class ConditionsUndertakings
      * @Form\Options({"label":"continuations.conditions-undertakings.continue.label"})
      * @Form\Type("\Laminas\Form\Element\Button")
      */
-    public $submit = null;
+    public $submit;
 }

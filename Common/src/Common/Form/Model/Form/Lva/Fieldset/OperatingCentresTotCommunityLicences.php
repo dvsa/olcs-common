@@ -21,5 +21,5 @@ class OperatingCentresTotCommunityLicences
      * @Form\Validator("Between", options={"min":0, "max": 10000})
      * @Form\Filter("\Laminas\Filter\ToNull", options={"type":"string"})
      */
-    public $totCommunityLicences = null;
+    public $totCommunityLicences;
 }

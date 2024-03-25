@@ -17,12 +17,13 @@ class PaymentTest extends MockeryTestCase
 {
     /** @var PaymentForm */
     protected $sut;
+
     /** @var  m\MockInterface */
     private $formHelper;
 
     protected $guidance;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->formHelper = m::mock(FormHelperService::class);
         $this->guidance = m::mock(GuidanceHelperService::class);
@@ -30,7 +31,7 @@ class PaymentTest extends MockeryTestCase
         $this->sut = new Payment($this->formHelper, $this->guidance);
     }
 
-    public function testGetForm()
+    public function testGetForm(): void
     {
         $form = m::mock(PaymentForm::class)
             ->shouldReceive('get')

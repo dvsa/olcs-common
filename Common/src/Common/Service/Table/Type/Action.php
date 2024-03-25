@@ -60,8 +60,6 @@ class Action extends AbstractType
 
     /**
      * Return true if the current internal user has read only permissions
-     *
-     * @return bool
      */
     protected function isInternalReadOnly(): bool
     {

@@ -48,10 +48,7 @@ abstract class TermsAbstract extends AggregationsAbstract
         return $this->options;
     }
 
-    /**
-     * @param array $options
-     */
-    public function setOptions(array $options)
+    public function setOptions(array $options): void
     {
         $this->options = $options;
     }

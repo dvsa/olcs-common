@@ -29,7 +29,7 @@ class TableBuilderTest extends MockeryTestCase
 
     private $mockFormatterPluginManager;
 
-    public function setup(): void
+    protected function setup(): void
     {
         $this->mockFormatterPluginManager = m::mock(FormatterPluginManager::class);
     }
@@ -76,11 +76,10 @@ class TableBuilderTest extends MockeryTestCase
         $mockTranslator->expects(static::any())
             ->method('translate')
             ->willReturnCallback(
-                function ($desc) {
+                static function ($desc) {
                     if (!is_string($desc)) {
                         return $desc;
                     }
-
                     return self::TRANSLATED . $desc;
                 }
             );
@@ -90,7 +89,7 @@ class TableBuilderTest extends MockeryTestCase
 
     private function getMockPermissionService()
     {
-        return $this->createPartialMock(Permission::class, array('isGranted', 'isInternalReadOnly'));
+        return $this->createPartialMock(Permission::class, ['isGranted', 'isInternalReadOnly']);
     }
 
     private function getMockUrlHelperService()
@@ -137,7 +136,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test getContentHelper
      */
-    public function testGetContentHelper()
+    public function testGetContentHelper(): void
     {
         $table = $this->getConcreteTableBuilder();
 
@@ -154,7 +153,7 @@ class TableBuilderTest extends MockeryTestCase
      * Test getContentHelper without configured partials
      *
      */
-    public function testGetContentHelperWithoutConfig()
+    public function testGetContentHelperWithoutConfig(): void
     {
         $this->expectException(\Exception::class);
 
@@ -167,7 +166,7 @@ class TableBuilderTest extends MockeryTestCase
      * Test getContentHelper without configured partials for current content type
      *
      */
-    public function testGetContentHelperWithoutConfigForType()
+    public function testGetContentHelperWithoutConfigForType(): void
     {
         $this->expectException(\Exception::class);
 
@@ -181,7 +180,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test getPaginationHelper
      */
-    public function testGetPaginationHelper()
+    public function testGetPaginationHelper(): void
     {
         $table = $this->getConcreteTableBuilder();
 
@@ -197,7 +196,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test getConfigFromFile
      */
-    public function testGetConfigFromFile()
+    public function testGetConfigFromFile(): void
     {
         $table = $this->getConcreteTableBuilder();
 
@@ -210,7 +209,7 @@ class TableBuilderTest extends MockeryTestCase
      * Test getConfigFromFile with missing file
      *
      */
-    public function testGetConfigFromFileWithMissingFile()
+    public function testGetConfigFromFileWithMissingFile(): void
     {
         $this->expectException(\Exception::class);
 
@@ -222,7 +221,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test build table calls all of the relevant methods
      */
-    public function testBuildTable()
+    public function testBuildTable(): void
     {
         $table = m::mock(TableBuilder::class)->makePartial();
 
@@ -238,7 +237,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test build table without render
      */
-    public function testBuildTableWithoutRender()
+    public function testBuildTableWithoutRender(): void
     {
         $table = m::mock(TableBuilder::class)->makePartial();
 
@@ -254,7 +253,7 @@ class TableBuilderTest extends MockeryTestCase
      * Test loadConfig without table config set
      *
      */
-    public function testLoadConfigWithoutTableConfig()
+    public function testLoadConfigWithoutTableConfig(): void
     {
         $this->expectException(\Exception::class);
 
@@ -266,7 +265,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test loadConfig with empty array
      */
-    public function testLoadConfigWithEmptyArray()
+    public function testLoadConfigWithEmptyArray(): void
     {
         $tableConfig = [];
 
@@ -290,7 +289,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test loadConfig With pagination settings With limit
      */
-    public function testLoadConfigWithPaginationWithLimit()
+    public function testLoadConfigWithPaginationWithLimit(): void
     {
         $paginate = [
             'limit' => [
@@ -321,7 +320,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test loadConfig With pagination settings Without limit
      */
-    public function testLoadConfigWithPaginationWithoutLimit()
+    public function testLoadConfigWithPaginationWithoutLimit(): void
     {
         $paginate = [
             'limit' => [
@@ -352,7 +351,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test loadConfig With action field name
      */
-    public function testLoadConfigWithActionFieldNameAndFormName()
+    public function testLoadConfigWithActionFieldNameAndFormName(): void
     {
         $paginate = [
             'limit' => [
@@ -387,7 +386,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test loadData without data
      */
-    public function testLoadDataWithoutData()
+    public function testLoadDataWithoutData(): void
     {
         $data = [];
 
@@ -404,7 +403,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test loadData with rows of data
      */
-    public function testLoadDataWithDataRows()
+    public function testLoadDataWithDataRows(): void
     {
         $data = [
             ['foo' => 'bar'],
@@ -424,7 +423,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test loadData with 1 row of data
      */
-    public function testLoadDataWithOneRow()
+    public function testLoadDataWithOneRow(): void
     {
         $data = [
             ['foo' => 'bar'],
@@ -447,7 +446,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test loadData with result data
      */
-    public function testLoadDataWithResultData()
+    public function testLoadDataWithResultData(): void
     {
         $rows = [
             ['foo' => 'bar'],
@@ -473,7 +472,7 @@ class TableBuilderTest extends MockeryTestCase
      *
      * @doesNotPerformAssertions
      */
-    public function testLoadParamsWithoutUrl()
+    public function testLoadParamsWithoutUrl(): void
     {
         $params = [];
 
@@ -485,7 +484,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test loadParams With limit
      */
-    public function testLoadParamsWithLimit()
+    public function testLoadParamsWithLimit(): void
     {
         $url = new \stdClass();
 
@@ -511,7 +510,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test loadParams With default limit
      */
-    public function testLoadParamsWithDefaultLimit()
+    public function testLoadParamsWithDefaultLimit(): void
     {
         $url = new \stdClass();
 
@@ -561,7 +560,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test loadParams With Query
      */
-    public function testLoadParamsWithQuery()
+    public function testLoadParamsWithQuery(): void
     {
         $query = new \stdClass();
 
@@ -580,7 +579,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test setupAction with action set
      */
-    public function testSetupActionWithActionSet()
+    public function testSetupActionWithActionSet(): void
     {
         $variables = [
             'action' => '/'
@@ -601,7 +600,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test setupAction without action set
      */
-    public function testSetupActionWithoutActionSet()
+    public function testSetupActionWithoutActionSet(): void
     {
         $variables = [];
 
@@ -627,7 +626,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test setupAction with action_route set
      */
-    public function testSetupActionWithActionRouteSet()
+    public function testSetupActionWithActionRouteSet(): void
     {
         $variables = [
             'action_route' => ['route' => 'someroute', 'params' => ['foo' => 'bar']]
@@ -655,7 +654,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test render
      */
-    public function testRender()
+    public function testRender(): void
     {
 
         $mockContentHelper = $this->createPartialMock(ContentHelper::class, ['replaceContent']);
@@ -685,7 +684,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderTableFooter without footer
      */
-    public function testRenderTableFooterWithoutFooter()
+    public function testRenderTableFooterWithoutFooter(): void
     {
         $table = $this->getConcreteTableBuilder();
 
@@ -695,14 +694,14 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderTableFooter
      */
-    public function testRenderTableFooter()
+    public function testRenderTableFooter(): void
     {
         $footer = [
             [
                 'type' => 'th',
                 'colspan' => 2,
                 'content' => 'foo',
-                'formatter' => fn() => 'ABC',
+                'formatter' => static fn() => 'ABC',
                 'align' => 'right',
             ],
             [
@@ -722,7 +721,7 @@ class TableBuilderTest extends MockeryTestCase
             ->method('replaceContent')
             ->will(
                 $this->returnCallback(
-                    fn($string) => $string
+                    static fn($string) => $string
                 )
             );
 
@@ -738,7 +737,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderTable For Hybrid
      */
-    public function testRenderTableForHybrid()
+    public function testRenderTableForHybrid(): void
     {
         $settings = [
             'crud' => 'foo',
@@ -763,7 +762,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderTable For Crud
      */
-    public function testRenderTableForCrud()
+    public function testRenderTableForCrud(): void
     {
         $settings = [
             'crud' => 'foo'
@@ -798,7 +797,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderTable For SubmissionSection
      */
-    public function testRenderTableForSubmissionSection()
+    public function testRenderTableForSubmissionSection(): void
     {
         $settings = [
             'submission_section' => 'foo'
@@ -822,7 +821,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderTable For Crud within form
      */
-    public function testRenderTableForCrudWithinForm()
+    public function testRenderTableForCrudWithinForm(): void
     {
         $settings = [
             'crud' => 'foo'
@@ -852,7 +851,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderTable For pagination
      */
-    public function testRenderTableForPagination()
+    public function testRenderTableForPagination(): void
     {
         $settings = [
             'paginate' => 'foo'
@@ -876,7 +875,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderTable default
      */
-    public function testRenderTableDefault()
+    public function testRenderTableDefault(): void
     {
         $settings = [];
 
@@ -898,7 +897,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderLayout
      */
-    public function testRenderLayout()
+    public function testRenderLayout(): void
     {
         $name = 'foo';
 
@@ -921,7 +920,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderTotal Without pagination
      */
-    public function testRenderTotalWithoutPagination()
+    public function testRenderTotalWithoutPagination(): void
     {
         $table = $this->getConcreteTableBuilder();
 
@@ -933,7 +932,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderTotal With pagination
      */
-    public function testRenderTotalWithPagination()
+    public function testRenderTotalWithPagination(): void
     {
         $total = 10;
 
@@ -964,7 +963,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderTotal With pagination With 1 result
      */
-    public function testRenderTotalWithPaginationWith1()
+    public function testRenderTotalWithPaginationWith1(): void
     {
         $total = 1;
 
@@ -995,7 +994,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderTotal Without pagination but with showTotal setting
      */
-    public function testRenderTotalWithoutPaginationWithShowTotal()
+    public function testRenderTotalWithoutPaginationWithShowTotal(): void
     {
         $total = 10;
         $expectedTotal = 10;
@@ -1022,7 +1021,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderTotal override
      */
-    public function testRenderTotalWithOverride()
+    public function testRenderTotalWithOverride(): void
     {
         $total = 10;
         $expectedTotal = '';
@@ -1042,7 +1041,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderActions With Pagination
      */
-    public function testRenderActionsWithoutCrud()
+    public function testRenderActionsWithoutCrud(): void
     {
         $table = $this->getConcreteTableBuilder();
 
@@ -1054,7 +1053,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderActions without actions
      */
-    public function testRenderActionsWithoutActions()
+    public function testRenderActionsWithoutActions(): void
     {
         $settings = [
             'crud' => []
@@ -1069,7 +1068,7 @@ class TableBuilderTest extends MockeryTestCase
         $this->assertEquals('', $table->renderActions());
     }
 
-    public function testTrimActionsHaveRows()
+    public function testTrimActionsHaveRows(): void
     {
         $settings = [
             'crud' => [
@@ -1090,7 +1089,7 @@ class TableBuilderTest extends MockeryTestCase
             ->times(2)
             ->with('{{[elements/actionButton]}}', m::any())
             ->andReturnUsing(
-                fn($content, $details) => $details['name']
+                static fn($content, $details) => $details['name']
             );
         $mockContentHelper
             ->shouldReceive('replaceContent')
@@ -1115,7 +1114,7 @@ class TableBuilderTest extends MockeryTestCase
         $table->renderActions();
     }
 
-    public function testTrimActionsReadOnlyUser()
+    public function testTrimActionsReadOnlyUser(): void
     {
         $settings = [
             'crud' => [
@@ -1137,7 +1136,7 @@ class TableBuilderTest extends MockeryTestCase
             ->shouldReceive('replaceContent')
             ->with('{{[elements/actionButton]}}', m::any())
             ->andReturnUsing(
-                fn($content, $details) => $details['name']
+                static fn($content, $details) => $details['name']
             );
         $mockContentHelper
             ->shouldReceive('replaceContent')
@@ -1166,7 +1165,7 @@ class TableBuilderTest extends MockeryTestCase
         $table->renderActions();
     }
 
-    public function testTrimActionsNoRows()
+    public function testTrimActionsNoRows(): void
     {
         $settings = [
             'crud' => [
@@ -1188,7 +1187,7 @@ class TableBuilderTest extends MockeryTestCase
             ->shouldReceive('replaceContent')
             ->with('{{[elements/actionButton]}}', m::any())
             ->andReturnUsing(
-                fn($content, $details) => $details['name']
+                static fn($content, $details) => $details['name']
             );
         $mockContentHelper
             ->shouldReceive('replaceContent')
@@ -1220,7 +1219,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderActions
      */
-    public function testRenderActions()
+    public function testRenderActions(): void
     {
         $settings = [
             'crud' => [
@@ -1242,7 +1241,7 @@ class TableBuilderTest extends MockeryTestCase
             ->with('{{[elements/actionContainer]}}')
             ->will(
                 $this->returnCallback(
-                    function ($content, $vars) {
+                    static function ($content, $vars) {
                         unset($content);
                         return $vars;
                     }
@@ -1268,7 +1267,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderActions With Dropdown
      */
-    public function testRenderActionsWithDropdown()
+    public function testRenderActionsWithDropdown(): void
     {
         $settings = [
             'crud' => [
@@ -1291,7 +1290,7 @@ class TableBuilderTest extends MockeryTestCase
             ->with('{{[elements/actionContainer]}}')
             ->will(
                 $this->returnCallback(
-                    function ($content, $vars) {
+                    static function ($content, $vars) {
                         unset($content);
                         return $vars;
                     }
@@ -1319,7 +1318,7 @@ class TableBuilderTest extends MockeryTestCase
      * Test renderActions with format override
      * (Default behaviour is dropdown for > 4 actions)
      */
-    public function testRenderActionsWithFormatOverrideButtons()
+    public function testRenderActionsWithFormatOverrideButtons(): void
     {
         $settings = [
             'crud' => [
@@ -1341,7 +1340,7 @@ class TableBuilderTest extends MockeryTestCase
             ->with('{{[elements/actionContainer]}}')
             ->will(
                 $this->returnCallback(
-                    function ($content, $vars) {
+                    static function ($content, $vars) {
                         unset($content);
                         return $vars;
                     }
@@ -1369,7 +1368,7 @@ class TableBuilderTest extends MockeryTestCase
      * Test renderActions with format override
      * (Default behaviour is buttons for <= 4 actions)
      */
-    public function testRenderActionsWithFormatOverrideDropdown()
+    public function testRenderActionsWithFormatOverrideDropdown(): void
     {
         $settings = [
             'crud' => [
@@ -1388,7 +1387,7 @@ class TableBuilderTest extends MockeryTestCase
             ->with('{{[elements/actionContainer]}}')
             ->will(
                 $this->returnCallback(
-                    function ($content, $vars) {
+                    static function ($content, $vars) {
                         unset($content);
                         return $vars;
                     }
@@ -1415,7 +1414,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderAttributes
      */
-    public function testRenderAttributes()
+    public function testRenderAttributes(): void
     {
         $attributes = [];
 
@@ -1437,7 +1436,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderAttributes without attributes
      */
-    public function testRenderAttributesWithoutAttributes()
+    public function testRenderAttributesWithoutAttributes(): void
     {
         $mockContentHelper = $this->createPartialMock(ContentHelper::class, ['renderAttributes']);
 
@@ -1457,7 +1456,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderDropdownActions
      */
-    public function testRenderDropdownActions()
+    public function testRenderDropdownActions(): void
     {
         $actions = [
             [
@@ -1494,7 +1493,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderButtonActions
      */
-    public function testRenderButtonActions()
+    public function testRenderButtonActions(): void
     {
         $actions = [
             [
@@ -1525,7 +1524,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderButtonActions with collapseAt value set
      */
-    public function testRenderButtonActionsCollapse()
+    public function testRenderButtonActionsCollapse(): void
     {
         $actions = [
             [
@@ -1548,7 +1547,7 @@ class TableBuilderTest extends MockeryTestCase
             ->times(4)
             ->with('{{[elements/actionButton]}}', m::any())
             ->andReturnUsing(
-                fn($content, $details) => key($details) . '-' . current($details)
+                static fn($content, $details) => key($details) . '-' . current($details)
             );
         $mockContentHelper
             ->shouldReceive('replaceContent')
@@ -1572,7 +1571,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderFooter Without pagination
      */
-    public function testRenderFooterWithoutPagination()
+    public function testRenderFooterWithoutPagination(): void
     {
         $table = $this->getConcreteTableBuilder();
 
@@ -1584,7 +1583,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderFooter
      */
-    public function testRenderFooter()
+    public function testRenderFooter(): void
     {
         $settings = [
             'paginate' => [
@@ -1616,7 +1615,7 @@ class TableBuilderTest extends MockeryTestCase
      *
      * @depends testRenderLimitOptions_IsDefined
      */
-    public function testRenderLimitOptions_WithoutLimitOptions()
+    public function testRenderLimitOptions_WithoutLimitOptions(): void
     {
         $settings = [
             'paginate' => [
@@ -1638,7 +1637,7 @@ class TableBuilderTest extends MockeryTestCase
      *
      * @depends testRenderLimitOptions_IsDefined
      */
-    public function testRenderLimitOptions()
+    public function testRenderLimitOptions(): void
     {
         $settings = [
             'paginate' => [
@@ -1697,7 +1696,7 @@ class TableBuilderTest extends MockeryTestCase
      *
      * @depends testRenderLimitOptions_IsDefined
      */
-    public function testRenderLimitOptions_WithQueryEnabled()
+    public function testRenderLimitOptions_WithQueryEnabled(): void
     {
         $settings = [
             'paginate' => [
@@ -1767,7 +1766,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * @depends renderPageOptions_IsDefined
      */
-    public function testRenderPageOptions_WithoutOptions()
+    public function testRenderPageOptions_WithoutOptions(): void
     {
         $options = [
             'previous' => [],
@@ -1793,7 +1792,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * @depends renderPageOptions_IsDefined
      */
-    public function testRenderPageOptions()
+    public function testRenderPageOptions(): void
     {
         $options = [
             'previous' => [
@@ -1914,7 +1913,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn Without options
      */
-    public function testRenderHeaderColumn_WithoutOptions()
+    public function testRenderHeaderColumn_WithoutOptions(): void
     {
         $column = [];
 
@@ -1936,7 +1935,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn With custom content
      */
-    public function testRenderHeaderColumn_WithCustomContent()
+    public function testRenderHeaderColumn_WithCustomContent(): void
     {
         $column = [];
 
@@ -1958,7 +1957,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn With sort current order asc
      */
-    public function testRenderHeaderColumn_WithSortCurrentOrderAsc()
+    public function testRenderHeaderColumn_WithSortCurrentOrderAsc(): void
     {
         $column = [
             'sort' => 'foo'
@@ -2022,7 +2021,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn With sort current order desc
      */
-    public function testRenderHeaderColumn_WithSortCurrentOrderDesc()
+    public function testRenderHeaderColumn_WithSortCurrentOrderDesc(): void
     {
         $column = [
             'sort' => 'foo'
@@ -2086,7 +2085,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn With sort
      */
-    public function testRenderHeaderColumn_WithSort()
+    public function testRenderHeaderColumn_WithSort(): void
     {
         $column = [
             'sort' => 'foo'
@@ -2150,7 +2149,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn With pre-set width
      */
-    public function testRenderHeaderColumn_WithWidthAndTitle()
+    public function testRenderHeaderColumn_WithWidthAndTitle(): void
     {
         $column = [
             'width' => 'checkbox',
@@ -2182,7 +2181,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn when disabled
      */
-    public function testRenderHeaderColumn_WhenDisabled()
+    public function testRenderHeaderColumn_WhenDisabled(): void
     {
         $column = [
             'hideWhenDisabled' => true
@@ -2200,7 +2199,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn with alignment
      */
-    public function testRenderHeaderColumn_WithAlign()
+    public function testRenderHeaderColumn_WithAlign(): void
     {
         $column = [
             'align' => 'right',
@@ -2230,7 +2229,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn with sort and alignment
      */
-    public function testRenderHeaderColumn_WithSortAndAlign()
+    public function testRenderHeaderColumn_WithSortAndAlign(): void
     {
         $column = [
             'sort' => 'foo',
@@ -2292,7 +2291,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderBodyColumn when disabled
      */
-    public function testRenderBodyColumnWhenDisabled()
+    public function testRenderBodyColumnWhenDisabled(): void
     {
         $column = [
             'hideWhenDisabled' => true
@@ -2309,7 +2308,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn when incorrect permission set
      */
-    public function testRenderHeaderColumn_WhenPermissionWontAllow()
+    public function testRenderHeaderColumn_WhenPermissionWontAllow(): void
     {
         $column = [
             'permissionRequisites' => ['incorrectPermission']
@@ -2325,7 +2324,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderBodyColumn when incorrect permission set
      */
-    public function testRenderBodyColumnWhenPermissionWontAllow()
+    public function testRenderBodyColumnWhenPermissionWontAllow(): void
     {
         $column = [
             'permissionRequisites' => ['incorrectPermission']
@@ -2341,7 +2340,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn when correct permission set
      */
-    public function testRenderHeaderColumn_WhenPermissionWillAllow()
+    public function testRenderHeaderColumn_WhenPermissionWillAllow(): void
     {
         $column = [
             'permissionRequisites' => ['correctPermission']
@@ -2351,7 +2350,7 @@ class TableBuilderTest extends MockeryTestCase
         $mockContentHelper->expects($this->once())
             ->method('replaceContent');
   
-        $mockAuthService = $this->createPartialMock(Permission::class, array('isGranted'));
+        $mockAuthService = $this->createPartialMock(Permission::class, ['isGranted']);
 
         $mockAuthService->expects($this->once())
             ->method('isGranted')
@@ -2380,7 +2379,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderBodyColumn when correct permission set
      */
-    public function testRenderBodyColumnWhenPermissionWillAllow()
+    public function testRenderBodyColumnWhenPermissionWillAllow(): void
     {
         $column = [
             'permissionRequisites' => ['correctPermission']
@@ -2390,7 +2389,7 @@ class TableBuilderTest extends MockeryTestCase
         $mockContentHelper->expects($this->once())
             ->method('replaceContent');
 
-        $mockAuthService = $this->createPartialMock(Permission::class, array('isGranted'));
+        $mockAuthService = $this->createPartialMock(Permission::class, ['isGranted']);
 
         $mockAuthService->expects($this->once())
             ->method('isGranted')
@@ -2418,7 +2417,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderBodyColumn With Empty Row With Empty Column
      */
-    public function testRenderBodyColumnEmptyRowEmptyColumn()
+    public function testRenderBodyColumnEmptyRowEmptyColumn(): void
     {
         $row = [];
 
@@ -2442,7 +2441,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderBodyColumn With Name
      */
-    public function testRenderBodyColumnWithName()
+    public function testRenderBodyColumnWithName(): void
     {
         $row = [
             'foo' => 'bar'
@@ -2470,7 +2469,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderBodyColumn With Align
      */
-    public function testRenderBodyColumnWithAlign()
+    public function testRenderBodyColumnWithAlign(): void
     {
         $row = [
             'foo' => 'bar'
@@ -2499,7 +2498,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderBodyColumn with data heading
      */
-    public function testRenderBodyColumnWithDataHeading()
+    public function testRenderBodyColumnWithDataHeading(): void
     {
         $row = [
             'foo' => 'bar'
@@ -2532,7 +2531,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderBodyColumn with data custom attributes
      */
-    public function testRenderBodyColumnWithAttributes()
+    public function testRenderBodyColumnWithAttributes(): void
     {
         $row = [
             'foo' => 'bar'
@@ -2567,7 +2566,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderBodyColumn Custom Wrapper
      */
-    public function testRenderBodyColumnCustomWrapper()
+    public function testRenderBodyColumnCustomWrapper(): void
     {
         $row = [];
 
@@ -2591,7 +2590,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderBodyColumn With Format
      */
-    public function testRenderBodyColumnWithFormat()
+    public function testRenderBodyColumnWithFormat(): void
     {
         $row = [
             'test' => 'bar'
@@ -2619,7 +2618,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderBodyColumn With Formatter
      */
-    public function testRenderBodyColumnWithFormatter()
+    public function testRenderBodyColumnWithFormatter(): void
     {
         $row = [
             'date' => date('Y-m-d')
@@ -2653,7 +2652,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderBodyColumn With Formatter And Action Type
      */
-    public function testRenderBodyColumnWithFormatterAndActionType()
+    public function testRenderBodyColumnWithFormatterAndActionType(): void
     {
         $row = [
             'id' => 1,
@@ -2698,7 +2697,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderBodyColumn With Invalid Formatter
      */
-    public function testRenderBodyColumnWithInvalidFormatter()
+    public function testRenderBodyColumnWithInvalidFormatter(): void
     {
         $this->expectException(MissingFormatterException::class);
         $this->expectExceptionMessage('Missing table formatter: Blah');
@@ -2715,14 +2714,14 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderBodyColumn With Formatter Returning Array
      */
-    public function testRenderBodyColumnWithFormatterReturningArray()
+    public function testRenderBodyColumnWithFormatterReturningArray(): void
     {
         $row = [
             'date' => date('Y-m-d')
         ];
 
         $column = [
-            'formatter' => fn() => ['date' => 'Something Else'],
+            'formatter' => static fn() => ['date' => 'Something Else'],
             'name' => 'date'
         ];
 
@@ -2745,7 +2744,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderBodyColumn With Selector Type
      */
-    public function testRenderBodyColumnWithSelectorType()
+    public function testRenderBodyColumnWithSelectorType(): void
     {
         $row = [
             'id' => 1
@@ -2776,7 +2775,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderBodyColumn With Selector Type And Fieldset
      */
-    public function testRenderBodyColumnWithSelectorTypeAndFieldset()
+    public function testRenderBodyColumnWithSelectorTypeAndFieldset(): void
     {
         $row = [
             'id' => 1
@@ -2809,7 +2808,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderBodyColumn With Action Type
      */
-    public function testRenderBodyColumnWithActionType()
+    public function testRenderBodyColumnWithActionType(): void
     {
         $row = [
             'id' => 1,
@@ -2847,7 +2846,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderBodyColumn With Action Type And Fieldset
      */
-    public function testRenderBodyColumnWithActionTypeAndFieldset()
+    public function testRenderBodyColumnWithActionTypeAndFieldset(): void
     {
         $row = [
             'id' => 1,
@@ -2887,7 +2886,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderExtraRows with rows
      */
-    public function testRenderExtraRowsWithRows()
+    public function testRenderExtraRowsWithRows(): void
     {
         $table = $this->getMockTableBuilder(['getRows']);
 
@@ -2901,7 +2900,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderExtraRows without rows with custom message
      */
-    public function testRenderExtraRowsWithoutRowsCustomMessage()
+    public function testRenderExtraRowsWithoutRowsCustomMessage(): void
     {
         $mockTranslator = $this->createPartialMock(Translator::class, ['translate']);
 
@@ -2909,7 +2908,7 @@ class TableBuilderTest extends MockeryTestCase
             ->method('translate')
             ->will(
                 $this->returnCallback(
-                    fn($string) => $string
+                    static fn($string) => $string
                 )
             );
 
@@ -2953,7 +2952,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderExtraRows without rows
      */
-    public function testRenderExtraRowsWithoutRows()
+    public function testRenderExtraRowsWithoutRows(): void
     {
         $mockTranslator = $this->createPartialMock(Translator::class, ['translate']);
 
@@ -2961,7 +2960,7 @@ class TableBuilderTest extends MockeryTestCase
             ->method('translate')
             ->will(
                 $this->returnCallback(
-                    fn($string) => $string
+                    static fn($string) => $string
                 )
             );
 
@@ -3004,7 +3003,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test action field name and fieldset
      */
-    public function testActionFieldNameAndFieldset()
+    public function testActionFieldNameAndFieldset(): void
     {
         $actionName = 'foo';
 
@@ -3026,7 +3025,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test get and set footer
      */
-    public function testGetFooter()
+    public function testGetFooter(): void
     {
         $table = $this->getConcreteTableBuilder();
 
@@ -3038,7 +3037,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test get and set variable
      */
-    public function testGetVariable()
+    public function testGetVariable(): void
     {
         $table = $this->getConcreteTableBuilder();
 
@@ -3059,7 +3058,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test remove column method
      */
-    public function testRemoveColumn()
+    public function testRemoveColumn(): void
     {
         $table = $this->getConcreteTableBuilder();
 
@@ -3080,7 +3079,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test remove column method if no name property exists
      */
-    public function testRemoveColumnNoNameExists()
+    public function testRemoveColumnNoNameExists(): void
     {
         $table = $this->getConcreteTableBuilder();
         $columns = [
@@ -3089,6 +3088,7 @@ class TableBuilderTest extends MockeryTestCase
         ];
         $table->setColumns($columns);
         $table->removeColumn('name1');
+
         $newColumns = $table->getColumns();
         $this->assertEquals(count($newColumns), 1);
     }
@@ -3096,7 +3096,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test get and set settings
      */
-    public function testGetSettings()
+    public function testGetSettings(): void
     {
         $table = $this->getConcreteTableBuilder();
 
@@ -3105,7 +3105,7 @@ class TableBuilderTest extends MockeryTestCase
         $this->assertEquals(['Foo' => 'Bar'], $table->getSettings());
     }
 
-    public function testIsRowDisabled()
+    public function testIsRowDisabled(): void
     {
         // Stubbed data
         $settings = [];
@@ -3135,11 +3135,11 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * @dataProvider providerIsRowDisabled
      */
-    public function testIsRowDisabledWithDisabled($disabled)
+    public function testIsRowDisabledWithDisabled($disabled): void
     {
         // Stubbed data
         $settings = [
-            'row-disabled-callback' => fn($row) => $row['disabled']
+            'row-disabled-callback' => static fn($row) => $row['disabled']
         ];
         $row = [
             'disabled' => $disabled
@@ -3174,7 +3174,7 @@ class TableBuilderTest extends MockeryTestCase
         ];
     }
 
-    public function testRemoveActions()
+    public function testRemoveActions(): void
     {
         $tableConfig = [
             'crud' => [
@@ -3202,7 +3202,7 @@ class TableBuilderTest extends MockeryTestCase
         $table->removeActions();
     }
 
-    public function testDisableAction()
+    public function testDisableAction(): void
     {
         $tableConfig = [
             'settings' => [
@@ -3235,7 +3235,7 @@ class TableBuilderTest extends MockeryTestCase
         );
     }
 
-    public function testGetEmptyMessage()
+    public function testGetEmptyMessage(): void
     {
         $message = 'foo';
         $config = [
@@ -3270,7 +3270,7 @@ class TableBuilderTest extends MockeryTestCase
         $this->assertEquals($message, $sut->getEmptyMessage());
     }
 
-    public function testAddAction()
+    public function testAddAction(): void
     {
         $tableConfig = [
             'settings' => [
@@ -3308,7 +3308,7 @@ class TableBuilderTest extends MockeryTestCase
         );
     }
 
-    public function testCheckForActionLinks()
+    public function testCheckForActionLinks(): void
     {
         $tableConfig = [
             'settings' => [
@@ -3365,7 +3365,7 @@ class TableBuilderTest extends MockeryTestCase
         );
     }
 
-    public function testSetSetting()
+    public function testSetSetting(): void
     {
         $table = $this->getConcreteTableBuilder();
 
@@ -3373,11 +3373,12 @@ class TableBuilderTest extends MockeryTestCase
         $this->assertEquals(2, $table->getSetting('collapseAt'));
     }
 
-    public function testGetAction()
+    public function testGetAction(): void
     {
         $table = $this->getConcreteTableBuilder();
 
         $table->setSetting('crud', ['actions' => []]);
+
         $action = ['foo', 'bar'];
         $table->addAction('add', $action);
         $this->assertEquals($table->getAction('add'), $action);
@@ -3386,13 +3387,13 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getUrlParameterNameMap_IsDefined()
+    public function getUrlParameterNameMap_IsDefined(): void
     {
         // Set Up
         $table = $this->setUpSut();
 
         // Assert
-        $this->assertIsCallable([$table, 'getUrlParameterNameMap']);
+        $this->assertIsCallable(static fn(): array => $table->getUrlParameterNameMap());
     }
 
     /**
@@ -3417,7 +3418,7 @@ class TableBuilderTest extends MockeryTestCase
      * @depends getUrlParameterNameMap_ReturnsAnArray
      * @test
      */
-    public function getUrlParameterNameMap_ReturnsAnEmptyArrayByDefault($map)
+    public function getUrlParameterNameMap_ReturnsAnEmptyArrayByDefault($map): void
     {
         // Assert
         $this->assertEmpty($map);
@@ -3426,20 +3427,20 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function setUrlParameterNameMap_IsDefined()
+    public function setUrlParameterNameMap_IsDefined(): void
     {
         // Set Up
         $table = $this->setUpSut();
 
         // Assert
-        $this->assertIsCallable([$table, 'setUrlParameterNameMap']);
+        $this->assertIsCallable(static fn(array $urlParamNameMap): self => $table->setUrlParameterNameMap($urlParamNameMap));
     }
 
     /**
      * @depends setUrlParameterNameMap_IsDefined
      * @test
      */
-    public function setUrlParameterNameMap_ReturnsSelf()
+    public function setUrlParameterNameMap_ReturnsSelf(): void
     {
         // Set Up
         $table = $this->setUpSut();
@@ -3456,7 +3457,7 @@ class TableBuilderTest extends MockeryTestCase
      * @depends getUrlParameterNameMap_IsDefined
      * @test
      */
-    public function setUrlParameterNameMap_SetsMappings()
+    public function setUrlParameterNameMap_SetsMappings(): void
     {
         // Set Up
         $table = $this->setUpSut();
@@ -3472,7 +3473,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function testRenderLimitOptions_IsDefined()
+    public function testRenderLimitOptions_IsDefined(): void
     {
         // Set Up
         $table = $this->getConcreteTableBuilder();
@@ -3497,7 +3498,7 @@ class TableBuilderTest extends MockeryTestCase
      * @dataProvider pageAndLimitUrlParameterNamesDataProvider
      * @test
      */
-    public function renderLimitOptions_DefaultUrlParameterNames(string $urlParameterName)
+    public function renderLimitOptions_DefaultUrlParameterNames(string $urlParameterName): void
     {
         // Set Up
         $table = $this->setUpSut();
@@ -3525,19 +3526,18 @@ class TableBuilderTest extends MockeryTestCase
     }
 
     /**
-     * @param string $originalName
-     * @param string $mappedName
      * @depends      renderLimitOptions_DefaultUrlParameterNames
      * @dataProvider mappedPageAndLimitUrlParameterNamesDataProvider
      * @test
      */
-    public function renderLimitOptions_MapsUrlParameterNames(string $originalName, string $mappedName)
+    public function renderLimitOptions_MapsUrlParameterNames(string $originalName, string $mappedName): void
     {
         // Set Up
         $table = $this->setUpSut();
         $table->setUrlParameterNameMap([$originalName => $mappedName]);
         $table->loadParams(['url' => $table->getUrl()]);
         $table->setSetting('paginate', ['limit' => ['options' => ['1']]]);
+
         $queryWithLimitMatcher = IsArrayContainingKey::hasKeyInArray($mappedName);
         $optionsMatcher = IsArrayContainingKeyValuePair::hasKeyValuePair('query', $queryWithLimitMatcher);
         $any = IsAnything::anything();
@@ -3552,7 +3552,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function renderPageOptions_IsDefined()
+    public function renderPageOptions_IsDefined(): void
     {
         // Set Up
         $table = $this->getConcreteTableBuilder();
@@ -3562,16 +3562,16 @@ class TableBuilderTest extends MockeryTestCase
     }
 
     /**
-     * @param string $urlParameterName
      * @depends      renderPageOptions_IsDefined
      * @dataProvider pageAndLimitUrlParameterNamesDataProvider
      * @test
      */
-    public function renderPageOptions_DefaultUrlParameterNames(string $urlParameterName)
+    public function renderPageOptions_DefaultUrlParameterNames(string $urlParameterName): void
     {
         // Set Up
         $table = $this->setUpSut();
         $table->setTotal(100);
+
         $queryWithLimitMatcher = IsArrayContainingKey::hasKeyInArray($urlParameterName);
         $optionsMatcher = IsArrayContainingKeyValuePair::hasKeyValuePair('query', $queryWithLimitMatcher);
         $any = IsAnything::anything();
@@ -3584,18 +3584,17 @@ class TableBuilderTest extends MockeryTestCase
     }
 
     /**
-     * @param string $originalName
-     * @param string $mappedName
      * @depends      renderPageOptions_DefaultUrlParameterNames
      * @dataProvider mappedPageAndLimitUrlParameterNamesDataProvider
      * @test
      */
-    public function renderPageOptions_MapsUrlParameterNames(string $originalName, string $mappedName)
+    public function renderPageOptions_MapsUrlParameterNames(string $originalName, string $mappedName): void
     {
         // Set Up
         $table = $this->setUpSut();
         $table->setUrlParameterNameMap([$originalName => $mappedName]);
         $table->setTotal(100);
+
         $queryWithLimitMatcher = IsArrayContainingKey::hasKeyInArray($mappedName);
         $optionsMatcher = IsArrayContainingKeyValuePair::hasKeyValuePair('query', $queryWithLimitMatcher);
         $any = IsAnything::anything();
@@ -3610,7 +3609,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function renderHeaderColumn_IsDefined()
+    public function renderHeaderColumn_IsDefined(): void
     {
         // Set Up
         $table = $this->getConcreteTableBuilder();
@@ -3631,12 +3630,11 @@ class TableBuilderTest extends MockeryTestCase
     }
 
     /**
-     * @param string $urlParameterName
      * @depends      renderHeaderColumn_IsDefined
      * @dataProvider sortAndOrderUrlParameterNamesDataProvider
      * @test
      */
-    public function renderHeaderColumn_DefaultUrlParameterNames(string $urlParameterName)
+    public function renderHeaderColumn_DefaultUrlParameterNames(string $urlParameterName): void
     {
         // Set Up
         $table = $this->setUpSut();
@@ -3663,18 +3661,17 @@ class TableBuilderTest extends MockeryTestCase
     }
 
     /**
-     * @param string $originalName
-     * @param string $mappedName
      * @depends      renderHeaderColumn_DefaultUrlParameterNames
      * @dataProvider mappedSortAndOrderUrlParameterNamesDataProvider
      * @test
      */
-    public function renderHeaderColumn_MapsUrlParameterNames(string $originalName, string $mappedName)
+    public function renderHeaderColumn_MapsUrlParameterNames(string $originalName, string $mappedName): void
     {
         // Set Up
         $table = $this->setUpSut();
         $table->setUrlParameterNameMap([$originalName => $mappedName]);
         $table->setTotal(100);
+
         $queryWithLimitMatcher = IsArrayContainingKey::hasKeyInArray($mappedName);
         $optionsMatcher = IsArrayContainingKeyValuePair::hasKeyValuePair('query', $queryWithLimitMatcher);
         $any = IsAnything::anything();
@@ -3686,20 +3683,18 @@ class TableBuilderTest extends MockeryTestCase
         $table->renderHeaderColumn(['sort' => 'foo']);
     }
 
-    /**
-     * @return TableBuilder
-     */
     protected function setUpSut(): TableBuilder
     {
         $sut = $this->getConcreteTableBuilder();
 
         $urlPlugin = m::mock(Url::class);
         $urlPlugin->shouldIgnoreMissing('');
+
         $sut->loadParams(['url' => $urlPlugin]);
         return $sut;
     }
 
-    public function testGetTranslator()
+    public function testGetTranslator(): void
     {
         $translator = m::mock(Translator::class);
 
@@ -3718,7 +3713,7 @@ class TableBuilderTest extends MockeryTestCase
         );
     }
 
-    public function testGetServiceLocator()
+    public function testGetServiceLocator(): void
     {
         $serviceLocator = m::mock(ContainerInterface::class);
 

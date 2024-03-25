@@ -23,19 +23,27 @@ use LmcRbacMvc\Service\AuthorizationService;
  */
 class FinancialEvidenceTest extends MockeryTestCase
 {
+    /**
+     * @var \Mockery\LegacyMockInterface
+     */
+    public $authService;
+    public $validatorPluginManager;
     /** @var  FinancialEvidence */
     protected $sut;
 
     /** @var  m\MockInterface|\Common\Service\Helper\FormHelperService */
     protected $formHelper;
+
     /** @var  \Common\FormService\FormServiceManager */
     protected $fsm;
+
     /** @var  m\MockInterface */
     protected $urlHelper;
+
     /** @var  m\MockInterface */
     protected $translator;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);
         $this->fsm = m::mock(\Common\FormService\FormServiceManager::class)->makePartial();
@@ -53,7 +61,7 @@ class FinancialEvidenceTest extends MockeryTestCase
         );
     }
 
-    public function testGetForm()
+    public function testGetForm(): void
     {
         $this->translator
             ->shouldReceive('translateReplace')

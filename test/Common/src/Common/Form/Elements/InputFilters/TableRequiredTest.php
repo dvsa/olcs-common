@@ -25,7 +25,7 @@ class TableRequiredTest extends \PHPUnit\Framework\TestCase
     /**
      * Setup the element
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->element = new TableRequired();
     }
@@ -33,7 +33,7 @@ class TableRequiredTest extends \PHPUnit\Framework\TestCase
     /**
      * Test validators
      */
-    public function testValidators()
+    public function testValidators(): void
     {
         $spec = $this->element->getInputSpecification();
 

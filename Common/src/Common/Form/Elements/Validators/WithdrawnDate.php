@@ -19,6 +19,7 @@ use Laminas\Validator as LaminasValidator;
 class WithdrawnDate extends LaminasValidator\AbstractValidator
 {
     public const DATE_NOT_VALID = 'dateNotValid';
+
     public const DATE_IN_FUTURE = 'dateInFuture';
 
     /**

@@ -19,7 +19,7 @@ class ContinueFormActions
      * @Form\Options({"label": "continue.button"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $continue = null;
+    public $continue;
 
     /**
      * @Form\Attributes({
@@ -31,5 +31,5 @@ class ContinueFormActions
      * @Form\Options({"label": "cancel.button"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $cancel = null;
+    public $cancel;
 }

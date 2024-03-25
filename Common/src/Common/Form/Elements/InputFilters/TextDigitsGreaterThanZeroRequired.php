@@ -9,7 +9,7 @@ namespace Common\Form\Elements\InputFilters;
 
 use Laminas\Form\Element as LaminasElement;
 use Laminas\Validator as LaminasValidator;
-use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\InputFilter\InputProviderInterface;
 
 /**
  * TextDigitsGreaterThanZeroRequired
@@ -20,12 +20,10 @@ class TextDigitsGreaterThanZeroRequired extends LaminasElement implements InputP
 {
     /**
      * Provide default input rules for this element.
-     *
-     * @return array
      */
     public function getInputSpecification(): array
     {
-        $specification = [
+        return [
             'name' => $this->getName(),
             'required' => true,
             'validators' => [
@@ -33,7 +31,5 @@ class TextDigitsGreaterThanZeroRequired extends LaminasElement implements InputP
                 ['name' => \Laminas\Validator\GreaterThan::class, 'options'=>['min' => 0]]
             ]
         ];
-
-        return $specification;
     }
 }

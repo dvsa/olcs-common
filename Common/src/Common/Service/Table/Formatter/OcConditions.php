@@ -35,12 +35,13 @@ class OcConditions implements FormatterPluginManagerInterface
 
         if (!is_null($data['conditions'])) {
             foreach ($data['conditions'] as $condition) {
-                if (
-                    !is_null($condition['licence'])
-                    && $condition['conditionType']['id'] === RefData::TYPE_CONDITION
-                ) {
-                    $count++;
+                if (is_null($condition['licence'])) {
+                    continue;
                 }
+                if ($condition['conditionType']['id'] !== RefData::TYPE_CONDITION) {
+                    continue;
+                }
+                ++$count;
             }
         }
 

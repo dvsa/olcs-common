@@ -8,7 +8,6 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
 class SystemParameterLinkFactory implements FactoryInterface
 {
     /**
-     * @param  ContainerInterface $container
      * @param  $requestedName
      * @param  array|null         $options
      * @return SystemParameterLink

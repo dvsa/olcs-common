@@ -15,7 +15,6 @@ class Config extends AbstractHelper
     /**
      * Create service instance
      *
-     * @param array $config
      *
      * @return Config
      */

@@ -16,12 +16,12 @@ class GenerateContinuation
      * @Form\Name("details")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\GenerateContinuationDetails")
      */
-    public $details = null;
+    public $details;
 
     /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\GenerateContinuationFormActions")
      * @Form\Attributes({"class":"govuk-button-group"})
      */
-    public $formActions = null;
+    public $formActions;
 }

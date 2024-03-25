@@ -17,7 +17,7 @@ use Laminas\Form\Fieldset;
  */
 class NoOfPermitsFormTest extends TestCase
 {
-    public function testParentNotValidNoZeroesCheckRequired()
+    public function testParentNotValidNoZeroesCheckRequired(): void
     {
         $existingErrorMessages = ['Existing error message 1', 'Existing error message 2'];
 
@@ -32,7 +32,7 @@ class NoOfPermitsFormTest extends TestCase
         $this->assertEquals($existingErrorMessages, $noOfPermitsForm->getMessages());
     }
 
-    public function testParentValidAllZeroFields()
+    public function testParentValidAllZeroFields(): void
     {
         $noOfPermitsForm = $this->createParentValidForm(false, false, false, false);
         $noOfPermitsForm->shouldReceive('callParentGetMessages')
@@ -46,13 +46,13 @@ class NoOfPermitsFormTest extends TestCase
         );
     }
 
-    public function testParentValidSomeZeroFields()
+    public function testParentValidSomeZeroFields(): void
     {
         $noOfPermitsForm = $this->createParentValidForm(false, true, false, true);
         $this->assertTrue($noOfPermitsForm->isValid());
     }
 
-    public function testParentValidNoZeroFields()
+    public function testParentValidNoZeroFields(): void
     {
         $noOfPermitsForm = $this->createParentValidForm(true, true, true, true);
         $this->assertTrue($noOfPermitsForm->isValid());

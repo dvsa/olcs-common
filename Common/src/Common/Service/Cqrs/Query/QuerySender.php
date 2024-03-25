@@ -17,6 +17,7 @@ class QuerySender implements FactoryInterface
      * @var TransferAnnotationBuilder
      */
     private $annotationBuilder;
+
     private CachingQueryService $queryService;
 
     /**
@@ -36,7 +37,6 @@ class QuerySender implements FactoryInterface
     /**
      * @todo not the right place for this, need to think what's best, but seems like it might be ok for now to avoid duplication
      *
-     * @param array $features
      *
      * @return bool
      */
@@ -51,10 +51,8 @@ class QuerySender implements FactoryInterface
     }
 
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
-     * @return $this
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

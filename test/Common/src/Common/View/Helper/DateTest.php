@@ -17,12 +17,12 @@ class DateTest extends MockeryTestCase
     /**
      * Setup the view helper
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $mockTranslator = m::mock(Translate::class);
         $mockTranslator->shouldReceive('__invoke')
             ->andReturnUsing(
-                fn($text) => $text . '-translated'
+                static fn($text) => $text . '-translated'
             );
 
         $this->sut = new Date($mockTranslator);
@@ -31,7 +31,7 @@ class DateTest extends MockeryTestCase
     /**
      * @dataProvider provider
      */
-    public function testInvoke($timestamp, $format, $altIfNull, $expected)
+    public function testInvoke($timestamp, $format, $altIfNull, $expected): void
     {
         $sut = $this->sut;
 

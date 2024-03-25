@@ -13,13 +13,11 @@ class VehicleLink implements FormatterPluginManagerInterface
 {
     private UrlHelperService $urlHelper;
 
-    /**
-     * @param UrlHelperService $urlHelper
-     */
     public function __construct(UrlHelperService $urlHelper)
     {
         $this->urlHelper = $urlHelper;
     }
+
     /**
      * Return a vehicle URL in a link format for a table.
      *

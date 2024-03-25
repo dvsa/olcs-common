@@ -18,6 +18,8 @@ use Mockery as m;
 
 class ConvictionsPenaltiesTest extends AbstractLvaFormServiceTestCase
 {
+    public $translator;
+    public $urlHelper;
     protected $classToTest = ConvictionsPenalties::class;
 
     protected $formName = 'Lva\ConvictionsPenalties';
@@ -25,7 +27,7 @@ class ConvictionsPenaltiesTest extends AbstractLvaFormServiceTestCase
     /** @var  m\MockInterface|\Laminas\Form\Form */
     private $mockedForm;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->translator = m::mock(TranslationHelperService::class);
         $this->urlHelper = m::mock(UrlHelperService::class);
@@ -35,7 +37,7 @@ class ConvictionsPenaltiesTest extends AbstractLvaFormServiceTestCase
     }
 
 
-    public function checkGetForm($guidePath, $guideName)
+    public function checkGetForm($guidePath, $guideName): void
     {
         $this->translator
             ->shouldReceive('translate')
@@ -81,7 +83,7 @@ class ConvictionsPenaltiesTest extends AbstractLvaFormServiceTestCase
         $this->assertSame($this->mockedForm, $actual);
     }
 
-    public function checkGetFormNi()
+    public function checkGetFormNi(): void
     {
         $this->checkGetForm(
             '/guides/convictions-and-penalties-guidance-ni/',
@@ -89,7 +91,7 @@ class ConvictionsPenaltiesTest extends AbstractLvaFormServiceTestCase
         );
     }
 
-    public function checkGetFormGb()
+    public function checkGetFormGb(): void
     {
         $this->checkGetForm(
             '/guides/convictions-and-penalties-guidance-gb/',
@@ -97,19 +99,19 @@ class ConvictionsPenaltiesTest extends AbstractLvaFormServiceTestCase
         );
     }
 
-    public function testGetForm()
+    public function testGetForm(): void
     {
         $this->checkGetFormGb();
         $this->checkGetFormNi();
     }
 
-    public function testAlterFormDoesNothingIfParamsNotSet()
+    public function testAlterFormDoesNothingIfParamsNotSet(): void
     {
         $this->mockedForm->shouldNotReceive('get');
         $this->sut->changeFormForDirectorVariation($this->mockedForm, []);
     }
 
-    public function testAlterFormChangesLabelsForDirectorVariationType()
+    public function testAlterFormChangesLabelsForDirectorVariationType(): void
     {
         $heading = 'selfserve-app-subSection-previous-history-criminal-conviction-hasConv';
         $this->mockedForm->shouldReceive('get')->with('data')->andReturn(
@@ -158,17 +160,17 @@ class ConvictionsPenaltiesTest extends AbstractLvaFormServiceTestCase
         $this->sut->changeFormForDirectorVariation($this->mockedForm, $params);
     }
 
-    public function testDirectChangeFalseIfNoParam()
+    public function testDirectChangeFalseIfNoParam(): void
     {
         $this->assertFalse($this->sut->isDirectorChange([]));
     }
 
-    public function testDirectChangeFalseIfNotAppropriateParam()
+    public function testDirectChangeFalseIfNotAppropriateParam(): void
     {
         $this->assertFalse($this->sut->isDirectorChange(['variationType' => 'inappropriate']));
     }
 
-    public function testDirectChangeTrueIfNotAppropriateVariationType()
+    public function testDirectChangeTrueIfNotAppropriateVariationType(): void
     {
         $this->assertTrue($this->sut->isDirectorChange(['variationType' => RefData::VARIATION_TYPE_DIRECTOR_CHANGE]));
     }

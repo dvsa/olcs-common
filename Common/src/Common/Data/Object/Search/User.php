@@ -14,6 +14,7 @@ class User extends InternalSearchAbstract
      * @var string
      */
     protected $title = 'Users';
+
     /**
      * @var string
      */
@@ -106,12 +107,12 @@ class User extends InternalSearchAbstract
          return [
             [
                 'title' => 'Username',
-                'formatter' => fn($data) => '<a class="govuk-link" href="/admin/user-management/users/edit/' . $data['userId']
+                'formatter' => static fn($data) => '<a class="govuk-link" href="/admin/user-management/users/edit/' . $data['userId']
                  . '">' . $data['loginId'] . '</a>'
             ],
             [
                 'title' => 'Name',
-                'formatter' => fn($data) => $data['forename'] . ' ' .
+                'formatter' => static fn($data) => $data['forename'] . ' ' .
                 $data['familyName']
             ],
             [

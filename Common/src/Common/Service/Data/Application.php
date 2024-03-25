@@ -67,16 +67,10 @@ class Application extends AbstractDataService
     public function canHaveCases($id)
     {
         $application = $this->fetchApplicationData($id);
-
-        if (empty($application['status'])
+        return !(empty($application['status'])
             || ((is_array($application['status']) ? $application['status']['id'] :
                     $application['status']) === CommonRefData::APPLICATION_STATUS_NOT_SUBMITTED)
-            || empty($application['licence']) || empty($application['licence']['licNo'])
-        ) {
-            return false;
-        }
-
-        return true;
+            || empty($application['licence']) || empty($application['licence']['licNo']));
     }
 
     /**

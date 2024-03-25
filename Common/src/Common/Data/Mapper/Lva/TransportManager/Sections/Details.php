@@ -64,7 +64,6 @@ class Details extends AbstractSection
     /**
      * populate
      *
-     * @param array $transportManagerApplication
      *
      * @return \Object;
      */
@@ -77,9 +76,9 @@ class Details extends AbstractSection
 
         if ($transportManagerApplication['application']['vehicleType']['id'] === RefData::APP_VEHICLE_TYPE_LGV) {
             // LGV only - populate lgvAcquiredRightsReferenceNumber
-            $this->lgvAcquiredRightsReferenceNumber = !empty($transportManagerApplication['lgvAcquiredRightsReferenceNumber'])
-                ? $transportManagerApplication['lgvAcquiredRightsReferenceNumber']
-                : $this->getTranslationTemplate() . 'lgvAcquiredRightsReferenceNumberNotProvided';
+            $this->lgvAcquiredRightsReferenceNumber = empty($transportManagerApplication['lgvAcquiredRightsReferenceNumber'])
+                ? $this->getTranslationTemplate() . 'lgvAcquiredRightsReferenceNumberNotProvided'
+                : $transportManagerApplication['lgvAcquiredRightsReferenceNumber'];
         } else {
             // skip lgvAcquiredRightsReferenceNumber
             $this->propertiesToSkip[] = 'lgvAcquiredRightsReferenceNumber';
@@ -119,7 +118,6 @@ class Details extends AbstractSection
     /**
      * processDocuments
      *
-     * @param array $transportManagerApplication
      *
      * @return mixed
      */
@@ -128,11 +126,13 @@ class Details extends AbstractSection
         $hasDocument = false;
         $documents = $transportManagerApplication['transportManager']['documents'];
         foreach ($documents as $document) {
-            if ($document['category']['id'] === Category::CATEGORY_TRANSPORT_MANAGER &&
-                $document['subCategory']['id'] === Category::DOC_SUB_CATEGORY_TRANSPORT_MANAGER_CPC_OR_EXEMPTION
-            ) {
-                $hasDocument = true;
+            if ($document['category']['id'] !== Category::CATEGORY_TRANSPORT_MANAGER) {
+                continue;
             }
+            if ($document['subCategory']['id'] !== Category::DOC_SUB_CATEGORY_TRANSPORT_MANAGER_CPC_OR_EXEMPTION) {
+                continue;
+            }
+            $hasDocument = true;
         }
 
         return $this->getTranslationTemplate() . ($hasDocument ? 'certificateAdded' : 'noCertificatesAttached');
@@ -142,8 +142,6 @@ class Details extends AbstractSection
      * processAddress
      *
      * @param $data
-     *
-     * @return array
      */
     private function processAddress($data): array
     {
@@ -153,10 +151,9 @@ class Details extends AbstractSection
                 $formattedAddress[$key] = $value;
             }
         }
-        $formattedAddress['country'] = $data['countryCode']['countryDesc'];
 
-        $formattedAddress = array_diff($formattedAddress, [''])
+        $formattedAddress['country'] = $data['countryCode']['countryDesc'];
+        return array_diff($formattedAddress, [''])
             + array_intersect($formattedAddress, ['']);
-        return $formattedAddress;
     }
 }

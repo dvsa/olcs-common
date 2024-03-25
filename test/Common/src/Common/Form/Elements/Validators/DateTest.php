@@ -18,7 +18,7 @@ class DateTest extends \PHPUnit\Framework\TestCase
      * @param $value
      * @param array $errorMessages
      */
-    public function testIsValid($expected, $value, $errorMessages = [])
+    public function testIsValid($expected, $value, $errorMessages = []): void
     {
         $errorMessages = empty($errorMessages) ? ['error' => 'message'] : $errorMessages;
 

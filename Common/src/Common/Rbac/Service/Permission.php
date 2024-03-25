@@ -40,6 +40,6 @@ class Permission
             return false;
         }
 
-        return strval($currentUserId) === $userId;
+        return (string) $currentUserId === $userId;
     }
 }

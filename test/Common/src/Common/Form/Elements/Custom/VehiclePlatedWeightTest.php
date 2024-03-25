@@ -11,7 +11,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class VehiclePlatedWeightTest extends MockeryTestCase
 {
-    public function testGetInputSpecification()
+    public function testGetInputSpecification(): void
     {
         /** @var VehiclePlatedWeight $sut */
         $sut = m::mock(VehiclePlatedWeight::class)->makePartial()
@@ -27,7 +27,7 @@ class VehiclePlatedWeightTest extends MockeryTestCase
                 \Laminas\Validator\Between::class,
             ],
             array_map(
-                fn($item) => $item['name'],
+                static fn($item) => $item['name'],
                 $actual['validators']
             )
         );
@@ -36,7 +36,7 @@ class VehiclePlatedWeightTest extends MockeryTestCase
     /**
      * @dataProvider dpTestGetInputSpecificationOptions
      */
-    public function testGetInputSpecificationOptions($options, $expect)
+    public function testGetInputSpecificationOptions($options, $expect): void
     {
         /** @var VehiclePlatedWeight $sut */
         $sut = new VehiclePlatedWeight(null, $options);

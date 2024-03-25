@@ -30,12 +30,12 @@ class LgvDeclaration
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      */
-    public $lgvDeclarationConfirmation = null;
+    public $lgvDeclarationConfirmation;
 
     /**
      * @Form\Attributes({"value":"<p class='exclamation'>%s</p>"})
      * @Form\Options({"tokens":{"application_type-of-licence_licence-type.data.lgvDeclarationWarning"}})
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $lgvDeclarationWarning = null;
+    public $lgvDeclarationWarning;
 }

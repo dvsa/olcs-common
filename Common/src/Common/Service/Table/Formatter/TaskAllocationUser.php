@@ -20,14 +20,15 @@ class TaskAllocationUser extends Name implements FormatterPluginManagerInterface
     public function format($data, $column = [])
     {
         $userName = parent::format($data, $column);
-        if (!empty(trim($userName))) {
+        if (trim($userName) !== '' && trim($userName) !== '0') {
             return $userName;
         }
-
-        if (is_array($data['taskAlphaSplits']) && count($data['taskAlphaSplits']) > 0) {
-            return '[Alpha split]';
+        if (!is_array($data['taskAlphaSplits'])) {
+            return 'Unassigned';
         }
-
-        return 'Unassigned';
+        if (count($data['taskAlphaSplits']) <= 0) {
+            return 'Unassigned';
+        }
+        return '[Alpha split]';
     }
 }

@@ -15,7 +15,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class StandardAndCabotageYesNoRadioTest extends MockeryTestCase
 {
-    public function testGetInputSpecification()
+    public function testGetInputSpecification(): void
     {
         $standardAndCabotageYesNoRadio = m::mock(StandardAndCabotageYesNoRadio::class)->makePartial()
             ->shouldAllowMockingProtectedMethods();

@@ -15,6 +15,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 class ConstrainedCountriesListTest extends MockeryTestCase
 {
+    public $sut;
     protected $translator;
 
     protected function setUp(): void
@@ -23,7 +24,7 @@ class ConstrainedCountriesListTest extends MockeryTestCase
         $this->sut = new ConstrainedCountriesList($this->translator);
     }
 
-    public function testFormat()
+    public function testFormat(): void
     {
         $data = [
             'constrainedCountries' => [
@@ -40,7 +41,7 @@ class ConstrainedCountriesListTest extends MockeryTestCase
         ];
 
         $this->translator->shouldReceive('translate')->andReturnUsing(
-            fn($key) => '_TRNSLT_' . $key
+            static fn($key) => '_TRNSLT_' . $key
         );
         $this->assertEquals(
             '_TRNSLT_United Kingdom, _TRNSLT_Trinidad &amp; Tobago, _TRNSLT_&quot;Third&quot; country',
@@ -48,7 +49,7 @@ class ConstrainedCountriesListTest extends MockeryTestCase
         );
     }
 
-    public function testFormatWithColumnName()
+    public function testFormatWithColumnName(): void
     {
         $columnName = 'anyName';
 
@@ -66,7 +67,7 @@ class ConstrainedCountriesListTest extends MockeryTestCase
             ]
         ];
         $this->translator->shouldReceive('translate')->andReturnUsing(
-            fn($key) => '_TRNSLT_' . $key
+            static fn($key) => '_TRNSLT_' . $key
         );
         $this->assertEquals(
             '_TRNSLT_United Kingdom, _TRNSLT_Trinidad &amp; Tobago, _TRNSLT_&quot;Third&quot; country',
@@ -74,13 +75,13 @@ class ConstrainedCountriesListTest extends MockeryTestCase
         );
     }
 
-    public function testFormatEmptyData()
+    public function testFormatEmptyData(): void
     {
         $data = [
             'constrainedCountries' => []
         ];
         $this->translator->shouldReceive('translate')->andReturnUsing(
-            fn($key) => '_TRNSLT_' . $key
+            static fn($key) => '_TRNSLT_' . $key
         );
         $this->assertEquals(
             '_TRNSLT_no.constrained.countries',

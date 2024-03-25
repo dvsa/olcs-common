@@ -18,11 +18,6 @@ class Filesystem extends BaseFileSystem
 {
     public const MAX_LOCK_ATTEMPTS = 3;
 
-    /**
-     * @param string $path
-     * @param string $prefix
-     * @return string
-     */
     public function createTmpDir(string $path, string $prefix = ''): string
     {
         $lock = $this->getLock($path);
@@ -39,11 +34,6 @@ class Filesystem extends BaseFileSystem
         return $dirname;
     }
 
-    /**
-     * @param string $path
-     * @param string $prefix
-     * @return string
-     */
     public function createTmpFile(string $path, string $prefix = ''): string
     {
         $lock = $this->getLock($path);
@@ -62,14 +52,11 @@ class Filesystem extends BaseFileSystem
 
 
     /**
-     * @param LockInterface $lock
-     * @param bool $blocking
-     * @param int $maxAttempts
      * @throws LockConflictedException | LockAcquiringException
      */
     private function acquireLock(LockInterface $lock, bool $blocking = true, int $maxAttempts = self::MAX_LOCK_ATTEMPTS): void
     {
-        for ($currentAttempt = 1; $currentAttempt <= $maxAttempts; $currentAttempt++)
+        for ($currentAttempt = 1; $currentAttempt <= $maxAttempts; ++$currentAttempt)
         {
             try {
                 $lock->acquire($blocking);
@@ -78,15 +65,12 @@ class Filesystem extends BaseFileSystem
                 if ($currentAttempt >= $maxAttempts) {
                     throw $exception;
                 }
+
                 usleep(500);
             }
         }
     }
 
-    /**
-     * @param string $path
-     * @return LockInterface
-     */
     protected function getLock(string $path): LockInterface
     {
         $store = new FlockStore();

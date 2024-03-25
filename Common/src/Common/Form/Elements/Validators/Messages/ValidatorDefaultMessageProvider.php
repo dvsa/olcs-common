@@ -12,6 +12,7 @@ use Laminas\Validator\ValidatorPluginManager;
 class ValidatorDefaultMessageProvider
 {
     protected ValidatorPluginManager $pluginManager;
+
     private string $validatorName;
 
     public function __construct(ValidatorPluginManager $pluginManager, string $validatorName)

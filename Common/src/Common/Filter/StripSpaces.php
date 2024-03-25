@@ -22,6 +22,7 @@ class StripSpaces extends AbstractFilter
         if (!is_scalar($value) && !is_array($value)) {
             return $value;
         }
+
         return str_replace(' ', '', $value);
     }
 }

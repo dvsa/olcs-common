@@ -21,7 +21,7 @@ class SaveButtons
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $submit = null;
+    public $submit;
 
     /**
      * @Form\Attributes({
@@ -35,5 +35,5 @@ class SaveButtons
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $cancel = null;
+    public $cancel;
 }

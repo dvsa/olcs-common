@@ -17,6 +17,7 @@ class BusReg extends InternalSearchAbstract
      * @var string
      */
     protected $title = 'Bus registrations';
+
     /**
      * @var string
      */
@@ -60,7 +61,7 @@ class BusReg extends InternalSearchAbstract
             [
                 'title' => 'Registration number',
                 'name' => 'regNo',
-                'formatter' => fn($data) => '<a class="govuk-link" href="/licence/'
+                'formatter' => static fn($data) => '<a class="govuk-link" href="/licence/'
                 . $data['licId'] . '/bus/' . $data['busregId']
                 . '/details">' . $data['regNo'] . '</a>'
             ],

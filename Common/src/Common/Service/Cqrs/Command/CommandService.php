@@ -100,8 +100,8 @@ class CommandService
             // @todo Tmp replace route name to prefix with api while we migrate all services
             $routeName = str_replace('backend/', 'backend/api/', $routeName);
             $uri = $this->router->assemble($data, ['name' => 'api/' . $routeName . '/' . $method]);
-        } catch (ExceptionInterface $ex) {
-            throw new Exception($ex->getMessage(), HttpResponse::STATUS_CODE_404, $ex);
+        } catch (ExceptionInterface $exception) {
+            throw new Exception($exception->getMessage(), HttpResponse::STATUS_CODE_404, $exception);
         }
 
         /**
@@ -148,6 +148,7 @@ class CommandService
                     $newHeaders->addHeader($header);
                 }
             }
+
             $request->setHeaders($newHeaders);
             $this->client->setRequest($request);
             $this->client->setParameterPost($data);
@@ -179,9 +180,11 @@ class CommandService
             if ($response->getStatusCode() === HttpResponse::STATUS_CODE_404) {
                 throw new Exception\NotFoundException('API responded with a 404 Not Found : '. $uri);
             }
+
             if ($response->getStatusCode() === HttpResponse::STATUS_CODE_403) {
                 throw new Exception\AccessDeniedException($response->getBody() .' : '. $uri);
             }
+
             if ($response->getStatusCode() > HttpResponse::STATUS_CODE_400) {
                 throw new Exception($response->getBody()  ." : ". $uri);
             }
@@ -191,20 +194,16 @@ class CommandService
             }
 
             return $response;
-        } catch (HttpClientExceptionInterface $ex) {
-            throw new Exception($ex->getMessage(), HttpResponse::STATUS_CODE_500, $ex);
+        } catch (HttpClientExceptionInterface $httpClientException) {
+            throw new Exception($httpClientException->getMessage(), HttpResponse::STATUS_CODE_500, $httpClientException);
         }
     }
 
-    /**
-     * @param Request $request
-     * @param string $token
-     * @return Request
-     */
     private function replaceOrAddSecureTokenCookieToRequest(Request $request, string $token): Request
     {
         $requestHeaders = $request->getHeaders();
         $requestHeaders->addHeader(new Cookie(['secureToken' => $token]));
+
         $request->setHeaders($requestHeaders);
 
         return $request;
@@ -221,6 +220,7 @@ class CommandService
         $header = sprintf("Authorization:Bearer %s", $accessToken);
         $headers = $request->getHeaders();
         $headers->addHeader(Authorization::FromString($header));
+
         $request->setHeaders($headers);
     }
 }

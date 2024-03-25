@@ -17,7 +17,6 @@ interface ApplicationUtilityInterface
     /**
      * Alter the create application data
      *
-     * @param array $data
      * @return array
      */
     public function alterCreateApplicationData(array $data);

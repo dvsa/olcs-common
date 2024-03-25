@@ -7,6 +7,7 @@ use Laminas\Validator\AbstractValidator;
 class NoOfPermitsEitherValidator extends AbstractValidator
 {
     public const MAX_PERMITTED_THRESHOLD = 'maxPermittedThreshold';
+
     public const PERMITS_REMAINING_THRESHOLD = 'permitsRemainingThreshold';
 
     public const PERMITS_REMAINING_THRESHOLD_TEMPLATE = 'qanda.ecmt.number-of-permits.error.permits-remaining-exceeded.%s';
@@ -52,7 +53,7 @@ class NoOfPermitsEitherValidator extends AbstractValidator
             );
         }
 
-        $permitsRequired = intval($value);
+        $permitsRequired = (int) $value;
 
         if ($permitsRequired > $thresholdValue) {
             $this->error($thresholdMessage);

@@ -15,12 +15,10 @@ class FinancialHistoryTextarea extends LaminasElement implements InputProviderIn
 {
     /**
      * Provide default input rules for this element.
-     *
-     * @return array
      */
     public function getInputSpecification(): array
     {
-        $specification = [
+        return [
             'name' => $this->getName(),
             'required' => true,
             'validators' => [
@@ -28,7 +26,5 @@ class FinancialHistoryTextarea extends LaminasElement implements InputProviderIn
                 new \Dvsa\Olcs\Transfer\Validators\FhAdditionalInfo(),
             ]
         ];
-
-        return $specification;
     }
 }

@@ -13,6 +13,7 @@ namespace Common\Service\Table;
 class PaginationHelper
 {
     public const ELLIPSE = '…';
+
     public const CLASS_PAGINATION_ITEM_CURRENT = 'govuk-pagination__item--current';
 
     /**
@@ -98,7 +99,7 @@ class PaginationHelper
      *
      * @param int $totalPages
      */
-    private function addRangeOptions($totalPages)
+    private function addRangeOptions($totalPages): void
     {
         $this->addPageOption(1);
 
@@ -123,9 +124,9 @@ class PaginationHelper
      * @param int $lowerRange
      * @param int $upperRange
      */
-    private function addRangeOfOptions($lowerRange, $upperRange)
+    private function addRangeOfOptions($lowerRange, $upperRange): void
     {
-        for ($i = $lowerRange; $i <= $upperRange; $i++) {
+        for ($i = $lowerRange; $i <= $upperRange; ++$i) {
             $this->addPageOption($i);
         }
     }
@@ -133,7 +134,7 @@ class PaginationHelper
     /**
      * Decide whether to add the "Previous" option
      */
-    private function maybeAddPreviousOption()
+    private function maybeAddPreviousOption(): void
     {
         if ($this->page > 1) {
             $label = ($this->translator ? $this->translator->translate('pagination.previous') : 'Previous');
@@ -150,7 +151,7 @@ class PaginationHelper
      *
      * @param int $totalPages
      */
-    private function maybeAddNextOption($totalPages)
+    private function maybeAddNextOption($totalPages): void
     {
         if ($this->page < $totalPages) {
             $label = ($this->translator ? $this->translator->translate('pagination.next') : 'Next');
@@ -167,12 +168,13 @@ class PaginationHelper
      *
      * @param boolean $add
      */
-    private function maybeAddAbbreviationOption($add)
+    private function maybeAddAbbreviationOption($add): void
     {
         if ($add) {
             $this->addPageOption(null, self::ELLIPSE);
         }
     }
+
     /**
      * Calculate the lower range
      *
@@ -216,7 +218,7 @@ class PaginationHelper
      * @param boolean $isPrevious
      * @param boolean $isNext
      */
-    private function addPageOption($page, $label = null)
+    private function addPageOption($page, $label = null): void
     {
         $this->options['links'][] = $this->formatPageOption($page, $label);
     }
@@ -250,7 +252,6 @@ class PaginationHelper
     /**
      * Set translator
      *
-     * @param \Laminas\Mvc\I18n\Translator $translator
      *
      * @return $this
      */

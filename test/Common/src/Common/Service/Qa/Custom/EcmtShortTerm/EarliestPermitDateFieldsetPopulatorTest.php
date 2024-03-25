@@ -18,7 +18,7 @@ use Laminas\Form\Form;
  */
 class EarliestPermitDateFieldsetPopulatorTest extends MockeryTestCase
 {
-    public function testPopulate()
+    public function testPopulate(): void
     {
         $requestedDate = '2020-03-15';
 

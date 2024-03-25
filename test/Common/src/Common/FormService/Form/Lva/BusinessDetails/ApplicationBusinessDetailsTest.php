@@ -20,7 +20,7 @@ class ApplicationBusinessDetailsTest extends MockeryTestCase
 
     protected $formHelper;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);
         $this->fsl = m::mock(\Common\FormService\FormServiceManager::class)->makePartial();
@@ -28,7 +28,7 @@ class ApplicationBusinessDetailsTest extends MockeryTestCase
         $this->sut = new ApplicationBusinessDetails($this->formHelper, $this->fsl);
     }
 
-    public function testAlterForm()
+    public function testAlterForm(): void
     {
         // Params
         $orgType = RefData::ORG_TYPE_REGISTERED_COMPANY;

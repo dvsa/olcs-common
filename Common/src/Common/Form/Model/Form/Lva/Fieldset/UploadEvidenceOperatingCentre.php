@@ -15,7 +15,7 @@ class UploadEvidenceOperatingCentre
     /**
      * @Form\Type("Hidden")
      */
-    public $aocId = null;
+    public $aocId;
 
     /**
      * @Form\Required(false)
@@ -25,7 +25,7 @@ class UploadEvidenceOperatingCentre
      * })
      * @Form\Type("Text")
      */
-    public $adPlacedIn = null;
+    public $adPlacedIn;
 
     /**
      * @Form\Required(false)
@@ -45,7 +45,7 @@ class UploadEvidenceOperatingCentre
      * @Form\Validator("\Common\Validator\Date")
      * @Form\Validator("Date", options={"format":"Y-m-d"})
      */
-    public $adPlacedDate = null;
+    public $adPlacedDate;
 
     /**
      * @Form\Name("file")
@@ -56,7 +56,7 @@ class UploadEvidenceOperatingCentre
      *     "label_attributes": {"class": "form-element__label"}
      * })
      */
-    public $file = null;
+    public $file;
 
     /**
      * @Form\Required(true)

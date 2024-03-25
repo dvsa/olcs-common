@@ -38,21 +38,21 @@ class FormElementErrorsTest extends MockeryTestCase
     /**
      * @test
      */
-    public function render_IsCallable()
+    public function render_IsCallable(): void
     {
         // Setup
         $serviceLocator = $this->setUpServiceLocator();
         $sut = $this->setUpSut($serviceLocator);
 
         // Assert
-        $this->assertIsCallable([$sut, 'render']);
+        $this->assertIsCallable(static fn(\Laminas\Form\ElementInterface $element, array $attributes = []): string => $sut->render($element, $attributes));
     }
 
     /**
      * @test
      * @depends render_IsCallable
      */
-    public function render_EscapesHtmlInMessage()
+    public function render_EscapesHtmlInMessage(): void
     {
         // Setup
         $serviceLocator = $this->setUpServiceLocator();
@@ -70,14 +70,16 @@ class FormElementErrorsTest extends MockeryTestCase
     /**
      * @depends render_IsCallable
      */
-    public function testRender()
+    public function testRender(): void
     {
         $element = new \Laminas\Form\Element\Text('test');
         $element->setLabel('Test');
         $element->setMessages(['Message']);
+
         $translator = new Translator();
         $translateHelper = new Translate();
         $translateHelper->setTranslator($translator);
+
         $doctype = m::mock(Doctype::class);
 
         $container = m::mock(ContainerInterface::class);
@@ -91,6 +93,7 @@ class FormElementErrorsTest extends MockeryTestCase
         $serviceLocator = $this->setUpServiceLocator();
         $viewHelper = $this->setUpSut($serviceLocator);
         $viewHelper->setView($view);
+
         $markup = $viewHelper($element);
 
         $expectedMarkup = '<p class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span>Message</p>';
@@ -98,9 +101,6 @@ class FormElementErrorsTest extends MockeryTestCase
         $this->assertSame($expectedMarkup, $markup);
     }
 
-    /**
-     * @return Element
-     */
     protected function setUpElement(): Element
     {
         $element = new Element();
@@ -111,8 +111,7 @@ class FormElementErrorsTest extends MockeryTestCase
 
     protected function setUpSut(ContainerInterface $container): FormElementErrors
     {
-        $instance = (new FormElementErrorsFactory())->__invoke($container, FormElementErrors::class);
-        return $instance;
+        return (new FormElementErrorsFactory())->__invoke($container, FormElementErrors::class);
     }
 
     /**
@@ -121,19 +120,15 @@ class FormElementErrorsTest extends MockeryTestCase
     protected function setUpTranslator(): MockInterface
     {
         $instance = $this->setUpMockService(Translator::class);
-        $instance->shouldReceive('translate')->andReturnUsing(fn($key) => $key)->byDefault();
+        $instance->shouldReceive('translate')->andReturnUsing(static fn($key) => $key)->byDefault();
         return $instance;
     }
 
     protected function setUpFormLabel(ContainerInterface $container): FormLabel
     {
-        $instance = (new FormLabelFactory())->__invoke($container, FormLabel::class);
-        return $instance;
+        return (new FormLabelFactory())->__invoke($container, FormLabel::class);
     }
 
-    /**
-     * @param ServiceManager $serviceManager
-     */
     protected function setUpDefaultServices(ServiceManager $serviceManager)
     {
         $serviceManager->setService(TranslatorInterface::class, $this->setUpTranslator());

@@ -13,7 +13,9 @@ use Laminas\Mvc\MvcEvent;
 class LanguageListenerTest extends MockeryTestCase
 {
     protected $languagePref;
+
     protected $flashMessenger;
+
     protected $translator;
 
     /**
@@ -21,7 +23,7 @@ class LanguageListenerTest extends MockeryTestCase
      */
     protected $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->languagePref = m::mock();
         $this->flashMessenger = m::mock();
@@ -37,7 +39,7 @@ class LanguageListenerTest extends MockeryTestCase
         $this->sut->__invoke($sm, LanguageListener::class);
     }
 
-    public function testAttach()
+    public function testAttach(): void
     {
         $eventManager = m::mock(EventManagerInterface::class);
         $eventManager->shouldReceive('attach')
@@ -48,7 +50,7 @@ class LanguageListenerTest extends MockeryTestCase
         $this->sut->attach($eventManager);
     }
 
-    public function testOnRoute()
+    public function testOnRoute(): void
     {
         self::expectNotToPerformAssertions();
 
@@ -61,7 +63,7 @@ class LanguageListenerTest extends MockeryTestCase
         $this->sut->onRoute($e);
     }
 
-    public function testOnRouteWithHttpRequest()
+    public function testOnRouteWithHttpRequest(): void
     {
         $request = m::mock(Request::class);
         $request->shouldReceive('getQuery')
@@ -83,7 +85,7 @@ class LanguageListenerTest extends MockeryTestCase
         $this->sut->onRoute($e);
     }
 
-    public function testOnRouteWithHttpRequestWithLang()
+    public function testOnRouteWithHttpRequestWithLang(): void
     {
         $request = m::mock(Request::class);
         $request->shouldReceive('getQuery')
@@ -108,7 +110,7 @@ class LanguageListenerTest extends MockeryTestCase
         $this->sut->onRoute($e);
     }
 
-    public function testOnRouteWithHttpRequestWithLangWithException()
+    public function testOnRouteWithHttpRequestWithLangWithException(): void
     {
         $request = m::mock(Request::class);
         $request->shouldReceive('getQuery')

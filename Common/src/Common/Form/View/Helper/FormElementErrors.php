@@ -24,10 +24,6 @@ class FormElementErrors extends LaminasFormElementErrors
      */
     protected $messageFormatter;
 
-    /**
-     * @param FormElementMessageFormatter $messageFormatter
-     * @param TranslatorInterface $translator
-     */
     public function __construct(FormElementMessageFormatter $messageFormatter, TranslatorInterface $translator)
     {
         $this->messageFormatter = $messageFormatter;
@@ -41,13 +37,12 @@ class FormElementErrors extends LaminasFormElementErrors
      * @param array            $attributes HTML attributes to add to the render markup
      *
      * @throws Exception\DomainException
-     * @return string
      */
     public function render(ElementInterface $element, array $attributes = []): string
     {
         $messages = $element->getMessages();
 
-        if (empty($messages)) {
+        if ($messages === []) {
             return '';
         }
 
@@ -64,7 +59,7 @@ class FormElementErrors extends LaminasFormElementErrors
         // Prepare attributes for opening tag
         $attributes = array_merge($this->attributes, $attributes);
         $attributes = $this->createAttributesString($attributes);
-        if (!empty($attributes)) {
+        if ($attributes !== '' && $attributes !== '0') {
             $attributes = ' ' . $attributes;
         }
 
@@ -79,10 +74,11 @@ class FormElementErrors extends LaminasFormElementErrors
             if ($shouldEscape && $elementShouldEscape !== false) {
                 $message = call_user_func($escaper, $message);
             }
+
             $messagesToPrint[] = $message;
         });
 
-        if (empty($messagesToPrint)) {
+        if ($messagesToPrint === []) {
             return '';
         }
 

@@ -14,12 +14,19 @@ use Laminas\View\HelperPluginManager;
 class DataRetentionRecordLink implements FormatterPluginManagerInterface
 {
     private const ENTITY_TRANSPORT_MANAGER = 'transport_manager';
+
     private const ENTITY_IRFO_GV_PERMIT = 'irfo_gv_permit';
+
     private const ENTITY_IRFO_PSV_AUTH = 'irfo_psv_auth';
+
     private const ENTITY_ORGANISATION = 'organisation';
+
     private const ENTITY_APPLICATION = 'application';
+
     private const ENTITY_BUS_REG = 'bus_reg';
+
     private const ENTITY_LICENCE = 'licence';
+
     private const ENTITY_CASES = 'cases';
 
     public const STATUS_DELETION = [
@@ -57,11 +64,6 @@ class DataRetentionRecordLink implements FormatterPluginManagerInterface
      */
     public function format($data, $column = [])
     {
-        /**
-         * @var Url          $urlHelper
-         * @var StatusHelper $statusHelper
-         */
-
         $statusHelper = $this->viewHelperManager->get('status');
 
         switch ($data['entityName']) {
@@ -143,7 +145,7 @@ class DataRetentionRecordLink implements FormatterPluginManagerInterface
             $url
         );
 
-        $statusInfo = self::getStatus($data['actionConfirmation'], $data['nextReviewDate']);
+        $statusInfo = $this->getStatus($data['actionConfirmation'], $data['nextReviewDate']);
         $status = $statusHelper->__invoke($statusInfo);
 
         return $output . $status;
@@ -179,11 +181,9 @@ class DataRetentionRecordLink implements FormatterPluginManagerInterface
                 $entityPk;
         }
 
-        return sprintf(
-            $organisationName .
-            $licenceNumber .
-            sprintf('<a class="govuk-link" href="%s" target="_self">%s</a>', $url, ucfirst($entityName) . ' ' . $entityPk)
-        );
+        return $organisationName .
+        $licenceNumber .
+        sprintf('<a class="govuk-link" href="%s" target="_self">%s</a>', $url, ucfirst($entityName) . ' ' . $entityPk);
     }
 
     /**
@@ -263,7 +263,7 @@ class DataRetentionRecordLink implements FormatterPluginManagerInterface
      *
      * @return array
      */
-    private static function getStatus($actionConfirmation, $nextReviewDate)
+    private function getStatus($actionConfirmation, $nextReviewDate)
     {
         $status = self::STATUS_DELETION;
 

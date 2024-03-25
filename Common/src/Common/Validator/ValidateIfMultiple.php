@@ -31,7 +31,7 @@ class ValidateIfMultiple extends ValidateIf
         if (array_key_exists($this->getContextField(), $context)) {
             if (is_array($context[$this->getContextField()])) {
                 foreach ($context[$this->getContextField()] as $optionSelected) {
-                    if (!(in_array($optionSelected, $this->getContextValues()) ^ $this->getContextTruth())) {
+                    if ((in_array($optionSelected, $this->getContextValues()) ^ $this->getContextTruth()) === 0) {
                         if ($this->allowEmpty() && empty($value)) {
                             return true;
                         }

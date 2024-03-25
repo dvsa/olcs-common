@@ -37,18 +37,13 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
     protected $data;
 
     protected DataHelperService $dataHelper;
+
     protected ScriptFactory $scriptFactory;
+
     protected FormServiceManager $formServiceManager;
+
     protected FormHelperService $formHelper;
 
-    /**
-     * @param NiTextTranslation $niTextTranslationUtil
-     * @param AuthorizationService $authService
-     * @param FormHelperService $formHelper
-     * @param FormServiceManager $formServiceManager
-     * @param ScriptFactory $scriptFactory
-     * @param DataHelperService $dataHelper
-     */
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
@@ -68,11 +63,7 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
     {
         $request = $this->getRequest();
 
-        if ($request->isPost()) {
-            $data = (array)$request->getPost();
-        } else {
-            $data = $this->getFormData();
-        }
+        $data = $request->isPost() ? (array)$request->getPost() : $this->getFormData();
 
         $form = $this->getForm()->setData($data);
 
@@ -110,6 +101,7 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
             if (!$response->isOk()) {
                 throw new \RuntimeException('Error getting vehicle declaration');
             }
+
             $this->data = $response->getResult();
         }
 
@@ -154,7 +146,6 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
      * Add customisation to the form dependent on which of five scenarios
      * is in play for OLCS-2855
      *
-     * @param Laminas\Form\Form $form
      * @return Laminas\Form\Form
      */
     protected function alterForm(\Laminas\Form\Form $form, $formData)
@@ -212,6 +203,7 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
             if (isset($validationGroup['smallVehiclesIntention'][0])) {
                 unset($validationGroup['smallVehiclesIntention'][0]);
             }
+
             if (isset($validationGroup['smallVehiclesIntention'][1])) {
                 unset($validationGroup['smallVehiclesIntention'][1]);
             }

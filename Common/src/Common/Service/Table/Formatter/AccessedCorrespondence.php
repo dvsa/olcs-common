@@ -18,12 +18,9 @@ use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 class AccessedCorrespondence implements FormatterPluginManagerInterface
 {
     protected UrlHelperService $urlHelper;
+
     protected TranslatorDelegator $translator;
 
-    /**
-     * @param UrlHelperService    $urlHelper
-     * @param TranslatorDelegator $translator
-     */
     public function __construct(UrlHelperService $urlHelper, TranslatorDelegator $translator)
     {
         $this->urlHelper = $urlHelper;

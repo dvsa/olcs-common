@@ -10,6 +10,7 @@ use Dvsa\Olcs\Transfer\Query as TransferQry;
 class MessagingSubject extends AbstractListDataService
 {
     public const SORT_BY = 'description';
+
     public const SORT_ORDER = 'ASC';
 
     /**
@@ -24,7 +25,7 @@ class MessagingSubject extends AbstractListDataService
     {
         $data = (array)$this->getData('subjects');
 
-        if (count($data) !== 0) {
+        if ($data !== []) {
             return $data;
         }
 

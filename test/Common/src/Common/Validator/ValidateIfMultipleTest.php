@@ -20,7 +20,7 @@ class ValidateIfMultipleTest extends MockeryTestCase
      * @param $chainValid
      * @param array $errorMessages
      */
-    public function testIsValid($expected, $options, $value, $context, $chainValid, $errorMessages = [])
+    public function testIsValid($expected, $options, $value, $context, $chainValid, $errorMessages = []): void
     {
         $errorMessages = empty($errorMessages) ? ['error' => 'message'] : $errorMessages;
 

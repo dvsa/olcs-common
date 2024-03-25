@@ -18,5 +18,5 @@ class PsvDiscsRequestData
      * @Form\Validator("Digits")
      * @Form\Validator("GreaterThan", options={"min":0})
      */
-    public $additionalDiscs = null;
+    public $additionalDiscs;
 }

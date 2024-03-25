@@ -8,10 +8,8 @@ use Psr\Container\ContainerInterface;
 class SectorsFieldsetPopulatorFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
-     * @return SectorsFieldsetPopulator
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

@@ -24,10 +24,8 @@ class ProcessTranslations
 
     /**
      * Process parse csv file and add/update new translations
-     *
-     * @return void
      */
-    public function exec()
+    public function exec(): void
     {
         //  snapshot
         $pathSnapshot = __DIR__ . '/../../olcs-backend/module/Snapshot/config/language/';
@@ -104,38 +102,30 @@ class ProcessTranslations
 
                 continue;
             }
+            $isKeyInGb = isset($enGb[$key]);
+            //  add or set values
+            $filePath = $pathToPartials . 'en_GB/' . $key . '.phtml';
+            $val = trim($value['English']);
+            if ($val !== '') {
+                if ($isKeyInGb) {
+                    $enGb[$key] = $val;
+                } elseif (!is_file($filePath)) {
+                    echo PHP_EOL . '  - TO FILE: ' . $filePath;
 
-            if ($tbt === 'FILE') {
-                $isKeyInGb = isset($enGb[$key]);
-
-                //  add or set values
-                $filePath = $pathToPartials . 'en_GB/' . $key . '.phtml';
-
-                $val = trim($value['English']);
-                if ($val !== '') {
-                    if ($isKeyInGb) {
-                        $enGb[$key] = $val;
-                    } elseif (!is_file($filePath)) {
-                        echo PHP_EOL . '  - TO FILE: ' . $filePath;
-
-                        file_put_contents($filePath, $val);
-                    }
+                    file_put_contents($filePath, $val);
                 }
+            }
+            //  add or set values
+            $val = trim($value['Welsh']);
+            if ($val !== '') {
+                if ($isKeyInGb) {
+                    $cyGb[$key] = $val;
+                } else {
+                    $filePath = $pathToPartials . 'cy_GB/' . $key . '.phtml';
+                    echo PHP_EOL . '  - TO FILE: ' . $filePath;
 
-                //  add or set values
-                $val = trim($value['Welsh']);
-                if ($val !== '') {
-                    if ($isKeyInGb) {
-                        $cyGb[$key] = $val;
-                    } else {
-                        $filePath = $pathToPartials . 'cy_GB/' . $key . '.phtml';
-                        echo PHP_EOL . '  - TO FILE: ' . $filePath;
-
-                        file_put_contents($filePath, $val);
-                    }
+                    file_put_contents($filePath, $val);
                 }
-
-                continue;
             }
         }
 
@@ -172,7 +162,7 @@ class ProcessTranslations
     {
         //  rearange items in CY to match position in EN
         $rearranged = [];
-        foreach ($enGb as $key => $value) {
+        foreach (array_keys($enGb) as $key) {
             if (!isset($cyGb[$key])) {
                 continue;
             }
@@ -181,9 +171,7 @@ class ProcessTranslations
             unset($cyGb[$key]);
         }
 
-        $rearranged += $cyGb;
-
-        return $rearranged;
+        return $rearranged + $cyGb;
     }
 
     /**
@@ -191,10 +179,8 @@ class ProcessTranslations
      *
      * @param array  $data Translations Array;
      * @param string $file Path to target file
-     *
-     * @return void
      */
-    private function saveArrayToFile(array $data, $file)
+    private function saveArrayToFile(array $data, $file): void
     {
         echo PHP_EOL . "  Save translations to " . $file;
         try {
@@ -218,8 +204,8 @@ class ProcessTranslations
 
             fwrite($fh, $result);
             fclose($fh);
-        } catch (\Exception $e) {
-            echo PHP_EOL . 'ERR: Cant store translation file ' . $file . '; ' . $e->getMessage();
+        } catch (\Exception $exception) {
+            echo PHP_EOL . 'ERR: Cant store translation file ' . $file . '; ' . $exception->getMessage();
         }
     }
 
@@ -241,11 +227,11 @@ class ProcessTranslations
 
         array_walk(
             $csv,
-            function (&$a) use ($header, &$result) {
+            static function (&$a) use ($header, &$result) {
                 try {
                     $tmp = array_combine($header, $a);
                     $result[$tmp['message']] = $tmp;
-                } catch (\Exception $e) {
+                } catch (\Exception $exception) {
                     echo PHP_EOL . 'something wrong with key: ' . var_export($a, 1);
                 }
             }

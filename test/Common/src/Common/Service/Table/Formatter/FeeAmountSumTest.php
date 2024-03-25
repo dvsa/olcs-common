@@ -26,7 +26,7 @@ class FeeAmountSumTest extends \PHPUnit\Framework\TestCase
      *
      * @dataProvider provider
      */
-    public function testFormat($data, $column, $expected)
+    public function testFormat($data, $column, $expected): void
     {
         $sumFormatter = new Sum();
         $feeAmountFormatter = new FeeAmount();

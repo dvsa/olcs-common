@@ -31,7 +31,7 @@ class StackHelperServiceTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider providerGetStackValue
      */
-    public function testGetStackValue($stack, $stackReference, $expected)
+    public function testGetStackValue($stack, $stackReference, $expected): void
     {
         $this->assertEquals($expected, $this->sut->getStackValue($stack, $stackReference));
     }

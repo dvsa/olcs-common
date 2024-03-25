@@ -13,13 +13,16 @@ abstract class AbstractTransportManagerAdapter extends AbstractControllerAwareAd
     TransportManagerAdapterInterface
 {
     public const SORT_LAST_FIRST_NAME = 1;
+
     //  sort: Last, First Name, 'A' action (ASC)
     public const SORT_LAST_FIRST_NAME_NEW_AT_END = 2;
 
     /** @var TransferAnnotationBuilder */
     protected $transferAnnotationBuilder;
+
     /** @var CachingQueryService */
     protected $querySrv;
+
     /** @var CommandService */
     protected $commandSrv;
 
@@ -159,13 +162,13 @@ abstract class AbstractTransportManagerAdapter extends AbstractControllerAwareAd
     protected function sortResultForTable(array $data, $method = null)
     {
         if ($method === self::SORT_LAST_FIRST_NAME) {
-            usort($data, [$this, 'sortCmpByName']);
+            usort($data, fn(array $a, array $b): int => $this::sortCmpByName($a, $b));
 
             return $data;
         }
 
         if ($method === self::SORT_LAST_FIRST_NAME_NEW_AT_END) {
-            usort($data, [$this, 'sortCmpByNameAndNewAtEnd']);
+            usort($data, fn(array $a, array $b): int => $this::sortCmpByNameAndNewAtEnd($a, $b));
 
             return $data;
         }
@@ -181,7 +184,7 @@ abstract class AbstractTransportManagerAdapter extends AbstractControllerAwareAd
      *
      * @return int
      */
-    private static function sortCmpByName($a, $b)
+    private function sortCmpByName($a, $b)
     {
         $keyA = strtolower($a['name']['familyName'] . $a['name']['forename']);
         $keyB = strtolower($b['name']['familyName'] . $b['name']['forename']);
@@ -199,16 +202,16 @@ abstract class AbstractTransportManagerAdapter extends AbstractControllerAwareAd
      *
      * @return int
      */
-    private static function sortCmpByNameAndNewAtEnd($a, $b)
+    private function sortCmpByNameAndNewAtEnd($a, $b)
     {
         $isNewA = (int)($a['action'] === 'A');
         $isNewB = (int)($b['action'] === 'A');
 
-        if ($isNewA != $isNewB) {
+        if ($isNewA !== $isNewB) {
             return ($isNewA < $isNewB ? -1 : 1);
         }
 
-        return static::sortCmpByName($a, $b);
+        return $this->sortCmpByName($a, $b);
     }
 
     /**

@@ -15,13 +15,11 @@ class InternalLicenceNumberLink implements FormatterPluginManagerInterface
 {
     private UrlHelperService $urlHelper;
 
-    /**
-     * @param UrlHelperService $urlHelper
-     */
     public function __construct(UrlHelperService $urlHelper)
     {
         $this->urlHelper = $urlHelper;
     }
+
     /**
      * Return a the licence URL in a link format for a table.
      *

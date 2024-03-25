@@ -8,6 +8,7 @@ use Common\Service\Helper\FormHelperService;
 class ApplicationPsvVehiclesVehicle extends AbstractPsvVehiclesVehicle
 {
     protected FormServiceManager $formServiceLocator;
+
     protected FormHelperService $formHelper;
 
     public function __construct(FormHelperService $formHelper, FormServiceManager $formServiceLocator)
@@ -15,6 +16,7 @@ class ApplicationPsvVehiclesVehicle extends AbstractPsvVehiclesVehicle
         $this->formHelper = $formHelper;
         $this->formServiceLocator = $formServiceLocator;
     }
+
     protected function alterForm($form, $params)
     {
         $dataFieldset = $form->get('licence-vehicle');

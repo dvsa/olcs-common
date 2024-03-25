@@ -25,15 +25,11 @@ class InterimOcCheckbox implements FormatterPluginManagerInterface
     public function format($data, $column = [])
     {
         $format = '<input type="checkbox" value="' . $data['id'] . '" name="operatingCentres[id][]" %s>';
-        if (
-            isset($data['isInterim'])
-            && $data['isInterim'] == 'Y'
-        ) {
-            $result = sprintf($format, 'checked');
-        } else {
-            $result = sprintf($format, '');
+        if (isset($data['isInterim'])
+        && $data['isInterim'] == 'Y') {
+            return sprintf($format, 'checked');
         }
 
-        return $result;
+        return sprintf($format, '');
     }
 }

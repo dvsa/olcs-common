@@ -20,9 +20,6 @@ trait MakeSectionTrait
 
     abstract protected function makeChangeLink();
 
-    /**
-     * @param bool $displayChangeLinkInHeading
-     */
     public function setDisplayChangeLinkInHeading(bool $displayChangeLinkInHeading): void
     {
         $this->displayChangeLinkInHeading = $displayChangeLinkInHeading;

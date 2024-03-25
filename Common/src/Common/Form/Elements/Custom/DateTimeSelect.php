@@ -22,8 +22,6 @@ class DateTimeSelect extends LaminasElement\DateTimeSelect
     /**
      * Should return an array specification compatible with
      * {@link Laminas\InputFilter\Factory::createInput()}.
-     *
-     * @return array
      */
     public function getInputSpecification(): array
     {
@@ -56,12 +54,13 @@ class DateTimeSelect extends LaminasElement\DateTimeSelect
                 [
                     'name'    => 'Callback',
                     'options' => [
-                        'callback' => function ($date) {
+                        'callback' => static function ($date) {
                             // Convert the date to a specific format
                             if (is_array($date)) {
                                 if (!isset($date['second'])) {
                                     $date['second'] = '00';
                                 }
+
                                 $date = sprintf(
                                     '%s-%s-%s %s:%s:%s',
                                     $date['year'],
@@ -72,7 +71,6 @@ class DateTimeSelect extends LaminasElement\DateTimeSelect
                                     $date['second']
                                 );
                             }
-
                             return $date;
                         }
                     ]
@@ -88,10 +86,8 @@ class DateTimeSelect extends LaminasElement\DateTimeSelect
      * Overrides the default Laminas behaviour if the value is null
      *
      * @param mixed $value Date time value to set
-     *
-     * @return void|\Laminas\Form\Element
      */
-    public function setValue($value)
+    public function setValue($value): void
     {
         if (null === $value) {
             $this->yearElement->setValue(null);

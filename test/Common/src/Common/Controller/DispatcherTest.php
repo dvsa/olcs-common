@@ -19,7 +19,17 @@ use Laminas\Http\Response;
 
 class DispatcherTest extends MockeryTestCase
 {
-    public function setUp(): void
+    /**
+     * @var \CommonTest\Common\Controller\Traits\Stubs\ControllerDelegateStub
+     */
+    public $delegate;
+    public $request;
+    public $routeMatch;
+    public $response;
+    public $pluginManager;
+    public $mvcEvent;
+    public $dispatcher;
+    protected function setUp(): void
     {
         $this->delegate = new ControllerDelegateStub();
         $this->request = m::mock(Request::class);

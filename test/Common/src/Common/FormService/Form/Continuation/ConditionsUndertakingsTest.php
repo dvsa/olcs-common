@@ -15,16 +15,17 @@ class ConditionsUndertakingsTest extends MockeryTestCase
 {
     /** @var ConditionsUndertakingsForm */
     protected $sut;
+
     /** @var  m\MockInterface */
     private $formHelper;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->formHelper = m::mock(FormHelperService::class);
         $this->sut = new ConditionsUndertakings($this->formHelper);
     }
 
-    public function testGetForm()
+    public function testGetForm(): void
     {
         $form = m::mock(ConditionsUndertakingsForm::class);
 

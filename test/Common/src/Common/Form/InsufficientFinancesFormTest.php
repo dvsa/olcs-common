@@ -16,7 +16,7 @@ class InsufficientFinancesFormTest extends TestCase
      */
     private $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = new InsufficientFinancesForm();
 
@@ -32,7 +32,7 @@ class InsufficientFinancesFormTest extends TestCase
         $expectRadioRequired,
         $expectFileCountRequired,
         $expectYesNoSetMessage
-    ) {
+    ): void {
         $yesNoInput = m::mock(ElementInterface::class);
         if ($expectYesNoSetMessage) {
             $yesNoInput->shouldReceive('setErrorMessage')->with('continuations.insufficient-finances.no')->once();
@@ -62,7 +62,7 @@ class InsufficientFinancesFormTest extends TestCase
         ];
     }
 
-    private function initForm($radioValue, $yesNoValue, $yesNoInput, $fileCountInput, $radioInput)
+    private function initForm($radioValue, $yesNoValue, $yesNoInput, $fileCountInput, $radioInput): void
     {
         $insufficientFinancesFieldset = m::mock(Fieldset::class)->makePartial();
         $insufficientFinancesFieldset->setName('insufficientFinances');

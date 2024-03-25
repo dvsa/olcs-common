@@ -37,7 +37,7 @@ return [
                 ]
             ]
         ],
-        'row-disabled-callback' => fn($row) => in_array(
+        'row-disabled-callback' => static fn($row) => in_array(
             $row['status']['id'],
             [
                 Common\RefData::COMMUNITY_LICENCE_STATUS_EXPIRED,

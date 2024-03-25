@@ -17,7 +17,6 @@ abstract class AbstractConversationMessage implements FormatterPluginManagerInte
      * @param array $row Row data
      * @param array $column Column data
      *
-     * @return     string
      * @inheritdoc
      */
     public function format($row, $column = null): string
@@ -32,7 +31,7 @@ abstract class AbstractConversationMessage implements FormatterPluginManagerInte
         $firstReadBy = $this->getFirstReadBy($row);
 
         // If createdBy (User) has a Team, they are an internal user.
-        $internalCaseworkerTeam = (!empty($row['createdBy']['team'])) ? '<p class="govuk-caption-m">' . $senderName . '<br/>Caseworker Team</p>' : '';
+        $internalCaseworkerTeam = (empty($row['createdBy']['team'])) ? '': '<p class="govuk-caption-m">' . $senderName . '<br/>Caseworker Team</p>' ;
 
         return strtr($this->rowTemplate, [
             '{senderName}' => $senderName,
@@ -58,9 +57,6 @@ abstract class AbstractConversationMessage implements FormatterPluginManagerInte
 
     /**
      * Returns HTML - The first user to read the given message
-     *
-     * @param array $row
-     * @return string
      */
     protected function getFirstReadBy(array $row): string
     {
@@ -99,9 +95,6 @@ abstract class AbstractConversationMessage implements FormatterPluginManagerInte
 
     /**
      * Returns HTML - File/Attachments list for given message
-     *
-     * @param array $row
-     * @return string
      */
     protected function getFileList(array $row): string
     {
@@ -114,18 +107,16 @@ abstract class AbstractConversationMessage implements FormatterPluginManagerInte
             ),
             $row['documents'],
         );
-        if (count($fileList) > 0) {
-            $fileList = '
+        if ($fileList !== []) {
+            return '
                 <h3 class="file__heading">Attachments</h3>
                 <div class="file-uploader">
                     <ul>' . implode('', $fileList) . '</ul>
                 </div>
             ';
-        } else {
-            $fileList = '';
         }
 
-        return $fileList;
+        return '';
     }
 
     protected function getSenderName(array $row): string
@@ -136,6 +127,7 @@ abstract class AbstractConversationMessage implements FormatterPluginManagerInte
         } else {
             $senderName = $row['createdBy']['loginId'];
         }
+
         return $senderName;
     }
 }

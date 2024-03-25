@@ -33,7 +33,7 @@ class GenericEditActionTest extends \PHPUnit\Framework\TestCase
      * @group controller_traits
      * @group generic_section_controller_traits
      */
-    public function testIndexAction()
+    public function testIndexAction(): void
     {
         $this->sut->expects($this->once())
             ->method('renderSection');

@@ -23,20 +23,20 @@ class FormValidatorTest extends MockeryTestCase
     /**
      * @test
      */
-    public function isValid_IsCallable()
+    public function isValid_IsCallable(): void
     {
         // Setup
         $this->setUpSut();
 
         // Assert
-        $this->assertIsCallable([$this->sut, 'isValid']);
+        $this->assertIsCallable(fn(\Laminas\Form\Form $form): bool => $this->sut->isValid($form));
     }
 
     /**
      * @test
      * @depends isValid_IsCallable
      */
-    public function isValid_ReturnsABoolean()
+    public function isValid_ReturnsABoolean(): void
     {
         // Setup
         $this->setUpSut();
@@ -50,7 +50,7 @@ class FormValidatorTest extends MockeryTestCase
      * @test
      * @depends isValid_ReturnsABoolean
      */
-    public function isValid_ReturnsABoolean_ThatIsTrueWhenAFormIsValid()
+    public function isValid_ReturnsABoolean_ThatIsTrueWhenAFormIsValid(): void
     {
         // Setup
         $this->setUpSut();
@@ -64,7 +64,7 @@ class FormValidatorTest extends MockeryTestCase
      * @test
      * @depends isValid_ReturnsABoolean
      */
-    public function isValid_ReturnsABoolean_ThatIsFalseWhenAFormIsNotValid()
+    public function isValid_ReturnsABoolean_ThatIsFalseWhenAFormIsNotValid(): void
     {
         // Setup
         $this->setUpSut();

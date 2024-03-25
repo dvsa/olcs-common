@@ -17,13 +17,11 @@ class TaskDate implements FormatterPluginManagerInterface
 {
     private Date $dateFormatter;
 
-    /**
-     * @param Date $dateFormatter
-     */
     public function __construct(Date $dateFormatter)
     {
         $this->dateFormatter = $dateFormatter;
     }
+
     /**
      * Format a task date
      *

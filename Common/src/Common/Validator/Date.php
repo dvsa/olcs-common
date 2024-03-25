@@ -18,6 +18,7 @@ use Laminas\Validator\Exception;
 class Date extends AbstractValidator
 {
     public const DATE_ERR_CONTAINS_STRING = 'DATE_ERR_CONTAINS_STRING';
+
     public const DATE_ERR_YEAR_LENGTH = 'DATE_ERR_YEAR_LENGTH';
 
     protected $messageTemplates = [
@@ -46,7 +47,7 @@ class Date extends AbstractValidator
             $errors[] = self::DATE_ERR_YEAR_LENGTH;
         }
 
-        if (empty($errors)) {
+        if ($errors === []) {
             return true;
         }
 

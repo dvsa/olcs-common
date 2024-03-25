@@ -13,17 +13,18 @@ class LicenceGoodsVehiclesFiltersTest extends MockeryTestCase
 {
     /** @var  LicenceGoodsVehiclesFilters */
     protected $sut;
+
     /** @var  \Common\Service\Helper\FormHelperService | m\MockInterface */
     protected $formHelper;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);
 
         $this->sut = new LicenceGoodsVehiclesFilters($this->formHelper);
     }
 
-    public function testGetForm()
+    public function testGetForm(): void
     {
         // Mocks
         $mockForm = m::mock();

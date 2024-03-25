@@ -14,7 +14,7 @@ namespace Common\Util;
  */
 class Redirect
 {
-    protected $route = null;
+    protected $route;
 
     protected $params = [];
 

@@ -16,7 +16,7 @@ class EcmtNoOfPermitsSingleDataTransformerTest extends MockeryTestCase
 {
     private $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = new EcmtNoOfPermitsSingleDataTransformer();
     }
@@ -24,7 +24,7 @@ class EcmtNoOfPermitsSingleDataTransformerTest extends MockeryTestCase
     /**
      * @dataProvider dpGetTransformed
      */
-    public function testGetTransformed($data, $expectedTransformedData)
+    public function testGetTransformed($data, $expectedTransformedData): void
     {
         $this->assertEquals(
             $expectedTransformedData,
@@ -58,7 +58,7 @@ class EcmtNoOfPermitsSingleDataTransformerTest extends MockeryTestCase
         ];
     }
 
-    public function testGetTransformedNoPermitsRequiredKey()
+    public function testGetTransformedNoPermitsRequiredKey(): void
     {
         $data = [
             'euro5' => '12',
@@ -74,7 +74,7 @@ class EcmtNoOfPermitsSingleDataTransformerTest extends MockeryTestCase
     /**
      * @dataProvider dpGetTransformedUnexpectedData
      */
-    public function testGetTransformedUnexpectedData($data)
+    public function testGetTransformedUnexpectedData($data): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage(EcmtNoOfPermitsSingleDataTransformer::ERR_UNEXPECTED_DATA);

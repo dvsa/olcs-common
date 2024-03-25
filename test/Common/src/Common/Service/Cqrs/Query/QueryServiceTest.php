@@ -53,7 +53,7 @@ class QueryServiceTest extends MockeryTestCase
      */
     private $mockContainer;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->mockRouter = m::mock(RouteInterface::class);
         $this->mockCli = m::mock(\Laminas\Http\Client::class);
@@ -85,7 +85,7 @@ class QueryServiceTest extends MockeryTestCase
             ->getMock();
     }
 
-    public function testSendFailQueryIsNotValid()
+    public function testSendFailQueryIsNotValid(): void
     {
         $this->mockQueryCntr
             ->shouldReceive('isValid')->once()->andReturn(false)
@@ -100,7 +100,7 @@ class QueryServiceTest extends MockeryTestCase
         static::assertEquals('unit_EXPECT', $this->sut->send($this->mockQueryCntr));
     }
 
-    public function testSendFailRouteException()
+    public function testSendFailRouteException(): void
     {
         $this->mockQueryCntr
             ->shouldReceive('isValid')->once()->andReturn(true)
@@ -115,7 +115,7 @@ class QueryServiceTest extends MockeryTestCase
         $this->sut->send($this->mockQueryCntr);
     }
 
-    public function testSendFailHttpClientException()
+    public function testSendFailHttpClientException(): void
     {
         $this->mockQueryCntr
             ->shouldReceive('isValid')->once()->andReturn(true)
@@ -137,7 +137,7 @@ class QueryServiceTest extends MockeryTestCase
         $this->sut->send($this->mockQueryCntr);
     }
 
-    public function testSendRecoverHttpClientException()
+    public function testSendRecoverHttpClientException(): void
     {
         $this->mockQueryCntr
             ->shouldReceive('isValid')->once()->andReturn(true)
@@ -162,7 +162,7 @@ class QueryServiceTest extends MockeryTestCase
         $this->assertEquals($expectedResponse, $response);
     }
 
-    public function testSendOk()
+    public function testSendOk(): void
     {
         $this->mockQueryCntr
             ->shouldReceive('isValid')->once()->andReturn(true)
@@ -205,7 +205,7 @@ class QueryServiceTest extends MockeryTestCase
         static::assertInstanceOf(CqrsResponse::class, $this->sut->send($this->mockQueryCntr));
     }
 
-    public function testSend404()
+    public function testSend404(): void
     {
         $this->mockQueryCntr
             ->shouldReceive('isValid')->once()->andReturn(true)
@@ -244,7 +244,7 @@ class QueryServiceTest extends MockeryTestCase
         $this->sut->send($this->mockQueryCntr);
     }
 
-    public function testSend403()
+    public function testSend403(): void
     {
         $this->mockQueryCntr
             ->shouldReceive('isValid')->once()->andReturn(true)
@@ -284,7 +284,7 @@ class QueryServiceTest extends MockeryTestCase
         $this->sut->send($this->mockQueryCntr);
     }
 
-    public function testSendGreaterThan400()
+    public function testSendGreaterThan400(): void
     {
         $this->mockQueryCntr
             ->shouldReceive('isValid')->once()->andReturn(true)
@@ -324,7 +324,7 @@ class QueryServiceTest extends MockeryTestCase
         $this->sut->send($this->mockQueryCntr);
     }
 
-    public function testAddAuthorizationHeader()
+    public function testAddAuthorizationHeader(): void
     {
         $this->mockQueryCntr
             ->shouldReceive('isValid')->once()->andReturn(true)

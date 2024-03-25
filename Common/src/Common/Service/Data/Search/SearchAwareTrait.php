@@ -18,9 +18,6 @@ trait SearchAwareTrait
         return $this->searchService;
     }
 
-    /**
-     * @param SearchService $searchService
-     */
     public function setSearchService(SearchService $searchService)
     {
         $this->searchService = $searchService;

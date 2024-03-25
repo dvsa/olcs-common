@@ -23,7 +23,7 @@ class FeeTypeTest extends AbstractDataServiceTestCase
         $this->sut = new FeeType($this->abstractDataServiceServices);
     }
 
-    public function testFormatData()
+    public function testFormatData(): void
     {
         $source = $this->getSingleSource();
         $expected = $this->getSingleExpected();
@@ -36,7 +36,7 @@ class FeeTypeTest extends AbstractDataServiceTestCase
      * @param $input
      * @param $expected
      */
-    public function testFetchListOptions($input, $expected)
+    public function testFetchListOptions($input, $expected): void
     {
         $this->sut->setData('FeeType', $input);
 
@@ -51,7 +51,7 @@ class FeeTypeTest extends AbstractDataServiceTestCase
         ];
     }
 
-    public function testFetchListData()
+    public function testFetchListData(): void
     {
         $results = ['results' => 'results'];
 
@@ -74,7 +74,7 @@ class FeeTypeTest extends AbstractDataServiceTestCase
         $this->assertEquals($results['results'], $this->sut->fetchListData());
     }
 
-    public function testFetchListDataWithException()
+    public function testFetchListDataWithException(): void
     {
         $this->expectException(DataServiceException::class);
 
@@ -99,12 +99,11 @@ class FeeTypeTest extends AbstractDataServiceTestCase
      */
     protected function getSingleExpected()
     {
-        $expected = [
+        return [
             'FEETYPE1' => 'FEETYPE1',
             'FEETYPE2' => 'FEETYPE2',
             'FEETYPE3' => 'FEETYPE3',
         ];
-        return $expected;
     }
 
     /**
@@ -112,11 +111,10 @@ class FeeTypeTest extends AbstractDataServiceTestCase
      */
     protected function getSingleSource()
     {
-        $source = [
+        return [
             ['id' => 'FEETYPE1'],
             ['id' => 'FEETYPE2'],
             ['id' => 'FEETYPE3'],
         ];
-        return $source;
     }
 }

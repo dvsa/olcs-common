@@ -19,8 +19,6 @@ class Checkbox extends LaminasElement\Checkbox
 
     /**
      * Provide default input rules for checkbox element.
-     *
-     * @return array
      */
     public function getInputSpecification(): array
     {
@@ -32,7 +30,7 @@ class Checkbox extends LaminasElement\Checkbox
             return [];
         }
 
-        $specification = [
+        return [
             'name' => $this->getName(),
             'required' => true,
             'validators' => [
@@ -48,7 +46,5 @@ class Checkbox extends LaminasElement\Checkbox
                 ]
             ]
         ];
-
-        return $specification;
     }
 }

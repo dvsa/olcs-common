@@ -22,7 +22,7 @@ class ContactDetailsTest extends AbstractListDataServiceTestCase
         $this->sut = new ContactDetails($this->abstractListDataServiceServices);
     }
 
-    public function testFetchListData()
+    public function testFetchListData(): void
     {
         $results = ['results' => 'results'];
         $params = [
@@ -57,7 +57,7 @@ class ContactDetailsTest extends AbstractListDataServiceTestCase
         $this->assertEquals($results['results'], $this->sut->fetchListData('unit_ContactType'));
     }
 
-    public function testSetters()
+    public function testSetters(): void
     {
         static::assertNull($this->sut->getContactType());
 
@@ -66,7 +66,7 @@ class ContactDetailsTest extends AbstractListDataServiceTestCase
         static::assertEquals('unit_ContactType', $this->sut->getContactType());
     }
 
-    public function testFetchListDataCache()
+    public function testFetchListDataCache(): void
     {
         $data = [
             [
@@ -79,7 +79,7 @@ class ContactDetailsTest extends AbstractListDataServiceTestCase
         static::assertEquals([9999 => 'EXPECTED'], $this->sut->fetchListOptions());
     }
 
-    public function testFetchListDataWithException()
+    public function testFetchListDataWithException(): void
     {
         $this->expectException(DataServiceException::class);
 

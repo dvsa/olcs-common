@@ -19,7 +19,7 @@ class OkCancelActions
      * @Form\Options({"label": "internal.community_licence.form_add.ok"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $submit = null;
+    public $submit;
 
     /**
      * @Form\Attributes({
@@ -31,5 +31,5 @@ class OkCancelActions
      * @Form\Options({"label": "internal.community_licence.form_add.cancel"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $cancel = null;
+    public $cancel;
 }

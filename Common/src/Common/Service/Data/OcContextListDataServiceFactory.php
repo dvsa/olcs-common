@@ -8,10 +8,8 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
 class OcContextListDataServiceFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
-     * @return OcContextListDataService
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

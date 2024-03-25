@@ -21,7 +21,7 @@ class AddTags extends AbstractHelper
         // but it'll be faster than using a back reference
         '\(if\s+applicable\)' => '<span class=js-hidden>(if applicable)</span>',
         // @TODO check welsh equivalent
-        '\(os\s+yw\'n\s+berthnasol\)' => '<span class=js-hidden>(os yw\'n berthnasol)</span>',
+        '\(os\s+yw\'n\s+berthnasol\)' => "<span class=js-hidden>(os yw'n berthnasol)</span>",
     ];
 
     /**
@@ -38,6 +38,7 @@ class AddTags extends AbstractHelper
             $search[] = '#'.$s.'#';
             $replace[] = $r;
         }
+
         return preg_replace($search, $replace, $str);
     }
 }

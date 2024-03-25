@@ -20,7 +20,7 @@ class NoOfPermitsTest extends TestCase
     /**
      * @dataProvider dpTestHasNonZeroValue
      */
-    public function testHasNonZeroValue($value, $expectedResult)
+    public function testHasNonZeroValue($value, $expectedResult): void
     {
         $sut = new NoOfPermits();
         $sut->setValue($value);

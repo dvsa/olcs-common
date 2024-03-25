@@ -24,7 +24,7 @@ class LicenceHistoryData
      *)
      * @Form\Flags({"priority": -10})
      */
-    public $prevHasLicence = null;
+    public $prevHasLicence;
 
     /**
      * @Form\Name("prevHasLicence-table")
@@ -35,7 +35,7 @@ class LicenceHistoryData
      * })
      * @Form\Flags({"priority": -20})
      */
-    public $prevHasLicenceTable = null;
+    public $prevHasLicenceTable;
 
     /**
      * @Form\Attributes({"id":""})
@@ -52,7 +52,7 @@ class LicenceHistoryData
      *)
      * @Form\Flags({"priority": -30})
      */
-    public $prevHadLicence = null;
+    public $prevHadLicence;
 
     /**
      * @Form\Name("prevHadLicence-table")
@@ -63,7 +63,7 @@ class LicenceHistoryData
      * })
      * @Form\Flags({"priority": -40})
      */
-    public $prevHadLicenceTable = null;
+    public $prevHadLicenceTable;
 
     /**
      * @Form\Attributes({"id":""})
@@ -80,7 +80,7 @@ class LicenceHistoryData
      *)
      * @Form\Flags({"priority": -50})
      */
-    public $prevBeenDisqualifiedTc = null;
+    public $prevBeenDisqualifiedTc;
 
     /**
      * @Form\Name("prevBeenDisqualifiedTc-table")
@@ -91,5 +91,5 @@ class LicenceHistoryData
      * })
      * @Form\Flags({"priority": -60})
      */
-    public $prevBeenDisqualifiedTcTable = null;
+    public $prevBeenDisqualifiedTcTable;
 }

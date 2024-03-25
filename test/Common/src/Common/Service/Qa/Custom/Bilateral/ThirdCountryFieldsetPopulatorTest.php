@@ -18,7 +18,7 @@ use Laminas\Form\Form;
  */
 class ThirdCountryFieldsetPopulatorTest extends MockeryTestCase
 {
-    public function testPopulate()
+    public function testPopulate(): void
     {
         $thirdCountryNoBlurb = 'Third country no blurb';
 

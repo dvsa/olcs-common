@@ -26,7 +26,7 @@ class BusRegBrowseListDataServiceTest extends AbstractDataServiceTestCase
     /**
      * @dataProvider provideFetchListOptions
      */
-    public function testFetchListOptions($context, $result, $expected)
+    public function testFetchListOptions($context, $result, $expected): void
     {
         $this->sut->setData('BusRegBrowse' . ucfirst($context), $result);
 
@@ -60,7 +60,7 @@ class BusRegBrowseListDataServiceTest extends AbstractDataServiceTestCase
     /**
      * @dataProvider provideFetchListData
      */
-    public function testFetchListData($context, $result, $expected)
+    public function testFetchListData($context, $result, $expected): void
     {
         $params = [
             'context' => $context,
@@ -117,7 +117,7 @@ class BusRegBrowseListDataServiceTest extends AbstractDataServiceTestCase
         ];
     }
 
-    public function testFetchListDataThrowsException()
+    public function testFetchListDataThrowsException(): void
     {
         $this->expectException(DataServiceException::class);
 

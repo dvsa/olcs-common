@@ -25,5 +25,5 @@ class EmployerNameDetails
      *     },
      * )
      */
-    public $employerName = null;
+    public $employerName;
 }

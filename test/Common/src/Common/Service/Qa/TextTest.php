@@ -13,7 +13,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class TextTest extends MockeryTestCase
 {
-    public function testPopulate()
+    public function testPopulate(): void
     {
         $name = 'qaElement';
     

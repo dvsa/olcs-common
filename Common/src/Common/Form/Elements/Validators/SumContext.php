@@ -17,6 +17,7 @@ use Laminas\Validator\AbstractValidator;
 class SumContext extends AbstractValidator
 {
     public const BELOW_MIN = 'belowMin';
+
     public const ABOVE_MAX = 'aboveMax';
 
     /**
@@ -49,10 +50,8 @@ class SumContext extends AbstractValidator
      * Set minimum float value
      *
      * @param int $min Set minimum value for all fields
-     *
-     * @return void
      */
-    public function setMin($min)
+    public function setMin($min): void
     {
         $this->min = $min;
     }
@@ -61,10 +60,8 @@ class SumContext extends AbstractValidator
      * Set maximum float value
      *
      * @param int $max Set maximum value for all fields
-     *
-     * @return void
      */
-    public function setMax($max)
+    public function setMax($max): void
     {
         $this->max = $max;
     }

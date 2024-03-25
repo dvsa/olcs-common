@@ -33,22 +33,20 @@ class PsvVehicles implements MapperInterface
         ];
     }
 
-    public static function mapFormErrors(Form $form, array $errors, FlashMessengerHelperService $fm)
+    public static function mapFormErrors(Form $form, array $errors, FlashMessengerHelperService $fm): void
     {
         $formMessages = [];
 
         if (isset($errors['hasEnteredReg'])) {
-            foreach ($errors['hasEnteredReg'] as $key => $message) {
+            foreach ($errors['hasEnteredReg'] as $message) {
                 $formMessages['data']['hasEnteredReg'][] = $message;
             }
 
             unset($errors['hasEnteredReg']);
         }
 
-        if (!empty($errors)) {
-            foreach ($errors as $error) {
-                $fm->addCurrentErrorMessage($error);
-            }
+        foreach ($errors as $error) {
+            $fm->addCurrentErrorMessage($error);
         }
 
         $form->setMessages($formMessages);

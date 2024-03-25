@@ -18,5 +18,5 @@ class HoursOfWeekRequired
      *     "hint":  "lva-tm-hours-per-week-hint",
      * })
      */
-    public $hoursPerWeekContent = null;
+    public $hoursPerWeekContent;
 }

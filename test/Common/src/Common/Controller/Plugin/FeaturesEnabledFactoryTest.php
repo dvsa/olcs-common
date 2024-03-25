@@ -11,7 +11,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
 class FeaturesEnabledFactoryTest extends TestCase
 {
-    public function testInvoke()
+    public function testInvoke(): void
     {
         $mockQuerySender = m::mock(QuerySender::class);
 

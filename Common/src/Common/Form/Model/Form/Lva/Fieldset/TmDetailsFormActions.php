@@ -19,7 +19,7 @@ class TmDetailsFormActions
      * @Form\Options({"label": "tm-details-submit.button"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $submit = null;
+    public $submit;
 
     /**
      * @Form\Attributes({
@@ -30,5 +30,5 @@ class TmDetailsFormActions
      * @Form\Options({"label": "tm-details-save.button"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $save = null;
+    public $save;
 }

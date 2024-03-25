@@ -20,22 +20,21 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
     use Traits\CrudTableTrait;
 
     protected $section = 'conditions_undertakings';
+
     protected string $baseRoute = 'lva-%s/conditions_undertakings';
 
     protected FormHelperService $formHelper;
-    protected FlashMessengerHelperService $flashMessengerHelper;
-    protected FormServiceManager $formServiceManager;
-    protected ScriptFactory $scriptFactory;
-    protected TableFactory $tableFactory;
-    protected $lvaAdapter; // ToDo: use UnionType here when PHP 8 is in place
 
+    protected FlashMessengerHelperService $flashMessengerHelper;
+
+    protected FormServiceManager $formServiceManager;
+
+    protected ScriptFactory $scriptFactory;
+
+    protected TableFactory $tableFactory;
+
+    protected $lvaAdapter; // ToDo: use UnionType here when PHP 8 is in place
     /**
-     * @param NiTextTranslation $niTextTranslationUtil
-     * @param AuthorizationService $authService
-     * @param FormHelperService $formHelper
-     * @param FlashMessengerHelperService $flashMessengerHelper
-     * @param FormServiceManager $formServiceManager
-     * @param TableFactory $tableFactory
      * @param $lvaAdapter
      */
     public function __construct(
@@ -126,6 +125,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
             if (!$response->isOk()) {
                 throw new \RuntimeException('Failed to get ConditionUndertaking');
             }
+
             $conditionUndertakingData = $response->getResult();
             if (!$this->lvaAdapter->canEditRecord($conditionUndertakingData)) {
                 $this->flashMessengerHelper
@@ -133,6 +133,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
 
                 return $this->redirect()->toRouteAjax(null, ['action' => null], [], true);
             }
+
             $formData = [
                 'fields' => [
                     'id' => $conditionUndertakingData['id'],
@@ -193,6 +194,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
         } else {
             $command = \Dvsa\Olcs\Transfer\Query\Application\OperatingCentre::create(['id' => $this->getIdentifier()]);
         }
+
         $response = $this->handleQuery($command);
         if (!$response->isOk()) {
             throw new \RuntimeException('Failed getting operating centre data');
@@ -315,6 +317,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
         if (!$response->isOk()) {
             throw new \RuntimeException('Failed to get ConditionUndertaking data.');
         }
+
         $results = $response->getResult()['results'];
 
         $data = [];
@@ -322,6 +325,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
             if ($row['action'] == '') {
                 $row['action'] = 'E';
             }
+
             switch ($row['action']) {
                 case 'U':
                     $data[$row['licConditionVariation']['id']]['action'] = 'C';
@@ -330,8 +334,10 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
                     unset($data[$row['licConditionVariation']['id']]);
                     break;
             }
+
             $data[$row['id']] = $row;
         }
+
         return $data;
     }
 

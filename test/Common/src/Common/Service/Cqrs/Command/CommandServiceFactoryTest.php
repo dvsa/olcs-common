@@ -23,7 +23,7 @@ class CommandServiceFactoryTest extends MockeryTestCase
      */
     protected $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->setUpServiceManager();
     }
@@ -37,7 +37,7 @@ class CommandServiceFactoryTest extends MockeryTestCase
         $this->setUpSut();
 
         // Assert
-        $this->assertIsCallable([$this->sut, '__invoke']);
+        $this->assertIsCallable(fn(\Psr\Container\ContainerInterface $container, string $requestedName, ?array $options = null): \Common\Service\Cqrs\Command\CommandService => $this->sut->__invoke($container, $requestedName, $options));
     }
 
     /**

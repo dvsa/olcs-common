@@ -27,9 +27,13 @@ class SumColumns implements FormatterPluginManagerInterface
         $total = 0;
         if (isset($column['columns']) && is_array($column['columns'])) {
             foreach ($column['columns'] as $name) {
-                if (isset($data[$name]) && is_numeric($data[$name])) {
-                    $total += (float)$data[$name];
+                if (!isset($data[$name])) {
+                    continue;
                 }
+                if (!is_numeric($data[$name])) {
+                    continue;
+                }
+                $total += (float)$data[$name];
             }
         }
 

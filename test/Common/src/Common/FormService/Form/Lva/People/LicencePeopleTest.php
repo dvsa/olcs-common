@@ -15,13 +15,17 @@ use LmcRbacMvc\Service\AuthorizationService;
  */
 class LicencePeopleTest extends MockeryTestCase
 {
+    /**
+     * @var \Mockery\LegacyMockInterface
+     */
+    public $authService;
     protected $sut;
 
     protected $formHelper;
 
     protected $fsm;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);
         $this->authService = m::mock(AuthorizationService::class);
@@ -29,7 +33,7 @@ class LicencePeopleTest extends MockeryTestCase
         $this->sut = new Sut($this->formHelper, $this->authService);
     }
 
-    public function testGetForm()
+    public function testGetForm(): void
     {
         $formActions = m::mock(\Common\Form\Form::class);
         $formActions->shouldReceive('has')->with('save')->andReturn(true);

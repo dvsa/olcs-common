@@ -21,6 +21,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 class SystemParameterLinkTest extends TestCase
 {
     protected $urlHelper;
+
     protected $sut;
 
     protected function setUp(): void
@@ -34,7 +35,7 @@ class SystemParameterLinkTest extends TestCase
         m::close();
     }
 
-    public function testFormat()
+    public function testFormat(): void
     {
         $data = [
             'id' => 1

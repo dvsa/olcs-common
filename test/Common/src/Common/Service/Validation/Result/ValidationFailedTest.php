@@ -14,7 +14,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
  */
 class ValidationFailedTest extends TestCase
 {
-    public function testObject()
+    public function testObject(): void
     {
         $command  = m::mock(CommandInterface::class);
         $sut = new ValidationFailed($command, ['failure' => 'It failed!']);

@@ -19,7 +19,6 @@ class LastLoginService
     }
 
     /**
-     * @param string $token
      * @return Response
      */
     public function updateLastLogin(string $token)

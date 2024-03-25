@@ -22,7 +22,7 @@ class WarningAdderTest extends MockeryTestCase
 
     public const ELEMENT_NAME = 'xyzWarning';
 
-    public function testAdd()
+    public function testAdd(): void
     {
         $warningMarkup = '<h1>warning markup</h1>';
 

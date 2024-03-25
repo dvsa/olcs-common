@@ -11,9 +11,13 @@ use Laminas\Authentication\Storage\Session;
 class RefreshTokenService
 {
     public const MESSAGE_BASE = "JWT refresh failed: %s";
+
     public const MESSAGE_RESULT_NOT_OK = 'Result is not ok';
+
     public const MESSAGE_AUTH_RESULT_NOT_VALID = 'Result is not valid';
+
     public const MESSAGE_IDENTITY_MISSING= 'Result is missing new identity';
+
     public const EXPIRES_WITHIN_SECONDS = 60;
 
     protected CommandSender $commandSender;
@@ -22,7 +26,6 @@ class RefreshTokenService
 
     /**
      * RefreshTokenService constructor.
-     * @param CommandSender $commandSender
      */
     public function __construct(CommandSender $commandSender)
     {

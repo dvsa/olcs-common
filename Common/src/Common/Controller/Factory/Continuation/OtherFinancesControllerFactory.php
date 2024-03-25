@@ -15,10 +15,8 @@ use LmcRbacMvc\Service\AuthorizationService;
 class OtherFinancesControllerFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
-     * @return OtherFinancesController
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): OtherFinancesController
     {

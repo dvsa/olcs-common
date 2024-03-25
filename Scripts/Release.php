@@ -14,15 +14,20 @@ class Runner
      * Release types
      */
     public const TYPE_MINOR = 1;
+
     public const TYPE_MAJOR = 2;
 
     /**
      * Message types
      */
     public const MESSAGE_DEFAULT = "\e[39m";
+
     public const MESSAGE_OK = "\e[34m";
+
     public const MESSAGE_ERROR = "\e[31m";
+
     public const MESSAGE_SUCCESS = "\e[32m";
+
     public const MESSAGE_INFO = "\e[33m";
 
     /**
@@ -68,7 +73,7 @@ class Runner
      *
      * @param string $version
      */
-    public function setVersion($version)
+    public function setVersion($version): void
     {
         $this->version = $version;
     }
@@ -78,30 +83,20 @@ class Runner
      *
      * @param int $type
      */
-    public function setType($type)
+    public function setType($type): void
     {
         $this->type = $type;
     }
 
     /**
-     * Determine what release type we are wanting
-     *
-     * @return int
-     */
-    private function getType()
-    {
-        return $this->type;
-    }
-
-    /**
      * Run the script
      */
-    public function run()
+    public function run(): void
     {
         try {
             $this->runCommand();
-        } catch (Exception $ex) {
-            $this->output($ex->getMessage(), self::MESSAGE_ERROR);
+        } catch (Exception $exception) {
+            $this->output($exception->getMessage(), self::MESSAGE_ERROR);
         }
     }
 
@@ -110,7 +105,7 @@ class Runner
      *
      * @throws Exception
      */
-    private function runCommand()
+    private function runCommand(): void
     {
         $this->output('Checking repositories', self::MESSAGE_INFO);
 
@@ -189,7 +184,7 @@ class Runner
     /**
      * Update release version
      */
-    private function updateReleaseVersion()
+    private function updateReleaseVersion(): void
     {
         $this->output('Updating release number in config');
 
@@ -199,7 +194,7 @@ class Runner
 
             $release['version'] = $this->getVersion();
 
-            if (!file_put_contents(__DIR__ . '/../Common/config/release.json', json_encode($release, JSON_UNESCAPED_SLASHES))) {
+            if (file_put_contents(__DIR__ . '/../Common/config/release.json', json_encode($release, JSON_UNESCAPED_SLASHES)) === 0 || file_put_contents(__DIR__ . '/../Common/config/release.json', json_encode($release, JSON_UNESCAPED_SLASHES)) === false) {
                 throw new Exception('Unable to write to release.json');
             }
         } else {
@@ -213,7 +208,7 @@ class Runner
      *
      * @param string $message
      */
-    public function output($message, $type = self::MESSAGE_OK)
+    public function output($message, $type = self::MESSAGE_OK): void
     {
         echo $type . $message . "\n" . self::MESSAGE_DEFAULT;
     }
@@ -243,10 +238,10 @@ class Runner
      */
     private function getNextRelease()
     {
-        if (empty($this->nextRelease)) {
+        if ($this->nextRelease === []) {
             [$lastMajor, $lastMinor] = $this->getLastTag();
 
-            switch($this->getType()) {
+            switch($this->type) {
                 case self::TYPE_MINOR:
                     $newMajor = $lastMajor;
                     $newMinor = ($lastMinor + 1);
@@ -275,19 +270,13 @@ class Runner
 
         $tag = trim($tag, "\n");
 
-        if (empty($tag)) {
+        if ($tag === '' || $tag === '0') {
             throw new Exception('No current tag found');
         }
 
         $tags = explode("\n", $tag);
 
-        if (count($tags) === 1) {
-
-            $lastTag = $tags[0];
-
-        } else {
-            $lastTag = array_pop($tags);
-        }
+        $lastTag = count($tags) === 1 ? $tags[0] : array_pop($tags);
 
         $lastTag = str_replace('v', '', $lastTag);
 
@@ -361,11 +350,12 @@ class Repo
      *
      * @param string $version
      */
-    public function setVersion($version)
+    public function setVersion($version): void
     {
         if (empty($version)) {
             throw new Exception($this->getName() . ': Version number is empty');
         }
+
         $this->version = (string)$version;
     }
 
@@ -381,7 +371,7 @@ class Repo
             throw new Exception($this->getName() . ': Version number is empty');
         }
 
-        if (!preg_match('/^[0-9]+\.[0-9]+$/', $this->version)) {
+        if (preg_match('/^\d+\.\d+$/', $this->version) === 0 || preg_match('/^\d+\.\d+$/', $this->version) === 0 || preg_match('/^\d+\.\d+$/', $this->version) === false) {
             throw new Exception($this->getName() . ' Invalid version number ' . $this->version);
         }
 
@@ -421,7 +411,7 @@ class Repo
     /**
      * Set the current status
      */
-    private function loadStatus()
+    private function loadStatus(): void
     {
         $this->status = shell_exec('cd ' . $this->getLocation() . ' && git status');
     }
@@ -429,7 +419,7 @@ class Repo
     /**
      * Fetch origin
      */
-    public function fetchOrigin()
+    public function fetchOrigin(): void
     {
         $this->output('Fetching origin');
         shell_exec('cd ' . $this->getLocation() . ' && git fetch -p origin');
@@ -467,7 +457,7 @@ class Repo
     /**
      * Checkout the latest develop
      */
-    public function checkoutDevelop()
+    public function checkoutDevelop(): void
     {
         $this->output('Checking if we can check out develop');
 
@@ -487,9 +477,9 @@ class Repo
     /**
      * Pull the latest develop
      */
-    public function pullDevelop()
+    public function pullDevelop(): void
     {
-        if (!strstr($this->getStatus(), 'Your branch is up-to-date with \'origin/develop\'')) {
+        if (strstr($this->getStatus(), "Your branch is up-to-date with 'origin/develop'") === '' || strstr($this->getStatus(), "Your branch is up-to-date with 'origin/develop'") === '0' || strstr($this->getStatus(), "Your branch is up-to-date with 'origin/develop'") === false) {
             $this->output('Pulling latest develop');
             shell_exec('cd ' . $this->getLocation() . ' && git pull origin develop');
             $this->loadStatus();
@@ -501,7 +491,7 @@ class Repo
     /**
      * Create release branch
      */
-    public function createRelease()
+    public function createRelease(): void
     {
         /**
         $this->output('Creating release ' . $this->getVersion());
@@ -528,7 +518,7 @@ class Repo
      */
     public function hasUncommittedChanges()
     {
-        return !(strstr($this->getStatus(), 'nothing to commit'));
+        return strstr($this->getStatus(), 'nothing to commit') === '' || strstr($this->getStatus(), 'nothing to commit') === '0' || strstr($this->getStatus(), 'nothing to commit') === false;
     }
 
     /**
@@ -536,7 +526,7 @@ class Repo
      *
      * @param string $message
      */
-    public function commitChanges($message)
+    public function commitChanges($message): void
     {
         $this->output('Committing changes');
 
@@ -546,7 +536,7 @@ class Repo
     /**
      * Publish repo
      */
-    public function publish()
+    public function publish(): void
     {
         /**
         $this->output('Publishing release branch');
@@ -563,7 +553,7 @@ class Repo
      *
      * @param array $version
      */
-    public function updateComposerJson()
+    public function updateComposerJson(): void
     {
         $this->output('Looking for composer.json');
 
@@ -596,7 +586,7 @@ class Repo
                 }
             }
 
-            if (!file_put_contents($composerFile, json_encode($composer, JSON_UNESCAPED_SLASHES))) {
+            if (file_put_contents($composerFile, json_encode($composer, JSON_UNESCAPED_SLASHES)) === 0 || file_put_contents($composerFile, json_encode($composer, JSON_UNESCAPED_SLASHES)) === false) {
 
                 throw new Exception($this->getName() . ': Could not write to ' . $composerFile);
             }
@@ -612,7 +602,7 @@ class Repo
      *
      * @param string $message
      */
-    private function output($message, $type = Runner::MESSAGE_OK)
+    private function output($message, $type = Runner::MESSAGE_OK): void
     {
         $this->runner->output($this->getName() . ': ' . $message, $type);
     }

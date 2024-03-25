@@ -14,7 +14,7 @@ use Rbac\Role\Role;
  */
 class RoleProviderTest extends TestCase
 {
-    public function testGetUserData()
+    public function testGetUserData(): void
     {
         $resultsData = [
             [
@@ -73,7 +73,7 @@ class RoleProviderTest extends TestCase
         $this->assertFalse($result['role3']->hasPermission('perm3'));
     }
 
-    public function testGetUserDataThrowsUnableToRetrieveException()
+    public function testGetUserDataThrowsUnableToRetrieveException(): void
     {
         $this->expectException('RuntimeException');
 

@@ -14,33 +14,33 @@ class Declarations
      * @Form\Options({"tokens":{"lva-tm-details-details-declarations-by-submitting"}})
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $bySubmitted = null;
+    public $bySubmitted;
 
     /**
      * @Form\Attributes({"value":"<strong>%s</strong>", "data-container-class": "js-hidden"})
      * @Form\Options({"tokens":{"lva-tm-details-details-declarations-internal-header"}})
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $internalHeader = null;
+    public $internalHeader;
 
     /**
      * @Form\Attributes({"data-container-class": "tm-details-declaration-internal"})
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $internal = null;
+    public $internal;
 
     /**
      * @Form\Attributes({"value":"<strong>%s</strong>", "data-container-class": "js-hidden"})
      * @Form\Options({"tokens":{"lva-tm-details-details-declarations-external-header"}})
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $externalHeader = null;
+    public $externalHeader;
 
     /**
      * @Form\Attributes({"data-container-class": "tm-details-declaration-external"})
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $external = null;
+    public $external;
 
     /**
      * @Form\Options({
@@ -51,5 +51,5 @@ class Declarations
      * @Form\Attributes({"data-container-class": "confirm checkbox"})
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      */
-    public $confirmation = null;
+    public $confirmation;
 }

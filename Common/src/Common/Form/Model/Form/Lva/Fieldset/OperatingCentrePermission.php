@@ -20,5 +20,5 @@ class OperatingCentrePermission
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      */
-    public $permission = null;
+    public $permission;
 }

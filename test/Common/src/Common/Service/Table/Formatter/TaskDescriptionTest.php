@@ -14,9 +14,13 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class TaskDescriptionTest extends MockeryTestCase
 {
+    public $mockRouteMatch;
     protected $urlHelper;
+
     protected $router;
+
     protected $request;
+
     protected $sut;
 
     protected function setUp(): void
@@ -32,10 +36,11 @@ class TaskDescriptionTest extends MockeryTestCase
     {
         m::close();
     }
+
     /**
      * @dataProvider dpTestFormat
      */
-    public function testFormat($matchedRouteName, $params, $expected)
+    public function testFormat($matchedRouteName, $params, $expected): void
     {
         $data = [
             'id' => 100,

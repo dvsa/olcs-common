@@ -24,17 +24,17 @@ class ApplicationDeclaration
      * })
      * @Form\Type("\Laminas\Form\Element\Radio")
      */
-    public $isDigitallySigned = null;
+    public $isDigitallySigned;
 
     /**
      * @Form\Attributes({"id":"declarationDownload"})
      * @Form\Type("\Common\Form\Elements\Types\Html")
      */
-    public $declarationDownload = null;
+    public $declarationDownload;
 
     /**
      * @Form\Attributes({"value": "markup-declaration-for-verify","data-container-class":"declarationForVerify"})
      * @Form\Type("Common\Form\Elements\Types\GuidanceTranslated")
      */
-    public $declarationForVerify = null;
+    public $declarationForVerify;
 }

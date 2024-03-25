@@ -28,13 +28,13 @@ class PublicHolidayArea implements FormatterPluginManagerInterface
             'isNi' => 'Northern Ireland',
         ];
 
-        $fncFilter = fn($key) => isset($data[$key]) && $data[$key] === 'Y';
+        $fncFilter = static fn($key) => isset($data[$key]) && $data[$key] === 'Y';
 
         $result = array_keys(array_filter(array_flip($map), $fncFilter));
         //  #TODO enable it after moving to PHP 5.6
         //  $result = array_filter($map, $fncFilter, ARRAY_FILTER_USE_KEY);
 
-        if (empty($result)) {
+        if ($result === []) {
             return self::NO_AREA;
         }
 

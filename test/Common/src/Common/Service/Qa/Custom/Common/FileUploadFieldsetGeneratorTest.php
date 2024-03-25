@@ -14,7 +14,7 @@ use Laminas\Form\InputFilterProviderFieldset;
 
 class FileUploadFieldsetGeneratorTest extends MockeryTestCase
 {
-    public function testGenerate()
+    public function testGenerate(): void
     {
         $multipleFileUploadSpec = [
             'input_filter' => [
@@ -33,13 +33,6 @@ class FileUploadFieldsetGeneratorTest extends MockeryTestCase
                 'fileCountAttribute2' => 'fileCountValue2',
                 'continue_if_empty' => true,
             ]
-        ];
-
-        $updatedMultipleFileUploadSpec = [
-            'input_filter' => $updatedInputFilter,
-            'otherAttribute1' => 'otherValue1',
-            'otherAttribute2' => 'otherValue2',
-            'type' => InputFilterProviderFieldset::class
         ];
 
         $fieldset = m::mock(ElementInterface::class);

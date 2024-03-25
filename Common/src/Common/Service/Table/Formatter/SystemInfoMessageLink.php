@@ -12,11 +12,9 @@ use Common\Service\Helper\UrlHelperService;
 class SystemInfoMessageLink implements FormatterPluginManagerInterface
 {
     public const MAX_DESC_LEN = 50;
+
     private UrlHelperService $urlHelper;
 
-    /**
-     * @param UrlHelperService $urlHelper
-     */
     public function __construct(UrlHelperService $urlHelper)
     {
         $this->urlHelper = $urlHelper;
@@ -48,11 +46,7 @@ class SystemInfoMessageLink implements FormatterPluginManagerInterface
         $htmlLink = '<a href="' . $url . '" class="govuk-link js-modal-ajax">' . $desc . '</a>';
 
         //  define status
-        if ($data['isActive']) {
-            $statusParams = ['green', 'ACTIVE'];
-        } else {
-            $statusParams = ['grey', 'INACTIVE'];
-        }
+        $statusParams = $data['isActive'] ? ['green', 'ACTIVE'] : ['grey', 'INACTIVE'];
 
         $htmlStatus = vsprintf(' <span class="status %s">%s</span>', $statusParams);
 

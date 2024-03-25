@@ -4,7 +4,7 @@ namespace Common\Form\Elements\InputFilters;
 
 use Laminas\Form\Element\Select as LaminasElement;
 use Laminas\Validator as LaminasValidator;
-use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\InputFilter\InputProviderInterface;
 
 /**
  * @deprecated Unused Custom InputFilter.  Need to remove in OLCS-15198
@@ -22,12 +22,10 @@ class SelectEmpty extends LaminasElement implements InputProviderInterface
 
     /**
      * Provide default input rules for this element.
-     *
-     * @return array
      */
     public function getInputSpecification(): array
     {
-        $specification = [
+        return [
             'required' => $this->required,
             'validators' => [
                 [
@@ -38,7 +36,5 @@ class SelectEmpty extends LaminasElement implements InputProviderInterface
                 ],
             ]
         ];
-
-        return $specification;
     }
 }

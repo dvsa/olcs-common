@@ -64,7 +64,7 @@ class CompanyNumber extends Fieldset
     }
 
 
-    public function setMessages($messages)
+    public function setMessages($messages): void
     {
         $this->messages = $messages;
     }

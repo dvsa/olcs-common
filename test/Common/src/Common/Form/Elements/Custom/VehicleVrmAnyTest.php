@@ -11,7 +11,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class VehicleVrmAnyTest extends MockeryTestCase
 {
-    public function testValidators()
+    public function testValidators(): void
     {
         /** @var VehicleVrmAny $sut */
         $sut = m::mock(VehicleVrmAny::class)->makePartial()
@@ -29,7 +29,7 @@ class VehicleVrmAnyTest extends MockeryTestCase
                 \Laminas\Validator\StringLength::class,
             ],
             array_map(
-                fn($item) => $item['name'],
+                static fn($item) => $item['name'],
                 $actual['validators']
             )
         );

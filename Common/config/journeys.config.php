@@ -7,7 +7,7 @@ $journeysDirectory = __DIR__ . '/journeys/*.journey.php';
 $allRoutes = [];
 
 $journeyArray = array_map(
-    fn($file) => include $file,
+    static fn($file) => include $file,
     glob($journeysDirectory)
 );
 

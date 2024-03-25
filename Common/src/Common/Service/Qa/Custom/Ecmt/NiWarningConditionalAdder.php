@@ -13,7 +13,6 @@ class NiWarningConditionalAdder
     /**
      * Create service instance
      *
-     * @param WarningAdder $warningAdder
      *
      * @return NiWarningConditionalAdder
      */
@@ -25,10 +24,9 @@ class NiWarningConditionalAdder
     /**
      * Add the NI warning to the fieldset if showNiWarning is true
      *
-     * @param Fieldset $fieldset
      * @param bool $showNiWarning
      */
-    public function addIfRequired(Fieldset $fieldset, $showNiWarning)
+    public function addIfRequired(Fieldset $fieldset, $showNiWarning): void
     {
         if ($showNiWarning) {
             $this->warningAdder->add(

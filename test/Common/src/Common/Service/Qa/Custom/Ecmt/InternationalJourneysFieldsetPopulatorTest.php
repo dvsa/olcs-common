@@ -21,7 +21,7 @@ class InternationalJourneysFieldsetPopulatorTest extends MockeryTestCase
     /**
      * @dataProvider dpTrueFalse
      */
-    public function testPopulate($showNiWarning)
+    public function testPopulate($showNiWarning): void
     {
         $radioOptions = [
             'radioKey1' => 'radioValue1',

@@ -29,7 +29,7 @@ class MultiResponseHelper extends ResponseHelper
                 $return[$uri] = $response['Data'];
             }
 
-            if (count($return)) {
+            if ($return !== []) {
                 return $return;
             }
         } else {

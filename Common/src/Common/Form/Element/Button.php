@@ -15,16 +15,23 @@ use InvalidArgumentException;
 class Button extends \Laminas\Form\Element\Button
 {
     public const PRIMARY = 'govuk-button';
+
     public const SECONDARY = 'govuk-button govuk-button--secondary';
+
     public const TERTIARY = 'govuk-button govuk-button--secondary';
+
     public const THEMES = [self::PRIMARY, self::SECONDARY, self::TERTIARY];
 
     public const LARGE = 'large';
+
     public const SIZES = [self::LARGE];
 
     public const RESET = 'reset';
+
     public const SUBMIT = 'submit';
+
     public const BUTTON = 'button';
+
     public const TYPES = [self::BUTTON, self::SUBMIT, self::RESET];
 
     /**
@@ -36,10 +43,6 @@ class Button extends \Laminas\Form\Element\Button
         'allowWrap' => false,
     ];
 
-    /**
-     * @param string $name
-     * @param string $label
-     */
     public function __construct(string $name, string $label)
     {
         parent::__construct($name, []);
@@ -69,7 +72,6 @@ class Button extends \Laminas\Form\Element\Button
     }
 
     /**
-     * @param string $theme
      * @return $this
      */
     public function setTheme(string $theme): self
@@ -77,6 +79,7 @@ class Button extends \Laminas\Form\Element\Button
         if (! in_array($theme, static::THEMES)) {
             throw new InvalidArgumentException('Invalid button theme');
         }
+
         $classList = $this->getAttribute('class');
         assert($classList instanceof ClassList);
         $classList->remove(static::THEMES);
@@ -84,14 +87,12 @@ class Button extends \Laminas\Form\Element\Button
         return $this;
     }
 
-    /**
-     * @param string $size
-     */
     public function setSize(string $size): self
     {
         if (! in_array($size, static::SIZES)) {
             throw new InvalidArgumentException('Invalid button size');
         }
+
         $classList = $this->getAttribute('class');
         assert($classList instanceof ClassList);
         $classList->remove(static::SIZES);

@@ -12,11 +12,8 @@ class CurrentUserFactory implements FactoryInterface
     public const MSG_MISSING_ANALYTICS_CONFIG = 'Missing auth.user_unique_id_salt from config';
 
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
-     *
-     * @return CurrentUser
      * @throws RuntimeException
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): CurrentUser

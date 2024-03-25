@@ -18,7 +18,8 @@ use Common\Form\Elements\Validators\VehicleUndertakingsOperateSmallVehiclesAgree
  */
 class VehicleUndertakingsOperateSmallVehiclesAgreementValidatorTest extends \PHPUnit\Framework\TestCase
 {
-    public function setUp(): void
+    public $validator;
+    protected function setUp(): void
     {
         $this->validator = new VehicleUndertakingsOperateSmallVehiclesAgreementValidator();
     }
@@ -26,7 +27,7 @@ class VehicleUndertakingsOperateSmallVehiclesAgreementValidatorTest extends \PHP
     /**
      * @dataProvider providerIsValid
      */
-    public function testIsValid($value, $context, $expected)
+    public function testIsValid($value, $context, $expected): void
     {
         $this->assertEquals($expected, $this->validator->isValid($value, $context));
     }

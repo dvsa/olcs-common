@@ -15,7 +15,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class ApplicationStepsPostDataTransformerTest extends MockeryTestCase
 {
-    public function testGetTransformed()
+    public function testGetTransformed(): void
     {
         $fieldset43Slug = 'permit-usage';
         $fieldset72Slug = 'no-of-permits';

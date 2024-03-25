@@ -57,7 +57,7 @@ class OtherFinancesDetails
      *      }
      * )
      */
-    public $amount = null;
+    public $amount;
 
     /**
      * @Form\Type("Textarea")
@@ -91,5 +91,5 @@ class OtherFinancesDetails
      *      }
      * )
      */
-    public $detail = null;
+    public $detail;
 }

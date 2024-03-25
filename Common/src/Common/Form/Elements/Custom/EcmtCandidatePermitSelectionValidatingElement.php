@@ -21,10 +21,7 @@ class EcmtCandidatePermitSelectionValidatingElement extends Hidden implements In
                 [
                     'name' => Callback::class,
                     'options' => [
-                        'callback' => [
-                            EcmtCandidatePermitSelectionValidator::class,
-                            'validate'
-                        ],
+                        'callback' => static fn($value, array $context): bool => \Common\Form\Elements\Validators\EcmtCandidatePermitSelectionValidator::validate($value, $context),
                         'messages' => [
                             Callback::INVALID_VALUE => 'permits.page.irhp.candidate-permit-selection.error'
                         ]

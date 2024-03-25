@@ -13,6 +13,7 @@ use LmcRbacMvc\Service\AuthorizationService;
 class VariationPsvVehicles extends PsvVehicles
 {
     protected FormHelperService $formHelper;
+
     protected AuthorizationService $authService;
 
     public function __construct(FormHelperService $formHelper, AuthorizationService $authService)

@@ -22,7 +22,7 @@ class VehicleUndertakingsOperateSmallVehiclesValidator extends AbstractValidator
      * @var array
      */
     protected $messageTemplates = [
-        'required' => 'Value is required and can\'t be empty'
+        'required' => "Value is required and can't be empty"
     ];
 
     /**
@@ -36,13 +36,12 @@ class VehicleUndertakingsOperateSmallVehiclesValidator extends AbstractValidator
         unset($value);
 
         // This only gets used if psvOperateSmallVehicles is shown
-        if (isset($context['psvOperateSmallVhl'])) {
-            if ($context['psvOperateSmallVhl'] === 'Y'
-                && trim($context['psvSmallVhlNotes']) === '') {
-                $this->error('required');
-                return false;
-            }
+        if (isset($context['psvOperateSmallVhl']) && ($context['psvOperateSmallVhl'] === 'Y'
+            && trim($context['psvSmallVhlNotes']) === '')) {
+            $this->error('required');
+            return false;
         }
+
         return true;
     }
 }

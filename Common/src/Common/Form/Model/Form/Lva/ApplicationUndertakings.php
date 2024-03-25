@@ -16,18 +16,18 @@ class ApplicationUndertakings
      * @Form\Name("declarationsAndUndertakings")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\ApplicationDeclarationsAndUndertakings")
      */
-    public $declarationsAndUndertakings = null;
+    public $declarationsAndUndertakings;
 
     /**
      * @Form\Name("interim")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\Interim")
      */
-    public $interim = null;
+    public $interim;
 
     /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
      * @Form\Attributes({"class":"govuk-button-group"})
      */
-    public $formActions = null;
+    public $formActions;
 }

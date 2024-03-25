@@ -29,7 +29,6 @@ class Version extends AbstractHelper
     /**
      * Create service instance
      *
-     * @param array $config
      *
      * @return Version
      */
@@ -69,6 +68,6 @@ class Version extends AbstractHelper
 
     protected function valOrAlt($array, $index, $alt = 'unknown')
     {
-        return (!empty($array[$index]) ? $array[$index] : $alt);
+        return (empty($array[$index]) ? $alt : $array[$index]);
     }
 }

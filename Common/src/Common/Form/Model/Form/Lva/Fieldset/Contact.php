@@ -16,38 +16,38 @@ class Contact
      * @Form\Attributes({"class":"medium","id":"phone_primary"})
      * @Form\Type("\Common\Form\Elements\InputFilters\PhoneRequired")
      */
-    public $phone_primary = null;
+    public $phone_primary;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $phone_primary_id = null;
+    public $phone_primary_id;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $phone_primary_version = null;
+    public $phone_primary_version;
 
     /**
      * @Form\Attributes({"class":"medium","id":"$phone_secondary"})
      * @Form\Options({"label": "secondary-contact-number-optional"})
      * @Form\Type("\Common\Form\Elements\InputFilters\Phone")
      */
-    public $phone_secondary = null;
+    public $phone_secondary;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $phone_secondary_id = null;
+    public $phone_secondary_id;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $phone_secondary_version = null;
+    public $phone_secondary_version;
 
     /**
      * @Form\Attributes({"class":"long","id":"email"})
@@ -63,5 +63,5 @@ class Contact
      * @Form\Filter("Laminas\Filter\StringTrim")
      * @Form\Validator("Dvsa\Olcs\Transfer\Validators\EmailAddress")
      */
-    public $email = null;
+    public $email;
 }

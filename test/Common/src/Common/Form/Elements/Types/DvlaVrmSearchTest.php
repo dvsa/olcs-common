@@ -12,7 +12,7 @@ use Laminas\Form\Element\Button;
 class DvlaVrmSearchTest extends TestCase
 {
 
-    public function testVrmSearchCreate()
+    public function testVrmSearchCreate(): void
     {
         $sut = new DvlaVrmSearch();
 

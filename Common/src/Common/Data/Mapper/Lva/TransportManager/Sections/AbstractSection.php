@@ -18,9 +18,6 @@ abstract class AbstractSection
         $this->translator = $translator;
     }
 
-    /**
-     * @return string
-     */
     protected function getTranslationTemplate(): string
     {
         return $this->translationTemplate;
@@ -40,14 +37,13 @@ abstract class AbstractSection
      * sortByCreated
      *
      * @param $items
-     *
-     * @return array
      */
     protected function sortByCreated(array $items): array
     {
         if (count($items) > 1) {
-            usort($items, fn($a, $b) => strtotime($b['createdOn']) - strtotime($a['createdOn']));
+            usort($items, static fn($a, $b) => strtotime($b['createdOn']) - strtotime($a['createdOn']));
         }
+
         return $items;
     }
 
@@ -71,6 +67,7 @@ abstract class AbstractSection
                 'changeLinkInHeading' => $this->displayChangeLinkInHeading
             ];
         }
+
         return $questionSections;
     }
 }

@@ -12,9 +12,6 @@ class IrhpPermitRangeType implements FormatterPluginManagerInterface
 {
     private TranslatorDelegator $translator;
 
-    /**
-     * @param TranslatorDelegator $translator
-     */
     public function __construct(TranslatorDelegator $translator)
     {
         $this->translator = $translator;

@@ -31,14 +31,9 @@ class DeclarationController extends AbstractContinuationController
     ];
 
     protected $currentStep = self::STEP_DECLARATION;
+
     protected FormHelperService $formHelper;
 
-    /**
-     * @param NiTextTranslation $niTextTranslationUtil
-     * @param AuthorizationService $authService
-     * @param FormServiceManager $formServiceManager
-     * @param TranslationHelperService $translationHelper
-     */
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
@@ -102,22 +97,24 @@ class DeclarationController extends AbstractContinuationController
                     if (!$urlResult->isOk()) {
                         throw new \Exception('GetGovUkAccountRedirect command returned non-OK', $urlResult->getStatusCode());
                     }
+
                     return $this->redirect()->toUrl($urlResult->getResult()['messages'][0]);
-                } else {
-                    // Using Print to sign
-                    // Submit the continuation
-                    $response = $this->handleCommand(
-                        Submit::create(['id' => $continuationDetail['id'], 'version' => $form->getData()['version']])
-                    );
-                    if ($response->isOk()) {
-                        // Goto to page depenedant on whether fees need to be paid
-                        if ($continuationDetail['hasOutstandingContinuationFee']) {
-                            return $this->redirectToPaymentPage();
-                        }
-                        return $this->redirectToSuccessPage();
-                    }
-                    $this->addErrorMessage('unknown-error');
                 }
+                // Using Print to sign
+                // Submit the continuation
+                $response = $this->handleCommand(
+                    Submit::create(['id' => $continuationDetail['id'], 'version' => $form->getData()['version']])
+                );
+                if ($response->isOk()) {
+                    // Goto to page depenedant on whether fees need to be paid
+                    if ($continuationDetail['hasOutstandingContinuationFee']) {
+                        return $this->redirectToPaymentPage();
+                    }
+
+                    return $this->redirectToSuccessPage();
+                }
+
+                $this->addErrorMessage('unknown-error');
             }
         }
 

@@ -107,8 +107,6 @@ class OperatingCentres implements MapperInterface
      * @param FlashMessengerHelperService $fm         Flash messenger
      * @param TranslationHelperService    $translator Translator Service
      * @param string                      $location   Selfserve|Internal
-     *
-     * @return void
      */
     public static function mapFormErrors(
         FormInterface $form,
@@ -116,32 +114,35 @@ class OperatingCentres implements MapperInterface
         FlashMessengerHelperService $fm,
         TranslationHelperService $translator,
         $location
-    ) {
+    ): void {
         $formMessages = [];
 
         if (isset($errors['totCommunityLicences'])) {
-            foreach ($errors['totCommunityLicences'] as $key => $message) {
+            foreach ($errors['totCommunityLicences'] as $message) {
                 $formMessages['data']['totCommunityLicencesFieldset']['totCommunityLicences'][] = $message;
             }
+
             unset($errors['totCommunityLicences']);
         }
 
         if (isset($errors['totAuthHgvVehicles'])) {
-            foreach ($errors['totAuthHgvVehicles'] as $key => $message) {
+            foreach ($errors['totAuthHgvVehicles'] as $message) {
                 $formMessages['data']['totAuthHgvVehiclesFieldset']['totAuthHgvVehicles'][] = $message;
             }
+
             unset($errors['totAuthHgvVehicles']);
         }
 
         if (isset($errors['totAuthLgvVehicles'])) {
-            foreach ($errors['totAuthLgvVehicles'] as $key => $message) {
+            foreach ($errors['totAuthLgvVehicles'] as $message) {
                 $formMessages['data']['totAuthLgvVehiclesFieldset']['totAuthLgvVehicles'][] = $message;
             }
+
             unset($errors['totAuthLgvVehicles']);
         }
 
         if (isset($errors['totAuthTrailers'])) {
-            foreach ($errors['totAuthTrailers'] as $key => $message) {
+            foreach ($errors['totAuthTrailers'] as $message) {
                 $formMessages['data']['totAuthTrailersFieldset']['totAuthTrailers'][] = $message;
             }
 
@@ -149,7 +150,7 @@ class OperatingCentres implements MapperInterface
         }
 
         if (isset($errors['operatingCentres'])) {
-            foreach ($errors['operatingCentres'] as $key => $message) {
+            foreach ($errors['operatingCentres'] as $message) {
                 $formMessages['table']['table'][] = $message;
             }
 
@@ -157,7 +158,7 @@ class OperatingCentres implements MapperInterface
         }
 
         if (isset($errors['enforcementArea'])) {
-            foreach ($errors['enforcementArea'] as $key => $message) {
+            foreach ($errors['enforcementArea'] as $message) {
                 $formMessages['dataTrafficArea']['enforcementArea'][] = $message;
             }
 
@@ -176,20 +177,14 @@ class OperatingCentres implements MapperInterface
      * @param array                       $apiErrors     List of errors from Api
      * @param FlashMessengerHelperService $flashMsgsSrv  Flash messenger
      * @param TranslationHelperService    $translatorSrv Translator Service
-     *
-     * @return void
      */
     public static function mapApiErrors(
         $location,
         array $apiErrors,
         FlashMessengerHelperService $flashMsgsSrv,
         TranslationHelperService $translatorSrv
-    ) {
-        if (empty($apiErrors)) {
-            return;
-        }
-
-        foreach ($apiErrors as $section => $apiErr) {
+    ): void {
+        foreach ($apiErrors as $apiErr) {
             if (!is_array($apiErr)) {
                 $flashMsgsSrv->addCurrentErrorMessage($apiErr);
 

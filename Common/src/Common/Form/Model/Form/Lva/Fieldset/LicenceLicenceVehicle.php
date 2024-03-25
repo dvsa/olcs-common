@@ -13,13 +13,13 @@ class LicenceLicenceVehicle
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $id = null;
+    public $id;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\Attributes({})
@@ -35,7 +35,7 @@ class LicenceLicenceVehicle
      * @Form\Validator("\Common\Validator\Date")
      * @Form\Validator("Date", options={"format":"Y-m-d"})
      */
-    public $receivedDate = null;
+    public $receivedDate;
 
     /**
      * @Form\Required(false)
@@ -72,7 +72,7 @@ class LicenceLicenceVehicle
      * @Form\Validator("\Common\Validator\Date")
      * @Form\Validator("Date", options={"format":"Y-m-d"})
      */
-    public $removalDate = null;
+    public $removalDate;
 
     /**
      * @Form\Attributes({})
@@ -87,7 +87,7 @@ class LicenceLicenceVehicle
      * @Form\Validator("\Common\Validator\Date")
      * @Form\Validator("Date", options={"format":"Y-m-d"})
      */
-    public $warningLetterSeedDate = null;
+    public $warningLetterSeedDate;
 
     /**
      * @Form\Attributes({})
@@ -102,7 +102,7 @@ class LicenceLicenceVehicle
      * @Form\Validator("\Common\Validator\Date")
      * @Form\Validator("Date", options={"format":"Y-m-d"})
      */
-    public $warningLetterSentDate = null;
+    public $warningLetterSentDate;
 
     /**
      * @Form\Attributes({"disabled":"disabled"})
@@ -112,5 +112,5 @@ class LicenceLicenceVehicle
      * @Form\Required(false)
      * @Form\Type("Text")
      */
-    public $discNo = null;
+    public $discNo;
 }

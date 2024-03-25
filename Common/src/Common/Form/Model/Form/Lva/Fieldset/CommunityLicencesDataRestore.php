@@ -13,5 +13,5 @@ class CommunityLicencesDataRestore
      * @Form\Attributes({"value": "internal.community_licence.confirm_restore_licences"})
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $confirm = null;
+    public $confirm;
 }

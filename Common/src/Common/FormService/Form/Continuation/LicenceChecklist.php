@@ -29,6 +29,7 @@ class LicenceChecklist
     ];
 
     private UrlHelperService $urlHelper;
+
     protected FormHelperService $formHelper;
 
 
@@ -59,8 +60,6 @@ class LicenceChecklist
      *
      * @param Form  $form form
      * @param array $data data
-     *
-     * @return void
      */
     protected function alterForm($form, $data): void
     {
@@ -77,8 +76,6 @@ class LicenceChecklist
      *
      * @param Form   $form    form
      * @param string $orgType organisation type
-     *
-     * @return void
      */
     protected function alterPeopleSection($form, $orgType): void
     {
@@ -95,8 +92,6 @@ class LicenceChecklist
      *
      * @param Form   $form        form
      * @param string $vehicleType vehicle type
-     *
-     * @return void
      */
     protected function alterOperatingCentresSection($form, $vehicleType): void
     {
@@ -118,8 +113,6 @@ class LicenceChecklist
      *
      * @param Form $form      form
      * @param int  $licenceId licence id
-     *
-     * @return void
      */
     protected function alterBackUrl($form, $licenceId): void
     {
@@ -137,12 +130,10 @@ class LicenceChecklist
      *
      * @param Form  $form     form
      * @param array $sections sections
-     *
-     * @return void
      */
     protected function alterAllSections($form, $sections): void
     {
-        $key = array_search('vehiclesPsv', $sections);
+        $key = array_search('vehiclesPsv', $sections, true);
         if ($key !== false) {
             $sections[$key] = 'vehicles';
         }
@@ -159,8 +150,6 @@ class LicenceChecklist
      *
      * @param Form  $form form
      * @param array $data data
-     *
-     * @return void
      */
     protected function alterContinueButton($form, $data): void
     {
@@ -175,6 +164,7 @@ class LicenceChecklist
                 ->setLabel('continuations.checklist.confirmation.yes-button-declaration');
             return;
         }
+
         if ($data['hasConditionsUndertakings']) {
             $form->get('licenceChecklistConfirmation')
                 ->get('yesContent')

@@ -9,10 +9,8 @@ use Psr\Container\ContainerInterface;
 class InternalLicencePermitReferenceFactory implements FactoryInterface
 {
     /**
-     * @param  ContainerInterface $container
      * @param  $requestedName
      * @param  array|null         $options
-     * @return InternalLicencePermitReference
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): InternalLicencePermitReference
     {

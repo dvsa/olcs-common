@@ -37,17 +37,11 @@ trait FormWithCsrfTrait
         $this->getInputFilter()->add($input);
     }
 
-    /**
-     * @return Csrf
-     */
     public function getCsrfElement(): Csrf
     {
         return $this->get(FormWithCsrfInterface::SECURITY);
     }
 
-    /**
-     * @return InputInterface
-     */
     public function getCsrfInput(): InputInterface
     {
         return $this->getInputFilter()->get(FormWithCsrfInterface::SECURITY);

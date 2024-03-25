@@ -30,14 +30,14 @@ class PeopleLvaServiceTest extends MockeryTestCase
     /** @var FormHelperService */
     private $formHelper;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->formHelper = m::mock(FormHelperService::class);
 
         $this->sut = new PeopleLvaService($this->formHelper);
     }
 
-    public function testLockPersonForm()
+    public function testLockPersonForm(): void
     {
         $mockTitleElement = m::Mock(Element::class);
 
@@ -73,7 +73,7 @@ class PeopleLvaServiceTest extends MockeryTestCase
         $this->sut->lockPersonForm($form, 'org_t_rc');
     }
 
-    public function testLockPartnershipForm()
+    public function testLockPartnershipForm(): void
     {
         /** @var Form|m\Mock $form */
         $form = m::mock(Form::class);
@@ -88,7 +88,7 @@ class PeopleLvaServiceTest extends MockeryTestCase
         $this->sut->lockPartnershipForm($form, $table);
     }
 
-    public function testLockOrganisationForm()
+    public function testLockOrganisationForm(): void
     {
         /** @var Form|m\Mock $form */
         $form = m::mock(Form::class);

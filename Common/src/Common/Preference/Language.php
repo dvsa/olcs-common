@@ -29,7 +29,7 @@ class Language implements FactoryInterface
 
     private $key = 'langPref';
 
-    public function setPreference($preference)
+    public function setPreference($preference): void
     {
         if (!array_key_exists($preference, $this->options)) {
             throw new \Exception('Invalid language preference option');
@@ -46,10 +46,8 @@ class Language implements FactoryInterface
     }
 
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
-     * @return $this
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
@@ -61,6 +59,7 @@ class Language implements FactoryInterface
         if (!$request instanceof Request) {
             return $this;
         }
+
         $cookie = $request->getCookie();
         $this->preference = self::OPTION_EN;
         $this->requestCookie = new SetCookie();
@@ -71,9 +70,11 @@ class Language implements FactoryInterface
                 return $this;
             }
         }
+
         if ($cookie instanceof Cookie && isset($cookie[$this->key])) {
             $this->preference = $cookie[$this->key];
         }
+
         $this->requestCookie->setName($this->key);
         $this->requestCookie->setValue($this->preference);
         $this->requestCookie->setPath('/');

@@ -23,10 +23,15 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class FeeTransactionDateTest extends MockeryTestCase
 {
     protected $urlHelper;
+
     protected $translator;
+
     protected $viewHelperManager;
+
     protected $router;
+
     protected $request;
+
     protected $sut;
 
     protected function setUp(): void
@@ -38,7 +43,8 @@ class FeeTransactionDateTest extends MockeryTestCase
     {
         m::close();
     }
-    public function testFormat()
+
+    public function testFormat(): void
     {
         $data = [
             'child' => [

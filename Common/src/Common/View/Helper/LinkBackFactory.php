@@ -8,11 +8,9 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
 class LinkBackFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
      *
-     * @return LinkBack
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): LinkBack
     {

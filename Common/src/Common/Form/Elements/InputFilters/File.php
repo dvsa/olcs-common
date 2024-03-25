@@ -33,8 +33,6 @@ class File extends LaminasFile
 
     /**
      * Add validator
-     *
-     * @return array
      */
     public function getInputSpecification(): array
     {

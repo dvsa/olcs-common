@@ -14,7 +14,7 @@ class TaxiPhvLicenceData
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\Attributes({"class":"","id":""})
@@ -22,5 +22,5 @@ class TaxiPhvLicenceData
      * @Form\Type("Text")
      * @Form\Filter("Laminas\Filter\StringTrim")
      */
-    public $privateHireLicenceNo = null;
+    public $privateHireLicenceNo;
 }

@@ -13,26 +13,26 @@ class FinancialHistoryData
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $id = null;
+    public $id;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\Attributes({"value":"markup-application_previous-history_financial-history-finance-hint"})
      * @Form\Type("Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $financeHint = null;
+    public $financeHint;
 
     /**
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      * @Form\Attributes({"value":"<h3 id=""mainq"">%s</h3>"})
      * @Form\Options({"tokens": {"application_previous-history_financial-history.intro"}})
      */
-    public $hasAnyPerson = null;
+    public $hasAnyPerson;
 
     /**
      * @Form\Options({
@@ -46,7 +46,7 @@ class FinancialHistoryData
      * })
      * @Form\Type("radio")
      */
-    public $bankrupt = null;
+    public $bankrupt;
 
     /**
      * @Form\Options({
@@ -60,7 +60,7 @@ class FinancialHistoryData
      * })
      * @Form\Type("radio")
      */
-    public $liquidation = null;
+    public $liquidation;
 
     /**
      * @Form\Options({
@@ -74,7 +74,7 @@ class FinancialHistoryData
      * })
      * @Form\Type("radio")
      */
-    public $receivership = null;
+    public $receivership;
 
     /**
      * @Form\Options({
@@ -88,7 +88,7 @@ class FinancialHistoryData
      * })
      * @Form\Type("radio")
      */
-    public $administration = null;
+    public $administration;
 
     /**
      * @Form\Options({
@@ -102,7 +102,7 @@ class FinancialHistoryData
      * })
      * @Form\Type("radio")
      */
-    public $disqualified = null;
+    public $disqualified;
 
     /**
      * @Form\Attributes({
@@ -110,7 +110,7 @@ class FinancialHistoryData
      * })
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $additionalInfoLabel = null;
+    public $additionalInfoLabel;
 
     /**
      * @Form\AllowEmpty(true)
@@ -136,22 +136,22 @@ class FinancialHistoryData
      * @Form\Filter("Laminas\Filter\StringTrim")
      * @Form\Validator("Dvsa\Olcs\Transfer\Validators\FhAdditionalInfo")
      */
-    public $insolvencyDetails = null;
+    public $insolvencyDetails;
 
     /**
      * @Form\ComposedObject("\Common\Form\Model\Fieldset\MultipleFileUpload")
      * @Form\Attributes({"id":"file"})
      */
-    public $file = null;
+    public $file;
 
     /**
      * @Form\ComposedObject("\Common\Form\Model\Form\Lva\Fieldset\FinancialHistoryConfirmation")
      */
-    public $financialHistoryConfirmation = null;
+    public $financialHistoryConfirmation;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $niFlag = null;
+    public $niFlag;
 }

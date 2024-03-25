@@ -17,6 +17,7 @@ class BusRegSelfserve extends InternalSearchAbstract
      * @var string
      */
     protected $title = 'Bus registrations';
+
     /**
      * @var string
      */
@@ -84,7 +85,7 @@ class BusRegSelfserve extends InternalSearchAbstract
             [
                 'title' => 'Operator name',
                 'name' => 'orgName',
-                'formatter' => fn($data) => Escape::html($data['orgName']),
+                'formatter' => static fn($data) => Escape::html($data['orgName']),
             ],
             ['title' => 'Service number', 'name' => 'serviceNo'],
             ['title' => 'Start point', 'name' => 'startPoint'],

@@ -31,18 +31,21 @@ abstract class AbstractDiscsController extends AbstractController
      * @var string
      */
     protected $section = 'discs';
+
     protected string $baseRoute = 'lva-%s/discs';
 
     protected $formTableData;
 
-    protected $spacesRemaining = null;
+    protected $spacesRemaining;
 
     //  actions
     public const ACTION_CEASED_SHOW_HIDE = 'ceased-show-hide';
 
     // Command keys
     public const CMD_REQUEST_DISCS = 'requested';
+
     public const CMD_VOID_DISCS = 'voided';
+
     public const CMD_REPLACE_DISCS = 'replaced';
 
     protected $commandMap = [
@@ -61,22 +64,17 @@ abstract class AbstractDiscsController extends AbstractController
     ];
 
     protected FormHelperService $formHelper;
+
     protected FlashMessengerHelperService $flashMessengerHelper;
+
     protected FormServiceManager $formServiceManager;
+
     protected ScriptFactory $scriptFactory;
+
     protected TableFactory $tableFactory;
+
     protected GuidanceHelperService $guidanceHelper;
 
-    /**
-     * @param NiTextTranslation $niTextTranslationUtil
-     * @param AuthorizationService $authService
-     * @param FormHelperService $formHelper
-     * @param FlashMessengerHelperService $flashMessengerHelper
-     * @param FormServiceManager $formServiceManager
-     * @param TableFactory $tableFactory
-     * @param GuidanceHelperService $guidanceHelper
-     * @param ScriptFactory $scriptFactory
-     */
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
@@ -123,6 +121,7 @@ abstract class AbstractDiscsController extends AbstractController
         if ($form === null) {
             return $this->notFoundAction();
         }
+
         $form->setData($data);
 
         /** @var \Common\Service\Script\ScriptFactory $scriptSrv */
@@ -240,7 +239,7 @@ abstract class AbstractDiscsController extends AbstractController
         return $this->redirect()->toRouteAjax(
             null,
             ['action' => 'index'],
-            ['query' => (!$isIncluded ? ['includeCeased' => '1'] : [])],
+            ['query' => ($isIncluded ? [] : ['includeCeased' => '1'])],
             true
         );
     }
@@ -263,6 +262,7 @@ abstract class AbstractDiscsController extends AbstractController
         if ($discTable === null) {
             return null;
         }
+
         $formHelper->populateFormTable($form->get('table'), $discTable);
         $formHelper->setFormActionFromRequest($form, $this->getRequest());
 
@@ -283,6 +283,7 @@ abstract class AbstractDiscsController extends AbstractController
         if ($tableData === null) {
             return null;
         }
+
         $table = $this->tableFactory->prepareTable(
             'lva-psv-discs',
             $tableData,
@@ -323,6 +324,7 @@ abstract class AbstractDiscsController extends AbstractController
             if ($response->isForbidden()) {
                 return null;
             }
+
             $result = $response->getResult();
             $data = $result['psvDiscs'];
             $this->spacesRemaining = $result['remainingSpacesPsv'];
@@ -355,12 +357,13 @@ abstract class AbstractDiscsController extends AbstractController
         if (isset($disc['discNo'])) {
             return $disc['discNo'];
         }
-
-        if (empty($disc['issuedDate']) && empty($disc['ceasedDate'])) {
-            return 'Pending';
+        if (!empty($disc['issuedDate'])) {
+            return '';
         }
-
-        return '';
+        if (!empty($disc['ceasedDate'])) {
+            return '';
+        }
+        return 'Pending';
     }
 
     /**
@@ -386,7 +389,7 @@ abstract class AbstractDiscsController extends AbstractController
             unset($errors['amount']);
         }
 
-        if (!empty($errors)) {
+        if ($errors !== []) {
             $fm = $this->flashMessengerHelper;
 
             foreach ($errors as $error) {
@@ -475,6 +478,7 @@ abstract class AbstractDiscsController extends AbstractController
         if ($this->fetchDataForLva()['licenceType']['id'] !== RefData::LICENCE_TYPE_SPECIAL_RESTRICTED) {
             $table->setEmptyMessage("");
         }
+
         return $table;
     }
 }

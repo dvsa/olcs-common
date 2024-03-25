@@ -13,6 +13,7 @@ use Laminas\Http\Response;
 class ResponseHelperService
 {
     protected static $ignoreColumnsByType = ['ActionLinks'];
+
     protected static $ignoreColumnsByName = ['action'];
 
     /**

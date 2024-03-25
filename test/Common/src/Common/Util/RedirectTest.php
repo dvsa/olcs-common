@@ -11,15 +11,16 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class RedirectTest extends MockeryTestCase
 {
     protected $sut;
+
     protected $redirectPlugin;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = new Redirect();
         $this->redirectPlugin = m::mock();
     }
 
-    public function testToRoute()
+    public function testToRoute(): void
     {
         $this->redirectPlugin->shouldReceive('toRoute')
             ->with('foo', ['foo' => 'bar'], ['cake' => 'bar'], true)->andReturnSelf();
@@ -28,7 +29,7 @@ class RedirectTest extends MockeryTestCase
         $this->assertEquals($this->redirectPlugin, $this->sut->process($this->redirectPlugin));
     }
 
-    public function testToRouteDefaults()
+    public function testToRouteDefaults(): void
     {
         $this->redirectPlugin->shouldReceive('toRoute')
             ->with(null, [], [], false)->andReturnSelf();
@@ -37,7 +38,7 @@ class RedirectTest extends MockeryTestCase
         $this->assertEquals($this->redirectPlugin, $this->sut->process($this->redirectPlugin));
     }
 
-    public function testToRouteAjax()
+    public function testToRouteAjax(): void
     {
         $this->redirectPlugin->shouldReceive('toRouteAjax')
             ->with('foo', ['foo' => 'bar'], ['cake' => 'bar'], true)->andReturnSelf();
@@ -46,7 +47,7 @@ class RedirectTest extends MockeryTestCase
         $this->assertEquals($this->redirectPlugin, $this->sut->process($this->redirectPlugin));
     }
 
-    public function testToRouteAjaxDefaults()
+    public function testToRouteAjaxDefaults(): void
     {
         $this->redirectPlugin->shouldReceive('toRouteAjax')
             ->with(null, [], [], false)->andReturnSelf();
@@ -55,7 +56,7 @@ class RedirectTest extends MockeryTestCase
         $this->assertEquals($this->redirectPlugin, $this->sut->process($this->redirectPlugin));
     }
 
-    public function testRefresh()
+    public function testRefresh(): void
     {
         $this->redirectPlugin->shouldReceive('toRoute')
             ->with(null, [], [], true)->andReturnSelf();
@@ -64,7 +65,7 @@ class RedirectTest extends MockeryTestCase
         $this->assertEquals($this->redirectPlugin, $this->sut->process($this->redirectPlugin));
     }
 
-    public function testRefreshAjax()
+    public function testRefreshAjax(): void
     {
         $this->redirectPlugin->shouldReceive('toRouteAjax')
             ->with(null, [], [], true)->andReturnSelf();

@@ -21,7 +21,7 @@ class NiWarningConditionalAdderTest extends MockeryTestCase
 
     private $niWarningConditionalAdder;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->fieldset = m::mock(Fieldset::class);
 
@@ -30,7 +30,7 @@ class NiWarningConditionalAdderTest extends MockeryTestCase
         $this->niWarningConditionalAdder = new NiWarningConditionalAdder($this->warningAdder);
     }
 
-    public function testAddWhenShowNiWarningTrue()
+    public function testAddWhenShowNiWarningTrue(): void
     {
         $this->warningAdder->shouldReceive('add')
             ->with(
@@ -44,7 +44,7 @@ class NiWarningConditionalAdderTest extends MockeryTestCase
         $this->niWarningConditionalAdder->addIfRequired($this->fieldset, true);
     }
 
-    public function testDoNothingWhenNiWarningFalse()
+    public function testDoNothingWhenNiWarningFalse(): void
     {
         $this->warningAdder->shouldReceive('add')
             ->never();

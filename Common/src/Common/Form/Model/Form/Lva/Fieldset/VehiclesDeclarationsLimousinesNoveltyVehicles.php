@@ -23,7 +23,7 @@ class VehiclesDeclarationsLimousinesNoveltyVehicles
      * })
      * @Form\Type("\Laminas\Form\Element\Radio")
      */
-    public $psvLimousines = null;
+    public $psvLimousines;
 
     /**
      * @Form\Options({
@@ -31,7 +31,7 @@ class VehiclesDeclarationsLimousinesNoveltyVehicles
      * })
      * @Form\Type("\Common\Form\Elements\Types\Html")
      */
-    public $psvNoLimousineConfirmationLabel = null;
+    public $psvNoLimousineConfirmationLabel;
 
     /**
      * @Form\Attributes({"class": "js-no-confirmation"})
@@ -47,7 +47,7 @@ class VehiclesDeclarationsLimousinesNoveltyVehicles
      *     options={"required_context_value": "N"}
      * )
      */
-    public $psvNoLimousineConfirmation = null;
+    public $psvNoLimousineConfirmation;
 
     /**
      * @Form\Attributes({"data-container-class":"psv-show-large psv-show-both"})
@@ -56,7 +56,7 @@ class VehiclesDeclarationsLimousinesNoveltyVehicles
      * })
      * @Form\Type("\Common\Form\Elements\Types\Html")
      */
-    public $psvOnlyLimousinesConfirmationLabel = null;
+    public $psvOnlyLimousinesConfirmationLabel;
 
     /**
      * @Form\Attributes({"class": "js-only-confirmation", "data-container-class":"psv-show-large psv-show-both"})
@@ -73,5 +73,5 @@ class VehiclesDeclarationsLimousinesNoveltyVehicles
      *     }
      * )
      */
-    public $psvOnlyLimousinesConfirmation = null;
+    public $psvOnlyLimousinesConfirmation;
 }

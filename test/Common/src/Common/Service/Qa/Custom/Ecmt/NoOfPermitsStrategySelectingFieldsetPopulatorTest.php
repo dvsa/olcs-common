@@ -26,7 +26,7 @@ class NoOfPermitsStrategySelectingFieldsetPopulatorTest extends MockeryTestCase
 
     private $noOfPermitsStrategySelectingFieldsetPopulator;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->form = m::mock(Form::class);
 
@@ -42,7 +42,7 @@ class NoOfPermitsStrategySelectingFieldsetPopulatorTest extends MockeryTestCase
         );
     }
 
-    public function testPopulateSingleEmissionsCategory()
+    public function testPopulateSingleEmissionsCategory(): void
     {
         $options = [
             'emissionsCategories' => [
@@ -60,7 +60,7 @@ class NoOfPermitsStrategySelectingFieldsetPopulatorTest extends MockeryTestCase
         $this->noOfPermitsStrategySelectingFieldsetPopulator->populate($this->form, $this->fieldset, $options);
     }
 
-    public function testMultipleEmissionsCategories()
+    public function testMultipleEmissionsCategories(): void
     {
         $options = [
             'emissionsCategories' => [

@@ -82,18 +82,12 @@ trait GenericMethods
              * validation.
              */
             if (!$validateForm || $form->isValid()) {
-                if ($validateForm) {
-                    $validatedData = $form->getData();
-                } else {
-                    $validatedData = $data;
-                }
-
+                $validatedData = $validateForm ? $form->getData() : $data;
                 $params = [
                     'validData' => $validatedData,
                     'form' => $form,
                     'params' => $additionalParams
                 ];
-
                 $this->callCallbackIfExists($callback, $params);
             } elseif (!$validateForm || !$form->isValid()) {
                 if (method_exists($this, 'onInvalidPost')) {
@@ -111,10 +105,9 @@ trait GenericMethods
      * @param callable $callback Callback
      * @param array    $params   Callback params
      *
-     * @return void
      * @throws \Exception
      */
-    public function callCallbackIfExists($callback, $params)
+    public function callCallbackIfExists($callback, $params): void
     {
         if (is_callable($callback)) {
             $callback($params);

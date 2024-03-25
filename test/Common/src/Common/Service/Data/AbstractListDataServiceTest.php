@@ -13,14 +13,14 @@ class AbstractListDataServiceTest extends AbstractListDataServiceTestCase
     /** @var  AbstractListDataServiceStub */
     private $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->sut = new AbstractListDataServiceStub($this->abstractListDataServiceServices);
     }
 
-    public function testFormatDataForGroup()
+    public function testFormatDataForGroup(): void
     {
         $data = [
             [
@@ -70,7 +70,7 @@ class AbstractListDataServiceTest extends AbstractListDataServiceTestCase
     /**
      * @dataProvider dpTestFetchListOptions
      */
-    public function testFetchListOptions($data, $useGroup, $expect)
+    public function testFetchListOptions($data, $useGroup, $expect): void
     {
         $context = 'unit_Context';
 

@@ -76,7 +76,6 @@ trait GenericRenderView
     /**
      * Gets a view model with optional params
      *
-     * @param array $params
      * @return ViewModel
      */
     public function getView(array $params = null)

@@ -36,7 +36,7 @@ class CachingQueryServiceTest extends MockeryTestCase
     /** @var m\MockInterface */
     private $mockResult;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->mockQuery = m::mock(QueryContainerInterface::class);
         $this->mockCache = m::mock(CacheEncryptionService::class);
@@ -52,14 +52,14 @@ class CachingQueryServiceTest extends MockeryTestCase
             ->andReturn($this->mockResult);
     }
 
-    public function testHandleCacheDisabled()
+    public function testHandleCacheDisabled(): void
     {
         $sut = new CachingQueryService($this->mockQS, $this->mockCache, $this->mockAnnotationBuilder, false, $this->ttlValues());
 
         static::assertSame($this->mockResult, $sut->send($this->mockQuery));
     }
 
-    public function testHandleCustomCache()
+    public function testHandleCustomCache(): void
     {
         $identifier = 'identifier';
         $uniqueId = 'unique id';
@@ -72,7 +72,7 @@ class CachingQueryServiceTest extends MockeryTestCase
         self::assertEquals($cacheResult, $sut->handleCustomCache($identifier, $uniqueId));
     }
 
-    public function testCustomCacheMissingThenLoadFromDb()
+    public function testCustomCacheMissingThenLoadFromDb(): void
     {
         $identifier = 'identifier';
         $uniqueId = 'unique id';
@@ -110,7 +110,7 @@ class CachingQueryServiceTest extends MockeryTestCase
         self::assertEquals($cacheResult, $sut->send($cqrsQueryContainer));
     }
 
-    public function testCustomCacheExceptionThenDbFail()
+    public function testCustomCacheExceptionThenDbFail(): void
     {
         $httpFailureCode = 418;
         $expectedMsg = sprintf(CachingQueryService::BACKEND_FAIL_MSG, $httpFailureCode);
@@ -145,7 +145,7 @@ class CachingQueryServiceTest extends MockeryTestCase
         self::assertEquals($cacheResult, $sut->handleCustomCache($identifier, $uniqueId));
     }
 
-    public function testSendWithCustomCache()
+    public function testSendWithCustomCache(): void
     {
         $identifier = 'identifier';
         $uniqueId = '';
@@ -166,7 +166,7 @@ class CachingQueryServiceTest extends MockeryTestCase
         self::assertEquals($cacheResult, $sut->send($cqrsQueryContainer));
     }
 
-    public function testSendWithNoCache()
+    public function testSendWithNoCache(): void
     {
         $this->mockQuery->expects('isCustomCacheable')->withNoArgs()->andReturnFalse();
         $this->mockQuery->expects('isPersistentCacheable')->withNoArgs()->andReturnFalse();
@@ -176,7 +176,7 @@ class CachingQueryServiceTest extends MockeryTestCase
         static::assertSame($this->mockResult, $sut->send($this->mockQuery));
     }
 
-    public function testSendWithShortCacheNull()
+    public function testSendWithShortCacheNull(): void
     {
         $this->mockQuery->expects('isCustomCacheable')->withNoArgs()->andReturnFalse();
         $this->mockQuery->expects('isPersistentCacheable')->withNoArgs()->andReturnFalse();
@@ -190,7 +190,7 @@ class CachingQueryServiceTest extends MockeryTestCase
         static::assertSame($this->mockResult, $sut->send($this->mockQuery));
     }
 
-    public function testSendWithShortCache()
+    public function testSendWithShortCache(): void
     {
         $this->mockQuery->expects('isCustomCacheable')->withNoArgs()->twice()->andReturnFalse();
         $this->mockQuery->expects('isPersistentCacheable')->withNoArgs()->twice()->andReturnFalse();
@@ -208,7 +208,7 @@ class CachingQueryServiceTest extends MockeryTestCase
     /**
      * Test exception is thrown when the query doesn't have any of the possible query interfaces
      */
-    public function testPersistentCacheMissingQueryInterface()
+    public function testPersistentCacheMissingQueryInterface(): void
     {
         $mockQuery = m::mock(QueryContainerInterface::class);
         $mockQuery->expects('isCustomCacheable')->withNoArgs()->andReturnFalse();
@@ -247,7 +247,7 @@ class CachingQueryServiceTest extends MockeryTestCase
      *
      * @dataProvider dpPersistentCacheNotPopulated
      */
-    public function testPersistentCacheNotPopulated($isMediumTerm, $cacheTtl)
+    public function testPersistentCacheNotPopulated($isMediumTerm, $cacheTtl): void
     {
         $mockQuery = m::mock(QueryContainerInterface::class);
         $mockQuery->expects('isCustomCacheable')->withNoArgs()->andReturnFalse();
@@ -295,7 +295,7 @@ class CachingQueryServiceTest extends MockeryTestCase
      * Second checks and retrieves from the persistent cache
      * Third checks retrieval from the short term cache
      */
-    public function testRetrieveFromPersistentThenRetrieveFromLocal()
+    public function testRetrieveFromPersistentThenRetrieveFromLocal(): void
     {
         /**
          * Each test is called twice, except encryption as 2nd time we use local cache
@@ -337,7 +337,7 @@ class CachingQueryServiceTest extends MockeryTestCase
     /**
      * Check that if there's an exception from the cache, the query is still executed
      */
-    public function testRetrieveFromPersistentWithException()
+    public function testRetrieveFromPersistentWithException(): void
     {
         $mockQuery = m::mock(QueryContainerInterface::class);
         $mockQuery->expects('isCustomCacheable')->withNoArgs()->andReturnFalse();

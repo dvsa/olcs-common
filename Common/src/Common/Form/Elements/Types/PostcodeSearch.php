@@ -34,7 +34,7 @@ class PostcodeSearch extends Fieldset
     {
         parent::__construct($name, $options);
 
-        self::$count++;
+        ++self::$count;
 
         $postcodeSearchId = 'postcodeInput' . self::$count;
 
@@ -124,10 +124,8 @@ class PostcodeSearch extends Fieldset
      * NB Not sure if this is used
      *
      * @param mixed $messages Messages
-     *
-     * @return void
      */
-    public function setMessages($messages)
+    public function setMessages($messages): void
     {
         $this->messages = $messages;
     }
@@ -135,8 +133,6 @@ class PostcodeSearch extends Fieldset
     /**
      * Get messages
      * NB Not sure if this is used
-     *
-     * @return array
      */
     public function getMessages(?string $elementName = null): array
     {

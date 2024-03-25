@@ -35,7 +35,7 @@ class YesNoRadioOptionsApplierTest extends MockeryTestCase
 
     public const RADIO_VALUE = 'radioValue';
 
-    public function testApplyTo()
+    public function testApplyTo(): void
     {
         $radio = m::mock(Radio::class);
 

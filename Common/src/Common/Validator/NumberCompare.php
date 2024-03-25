@@ -86,7 +86,6 @@ class NumberCompare extends AbstractCompare
      * matches that token.
      *
      * @param  mixed $value
-     * @param  array $context
      * @return bool
      */
     public function isValid($value, array $context = null)

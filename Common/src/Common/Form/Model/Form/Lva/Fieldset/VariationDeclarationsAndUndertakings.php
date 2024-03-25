@@ -13,12 +13,12 @@ class VariationDeclarationsAndUndertakings
      * @Form\Attributes({"value": "markup-review-text-variation"})
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $review = null;
+    public $review;
 
     /**
      * @Form\Type("\Common\Form\Elements\Types\Html")
      */
-    public $summaryDownload = null;
+    public $summaryDownload;
 
     /**
      * @Form\Options({
@@ -34,17 +34,17 @@ class VariationDeclarationsAndUndertakings
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      */
-    public $declarationConfirmation = null;
+    public $declarationConfirmation;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $id = null;
+    public $id;
 }

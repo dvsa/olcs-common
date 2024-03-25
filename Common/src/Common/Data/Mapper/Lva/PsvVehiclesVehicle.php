@@ -58,15 +58,16 @@ class PsvVehiclesVehicle implements MapperInterface
         if (isset($data['data']['makeModel'])) {
             $mappedData['makeModel'] = $data['data']['makeModel'];
         }
+
         return $mappedData;
     }
 
-    public static function mapFormErrors(Form $form, array $errors, FlashMessengerHelperService $fm)
+    public static function mapFormErrors(Form $form, array $errors, FlashMessengerHelperService $fm): void
     {
         $formMessages = [];
 
         if (isset($errors['vrm'])) {
-            foreach ($errors['vrm'] as $key => $message) {
+            foreach ($errors['vrm'] as $message) {
                 $formMessages['data']['vrm'][] = $message;
             }
 
@@ -74,17 +75,15 @@ class PsvVehiclesVehicle implements MapperInterface
         }
 
         if (isset($errors['removalDate'])) {
-            foreach ($errors['removalDate'] as $key => $message) {
+            foreach ($errors['removalDate'] as $message) {
                 $formMessages['licence-vehicle']['removalDate'][] = $message;
             }
 
             unset($errors['removalDate']);
         }
 
-        if (!empty($errors)) {
-            foreach ($errors as $error) {
-                $fm->addCurrentErrorMessage($error);
-            }
+        foreach ($errors as $error) {
+            $fm->addCurrentErrorMessage($error);
         }
 
         $form->setMessages($formMessages);

@@ -65,7 +65,7 @@ class FinancialEvidence implements MapperInterface
      */
     public static function mapFromPost(array $data)
     {
-        if (empty($data)) {
+        if ($data === []) {
             return [];
         }
 

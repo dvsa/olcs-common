@@ -20,15 +20,25 @@ use LmcRbacMvc\Service\AuthorizationService;
 abstract class AbstractContinuationController extends AbstractController
 {
     public const SUCCESS_CONTROLLER = 'ContinuationController/Success';
+
     public const LICENCE_OVERVIEW_ROUTE = 'lva-licence';
+
     public const PATH_SR = 1;
+
     public const PATH_CU = 2;
+
     public const PATH_NCU = 3;
+
     public const STEP_START = 'start';
+
     public const STEP_CHECKLIST = 'checklist';
+
     public const STEP_CU = 'cu';
+
     public const STEP_FINANCE = 'finance';
+
     public const STEP_DECLARATION = 'declaration';
+
     public const STEP_DEFAULT = 'default';
 
     /** @var string  */
@@ -49,13 +59,11 @@ abstract class AbstractContinuationController extends AbstractController
     ];
 
     protected $currentStep = self::STEP_DEFAULT;
+
     protected FormServiceManager $formServiceManager;
+
     protected TranslationHelperService $translationHelper;
 
-    /**
-     * @param NiTextTranslation $niTextTranslationUtil
-     * @param AuthorizationService $authService
-     */
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
@@ -104,6 +112,7 @@ abstract class AbstractContinuationController extends AbstractController
         $layout->setTemplate($this->simpleLayout);
         $layout->setTerminal(true);
         $layout->addChild($view, 'content');
+
         $view->setTemplate($this->layout);
 
         return $layout;
@@ -154,6 +163,7 @@ abstract class AbstractContinuationController extends AbstractController
                 $this->addErrorMessage('unknown-error');
             }
         }
+
         return $this->continuationData;
     }
 
@@ -207,6 +217,7 @@ abstract class AbstractContinuationController extends AbstractController
         if (!$routeMatch) {
             throw new Exception\DomainException('Missing route matches; unsure how to retrieve action');
         }
+
         $data = $this->getContinuationDetailData();
         $status = $data['status']['id'] ?? null;
         $controller = $routeMatch->getParam('controller');
@@ -216,16 +227,16 @@ abstract class AbstractContinuationController extends AbstractController
             if ($this->allowedToAccess($controller, $action)) {
                 return parent::onDispatch($e);
             }
+
             if ($status === RefData::CONTINUATION_STATUS_COMPLETE && (int) $data['isDigital'] === 1) {
                 return $this->redirectToSuccessPage();
             }
+
             if ($status === RefData::CONTINUATION_STATUS_GENERATED) {
                 return parent::onDispatch($e);
             }
-        } else {
-            if ($status === RefData::CONTINUATION_STATUS_COMPLETE) {
-                return parent::onDispatch($e);
-            }
+        } elseif ($status === RefData::CONTINUATION_STATUS_COMPLETE) {
+            return parent::onDispatch($e);
         }
 
         return $this->redirectToLicenceOverviewPage($data['licence']['id']);
@@ -242,9 +253,13 @@ abstract class AbstractContinuationController extends AbstractController
     protected function allowedToAccess($controller, $action)
     {
         foreach ($this->exclusions as $exclusion) {
-            if ($exclusion['controller'] === $controller && $exclusion['action'] === $action) {
-                return true;
+            if ($exclusion['controller'] !== $controller) {
+                continue;
             }
+            if ($exclusion['action'] !== $action) {
+                continue;
+            }
+            return true;
         }
 
         return false;
@@ -262,19 +277,20 @@ abstract class AbstractContinuationController extends AbstractController
         if ($step === null || $step === self::STEP_DEFAULT) {
             return '';
         }
+
         $data = $this->getContinuationDetailData();
         $licenceType = $data['licence']['licenceType']['id'];
         $hasConditionsUndertakings =
             (
                 isset($data['conditionsUndertakings']['licence'])
                 && is_array($data['conditionsUndertakings']['licence'])
-                && count($data['conditionsUndertakings']['licence']) > 0
+                && $data['conditionsUndertakings']['licence'] !== []
             )
             ||
             (
                 isset($data['conditionsUndertakings']['operatingCentres'])
                 && is_array($data['conditionsUndertakings']['operatingCentres'])
-                && count($data['conditionsUndertakings']['operatingCentres']) > 0
+                && $data['conditionsUndertakings']['operatingCentres'] !== []
             );
 
         if ($licenceType === RefData::LICENCE_TYPE_SPECIAL_RESTRICTED) {
@@ -335,7 +351,6 @@ abstract class AbstractContinuationController extends AbstractController
 
     /**
      * @param $licence
-     * @return bool
      */
     protected function isPsvRestricted(array $licence): bool
     {

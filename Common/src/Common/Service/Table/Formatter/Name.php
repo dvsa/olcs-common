@@ -19,9 +19,6 @@ class Name implements FormatterPluginManagerInterface
 {
     private DataHelperService $dataHelper;
 
-    /**
-     * @param DataHelperService $dataHelper
-     */
     public function __construct(DataHelperService $dataHelper)
     {
         $this->dataHelper = $dataHelper;
@@ -46,7 +43,7 @@ class Name implements FormatterPluginManagerInterface
             }
         }
 
-        $title = !empty($data['title']['description']) ? $data['title']['description'] . ' ' : '';
+        $title = empty($data['title']['description']) ? '' : $data['title']['description'] . ' ';
         return htmlspecialchars($title, ENT_QUOTES, 'UTF-8') . htmlspecialchars($data['forename'], ENT_QUOTES, 'UTF-8') . ' ' . htmlspecialchars($data['familyName'], ENT_QUOTES, 'UTF-8');
     }
 }

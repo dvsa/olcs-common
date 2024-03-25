@@ -17,5 +17,5 @@ class GenericDeleteConfirmation
      * @Form\ComposedObject("Common\Form\Model\Fieldset\DeleteConfirmButtons")
      * @Form\Attributes({"class":"govuk-button-group"})
      */
-    public $formActions = null;
+    public $formActions;
 }

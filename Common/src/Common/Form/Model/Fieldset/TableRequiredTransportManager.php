@@ -17,11 +17,11 @@ class TableRequiredTransportManager extends TableRequired
      *     options={"label":"Transport Manager"}
      * )
      */
-    public $rows = null;
+    public $rows;
 
     /**
      * @Form\Options({"label":"row"})
      * @Form\Type("\Common\Form\Elements\Types\Table")
      */
-    public $table = null;
+    public $table;
 }

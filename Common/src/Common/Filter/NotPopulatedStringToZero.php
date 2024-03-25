@@ -25,7 +25,7 @@ class NotPopulatedStringToZero extends AbstractFilter
             return self::ZERO;
         }
 
-        if ($value == '') {
+        if ($value === '') {
             return self::ZERO;
         }
 

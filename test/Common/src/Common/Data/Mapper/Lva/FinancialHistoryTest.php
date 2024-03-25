@@ -6,7 +6,7 @@ use Common\Data\Mapper\Lva\FinancialHistory;
 
 class FinancialHistoryTest extends \PHPUnit\Framework\TestCase
 {
-    public function testMapFromResult()
+    public function testMapFromResult(): void
     {
         $input = [
             'foo' => 'bar',

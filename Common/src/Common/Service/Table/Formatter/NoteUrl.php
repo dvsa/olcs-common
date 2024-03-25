@@ -20,12 +20,9 @@ use Laminas\Http\Request;
 class NoteUrl implements FormatterPluginManagerInterface
 {
     protected Request $request;
+
     protected UrlHelperService $urlHelper;
 
-    /**
-     * @param Request          $request
-     * @param UrlHelperService $urlHelper
-     */
     public function __construct(Request $request, UrlHelperService $urlHelper)
     {
         $this->request = $request;

@@ -14,12 +14,14 @@ class VariationRecordActionTest extends MockeryTestCase
 {
     /** @var  VariationRecordAction */
     protected $sut;
+
     /** @var  m\MockInterface */
     protected $table;
+
     /** @var  m\MockInterface */
     private $mockTranslator;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->mockTranslator = m::mock(\Laminas\I18n\Translator\TranslatorInterface::class);
 
@@ -33,7 +35,7 @@ class VariationRecordActionTest extends MockeryTestCase
     /**
      * @dataProvider provider
      */
-    public function testRender($action, $prefix, $expected)
+    public function testRender($action, $prefix, $expected): void
     {
         if ($prefix !== null) {
             $this->mockTranslator
