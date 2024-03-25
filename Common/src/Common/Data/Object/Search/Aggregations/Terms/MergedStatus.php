@@ -11,7 +11,7 @@ class MergedStatus extends TermsAbstract
 
     public function getType(): string
     {
-        return self::TYPE_NULLCHECK;
+        return self::TYPE_BOOLEAN;
     }
 
     public function getOptionsKvp(): array
