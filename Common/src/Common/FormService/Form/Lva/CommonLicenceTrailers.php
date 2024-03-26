@@ -4,12 +4,9 @@ namespace Common\FormService\Form\Lva;
 
 use Common\Service\Helper\FormHelperService;
 use Common\Service\Table\TableBuilder;
+use Laminas\Form\Form;
+use Laminas\Http\Request;
 
-/**
- * Abstract Trailers
- *
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
- */
 class CommonLicenceTrailers
 {
     protected FormHelperService $formHelper;
@@ -24,7 +21,7 @@ class CommonLicenceTrailers
      *
      * @param Request $request
      * @param TableBuilder $table
-     * @return \Laminas\Form\Form
+     * @return Form
      */
     public function getForm($request, $table)
     {
@@ -37,9 +34,9 @@ class CommonLicenceTrailers
     /**
      * Generic form alterations
      *
-     * @param \Laminas\Form\Form $form
+     * @param Form $form
      * @param TableBuilder $table
-     * @return \Laminas\Form\Form
+     * @return Form
      */
     protected function alterForm($form, $table)
     {

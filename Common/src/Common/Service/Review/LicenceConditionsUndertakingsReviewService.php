@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Licence Conditions Undertakings Review Service
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Service\Review;
 
 use Common\Service\Table\Formatter\Address;
@@ -14,19 +9,11 @@ use Common\Service\Table\Formatter\Address;
  *
  * @NOTE There is not such thing as a Licence Review Section, however our external licence lva version of this page is
  * a read only page with identical config to the review service, so it makes sense to re-use this code
- *
- * @author Rob Caiger <rob@clocal.co.uk>
  */
 class LicenceConditionsUndertakingsReviewService extends AbstractReviewService
 {
-    protected $helper;
+    protected ConditionsUndertakingsReviewService $helper;
 
-    /**
-     * Create service instance
-     *
-     * @param ComditionsUndertakingsReviewService $helper
-     * @return LicenceConditionsUndertakingsReviewService
-     */
     public function __construct(
         AbstractReviewServiceServices $abstractReviewServiceServices,
         ConditionsUndertakingsReviewService $helper,

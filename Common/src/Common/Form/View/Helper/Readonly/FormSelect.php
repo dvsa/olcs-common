@@ -47,7 +47,7 @@ class FormSelect extends AbstractHelper
      *
      * @param ElementInterface|null $element the element
      *
-     * @return string|FormElement
+     * @return string|EscapeHtml
      */
     public function __invoke(ElementInterface $element = null)
     {

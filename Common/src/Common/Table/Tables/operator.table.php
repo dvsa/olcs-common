@@ -69,6 +69,10 @@ return [
                         false
                     ) . '">' . $data['caseCount'] . '</a>';
                 }
+                /**
+                 * @var TableBuilder $this
+                 * @psalm-scope-this TableBuilder
+                 */
                 return '<a class="govuk-link" href="' . $this->generateUrl(
                     ['licence' => $data['licenceId'], 'action' => 'add'],
                     'licence_case_action'

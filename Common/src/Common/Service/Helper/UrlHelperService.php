@@ -48,7 +48,7 @@ class UrlHelperService
      * Generates a URL based on a route
      *
      * @param  string             $route              RouteInterface name
-     * @param  array|Traversable  $params             Parameters to use in url generation, if any
+     * @param  array              $params             Parameters to use in url generation, if any
      * @param  array|bool         $options            RouteInterface-specific options to use in url generation, if any.
      *                                                If boolean, and no fourth argument, used as $reuseMatchedParams.
      * @param  bool               $reuseMatchedParams Whether to reuse matched parameters

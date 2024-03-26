@@ -10,11 +10,6 @@ use Common\Service\Table\TableFactory;
 use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use LmcRbacMvc\Service\AuthorizationService;
 
-/**
- * Abstract Conditions Undertakings Controller
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 abstract class AbstractConditionsUndertakingsController extends AbstractController
 {
     use Traits\CrudTableTrait;
@@ -109,7 +104,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
      * Common logic between add/edit
      *
      * @param string $mode
-     * @return mi
+     * @return mixed
      */
     protected function addOrEdit($mode)
     {

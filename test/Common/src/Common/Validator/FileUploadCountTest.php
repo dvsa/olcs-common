@@ -1,14 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Validator;
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Validator\FileUploadCount;
 
-/**
- * Class FileUploadCountTest
- * @package CommonTest\Validator
- */
 class FileUploadCountTest extends MockeryTestCase
 {
     public function testSetOptions(): void
@@ -18,11 +16,6 @@ class FileUploadCountTest extends MockeryTestCase
     }
 
     /**
-     *
-     * @param type $expected
-     * @param type $min
-     * @param type $context
-     *
      * @dataProvider dataProviderTestIsValid
      */
     public function testIsValid($expected, $min, $context): void

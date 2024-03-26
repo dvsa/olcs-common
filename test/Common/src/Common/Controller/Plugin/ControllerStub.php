@@ -1,15 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Common\Controller\Plugin;
 
 use Laminas\Mvc\Controller\AbstractActionController as LaminasAbstractActionController;
 use Laminas\View\Helper\Placeholder;
+use Laminas\View\Model\ViewModel;
 
 /**
- * Class TestController
- * Provuides a controlled and consistent environment with which to test the plugin.
- *
- * @package OlcsTest\Controller\Plugin
+ * Provides a controlled and consistent environment with which to test the plugin.
  */
 class ControllerStub extends LaminasAbstractActionController
 {

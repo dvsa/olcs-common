@@ -1,20 +1,9 @@
 <?php
 
-/**
- * A trait that controllers can use to easily interact with the flash messenger.
- *
- * @package     olcscommon
- * @subpackage  utility
- * @author      Craig Reasbeck <craig.reasbeck@valtech.co.uk>
- */
 namespace Common\Util;
 
 /**
  * A trait that controllers can use to easily interact with the flash messenger.
- *
- * @package     olcscommon
- * @subpackage  utility
- * @author      Craig Reasbeck <craig.reasbeck@valtech.co.uk>
  */
 trait FlashMessengerTrait
 {
@@ -46,7 +35,7 @@ trait FlashMessengerTrait
      *
      * @param string $message The message
      *
-     * @return \OlcsCommon\Utility\FlashMessengerTrait
+     * @return mixed
      */
     public function addInfoMessage($message)
     {
@@ -60,7 +49,7 @@ trait FlashMessengerTrait
      *
      * @param string $message The message
      *
-     * @return \OlcsCommon\Utility\FlashMessengerTrait
+     * @return mixed
      */
     public function addErrorMessage($message)
     {
@@ -74,7 +63,7 @@ trait FlashMessengerTrait
      *
      * @param string $message The message
      *
-     * @return \OlcsCommon\Utility\FlashMessengerTrait
+     * @return mixed
      */
     public function addWarningMessage($message)
     {
@@ -88,7 +77,7 @@ trait FlashMessengerTrait
      *
      * @param string $message The message
      *
-     * @return \OlcsCommon\Utility\FlashMessengerTrait
+     * @return mixed
      */
     public function addSuccessMessage($message)
     {

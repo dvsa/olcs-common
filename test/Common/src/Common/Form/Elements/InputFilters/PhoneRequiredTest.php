@@ -23,7 +23,7 @@ class PhoneRequiredTest extends MockeryTestCase
 
     public function testValidators(): void
     {
-        /** @var Phone $sut */
+        /** @var PhoneRequired $sut */
         $sut = m::mock(PhoneRequired::class)->makePartial()
             ->shouldReceive('getName')->once()->andReturn('unit_Name')
             ->getMock();

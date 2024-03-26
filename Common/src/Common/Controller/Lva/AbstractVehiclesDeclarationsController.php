@@ -111,7 +111,7 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
     /**
      * Format data for dorm
      *
-     * @param arary $data
+     * @param array $data
      * @return array
      */
     protected function formatDataForForm($data)

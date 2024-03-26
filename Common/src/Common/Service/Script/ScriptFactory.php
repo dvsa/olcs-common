@@ -1,20 +1,13 @@
 <?php
 
-/**
- * Inline JavaScript loading service
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
- */
-
 namespace Common\Service\Script;
 
+use Laminas\View\HelperPluginManager;
 use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 /**
  * Inline JavaScript loading service
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
  */
 class ScriptFactory implements FactoryInterface
 {
@@ -35,7 +28,7 @@ class ScriptFactory implements FactoryInterface
     /**
      * Contains the view helper manager! :)
      *
-     * @var unknown
+     * @var HelperPluginManager
      */
     protected $viewHelperManager;
 
@@ -158,7 +151,7 @@ class ScriptFactory implements FactoryInterface
     /**
      * get the available file system paths across all modules
      *
-     * @return string
+     * @return array
      */
     protected function getFilePaths()
     {

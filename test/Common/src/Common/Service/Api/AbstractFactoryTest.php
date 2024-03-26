@@ -27,7 +27,7 @@ class AbstractFactoryTest extends MockeryTestCase
     protected $mockTranslator;
 
     /**
-     * @var Laminas\Authentication\Storage\Session|m\LegacyMockInterface|m\MockInterface
+     * @var Session|m\LegacyMockInterface|m\MockInterface
      */
     private $mockSession;
 

@@ -47,7 +47,7 @@ class Declaration
      *
      * @param array $continuationDetailData Continuation detail data
      *
-     * @return \Common\Form
+     * @return Form
      */
     public function getForm(array $continuationDetailData = [])
     {
