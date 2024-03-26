@@ -1,20 +1,9 @@
 <?php
 
-/**
- * Address formatter
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
-
 namespace Common\Service\Table\Formatter;
 
 use Common\Service\Helper\DataHelperService;
 
-/**
- * Address formatter
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class Address implements FormatterPluginManagerInterface
 {
     protected $formats = [

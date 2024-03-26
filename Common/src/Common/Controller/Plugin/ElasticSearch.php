@@ -2,14 +2,17 @@
 
 namespace Common\Controller\Plugin;
 
+use Common\Controller\Traits\GenericMethods;
 use Laminas\Mvc\Controller\Plugin\AbstractPlugin;
+use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 use Laminas\Session\Container;
 use Laminas\View\Model\ViewModel;
 
 /**
  * Class ElasticSearch - Generates and processes calls to Elastic Search
  *
- * @package Olcs\Mvc\Controller\Plugin
+ * @method FlashMessenger flashMessenger()
+ * @method GenericMethods redirectToRoute($route = null, $params = [], $options = [], $reuse = false)
  */
 class ElasticSearch extends AbstractPlugin
 {

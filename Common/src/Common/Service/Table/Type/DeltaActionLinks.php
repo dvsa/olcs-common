@@ -19,7 +19,7 @@ class DeltaActionLinks extends Selector
      * @param array $column
      * @param string $formattedContent
      *
-     * @return string
+     * @return string|void
      */
     public function render($data, $column, $formattedContent = null)
     {

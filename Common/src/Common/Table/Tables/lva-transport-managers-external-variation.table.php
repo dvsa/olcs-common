@@ -3,6 +3,7 @@
 use Common\Service\Table\Formatter\Name;
 use Common\Service\Table\Formatter\TransportManagerDateOfBirth;
 use Common\Service\Table\Formatter\TransportManagerName;
+use Common\Service\Table\TableBuilder;
 
 return [
     'variables' => [
@@ -42,6 +43,10 @@ return [
             'title' => 'markup-table-th-remove-restore', //view partial from olcs-common
             'ariaDescription' => function ($row, $column) {
                 $column['formatter'] = Name::class;
+                /**
+                 * @var TableBuilder $this
+                 * @psalm-scope-this TableBuilder
+                 */
                 return $this->callFormatter($column, $row['name']);
             },
             'type' => 'DeltaActionLinks'

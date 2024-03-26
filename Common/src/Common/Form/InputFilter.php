@@ -1,34 +1,24 @@
 <?php
 
-/**
- * InputFilter
- *
- * @author Someone <someone@valtech.co.uk>
- */
 namespace Common\Form;
 
 use Traversable;
 use Laminas\Stdlib\ArrayUtils;
 use Laminas\InputFilter\InputFilter as LaminasInputFilter;
 
-/**
- * InputFilter
- *
- * @author Someone <someone@valtech.co.uk>
- */
 class InputFilter extends LaminasInputFilter
 {
     /**
      * Set data to use when validating and filtering
      *
      * @param  array|Traversable $data
-     * @throws Exception\InvalidArgumentException
-     * @return InputFilterInterface
+     * @throws \InvalidArgumentException
+     * @return InputFilter
      */
     public function setData($data)
     {
         if (!is_array($data) && !$data instanceof Traversable) {
-            throw new Exception\InvalidArgumentException(
+            throw new \InvalidArgumentException(
                 sprintf(
                     '%s expects an array or Traversable argument; received %s',
                     __METHOD__,

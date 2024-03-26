@@ -503,7 +503,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
     /**
      * Delete
      *
-     * @return bool
+     * @return bool|void
      */
     protected function delete()
     {

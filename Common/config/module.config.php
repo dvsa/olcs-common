@@ -234,8 +234,6 @@ return [
                 QaService\Custom\Ecmt\AnnualTripsAbroadIsValidHandler::class,
             'QaBilateralYesNoValueOptionsGenerator' =>
                 QaService\Custom\Bilateral\YesNoValueOptionsGenerator::class,
-            'QaBilateralCabotageOnlyYesNoRadioFactory' =>
-                QaService\Custom\Bilateral\CabotageOnlyYesNoRadioFactory::class,
             'QaBilateralStandardAndCabotageYesNoRadioFactory' =>
                 QaService\Custom\Bilateral\StandardAndCabotageYesNoRadioFactory::class,
             'QaBilateralRadioFactory' =>
@@ -336,7 +334,6 @@ return [
             \Common\Rbac\Service\Permission::class => \Common\Rbac\Service\PermissionFactory::class,
             \Common\Service\Data\Search\SearchTypeManager::class =>
                 \Common\Service\Data\Search\SearchTypeManagerFactory::class,
-            \Common\Rbac\PidIdentityProvider::class => \Common\Rbac\PidIdentityProviderFactory::class,
             \Common\Rbac\JWTIdentityProvider::class => \Common\Rbac\JWTIdentityProviderFactory::class,
             \Common\Service\AntiVirus\Scan::class => \Common\Service\AntiVirus\Scan::class,
             'QaCommonWarningAdder' => QaService\Custom\Common\WarningAdderFactory::class,

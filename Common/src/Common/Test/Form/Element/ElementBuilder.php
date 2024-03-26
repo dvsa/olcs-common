@@ -6,7 +6,7 @@ namespace Common\Test\Form\Element;
 
 use Laminas\Form\Element;
 
-class ElementBuilder
+final class ElementBuilder
 {
     /**
      * @var string|null

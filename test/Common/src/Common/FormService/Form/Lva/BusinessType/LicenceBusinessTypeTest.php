@@ -1,21 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Common\FormService\Form\Lva\BusinessType;
 
+use Common\FormService\Form\Lva\Licence;
 use Common\Service\Helper\FormHelperService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Lva\BusinessType\LicenceBusinessType;
-use Common\FormService\FormServiceInterface;
 use Laminas\Form\Form;
-use Laminas\Form\Element;
 use LmcRbacMvc\Service\AuthorizationService;
 
-/**
- * Licence Business Type Form Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class LicenceBusinessTypeTest extends MockeryTestCase
 {
     /**
@@ -57,12 +53,11 @@ class LicenceBusinessTypeTest extends MockeryTestCase
             ->with('Lva\BusinessType')
             ->andReturn($mockForm);
 
-        $mockApplication = m::mock(FormServiceInterface::class);
-        $mockApplication->shouldReceive('alterForm')
-            ->once()
+        $mockLicence = m::mock(Licence::class);
+        $mockLicence->expects('alterForm')
             ->with($mockForm);
 
-        $this->fsm->setService('lva-licence', $mockApplication);
+        $this->fsm->setService('lva-licence', $mockLicence);
 
         $form = $this->sut->getForm($hasInforceLicences, $hasOrganisationSubmittedLicenceApplication);
 

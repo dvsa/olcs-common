@@ -29,6 +29,7 @@ use Laminas\View\Model\ViewModel;
 use Olcs\Mvc\Controller\ParameterProvider\GenericList;
 use RuntimeException;
 use LmcRbacMvc\Service\AuthorizationService;
+use Common\Service\Cqrs\Response;
 
 /**
  * Shared logic between Community Licences controllers
@@ -289,6 +290,10 @@ abstract class AbstractCommunityLicencesController extends AbstractController
      */
     private function getTableData()
     {
+        /**
+         * @todo GenericList lives in olcs-internal so shouldn't be used here, ticket to fix VOL-5194
+         * @phpstan-ignore-next-line
+         */
         $paramProvider = new GenericList(['licence']);
         $paramProvider->setParams($this->plugin('params'));
 
@@ -817,7 +822,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController
      */
     protected function processDto($dto, $successMessage)
     {
-        /** @var \Common\Service\Cqrs\Response $response */
+        /** @var Response $response */
         $response = $this->sendCommand($dto);
 
         if ($response->isOk()) {
@@ -834,7 +839,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController
      *
      * @param \Dvsa\Olcs\Transfer\Command\AbstractCommand $dto dto
      *
-     * @return \Common\Service\Cqrs\Response
+     * @return Response
      */
     protected function sendCommand($dto)
     {
@@ -845,7 +850,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController
     /**
      * Display errors
      *
-     * @param \Common\Service\Cqrs\Response $response response
+     * @param Response $response response
      *
      * @return void
      */

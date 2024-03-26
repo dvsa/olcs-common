@@ -60,8 +60,15 @@ trait CrudTableTrait
         $request = $this->getRequest();
 
         if ($request->isPost()) {
+            /**
+             * @todo VOL-5192 has been created to refactor this piece of code ($this->delete sometimes returns void)
+             * @phpstan-ignore-next-line
+             */
             $response = $this->delete();
-
+            /**
+             * @todo VOL-5191 has been created to refactor this piece of code (location of ViewModel)
+             * @phpstan-ignore-next-line
+             */
             if ($response instanceof Response || $response instanceof ViewModel) {
                 return $response;
             }

@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Common\Data\Mapper\Licence\Surrender\Sections;
 
-use Common\Data\Mapper\licence\Surrender\OperatorLicence;
 use Common\Data\Mapper\Licence\Surrender\Sections\SurrenderSection;
 use Common\RefData;
 use Common\Service\Helper\TranslationHelperService;

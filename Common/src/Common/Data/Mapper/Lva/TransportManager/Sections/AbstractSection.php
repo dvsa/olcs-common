@@ -33,6 +33,8 @@ abstract class AbstractSection
         return $this->sectionSerialize();
     }
 
+    abstract public function sectionSerialize();
+
     /**
      * sortByCreated
      *

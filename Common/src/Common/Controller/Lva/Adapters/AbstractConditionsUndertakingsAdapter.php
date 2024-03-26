@@ -6,6 +6,7 @@ use Common\Controller\Lva\Interfaces\ConditionsUndertakingsAdapterInterface;
 use Common\RefData;
 use Common\Service\Script\ScriptFactory;
 use Common\Service\Table\Formatter\Address;
+use Common\Service\Table\Formatter\FormatterPluginManager;
 use Common\Service\Table\TableBuilder;
 use Psr\Container\ContainerInterface;
 use Laminas\Form\Form;
@@ -99,8 +100,11 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
         $operatingCentres = $this->getOperatingCentresForList($data);
         $attachedToOperatingCentres = [];
 
+        /** @var Address $addressFormatter */
+        $addressFormatter = $this->container->get(FormatterPluginManager::class)->get(Address::class);
+
         foreach ($operatingCentres as $oc) {
-            $attachedToOperatingCentres[$oc['id']] = Address::format($oc['address']);
+            $attachedToOperatingCentres[$oc['id']] = $addressFormatter->format($oc['address']);
         }
 
         if ($attachedToOperatingCentres !== []) {

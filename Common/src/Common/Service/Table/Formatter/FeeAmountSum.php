@@ -24,7 +24,7 @@ class FeeAmountSum implements FormatterPluginManagerInterface
      *
      * @param  array $data
      * @param  array $column
-     * @return string
+     * @return ?string
      */
     public function format($data, $column = [])
     {

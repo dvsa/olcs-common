@@ -145,8 +145,6 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
     /**
      * Add customisation to the form dependent on which of five scenarios
      * is in play for OLCS-2855
-     *
-     * @return Laminas\Form\Form
      */
     protected function alterForm(\Laminas\Form\Form $form, $formData)
     {

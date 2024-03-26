@@ -31,6 +31,11 @@ class StubAbstractTransportManagerAdapter extends AbstractTransportManagerAdapte
         ];
     }
 
+    /**
+     * Only here to ensure interface implemented (so phpstan ignored)
+     *
+     * @phpstan-ignore-next-line
+     */
     public function delete(array $ids, $applicationId)
     {
     }

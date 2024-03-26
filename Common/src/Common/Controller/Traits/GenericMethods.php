@@ -2,10 +2,25 @@
 
 namespace Common\Controller\Traits;
 
+use Common\Service\Helper\FormHelperService;
+use Common\Service\Script\ScriptFactory;
+use Common\Service\Table\TableFactory;
+use Common\Util\FlashMessengerTrait;
+use Laminas\Mvc\Controller\AbstractController;
+use Laminas\Mvc\Controller\Plugin\Params;
+use Laminas\Mvc\Controller\Plugin\Redirect;
+
 /**
  * Generic Methods from legacy Abstract Action controller
  *
- * @author Alex Peshkov <alex.pehkov@valtech.co.uk>
+ * @property ScriptFactory $scriptFactory
+ * @property FormHelperService $formHelperService
+ * @property TableFactory $tableFactory
+ * @method AbstractController getRequest()
+ * @method AbstractController getPluginManager()
+ * @method FlashMessengerTrait addErrorMessage($message)
+ * @method Params|mixed params(string $param = null, mixed $default = null)
+ * @method Redirect redirect()
  */
 trait GenericMethods
 {
@@ -13,12 +28,10 @@ trait GenericMethods
      * Load an array of script files which will be rendered inline inside a view
      *
      * @param array $scripts Scripts
-     *
-     * @return array
      */
-    protected function loadScripts($scripts)
+    protected function loadScripts($scripts): void
     {
-        return $this->scriptFactory->loadFiles($scripts);
+        $this->scriptFactory->loadFiles($scripts);
     }
 
     /**
@@ -155,7 +168,7 @@ trait GenericMethods
      * @param array  $results Table Data
      * @param array  $data    Params
      *
-     * @return \Common\Service\Table\TableBuilder
+     * @return \Common\Service\Table\TableBuilder|string
      */
     public function getTable($table, $results, $data = [])
     {
