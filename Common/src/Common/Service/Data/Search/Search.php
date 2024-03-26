@@ -2,8 +2,10 @@
 
 namespace Common\Service\Data\Search;
 
+use Common\Data\Object\Search\Aggregations\Terms\TermsAbstract;
 use Common\Service\Data\AbstractData;
 use Common\Service\Table\TableFactory;
+use Elastica\Query\Terms;
 use Laminas\Http\Request as HttpRequest;
 use Laminas\View\HelperPluginManager as ViewHelperManager;
 
@@ -205,6 +207,7 @@ class Search extends AbstractData
                 'limit' => $this->getLimit(),
                 'page' => $this->getPage(),
                 'filters' => $this->getFilterNames(),
+                'filterTypes' => $this->getFilterTypes(),
                 'dateRanges' => $this->getDateRangeKvp(),
                 'sort' => $this->getSort(),
                 'order' => $this->getOrder()
@@ -263,12 +266,16 @@ class Search extends AbstractData
         /** @var \Common\Form\Form $form */
         $form = $this->fetchFiltersFormObject();
 
-        /** @var \Common\Data\Object\Search\Aggregations\Terms\TermsAbstract $filterClass */
+        /** @var TermsAbstract $filterClass */
         foreach ($this->getFilters() as $filterClass) {
-            $options = array_combine(
-                $filterClass->getOptionsKvp(),
-                $filterClass->getOptionsKvp()
-            );
+            if ($filterClass->getType() === TermsAbstract::TYPE_DYNAMIC) {
+                $options = array_combine(
+                    $filterClass->getOptionsKvp(),
+                    $filterClass->getOptionsKvp()
+                );
+            } else {
+                $options = $filterClass->getOptionsKvp();
+            }
 
             $select = $form->get('filter')->get($filterClass->getKey());
             $select->setValueOptions($options);
@@ -346,9 +353,7 @@ class Search extends AbstractData
         );
 
         foreach ($this->getFilters() as $filterClass) {
-
-            /** @var \Common\Data\Object\Search\Aggregations\Terms\TermsAbstract $filterClass */
-            if (isset($post['filter'][$filterClass->getKey()]) && !empty($post['filter'][$filterClass->getKey()])) {
+            if (isset($post['filter'][$filterClass->getKey()]) && $post['filter'][$filterClass->getKey()] !== '') {
                 $filterClass->setValue($post['filter'][$filterClass->getKey()]);
             }
         }
@@ -368,10 +373,21 @@ class Search extends AbstractData
         return $output;
     }
 
+    public function getFilterTypes(): array
+    {
+        $ret = [];
+
+        foreach ($this->getFilters() as $filter) {
+            $ret[$filter->getKey()] = $filter->getType();
+        }
+
+        return $ret;
+    }
+
     /**
      * Returns an array of filters relevant to this index.
      *
-     * @return mixed
+     * @return TermsAbstract[]
      */
     public function getFilters()
     {
@@ -406,7 +422,7 @@ class Search extends AbstractData
     public function setFilterOptionValues(array $filterValues)
     {
         foreach ($this->getFilters() as $filterClass) {
-            /** @var $filterClass \Common\Data\Object\Search\Aggregations\Terms\TermsAbstract */
+            /** @var $filterClass TermsAbstract */
             if (isset($filterValues[$filterClass->getKey()])) {
                 $filterClass->setOptions($filterValues[$filterClass->getKey()]);
             }
