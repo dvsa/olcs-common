@@ -32,7 +32,7 @@ class FormElementMessageFormatter
     }
 
     /**
-     * @param string|callable|Closure $defaultMessageOrProvider
+     * @param string|callable $defaultMessageOrProvider
      */
     public function enableReplacementOfMessage(string $messageKey, $defaultMessageOrProvider): void
     {
@@ -45,7 +45,7 @@ class FormElementMessageFormatter
     }
 
     /**
-     * @return callable|Closure|null
+     * @return callable|null
      */
     public function getReplacementFor(string $messageKey)
     {

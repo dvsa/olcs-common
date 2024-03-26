@@ -1,16 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Controller\Util;
 
+use Common\Util\FlashMessengerTrait;
 use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger as FlashMessengerPlugin;
 use Mockery as m;
 
-/**
- * Test FlashMessengerTrait
- *
- * @author Michael Cooper <michael.cooper@valtech.co.uk>
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class FlashMessengerTraitTest extends m\Adapter\Phpunit\MockeryTestCase
 {
     private $sut;
@@ -18,7 +15,7 @@ class FlashMessengerTraitTest extends m\Adapter\Phpunit\MockeryTestCase
     protected function setUp(): void
     {
         $this->sut = $this->getMockForTrait(
-            \Common\Util\FlashMessengerTrait::class,
+            FlashMessengerTrait::class,
             [],
             '',
             true,
@@ -37,7 +34,7 @@ class FlashMessengerTraitTest extends m\Adapter\Phpunit\MockeryTestCase
     public function testGetFlashMessenger(): void
     {
         $this->sut = $this->getMockForTrait(
-            \Common\Util\FlashMessengerTrait::class,
+            FlashMessengerTrait::class,
             [],
             '',
             true,

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Controller\Traits;
 
 use Common\Controller\Traits\GenericMethods;
@@ -11,11 +13,11 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 
 /**
- * @covers \Common\Controller\Traits\GenericMethods
+ * @covers GenericMethods
  */
 class GenericMethodsTest extends MockeryTestCase
 {
-    /** @var  GenericMethods | m\MockInterface */
+    /** @var  GenericMethodsStub | m\MockInterface */
     private $sut;
 
     /** @var  m\MockInterface | FormHelperService */

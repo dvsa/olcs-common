@@ -1,18 +1,11 @@
 <?php
 
-/**
- * Override ZFs date validation messages (As they are a bit rubbish)
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Form\Elements\Validators;
 
 use Laminas\Validator\Date as LaminasDate;
 
 /**
  * Override ZFs date validation messages (As they are a bit rubbish)
- *
- * @author Rob Caiger <rob@clocal.co.uk>
  */
 class Date extends LaminasDate
 {
@@ -32,7 +25,7 @@ class Date extends LaminasDate
      * Returns true if $value is a DateTime instance or can be converted into one.
      * Returns false if $value is empty of invalid  and gives an error message
      *
-     * @param string|array|int|DateTime $value Value
+     * @param string|array|int|\DateTimeInterface $value Value
      *
      * @return bool
      */

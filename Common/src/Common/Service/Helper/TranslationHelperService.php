@@ -1,30 +1,13 @@
 <?php
 
-/**
- * Translation Helper Service
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Service\Helper;
 
 use Laminas\I18n\Translator\TranslatorInterface;
 
-/**
- * Translation Helper Service
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class TranslationHelperService
 {
-    /** @var TranslatorInterface */
-    protected $translator;
+    protected TranslatorInterface $translator;
 
-    /**
-     * Create service instance
-     *
-     *
-     * @return TranslationHelperService
-     */
     public function __construct(
         TranslatorInterface $translator
     ) {

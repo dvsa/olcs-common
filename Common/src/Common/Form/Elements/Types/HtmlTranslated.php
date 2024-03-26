@@ -1,17 +1,7 @@
 <?php
 
-/**
- * Html Translated Element
- *
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
- */
 namespace Common\Form\Elements\Types;
 
-/**
- * Html Translated Element
- *
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
- */
 class HtmlTranslated extends Html
 {
     /**
@@ -22,7 +12,7 @@ class HtmlTranslated extends Html
     /**
      * Set the tokens to be translated
      *
-     * @return Element|ElementInterface
+     * @return HtmlTranslated
      */
     public function setTokens(array $tokens)
     {

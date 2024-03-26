@@ -6,17 +6,15 @@ use Common\Exception\ResourceNotFoundException;
 use Common\Preference\LanguageListener;
 use Common\Service\Cqrs\Exception\AccessDeniedException;
 use Common\Service\Cqrs\Exception\NotFoundException;
-use Common\Service\Helper\TranslationHelperService;
 use Dvsa\Olcs\Utils\Translation\MissingTranslationProcessor;
 use Laminas\ServiceManager\ServiceManager;
+use Laminas\Stdlib\RequestInterface;
 use Olcs\Logging\Log\Logger;
 use Laminas\EventManager\EventManager;
 use Laminas\Http\Request;
-use Laminas\I18n\Translator\Translator;
 use Laminas\ModuleManager\ModuleEvent;
 use Laminas\Mvc\Application;
 use Laminas\Mvc\MvcEvent;
-
 use Laminas\Http\PhpEnvironment\Response;
 use Laminas\View\Model\ViewModel;
 use Laminas\ModuleManager\Feature\ConfigProviderInterface;
@@ -234,7 +232,6 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
     /**
      * Setup the translator service
      *
-     * @param ServiceLocatorInterface         $sm           Service manager
      * @param \Laminas\EventManager\EventManager $eventManager Event manager
      *
      * @return void
@@ -259,17 +256,14 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
 
     /**
      * If the request is coming through a proxy then update the host name on the request
-     *
-     * @param \Laminas\Stdlib\RequestInterface $request Request
      */
-    private function setupRequestForProxyHost(\Laminas\Stdlib\RequestInterface $request): void
+    private function setupRequestForProxyHost(RequestInterface $request): void
     {
         if (!$request instanceof \Laminas\Http\PhpEnvironment\Request) {
             // if request is not \Laminas\Http\PhpEnvironment\Request we must be running from CLI so do nothing
             return;
         }
 
-        /* @var $request \Laminas\Http\PhpEnvironment\Request */
         if ($request->getHeaders()->get('x-forwarded-host')) {
             $host = $request->getHeaders()->get('x-forwarded-host')->getFieldValue();
 
@@ -305,8 +299,6 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
 
     /**
      * Set the user ID in the log processor so that it can be included in the log files
-     *
-     * @param ServiceLocatorInterface $serviceManager Service manager
      */
     private function setLoggerUser(ServiceManager $serviceManager): void
     {

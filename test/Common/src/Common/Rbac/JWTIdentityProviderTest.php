@@ -536,7 +536,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
     }
 
     /**
-     * @return MockInterface|Sessionion
+     * @return MockInterface|Session
      */
     protected function tokenSession()
     {

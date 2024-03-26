@@ -1,20 +1,11 @@
 <?php
 
-/**
- * Checks a date is not in the future
- *
- * @author Ian Lindsay <ian@hemera-business-services.co.uk>
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Form\Elements\Validators;
 
 use Laminas\Validator\AbstractValidator;
 
 /**
  * Checks a date is not in the future
- *
- * @author Ian Lindsay <ian@hemera-business-services.co.uk>
- * @author Rob Caiger <rob@clocal.co.uk>
  */
 class DateNotInFuture extends AbstractValidator
 {
@@ -37,7 +28,6 @@ class DateNotInFuture extends AbstractValidator
      *
      * @param  mixed $value
      * @return bool
-     * @throws Exception\RuntimeException if the token doesn't exist in the context array
      */
     public function isValid($value)
     {

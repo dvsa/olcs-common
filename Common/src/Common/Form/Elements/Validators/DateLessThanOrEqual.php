@@ -1,4 +1,5 @@
 <?php
+
 namespace Common\Form\Elements\Validators;
 
 use Laminas\Validator\AbstractValidator;
@@ -76,7 +77,7 @@ class DateLessThanOrEqual extends AbstractValidator
      * Set token against which to compare
      *
      * @param  mixed $token
-     * @return Identical
+     * @return DateLessThanOrEqual
      */
     public function setToken($token)
     {
@@ -91,7 +92,6 @@ class DateLessThanOrEqual extends AbstractValidator
      *
      * @param  mixed $value
      * @return bool
-     * @throws Exception\RuntimeException if the token doesn't exist in the context array
      */
     public function isValid($value, array $context = null)
     {

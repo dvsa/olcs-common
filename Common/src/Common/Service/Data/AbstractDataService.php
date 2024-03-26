@@ -2,6 +2,11 @@
 
 namespace Common\Service\Data;
 
+use Common\Service\Cqrs\Command\CommandService;
+use Common\Service\Cqrs\Query\CachingQueryService;
+use Common\Service\Cqrs\Response;
+use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
+
 /**
  * Abstract data service class
  *
@@ -14,22 +19,15 @@ abstract class AbstractDataService
      */
     protected $data = [];
 
-    /** @var TransferAnnotationBuilder */
+    /** @var AnnotationBuilder */
     protected $transferAnnotationBuilder;
 
-    /** @var QueryService */
+    /** @var CachingQueryService */
     protected $queryService;
 
     /** @var CommandService */
     protected $commandService;
 
-    /**
-     * Create service instance
-     *
-     * @param AbstractDataServiceServices $abstractConsumerServices
-     *
-     * @return AbstractDataService
-     */
     public function __construct(AbstractDataServiceServices $abstractDataServiceServices)
     {
         $this->transferAnnotationBuilder = $abstractDataServiceServices->getTransferAnnotationBuilder();
@@ -42,7 +40,7 @@ abstract class AbstractDataService
      *
      * @param string $dtoData Query dto
      *
-     * @return \Common\Service\Cqrs\Response
+     * @return Response
      */
     protected function handleQuery($dtoData)
     {
@@ -56,7 +54,7 @@ abstract class AbstractDataService
      *
      * @param string $dtoData Command dto
      *
-     * @return \Common\Service\Cqrs\Response
+     * @return Response
      */
     protected function handleCommand($dtoData)
     {

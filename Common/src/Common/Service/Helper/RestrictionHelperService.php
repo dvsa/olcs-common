@@ -1,17 +1,7 @@
 <?php
 
-/**
- * Restriction Helper Service
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Service\Helper;
 
-/**
- * Restriction Helper Service
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class RestrictionHelperService
 {
     /**
@@ -28,7 +18,7 @@ class RestrictionHelperService
      * Check restriction
      *
      * @param mixed $restrictions
-     * @param type $strict
+     * @param bool $strict
      * @return boolean
      */
     private function checkRestriction($restrictions, array $accessKeys = [], $strict = true, $reference = null)

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Service\Table;
 
 use Common\Rbac\Service\Permission;
@@ -13,12 +15,12 @@ use Common\Service\Table\TableBuilder;
 use Hamcrest\Arrays\IsArrayContainingKey;
 use Hamcrest\Arrays\IsArrayContainingKeyValuePair;
 use Hamcrest\Core\IsAnything;
+use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Container\ContainerInterface;
 use Laminas\Mvc\Controller\Plugin\Url;
 use Laminas\Mvc\I18n\Translator;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use LmcRbacMvc\Service\AuthorizationService;
 
 /**
  * @covers \Common\Service\Table\TableBuilder
@@ -49,7 +51,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Get Mock Table Builder
      *
-     * @return \Common\Service\Table\TableBuilder | \PHPUnit_Framework_MockObject_MockObject
+     * @return \Common\Service\Table\TableBuilder | MockObject
      */
     private function getMockTableBuilder($methods = [], $constructorArgs = null)
     {
@@ -2349,7 +2351,7 @@ class TableBuilderTest extends MockeryTestCase
         $mockContentHelper = $this->createPartialMock(ContentHelper::class, ['replaceContent']);
         $mockContentHelper->expects($this->once())
             ->method('replaceContent');
-  
+
         $mockAuthService = $this->createPartialMock(Permission::class, ['isGranted']);
 
         $mockAuthService->expects($this->once())

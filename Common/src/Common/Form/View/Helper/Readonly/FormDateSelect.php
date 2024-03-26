@@ -7,10 +7,6 @@ use Laminas\Form\Element\DateSelect;
 use Laminas\Form\ElementInterface;
 use Laminas\View\Helper\AbstractHelper;
 
-/**
- * Class FormDateSelect
- * @package Common\Form\View\Helper\Readonly
- */
 class FormDateSelect extends AbstractHelper
 {
     /**
@@ -19,7 +15,7 @@ class FormDateSelect extends AbstractHelper
      * Proxies to {@link render()}.
      *
      * @param  ElementInterface|null $element
-     * @return string|FormElement
+     * @return string|FormDateSelect
      */
     public function __invoke(ElementInterface $element = null)
     {

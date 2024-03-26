@@ -1,15 +1,9 @@
 <?php
 
-/**
- * Year Select
- */
 namespace Common\Form\Elements\Custom;
 
 use Laminas\Form\Element as LaminasElement;
 
-/**
- * Year Select
- */
 class YearSelect extends LaminasElement\Select
 {
     use Traits\YearDelta;
@@ -44,7 +38,7 @@ class YearSelect extends LaminasElement\Select
 
     /**
      * @param  array $options
-     * @return Select
+     * @return YearSelect
      */
     public function setOptions($options)
     {
