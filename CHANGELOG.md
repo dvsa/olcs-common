@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.6.0](https://github.com/dvsa/olcs-common/compare/v6.5.0...v6.6.0) (2024-03-26)
+
+
+### Features
+
+* Add list conversations permission const ([#76](https://github.com/dvsa/olcs-common/issues/76)) ([052306f](https://github.com/dvsa/olcs-common/commit/052306f34a553d1c2fd02bdf18750b6a1d2c79da))
+* Null check elastic search terms for filtering transport managers ([#75](https://github.com/dvsa/olcs-common/issues/75)) ([7705662](https://github.com/dvsa/olcs-common/commit/77056621549841b89eaf7f826175239d9d74c759))
+
 ## [6.5.0](https://github.com/dvsa/olcs-common/compare/v6.4.0...v6.5.0) (2024-03-20)
 
 
