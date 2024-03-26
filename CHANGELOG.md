@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.6.1](https://github.com/dvsa/olcs-common/compare/v6.6.0...v6.6.1) (2024-03-26)
+
+
+### Bug Fixes
+
+* Consistent callback call ([#77](https://github.com/dvsa/olcs-common/issues/77)) ([1702829](https://github.com/dvsa/olcs-common/commit/17028293322dc90c2445be1b7b81fe556841bfa6))
+
 ## [6.6.0](https://github.com/dvsa/olcs-common/compare/v6.5.0...v6.6.0) (2024-03-26)
 
 
