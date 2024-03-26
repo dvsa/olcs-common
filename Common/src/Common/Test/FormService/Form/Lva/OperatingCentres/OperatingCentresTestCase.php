@@ -4,32 +4,19 @@ declare(strict_types=1);
 
 namespace Common\Test\FormService\Form\Lva\OperatingCentres;
 
-use Olcs\TestHelpers\MockeryTestCase;
-use Olcs\TestHelpers\Service\MocksServicesTrait;
-use Laminas\Mvc\I18n\Translator;
-use Laminas\Mvc\Service\TranslatorServiceFactory;
 use Common\RefData;
 use Common\Service\Table\TableFactory;
-use Common\Service\Table\TableBuilder;
 use LmcRbacMvc\Service\AuthorizationService;
 use Laminas\Filter\FilterPluginManager;
-use Laminas\Mvc\Service\FilterManagerFactory;
-use Laminas\Validator\ValidatorPluginManager;
-use Laminas\Mvc\Service\ValidatorManagerFactory;
-use Laminas\ServiceManager\AbstractPluginManager;
-use Laminas\Form\FormElementManagerFactory;
-use Common\Service\FormAnnotationBuilderFactory;
 use Common\Service\Helper\FormHelperService;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\FormServiceManager;
 use Common\Service\Helper\TranslationHelperService;
 use Laminas\Form\Form;
-use Laminas\View\Renderer\PhpRenderer;
 
 abstract class OperatingCentresTestCase extends MockeryTestCase
 {
-    use MocksServicesTrait;
-
     protected const LGV_FIELDSET_NAME = 'totAuthLgvVehiclesFieldset';
 
     protected const HGV_FIELDSET_LABEL_WITH_VEHICLE_CLASSIFICATIONS_DISABLED = 'application_operating-centres_authorisation.data.totAuthHgvVehiclesFieldset.vehicles-label';
@@ -64,6 +51,8 @@ abstract class OperatingCentresTestCase extends MockeryTestCase
     protected $formHelper;
 
     protected $authService;
+
+    protected $filterManager;
 
 
     protected function setUpDefaultServices()

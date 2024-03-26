@@ -4,6 +4,7 @@ use Common\Service\Table\Formatter\Address;
 use Common\Service\Table\Formatter\ConditionsUndertakingsType;
 use Common\Service\Table\Formatter\Translate;
 use Common\Service\Table\Formatter\YesNo;
+use Common\Service\Table\TableBuilder;
 
 return [
     'variables' => [
@@ -57,7 +58,10 @@ return [
                 if (isset($data['operatingCentre']['address'])) {
 
                     $column['formatter'] = Address::class;
-
+                    /**
+                     * @var TableBuilder $this
+                     * @psalm-scope-this TableBuilder
+                     */
                     return $this->callFormatter($column, $data['operatingCentre']['address']);
                 }
 

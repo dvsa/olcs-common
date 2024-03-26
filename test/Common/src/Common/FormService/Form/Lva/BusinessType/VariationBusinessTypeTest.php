@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Common\FormService\Form\Lva\BusinessType;
 
+use Common\FormService\Form\Lva\Variation;
 use Common\Service\Helper\FormHelperService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -56,12 +59,11 @@ class VariationBusinessTypeTest extends MockeryTestCase
             ->with('Lva\BusinessType')
             ->andReturn($mockForm);
 
-        $mockApplication = m::mock(FormServiceInterface::class);
-        $mockApplication->shouldReceive('alterForm')
-            ->once()
+        $mockVariation = m::mock(Variation::class);
+        $mockVariation->expects('alterForm')
             ->with($mockForm);
 
-        $this->fsm->setService('lva-variation', $mockApplication);
+        $this->fsm->setService('lva-variation', $mockVariation);
 
         $form = $this->sut->getForm($hasInforceLicences, $hasOrganisationSubmittedLicenceApplication);
 

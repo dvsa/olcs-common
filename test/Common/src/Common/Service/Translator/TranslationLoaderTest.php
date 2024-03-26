@@ -66,7 +66,7 @@ class TranslationLoaderTest extends MockeryTestCase
         $mockCache = m::mock(CachingQueryService::class);
         $mockCache->expects('handleCustomCache')
             ->with($cacheIdentifier, $locale)
-            ->andThrow(new \Exception());
+            ->andThrow(new \Exception($initialExceptionMsg));
 
         $loader = new TranslationLoader($mockCache);
         $loader->load($locale, $textDomain);

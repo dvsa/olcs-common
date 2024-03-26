@@ -141,8 +141,6 @@ abstract class AbstractController extends AbstractActionController
 
     /**
      * Hook into the dispatch before the controller action is executed
-     *
-     * @return \Laminas\Http\Response
      */
     protected function preDispatch()
     {

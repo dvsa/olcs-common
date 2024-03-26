@@ -1,13 +1,5 @@
 <?php
 
-/**
- * Response Helper
- *
- * Handle responses from the rest service
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
-
 namespace Common\Util;
 
 use Laminas\Http\Response;
@@ -138,7 +130,7 @@ class ResponseHelper
     }
 
     /**
-     * @return bool
+     * @return ?bool
      */
     protected function processResponse()
     {

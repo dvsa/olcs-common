@@ -44,6 +44,6 @@ class VariationFinancialEvidence extends FinancialEvidence
     {
         $this->removeFormAction($form, 'saveAndContinue');
 
-        return parent::alterForm($form);
+        parent::alterForm($form);
     }
 }

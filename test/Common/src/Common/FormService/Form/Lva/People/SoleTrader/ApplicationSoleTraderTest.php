@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\FormService\Form\Lva\People\SoleTrader;
 
 use Common\Form\Form;
-use Common\FormService\FormServiceInterface;
+use Common\FormService\Form\Lva\Application;
 use Common\FormService\FormServiceManager;
 use Common\Service\Lva\PeopleLvaService;
 use Laminas\Form\ElementInterface;
@@ -12,11 +14,6 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Lva\People\SoleTrader\ApplicationSoleTrader as Sut;
 use LmcRbacMvc\Service\AuthorizationService;
 
-/**
- * Application Sole Trader Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class ApplicationSoleTraderTest extends MockeryTestCase
 {
     /**
@@ -41,7 +38,7 @@ class ApplicationSoleTraderTest extends MockeryTestCase
         $this->peopleLvaService = m::mock(PeopleLvaService::class);
         $this->fsl = m::mock(FormServiceManager::class)->makePartial();
 
-        $this->mockApplicationService = m::mock(FormServiceInterface::class);
+        $this->mockApplicationService = m::mock(Application::class);
 
         $this->fsl->shouldReceive('get')
             ->with('lva-application')

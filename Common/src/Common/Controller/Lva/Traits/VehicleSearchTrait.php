@@ -1,13 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Common\Controller\Lva\Traits;
 
+use Common\FormService\FormServiceManager;
+use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Table\TableBuilder;
+use Laminas\Mvc\Controller\AbstractController;
+use Laminas\Mvc\Controller\Plugin\Redirect;
 
 /**
- * Vehicle Search Trait
- *
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
+ * @property FormServiceManager $formServiceManager
+ * @property TranslationHelperService $translationHelper
+ * @method AbstractController getRequest()
+ * @method Redirect redirect()
  */
 trait VehicleSearchTrait
 {

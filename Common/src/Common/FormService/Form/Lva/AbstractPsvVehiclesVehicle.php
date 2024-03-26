@@ -31,7 +31,6 @@ abstract class AbstractPsvVehiclesVehicle
      *
      * @param \Laminas\Form\Form $form
      * @param array $params
-     * @return \Laminas\Form\Form
      */
     protected function alterForm($form, $params)
     {

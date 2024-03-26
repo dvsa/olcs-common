@@ -19,7 +19,7 @@ class ClassList
     /**
      * @param string|string[] $classes
      */
-    public function __construct($classes = [])
+    final public function __construct($classes = [])
     {
         $this->add($classes);
     }

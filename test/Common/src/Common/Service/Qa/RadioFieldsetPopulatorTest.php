@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Service\Qa;
 
 use Common\Form\Elements\InputFilters\QaRadio;
@@ -11,11 +13,6 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Form\Fieldset;
 use Laminas\Form\Form;
 
-/**
- * RadioFieldsetPopulatorTest
- *
- * @author Jonathan Thomas <jonathan@opalise.co.uk>
- */
 class RadioFieldsetPopulatorTest extends MockeryTestCase
 {
     public function testPopulate(): void
@@ -63,7 +60,7 @@ class RadioFieldsetPopulatorTest extends MockeryTestCase
             'notSelectedMessage' => $notSelectedMessageOptions,
         ];
 
-        $radio = m::mock(Radio::class);
+        $radio = m::mock(QaRadio::class);
         $radio->shouldReceive('setValueOptions')
             ->with($updatedValueOptions)
             ->once();

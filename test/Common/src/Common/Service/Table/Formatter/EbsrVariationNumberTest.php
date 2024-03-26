@@ -3,6 +3,7 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\EbsrVariationNumber;
+use Common\View\Helper\Status;
 use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 use Laminas\View\HelperPluginManager;
 use Mockery as m;

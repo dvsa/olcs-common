@@ -7,6 +7,7 @@ namespace CommonTest\Common\FormService\Form\Lva\OperatingCentres;
 use Common\Form\Elements\Types\Table;
 use Common\Form\Elements\Validators\TableRequiredValidator;
 use Common\Form\Form;
+use Common\FormService\Form\Lva\Licence;
 use Common\FormService\Form\Lva\OperatingCentres\LicenceOperatingCentres;
 use Common\FormService\FormServiceManager;
 use Common\Service\Helper\TranslationHelperService;
@@ -24,11 +25,6 @@ use Common\Service\Helper\FormHelperService;
 use Common\RefData;
 use LmcRbacMvc\Service\AuthorizationService;
 
-/**
- * Variation Operating Centres Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class LicenceOperatingCentresTest extends MockeryTestCase
 {
     /**
@@ -80,7 +76,7 @@ class LicenceOperatingCentresTest extends MockeryTestCase
         $this->form = m::mock(Form::class);
         $this->form->expects('getInputFilter')->withNoArgs()->andReturn($this->inputFilter);
 
-        $lvaLicence = m::mock(FormServiceInterface::class);
+        $lvaLicence = m::mock(Licence::class);
         $lvaLicence->expects('alterForm')
             ->with($this->form);
 

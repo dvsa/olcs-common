@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Data\Mapper\Lva;
 
 use Common\Data\Mapper\Lva\OperatingCentres;
@@ -285,12 +287,5 @@ class OperatingCentresTest extends MockeryTestCase
             ->shouldReceive('addCurrentErrorMessage')->once()->with(self::TRANSL . 'unit_TA_PSV_RS_msg');
 
         OperatingCentres::mapApiErrors(self::LOCATION, $errors, $this->mockFlashMsg, $this->mockTranslator);
-    }
-
-    public function testMapApiErrorsEmpty(): void
-    {
-        static::assertNull(
-            OperatingCentres::mapApiErrors(self::LOCATION, [], $this->mockFlashMsg, $this->mockTranslator)
-        );
     }
 }

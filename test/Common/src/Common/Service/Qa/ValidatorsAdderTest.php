@@ -5,6 +5,7 @@ namespace CommonTest\Service\Qa;
 use Common\Service\Qa\ValidatorsAdder;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Laminas\Form\ElementInterface;
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterInterface;
 use Laminas\InputFilter\InputInterface;
@@ -43,7 +44,7 @@ class ValidatorsAdderTest extends MockeryTestCase
             'min' => 40,
             'inclusive' => true
         ];
-         
+
         $options = [
             'fieldsetName' => $fieldsetName,
             'validators' => [
@@ -68,7 +69,7 @@ class ValidatorsAdderTest extends MockeryTestCase
             ->ordered()
             ->once();
 
-        $qaElementInput = m::mock(QaElementInput::class);
+        $qaElementInput = m::mock(ElementInterface::class);
         $qaElementInput->shouldReceive('setContinueIfEmpty')
             ->with(true)
             ->once();

@@ -12,7 +12,7 @@ use Laminas\Form\Element\Csrf;
  * @see FormValidator
  * @see \CommonTest\Test\Form\FormValidationBuilderTest
  */
-class FormValidatorBuilder
+final class FormValidatorBuilder
 {
     /**
      * @var bool

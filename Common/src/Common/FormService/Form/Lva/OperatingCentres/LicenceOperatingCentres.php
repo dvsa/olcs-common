@@ -37,7 +37,7 @@ class LicenceOperatingCentres extends AbstractOperatingCentres
     protected function alterForm(Form $form, array $params)
     {
         $this->formServiceLocator->get('lva-licence')->alterForm($form);
-        parent::alterForm($form, $params);
+        return parent::alterForm($form, $params);
     }
 
     protected function alterFormForPsvLicences(Form $form, array $params)

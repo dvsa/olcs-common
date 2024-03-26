@@ -42,7 +42,7 @@ class CachingQueryServiceTest extends MockeryTestCase
         $this->mockCache = m::mock(CacheEncryptionService::class);
         $this->mockAnnotationBuilder = m::mock(AnnotationBuilder::class);
 
-        $this->mockResult = m::mock(\Dvsa\Olcs\Api\Domain\Command\Result::class);
+        $this->mockResult = m::mock();
 
         $this->mockQS = m::mock(QueryServiceInterface::class);
         $this->mockQS

@@ -1,6 +1,7 @@
 <?php
 
 use Common\Service\Table\Formatter\Date;
+use Common\Service\Table\TableBuilder;
 
 return [
     'variables' => [
@@ -58,6 +59,10 @@ return [
             'title' => 'Cases',
             'formatter' => function ($data) {
                 if (isset($data['caseCount']) && (int) $data['caseCount'] > 0) {
+                    /**
+                     * @var TableBuilder $this
+                     * @psalm-scope-this TableBuilder
+                     */
                     return '<a class="govuk-link" href="' . $this->generateUrl(
                         ['licence' => $data['licenceId']],
                         'licence_case_list/pagination',
