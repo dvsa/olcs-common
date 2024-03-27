@@ -68,7 +68,17 @@ abstract class AbstractConversationMessage implements FormatterPluginManagerInte
             return '';
         }
 
-        $firstRead = array_pop($row['userMessageReads']);
+        $firstRead = null;
+        while ($firstRead = array_pop($row['userMessageReads'])) {
+            if ($firstRead === null || $row['createdBy']['id'] !== $firstRead['user']['id']) {
+                break;
+            }
+        }
+
+        if ($firstRead === null) {
+            return '';
+        }
+
         $firstReadOn = DateTimeImmutable::createFromFormat(DateTimeInterface::ATOM, $firstRead["createdOn"]);
 
         if (isset($firstRead['user']['contactDetails']['person'])) {
