@@ -19,6 +19,7 @@ class FormDateSelectTest extends MockeryTestCase
 
     protected function setUp(): void
     {
+        setlocale(LC_ALL, 'en_GB');
         $formInput = m::mock(FormInput::class)->makePartial();
 
         $translator = m::mock(Translator::class);
