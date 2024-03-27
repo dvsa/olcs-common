@@ -32,6 +32,8 @@ class TranslationHelperService
      * @param string $format
      * @param array $messages
      * @return string
+     *
+     * @psalm-suppress NoValue
      */
     public function formatTranslation($format, $messages)
     {

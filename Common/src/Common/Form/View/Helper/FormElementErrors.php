@@ -31,6 +31,8 @@ class FormElementErrors extends LaminasFormElementErrors
     }
 
     /**
+     * @psalm-suppress NoValue
+     *
      * Render validation errors for the provided $element
      *
      * @param ElementInterface $element    Element to render errors for

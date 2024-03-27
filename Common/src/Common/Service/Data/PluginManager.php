@@ -7,6 +7,7 @@ use Laminas\ServiceManager\AbstractPluginManager;
 /**
  * Class PluginManager
  * @package Common\Service\Data
+ * @template-extends AbstractPluginManager<object>
  */
 class PluginManager extends AbstractPluginManager
 {
