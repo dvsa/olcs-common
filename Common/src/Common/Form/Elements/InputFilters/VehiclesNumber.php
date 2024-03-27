@@ -5,6 +5,7 @@
  *
  * @author Jakub Igla <jakub.igla@valtech.co.uk>
  */
+
 namespace Common\Form\Elements\InputFilters;
 
 use Laminas\Form\Element as LaminasElement;
@@ -19,7 +20,6 @@ use Common\Form\Elements\Validators\VehiclesNumber as VehiclesNumberValidator;
  */
 class VehiclesNumber extends LaminasElement implements InputProviderInterface
 {
-
     /**
      * Provide default input rules for this element.
      */

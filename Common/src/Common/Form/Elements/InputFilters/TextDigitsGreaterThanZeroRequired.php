@@ -5,6 +5,7 @@
  *
  * @author Jakub.Igla <jakub.igla@valtech.co.uk>
  */
+
 namespace Common\Form\Elements\InputFilters;
 
 use Laminas\Form\Element as LaminasElement;
@@ -28,7 +29,7 @@ class TextDigitsGreaterThanZeroRequired extends LaminasElement implements InputP
             'required' => true,
             'validators' => [
                 ['name' => \Laminas\Validator\Digits::class],
-                ['name' => \Laminas\Validator\GreaterThan::class, 'options'=>['min' => 0]]
+                ['name' => \Laminas\Validator\GreaterThan::class, 'options' => ['min' => 0]]
             ]
         ];
     }

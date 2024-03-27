@@ -11,7 +11,8 @@ class Permission
 {
     private AuthorizationService $authService;
 
-    public function __construct(AuthorizationService $authService) {
+    public function __construct(AuthorizationService $authService)
+    {
         $this->authService = $authService;
     }
 

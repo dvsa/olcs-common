@@ -98,7 +98,7 @@ function loadBackendEmailTranslations(string $path)
 function removeIdenticalWelshEnglish(array $mergedTranslations)
 {
     foreach ($mergedTranslations as $langKey => $translations) {
-        if($langKey != 'en_GB') {
+        if ($langKey != 'en_GB') {
             foreach ($translations as $transKey => $translatedText) {
                 if (!array_key_exists($transKey, $mergedTranslations['en_GB'])) {
                     continue;

@@ -48,7 +48,7 @@ class SurrenderSectionTest extends MockeryTestCase
         $expected = [
             'sectionHeading' => 'DISCHEADING',
             'changeLinkInHeading' => true,
-            'change'=> ['sectionLink' => 'discBackLInk'],
+            'change' => ['sectionLink' => 'discBackLInk'],
             'questions' => $expected
         ];
         $this->assertSame($expected, $sut->makeSection());
@@ -275,9 +275,7 @@ class SurrenderSectionTest extends MockeryTestCase
 
         $this->mockTranslator->shouldReceive('translate')->with($translationString)->andReturn($expected[0]['answer']);
 
-
         $this->mockUrlHelper->shouldReceive('fromRoute')->with('licence/surrender/operator-licence/review/GET', [], [], true)->andReturn($expected[0]['change']['sectionLink']);
-
 
         $sut = new SurrenderSection(
             $mockSurrender,
@@ -292,7 +290,7 @@ class SurrenderSectionTest extends MockeryTestCase
         $expected = [
             'sectionHeading' => 'DOCUMENTHEADING',
             'changeLinkInHeading' => true,
-            'change'=> ['sectionLink' => $expected[0]['change']['sectionLink']],
+            'change' => ['sectionLink' => $expected[0]['change']['sectionLink']],
             'questions' => $expected
         ];
         $this->assertSame($expected, $sut->makeSection());
@@ -370,15 +368,15 @@ class SurrenderSectionTest extends MockeryTestCase
         ];
     }
 
-    private function getTranslationStrings(string $dataDescription):string
+    private function getTranslationStrings(string $dataDescription): string
     {
         $translations = [
-            'OperatorLicenceLost'=>'licence.surrender.review.label.documents.answerlost',
-            'OperatorLicenceDestroyed'=>'licence.surrender.review.label.documents.answerpossession',
-            'OperatorLicenceStolen' =>'licence.surrender.review.label.documents.answerstolen',
-            'communityLicenceDestroyed' =>'licence.surrender.review.label.documents.answerpossession',
-            'communityLicenceStolen' =>'licence.surrender.review.label.documents.answerstolen',
-            'communityLicenceLost' =>'licence.surrender.review.label.documents.answerlost',
+            'OperatorLicenceLost' => 'licence.surrender.review.label.documents.answerlost',
+            'OperatorLicenceDestroyed' => 'licence.surrender.review.label.documents.answerpossession',
+            'OperatorLicenceStolen' => 'licence.surrender.review.label.documents.answerstolen',
+            'communityLicenceDestroyed' => 'licence.surrender.review.label.documents.answerpossession',
+            'communityLicenceStolen' => 'licence.surrender.review.label.documents.answerstolen',
+            'communityLicenceLost' => 'licence.surrender.review.label.documents.answerlost',
 
         ];
         return $translations[$dataDescription];
@@ -398,9 +396,7 @@ class SurrenderSectionTest extends MockeryTestCase
 
         $this->mockTranslator->shouldReceive('translate')->with($translationString)->andReturn($expected[0]['answer']);
 
-
         $this->mockUrlHelper->shouldReceive('fromRoute')->with('licence/surrender/community-licence/review/GET', [], [], true)->andReturn($expected[0]['change']['sectionLink']);
-
 
         $sut = new SurrenderSection(
             $mockSurrender,
@@ -415,7 +411,7 @@ class SurrenderSectionTest extends MockeryTestCase
         $expected = [
             'sectionHeading' => 'DOCUMENTHEADING',
             'changeLinkInHeading' => true,
-            'change'=> ['sectionLink' => $expected[0]['change']['sectionLink']],
+            'change' => ['sectionLink' => $expected[0]['change']['sectionLink']],
             'questions' => $expected
         ];
         $this->assertSame($expected, $sut->makeSection());

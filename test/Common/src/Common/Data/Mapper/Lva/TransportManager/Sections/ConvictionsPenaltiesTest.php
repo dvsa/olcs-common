@@ -1,6 +1,5 @@
 <?php
 
-
 namespace CommonTest\Data\Mapper\Lva\TransportManager\Sections;
 
 use Common\Data\Mapper\Lva\TransportManager\Sections\ConvictionsPenalties;
@@ -24,17 +23,17 @@ class ConvictionsPenaltiesTest extends TestCase
     {
         $this->mockTranslator->shouldReceive(
             'translateReplace'
-        )->with('markup-lva-tmverify-details-checkanswer-answer-convictions', [0=>'__TEST__',1=>'__TEST__'])->once()->andReturn('__TEST__');
+        )->with('markup-lva-tmverify-details-checkanswer-answer-convictions', [0 => '__TEST__',1 => '__TEST__'])->once()->andReturn('__TEST__');
 
         $actual = $this->sut->populate(
             [
                 'transportManager' =>
                     [
-                        'previousConvictions'=>
+                        'previousConvictions' =>
                             [
                               [
-                                  'categoryText' =>'__TEST__',
-                                  'convictionDate'=>'__TEST__',
+                                  'categoryText' => '__TEST__',
+                                  'convictionDate' => '__TEST__',
                               ]
                             ]
                     ]

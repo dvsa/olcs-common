@@ -50,7 +50,6 @@ class PublicationSelfserve extends InternalSearchAbstract
     public function getDateRanges()
     {
         if (empty($this->dateRanges)) {
-
             $this->dateRanges = [
                 new DateRange\PublishedDateFrom(),
                 new DateRange\PublishedDateTo(),
@@ -68,7 +67,6 @@ class PublicationSelfserve extends InternalSearchAbstract
     public function getFilters()
     {
         if (empty($this->filters)) {
-
             $this->filters = [
                 new Filter\LicenceType(),
                 new Filter\TrafficArea(),
@@ -89,8 +87,8 @@ class PublicationSelfserve extends InternalSearchAbstract
     public function getColumns()
     {
         return [
-            ['title' => 'Forename', 'name'=> 'pubNo'],
-            ['title' => 'Family name', 'name'=> 'pubSecDesc'],
+            ['title' => 'Forename', 'name' => 'pubNo'],
+            ['title' => 'Family name', 'name' => 'pubSecDesc'],
         ];
     }
 

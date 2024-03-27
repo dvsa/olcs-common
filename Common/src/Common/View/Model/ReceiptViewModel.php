@@ -5,6 +5,7 @@
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
+
 namespace Common\View\Model;
 
 use Laminas\View\Model\ViewModel;

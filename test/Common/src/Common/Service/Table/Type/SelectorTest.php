@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace CommonTest\Service\Table\Type;
 
 use Laminas\I18n\Translator\Translator;
@@ -207,7 +208,7 @@ class SelectorTest extends MockeryTestCase
      * @test
      * @group tableSelectorAriaSupport
      */
-    public function render_WithAriaAttribute_LiteralStringDefinition_Single(): void
+    public function renderWithAriaAttributeLiteralStringDefinitionSingle(): void
     {
         $column = [
             'aria-attributes' => [
@@ -225,10 +226,10 @@ class SelectorTest extends MockeryTestCase
      * Test render with a multiple aria attribute defined as string literals.
      *
      * @test
-     * @depends render_WithAriaAttribute_LiteralStringDefinition_Single
+     * @depends renderWithAriaAttributeLiteralStringDefinitionSingle
      * @group tableSelectorAriaSupport
      */
-    public function render_WithAriaAttribute_LiteralStringDefinition_Multiple(): void
+    public function renderWithAriaAttributeLiteralStringDefinitionMultiple(): void
     {
         $column = [
             'aria-attributes' => [
@@ -250,7 +251,7 @@ class SelectorTest extends MockeryTestCase
      * @test
      * @group tableSelectorAriaSupport
      */
-    public function render_WithAriaAttribute_AsCallback(): void
+    public function renderWithAriaAttributeAsCallback(): void
     {
         $column = [
             'aria-attributes' => [
@@ -268,10 +269,10 @@ class SelectorTest extends MockeryTestCase
      * Test render with aria attribute being a callback, translator is passed to callable.
      *
      * @test
-     * @depends render_WithAriaAttribute_AsCallback
+     * @depends renderWithAriaAttributeAsCallback
      * @group tableSelectorAriaSupport
      */
-    public function render_WithAriaAttribute_AsCallback_TranslatorIsPassedToCallable(): void
+    public function renderWithAriaAttributeAsCallbackTranslatorIsPassedToCallable(): void
     {
         $translatorMock = m::mock(Translator::class);
         $this->table
@@ -293,10 +294,10 @@ class SelectorTest extends MockeryTestCase
      * Test render with aria attribute being a callback, data is passed to callable.
      *
      * @test
-     * @depends render_WithAriaAttribute_AsCallback
+     * @depends renderWithAriaAttributeAsCallback
      * @group tableSelectorAriaSupport
      */
-    public function render_WithAriaAttribute_AsCallback_DataIsPassedToCallable(): void
+    public function renderWithAriaAttributeAsCallbackDataIsPassedToCallable(): void
     {
         $expectedData = ['id' => 7];
 
@@ -317,7 +318,7 @@ class SelectorTest extends MockeryTestCase
      * @test
      * @group tableSelectorAriaSupport
      */
-    public function render_WithAriaAttribute_HtmlIsEscaped(): void
+    public function renderWithAriaAttributeHtmlIsEscaped(): void
     {
         $column = [
             'aria-attributes' => [

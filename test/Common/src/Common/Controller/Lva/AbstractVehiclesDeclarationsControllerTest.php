@@ -59,7 +59,6 @@ class AbstractVehiclesDeclarationsControllerTest extends AbstractLvaControllerTe
             ->makePartial()
             ->shouldAllowMockingProtectedMethods();
 
-
         $this->mockScriptFactory->shouldReceive('loadFile')->with('vehicle-declarations');
     }
 

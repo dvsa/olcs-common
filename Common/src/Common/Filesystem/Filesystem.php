@@ -9,7 +9,6 @@ use Symfony\Component\Lock\LockFactory;
 use Symfony\Component\Lock\LockInterface;
 use Symfony\Component\Lock\Store\FlockStore;
 
-
 /**
  * Class Filesystem
  * @package Common\Filesystem
@@ -56,8 +55,7 @@ class Filesystem extends BaseFileSystem
      */
     private function acquireLock(LockInterface $lock, bool $blocking = true, int $maxAttempts = self::MAX_LOCK_ATTEMPTS): void
     {
-        for ($currentAttempt = 1; $currentAttempt <= $maxAttempts; ++$currentAttempt)
-        {
+        for ($currentAttempt = 1; $currentAttempt <= $maxAttempts; ++$currentAttempt) {
             try {
                 $lock->acquire($blocking);
                 break;

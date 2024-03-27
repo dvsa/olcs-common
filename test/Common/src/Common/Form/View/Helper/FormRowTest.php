@@ -50,7 +50,7 @@ class FormRowTest extends MockeryTestCase
     /**
      * @test
      */
-    public function __invoke_IsCallable(): void
+    public function invokeIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -61,9 +61,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_ClassicNoLabel(): void
+    public function invokeClassicNoLabel(): void
     {
         // Setup
         $this->setUpSut();
@@ -75,16 +75,16 @@ class FormRowTest extends MockeryTestCase
 
         // Assert
         $this->assertMatchesRegularExpression(
-        '/^<div class="validation-wrapper"><div class="field ">(.*)<\/div><\/div>$/',
+            '/^<div class="validation-wrapper"><div class="field ">(.*)<\/div><\/div>$/',
             $result
         );
     }
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_ClassicWithId(): void
+    public function invokeClassicWithId(): void
     {
         // Setup
         $this->setUpSut();
@@ -100,9 +100,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_ClassicWithPartial(): void
+    public function invokeClassicWithPartial(): void
     {
         // Setup
         $this->setUpSut();
@@ -117,9 +117,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RendersActionButton(): void
+    public function invokeRendersActionButton(): void
     {
         // Setup
         $this->setUpSut();
@@ -134,9 +134,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RendersNoRender(): void
+    public function invokeRendersNoRender(): void
     {
         // Setup
         $this->setUpSut();
@@ -151,9 +151,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RendersTable(): void
+    public function invokeRendersTable(): void
     {
         // Setup
         $this->setUpSut();
@@ -176,9 +176,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RendersSingleCheckbox(): void
+    public function invokeRendersSingleCheckbox(): void
     {
         // Setup
         $this->setUpSut();
@@ -194,9 +194,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RendersCheckbox(): void
+    public function invokeRendersCheckbox(): void
     {
         // Setup
         $this->setUpSut();
@@ -218,9 +218,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RendesrRadioNoAttribute(): void
+    public function invokeRendesrRadioNoAttribute(): void
     {
         // Setup
         $this->setUpSut();
@@ -235,9 +235,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RendersRadioLegendAttribute(): void
+    public function invokeRendersRadioLegendAttribute(): void
     {
         // Setup
         $this->setUpSut();
@@ -259,9 +259,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RendersRadioWithDataGroupAttribute(): void
+    public function invokeRendersRadioWithDataGroupAttribute(): void
     {
         // Setup
         $this->setUpSut();
@@ -281,9 +281,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RendersRadioWithInlineAttribute(): void
+    public function invokeRendersRadioWithInlineAttribute(): void
     {
         // Setup
         $this->setUpSut();
@@ -306,10 +306,10 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      * @group formRow
      */
-    public function __invoke_RendersCsrfElement(): void
+    public function invokeRendersCsrfElement(): void
     {
         // Setup
         $this->setUpSut();
@@ -336,10 +336,10 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      * @group formRow
      */
-    public function __invoke_RendersVisuallyHiddenElement(): void
+    public function invokeRendersVisuallyHiddenElement(): void
     {
         // Setup
         $this->setUpSut();
@@ -360,10 +360,10 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      * @group formRow
      */
-    public function __invoke_RendersHiddenElement(): void
+    public function invokeRendersHiddenElement(): void
     {
         // Setup
         $this->setUpSut();
@@ -392,9 +392,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RendersWithRenderAsFieldset(): void
+    public function invokeRendersWithRenderAsFieldset(): void
     {
         // Setup
         $this->setUpSut();
@@ -410,9 +410,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RendersReadonlyElement(): void
+    public function invokeRendersReadonlyElement(): void
     {
         // Setup
         $this->setUpSut();
@@ -435,9 +435,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RendersDateSelectElement(): void
+    public function invokeRendersDateSelectElement(): void
     {
         // Setup
         $this->setUpSut();
@@ -460,9 +460,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RendersDateSelectWithFieldsetClass(): void
+    public function invokeRendersDateSelectWithFieldsetClass(): void
     {
         // Setup
         $this->setUpSut();
@@ -486,9 +486,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RendersDateTimeSelectElement(): void
+    public function invokeRendersDateTimeSelectElement(): void
     {
         // Setup
         $this->setUpSut();
@@ -510,9 +510,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RendersAttachFilesButtonElement(): void
+    public function invokeRendersAttachFilesButtonElement(): void
     {
         // Setup
         $this->setUpSut();
@@ -537,9 +537,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RendersSingleRadio(): void
+    public function invokeRendersSingleRadio(): void
     {
         // Setup
         $this->setUpSut();
@@ -572,9 +572,9 @@ class FormRowTest extends MockeryTestCase
     /**
      * @test
      * @dataProvider allowWrapValuesThatCauseMarkupToBeWrappedDataProvider
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_WrapsMarkupInAField($allowWrapAttributeValue): void
+    public function invokeWrapsMarkupInAField($allowWrapAttributeValue): void
     {
         // Setup
         $this->setUpSut();
@@ -590,9 +590,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_DoesNotWrapMarkupInAField_IfAllowWrapAttributeIsFalse(): void
+    public function invokeDoesNotWrapMarkupInAFieldIfAllowWrapAttributeIsFalse(): void
     {
         // Setup
         $this->setUpSut();

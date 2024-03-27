@@ -4,7 +4,6 @@ namespace Common\Data\Mapper\Licence\Surrender\Sections;
 
 class LicenceDetails extends AbstractSection
 {
-
     public $licence;
     protected $heading = 'licence-details';
 

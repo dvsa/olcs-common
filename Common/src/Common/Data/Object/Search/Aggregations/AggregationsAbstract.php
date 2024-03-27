@@ -1,8 +1,8 @@
 <?php
+
 namespace Common\Data\Object\Search\Aggregations;
 
-abstract class AggregationsAbstract
-    implements AggregationsInterface
+abstract class AggregationsAbstract implements AggregationsInterface
 {
     /**
      * The human readable title of this filter. This may also be used in the front-end (not sure yet).

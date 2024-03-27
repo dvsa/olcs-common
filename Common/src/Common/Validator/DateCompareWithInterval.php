@@ -12,7 +12,6 @@ namespace Common\Validator;
  */
 class DateCompareWithInterval extends DateCompare
 {
-
     /**
      * Error codes
      * @const string

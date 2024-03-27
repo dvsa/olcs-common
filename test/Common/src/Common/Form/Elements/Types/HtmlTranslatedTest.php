@@ -5,6 +5,7 @@
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
+
 namespace CommonTest\Form\Elements\Types;
 
 use Common\Form\Elements\Types\HtmlTranslated;

@@ -6,6 +6,7 @@
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Form\Elements\Types;
 
 use Laminas\Form\Fieldset;

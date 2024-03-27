@@ -310,7 +310,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
             $hasProcessedFiles = $this->processFiles(
                 $form,
                 'advertisements->adPlacedContent->file',
-                function (array $file) : void {
+                function (array $file): void {
                     $this->processAdvertisementFileUpload($file);
                 },
                 fn(int $id): bool => $this->deleteFile($id),
@@ -425,7 +425,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
             $hasProcessedFiles = $this->processFiles(
                 $form,
                 'advertisements->adPlacedContent->file',
-                function (array $file) : void {
+                function (array $file): void {
                     $this->processAdvertisementFileUpload($file);
                 },
                 fn(int $id): bool => $this->deleteFile($id),

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace CommonTest\Data\Mapper\Lva\TransportManager\Sections;
 
 use Common\Data\Mapper\Lva\TransportManager\Sections\RevokedLicences;

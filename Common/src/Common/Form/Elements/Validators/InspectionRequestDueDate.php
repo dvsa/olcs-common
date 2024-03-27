@@ -5,6 +5,7 @@
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
+
 namespace Common\Form\Elements\Validators;
 
 use Laminas\Validator\AbstractValidator;

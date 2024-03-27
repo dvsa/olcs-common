@@ -10,7 +10,6 @@ use Laminas\Form\Annotation as Form;
  */
 class VehiclesTransferActions
 {
-
     /**
      * @Form\Attributes({
      *     "data-module": "govuk-button",

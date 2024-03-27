@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * @author Ian Lindsay <ian@hemera-business-services.co.uk>
@@ -14,7 +15,6 @@ use Laminas\Validator\Date as DateValidator;
  */
 class StopDateBeforeRequestDate extends DateRequired implements InputProviderInterface
 {
-
     public function getValidators()
     {
         return [

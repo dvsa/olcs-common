@@ -42,7 +42,7 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
     {
         /** @var EventManager $events */
         $events = $moduleManager->getEventManager();
-        $events->attach('loadModules.post', function (\Laminas\ModuleManager\ModuleEvent $e) : void {
+        $events->attach('loadModules.post', function (\Laminas\ModuleManager\ModuleEvent $e): void {
             $this->modulesLoaded($e);
         });
     }
@@ -89,7 +89,7 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
         //  RBAC behaviour if user not authorised
         $events->attach(MvcEvent::EVENT_DISPATCH_ERROR, [$sm->get(\LmcRbacMvc\View\Strategy\RedirectStrategy::class), 'onError']);
         //  CSRF token check
-        $events->attach(MvcEvent::EVENT_DISPATCH, function (\Laminas\Mvc\MvcEvent $e) : void {
+        $events->attach(MvcEvent::EVENT_DISPATCH, function (\Laminas\Mvc\MvcEvent $e): void {
             $this->validateCsrfToken($e);
         }, 100);
 
@@ -98,7 +98,8 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
             MvcEvent::EVENT_DISPATCH_ERROR,
             static function (MvcEvent $e) {
                 // If Backend Not found or access denied then display error as a 404 not found
-                if ($e->getParam('exception') instanceof NotFoundException
+                if (
+                    $e->getParam('exception') instanceof NotFoundException
                     || $e->getParam('exception') instanceof AccessDeniedException
                     || $e->getParam('exception') instanceof ResourceNotFoundException
                 ) {
@@ -166,7 +167,7 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
                 /** @var Response $response */
                 $response = new Response();
                 $response->getHeaders()
-                    ->addHeaderLine('Location', '/error?correlationId='. $identifier .'&src=shutdown');
+                    ->addHeaderLine('Location', '/error?correlationId=' . $identifier . '&src=shutdown');
                 $response->setStatusCode(Response::STATUS_CODE_302);
                 $response->sendHeaders();
                 return $response;

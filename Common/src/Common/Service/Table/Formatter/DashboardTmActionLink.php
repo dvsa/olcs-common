@@ -51,7 +51,6 @@ class DashboardTmActionLink implements FormatterPluginManagerInterface
             $ariaLabel = 'dashboard.tm-applications.table.aria.view-details';
         }
 
-
         /** @var TranslateReplace $translateReplace */
         $translateReplace = $this->viewHelperManager->get('translateReplace');
 

@@ -639,31 +639,31 @@ class RefData
     public const FT_CONDITIONAL = 'conditionally-active';
 
     //Surrenders
-    public const SURRENDER_STATUS_START='surr_sts_start';
+    public const SURRENDER_STATUS_START = 'surr_sts_start';
 
-    public const SURRENDER_STATUS_CONTACTS_COMPLETE='surr_sts_contacts_complete';
+    public const SURRENDER_STATUS_CONTACTS_COMPLETE = 'surr_sts_contacts_complete';
 
-    public const SURRENDER_STATUS_DISCS_COMPLETE='surr_sts_discs_complete';
+    public const SURRENDER_STATUS_DISCS_COMPLETE = 'surr_sts_discs_complete';
 
-    public const SURRENDER_STATUS_LIC_DOCS_COMPLETE='surr_sts_lic_docs_complete';
+    public const SURRENDER_STATUS_LIC_DOCS_COMPLETE = 'surr_sts_lic_docs_complete';
 
-    public const SURRENDER_STATUS_COMM_LIC_DOCS_COMPLETE='surr_sts_comm_lic_docs_complete';
+    public const SURRENDER_STATUS_COMM_LIC_DOCS_COMPLETE = 'surr_sts_comm_lic_docs_complete';
 
-    public const SURRENDER_STATUS_DETAILS_CONFIRMED='surr_sts_details_confirmed';
+    public const SURRENDER_STATUS_DETAILS_CONFIRMED = 'surr_sts_details_confirmed';
 
-    public const SURRENDER_STATUS_SUBMITTED='surr_sts_submitted';
+    public const SURRENDER_STATUS_SUBMITTED = 'surr_sts_submitted';
 
-    public const SURRENDER_STATUS_SIGNED='surr_sts_signed';
+    public const SURRENDER_STATUS_SIGNED = 'surr_sts_signed';
 
-    public const SURRENDER_STATUS_WITHDRAWN='surr_sts_withdrawn';
+    public const SURRENDER_STATUS_WITHDRAWN = 'surr_sts_withdrawn';
 
-    public const SURRENDER_STATUS_APPROVED='surr_sts_approved';
+    public const SURRENDER_STATUS_APPROVED = 'surr_sts_approved';
 
-    public const SURRENDER_DOC_STATUS_DESTROYED='doc_sts_destroyed';
+    public const SURRENDER_DOC_STATUS_DESTROYED = 'doc_sts_destroyed';
 
-    public const SURRENDER_DOC_STATUS_LOST='doc_sts_lost';
+    public const SURRENDER_DOC_STATUS_LOST = 'doc_sts_lost';
 
-    public const SURRENDER_DOC_STATUS_STOLEN='doc_sts_stolen';
+    public const SURRENDER_DOC_STATUS_STOLEN = 'doc_sts_stolen';
 
     //IRHP Permit Type
     public const ECMT_PERMIT_TYPE_ID = 1;

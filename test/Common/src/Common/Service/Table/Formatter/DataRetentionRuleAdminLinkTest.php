@@ -42,7 +42,6 @@ class DataRetentionRuleAdminLinkTest extends TestCase
             )
             ->andReturn('DATA_RETENTION_RULE_EDIT_URL');
 
-
         $this->assertEquals(
             '<a href="DATA_RETENTION_RULE_EDIT_URL" class="govuk-link js-modal-ajax">Test</a>',
             $this->sut->format($data, [])

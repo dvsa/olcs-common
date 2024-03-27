@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace CommonTest\Service\Section\VehicleSafety\Vehicle\Formatter;
 
 use Common\Service\Helper\UrlHelperService;

@@ -37,7 +37,8 @@ class FormItem extends AbstractHelper
      */
     public function render(ElementInterface $element): string
     {
-        if ($element instanceof Elements\InputFilters\ActionButton
+        if (
+            $element instanceof Elements\InputFilters\ActionButton
             || $element instanceof Elements\Types\AttachFilesButton
             || $element instanceof \Laminas\Form\Element\Submit
             || $element instanceof \Laminas\Form\Element\Hidden

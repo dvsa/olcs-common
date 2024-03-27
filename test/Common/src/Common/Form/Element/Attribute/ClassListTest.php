@@ -36,7 +36,7 @@ class ClassListTest extends MockeryTestCase
     /**
      * @test
      */
-    public function __toString_IsCallable(): void
+    public function toStringIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -47,9 +47,9 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __toString_IsCallable
+     * @depends toStringIsCallable
      */
-    public function __toString_ReturnsAnEmptyString_WhenNoClassesHaveBeenAdded(): void
+    public function toStringReturnsAnEmptyStringWhenNoClassesHaveBeenAdded(): void
     {
         // Setup
         $this->setUpSut();
@@ -64,7 +64,7 @@ class ClassListTest extends MockeryTestCase
     /**
      * @test
      */
-    public function add_IsCallable(): void
+    public function addIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -75,9 +75,9 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends add_IsCallable
+     * @depends addIsCallable
      */
-    public function add_ReturnsSelf(): void
+    public function addReturnsSelf(): void
     {
         // Setup
         $this->setUpSut();
@@ -91,10 +91,10 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends add_IsCallable
-     * @depends __toString_IsCallable
+     * @depends addIsCallable
+     * @depends toStringIsCallable
      */
-    public function add_AddsAClass_WhenPassedAString(): void
+    public function addAddsAClassWhenPassedAString(): void
     {
         // Setup
         $this->setUpSut();
@@ -109,9 +109,9 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends add_AddsAClass_WhenPassedAString
+     * @depends addAddsAClassWhenPassedAString
      */
-    public function add_AddsMultipleClasses_WhenPassedAString(): void
+    public function addAddsMultipleClassesWhenPassedAString(): void
     {
         // Setup
         $this->setUpSut();
@@ -126,10 +126,10 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends add_IsCallable
-     * @depends __toString_IsCallable
+     * @depends addIsCallable
+     * @depends toStringIsCallable
      */
-    public function add_AddsAClass_WhenPassedAnArray(): void
+    public function addAddsAClassWhenPassedAnArray(): void
     {
         // Setup
         $this->setUpSut();
@@ -144,9 +144,9 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends add_AddsAClass_WhenPassedAString
+     * @depends addAddsAClassWhenPassedAString
      */
-    public function add_AddsMultipleClasses_WhenPassedAnArray(): void
+    public function addAddsMultipleClassesWhenPassedAnArray(): void
     {
         // Setup
         $this->setUpSut();
@@ -161,9 +161,9 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends add_AddsAClass_WhenPassedAnArray
+     * @depends addAddsAClassWhenPassedAnArray
      */
-    public function add_AddsMultipleClasses_WhenPassedOneAtATime(): void
+    public function addAddsMultipleClassesWhenPassedOneAtATime(): void
     {
         // Setup
         $this->setUpSut();
@@ -180,9 +180,9 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends add_AddsAClass_WhenPassedAnArray
+     * @depends addAddsAClassWhenPassedAnArray
      */
-    public function add_AddsAClass_WhenPassedAClassList(): void
+    public function addAddsAClassWhenPassedAClassList(): void
     {
         // Setup
         $this->setUpSut();
@@ -200,9 +200,9 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends add_AddsMultipleClasses_WhenPassedOneAtATime
+     * @depends addAddsMultipleClassesWhenPassedOneAtATime
      */
-    public function add_AddsMultipleClasses_WhenPassedAClassList(): void
+    public function addAddsMultipleClassesWhenPassedAClassList(): void
     {
         // Setup
         $this->setUpSut();
@@ -221,9 +221,9 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends add_AddsMultipleClasses_WhenPassedAString
+     * @depends addAddsMultipleClassesWhenPassedAString
      */
-    public function add_DoesNotAddDuplicateClasses(): void
+    public function addDoesNotAddDuplicateClasses(): void
     {
         // Setup
         $this->setUpSut();
@@ -238,10 +238,10 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends add_IsCallable
-     * @depends __toString_IsCallable
+     * @depends addIsCallable
+     * @depends toStringIsCallable
      */
-    public function __construct_AddsAClass_WhenPassedAString(): void
+    public function constructAddsAClassWhenPassedAString(): void
     {
         // Execute
         $this->setUpSut(static::A_CLASS);
@@ -253,9 +253,9 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends add_AddsAClass_WhenPassedAString
+     * @depends addAddsAClassWhenPassedAString
      */
-    public function __construct_AddsMultipleClasses_WhenPassedAString(): void
+    public function constructAddsMultipleClassesWhenPassedAString(): void
     {
         // Execute
         $this->setUpSut(static::AB_CLASS_STRING);
@@ -267,10 +267,10 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends add_IsCallable
-     * @depends __toString_IsCallable
+     * @depends addIsCallable
+     * @depends toStringIsCallable
      */
-    public function __construct_AddsAClass_WhenPassedAnArray(): void
+    public function constructAddsAClassWhenPassedAnArray(): void
     {
         // Execute
         $this->setUpSut(static::A_CLASS_ARRAY);
@@ -282,9 +282,9 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends add_AddsAClass_WhenPassedAString
+     * @depends addAddsAClassWhenPassedAString
      */
-    public function __construct_AddsMultipleClasses_WhenPassedAnArray(): void
+    public function constructAddsMultipleClassesWhenPassedAnArray(): void
     {
         // Execute
         $this->setUpSut(static::AB_CLASS_ARRAY);
@@ -296,9 +296,9 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends add_AddsAClass_WhenPassedAnArray
+     * @depends addAddsAClassWhenPassedAnArray
      */
-    public function __construct_AddsAClass_WhenPassedAClassList(): void
+    public function constructAddsAClassWhenPassedAClassList(): void
     {
         // Setup
         $otherClassList = new ClassList();
@@ -314,9 +314,9 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends add_AddsMultipleClasses_WhenPassedOneAtATime
+     * @depends addAddsMultipleClassesWhenPassedOneAtATime
      */
-    public function __construct_AddsMultipleClasses_WhenPassedAClassList(): void
+    public function constructAddsMultipleClassesWhenPassedAClassList(): void
     {
         // Setup
         $otherClassList = new ClassList();
@@ -333,9 +333,9 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends add_AddsMultipleClasses_WhenPassedAString
+     * @depends addAddsMultipleClassesWhenPassedAString
      */
-    public function __construct_DoesNotAddDuplicateClasses(): void
+    public function constructDoesNotAddDuplicateClasses(): void
     {
         // Execute
         $this->setUpSut([static::A_CLASS, static::A_CLASS, static::B_CLASS]);
@@ -348,7 +348,7 @@ class ClassListTest extends MockeryTestCase
     /**
      * @test
      */
-    public function remove_IsCallable(): void
+    public function removeIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -359,9 +359,9 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends remove_IsCallable
+     * @depends removeIsCallable
      */
-    public function remove_RemovesClassThatWasNeverAdded(): void
+    public function removeRemovesClassThatWasNeverAdded(): void
     {
         // Setup
         $this->setUpSut();
@@ -375,10 +375,10 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends add_AddsAClass_WhenPassedAString
-     * @depends remove_IsCallable
+     * @depends addAddsAClassWhenPassedAString
+     * @depends removeIsCallable
      */
-    public function remove_ReturnsSelf(): void
+    public function removeReturnsSelf(): void
     {
         // Setup
         $this->setUpSut();
@@ -393,10 +393,10 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends add_AddsAClass_WhenPassedAString
-     * @depends remove_IsCallable
+     * @depends addAddsAClassWhenPassedAString
+     * @depends removeIsCallable
      */
-    public function remove_RemovesAPreviouslyAddedClass_WhenPassedAString(): void
+    public function removeRemovesAPreviouslyAddedClassWhenPassedAString(): void
     {
         // Setup
         $this->setUpSut();
@@ -414,11 +414,11 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends add_AddsAClass_WhenPassedAString
-     * @depends remove_IsCallable
-     * @depends __toString_ReturnsAnEmptyString_WhenNoClassesHaveBeenAdded
+     * @depends addAddsAClassWhenPassedAString
+     * @depends removeIsCallable
+     * @depends toStringReturnsAnEmptyStringWhenNoClassesHaveBeenAdded
      */
-    public function remove_RemovesMultiplePreviouslyAddedClasses_WhenPassedAString(): void
+    public function removeRemovesMultiplePreviouslyAddedClassesWhenPassedAString(): void
     {
         // Setup
         $this->setUpSut();
@@ -436,10 +436,10 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends add_AddsMultipleClasses_WhenPassedAnArray
-     * @depends __toString_ReturnsAnEmptyString_WhenNoClassesHaveBeenAdded
+     * @depends addAddsMultipleClassesWhenPassedAnArray
+     * @depends toStringReturnsAnEmptyStringWhenNoClassesHaveBeenAdded
      */
-    public function remove_RemovesAPreviouslyAddedClass_WhenPassedAnArray(): void
+    public function removeRemovesAPreviouslyAddedClassWhenPassedAnArray(): void
     {
         // Setup
         $this->setUpSut();
@@ -456,10 +456,10 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends add_AddsAClass_WhenPassedAString
-     * @depends __toString_ReturnsAnEmptyString_WhenNoClassesHaveBeenAdded
+     * @depends addAddsAClassWhenPassedAString
+     * @depends toStringReturnsAnEmptyStringWhenNoClassesHaveBeenAdded
      */
-    public function remove_RemovesMultiplePreviouslyAddedClasses_WhenPassedAnArray(): void
+    public function removeRemovesMultiplePreviouslyAddedClassesWhenPassedAnArray(): void
     {
         // Setup
         $this->setUpSut();
@@ -477,10 +477,10 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends add_AddsMultipleClasses_WhenPassedAnArray
-     * @depends __toString_ReturnsAnEmptyString_WhenNoClassesHaveBeenAdded
+     * @depends addAddsMultipleClassesWhenPassedAnArray
+     * @depends toStringReturnsAnEmptyStringWhenNoClassesHaveBeenAdded
      */
-    public function remove_RemovesAPreviouslyAddedClass_WhenPassedAClassList(): void
+    public function removeRemovesAPreviouslyAddedClassWhenPassedAClassList(): void
     {
         // Setup
         $this->setUpSut();
@@ -500,10 +500,10 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends add_AddsMultipleClasses_WhenPassedAnArray
-     * @depends __toString_ReturnsAnEmptyString_WhenNoClassesHaveBeenAdded
+     * @depends addAddsMultipleClassesWhenPassedAnArray
+     * @depends toStringReturnsAnEmptyStringWhenNoClassesHaveBeenAdded
      */
-    public function remove_RemovesMultiplePreviouslyAddedClasses_WhenPassedAClassList(): void
+    public function removeRemovesMultiplePreviouslyAddedClassesWhenPassedAClassList(): void
     {
         // Setup
         $this->setUpSut();
@@ -524,7 +524,7 @@ class ClassListTest extends MockeryTestCase
     /**
      * @test
      */
-    public function toArray_IsCallable(): void
+    public function toArrayIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -535,9 +535,9 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends toArray_IsCallable
+     * @depends toArrayIsCallable
      */
-    public function toArray_ReturnsAnArray(): void
+    public function toArrayReturnsAnArray(): void
     {
         // Setup
         $this->setUpSut();
@@ -551,10 +551,10 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends toArray_ReturnsAnArray
-     * @depends __construct_AddsMultipleClasses_WhenPassedAnArray
+     * @depends toArrayReturnsAnArray
+     * @depends constructAddsMultipleClassesWhenPassedAnArray
      */
-    public function toArray_ReturnsAnArrayOfClassNames(): void
+    public function toArrayReturnsAnArrayOfClassNames(): void
     {
         // Setup
         $this->setUpSut(static::AB_CLASS_ARRAY);
@@ -568,9 +568,9 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends toArray_ReturnsAnArrayOfClassNames
+     * @depends toArrayReturnsAnArrayOfClassNames
      */
-    public function toArray_ReturnsAnArray_IndexedNumerically(): void
+    public function toArrayReturnsAnArrayIndexedNumerically(): void
     {
         // Setup
         $this->setUpSut(static::AB_CLASS_ARRAY);
@@ -584,9 +584,9 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends toArray_ReturnsAnArrayOfClassNames
+     * @depends toArrayReturnsAnArrayOfClassNames
      */
-    public function toArray_RemovesDuplicateClassNames(): void
+    public function toArrayRemovesDuplicateClassNames(): void
     {
         // Setup
         $this->setUpSut(static::AA_CLASS_ARRAY);
@@ -601,7 +601,7 @@ class ClassListTest extends MockeryTestCase
     /**
      * @test
      */
-    public function fromString_IsCallable(): void
+    public function fromStringIsCallable(): void
     {
         // Assert
         $this->assertIsCallable(static fn(string $str): self => \Common\Form\Element\Attribute\ClassList::fromString($str));
@@ -609,9 +609,9 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends fromString_IsCallable
+     * @depends fromStringIsCallable
      */
-    public function fromString_ReturnsAClassList(): void
+    public function fromStringReturnsAClassList(): void
     {
         // Execute
         $result = ClassList::fromString(static::AB_CLASS_STRING);
@@ -622,9 +622,9 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends fromString_ReturnsAClassList
+     * @depends fromStringReturnsAClassList
      */
-    public function fromString_ReturnsAClassList_WithEachClassInAString(): void
+    public function fromStringReturnsAClassListWithEachClassInAString(): void
     {
         // Execute
         $result = ClassList::fromString(static::AB_CLASS_STRING);
@@ -636,7 +636,7 @@ class ClassListTest extends MockeryTestCase
     /**
      * @test
      */
-    public function has_IsCallable(): void
+    public function hasIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -647,10 +647,10 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends has_IsCallable
-     * @depends add_AddsAClass_WhenPassedAString
+     * @depends hasIsCallable
+     * @depends addAddsAClassWhenPassedAString
      */
-    public function has_ReturnsFalseWhenAClassListIsEmpty_AndPassedAString(): void
+    public function hasReturnsFalseWhenAClassListIsEmptyAndPassedAString(): void
     {
         // Setup
         $this->setUpSut();
@@ -664,10 +664,10 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends has_IsCallable
-     * @depends add_AddsAClass_WhenPassedAString
+     * @depends hasIsCallable
+     * @depends addAddsAClassWhenPassedAString
      */
-    public function has_ReturnsTrueWhenAStringClassIsInAClassList(): void
+    public function hasReturnsTrueWhenAStringClassIsInAClassList(): void
     {
         // Setup
         $this->setUpSut();
@@ -682,9 +682,9 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends has_IsCallable
+     * @depends hasIsCallable
      */
-    public function has_ReturnsFalseWhenAClassListIsEmpty_AndPassedAnArray(): void
+    public function hasReturnsFalseWhenAClassListIsEmptyAndPassedAnArray(): void
     {
         // Setup
         $this->setUpSut();
@@ -698,10 +698,10 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends has_IsCallable
-     * @depends add_AddsMultipleClasses_WhenPassedAnArray
+     * @depends hasIsCallable
+     * @depends addAddsMultipleClassesWhenPassedAnArray
      */
-    public function has_ReturnsTrueWhenAllClassesInAnArrayOfClassesAreInAClassList(): void
+    public function hasReturnsTrueWhenAllClassesInAnArrayOfClassesAreInAClassList(): void
     {
         // Setup
         $this->setUpSut(static::AB_CLASS_ARRAY);
@@ -715,10 +715,10 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends has_IsCallable
-     * @depends __construct_AddsMultipleClasses_WhenPassedAnArray
+     * @depends hasIsCallable
+     * @depends constructAddsMultipleClassesWhenPassedAnArray
      */
-    public function has_ReturnsFalseWhenAClassListIsEmpty_AndPassedAClassList(): void
+    public function hasReturnsFalseWhenAClassListIsEmptyAndPassedAClassList(): void
     {
         // Setup
         $this->setUpSut();
@@ -732,11 +732,11 @@ class ClassListTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends has_IsCallable
-     * @depends add_AddsMultipleClasses_WhenPassedAnArray
-     * @depends __construct_AddsMultipleClasses_WhenPassedAnArray
+     * @depends hasIsCallable
+     * @depends addAddsMultipleClassesWhenPassedAnArray
+     * @depends constructAddsMultipleClassesWhenPassedAnArray
      */
-    public function has_ReturnsTrueWhenAllClassesOfAClassListAreInAClassList(): void
+    public function hasReturnsTrueWhenAllClassesOfAClassListAreInAClassList(): void
     {
         // Setup
         $this->setUpSut(static::AB_CLASS_ARRAY);

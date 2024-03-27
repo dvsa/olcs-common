@@ -180,8 +180,6 @@ class VariationOperatingCentresTest extends MockeryTestCase
             ->with('data')
             ->andReturn($data);
 
-
-
         $this->mockFormHelper->shouldReceive('disableElement')
             ->with($this->form, 'data->totCommunityLicencesFieldset->totCommunityLicences');
 

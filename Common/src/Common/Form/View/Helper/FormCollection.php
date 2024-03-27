@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Form\View\Helper;
 
 use Common\Form\Elements\Types\AbstractInputSearch;
@@ -105,7 +106,7 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
                     $tmpMessages[] = $fieldMessage;
                 }
             }
-            
+
             unset($messages['hoursPerWeekContent']);
             $messages = array_merge($messages, $tmpMessages);
         }
@@ -254,10 +255,12 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
             return $markup;
         }
 
-        if (!($element instanceof PostcodeSearch)
+        if (
+            !($element instanceof PostcodeSearch)
             && !($element instanceof CompanyNumber)
             && !($element instanceof HoursPerWeek)
-            && !$element->getOption('showErrors')) {
+            && !$element->getOption('showErrors')
+        ) {
             return $markup;
         }
 

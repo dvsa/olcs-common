@@ -16,7 +16,7 @@ class TextTest extends MockeryTestCase
     public function testPopulate(): void
     {
         $name = 'qaElement';
-    
+
         $expectedInputSpecification = [
             'id' => 'qaText',
             'name' => $name,

@@ -42,7 +42,7 @@ class MessagingSubject extends AbstractListDataService
 
         $result = $response->getResult();
 
-        $this->setData('subjects', ($result['results'] ?? NULL));
+        $this->setData('subjects', ($result['results'] ?? null));
 
         return $this->getData('subjects');
     }

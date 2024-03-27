@@ -54,7 +54,7 @@ trait CqrsTrait
     protected function showApiMessages($messages = [])
     {
         foreach ($messages as $message) {
-            $message = (is_array($message))? end($message) : $message;
+            $message = (is_array($message)) ? end($message) : $message;
             $this->flashMessenger->addErrorMessage('DEBUG: ' . print_r($message, true));
         }
     }

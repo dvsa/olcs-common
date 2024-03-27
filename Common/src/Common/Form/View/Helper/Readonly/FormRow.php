@@ -85,7 +85,8 @@ class FormRow extends AbstractHelper
         /** @var \Common\Form\View\Helper\FormElement $defElmHlpr */
         $defElmHlpr = $this->getView()->plugin('FormElement');
 
-        if ($element instanceof LaminasElement\Csrf
+        if (
+            $element instanceof LaminasElement\Csrf
             || (
                 $element instanceof Elements\InputFilters\ActionButton
                 && $element->getOption('keepForReadOnly') === true
@@ -94,13 +95,15 @@ class FormRow extends AbstractHelper
             return $defElmHlpr->render($element);
         }
 
-        if ($element instanceof Elements\InputFilters\ActionButton
+        if (
+            $element instanceof Elements\InputFilters\ActionButton
             || $element instanceof Elements\Types\AttachFilesButton
         ) {
             return '';
         }
 
-        if (in_array($element->getAttribute('type'), ['hidden', 'submit']) ||
+        if (
+            in_array($element->getAttribute('type'), ['hidden', 'submit']) ||
             $element instanceof LaminasElement\Button ||
             $element->getOption('remove_if_readonly')
         ) {

@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Exception;
 
 /**
@@ -14,5 +15,4 @@ namespace Common\Exception;
  */
 class ResourceConflictException extends \Exception
 {
-
 }

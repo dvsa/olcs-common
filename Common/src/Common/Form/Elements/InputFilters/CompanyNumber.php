@@ -27,7 +27,7 @@ class CompanyNumber extends \Laminas\Form\Element implements InputProviderInterf
             'validators' => [
                 [
                     'name' => \Laminas\Validator\StringLength::class,
-                    'options'=> [
+                    'options' => [
                         'min' => 1,
                         'max' => 8,
                         'messages' => [

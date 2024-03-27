@@ -26,7 +26,7 @@ class FormValidationBuilderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function aValidator_IsCallable(): void
+    public function aValidatorIsCallable(): void
     {
         // Assert
         $this->assertIsCallable(static fn(): self => \Common\Test\Form\FormValidatorBuilder::aValidator());
@@ -34,9 +34,9 @@ class FormValidationBuilderTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends aValidator_IsCallable
+     * @depends aValidatorIsCallable
      */
-    public function aValidator_ReturnsInstanceOfSelf(): void
+    public function aValidatorReturnsInstanceOfSelf(): void
     {
         // Execute
         $result = FormValidatorBuilder::aValidator();
@@ -48,7 +48,7 @@ class FormValidationBuilderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function populateCsrfValidationBeforeValidating_IsCallable(): void
+    public function populateCsrfValidationBeforeValidatingIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -59,9 +59,9 @@ class FormValidationBuilderTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends populateCsrfValidationBeforeValidating_IsCallable
+     * @depends populateCsrfValidationBeforeValidatingIsCallable
      */
-    public function populateCsrfValidationBeforeValidating_ReturnsSelf(): void
+    public function populateCsrfValidationBeforeValidatingReturnsSelf(): void
     {
         // Setup
         $this->setUpSut();
@@ -76,7 +76,7 @@ class FormValidationBuilderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function build_IsCallable(): void
+    public function buildIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -87,9 +87,9 @@ class FormValidationBuilderTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends build_IsCallable
+     * @depends buildIsCallable
      */
-    public function build_ReturnsInstanceOfFormValidator(): void
+    public function buildReturnsInstanceOfFormValidator(): void
     {
         // Setup
         $this->setUpSut();
@@ -103,9 +103,9 @@ class FormValidationBuilderTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends build_ReturnsInstanceOfFormValidator
+     * @depends buildReturnsInstanceOfFormValidator
      */
-    public function build_AllowsCsrfValidation(): void
+    public function buildAllowsCsrfValidation(): void
     {
         // Setup
         $this->setUpSut();
@@ -120,10 +120,10 @@ class FormValidationBuilderTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends build_ReturnsInstanceOfFormValidator
-     * @depends populateCsrfValidationBeforeValidating_ReturnsSelf
+     * @depends buildReturnsInstanceOfFormValidator
+     * @depends populateCsrfValidationBeforeValidatingReturnsSelf
      */
-    public function build_DisablesCsrf_ForTopLevelCsrfFormElement(): void
+    public function buildDisablesCsrfForTopLevelCsrfFormElement(): void
     {
         // Setup
         $this->setUpSut();

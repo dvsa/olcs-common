@@ -2,7 +2,7 @@
 
 namespace CommonTest\View\Helper;
 
-use \Common\View\Helper\ApplicationName;
+use Common\View\Helper\ApplicationName;
 
 /**
  * Test ApplicationName view helper

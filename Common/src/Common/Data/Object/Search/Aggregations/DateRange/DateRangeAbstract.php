@@ -1,4 +1,5 @@
 <?php
+
 namespace Common\Data\Object\Search\Aggregations\DateRange;
 
 use Common\Data\Object\Search\Aggregations\AggregationsAbstract;

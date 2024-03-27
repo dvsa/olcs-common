@@ -78,7 +78,7 @@ class VariationRecordActionTest extends MockeryTestCase
             [
                 'action' => 'U',
                 'expectPrefix' => 'updated',
-                'expect' => '(TRSLTD_STATUS) <button data-prevent-double-click="true" data-module="govuk-button" role="link" type="submit" class="action-button-link " name="table[action][foo][7]" '.
+                'expect' => '(TRSLTD_STATUS) <button data-prevent-double-click="true" data-module="govuk-button" role="link" type="submit" class="action-button-link " name="table[action][foo][7]" ' .
                     '>link-text</button>',
             ],
             [

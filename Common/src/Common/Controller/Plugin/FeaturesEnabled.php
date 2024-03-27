@@ -22,7 +22,7 @@ class FeaturesEnabled extends AbstractPlugin
         $this->querySender = $sender;
     }
 
-    
+
     public function __invoke(array $toggleConfig, MvcEvent $e): bool
     {
         $action = strtolower($e->getRouteMatch()->getParam('action'));

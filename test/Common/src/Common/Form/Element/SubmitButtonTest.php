@@ -27,7 +27,7 @@ class SubmitButtonTest extends MockeryTestCase
     /**
      * @test
      */
-    public function __construct_SetsTypeAttributeToSubmit(): void
+    public function constructSetsTypeAttributeToSubmit(): void
     {
         // Setup
         $this->setUpSut(static::A_BUTTON_NAME, static::A_BUTTON_LABEL);

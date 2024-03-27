@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace CommonTest\Common\Auth\Adapter;
@@ -28,7 +29,7 @@ class CommandAdapterFactoryTest extends MockeryTestCase
     /**
      * @test
      */
-    public function __invoke_IsCallable(): void
+    public function invokeIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -39,9 +40,9 @@ class CommandAdapterFactoryTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_ReturnsAnInstanceOfCommandAdapter(): void
+    public function invokeReturnsAnInstanceOfCommandAdapter(): void
     {
         // Setup
         $this->setUpSut();

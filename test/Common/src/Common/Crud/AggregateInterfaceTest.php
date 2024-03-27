@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Class AggregateInterfaceTest
  *
  * @package CommonTest\Crud
  * @author Craig Reasbeck <craig.reasbeck@valtech.co.uk>
  */
+
 namespace CommonTest\Crud;
 
 /**

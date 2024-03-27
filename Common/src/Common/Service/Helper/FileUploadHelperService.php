@@ -311,7 +311,7 @@ class FileUploadHelperService extends AbstractHelperService
         if (!is_null($selector)) {
             $element = $this->findElement($this->getForm(), $selector);
             $count = (int)$element->getValue();
-            if ($count>0) {
+            if ($count > 0) {
                 $element->setValue($count - 1);
             }
         }
@@ -363,7 +363,8 @@ class FileUploadHelperService extends AbstractHelperService
             $fileData['file-controls'] = $fileData;
         }
 
-        if ($postData === null
+        if (
+            $postData === null
             || $fileData === null
             || !isset($postData['file-controls']['upload'])
             || empty($postData['file-controls']['upload'])
@@ -445,7 +446,8 @@ class FileUploadHelperService extends AbstractHelperService
 
         $postData = $this->findSelectorData((array)$this->getRequest()->getPost(), $this->getSelector());
 
-        if ($postData === null
+        if (
+            $postData === null
             || !isset($postData['list'])
         ) {
             return false;
@@ -458,8 +460,10 @@ class FileUploadHelperService extends AbstractHelperService
         foreach ($list->getFieldsets() as $listFieldset) {
             $name = $listFieldset->getName();
 
-            if (isset($postData['list'][$name]['remove'])
-                && !empty($postData['list'][$name]['remove'])) {
+            if (
+                isset($postData['list'][$name]['remove'])
+                && !empty($postData['list'][$name]['remove'])
+            ) {
                 $success = call_user_func(
                     $callback,
                     $postData['list'][$name]['id']

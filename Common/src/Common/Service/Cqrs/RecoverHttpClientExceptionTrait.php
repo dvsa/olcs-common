@@ -2,7 +2,6 @@
 
 namespace Common\Service\Cqrs;
 
-
 /**
  * Recover HttpClientExceptionTrait Trait
  *

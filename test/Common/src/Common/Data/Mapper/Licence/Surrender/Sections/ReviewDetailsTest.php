@@ -11,6 +11,7 @@ use Laminas\Mvc\Controller\Plugin\Url;
 class ReviewDetailsTest extends TestCase
 {
     use ReviewContactDetailsMocksAndExpectationsTrait;
+
     protected $sut;
 
     protected function setUp(): void
@@ -81,7 +82,6 @@ class ReviewDetailsTest extends TestCase
     public function surrender(): array
     {
 
-
         return [
             'surrender' => [
                 'version' => '1',
@@ -94,7 +94,7 @@ class ReviewDetailsTest extends TestCase
                 'id' => '1',
                 'licenceDocumentStatus' => ['id' => 'doc_sts_destroyed'],
                 'licenceDocumentInfo' => null,
-                'communityLicenceDocumentStatus'=> ['id' => 'doc_sts_destroyed'],
+                'communityLicenceDocumentStatus' => ['id' => 'doc_sts_destroyed'],
                 'communityLicenceDocumentInfo' => null,
                 'isInternationalLicence' => false
             ]

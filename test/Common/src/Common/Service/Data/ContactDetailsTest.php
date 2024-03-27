@@ -71,7 +71,7 @@ class ContactDetailsTest extends AbstractListDataServiceTestCase
         $data = [
             [
                 'id' => 9999,
-                'description'=> 'EXPECTED'
+                'description' => 'EXPECTED'
             ],
         ];
         $this->sut->setData('ContactDetails', $data);

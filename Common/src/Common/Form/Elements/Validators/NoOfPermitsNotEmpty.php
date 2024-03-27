@@ -5,6 +5,7 @@
  *
  * @author Jonathan Thomas <jonathan@opalise.co.uk>
  */
+
 namespace Common\Form\Elements\Validators;
 
 use Laminas\Validator\NotEmpty;

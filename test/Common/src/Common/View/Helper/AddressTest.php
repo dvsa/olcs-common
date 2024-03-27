@@ -8,7 +8,7 @@
 
 namespace CommonTest\View\Helper;
 
-use \Common\View\Helper\Address;
+use Common\View\Helper\Address;
 
 /**
  * Test Address view helper

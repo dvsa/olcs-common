@@ -43,7 +43,7 @@ abstract class AbstractPeopleController extends AbstractController
     protected GuidanceHelperService $guidanceHelper;
 
     protected $lvaAdapter;
-     //ToDo: Use Union Type Hint when available in php 8.0
+
     protected FlashMessengerHelperService $flashMessengerHelper;
 
     /**
@@ -369,13 +369,15 @@ abstract class AbstractPeopleController extends AbstractController
             if ($additionalGuidanceLabel !== null) {
                 $this->guidanceHelper->append($additionalGuidanceLabel);
             }
-        } elseif ($this->lva === self::LVA_LIC
-        &&
-        (
+        } elseif (
+            $this->lva === self::LVA_LIC
+            &&
+            (
             ($this->lvaAdapter->isOrganisationLimited() &&
                 $this->lvaAdapter->getLicenceType() !== \Common\RefData::LICENCE_TYPE_SPECIAL_RESTRICTED) ||
             $this->lvaAdapter->isOrganisationOther()
-        )) {
+            )
+        ) {
             $this->variationLvaService->addVariationMessage($this->getLicenceId(), 'people');
         } else {
             $this->guidanceHelper->append(

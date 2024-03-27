@@ -95,16 +95,16 @@ function getMarkupUsage(string $path)
     echo "Generating markup partial report\n";
     $dirContents = array_diff(scandir($path . '/olcs-common/Common/config/language/partials/'), ['..', '.']);
     $markups = [];
-    foreach($dirContents as $item) {
-        if(is_dir($path.'/olcs-common/Common/config/language/partials/'.$item)){
-            $markups[$item] = str_replace('.phtml', '', array_diff(scandir($path.'/olcs-common/Common/config/language/partials/'.$item), ['..', '.']));
+    foreach ($dirContents as $item) {
+        if (is_dir($path . '/olcs-common/Common/config/language/partials/' . $item)) {
+            $markups[$item] = str_replace('.phtml', '', array_diff(scandir($path . '/olcs-common/Common/config/language/partials/' . $item), ['..', '.']));
         }
     }
 
     $usages = [];
 
     foreach ($markups as $langKeyFiles) {
-        foreach($langKeyFiles as $markupFilename) {
+        foreach ($langKeyFiles as $markupFilename) {
             $output = [];
             $usages[$markupFilename] = [];
             exec('grep -rl -m 1 --exclude-dir=vendor --include=\*.php --include \*.phtml "' . $markupFilename . '" ' . $path, $output);

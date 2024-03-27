@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace CommonTest\Controller\Plugin;
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;

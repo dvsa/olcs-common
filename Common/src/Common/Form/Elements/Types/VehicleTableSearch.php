@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Common\Form\Elements\Types;
@@ -8,7 +9,6 @@ use Laminas\Form\Element\Button;
 
 class VehicleTableSearch extends AbstractInputSearch
 {
-
     protected function addHint()
     {
         $this->add(

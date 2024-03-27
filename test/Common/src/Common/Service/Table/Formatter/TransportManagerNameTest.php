@@ -137,7 +137,6 @@ class TransportManagerNameTest extends MockeryTestCase
             ->with('tm_application.table.status.updated')
             ->andReturn('translated');
 
-
         $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 

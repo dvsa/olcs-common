@@ -40,7 +40,6 @@ class User extends InternalSearchAbstract
     public function getFilters()
     {
         if (empty($this->filters)) {
-
             $this->filters = [
                 new Filter\UserType(),
                 new Filter\Partner(),
@@ -76,16 +75,16 @@ class User extends InternalSearchAbstract
             'crud' => [
                 'actions' => [
                     'add' => [
-                        'class' => 'govuk-button', 
+                        'class' => 'govuk-button',
                         'requireRows' => false
                     ],
                     'edit' => [
-                        'requireRows' => true, 
+                        'requireRows' => true,
                         'class' => 'govuk-button govuk-button--secondary js-require--one'
                     ],
                     'delete' => [
                         'label' => 'action_links.remove',
-                        'requireRows' => true, 
+                        'requireRows' => true,
                         'class' => 'govuk-button govuk-button--secondary js-require--one'
                     ]
                 ]
@@ -133,6 +132,6 @@ class User extends InternalSearchAbstract
                 'data-field' => 'userId',
                 'type' => 'CustomSelector',
             ]
-        ];
+         ];
     }
 }

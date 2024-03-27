@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Validator;
 
 use Laminas\Validator\AbstractValidator;

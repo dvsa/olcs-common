@@ -49,7 +49,7 @@ class DisqualifyUrl implements FormatterPluginManagerInterface
 
         $url = '';
         switch ($matchedRouteName) {
-            case 'operator/people' :
+            case 'operator/people':
                 $url = $this->urlHelper->fromRoute(
                     'operator/disqualify_person',
                     [

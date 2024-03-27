@@ -6,6 +6,7 @@
  * @author Rob Caiger <rob@clocal.co.uk>
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
+
 namespace CommonTest\Service\Table\Type;
 
 use Mockery as m;

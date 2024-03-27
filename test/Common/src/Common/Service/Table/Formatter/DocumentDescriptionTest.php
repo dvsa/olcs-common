@@ -43,7 +43,6 @@ class DocumentDescriptionTest extends MockeryTestCase
         ];
         $column = [];
 
-
         $this->urlHelper->shouldReceive('fromRoute')
             ->with('getfile', ['identifier' => 666])
             ->andReturn('URL');

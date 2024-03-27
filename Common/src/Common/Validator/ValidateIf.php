@@ -1,4 +1,5 @@
 <?php
+
 namespace Common\Validator;
 
 use Laminas\Validator\AbstractValidator;

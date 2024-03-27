@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Form\Elements\Types;
 
 /**
@@ -14,5 +15,4 @@ namespace Common\Form\Elements\Types;
  */
 class GuidanceTranslated extends HtmlTranslated
 {
-
 }

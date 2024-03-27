@@ -5,6 +5,7 @@
  *
  * @author Jakub Igla <jakub.igla@valtech.co.uk>
  */
+
 namespace Common\Form\Elements\InputFilters;
 
 use Laminas\Form\Element as LaminasElement;
@@ -18,7 +19,6 @@ use Laminas\InputFilter\InputProviderInterface;
  */
 class OneContactPhoneRequired extends LaminasElement\Hidden implements InputProviderInterface
 {
-
     /**
      * Provide default input rules for this element.
      */

@@ -19,8 +19,8 @@ class SumCompareTest extends MockeryTestCase
         $sut = new SumCompare();
         $sut->setOptions(
             [
-                'compare_to' =>'test',
-                'sum_with' =>'sum_with',
+                'compare_to' => 'test',
+                'sum_with' => 'sum_with',
                 'compare_to_label' => [null],
                 'operator' => 'lt',
                 'allow_empty' => true

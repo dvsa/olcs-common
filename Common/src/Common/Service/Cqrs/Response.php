@@ -150,7 +150,7 @@ class Response
     {
         return sprintf(
             "Status = %s\nResponse = %s",
-            $this->httpResponse->getStatusCode() .' '. $this->httpResponse->getReasonPhrase(),
+            $this->httpResponse->getStatusCode() . ' ' . $this->httpResponse->getReasonPhrase(),
             print_r($this->getResult(), true)
         );
     }

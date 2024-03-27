@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Common\Auth\Service;
@@ -16,7 +17,7 @@ class RefreshTokenService
 
     public const MESSAGE_AUTH_RESULT_NOT_VALID = 'Result is not valid';
 
-    public const MESSAGE_IDENTITY_MISSING= 'Result is missing new identity';
+    public const MESSAGE_IDENTITY_MISSING = 'Result is missing new identity';
 
     public const EXPIRES_WITHIN_SECONDS = 60;
 
@@ -58,7 +59,6 @@ class RefreshTokenService
             throw new Exception(sprintf(static::MESSAGE_BASE, static::MESSAGE_IDENTITY_MISSING));
         }
 
-        // TODO: Can we make an object instead?
         return $identity;
     }
 

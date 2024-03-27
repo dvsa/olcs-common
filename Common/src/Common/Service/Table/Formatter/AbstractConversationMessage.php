@@ -31,7 +31,7 @@ abstract class AbstractConversationMessage implements FormatterPluginManagerInte
         $firstReadBy = $this->getFirstReadBy($row);
 
         // If createdBy (User) has a Team, they are an internal user.
-        $internalCaseworkerTeam = (empty($row['createdBy']['team'])) ? '': '<p class="govuk-caption-m">' . $senderName . '<br/>Caseworker Team</p>' ;
+        $internalCaseworkerTeam = (empty($row['createdBy']['team'])) ? '' : '<p class="govuk-caption-m">' . $senderName . '<br/>Caseworker Team</p>' ;
 
         return strtr($this->rowTemplate, [
             '{senderName}' => $senderName,

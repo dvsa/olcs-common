@@ -8,7 +8,7 @@
 
 namespace CommonTest\View\Helper;
 
-use \Common\View\Helper\AddTags;
+use Common\View\Helper\AddTags;
 
 /**
  * Test AddTags view helper

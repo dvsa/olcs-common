@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace CommonTest\Form\Elements\Types;
 
 use Common\Form\Elements\Types\Table;

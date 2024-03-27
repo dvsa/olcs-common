@@ -19,8 +19,7 @@ class LinkNewWindowExternal extends AbstractHelper
         string $linkText,
         string $class = 'govuk-link',
         bool $hideNewTabMessage = false
-    ): string
-    {
+    ): string {
         return $this->view->linkNewWindow($url, $linkText, $class, $hideNewTabMessage, true);
     }
 }

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Common\Data\Mapper\Lva\TransportManager\Sections;
 
 /**
@@ -10,7 +9,6 @@ namespace Common\Data\Mapper\Lva\TransportManager\Sections;
  */
 class OtherLicences extends AbstractSection implements TransportManagerSectionInterface
 {
-
     use SectionSerializeTrait;
 
     private $licences;

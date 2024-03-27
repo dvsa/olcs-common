@@ -30,12 +30,12 @@ class DateTimeSelectNullifierTest extends \PHPUnit\Framework\TestCase
         return [
             [null, null],
             ['string', null],
-            [['day'=>'', 'year'=>'', 'month'=>'', 'hour'=>'', 'minute'=>''], null],
-            [['day'=>'', 'year'=>'2012', 'month'=>'10', 'hour' => '16', 'minute' => ''], '2012-10- 16::00'],
-            [['day'=>'', 'year'=>'', 'month'=>'10', 'hour' => '16', 'minute' => ''], '-10- 16::00'],
-            [['day'=>'', 'year'=>'', 'month'=>'', 'hour' => '16', 'minute' => ''], '-- 16::00'],
-            [['day'=>'04', 'year'=>'2012', 'month'=>'10', 'hour' => '16', 'minute' => ''], '2012-10-04 16::00'],
-            [['day'=>'04', 'year'=>'2012', 'month'=>'10', 'hour' => '16', 'minute' => '00'], '2012-10-04 16:00:00'],
+            [['day' => '', 'year' => '', 'month' => '', 'hour' => '', 'minute' => ''], null],
+            [['day' => '', 'year' => '2012', 'month' => '10', 'hour' => '16', 'minute' => ''], '2012-10- 16::00'],
+            [['day' => '', 'year' => '', 'month' => '10', 'hour' => '16', 'minute' => ''], '-10- 16::00'],
+            [['day' => '', 'year' => '', 'month' => '', 'hour' => '16', 'minute' => ''], '-- 16::00'],
+            [['day' => '04', 'year' => '2012', 'month' => '10', 'hour' => '16', 'minute' => ''], '2012-10-04 16::00'],
+            [['day' => '04', 'year' => '2012', 'month' => '10', 'hour' => '16', 'minute' => '00'], '2012-10-04 16:00:00'],
         ];
     }
 }

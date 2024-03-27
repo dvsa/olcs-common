@@ -5,6 +5,7 @@
  *
  * @author Michael Cooper <michael.cooper@valtech.co.uk>
  */
+
 namespace CommonTest\Util;
 
 use Laminas\Http\Client as HttpClient;

@@ -5,6 +5,7 @@
  *
  * @author Jonathan Thomas <jonathan@opalise.co.uk>
  */
+
 namespace CommonTest\Service\Qa;
 
 use Common\Service\Qa\FieldsetAdder;

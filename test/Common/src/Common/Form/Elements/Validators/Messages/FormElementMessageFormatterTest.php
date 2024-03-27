@@ -86,7 +86,7 @@ class FormElementMessageFormatterTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getReplacementFor_IsCallable(): void
+    public function getReplacementForIsCallable(): void
     {
         // Setup
         $this->sut = $this->setUpSut($this->serviceManager());
@@ -98,22 +98,22 @@ class FormElementMessageFormatterTest extends MockeryTestCase
     /**
      * @test
      */
-    public function enableReplacementOfMessage_IsCallable(): void
+    public function enableReplacementOfMessageIsCallable(): void
     {
         // Setup
         $this->sut = $this->setUpSut($this->serviceManager());
 
         // Assert
-        $this->assertIsCallable(function (string $messageKey, $defaultMessageOrProvider) : void {
+        $this->assertIsCallable(function (string $messageKey, $defaultMessageOrProvider): void {
             $this->sut->enableReplacementOfMessage($messageKey, $defaultMessageOrProvider);
         });
     }
 
     /**
      * @test
-     * @depends enableReplacementOfMessage_IsCallable
+     * @depends enableReplacementOfMessageIsCallable
      */
-    public function enableReplacementOfMessage_SetsDefaultMessageProviderForMessagesWithKey(): void
+    public function enableReplacementOfMessageSetsDefaultMessageProviderForMessagesWithKey(): void
     {
         // Setup
         $this->sut = $this->setUpSut($this->serviceManager());
@@ -128,9 +128,9 @@ class FormElementMessageFormatterTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends enableReplacementOfMessage_IsCallable
+     * @depends enableReplacementOfMessageIsCallable
      */
-    public function enableReplacementOfMessage_EncapsulatesTextReplacements_IsCallable(): void
+    public function enableReplacementOfMessageEncapsulatesTextReplacementsIsCallable(): void
     {
         // Setup
         $this->sut = $this->setUpSut($this->serviceManager());
@@ -145,9 +145,9 @@ class FormElementMessageFormatterTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends enableReplacementOfMessage_EncapsulatesTextReplacements_IsCallable
+     * @depends enableReplacementOfMessageEncapsulatesTextReplacementsIsCallable
      */
-    public function enableReplacementOfMessage_EncapsulatesTextReplacements_IsCallableThatReturnsOriginalText(): void
+    public function enableReplacementOfMessageEncapsulatesTextReplacementsIsCallableThatReturnsOriginalText(): void
     {
         // Setup
         $this->sut = $this->setUpSut($this->serviceManager());
@@ -163,7 +163,7 @@ class FormElementMessageFormatterTest extends MockeryTestCase
     /**
      * @test
      */
-    public function formatElementMessage_IsCallable(): void
+    public function formatElementMessageIsCallable(): void
     {
         // Setup
         $this->sut = $this->setUpSut($this->serviceManager());
@@ -174,9 +174,9 @@ class FormElementMessageFormatterTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends formatElementMessage_IsCallable
+     * @depends formatElementMessageIsCallable
      */
-    public function formatElementMessage_ReturnsString(): void
+    public function formatElementMessageReturnsString(): void
     {
         // Setup
         $this->sut = $this->setUpSut($this->serviceManager());
@@ -191,9 +191,9 @@ class FormElementMessageFormatterTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends formatElementMessage_ReturnsString
+     * @depends formatElementMessageReturnsString
      */
-    public function formatElementMessage_AcceptsNullElementLabels(): void
+    public function formatElementMessageAcceptsNullElementLabels(): void
     {
         // Setup
         $this->sut = $this->setUpSut($this->serviceManager());
@@ -208,9 +208,9 @@ class FormElementMessageFormatterTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends formatElementMessage_IsCallable
+     * @depends formatElementMessageIsCallable
      */
-    public function formatElementMessage_ReplacesFieldLabelPlaceholder_InCustomMessage(): void
+    public function formatElementMessageReplacesFieldLabelPlaceholderInCustomMessage(): void
     {
         // Setup
         $this->sut = $this->setUpSut($this->serviceManager());
@@ -225,9 +225,9 @@ class FormElementMessageFormatterTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends formatElementMessage_ReplacesFieldLabelPlaceholder_InCustomMessage
+     * @depends formatElementMessageReplacesFieldLabelPlaceholderInCustomMessage
      */
-    public function formatElementMessage_ReplacesFieldLabelPlaceholder_InCustomMessage_WithEmptyString_WhenLabelEmpty(): void
+    public function formatElementMessageReplacesFieldLabelPlaceholderInCustomMessageWithEmptyStringWhenLabelEmpty(): void
     {
         // Setup
         $this->sut = $this->setUpSut($this->serviceManager());
@@ -242,9 +242,9 @@ class FormElementMessageFormatterTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends formatElementMessage_ReplacesFieldLabelPlaceholder_InCustomMessage
+     * @depends formatElementMessageReplacesFieldLabelPlaceholderInCustomMessage
      */
-    public function formatElementMessage_ReplacesFieldLabelPlaceholder_InCustomMessage_AsTrimmed(): void
+    public function formatElementMessageReplacesFieldLabelPlaceholderInCustomMessageAsTrimmed(): void
     {
         //setup
         $serviceLocator = $this->setUpServiceManager();
@@ -264,9 +264,9 @@ class FormElementMessageFormatterTest extends MockeryTestCase
      * replacement message is not translated a second time before having any variables replaced. This is because, at the
      * time of writing this, there is an issue with the MissingTranslationProcessor which will change the placeholder
      * prefix/suffix curly braces so that they no longer get correctly replaced.
-     * @depends formatElementMessage_ReplacesFieldLabelPlaceholder_InCustomMessage
+     * @depends formatElementMessageReplacesFieldLabelPlaceholderInCustomMessage
      */
-    public function formatElementMessage_ReplacesVariablesBeforeTranslating(): void
+    public function formatElementMessageReplacesVariablesBeforeTranslating(): void
     {
         // Setup
         $this->sut = $this->setUpSut($this->serviceManager());
@@ -282,9 +282,9 @@ class FormElementMessageFormatterTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends formatElementMessage_IsCallable
+     * @depends formatElementMessageIsCallable
      */
-    public function formatElementMessage_ReplacesDefaultMessage_WhenElementTypeIsSet(): void
+    public function formatElementMessageReplacesDefaultMessageWhenElementTypeIsSet(): void
     {
         // Setup
         $this->sut = $this->setUpSut($this->serviceManager());
@@ -300,9 +300,9 @@ class FormElementMessageFormatterTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends formatElementMessage_ReplacesDefaultMessage_WhenElementTypeIsSet
+     * @depends formatElementMessageReplacesDefaultMessageWhenElementTypeIsSet
      */
-    public function formatElementMessage_ReplacesDefaultMessage_WhenDefaultMessageIsTranslated(): void
+    public function formatElementMessageReplacesDefaultMessageWhenDefaultMessageIsTranslated(): void
     {
         // Setup
         $this->sut = $this->setUpSut($this->serviceManager());
@@ -319,9 +319,9 @@ class FormElementMessageFormatterTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends formatElementMessage_ReplacesDefaultMessage_WhenElementTypeIsSet
+     * @depends formatElementMessageReplacesDefaultMessageWhenElementTypeIsSet
      */
-    public function formatElementMessage_ReplacesDefaultMessage_IfElementTypeIsNotSet(): void
+    public function formatElementMessageReplacesDefaultMessageIfElementTypeIsNotSet(): void
     {
         // Setup
         $this->sut = $this->setUpSut($this->serviceManager());
@@ -341,9 +341,9 @@ class FormElementMessageFormatterTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends formatElementMessage_ReplacesDefaultMessage_WhenElementTypeIsSet
+     * @depends formatElementMessageReplacesDefaultMessageWhenElementTypeIsSet
      */
-    public function formatElementMessage_ReplacesDefaultMessage_IfElementTypeHasNoTranslation(): void
+    public function formatElementMessageReplacesDefaultMessageIfElementTypeHasNoTranslation(): void
     {
         // Setup
         $this->sut = $this->setUpSut($this->serviceManager());
@@ -363,9 +363,9 @@ class FormElementMessageFormatterTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends formatElementMessage_ReplacesDefaultMessage_IfElementTypeIsNotSet
+     * @depends formatElementMessageReplacesDefaultMessageIfElementTypeIsNotSet
      */
-    public function formatElementMessage_UsesOriginalMessage_WhenCustomValidationMessageUsed(): void
+    public function formatElementMessageUsesOriginalMessageWhenCustomValidationMessageUsed(): void
     {
         // Setup
         $this->sut = $this->setUpSut($this->serviceManager());
@@ -381,9 +381,9 @@ class FormElementMessageFormatterTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends formatElementMessage_UsesOriginalMessage_WhenCustomValidationMessageUsed
+     * @depends formatElementMessageUsesOriginalMessageWhenCustomValidationMessageUsed
      */
-    public function formatElementMessage_TranslatesCustomMessages(): void
+    public function formatElementMessageTranslatesCustomMessages(): void
     {
         // Setup
         $this->sut = $this->setUpSut($this->serviceManager());
@@ -402,9 +402,9 @@ class FormElementMessageFormatterTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends formatElementMessage_ReplacesDefaultMessage_IfElementTypeIsNotSet
+     * @depends formatElementMessageReplacesDefaultMessageIfElementTypeIsNotSet
      */
-    public function formatElementMessage_UsesOriginalMessage_WhenReplacementIsNotEnabledForAMessageKey(): void
+    public function formatElementMessageUsesOriginalMessageWhenReplacementIsNotEnabledForAMessageKey(): void
     {
         // Setup
         $this->sut = $this->setUpSut($this->serviceManager());
@@ -419,9 +419,9 @@ class FormElementMessageFormatterTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends formatElementMessage_ReplacesDefaultMessage_IfElementTypeIsNotSet
+     * @depends formatElementMessageReplacesDefaultMessageIfElementTypeIsNotSet
      */
-    public function formatElementMessage_UsesOriginalMessage_WhenReplacementEnabledForMessage_ButNoTranslationIsAvailable(): void
+    public function formatElementMessageUsesOriginalMessageWhenReplacementEnabledForMessageButNoTranslationIsAvailable(): void
     {
         // Setup
         $this->sut = $this->setUpSut($this->serviceManager());
@@ -437,9 +437,9 @@ class FormElementMessageFormatterTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends formatElementMessage_ReplacesDefaultMessage_IfElementTypeIsNotSet
+     * @depends formatElementMessageReplacesDefaultMessageIfElementTypeIsNotSet
      */
-    public function formatElementMessage_DoesNotUseReplacementMessage_ContainingLabelPlaceholder_IfElementLabelIsEmpty(): void
+    public function formatElementMessageDoesNotUseReplacementMessageContainingLabelPlaceholderIfElementLabelIsEmpty(): void
     {
         // Setup
         $this->sut = $this->setUpSut($this->serviceManager());
@@ -455,9 +455,9 @@ class FormElementMessageFormatterTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends formatElementMessage_ReplacesDefaultMessage_IfElementTypeIsNotSet
+     * @depends formatElementMessageReplacesDefaultMessageIfElementTypeIsNotSet
      */
-    public function formatElementMessage_DoesNotUseReplacementMessage_ContainingLabelPlaceholder_IfElementLabelContainsHtml(): void
+    public function formatElementMessageDoesNotUseReplacementMessageContainingLabelPlaceholderIfElementLabelContainsHtml(): void
     {
         // Setup
         $this->sut = $this->setUpSut($this->serviceManager());
@@ -473,9 +473,9 @@ class FormElementMessageFormatterTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends formatElementMessage_DoesNotUseReplacementMessage_ContainingLabelPlaceholder_IfElementLabelContainsHtml
+     * @depends formatElementMessageDoesNotUseReplacementMessageContainingLabelPlaceholderIfElementLabelContainsHtml
      */
-    public function formatElementMessage_DoesNotUseReplacementMessage_ContainingLabelPlaceholder_IfElementLabelContainsHtml_AfterBeingTranslated(): void
+    public function formatElementMessageDoesNotUseReplacementMessageContainingLabelPlaceholderIfElementLabelContainsHtmlAfterBeingTranslated(): void
     {
         // Setup
         $this->sut = $this->setUpSut($this->serviceManager());
@@ -492,9 +492,9 @@ class FormElementMessageFormatterTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends formatElementMessage_ReturnsString
+     * @depends formatElementMessageReturnsString
      */
-    public function formatElementMessage_ReturnsShortLabel(): void
+    public function formatElementMessageReturnsShortLabel(): void
     {
         // Setup
         $this->sut = $this->setUpSut($this->serviceManager());
@@ -509,9 +509,9 @@ class FormElementMessageFormatterTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends formatElementMessage_ReturnsShortLabel
+     * @depends formatElementMessageReturnsShortLabel
      */
-    public function formatElementMessage_ReturnsShortLabel_WithTranslatedMessage(): void
+    public function formatElementMessageReturnsShortLabelWithTranslatedMessage(): void
     {
         // Setup
         $this->sut = $this->setUpSut($this->serviceManager());

@@ -9,5 +9,4 @@ namespace Common\Controller\Interfaces;
  */
 interface ToggleAwareInterface
 {
-
 }

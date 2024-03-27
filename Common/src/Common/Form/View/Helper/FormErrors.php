@@ -163,7 +163,8 @@ class FormErrors extends AbstractHelper
     protected function getNamedAnchor($element)
     {
         // For PostcodeSearch we want to use the id of the text input, as this is the element we want to receive focus
-        if ($element instanceof PostcodeSearch
+        if (
+            $element instanceof PostcodeSearch
             && !empty($element->get('postcode')->getAttribute('id'))
         ) {
             return $element->get('postcode')->getAttribute('id');

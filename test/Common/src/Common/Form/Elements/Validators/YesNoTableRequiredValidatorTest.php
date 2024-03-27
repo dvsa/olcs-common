@@ -45,22 +45,22 @@ class YesNoTableRequiredValidatorTest extends MockeryTestCase
         return [
             [
                 'Y',
-                ['testTable'=> ['rows' => 1]],
+                ['testTable' => ['rows' => 1]],
                 true
             ],
             [
                 'Y',
-                ['testTable'=> ['rows' => 0]],
+                ['testTable' => ['rows' => 0]],
                 false
             ],
             [
                 'N',
-                ['testTable'=> ['rows' => 1]],
+                ['testTable' => ['rows' => 1]],
                 true
             ],
             [
                 'N',
-                ['testTable'=> ['rows' => 0]],
+                ['testTable' => ['rows' => 0]],
                 true
             ],
         ];

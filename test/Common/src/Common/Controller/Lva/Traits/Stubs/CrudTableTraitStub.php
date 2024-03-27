@@ -14,15 +14,17 @@ use Laminas\Mvc\Controller\AbstractActionController;
  */
 class CrudTableTraitStub extends AbstractActionController
 {
+    use CrudTableTrait;
+
     /**
      * @var \Common\Service\Helper\FlashMessengerHelperService
      */
     public $flashMessengerHelper;
+
     /**
      * @var \Common\Service\Helper\FormHelperService
      */
     public $formHelper;
-    use CrudTableTrait;
 
     protected $section = 'fake-section';
 

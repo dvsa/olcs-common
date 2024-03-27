@@ -5,6 +5,7 @@
  *
  * @author Alex Peshkov <alex.peshkov@clocal.co.uk>
  */
+
 namespace CommonTest\Form\Elements\InputFilters;
 
 use Common\Form\Elements\InputFilters\FeeWaiveNote;

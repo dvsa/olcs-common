@@ -38,7 +38,7 @@ class SearchType extends SearchAbstract
     public function getColumns()
     {
         return [
-            ['title' => 'Search Type', 'name'=> 'searchtypeId'],
+            ['title' => 'Search Type', 'name' => 'searchtypeId'],
         ];
     }
 }

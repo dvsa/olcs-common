@@ -16,7 +16,8 @@ class DateSelect extends LaminasInput
     public function getRawValue()
     {
         // if all elements of the date are empty then return null
-        if (is_array($this->value) &&
+        if (
+            is_array($this->value) &&
             empty($this->value['day']) &&
             empty($this->value['month']) &&
             empty($this->value['year'])

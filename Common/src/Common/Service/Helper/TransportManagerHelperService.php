@@ -114,7 +114,7 @@ class TransportManagerHelperService
         $response = $this->queryService->send($this->transferAnnotationBuilder->createQuery($dto));
 
         if (!$response->isOk()) {
-            throw new \RuntimeException('Error fetching query '. get_class($dto));
+            throw new \RuntimeException('Error fetching query ' . get_class($dto));
         }
 
         return $response->getResult();

@@ -18,7 +18,7 @@ abstract class SearchAbstractTest extends MockeryTestCase
 
     protected function setUp(): void
     {
-        $this->sut = new $this->class;
+        $this->sut = new $this->class();
     }
 
     public function testGetTableConfig(): void

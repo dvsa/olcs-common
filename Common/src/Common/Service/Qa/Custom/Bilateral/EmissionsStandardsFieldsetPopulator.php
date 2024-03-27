@@ -52,7 +52,7 @@ class EmissionsStandardsFieldsetPopulator implements FieldsetPopulatorInterface
         $this->warningAdder->add($fieldset, 'qanda.bilaterals.emissions-standards.euro2-warning');
 
         $noMarkup = $this->translator->translate('qanda.bilaterals.emissions-standards.no-blurb');
-    
+
         $this->yesNoWithMarkupForNoPopulator->populate(
             $fieldset,
             $valueOptions,

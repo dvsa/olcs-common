@@ -29,13 +29,13 @@ class InputTest extends MockeryTestCase
     /**
      * @test
      */
-    public function setValue_IsCallable(): void
+    public function setValueIsCallable(): void
     {
         // Setup
         $this->setUpSut();
 
         // Assert
-        $this->assertIsCallable(function ($value) : void {
+        $this->assertIsCallable(function ($value): void {
             $this->sut->setValue($value);
         });
     }
@@ -43,7 +43,7 @@ class InputTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getValue_IsCallable(): void
+    public function getValueIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -54,9 +54,9 @@ class InputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends getValue_IsCallable
+     * @depends getValueIsCallable
      */
-    public function getValue_FiltersValue(): void
+    public function getValueFiltersValue(): void
     {
         // Setup
         $this->setUpSut();
@@ -72,9 +72,9 @@ class InputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends getValue_FiltersValue
+     * @depends getValueFiltersValue
      */
-    public function getValue_FiltersValue_OnceWhenTheValueHasNotBeenSetAgain(): void
+    public function getValueFiltersValueOnceWhenTheValueHasNotBeenSetAgain(): void
     {
         // Setup
         $this->setUpSut();
@@ -92,10 +92,10 @@ class InputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends getValue_IsCallable
-     * @depends setValue_IsCallable
+     * @depends getValueIsCallable
+     * @depends setValueIsCallable
      */
-    public function getValue_FiltersValue_TwiceWhenTheValueHasBeenSetSinceFirstBeingGotten(): void
+    public function getValueFiltersValueTwiceWhenTheValueHasBeenSetSinceFirstBeingGotten(): void
     {
         // Setup
         $this->setUpSut();

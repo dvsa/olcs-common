@@ -7,7 +7,6 @@ use Laminas\Form\Element\Button;
 
 class DvlaVrmSearch extends AbstractInputSearch
 {
-
     protected function addHint()
     {
         $this->add(

@@ -5,6 +5,7 @@
  *
  * @author Michael Cooper <michael.cooper@valtech.co.uk>
  */
+
 namespace CommonTest\Controller\Util;
 
 use Laminas\Http\Response as HttpResponse;
@@ -16,7 +17,6 @@ use Laminas\Http\Response as HttpResponse;
  */
 class ResponseHelperTest extends \PHPUnit\Framework\TestCase
 {
-
     public $handleReponseMethods = [
         'checkForValidResponseBody',
         'checkForInternalServerError',
@@ -41,7 +41,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
     public function testSetResponse(): void
     {
         $mock = $this->createMock(\Common\Util\ResponseHelper::class);
-        $response = new \Laminas\Http\Response;
+        $response = new \Laminas\Http\Response();
         $mock->setResponse($response);
     }
 
@@ -51,7 +51,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
     public function testGetResponse(): void
     {
         $mock = $this->createMock(\Common\Util\ResponseHelper::class);
-        $mock->response = new \Laminas\Http\Response;
+        $mock->response = new \Laminas\Http\Response();
         $mock->getResponse();
     }
 

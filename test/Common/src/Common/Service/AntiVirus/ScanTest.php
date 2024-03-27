@@ -1,6 +1,5 @@
 <?php
 
-
 namespace CommonTest\Service\AntVirus;
 
 use Common\Service\AntiVirus\Scan;
@@ -86,7 +85,7 @@ class ScanTest extends MockeryTestCase
         $mockShell = m::mock(\Common\Filesystem\Shell::class);
         $mockShell->shouldReceive('fileperms')->with(__FILE__)->once()->andReturn(octdec(600));
         $mockShell->shouldReceive('chmod')->with(__FILE__, 0660)->once()->andReturn(true);
-        $mockShell->shouldReceive('execute')->with('scan '. __FILE__)->once()->andReturn(0);
+        $mockShell->shouldReceive('execute')->with('scan ' . __FILE__)->once()->andReturn(0);
         $mockShell->shouldReceive('chmod')->with(__FILE__, octdec(600))->once()->andReturn(true);
         $this->sut->setShell($mockShell);
 
@@ -101,7 +100,7 @@ class ScanTest extends MockeryTestCase
         $mockShell = m::mock(\Common\Filesystem\Shell::class);
         $mockShell->shouldReceive('fileperms')->with(__FILE__)->once()->andReturn(octdec(644));
         $mockShell->shouldReceive('chmod')->with(__FILE__, 0660)->once()->andReturn(true);
-        $mockShell->shouldReceive('execute')->with('scan '. __FILE__)->once()->andReturn(1);
+        $mockShell->shouldReceive('execute')->with('scan ' . __FILE__)->once()->andReturn(1);
         $mockShell->shouldReceive('chmod')->with(__FILE__, octdec(644))->once()->andReturn(true);
         $this->sut->setShell($mockShell);
 

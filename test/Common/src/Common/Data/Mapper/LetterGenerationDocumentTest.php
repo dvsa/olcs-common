@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace CommonTest\Data\Mapper;
 
 use Common\Data\Mapper\LetterGenerationDocument;

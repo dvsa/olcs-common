@@ -53,8 +53,8 @@ class VenueTest extends AbstractDataServiceTestCase
             ->andReturn(
                 [
                     'id' => 7,
-                    'niFlag'=> true,
-                    'goodsOrPsv' => ['id'=>'lcat_gv'],
+                    'niFlag' => true,
+                    'goodsOrPsv' => ['id' => 'lcat_gv'],
                     'trafficArea' => ['id' => 'B']
                 ]
             );

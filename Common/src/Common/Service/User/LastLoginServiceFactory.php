@@ -1,4 +1,5 @@
 <?php
+
 namespace Common\Service\User;
 
 use Common\Service\Cqrs\Command\CommandSender;

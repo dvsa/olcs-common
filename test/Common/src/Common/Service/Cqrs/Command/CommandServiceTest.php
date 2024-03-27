@@ -446,5 +446,4 @@ class CommandServiceTest extends MockeryTestCase
         $this->assertArrayHasKey('Authorization', $headers->toArray());
         $this->assertSame('Bearer access_token', $headers->get('Authorization')->getFieldValue());
     }
-
 }

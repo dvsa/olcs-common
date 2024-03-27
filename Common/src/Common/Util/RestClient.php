@@ -5,6 +5,7 @@
  *
  * @author Pelle Wessman <pelle.wessman@valtech.se>
  */
+
 namespace Common\Util;
 
 use Dvsa\Olcs\Utils\Client\ClientAdapterLoggingWrapper;

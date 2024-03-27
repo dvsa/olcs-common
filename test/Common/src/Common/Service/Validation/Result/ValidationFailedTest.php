@@ -1,6 +1,5 @@
 <?php
 
-
 namespace CommonTest\Validation\Result;
 
 use Common\Service\Validation\Result\ValidationFailed;

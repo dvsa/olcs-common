@@ -5,6 +5,7 @@
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
+
 namespace CommonTest\Data\Mapper\Lva;
 
 use Common\Data\Mapper\Lva\OtherLicence;

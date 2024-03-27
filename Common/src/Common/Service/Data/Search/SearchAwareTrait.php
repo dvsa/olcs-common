@@ -1,4 +1,5 @@
 <?php
+
 namespace Common\Service\Data\Search;
 
 use Common\Service\Data\Search\Search as SearchService;

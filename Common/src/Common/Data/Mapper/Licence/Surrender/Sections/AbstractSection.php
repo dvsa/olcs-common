@@ -6,16 +6,14 @@ use Common\Service\Helper\TranslationHelperService;
 
 abstract class AbstractSection
 {
+    use MakeSectionTrait;
+
     /**
      * @var mixed[]
      */
     public $licence;
-    use MakeSectionTrait;
-
     protected $heading;
-
     protected $urlHelper;
-
     protected $translator;
 
     public function __construct(

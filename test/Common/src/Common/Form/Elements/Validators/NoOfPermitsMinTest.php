@@ -5,6 +5,7 @@
  *
  * @author Jonathan Thomas <jonathan@opalise.co.uk>
  */
+
 namespace CommonTest\Form\Elements\Validators;
 
 use Common\Form\Elements\Validators\NoOfPermitsMin;

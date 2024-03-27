@@ -6,7 +6,6 @@ use Laminas\Validator\AbstractValidator;
 
 class YesNoTableRequiredValidator extends AbstractValidator
 {
-
     protected $messageTemplates = [];
 
     private $table;

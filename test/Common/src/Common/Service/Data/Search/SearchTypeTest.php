@@ -69,7 +69,6 @@ class SearchTypeTest extends TestCase
 
         $options = $sut->fetchListOptions(null);
 
-
         $this->assertCount(3, $options);
     }
 
@@ -82,7 +81,6 @@ class SearchTypeTest extends TestCase
         $sut->setRoleService($mockRoleService);
 
         $options = $sut->fetchListOptions(null);
-
 
         $this->assertCount(2, $options);
     }

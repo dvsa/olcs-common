@@ -10,7 +10,6 @@ use Laminas\Form\Annotation as Form;
  */
 class ConditionsUndertakings
 {
-
     /**
      * @Form\Attributes({"id":"confirmation"})
      * @Form\Options({

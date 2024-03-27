@@ -1,6 +1,5 @@
 <?php
 
-
 namespace CommonTest\Common\Data\Mapper\Licence\Surrender\Sections;
 
 use Common\Data\Mapper\Licence\Surrender\Sections\ContactDetails;

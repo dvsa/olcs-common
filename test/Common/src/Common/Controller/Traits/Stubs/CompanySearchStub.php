@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace CommonTest\Common\Controller\Traits\Stubs;
 
@@ -6,8 +8,9 @@ use Common\Controller\Traits\CompanySearch;
 
 class CompanySearchStub
 {
-    public $form;
     use CompanySearch;
+
+    public $form;
 
     public $stubResponse;
 
