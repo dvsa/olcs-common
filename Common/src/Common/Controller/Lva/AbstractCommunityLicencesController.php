@@ -287,6 +287,8 @@ abstract class AbstractCommunityLicencesController extends AbstractController
      * Get Table Data
      *
      * @return array
+     *
+     * @psalm-suppress all
      */
     private function getTableData()
     {

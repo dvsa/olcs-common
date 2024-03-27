@@ -85,17 +85,19 @@ class FileUploadHelperServiceTest extends MockeryTestCase
 
     public function testSetGetDeleteCallback(): void
     {
+        $callback = function () {};
         $this->assertEquals(
-            'fakeDeleteCallback',
-            $this->sut->setDeleteCallback('fakeDeleteCallback')->getDeleteCallback()
+            $callback,
+            $this->sut->setDeleteCallback($callback)->getDeleteCallback()
         );
     }
 
     public function testSetGetLoadCallback(): void
     {
+        $callback = function () {};
         $this->assertEquals(
-            'fakeLoadCallback',
-            $this->sut->setLoadCallback('fakeLoadCallback')->getLoadCallback()
+            $callback,
+            $this->sut->setLoadCallback($callback)->getLoadCallback()
         );
     }
 

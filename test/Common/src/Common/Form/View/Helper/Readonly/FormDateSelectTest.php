@@ -29,6 +29,7 @@ class FormDateSelectTest extends TestCase
      */
     public function provideTestInvoke()
     {
+        setlocale(LC_ALL, 'en_GB');
         $mockDs = m::mock(\Laminas\Form\Element\DateSelect::class);
         $mockDs->shouldReceive('getYearElement->getValue')->andReturn('2014');
         $mockDs->shouldReceive('getMonthElement->getValue')->andReturn('11');

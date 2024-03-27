@@ -9,11 +9,12 @@ use Laminas\InputFilter\InputFilter as LaminasInputFilter;
 class InputFilter extends LaminasInputFilter
 {
     /**
+     * @psalm-suppress NoValue
      * Set data to use when validating and filtering
      *
      * @param  array|Traversable $data
-     * @throws \InvalidArgumentException
      * @return InputFilter
+     * @throws \InvalidArgumentException
      */
     public function setData($data)
     {
