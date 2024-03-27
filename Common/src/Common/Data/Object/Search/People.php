@@ -158,7 +158,7 @@ class People extends InternalSearchAbstract
                     if ($row['foundAs'] === self::FOUND_AS_HISTORICAL_TM) {
                         return 'NA';
                     }
-                    
+
                     return $row['disqualified'];
                 }
             ]

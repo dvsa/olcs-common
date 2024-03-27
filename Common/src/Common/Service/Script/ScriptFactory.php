@@ -95,7 +95,7 @@ class ScriptFactory implements FactoryInterface
             }
         }
 
-        throw new \Exception('Attempted to load invalid script file "'. $file . '"');
+        throw new \Exception('Attempted to load invalid script file "' . $file . '"');
     }
 
     /**

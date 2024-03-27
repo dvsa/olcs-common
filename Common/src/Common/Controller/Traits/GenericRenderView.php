@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Controller\Traits;
 
 use Laminas\View\Model\ViewModel;

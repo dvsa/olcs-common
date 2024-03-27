@@ -30,7 +30,7 @@ class FormWithCsrfTraitTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getCsrfElement_IsCallable(): void
+    public function getCsrfElementIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -41,9 +41,9 @@ class FormWithCsrfTraitTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends getCsrfElement_IsCallable
+     * @depends getCsrfElementIsCallable
      */
-    public function getCsrfElement_ReturnsACsrfElement(): void
+    public function getCsrfElementReturnsACsrfElement(): void
     {
         // Setup
         $this->setUpSut();
@@ -54,9 +54,9 @@ class FormWithCsrfTraitTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends getCsrfElement_ReturnsACsrfElement
+     * @depends getCsrfElementReturnsACsrfElement
      */
-    public function getCsrfElement_ReturnsACsrfElement_WithAName(): void
+    public function getCsrfElementReturnsACsrfElementWithAName(): void
     {
         // Setup
         $this->setUpSut();
@@ -68,7 +68,7 @@ class FormWithCsrfTraitTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getCsrfInput_IsCallable(): void
+    public function getCsrfInputIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -79,9 +79,9 @@ class FormWithCsrfTraitTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends getCsrfInput_IsCallable
+     * @depends getCsrfInputIsCallable
      */
-    public function getCsrfInput_ReturnsInstanceOfInput(): void
+    public function getCsrfInputReturnsInstanceOfInput(): void
     {
         // Setup
         $this->setUpSut();
@@ -95,9 +95,9 @@ class FormWithCsrfTraitTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends getCsrfInput_ReturnsInstanceOfInput
+     * @depends getCsrfInputReturnsInstanceOfInput
      */
-    public function getCsrfInput_ReturnsInstanceOfInput_ThatIsRequired(): void
+    public function getCsrfInputReturnsInstanceOfInputThatIsRequired(): void
     {
         // Setup
         $this->setUpSut();
@@ -112,9 +112,9 @@ class FormWithCsrfTraitTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends getCsrfInput_ReturnsInstanceOfInput
+     * @depends getCsrfInputReturnsInstanceOfInput
      */
-    public function getCsrfInput_ReturnsInstanceOfInput_ThatAcceptsAValidValue(): void
+    public function getCsrfInputReturnsInstanceOfInputThatAcceptsAValidValue(): void
     {
         // Setup
         $this->setUpSut();
@@ -141,10 +141,10 @@ class FormWithCsrfTraitTest extends MockeryTestCase
     /**
      * @param mixed $value
      * @test
-     * @depends getCsrfInput_ReturnsInstanceOfInput
+     * @depends getCsrfInputReturnsInstanceOfInput
      * @dataProvider csrfInvalidValueDataProvider
      */
-    public function getCsrfInput_ReturnsInstanceOfInput_ThatRejectsAnInvalidValue($value): void
+    public function getCsrfInputReturnsInstanceOfInputThatRejectsAnInvalidValue($value): void
     {
         // Setup
         $this->setUpSut();

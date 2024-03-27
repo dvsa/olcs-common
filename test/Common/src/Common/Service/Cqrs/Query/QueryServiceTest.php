@@ -62,7 +62,6 @@ class QueryServiceTest extends MockeryTestCase
         $this->mockContainer = m::mock(Container::class);
         $this->mockContainer->allows('offsetGet')->andReturn([])->byDefault();
 
-
         $this->sut = m::mock(
             QueryService::class . '[invalidResponse, showApiMessagesFromResponse]',
             [

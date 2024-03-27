@@ -84,7 +84,7 @@ class Application extends AbstractDataService
     {
         $id = is_null($id) ? $this->getId() : $id;
 
-        if (is_null($this->getData('oc_' .$id))) {
+        if (is_null($this->getData('oc_' . $id))) {
             $dtoData = OcQry::create(['id' => $id, 'sort' => 'id', 'order' => 'ASC']);
             $response = $this->handleQuery($dtoData);
 
@@ -93,7 +93,7 @@ class Application extends AbstractDataService
             }
 
             $data = $response->getResult();
-            $this->setData('oc_' .$id, $data);
+            $this->setData('oc_' . $id, $data);
         }
 
         return $this->getData('oc_' . $id);

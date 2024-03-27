@@ -31,7 +31,7 @@ class DynamicSelectTest extends TestCase
 
     public function testSetOptions(): void
     {
-        $this->sut->setOptions(['context' => 'testing', 'use_groups'=>true, 'other_option'=>true, 'label' => 'Testing']);
+        $this->sut->setOptions(['context' => 'testing', 'use_groups' => true, 'other_option' => true, 'label' => 'Testing']);
 
         $this->assertEquals('testing', $this->sut->getContext());
         $this->assertTrue($this->sut->useGroups());
@@ -52,12 +52,12 @@ class DynamicSelectTest extends TestCase
             ->expects($this->once())
             ->method('fetchListOptions')
             ->with($this->equalTo('category'), $this->equalTo(false))
-            ->willReturn(['key'=>'value']);
+            ->willReturn(['key' => 'value']);
 
         $this->sut->setDataService($this->mockRefDataService);
         $this->sut->setContext('category');
 
-        $this->assertEquals(['key'=>'value'], $this->sut->getValueOptions());
+        $this->assertEquals(['key' => 'value'], $this->sut->getValueOptions());
 
         //check that the values are only fetched once
         $this->sut->getValueOptions();
@@ -69,13 +69,13 @@ class DynamicSelectTest extends TestCase
             ->expects($this->once())
             ->method('fetchListOptions')
             ->with($this->equalTo('category'), $this->equalTo(false))
-            ->willReturn(['key'=>'value']);
+            ->willReturn(['key' => 'value']);
 
         $this->sut->setOtherOption(true);
         $this->sut->setDataService($this->mockRefDataService);
         $this->sut->setContext('category');
 
-        $this->assertEquals(['key'=>'value', 'other' => 'Other'], $this->sut->getValueOptions());
+        $this->assertEquals(['key' => 'value', 'other' => 'Other'], $this->sut->getValueOptions());
 
         //check that the values are only fetched once
         $this->sut->getValueOptions();
@@ -93,7 +93,7 @@ class DynamicSelectTest extends TestCase
         $this->sut->setDataService($this->mockRefDataService);
         $this->sut->setContext('category');
 
-        $this->assertEquals(['key'=>'value', 'one_more' => 'one more value'], $this->sut->getValueOptions());
+        $this->assertEquals(['key' => 'value', 'one_more' => 'one more value'], $this->sut->getValueOptions());
 
         //check that the values are only fetched once
         $this->sut->getValueOptions();
@@ -105,13 +105,13 @@ class DynamicSelectTest extends TestCase
             ->expects($this->once())
             ->method('fetchListOptions')
             ->with($this->equalTo('category'), $this->equalTo(false))
-            ->willReturn(['key'=>'value']);
+            ->willReturn(['key' => 'value']);
 
         $this->sut->setOtherOption(false);
         $this->sut->setEmptyOption('choose one');
         $this->sut->setContext('category');
 
-        $this->assertEquals(['key'=>'value'], $this->sut->getValueOptions());
+        $this->assertEquals(['key' => 'value'], $this->sut->getValueOptions());
 
         // empty option does not get returned from getValueOptions,
         // it's appended in the view helper - @see Laminas\Form\View\Helper\FormSelect::render
@@ -135,11 +135,11 @@ class DynamicSelectTest extends TestCase
     {
         return [
             ['test', 'test'],
-            [[0=>'test', 1=> 'test2'], [0=>'test', 1=> 'test2']],
-            [['id'=>'test', 'desc' => 'Test Item'], 'test'],
+            [[0 => 'test', 1 => 'test2'], [0 => 'test', 1 => 'test2']],
+            [['id' => 'test', 'desc' => 'Test Item'], 'test'],
             [[], null],
-            [[['id'=>'test', 'desc' => 'Test Item'], [0 => 'test2']], ['test', [0 => 'test2']], true],
-            [[['id'=>'test', 'desc' => 'Test Item'], ['id'=>'test2', 'desc' => 'Test Item']], ['test', 'test2'], true]
+            [[['id' => 'test', 'desc' => 'Test Item'], [0 => 'test2']], ['test', [0 => 'test2']], true],
+            [[['id' => 'test', 'desc' => 'Test Item'], ['id' => 'test2', 'desc' => 'Test Item']], ['test', 'test2'], true]
         ];
     }
 

@@ -6,7 +6,6 @@ use Common\Form\Elements\InputFilters\ActionButton;
 use Common\Form\Elements\InputFilters\ActionLink;
 use Common\Form\Elements\InputFilters\NoRender;
 use Common\Form\Elements\InputFilters\SingleCheckbox;
-use Common\Form\Elements\Types\Readonly;
 use Common\Form\Elements\Types\Table;
 use Laminas\Form\Element\Button;
 use Laminas\Form\Element\DateSelect;
@@ -14,6 +13,7 @@ use Laminas\Form\Element\Hidden;
 use Laminas\Form\ElementInterface;
 use Laminas\Form\LabelAwareInterface;
 use Common\Form\Elements\Types\AttachFilesButton;
+use Common\Form\Elements\Types\Readonly as ReadonlyElement;
 
 /**
  * @see \CommonTest\Form\View\Helper\FormRowTest
@@ -53,7 +53,7 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow
      */
     public function render(ElementInterface $element, ?string $labelPosition = null): string
     {
-        if ($element instanceof Readonly) {
+        if ($element instanceof ReadonlyElement) {
             $class = $element->getAttribute('data-container-class');
             $label = $this->getView()->translate($element->getLabel());
             $value = $element->getValue();
@@ -97,8 +97,10 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow
 
         $type = $element->getAttribute('type');
         $allowWrap = $element->getAttribute('allowWrap');
-        if ($type === 'multi_checkbox' || ($type === 'radio' && !$allowWrap)
-            || $element->getAttribute('id') === 'security' || $allowWrap === false) {
+        if (
+            $type === 'multi_checkbox' || ($type === 'radio' && !$allowWrap)
+            || $element->getAttribute('id') === 'security' || $allowWrap === false
+        ) {
             $wrap = false;
         }
 
@@ -289,7 +291,8 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow
                     );
                 }
             } else {
-                if ($element->hasAttribute('id')
+                if (
+                    $element->hasAttribute('id')
                     && ! ($element instanceof SingleCheckbox)
                     && ($element instanceof LabelAwareInterface && !$element->getLabelOption('always_wrap'))
                 ) {

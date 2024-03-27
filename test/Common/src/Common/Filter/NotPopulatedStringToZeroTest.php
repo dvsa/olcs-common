@@ -27,7 +27,7 @@ class NotPopulatedStringToZeroTest extends \PHPUnit\Framework\TestCase
     public function provideFilter()
     {
         return [
-            [new \stdClass, '0'],
+            [new \stdClass(), '0'],
             [4, '0'],
             [null, '0'],
             ['', '0'],

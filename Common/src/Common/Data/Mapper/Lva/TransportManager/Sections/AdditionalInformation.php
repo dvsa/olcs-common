@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Common\Data\Mapper\Lva\TransportManager\Sections;
 
 class AdditionalInformation extends AbstractSection implements TransportManagerSectionInterface

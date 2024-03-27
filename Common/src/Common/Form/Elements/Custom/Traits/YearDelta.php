@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Form\Elements\Custom\Traits;
 
 /**
@@ -25,7 +26,6 @@ trait YearDelta
         $defaultDate = $this->getOption('default_date');
 
         if ($defaultDate) {
-
             $dateTime = new \DateTime();
 
             if ($defaultDate !== 'now') {

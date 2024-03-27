@@ -29,7 +29,7 @@ class StandardAndCabotageYesNoRadioValidator extends AbstractValidator
             $this->yesContentElement->setMessages(
                 ['qanda.bilaterals.standard-and-cabotage.not-selected-message']
             );
-    
+
             return false;
         }
 

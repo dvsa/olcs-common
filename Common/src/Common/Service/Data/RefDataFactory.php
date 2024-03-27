@@ -5,7 +5,6 @@ namespace Common\Service\Data;
 use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
-
 /**
  * RefDataFactory
  */

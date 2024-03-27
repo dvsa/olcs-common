@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace CommonTest\Common\Auth;
@@ -28,7 +29,7 @@ class SessionFactoryTest extends MockeryTestCase
     /**
      * @test
      */
-    public function __invoke_IsCallable(): void
+    public function invokeIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -39,9 +40,9 @@ class SessionFactoryTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_ReturnsAnInstanceOfSessionFactory(): void
+    public function invokeReturnsAnInstanceOfSessionFactory(): void
     {
         // Setup
         $this->setUpSut();
@@ -56,9 +57,9 @@ class SessionFactoryTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_ThrowsException_WhenConfigIsMissing(): void
+    public function invokeThrowsExceptionWhenConfigIsMissing(): void
     {
         // Setup
         $this->setUpSut();

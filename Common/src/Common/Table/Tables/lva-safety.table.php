@@ -1,4 +1,5 @@
 <?php
+
 use Common\Controller\Lva\AbstractSafetyController;
 use Common\Service\Table\Formatter\Address;
 use Common\Service\Table\Formatter\StackValue;

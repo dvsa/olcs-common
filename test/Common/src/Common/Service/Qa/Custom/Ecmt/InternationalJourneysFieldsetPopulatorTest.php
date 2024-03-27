@@ -66,7 +66,7 @@ class InternationalJourneysFieldsetPopulatorTest extends MockeryTestCase
             $radioFieldsetPopulator,
             $niWarningConditionalAdder
         );
- 
+
         $internationalJourneysFieldsetPopulator->populate($form, $fieldset, $options);
     }
 

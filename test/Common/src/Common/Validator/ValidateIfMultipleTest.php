@@ -45,17 +45,17 @@ class ValidateIfMultipleTest extends MockeryTestCase
     {
         return [
             //context matches, field is valid
-            [true, ['context_field' => 'field', 'context_values' => ['Y']], 'isValid', ['field'=>'Y'], true],
+            [true, ['context_field' => 'field', 'context_values' => ['Y']], 'isValid', ['field' => 'Y'], true],
             //context matches, field is invalid
-            [true, ['context_field' => 'field', 'context_values' => ['Y']], 'isValid', ['field'=>'Y'], false],
+            [true, ['context_field' => 'field', 'context_values' => ['Y']], 'isValid', ['field' => 'Y'], false],
             //context doesn't match, field is invalid
-            [true, ['context_field' => 'field', 'context_values' => ['Y']], 'isValid', ['field'=>'N'], false],
+            [true, ['context_field' => 'field', 'context_values' => ['Y']], 'isValid', ['field' => 'N'], false],
             //inverse context match, field valid
             [
                 true,
                 ['context_field' => 'field', 'context_values' => ['Y'], 'context_truth' => 0],
                 'isValid',
-                ['field'=>'N'],
+                ['field' => 'N'],
                 true
             ],
             //missing context
@@ -63,9 +63,9 @@ class ValidateIfMultipleTest extends MockeryTestCase
             //context matches value is empty
             [
                 true,
-                ['allow_empty'=>true, 'context_field' => 'field', 'context_values' => ['Y']],
+                ['allow_empty' => true, 'context_field' => 'field', 'context_values' => ['Y']],
                 null,
-                ['field'=>'Y'],
+                ['field' => 'Y'],
                 true
             ],
         ];

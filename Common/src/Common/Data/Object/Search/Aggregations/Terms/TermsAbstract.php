@@ -1,4 +1,5 @@
 <?php
+
 namespace Common\Data\Object\Search\Aggregations\Terms;
 
 use Common\Data\Object\Search\Aggregations\AggregationsAbstract;

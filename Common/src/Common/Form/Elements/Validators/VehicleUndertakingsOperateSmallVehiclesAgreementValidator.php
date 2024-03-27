@@ -5,6 +5,7 @@
  *
  * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
+
 namespace Common\Form\Elements\Validators;
 
 use Laminas\Validator\AbstractValidator;
@@ -39,7 +40,8 @@ class VehicleUndertakingsOperateSmallVehiclesAgreementValidator extends Abstract
         // *at all* then we're Scottish
         $isScotland = !array_key_exists('psvOperateSmallVhl', $context);
 
-        if (($isScotland || $context['psvOperateSmallVhl'] === 'N')
+        if (
+            ($isScotland || $context['psvOperateSmallVhl'] === 'N')
             && $value !== 'Y'
         ) {
             $this->error('required');

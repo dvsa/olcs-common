@@ -23,7 +23,7 @@ class FormValidatorTest extends MockeryTestCase
     /**
      * @test
      */
-    public function isValid_IsCallable(): void
+    public function isValidIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -34,9 +34,9 @@ class FormValidatorTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends isValid_IsCallable
+     * @depends isValidIsCallable
      */
-    public function isValid_ReturnsABoolean(): void
+    public function isValidReturnsABoolean(): void
     {
         // Setup
         $this->setUpSut();
@@ -48,9 +48,9 @@ class FormValidatorTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends isValid_ReturnsABoolean
+     * @depends isValidReturnsABoolean
      */
-    public function isValid_ReturnsABoolean_ThatIsTrueWhenAFormIsValid(): void
+    public function isValidReturnsABooleanThatIsTrueWhenAFormIsValid(): void
     {
         // Setup
         $this->setUpSut();
@@ -62,9 +62,9 @@ class FormValidatorTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends isValid_ReturnsABoolean
+     * @depends isValidReturnsABoolean
      */
-    public function isValid_ReturnsABoolean_ThatIsFalseWhenAFormIsNotValid(): void
+    public function isValidReturnsABooleanThatIsFalseWhenAFormIsNotValid(): void
     {
         // Setup
         $this->setUpSut();

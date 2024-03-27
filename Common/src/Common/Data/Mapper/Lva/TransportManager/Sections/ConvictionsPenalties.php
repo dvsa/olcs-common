@@ -1,11 +1,9 @@
 <?php
 
-
 namespace Common\Data\Mapper\Lva\TransportManager\Sections;
 
 class ConvictionsPenalties extends AbstractSection implements TransportManagerSectionInterface
 {
-
     use SectionSerializeTrait;
 
     private $convictions;

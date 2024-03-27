@@ -5,6 +5,7 @@
  *
  * @author Ian Lindsay <ian@hemera-business-services.co.uk>
  */
+
 namespace Common\Mapper;
 
 /**
@@ -14,7 +15,6 @@ namespace Common\Mapper;
  */
 class GenericMapper
 {
-
     /**
      * Default fieldMap to use when one isn't passed to the service
      */

@@ -24,9 +24,11 @@ class Checkbox extends LaminasElement\Checkbox
     {
         $options = $this->getOptions();
 
-        if (!isset($options['must_be_value'])
+        if (
+            !isset($options['must_be_value'])
             || $options['must_be_value'] === false
-            || $options['must_be_value'] === null) {
+            || $options['must_be_value'] === null
+        ) {
             return [];
         }
 

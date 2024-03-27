@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Checks that if a withdrawn checkbox is ticked then the corresponding date is also filled in
  *
@@ -17,7 +18,6 @@ use Laminas\Form\Element\DateSelect as LaminasDateSelect;
  */
 class WithdrawnDate extends LaminasDateSelect implements InputProviderInterface
 {
-
     /**
      * Provide default input rules for this element.
      */
@@ -32,8 +32,10 @@ class WithdrawnDate extends LaminasDateSelect implements InputProviderInterface
                     'options' => [
                         'callback' => static function ($date) {
                             // Convert the date to a specific format
-                            if (!is_array($date) || empty($date['year']) ||
-                                empty($date['month']) || empty($date['day'])) {
+                            if (
+                                !is_array($date) || empty($date['year']) ||
+                                empty($date['month']) || empty($date['day'])
+                            ) {
                                 return null;
                             }
                             return $date['year'] . '-' . $date['month'] . '-' . $date['day'];

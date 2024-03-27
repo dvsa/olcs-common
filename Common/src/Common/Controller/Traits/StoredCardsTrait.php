@@ -5,6 +5,7 @@
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
+
 namespace Common\Controller\Traits;
 
 use Dvsa\Olcs\Transfer\Query\Cpms\StoredCardList;
@@ -30,7 +31,7 @@ trait StoredCardsTrait
         $response = $this->handleQuery(StoredCardList::create(['isNi' => $isNi]));
         if ($response->isOk()) {
             foreach ($response->getResult()['results'] as $storedCard) {
-                $options[$storedCard['cardReference']] = $storedCard['cardScheme'] .' '. $storedCard['maskedPan'];
+                $options[$storedCard['cardReference']] = $storedCard['cardScheme'] . ' ' . $storedCard['maskedPan'];
             }
         }
 

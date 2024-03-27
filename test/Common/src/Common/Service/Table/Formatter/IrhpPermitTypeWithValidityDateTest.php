@@ -31,7 +31,6 @@ class IrhpPermitTypeWithValidityDateTest extends MockeryTestCase
     {
         $column = ['name' => 'typeDescription'];
 
-
         $this->translator->shouldReceive('translate')
             ->andReturnUsing(
                 static fn($key) => '_TRNSLT_' . $key

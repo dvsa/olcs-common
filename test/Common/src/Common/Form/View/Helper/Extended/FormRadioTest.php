@@ -28,7 +28,7 @@ class FormRadioTest extends MockeryTestCase
 
         $sut = new FormRadioStub($idGenerator);
         $translator = m::mock(TranslatorInterface::class);
-        $translator->shouldReceive('translate')->andReturnUsing(static fn($string, $domain) => $domain.'-translated-'.$string);
+        $translator->shouldReceive('translate')->andReturnUsing(static fn($string, $domain) => $domain . '-translated-' . $string);
         $sut->setTranslator($translator);
         if (!is_null($globalAttributes)) {
             $sut->setLabelAttributes($globalAttributes);

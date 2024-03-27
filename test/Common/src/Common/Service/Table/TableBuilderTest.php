@@ -1615,9 +1615,9 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderLimitOptions Without limit options
      *
-     * @depends testRenderLimitOptions_IsDefined
+     * @depends testRenderLimitOptionsIsDefined
      */
-    public function testRenderLimitOptions_WithoutLimitOptions(): void
+    public function testRenderLimitOptionsWithoutLimitOptions(): void
     {
         $settings = [
             'paginate' => [
@@ -1637,7 +1637,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderLimitOptions
      *
-     * @depends testRenderLimitOptions_IsDefined
+     * @depends testRenderLimitOptionsIsDefined
      */
     public function testRenderLimitOptions(): void
     {
@@ -1696,9 +1696,9 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderLimitOptions with query enabled
      *
-     * @depends testRenderLimitOptions_IsDefined
+     * @depends testRenderLimitOptionsIsDefined
      */
-    public function testRenderLimitOptions_WithQueryEnabled(): void
+    public function testRenderLimitOptionsWithQueryEnabled(): void
     {
         $settings = [
             'paginate' => [
@@ -1766,9 +1766,9 @@ class TableBuilderTest extends MockeryTestCase
     }
 
     /**
-     * @depends renderPageOptions_IsDefined
+     * @depends renderPageOptionsIsDefined
      */
-    public function testRenderPageOptions_WithoutOptions(): void
+    public function testRenderPageOptionsWithoutOptions(): void
     {
         $options = [
             'previous' => [],
@@ -1792,7 +1792,7 @@ class TableBuilderTest extends MockeryTestCase
     }
 
     /**
-     * @depends renderPageOptions_IsDefined
+     * @depends renderPageOptionsIsDefined
      */
     public function testRenderPageOptions(): void
     {
@@ -1915,7 +1915,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn Without options
      */
-    public function testRenderHeaderColumn_WithoutOptions(): void
+    public function testRenderHeaderColumnWithoutOptions(): void
     {
         $column = [];
 
@@ -1937,7 +1937,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn With custom content
      */
-    public function testRenderHeaderColumn_WithCustomContent(): void
+    public function testRenderHeaderColumnWithCustomContent(): void
     {
         $column = [];
 
@@ -1959,7 +1959,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn With sort current order asc
      */
-    public function testRenderHeaderColumn_WithSortCurrentOrderAsc(): void
+    public function testRenderHeaderColumnWithSortCurrentOrderAsc(): void
     {
         $column = [
             'sort' => 'foo'
@@ -2023,7 +2023,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn With sort current order desc
      */
-    public function testRenderHeaderColumn_WithSortCurrentOrderDesc(): void
+    public function testRenderHeaderColumnWithSortCurrentOrderDesc(): void
     {
         $column = [
             'sort' => 'foo'
@@ -2087,7 +2087,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn With sort
      */
-    public function testRenderHeaderColumn_WithSort(): void
+    public function testRenderHeaderColumnWithSort(): void
     {
         $column = [
             'sort' => 'foo'
@@ -2151,7 +2151,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn With pre-set width
      */
-    public function testRenderHeaderColumn_WithWidthAndTitle(): void
+    public function testRenderHeaderColumnWithWidthAndTitle(): void
     {
         $column = [
             'width' => 'checkbox',
@@ -2183,7 +2183,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn when disabled
      */
-    public function testRenderHeaderColumn_WhenDisabled(): void
+    public function testRenderHeaderColumnWhenDisabled(): void
     {
         $column = [
             'hideWhenDisabled' => true
@@ -2201,7 +2201,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn with alignment
      */
-    public function testRenderHeaderColumn_WithAlign(): void
+    public function testRenderHeaderColumnWithAlign(): void
     {
         $column = [
             'align' => 'right',
@@ -2231,7 +2231,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn with sort and alignment
      */
-    public function testRenderHeaderColumn_WithSortAndAlign(): void
+    public function testRenderHeaderColumnWithSortAndAlign(): void
     {
         $column = [
             'sort' => 'foo',
@@ -2310,7 +2310,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn when incorrect permission set
      */
-    public function testRenderHeaderColumn_WhenPermissionWontAllow(): void
+    public function testRenderHeaderColumnWhenPermissionWontAllow(): void
     {
         $column = [
             'permissionRequisites' => ['incorrectPermission']
@@ -2342,7 +2342,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test renderHeaderColumn when correct permission set
      */
-    public function testRenderHeaderColumn_WhenPermissionWillAllow(): void
+    public function testRenderHeaderColumnWhenPermissionWillAllow(): void
     {
         $column = [
             'permissionRequisites' => ['correctPermission']
@@ -2738,7 +2738,6 @@ class TableBuilderTest extends MockeryTestCase
         $table->expects($this->any())
             ->method('getContentHelper')
             ->will($this->returnValue($mockContentHelper));
-
 
         $table->renderBodyColumn($row, $column);
     }
@@ -3389,7 +3388,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getUrlParameterNameMap_IsDefined(): void
+    public function getUrlParameterNameMapIsDefined(): void
     {
         // Set Up
         $table = $this->setUpSut();
@@ -3399,10 +3398,10 @@ class TableBuilderTest extends MockeryTestCase
     }
 
     /**
-     * @depends getUrlParameterNameMap_IsDefined
+     * @depends getUrlParameterNameMapIsDefined
      * @test
      */
-    public function getUrlParameterNameMap_ReturnsAnArray()
+    public function getUrlParameterNameMapReturnsAnArray()
     {
         // Set Up
         $table = $this->setUpSut();
@@ -3417,10 +3416,10 @@ class TableBuilderTest extends MockeryTestCase
     }
 
     /**
-     * @depends getUrlParameterNameMap_ReturnsAnArray
+     * @depends getUrlParameterNameMapReturnsAnArray
      * @test
      */
-    public function getUrlParameterNameMap_ReturnsAnEmptyArrayByDefault($map): void
+    public function getUrlParameterNameMapReturnsAnEmptyArrayByDefault($map): void
     {
         // Assert
         $this->assertEmpty($map);
@@ -3429,7 +3428,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function setUrlParameterNameMap_IsDefined(): void
+    public function setUrlParameterNameMapIsDefined(): void
     {
         // Set Up
         $table = $this->setUpSut();
@@ -3439,10 +3438,10 @@ class TableBuilderTest extends MockeryTestCase
     }
 
     /**
-     * @depends setUrlParameterNameMap_IsDefined
+     * @depends setUrlParameterNameMapIsDefined
      * @test
      */
-    public function setUrlParameterNameMap_ReturnsSelf(): void
+    public function setUrlParameterNameMapReturnsSelf(): void
     {
         // Set Up
         $table = $this->setUpSut();
@@ -3455,11 +3454,11 @@ class TableBuilderTest extends MockeryTestCase
     }
 
     /**
-     * @depends setUrlParameterNameMap_IsDefined
-     * @depends getUrlParameterNameMap_IsDefined
+     * @depends setUrlParameterNameMapIsDefined
+     * @depends getUrlParameterNameMapIsDefined
      * @test
      */
-    public function setUrlParameterNameMap_SetsMappings(): void
+    public function setUrlParameterNameMapSetsMappings(): void
     {
         // Set Up
         $table = $this->setUpSut();
@@ -3475,7 +3474,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function testRenderLimitOptions_IsDefined(): void
+    public function testRenderLimitOptionsIsDefined(): void
     {
         // Set Up
         $table = $this->getConcreteTableBuilder();
@@ -3496,11 +3495,11 @@ class TableBuilderTest extends MockeryTestCase
     }
 
     /**
-     * @depends      testRenderLimitOptions_IsDefined
+     * @depends      testRenderLimitOptionsIsDefined
      * @dataProvider pageAndLimitUrlParameterNamesDataProvider
      * @test
      */
-    public function renderLimitOptions_DefaultUrlParameterNames(string $urlParameterName): void
+    public function renderLimitOptionsDefaultUrlParameterNames(string $urlParameterName): void
     {
         // Set Up
         $table = $this->setUpSut();
@@ -3528,11 +3527,11 @@ class TableBuilderTest extends MockeryTestCase
     }
 
     /**
-     * @depends      renderLimitOptions_DefaultUrlParameterNames
+     * @depends      renderLimitOptionsDefaultUrlParameterNames
      * @dataProvider mappedPageAndLimitUrlParameterNamesDataProvider
      * @test
      */
-    public function renderLimitOptions_MapsUrlParameterNames(string $originalName, string $mappedName): void
+    public function renderLimitOptionsMapsUrlParameterNames(string $originalName, string $mappedName): void
     {
         // Set Up
         $table = $this->setUpSut();
@@ -3554,7 +3553,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function renderPageOptions_IsDefined(): void
+    public function renderPageOptionsIsDefined(): void
     {
         // Set Up
         $table = $this->getConcreteTableBuilder();
@@ -3564,11 +3563,11 @@ class TableBuilderTest extends MockeryTestCase
     }
 
     /**
-     * @depends      renderPageOptions_IsDefined
+     * @depends      renderPageOptionsIsDefined
      * @dataProvider pageAndLimitUrlParameterNamesDataProvider
      * @test
      */
-    public function renderPageOptions_DefaultUrlParameterNames(string $urlParameterName): void
+    public function renderPageOptionsDefaultUrlParameterNames(string $urlParameterName): void
     {
         // Set Up
         $table = $this->setUpSut();
@@ -3586,11 +3585,11 @@ class TableBuilderTest extends MockeryTestCase
     }
 
     /**
-     * @depends      renderPageOptions_DefaultUrlParameterNames
+     * @depends      renderPageOptionsDefaultUrlParameterNames
      * @dataProvider mappedPageAndLimitUrlParameterNamesDataProvider
      * @test
      */
-    public function renderPageOptions_MapsUrlParameterNames(string $originalName, string $mappedName): void
+    public function renderPageOptionsMapsUrlParameterNames(string $originalName, string $mappedName): void
     {
         // Set Up
         $table = $this->setUpSut();
@@ -3611,7 +3610,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function renderHeaderColumn_IsDefined(): void
+    public function renderHeaderColumnIsDefined(): void
     {
         // Set Up
         $table = $this->getConcreteTableBuilder();
@@ -3632,11 +3631,11 @@ class TableBuilderTest extends MockeryTestCase
     }
 
     /**
-     * @depends      renderHeaderColumn_IsDefined
+     * @depends      renderHeaderColumnIsDefined
      * @dataProvider sortAndOrderUrlParameterNamesDataProvider
      * @test
      */
-    public function renderHeaderColumn_DefaultUrlParameterNames(string $urlParameterName): void
+    public function renderHeaderColumnDefaultUrlParameterNames(string $urlParameterName): void
     {
         // Set Up
         $table = $this->setUpSut();
@@ -3663,11 +3662,11 @@ class TableBuilderTest extends MockeryTestCase
     }
 
     /**
-     * @depends      renderHeaderColumn_DefaultUrlParameterNames
+     * @depends      renderHeaderColumnDefaultUrlParameterNames
      * @dataProvider mappedSortAndOrderUrlParameterNamesDataProvider
      * @test
      */
-    public function renderHeaderColumn_MapsUrlParameterNames(string $originalName, string $mappedName): void
+    public function renderHeaderColumnMapsUrlParameterNames(string $originalName, string $mappedName): void
     {
         // Set Up
         $table = $this->setUpSut();

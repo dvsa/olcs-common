@@ -9,7 +9,6 @@ use Common\Service\Helper\TranslationHelperService;
 
 class ReviewContactDetails
 {
-
     public static function makeSections(
         array $licence,
         \Laminas\Mvc\Controller\Plugin\Url $urlHelper,

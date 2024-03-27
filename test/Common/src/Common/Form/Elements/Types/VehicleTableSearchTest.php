@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace CommonTest\Form\Elements\Types;
@@ -11,7 +12,6 @@ use Laminas\Form\Element\Button;
 
 class VehicleTableSearchTest extends TestCase
 {
-
     public function testVehicleTableSearchCreate(): void
     {
         $sut = new VehicleTableSearch();

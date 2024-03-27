@@ -52,7 +52,7 @@ class FormElementMessageFormatterFactoryTest extends MockeryTestCase
         $container->expects('get')->with(TranslatorInterface::class)->andReturn($translator);
         $container->expects('get')->with('ValidatorManager')->andReturn($validatorPluginManager);
 
-        $sut = new FormElementMessageFormatterFactory;
+        $sut = new FormElementMessageFormatterFactory();
         $formatter = $sut->__invoke($container, FormElementMessageFormatter::class);
         $replacement = $formatter->getReplacementFor(static::MESSAGE_KEY);
 

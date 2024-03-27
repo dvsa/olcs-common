@@ -20,7 +20,8 @@ class DateTimeSelectNullifier extends AbstractFilter
      */
     public function filter($date)
     {
-        if (!is_array($date)
+        if (
+            !is_array($date)
             || (
                 empty($date['year']) && empty($date['month']) && empty($date['day'])
                 && empty($date['hour']) && empty($date['minute'])
@@ -30,6 +31,6 @@ class DateTimeSelectNullifier extends AbstractFilter
         }
 
         return $date['year'] . '-' . $date['month'] . '-' . $date['day'] . ' '
-        . $date['hour']. ':' . $date['minute']. ':00';
+        . $date['hour'] . ':' . $date['minute'] . ':00';
     }
 }

@@ -60,7 +60,7 @@ class InsufficientFinancesController extends AbstractContinuationController
         $hasProcessedFiles = $this->processFiles(
             $form,
             'insufficientFinances->yesContent->uploadContent',
-            function (array $file) : void {
+            function (array $file): void {
                 $this->processFinancialFileUpload($file);
             },
             fn(int $id): bool => $this->deleteFile($id),

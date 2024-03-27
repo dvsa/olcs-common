@@ -1,4 +1,5 @@
 <?php
+
 namespace Common\View\Helper;
 
 use Laminas\View\HelperPluginManager as ViewHelperManager;

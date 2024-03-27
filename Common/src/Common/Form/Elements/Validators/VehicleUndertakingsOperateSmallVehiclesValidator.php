@@ -5,6 +5,7 @@
  *
  * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
+
 namespace Common\Form\Elements\Validators;
 
 use Laminas\Validator\AbstractValidator;
@@ -36,8 +37,10 @@ class VehicleUndertakingsOperateSmallVehiclesValidator extends AbstractValidator
         unset($value);
 
         // This only gets used if psvOperateSmallVehicles is shown
-        if (isset($context['psvOperateSmallVhl']) && ($context['psvOperateSmallVhl'] === 'Y'
-            && trim($context['psvSmallVhlNotes']) === '')) {
+        if (
+            isset($context['psvOperateSmallVhl']) && ($context['psvOperateSmallVhl'] === 'Y'
+            && trim($context['psvSmallVhlNotes']) === '')
+        ) {
             $this->error('required');
             return false;
         }

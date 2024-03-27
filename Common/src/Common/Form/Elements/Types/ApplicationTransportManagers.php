@@ -5,6 +5,7 @@
  *
  * @author Shaun Lizzio <shaun@lizzio.co.uk>
  */
+
 namespace Common\Form\Elements\Types;
 
 use Laminas\Form\Fieldset;
@@ -20,7 +21,6 @@ use Common\Form\Elements\Types\HtmlTranslated;
  */
 class ApplicationTransportManagers extends Fieldset
 {
-
     /**
      * Setup the elements
      *

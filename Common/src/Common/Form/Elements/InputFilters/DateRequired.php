@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * @author Ian Lindsay <ian@hemera-business-services.co.uk>
@@ -37,7 +38,7 @@ class DateRequired extends LaminasDateSelect implements InputProviderInterface
     public function getValidators()
     {
         return [
-            ['name' => 'Date', 'options'=>['format' => 'Y-m-d']]
+            ['name' => 'Date', 'options' => ['format' => 'Y-m-d']]
         ];
     }
 }

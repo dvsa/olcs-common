@@ -120,6 +120,6 @@ class SumCompare extends AbstractCompare
 
         $compareToValue = $context[$this->getCompareTo()];
         $sumWithValue = $context[$this->getSumWith()];
-        return ($this->isValidForOperator($value+$sumWithValue, $compareToValue));
+        return ($this->isValidForOperator($value + $sumWithValue, $compareToValue));
     }
 }

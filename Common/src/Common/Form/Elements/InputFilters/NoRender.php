@@ -17,5 +17,4 @@ use Laminas\Form\Element\Hidden as LaminasElement;
  */
 class NoRender extends LaminasElement
 {
-
 }

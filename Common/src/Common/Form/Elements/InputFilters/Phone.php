@@ -47,7 +47,7 @@ class Phone extends LaminasElement implements InputProviderInterface
                     'break_chain_on_failure' => true,
                 ],
                 [
-                    'name'=> \Laminas\Validator\Regex::class,
+                    'name' => \Laminas\Validator\Regex::class,
                     'options' => [
                         'pattern' => '/^[0-9 \(\)\-\+]+$/',
                         'messages' => [

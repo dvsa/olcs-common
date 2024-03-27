@@ -5,6 +5,7 @@
  *
  * @author Jakub Igla <jakub.igla@valtech.co.uk>
  */
+
 namespace Common\Form\Elements\InputFilters;
 
 use Laminas\Form\Element as LaminasElement;
@@ -32,7 +33,7 @@ class Email extends LaminasElement implements InputProviderInterface
             'validators' => [
                 // @NOTE don't know if this is still used but I'll update it anyway
                 ['name' => \Dvsa\Olcs\Transfer\Validators\EmailAddress::class],
-                ['name' => \Laminas\Validator\StringLength::class, 'options'=> ['min' => 5, 'max' => 255]],
+                ['name' => \Laminas\Validator\StringLength::class, 'options' => ['min' => 5, 'max' => 255]],
             ]
         ];
     }

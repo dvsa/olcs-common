@@ -13,6 +13,7 @@ use Psr\Container\ContainerInterface;
 class IsAllowedListener implements FactoryInterface
 {
     use ProtectionPolicyTrait;
+
     /**
      * @var AuthorizationServiceInterface
      */

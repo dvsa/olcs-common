@@ -10,16 +10,16 @@ use Laminas\Form\View\Helper\AbstractHelper;
  */
 class PrepareAttributesTraitStub extends AbstractHelper
 {
+    use PrepareAttributesTrait {
+        prepareAttributes as public;
+    }
+
     protected $booleanAttributes = [
         'data-bool-attr' => [
             'on' => 'unit_YES',
             'off' => 'unit_NO',
         ],
     ];
-
-    use PrepareAttributesTrait {
-        prepareAttributes as public;
-    }
 
     public function getTranslatableAttributes()
     {

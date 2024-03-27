@@ -84,7 +84,6 @@ class LicenceApplicationTest extends MockeryTestCase
             ->times($appTimes)
             ->andReturn($formattedAppStatus);
 
-
         $this->urlHelper->shouldReceive('fromRoute')
             ->with('licence', ['licence' => $licId])
             ->once()

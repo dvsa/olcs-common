@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace CommonTest\Common\Rbac;
@@ -96,7 +97,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function validateToken_ShouldReturnFalse_WhenAnonymous(): void
+    public function validateTokenShouldReturnFalseWhenAnonymous(): void
     {
         $this->setupSut();
 
@@ -115,7 +116,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function validateToken_ShouldReturnFalse_WhenEmptyToken(): void
+    public function validateTokenShouldReturnFalseWhenEmptyToken(): void
     {
         $this->setupSut();
 
@@ -134,7 +135,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function validateToken_ShouldReturnFalse_WhenCantReadToken(): void
+    public function validateTokenShouldReturnFalseWhenCantReadToken(): void
     {
         $this->setupSut();
 
@@ -154,7 +155,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function validateToken_ShouldReturnFalse_WhenExpiredToken(): void
+    public function validateTokenShouldReturnFalseWhenExpiredToken(): void
     {
         $this->setupSut();
 
@@ -179,7 +180,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function validateToken_ShouldReturnFalse_WhenTokenHasWrongUser(): void
+    public function validateTokenShouldReturnFalseWhenTokenHasWrongUser(): void
     {
         $this->setupSut();
 
@@ -205,7 +206,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function validateToken_ShouldReturnTrue_WhenValid(): void
+    public function validateTokenShouldReturnTrueWhenValid(): void
     {
         $this->setupSut();
 
@@ -232,7 +233,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getIdentity_ShouldRetriveDataFromCache_WhenShouldntUpdateAndCacheExists(): void
+    public function getIdentityShouldRetriveDataFromCacheWhenShouldntUpdateAndCacheExists(): void
     {
         $this->setupSut();
 
@@ -255,7 +256,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getIdentity_ShouldRetriveDataFromDB_WhenIdentityIsNotInstanceOfUser(): void
+    public function getIdentityShouldRetriveDataFromDBWhenIdentityIsNotInstanceOfUser(): void
     {
         // Setup
         $this->setupSut();
@@ -274,7 +275,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getIdentity_ShouldRetriveDataFromDB_WhenIdentityHasNoId(): void
+    public function getIdentityShouldRetriveDataFromDBWhenIdentityHasNoId(): void
     {
         // Setup
         $this->setupSut();
@@ -293,7 +294,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getIdentity_ShouldRetriveDataFromDB_WhenCacheDoesntExist(): void
+    public function getIdentityShouldRetriveDataFromDBWhenCacheDoesntExist(): void
     {
         // Setup
         $this->setupSut();
@@ -319,7 +320,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getIdentity_ShouldStoreIdentityInTheSession(): void
+    public function getIdentityShouldStoreIdentityInTheSession(): void
     {
         // Setup
         $this->setupSut();
@@ -335,7 +336,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getIdentity_ShouldReturnInstanceofUser(): void
+    public function getIdentityShouldReturnInstanceofUser(): void
     {
         // Setup
         $this->setupSut();
@@ -350,7 +351,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getIdentity_ShouldReturnInstanceofUser_WithRoles(): void
+    public function getIdentityShouldReturnInstanceofUserWithRoles(): void
     {
         // Setup
         $this->setupSut();
@@ -369,7 +370,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getIdentity_ShouldRefreshTokens_WhenRequired(): void
+    public function getIdentityShouldRefreshTokensWhenRequired(): void
     {
         // Setup
         $this->setupSut();
@@ -390,7 +391,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getIdentity_ShouldNotRefreshTokens_WhenTokenSessionIsEmpty(): void
+    public function getIdentityShouldNotRefreshTokensWhenTokenSessionIsEmpty(): void
     {
         // Setup
         $this->setupSut();
@@ -411,7 +412,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getIdentity_ShouldReturnExistingIdentity_WhenPresent(): void
+    public function getIdentityShouldReturnExistingIdentityWhenPresent(): void
     {
         // Setup
         $this->setupSut();
@@ -429,7 +430,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
     /**
      * @test
      */
-    public function clearSession_ShouldClearSession(): void
+    public function clearSessionShouldClearSession(): void
     {
         $this->setupSut();
         $this->identitySession()->expects('exchangeArray')->with([]);
@@ -551,7 +552,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
     private function response(bool $isSuccess = false, array $result = []): Response
     {
         $httpResponse = new HttpResponse();
-        $httpResponse->setStatusCode($isSuccess ? 200:500);
+        $httpResponse->setStatusCode($isSuccess ? 200 : 500);
 
         $response = new Response($httpResponse);
         $response->setResult($result);

@@ -88,7 +88,7 @@ class FormRadioVerticalTest extends MockeryTestCase
     /**
      * @test
      */
-    public function render_IsCallable(): void
+    public function renderIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -99,9 +99,9 @@ class FormRadioVerticalTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends render_IsCallable
+     * @depends renderIsCallable
      */
-    public function render_RendersAFieldset(): void
+    public function renderRendersAFieldset(): void
     {
         // Setup
         $this->setUpSut();
@@ -117,9 +117,9 @@ class FormRadioVerticalTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends render_IsCallable
+     * @depends renderIsCallable
      */
-    public function render_RendersARadio(): void
+    public function renderRendersARadio(): void
     {
         // Setup
         $this->setUpSut();
@@ -135,9 +135,9 @@ class FormRadioVerticalTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends render_RendersARadio
+     * @depends renderRendersARadio
      */
-    public function render_ReturnsARenderedView(): void
+    public function renderReturnsARenderedView(): void
     {
         // Setup
         $this->setUpSut();
@@ -152,10 +152,10 @@ class FormRadioVerticalTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends render_RendersAFieldset
-     * @depends render_ReturnsARenderedView
+     * @depends renderRendersAFieldset
+     * @depends renderReturnsARenderedView
      */
-    public function render_ReturnsARenderedView_WithFieldsetElement(): void
+    public function renderReturnsARenderedViewWithFieldsetElement(): void
     {
         // Setup
         $this->setUpSut();
@@ -174,9 +174,9 @@ class FormRadioVerticalTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends render_ReturnsARenderedView_WithFieldsetElement
+     * @depends renderReturnsARenderedViewWithFieldsetElement
      */
-    public function render_ReturnsARenderedView_WithFieldsetElement_WhenPassedARadio(): void
+    public function renderReturnsARenderedViewWithFieldsetElementWhenPassedARadio(): void
     {
         // Setup
         $this->setUpSut();
@@ -199,9 +199,9 @@ class FormRadioVerticalTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends render_ReturnsARenderedView_WithFieldsetElement
+     * @depends renderReturnsARenderedViewWithFieldsetElement
      */
-    public function render_ReturnsARenderedView_WithFieldsetElement_WhenPassedARadio_WithRadioElementOption_SetToTheElementsName(): void
+    public function renderReturnsARenderedViewWithFieldsetElementWhenPassedARadioWithRadioElementOptionSetToTheElementsName(): void
     {
         // Setup
         $this->setUpSut();
@@ -223,10 +223,10 @@ class FormRadioVerticalTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends render_RendersARadio
-     * @depends render_ReturnsARenderedView
+     * @depends renderRendersARadio
+     * @depends renderReturnsARenderedView
      */
-    public function render_ReturnsARenderedView_WithRadioElement(): void
+    public function renderReturnsARenderedViewWithRadioElement(): void
     {
         // Setup
         $this->setUpSut();
@@ -245,10 +245,10 @@ class FormRadioVerticalTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends render_RendersARadio
-     * @depends render_ReturnsARenderedView
+     * @depends renderRendersARadio
+     * @depends renderReturnsARenderedView
      */
-    public function render_ReturnsARenderedView_WithValueOptions(): void
+    public function renderReturnsARenderedViewWithValueOptions(): void
     {
         // Setup
         $this->setUpSut();
@@ -267,10 +267,10 @@ class FormRadioVerticalTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends render_RendersARadio
-     * @depends render_ReturnsARenderedView
+     * @depends renderRendersARadio
+     * @depends renderReturnsARenderedView
      */
-    public function render_ReturnsARenderedView_WithValueOptions_FromAStringFormat_ToBeAnArray(): void
+    public function renderReturnsARenderedViewWithValueOptionsFromAStringFormatToBeAnArray(): void
     {
         // Setup
         $this->setUpSut();
@@ -294,10 +294,10 @@ class FormRadioVerticalTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends render_RendersARadio
-     * @depends render_ReturnsARenderedView
+     * @depends renderRendersARadio
+     * @depends renderReturnsARenderedView
      */
-    public function render_ReturnsARenderedView_WithValueOptions_FromAnArrayFormat_ToBeAnArray_IncludingConditionalContent_FromAValueOptionConfiguration(): void
+    public function renderReturnsARenderedViewWithValueOptionsFromAnArrayFormatToBeAnArrayIncludingConditionalContentFromAValueOptionConfiguration(): void
     {
         // Setup
         $this->setUpSut();
@@ -322,10 +322,10 @@ class FormRadioVerticalTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends render_RendersARadio
-     * @depends render_ReturnsARenderedView
+     * @depends renderRendersARadio
+     * @depends renderReturnsARenderedView
      */
-    public function render_ReturnsARenderedView_WithValueOptions_FromAnArrayFormat_ToBeAnArray_IncludingConditionalContent_FromASibling(): void
+    public function renderReturnsARenderedViewWithValueOptionsFromAnArrayFormatToBeAnArrayIncludingConditionalContentFromASibling(): void
     {
         // Setup
         $this->setUpSut();
@@ -355,7 +355,7 @@ class FormRadioVerticalTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends render_ReturnsARenderedView
+     * @depends renderReturnsARenderedView
      */
     public function renderReturnsRenderedViewWithLabelAndHint(): void
     {

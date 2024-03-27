@@ -143,7 +143,7 @@ class Search extends AbstractData
      */
     public function getLimit()
     {
-        return ($this->getQuery() === null || empty($this->getQuery()->limit))? 10 : $this->getQuery()->limit;
+        return ($this->getQuery() === null || empty($this->getQuery()->limit)) ? 10 : $this->getQuery()->limit;
     }
 
     /**
@@ -151,7 +151,7 @@ class Search extends AbstractData
      */
     public function getPage()
     {
-        return ($this->getQuery() === null || empty($this->getQuery()->page))? 1 : $this->getQuery()->page;
+        return ($this->getQuery() === null || empty($this->getQuery()->page)) ? 1 : $this->getQuery()->page;
     }
 
     /**

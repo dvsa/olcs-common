@@ -38,7 +38,7 @@ class FormElementErrorsTest extends MockeryTestCase
     /**
      * @test
      */
-    public function render_IsCallable(): void
+    public function renderIsCallable(): void
     {
         // Setup
         $serviceLocator = $this->setUpServiceLocator();
@@ -50,9 +50,9 @@ class FormElementErrorsTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends render_IsCallable
+     * @depends renderIsCallable
      */
-    public function render_EscapesHtmlInMessage(): void
+    public function renderEscapesHtmlInMessage(): void
     {
         // Setup
         $serviceLocator = $this->setUpServiceLocator();
@@ -68,7 +68,7 @@ class FormElementErrorsTest extends MockeryTestCase
     }
 
     /**
-     * @depends render_IsCallable
+     * @depends renderIsCallable
      */
     public function testRender(): void
     {

@@ -259,7 +259,7 @@ class NoOfPermitsTest extends TestCase
 
         $element2021 = $permitsRequiredElements['2021'];
         $this->assertInstanceOf(HtmlElement::class, $element2021);
-        $this->assertEquals('<p class="no-more-available">' . $for2021Html. '</p>', $element2021->getValue());
+        $this->assertEquals('<p class="no-more-available">' . $for2021Html . '</p>', $element2021->getValue());
 
         $this->assertArrayHasKey('Submit', $formFieldsets);
         $submitFieldsetElements = $formFieldsets['Submit']->getElements();
@@ -419,15 +419,15 @@ class NoOfPermitsTest extends TestCase
 
         $element2018 = $permitsRequiredElements['2018'];
         $this->assertInstanceOf(HtmlElement::class, $element2018);
-        $this->assertEquals('<p class="no-more-available">' . $for2018Html. '</p>', $element2018->getValue());
+        $this->assertEquals('<p class="no-more-available">' . $for2018Html . '</p>', $element2018->getValue());
 
         $element2019 = $permitsRequiredElements['2019'];
         $this->assertInstanceOf(HtmlElement::class, $element2019);
-        $this->assertEquals('<p class="no-more-available">' . $for2019Html. '</p>', $element2019->getValue());
+        $this->assertEquals('<p class="no-more-available">' . $for2019Html . '</p>', $element2019->getValue());
 
         $element2020 = $permitsRequiredElements['2020'];
         $this->assertInstanceOf(HtmlElement::class, $element2020);
-        $this->assertEquals('<p class="no-more-available">' . $for2020Html. '</p>', $element2020->getValue());
+        $this->assertEquals('<p class="no-more-available">' . $for2020Html . '</p>', $element2020->getValue());
 
         $this->assertArrayHasKey('Submit', $formFieldsets);
         $submitFieldsetElements = $formFieldsets['Submit']->getElements();

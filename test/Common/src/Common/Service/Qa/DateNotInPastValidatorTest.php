@@ -5,6 +5,7 @@
  *
  * @author Jonathan Thomas <jonathan@opalise.co.uk>
  */
+
 namespace CommonTest\Service\Qa;
 
 use Common\Service\Qa\DateNotInPastValidator;
@@ -32,7 +33,7 @@ class DateNotInPastValidatorTest extends MockeryTestCase
 
         $this->dateNotInPastValidator = new DateNotInPastValidator($dateTimeFactory, $options);
     }
-    
+
     /**
      * @dataProvider dpIsValidTrue
      */

@@ -11,7 +11,6 @@ use Common\Form\Elements\Validators\Date;
  */
 class DateTest extends \PHPUnit\Framework\TestCase
 {
-
     /**
      * @dataProvider providerIsValid
      * @param $expected

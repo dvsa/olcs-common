@@ -1,4 +1,5 @@
 <?php
+
 $prefix = 'selfserve-app-subSection-previous-history-previous-licence-';
 
 return [

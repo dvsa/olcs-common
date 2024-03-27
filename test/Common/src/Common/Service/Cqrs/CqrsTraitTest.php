@@ -8,6 +8,7 @@ use CommonTest\Common\Service\Cqrs\Stub\CqrsTraitStub;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 use Laminas\Http\Response as HttpResponse;
+
 class CqrsTraitTest extends MockeryTestCase
 {
     /** @var  m\MockInterface */

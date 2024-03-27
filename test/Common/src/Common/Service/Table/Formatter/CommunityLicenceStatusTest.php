@@ -36,7 +36,6 @@ class CommunityLicenceStatusTest extends MockeryTestCase
             ->andReturn('route')
             ->getMock();
 
-
         $this->request->shouldReceive('getQuery')
             ->andReturn(
                 m::mock()

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Input Specification for Conviction offence details
  *
@@ -17,7 +18,6 @@ use Laminas\InputFilter\InputProviderInterface;
  */
 class ConvictionTextarea extends LaminasElement implements InputProviderInterface
 {
-
     public function __construct($name = null, $options = [])
     {
         parent::__construct($name, $options);

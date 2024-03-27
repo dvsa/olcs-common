@@ -12,7 +12,6 @@ use Laminas\Form\Annotation as Form;
  */
 class AddPerson
 {
-
     /**
      * @Form\Attributes({"class":""})
      * @Form\ComposedObject("Common\Form\Model\Form\Licence\Fieldset\Person")

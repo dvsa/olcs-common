@@ -103,7 +103,7 @@ class ActionLinks extends Selector
             return $column['actionClasses'];
         }
 
-        $modalClass = ($this->useModal($column)) ? ' trigger-modal' :'';
+        $modalClass = ($this->useModal($column)) ? ' trigger-modal' : '';
         return 'right-aligned govuk-button govuk-button--secondary' . $modalClass;
     }
 

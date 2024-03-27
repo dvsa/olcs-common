@@ -1,6 +1,5 @@
 <?php
 
-
 namespace CommonTest\Validation\Service;
 
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;

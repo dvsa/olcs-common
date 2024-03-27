@@ -335,13 +335,11 @@ abstract class AbstractBusinessDetailsController extends AbstractController
             $data = CompanySubsidiaryMapper::mapFromResult($response->getResult());
         }
 
-        // @todo Move this into a form service
         /** @var \Common\Form\Form $form */
         $form = $this->formHelper
             ->createFormWithRequest('Lva\BusinessDetailsSubsidiaryCompany', $request)
             ->setData($data);
 
-        // @todo Add this generic behaviour to a form service
         if ($mode !== 'add') {
             $form->get('form-actions')->remove('addAnother');
         }

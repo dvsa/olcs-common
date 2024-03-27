@@ -5,6 +5,7 @@
  *
  * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
+
 namespace Common\Form\Elements\Validators;
 
 use Laminas\Validator\AbstractValidator;
@@ -36,7 +37,8 @@ class VehicleUndertakingsNoLimousineConfirmationValidator extends AbstractValida
         $requiredContext = $this->getOption('required_context_value');
 
         // This only gets used if psvOperateSmallVhl is shown
-        if (isset($context['psvLimousines'])
+        if (
+            isset($context['psvLimousines'])
             && $context['psvLimousines'] === $requiredContext
             && $value !== 'Y'
         ) {

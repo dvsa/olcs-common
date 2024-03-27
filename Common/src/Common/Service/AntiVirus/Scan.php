@@ -4,7 +4,6 @@ namespace Common\Service\AntiVirus;
 
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Olcs\Logging\Log\Logger;
-
 use Psr\Container\ContainerInterface;
 
 /**

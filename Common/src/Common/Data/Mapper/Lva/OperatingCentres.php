@@ -201,7 +201,7 @@ class OperatingCentres implements MapperInterface
                 $key = key($err);
 
                 if (in_array($key, self::API_ERR_KEYS)) {
-                    $msg = $translatorSrv->translateReplace($key .'_'. strtoupper($location), $err);
+                    $msg = $translatorSrv->translateReplace($key . '_' . strtoupper($location), $err);
                 } else {
                     $msg = current($err);
                 }

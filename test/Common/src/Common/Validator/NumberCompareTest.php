@@ -19,7 +19,7 @@ class NumberCompareTest extends MockeryTestCase
         $sut = new NumberCompare();
         $sut->setOptions(
             [
-                'compare_to' =>'test',
+                'compare_to' => 'test',
                 'compare_to_label' => [null],
                 'operator' => 'lt',
                 'max_diff' => 100
@@ -30,7 +30,6 @@ class NumberCompareTest extends MockeryTestCase
         $this->assertEquals([null], $sut->getCompareToLabel());
         $this->assertEquals('lt', $sut->getOperator());
         $this->assertEquals(100, $sut->getMaxDiff());
-
     }
 
     /**

@@ -64,7 +64,7 @@ abstract class AbstractTransportManagersController extends AbstractController
 
     protected AnnotationBuilder $transferAnnotationBuilder;
 
-    protected $lvaAdapter; //ToDo: Use Union Type Hint when available in php 8.0
+    protected $lvaAdapter;
     /**
      * @param $lvaAdapter
      */

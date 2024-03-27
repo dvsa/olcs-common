@@ -1,4 +1,5 @@
 <?php
+
 namespace Common\Rbac;
 
 use LmcRbacMvc\Identity\IdentityInterface;

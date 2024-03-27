@@ -33,8 +33,6 @@ class TaskDate implements FormatterPluginManagerInterface
     {
         $date = $this->dateFormatter->format($data, $column);
         if (isset($data['urgent']) && $data['urgent'] === 'Y') {
-            // @TODO no AC for what the urgent marker looks like
-            // $date .= ' <span class="status orange">urgent</span>';
             $date .= ' (urgent)';
         }
 

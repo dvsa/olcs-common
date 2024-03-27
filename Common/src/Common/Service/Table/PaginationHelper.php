@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Common\Service\Table;
 
 /**

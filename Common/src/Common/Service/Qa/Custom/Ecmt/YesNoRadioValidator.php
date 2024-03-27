@@ -30,7 +30,7 @@ class YesNoRadioValidator extends AbstractValidator
             $this->yesContentElement->setMessages(
                 ['qanda.ecmt.restricted-countries.error.select-countries']
             );
-    
+
             return false;
         }
 

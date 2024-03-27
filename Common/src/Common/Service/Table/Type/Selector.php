@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Service\Table\Type;
 
 use Common\Util\Escape;
@@ -97,7 +98,7 @@ class Selector extends AbstractType
             $idx = $column['idIndex'];
         }
 
-        $attributes[] = 'id="'. $fieldset . '[id][' . $data[$idx] .']"';
+        $attributes[] = 'id="' . $fieldset . '[id][' . $data[$idx] . ']"';
 
         return sprintf($this->format, $name, $data[$idx], implode(' ', $attributes));
     }

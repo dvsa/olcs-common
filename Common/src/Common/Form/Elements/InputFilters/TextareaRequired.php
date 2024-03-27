@@ -1,4 +1,5 @@
 <?php
+
 namespace Common\Form\Elements\InputFilters;
 
 use Laminas\InputFilter\InputProviderInterface;

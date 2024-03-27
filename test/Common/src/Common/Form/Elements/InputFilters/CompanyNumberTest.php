@@ -32,7 +32,7 @@ class CompanyNumberTest extends \PHPUnit\Framework\TestCase
             'validators' => [
                 [
                     'name' => \Laminas\Validator\StringLength::class,
-                    'options'=> [
+                    'options' => [
                         'min' => 1,
                         'max' => 8,
                         'messages' => [

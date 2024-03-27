@@ -1,4 +1,5 @@
 <?php
+
 namespace Common\Service\Cqrs\Query;
 
 use Common\Service\Cqrs\Response;

@@ -96,7 +96,7 @@ abstract class AbstractFinancialHistoryController extends AbstractController
         $hasProcessedFiles = $this->processFiles(
             $form,
             'data->file',
-            function (array $file) : void {
+            function (array $file): void {
                 $this->processFinancialFileUpload($file);
             },
             fn(int $id): bool => $this->deleteFile($id),

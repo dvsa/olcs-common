@@ -151,7 +151,7 @@ class FormDateTimeSelectTest extends MockeryTestCase
 
         for ($i = 0; $i <= 59; ++$i) {
             $minute = str_pad($i, 2, '0', STR_PAD_LEFT);
-            $expected .= '<option value="' . $minute . '">' . $minute. '</option>';
+            $expected .= '<option value="' . $minute . '">' . $minute . '</option>';
         }
 
         $expected .= '</select>';

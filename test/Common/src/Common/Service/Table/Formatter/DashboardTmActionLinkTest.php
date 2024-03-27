@@ -80,7 +80,6 @@ class DashboardTmActionLinkTest extends MockeryTestCase
             ->with('dashboard.tm-applications.table.action.' . $expectTextKey)
             ->andReturn('LINK TEXT');
 
-
         $mockTranslateReplace = m::mock(TranslateReplace::class);
         $mockTranslateReplace->expects('__invoke')
             ->with('dashboard.tm-applications.table.aria.' . $expectTextKey, [323])

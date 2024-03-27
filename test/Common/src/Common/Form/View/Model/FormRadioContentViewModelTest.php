@@ -57,7 +57,7 @@ class FormRadioContentViewModelTest extends MockeryTestCase
     /**
      * @test
      */
-    public function __construct_InitialisesIdVariable(): void
+    public function constructInitialisesIdVariable(): void
     {
         // Setup
         $this->setUpSut(static::A_VALUE_OPTION_WITH_ID);
@@ -68,9 +68,9 @@ class FormRadioContentViewModelTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __construct_InitialisesIdVariable
+     * @depends constructInitialisesIdVariable
      */
-    public function __construct_InitialisesIdVariable_WhenNoIdIsSetOnValueOption(): void
+    public function constructInitialisesIdVariableWhenNoIdIsSetOnValueOption(): void
     {
         // Setup
         $this->setUpSut(static::A_VALUE_OPTION_WITHOUT_ID);
@@ -82,7 +82,7 @@ class FormRadioContentViewModelTest extends MockeryTestCase
     /**
      * @test
      */
-    public function __construct_ConditionalContentVariable(): void
+    public function constructConditionalContentVariable(): void
     {
         // Setup
         $this->setUpSut(static::A_VALUE_OPTION_WITH_CONDITIONAL_CONTENT);
@@ -94,7 +94,7 @@ class FormRadioContentViewModelTest extends MockeryTestCase
     /**
      * @test
      */
-    public function __construct_HasTemplate(): void
+    public function constructHasTemplate(): void
     {
         // Setup
         $this->setUpSut(static::A_VALUE_OPTION_WITH_ID);
@@ -106,7 +106,7 @@ class FormRadioContentViewModelTest extends MockeryTestCase
     /**
      * @test
      */
-    public function __construct_SetClassVariable_WithDefaultClasses(): void
+    public function constructSetClassVariableWithDefaultClasses(): void
     {
         // Setup
         $this->setUpSut(static::A_VALUE_OPTION_WITH_ID);
@@ -117,9 +117,9 @@ class FormRadioContentViewModelTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __construct_SetClassVariable_WithDefaultClasses
+     * @depends constructSetClassVariableWithDefaultClasses
      */
-    public function __construct_SetClassVariable_WithCustomClasses_FromString(): void
+    public function constructSetClassVariableWithCustomClassesFromString(): void
     {
         // Setup
         $this->setUpSut(static::A_VALUE_OPTION_WITH_CUSTOM_CLASS_STRING);
@@ -130,9 +130,9 @@ class FormRadioContentViewModelTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __construct_SetClassVariable_WithCustomClasses_FromString
+     * @depends constructSetClassVariableWithCustomClassesFromString
      */
-    public function __construct_SetClassVariable_WithCustomClasses_FromString_AndEliminatesDuplicates(): void
+    public function constructSetClassVariableWithCustomClassesFromStringAndEliminatesDuplicates(): void
     {
         // Setup
         $this->setUpSut(static::A_VALUE_OPTION_WITH_CUSTOM_CLASS_STRING_WITH_DUPLICATES);
@@ -143,9 +143,9 @@ class FormRadioContentViewModelTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __construct_SetClassVariable_WithDefaultClasses
+     * @depends constructSetClassVariableWithDefaultClasses
      */
-    public function __construct_SetClassVariable_WithCustomClasses_FromArray(): void
+    public function constructSetClassVariableWithCustomClassesFromArray(): void
     {
         // Setup
         $this->setUpSut(static::A_VALUE_OPTION_WITH_CUSTOM_CLASS_ARRAY);
@@ -156,9 +156,9 @@ class FormRadioContentViewModelTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __construct_SetClassVariable_WithCustomClasses_FromArray
+     * @depends constructSetClassVariableWithCustomClassesFromArray
      */
-    public function __construct_SetClassVariable_WithCustomClasses_FromArray_AndEliminatesDuplicates(): void
+    public function constructSetClassVariableWithCustomClassesFromArrayAndEliminatesDuplicates(): void
     {
         // Setup
         $this->setUpSut(static::A_VALUE_OPTION_WITH_CUSTOM_CLASS_ARRAY_WITH_DUPLICATES);

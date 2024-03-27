@@ -268,8 +268,8 @@ class FormCollectionTest extends MockeryTestCase
             '<div class="help__text">' .
             '<h3 class="file__heading">_TRANSL_common.file-upload.table.col.FileName</h3>' .
             '<ul name="files" title="unit_attr1" data-group="files">' .
-            '<p class="hint">_TRANSL_@unit_hint@</p>'.
-            '<li name="file1" data-group="file1"></li>'.
+            '<p class="hint">_TRANSL_@unit_hint@</p>' .
+            '<li name="file1" data-group="file1"></li>' .
             '</ul>' .
             '</div>',
             $actual

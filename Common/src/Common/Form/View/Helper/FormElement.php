@@ -101,7 +101,6 @@ class FormElement extends LaminasFormElement
             return $renderedOptions;
         }
 
-
         if ($element instanceof TrafficAreaSet) {
             $value = $element->getValue();
             $view = $this->getView();

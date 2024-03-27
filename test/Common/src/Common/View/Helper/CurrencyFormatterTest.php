@@ -2,7 +2,7 @@
 
 namespace CommonTest\View\Helper;
 
-use \Common\View\Helper\CurrencyFormatter;
+use Common\View\Helper\CurrencyFormatter;
 
 /**
  * Test CurrencyFormatter view helper

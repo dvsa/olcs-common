@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace CommonTest\Common\Rbac;
@@ -29,7 +30,7 @@ class IdentityProviderFactoryTest extends MockeryTestCase
     /**
      * @test
      */
-    public function __invoke_IsCallable(): void
+    public function invokeIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -40,9 +41,9 @@ class IdentityProviderFactoryTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_ReturnsInstance_WhenItImplementsIdentityProviderInterface(): void
+    public function invokeReturnsInstanceWhenItImplementsIdentityProviderInterface(): void
     {
         // Setup
         $this->setUpSut();
@@ -58,9 +59,9 @@ class IdentityProviderFactoryTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_ThrowsException_WhenConfigIsMissing(): void
+    public function invokeThrowsExceptionWhenConfigIsMissing(): void
     {
         // Setup
         $this->setUpSut();
@@ -76,9 +77,9 @@ class IdentityProviderFactoryTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_ThrowsException_WhenContainerDoesNotHaveRequestedInstance(): void
+    public function invokeThrowsExceptionWhenContainerDoesNotHaveRequestedInstance(): void
     {
         // Setup
         $this->setUpSut();
@@ -94,9 +95,9 @@ class IdentityProviderFactoryTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_ThrowsException_WhenInstanceDoesNotImplementIdentityProviderInterface(): void
+    public function invokeThrowsExceptionWhenInstanceDoesNotImplementIdentityProviderInterface(): void
     {
         // Setup
         $this->setUpSut();

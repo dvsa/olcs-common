@@ -42,7 +42,7 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
     protected CommandService $commandService;
 
     protected $lvaAdapter;
-      //TODO: Use Union Type when PHP 8 is available
+
     protected FileUploadHelperService $uploadHelper;
 
     /**
@@ -107,7 +107,7 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
         $hasProcessedFiles = $this->processFiles(
             $form,
             'evidence->files',
-            function (array $file) : void {
+            function (array $file): void {
                 $this->processFinancialEvidenceFileUpload($file);
             },
             fn(int $id): bool => $this->deleteFile($id),

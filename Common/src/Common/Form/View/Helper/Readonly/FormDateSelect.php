@@ -32,7 +32,8 @@ class FormDateSelect extends AbstractHelper
             return '';
         }
 
-        if (empty($element->getYearElement()->getValue())
+        if (
+            empty($element->getYearElement()->getValue())
             || empty($element->getMonthElement()->getValue())
             || empty($element->getDayElement()->getValue())
         ) {

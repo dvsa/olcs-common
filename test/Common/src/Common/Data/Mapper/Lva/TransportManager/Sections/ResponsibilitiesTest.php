@@ -1,6 +1,5 @@
 <?php
 
-
 namespace CommonTest\Data\Mapper\Lva\TransportManager\Sections;
 
 use Common\Data\Mapper\Lva\TransportManager\Sections\Responsibilities;
@@ -28,7 +27,7 @@ class ResponsibilitiesTest extends MockeryTestCase
         $actual = $this->sut->populate(
             [
                 'isOwner' => '__TEST__',
-                'tmType'=>['description'=>'__TEST__'],
+                'tmType' => ['description' => '__TEST__'],
             ]
         );
         $this->assertInstanceOf(Responsibilities::class, $actual);

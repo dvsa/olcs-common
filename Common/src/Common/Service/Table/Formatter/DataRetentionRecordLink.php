@@ -201,7 +201,6 @@ class DataRetentionRecordLink implements FormatterPluginManagerInterface
         }
 
         if (!is_null($url)) {
-
             $url = $this->urlHelper->fromRoute(
                 'licence-no',
                 ['licNo' => $licenceNumber],
@@ -235,7 +234,6 @@ class DataRetentionRecordLink implements FormatterPluginManagerInterface
         }
 
         if (!is_null($url)) {
-
             $url = $this->urlHelper->fromRoute(
                 'operator/business-details',
                 ['organisation' => $organisationId],

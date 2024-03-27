@@ -7,7 +7,6 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 class UniqidGeneratorTest extends MockeryTestCase
 {
-
     public function testGetLastId(): void
     {
         $sut = new UniqidGenerator();

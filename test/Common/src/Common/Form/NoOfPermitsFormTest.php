@@ -85,7 +85,7 @@ class NoOfPermitsFormTest extends TestCase
         $fieldsFieldset = new Fieldset('fieldsFieldset');
         $fieldsFieldset->add($permitsRequiredFieldset);
 
-        $noOfPermitsForm = m::mock(NoOfPermitsForm::class.'[callParentIsValid, callParentGetMessages]')
+        $noOfPermitsForm = m::mock(NoOfPermitsForm::class . '[callParentIsValid, callParentGetMessages]')
             ->shouldAllowMockingProtectedMethods();
         $noOfPermitsForm->add($fieldsFieldset);
 

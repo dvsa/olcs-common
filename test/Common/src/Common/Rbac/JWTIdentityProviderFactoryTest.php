@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace CommonTest\Common\Rbac;
@@ -31,7 +32,7 @@ class JWTIdentityProviderFactoryTest extends MockeryTestCase
     /**
      * @test
      */
-    public function __invoke_IsCallable(): void
+    public function invokeIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -42,9 +43,9 @@ class JWTIdentityProviderFactoryTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_ReturnsAnInstanceOfJWTIdentityProvider(): void
+    public function invokeReturnsAnInstanceOfJWTIdentityProvider(): void
     {
         // Setup
         $this->setUpSut();
@@ -59,9 +60,9 @@ class JWTIdentityProviderFactoryTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_ThrowsException_WhenConfigIsMissing(): void
+    public function invokeThrowsExceptionWhenConfigIsMissing(): void
     {
         // Setup
         $this->setUpSut();

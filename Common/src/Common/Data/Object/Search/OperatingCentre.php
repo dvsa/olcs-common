@@ -40,7 +40,6 @@ class OperatingCentre extends InternalSearchAbstract
     public function getFilters()
     {
         if (empty($this->filters)) {
-
             $this->filters = [
                 new Filter\EntityType(),
                 new Filter\LicenceType(),
@@ -66,13 +65,13 @@ class OperatingCentre extends InternalSearchAbstract
         return [
             [
                 'title' => 'Licence number',
-                'name'=> 'licNo',
+                'name' => 'licNo',
                 'formatter' => static fn($data) => '<a class="govuk-link" href="/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>/'
                 . '<br />' . $data['licStatusDesc']
             ],
             [
                 'title' => 'Operator name',
-                'name'=> 'orgName',
+                'name' => 'orgName',
                 'formatter' => static fn($data) => '<a class="govuk-link" href="/operator/' . $data['orgId'] . '">' . $data['orgName'] . '</a>'
             ],
             [

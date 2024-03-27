@@ -486,7 +486,7 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
 
         $this->assertSame(
             '<p class="hint">Hint</p><input type="text" name="test" class="class" id="test" value="">'
-            .'<div class="hint">HINT BELOW</div>',
+            . '<div class="hint">HINT BELOW</div>',
             $output
         );
     }

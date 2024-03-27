@@ -1,10 +1,10 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Internal licence conversation link
  */
+
+declare(strict_types=1);
 
 namespace Common\Service\Table\Formatter;
 

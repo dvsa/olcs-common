@@ -641,7 +641,7 @@ class LicenceChecklist
             'safetyInsVehicles' => $safetyInsVehicles,
             'safetyInsTrailers' => $safetyInsTrailers,
             'safetyInsVaries' => $safetyInsVaries,
-            'tachographIns'=> isset($data['tachographIns']['id'])
+            'tachographIns' => isset($data['tachographIns']['id'])
                 ? $translator->translate('continuations.safety-section.table.' . $data['tachographIns']['id'])
                 : null,
             'tachographInsName' => $data['tachographInsName'],
@@ -723,7 +723,7 @@ class LicenceChecklist
                 $user['permission'] = implode(
                     ',',
                     array_map(
-                        static fn($role) => $translator->translate('role.'.$role['role']),
+                        static fn($role) => $translator->translate('role.' . $role['role']),
                         $userData['roles']
                     )
                 );

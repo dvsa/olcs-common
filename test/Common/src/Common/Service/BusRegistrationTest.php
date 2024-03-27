@@ -1,6 +1,5 @@
 <?php
 
-
 namespace CommonTest\Service;
 
 use Common\Service\BusRegistration;

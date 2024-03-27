@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace CommonTest\Service\Review;
 
 use Common\RefData;
@@ -27,7 +28,7 @@ class ConditionsUndertakingsReviewServiceTest extends \PHPUnit\Framework\TestCas
     protected function setUp(): void
     {
         $mockTranslationHelper = m::mock(TranslationHelperService::class);
-        
+
         $abstractReviewServiceServices = m::mock(AbstractReviewServiceServices::class);
         $abstractReviewServiceServices->shouldReceive('getTranslationHelper')
             ->withNoArgs()

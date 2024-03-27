@@ -11,7 +11,6 @@ use Laminas\Form\Annotation as Form;
  */
 class BusinessDetails
 {
-
     /**
      * @Form\Options({"label":"application_your-business_business-details.data.company_number"})
      * @Form\Attributes({"id": "companyNumber"})

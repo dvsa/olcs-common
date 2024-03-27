@@ -55,7 +55,7 @@ class DateCompare extends AbstractCompare
      */
     public function setHasTime($hasTime)
     {
-        $this->hasTime = (boolean) $hasTime;
+        $this->hasTime = (bool) $hasTime;
         return $this;
     }
 
@@ -73,7 +73,7 @@ class DateCompare extends AbstractCompare
      */
     public function setAllowEmpty($allowEmpty)
     {
-        $this->allowEmpty = (boolean) $allowEmpty;
+        $this->allowEmpty = (bool) $allowEmpty;
         return $this;
     }
 

@@ -31,7 +31,7 @@ class CommandServiceFactoryTest extends MockeryTestCase
     /**
      * @test
      */
-    public function __invoke_IsCallable(): void
+    public function invokeIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -42,9 +42,9 @@ class CommandServiceFactoryTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_ReturnsAnInstanceOfCommandService(): void
+    public function invokeReturnsAnInstanceOfCommandService(): void
     {
         // Setup
         $this->setUpSut();
@@ -69,9 +69,9 @@ class CommandServiceFactoryTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_ThrowsException_WhenConfigMissing(): void
+    public function invokeThrowsExceptionWhenConfigMissing(): void
     {
         // Setup
         $this->setUpSut();

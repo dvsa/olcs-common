@@ -28,7 +28,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
 
     protected TableFactory $tableFactory;
 
-    protected $lvaAdapter; // ToDo: use UnionType here when PHP 8 is in place
+    protected $lvaAdapter;
     /**
      * @param $lvaAdapter
      */

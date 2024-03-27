@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Common\Service\Data;
 
 use Common\Exception\DataServiceException;

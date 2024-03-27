@@ -113,7 +113,8 @@ class OneOf extends AbstractValidator
                 continue;
             }
 
-            if ((!empty($context[$field])) || ($context[$field] == 0 && $this->getAllowZero())
+            if (
+                (!empty($context[$field])) || ($context[$field] == 0 && $this->getAllowZero())
             ) {
                 $valid = true;
                 break;

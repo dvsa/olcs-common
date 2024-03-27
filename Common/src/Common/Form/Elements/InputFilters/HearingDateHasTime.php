@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * @author Ian Lindsay <ian@hemera-business-services.co.uk>
@@ -31,8 +32,10 @@ class HearingDateHasTime extends LaminasDateSelect implements InputProviderInter
                     'options' => [
                         'callback' => static function ($date) {
                             // Convert the date to a specific format
-                            if (!is_array($date) || empty($date['year']) ||
-                                empty($date['month']) || empty($date['day'])) {
+                            if (
+                                !is_array($date) || empty($date['year']) ||
+                                empty($date['month']) || empty($date['day'])
+                            ) {
                                 return null;
                             }
                             return $date['year'] . '-' . $date['month'] . '-' . $date['day'];

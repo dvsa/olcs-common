@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Form\Elements\Types;
 
 use Laminas\Form\Fieldset;
@@ -31,7 +32,7 @@ class MultipleFileUpload extends Fieldset
         $this->setLabel('Upload file');
 
         $list = new FileUploadList('list');
-        
+
         $this->add($list);
 
         $messages = new Element\Hidden('__messages__');

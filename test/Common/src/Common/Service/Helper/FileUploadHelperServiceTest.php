@@ -85,7 +85,8 @@ class FileUploadHelperServiceTest extends MockeryTestCase
 
     public function testSetGetDeleteCallback(): void
     {
-        $callback = function () {};
+        $callback = function () {
+        };
         $this->assertEquals(
             $callback,
             $this->sut->setDeleteCallback($callback)->getDeleteCallback()
@@ -94,7 +95,8 @@ class FileUploadHelperServiceTest extends MockeryTestCase
 
     public function testSetGetLoadCallback(): void
     {
-        $callback = function () {};
+        $callback = function () {
+        };
         $this->assertEquals(
             $callback,
             $this->sut->setLoadCallback($callback)->getLoadCallback()
@@ -285,10 +287,10 @@ class FileUploadHelperServiceTest extends MockeryTestCase
     public function fileUploadProvider()
     {
         return [
-            [UPLOAD_ERR_PARTIAL, 'message.file-upload-error.'. UPLOAD_ERR_PARTIAL],
-            [UPLOAD_ERR_NO_FILE, 'message.file-upload-error.'. UPLOAD_ERR_NO_FILE],
-            [UPLOAD_ERR_INI_SIZE, 'message.file-upload-error.'. UPLOAD_ERR_INI_SIZE],
-            [UPLOAD_ERR_NO_TMP_DIR, 'message.file-upload-error.'. UPLOAD_ERR_NO_TMP_DIR],
+            [UPLOAD_ERR_PARTIAL, 'message.file-upload-error.' . UPLOAD_ERR_PARTIAL],
+            [UPLOAD_ERR_NO_FILE, 'message.file-upload-error.' . UPLOAD_ERR_NO_FILE],
+            [UPLOAD_ERR_INI_SIZE, 'message.file-upload-error.' . UPLOAD_ERR_INI_SIZE],
+            [UPLOAD_ERR_NO_TMP_DIR, 'message.file-upload-error.' . UPLOAD_ERR_NO_TMP_DIR],
         ];
     }
 

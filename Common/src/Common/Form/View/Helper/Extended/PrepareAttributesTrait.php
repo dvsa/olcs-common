@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Form\View\Helper\Extended;
 
 /**
@@ -36,7 +37,8 @@ trait PrepareAttributesTrait
                 $this->translatableAttributes += [$attribute => true];
             }
 
-            if (!isset($this->validGlobalAttributes[$attribute])
+            if (
+                !isset($this->validGlobalAttributes[$attribute])
                 && !isset($this->validTagAttributes[$attribute])
                 && 'data-' != substr($attribute, 0, 5)
                 && 'aria-' != substr($attribute, 0, 5)

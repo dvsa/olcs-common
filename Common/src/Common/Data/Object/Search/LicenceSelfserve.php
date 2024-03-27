@@ -1,4 +1,5 @@
 <?php
+
 namespace Common\Data\Object\Search;
 
 use Common\Data\Object\Search\Aggregations\Terms as Filter;
@@ -57,7 +58,6 @@ class LicenceSelfserve extends InternalSearchAbstract
     public function getFilters()
     {
         if (empty($this->filters)) {
-
             $this->filters = [
                 new Filter\EntityType(),
                 new Filter\LicenceType(),
@@ -80,7 +80,7 @@ class LicenceSelfserve extends InternalSearchAbstract
         return [
             [
                 'title' => 'Licence number',
-                'name'=> 'licNo',
+                'name' => 'licNo',
                 'formatter' => static fn($data) => '<a class="govuk-link" href="/view-details/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>'
             ],
             [
@@ -90,12 +90,12 @@ class LicenceSelfserve extends InternalSearchAbstract
             ],
             [
                 'title' => 'Operator name',
-                'name'=> 'orgName',
+                'name' => 'orgName',
                 'formatter' => static fn($data) => $data['orgName'] . ($data['noOfLicencesHeld'] > 1 ? ' (MLH)' : ''),
             ],
             [
                 'title' => 'Trading name',
-                'name'=> 'licenceTradingNames',
+                'name' => 'licenceTradingNames',
                 'formatter' => static fn($data) => str_replace('|', ', <br />', $data['licenceTradingNames'])
             ]
         ];

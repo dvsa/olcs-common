@@ -38,7 +38,6 @@ class PlainTextTest extends \PHPUnit\Framework\TestCase
         );
         $formPlainText->setView($mockRenderer);
 
-
         $this->helper = new FormElement();
         $this->helper->setView($mockRenderer);
 

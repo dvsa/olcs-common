@@ -1,6 +1,5 @@
 <?php
 
-
 namespace CommonTest\Data\Mapper\Lva\TransportManager\Sections;
 
 use Common\Data\Mapper\Lva\TransportManager\Sections\OtherEmployment;
@@ -10,7 +9,6 @@ use Mockery as m;
 
 class OtherEmploymentsTest extends MockeryTestCase
 {
-
     private $mockTranslator;
 
     private $sut;
@@ -26,8 +24,8 @@ class OtherEmploymentsTest extends MockeryTestCase
     {
         $actual = $this->sut->populate(
             [
-                'transportManager' =>[
-                    'employments'=>[]
+                'transportManager' => [
+                    'employments' => []
                 ]
             ]
         );
@@ -42,30 +40,29 @@ class OtherEmploymentsTest extends MockeryTestCase
             'translateReplace'
         )->with('markup-lva-tmverify-details-checkanswer-answer-otherEmployments', ['__TEST__'])->times(3)->andReturn('__TEST__');
 
-
         $this->mockTranslator->shouldReceive(
             'translateReplace'
         )->with('markup-lva-tmverify-details-checkanswer-answer-otherEmployments-more', [1])->once()->andReturn('__TEST__');
 
         $actual = $this->sut->populate(
             [
-                'transportManager' =>[
-                    'employments'=>[
-                        0 =>[
-                            'employerName' =>'__TEST__',
-                            'createdOn'=>1,
+                'transportManager' => [
+                    'employments' => [
+                        0 => [
+                            'employerName' => '__TEST__',
+                            'createdOn' => 1,
                         ],
-                        1 =>[
-                            'employerName' =>'__TEST__',
-                            'createdOn'=>3,
+                        1 => [
+                            'employerName' => '__TEST__',
+                            'createdOn' => 3,
                         ],
-                        2 =>[
-                            'employerName' =>'__TEST__',
-                            'createdOn'=>2,
+                        2 => [
+                            'employerName' => '__TEST__',
+                            'createdOn' => 2,
                         ],
-                        3 =>[
-                            'employerName' =>'__TEST__',
-                            'createdOn'=>4,
+                        3 => [
+                            'employerName' => '__TEST__',
+                            'createdOn' => 4,
                         ]
                     ]
                 ]

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace CommonTest\Controller\Util;
 
 use Common\Util\MultiResponseHelper;

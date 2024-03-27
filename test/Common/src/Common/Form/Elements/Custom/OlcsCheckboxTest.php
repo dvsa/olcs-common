@@ -5,6 +5,7 @@
  *
  * @author Shaun Lizzio <shaun.lizzio@valtech.co.uk>
  */
+
 namespace CommonTest\Form\Elements\Custom;
 
 use Common\Form\Elements\Custom\OlcsCheckbox;

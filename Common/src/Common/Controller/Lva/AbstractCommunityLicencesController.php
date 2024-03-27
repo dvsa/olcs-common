@@ -38,8 +38,9 @@ use Common\Service\Cqrs\Response;
  */
 abstract class AbstractCommunityLicencesController extends AbstractController
 {
-    public $totActiveCommunityLicences;
     use Traits\CrudTableTrait;
+
+    public $totActiveCommunityLicences;
 
     // See OLCS-16655, pagination is to be 50 per page only
     public const TABLE_RESULTS_PER_PAGE = 50;
@@ -293,7 +294,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController
     private function getTableData()
     {
         /**
-         * @todo GenericList lives in olcs-internal so shouldn't be used here, ticket to fix VOL-5194
+         * @VOL GenericList lives in olcs-internal so shouldn't be used here, ticket to fix VOL-5194
          * @phpstan-ignore-next-line
          */
         $paramProvider = new GenericList(['licence']);

@@ -8,7 +8,7 @@
 
 namespace CommonTest\View\Helper;
 
-use \Common\View\Helper\PersonName;
+use Common\View\Helper\PersonName;
 
 /**
  * Test PersonName view helper

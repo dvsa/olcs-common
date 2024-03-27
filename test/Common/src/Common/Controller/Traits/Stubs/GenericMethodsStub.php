@@ -10,11 +10,12 @@ use Common\Service\Helper\FormHelperService;
  */
 class GenericMethodsStub
 {
+    use Traits\GenericMethods;
+
     /**
      * @var \Common\Service\Helper\FormHelperService
      */
     public $formHelper;
-    use Traits\GenericMethods;
 
     public function __construct(FormHelperService $formHelper)
     {

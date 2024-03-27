@@ -1,4 +1,5 @@
 <?php
+
 namespace CommonTest\Common\Util;
 
 /**

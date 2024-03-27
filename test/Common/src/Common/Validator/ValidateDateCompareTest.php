@@ -19,7 +19,7 @@ class ValidateDateCompareTest extends MockeryTestCase
         $sut = new DateCompare();
         $sut->setOptions(
             [
-                'compare_to' =>'test',
+                'compare_to' => 'test',
                 'compare_to_label' => [null],
                 'operator' => 'lt',
                 'has_time' => false,
@@ -60,7 +60,7 @@ class ValidateDateCompareTest extends MockeryTestCase
                 ['compare_to' => 'other_field', 'operator' => 'gt', 'compare_to_label' => 'Other field'],
                 '2014-01-10',
                 [
-                    'other_field'=> ['day' => '09', 'month' => '01', 'year' => '2014'],
+                    'other_field' => ['day' => '09', 'month' => '01', 'year' => '2014'],
                 ],
             ],
             //context matches, field is invalid
@@ -68,7 +68,7 @@ class ValidateDateCompareTest extends MockeryTestCase
                 false,
                 ['compare_to' => 'other_field', 'operator' => 'gt', 'compare_to_label' => 'Other field'],
                 '2014-01-10',
-                ['other_field'=> ['day' => '11', 'month' => '01', 'year' => '2014']],
+                ['other_field' => ['day' => '11', 'month' => '01', 'year' => '2014']],
                 [DateCompare::NOT_GT => "This date must be after 'Other field'"]
             ],
             //context doesn't match, field is invalid
@@ -92,7 +92,7 @@ class ValidateDateCompareTest extends MockeryTestCase
                 false,
                 ['compare_to' => 'other_field', 'operator' => 'invalid', 'compare_to_label' => 'Other field'],
                 '2014-01-10',
-                ['other_field'=> ['day' => '', 'month' => '', 'year' => '2014']],
+                ['other_field' => ['day' => '', 'month' => '', 'year' => '2014']],
                 [DateCompare::INVALID_FIELD => "Input field being compared to doesn't exist"]
             ],
             //context matches value is empty
@@ -100,7 +100,7 @@ class ValidateDateCompareTest extends MockeryTestCase
                 false,
                 ['compare_to' => 'other_field', 'operator' => 'gt', 'compare_to_label' => 'Other field'],
                 '',
-                ['other_field'=> ['day' => '11', 'month' => '01', 'year' => '2014']],
+                ['other_field' => ['day' => '11', 'month' => '01', 'year' => '2014']],
                 [DateCompare::INVALID_FIELD => "Input field being compared to doesn't exist"]
             ],
             //context matches, field is valid gte
@@ -108,14 +108,14 @@ class ValidateDateCompareTest extends MockeryTestCase
                 true,
                 ['compare_to' => 'other_field', 'operator' => 'gte', 'compare_to_label' => 'Other field'],
                 '2014-01-10',
-                ['other_field'=> ['day' => '10', 'month' => '01', 'year' => '2014']],
+                ['other_field' => ['day' => '10', 'month' => '01', 'year' => '2014']],
             ],
             //context matches, field is invalid gte
             [
                 false,
                 ['compare_to' => 'other_field', 'operator' => 'gte', 'compare_to_label' => 'Other field'],
                 '2014-01-10',
-                ['other_field'=> ['day' => '11', 'month' => '01', 'year' => '2014']],
+                ['other_field' => ['day' => '11', 'month' => '01', 'year' => '2014']],
                 [DateCompare::NOT_GTE => "This date must be after or the same as 'Other field'"]
             ],
             //context matches, field is valid lt
@@ -123,14 +123,14 @@ class ValidateDateCompareTest extends MockeryTestCase
                 true,
                 ['compare_to' => 'other_field', 'operator' => 'lt', 'compare_to_label' => 'Other field'],
                 '2014-01-10',
-                ['other_field'=> ['day' => '11', 'month' => '01', 'year' => '2014']],
+                ['other_field' => ['day' => '11', 'month' => '01', 'year' => '2014']],
             ],
             //context matches, field is invalid lt
             [
                 false,
                 ['compare_to' => 'other_field', 'operator' => 'lt', 'compare_to_label' => 'Other field'],
                 '2014-01-10',
-                ['other_field'=> ['day' => '09', 'month' => '01', 'year' => '2014']],
+                ['other_field' => ['day' => '09', 'month' => '01', 'year' => '2014']],
                 [DateCompare::NOT_LT => "This date must be before 'Other field'"]
             ],
             //context matches, field is valid lte
@@ -138,7 +138,7 @@ class ValidateDateCompareTest extends MockeryTestCase
                 true,
                 ['compare_to' => 'other_field', 'operator' => 'lte', 'compare_to_label' => 'Other field'],
                 '2014-01-10',
-                ['other_field'=> ['day' => '10', 'month' => '01', 'year' => '2014']],
+                ['other_field' => ['day' => '10', 'month' => '01', 'year' => '2014']],
             ],
             //context matches, field has time and is valid gte
             [
@@ -206,7 +206,7 @@ class ValidateDateCompareTest extends MockeryTestCase
                 false,
                 ['compare_to' => 'other_field', 'operator' => 'lte', 'compare_to_label' => 'Other field'],
                 '2014-01-10',
-                ['other_field'=> ['day' => '09', 'month' => '01', 'year' => '2014']],
+                ['other_field' => ['day' => '09', 'month' => '01', 'year' => '2014']],
                 [DateCompare::NOT_LTE => "This date must be before or the same as 'Other field'"]
             ],
             //Invalid operator
@@ -214,7 +214,7 @@ class ValidateDateCompareTest extends MockeryTestCase
                 false,
                 ['compare_to' => 'other_field', 'operator' => 'invalid', 'compare_to_label' => 'Other field'],
                 '2014-01-10',
-                ['other_field'=> ['day' => '09', 'month' => '01', 'year' => '2014']],
+                ['other_field' => ['day' => '09', 'month' => '01', 'year' => '2014']],
                 [DateCompare::INVALID_OPERATOR => 'Invalid operator']
             ],
             //Can't compare
@@ -222,7 +222,7 @@ class ValidateDateCompareTest extends MockeryTestCase
                 false,
                 ['compare_to' => 'other_field', 'operator' => 'invalid', 'compare_to_label' => 'Other field'],
                 '2014-01-',
-                ['other_field'=> ['day' => '09', 'month' => '01', 'year' => '2014']],
+                ['other_field' => ['day' => '09', 'month' => '01', 'year' => '2014']],
                 [DateCompare::NO_COMPARE => "Unable to compare with 'Other field'"]
             ],
             //  compare DateTime against Date object

@@ -32,8 +32,7 @@ class LinkNewWindow extends AbstractHelper
         string $class = 'govuk-link',
         bool $hideNewTabMessage = false,
         bool $isExternal = false
-    ): string
-    {
+    ): string {
         //we have the option to hide the new tab message, this is defaulted to off
         $hiddenNewTabMarkup = '';
 
@@ -46,7 +45,7 @@ class LinkNewWindow extends AbstractHelper
         //decide whether the new tab text goes in the hidden span or is appended to the link text itself
         if ($hideNewTabMessage) {
             $hiddenNewTabMarkup = sprintf(self::HIDDEN_NEW_TAB_SPAN, $escapedNewTabText);
-        } else{
+        } else {
             $escapedText = $escapedText . ' ' . $escapedNewTabText;
         }
 

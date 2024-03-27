@@ -56,7 +56,6 @@ return [
             'formatter' => function ($data, $column) {
 
                 if (isset($data['operatingCentre']['address'])) {
-
                     $column['formatter'] = Address::class;
                     /**
                      * @var TableBuilder $this
