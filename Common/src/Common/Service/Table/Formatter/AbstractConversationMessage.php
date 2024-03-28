@@ -32,7 +32,7 @@ abstract class AbstractConversationMessage implements FormatterPluginManagerInte
         $firstReadBy = $this->getFirstReadBy($row);
 
         // If createdBy (User) has a Team, they are an internal user.
-        $internalCaseworkerTeam = (!empty($row['createdBy']['team'])) ? '<p class="govuk-caption-m">'.$senderName.'<br/>Caseworker Team</p>': '';
+        $internalCaseworkerTeam = (!empty($row['createdBy']['team'])) ? '<p class="govuk-caption-m">' . $senderName . '<br/>Caseworker Team</p>' : '';
 
         return strtr($this->rowTemplate, [
             '{senderName}' => $senderName,
@@ -68,7 +68,17 @@ abstract class AbstractConversationMessage implements FormatterPluginManagerInte
             return '';
         }
 
-        $firstRead = array_pop($row['userMessageReads']);
+        $firstRead = null;
+        while ($firstRead = array_pop($row['userMessageReads'])) {
+            if ($firstRead === null || $row['createdBy']['id'] !== $firstRead['user']['id']) {
+                break;
+            }
+        }
+
+        if ($firstRead === null) {
+            return '';
+        }
+
         $firstReadOn = DateTimeImmutable::createFromFormat(DateTimeInterface::ATOM, $firstRead["createdOn"]);
 
         if (isset($firstRead['user']['contactDetails']['person'])) {
