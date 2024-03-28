@@ -14,10 +14,8 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
 class DeclarationFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
-     * @return Declaration
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

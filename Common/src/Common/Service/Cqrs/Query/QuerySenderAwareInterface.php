@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Service\Cqrs\Query;
 
 /**
@@ -16,8 +17,6 @@ interface QuerySenderAwareInterface
 {
     /**
      * Set query sender
-     *
-     * @param QuerySender $querySender
      */
     public function setQuerySender(QuerySender $querySender);
 

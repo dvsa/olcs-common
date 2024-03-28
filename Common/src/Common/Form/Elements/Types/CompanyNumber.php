@@ -5,6 +5,7 @@
  *
  * @author Someone <someone@valtech.co.uk>
  */
+
 namespace Common\Form\Elements\Types;
 
 use Laminas\Form\Fieldset;
@@ -16,7 +17,6 @@ use Laminas\Form\Fieldset;
  */
 class CompanyNumber extends Fieldset
 {
-
     public function __construct($name = null, $options = [])
     {
         parent::__construct($name, $options);
@@ -64,7 +64,7 @@ class CompanyNumber extends Fieldset
     }
 
 
-    public function setMessages($messages)
+    public function setMessages($messages): void
     {
         $this->messages = $messages;
     }

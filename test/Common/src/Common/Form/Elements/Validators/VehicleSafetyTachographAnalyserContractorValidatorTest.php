@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace CommonTest\Form\Elements\Validators;
 
 use Common\Form\Elements\Validators\VehicleSafetyTachographAnalyserContractorValidator;
@@ -16,10 +17,11 @@ use Common\Form\Elements\Validators\VehicleSafetyTachographAnalyserContractorVal
  */
 class VehicleSafetyTachographAnalyserContractorValidatorTest extends \PHPUnit\Framework\TestCase
 {
+    public $validator;
     /**
      * Set up the validator
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->validator = new VehicleSafetyTachographAnalyserContractorValidator();
     }
@@ -29,7 +31,7 @@ class VehicleSafetyTachographAnalyserContractorValidatorTest extends \PHPUnit\Fr
      *
      * @dataProvider providerIsValid
      */
-    public function testIsValid($value, $context, $expected)
+    public function testIsValid($value, $context, $expected): void
     {
         $this->assertEquals($expected, $this->validator->isValid($value, $context));
     }

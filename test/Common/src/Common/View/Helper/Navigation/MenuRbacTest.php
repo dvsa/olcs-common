@@ -13,7 +13,7 @@ use Laminas\Navigation\Page\AbstractPage;
  */
 class MenuRbacTest extends MockeryTestCase
 {
-    public function testFilter()
+    public function testFilter(): void
     {
         $mockPage1 = m::mock(AbstractPage::class)->makePartial();
         $mockPage2 = m::mock(AbstractPage::class)->makePartial();

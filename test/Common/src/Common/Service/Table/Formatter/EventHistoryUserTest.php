@@ -15,6 +15,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class EventHistoryUserTest extends MockeryTestCase
 {
     protected $translator;
+
     protected $sut;
 
     protected function setUp(): void
@@ -33,7 +34,7 @@ class EventHistoryUserTest extends MockeryTestCase
      *
      * @dataProvider provider
      */
-    public function testFormat($data, $expectedOutput)
+    public function testFormat($data, $expectedOutput): void
     {
         if (isset($data['user']['team'])) {
             $this->translator

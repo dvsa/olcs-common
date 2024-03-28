@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Service\Helper;
 
 /**
@@ -70,9 +71,13 @@ class AddressHelperService
             $parts = [];
 
             foreach ($allowedParts as $part) {
-                if (array_key_exists($part, $address) && !empty($address[$part])) {
-                    $parts[] = $address[$part];
+                if (!array_key_exists($part, $address)) {
+                    continue;
                 }
+                if (empty($address[$part])) {
+                    continue;
+                }
+                $parts[] = $address[$part];
             }
 
             $str = implode(', ', $parts);

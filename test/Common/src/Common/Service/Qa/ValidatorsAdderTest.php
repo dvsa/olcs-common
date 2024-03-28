@@ -5,6 +5,7 @@ namespace CommonTest\Service\Qa;
 use Common\Service\Qa\ValidatorsAdder;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Laminas\Form\ElementInterface;
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterInterface;
 use Laminas\InputFilter\InputInterface;
@@ -21,14 +22,14 @@ class ValidatorsAdderTest extends MockeryTestCase
 
     private $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->form = m::mock(Form::class);
 
         $this->sut = new ValidatorsAdder();
     }
 
-    public function testAdd()
+    public function testAdd(): void
     {
         $fieldsetName = 'fields123';
 
@@ -43,7 +44,7 @@ class ValidatorsAdderTest extends MockeryTestCase
             'min' => 40,
             'inclusive' => true
         ];
-         
+
         $options = [
             'fieldsetName' => $fieldsetName,
             'validators' => [
@@ -68,7 +69,7 @@ class ValidatorsAdderTest extends MockeryTestCase
             ->ordered()
             ->once();
 
-        $qaElementInput = m::mock(QaElementInput::class);
+        $qaElementInput = m::mock(ElementInterface::class);
         $qaElementInput->shouldReceive('setContinueIfEmpty')
             ->with(true)
             ->once();
@@ -94,12 +95,12 @@ class ValidatorsAdderTest extends MockeryTestCase
             ->withNoArgs()
             ->andReturn($formInputFilter);
 
-        $qaElementInput = m::mock(InputInterface::class);
+        m::mock(InputInterface::class);
 
         $this->sut->add($this->form, $options);
     }
 
-    public function testAddWithNoValidators()
+    public function testAddWithNoValidators(): void
     {
         $options = [
             'validators' => []

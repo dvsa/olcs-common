@@ -15,20 +15,24 @@ use LmcRbacMvc\Service\AuthorizationService;
  */
 class LicenceTransportManagerTest extends MockeryTestCase
 {
+    /**
+     * @var \Mockery\LegacyMockInterface
+     */
+    public $authService;
     protected $sut;
 
     protected $formHelper;
 
     protected $fsm;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);
         $this->authService = m::mock(AuthorizationService::class);
         $this->sut = new Sut($this->formHelper, $this->authService);
     }
 
-    public function testGetForm()
+    public function testGetForm(): void
     {
         $formActions = m::mock();
         $formActions->shouldReceive('has')->with('save')->andReturn(true);
@@ -51,7 +55,7 @@ class LicenceTransportManagerTest extends MockeryTestCase
         $this->sut->getForm();
     }
 
-    public function testGetFormWithoutFormActions()
+    public function testGetFormWithoutFormActions(): void
     {
         $form = m::mock();
         $form->shouldReceive('has')->with('form-actions')->andReturn(false);
@@ -63,7 +67,7 @@ class LicenceTransportManagerTest extends MockeryTestCase
         $this->sut->getForm();
     }
 
-    public function testGetFormWithoutFormAction()
+    public function testGetFormWithoutFormAction(): void
     {
         $formActions = m::mock();
         $formActions->shouldReceive('has')->with('save')->andReturn(true);

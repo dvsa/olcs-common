@@ -8,10 +8,12 @@ abstract class AbstractSection
 {
     use MakeSectionTrait;
 
+    /**
+     * @var mixed[]
+     */
+    public $licence;
     protected $heading;
-
     protected $urlHelper;
-
     protected $translator;
 
     public function __construct(

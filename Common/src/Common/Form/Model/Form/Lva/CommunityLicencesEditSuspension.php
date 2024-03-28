@@ -16,19 +16,19 @@ class CommunityLicencesEditSuspension
      * @Form\Name("data")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\CommunityLicencesEditSuspension")
      */
-    public $data = null;
+    public $data;
 
     /**
      * @Form\Attributes({"id":"dates"})
      * @Form\Name("dates")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\CommunityLicencesEditSuspensionDates")
      */
-    public $dates = null;
+    public $dates;
 
     /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\OkCancelActions")
      * @Form\Attributes({"class":"govuk-button-group"})
      */
-    public $formActions = null;
+    public $formActions;
 }

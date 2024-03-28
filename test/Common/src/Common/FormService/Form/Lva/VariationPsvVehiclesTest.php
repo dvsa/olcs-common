@@ -18,13 +18,13 @@ class VariationPsvVehiclesTest extends AbstractLvaFormServiceTestCase
 
     protected $formName = 'Lva\PsvVehicles';
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->classArgs = [m::mock(AuthorizationService::class)];
         parent::setUp();
     }
 
-    public function testGetFormWithoutFormActions()
+    public function testGetFormWithoutFormActions(): void
     {
         // Mocks
         $mockForm = m::mock();
@@ -43,7 +43,7 @@ class VariationPsvVehiclesTest extends AbstractLvaFormServiceTestCase
         $this->assertSame($mockForm, $form);
     }
 
-    public function testGetForm()
+    public function testGetForm(): void
     {
         $formActions = m::mock();
         $formActions->shouldReceive('has')->with('save')->andReturn(true);

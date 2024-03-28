@@ -22,7 +22,6 @@ abstract class BinaryFeatureToggleAwareControllerFactory implements FactoryInter
     abstract protected function getFeatureToggleNames(): array;
 
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
      * @return mixed
@@ -30,7 +29,6 @@ abstract class BinaryFeatureToggleAwareControllerFactory implements FactoryInter
     abstract protected function createServiceWhenEnabled(ContainerInterface $container, $requestedName, array $options = null);
 
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
      * @return mixed
@@ -38,7 +36,6 @@ abstract class BinaryFeatureToggleAwareControllerFactory implements FactoryInter
     abstract protected function createServiceWhenDisabled(ContainerInterface $container, $requestedName, array $options = null);
 
     /**
-     * @param ContainerInterface $container
      * @param mixed $requestedName
      * @param array|null $options
      * @return mixed
@@ -48,17 +45,16 @@ abstract class BinaryFeatureToggleAwareControllerFactory implements FactoryInter
         if ($this->featureTogglesAreEnabled($container, $this->getFeatureToggleNames())) {
             return $this->createServiceWhenEnabled($container, $requestedName, $options);
         }
+
         return $this->createServiceWhenDisabled($container, $requestedName, $options);
     }
 
     /**
-     * @param ContainerInterface $container
      * @param string[] $featureToggles
-     * @return bool
      */
     protected function featureTogglesAreEnabled(ContainerInterface $container, array $featureToggles): bool
     {
-        if (empty($featureToggles)) {
+        if ($featureToggles === []) {
             return true;
         }
 

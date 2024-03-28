@@ -5,6 +5,7 @@
  *
  * @author Jonathan Thomas <jonathan@opalise.co.uk>
  */
+
 namespace CommonTest\Form\Elements\Custom;
 
 use Common\Form\Elements\Custom\NoOfPermits;
@@ -20,7 +21,7 @@ class NoOfPermitsTest extends TestCase
     /**
      * @dataProvider dpTestHasNonZeroValue
      */
-    public function testHasNonZeroValue($value, $expectedResult)
+    public function testHasNonZeroValue($value, $expectedResult): void
     {
         $sut = new NoOfPermits();
         $sut->setValue($value);

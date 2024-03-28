@@ -13,10 +13,12 @@ use Psr\Container\ContainerInterface;
 class IsAllowedListener implements FactoryInterface
 {
     use ProtectionPolicyTrait;
+
     /**
      * @var AuthorizationServiceInterface
      */
     protected $authorizationService;
+
     /**
      * Route guard rules
      * Those rules are an associative array that map a rule with one or multiple permissions
@@ -27,7 +29,7 @@ class IsAllowedListener implements FactoryInterface
     /**
      * @param \LmcRbacMvc\Service\AuthorizationServiceInterface $authorizationService
      */
-    public function setAuthorizationService($authorizationService)
+    public function setAuthorizationService($authorizationService): void
     {
         $this->authorizationService = $authorizationService;
     }
@@ -42,11 +44,8 @@ class IsAllowedListener implements FactoryInterface
 
     /**
      * Set the rules (it overrides any existing rules)
-     *
-     * @param array $rules
-     * @return void
      */
-    public function setRules(array $rules)
+    public function setRules(array $rules): void
     {
         $this->rules = [];
         foreach ($rules as $key => $value) {
@@ -57,12 +56,12 @@ class IsAllowedListener implements FactoryInterface
                 $routeRegex = $key;
                 $permissions = (array) $value;
             }
+
             $this->rules[$routeRegex] = $permissions;
         }
     }
 
     /**
-     * @param Mvc $page
      * @return bool
      */
     public function isGranted(Mvc $page)
@@ -95,7 +94,6 @@ class IsAllowedListener implements FactoryInterface
     }
 
     /**
-     * @param Event $event
      * @return bool
      */
     public function accept(Event $event)
@@ -111,10 +109,8 @@ class IsAllowedListener implements FactoryInterface
     }
 
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
-     * @return $this
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
@@ -127,6 +123,7 @@ class IsAllowedListener implements FactoryInterface
         if (isset($guardsOptions[\LmcRbacMvc\Guard\RoutePermissionsGuard::class])) {
             $this->setRules($guardsOptions[\LmcRbacMvc\Guard\RoutePermissionsGuard::class]);
         }
+
         return $this;
     }
 }

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace CommonTest\Common\Data\Mapper\Licence\Surrender\Sections;
 
 use Common\Data\Mapper\Licence\Surrender\Sections\LicenceDetails;
@@ -14,7 +13,7 @@ class LicenceDetailsTest extends MockeryTestCase
 {
     use ReviewContactDetailsMocksAndExpectationsTrait;
 
-    public function testMakeQuestions()
+    public function testMakeQuestions(): void
     {
         $mockTranslator = m::mock(TranslationHelperService::class);
         $mockUrlHelper = m::mock(Url::class);

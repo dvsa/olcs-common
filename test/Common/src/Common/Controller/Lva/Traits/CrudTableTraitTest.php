@@ -15,8 +15,11 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class CrudTableTraitTest extends MockeryTestCase
 {
+    public $mockFlashMessengerHelper;
+    public $mockFormHelper;
     /** @var  Stubs\CrudTableTraitStub|m\MockInterface */
     protected $sut;
+
     /** @var  \Laminas\ServiceManager\ServiceManager */
     protected $sm;
 
@@ -30,7 +33,7 @@ class CrudTableTraitTest extends MockeryTestCase
             ->shouldAllowMockingProtectedMethods();
     }
 
-    public function testHandlePostSaveWithAddAnother()
+    public function testHandlePostSaveWithAddAnother(): void
     {
         $prefix = 'unit_Prdx';
         $options = ['unit_options'];
@@ -71,7 +74,7 @@ class CrudTableTraitTest extends MockeryTestCase
         );
     }
 
-    public function testHandlePostSave()
+    public function testHandlePostSave(): void
     {
         $prefix = 'unit_Prdx';
         $options = ['unit_options'];
@@ -109,7 +112,7 @@ class CrudTableTraitTest extends MockeryTestCase
         );
     }
 
-    public function testDeleteAction()
+    public function testDeleteAction(): void
     {
         $request = m::mock()
             ->shouldReceive('isPost')
@@ -135,7 +138,7 @@ class CrudTableTraitTest extends MockeryTestCase
         );
     }
 
-    public function testDeleteActionWithPost()
+    public function testDeleteActionWithPost(): void
     {
         $route = 'unit_Route';
         $queryParams = ['unit_queryParams'];

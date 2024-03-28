@@ -5,6 +5,7 @@
  *
  * @author Ian Lindsay <ian@hemera-business-services.co.uk>
  */
+
 namespace Common\Exception;
 
 /**
@@ -14,5 +15,4 @@ namespace Common\Exception;
  */
 class DataServiceException extends \Exception
 {
-
 }

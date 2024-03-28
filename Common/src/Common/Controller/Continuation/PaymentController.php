@@ -25,15 +25,11 @@ class PaymentController extends AbstractContinuationController
     use StoredCardsTrait;
 
     protected $layout = 'pages/fees/pay-one';
+
     protected UrlHelperService $urlHelper;
+
     protected TableFactory $tableFactory;
 
-    /**
-     * @param NiTextTranslation $niTextTranslationUtil
-     * @param AuthorizationService $authService
-     * @param FormServiceManager $formServiceManager
-     * @param TranslationHelperService $translationHelper
-     */
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
@@ -95,6 +91,7 @@ class PaymentController extends AbstractContinuationController
         } else {
             $viewVariables['fee'] = $fee;
         }
+
         return $this->getViewModel($data['licence']['licNo'], $form, $viewVariables);
     }
 
@@ -117,7 +114,7 @@ class PaymentController extends AbstractContinuationController
         );
 
         $paymentMethod = RefData::FEE_PAYMENT_METHOD_CARD_ONLINE;
-        $dtoData = compact('cpmsRedirectUrl', 'feeIds', 'paymentMethod', 'organisationId', 'storedCardReference');
+        $dtoData = ['cpmsRedirectUrl' => $cpmsRedirectUrl, 'feeIds' => $feeIds, 'paymentMethod' => $paymentMethod, 'organisationId' => $organisationId, 'storedCardReference' => $storedCardReference];
 
         /** @var \Common\Service\Cqrs\Response $response */
         $response = $this->handleCommand(PayOutstandingFees::create($dtoData));
@@ -163,10 +160,12 @@ class PaymentController extends AbstractContinuationController
                 break;
             }
         }
+
         if ($errorMessage !== '') {
             $this->addErrorMessage($errorMessage);
             return $this->redirectToPaymentPage();
         }
+
         if (!$response->isOk()) {
             $this->addErrorMessage('payment-failed');
             return $this->redirectToPaymentPage();
@@ -183,7 +182,7 @@ class PaymentController extends AbstractContinuationController
     public function resultAction()
     {
         $queryStringData = (array) $this->getRequest()->getQuery();
-        if (empty($queryStringData)) {
+        if ($queryStringData === []) {
             $this->addErrorMessage('payment-failed');
             return $this->redirectToPaymentPage();
         }

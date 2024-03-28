@@ -20,13 +20,11 @@ class TaskIdentifier implements FormatterPluginManagerInterface
 {
     private UrlHelperService $urlHelper;
 
-    /**
-     * @param UrlHelperService $urlHelper
-     */
     public function __construct(UrlHelperService $urlHelper)
     {
         $this->urlHelper = $urlHelper;
     }
+
     /**
      * Format a task identifier
      *
@@ -83,8 +81,7 @@ class TaskIdentifier implements FormatterPluginManagerInterface
             default:
                 break;
         }
-        $value = '<a class="govuk-link" href="' . $url . '">' . $data['linkDisplay'] . '</a>';
 
-        return $value;
+        return '<a class="govuk-link" href="' . $url . '">' . $data['linkDisplay'] . '</a>';
     }
 }

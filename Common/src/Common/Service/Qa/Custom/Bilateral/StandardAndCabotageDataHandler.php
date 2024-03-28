@@ -20,9 +20,6 @@ class StandardAndCabotageDataHandler implements DataHandlerInterface
     /**
      * Create service instance
      *
-     * @param StandardAndCabotageSubmittedAnswerGenerator $standardAndCabotageSubmittedAnswerGenerator
-     * @param StandardAndCabotageIsValidHandler $standardAndCabotageIsValidHandler
-     * @param WarningAdder $warningAdder
      *
      * @return StandardAndCabotageDataHandler
      */
@@ -39,7 +36,7 @@ class StandardAndCabotageDataHandler implements DataHandlerInterface
     /**
      * {@inheritdoc}
      */
-    public function setData(QaForm $form)
+    public function setData(QaForm $form): void
     {
         if ($this->standardAndCabotageIsValidHandler->isValid($form)) {
             return;

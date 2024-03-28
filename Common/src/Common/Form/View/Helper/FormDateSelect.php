@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Form\View\Helper;
 
 use Laminas\Form\View\Helper\FormDateSelect as LaminasFormDateSelect;
@@ -27,10 +28,8 @@ class FormDateSelect extends \Common\Form\View\Helper\Extended\FormDateSelect
     /**
      * Render a date element that is composed of three selects
      *
-     * @param  ElementInterface $element
      * @throws \Laminas\Form\Exception\InvalidArgumentException
      * @throws \Laminas\Form\Exception\DomainException
-     * @return string
      */
     public function render(ElementInterface $element): string
     {
@@ -61,8 +60,8 @@ class FormDateSelect extends \Common\Form\View\Helper\Extended\FormDateSelect
 
         // set ids and patterns on each input field
         $dayElement->setAttributes(['id' => $element->getAttribute('id') . '_day', 'pattern' => '\d*']);
-        $monthElement->setAttributes(['id'=> $element->getAttribute('id') . '_month', 'pattern' => '\d*']);
-        $yearElement->setAttributes(['id'=> $element->getAttribute('id') . '_year', 'pattern' => '\d*']);
+        $monthElement->setAttributes(['id' => $element->getAttribute('id') . '_month', 'pattern' => '\d*']);
+        $yearElement->setAttributes(['id' => $element->getAttribute('id') . '_year', 'pattern' => '\d*']);
 
         $data = [];
         $data[$pattern['day']]   = $this->renderDayInput($dayElement);

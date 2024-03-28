@@ -17,13 +17,13 @@ class DateSelectTest extends MockeryTestCase
 {
     private $dateSelect;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->dateSelect = m::mock(DateSelect::class)->makePartial()
             ->shouldAllowMockingProtectedMethods();
     }
 
-    public function testSetValueWithString()
+    public function testSetValueWithString(): void
     {
         $value = '2020-05-22';
 
@@ -43,7 +43,7 @@ class DateSelectTest extends MockeryTestCase
     /**
      * @dataProvider dpSetValueWithOther
      */
-    public function testSetValueWithOther($value)
+    public function testSetValueWithOther($value): void
     {
         $this->dateSelect->shouldReceive('callParentSetValue')
             ->with($value)
@@ -63,7 +63,7 @@ class DateSelectTest extends MockeryTestCase
         ];
     }
 
-    public function testGetInputSpecification()
+    public function testGetInputSpecification(): void
     {
         $name = 'foo';
         $invalidDateKey = 'qanda.date.error.invalid-date';

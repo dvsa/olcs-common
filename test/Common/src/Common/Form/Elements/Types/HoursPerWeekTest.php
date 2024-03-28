@@ -5,6 +5,7 @@
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
+
 namespace CommonTest\Form\Elements\Types;
 
 use Common\Form\Elements\Types\HoursPerWeek;
@@ -21,7 +22,7 @@ class HoursPerWeekTest extends \PHPUnit\Framework\TestCase
      *
      * @group hoursPerWeekType
      */
-    public function testGetMessages()
+    public function testGetMessages(): void
     {
         $element = new HoursPerWeek();
         $element->setMessages(['messages']);

@@ -7,7 +7,7 @@ use Laminas\Validator\NotEmpty;
 
 class RequiredValidationInput extends Input
 {
-    protected $isEmptyMessage = 'Value is required and can\'t be empty';
+    protected $isEmptyMessage = "Value is required and can't be empty";
 
     protected function prepareRequiredValidationFailureMessage()
     {

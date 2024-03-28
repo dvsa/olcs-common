@@ -25,7 +25,7 @@ class TypeOfLicence
      * })
      * @Form\Type("Radio")
      */
-    public $operatorLocation = null;
+    public $operatorLocation;
 
     /**
      * @Form\Name("operator-type")
@@ -44,7 +44,7 @@ class TypeOfLicence
      * })
      * @Form\Type("Radio")
      */
-    public $operatorType = null;
+    public $operatorType;
 
     /**
      * @Form\Name("licence-type")
@@ -53,5 +53,5 @@ class TypeOfLicence
      *     "label": "short-label-tol-licence-type",
      * })
      */
-    public $licenceType = null;
+    public $licenceType;
 }

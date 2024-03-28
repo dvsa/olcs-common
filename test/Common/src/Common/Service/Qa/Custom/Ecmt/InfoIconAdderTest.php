@@ -16,7 +16,7 @@ use Laminas\Form\Fieldset;
  */
 class InfoIconAdderTest extends MockeryTestCase
 {
-    public function testPopulate()
+    public function testPopulate(): void
     {
         $translationKey = 'translation.key';
 

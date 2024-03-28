@@ -16,13 +16,13 @@ class ConvictionsAndPenaltiesDetails
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $id = null;
+    public $id;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\Attributes({"id":"conviction-date","required":false,"class":"long"})
@@ -38,7 +38,7 @@ class ConvictionsAndPenaltiesDetails
      * @Form\Validator("Date", options={"format":"Y-m-d"})
      * @Form\Validator("\Common\Form\Elements\Validators\DateNotInFuture")
      */
-    public $convictionDate = null;
+    public $convictionDate;
 
     /**
      * @Form\Attributes({"class":"long","id":"category-text"})
@@ -47,7 +47,7 @@ class ConvictionsAndPenaltiesDetails
      * @Form\Required(true)
      * @Form\Validator("Laminas\Validator\StringLength", options={"min":1,"max":1024})
      */
-    public $categoryText = null;
+    public $categoryText;
 
     /**
      * @Form\Attributes({"class":"long","id":"notes"})
@@ -56,7 +56,7 @@ class ConvictionsAndPenaltiesDetails
      * @Form\Required(true)
      * @Form\Validator("Laminas\Validator\StringLength", options={"min":1,"max":4000})
      */
-    public $notes = null;
+    public $notes;
 
     /**
      * @Form\Attributes({"class":"long","id":"court-fpn"})
@@ -65,7 +65,7 @@ class ConvictionsAndPenaltiesDetails
      * @Form\Required(true)
      * @Form\Validator("Laminas\Validator\StringLength", options={"min":1,"max":70})
      */
-    public $courtFpn = null;
+    public $courtFpn;
 
     /**
      * @Form\Attributes({"class":"long","id":"penalty"})
@@ -74,5 +74,5 @@ class ConvictionsAndPenaltiesDetails
      * @Form\Required(true)
      * @Form\Validator("Laminas\Validator\StringLength", options={"min":1,"max":255})
      */
-    public $penalty = null;
+    public $penalty;
 }

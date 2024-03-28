@@ -15,7 +15,7 @@ use Laminas\Validator\Identical;
  */
 class EcmtNoOfPermitsEmissionsCategoryHiddenElementTest extends MockeryTestCase
 {
-    public function testGetInputSpecification()
+    public function testGetInputSpecification(): void
     {
         $name = 'emissionsCategory';
         $expectedValue = 'euro5';

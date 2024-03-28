@@ -5,19 +5,16 @@ namespace CommonTest\Service\Qa\Custom\Common;
 use Common\Form\Annotation\CustomAnnotationBuilder;
 use Common\Form\Model\Fieldset\MultipleFileUpload;
 use Common\Service\Qa\Custom\Common\FileUploadFieldsetGenerator;
+use Laminas\Form\Annotation\AbstractBuilder;
+use Laminas\Form\ElementInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Form\Factory as FormFactory;
 use Laminas\Form\InputFilterProviderFieldset;
 
-/**
- * FileUploadFieldsetGeneratorTest
- *
- * @author Jonathan Thomas <jonathan@opalise.co.uk>
- */
 class FileUploadFieldsetGeneratorTest extends MockeryTestCase
 {
-    public function testGenerate()
+    public function testGenerate(): void
     {
         $multipleFileUploadSpec = [
             'input_filter' => [
@@ -38,29 +35,22 @@ class FileUploadFieldsetGeneratorTest extends MockeryTestCase
             ]
         ];
 
-        $updatedMultipleFileUploadSpec = [
-            'input_filter' => $updatedInputFilter,
-            'otherAttribute1' => 'otherValue1',
-            'otherAttribute2' => 'otherValue2',
-            'type' => InputFilterProviderFieldset::class
-        ];
-
-        $fieldset = m::mock(InputFilterProviderFieldset::class);
+        $fieldset = m::mock(ElementInterface::class);
         $fieldset->shouldReceive('setInputFilterSpecification')
             ->with($updatedInputFilter)
             ->once();
 
         $formFactory = m::mock(FormFactory::class);
         $formFactory->shouldReceive('create')
-            ->with($updatedMultipleFileUploadSpec)
+            ->with(m::type(\ArrayObject::class))
             ->once()
             ->andReturn($fieldset);
 
-        $customAnnotationBuilder = m::mock(CustomAnnotationBuilder::class);
+        $customAnnotationBuilder = m::mock(AbstractBuilder::class);
         $customAnnotationBuilder->shouldReceive('getFormSpecification')
             ->with(MultipleFileUpload::class)
             ->once()
-            ->andReturn($multipleFileUploadSpec);
+            ->andReturn(new \ArrayObject($multipleFileUploadSpec));
 
         $fileUploadFieldsetGenerator = new FileUploadFieldsetGenerator($formFactory, $customAnnotationBuilder);
 

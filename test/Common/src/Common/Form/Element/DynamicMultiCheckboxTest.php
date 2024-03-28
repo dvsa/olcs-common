@@ -1,31 +1,35 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Form\Element;
 
 use Common\Form\Element\DynamicMultiCheckbox;
 use Common\Service\Data\PluginManager;
 use Common\Service\Data\RefData;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
-class DynamicMultiCheckboxTest extends \PHPUnit\Framework\TestCase
+class DynamicMultiCheckboxTest extends MockeryTestCase
 {
     private $pluginManager;
 
-    public function setUp(): void{
+    protected function setUp(): void
+    {
         $this->pluginManager = m::mock(PluginManager::class);
     }
 
-    public function testSetOptions()
+    public function testSetOptions(): void
     {
         $sut =  new DynamicMultiCheckbox($this->pluginManager);
-        $sut->setOptions(['context' => 'testing', 'use_groups'=>true, 'label' => 'Testing']);
+        $sut->setOptions(['context' => 'testing', 'use_groups' => true, 'label' => 'Testing']);
 
         $this->assertEquals('testing', $sut->getContext());
         $this->assertTrue($sut->useGroups());
         $this->assertEquals('Testing', $sut->getLabel());
     }
 
-    public function testBcSetOptions()
+    public function testBcSetOptions(): void
     {
         $sut =  new DynamicMultiCheckbox($this->pluginManager);
         $sut->setOptions(['category' => 'testing']);
@@ -33,21 +37,20 @@ class DynamicMultiCheckboxTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('testing', $sut->getContext());
     }
 
-    public function testGetValueOptions()
+    public function testGetValueOptions(): void
     {
         $mockRefDataService = $this->createMock(RefData::class);
         $mockRefDataService
             ->expects($this->once())
             ->method('fetchListOptions')
             ->with($this->equalTo('category'), $this->equalTo(false))
-            ->willReturn(['key'=>'value']);
+            ->willReturn(['key' => 'value']);
 
-        $this->pluginManager->expects('get')->with(RefData::class)->andReturn($mockRefDataService);
         $sut = new DynamicMultiCheckbox($this->pluginManager);
         $sut->setDataService($mockRefDataService);
         $sut->setContext('category');
 
-        $this->assertEquals(['key'=>'value'], $sut->getValueOptions());
+        $this->assertEquals(['key' => 'value'], $sut->getValueOptions());
 
         //check that the values are only fetched once
         $sut->getValueOptions();
@@ -58,7 +61,7 @@ class DynamicMultiCheckboxTest extends \PHPUnit\Framework\TestCase
      * @param $expected
      * @dataProvider provideSetValue
      */
-    public function testSetValue($value, $expected)
+    public function testSetValue($value, $expected): void
     {
         $sut = new DynamicMultiCheckbox($this->pluginManager);
         $sut->setValue($value);
@@ -70,12 +73,12 @@ class DynamicMultiCheckboxTest extends \PHPUnit\Framework\TestCase
     {
         return [
             ['test', 'test'],
-            [[0=>'test', 1=> 'test2'], [0=>'test', 1=> 'test2']],
-            [['id'=>'test', 'desc' => 'Test Item'], 'test']
+            [[0 => 'test', 1 => 'test2'], [0 => 'test', 1 => 'test2']],
+            [['id' => 'test', 'desc' => 'Test Item'], 'test']
         ];
     }
 
-    public function testGetDataService()
+    public function testGetDataService(): void
     {
         $serviceName = 'testListService';
 
@@ -87,7 +90,7 @@ class DynamicMultiCheckboxTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($mockService, $sut->getDataService());
     }
 
-    public function testGetDataServiceThrows()
+    public function testGetDataServiceThrows(): void
     {
         $serviceName = 'testListService';
 

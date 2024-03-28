@@ -1,6 +1,5 @@
 <?php
 
-
 namespace CommonTest\Form\View\Helper\Readonly;
 
 use Common\Form\View\Helper\Readonly\FormTable;
@@ -18,7 +17,7 @@ class FormTableTest extends TestCase
      * @param $element
      * @param $expected
      */
-    public function testInvoke($element, $expected)
+    public function testInvoke($element, $expected): void
     {
 
         $mockView = new \Laminas\View\Renderer\PhpRenderer();

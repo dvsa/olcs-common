@@ -11,10 +11,6 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class LinkBackTest extends MockeryTestCase
 {
-    /** @var  \Laminas\ServiceManager\ServiceManager | m\MockInterface */
-    private $mockSm;
-    /** @var  m\MockInterface */
-    private $mockSl;
     /** @var  m\MockInterface */
     private $mockRequest;
 
@@ -24,13 +20,13 @@ class LinkBackTest extends MockeryTestCase
     /**
      * Setup the view helper
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->mockView = m::mock(\Laminas\View\Renderer\RendererInterface::class)
             ->shouldReceive('translate')
             ->zeroOrMoreTimes()
             ->andReturnUsing(
-                fn($arg) => '_TRLTD_' . $arg
+                static fn($arg) => '_TRLTD_' . $arg
             )
             ->getMock();
 
@@ -40,7 +36,7 @@ class LinkBackTest extends MockeryTestCase
     /**
      * @dataProvider dpTestInvoke
      */
-    public function testInvoke($params, $referer, $expect)
+    public function testInvoke($params, $referer, $expect): void
     {
         if ($referer !== null) {
             $this->mockRequest->shouldReceive('getHeader')->once()->with('referer')->andReturn($referer);

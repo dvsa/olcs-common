@@ -20,12 +20,10 @@ class MultiCheckboxEmpty extends MultiCheckbox implements InputProviderInterface
 
     /**
      * Provide default input rules for this element.
-     *
-     * @return array
      */
     public function getInputSpecification(): array
     {
-        $specification = [
+        return [
             'required'   => $this->required,
             'validators' => [
                 [
@@ -36,7 +34,5 @@ class MultiCheckboxEmpty extends MultiCheckbox implements InputProviderInterface
                 ],
             ],
         ];
-
-        return $specification;
     }
 }

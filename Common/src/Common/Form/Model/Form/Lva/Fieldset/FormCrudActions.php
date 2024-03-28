@@ -19,7 +19,7 @@ class FormCrudActions
      * @Form\Options({"label": "Save"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $submit = null;
+    public $submit;
 
     /**
      * @Form\Attributes({
@@ -33,7 +33,7 @@ class FormCrudActions
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $cancel = null;
+    public $cancel;
 
     /**
      * @Form\Attributes({
@@ -45,5 +45,5 @@ class FormCrudActions
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $addAnother = null;
+    public $addAnother;
 }

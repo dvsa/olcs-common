@@ -17,8 +17,6 @@ class PermitUsageDataHandler implements DataHandlerInterface
     /**
      * Create service instance
      *
-     * @param IsValidBasedWarningAdder $isValidBasedWarningAdder
-     * @param PermitUsageIsValidHandler $permitUsageIsValidHandler
      *
      * @return PermitUsageDataHandler
      */
@@ -33,7 +31,7 @@ class PermitUsageDataHandler implements DataHandlerInterface
     /**
      * {@inheritdoc}
      */
-    public function setData(QaForm $form)
+    public function setData(QaForm $form): void
     {
         $this->isValidBasedWarningAdder->add(
             $this->permitUsageIsValidHandler,

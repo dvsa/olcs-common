@@ -3,14 +3,13 @@
 namespace Common\Controller\Traits;
 
 use Common\Exception\File\InvalidMimeException;
+use Common\Service\Helper\FileUploadHelperService;
 use Common\Util\FileContent;
 use Dvsa\Olcs\Transfer\Command\Document\DeleteDocument;
 use Dvsa\Olcs\Transfer\Command\Document\Upload;
 
 /**
- * Generic Upload
- *
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
+ * @property FileUploadHelperService $uploadHelper
  */
 trait GenericUpload
 {

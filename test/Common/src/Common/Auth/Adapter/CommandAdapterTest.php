@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace CommonTest\Common\Auth\Adapter;
@@ -29,7 +30,7 @@ class CommandAdapterTest extends MockeryTestCase
     /**
      * @test
      */
-    public function authenticate_ReturnsFailureWhen_CommandReturnsNotOk()
+    public function authenticateReturnsFailureWhenCommandReturnsNotOk(): void
     {
         // Setup
         $cmdResult = [
@@ -57,7 +58,7 @@ class CommandAdapterTest extends MockeryTestCase
      * @test
      * @dataProvider commandResultDataProvider
      */
-    public function authenticate_ReturnsResultObject_FromCommandResult(int $code, ?array $identity, ?array $messages)
+    public function authenticateReturnsResultObjectFromCommandResult(int $code, ?array $identity, ?array $messages): void
     {
         // Setup
         $cmdResult = [
@@ -67,7 +68,6 @@ class CommandAdapterTest extends MockeryTestCase
                 'messages' => $messages
             ]
         ];
-
 
         $response = $this->response(true, $cmdResult);
         $commandSender = $this->commandSender($response);
@@ -115,8 +115,6 @@ class CommandAdapterTest extends MockeryTestCase
     }
 
     /**
-     * @param bool $isOk
-     * @param array $result
      * @return Response|MockInterface
      */
     protected function response(bool $isOk, array $result)
@@ -145,7 +143,6 @@ class CommandAdapterTest extends MockeryTestCase
 
     /**
      * @param $commandSender
-     * @return CommandAdapter
      */
     protected function setupSut(CommandSender $commandSender): CommandAdapter
     {

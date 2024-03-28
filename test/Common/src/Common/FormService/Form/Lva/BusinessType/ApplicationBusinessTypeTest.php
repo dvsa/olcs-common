@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Common\FormService\Form\Lva\BusinessType;
 
+use Common\FormService\Form\Lva\Application;
 use Common\Service\Helper\FormHelperService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Lva\BusinessType\ApplicationBusinessType;
-use Common\FormService\FormServiceInterface;
 use Laminas\Form\Form;
-use Laminas\Form\Element;
 use LmcRbacMvc\Service\AuthorizationService;
 
 /**
@@ -19,6 +20,14 @@ use LmcRbacMvc\Service\AuthorizationService;
 class ApplicationBusinessTypeTest extends MockeryTestCase
 {
     /**
+     * @var \Mockery\LegacyMockInterface
+     */
+    public $authService;
+    /**
+     * @var \Mockery\LegacyMockInterface
+     */
+    public $guidanceService;
+    /**
      * @var ApplicationBusinessType
      */
     protected $sut;
@@ -27,7 +36,7 @@ class ApplicationBusinessTypeTest extends MockeryTestCase
 
     protected $fh;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->fsm = m::mock(\Common\FormService\FormServiceManager::class)->makePartial();
         $this->fh = m::mock(FormHelperService::class)->makePartial();
@@ -37,7 +46,7 @@ class ApplicationBusinessTypeTest extends MockeryTestCase
         $this->sut = new ApplicationBusinessType($this->fh, $this->authService, $this->guidanceService, $this->fsm);
     }
 
-    public function testGetForm()
+    public function testGetForm(): void
     {
         $hasInforceLicences = true;
         $hasOrganisationSubmittedLicenceApplication = false;
@@ -49,7 +58,7 @@ class ApplicationBusinessTypeTest extends MockeryTestCase
             ->with('Lva\BusinessType')
             ->andReturn($mockForm);
 
-        $mockApplication = m::mock(FormServiceInterface::class);
+        $mockApplication = m::mock(Application::class);
         $mockApplication->shouldReceive('alterForm')
             ->once()
             ->with($mockForm);

@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Service\Listener;
 
 /**
@@ -14,5 +15,4 @@ namespace Common\Service\Listener;
  */
 class Exception extends \Exception
 {
-
 }

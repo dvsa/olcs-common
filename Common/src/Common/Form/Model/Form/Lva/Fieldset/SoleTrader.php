@@ -13,13 +13,13 @@ class SoleTrader
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $id = null;
+    public $id;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\Attributes({"id":"","placeholder":""})
@@ -31,7 +31,7 @@ class SoleTrader
      * })
      * @Form\Type("DynamicSelect")
      */
-    public $title = null;
+    public $title;
 
     /**
      * @Form\Attributes({"class":"long","id":""})
@@ -41,7 +41,7 @@ class SoleTrader
      * @Form\Type("Text")
      * @Form\Filter("Laminas\Filter\StringTrim")
      */
-    public $forename = null;
+    public $forename;
 
     /**
      * @Form\Attributes({"class":"long","id":""})
@@ -51,7 +51,7 @@ class SoleTrader
      * @Form\Type("Text")
      * @Form\Filter("Laminas\Filter\StringTrim")
      */
-    public $familyName = null;
+    public $familyName;
 
     /**
      * @Form\Attributes({"class":"long","id":""})
@@ -62,7 +62,7 @@ class SoleTrader
      * @Form\Required(false)
      * @Form\Type("Text")
      */
-    public $otherName = null;
+    public $otherName;
 
     /**
      * @Form\Attributes({"id":"dob"})
@@ -76,5 +76,5 @@ class SoleTrader
      * @Form\Validator("\Common\Validator\Date")
      * @Form\Validator("Date", options={"format":"Y-m-d"})
      */
-    public $birthDate = null;
+    public $birthDate;
 }

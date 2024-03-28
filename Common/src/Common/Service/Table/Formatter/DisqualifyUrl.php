@@ -11,15 +11,13 @@ use Laminas\Router\Http\TreeRouteStack;
 class DisqualifyUrl implements FormatterPluginManagerInterface
 {
     private UrlHelperService $urlHelper;
+
     private TreeRouteStack $router;
+
     private Request $request;
+
     private Permission $permissionService;
 
-    /**
-     * @param UrlHelperService $urlHelper
-     * @param TreeRouteStack   $router
-     * @param Request          $request
-     */
     public function __construct(UrlHelperService $urlHelper, TreeRouteStack $router, Request $request, Permission $permissionService)
     {
         $this->urlHelper = $urlHelper;
@@ -51,7 +49,7 @@ class DisqualifyUrl implements FormatterPluginManagerInterface
 
         $url = '';
         switch ($matchedRouteName) {
-            case 'operator/people' :
+            case 'operator/people':
                 $url = $this->urlHelper->fromRoute(
                     'operator/disqualify_person',
                     [
@@ -97,6 +95,7 @@ class DisqualifyUrl implements FormatterPluginManagerInterface
             default:
                 break;
         }
+
         return sprintf(
             '<a href="%s" class="govuk-link js-modal-ajax">%s</a>',
             $url,

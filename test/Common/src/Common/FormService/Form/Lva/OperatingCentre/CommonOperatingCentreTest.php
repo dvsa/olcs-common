@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Common\FormService\Form\Lva\OperatingCentre;
 
 use Common\FormService\Form\Lva\OperatingCentre\CommonOperatingCentre;
@@ -25,7 +27,7 @@ class CommonOperatingCentreTest extends MockeryTestCase
 
     protected $mockFormHelper;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->form = m::mock(Form::class);
 
@@ -40,7 +42,7 @@ class CommonOperatingCentreTest extends MockeryTestCase
         $this->sut = new CommonOperatingCentre($this->mockFormHelper);
     }
 
-    public function testGetForm()
+    public function testGetForm(): void
     {
         $params = [
             'action' => 'edit',
@@ -89,7 +91,7 @@ class CommonOperatingCentreTest extends MockeryTestCase
         $this->assertSame($this->form, $form);
     }
 
-    public function testGetFormPsv()
+    public function testGetFormPsv(): void
     {
         $params = [
             'action' => 'edit',
@@ -171,7 +173,7 @@ class CommonOperatingCentreTest extends MockeryTestCase
         $this->assertSame($this->form, $form);
     }
 
-    public function testGetFormAdd()
+    public function testGetFormAdd(): void
     {
         $params = [
             'action' => 'add',
@@ -224,7 +226,7 @@ class CommonOperatingCentreTest extends MockeryTestCase
         $this->assertSame($this->form, $form);
     }
 
-    public function testGetFormCantUpdateAddress()
+    public function testGetFormCantUpdateAddress(): void
     {
         $params = [
             'action' => 'edit',
@@ -286,7 +288,7 @@ class CommonOperatingCentreTest extends MockeryTestCase
         $this->assertSame($this->form, $form);
     }
 
-    public function testGetFormVariation()
+    public function testGetFormVariation(): void
     {
         $params = [
             'action' => 'edit',
@@ -314,7 +316,7 @@ class CommonOperatingCentreTest extends MockeryTestCase
         $this->form->shouldReceive('getInputFilter->get->get->setRequired')
             ->with(false);
 
-        $data = m::mock();
+        $data = m::mock(ElementInterface::class);
         $data->shouldReceive('has')
             ->with('noOfTrailersRequired')
             ->andReturn(true);

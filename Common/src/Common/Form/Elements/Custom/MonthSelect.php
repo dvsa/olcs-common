@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Form\Elements\Custom;
 
 use Laminas\Form\Element as LaminasElement;
@@ -27,12 +28,11 @@ class MonthSelect extends LaminasElement\MonthSelect
                 [
                     'name'    => 'Callback',
                     'options' => [
-                        'callback' => function ($date) {
+                        'callback' => static function ($date) {
                             // Convert the date to a specific format
                             if (!is_array($date) || empty($date['year']) || empty($date['month'])) {
                                 return null;
                             }
-
                             return $date['year'] . '-' . $date['month'];
                         }
                     ]

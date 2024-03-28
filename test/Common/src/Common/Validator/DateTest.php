@@ -16,7 +16,7 @@ class DateTest extends \PHPUnit\Framework\TestCase
      */
     protected $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = new Date();
     }
@@ -24,7 +24,7 @@ class DateTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider provideIsValid
      */
-    public function testIsValid($input, $expected)
+    public function testIsValid($input, $expected): void
     {
         $this->assertEquals($expected, $this->sut->isValid($input));
     }

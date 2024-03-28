@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace CommonTest\Form\Elements\Types;
 
 use Common\Form\Elements\Types\Table;
@@ -20,7 +21,7 @@ class TableTest extends \PHPUnit\Framework\TestCase
     /**
      * Test setTable
      */
-    public function testSetTable()
+    public function testSetTable(): void
     {
         $fieldset = 'table';
 
@@ -38,7 +39,7 @@ class TableTest extends \PHPUnit\Framework\TestCase
     /**
      * Test render
      */
-    public function testRenderDefersToSuppliedTableRenderMethod()
+    public function testRenderDefersToSuppliedTableRenderMethod(): void
     {
         $fieldset = 'table';
 
@@ -59,7 +60,7 @@ class TableTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('<table></table>', $table->render());
     }
 
-    public function testSetTablePassesDisabledAttributeToBuilder()
+    public function testSetTablePassesDisabledAttributeToBuilder(): void
     {
         $fieldset = 'table';
 

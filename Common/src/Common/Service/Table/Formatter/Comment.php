@@ -37,6 +37,7 @@ class Comment implements FormatterPluginManagerInterface
 
             return nl2br($data[$column['name']]);
         }
+
         return '';
     }
 }

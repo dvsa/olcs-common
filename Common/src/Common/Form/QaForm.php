@@ -28,7 +28,7 @@ class QaForm extends BaseQaForm
      *
      * @param mixed $data
      */
-    public function setData($data)
+    public function setData($data): void
     {
         $data = $this->updateDataForQa($data);
         $this->callParentSetData($data);
@@ -39,7 +39,7 @@ class QaForm extends BaseQaForm
      *
      * @param mixed $data
      */
-    public function setDataForRedisplay($data)
+    public function setDataForRedisplay($data): void
     {
         $this->setData($data);
 
@@ -54,8 +54,6 @@ class QaForm extends BaseQaForm
 
     /**
      * Whether the form passes validation
-     *
-     * @return bool
      */
     public function isValid(): bool
     {
@@ -77,17 +75,15 @@ class QaForm extends BaseQaForm
     /**
      * Prevent form from successfully validating (i.e. returning true from isValid) even when all fields are valid
      */
-    public function preventSuccessfulValidation()
+    public function preventSuccessfulValidation(): void
     {
         $this->successfulValidationAllowed = false;
     }
 
     /**
      * Set the application step data provided by the backend
-     *
-     * @param array $applicationStep
      */
-    public function setApplicationStep(array $applicationStep)
+    public function setApplicationStep(array $applicationStep): void
     {
         $this->applicationStep = $applicationStep;
     }
@@ -106,9 +102,8 @@ class QaForm extends BaseQaForm
      * Add a custom setData handler to be run for the specified custom form control type
      *
      * @param string $type
-     * @param DataHandlerInterface $dataHandler
      */
-    public function registerDataHandler($type, DataHandlerInterface $dataHandler)
+    public function registerDataHandler($type, DataHandlerInterface $dataHandler): void
     {
         $this->dataHandlers[$type] = $dataHandler;
     }
@@ -117,9 +112,8 @@ class QaForm extends BaseQaForm
      * Add a custom isValid handler to be run for the specified custom form control type
      *
      * @param string $type
-     * @param IsValidHandlerInterface $isValidHandler
      */
-    public function registerIsValidHandler($type, IsValidHandlerInterface $isValidHandler)
+    public function registerIsValidHandler($type, IsValidHandlerInterface $isValidHandler): void
     {
         $this->isValidHandlers[$type] = $isValidHandler;
     }

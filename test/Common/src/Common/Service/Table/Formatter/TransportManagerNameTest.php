@@ -15,7 +15,9 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class TransportManagerNameTest extends MockeryTestCase
 {
     protected $urlHelper;
+
     protected $translator;
+
     protected $sut;
 
     protected function setUp(): void
@@ -30,7 +32,7 @@ class TransportManagerNameTest extends MockeryTestCase
         m::close();
     }
 
-    public function testFormatNoLvaLocation()
+    public function testFormatNoLvaLocation(): void
     {
         $data = [
             'name' => [
@@ -44,7 +46,7 @@ class TransportManagerNameTest extends MockeryTestCase
         $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 
-    public function testFormatApplicationInternal()
+    public function testFormatApplicationInternal(): void
     {
         $data = [
             'name' => [
@@ -73,7 +75,7 @@ class TransportManagerNameTest extends MockeryTestCase
         $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 
-    public function testFormatApplicationExternal()
+    public function testFormatApplicationExternal(): void
     {
         $data = [
             'id' => 333,
@@ -103,7 +105,7 @@ class TransportManagerNameTest extends MockeryTestCase
         $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 
-    public function testFormatVariationInternal()
+    public function testFormatVariationInternal(): void
     {
         $data = [
             'name' => [
@@ -135,11 +137,10 @@ class TransportManagerNameTest extends MockeryTestCase
             ->with('tm_application.table.status.updated')
             ->andReturn('translated');
 
-
         $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 
-    public function testFormatVariationInternalInvalidAction()
+    public function testFormatVariationInternalInvalidAction(): void
     {
         $data = [
             'name' => [
@@ -168,7 +169,7 @@ class TransportManagerNameTest extends MockeryTestCase
         $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 
-    public function testFormatVariationExternal()
+    public function testFormatVariationExternal(): void
     {
         $data = [
             'id' => 333,
@@ -204,7 +205,7 @@ class TransportManagerNameTest extends MockeryTestCase
         $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 
-    public function testFormatVariationExternalNoLink()
+    public function testFormatVariationExternalNoLink(): void
     {
         $data = [
             'id' => 333,
@@ -235,7 +236,7 @@ class TransportManagerNameTest extends MockeryTestCase
         $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 
-    public function testFormatLicenceInternal()
+    public function testFormatLicenceInternal(): void
     {
         $data = [
             'name' => [
@@ -260,7 +261,7 @@ class TransportManagerNameTest extends MockeryTestCase
         $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 
-    public function testFormatLicenceExternal()
+    public function testFormatLicenceExternal(): void
     {
         $data = [
             'name' => [

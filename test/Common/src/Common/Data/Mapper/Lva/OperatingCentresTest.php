@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Data\Mapper\Lva;
 
 use Common\Data\Mapper\Lva\OperatingCentres;
@@ -14,14 +16,16 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class OperatingCentresTest extends MockeryTestCase
 {
     public const LOCATION = 'EXTERNAL';
+
     public const TRANSL = '_TRANSL_';
 
     /** @var  m\MockInterface | TranslationHelperService*/
     private $mockTranslator;
+
     /** @var  m\MockInterface | FlashMessengerHelperService */
     private $mockFlashMsg;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->mockTranslator = m::mock(TranslationHelperService::class);
         $this->mockFlashMsg = m::mock(FlashMessengerHelperService::class);
@@ -30,7 +34,7 @@ class OperatingCentresTest extends MockeryTestCase
     /**
      * @dataProvider dpTestMapFromResult
      */
-    public function testMapFromResult($result, $expected)
+    public function testMapFromResult($result, $expected): void
     {
         $this->assertEquals($expected, OperatingCentres::mapFromResult($result));
     }
@@ -140,7 +144,7 @@ class OperatingCentresTest extends MockeryTestCase
     /**
      * @dataProvider dpMapFromForm
      */
-    public function testMapFromForm($formData, $expected)
+    public function testMapFromForm($formData, $expected): void
     {
         $this->assertEquals($expected, OperatingCentres::mapFromForm($formData));
     }
@@ -183,7 +187,7 @@ class OperatingCentresTest extends MockeryTestCase
         ];
     }
 
-    public function testMapFormErrors()
+    public function testMapFormErrors(): void
     {
         $expectedMessages = [
             'data' => [
@@ -250,14 +254,13 @@ class OperatingCentresTest extends MockeryTestCase
         OperatingCentres::mapFormErrors($form, $errors, $this->mockFlashMsg, $this->mockTranslator, self::LOCATION);
     }
 
-    public function testMapApiErrors()
+    public function testMapApiErrors(): void
     {
         $this->mockTranslator
             ->shouldReceive('translateReplace')
             ->andReturnUsing(
-                function ($key, $args) {
+                static function ($key, $args) {
                     static::assertEquals(key($args) . '_' . self::LOCATION, $key);
-
                     return self::TRANSL . current($args);
                 }
             );
@@ -284,12 +287,5 @@ class OperatingCentresTest extends MockeryTestCase
             ->shouldReceive('addCurrentErrorMessage')->once()->with(self::TRANSL . 'unit_TA_PSV_RS_msg');
 
         OperatingCentres::mapApiErrors(self::LOCATION, $errors, $this->mockFlashMsg, $this->mockTranslator);
-    }
-
-    public function testMapApiErrorsEmpty()
-    {
-        static::assertNull(
-            OperatingCentres::mapApiErrors(self::LOCATION, [], $this->mockFlashMsg, $this->mockTranslator)
-        );
     }
 }

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace CommonTest\Form\View\Helper\Readonly;
 
 use Common\Form\View\Helper\Readonly\FormSelect;
@@ -18,7 +17,7 @@ class FormSelectTest extends TestCase
      * @param $expected
      * @dataProvider provideTestInvoke
      */
-    public function testInvoke($element, $expected)
+    public function testInvoke($element, $expected): void
     {
         $sut =  new FormSelect();
         $expected ??= $sut;

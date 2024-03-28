@@ -5,6 +5,7 @@
  *
  * @author Michael Cooper <michael.cooper@valtech.co.uk>
  */
+
 namespace CommonTest\Util;
 
 use Laminas\Http\Client as HttpClient;
@@ -40,7 +41,7 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
         return $this->createPartialMock(RestClient::class, $methods);
     }
 
-    public function testUrl()
+    public function testUrl(): void
     {
         $mock = $this->getSutMock(['pathOrParams']);
         $mock->expects($this->once())
@@ -53,7 +54,7 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
         $mock->url('/licence');
     }
 
-    public function testCreate()
+    public function testCreate(): void
     {
         $mock = $this->getSutMock(['post']);
         $mock->expects($this->once())
@@ -62,7 +63,7 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
         $mock->create('/licence', ['id' => 7]);
     }
 
-    public function testPost()
+    public function testPost(): void
     {
         $mock = $this->getSutMock(['request']);
 
@@ -73,7 +74,7 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
         $mock->post(null, ['id' => 7]);
     }
 
-    public function testRead()
+    public function testRead(): void
     {
         $mock = $this->getSutMock(['get']);
 
@@ -84,7 +85,7 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
         $mock->read(null, ['id' => 7]);
     }
 
-    public function testGet()
+    public function testGet(): void
     {
         $mock = $this->getSutMock(['request']);
 
@@ -95,7 +96,7 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
         $mock->get('licence', []);
     }
 
-    public function testUpdate()
+    public function testUpdate(): void
     {
         $mock = $this->getSutMock(['put']);
 
@@ -106,7 +107,7 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
         $mock->update(null, ['id' => 7]);
     }
 
-    public function testPut()
+    public function testPut(): void
     {
         $mock = $this->getSutMock(['request']);
 
@@ -117,7 +118,7 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
         $mock->put(null, ['id' => 7]);
     }
 
-    public function testPatch()
+    public function testPatch(): void
     {
         $mock = $this->getSutMock(['request']);
 
@@ -128,7 +129,7 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
         $mock->patch(null, ['id' => 7]);
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $mock = $this->getSutMock(['request']);
 
@@ -139,7 +140,7 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
         $mock->delete(null, ['id' => 7]);
     }
 
-    public function testRequest()
+    public function testRequest(): void
     {
         $mock = $this->getSutMock(['prepareRequest', 'getResponseHelper']);
 
@@ -181,13 +182,13 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
     /**
      * @doesNotPerformAssertions
      */
-    public function testGetResponseHelper()
+    public function testGetResponseHelper(): void
     {
         $mock = $this->getSutMock(null);
         $mock->getResponseHelper();
     }
 
-    public function testPrepareRequest()
+    public function testPrepareRequest(): void
     {
         $mock = $this->getSutMock(['getClientRequest', 'getAccept', 'getAcceptLanguage']);
 
@@ -261,7 +262,7 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
      * @NOTE I duplicate most of the above method just to get the coverage,
      *  These tests need attention, but that is out of scope in my story
      */
-    public function testPrepareGetRequest()
+    public function testPrepareGetRequest(): void
     {
         $mock = $this->getSutMock(['getClientRequest', 'getAccept', 'getAcceptLanguage']);
 
@@ -335,7 +336,7 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
     /**
      * @doesNotPerformAssertions
      */
-    public function testGetAccept()
+    public function testGetAccept(): void
     {
         $mock = $this->getSutMock(null);
         $mock->getAccept();
@@ -344,26 +345,26 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
     /**
      * @doesNotPerformAssertions
      */
-    public function testGetClientRequest()
+    public function testGetClientRequest(): void
     {
         $mock = $this->getSutMock(null);
         $mock->getClientRequest();
     }
 
-    public function testGetLanguage()
+    public function testGetLanguage(): void
     {
         $mock = $this->getSutMock(null);
         $this->assertEquals('en-gb', $mock->getLanguage());
     }
 
-    public function testSetLanguage()
+    public function testSetLanguage(): void
     {
         $mock = $this->getSutMock(null);
         $mock->setLanguage('cy_cy');
         $this->assertEquals('cy-cy', $mock->getLanguage());
     }
 
-    public function testGetAcceptLanguage()
+    public function testGetAcceptLanguage(): void
     {
         $sut = new RestClient(new HttpUri());
         $acceptLanguage = $sut->getAcceptLanguage();
@@ -371,7 +372,7 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
         $this->assertInstanceOf(\Laminas\Http\Header\AcceptLanguage::class, $acceptLanguage);
     }
 
-    public function testConstructorWithParams()
+    public function testConstructorWithParams(): void
     {
         $options = [
             'foo' => 'bar',

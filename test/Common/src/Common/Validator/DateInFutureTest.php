@@ -13,7 +13,7 @@ class DateInFutureTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
     /**
      * @dataProvider dataProvider
      */
-    public function testIsValid($expected, $value)
+    public function testIsValid($expected, $value): void
     {
         $sut = \Mockery::mock(\Common\Validator\DateInFuture::class)->makePartial()->shouldAllowMockingProtectedMethods();
         $sut->shouldReceive('getNowDateTime')->andReturn(new \DateTime('2015-05-22 15:43'));
@@ -37,7 +37,7 @@ class DateInFutureTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
         ];
     }
 
-    public function testIsValidNoMock()
+    public function testIsValidNoMock(): void
     {
         $sut = new DateInFuture();
 

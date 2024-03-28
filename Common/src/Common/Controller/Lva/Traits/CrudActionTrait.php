@@ -80,6 +80,7 @@ trait CrudActionTrait
 
             $routeParams[$childIdParamName] = $data['id'];
         }
+
         $options = ['query' => $this->getRequest()->getQuery()->toArray()];
 
         if ($route === null) {
@@ -99,6 +100,7 @@ trait CrudActionTrait
         if (empty($this->baseRoute)) {
             return null;
         }
+
         if (isset($this->lva)) {
             return sprintf($this->baseRoute, $this->lva);
         }

@@ -33,10 +33,8 @@ class PlainText extends Element
      * setValue
      *
      * @param mixed $value value
-     *
-     * @return void
      */
-    public function setValue($value)
+    public function setValue($value): void
     {
         /**  #OLCS-17989 - overridden to ensure any injection cannot happen **/
         if (!Form::isPopulating()) {

@@ -14,6 +14,7 @@ class SearchType extends SearchAbstract
      * @var string
      */
     protected $title = 'SearchType';
+
     /**
      * @var string
      */
@@ -37,7 +38,7 @@ class SearchType extends SearchAbstract
     public function getColumns()
     {
         return [
-            ['title' => 'Search Type', 'name'=> 'searchtypeId'],
+            ['title' => 'Search Type', 'name' => 'searchtypeId'],
         ];
     }
 }

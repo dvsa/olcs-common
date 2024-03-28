@@ -16,11 +16,11 @@ class TmConvictionsAndPenalties
      * @Form\Name("tm-convictions-and-penalties-details")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TransportManager\ConvictionsAndPenaltiesDetails")
      */
-    public $tmConvictionsAndPenaltiesDetails = null;
+    public $tmConvictionsAndPenaltiesDetails;
 
     /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormCrudActions")
      */
-    public $formActions = null;
+    public $formActions;
 }

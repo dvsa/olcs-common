@@ -14,6 +14,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class AccessedCorrespondenceTest extends MockeryTestCase
 {
     protected $urlHelper;
+
     protected $translator;
 
     protected function setUp(): void
@@ -26,10 +27,11 @@ class AccessedCorrespondenceTest extends MockeryTestCase
     {
         m::close();
     }
+
     /**
      * @dataProvider formatProvider
      */
-    public function testFormat($data, $isNew, $expected)
+    public function testFormat($data, $isNew, $expected): void
     {
 
         $this->urlHelper->shouldReceive('fromRoute')

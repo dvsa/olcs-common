@@ -21,5 +21,5 @@ class ShareInfo
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      */
-    public $shareInfo = null;
+    public $shareInfo;
 }

@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Form\Elements\InputFilters;
 
 use Laminas\Form\Element\File as LaminasFile;
@@ -33,8 +34,6 @@ class File extends LaminasFile
 
     /**
      * Add validator
-     *
-     * @return array
      */
     public function getInputSpecification(): array
     {

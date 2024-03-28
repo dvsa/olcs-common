@@ -24,10 +24,15 @@ use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
  */
 class SlaTargetDateTest extends TestCase
 {
+    public $mockRouteMatch;
     protected $urlHelper;
+
     protected $translator;
+
     protected $router;
+
     protected $request;
+
     protected $sut;
 
     protected function setUp(): void
@@ -55,7 +60,7 @@ class SlaTargetDateTest extends TestCase
      *
      * @dataProvider provider
      */
-    public function testFormat($data, $routeMatch, $expectedRoute, $expectedRouteParams, $expectedLink)
+    public function testFormat($data, $routeMatch, $expectedRoute, $expectedRouteParams, $expectedLink): void
     {
         $this->mockRouteMatch
             ->shouldReceive('getMatchedRouteName')

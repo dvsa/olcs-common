@@ -19,7 +19,7 @@ class LicenceVariationVehicles
         $this->formHelper = $formHelper;
     }
 
-    public function alterForm($form)
+    public function alterForm($form): void
     {
         $this->formHelper->remove($form, 'data->hasEnteredReg');
         $this->formHelper->remove($form, 'data->notice');

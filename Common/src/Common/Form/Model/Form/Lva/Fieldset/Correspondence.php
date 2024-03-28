@@ -13,13 +13,13 @@ class Correspondence
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $id = null;
+    public $id;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\Attributes({"class":"long","id":""})
@@ -38,5 +38,5 @@ class Correspondence
      *     }
      * )
      */
-    public $fao = null;
+    public $fao;
 }

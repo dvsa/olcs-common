@@ -27,7 +27,7 @@ class QueryServiceFactoryTest extends MockeryTestCase
      */
     protected $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->setUpServiceManager();
     }
@@ -35,20 +35,20 @@ class QueryServiceFactoryTest extends MockeryTestCase
     /**
      * @test
      */
-    public function __invoke_IsCallable(): void
+    public function invokeIsCallable(): void
     {
         // Setup
         $this->setUpSut();
 
         // Assert
-        $this->assertIsCallable([$this->sut, '__invoke']);
+        $this->assertIsCallable(fn(\Psr\Container\ContainerInterface $container, string $requestedName, ?array $options = null): \Common\Service\Cqrs\Query\QueryService => $this->sut->__invoke($container, $requestedName, $options));
     }
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_ReturnsAnInstanceOfQueryService(): void
+    public function invokeReturnsAnInstanceOfQueryService(): void
     {
         // Setup
         $this->setUpSut();
@@ -73,9 +73,9 @@ class QueryServiceFactoryTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_ThrowsException_WhenConfigMissing(): void
+    public function invokeThrowsExceptionWhenConfigMissing(): void
     {
         // Setup
         $this->setUpSut();

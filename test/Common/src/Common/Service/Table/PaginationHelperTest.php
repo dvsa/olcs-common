@@ -16,7 +16,7 @@ class PaginationHelperTest extends MockeryTestCase
      *
      * @dataProvider provider
      */
-    public function testPaginationHelper($page, $total, $limit, $isSetTranslator, $expected)
+    public function testPaginationHelper($page, $total, $limit, $isSetTranslator, $expected): void
     {
         $mockTranslator = m::mock(\Laminas\Mvc\I18n\Translator::class);
         $mockTranslator

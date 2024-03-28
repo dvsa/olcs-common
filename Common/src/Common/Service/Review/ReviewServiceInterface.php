@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Service\Review;
 
 /**
@@ -17,7 +18,6 @@ interface ReviewServiceInterface
     /**
      * Format the readonly config from the given data
      *
-     * @param array $data
      * @return array
      */
     public function getConfigFromData(array $data = []);

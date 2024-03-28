@@ -21,7 +21,7 @@ class IrhpPermitJurisdictionPermitNumberTest extends MockeryTestCase
      *
      * @dataProvider formatProvider
      */
-    public function testFormat($data, $expected)
+    public function testFormat($data, $expected): void
     {
         $this->assertEquals($expected, (new IrhpPermitJurisdictionPermitNumber())->format($data));
     }

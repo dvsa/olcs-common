@@ -16,7 +16,7 @@ use Laminas\Validator\StringLength;
  */
 class EcmtNoOfPermitsElementTest extends MockeryTestCase
 {
-    public function testGetInputSpecification()
+    public function testGetInputSpecification(): void
     {
         $name = 'permitsRequired';
 

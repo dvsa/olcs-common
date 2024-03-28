@@ -23,10 +23,10 @@ class Interim
      * @Form\Attributes({"value": "N"})
      * @Form\Type("\Laminas\Form\Element\Radio")
      */
-    public $goodsApplicationInterim = null;
+    public $goodsApplicationInterim;
 
     /**
      * @Form\ComposedObject("\Common\Form\Model\Form\Lva\Fieldset\AuthorityToOperate")
      */
-    public $YContent = null;
+    public $YContent;
 }

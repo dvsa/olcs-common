@@ -23,24 +23,24 @@ class Advertisements
      * })
      * @Form\ErrorMessage("advertisements_adPlaced-error")
      */
-    public $radio = null;
+    public $radio;
 
     /**
      * @Form\ComposedObject("\Common\Form\Model\Form\Lva\Fieldset\AdvertisementsAdPlacedNow")
      */
-    public $adPlacedContent = null;
+    public $adPlacedContent;
 
     /**
      * @Form\Attributes({"data-container-class":"ad-send-by-post"})
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $adSendByPostContent = null;
+    public $adSendByPostContent;
 
     /**
      * @Form\Attributes({"data-container-class":"ad-upload-later"})
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $adPlacedLaterContent = null;
+    public $adPlacedLaterContent;
 
     /**
      * @Form\AllowEmpty(true)
@@ -69,5 +69,5 @@ class Advertisements
      *      }
      * )
      */
-    public $uploadedFileCount = null;
+    public $uploadedFileCount;
 }

@@ -17,6 +17,7 @@ class IrhpPermitNumberInternal implements FormatterPluginManagerInterface
     {
         $this->urlHelper = $urlHelper;
     }
+
     /**
      * @inheritdoc
      */

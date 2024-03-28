@@ -45,8 +45,8 @@ class CurrentUser extends AbstractHelper
 
         $name = $this->view->personName($userData['contactDetails']['person'], ['forename', 'familyName']);
 
-        if (empty(trim($name))) {
-            $name = $userData['loginId'];
+        if (trim($name) === '' || trim($name) === '0') {
+            return $userData['loginId'];
         }
 
         return $name;
@@ -159,10 +159,8 @@ class CurrentUser extends AbstractHelper
      */
     private function getUserData()
     {
-        if (!$this->userData) {
-            if ($this->authService->getIdentity()) {
-                $this->userData = $this->authService->getIdentity()->getUserData();
-            }
+        if (!$this->userData && $this->authService->getIdentity()) {
+            $this->userData = $this->authService->getIdentity()->getUserData();
         }
 
         return $this->userData;
@@ -176,7 +174,7 @@ class CurrentUser extends AbstractHelper
     public function getNumberOfVehicles()
     {
         $userData = $this->getUserData();
-        return !empty($userData['numberOfVehicles']) ? $userData['numberOfVehicles'] : 0;
+        return empty($userData['numberOfVehicles']) ? 0 : $userData['numberOfVehicles'];
     }
 
     /**

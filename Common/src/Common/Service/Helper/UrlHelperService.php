@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Service\Helper;
 
 use Laminas\View\HelperPluginManager;
@@ -21,6 +22,7 @@ use Laminas\View\HelperPluginManager;
 class UrlHelperService
 {
     public const EXTERNAL_HOST = 'selfserve';
+
     public const INTERNAL_HOST = 'internal';
 
     /** @var HelperPluginManager */
@@ -32,8 +34,6 @@ class UrlHelperService
     /**
      * Create service instance
      *
-     * @param HelperPluginManager $helperPluginManager
-     * @param array $config
      *
      * @return UrlHelperService
      */
@@ -49,7 +49,7 @@ class UrlHelperService
      * Generates a URL based on a route
      *
      * @param  string             $route              RouteInterface name
-     * @param  array|Traversable  $params             Parameters to use in url generation, if any
+     * @param  array              $params             Parameters to use in url generation, if any
      * @param  array|bool         $options            RouteInterface-specific options to use in url generation, if any.
      *                                                If boolean, and no fourth argument, used as $reuseMatchedParams.
      * @param  bool               $reuseMatchedParams Whether to reuse matched parameters
@@ -80,8 +80,9 @@ class UrlHelperService
     {
         $config = $this->config['hostnames'];
         if (!isset($config[$key])) {
-            throw new \RuntimeException('Hostname for \'' . $key . '\' not found');
+            throw new \RuntimeException("Hostname for '" . $key . "' not found");
         }
+
         return $config[$key];
     }
 }

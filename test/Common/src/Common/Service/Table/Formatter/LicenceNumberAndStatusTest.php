@@ -22,6 +22,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class LicenceNumberAndStatusTest extends MockeryTestCase
 {
     protected $urlHelper;
+
     protected $sut;
 
     protected function setUp(): void
@@ -34,6 +35,7 @@ class LicenceNumberAndStatusTest extends MockeryTestCase
     {
         m::close();
     }
+
     /**
      * Test format
      *
@@ -41,7 +43,7 @@ class LicenceNumberAndStatusTest extends MockeryTestCase
      * @param array $data
      * @param string $expected
      */
-    public function testFormat($data, $expected)
+    public function testFormat($data, $expected): void
     {
         $this->urlHelper->shouldReceive('fromRoute')
             ->with('lva-licence', ['licence' => 2])

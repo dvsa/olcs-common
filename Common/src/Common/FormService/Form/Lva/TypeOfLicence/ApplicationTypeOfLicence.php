@@ -15,6 +15,7 @@ class ApplicationTypeOfLicence extends AbstractTypeOfLicence
     protected FormHelperService $formHelper;
 
     protected Permission $permissionService;
+
     protected FormServiceManager $formServiceLocator;
 
     public function __construct(FormHelperService $formHelper, Permission $permissionService, FormServiceManager $formServiceLocator)
@@ -23,6 +24,7 @@ class ApplicationTypeOfLicence extends AbstractTypeOfLicence
         $this->permissionService = $permissionService;
         $this->formServiceLocator = $formServiceLocator;
     }
+
     protected function alterForm(Form $form, $params = [])
     {
         if ($this->permissionService->isInternalReadOnly()) {

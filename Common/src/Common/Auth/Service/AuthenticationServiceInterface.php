@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Common\Auth\Service;
 
@@ -11,8 +12,6 @@ interface AuthenticationServiceInterface extends LaminasAuthenticationServiceInt
 {
     /**
      * Authenticates and provides an authentication result
-     *
-     * @return Result
      */
     public function authenticate(AdapterInterface $adapter = null): Result;
 }

@@ -15,9 +15,17 @@ use LmcRbacMvc\Service\AuthorizationService;
  */
 class ApplicationTest extends MockeryTestCase
 {
+    /**
+     * @var \Mockery\LegacyMockInterface
+     */
+    public $formHelper;
+    /**
+     * @var \Mockery\LegacyMockInterface
+     */
+    public $authService;
     protected $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->formHelper = m::mock(FormHelperService::class);
         $this->authService = m::mock(AuthorizationService::class);
@@ -27,7 +35,7 @@ class ApplicationTest extends MockeryTestCase
     /**
      * No op
      */
-    public function testAlterForm()
+    public function testAlterForm(): void
     {
         $form = m::mock(\Laminas\Form\Form::class);
 

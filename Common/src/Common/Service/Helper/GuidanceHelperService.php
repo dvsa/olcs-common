@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Service\Helper;
 
 use Laminas\View\Helper\Placeholder;
@@ -25,7 +26,7 @@ class GuidanceHelperService
         $this->placeholder = $placeholder;
     }
 
-    public function append($message)
+    public function append($message): void
     {
         $this->placeholder->getContainer('guidance')->append($message);
     }

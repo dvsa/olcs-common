@@ -5,6 +5,7 @@
  *
  * @authorPelle Wessman <pelle.wessman@valtech.se>
  */
+
 namespace Common\Util\RestClient;
 
 /**
@@ -14,5 +15,4 @@ namespace Common\Util\RestClient;
  */
 class Exception extends \Exception
 {
-
 }

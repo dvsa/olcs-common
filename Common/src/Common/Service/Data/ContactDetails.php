@@ -13,6 +13,7 @@ use Dvsa\Olcs\Transfer\Query as TransferQry;
 class ContactDetails extends AbstractListDataService
 {
     private static $sort = 'description';
+
     private static $order = 'ASC';
 
     /** @var int */
@@ -29,7 +30,7 @@ class ContactDetails extends AbstractListDataService
     public function fetchListData($context = null)
     {
         $data = (array)$this->getData('ContactDetails');
-        if (0 !== count($data)) {
+        if ([] !== $data) {
             return $data;
         }
 

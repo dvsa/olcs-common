@@ -19,7 +19,7 @@ class ApplicationPsvVehiclesVehicleTest extends MockeryTestCase
 
     protected $formService;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);
         $this->formService = m::mock(\Common\FormService\FormServiceManager::class)->makePartial();
@@ -27,7 +27,7 @@ class ApplicationPsvVehiclesVehicleTest extends MockeryTestCase
         $this->sut = new ApplicationPsvVehiclesVehicle($this->formHelper, $this->formService);
     }
 
-    public function testGetFormEdit()
+    public function testGetFormEdit(): void
     {
         $mockRequest = m::mock();
         $params = [
@@ -134,7 +134,7 @@ class ApplicationPsvVehiclesVehicleTest extends MockeryTestCase
         $this->assertSame($mockForm, $form);
     }
 
-    public function testGetFormAdd()
+    public function testGetFormAdd(): void
     {
         $mockRequest = m::mock();
         $params = [
@@ -244,7 +244,7 @@ class ApplicationPsvVehiclesVehicleTest extends MockeryTestCase
         $this->assertSame($mockForm, $form);
     }
 
-    public function testGetFormRemoved()
+    public function testGetFormRemoved(): void
     {
         $mockRequest = m::mock();
         $params = [

@@ -47,11 +47,7 @@ trait CheckForCrudAction
         if (!in_array($action, $this->getNoActionIdentifierRequired())) {
             $post = (array)$this->getRequest()->getPost();
 
-            if (isset($post['table']['id'])) {
-                $id = $post['table']['id'];
-            } else {
-                $id = $this->params()->fromPost('id');
-            }
+            $id = $post['table']['id'] ?? $this->params()->fromPost('id');
 
             if (empty($id)) {
                 $this->crudActionMissingId();
@@ -86,11 +82,7 @@ trait CheckForCrudAction
     {
         $post = (array)$this->getRequest()->getPost();
 
-        if (isset($post['table']['action'])) {
-            return $post['table']['action'];
-        }
-
-        return $post['action'] ?? null;
+        return $post['table']['action'] ?? $post['action'] ?? null;
     }
 
     /**
@@ -117,7 +109,7 @@ trait CheckForCrudAction
             return '';
         }
 
-        if (!strstr($action, '-')) {
+        if (strstr($action, '-') === '' || strstr($action, '-') === '0' || strstr($action, '-') === false) {
             return $action;
         }
 

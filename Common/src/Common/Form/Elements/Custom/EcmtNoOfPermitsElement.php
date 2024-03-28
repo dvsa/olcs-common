@@ -12,6 +12,7 @@ use Laminas\Validator\StringLength;
 class EcmtNoOfPermitsElement extends Text implements InputProviderInterface
 {
     public const GENERIC_ERROR_KEY = 'qanda.ecmt.number-of-permits.error.enter-permits-needed';
+
     public const MAX_LENGTH = '4';
 
     protected $attributes = [

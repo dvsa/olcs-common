@@ -28,7 +28,7 @@ class LicenceChecklist
      *      "not_checked_message":"continuations.checklist.section.error.type-of-licence",
      * })
      */
-    public $typeOfLicenceCheckbox = null;
+    public $typeOfLicenceCheckbox;
 
     /**
      * @Form\Type("Common\Form\Elements\Types\CheckboxAdvanced")
@@ -49,7 +49,7 @@ class LicenceChecklist
      *     "not_checked_message":"continuations.checklist.section.error.business-type"
      * })
      */
-    public $businessTypeCheckbox = null;
+    public $businessTypeCheckbox;
 
     /**
      * @Form\Type("Common\Form\Elements\Types\CheckboxAdvanced")
@@ -70,7 +70,7 @@ class LicenceChecklist
      *     "not_checked_message":"continuations.checklist.section.error.business-details"
      * })
      */
-    public $businessDetailsCheckbox = null;
+    public $businessDetailsCheckbox;
 
     /**
      * @Form\Type("Common\Form\Elements\Types\CheckboxAdvanced")
@@ -91,7 +91,7 @@ class LicenceChecklist
      *     "not_checked_message":"continuations.checklist.section.error.addresses"
      * })
      */
-    public $addressesCheckbox = null;
+    public $addressesCheckbox;
 
     /**
      * @Form\Type("Common\Form\Elements\Types\CheckboxAdvanced")
@@ -112,7 +112,7 @@ class LicenceChecklist
      *     "not_checked_message":"continuations.checklist.section.error.people."
      * })
      */
-    public $peopleCheckbox = null;
+    public $peopleCheckbox;
 
     /**
      * @Form\Type("Common\Form\Elements\Types\CheckboxAdvanced")
@@ -133,7 +133,7 @@ class LicenceChecklist
      *     "not_checked_message":"continuations.checklist.section.error.operatingCentres"
      * })
      */
-    public $operatingCentresCheckbox = null;
+    public $operatingCentresCheckbox;
 
     /**
      * @Form\Type("Common\Form\Elements\Types\CheckboxAdvanced")
@@ -154,7 +154,7 @@ class LicenceChecklist
      *     "not_checked_message":"continuations.checklist.section.error.transportManagers"
      * })
      */
-    public $transportManagersCheckbox = null;
+    public $transportManagersCheckbox;
 
     /**
      * @Form\Type("Common\Form\Elements\Types\CheckboxAdvanced")
@@ -175,7 +175,7 @@ class LicenceChecklist
      *     "not_checked_message":"continuations.checklist.section.error.vehicles"
      * })
      */
-    public $vehiclesCheckbox = null;
+    public $vehiclesCheckbox;
 
     /**
      * @Form\Type("Common\Form\Elements\Types\CheckboxAdvanced")
@@ -196,7 +196,7 @@ class LicenceChecklist
      *     "not_checked_message":"continuations.checklist.section.error.safety"
      * })
      */
-    public $safetyCheckbox = null;
+    public $safetyCheckbox;
 
     /**
      * @Form\Type("Common\Form\Elements\Types\CheckboxAdvanced")
@@ -217,5 +217,5 @@ class LicenceChecklist
      *     "not_checked_message":"continuations.checklist.section.error.users"
      * })
      */
-    public $usersCheckbox = null;
+    public $usersCheckbox;
 }

@@ -5,6 +5,7 @@
  *
  * @author Jonathan Thomas <jonathan@opalise.co.uk>
  */
+
 namespace CommonTest\Form\Elements\Validators;
 
 use Common\Form\Elements\Validators\NoOfPermitsMin;
@@ -17,10 +18,11 @@ use Laminas\Validator\GreaterThan;
  */
 class NoOfPermitsMinTest extends \PHPUnit\Framework\TestCase
 {
+    public $validator;
     /**
      * Set up the validator
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->validator = new NoOfPermitsMin();
     }
@@ -30,12 +32,12 @@ class NoOfPermitsMinTest extends \PHPUnit\Framework\TestCase
      *
      * @dataProvider providerIsValid
      */
-    public function testIsValid($value, $expected)
+    public function testIsValid($value, $expected): void
     {
         $this->assertEquals($expected, $this->validator->isValid($value, null));
     }
 
-    public function testMessageTemplates()
+    public function testMessageTemplates(): void
     {
         $expectedValue = [
             GreaterThan::NOT_GREATER_INCLUSIVE => 'permits.page.no-of-permits.error.general'

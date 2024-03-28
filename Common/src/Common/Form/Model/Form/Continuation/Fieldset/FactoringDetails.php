@@ -57,5 +57,5 @@ class FactoringDetails
      *      }
      * )
      */
-    public $amount = null;
+    public $amount;
 }

@@ -13,17 +13,11 @@ class Dispatcher extends AbstractOlcsController
      */
     private $delegate;
 
-    /**
-     * @param object $delegate
-     */
     public function __construct(object $delegate)
     {
         $this->delegate = $delegate;
     }
 
-    /**
-     * @return object
-     */
     public function getDelegate(): object
     {
         return $this->delegate;
@@ -34,7 +28,7 @@ class Dispatcher extends AbstractOlcsController
      *
      * @return mixed
      */
-    protected function callAction()
+    public function callAction()
     {
         $event = $this->getEvent();
         $request = $event->getRequest();
@@ -54,10 +48,6 @@ class Dispatcher extends AbstractOlcsController
         return $this->delegate->$actionMethod($request, $routeMatch, $response);
     }
 
-    /**
-     * @param MvcEvent $event
-     * @return ViewModel
-     */
     protected function newControllerActionNotFoundResponse(MvcEvent $event): ViewModel
     {
         $event->setError(Application::ERROR_CONTROLLER_CANNOT_DISPATCH);

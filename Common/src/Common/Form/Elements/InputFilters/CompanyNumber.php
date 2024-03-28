@@ -15,12 +15,10 @@ class CompanyNumber extends \Laminas\Form\Element implements InputProviderInterf
 {
     /**
      * Provide default input rules for this element.
-     *
-     * @return array
      */
     public function getInputSpecification(): array
     {
-        $specification = [
+        return [
             'name' => $this->getName(),
             'required' => true,
             'filters' => [
@@ -29,7 +27,7 @@ class CompanyNumber extends \Laminas\Form\Element implements InputProviderInterf
             'validators' => [
                 [
                     'name' => \Laminas\Validator\StringLength::class,
-                    'options'=> [
+                    'options' => [
                         'min' => 1,
                         'max' => 8,
                         'messages' => [
@@ -47,7 +45,5 @@ class CompanyNumber extends \Laminas\Form\Element implements InputProviderInterf
                 ]
             ]
         ];
-
-        return $specification;
     }
 }

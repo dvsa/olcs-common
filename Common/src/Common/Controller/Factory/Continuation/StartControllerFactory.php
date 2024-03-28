@@ -13,10 +13,8 @@ use LmcRbacMvc\Service\AuthorizationService;
 class StartControllerFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
-     * @return StartController
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): StartController
     {

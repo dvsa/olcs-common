@@ -5,9 +5,10 @@
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
+
 namespace Common\Form\Elements\Validators;
 
-use Laminas\Validator\AbstractValidator as AbstractValidator;
+use Laminas\Validator\AbstractValidator;
 
 /**
  * Inspection Request Due Date Validator
@@ -34,7 +35,6 @@ class InspectionRequestDueDate extends AbstractValidator
      * Validate due date against requested date
      *
      * @param  mixed $value
-     * @param  array $context
      * @return bool
      */
     public function isValid($value, array $context = null)
@@ -45,7 +45,7 @@ class InspectionRequestDueDate extends AbstractValidator
             [$context['requestDate']['year'], $context['requestDate']['month'], $context['requestDate']['day']]
         );
 
-        if (!($dueDate > $requestedDate)) {
+        if ($dueDate <= $requestedDate) {
             $this->error(self::NOT_SAME_OR_MORE);
             return false;
         }

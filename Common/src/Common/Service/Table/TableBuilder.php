@@ -21,27 +21,41 @@ use LmcRbacMvc\Service\AuthorizationService;
 class TableBuilder
 {
     public const TYPE_DEFAULT = 1;
+
     public const TYPE_PAGINATE = 2;
+
     public const TYPE_CRUD = 3;
+
     public const TYPE_HYBRID = 4;
+
     public const TYPE_FORM_TABLE = 5;
+
     public const DEFAULT_LIMIT = 10;
+
     public const DEFAULT_PAGE = 1;
 
     public const MAX_FORM_ACTIONS = 6;
 
     public const ACTION_FORMAT_BUTTONS = 'buttons';
+
     public const ACTION_FORMAT_DROPDOWN = 'dropdown';
 
     public const CONTENT_TYPE_HTML = 'html';
+
     public const CONTENT_TYPE_CSV = 'csv';
 
     public const ARIA_SORT_ASC = 'sort-in-ascending-order';
+
     public const ARIA_SORT_DESC = 'sort-in-descending-order';
+
     public const CLASS_TABLE = 'govuk-table';
+
     public const CLASS_TABLE_CELL = 'govuk-table__cell';
+
     public const CLASS_TABLE_HEADER = 'govuk-table__header';
+
     public const CLASS_TABLE_HEADER_NUMERIC = 'govuk-table__header--numeric';
+
     public const CLASS_TABLE_CELL_NUMERIC = 'govuk-table__cell--numeric';
 
     /**
@@ -196,7 +210,7 @@ class TableBuilder
      *
      * @var null
      */
-    private $fieldset = null;
+    private $fieldset;
 
     /**
      * Is this builder inside a disabled table element?
@@ -226,6 +240,7 @@ class TableBuilder
     private $urlParameterNameMap = [];
 
     private FormatterPluginManager $formatterPluginManager;
+
     private Permission $permissionService;
 
     /**
@@ -242,15 +257,11 @@ class TableBuilder
      */
     public function setUrlParameterNameMap(array $urlParamNameMap): self
     {
-        assert(array_reduce($urlParamNameMap, fn($carry, $mappedValue) => $carry && is_string($mappedValue), true), 'Expected all mapped values to be strings');
+        assert(array_reduce($urlParamNameMap, static fn($carry, $mappedValue) => $carry && is_string($mappedValue), true), 'Expected all mapped values to be strings');
         $this->urlParameterNameMap = $urlParamNameMap;
         return $this;
     }
 
-    /**
-     * @param string $urlParam
-     * @return string
-     */
     protected function mapUrlParameterName(string $urlParam): string
     {
         return $this->getUrlParameterNameMap()[$urlParam] ?? $urlParam;
@@ -280,7 +291,7 @@ class TableBuilder
      *
      * @param bool $disabled
      */
-    public function setDisabled($disabled)
+    public function setDisabled($disabled): void
     {
         $this->isDisabled = $disabled;
     }
@@ -290,7 +301,7 @@ class TableBuilder
      *
      * @param string $name
      */
-    public function setActionFieldName($name)
+    public function setActionFieldName($name): void
     {
         $this->actionFieldName = $name;
     }
@@ -314,7 +325,7 @@ class TableBuilder
      *
      * @param string $name
      */
-    public function setFieldset($name)
+    public function setFieldset($name): void
     {
         $this->fieldset = $name;
     }
@@ -345,7 +356,7 @@ class TableBuilder
      *
      * @param array $settings
      */
-    public function setSettings($settings = [])
+    public function setSettings($settings = []): void
     {
         $this->settings = $settings;
     }
@@ -377,7 +388,7 @@ class TableBuilder
      *
      * @param int $total
      */
-    public function setTotal($total)
+    public function setTotal($total): void
     {
         $this->total = $total;
     }
@@ -387,7 +398,7 @@ class TableBuilder
      *
      * @param int $unfilteredTotal
      */
-    public function setUnfilteredTotal($unfilteredTotal)
+    public function setUnfilteredTotal($unfilteredTotal): void
     {
         $this->unfilteredTotal = $unfilteredTotal;
     }
@@ -408,7 +419,7 @@ class TableBuilder
      *
      * @param array $footer
      */
-    public function setFooter($footer = [])
+    public function setFooter($footer = []): void
     {
         $this->footer = $footer;
     }
@@ -439,23 +450,24 @@ class TableBuilder
      *
      * @param string $name
      */
-    public function removeAction($name)
+    public function removeAction($name): void
     {
         if ($this->hasAction($name)) {
             unset($this->settings['crud']['actions'][$name]);
         }
     }
 
-    public function removeActions()
+    public function removeActions(): void
     {
         foreach ($this->settings['crud']['actions'] as $key => $config) {
             $this->removeAction($key);
         }
+
         // remove any actions that are in the table
         $this->removeColumn('actionLinks');
     }
 
-    public function addAction($key, $settings = [])
+    public function addAction($key, $settings = []): void
     {
         $this->settings['crud']['actions'][$key] = $settings;
     }
@@ -477,7 +489,7 @@ class TableBuilder
      *
      * @param string $name
      */
-    public function disableAction($name)
+    public function disableAction($name): void
     {
         if ($this->hasAction($name)) {
             $this->settings['crud']['actions'][$name]['disabled'] = 'disabled';
@@ -506,7 +518,7 @@ class TableBuilder
         return $this->contentHelper;
     }
 
-    public function setContentType($type)
+    public function setContentType($type): void
     {
         $this->contentType = $type;
     }
@@ -541,7 +553,7 @@ class TableBuilder
      *
      * @param array $variables
      */
-    public function setVariables($variables = [])
+    public function setVariables($variables = []): void
     {
         $this->variables = $variables;
     }
@@ -552,7 +564,7 @@ class TableBuilder
      * @param string $name
      * @param mixed $value
      */
-    public function setVariable($name, $value)
+    public function setVariable($name, $value): void
     {
         $this->variables[$name] = $value;
     }
@@ -583,17 +595,13 @@ class TableBuilder
      *
      * @param array $columns
      */
-    public function setColumns($columns)
+    public function setColumns($columns): void
     {
         $this->columns = [];
 
         foreach ($columns as $key => $column) {
             if (!is_string($key)) {
-                if (isset($column['name'])) {
-                    $key = $column['name'];
-                } else {
-                    $key = null;
-                }
+                $key = $column['name'] ?? null;
             }
 
             if ($key == null) {
@@ -654,7 +662,7 @@ class TableBuilder
      *
      * @param int $limit
      */
-    public function setLimit($limit)
+    public function setLimit($limit): void
     {
         $this->limit = $limit;
     }
@@ -674,7 +682,7 @@ class TableBuilder
      *
      * @param int $page
      */
-    public function setPage($page)
+    public function setPage($page): void
     {
         $this->page = $page;
     }
@@ -714,7 +722,7 @@ class TableBuilder
      *
      * @param string $sort
      */
-    public function setSort($sort)
+    public function setSort($sort): void
     {
         $this->sort = $sort;
     }
@@ -734,7 +742,7 @@ class TableBuilder
      *
      * @param string $order
      */
-    public function setOrder($order)
+    public function setOrder($order): void
     {
         $this->order = $order;
     }
@@ -780,9 +788,8 @@ class TableBuilder
 
         if ($render) {
             return $this->render();
-        } else {
-            return $this;
         }
+        return $this;
     }
 
     /**
@@ -837,24 +844,26 @@ class TableBuilder
     /**
      * Set Pagination Defaults
      */
-    private function setPaginationDefaults()
+    private function setPaginationDefaults(): void
     {
-        if ($this->shouldPaginate() && !isset($this->settings['paginate']['limit'])) {
-            $this->settings['paginate']['limit'] = [
-                'default' => 10,
-                'options' => [10, 25, 50]
-            ];
+        if (!$this->shouldPaginate()) {
+            return;
         }
+        if (isset($this->settings['paginate']['limit'])) {
+            return;
+        }
+        $this->settings['paginate']['limit'] = [
+            'default' => 10,
+            'options' => [10, 25, 50]
+        ];
     }
 
     /**
      * Translate title
      *
      * @param array $config Config
-     *
-     * @return void
      */
-    private function translateTitle(&$config)
+    private function translateTitle(&$config): void
     {
         if (isset($config['variables']['title'])) {
             $config['variables']['title'] = $this->translator->translate($config['variables']['title']);
@@ -864,18 +873,19 @@ class TableBuilder
     /**
      * Maybe set the action field name
      */
-    private function maybeSetActionFieldName()
+    private function maybeSetActionFieldName(): void
     {
         if (isset($this->settings['crud']['action_field_name'])) {
             $this->setActionFieldName($this->settings['crud']['action_field_name']);
         }
     }
+
     /**
      * Load data, set the rows and the total count for pagination
      *
      * @param array $data
      */
-    public function loadData($data = [])
+    public function loadData($data = []): void
     {
         if (isset($data['Results'])) {
             $data['results'] = $data['Results'];
@@ -890,13 +900,14 @@ class TableBuilder
         $this->setRows($data['results'] ?? $data);
         $this->setTotal($data['count'] ?? count($this->rows));
         $this->setUnfilteredTotal($data['count-unfiltered'] ?? $this->getTotal());
-
         // if there's only one row and we have a singular title, use it
-        if ($this->getTotal() == 1) {
-            if ($this->getVariable('titleSingular')) {
-                $this->setVariable('title', $this->translator->translate($this->getVariable('titleSingular')));
-            }
+        if ($this->getTotal() != 1) {
+            return;
         }
+        if (!$this->getVariable('titleSingular')) {
+            return;
+        }
+        $this->setVariable('title', $this->translator->translate($this->getVariable('titleSingular')));
     }
 
     /**
@@ -904,7 +915,7 @@ class TableBuilder
      *
      * @param array $array
      */
-    public function loadParams($array = [])
+    public function loadParams($array = []): void
     {
         if (!isset($array['url'])) {
             $array['url'] = $this->urlHelper;
@@ -939,7 +950,7 @@ class TableBuilder
     /**
      * Setup the action
      */
-    public function setupAction()
+    public function setupAction(): void
     {
         $variables = $this->getVariables();
         if (!isset($variables['action'])) {
@@ -970,11 +981,10 @@ class TableBuilder
     {
         try {
             return $this->render();
-        } catch (\Exception $ex) {
-            $content = $ex->getMessage();
-            $content .= $ex->getTraceAsString();
+        } catch (\Exception $exception) {
+            $content = $exception->getMessage();
 
-            return $content;
+            return $content . $exception->getTraceAsString();
         }
     }
 
@@ -1032,7 +1042,7 @@ class TableBuilder
      */
     public function renderTableFooter()
     {
-        if (empty($this->footer)) {
+        if ($this->footer === []) {
             return '';
         }
 
@@ -1178,7 +1188,7 @@ class TableBuilder
      */
     public function renderLayout($name)
     {
-        if ($name === 'default' && (empty($this->unfilteredTotal) && empty($this->rows))) {
+        if ($name === 'default' && (empty($this->unfilteredTotal) && $this->rows === [])) {
             return $this->renderLayout('default_empty');
         }
 
@@ -1269,12 +1279,10 @@ class TableBuilder
             $content .= $this->renderLinks($links);
         }
 
-        $content .= $this->replaceContent(
+        return $content . $this->replaceContent(
             '{{[elements/actionSelect]}}',
             ['option' => $options, 'action_field_name' => $this->getActionFieldName()]
         );
-
-        return $content;
     }
 
     /**
@@ -1298,10 +1306,9 @@ class TableBuilder
             $max = count($actions);
             while ($i < $max && $i < $collapseAt) {
                 $content .= $this->replaceContent('{{[elements/actionButton]}}', array_shift($actions));
-                $i++;
+                ++$i;
             }
-            $content .= $this->renderMoreActions($actions);
-            return $content;
+            return $content . $this->renderMoreActions($actions);
         }
 
         foreach ($actions as $details) {
@@ -1398,6 +1405,7 @@ class TableBuilder
             if ($option == $this->getLimit()) {
                 $class = PaginationHelper::CLASS_PAGINATION_ITEM_CURRENT;
             }
+
                 $details = [
                     'option' => $option,
                     'link' => $this->generatePaginationUrl([
@@ -1447,7 +1455,7 @@ class TableBuilder
             $content .= $this->replaceContent('{{[elements/paginationItem]}}', $details);
         }
 
-        if (!empty($content)) {
+        if ($content !== '' && $content !== '0') {
             $content = $this->replaceContent('{{[elements/paginationList]}}', ['items' => $content]);
         }
 
@@ -1619,9 +1627,13 @@ class TableBuilder
         }
 
         foreach ($columnAttributes as $attribute => $value) {
-            if (empty(trim($value))) {
+            if (trim($value) === '') {
                 continue;
             }
+            if (trim($value) === '0') {
+                continue;
+            }
+
             $plainAttributes .= ' ' . $attribute . '="' . $value . '"';
         }
 
@@ -1641,6 +1653,7 @@ class TableBuilder
                 return true;
             }
         }
+
         return false;
     }
 
@@ -1654,11 +1667,7 @@ class TableBuilder
         if (count($this->getRows()) === 0) {
             $columns = $this->getColumns();
 
-            if ($this->unfilteredTotal > 0) {
-                $message = 'There are no results matching your search';
-            } else {
-                $message = $this->getEmptyMessage();
-            }
+            $message = $this->unfilteredTotal > 0 ? 'There are no results matching your search' : $this->getEmptyMessage();
 
             $vars = [
                 'colspan' => count($columns),
@@ -1671,7 +1680,7 @@ class TableBuilder
         return $content;
     }
 
-    public function setEmptyMessage($message)
+    public function setEmptyMessage($message): void
     {
         $this->variables['empty_message'] = $message;
     }
@@ -1717,7 +1726,8 @@ class TableBuilder
         if (is_object($column['formatter'])) {
             if (method_exists($column['formatter'], 'format')) {
                 return $column['formatter']->format($data, $column);
-            } elseif ($column['formatter'] instanceof \Closure) {
+            }
+            if ($column['formatter'] instanceof \Closure) {
                 return $column['formatter']($data, $column);
             }
         }
@@ -1950,7 +1960,7 @@ class TableBuilder
 
         return array_filter(
             $items,
-            fn(array $item) => !isset($item['requireRows']) || (bool)$item['requireRows'] === false
+            static fn(array $item) => !isset($item['requireRows']) || (bool)$item['requireRows'] === false
         );
     }
 
@@ -1969,7 +1979,7 @@ class TableBuilder
 
         return array_filter(
             $items,
-            fn(array $item) => isset($item['keepForReadOnly']) && (bool)$item['keepForReadOnly'] === true
+            static fn(array $item) => isset($item['keepForReadOnly']) && (bool)$item['keepForReadOnly']
         );
     }
 
@@ -1979,7 +1989,7 @@ class TableBuilder
         return ($this->hasColumn($name) ? $this->columns[$name] : null);
     }
 
-    public function setColumn($name, $column)
+    public function setColumn($name, $column): void
     {
         $this->columns[$name] = $column;
     }
@@ -1994,7 +2004,7 @@ class TableBuilder
      *
      * @param string $name
      */
-    public function removeColumn($name = '')
+    public function removeColumn($name = ''): void
     {
         if ($this->hasColumn($name)) {
             unset($this->columns[$name]);
@@ -2009,6 +2019,7 @@ class TableBuilder
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -2018,8 +2029,10 @@ class TableBuilder
 
     private function shouldHide($column)
     {
-        return !($this->authorisedToView($column)) ||
-        ($this->isDisabled && isset($column['hideWhenDisabled']) && $column['hideWhenDisabled']);
+        if (!($this->authorisedToView($column))) {
+            return true;
+        }
+        return $this->isDisabled && isset($column['hideWhenDisabled']) && $column['hideWhenDisabled'];
     }
 
     public function isRowDisabled($row)
@@ -2053,7 +2066,7 @@ class TableBuilder
         if (isset($this->variables['dataAttributes']) && is_array($this->variables['dataAttributes'])) {
             $attrs = [];
             foreach ($this->variables['dataAttributes'] as $attribute => $value) {
-                $attrs[] = $attribute . '="' . (string)$value . '"';
+                $attrs[] = $attribute . '="' . $value . '"';
             }
 
             $this->variables['dataAttributes'] = implode(' ', $attrs);
@@ -2086,8 +2099,10 @@ class TableBuilder
                 ) {
                     continue;
                 }
+
                 $updatedColumns[] = $column;
             }
+
             $this->setColumns($updatedColumns);
         }
     }

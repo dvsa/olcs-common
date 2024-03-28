@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace CommonTest\Service\Helper;
 
 use Common\Service\Helper\DataHelperService;
@@ -35,7 +36,7 @@ class DataHelperServiceTest extends \PHPUnit\Framework\TestCase
      * @group helper_service
      * @group data_helper_service
      */
-    public function testArrayRepeat()
+    public function testArrayRepeat(): void
     {
         $input = [
             'foo' => 'bar',
@@ -53,7 +54,7 @@ class DataHelperServiceTest extends \PHPUnit\Framework\TestCase
      * @group helper_service
      * @group data_helper_service
      */
-    public function testProcessDataMapWithoutMap()
+    public function testProcessDataMapWithoutMap(): void
     {
         $input = [
             'foo' => 'bar'
@@ -68,7 +69,7 @@ class DataHelperServiceTest extends \PHPUnit\Framework\TestCase
      * @group helper_service
      * @group data_helper_service
      */
-    public function testProcessDataMap()
+    public function testProcessDataMap(): void
     {
         $input = [
             'foo' => [
@@ -118,7 +119,7 @@ class DataHelperServiceTest extends \PHPUnit\Framework\TestCase
      * @group helper_service
      * @group data_helper_service
      */
-    public function testProcessDataMapWithAddress()
+    public function testProcessDataMapWithAddress(): void
     {
         $input = [
             'foo' => [
@@ -163,7 +164,7 @@ class DataHelperServiceTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $output);
     }
 
-    public function testReplaceIds()
+    public function testReplaceIds(): void
     {
         $data = [
             'foo' => 'bar',
@@ -186,7 +187,7 @@ class DataHelperServiceTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expectedData, $this->sut->replaceIds($data));
     }
 
-    public function testFetchNestedData()
+    public function testFetchNestedData(): void
     {
         $data = [
             'foo' => [

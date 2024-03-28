@@ -9,10 +9,8 @@ class RadioYesNo extends Radio
 {
     /**
      * Initial value options
-     *
-     * @return void
      */
-    public function init()
+    public function init(): void
     {
         $this->setValueOptions(['Y' => 'Yes', 'N' => 'No']);
 

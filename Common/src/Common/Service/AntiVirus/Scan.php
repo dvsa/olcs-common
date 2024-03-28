@@ -4,7 +4,6 @@ namespace Common\Service\AntiVirus;
 
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Olcs\Logging\Log\Logger;
-
 use Psr\Container\ContainerInterface;
 
 /**
@@ -36,8 +35,9 @@ class Scan implements FactoryInterface
         if (!is_string($file)) {
             throw new \InvalidArgumentException('file to scan must be a string');
         }
+
         if (!file_exists($file)) {
-            throw new \InvalidArgumentException("Cannot scan '$file' as it does not exist");
+            throw new \InvalidArgumentException(sprintf('Cannot scan \'%s\' as it does not exist', $file));
         }
 
         $existingFilePerms = $this->shell->fileperms($file);
@@ -47,14 +47,14 @@ class Scan implements FactoryInterface
             $this->shell->chmod($file, 0660);
 
             $result = $this->shell->execute($this->getCliCommandFile($file));
-        } catch (\Exception $ex) {
+        } catch (\Exception $exception) {
             $result = -1;
 
             Logger::notice(
                 sprintf(
                     'Unable to scan the file. File: %s, Error: %s',
                     $file,
-                    $ex->getMessage()
+                    $exception->getMessage()
                 )
             );
         }
@@ -62,13 +62,13 @@ class Scan implements FactoryInterface
         try {
             // revert back the file's permissions
             $this->shell->chmod($file, $existingFilePerms);
-        } catch (\Exception $ex) {
+        } catch (\Exception $exception) {
             Logger::warn(
                 sprintf(
                     'Unable to revert the file permissions. File: %s, Perms: %s, Error: %s',
                     $file,
                     substr(decoct($existingFilePerms), -4),
-                    $ex->getMessage()
+                    $exception->getMessage()
                 )
             );
         }
@@ -90,14 +90,13 @@ class Scan implements FactoryInterface
      * Validate the cli command
      *
      * @throws \Common\Exception\ConfigurationException
-     *
-     * @return void
      */
-    private function validatecliCommand()
+    private function validatecliCommand(): void
     {
         if (empty($this->getCliCommand())) {
             throw new \Common\Exception\ConfigurationException('Scan cliCommand is not set.');
         }
+
         if (strpos($this->getCliCommand(), '%s') === false) {
             throw new \Common\Exception\ConfigurationException(
                 '%s must be in the cliCommand, this is where the file to be scanned is inserted'
@@ -131,10 +130,8 @@ class Scan implements FactoryInterface
      * Set Cli Command
      *
      * @param string $cliCommand Cli Command
-     *
-     * @return void
      */
-    public function setCliCommand($cliCommand)
+    public function setCliCommand($cliCommand): void
     {
         $this->cliCommand = $cliCommand;
     }
@@ -143,20 +140,16 @@ class Scan implements FactoryInterface
      * Set the shell to use
      *
      * @param \Common\Filesystem\Shell $shell Shell
-     *
-     * @return void
      */
-    public function setShell(\Common\Filesystem\Shell $shell)
+    public function setShell(\Common\Filesystem\Shell $shell): void
     {
         $this->shell = $shell;
     }
 
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
      * @return $this
-     *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
@@ -165,6 +158,7 @@ class Scan implements FactoryInterface
         if (isset($config['antiVirus']['cliCommand'])) {
             $this->cliCommand = $config['antiVirus']['cliCommand'];
         }
+
         $this->setShell(new \Common\Filesystem\Shell());
         return $this;
     }

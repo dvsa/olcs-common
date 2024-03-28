@@ -13,6 +13,7 @@ use LmcRbacMvc\Service\AuthorizationService;
 class LicenceCommunityLicences extends AbstractCommunityLicences
 {
     protected FormHelperService $formHelper;
+
     protected AuthorizationService $authService;
 
     public function __construct(FormHelperService $formHelper, AuthorizationService $authService)
@@ -20,6 +21,7 @@ class LicenceCommunityLicences extends AbstractCommunityLicences
         $this->formHelper = $formHelper;
         $this->authService = $authService;
     }
+
     /**
      * Make form alterations
      *

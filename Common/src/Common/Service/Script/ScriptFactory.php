@@ -1,20 +1,13 @@
 <?php
 
-/**
- * Inline JavaScript loading service
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
- */
-
 namespace Common\Service\Script;
 
+use Laminas\View\HelperPluginManager;
 use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 /**
  * Inline JavaScript loading service
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
  */
 class ScriptFactory implements FactoryInterface
 {
@@ -35,9 +28,9 @@ class ScriptFactory implements FactoryInterface
     /**
      * Contains the view helper manager! :)
      *
-     * @var unknown
+     * @var HelperPluginManager
      */
-    protected $viewHelperManager = null;
+    protected $viewHelperManager;
 
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
@@ -48,6 +41,7 @@ class ScriptFactory implements FactoryInterface
         if (!isset($config['local_scripts_path'])) {
             throw new \LogicException('local_scripts_path was not set in the module config');
         }
+
         $this->setFilePaths($config['local_scripts_path']);
 
         return $this;
@@ -57,10 +51,8 @@ class ScriptFactory implements FactoryInterface
      * load an array of files
      *
      * @param array $files - the files to load
-     *
-     * @return array
      */
-    public function loadFiles($files = [])
+    public function loadFiles($files = []): void
     {
         foreach ($files as $file) {
             $this->loadFile($file);
@@ -71,10 +63,8 @@ class ScriptFactory implements FactoryInterface
      * add an array of files
      *
      * @param array $files - the files to load
-     *
-     * @return array
      */
-    public function appendFiles($files = [])
+    public function appendFiles($files = []): void
     {
         foreach ($files as $file) {
             $this->appendFile($file);
@@ -86,10 +76,8 @@ class ScriptFactory implements FactoryInterface
      *
      * @param string $file - the file to load
      * @throws \Exception
-     *
-     * @return string
      */
-    public function loadFile($file)
+    public function loadFile($file): void
     {
         $paths = $this->getFilePaths();
 
@@ -107,7 +95,7 @@ class ScriptFactory implements FactoryInterface
             }
         }
 
-        throw new \Exception('Attempted to load invalid script file "'. $file . '"');
+        throw new \Exception('Attempted to load invalid script file "' . $file . '"');
     }
 
     /**
@@ -115,7 +103,7 @@ class ScriptFactory implements FactoryInterface
      *
      * @param string $file - the file to load
      */
-    public function appendFile($fileName)
+    public function appendFile($fileName): void
     {
         $assetPath = $this->getViewHelperManager()->get('assetPath');
         $this->getViewHelperManager()->get('inlineScript')->appendFile($assetPath($fileName));
@@ -163,7 +151,7 @@ class ScriptFactory implements FactoryInterface
     /**
      * get the available file system paths across all modules
      *
-     * @return string
+     * @return array
      */
     protected function getFilePaths()
     {

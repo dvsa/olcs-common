@@ -15,8 +15,6 @@ class CheckboxFieldsetPopulator implements FieldsetPopulatorInterface
     /**
      * Create service instance
      *
-     * @param CheckboxFactory $checkboxFactory
-     * @param TranslateableTextHandler $translateableTextHandler
      *
      * @return CheckboxFieldsetPopulator
      */
@@ -32,10 +30,8 @@ class CheckboxFieldsetPopulator implements FieldsetPopulatorInterface
      * Populate the fieldset with a checkbox element based on the supplied options array
      *
      * @param mixed $form
-     * @param Fieldset $fieldset
-     * @param array $options
      */
-    public function populate($form, Fieldset $fieldset, array $options)
+    public function populate($form, Fieldset $fieldset, array $options): void
     {
         $label = $this->translateableTextHandler->translate($options['label']);
         $notCheckedMessage = $this->translateableTextHandler->translate($options['notCheckedMessage']);

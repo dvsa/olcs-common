@@ -16,9 +16,13 @@ use LmcRbacMvc\Service\AuthorizationService;
 class VariationFinancialEvidence extends FinancialEvidence
 {
     protected FormHelperService $formHelper;
+
     protected AuthorizationService $authService;
+
     protected UrlHelperService $urlHelper;
+
     protected TranslationHelperService $translator;
+
     protected ValidatorPluginManager $validatorPluginManager;
 
 
@@ -40,6 +44,6 @@ class VariationFinancialEvidence extends FinancialEvidence
     {
         $this->removeFormAction($form, 'saveAndContinue');
 
-        return parent::alterForm($form);
+        parent::alterForm($form);
     }
 }

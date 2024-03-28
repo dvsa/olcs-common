@@ -52,7 +52,6 @@ class QueryService implements QueryServiceInterface
      * @param Request $request Http Request
      * @param boolean $showApiMessages Is Show Api Messages
      * @param FlashMessengerHelperService $flashMessenger Flash messeger service
-     * @param Container $session
      */
     public function __construct(
         RouteInterface $router,
@@ -89,14 +88,13 @@ class QueryService implements QueryServiceInterface
         $queryDto = $query->getDto();
 
         try {
-            // @todo Tmp replace route name to prefix with api while we migrate all services
             $routeName = str_replace('backend/', 'backend/api/', $routeName);
             $uri = $this->router->assemble(
                 $queryDto->getArrayCopy(),
                 ['name' => 'api/' . $routeName . '/GET']
             );
-        } catch (ExceptionInterface $ex) {
-            throw new Exception($ex->getMessage(), HttpResponse::STATUS_CODE_404, $ex);
+        } catch (ExceptionInterface $exception) {
+            throw new Exception($exception->getMessage(), HttpResponse::STATUS_CODE_404, $exception);
         }
 
         $this->request->setUri($uri);
@@ -130,13 +128,15 @@ class QueryService implements QueryServiceInterface
             $response = new Response($clientResponse);
 
             if ($response->getStatusCode() === HttpResponse::STATUS_CODE_404) {
-                throw new Exception\NotFoundException('API responded with a 404 Not Found : '. $uri);
+                throw new Exception\NotFoundException('API responded with a 404 Not Found : ' . $uri);
             }
+
             if ($response->getStatusCode() === HttpResponse::STATUS_CODE_403) {
-                throw new Exception\AccessDeniedException($response->getBody() ." : ". $uri);
+                throw new Exception\AccessDeniedException($response->getBody() . " : " . $uri);
             }
+
             if ($response->getStatusCode() > HttpResponse::STATUS_CODE_400) {
-                throw new Exception($response->getBody()  .' : '. $uri);
+                throw new Exception($response->getBody()  . ' : ' . $uri);
             }
 
             if ($this->showApiMessages) {
@@ -144,15 +144,16 @@ class QueryService implements QueryServiceInterface
             }
 
             return $response;
-        } catch (HttpClientExceptionInterface $ex) {
+        } catch (HttpClientExceptionInterface $httpClientException) {
             if ($this->getRecoverHttpClientException()) {
                 return new Response((new HttpResponse())->setStatusCode(HttpResponse::STATUS_CODE_500));
             }
-            throw new Exception($ex->getMessage(), HttpResponse::STATUS_CODE_500, $ex);
+
+            throw new Exception($httpClientException->getMessage(), HttpResponse::STATUS_CODE_500, $httpClientException);
         }
     }
 
-    private function addAuthorizationHeader()
+    private function addAuthorizationHeader(): void
     {
         $accessToken = $this->session->offsetGet('storage')['AccessToken'] ?? null;
 

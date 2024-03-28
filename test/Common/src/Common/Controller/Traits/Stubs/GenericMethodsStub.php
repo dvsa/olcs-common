@@ -12,6 +12,11 @@ class GenericMethodsStub
 {
     use Traits\GenericMethods;
 
+    /**
+     * @var \Common\Service\Helper\FormHelperService
+     */
+    public $formHelper;
+
     public function __construct(FormHelperService $formHelper)
     {
         $this->formHelper = $formHelper;

@@ -3,7 +3,7 @@
 namespace CommonTest\Form\Elements\InputFilters;
 
 use Common\Form\Elements\InputFilters;
-use \Laminas\Validator\StringLength;
+use Laminas\Validator\StringLength;
 
 /**
  * Test Hidden InputFilter
@@ -11,12 +11,11 @@ use \Laminas\Validator\StringLength;
  */
 class HiddenTest extends \PHPUnit\Framework\TestCase
 {
+    public $filter;
     /**
      * test setup
-     *
-     * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->filter = new InputFilters\Hidden("test");
     }
@@ -35,30 +34,24 @@ class HiddenTest extends \PHPUnit\Framework\TestCase
 
     /**
      * test basic name
-     *
-     * @return void
      */
-    public function testGetInputSpecificationReturnsCorrectName()
+    public function testGetInputSpecificationReturnsCorrectName(): void
     {
         $this->assertEquals('test', $this->getSpecificationElement('name'));
     }
 
     /**
      * ensure hidden fields aren't required by default
-     *
-     * @return void
      */
-    public function testTextNotRequired()
+    public function testTextNotRequired(): void
     {
         $this->assertFalse($this->getSpecificationElement('required'));
     }
 
     /**
      * ensure we trim all input strings
-     *
-     * @return void
      */
-    public function testStringTrimFilterIsUsed()
+    public function testStringTrimFilterIsUsed(): void
     {
         $this->assertEquals(
             [['name' => \Laminas\Filter\StringTrim::class]],
@@ -68,10 +61,8 @@ class HiddenTest extends \PHPUnit\Framework\TestCase
 
     /**
      * Test set max
-     *
-     * @return void
      */
-    public function testSetMax()
+    public function testSetMax(): void
     {
         $this->filter->setMax(10);
 

@@ -5,6 +5,7 @@
  *
  * @author Mat Evans <mat.evans@valtech.co.uk>
  */
+
 namespace CommonTest\Service\Helper;
 
 use Common\Service\Helper\OppositionHelperService;
@@ -16,10 +17,11 @@ use Common\Service\Helper\OppositionHelperService;
  */
 class OppositionHelperServiceTest extends \PHPUnit\Framework\TestCase
 {
+    public $helper;
     /**
      * Setup the helper
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->helper = new OppositionHelperService();
     }
@@ -27,7 +29,7 @@ class OppositionHelperServiceTest extends \PHPUnit\Framework\TestCase
     /**
      * test sortCasesOpenClosed
      */
-    public function testSortCasesOpenClosed()
+    public function testSortCasesOpenClosed(): void
     {
         $oppositions = [
             ['case' => ['closedDate' => null]],

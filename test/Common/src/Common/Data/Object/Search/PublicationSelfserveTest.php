@@ -20,14 +20,14 @@ class PublicationSelfserveTest extends SearchAbstractTest
     /** @var  \Common\Data\Object\Search\PublicationSelfserve */
     protected $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = new $this->class();
 
         parent::setUp();
     }
 
-    public function testGetDateRanges()
+    public function testGetDateRanges(): void
     {
         $dateRanges = $this->sut->getDateRanges();
 
@@ -37,7 +37,7 @@ class PublicationSelfserveTest extends SearchAbstractTest
         $this->assertInstanceOf(PublishedDateTo::class, $dateRanges[1]);
     }
 
-    public function testGetFilters()
+    public function testGetFilters(): void
     {
         $filters = $this->sut->getFilters();
 

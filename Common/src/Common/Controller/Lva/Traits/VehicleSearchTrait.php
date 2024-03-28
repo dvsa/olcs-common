@@ -1,13 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Common\Controller\Lva\Traits;
 
+use Common\FormService\FormServiceManager;
+use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Table\TableBuilder;
+use Laminas\Mvc\Controller\AbstractController;
+use Laminas\Mvc\Controller\Plugin\Redirect;
 
 /**
- * Vehicle Search Trait
- *
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
+ * @property FormServiceManager $formServiceManager
+ * @property TranslationHelperService $translationHelper
+ * @method AbstractController getRequest()
+ * @method Redirect redirect()
  */
 trait VehicleSearchTrait
 {
@@ -62,9 +69,11 @@ trait VehicleSearchTrait
             if (!isset($query['limit']) || !is_numeric($query['limit'])) {
                 $query['limit'] = 10;
             }
+
             if (isset($query['vehicleSearch']['clearSearch'])) {
                 unset($query['vehicleSearch']);
             }
+
             $searchForm->setData($query);
             if (isset($query['vehicleSearch']['filter']) && !$searchForm->isValid()) {
                 $message = [
@@ -74,8 +83,10 @@ trait VehicleSearchTrait
                 ];
                 $searchForm->setMessages($message);
             }
+
             $searchForm->setAttribute('action', '');
         }
+
         return $searchForm;
     }
 
@@ -95,9 +106,11 @@ trait VehicleSearchTrait
             $query['vehicleSearch'] = null;
             unset($query['vehicleSearch']);
         }
+
         if (isset($query['includeRemoved']) && !$query['includeRemoved']) {
             unset($query['includeRemoved']);
         }
+
         return $query;
     }
 

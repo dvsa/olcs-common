@@ -8,7 +8,6 @@ use Laminas\I18n\Translator\TranslatorInterface;
 use Traversable;
 use Laminas\Form\ElementInterface;
 use Laminas\Form\Exception;
-use Common\Form\Elements\Validators\Messages\ValidationMessageInterface;
 
 /**
  * @see FormElementErrorsFactory
@@ -25,10 +24,6 @@ class FormElementErrors extends LaminasFormElementErrors
      */
     protected $messageFormatter;
 
-    /**
-     * @param FormElementMessageFormatter $messageFormatter
-     * @param TranslatorInterface $translator
-     */
     public function __construct(FormElementMessageFormatter $messageFormatter, TranslatorInterface $translator)
     {
         $this->messageFormatter = $messageFormatter;
@@ -36,19 +31,20 @@ class FormElementErrors extends LaminasFormElementErrors
     }
 
     /**
+     * @psalm-suppress NoValue
+     *
      * Render validation errors for the provided $element
      *
      * @param ElementInterface $element    Element to render errors for
      * @param array            $attributes HTML attributes to add to the render markup
      *
      * @throws Exception\DomainException
-     * @return string
      */
     public function render(ElementInterface $element, array $attributes = []): string
     {
         $messages = $element->getMessages();
 
-        if (empty($messages)) {
+        if ($messages === []) {
             return '';
         }
 
@@ -65,7 +61,7 @@ class FormElementErrors extends LaminasFormElementErrors
         // Prepare attributes for opening tag
         $attributes = array_merge($this->attributes, $attributes);
         $attributes = $this->createAttributesString($attributes);
-        if (!empty($attributes)) {
+        if ($attributes !== '' && $attributes !== '0') {
             $attributes = ' ' . $attributes;
         }
 
@@ -76,17 +72,15 @@ class FormElementErrors extends LaminasFormElementErrors
         $messagesToPrint = [];
         array_walk_recursive($messages, function ($item, $itemKey) use (&$messagesToPrint, $elementShouldEscape, $element, $escaper) {
             $shouldEscape = true;
-            if ($item instanceof ValidationMessageInterface) {
-                $shouldEscape = $item->shouldEscape();
-            }
             $message = $this->messageFormatter->formatElementMessage($element, $item, $itemKey);
             if ($shouldEscape && $elementShouldEscape !== false) {
                 $message = call_user_func($escaper, $message);
             }
+
             $messagesToPrint[] = $message;
         });
 
-        if (empty($messagesToPrint)) {
+        if ($messagesToPrint === []) {
             return '';
         }
 

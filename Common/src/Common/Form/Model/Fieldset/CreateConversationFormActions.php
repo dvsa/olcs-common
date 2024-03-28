@@ -19,5 +19,5 @@ class CreateConversationFormActions
      * @Form\Options({"label": "Create Conversation"})
      * @Form\Type(\Common\Form\Elements\InputFilters\ActionButton::class)
      */
-    public $submit = null;
+    public $submit;
 }

@@ -13,7 +13,7 @@ class VehiclesData
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\Attributes({"id":"","placeholder":"","class":"js-enabled"})
@@ -25,11 +25,11 @@ class VehiclesData
      * })
      * @Form\Type("\Laminas\Form\Element\Radio")
      */
-    public $hasEnteredReg = null;
+    public $hasEnteredReg;
 
     /**
      * @Form\Attributes({"value":"markup-application_vehicle-notice"})
      * @Form\Type("Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $notice = null;
+    public $notice;
 }

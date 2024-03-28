@@ -9,10 +9,8 @@ use LmcRbacMvc\Service\AuthorizationService;
 class SearchCasesCaseIdFactory implements FactoryInterface
 {
     /**
-     * @param  ContainerInterface $container
      * @param  $requestedName
      * @param  array|null         $options
-     * @return SearchCasesCaseId
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): SearchCasesCaseId
     {

@@ -16,6 +16,7 @@ use LmcRbacMvc\Service\AuthorizationService;
 class SearchCasesName implements FormatterPluginManagerInterface
 {
     private AuthorizationService $authService;
+
     private UrlHelperService $urlHelper;
 
     public function __construct(AuthorizationService $authService, UrlHelperService $urlHelper)

@@ -22,7 +22,9 @@ use Laminas\Form\View\Helper\FormElement as LaminasFormElement;
 class FormElement extends LaminasFormElement
 {
     protected const GUIDANCE_WRAPPER = '<div class="article">%s</div>';
+
     protected const TERMS_BOX_WRAPPER = '<div %s>%s</div>';
+
     protected const FILE_CHOOSE_WRAPPER
         = '<ul class="%s"><li class="%s"><label class="%s">%s %s</label><p class="%s">%s</p></li></ul>';
 
@@ -49,8 +51,6 @@ class FormElement extends LaminasFormElement
      * helper to utilize when rendering.
      *
      * @param LaminasElementInterface $element Form Element
-     *
-     * @return string
      */
     public function render(LaminasElementInterface $element): string
     {
@@ -82,6 +82,7 @@ class FormElement extends LaminasFormElement
                             $tag
                         );
                     }
+
                     $search[] = '[#' . $value['value'] . ']';
                     $replace[] = $theExtras;
                     if (isset($value['html_replace']) && $value['html_replace']) {
@@ -90,14 +91,15 @@ class FormElement extends LaminasFormElement
                         $value['label'] = $value['label'] . '[#' . $value['value'] . ']';
                     }
                 }
+
                 $replaceValues[] = $value;
             }
+
             $element->setValueOptions($replaceValues);
             $renderedOptions = str_replace($search, $replace, parent::render($element));
             $element->setValueOptions($values);
             return $renderedOptions;
         }
-
 
         if ($element instanceof TrafficAreaSet) {
             $value = $element->getValue();
@@ -119,11 +121,7 @@ class FormElement extends LaminasFormElement
 
         if ($element instanceof ActionLink) {
             $route = $element->getOption('route');
-            if (!empty($route)) {
-                $url = $this->getView()->url($route, [], [], true);
-            } else {
-                $url = $element->getValue();
-            }
+            $url = empty($route) ? $element->getValue() : $this->getView()->url($route, [], [], true);
 
             $class = '';
 
@@ -141,30 +139,23 @@ class FormElement extends LaminasFormElement
 
             return '<a href="' . htmlspecialchars($url, ENT_QUOTES, 'utf-8') . '" class="' . $class . '"' . $target . '>' . $label . '</a>';
         }
+
         if ($element instanceof HtmlTranslated) {
-            if ($element instanceof GuidanceTranslated) {
-                $wrapper = self::GUIDANCE_WRAPPER;
-            } else {
-                $wrapper = '%s';
-            }
-
+            $wrapper = $element instanceof GuidanceTranslated ? self::GUIDANCE_WRAPPER : '%s';
             $tokens = $element->getTokens();
-
             if (is_array($tokens) && count($tokens)) {
                 $translated = [];
 
                 foreach ($tokens as $token) {
                     $translated[] = $this->getView()->translate($token);
                 }
+
                 return sprintf($wrapper, vsprintf($this->getView()->translate($element->getValue()), $translated));
             }
-
             $value = $element->getValue();
-
             if (empty($value)) {
                 return '';
             }
-
             return sprintf($wrapper, $this->getView()->translate($element->getValue()));
         }
 
@@ -216,7 +207,7 @@ class FormElement extends LaminasFormElement
         }
 
         // If the element has errors, then add a class to the elements HTML
-        if (!empty($element->getMessages())) {
+        if ($element->getMessages() !== []) {
             $element->setAttribute('class', $element->getAttribute('class') . ' error__input');
         }
 
@@ -226,9 +217,8 @@ class FormElement extends LaminasFormElement
         $markup = parent::render($element);
         $markup = $elementErrorsHelper->render($element) . $markup;
         $markup = $this->attachHint($element, $markup);
-        $markup = $this->attachBelowHint($element, $markup);
 
-        return $markup;
+        return $this->attachBelowHint($element, $markup);
     }
 
     /**

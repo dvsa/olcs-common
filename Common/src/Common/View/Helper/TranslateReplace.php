@@ -4,7 +4,6 @@ namespace Common\View\Helper;
 
 use Common\Service\Helper\TranslationHelperService;
 use Laminas\ServiceManager\Factory\FactoryInterface;
-
 use Laminas\View\Helper\AbstractHelper;
 
 /**
@@ -18,11 +17,11 @@ class TranslateReplace extends AbstractHelper
     {
         $this->translator = $translator;
     }
+
     /**
      * Allows you to replace variables after the string is translated
      *
      * @param string $translationKey
-     * @param array $arguments
      * @param string $translateToWelsh 'Y' or 'N', Force the translation into welsh
      * @return string
      */

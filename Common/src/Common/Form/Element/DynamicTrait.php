@@ -163,7 +163,6 @@ trait DynamicTrait
     }
 
     /**
-     * @param array $exclude
      * @return $this
      */
     public function setExclude(array $exclude)
@@ -195,7 +194,7 @@ trait DynamicTrait
      *
      * @param array $extraOption
      */
-    public function setExtraOption($extraOption)
+    public function setExtraOption($extraOption): void
     {
         $this->extraOption = $extraOption;
     }
@@ -234,13 +233,12 @@ trait DynamicTrait
         if (isset($this->options['extra_option'])) {
             $this->setExtraOption($this->options['extra_option']);
         }
+
         return $this;
     }
 
     /**
      * Returns the value options for this select, fetching from the refdata service if requried
-     *
-     * @return array
      */
     public function getValueOptions(): array
     {
@@ -274,18 +272,14 @@ trait DynamicTrait
      */
     public function setValue($value)
     {
-        if (is_array($value) && empty($value)) {
+        if ($value === []) {
             $value = null;
         } elseif (is_array($value) && array_key_exists('id', $value)) {
             $value = $value['id'];
         } elseif ($this->getAttribute('multiple') && is_array($value)) {
             $tmp = [];
             foreach ($value as $singleValue) {
-                if (is_array($singleValue) && array_key_exists('id', $singleValue)) {
-                    $tmp[] = $singleValue['id'];
-                } else {
-                    $tmp[] = $singleValue;
-                }
+                $tmp[] = is_array($singleValue) && array_key_exists('id', $singleValue) ? $singleValue['id'] : $singleValue;
             }
 
             $value = $tmp;
@@ -294,7 +288,7 @@ trait DynamicTrait
         return parent::setValue($value);
     }
 
-    public function addValueOption(array $valueOption)
+    public function addValueOption(array $valueOption): void
     {
         $this->setValueOptions(array_merge($this->getValueOptions(), $valueOption));
     }

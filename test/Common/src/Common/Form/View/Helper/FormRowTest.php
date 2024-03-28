@@ -18,9 +18,11 @@ use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\I18n\View\Helper\Translate;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Validator\ValidatorPluginManager;
+use Laminas\View\Helper\Doctype;
 use Laminas\View\HelperPluginManager;
 use Laminas\View\Renderer\PhpRenderer;
 use Mockery\MockInterface;
+use Mockery as m;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Container\ContainerInterface;
 
@@ -33,8 +35,11 @@ class FormRowTest extends MockeryTestCase
     use MocksServicesTrait;
 
     protected const VALIDATOR_MANAGER = 'ValidatorManager';
+
     protected const AN_ELEMENT_NAME = 'AN ELEMENT NAME';
+
     protected const AN_EMPTY_FIELD = '<div class="field "></div>';
+
     protected const AN_EMPTY_STRING = '';
 
     /**
@@ -45,7 +50,7 @@ class FormRowTest extends MockeryTestCase
     /**
      * @test
      */
-    public function __invoke_IsCallable()
+    public function invokeIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -56,9 +61,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_ClassicNoLabel()
+    public function invokeClassicNoLabel(): void
     {
         // Setup
         $this->setUpSut();
@@ -70,17 +75,16 @@ class FormRowTest extends MockeryTestCase
 
         // Assert
         $this->assertMatchesRegularExpression(
-        '/^<div class="validation-wrapper"><div class="field ">' .
-            '(.*)<\/div><\/div>$/',
+            '/^<div class="validation-wrapper"><div class="field ">(.*)<\/div><\/div>$/',
             $result
         );
     }
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_ClassicWithId()
+    public function invokeClassicWithId(): void
     {
         // Setup
         $this->setUpSut();
@@ -96,9 +100,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_ClassicWithPartial()
+    public function invokeClassicWithPartial(): void
     {
         // Setup
         $this->setUpSut();
@@ -113,9 +117,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RendersActionButton()
+    public function invokeRendersActionButton(): void
     {
         // Setup
         $this->setUpSut();
@@ -130,9 +134,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RendersNoRender()
+    public function invokeRendersNoRender(): void
     {
         // Setup
         $this->setUpSut();
@@ -147,9 +151,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RendersTable()
+    public function invokeRendersTable(): void
     {
         // Setup
         $this->setUpSut();
@@ -172,9 +176,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RendersSingleCheckbox()
+    public function invokeRendersSingleCheckbox(): void
     {
         // Setup
         $this->setUpSut();
@@ -190,9 +194,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RendersCheckbox()
+    public function invokeRendersCheckbox(): void
     {
         // Setup
         $this->setUpSut();
@@ -214,9 +218,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RendesrRadioNoAttribute()
+    public function invokeRendesrRadioNoAttribute(): void
     {
         // Setup
         $this->setUpSut();
@@ -231,9 +235,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RendersRadioLegendAttribute()
+    public function invokeRendersRadioLegendAttribute(): void
     {
         // Setup
         $this->setUpSut();
@@ -255,9 +259,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RendersRadioWithDataGroupAttribute()
+    public function invokeRendersRadioWithDataGroupAttribute(): void
     {
         // Setup
         $this->setUpSut();
@@ -277,9 +281,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RendersRadioWithInlineAttribute()
+    public function invokeRendersRadioWithInlineAttribute(): void
     {
         // Setup
         $this->setUpSut();
@@ -302,10 +306,10 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      * @group formRow
      */
-    public function __invoke_RendersCsrfElement()
+    public function invokeRendersCsrfElement(): void
     {
         // Setup
         $this->setUpSut();
@@ -332,10 +336,10 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      * @group formRow
      */
-    public function __invoke_RendersVisuallyHiddenElement()
+    public function invokeRendersVisuallyHiddenElement(): void
     {
         // Setup
         $this->setUpSut();
@@ -356,10 +360,10 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      * @group formRow
      */
-    public function __invoke_RendersHiddenElement()
+    public function invokeRendersHiddenElement(): void
     {
         // Setup
         $this->setUpSut();
@@ -388,9 +392,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RendersWithRenderAsFieldset()
+    public function invokeRendersWithRenderAsFieldset(): void
     {
         // Setup
         $this->setUpSut();
@@ -406,9 +410,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RendersReadonlyElement()
+    public function invokeRendersReadonlyElement(): void
     {
         // Setup
         $this->setUpSut();
@@ -431,9 +435,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RendersDateSelectElement()
+    public function invokeRendersDateSelectElement(): void
     {
         // Setup
         $this->setUpSut();
@@ -456,9 +460,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RendersDateSelectWithFieldsetClass()
+    public function invokeRendersDateSelectWithFieldsetClass(): void
     {
         // Setup
         $this->setUpSut();
@@ -482,9 +486,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RendersDateTimeSelectElement()
+    public function invokeRendersDateTimeSelectElement(): void
     {
         // Setup
         $this->setUpSut();
@@ -506,9 +510,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RendersAttachFilesButtonElement()
+    public function invokeRendersAttachFilesButtonElement(): void
     {
         // Setup
         $this->setUpSut();
@@ -533,9 +537,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RendersSingleRadio()
+    public function invokeRendersSingleRadio(): void
     {
         // Setup
         $this->setUpSut();
@@ -548,9 +552,6 @@ class FormRowTest extends MockeryTestCase
         $this->assertMatchesRegularExpression('/^$/', $result);
     }
 
-    /**
-     * @return array
-     */
     public function allowWrapValuesThatCauseMarkupToBeWrappedDataProvider(): array
     {
         return [
@@ -571,9 +572,9 @@ class FormRowTest extends MockeryTestCase
     /**
      * @test
      * @dataProvider allowWrapValuesThatCauseMarkupToBeWrappedDataProvider
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_WrapsMarkupInAField($allowWrapAttributeValue)
+    public function invokeWrapsMarkupInAField($allowWrapAttributeValue): void
     {
         // Setup
         $this->setUpSut();
@@ -589,9 +590,9 @@ class FormRowTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_DoesNotWrapMarkupInAField_IfAllowWrapAttributeIsFalse()
+    public function invokeDoesNotWrapMarkupInAFieldIfAllowWrapAttributeIsFalse(): void
     {
         // Setup
         $this->setUpSut();
@@ -648,13 +649,9 @@ class FormRowTest extends MockeryTestCase
 
     protected function setUpFormElementErrors(ContainerInterface $serviceLocator): CommonHelper\FormElementErrors
     {
-        $pluginManager = $this->setUpAbstractPluginManager($serviceLocator);
-        return (new CommonHelper\FormElementErrorsFactory())->__invoke($pluginManager, CommonHelper\FormElementErrors::class);
+        return (new CommonHelper\FormElementErrorsFactory())->__invoke($serviceLocator, CommonHelper\FormElementErrors::class);
     }
 
-    /**
-     * @param ServiceManager $serviceManager
-     */
     protected function setUpDefaultServices(ServiceManager $serviceManager)
     {
         $serviceManager->setFactory(FormElementMessageFormatter::class, new FormElementMessageFormatterFactory());
@@ -672,14 +669,12 @@ class FormRowTest extends MockeryTestCase
             $this->serviceManager->setService(PhpRenderer::class, $instance);
             $instance->setHelperPluginManager($this->viewHelperPluginManager());
         }
+
         $instance = $this->serviceManager->get(PhpRenderer::class);
         assert($instance instanceof MockObject);
         return $instance;
     }
 
-    /**
-     * @return HelperPluginManager
-     */
     protected function viewHelperPluginManager(): HelperPluginManager
     {
         if (! $this->serviceManager->has(HelperPluginManager::class)) {
@@ -691,6 +686,7 @@ class FormRowTest extends MockeryTestCase
             $instance->setService('form_label', new LaminasHelper\FormLabel());
             $instance->setService('form_element', new CommonHelper\FormElement());
             $instance->setService('form_text', new LaminasHelper\FormText());
+            $instance->setService(Doctype::class, m::mock(Doctype::class));
 
             $formElementErrors = $this->setUpFormElementErrors($this->serviceManager);
             $formElementErrors->setView($this->phpRenderer());
@@ -698,30 +694,26 @@ class FormRowTest extends MockeryTestCase
 
             $this->serviceManager->setService(HelperPluginManager::class, $instance);
         }
+
         $instance = $this->serviceManager->get(HelperPluginManager::class);
         assert($instance instanceof HelperPluginManager);
         return $instance;
     }
 
-    /**
-     * @return Translator
-     */
     protected function translator(): Translator
     {
         if (! $this->serviceManager->has(TranslatorInterface::class)) {
             $instance = new Translator();
             $this->serviceManager->setService(TranslatorInterface::class, $instance);
         }
+
         $instance = $this->serviceManager->get(TranslatorInterface::class);
         assert($instance instanceof Translator);
         return $instance;
     }
 
-    /**
-     * @return ValidatorPluginManager
-     */
     protected function setUpValidatorPluginManager(): ValidatorPluginManager
     {
-        return new ValidatorPluginManager();
+        return m::mock(ValidatorPluginManager::class);
     }
 }

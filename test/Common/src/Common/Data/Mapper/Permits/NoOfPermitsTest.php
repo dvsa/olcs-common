@@ -24,7 +24,7 @@ class NoOfPermitsTest extends TestCase
 
     private $noOfPermits;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $submitButton = new Submit();
         $submitButton->setName('SubmitButton');
@@ -45,7 +45,7 @@ class NoOfPermitsTest extends TestCase
         $this->noOfPermits = new NoOfPermits($this->translationHelperService);
     }
 
-    public function testMapForFormOptions()
+    public function testMapForFormOptions(): void
     {
         $form = $this->form;
 
@@ -259,7 +259,7 @@ class NoOfPermitsTest extends TestCase
 
         $element2021 = $permitsRequiredElements['2021'];
         $this->assertInstanceOf(HtmlElement::class, $element2021);
-        $this->assertEquals('<p class="no-more-available">' . $for2021Html. '</p>', $element2021->getValue());
+        $this->assertEquals('<p class="no-more-available">' . $for2021Html . '</p>', $element2021->getValue());
 
         $this->assertArrayHasKey('Submit', $formFieldsets);
         $submitFieldsetElements = $formFieldsets['Submit']->getElements();
@@ -307,7 +307,7 @@ class NoOfPermitsTest extends TestCase
         );
     }
 
-    public function testAllAllowablePermitsIssued()
+    public function testAllAllowablePermitsIssued(): void
     {
         $form = $this->form;
 
@@ -419,15 +419,15 @@ class NoOfPermitsTest extends TestCase
 
         $element2018 = $permitsRequiredElements['2018'];
         $this->assertInstanceOf(HtmlElement::class, $element2018);
-        $this->assertEquals('<p class="no-more-available">' . $for2018Html. '</p>', $element2018->getValue());
+        $this->assertEquals('<p class="no-more-available">' . $for2018Html . '</p>', $element2018->getValue());
 
         $element2019 = $permitsRequiredElements['2019'];
         $this->assertInstanceOf(HtmlElement::class, $element2019);
-        $this->assertEquals('<p class="no-more-available">' . $for2019Html. '</p>', $element2019->getValue());
+        $this->assertEquals('<p class="no-more-available">' . $for2019Html . '</p>', $element2019->getValue());
 
         $element2020 = $permitsRequiredElements['2020'];
         $this->assertInstanceOf(HtmlElement::class, $element2020);
-        $this->assertEquals('<p class="no-more-available">' . $for2020Html. '</p>', $element2020->getValue());
+        $this->assertEquals('<p class="no-more-available">' . $for2020Html . '</p>', $element2020->getValue());
 
         $this->assertArrayHasKey('Submit', $formFieldsets);
         $submitFieldsetElements = $formFieldsets['Submit']->getElements();
@@ -467,7 +467,7 @@ class NoOfPermitsTest extends TestCase
         $this->assertArrayNotHasKey('banner', $data);
     }
 
-    public function testExceptionOnIncorrectPermitType()
+    public function testExceptionOnIncorrectPermitType(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Permit type 7 is not supported by this mapper');
@@ -482,7 +482,7 @@ class NoOfPermitsTest extends TestCase
 
         $form = new Form();
 
-        $data = $this->noOfPermits->mapForFormOptions(
+        $this->noOfPermits->mapForFormOptions(
             $data,
             $form,
             'application',

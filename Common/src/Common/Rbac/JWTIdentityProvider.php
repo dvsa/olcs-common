@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Common\Rbac;
@@ -20,10 +21,15 @@ use LmcRbacMvc\Identity\IdentityProviderInterface;
 class JWTIdentityProvider implements IdentityProviderInterface
 {
     private ?IdentityInterface $identity = null;
+
     private Container $identitySession;
+
     private QuerySender $querySender;
+
     private CacheEncryption $cacheService;
+
     private RefreshTokenService $refreshTokenService;
+
     private Session $tokenSession;
 
     public function __construct(
@@ -68,6 +74,7 @@ class JWTIdentityProvider implements IdentityProviderInterface
         $identity->setUserData($data);
 
         $this->identity = $identity;
+
         $this->identitySession->offsetSet('identity', $this->identity);
         return $this->identity;
     }
@@ -78,13 +85,8 @@ class JWTIdentityProvider implements IdentityProviderInterface
             // no identity in the session yet - refresh
             return true;
         }
-
-        if (empty($identity->getId())) {
-            //no user id - refresh
-            return true;
-        }
-
-        return false;
+        //no user id - refresh
+        return empty($identity->getId());
     }
 
     /**
@@ -134,7 +136,7 @@ class JWTIdentityProvider implements IdentityProviderInterface
         try {
             $newTokens = $this->refreshTokenService->refreshTokens($tokens, $identifier);
             $this->tokenSession->write($newTokens);
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return;
         }
     }

@@ -19,7 +19,9 @@ class FlashMessenger extends LaminasFlashMessenger
      * @var string
      */
     protected $messageCloseString = '</p></div>';
+
     protected $messageOpenFormat = '<div %s><p role="alert">';
+
     protected $messageSeparatorString = '</p></div><div %s><p>';
 
     /**
@@ -122,7 +124,7 @@ class FlashMessenger extends LaminasFlashMessenger
         $markup .= $this->renderAllFromNamespace('info', ['notice--info']);
         $markup .= $this->renderAllFromNamespace('default', ['notice--info']);
 
-        if (empty($markup)) {
+        if ($markup === '' || $markup === '0') {
             return '';
         }
 
@@ -163,14 +165,12 @@ class FlashMessenger extends LaminasFlashMessenger
     ) {
         $content = parent::renderCurrent($namespace, $classes);
 
-        $content .= $this->renderMessages(
+        return $content . $this->renderMessages(
             $namespace,
             $this->flashMessengerHelperService->getCurrentMessages($namespace),
             $classes,
             $autoEscape
         );
-
-        return $content;
     }
 
     /**
@@ -199,19 +199,18 @@ class FlashMessenger extends LaminasFlashMessenger
 
         array_walk_recursive(
             $messages,
-            function ($item) use (&$messagesToPrint, $translator, $translatorTextDomain) {
+            static function ($item) use (&$messagesToPrint, $translator, $translatorTextDomain) {
                 if ($translator !== null) {
                     $item = $translator->translate(
                         $item,
                         $translatorTextDomain
                     );
                 }
-
                 $messagesToPrint[] = $item;
             }
         );
 
-        if (empty($messagesToPrint)) {
+        if ($messagesToPrint === []) {
             return '';
         }
 
@@ -229,8 +228,6 @@ class FlashMessenger extends LaminasFlashMessenger
             $messagesToPrint
         );
 
-        $markup .= $this->getMessageCloseString();
-
-        return $markup;
+        return $markup . $this->getMessageCloseString();
     }
 }

@@ -25,6 +25,8 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class EnabledSectionTraitTest extends MockeryTestCase
 {
+    public $mockRestrictionHelper;
+    public $mockStringHelper;
     protected $sut;
 
     protected $sm;
@@ -45,7 +47,7 @@ class EnabledSectionTraitTest extends MockeryTestCase
      * @param array $completions application completions
      * @param array $expected
      */
-    public function testSetEnabledAndCompleteFlagOnSections($sections, $completions, $expected)
+    public function testSetEnabledAndCompleteFlagOnSections($sections, $completions, $expected): void
     {
         $this->mockRestrictionHelper
                 ->shouldReceive('isRestrictionSatisfied')
@@ -66,21 +68,6 @@ class EnabledSectionTraitTest extends MockeryTestCase
 
     public function setEnabledAndCompleteProvider()
     {
-        $sections = [
-            'type_of_licence' => [],
-            'business_type' => [
-                'prerequisite' => 'type_of_licence'
-            ],
-        ];
-        $completions = [
-            'typeOfLicenceStatus' => RefData::APPLICATION_COMPLETION_STATUS_COMPLETE,
-            'businessTypeStatus' => 2,
-        ];
-        $expected = [
-            'type_of_licence' => ['enabled' => true, 'complete' => true],
-            'business_type'   => ['enabled' => true, 'complete' => true],
-        ];
-
         return [
             'single prerequisite, 1 complete' => [
                 [

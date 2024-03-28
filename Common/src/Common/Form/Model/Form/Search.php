@@ -21,18 +21,18 @@ class Search
      * @Form\Options({"label":"Search"})
      * @Form\Type("\Laminas\Form\Element\Button")
      */
-    public $submit = null;
+    public $submit;
 
     /**
      * @Form\Name("search")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Search")
      */
-    public $search = null;
+    public $search;
 
     /**
      * @Form\Name("advanced")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Advanced")
      * @Form\Options({"label":"Advanced search"})
      */
-    public $advanced = null;
+    public $advanced;
 }

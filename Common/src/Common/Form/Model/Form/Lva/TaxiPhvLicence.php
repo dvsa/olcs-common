@@ -17,32 +17,32 @@ class TaxiPhvLicence
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TaxiPhvLicenceData")
      * @Form\Options({"label":"application_taxi-phv_licence-sub-action.data"})
      */
-    public $data = null;
+    public $data;
 
     /**
      * @Form\Name("contactDetails")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TaxiPhvContactDetails")
      * @Form\Options({"label":"application_taxi-phv_licence-sub-action.contactDetails"})
      */
-    public $contactDetails = null;
+    public $contactDetails;
 
     /**
      * @Form\Name("address")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Address")
      */
-    public $address = null;
+    public $address;
 
     /**
      * @Form\Name("trafficArea")
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $trafficArea = null;
+    public $trafficArea;
 
     /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormCrudActions")
      * @Form\Attributes({"class":"govuk-button-group"})
      */
-    public $formActions = null;
+    public $formActions;
 }

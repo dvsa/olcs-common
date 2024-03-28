@@ -18,12 +18,16 @@ use Common\Service\Helper\FormHelperService;
  */
 class DeclarationTest extends MockeryTestCase
 {
+    public $translator;
+    public $scriptFactory;
+    public $urlHelper;
     /** @var Declaration */
     protected $sut;
+
     /** @var  m\MockInterface */
     private $formHelper;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->formHelper = m::mock(FormHelperService::class);
         $this->translator = m::mock(TranslationHelperService::class);
@@ -32,7 +36,7 @@ class DeclarationTest extends MockeryTestCase
         $this->sut = new Declaration($this->formHelper, $this->translator, $this->scriptFactory, $this->urlHelper);
     }
 
-    public function testGetFormSignatureDisabled()
+    public function testGetFormSignatureDisabled(): void
     {
         $contentElement = m::mock();
         $declarationElement = m::mock();
@@ -73,7 +77,7 @@ class DeclarationTest extends MockeryTestCase
         $this->assertEquals($form, $this->sut->getForm($continuationDetailData));
     }
 
-    public function testGetFormSignatureEnabled()
+    public function testGetFormSignatureEnabled(): void
     {
         $contentElement = m::mock();
         $declarationElement = m::mock();
@@ -113,7 +117,7 @@ class DeclarationTest extends MockeryTestCase
         $this->assertEquals($form, $this->sut->getForm($continuationDetailData));
     }
 
-    public function testGetFormNoFees()
+    public function testGetFormNoFees(): void
     {
         $contentElement = m::mock();
         $declarationElement = m::mock();
@@ -153,7 +157,7 @@ class DeclarationTest extends MockeryTestCase
         $this->assertEquals($form, $this->sut->getForm($continuationDetailData));
     }
 
-    public function testGetFormWithFees()
+    public function testGetFormWithFees(): void
     {
         $contentElement = m::mock();
         $declarationElement = m::mock();
@@ -193,7 +197,7 @@ class DeclarationTest extends MockeryTestCase
         $this->assertEquals($form, $this->sut->getForm($continuationDetailData));
     }
 
-    public function testGetFormReviewSection()
+    public function testGetFormReviewSection(): void
     {
         $contentElement = m::mock();
         $declarationElement = m::mock();
@@ -239,7 +243,7 @@ class DeclarationTest extends MockeryTestCase
         $this->assertEquals($form, $this->sut->getForm($continuationDetailData));
     }
 
-    public function testGetFormSignature()
+    public function testGetFormSignature(): void
     {
         $contentElement = m::mock();
         $declarationElement = m::mock();

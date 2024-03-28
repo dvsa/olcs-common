@@ -22,7 +22,7 @@ class RestrictedCountriesFieldsetPopulatorTest extends MockeryTestCase
     /**
      * @dataProvider dpTestPopulate
      */
-    public function testPopulate($options, $expectedValueOptions, $expectedSetValue)
+    public function testPopulate($options, $expectedValueOptions, $expectedSetValue): void
     {
         $fieldsetName = 'fieldset12';
         $yesNoRadioName = 'restrictedCountries';

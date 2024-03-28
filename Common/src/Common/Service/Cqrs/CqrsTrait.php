@@ -33,6 +33,7 @@ trait CqrsTrait
     {
         $httpResponse = new HttpResponse();
         $httpResponse->setStatusCode($statusCode);
+
         $response = new Response($httpResponse);
         $response->setResult(['messages' => $messages]);
 
@@ -53,7 +54,7 @@ trait CqrsTrait
     protected function showApiMessages($messages = [])
     {
         foreach ($messages as $message) {
-            $message = (is_array($message))? end($message) : $message;
+            $message = (is_array($message)) ? end($message) : $message;
             $this->flashMessenger->addErrorMessage('DEBUG: ' . print_r($message, true));
         }
     }
@@ -76,8 +77,12 @@ trait CqrsTrait
         }
 
         $result = $response->getResult();
-        if (!$response->isOk() && isset($result['messages'])) {
-            $this->showApiMessages($result['messages']);
+        if ($response->isOk()) {
+            return;
         }
+        if (!isset($result['messages'])) {
+            return;
+        }
+        $this->showApiMessages($result['messages']);
     }
 }

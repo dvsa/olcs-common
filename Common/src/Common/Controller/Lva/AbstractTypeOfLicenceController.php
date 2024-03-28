@@ -18,18 +18,12 @@ abstract class AbstractTypeOfLicenceController extends AbstractController
 {
     use CrudActionTrait;
 
-    /** @var string */
     protected string $baseRoute = 'lva-%s/type_of_licence';
 
     protected FlashMessengerHelperService $flashMessengerHelper;
+
     protected ScriptFactory $scriptFactory;
 
-    /**
-     * @param NiTextTranslation $niTextTranslationUtil
-     * @param AuthorizationService $authService
-     * @param FlashMessengerHelperService $flashMessengerHelper
-     * @param ScriptFactory $scriptFactory
-     */
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
@@ -83,7 +77,7 @@ abstract class AbstractTypeOfLicenceController extends AbstractController
             unset($errors['licenceType']);
         }
 
-        if (!empty($errors)) {
+        if ($errors !== []) {
             $fm = $this->flashMessengerHelper;
 
             foreach ($errors as $error) {

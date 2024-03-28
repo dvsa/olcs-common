@@ -21,7 +21,7 @@ class SumContextTest extends MockeryTestCase
 {
     protected $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = new SumContext();
     }
@@ -29,7 +29,7 @@ class SumContextTest extends MockeryTestCase
     /**
      * @dataProvider providerIsValid
      */
-    public function testIsValid($min, $max, $context, $expected)
+    public function testIsValid($min, $max, $context, $expected): void
     {
         $this->sut->setMin($min);
         $this->sut->setMax($max);

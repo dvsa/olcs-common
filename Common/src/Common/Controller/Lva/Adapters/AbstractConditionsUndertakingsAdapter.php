@@ -6,6 +6,7 @@ use Common\Controller\Lva\Interfaces\ConditionsUndertakingsAdapterInterface;
 use Common\RefData;
 use Common\Service\Script\ScriptFactory;
 use Common\Service\Table\Formatter\Address;
+use Common\Service\Table\Formatter\FormatterPluginManager;
 use Common\Service\Table\TableBuilder;
 use Psr\Container\ContainerInterface;
 use Laminas\Form\Form;
@@ -23,7 +24,7 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
     /**
      * Attach the relevant scripts to the main page
      */
-    public function attachMainScripts()
+    public function attachMainScripts(): void
     {
         $this->container->get(ScriptFactory::class)->loadFile('lva-crud');
     }
@@ -44,10 +45,8 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
 
     /**
      * Remove the restore button
-     *
-     * @param TableBuilder $table
      */
-    public function alterTable(TableBuilder $table)
+    public function alterTable(TableBuilder $table): void
     {
         $table->removeAction('restore');
     }
@@ -76,15 +75,15 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
     /**
      * Set the attached to options for the form, based on the lva type and id
      *
-     * @param Form  $form
      * @param array $data
      */
-    public function alterForm(Form $form, $data)
+    public function alterForm(Form $form, $data): void
     {
         $licNo = 'Unknown';
         if (isset($data['licence']['licNo'])) {
             $licNo = $data['licence']['licNo'];
         }
+
         if (isset($data['licNo'])) {
             $licNo = $data['licNo'];
         }
@@ -101,11 +100,14 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
         $operatingCentres = $this->getOperatingCentresForList($data);
         $attachedToOperatingCentres = [];
 
+        /** @var Address $addressFormatter */
+        $addressFormatter = $this->container->get(FormatterPluginManager::class)->get(Address::class);
+
         foreach ($operatingCentres as $oc) {
-            $attachedToOperatingCentres[$oc['id']] = Address::format($oc['address']);
+            $attachedToOperatingCentres[$oc['id']] = $addressFormatter->format($oc['address']);
         }
 
-        if (!empty($attachedToOperatingCentres)) {
+        if ($attachedToOperatingCentres !== []) {
             $options['OC'] = [
                 'label' => 'OC Address',
                 'options' => $attachedToOperatingCentres
@@ -134,11 +136,13 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
             foreach ($data['licence']['operatingCentres'] as $loc) {
                 $ocs[$loc['operatingCentre']['id']] = $loc['operatingCentre'];
             }
+
             foreach ($data['operatingCentres'] as $aoc) {
                 if ($aoc['action'] === 'D') {
                     unset($ocs[$aoc['operatingCentre']['id']]);
                     continue;
                 }
+
                 $ocs[$aoc['operatingCentre']['id']] = $aoc['operatingCentre'];
             }
         } else {

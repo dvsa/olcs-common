@@ -14,6 +14,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class IssuedPermitLicencePermitReferenceTest extends MockeryTestCase
 {
     protected $urlHelper;
+
     protected $sut;
 
     protected function setUp(): void
@@ -30,7 +31,7 @@ class IssuedPermitLicencePermitReferenceTest extends MockeryTestCase
     /**
      * @dataProvider dpFormatLinkToIssuedPermits
      */
-    public function testFormatLinkToIssuedPermits($row, $expectedOutput)
+    public function testFormatLinkToIssuedPermits($row, $expectedOutput): void
     {
         $this->urlHelper->shouldReceive('fromRoute')
             ->with('licence/irhp-application/irhp-permits', ['irhpAppId' => $row['id'], 'licence' => $row['licenceId'], 'permitTypeId' => $row['typeId']])
@@ -96,7 +97,7 @@ class IssuedPermitLicencePermitReferenceTest extends MockeryTestCase
     /**
      * @dataProvider dpFormatLinkToApplication
      */
-    public function testFormatLinkToApplication($row, $expectedOutput)
+    public function testFormatLinkToApplication($row, $expectedOutput): void
     {
         $this->urlHelper->shouldReceive('fromRoute')
             ->with('licence/irhp-application/application', ['licence' => $row['licenceId'], 'action' => 'edit', 'irhpAppId' => $row['id']])

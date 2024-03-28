@@ -14,7 +14,6 @@ class FlashMessengerFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): FlashMessenger
     {
-        /** @var FlashMessengerHelperService $queryService */
         $flashMessengerHelperService = $container->get('Helper\FlashMessenger');
 
         $flashMessenger = new FlashMessenger($flashMessengerHelperService);

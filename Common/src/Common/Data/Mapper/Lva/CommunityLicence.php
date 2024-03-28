@@ -64,7 +64,8 @@ class CommunityLicence implements MapperInterface
             'status' => $dataFieldset['status']
         ];
 
-        if (isset($data['dates']['startDate'])
+        if (
+            isset($data['dates']['startDate'])
             && !empty($data['dates']['startDate']['year'])
             && !empty($data['dates']['startDate']['month'])
             && !empty($data['dates']['startDate']['day'])
@@ -73,7 +74,8 @@ class CommunityLicence implements MapperInterface
             $result['startDate'] = $startDate['year'] . '-' . $startDate['month'] . '-' . $startDate['day'];
         }
 
-        if (isset($data['dates']['endDate'])
+        if (
+            isset($data['dates']['endDate'])
             && !empty($data['dates']['endDate']['year'])
             && !empty($data['dates']['endDate']['month'])
             && !empty($data['dates']['endDate']['day'])

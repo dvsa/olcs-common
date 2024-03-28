@@ -23,6 +23,7 @@ class TaskCheckbox implements FormatterPluginManagerInterface
     {
         $this->tableBuilder = $tableBuilder;
     }
+
     /**
      * Format a task checkbox
      *

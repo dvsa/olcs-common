@@ -15,21 +15,24 @@ class FormInputSearchTest extends TestCase
      */
     protected $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = new FormInputSearch();
     }
 
-    public function testInvoke()
+    public function testInvoke(): void
     {
+        $returnedValue = 'string';
+
         $mockElement = m::mock(ElementInterface::class);
         $mockView = m::mock(RendererInterface::class);
         $mockView->shouldReceive('vars->getArrayCopy')->withNoArgs()->andReturn(['VAR' => 'FOO']);
-        $mockView->shouldReceive('render')
-            ->with('partials/form/input-search', ['VAR' => 'FOO', 'fieldsetElement' => $mockElement])->once();
+        $mockView->expects('render')
+            ->with('partials/form/input-search', ['VAR' => 'FOO', 'fieldsetElement' => $mockElement])
+            ->andReturn($returnedValue);
 
         $this->sut->setView($mockView);
 
-        $this->sut->__invoke($mockElement);
+        $this->assertEquals($returnedValue, $this->sut->__invoke($mockElement));
     }
 }

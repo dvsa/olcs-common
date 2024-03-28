@@ -14,7 +14,7 @@ class ReturnToAddressTest extends MockeryTestCase
     /**
      * @dataProvider dpTestInvoke
      */
-    public function testInvoke($isNi, $separator, $expect)
+    public function testInvoke($isNi, $separator, $expect): void
     {
         $sut = new ReturnToAddress();
 
@@ -42,8 +42,7 @@ class ReturnToAddressTest extends MockeryTestCase
             [
                 'isNi' => false,
                 'separator' => '</br>',
-                'expect' => 'Office of the Traffic Commissioner</br>' .
-                    'The Central Licensing Office</br>Hillcrest House</br>' .
+                'expect' => 'Office of the Traffic Commissioner</br>The Central Licensing Office</br>Hillcrest House</br>' .
                     '386 Harehills Lane</br>Leeds</br>LS9 6NF',
             ],
             [

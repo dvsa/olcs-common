@@ -13,5 +13,5 @@ class DeclarationSignatureDetails
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      * @Form\Attributes({"data-container-class": "verify"})
      */
-    public $signature = null;
+    public $signature;
 }

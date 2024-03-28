@@ -20,7 +20,9 @@ use Laminas\Stdlib\RequestInterface;
 class FileUploadHelperService extends AbstractHelperService
 {
     public const FILE_UPLOAD_ERR_PREFIX = 'message.file-upload-error.';
+
     public const FILE_UPLOAD_ERR_FILE_LENGTH_TOO_LONG = 'message.file-upload-error.lengthtoolong';
+
     public const FILE_NAME_MAX_LENGTH = 200;
 
     /**
@@ -58,12 +60,8 @@ class FileUploadHelperService extends AbstractHelperService
      */
     private $request;
 
-    /**
-     * @var ElementInterface
-     */
-    private $element;
-
     protected UrlHelperService $urlHelper;
+
     protected Scan $antiVirusService;
 
     public function __construct(
@@ -251,7 +249,7 @@ class FileUploadHelperService extends AbstractHelperService
         $this->populateFileList();
 
         if ($this->getRequest()->isPost() && $this->processFileDeletions()) {
-            $processed = true;
+            return true;
         }
 
         return $processed;
@@ -260,10 +258,9 @@ class FileUploadHelperService extends AbstractHelperService
     /**
      * Populate file list
      *
-     * @return void
      * @throws ConfigurationException
      */
-    private function populateFileList()
+    private function populateFileList(): void
     {
         $callback = $this->getLoadCallback();
 
@@ -314,7 +311,7 @@ class FileUploadHelperService extends AbstractHelperService
         if (!is_null($selector)) {
             $element = $this->findElement($this->getForm(), $selector);
             $count = (int)$element->getValue();
-            if ($count>0) {
+            if ($count > 0) {
                 $element->setValue($count - 1);
             }
         }
@@ -361,11 +358,13 @@ class FileUploadHelperService extends AbstractHelperService
         if (isset($postData) && !isset($postData['file-controls'])) {
             $postData['file-controls'] = $postData;
         }
+
         if (isset($fileData) && !isset($fileData['file-controls'])) {
             $fileData['file-controls'] = $fileData;
         }
 
-        if ($postData === null
+        if (
+            $postData === null
             || $fileData === null
             || !isset($postData['file-controls']['upload'])
             || empty($postData['file-controls']['upload'])
@@ -447,7 +446,8 @@ class FileUploadHelperService extends AbstractHelperService
 
         $postData = $this->findSelectorData((array)$this->getRequest()->getPost(), $this->getSelector());
 
-        if ($postData === null
+        if (
+            $postData === null
             || !isset($postData['list'])
         ) {
             return false;
@@ -460,8 +460,10 @@ class FileUploadHelperService extends AbstractHelperService
         foreach ($list->getFieldsets() as $listFieldset) {
             $name = $listFieldset->getName();
 
-            if (isset($postData['list'][$name]['remove'])
-                && !empty($postData['list'][$name]['remove'])) {
+            if (
+                isset($postData['list'][$name]['remove'])
+                && !empty($postData['list'][$name]['remove'])
+            ) {
                 $success = call_user_func(
                     $callback,
                     $postData['list'][$name]['id']
@@ -552,20 +554,16 @@ class FileUploadHelperService extends AbstractHelperService
 
     /**
      * Invalid mime
-     *
-     * @return void
      */
-    private function invalidMime()
+    private function invalidMime(): void
     {
         $this->getForm()->setMessages($this->formatErrorMessageForForm('ERR_MIME'));
     }
 
     /**
      * Failed upload
-     *
-     * @return void
      */
-    private function failedUpload()
+    private function failedUpload(): void
     {
         $this->getForm()->setMessages($this->formatErrorMessageForForm(self::FILE_UPLOAD_ERR_PREFIX . 'any'));
     }

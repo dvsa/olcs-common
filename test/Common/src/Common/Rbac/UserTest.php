@@ -15,7 +15,7 @@ class UserTest extends TestCase
     private $sut;
 
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = new User();
     }
@@ -23,7 +23,7 @@ class UserTest extends TestCase
     /**
      * @dataProvider dpIsLocalAuthority
      */
-    public function testIsLocalAuthority($userType, $isLocalAuthority)
+    public function testIsLocalAuthority($userType, $isLocalAuthority): void
     {
         $this->sut->setUserType($userType);
         $this->assertEquals($isLocalAuthority, $this->sut->isLocalAuthority());
@@ -45,7 +45,7 @@ class UserTest extends TestCase
     /**
      * @dataProvider dpIsNotIdentified
      */
-    public function testIsNotIdentified($userType, $isNotIdentified)
+    public function testIsNotIdentified($userType, $isNotIdentified): void
     {
         $this->sut->setUserType($userType);
         $this->assertEquals($isNotIdentified, $this->sut->isNotIdentified());
@@ -64,7 +64,7 @@ class UserTest extends TestCase
         ];
     }
 
-    public function testIsNotIdentifiedFalse()
+    public function testIsNotIdentifiedFalse(): void
     {
 
         $this->sut->setUserType(User::USER_TYPE_ANON);
@@ -72,7 +72,7 @@ class UserTest extends TestCase
         $this->assertFalse($this->sut->isNotIdentified());
     }
 
-    public function testHasRole()
+    public function testHasRole(): void
     {
         $roles = [RefData::ROLE_INTERNAL_CASE_WORKER];
         $this->sut->setRoles($roles);
@@ -80,7 +80,7 @@ class UserTest extends TestCase
         $this->assertTrue($this->sut->hasRole(RefData::ROLE_INTERNAL_CASE_WORKER));
     }
 
-    public function testHasRoleFalse()
+    public function testHasRoleFalse(): void
     {
         $roles = [RefData::ROLE_INTERNAL_CASE_WORKER];
         $this->sut->setRoles($roles);

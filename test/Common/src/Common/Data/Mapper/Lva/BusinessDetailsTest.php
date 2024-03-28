@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace CommonTest\Data\Mapper\Lva;
 
 use Common\Data\Mapper\Lva\BusinessDetails;
@@ -16,7 +17,7 @@ use Common\Data\Mapper\Lva\BusinessDetails;
  */
 class BusinessDetailsTest extends \PHPUnit\Framework\TestCase
 {
-    public function testMapFromResult()
+    public function testMapFromResult(): void
     {
         $input = [
             'name' => 'Foo ltd',

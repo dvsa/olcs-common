@@ -8,19 +8,22 @@ use CommonTest\Common\Service\Cqrs\Stub\CqrsTraitStub;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 use Laminas\Http\Response as HttpResponse;
+
 class CqrsTraitTest extends MockeryTestCase
 {
     /** @var  m\MockInterface */
     private $mockHttpResp;
+
     /** @var  m\MockInterface */
     private $mockCqrsResp;
+
     /** @var  m\MockInterface */
     private $mockFlashMsngr;
 
     /** @var  CqrsTraitStub */
     private $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->mockHttpResp = m::mock(HttpResponse::class);
 
@@ -33,8 +36,10 @@ class CqrsTraitTest extends MockeryTestCase
         $this->sut->setFlashMessenger($this->mockFlashMsngr);
     }
 
-    public function testShowApiMessagesFromResponseStream()
+    public function testShowApiMessagesFromResponseStream(): void
     {
+        self::expectNotToPerformAssertions();
+
         $mockCqrsResp = m::mock(Response::class)
             ->shouldReceive('getHttpResponse')->andReturn(m::mock(HttpResponse\Stream::class))
             ->getMock();
@@ -42,7 +47,7 @@ class CqrsTraitTest extends MockeryTestCase
         $this->sut->testShowApiMessagesFromResponse($mockCqrsResp);
     }
 
-    public function testShowApiMessagesFromResponseMssg()
+    public function testShowApiMessagesFromResponseMssg(): void
     {
         $messages = [
             'messages' => ['EXPECT', 'EXPECT2'],

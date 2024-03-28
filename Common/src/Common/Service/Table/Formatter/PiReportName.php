@@ -12,12 +12,9 @@ namespace Common\Service\Table\Formatter;
 class PiReportName implements FormatterPluginManagerInterface
 {
     private OrganisationLink $organisationLinkformatter;
+
     private Name $nameFormatter;
 
-    /**
-     * @param OrganisationLink $organisationLinkformatter
-     * @param Name             $nameFormatter
-     */
     public function __construct(OrganisationLink $organisationLinkformatter, Name $nameFormatter)
     {
         $this->organisationLinkformatter = $organisationLinkformatter;
@@ -37,10 +34,12 @@ class PiReportName implements FormatterPluginManagerInterface
         if (!empty($data['pi']['case']['licence']['organisation'])) {
             // display org linked to the licence
             return $this->organisationLinkformatter->format($data['pi']['case']['licence'], $column);
-        } elseif (!empty($data['pi']['case']['transportManager']['homeCd']['person'])) {
+        }
+        if (!empty($data['pi']['case']['transportManager']['homeCd']['person'])) {
             // display TM details
             return $this->nameFormatter->format($data['pi']['case']['transportManager']['homeCd']['person']);
         }
+
         return '';
     }
 }

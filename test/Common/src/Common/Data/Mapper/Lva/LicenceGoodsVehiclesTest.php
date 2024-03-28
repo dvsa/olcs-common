@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace CommonTest\Data\Mapper\Lva;
 
 use Common\Data\Mapper\Lva\LicenceGoodsVehicles;
@@ -16,7 +17,7 @@ use Common\Data\Mapper\Lva\LicenceGoodsVehicles;
  */
 class LicenceGoodsVehiclesTest extends \PHPUnit\Framework\TestCase
 {
-    public function testMapFromResult()
+    public function testMapFromResult(): void
     {
         $data = [
             'organisation' => [

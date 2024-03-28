@@ -12,7 +12,7 @@ class StripSpacesTest extends \PHPUnit\Framework\TestCase
      * @param $input
      * @param $expected
      */
-    public function testFilter($input, $expected)
+    public function testFilter($input, $expected): void
     {
         $sut = new StripSpaces();
         $this->assertEquals($expected, $sut->filter($input));

@@ -25,4 +25,6 @@ abstract class AbstractGoodsVehicles extends AbstractLvaFormService
 
         return $form;
     }
+
+    abstract protected function alterForm($form);
 }

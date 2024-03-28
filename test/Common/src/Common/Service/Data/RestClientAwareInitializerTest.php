@@ -16,12 +16,12 @@ class RestClientAwareInitializerTest extends MockeryTestCase
 {
     private $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = new RestClientAwareInitializer();
     }
 
-    public function testInvokeWhenInstanceNotRestClientAware()
+    public function testInvokeWhenInstanceNotRestClientAware(): void
     {
         $instance = m::mock(stdClass::class);
         $serviceLocator = m::mock(ContainerInterface::class);
@@ -32,7 +32,7 @@ class RestClientAwareInitializerTest extends MockeryTestCase
         );
     }
 
-    public function testInvokeWhenInstanceRestClientAware()
+    public function testInvokeWhenInstanceRestClientAware(): void
     {
         $lang = 'en_GB';
         $serviceName = 'ServiceName';

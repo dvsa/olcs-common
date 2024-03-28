@@ -17,7 +17,7 @@ class IrhpPermitTypeTest extends \PHPUnit\Framework\TestCase
      *
      * @dataProvider provider
      */
-    public function testFormat($data, $expected)
+    public function testFormat($data, $expected): void
     {
         $this->assertEquals($expected, (new IrhpPermitType())->format($data));
     }

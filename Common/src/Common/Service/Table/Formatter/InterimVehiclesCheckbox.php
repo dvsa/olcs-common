@@ -29,11 +29,9 @@ class InterimVehiclesCheckbox implements FormatterPluginManagerInterface
             isset($data['interimApplication'])
             && isset($data['interimApplication']['id'])
         ) {
-            $result = sprintf($format, 'checked');
-        } else {
-            $result = sprintf($format, '');
+            return sprintf($format, 'checked');
         }
 
-        return $result;
+        return sprintf($format, '');
     }
 }

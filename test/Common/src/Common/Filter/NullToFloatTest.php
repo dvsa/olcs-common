@@ -17,7 +17,7 @@ class NullToFloatTest extends \PHPUnit\Framework\TestCase
      * @param $input
      * @param $expected
      */
-    public function testFilter($input, $expected)
+    public function testFilter($input, $expected): void
     {
         $filter = new NullToFloat();
         $this->assertEquals($expected, $filter->filter($input));

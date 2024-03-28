@@ -67,16 +67,10 @@ class Application extends AbstractDataService
     public function canHaveCases($id)
     {
         $application = $this->fetchApplicationData($id);
-
-        if (empty($application['status'])
+        return !(empty($application['status'])
             || ((is_array($application['status']) ? $application['status']['id'] :
                     $application['status']) === CommonRefData::APPLICATION_STATUS_NOT_SUBMITTED)
-            || empty($application['licence']) || empty($application['licence']['licNo'])
-        ) {
-            return false;
-        }
-
-        return true;
+            || empty($application['licence']) || empty($application['licence']['licNo']));
     }
 
     /**
@@ -90,7 +84,7 @@ class Application extends AbstractDataService
     {
         $id = is_null($id) ? $this->getId() : $id;
 
-        if (is_null($this->getData('oc_' .$id))) {
+        if (is_null($this->getData('oc_' . $id))) {
             $dtoData = OcQry::create(['id' => $id, 'sort' => 'id', 'order' => 'ASC']);
             $response = $this->handleQuery($dtoData);
 
@@ -99,7 +93,7 @@ class Application extends AbstractDataService
             }
 
             $data = $response->getResult();
-            $this->setData('oc_' .$id, $data);
+            $this->setData('oc_' . $id, $data);
         }
 
         return $this->getData('oc_' . $id);

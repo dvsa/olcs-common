@@ -16,11 +16,11 @@ class TmPreviousLicences
      * @Form\Name("tm-previous-licences-details")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TransportManager\PreviousLicencesDetails")
      */
-    public $tmPreviousLicencesDetails = null;
+    public $tmPreviousLicencesDetails;
 
     /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormCrudActions")
      */
-    public $formActions = null;
+    public $formActions;
 }

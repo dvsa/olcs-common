@@ -10,6 +10,7 @@ use Psr\Container\NotFoundExceptionInterface;
 abstract class AbstractAdapter implements AdapterInterface
 {
     protected $lva;
+
     protected $applicationAdapter;
 
     protected $container;
@@ -35,7 +36,6 @@ abstract class AbstractAdapter implements AdapterInterface
      * Get an instance of an Lva Adapter
      *
      * @param string|null $lva
-     * @return AbstractLvaAdapter
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */

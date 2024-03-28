@@ -3,7 +3,7 @@
 namespace Common\Data\Object\Search;
 
 use Common\Data\Object\Search\Aggregations\Terms as Filter;
-use Common\Data\Object\Search\Aggregations\DateRange as DateRange;
+use Common\Data\Object\Search\Aggregations\DateRange;
 use Common\Module;
 use Common\Service\Table\Formatter\SearchPeopleName;
 use Common\Service\Table\Formatter\SearchPeopleRecord;
@@ -71,7 +71,7 @@ class People extends InternalSearchAbstract
      */
     public function getDateRanges()
     {
-        if (empty($this->dateRanges)) {
+        if ($this->dateRanges === []) {
             $this->dateRanges = [
                 new DateRange\DateOfBirthFromAndTo()
             ];
@@ -137,26 +137,27 @@ class People extends InternalSearchAbstract
             [
                 'title' => 'DOB',
                 'name' => 'personBirthDate',
-                'formatter' => fn($row) => empty($row['personBirthDate']) ?
+                'formatter' => static fn($row) => empty($row['personBirthDate']) ?
                     'Not known' : date(Module::$dateFormat, strtotime($row['personBirthDate']))
             ],
             [
                 'title' => 'Date added',
                 'name' => 'dateAdded',
-                'formatter' => fn($row) => empty($row['dateAdded']) ? 'NA' : date(Module::$dateFormat, strtotime($row['dateAdded']))
+                'formatter' => static fn($row) => empty($row['dateAdded']) ? 'NA' : date(Module::$dateFormat, strtotime($row['dateAdded']))
             ],
             [
                 'title' => 'Date removed',
                 'name' => 'dateRemoved',
-                'formatter' => fn($row) => empty($row['dateRemoved']) ? 'NA' : date(Module::$dateFormat, strtotime($row['dateRemoved']))
+                'formatter' => static fn($row) => empty($row['dateRemoved']) ? 'NA' : date(Module::$dateFormat, strtotime($row['dateRemoved']))
             ],
             [
                 'title' => 'Disq?',
                 'name' => 'disqualified',
-                'formatter' => function ($row) {
+                'formatter' => static function ($row) {
                     if ($row['foundAs'] === self::FOUND_AS_HISTORICAL_TM) {
                         return 'NA';
                     }
+
                     return $row['disqualified'];
                 }
             ]

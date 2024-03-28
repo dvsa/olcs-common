@@ -17,7 +17,7 @@ class FormDateSelectTest extends TestCase
      * @param $expected
      * @dataProvider provideTestInvoke
      */
-    public function testInvoke($element, $expected)
+    public function testInvoke($element, $expected): void
     {
         $sut = new FormDateSelect();
         $expected ??= $sut;

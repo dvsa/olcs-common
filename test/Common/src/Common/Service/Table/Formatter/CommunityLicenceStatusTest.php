@@ -16,11 +16,15 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class CommunityLicenceStatusTest extends MockeryTestCase
 {
+    public $sut;
+    public $mockRouteMatch;
     protected $urlHelper;
+
     protected $router;
+
     protected $request;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->urlHelper = m::mock(UrlHelperService::class);
         $this->router = m::mock(TreeRouteStack::class);
@@ -31,7 +35,6 @@ class CommunityLicenceStatusTest extends MockeryTestCase
             ->shouldReceive('getMatchedRouteName')
             ->andReturn('route')
             ->getMock();
-
 
         $this->request->shouldReceive('getQuery')
             ->andReturn(
@@ -55,7 +58,7 @@ class CommunityLicenceStatusTest extends MockeryTestCase
      *
      * @dataProvider dataProvider
      */
-    public function testFormat($data, $url)
+    public function testFormat($data, $url): void
     {
         $this->urlHelper
             ->shouldReceive('fromRoute')

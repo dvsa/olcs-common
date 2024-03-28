@@ -19,7 +19,7 @@ use Laminas\Form\Form;
  */
 class EmissionsStandardsFieldsetPopulatorTest extends MockeryTestCase
 {
-    public function testPopulate()
+    public function testPopulate(): void
     {
         $emissionsStandardsNoBlurb = 'Emissions standards no blurb';
 

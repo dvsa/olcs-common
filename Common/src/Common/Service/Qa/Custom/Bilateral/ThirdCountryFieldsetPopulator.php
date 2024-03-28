@@ -20,9 +20,6 @@ class ThirdCountryFieldsetPopulator implements FieldsetPopulatorInterface
     /**
      * Create service instance
      *
-     * @param TranslationHelperService $translator
-     * @param YesNoWithMarkupForNoPopulator $yesNoWithMarkupForNoPopulator
-     * @param StandardYesNoValueOptionsGenerator $standardYesNoValueOptionsGenerator
      *
      * @return ThirdCountryFieldsetPopulator
      */
@@ -39,7 +36,7 @@ class ThirdCountryFieldsetPopulator implements FieldsetPopulatorInterface
     /**
      * {@inheritdoc}
      */
-    public function populate($form, Fieldset $fieldset, array $options)
+    public function populate($form, Fieldset $fieldset, array $options): void
     {
         $valueOptions = $this->standardYesNoValueOptionsGenerator->generate();
 

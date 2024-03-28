@@ -34,10 +34,8 @@ class PeopleLvaService
      *
      * @param Form  $form    form
      * @param mixed $orgType organisation type
-     *
-     * @return void
      */
-    public function lockPersonForm(Form $form, $orgType)
+    public function lockPersonForm(Form $form, $orgType): void
     {
         /** @var FieldsetInterface $fieldset */
         $fieldset = $form->get('data');
@@ -64,10 +62,8 @@ class PeopleLvaService
      *
      * @param Form  $form  form
      * @param mixed $table table
-     *
-     * @return void
      */
-    public function lockPartnershipForm(Form $form, $table)
+    public function lockPartnershipForm(Form $form, $table): void
     {
         $table->removeActions();
         $table->removeColumn('select');
@@ -78,10 +74,8 @@ class PeopleLvaService
      *
      * @param Form  $form  form
      * @param mixed $table table
-     *
-     * @return void
      */
-    public function lockOrganisationForm(Form $form, $table)
+    public function lockOrganisationForm(Form $form, $table): void
     {
         $table->removeActions();
         $table->removeColumn('select');

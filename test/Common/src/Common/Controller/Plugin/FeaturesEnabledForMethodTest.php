@@ -16,7 +16,7 @@ class FeaturesEnabledForMethodTest extends MockeryTestCase
         $this->querySender = m::mock(QuerySender::class);
     }
 
-    public function testInvoke()
+    public function testInvoke(): void
     {
         $toggleConfig = [
             'methodName' => ['toggleName']
@@ -26,14 +26,14 @@ class FeaturesEnabledForMethodTest extends MockeryTestCase
         $this->assertEquals(true, $sut->__invoke($toggleConfig, 'methodName'));
     }
 
-    public function testInvokeWithEmptyConfig()
+    public function testInvokeWithEmptyConfig(): void
     {
         $this->querySender->shouldNotReceive('featuresEnabled');
         $sut = new FeaturesEnabledForMethod($this->querySender);
         $this->assertEquals(false, $sut->__invoke([], 'wrong method name'));
     }
 
-    public function testInvokeWithNoToggleConfig()
+    public function testInvokeWithNoToggleConfig(): void
     {
         $toggleConfig = [
             'methodName' => []

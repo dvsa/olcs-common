@@ -14,7 +14,7 @@ use LmcRbacMvc\Service\AuthorizationServiceInterface;
  */
 class CurrentUserTest extends MockeryTestCase
 {
-    public function testGetUserData()
+    public function testGetUserData(): void
     {
         $data = [];
 
@@ -30,7 +30,7 @@ class CurrentUserTest extends MockeryTestCase
         static::assertEquals($data, $sut->getUserData());
     }
 
-    public function testHasPermission()
+    public function testHasPermission(): void
     {
         /** @var AuthorizationServiceInterface|\Mockery\MockInterface $mockAuth */
         $mockAuth = m::mock(AuthorizationServiceInterface::class);

@@ -7,13 +7,13 @@ use Psr\Container\ContainerInterface;
 
 class SearchTypeManagerFactory implements FactoryInterface
 {
-    PUBLIC CONST MISSING_CONFIG_MESSAGE = 'Search config is missing';
+    public const MISSING_CONFIG_MESSAGE = 'Search config is missing';
 
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): SearchTypeManager
     {
         $config = $container->get('Config');
 
-        if(!isset($config['search'])) {
+        if (!isset($config['search'])) {
             throw new \RuntimeException(self::MISSING_CONFIG_MESSAGE);
         }
 

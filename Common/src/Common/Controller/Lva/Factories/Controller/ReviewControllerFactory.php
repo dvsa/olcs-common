@@ -11,10 +11,8 @@ use LmcRbacMvc\Service\AuthorizationService;
 class ReviewControllerFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
-     * @return ReviewController
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): ReviewController
     {

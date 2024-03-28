@@ -26,7 +26,6 @@ class FormRadio extends \Laminas\Form\View\Helper\FormRadio
 
     /**
      * FormRadio constructor.
-     * @param UniqidGenerator $idGenerator
      */
     public function __construct(UniqidGenerator $idGenerator = null)
     {
@@ -48,11 +47,9 @@ class FormRadio extends \Laminas\Form\View\Helper\FormRadio
         $closingBracket = $this->getInlineClosingBracket();
         $radiosWrapperAttributes = $this->makeRadiosWrapperAttributes($attributes);
 
-        if ($element instanceof LabelAwareInterface) {
-            $globalLabelAttributes = $element->getLabelAttributes();
-        }
+        $globalLabelAttributes = $element->getLabelAttributes();
 
-        if (empty($globalLabelAttributes)) {
+        if ($globalLabelAttributes === []) {
             $globalLabelAttributes = $this->labelAttributes;
         }
 
@@ -60,7 +57,7 @@ class FormRadio extends \Laminas\Form\View\Helper\FormRadio
         $count = 0;
 
         foreach ($options as $key => $optionSpec) {
-            $count++;
+            ++$count;
             if ($count > 1 && array_key_exists('id', $attributes)) {
                 unset($attributes['id']);
             }
@@ -87,12 +84,15 @@ class FormRadio extends \Laminas\Form\View\Helper\FormRadio
             if (isset($optionSpec['value'])) {
                 $value = $optionSpec['value'];
             }
+
             if (isset($optionSpec['label'])) {
                 $label = $optionSpec['label'];
             }
+
             if (isset($optionSpec['hint_attributes'])) {
                 $hintAttributes = $this->createAttributesString($optionSpec['hint_attributes']);
             }
+
             if (isset($optionSpec['hint'])) {
                 $hintText = $optionSpec['hint'];
 
@@ -105,20 +105,25 @@ class FormRadio extends \Laminas\Form\View\Helper\FormRadio
 
                 $hint = $this->wrapWithTag($hintText, $hintAttributes);
             }
+
             if (isset($optionSpec['selected'])) {
                 $selected = $optionSpec['selected'];
             }
+
             if (isset($optionSpec['disabled'])) {
                 $disabled = $optionSpec['disabled'];
             }
+
             if (isset($optionSpec['label_attributes'])) {
                 $labelAttributes = (isset($labelAttributes))
                     ? array_merge($labelAttributes, $optionSpec['label_attributes'])
                     : $optionSpec['label_attributes'];
             }
+
             if (isset($optionSpec['attributes'])) {
                 $inputAttributes = array_merge($inputAttributes, $optionSpec['attributes']);
             }
+
             if (isset($optionSpec['item_wrapper_attributes'])) {
                 $itemWrapperAttributes = $this->createAttributesString($optionSpec['item_wrapper_attributes']);
             }
@@ -177,7 +182,7 @@ class FormRadio extends \Laminas\Form\View\Helper\FormRadio
         $outputMarkup = implode($this->getSeparator(), $combinedMarkup);
 
         if ($outputMarkup !== '') {
-            $outputMarkup = $this->wrapWithTag(
+            return $this->wrapWithTag(
                 $outputMarkup,
                 $this->createAttributesString($radiosWrapperAttributes)
             );
@@ -227,6 +232,7 @@ class FormRadio extends \Laminas\Form\View\Helper\FormRadio
         if (!isset($inputAttributes['id'])) {
             $inputAttributes['id'] = $this->idGenerator->generateId();
         }
+
         return $inputAttributes;
     }
 

@@ -13,10 +13,12 @@ use Common\Controller\Lva\Adapters\LicenceLvaAdapter;
 class LicenceLvaAdapterTest extends MockeryTestCase
 {
     protected $sut;
+
     protected $container;
+
     protected $controller;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->container = m::mock(ContainerInterface::class);
 
@@ -26,7 +28,7 @@ class LicenceLvaAdapterTest extends MockeryTestCase
         $this->sut->setController($this->controller);
     }
 
-    public function testAlterForm()
+    public function testAlterForm(): void
     {
         $mockForm = m::mock(Form::class);
 

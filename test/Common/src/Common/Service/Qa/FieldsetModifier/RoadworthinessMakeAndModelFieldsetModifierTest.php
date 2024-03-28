@@ -20,7 +20,7 @@ class RoadworthinessMakeAndModelFieldsetModifierTest extends MockeryTestCase
 
     private $roadworthinessMakeAndModelFieldsetModifier;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->fieldset = m::mock(Fieldset::class);
 
@@ -30,7 +30,7 @@ class RoadworthinessMakeAndModelFieldsetModifierTest extends MockeryTestCase
     /**
      * @dataProvider dpShouldModify
      */
-    public function testShouldModify($fieldsetName, $expectedShouldModify)
+    public function testShouldModify($fieldsetName, $expectedShouldModify): void
     {
         $this->fieldset->shouldReceive('getName')
             ->withNoArgs()
@@ -52,7 +52,7 @@ class RoadworthinessMakeAndModelFieldsetModifierTest extends MockeryTestCase
         ];
     }
 
-    public function testModify()
+    public function testModify(): void
     {
         $text = m::mock(Text::class);
 

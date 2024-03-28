@@ -5,6 +5,7 @@
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
+
 namespace Common\Filter;
 
 use Laminas\Filter\AbstractFilter;
@@ -50,10 +51,6 @@ class Vrm extends AbstractFilter
         // ab04 CVA -> AB04CVA
         $input = strtoupper(str_replace(' ', '', $input));
 
-        if (isset($this->translations[$input])) {
-            $input = $this->translations[$input];
-        }
-
-        return $input;
+        return $this->translations[$input] ?? $input;
     }
 }

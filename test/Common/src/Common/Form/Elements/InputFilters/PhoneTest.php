@@ -11,7 +11,7 @@ use Mockery as m;
  */
 class PhoneTest extends MockeryTestCase
 {
-    public function testInit()
+    public function testInit(): void
     {
         $sut = new Phone();
 
@@ -21,7 +21,7 @@ class PhoneTest extends MockeryTestCase
         static::assertSame('contact-number-optional', $sut->getLabel());
     }
 
-    public function testValidators()
+    public function testValidators(): void
     {
         /** @var Phone $sut */
         $sut = m::mock(Phone::class)->makePartial()
@@ -39,7 +39,7 @@ class PhoneTest extends MockeryTestCase
                 \Laminas\Validator\StringLength::class,
             ],
             array_map(
-                fn($item) => $item['name'],
+                static fn($item) => $item['name'],
                 $actual['validators']
             )
         );

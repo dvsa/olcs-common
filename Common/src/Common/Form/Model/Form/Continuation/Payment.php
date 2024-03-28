@@ -15,18 +15,18 @@ class Payment
     /**
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $amount = null;
+    public $amount;
 
 
     /**
      * @Form\ComposedObject("Common\Form\Model\Form\Continuation\Fieldset\FeeStoredCards")
      */
-    public $storedCards = null;
+    public $storedCards;
 
     /**
      * @Form\Name("form-actions")
      * @Form\Attributes({"class":"govuk-button-group"})
      * @Form\ComposedObject("Common\Form\Model\Form\Continuation\Fieldset\FeePaymentActions")
      */
-    public $formActions = null;
+    public $formActions;
 }

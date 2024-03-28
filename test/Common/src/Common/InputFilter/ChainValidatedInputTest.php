@@ -20,32 +20,59 @@ use Laminas\InputFilter\Input;
 class ChainValidatedInputTest extends MockeryTestCase
 {
     protected const AN_INPUT_NAME = 'AN INPUT NAME';
+
     protected const A_CUSTOM_INPUT_NAME = 'A CUSTOM INPUT NAME';
+
     protected const AN_ALTERNATIVE_INPUT_NAME = 'AN ALTERNATIVE INPUT NAME';
+
     protected const EXPECTED_STRING_EXCEPTION_MESSAGE = 'Expected string';
+
     protected const AN_INT = 0;
+
     protected const REQUIRED = true;
+
     protected const NOT_REQUIRED = false;
+
     protected const EXPECTED_BOOL_EXCEPTION_MESSAGE = 'Expected bool';
+
     protected const ALLOW_EMPTY = true;
+
     protected const DONT_ALLOW_EMPTY = false;
+
     protected const BREAK_ON_FAILURE = true;
+
     protected const DONT_BREAK_ON_FAILURE = false;
+
     protected const A_CUSTOM_ERROR_MESSAGE = 'AN ERROR MESSAGE';
+
     protected const A_MESSAGES_ARRAY_CONTAINING_A_CUSTOM_ERROR_MESSAGE = [self::A_CUSTOM_ERROR_MESSAGE];
+
     protected const NO_ERROR_MESSAGE = null;
+
     protected const THE_DEFAULT_INPUT_VALUE = null;
+
     protected const A_RAW_INPUT_VALUE = 'A RAW INPUT VALUE';
+
     protected const A_SECOND_RAW_INPUT_VALUE = 'A SECOND RAW INPUT VALUE';
+
     protected const A_FILTERED_INPUT_VALUE = 'A FILTERED INPUT VALUE';
+
     protected const EMPTY_VALIDATION_CONTEXT = [];
+
     protected const VALID = true;
+
     protected const NOT_VALID = false;
+
     protected const MESSAGES_FOR_A_VALID_INPUT = [];
+
     protected const MESSAGES_FOR_AN_INVALID_INPUT = ['A VALIDATOR KEY' => 'AN VALIDATION MESSAGE'];
+
     protected const THE_DEFAULT_ERROR_MESSAGE = null;
+
     protected const A_STRING_SUFFIX = 'A STRING SUFFIX';
+
     protected const A_SECOND_STRING_SUFFIX = 'A SECOND STRING SUFFIX';
+
     protected const AN_EMPTY_RAW_INPUT_VALUE = '';
 
     /**
@@ -56,7 +83,7 @@ class ChainValidatedInputTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getName_IsCallable()
+    public function getNameIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -67,9 +94,9 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends getName_IsCallable
+     * @depends getNameIsCallable
      */
-    public function getName_ReturnsTheNameOfAnInput()
+    public function getNameReturnsTheNameOfAnInput(): void
     {
         // Setup
         $this->setUpSut(static::AN_INPUT_NAME);
@@ -81,7 +108,7 @@ class ChainValidatedInputTest extends MockeryTestCase
     /**
      * @test
      */
-    public function setName_IsCallable()
+    public function setNameIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -92,9 +119,9 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends setName_IsCallable
+     * @depends setNameIsCallable
      */
-    public function setName_ReturnsSelf()
+    public function setNameReturnsSelf(): void
     {
         // Setup
         $this->setUpSut();
@@ -105,10 +132,10 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends setName_IsCallable
-     * @depends getName_ReturnsTheNameOfAnInput
+     * @depends setNameIsCallable
+     * @depends getNameReturnsTheNameOfAnInput
      */
-    public function setName_SetsTheName()
+    public function setNameSetsTheName(): void
     {
         // Setup
         $this->setUpSut();
@@ -122,10 +149,10 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends setName_IsCallable
-     * @depends getName_ReturnsTheNameOfAnInput
+     * @depends setNameIsCallable
+     * @depends getNameReturnsTheNameOfAnInput
      */
-    public function setName_ThrowsInvalidArgumentException_IfNotPassedAString()
+    public function setNameThrowsInvalidArgumentExceptionIfNotPassedAString(): void
     {
         // Setup
         $this->setUpSut();
@@ -141,7 +168,7 @@ class ChainValidatedInputTest extends MockeryTestCase
     /**
      * @test
      */
-    public function isRequired_IsCallable()
+    public function isRequiredIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -152,9 +179,9 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends isRequired_IsCallable
+     * @depends isRequiredIsCallable
      */
-    public function isRequired_ReturnsABoolean()
+    public function isRequiredReturnsABoolean(): void
     {
         // Setup
         $this->setUpSut();
@@ -168,9 +195,9 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends isRequired_ReturnsABoolean
+     * @depends isRequiredReturnsABoolean
      */
-    public function isRequired_ReturnsTrueByDefault()
+    public function isRequiredReturnsTrueByDefault(): void
     {
         // Setup
         $this->setUpSut();
@@ -186,7 +213,7 @@ class ChainValidatedInputTest extends MockeryTestCase
     /**
      * @test
      */
-    public function setRequired_IsCallable()
+    public function setRequiredIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -197,9 +224,9 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends setRequired_IsCallable
+     * @depends setRequiredIsCallable
      */
-    public function setRequired_ReturnsSelf()
+    public function setRequiredReturnsSelf(): void
     {
         // Setup
         $this->setUpSut();
@@ -213,9 +240,9 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends setRequired_IsCallable
+     * @depends setRequiredIsCallable
      */
-    public function setRequired_ThrowsInvalidArgumentException_IfProvidedNonBoolean()
+    public function setRequiredThrowsInvalidArgumentExceptionIfProvidedNonBoolean(): void
     {
         // Setup
         $this->setUpSut();
@@ -230,10 +257,10 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends setRequired_IsCallable
-     * @depends isRequired_ReturnsABoolean
+     * @depends setRequiredIsCallable
+     * @depends isRequiredReturnsABoolean
      */
-    public function setRequired_SetsAnInputAsRequired()
+    public function setRequiredSetsAnInputAsRequired(): void
     {
         // Setup
         $this->setUpSut();
@@ -247,10 +274,10 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends setRequired_IsCallable
-     * @depends isRequired_ReturnsABoolean
+     * @depends setRequiredIsCallable
+     * @depends isRequiredReturnsABoolean
      */
-    public function setRequired_SetsAnInputAsNotRequired()
+    public function setRequiredSetsAnInputAsNotRequired(): void
     {
         // Setup
         $this->setUpSut();
@@ -265,7 +292,7 @@ class ChainValidatedInputTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getValidatorChain_IsCallable()
+    public function getValidatorChainIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -277,9 +304,9 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends getValidatorChain_IsCallable
+     * @depends getValidatorChainIsCallable
      */
-    public function getValidatorChain_ReturnsAValidatorChain()
+    public function getValidatorChainReturnsAValidatorChain(): void
     {
         // Setup
         $this->setUpSut();
@@ -290,9 +317,9 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends getValidatorChain_ReturnsAValidatorChain
+     * @depends getValidatorChainReturnsAValidatorChain
      */
-    public function getValidatorChain_ThatIsEmpty_ByDefault()
+    public function getValidatorChainThatIsEmptyByDefault(): void
     {
         // Setup
         $this->setUpSut();
@@ -307,7 +334,7 @@ class ChainValidatedInputTest extends MockeryTestCase
     /**
      * @test
      */
-    public function setValidatorChain_IsCallable()
+    public function setValidatorChainIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -318,9 +345,9 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends setValidatorChain_IsCallable
+     * @depends setValidatorChainIsCallable
      */
-    public function setValidatorChain_ReturnsSelf()
+    public function setValidatorChainReturnsSelf(): void
     {
         // Setup
         $this->setUpSut();
@@ -334,10 +361,10 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends setValidatorChain_IsCallable
-     * @depends getValidatorChain_IsCallable
+     * @depends setValidatorChainIsCallable
+     * @depends getValidatorChainIsCallable
      */
-    public function setValidatorChain_SetsTheValidatorChain()
+    public function setValidatorChainSetsTheValidatorChain(): void
     {
         // Setup
         $this->setUpSut();
@@ -353,7 +380,7 @@ class ChainValidatedInputTest extends MockeryTestCase
     /**
      * @test
      */
-    public function allowEmpty_IsCallable()
+    public function allowEmptyIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -364,10 +391,10 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends allowEmpty_IsCallable
-     * @depends getValidatorChain_ReturnsAValidatorChain
+     * @depends allowEmptyIsCallable
+     * @depends getValidatorChainReturnsAValidatorChain
      */
-    public function allowEmpty_ReturnsTrue_IfNotEmptyValidatorExistsInTheValidatorChain()
+    public function allowEmptyReturnsTrueIfNotEmptyValidatorExistsInTheValidatorChain(): void
     {
         // Setup
         $this->setUpSut();
@@ -380,10 +407,10 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends allowEmpty_IsCallable
-     * @depends setValidatorChain_SetsTheValidatorChain
+     * @depends allowEmptyIsCallable
+     * @depends setValidatorChainSetsTheValidatorChain
      */
-    public function allowEmpty_ReturnsFalse_IfNotEmptyValidatorDoesNotExistInTheValidatorChain()
+    public function allowEmptyReturnsFalseIfNotEmptyValidatorDoesNotExistInTheValidatorChain(): void
     {
         // Setup
         $this->setUpSut();
@@ -396,7 +423,7 @@ class ChainValidatedInputTest extends MockeryTestCase
     /**
      * @test
      */
-    public function setAllowEmpty_IsCallable()
+    public function setAllowEmptyIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -407,9 +434,9 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends setAllowEmpty_IsCallable
+     * @depends setAllowEmptyIsCallable
      */
-    public function setAllowEmpty_ReturnsSelf()
+    public function setAllowEmptyReturnsSelf(): void
     {
         // Setup
         $this->setUpSut();
@@ -423,9 +450,9 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends setAllowEmpty_IsCallable
+     * @depends setAllowEmptyIsCallable
      */
-    public function setAllowEmpty_ThrowsInvalidArgumentException_IfNotPassedABool()
+    public function setAllowEmptyThrowsInvalidArgumentExceptionIfNotPassedABool(): void
     {
         // Setup
         $this->setUpSut();
@@ -440,11 +467,11 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends setAllowEmpty_IsCallable
-     * @depends allowEmpty_ReturnsTrue_IfNotEmptyValidatorExistsInTheValidatorChain
-     * @depends allowEmpty_ReturnsFalse_IfNotEmptyValidatorDoesNotExistInTheValidatorChain
+     * @depends setAllowEmptyIsCallable
+     * @depends allowEmptyReturnsTrueIfNotEmptyValidatorExistsInTheValidatorChain
+     * @depends allowEmptyReturnsFalseIfNotEmptyValidatorDoesNotExistInTheValidatorChain
      */
-    public function setAllowEmpty_WhenPassedFalse_AndNotEmptyValidatorIsNotPresentInTheValidatorChain_AddsNotEmptyValidatorToTheValidatorChain()
+    public function setAllowEmptyWhenPassedFalseAndNotEmptyValidatorIsNotPresentInTheValidatorChainAddsNotEmptyValidatorToTheValidatorChain(): void
     {
         // Setup
         $this->setUpSut();
@@ -458,12 +485,12 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends setAllowEmpty_IsCallable
-     * @depends allowEmpty_ReturnsTrue_IfNotEmptyValidatorExistsInTheValidatorChain
-     * @depends allowEmpty_ReturnsFalse_IfNotEmptyValidatorDoesNotExistInTheValidatorChain
-     * @depends setValidatorChain_SetsTheValidatorChain
+     * @depends setAllowEmptyIsCallable
+     * @depends allowEmptyReturnsTrueIfNotEmptyValidatorExistsInTheValidatorChain
+     * @depends allowEmptyReturnsFalseIfNotEmptyValidatorDoesNotExistInTheValidatorChain
+     * @depends setValidatorChainSetsTheValidatorChain
      */
-    public function setAllowEmpty_WhenPassedFalse_AndNotEmptyValidatorIsPresentInTheValidatorChain_LeavesNotEmptyValidator()
+    public function setAllowEmptyWhenPassedFalseAndNotEmptyValidatorIsPresentInTheValidatorChainLeavesNotEmptyValidator(): void
     {
         // Setup
         $this->setUpSut();
@@ -479,12 +506,12 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends setAllowEmpty_IsCallable
-     * @depends allowEmpty_ReturnsTrue_IfNotEmptyValidatorExistsInTheValidatorChain
-     * @depends allowEmpty_ReturnsFalse_IfNotEmptyValidatorDoesNotExistInTheValidatorChain
-     * @depends setValidatorChain_SetsTheValidatorChain
+     * @depends setAllowEmptyIsCallable
+     * @depends allowEmptyReturnsTrueIfNotEmptyValidatorExistsInTheValidatorChain
+     * @depends allowEmptyReturnsFalseIfNotEmptyValidatorDoesNotExistInTheValidatorChain
+     * @depends setValidatorChainSetsTheValidatorChain
      */
-    public function setAllowEmpty_WhenPassedTrue_AndNotEmptyValidatorIsPresentInTheValidatorChain_RemovesNotEmptyValidatorFromTheValidatorChain()
+    public function setAllowEmptyWhenPassedTrueAndNotEmptyValidatorIsPresentInTheValidatorChainRemovesNotEmptyValidatorFromTheValidatorChain(): void
     {
         // Setup
         $this->setUpSut();
@@ -500,12 +527,12 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends setAllowEmpty_IsCallable
-     * @depends allowEmpty_ReturnsTrue_IfNotEmptyValidatorExistsInTheValidatorChain
-     * @depends allowEmpty_ReturnsFalse_IfNotEmptyValidatorDoesNotExistInTheValidatorChain
-     * @depends setValidatorChain_SetsTheValidatorChain
+     * @depends setAllowEmptyIsCallable
+     * @depends allowEmptyReturnsTrueIfNotEmptyValidatorExistsInTheValidatorChain
+     * @depends allowEmptyReturnsFalseIfNotEmptyValidatorDoesNotExistInTheValidatorChain
+     * @depends setValidatorChainSetsTheValidatorChain
      */
-    public function setAllowEmpty_WhenPassedTrue_AndNotEmptyValidatorIsNotPresentInTheValidatorChain_DoesNotAddNotEmptyValidator()
+    public function setAllowEmptyWhenPassedTrueAndNotEmptyValidatorIsNotPresentInTheValidatorChainDoesNotAddNotEmptyValidator(): void
     {
         // Setup
         $this->setUpSut();
@@ -521,7 +548,7 @@ class ChainValidatedInputTest extends MockeryTestCase
     /**
      * @test
      */
-    public function breakOnFailure_IsCallable()
+    public function breakOnFailureIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -532,9 +559,9 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends breakOnFailure_IsCallable
+     * @depends breakOnFailureIsCallable
      */
-    public function breakOnFailure_ReturnsFalse_ByDefault()
+    public function breakOnFailureReturnsFalseByDefault(): void
     {
         // Setup
         $this->setUpSut();
@@ -546,7 +573,7 @@ class ChainValidatedInputTest extends MockeryTestCase
     /**
      * @test
      */
-    public function setBreakOnFailure_IsCallable()
+    public function setBreakOnFailureIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -557,9 +584,9 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends setBreakOnFailure_IsCallable
+     * @depends setBreakOnFailureIsCallable
      */
-    public function setBreakOnFailure_ThrowsInvalidArgumentException_IfNotPassedABool()
+    public function setBreakOnFailureThrowsInvalidArgumentExceptionIfNotPassedABool(): void
     {
         // Setup
         $this->setUpSut();
@@ -574,10 +601,10 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends setBreakOnFailure_IsCallable
-     * @depends breakOnFailure_IsCallable
+     * @depends setBreakOnFailureIsCallable
+     * @depends breakOnFailureIsCallable
      */
-    public function setBreakOnFailure_SetsTheBreakOnFailureFlagToTrue()
+    public function setBreakOnFailureSetsTheBreakOnFailureFlagToTrue(): void
     {
         // Setup
         $this->setUpSut();
@@ -592,7 +619,7 @@ class ChainValidatedInputTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getErrorMessage_IsCallable()
+    public function getErrorMessageIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -603,9 +630,9 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends getErrorMessage_IsCallable
+     * @depends getErrorMessageIsCallable
      */
-    public function getErrorMessage_ReturnsNullByDefault()
+    public function getErrorMessageReturnsNullByDefault(): void
     {
         // Setup
         $this->setUpSut();
@@ -620,7 +647,7 @@ class ChainValidatedInputTest extends MockeryTestCase
     /**
      * @test
      */
-    public function setErrorMessage_IsCallable()
+    public function setErrorMessageIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -631,10 +658,10 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends getErrorMessage_IsCallable
-     * @depends setErrorMessage_IsCallable
+     * @depends getErrorMessageIsCallable
+     * @depends setErrorMessageIsCallable
      */
-    public function setErrorMessage_WhenProvidedAString_SetsTheString()
+    public function setErrorMessageWhenProvidedAStringSetsTheString(): void
     {
         // Setup
         $this->setUpSut();
@@ -648,10 +675,10 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends getErrorMessage_IsCallable
-     * @depends setErrorMessage_IsCallable
+     * @depends getErrorMessageIsCallable
+     * @depends setErrorMessageIsCallable
      */
-    public function setErrorMessage_WhenProvidedNull_SetsNull()
+    public function setErrorMessageWhenProvidedNullSetsNull(): void
     {
         // Setup
         $this->setUpSut();
@@ -665,10 +692,10 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends getErrorMessage_IsCallable
-     * @depends setErrorMessage_IsCallable
+     * @depends getErrorMessageIsCallable
+     * @depends setErrorMessageIsCallable
      */
-    public function setErrorMessage_WhenProvidedAnObject_SetsStringRepresentationOfAnObject()
+    public function setErrorMessageWhenProvidedAnObjectSetsStringRepresentationOfAnObject(): void
     {
         // Setup
         $this->setUpSut();
@@ -683,7 +710,7 @@ class ChainValidatedInputTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getFilterChain_IsCallable()
+    public function getFilterChainIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -695,7 +722,7 @@ class ChainValidatedInputTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getFilterChain_ReturnsAFilterChain()
+    public function getFilterChainReturnsAFilterChain(): void
     {
         // Setup
         $this->setUpSut();
@@ -710,7 +737,7 @@ class ChainValidatedInputTest extends MockeryTestCase
     /**
      * @test
      */
-    public function setFilterChain_IsCallable()
+    public function setFilterChainIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -721,9 +748,9 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends setFilterChain_IsCallable
+     * @depends setFilterChainIsCallable
      */
-    public function setFilterChain_ReturnsSelf()
+    public function setFilterChainReturnsSelf(): void
     {
         // Setup
         $this->setUpSut();
@@ -738,10 +765,10 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends setFilterChain_IsCallable
-     * @depends getFilterChain_ReturnsAFilterChain
+     * @depends setFilterChainIsCallable
+     * @depends getFilterChainReturnsAFilterChain
      */
-    public function setFilterChain_SetsAFilterChain()
+    public function setFilterChainSetsAFilterChain(): void
     {
         // Setup
         $this->setUpSut();
@@ -757,7 +784,7 @@ class ChainValidatedInputTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getRawValue_IsCallable()
+    public function getRawValueIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -768,9 +795,9 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends getRawValue_IsCallable
+     * @depends getRawValueIsCallable
      */
-    public function getRawValue_ReturnsNullByDefault()
+    public function getRawValueReturnsNullByDefault(): void
     {
         // Setup
         $this->setUpSut();
@@ -784,10 +811,10 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends getRawValue_IsCallable
-     * @depends setFilterChain_SetsAFilterChain
+     * @depends getRawValueIsCallable
+     * @depends setFilterChainSetsAFilterChain
      */
-    public function getRawValue_ReturnsTheInputValue_WithoutTheFilterChainApplied()
+    public function getRawValueReturnsTheInputValueWithoutTheFilterChainApplied(): void
     {
         // Setup
         $this->setUpSut();
@@ -803,7 +830,7 @@ class ChainValidatedInputTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getValue_IsCallable()
+    public function getValueIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -815,7 +842,7 @@ class ChainValidatedInputTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getValue_ReturnsNullByDefault()
+    public function getValueReturnsNullByDefault(): void
     {
         // Setup
         $this->setUpSut();
@@ -829,10 +856,10 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends getValue_IsCallable
-     * @depends setFilterChain_SetsAFilterChain
+     * @depends getValueIsCallable
+     * @depends setFilterChainSetsAFilterChain
      */
-    public function getValue_ReturnsTheInputValue_WithTheFilterChainApplied()
+    public function getValueReturnsTheInputValueWithTheFilterChainApplied(): void
     {
         // Setup
         $this->setUpSut();
@@ -848,7 +875,7 @@ class ChainValidatedInputTest extends MockeryTestCase
     /**
      * @test
      */
-    public function setValue_IsCallable()
+    public function setValueIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -859,9 +886,9 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends setValue_IsCallable
+     * @depends setValueIsCallable
      */
-    public function setValue_ReturnsSelf()
+    public function setValueReturnsSelf(): void
     {
         // Setup
         $this->setUpSut();
@@ -875,10 +902,10 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends setValue_IsCallable
-     * @depends getRawValue_ReturnsTheInputValue_WithoutTheFilterChainApplied
+     * @depends setValueIsCallable
+     * @depends getRawValueReturnsTheInputValueWithoutTheFilterChainApplied
      */
-    public function setValue_SetsAValue()
+    public function setValueSetsAValue(): void
     {
         // Setup
         $this->setUpSut();
@@ -894,7 +921,7 @@ class ChainValidatedInputTest extends MockeryTestCase
     /**
      * @test
      */
-    public function isValid_IsCallable()
+    public function isValidIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -906,7 +933,7 @@ class ChainValidatedInputTest extends MockeryTestCase
     /**
      * @test
      */
-    public function isValid_ReturnsBoolean()
+    public function isValidReturnsBoolean(): void
     {
         // Setup
         $this->setUpSut();
@@ -918,7 +945,7 @@ class ChainValidatedInputTest extends MockeryTestCase
     /**
      * @test
      */
-    public function isValid_ReturnsTrueByDefault()
+    public function isValidReturnsTrueByDefault(): void
     {
         // Setup
         $this->setUpSut();
@@ -929,12 +956,12 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends isValid_ReturnsBoolean
-     * @depends setValidatorChain_SetsTheValidatorChain
-     * @depends setValue_SetsAValue
-     * @depends setFilterChain_SetsAFilterChain
+     * @depends isValidReturnsBoolean
+     * @depends setValidatorChainSetsTheValidatorChain
+     * @depends setValueSetsAValue
+     * @depends setFilterChainSetsAFilterChain
      */
-    public function isValid_ProxiesToValidatorChain()
+    public function isValidProxiesToValidatorChain(): void
     {
         // Setup
         $this->setUpSut();
@@ -960,7 +987,7 @@ class ChainValidatedInputTest extends MockeryTestCase
     /**
      * @test
      */
-    public function getMessages_IsCallable()
+    public function getMessagesIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -971,9 +998,9 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends getMessages_IsCallable
+     * @depends getMessagesIsCallable
      */
-    public function getMessages_ReturnsAnArray()
+    public function getMessagesReturnsAnArray(): void
     {
         // Setup
         $this->setUpSut();
@@ -987,9 +1014,9 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends getMessages_ReturnsAnArray
+     * @depends getMessagesReturnsAnArray
      */
-    public function getMessages_ReturnsAnEmptyArrayByDefault()
+    public function getMessagesReturnsAnEmptyArrayByDefault(): void
     {
         // Setup
         $this->setUpSut();
@@ -1003,10 +1030,10 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends getMessages_ReturnsAnArray
-     * @depends setValidatorChain_SetsTheValidatorChain
+     * @depends getMessagesReturnsAnArray
+     * @depends setValidatorChainSetsTheValidatorChain
      */
-    public function getMessages_ReturnsMessagesFromValidatorChain()
+    public function getMessagesReturnsMessagesFromValidatorChain(): void
     {
         // Setup
         $this->setUpSut();
@@ -1023,10 +1050,10 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends getMessages_ReturnsAnArray
-     * @depends setErrorMessage_WhenProvidedAString_SetsTheString
+     * @depends getMessagesReturnsAnArray
+     * @depends setErrorMessageWhenProvidedAStringSetsTheString
      */
-    public function getMessages_ReturnsAnArray_WithCustomErrorMessage()
+    public function getMessagesReturnsAnArrayWithCustomErrorMessage(): void
     {
         // Setup
         $this->setUpSut();
@@ -1041,9 +1068,9 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends getMessages_ReturnsAnArray_WithCustomErrorMessage
+     * @depends getMessagesReturnsAnArrayWithCustomErrorMessage
      */
-    public function getMessages_ReturnsAnArray_WithCustomErrorMessage_WhenThereAreValidationMessagesFromTheChain()
+    public function getMessagesReturnsAnArrayWithCustomErrorMessageWhenThereAreValidationMessagesFromTheChain(): void
     {
         // Setup
         $this->setUpSut();
@@ -1060,7 +1087,7 @@ class ChainValidatedInputTest extends MockeryTestCase
     /**
      * @test
      */
-    public function merge_IsCallable()
+    public function mergeIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -1071,9 +1098,9 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends merge_IsCallable
+     * @depends mergeIsCallable
      */
-    public function merge_ReturnsSelf()
+    public function mergeReturnsSelf(): void
     {
         // Setup
         $this->setUpSut();
@@ -1088,10 +1115,10 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends merge_IsCallable
-     * @depends setBreakOnFailure_SetsTheBreakOnFailureFlagToTrue
+     * @depends mergeIsCallable
+     * @depends setBreakOnFailureSetsTheBreakOnFailureFlagToTrue
      */
-    public function merge_SetsBreakOnFailure()
+    public function mergeSetsBreakOnFailure(): void
     {
         // Setup
         $this->setUpSut();
@@ -1108,11 +1135,11 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends merge_IsCallable
-     * @depends setErrorMessage_WhenProvidedAString_SetsTheString
-     * @depends getErrorMessage_IsCallable
+     * @depends mergeIsCallable
+     * @depends setErrorMessageWhenProvidedAStringSetsTheString
+     * @depends getErrorMessageIsCallable
      */
-    public function merge_SetsErrorMessage()
+    public function mergeSetsErrorMessage(): void
     {
         // Setup
         $this->setUpSut();
@@ -1129,11 +1156,11 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends merge_IsCallable
-     * @depends setName_SetsTheName
-     * @depends getName_ReturnsTheNameOfAnInput
+     * @depends mergeIsCallable
+     * @depends setNameSetsTheName
+     * @depends getNameReturnsTheNameOfAnInput
      */
-    public function merge_SetsName()
+    public function mergeSetsName(): void
     {
         // Setup
         $this->setUpSut();
@@ -1150,11 +1177,11 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends merge_IsCallable
-     * @depends isRequired_ReturnsABoolean
-     * @depends setRequired_SetsAnInputAsNotRequired
+     * @depends mergeIsCallable
+     * @depends isRequiredReturnsABoolean
+     * @depends setRequiredSetsAnInputAsNotRequired
      */
-    public function merge_SetsIsRequired()
+    public function mergeSetsIsRequired(): void
     {
         // Setup
         $this->setUpSut();
@@ -1171,12 +1198,12 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends merge_IsCallable
-     * @depends setValue_SetsAValue
-     * @depends setFilterChain_SetsAFilterChain
-     * @depends getRawValue_ReturnsTheInputValue_WithoutTheFilterChainApplied
+     * @depends mergeIsCallable
+     * @depends setValueSetsAValue
+     * @depends setFilterChainSetsAFilterChain
+     * @depends getRawValueReturnsTheInputValueWithoutTheFilterChainApplied
      */
-    public function merge_SetsValue_ToRawValue_ForInputsThatAreNotLaminas()
+    public function mergeSetsValueToRawValueForInputsThatAreNotLaminas(): void
     {
         // Setup
         $this->setUpSut();
@@ -1195,10 +1222,10 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends merge_IsCallable
-     * @depends getRawValue_ReturnsTheInputValue_WithoutTheFilterChainApplied
+     * @depends mergeIsCallable
+     * @depends getRawValueReturnsTheInputValueWithoutTheFilterChainApplied
      */
-    public function merge_SetsValue_ToRawValue_ForInputsThatAreLaminasAndHaveAValueSet()
+    public function mergeSetsValueToRawValueForInputsThatAreLaminasAndHaveAValueSet(): void
     {
         // Setup
         $this->setUpSut();
@@ -1217,10 +1244,10 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends merge_IsCallable
-     * @depends getRawValue_ReturnsTheInputValue_WithoutTheFilterChainApplied
+     * @depends mergeIsCallable
+     * @depends getRawValueReturnsTheInputValueWithoutTheFilterChainApplied
      */
-    public function merge_DoesNotSetValueForInputsThatAreLaminasDoNotHaveAValueSet()
+    public function mergeDoesNotSetValueForInputsThatAreLaminasDoNotHaveAValueSet(): void
     {
         // Setup
         $this->setUpSut();
@@ -1238,11 +1265,11 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends getFilterChain_ReturnsAFilterChain
-     * @depends setFilterChain_SetsAFilterChain
-     * @depends merge_IsCallable
+     * @depends getFilterChainReturnsAFilterChain
+     * @depends setFilterChainSetsAFilterChain
+     * @depends mergeIsCallable
      */
-    public function merge_MergesFilterChain()
+    public function mergeMergesFilterChain(): void
     {
         // Setup
         $this->setUpSut();
@@ -1260,11 +1287,11 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends setValidatorChain_SetsTheValidatorChain
-     * @depends getValidatorChain_ReturnsAValidatorChain
-     * @depends merge_IsCallable
+     * @depends setValidatorChainSetsTheValidatorChain
+     * @depends getValidatorChainReturnsAValidatorChain
+     * @depends mergeIsCallable
      */
-    public function merge_MergesValidatorChain()
+    public function mergeMergesValidatorChain(): void
     {
         // Setup
         $this->setUpSut();
@@ -1288,32 +1315,26 @@ class ChainValidatedInputTest extends MockeryTestCase
         $this->sut = new ChainValidatedInput($name ?? static::AN_INPUT_NAME);
     }
 
-    /**
-     * @return ValidatorChain
-     */
     protected function emptyValidatorChain(): ValidatorChain
     {
         return new ValidatorChain();
     }
 
-    /**
-     * @param ValidatorChain $validatorChain
-     * @return NotEmpty|null
-     */
     protected function getNotEmptyValidatorFromValidatorChain(ValidatorChain $validatorChain): ?NotEmpty
     {
         foreach ($validatorChain->getValidators() as $validatorConfig) {
-            if (is_array($validatorConfig) && (($validatorConfig['instance'] ?? null) instanceof NotEmpty)) {
-                return $validatorConfig['instance'];
+            if (!is_array($validatorConfig)) {
+                continue;
             }
+            if (!($validatorConfig['instance'] ?? null) instanceof NotEmpty) {
+                continue;
+            }
+            return $validatorConfig['instance'];
         }
+
         return null;
     }
 
-    /**
-     * @param ValidatorInterface $validator
-     * @return ValidatorChain
-     */
     protected function validatorChainWithValidator(ValidatorInterface $validator): ValidatorChain
     {
         $chain = new ValidatorChain();
@@ -1321,18 +1342,16 @@ class ChainValidatedInputTest extends MockeryTestCase
         return $chain;
     }
 
-    /**
-     * @param string $errorMessage
-     * @return object
-     */
     protected function errorMessageObjectThatCastsToAString(string $errorMessage): object
     {
-        return new class($errorMessage) {
+        return new class ($errorMessage) {
             private $val;
+
             public function __construct(string $val)
             {
                 $this->val = $val;
             }
+
             public function __toString()
             {
                 return $this->val;
@@ -1342,29 +1361,21 @@ class ChainValidatedInputTest extends MockeryTestCase
 
     /**
      * @param mixed $val
-     * @return FilterChain
      */
     protected function filterChainThatConvertsAllValuesTo($val): FilterChain
     {
         $filterChain = new FilterChain();
-        $filterChain->attach(fn() => $val);
+        $filterChain->attach(static fn() => $val);
         return $filterChain;
     }
 
-    /**
-     * @param string $suffix
-     * @return FilterChain
-     */
     protected function filterChainThatAddsSuffix(string $suffix): FilterChain
     {
         $filterChain = new FilterChain();
-        $filterChain->attach(fn($val) => ($val ?? '') . $suffix);
+        $filterChain->attach(static fn($val) => ($val ?? '') . $suffix);
         return $filterChain;
     }
 
-    /**
-     * @return ValidatorChain
-     */
     protected function validatorChainWithErrorMessage(): ValidatorChain
     {
         $chain = new ValidatorChain();

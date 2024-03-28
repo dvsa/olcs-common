@@ -22,7 +22,7 @@ class TransportConsultant
      * @Form\Attributes({"value":"N"})
      * @Form\Type("\Laminas\Form\Element\Radio")
      */
-    public $addTransportConsultant = null;
+    public $addTransportConsultant;
 
     /**
      * @Form\Type("OlcsCheckbox")
@@ -34,7 +34,7 @@ class TransportConsultant
      *     "unchecked_value":"N",
      * })
      */
-    public $writtenPermissionToEngage = null;
+    public $writtenPermissionToEngage;
 
     /**
      * @Form\Type("Text")
@@ -42,5 +42,5 @@ class TransportConsultant
      * @Form\Options({"label":"application_your-business_business-type.consultant-name.label"})
      * @Form\Filter("Laminas\Filter\StringTrim")
      */
-    public $transportConsultantName = null;
+    public $transportConsultantName;
 }

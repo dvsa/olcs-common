@@ -13,10 +13,10 @@ class OtherFinances
      * @Form\Type("Common\Form\Elements\Types\RadioYesNo")
      * @Form\ErrorMessage("continuations.finances.otherFinances.error")
      */
-    public $yesNo = null;
+    public $yesNo;
 
     /**
      * @Form\ComposedObject("Common\Form\Model\Form\Continuation\Fieldset\OtherFinancesDetails")
      */
-    public $yesContent = null;
+    public $yesContent;
 }

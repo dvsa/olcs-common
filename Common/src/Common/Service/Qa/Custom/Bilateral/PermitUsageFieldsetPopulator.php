@@ -23,9 +23,6 @@ class PermitUsageFieldsetPopulator implements FieldsetPopulatorInterface
     /**
      * Create service instance
      *
-     * @param RadioFieldsetPopulator $radioFieldsetPopulator
-     * @param TranslationHelperService $translator
-     * @param HtmlAdder $htmlAdder
      *
      * @return PermitUsageFieldsetPopulator
      */
@@ -43,10 +40,8 @@ class PermitUsageFieldsetPopulator implements FieldsetPopulatorInterface
      * Populate the fieldset with a radio or html element based on the supplied options array
      *
      * @param mixed $form
-     * @param Fieldset $fieldset
-     * @param array $options
      */
-    public function populate($form, Fieldset $fieldset, array $options)
+    public function populate($form, Fieldset $fieldset, array $options): void
     {
         if (count($options['options']) === 1) {
             $this->populateSingleOption($fieldset, $options['options'][0]);
@@ -68,11 +63,8 @@ class PermitUsageFieldsetPopulator implements FieldsetPopulatorInterface
 
     /**
      * Populate the fieldset with a html element in a single option scenario
-     *
-     * @param Fieldset $fieldset
-     * @param array $firstOption
      */
-    private function populateSingleOption(Fieldset $fieldset, array $firstOption)
+    private function populateSingleOption(Fieldset $fieldset, array $firstOption): void
     {
         $translationKey = $this->generateTranslationKey($firstOption['value'], 'single-option');
 
@@ -98,10 +90,8 @@ class PermitUsageFieldsetPopulator implements FieldsetPopulatorInterface
      * Populate the fieldset with radio buttons in a multiple option scenario
      *
      * @param mixed $form
-     * @param Fieldset $fieldset
-     * @param array $options
      */
-    private function populateMultipleOptions($form, Fieldset $fieldset, array $options)
+    private function populateMultipleOptions($form, Fieldset $fieldset, array $options): void
     {
         foreach ($options['options'] as $key => $option) {
             $options['options'][$key]['label'] = $this->generateTranslationKey($option['value'], 'multiple-options');

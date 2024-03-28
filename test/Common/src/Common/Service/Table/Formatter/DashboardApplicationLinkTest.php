@@ -13,6 +13,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class DashboardApplicationLinkTest extends MockeryTestCase
 {
+    public $sut;
     protected $urlHelper;
 
     protected function setUp(): void
@@ -25,12 +26,13 @@ class DashboardApplicationLinkTest extends MockeryTestCase
     {
         m::close();
     }
+
     /**
      * Test format
      *
      * @dataProvider provider
      */
-    public function testFormat($data, $column, $expectedRoute, $expectedParams, $expected)
+    public function testFormat($data, $column, $expectedRoute, $expectedParams, $expected): void
     {
         $this->urlHelper
             ->shouldReceive('fromRoute')

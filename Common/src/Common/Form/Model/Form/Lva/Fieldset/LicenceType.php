@@ -44,7 +44,7 @@ class LicenceType
      *
      * })
      */
-    public $radio = null;
+    public $radio;
 
     /**
      * @Form\Attributes({
@@ -54,10 +54,10 @@ class LicenceType
      * @Form\Options({"tokens":{"application_type-of-licence_licence-type.data.restrictedGuidance"}})
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $ltyp_rContent = null;
+    public $ltyp_rContent;
 
     /**
      * @Form\ComposedObject("\Common\Form\Model\Form\Lva\Fieldset\StandardInternationalVehicleType")
      */
-    public $ltyp_siContent = null;
+    public $ltyp_siContent;
 }

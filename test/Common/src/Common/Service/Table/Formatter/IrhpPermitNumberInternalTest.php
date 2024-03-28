@@ -14,6 +14,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class IrhpPermitNumberInternalTest extends MockeryTestCase
 {
     protected $urlHelper;
+
     protected $sut;
 
     protected function setUp(): void
@@ -22,7 +23,7 @@ class IrhpPermitNumberInternalTest extends MockeryTestCase
         $this->sut = new IrhpPermitNumberInternal($this->urlHelper);
     }
 
-    public function testFormat()
+    public function testFormat(): void
     {
         $licenceId = 200;
         $irhpPermitTypeId = RefData::ECMT_PERMIT_TYPE_ID;

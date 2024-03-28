@@ -20,7 +20,6 @@ class CommandSender implements FactoryInterface
     private $commandService;
 
     /**
-     * @param CommandInterface $command
      * @return \Common\Service\Cqrs\Response
      */
     public function send(CommandInterface $command)
@@ -30,10 +29,8 @@ class CommandSender implements FactoryInterface
     }
 
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
-     * @return $this
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

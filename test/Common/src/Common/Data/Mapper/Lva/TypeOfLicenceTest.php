@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace CommonTest\Data\Mapper\Lva;
 
 use Common\Data\Mapper\Lva\TypeOfLicence;
@@ -16,7 +17,7 @@ use Common\Data\Mapper\Lva\TypeOfLicence;
  */
 class TypeOfLicenceTest extends \PHPUnit\Framework\TestCase
 {
-    public function testMapFromResult()
+    public function testMapFromResult(): void
     {
         $input = [
             'version' => 111,

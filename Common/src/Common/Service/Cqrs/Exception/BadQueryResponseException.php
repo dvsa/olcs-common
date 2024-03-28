@@ -22,9 +22,6 @@ class BadQueryResponseException extends Exception
     protected $response;
 
     /**
-     * @param string $message
-     * @param QueryInterface $query
-     * @param Response $response
      * @param Throwable|null $previous
      */
     public function __construct(string $message, QueryInterface $query, Response $response, Throwable $previous = null)

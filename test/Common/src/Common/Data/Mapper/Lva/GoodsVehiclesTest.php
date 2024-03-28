@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace CommonTest\Data\Mapper\Lva;
 
 use Common\Data\Mapper\Lva\GoodsVehicles;
@@ -16,7 +17,7 @@ use Common\Data\Mapper\Lva\GoodsVehicles;
  */
 class GoodsVehiclesTest extends \PHPUnit\Framework\TestCase
 {
-    public function testMapFromResult()
+    public function testMapFromResult(): void
     {
         $input = [
             'version' => 1,
@@ -35,7 +36,7 @@ class GoodsVehiclesTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $output);
     }
 
-    public function testMapFromResult2()
+    public function testMapFromResult2(): void
     {
         $input = [
             'version' => 1,

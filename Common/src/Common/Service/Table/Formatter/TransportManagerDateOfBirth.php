@@ -12,6 +12,7 @@ class TransportManagerDateOfBirth extends Date
     {
         $this->viewHelperManager = $viewHelperManager;
     }
+
     /**
      * {@inheritdoc}
      */
@@ -29,7 +30,6 @@ class TransportManagerDateOfBirth extends Date
     /**
      * Whether the status should be displayed after the date of birth
      *
-     * @param array $column
      *
      * @return bool
      */
@@ -38,12 +38,7 @@ class TransportManagerDateOfBirth extends Date
         if (!isset($column['internal']) || (!isset($column['lva']))) {
             return false;
         }
-
-        if ($column['lva'] == 'variation' || $column['lva'] == 'application') {
-            return true;
-        }
-
-        return false;
+        return $column['lva'] == 'variation' || $column['lva'] == 'application';
     }
 
     /**

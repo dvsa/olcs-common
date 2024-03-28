@@ -10,12 +10,9 @@ use Laminas\View\HelperPluginManager;
 class RefDataStatus implements FormatterPluginManagerInterface
 {
     protected $viewHelperManager;
+
     private RefData $refDataFormatter;
 
-    /**
-     * @param HelperPluginManager $viewHelperManager
-     * @param RefData             $refDataFormatter
-     */
     public function __construct(HelperPluginManager $viewHelperManager, RefData $refDataFormatter)
     {
         $this->viewHelperManager = $viewHelperManager;

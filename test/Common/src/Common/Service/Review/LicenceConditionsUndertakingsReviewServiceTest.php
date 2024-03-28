@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace CommonTest\Service\Review;
 
 use Common\Service\Helper\DataHelperService;
@@ -31,7 +32,7 @@ class LicenceConditionsUndertakingsReviewServiceTest extends MockeryTestCase
     /** @var ConditionsUndertakingsReviewService */
     protected $mockConditionsUndertakings;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->mockTranslationHelper = m::mock(TranslationHelperService::class);
 
@@ -49,7 +50,7 @@ class LicenceConditionsUndertakingsReviewServiceTest extends MockeryTestCase
         );
     }
 
-    public function testGetConfigFromData()
+    public function testGetConfigFromData(): void
     {
         // Params
         $data = [
@@ -103,7 +104,7 @@ class LicenceConditionsUndertakingsReviewServiceTest extends MockeryTestCase
 
         $this->mockTranslationHelper->shouldReceive('translate')
             ->andReturnUsing(
-                fn($string) => $string . '-translated'
+                static fn($string) => $string . '-translated'
             );
 
         $this->assertEquals($expected, $this->sut->getConfigFromData($inputData));

@@ -19,7 +19,7 @@ class IrhpPermitStockCountryTest extends \PHPUnit\Framework\TestCase
      *
      * @dataProvider dpFormat
      */
-    public function testFormat($data, $expected)
+    public function testFormat($data, $expected): void
     {
         $this->assertEquals(
             $expected,

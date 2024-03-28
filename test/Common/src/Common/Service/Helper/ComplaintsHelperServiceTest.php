@@ -5,6 +5,7 @@
  *
  * @author Mat Evans <mat.evans@valtech.co.uk>
  */
+
 namespace CommonTest\Service\Helper;
 
 use Common\Service\Helper\ComplaintsHelperService;
@@ -16,10 +17,11 @@ use Common\Service\Helper\ComplaintsHelperService;
  */
 class ComplaintsHelperServiceTest extends \PHPUnit\Framework\TestCase
 {
+    public $helper;
     /**
      * Setup the helper
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->helper = new ComplaintsHelperService();
     }
@@ -27,7 +29,7 @@ class ComplaintsHelperServiceTest extends \PHPUnit\Framework\TestCase
     /**
      * test sortCasesOpenClosed
      */
-    public function testSortCasesOpenClosed()
+    public function testSortCasesOpenClosed(): void
     {
         $cases = [
             [

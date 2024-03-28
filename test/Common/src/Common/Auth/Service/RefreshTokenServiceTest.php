@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace CommonTest\Common\Auth\Service;
@@ -24,7 +25,7 @@ class RefreshTokenServiceTest extends MockeryTestCase
 
     private RefreshTokenService $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->setUpServiceManager();
     }
@@ -41,11 +42,9 @@ class RefreshTokenServiceTest extends MockeryTestCase
 
     /**
      * @test
-     * @param array $token
-     * @param bool $expectedResult
      * @dataProvider isRefreshRequiredProvider
      */
-    public function isRefreshRequired_ReturnsExpectedResult(array $token, bool $expectedResult)
+    public function isRefreshRequiredReturnsExpectedResult(array $token, bool $expectedResult): void
     {
         $this->markTestSkipped('Works locally, not in pipeline (it did for a while). Investigation required.');
 
@@ -73,7 +72,7 @@ class RefreshTokenServiceTest extends MockeryTestCase
     /**
      * @test
      */
-    public function refreshTokens_ReturnsExpectedResult()
+    public function refreshTokensReturnsExpectedResult(): void
     {
         // Setup
         $this->sut = $this->setUpSut();
@@ -105,7 +104,7 @@ class RefreshTokenServiceTest extends MockeryTestCase
     /**
      * @test
      */
-    public function refreshTokens_ThrowsException_WhenResultIsNotOk()
+    public function refreshTokensThrowsExceptionWhenResultIsNotOk(): void
     {
         // Setup
         $this->sut = $this->setUpSut();
@@ -128,7 +127,7 @@ class RefreshTokenServiceTest extends MockeryTestCase
     /**
      * @test
      */
-    public function refreshTokens_ThrowsException_WhenIsValidFlagIsFalse()
+    public function refreshTokensThrowsExceptionWhenIsValidFlagIsFalse(): void
     {
         // Setup
         $this->sut = $this->setUpSut();
@@ -158,7 +157,7 @@ class RefreshTokenServiceTest extends MockeryTestCase
     /**
      * @test
      */
-    public function refreshTokens_ThrowsException_WhenIdentityFlagIsMissing()
+    public function refreshTokensThrowsExceptionWhenIdentityFlagIsMissing(): void
     {
         // Setup
         $this->sut = $this->setUpSut();
@@ -186,8 +185,6 @@ class RefreshTokenServiceTest extends MockeryTestCase
     }
 
     /**
-     * @param bool $isOk
-     * @param array $result
      * @return Response|MockInterface
      */
     protected function response(bool $isOk, array $result)
@@ -211,6 +208,7 @@ class RefreshTokenServiceTest extends MockeryTestCase
             $instance = $this->setUpMockService(CommandSender::class);
             $this->serviceManager->setService(CommandSender::class, $instance);
         }
+
         return $this->serviceManager->get(CommandSender::class);
     }
 }

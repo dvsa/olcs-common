@@ -26,7 +26,7 @@ class OtherEmployments
      * )
      * @Form\Type("Radio")
      */
-    public $hasOtherEmployment = null;
+    public $hasOtherEmployment;
 
     /**
      * @Form\Name("otherEmployment")
@@ -36,5 +36,5 @@ class OtherEmployments
      *      "class": "help__text help__text--removePadding"
      * })
      */
-    public $otherEmployment = null;
+    public $otherEmployment;
 }

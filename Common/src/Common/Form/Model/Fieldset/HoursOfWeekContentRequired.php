@@ -43,7 +43,7 @@ class HoursOfWeekContentRequired
      *     }
      *})
      */
-    public $hoursMon = null;
+    public $hoursMon;
 
     /**
      * @Form\Filter("Common\Filter\NullToFloat")
@@ -71,7 +71,7 @@ class HoursOfWeekContentRequired
      *     }
      *})
      */
-    public $hoursTue = null;
+    public $hoursTue;
 
     /**
      * @Form\Filter("Common\Filter\NullToFloat")
@@ -99,7 +99,7 @@ class HoursOfWeekContentRequired
      *     }
      *})
      */
-    public $hoursWed = null;
+    public $hoursWed;
 
     /**
      * @Form\Filter("Common\Filter\NullToFloat")
@@ -127,7 +127,7 @@ class HoursOfWeekContentRequired
      *     }
      *})
      */
-    public $hoursThu = null;
+    public $hoursThu;
 
     /**
      * @Form\Filter("Common\Filter\NullToFloat")
@@ -155,7 +155,7 @@ class HoursOfWeekContentRequired
      *     }
      *})
      */
-    public $hoursFri = null;
+    public $hoursFri;
 
     /**
      * @Form\Filter("Common\Filter\NullToFloat")
@@ -183,7 +183,7 @@ class HoursOfWeekContentRequired
      *     }
      *})
      */
-    public $hoursSat = null;
+    public $hoursSat;
 
     /**
      * @Form\Filter("Common\Filter\NullToFloat")
@@ -211,5 +211,5 @@ class HoursOfWeekContentRequired
      *     }
      *})
      */
-    public $hoursSun = null;
+    public $hoursSun;
 }

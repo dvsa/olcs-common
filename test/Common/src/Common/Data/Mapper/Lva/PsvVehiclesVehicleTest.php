@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace CommonTest\Data\Mapper\Lva;
 
 use Common\Data\Mapper\Lva\PsvVehiclesVehicle;
@@ -20,7 +21,7 @@ use Laminas\Form\Form;
  */
 class PsvVehiclesVehicleTest extends MockeryTestCase
 {
-    public function testMapFromResult()
+    public function testMapFromResult(): void
     {
         $data = [
             'id' => 123,
@@ -51,7 +52,7 @@ class PsvVehiclesVehicleTest extends MockeryTestCase
         $this->assertEquals($expected, PsvVehiclesVehicle::mapFromResult($data));
     }
 
-    public function testMapFromForm()
+    public function testMapFromForm(): void
     {
         $data = [
             'data' => [
@@ -79,7 +80,7 @@ class PsvVehiclesVehicleTest extends MockeryTestCase
         $this->assertEquals($expected, PsvVehiclesVehicle::mapFromForm($data));
     }
 
-    public function testMapFormErrors()
+    public function testMapFormErrors(): void
     {
         $form = m::mock(Form::class);
         $fm = m::mock(FlashMessengerHelperService::class);

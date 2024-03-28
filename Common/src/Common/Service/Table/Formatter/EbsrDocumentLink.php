@@ -12,14 +12,13 @@ use Common\Service\Helper\UrlHelperService;
 class EbsrDocumentLink implements FormatterPluginManagerInterface
 {
     public const LINK_PATTERN = '<a class="govuk-link" href="%s">%s</a>';
+
     public const URL_ROUTE = 'bus-registration/ebsr';
+
     public const URL_ACTION = 'detail';
 
     private UrlHelperService $urlHelper;
 
-    /**
-     * @param UrlHelperService $urlHelper
-     */
     public function __construct(UrlHelperService $urlHelper)
     {
         $this->urlHelper = $urlHelper;

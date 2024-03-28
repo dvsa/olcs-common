@@ -19,31 +19,31 @@ class BusinessDetails
      * @Form\Name("data")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\BusinessDetails")
      */
-    public $data = null;
+    public $data;
 
     /**
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\RegisteredAddress")
      * @Form\Options({"label": "application_your-business_business-details.data.registered_address"})
      */
-    public $registeredAddress = null;
+    public $registeredAddress;
 
     /**
      * @Form\Name("table")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
      * @Form\Attributes({"id":"table"})
      */
-    public $table = null;
+    public $table;
 
     /**
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\BusinessDetailsAllowEmail")
      * @Form\Name("allow-email")
      */
-    public $allowEmail = null;
+    public $allowEmail;
 
     /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
      * @Form\Attributes({"class":"govuk-button-group"})
      */
-    public $formActions = null;
+    public $formActions;
 }

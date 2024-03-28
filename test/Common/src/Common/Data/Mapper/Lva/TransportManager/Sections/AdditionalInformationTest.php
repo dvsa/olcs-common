@@ -1,6 +1,5 @@
 <?php
 
-
 namespace CommonTest\Data\Mapper\Lva\TransportManager\Sections;
 
 use Common\Data\Mapper\Lva\TransportManager\Sections\AdditionalInformation;
@@ -11,15 +10,16 @@ use Mockery as m;
 class AdditionalInformationTest extends MockeryTestCase
 {
     private $mockTranslator;
+
     private $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->mockTranslator = m::mock(TranslationHelperService::class);
         $this->sut = new AdditionalInformation($this->mockTranslator);
     }
 
-    public function testObjectPopulated()
+    public function testObjectPopulated(): void
     {
         $actual = $this->sut->populate([
 
@@ -35,7 +35,7 @@ class AdditionalInformationTest extends MockeryTestCase
         }
     }
 
-    public function testObjectPopulatedDocuments()
+    public function testObjectPopulatedDocuments(): void
     {
         $actual = $this->sut->populate([
             'application' => ['id' => 1],

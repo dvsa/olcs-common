@@ -20,5 +20,5 @@ class FeePaymentActions
      * @Form\Options({"label": "continuation.payment.pay-and-submit"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $pay = null;
+    public $pay;
 }

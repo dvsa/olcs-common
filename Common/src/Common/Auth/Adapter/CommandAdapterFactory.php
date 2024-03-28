@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Common\Auth\Adapter;
@@ -13,10 +14,8 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
 class CommandAdapterFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
-     * @return CommandAdapter
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): CommandAdapter
     {

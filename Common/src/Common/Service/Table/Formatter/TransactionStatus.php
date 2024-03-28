@@ -37,6 +37,7 @@ class TransactionStatus implements FormatterPluginManagerInterface
                 if (isset($row['migratedFromOlbs']) && $row['migratedFromOlbs'] === true) {
                     $row['status']['description'] = 'Migrated';
                 }
+
                 break;
             case Ref::TRANSACTION_STATUS_PAID:
             case Ref::TRANSACTION_STATUS_COMPLETE:

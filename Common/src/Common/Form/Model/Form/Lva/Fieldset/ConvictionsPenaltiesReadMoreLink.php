@@ -14,5 +14,5 @@ class ConvictionsPenaltiesReadMoreLink
      * @Form\Attributes({"target":"_blank"})
      * @Form\Options({"label":"Read more about convictions"})
      */
-    public $readMoreLink = null;
+    public $readMoreLink;
 }

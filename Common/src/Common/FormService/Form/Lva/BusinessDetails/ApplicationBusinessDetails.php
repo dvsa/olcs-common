@@ -15,6 +15,7 @@ use LmcRbacMvc\Service\AuthorizationService;
 class ApplicationBusinessDetails extends AbstractBusinessDetails
 {
     protected FormServiceManager $formServiceLocator;
+
     protected FormHelperService $formHelper;
 
     public function __construct(FormHelperService $formHelper, FormServiceManager $formServiceLocator)
@@ -22,6 +23,7 @@ class ApplicationBusinessDetails extends AbstractBusinessDetails
         $this->formServiceLocator = $formServiceLocator;
         parent::__construct($formHelper);
     }
+
     protected function alterForm($form, $params)
     {
         $this->formServiceLocator->get('lva-application')->alterForm($form);

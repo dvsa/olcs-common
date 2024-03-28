@@ -22,7 +22,9 @@ use Laminas\Router\Http\TreeRouteStack;
 class TransactionFeeStatus implements FormatterPluginManagerInterface
 {
     private TreeRouteStack $router;
+
     private Request $request;
+
     private UrlHelperService $urlHelper;
 
     public function __construct(TreeRouteStack $router, Request $request, UrlHelperService $urlHelper)

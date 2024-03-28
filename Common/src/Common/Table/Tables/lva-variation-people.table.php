@@ -4,6 +4,7 @@ use Common\Service\Table\Formatter\Date;
 use Common\Service\Table\Formatter\DisqualifyUrl;
 use Common\Service\Table\Formatter\Name;
 use Common\Service\Table\Formatter\YesNo;
+use Common\Service\Table\TableBuilder;
 
 return [
     'variables' => [
@@ -18,7 +19,7 @@ return [
                 'add' => ['label' => 'Add person'],
             ]
         ],
-        'row-disabled-callback' => fn($row) => in_array($row['action'], ['D', 'C'], true)
+        'row-disabled-callback' => static fn($row) => in_array($row['action'], ['D', 'C'], true)
     ],
     'columns' => [
         [
@@ -51,6 +52,10 @@ return [
             'title' => 'markup-table-th-remove-restore', //view partial from olcs-common
             'ariaDescription' => function ($row, $column) {
                 $column['formatter'] = Name::class;
+                /**
+                 * @var TableBuilder $this
+                 * @psalm-scope-this TableBuilder
+                 */
                 return $this->callFormatter($column, $row['name']);
             },
             'type' => 'DeltaActionLinks',

@@ -15,7 +15,7 @@ class InsufficientFinancesTest extends MockeryTestCase
      */
     private $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = new InsufficientFinances();
     }
@@ -23,7 +23,7 @@ class InsufficientFinancesTest extends MockeryTestCase
     /**
      * @dataProvider dataProviderTestMapFromResult
      */
-    public function testMapFromResult($financialEvidenceUploaded, $expectedYesNo, $expectedRadio)
+    public function testMapFromResult($financialEvidenceUploaded, $expectedYesNo, $expectedRadio): void
     {
         $data = [
             'version' => 99,
@@ -55,7 +55,7 @@ class InsufficientFinancesTest extends MockeryTestCase
     /**
      * @dataProvider dataProviderTestMapFromForm
      */
-    public function testMapFromForm($radio, $expectedFinancialEvidenceUploaded)
+    public function testMapFromForm($radio, $expectedFinancialEvidenceUploaded): void
     {
         $formData = [
             'version' => 99,

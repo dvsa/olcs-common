@@ -11,13 +11,11 @@ class RefData implements FormatterPluginManagerInterface
 {
     private TranslatorDelegator $translator;
 
-    /**
-     * @param TranslatorDelegator $translator
-     */
     public function __construct(TranslatorDelegator $translator)
     {
         $this->translator = $translator;
     }
+
     /**
      * Format a address
      *
@@ -33,6 +31,7 @@ class RefData implements FormatterPluginManagerInterface
         if (empty($colData)) {
             return '';
         }
+
         //  single RefData (check, it is NOT an array of entities)
         if (isset($colData['description'])) {
             return $this->translator->translate($colData['description']);

@@ -1,13 +1,11 @@
 <?php
 
-// @TODO now we are sharing this between applications we may need to refactor in here
-
 $journeysDirectory = __DIR__ . '/journeys/*.journey.php';
 
 $allRoutes = [];
 
 $journeyArray = array_map(
-    fn($file) => include $file,
+    static fn($file) => include $file,
     glob($journeysDirectory)
 );
 

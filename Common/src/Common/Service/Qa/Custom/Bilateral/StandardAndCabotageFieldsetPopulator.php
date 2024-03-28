@@ -9,7 +9,9 @@ use Laminas\Form\Fieldset;
 class StandardAndCabotageFieldsetPopulator implements FieldsetPopulatorInterface
 {
     public const ANSWER_CABOTAGE_ONLY = 'qanda.bilaterals.cabotage.answer.cabotage-only';
+
     public const ANSWER_STANDARD_AND_CABOTAGE = 'qanda.bilaterals.cabotage.answer.standard-and-cabotage';
+
     public const ANSWER_STANDARD_ONLY = 'qanda.bilaterals.cabotage.answer.standard-only';
 
     public const CABOTAGE_VALUE_OPTIONS = [
@@ -32,10 +34,6 @@ class StandardAndCabotageFieldsetPopulator implements FieldsetPopulatorInterface
     /**
      * Create service instance
      *
-     * @param RadioFactory $radioFactory
-     * @param StandardAndCabotageYesNoRadioFactory $standardAndCabotageYesNoRadioFactory
-     * @param YesNoRadioOptionsApplier $yesNoRadioOptionsApplier
-     * @param StandardYesNoValueOptionsGenerator $standardYesNoValueOptionsGenerator
      *
      * @return StandardAndCabotageFieldsetPopulator
      */
@@ -54,7 +52,7 @@ class StandardAndCabotageFieldsetPopulator implements FieldsetPopulatorInterface
     /**
      * {@inheritdoc}
      */
-    public function populate($form, Fieldset $fieldset, array $options)
+    public function populate($form, Fieldset $fieldset, array $options): void
     {
         $fieldset->add(
             [

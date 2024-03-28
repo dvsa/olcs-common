@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace CommonTest\Form\Elements\Types;
@@ -13,20 +14,22 @@ class AbstractInputSearchTest extends TestCase
     {
         $sut = new class extends AbstractInputSearch {
             public $hint;
+
             public $input;
+
             public $submit;
 
-            protected function addHint()
+            protected function addHint(): void
             {
                 $this->hint = 'hint_is_set';
             }
 
-            protected function addInput()
+            protected function addInput(): void
             {
                 $this->input = 'input_is_set';
             }
 
-            protected function addSubmit()
+            protected function addSubmit(): void
             {
                 $this->submit = 'submit_is_set';
             }
@@ -36,24 +39,26 @@ class AbstractInputSearchTest extends TestCase
         $this->assertEmpty($messages);
     }
 
-    public function testSetAndGetMessages()
+    public function testSetAndGetMessages(): void
     {
         $sut = new class extends AbstractInputSearch {
             public $hint;
+
             public $input;
+
             public $submit;
 
-            protected function addHint()
+            protected function addHint(): void
             {
                 $this->hint = 'hint_is_set';
             }
 
-            protected function addInput()
+            protected function addInput(): void
             {
                 $this->input = 'input_is_set';
             }
 
-            protected function addSubmit()
+            protected function addSubmit(): void
             {
                 $this->submit = 'submit_is_set';
             }

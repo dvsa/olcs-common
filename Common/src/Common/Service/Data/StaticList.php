@@ -17,8 +17,6 @@ class StaticList extends AbstractDataService implements ListData
     /**
      * Create service instance
      *
-     * @param AbstractDataServiceServices $abstractDataServiceServices
-     * @param array $config
      *
      * @return StaticList
      */

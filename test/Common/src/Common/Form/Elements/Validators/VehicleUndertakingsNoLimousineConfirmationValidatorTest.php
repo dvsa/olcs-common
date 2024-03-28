@@ -5,6 +5,7 @@
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
+
 namespace CommonTest\Form\Elements\Validators;
 
 use Common\Form\Elements\Validators\VehicleUndertakingsNoLimousineConfirmationValidator;
@@ -16,7 +17,7 @@ use Common\Form\Elements\Validators\VehicleUndertakingsNoLimousineConfirmationVa
  */
 class VehicleUndertakingsNoLimousineConfirmationValidatorTest extends \PHPUnit\Framework\TestCase
 {
-    public function testIsValidWhenValid()
+    public function testIsValidWhenValid(): void
     {
         $validator = new VehicleUndertakingsNoLimousineConfirmationValidator(
             [
@@ -31,7 +32,7 @@ class VehicleUndertakingsNoLimousineConfirmationValidatorTest extends \PHPUnit\F
         $this->assertTrue($validator->isValid('Y', $context));
     }
 
-    public function testIsValidWhenNotValid()
+    public function testIsValidWhenNotValid(): void
     {
         $validator = new VehicleUndertakingsNoLimousineConfirmationValidator(
             [
@@ -46,7 +47,7 @@ class VehicleUndertakingsNoLimousineConfirmationValidatorTest extends \PHPUnit\F
         $this->assertFalse($validator->isValid('N', $context));
     }
 
-    public function testIsValidWhenValueIsNegativeButContextDoesNotMatch()
+    public function testIsValidWhenValueIsNegativeButContextDoesNotMatch(): void
     {
         $validator = new VehicleUndertakingsNoLimousineConfirmationValidator(
             [

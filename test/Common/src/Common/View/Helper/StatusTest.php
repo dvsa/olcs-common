@@ -18,11 +18,13 @@ use Common\View\Helper\Status;
  */
 class StatusTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
 {
+    public $sut;
     private $mockView;
+
     /**
      * Setup the view helper
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = new Status();
 
@@ -33,11 +35,11 @@ class StatusTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
     /**
      * @dataProvider dataProviderStatus
      */
-    public function testStatus($status, $color)
+    public function testStatus($status, $color): void
     {
         $html = $this->sut->__invoke($status);
 
-        $expected = !empty($color) ? '<strong class="govuk-tag govuk-tag--'. $color .'">value</strong>' : '';
+        $expected = empty($color) ? '' : '<strong class="govuk-tag govuk-tag--' . $color . '">value</strong>';
         $this->assertEquals($expected, $html);
     }
 

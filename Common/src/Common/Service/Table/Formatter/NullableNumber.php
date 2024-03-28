@@ -30,6 +30,7 @@ class NullableNumber implements FormatterPluginManagerInterface
         if (!is_null($name)) {
             return Escape::html($name);
         }
+
         return 0;
     }
 }

@@ -15,7 +15,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class TranslateableTextHandlerTest extends MockeryTestCase
 {
-    public function testTranslate()
+    public function testTranslate(): void
     {
         $translateableTextKey = 'textKey';
 

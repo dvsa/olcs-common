@@ -15,12 +15,12 @@ class CompanyNumberTest extends \PHPUnit\Framework\TestCase
     /** @var  CompanyNumber */
     private $element;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->element = new CompanyNumber();
     }
 
-    public function testValidators()
+    public function testValidators(): void
     {
         $spec = $this->element->getInputSpecification();
         $expected = [
@@ -32,7 +32,7 @@ class CompanyNumberTest extends \PHPUnit\Framework\TestCase
             'validators' => [
                 [
                     'name' => \Laminas\Validator\StringLength::class,
-                    'options'=> [
+                    'options' => [
                         'min' => 1,
                         'max' => 8,
                         'messages' => [

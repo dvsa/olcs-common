@@ -1,17 +1,7 @@
 <?php
 
-/**
- * Restriction Helper Service
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Service\Helper;
 
-/**
- * Restriction Helper Service
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class RestrictionHelperService
 {
     /**
@@ -28,8 +18,7 @@ class RestrictionHelperService
      * Check restriction
      *
      * @param mixed $restrictions
-     * @param array $accessKeys
-     * @param type $strict
+     * @param bool $strict
      * @return boolean
      */
     private function checkRestriction($restrictions, array $accessKeys = [], $strict = true, $reference = null)
@@ -58,11 +47,14 @@ class RestrictionHelperService
             if ($satisfied && !$strict) {
                 return true;
             }
-
             // If we are being strict and we haven't been satisfied, we can just return false
-            if (!$satisfied && $strict) {
-                return false;
+            if ($satisfied) {
+                continue;
             }
+            if (!$strict) {
+                continue;
+            }
+            return false;
         }
 
         // This looks wrong, but it is right.

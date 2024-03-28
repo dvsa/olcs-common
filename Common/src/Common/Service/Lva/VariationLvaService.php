@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Service\Lva;
 
 use Common\Service\Helper\GuidanceHelperService;
@@ -43,10 +44,8 @@ class VariationLvaService
      * @param int         $licenceId     licence id
      * @param null|string $redirectRoute route for redirect
      * @param string      $msgKey        message key
-     *
-     * @return void
      */
-    public function addVariationMessage($licenceId, $redirectRoute = null, $msgKey = 'variation-message')
+    public function addVariationMessage($licenceId, $redirectRoute = null, $msgKey = 'variation-message'): void
     {
         $link = $this->getVariationLink($licenceId, $redirectRoute);
 

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Common\Auth\Adapter;
@@ -24,7 +25,7 @@ class CommandAdapter extends AbstractAdapter
      *
      * @var string|null
      */
-    protected $realm = null;
+    protected $realm;
 
     /**
      * CognitoAdapter constructor.

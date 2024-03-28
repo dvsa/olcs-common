@@ -33,7 +33,7 @@ class LicenceOperatingCentreTest extends AbstractDataServiceTestCase
     /**
      * @group licenceOperatingCentreTest
      */
-    public function testGetId()
+    public function testGetId(): void
     {
         $licenceId = 110;
 
@@ -49,7 +49,7 @@ class LicenceOperatingCentreTest extends AbstractDataServiceTestCase
      * @group licenceOperatingCentreTest
      * @dataProvider providerOutputType
      */
-    public function testFetchListOptions($outputType)
+    public function testFetchListOptions($outputType): void
     {
         $this->sut->setOutputType($outputType);
 
@@ -120,7 +120,7 @@ class LicenceOperatingCentreTest extends AbstractDataServiceTestCase
     /**
      * @group licenceOperatingCentreTest
      */
-    public function testSetOutputType()
+    public function testSetOutputType(): void
     {
         $this->sut->setOutputType(LicenceOperatingCentre::OUTPUT_TYPE_FULL);
 

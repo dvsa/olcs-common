@@ -21,6 +21,7 @@ class FeeNoAndStatus implements FormatterPluginManagerInterface
     {
         $this->feeStatusFormatter = $feeStatusFormatter;
     }
+
     /**
      * Format a fee status
      *

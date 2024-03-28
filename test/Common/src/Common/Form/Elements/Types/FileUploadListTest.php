@@ -15,7 +15,7 @@ class FileUploadListTest extends \PHPUnit\Framework\TestCase
     /**
      * Test the element configuration
      */
-    public function testElement()
+    public function testElement(): void
     {
         $files = [
             [

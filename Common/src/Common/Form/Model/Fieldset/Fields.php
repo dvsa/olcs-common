@@ -18,7 +18,7 @@ class Fields
      * @Form\Filter("Laminas\Filter\StringToLower")
      * @Form\Validator("Laminas\Validator\StringLength", options={"min":10,"max":100})
      */
-    public $description = null;
+    public $description;
 
     /**
      * @Form\Attributes({"class":"medium","id":""})
@@ -26,23 +26,23 @@ class Fields
      * @Form\Required(false)
      * @Form\Type("Text")
      */
-    public $ecmsNo = null;
+    public $ecmsNo;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $licence = null;
+    public $licence;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $id = null;
+    public $id;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 }

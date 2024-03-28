@@ -15,7 +15,7 @@ class NotPopulatedStringToZeroTest extends \PHPUnit\Framework\TestCase
      * @param $input
      * @param $output
      */
-    public function testFilter($input, $output)
+    public function testFilter($input, $output): void
     {
         $sut = new NotPopulatedStringToZero();
         $this->assertEquals($output, $sut->filter($input));
@@ -27,7 +27,7 @@ class NotPopulatedStringToZeroTest extends \PHPUnit\Framework\TestCase
     public function provideFilter()
     {
         return [
-            [new \stdClass, '0'],
+            [new \stdClass(), '0'],
             [4, '0'],
             [null, '0'],
             ['', '0'],

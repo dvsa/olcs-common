@@ -35,12 +35,13 @@ class OcUndertakings implements FormatterPluginManagerInterface
 
         if (!is_null($data['undertakings'])) {
             foreach ($data['undertakings'] as $undertaking) {
-                if (
-                    !is_null($undertaking['licence'])
-                    && $undertaking['conditionType']['id'] === RefData::TYPE_UNDERTAKING
-                ) {
-                    $count++;
+                if (is_null($undertaking['licence'])) {
+                    continue;
                 }
+                if ($undertaking['conditionType']['id'] !== RefData::TYPE_UNDERTAKING) {
+                    continue;
+                }
+                ++$count;
             }
         }
 

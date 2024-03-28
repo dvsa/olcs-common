@@ -18,13 +18,14 @@ class SystemInfoMessagesTest extends MockeryTestCase
 {
     /** @var m\MockInterface|QueryService */
     protected $mockQuerySrv;
+
     /** @var m\MockInterface|AnnotationBuilder $mockAnnotationBuilder */
     private $mockAnnotationBuilder;
 
     /**
      * Setup the view helper
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->mockAnnotationBuilder = m::mock(AnnotationBuilder::class);
         $this->mockQuerySrv = m::mock(QueryService::class);
@@ -33,7 +34,7 @@ class SystemInfoMessagesTest extends MockeryTestCase
     /**
      * @dataProvider dataProviderTest
      */
-    public function test($data, $expect)
+    public function test($data, $expect): void
     {
         $isOk = ($data !== null);
 
@@ -87,8 +88,7 @@ class SystemInfoMessagesTest extends MockeryTestCase
                     ],
                 ],
                 'expect' =>
-                    '<div class="system-messages">' .
-                    '<div class="system-messages__wrapper"><p>unit_Desc1</p></div>' .
+                    '<div class="system-messages"><div class="system-messages__wrapper"><p>unit_Desc1</p></div>' .
                     '<div class="system-messages__wrapper"><p>unit_Desc2 &amp;</p></div>' .
                     '</div>',
             ],

@@ -1,8 +1,8 @@
 <?php
+
 namespace Common\Data\Object\Search\Aggregations;
 
-abstract class AggregationsAbstract
-    implements AggregationsInterface
+abstract class AggregationsAbstract implements AggregationsInterface
 {
     /**
      * The human readable title of this filter. This may also be used in the front-end (not sure yet).
@@ -36,7 +36,7 @@ abstract class AggregationsAbstract
     /**
      * @param mixed $key
      */
-    public function setKey($key)
+    public function setKey($key): void
     {
         $this->key = $key;
     }
@@ -52,7 +52,7 @@ abstract class AggregationsAbstract
     /**
      * @param mixed $value
      */
-    public function setValue($value)
+    public function setValue($value): void
     {
         $this->value = $value;
     }
@@ -68,7 +68,7 @@ abstract class AggregationsAbstract
     /**
      * @param mixed $title
      */
-    public function setTitle($title)
+    public function setTitle($title): void
     {
         $this->title = $title;
     }

@@ -20,14 +20,14 @@ class EcmtCandidatePermitSelectionValidatingElementTest extends MockeryTestCase
 
     private $ecmtCandidatePermitSelectionValidatingElement;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->ecmtCandidatePermitSelectionValidatingElement = new EcmtCandidatePermitSelectionValidatingElement(
             self::ELEMENT_NAME
         );
     }
 
-    public function testGetInputSpecification()
+    public function testGetInputSpecification(): void
     {
         $expectedInputSpecification = [
             'name' => self::ELEMENT_NAME,
@@ -36,10 +36,7 @@ class EcmtCandidatePermitSelectionValidatingElementTest extends MockeryTestCase
                 [
                     'name' => Callback::class,
                     'options' => [
-                        'callback' => [
-                            EcmtCandidatePermitSelectionValidator::class,
-                            'validate'
-                        ],
+                        'callback' => static fn($value, array $context): bool => \Common\Form\Elements\Validators\EcmtCandidatePermitSelectionValidator::validate($value, $context),
                         'messages' => [
                             Callback::INVALID_VALUE => 'permits.page.irhp.candidate-permit-selection.error'
                         ]
@@ -54,7 +51,7 @@ class EcmtCandidatePermitSelectionValidatingElementTest extends MockeryTestCase
         );
     }
 
-    public function testInstanceOf()
+    public function testInstanceOf(): void
     {
         $this->assertInstanceOf(
             Hidden::class,

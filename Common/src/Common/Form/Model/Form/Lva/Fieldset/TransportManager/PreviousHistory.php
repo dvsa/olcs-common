@@ -27,7 +27,7 @@ class PreviousHistory
      * @Form\Type("Radio")
      * @Form\Flags({"priority": -10})
      */
-    public $hasConvictions = null;
+    public $hasConvictions;
 
     /**
      * @Form\Name("convictions")
@@ -38,7 +38,7 @@ class PreviousHistory
      * })
      * @Form\Flags({"priority": -20})
      */
-    public $convictions = null;
+    public $convictions;
 
     /**
      * @Form\Options({
@@ -57,7 +57,7 @@ class PreviousHistory
      * @Form\Type("Radio")
      * @Form\Flags({"priority": -30})
      */
-    public $hasPreviousLicences = null;
+    public $hasPreviousLicences;
 
     /**
      * @Form\Name("previousLicences")
@@ -68,5 +68,5 @@ class PreviousHistory
      * })
      * @Form\Flags({"priority": -40})
      */
-    public $previousLicences = null;
+    public $previousLicences;
 }

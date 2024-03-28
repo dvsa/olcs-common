@@ -18,13 +18,13 @@ class AddressOptional
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $id = null;
+    public $id;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\Options({
@@ -34,7 +34,7 @@ class AddressOptional
      * @Form\Type("Common\Form\Elements\Types\PostcodeSearch")
      * @Form\Flags({"priority": 100})
      */
-    public $searchPostcode = null;
+    public $searchPostcode;
 
     /**
      * @Form\Attributes({
@@ -51,7 +51,7 @@ class AddressOptional
      * @Form\Type("Text")
      * @Form\Filter("Laminas\Filter\StringTrim")
      */
-    public $addressLine1 = null;
+    public $addressLine1;
 
     /**
      * @Form\Attributes({
@@ -63,7 +63,7 @@ class AddressOptional
      * @Form\Required(false)
      * @Form\Type("Text")
      */
-    public $addressLine2 = null;
+    public $addressLine2;
 
     /**
      * @Form\Attributes({
@@ -75,7 +75,7 @@ class AddressOptional
      * @Form\Required(false)
      * @Form\Type("Text")
      */
-    public $addressLine3 = null;
+    public $addressLine3;
 
     /**
      * @Form\Attributes({"class":"long","id":""})
@@ -83,7 +83,7 @@ class AddressOptional
      * @Form\Required(false)
      * @Form\Type("Text")
      */
-    public $addressLine4 = null;
+    public $addressLine4;
 
     /**
      * @Form\Attributes({"class":"long","id":""})
@@ -97,7 +97,7 @@ class AddressOptional
      * @Form\Type("Text")
      * @Form\Filter("Laminas\Filter\StringTrim")
      */
-    public $town = null;
+    public $town;
 
     /**
      * @Form\Options({
@@ -113,7 +113,7 @@ class AddressOptional
      *      options={"allow_empty": true}
      * );
      */
-    public $postcode = null;
+    public $postcode;
 
     /**
      * @Form\Attributes({"id":"","placeholder":"","value":"GB"})
@@ -129,5 +129,5 @@ class AddressOptional
      * })
      * @Form\Type("DynamicSelect")
      */
-    public $countryCode = null;
+    public $countryCode;
 }

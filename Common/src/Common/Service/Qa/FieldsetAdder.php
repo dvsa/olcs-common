@@ -18,9 +18,6 @@ class FieldsetAdder
     /**
      * Create service instance
      *
-     * @param FieldsetPopulatorProvider $fieldsetPopulatorProvider
-     * @param FieldsetFactory $fieldsetFactory
-     * @param FieldsetModifier $fieldsetModifier
      *
      * @return FieldsetAdder
      */
@@ -38,10 +35,9 @@ class FieldsetAdder
      * Add a question fieldset to the qa fieldset based on the supplied options array
      *
      * @param mixed $form
-     * @param array $options
      * @param string $usageContext
      */
-    public function add($form, array $options, $usageContext)
+    public function add($form, array $options, $usageContext): void
     {
         $fieldset = $this->fieldsetFactory->create($options['fieldsetName'], $options['type']);
 

@@ -15,7 +15,7 @@ use Laminas\Router\Http\Segment;
  */
 class SectionConfigTest extends MockeryTestCase
 {
-    public function testGetAllRoutes()
+    public function testGetAllRoutes(): void
     {
         $sections = [
             'unit_test_route' => [],

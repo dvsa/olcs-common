@@ -22,7 +22,7 @@ class NullableNumberTest extends MockeryTestCase
      *
      * @dataProvider provider
      */
-    public function testFormat($data)
+    public function testFormat($data): void
     {
         $this->assertEquals($data['expected'], (new NullableNumber())->format($data, ['name' => 'permitsRequired']));
     }

@@ -11,7 +11,7 @@ use Common\Exception\BailOutException;
  */
 class BailOutExceptionTest extends \PHPUnit\Framework\TestCase
 {
-    public function testException()
+    public function testException(): void
     {
         $exception = new BailOutException('foo', 'bar');
 

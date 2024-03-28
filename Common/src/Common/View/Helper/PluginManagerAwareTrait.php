@@ -1,4 +1,5 @@
 <?php
+
 namespace Common\View\Helper;
 
 use Laminas\View\HelperPluginManager as ViewHelperManager;
@@ -14,7 +15,6 @@ trait PluginManagerAwareTrait
     protected $viewHelperManager;
 
     /**
-     * @param ViewHelperManager $viewHelperManager
      * @return $this
      */
     public function setViewHelperManager(ViewHelperManager $viewHelperManager)

@@ -20,5 +20,5 @@ class ConvictionsPenaltiesConfirmation
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      */
-    public $convictionsConfirmation = null;
+    public $convictionsConfirmation;
 }

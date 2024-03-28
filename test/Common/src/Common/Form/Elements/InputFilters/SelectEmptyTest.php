@@ -3,7 +3,7 @@
 namespace CommonTest\Form\Elements\InputFilters;
 
 use Common\Form\Elements\InputFilters;
-use \Laminas\Validator\StringLength;
+use Laminas\Validator\StringLength;
 
 /**
  * Test SelectEmpty InputFilter
@@ -11,12 +11,11 @@ use \Laminas\Validator\StringLength;
  */
 class SelectEmptyTest extends \PHPUnit\Framework\TestCase
 {
+    public $filter;
     /**
      * test setup
-     *
-     * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->filter = new InputFilters\SelectEmpty("test");
     }
@@ -35,10 +34,8 @@ class SelectEmptyTest extends \PHPUnit\Framework\TestCase
 
     /**
      * ensure select option is not required by default
-     *
-     * @return void
      */
-    public function testValueNotRequired()
+    public function testValueNotRequired(): void
     {
         $this->assertFalse($this->getSpecificationElement('required'));
     }

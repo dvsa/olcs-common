@@ -21,8 +21,6 @@ class YesNoWithMarkupForNoPopulator
      * Create service instance
      *
      * @param RadioFactory $radioFactory
-     * @param YesNoRadioOptionsApplier $yesNoRadioOptionsApplier
-     * @param HtmlAdder $htmlAdder
      *
      * @return YesNoWithMarkupForNoPopulator
      */
@@ -41,13 +39,11 @@ class YesNoWithMarkupForNoPopulator
      * parameter, the no option being annotated with the specified markup, and notSelectedMessage being used as the
      * error if the form is submitted with neither option selected
      *
-     * @param Fieldset $fieldset
-     * @param array $valueOptions
      * @param string $noMarkup
      * @param mixed $yesNo
      * @param string $notSelectedMessage
      */
-    public function populate(Fieldset $fieldset, array $valueOptions, $noMarkup, $yesNo, $notSelectedMessage)
+    public function populate(Fieldset $fieldset, array $valueOptions, $noMarkup, $yesNo, $notSelectedMessage): void
     {
         $yesNoRadio = $this->radioFactory->create('qaElement');
         $yesNoValue = is_null($yesNo) ? null : 'Y';

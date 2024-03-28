@@ -24,5 +24,5 @@ class FinancialHistoryConfirmation
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      */
-    public $insolvencyConfirmation = null;
+    public $insolvencyConfirmation;
 }

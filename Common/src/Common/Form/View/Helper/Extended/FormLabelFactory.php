@@ -15,10 +15,8 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
 class FormLabelFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
-     * @return FormLabel
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): FormLabel
     {

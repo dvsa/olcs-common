@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace CommonTest\Form\Elements\InputFilters;
 
 use Common\Form\Elements\InputFilters\VehicleSafetyTachographAnalyserContractor;
@@ -25,7 +26,7 @@ class VehicleSafetyTachographAnalyserContractorTest extends \PHPUnit\Framework\T
     /**
      * Setup the element
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->element = new VehicleSafetyTachographAnalyserContractor();
     }
@@ -33,7 +34,7 @@ class VehicleSafetyTachographAnalyserContractorTest extends \PHPUnit\Framework\T
     /**
      * Test validators
      */
-    public function testValidators()
+    public function testValidators(): void
     {
         $spec = $this->element->getInputSpecification();
 

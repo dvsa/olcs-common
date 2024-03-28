@@ -3,6 +3,7 @@
 /**
  * Year Select Test
  */
+
 namespace CommonTest\Form\Elements\Custom;
 
 use Common\Form\Elements\Custom\YearSelect;
@@ -14,12 +15,12 @@ class YearSelectTest extends \PHPUnit\Framework\TestCase
 {
     protected $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = new YearSelect('foo');
     }
 
-    public function testSetOptionsMinAndMaxYear()
+    public function testSetOptionsMinAndMaxYear(): void
     {
         $options = [
             'max_year_delta' => '+5',
@@ -35,7 +36,7 @@ class YearSelectTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(11, count($this->sut->getValueOptions()));
     }
 
-    public function testSetOptionsMaxYear()
+    public function testSetOptionsMaxYear(): void
     {
         $options = [
             'max_year_delta' => '+5'
@@ -50,7 +51,7 @@ class YearSelectTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(6, count($this->sut->getValueOptions()));
     }
 
-    public function testSetOptionsMinYear()
+    public function testSetOptionsMinYear(): void
     {
         $options = [
             'min_year_delta' => '-5'

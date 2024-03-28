@@ -15,7 +15,7 @@ use Mockery as m;
  */
 class FilesystemTest extends \PHPUnit\Framework\TestCase
 {
-    public function testCreateTmpDir()
+    public function testCreateTmpDir(): void
     {
         vfsStream::setup('tmp');
         $sut = new Filesystem();
@@ -25,7 +25,7 @@ class FilesystemTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(is_dir($dir));
     }
 
-    public function testCreateTmpFile()
+    public function testCreateTmpFile(): void
     {
         vfsStream::setup('tmp');
         $sut = new Filesystem();
@@ -35,19 +35,18 @@ class FilesystemTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(file_exists($dir));
     }
 
-    public function testCreateTmpFileWithLock()
+    public function testCreateTmpFileWithLock(): void
     {
         vfsStream::setup('tmp');
 
         $sut = new class extends Filesystem {
             protected function getLock(string $path): LockInterface
             {
-                $mock =  m::mock(FlockStore::class, LockInterface::class)
+                return m::mock(FlockStore::class, LockInterface::class)
                     ->shouldReceive('acquire')
                     ->andThrow(LockConflictedException::class)
                     ->times(3)
                     ->getMock();
-                return $mock;
             }
         };
 

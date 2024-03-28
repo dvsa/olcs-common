@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace CommonTest\Common\Auth;
@@ -20,7 +21,7 @@ class SessionFactoryTest extends MockeryTestCase
      */
     protected $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->setUpServiceManager();
     }
@@ -28,20 +29,20 @@ class SessionFactoryTest extends MockeryTestCase
     /**
      * @test
      */
-    public function __invoke_IsCallable(): void
+    public function invokeIsCallable(): void
     {
         // Setup
         $this->setUpSut();
 
         // Assert
-        $this->assertIsCallable([$this->sut, '__invoke']);
+        $this->assertIsCallable(fn(\Psr\Container\ContainerInterface $container, string $requestedName, ?array $options = null): \Laminas\Authentication\Storage\Session => $this->sut->__invoke($container, $requestedName, $options));
     }
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_ReturnsAnInstanceOfSessionFactory()
+    public function invokeReturnsAnInstanceOfSessionFactory(): void
     {
         // Setup
         $this->setUpSut();
@@ -56,9 +57,9 @@ class SessionFactoryTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_ThrowsException_WhenConfigIsMissing()
+    public function invokeThrowsExceptionWhenConfigIsMissing(): void
     {
         // Setup
         $this->setUpSut();

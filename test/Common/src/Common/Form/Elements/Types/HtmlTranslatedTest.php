@@ -5,6 +5,7 @@
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
+
 namespace CommonTest\Form\Elements\Types;
 
 use Common\Form\Elements\Types\HtmlTranslated;
@@ -20,7 +21,7 @@ class HtmlTranslatedTest extends \PHPUnit\Framework\TestCase
      * Placeholder
      *
      */
-    public function testElement()
+    public function testElement(): void
     {
         $element = new HtmlTranslated();
         $this->assertInstanceOf(\Common\Form\Elements\Types\HtmlTranslated::class, $element);

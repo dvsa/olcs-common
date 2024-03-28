@@ -1,24 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Controller\Util;
 
+use Common\Util\FlashMessengerTrait;
 use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger as FlashMessengerPlugin;
 use Mockery as m;
 
-/**
- * Test FlashMessengerTrait
- *
- * @author Michael Cooper <michael.cooper@valtech.co.uk>
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class FlashMessengerTraitTest extends m\Adapter\Phpunit\MockeryTestCase
 {
     private $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = $this->getMockForTrait(
-            \Common\Util\FlashMessengerTrait::class,
+            FlashMessengerTrait::class,
             [],
             '',
             true,
@@ -34,10 +31,10 @@ class FlashMessengerTraitTest extends m\Adapter\Phpunit\MockeryTestCase
      * @group util
      * @group flash_messenger_trait
      */
-    public function testGetFlashMessenger()
+    public function testGetFlashMessenger(): void
     {
         $this->sut = $this->getMockForTrait(
-            \Common\Util\FlashMessengerTrait::class,
+            FlashMessengerTrait::class,
             [],
             '',
             true,
@@ -61,7 +58,7 @@ class FlashMessengerTraitTest extends m\Adapter\Phpunit\MockeryTestCase
      * @group util
      * @group flash_messenger_trait
      */
-    public function testAddInfoMessage()
+    public function testAddInfoMessage(): void
     {
         $message = 'foo';
 
@@ -81,7 +78,7 @@ class FlashMessengerTraitTest extends m\Adapter\Phpunit\MockeryTestCase
      * @group util
      * @group flash_messenger_trait
      */
-    public function testAddErrorMessage()
+    public function testAddErrorMessage(): void
     {
         $message = 'foo';
 
@@ -101,7 +98,7 @@ class FlashMessengerTraitTest extends m\Adapter\Phpunit\MockeryTestCase
      * @group util
      * @group flash_messenger_trait
      */
-    public function testAddSuccessMessage()
+    public function testAddSuccessMessage(): void
     {
         $message = 'foo';
 
@@ -121,7 +118,7 @@ class FlashMessengerTraitTest extends m\Adapter\Phpunit\MockeryTestCase
      * @group util
      * @group flash_messenger_trait
      */
-    public function testAddWarningMessage()
+    public function testAddWarningMessage(): void
     {
         $message = 'foo';
 
@@ -141,7 +138,7 @@ class FlashMessengerTraitTest extends m\Adapter\Phpunit\MockeryTestCase
      * @group util
      * @group flash_messenger_trait
      */
-    public function testAddMessage()
+    public function testAddMessage(): void
     {
         $message = 'foo';
         $namespace = 'error';

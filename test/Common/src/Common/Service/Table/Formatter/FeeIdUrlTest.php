@@ -22,9 +22,13 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class FeeIdUrlTest extends MockeryTestCase
 {
+    public $mockRouteMatch;
     protected $urlHelper;
+
     protected $router;
+
     protected $request;
+
     protected $sut;
 
     protected function setUp(): void
@@ -63,7 +67,7 @@ class FeeIdUrlTest extends MockeryTestCase
     /**
      * Test the format method
      */
-    public function testFormat()
+    public function testFormat(): void
     {
         $this->mockRouteMatch
             ->shouldReceive('getMatchedRouteName')

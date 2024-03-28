@@ -13,7 +13,7 @@ class SafetyLicence
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\Attributes({"class":"tiny", "id":""})
@@ -29,7 +29,7 @@ class SafetyLicence
      *     "messages": {"notBetween": "safetyLicence_safetyInsBetween-error"}
      *})
      */
-    public $safetyInsVehicles = null;
+    public $safetyInsVehicles;
 
     /**
      * @Form\Attributes({"class":"tiny", "id":""})
@@ -45,7 +45,7 @@ class SafetyLicence
      *     "messages": {"notBetween": "safetyLicence_safetyInsBetween-error"}
      *})
      */
-    public $safetyInsTrailers = null;
+    public $safetyInsTrailers;
 
     /**
      * @Form\Attributes({"id":"","placeholder":""})
@@ -57,7 +57,7 @@ class SafetyLicence
      * })
      * @Form\Type("\Laminas\Form\Element\Radio")
      */
-    public $safetyInsVaries = null;
+    public $safetyInsVaries;
 
     /**
      * @Form\Attributes({"id":"","placeholder":""})
@@ -75,7 +75,7 @@ class SafetyLicence
      * })
      * @Form\Type("DynamicRadio")
      */
-    public $tachographIns = null;
+    public $tachographIns;
 
     /**
      * @Form\Required(true)
@@ -98,5 +98,5 @@ class SafetyLicence
      *     }
      * )
      */
-    public $tachographInsName = null;
+    public $tachographInsName;
 }

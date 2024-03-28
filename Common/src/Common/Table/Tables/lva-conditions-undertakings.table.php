@@ -4,6 +4,7 @@ use Common\Service\Table\Formatter\Address;
 use Common\Service\Table\Formatter\ConditionsUndertakingsType;
 use Common\Service\Table\Formatter\Translate;
 use Common\Service\Table\Formatter\YesNo;
+use Common\Service\Table\TableBuilder;
 
 return [
     'variables' => [
@@ -25,11 +26,10 @@ return [
             'title' => 'lva-conditions-undertakings-table-no',
             'type' => 'Action',
             'action' => 'edit',
-            'formatter' => function ($data, $column) {
+            'formatter' => static function ($data, $column) {
                 if (in_array($data['action'], ['U', 'D'])) {
                      return $data['licConditionVariation']['id'];
                 }
-
                 return $data['id'];
             }
         ],
@@ -49,16 +49,18 @@ return [
         ],
         [
             'title' => 'lva-conditions-undertakings-table-status',
-            'formatter' => fn($data) => $data['isDraft'] == 'Y' ? 'Draft' : 'Approved',
+            'formatter' => static fn($data) => $data['isDraft'] == 'Y' ? 'Draft' : 'Approved',
         ],
         [
             'title' => 'lva-conditions-undertakings-table-attached-to',
             'formatter' => function ($data, $column) {
 
                 if (isset($data['operatingCentre']['address'])) {
-
                     $column['formatter'] = Address::class;
-
+                    /**
+                     * @var TableBuilder $this
+                     * @psalm-scope-this TableBuilder
+                     */
                     return $this->callFormatter($column, $data['operatingCentre']['address']);
                 }
 
@@ -75,6 +77,10 @@ return [
             'title' => 'markup-table-th-remove', //this is a view partial from olcs-common
             'ariaDescription' => function ($row, $column) {
                 $column['formatter'] = ConditionsUndertakingsType::class;
+                /**
+                 * @var TableBuilder $this
+                 * @psalm-scope-this TableBuilder
+                 */
                 return $this->callFormatter($column, $row);
             },
             'type' => 'ActionLinks',

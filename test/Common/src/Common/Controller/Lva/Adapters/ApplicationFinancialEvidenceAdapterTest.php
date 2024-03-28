@@ -18,13 +18,13 @@ class ApplicationFinancialEvidenceAdapterTest extends MockeryTestCase
 
     protected $container;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->container = m::mock(ContainerInterface::class);
         $this->sut = m::mock(ApplicationFinancialEvidenceAdapter::class, [$this->container])->makePartial();
     }
 
-    public function testAlterFormForLva()
+    public function testAlterFormForLva(): void
     {
         $mockForm = m::mock(Form::class)
             ->shouldReceive('get')
@@ -49,7 +49,7 @@ class ApplicationFinancialEvidenceAdapterTest extends MockeryTestCase
         $this->assertNull($this->sut->alterFormForLva($mockForm));
     }
 
-    public function testGetDocuments()
+    public function testGetDocuments(): void
     {
         $applicationId = 1;
 
@@ -61,7 +61,7 @@ class ApplicationFinancialEvidenceAdapterTest extends MockeryTestCase
         $this->assertEquals(['documents'], $this->sut->getDocuments($applicationId));
     }
 
-    public function testGetUploadMetaData()
+    public function testGetUploadMetaData(): void
     {
         $applicationId = 1;
         $licenceId = 2;
@@ -85,7 +85,7 @@ class ApplicationFinancialEvidenceAdapterTest extends MockeryTestCase
         $this->assertEquals($expected, $this->sut->getUploadMetaData($file, $applicationId));
     }
 
-    public function testGetData()
+    public function testGetData(): void
     {
         $applicationId = 1;
 

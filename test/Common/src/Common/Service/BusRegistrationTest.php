@@ -1,6 +1,5 @@
 <?php
 
-
 namespace CommonTest\Service;
 
 use Common\Service\BusRegistration;
@@ -65,7 +64,7 @@ class BusRegistrationTest extends \PHPUnit\Framework\TestCase
      * @depends testCreateVariation
      * @param $variation
      */
-    public function testCreateCancellation($variation)
+    public function testCreateCancellation($variation): void
     {
         $mostRecent = ['variationNo' => $variation['variationNo']];
 
@@ -78,7 +77,7 @@ class BusRegistrationTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(BusRegistration::STATUS_CANCEL, $result['revertStatus']);
     }
 
-    public function testGetCascadeOptions()
+    public function testGetCascadeOptions(): void
     {
         $sut = new BusRegistration();
         $options = $sut->getCascadeOptions();
@@ -89,7 +88,7 @@ class BusRegistrationTest extends \PHPUnit\Framework\TestCase
         $this->assertNotEmpty($options['cascade']['single']);
     }
 
-    public function testGetCascadeOptionsVariation()
+    public function testGetCascadeOptionsVariation(): void
     {
         $sut = new BusRegistration();
         $options = $sut->getCascadeOptionsVariation();

@@ -10,10 +10,8 @@ use Psr\Container\NotFoundExceptionInterface;
 class FeeUrlFactory implements FactoryInterface
 {
     /**
-     * @param  ContainerInterface $container
      * @param  $requestedName
      * @param  array|null         $options
-     * @return FeeUrl
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */

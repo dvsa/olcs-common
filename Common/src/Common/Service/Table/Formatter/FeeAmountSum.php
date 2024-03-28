@@ -10,12 +10,9 @@ namespace Common\Service\Table\Formatter;
 class FeeAmountSum implements FormatterPluginManagerInterface
 {
     private Sum $sumFormatter;
+
     private FeeAmount $feeAmountFormatter;
 
-    /**
-     * @param Sum       $sumFormatter
-     * @param FeeAmount $feeAmountFormatter
-     */
     public function __construct(Sum $sumFormatter, FeeAmount $feeAmountFormatter)
     {
         $this->sumFormatter = $sumFormatter;
@@ -27,7 +24,7 @@ class FeeAmountSum implements FormatterPluginManagerInterface
      *
      * @param  array $data
      * @param  array $column
-     * @return string
+     * @return ?string
      */
     public function format($data, $column = [])
     {

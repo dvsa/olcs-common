@@ -14,13 +14,7 @@ interface FormWithCsrfInterface
 {
     public const SECURITY = 'security';
 
-    /**
-     * @return Csrf
-     */
     public function getCsrfElement(): Csrf;
 
-    /**
-     * @return InputInterface
-     */
     public function getCsrfInput(): InputInterface;
 }

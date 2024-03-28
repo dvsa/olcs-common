@@ -30,7 +30,7 @@ class RoleTest extends AbstractDataServiceTestCase
      * @param $input
      * @param $expected
      */
-    public function testFetchListOptions($input, $expected)
+    public function testFetchListOptions($input, $expected): void
     {
         $this->sut->setData('Role', $input);
 
@@ -50,11 +50,10 @@ class RoleTest extends AbstractDataServiceTestCase
      */
     protected function getSingleExpected()
     {
-        $expected = [
+        return [
             'role1' => 'role1desc',
             'role2' => 'role2desc'
         ];
-        return $expected;
     }
 
     /**
@@ -62,14 +61,13 @@ class RoleTest extends AbstractDataServiceTestCase
      */
     protected function getSingleSource()
     {
-        $source = [
+        return [
             ['id' => 1, 'role' => 'role1', 'description' => 'role1desc'],
             ['id' => 2, 'role' => 'role2', 'description' => 'role2desc']
         ];
-        return $source;
     }
 
-    public function testFetchListData()
+    public function testFetchListData(): void
     {
         $results = ['results' => 'results'];
 
@@ -92,7 +90,7 @@ class RoleTest extends AbstractDataServiceTestCase
         $this->assertEquals($results['results'], $this->sut->fetchListData());
     }
 
-    public function testFetchListDataWithException()
+    public function testFetchListDataWithException(): void
     {
         $this->expectException(DataServiceException::class);
 

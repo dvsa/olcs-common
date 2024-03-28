@@ -49,7 +49,7 @@ trait GenericReceipt
         if ($response->isOk()) {
             $payment = $response->getResult();
             $fees = array_map(
-                fn($fp) => $fp['fee'],
+                static fn($fp) => $fp['fee'],
                 $payment['feeTransactions']
             );
         } else {
@@ -88,6 +88,7 @@ trait GenericReceipt
                 return true;
             }
         }
+
         return false;
     }
 }

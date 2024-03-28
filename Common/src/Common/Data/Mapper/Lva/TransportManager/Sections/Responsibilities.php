@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Common\Data\Mapper\Lva\TransportManager\Sections;
 
 /**
@@ -34,8 +33,6 @@ class Responsibilities extends AbstractSection implements TransportManagerSectio
 
     /**
      * populate
-     *
-     * @param array $transportManagerApplication
      */
     public function populate(array $transportManagerApplication)
     {

@@ -5,6 +5,7 @@
  *
  * @author Shaun Lizzio <shaun@lizzio.co.uk>
  */
+
 namespace CommonTest\Form\Elements\Types;
 
 use Common\Form\Elements\Types\ApplicationTransportManagers;
@@ -19,7 +20,7 @@ class ApplicationTransportManagersTest extends \PHPUnit\Framework\TestCase
     /**
      * Test the element configuration
      */
-    public function testElement()
+    public function testElement(): void
     {
         $element = new ApplicationTransportManagers();
 
@@ -32,7 +33,7 @@ class ApplicationTransportManagersTest extends \PHPUnit\Framework\TestCase
      * Test get and set messages
      *
      */
-    public function testGetMessages()
+    public function testGetMessages(): void
     {
         $element = new ApplicationTransportManagers();
         $element->setMessages(['messages']);

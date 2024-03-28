@@ -16,6 +16,15 @@ class EnabledSectionTraitStub extends AbstractActionController
 {
     use EnabledSectionTrait;
 
+    /**
+     * @var \Common\Service\Helper\RestrictionHelperService
+     */
+    public $restrictionHelper;
+    /**
+     * @var \Common\Service\Helper\StringHelperService
+     */
+    public $stringHelper;
+
     public function __construct(RestrictionHelperService $restrictionHelper, StringHelperService $stringHelper)
     {
         $this->restrictionHelper = $restrictionHelper;

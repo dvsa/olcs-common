@@ -2,11 +2,20 @@
 
 namespace CommonTest\Form\View\Helper;
 
+use Common\Form\Elements\InputFilters\ActionLink;
+use Common\Form\Elements\Types\AttachFilesButton;
+use Common\Form\Elements\Types\GuidanceTranslated;
+use Common\Form\Elements\Types\Html;
+use Common\Form\Elements\Types\HtmlTranslated;
+use Common\Form\Elements\Types\Table;
+use Common\Form\Elements\Types\TermsBox;
+use Common\Form\Elements\Types\TrafficAreaSet;
 use Common\Form\Elements\Validators\Messages\FormElementMessageFormatter;
 use Common\Form\View\Helper\FormElement;
 use Common\Form\View\Helper\FormElementErrors;
 use Common\Form\View\Helper\FormPlainText;
 use CommonTest\Common\Util\DummyTranslator;
+use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Container\ContainerInterface;
 use Laminas\I18n\View\Helper\Translate;
 use Laminas\View\Helper\Doctype;
@@ -20,6 +29,7 @@ use Laminas\Form\View\Helper;
 class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
 {
     protected const A_HINT = 'A HINT';
+
     protected const A_CUSTOM_CSS_CLASS = 'A_CSS_CLASS';
 
     /**
@@ -27,7 +37,7 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
      */
     protected $element;
 
-    private function prepareElement($type = 'Text', $options = [])
+    private function prepareElement($type = 'Text', $options = []): void
     {
         if (strpos($type, '\\') === false) {
             $type = '\Laminas\Form\Element\\' . ucfirst($type);
@@ -50,7 +60,7 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
     /**
      * @outputBuffering disabled
      */
-    public function testRenderWithNoRendererPlugin()
+    public function testRenderWithNoRendererPlugin(): void
     {
         $this->prepareElement();
         $view = new JsonRenderer();
@@ -65,7 +75,7 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
     /**
      * @outputBuffering disabled
      */
-    public function testRenderForTextElement()
+    public function testRenderForTextElement(): void
     {
         $this->prepareElement();
 
@@ -81,7 +91,7 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
     /**
      * @outputBuffering disabled
      */
-    public function testRenderForPlainTextElement()
+    public function testRenderForPlainTextElement(): void
     {
         $this->prepareElement(\Common\Form\Elements\Types\PlainText::class);
 
@@ -96,10 +106,10 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
     /**
      * @outputBuffering disabled
      */
-    public function testRenderForActionLinkElementWithRoute()
+    public function testRenderForActionLinkElementWithRoute(): void
     {
         $options = ['route' => 'route'];
-        $this->prepareElement(\Common\Form\Elements\InputFilters\ActionLink::class, $options);
+        $this->prepareElement(ActionLink::class, $options);
 
         $viewHelper = $this->prepareViewHelper();
 
@@ -111,9 +121,9 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
     /**
      * @outputBuffering disabled
      */
-    public function testRenderForActionLinkElementWithUrl()
+    public function testRenderForActionLinkElementWithUrl(): void
     {
-        $this->prepareElement(\Common\Form\Elements\InputFilters\ActionLink::class);
+        $this->prepareElement(ActionLink::class);
         $this->element->setValue('url');
 
         $viewHelper = $this->prepareViewHelper();
@@ -126,9 +136,9 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
     /**
      * @outputBuffering disabled
      */
-    public function testRenderForActionLinkElementWithMaliciousUrl()
+    public function testRenderForActionLinkElementWithMaliciousUrl(): void
     {
-        $this->prepareElement(\Common\Form\Elements\InputFilters\ActionLink::class);
+        $this->prepareElement(ActionLink::class);
         $maliciousUrl = '<script>alert("url")</script>';
         $this->element->setValue($maliciousUrl);
 
@@ -147,9 +157,9 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
     /**
      * @outputBuffering disabled
      */
-    public function testRenderForActionLinkElementWithTarget()
+    public function testRenderForActionLinkElementWithTarget(): void
     {
-        $this->prepareElement(\Common\Form\Elements\InputFilters\ActionLink::class);
+        $this->prepareElement(ActionLink::class);
         $this->element->setValue('url');
         $this->element->setAttribute('target', '_blank');
 
@@ -163,9 +173,9 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
     /**
      * @outputBuffering disabled
      */
-    public function testRenderForHtmlElement()
+    public function testRenderForHtmlElement(): void
     {
-        $this->prepareElement(\Common\Form\Elements\Types\Html::class);
+        $this->prepareElement(Html::class);
         $this->element->setValue('<div></div>');
 
         $viewHelper = $this->prepareViewHelper();
@@ -178,9 +188,9 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
     /**
      * @outputBuffering disabled
      */
-    public function testRenderForTermsBoxElement()
+    public function testRenderForTermsBoxElement(): void
     {
-        $this->prepareElement(\Common\Form\Elements\Types\TermsBox::class);
+        $this->prepareElement(TermsBox::class);
         $this->element->setValue('foo');
 
         $viewHelper = $this->prepareViewHelper();
@@ -193,9 +203,9 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
     /**
      * @outputBuffering disabled
      */
-    public function testRenderForTermsBoxElementWithoutClass()
+    public function testRenderForTermsBoxElementWithoutClass(): void
     {
-        $this->prepareElement(\Common\Form\Elements\Types\TermsBox::class);
+        $this->prepareElement(TermsBox::class);
         $this->element->setAttribute('class', null);
         $this->element->setValue('foo');
 
@@ -209,9 +219,9 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
     /**
      * @outputBuffering disabled
      */
-    public function testRenderForHtmlTranslatedElement()
+    public function testRenderForHtmlTranslatedElement(): void
     {
-        $this->prepareElement(\Common\Form\Elements\Types\HtmlTranslated::class);
+        $this->prepareElement(HtmlTranslated::class);
         $this->element->setValue('some-translation-key');
 
         $translations = ['some-translation-key' => 'actual translated string'];
@@ -225,9 +235,9 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
     /**
      * @outputBuffering disabled
      */
-    public function testRenderForHtmlTranslatedElementWithoutValue()
+    public function testRenderForHtmlTranslatedElementWithoutValue(): void
     {
-        $this->prepareElement(\Common\Form\Elements\Types\HtmlTranslated::class);
+        $this->prepareElement(HtmlTranslated::class);
 
         $viewHelper = $this->prepareViewHelper([]);
 
@@ -239,9 +249,9 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
     /**
      * @outputBuffering disabled
      */
-    public function testRenderForHtmlTranslatedElementWithTokens()
+    public function testRenderForHtmlTranslatedElementWithTokens(): void
     {
-        $this->prepareElement(\Common\Form\Elements\Types\HtmlTranslated::class);
+        $this->prepareElement(HtmlTranslated::class);
         $this->element->setValue('<div>%s and then %s</div>');
         $this->element->setTokens(['foo-key', 'bar-key']);
 
@@ -259,9 +269,9 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
     /**
      * @outputBuffering disabled
      */
-    public function testRenderForHtmlTranslatedElementWithTokensViaOptions()
+    public function testRenderForHtmlTranslatedElementWithTokensViaOptions(): void
     {
-        $this->prepareElement(\Common\Form\Elements\Types\HtmlTranslated::class);
+        $this->prepareElement(HtmlTranslated::class);
         $this->element->setValue('<div>%s and then %s</div>');
         $this->element->setOptions(['tokens' => ['foo-key', 'bar-key']]);
 
@@ -279,9 +289,9 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
     /**
      * @outputBuffering disabled
      */
-    public function testRenderForTableElement()
+    public function testRenderForTableElement(): void
     {
-        $this->prepareElement(\Common\Form\Elements\Types\Table::class);
+        $this->prepareElement(Table::class);
 
         $mockTable = $this->getMockBuilder(\Common\Service\Table\TableBuilder::class)
             ->disableOriginalConstructor()
@@ -301,9 +311,9 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
         $this->expectOutputRegex('/^<table><\/table>$/');
     }
 
-    public function testRenderForTrafficAreaSet()
+    public function testRenderForTrafficAreaSet(): void
     {
-        $this->prepareElement(\Common\Form\Elements\Types\TrafficAreaSet::class);
+        $this->prepareElement(TrafficAreaSet::class);
 
         $this->element
             ->setValue('<ABC>')
@@ -319,9 +329,9 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
         );
     }
 
-    public function testRenderForTrafficAreaSetWithoutHint()
+    public function testRenderForTrafficAreaSetWithoutHint(): void
     {
-        $this->prepareElement(\Common\Form\Elements\Types\TrafficAreaSet::class);
+        $this->prepareElement(TrafficAreaSet::class);
 
         $this->element->setValue('ABC');
         $this->element->setOption('hint', null);
@@ -336,9 +346,9 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
         );
     }
 
-    public function testRenderForTrafficAreaSetWithSuffix()
+    public function testRenderForTrafficAreaSetWithSuffix(): void
     {
-        $this->prepareElement(\Common\Form\Elements\Types\TrafficAreaSet::class);
+        $this->prepareElement(TrafficAreaSet::class);
 
         $this->element->setValue('ABC');
         $this->element->setOption('hint-suffix', '-foo');
@@ -356,9 +366,9 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
     /**
      * @outputBuffering disabled
      */
-    public function testRenderForGuidanceTranslatedElement()
+    public function testRenderForGuidanceTranslatedElement(): void
     {
-        $this->prepareElement(\Common\Form\Elements\Types\GuidanceTranslated::class);
+        $this->prepareElement(GuidanceTranslated::class);
         $this->element->setValue('some-translation-key');
 
         $translations = ['some-translation-key' => 'actual translated string'];
@@ -372,9 +382,9 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
     /**
      * @outputBuffering disabled
      */
-    public function testRenderForGuidanceTranslatedElementWithoutValue()
+    public function testRenderForGuidanceTranslatedElementWithoutValue(): void
     {
-        $this->prepareElement(\Common\Form\Elements\Types\GuidanceTranslated::class);
+        $this->prepareElement(GuidanceTranslated::class);
 
         $viewHelper = $this->prepareViewHelper([]);
 
@@ -386,9 +396,9 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
     /**
      * @outputBuffering disabled
      */
-    public function testRenderForGuidanceTranslatedElementWithTokens()
+    public function testRenderForGuidanceTranslatedElementWithTokens(): void
     {
-        $this->prepareElement(\Common\Form\Elements\Types\GuidanceTranslated::class);
+        $this->prepareElement(GuidanceTranslated::class);
         $this->element->setValue('<div>%s and then %s</div>');
         $this->element->setTokens(['foo-key', 'bar-key']);
 
@@ -406,9 +416,9 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
     /**
      * @outputBuffering disabled
      */
-    public function testRenderForGuidanceTranslatedElementWithTokensViaOptions()
+    public function testRenderForGuidanceTranslatedElementWithTokensViaOptions(): void
     {
-        $this->prepareElement(\Common\Form\Elements\Types\GuidanceTranslated::class);
+        $this->prepareElement(GuidanceTranslated::class);
         $this->element->setValue('<div>%s and then %s</div>');
         $this->element->setOptions(['tokens' => ['foo-key', 'bar-key']]);
 
@@ -423,9 +433,9 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
         $this->expectOutputRegex('/^<div class="article"><div>foo string and then bar string<\/div><\/div>$/');
     }
 
-    public function testRenderForAttachFilesButton()
+    public function testRenderForAttachFilesButton(): void
     {
-        $this->prepareElement(\Common\Form\Elements\Types\AttachFilesButton::class);
+        $this->prepareElement(AttachFilesButton::class);
 
         $this->element->setValue('My Button');
 
@@ -433,8 +443,7 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
 
         $markup = $viewHelper($this->element, 'formCollection', '/');
 
-        $expected = '<ul class="attach-action__list"><li class="attach-action">'
-            . '<label class="attach-action__label"> '
+        $expected = '<ul class="attach-action__list"><li class="attach-action"><label class="attach-action__label"> '
             . '<input type="file" name="test" class="class&#x20;attach-action__input" id="test">'
             . '</label>'
             . '<p class="attach-action__hint">Hint</p></li></ul>';
@@ -445,9 +454,9 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
         );
     }
 
-    public function testRenderForAttachFilesButtonWithNoClass()
+    public function testRenderForAttachFilesButtonWithNoClass(): void
     {
-        $this->prepareElement(\Common\Form\Elements\Types\AttachFilesButton::class);
+        $this->prepareElement(AttachFilesButton::class);
 
         $this->element->setValue('My Button');
         $this->element->setAttribute('class', null);
@@ -456,8 +465,7 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
 
         $markup = $viewHelper($this->element, 'formCollection', '/');
 
-        $expected = '<ul class="attach-action__list"><li class="attach-action">'
-            . '<label class="attach-action__label"> '
+        $expected = '<ul class="attach-action__list"><li class="attach-action"><label class="attach-action__label"> '
             . '<input type="file" name="test" class="&#x20;attach-action__input" id="test">'
             . '</label>'
             . '<p class="attach-action__hint">Hint</p></li></ul>';
@@ -468,7 +476,7 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
         );
     }
 
-    public function testRenderHintBelow()
+    public function testRenderHintBelow(): void
     {
         $this->prepareElement('Text', ['hint-below' => 'HINT BELOW']);
 
@@ -478,7 +486,7 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
 
         $this->assertSame(
             '<p class="hint">Hint</p><input type="text" name="test" class="class" id="test" value="">'
-            .'<div class="hint">HINT BELOW</div>',
+            . '<div class="hint">HINT BELOW</div>',
             $output
         );
     }
@@ -486,7 +494,7 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
     /**
      * @depends testRenderHintBelow
      */
-    public function testRenderAddsCustomHintClassToHintsThatArePositionedBelowAnElement()
+    public function testRenderAddsCustomHintClassToHintsThatArePositionedBelowAnElement(): void
     {
         // Setup
         $this->prepareElement('Text', [
@@ -512,7 +520,7 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
     /**
      * @depends testRenderAddsCustomHintClassToHintsThatArePositionedBelowAnElement
      */
-    public function testRenderAddsCustomBelowHintClassToHintsThatArePositionedBelowAnElement()
+    public function testRenderAddsCustomBelowHintClassToHintsThatArePositionedBelowAnElement(): void
     {
         // Setup
         $this->prepareElement('Text', [
@@ -535,7 +543,7 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
         );
     }
 
-    public function testRenderElementWithError()
+    public function testRenderElementWithError(): void
     {
         $this->prepareElement();
         $this->element->setMessages(['Message 1']);
@@ -559,7 +567,7 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
         $translateHelper = new Translate();
         $translateHelper->setTranslator($translator);
 
-        /** @var PhpRenderer | \PHPUnit_Framework_MockObject_MockObject $view */
+        /** @var PhpRenderer | MockObject $view */
         $view = $this->createPartialMock(PhpRenderer::class, []);
 
         $plainTextService = new FormPlainText();

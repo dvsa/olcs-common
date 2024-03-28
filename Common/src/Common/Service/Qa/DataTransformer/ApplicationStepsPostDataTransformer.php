@@ -10,7 +10,6 @@ class ApplicationStepsPostDataTransformer
     /**
      * Create service instance
      *
-     * @param DataTransformerProvider $dataTransformerProvider
      *
      * @return ApplicationStepsPostDataTransformer
      */
@@ -22,8 +21,6 @@ class ApplicationStepsPostDataTransformer
     /**
      * Convert fieldset post data from the frontend to a format suitable for backend submission
      *
-     * @param array $applicationSteps
-     * @param array $applicationStepsPostData
      *
      * @return array
      */

@@ -26,7 +26,7 @@ class TransactionAmountSumTest extends \PHPUnit\Framework\TestCase
      *
      * @dataProvider provider
      */
-    public function testFormat($data, $expected)
+    public function testFormat($data, $expected): void
     {
         $column = ['name' => 'amount'];
         $this->assertSame($expected, (new TransactionAmountSum(new Money()))->format($data, $column));

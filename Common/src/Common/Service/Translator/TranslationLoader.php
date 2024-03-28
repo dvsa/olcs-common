@@ -16,8 +16,9 @@ use Laminas\I18n\Translator\TextDomain;
  */
 class TranslationLoader implements RemoteLoaderInterface
 {
-    public const ERR_UNABLE_TO_LOAD_REPLACEMENTS = 'Replacements could not be loaded: ';
-    public const ERR_UNABLE_TO_LOAD = 'Translations could not be loaded: ';
+    public const ERR_UNABLE_TO_LOAD_REPLACEMENTS = 'Replacements could not be loaded: %s';
+
+    public const ERR_UNABLE_TO_LOAD = 'Translations could not be loaded: %s';
 
     /** @var CachingQueryService $queryService */
     private $queryService;
@@ -25,7 +26,6 @@ class TranslationLoader implements RemoteLoaderInterface
     /**
      * TranslationLoader constructor.
      *
-     * @param CachingQueryService $queryService
      *
      * @return void
      */
@@ -47,9 +47,9 @@ class TranslationLoader implements RemoteLoaderInterface
     {
         try {
             $messages = $this->queryService->handleCustomCache(CacheEncryption::TRANSLATION_KEY_IDENTIFIER, $locale);
-        } catch (\Exception $e) {
-            $message = sprintf(self::ERR_UNABLE_TO_LOAD, $e->getMessage());
-            throw new \Exception($message);
+        } catch (\Exception $exception) {
+            $message = sprintf(self::ERR_UNABLE_TO_LOAD, $exception->getMessage());
+            throw new \Exception($message, $exception->getCode(), $exception);
         }
 
         $phpMemoryArray = new PhpMemoryArray($messages);
@@ -59,7 +59,6 @@ class TranslationLoader implements RemoteLoaderInterface
     /**
      * Load translation replacements
      *
-     * @return array
      * @throws \Exception
      */
     public function loadReplacements(): array
@@ -68,9 +67,9 @@ class TranslationLoader implements RemoteLoaderInterface
             $replacements = $this->queryService->handleCustomCache(
                 CacheEncryption::TRANSLATION_REPLACEMENT_IDENTIFIER
             );
-        } catch (\Exception $e) {
+        } catch (\Exception $exception) {
             $replacements = [];
-            $errorMessage = sprintf(self::ERR_UNABLE_TO_LOAD_REPLACEMENTS, $e->getMessage());
+            $errorMessage = sprintf(self::ERR_UNABLE_TO_LOAD_REPLACEMENTS, $exception->getMessage());
             Logger::err($errorMessage);
         }
 

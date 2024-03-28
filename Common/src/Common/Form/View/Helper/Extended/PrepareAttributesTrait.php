@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Form\View\Helper\Extended;
 
 /**
@@ -23,8 +24,6 @@ trait PrepareAttributesTrait
      * Removes any invalid attributes
      *
      * @param array $attributes Attributes
-     *
-     * @return array
      */
     protected function prepareAttributes(array $attributes): array
     {
@@ -38,7 +37,8 @@ trait PrepareAttributesTrait
                 $this->translatableAttributes += [$attribute => true];
             }
 
-            if (!isset($this->validGlobalAttributes[$attribute])
+            if (
+                !isset($this->validGlobalAttributes[$attribute])
                 && !isset($this->validTagAttributes[$attribute])
                 && 'data-' != substr($attribute, 0, 5)
                 && 'aria-' != substr($attribute, 0, 5)
@@ -59,11 +59,6 @@ trait PrepareAttributesTrait
             if (isset($this->booleanAttributes[$attribute])) {
                 $attributes[$attribute] = $this->prepareBooleanAttributeValue($attribute, $value);
             }
-
-            $stringValue = (string) $value;
-
-            // Use the string key and value
-            $attributes[$key] = $stringValue;
         }
 
         return $attributes;

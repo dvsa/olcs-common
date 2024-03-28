@@ -13,7 +13,7 @@ class PublicHolidayAreaTest extends TestCase
     /**
      * @dataProvider dpTestFormat
      */
-    public function testFormat($data, $expect)
+    public function testFormat($data, $expect): void
     {
         static::assertEquals($expect, (new PublicHolidayArea())->format($data));
     }

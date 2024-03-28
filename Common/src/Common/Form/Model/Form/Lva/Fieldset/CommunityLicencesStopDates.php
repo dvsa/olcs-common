@@ -28,7 +28,7 @@ class CommunityLicencesStopDates
      *      }
      * )
      */
-    public $startDate = null;
+    public $startDate;
 
     /**
      * @Form\Required(false)
@@ -51,5 +51,5 @@ class CommunityLicencesStopDates
      *      }
      * )
      */
-    public $endDate = null;
+    public $endDate;
 }

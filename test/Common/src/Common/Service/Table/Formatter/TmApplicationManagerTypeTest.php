@@ -23,8 +23,11 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class TmApplicationManagerTypeTest extends MockeryTestCase
 {
     protected $application;
+
     protected $urlHelper;
+
     protected $translator;
+
     protected $sut;
 
     protected function setUp(): void
@@ -46,7 +49,7 @@ class TmApplicationManagerTypeTest extends MockeryTestCase
      * @group tmApplicationManagerType
      * @dataProvider formatProvider
      */
-    public function testFormat($data, $message, $status, $expected)
+    public function testFormat($data, $message, $status, $expected): void
     {
         $routeParams = [
             'id' => 1,

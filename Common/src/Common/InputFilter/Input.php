@@ -12,6 +12,7 @@ class Input extends \Laminas\InputFilter\Input
      * @var mixed
      */
     protected $filteredValue;
+
     /**
      * @var bool
      */
@@ -26,14 +27,14 @@ class Input extends \Laminas\InputFilter\Input
             $this->filteredValue = $this->getFilterChain()->filter($this->value);
             $this->hasFiltered = true;
         }
+
         return $this->filteredValue;
     }
 
     /**
      * @param  mixed $value
-     * @return Input
      */
-    public function setValue($value)
+    public function setValue($value): void
     {
         $this->hasFiltered = false;
         $this->value = $value;

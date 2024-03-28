@@ -6,16 +6,12 @@ use Common\Form\Form;
 use Common\Service\Helper\FormHelperService;
 use LmcRbacMvc\Service\AuthorizationService;
 
-/**
- * Application People
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class ApplicationPeople extends AbstractPeople
 {
     protected $lva = 'application';
 
     protected FormHelperService $formHelper;
+
     protected AuthorizationService $authService;
 
     public function __construct(FormHelperService $formHelper, AuthorizationService $authService)
@@ -37,5 +33,7 @@ class ApplicationPeople extends AbstractPeople
         parent::alterForm($form, $params);
 
         $this->removeFormAction($form, 'cancel');
+
+        return $form;
     }
 }

@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Service\Cqrs\Command;
 
 /**
@@ -16,8 +17,6 @@ interface CommandSenderAwareInterface
 {
     /**
      * Set Command sender
-     *
-     * @param CommandSender $CommandSender
      */
     public function setCommandSender(CommandSender $CommandSender);
 

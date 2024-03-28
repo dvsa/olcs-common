@@ -17,6 +17,7 @@ use LmcRbacMvc\Service\AuthorizationService;
 abstract class AbstractLvaFormService
 {
     protected FormHelperService $formHelper;
+
     protected AuthorizationService $authService;
 
     protected $backToLinkMap = [

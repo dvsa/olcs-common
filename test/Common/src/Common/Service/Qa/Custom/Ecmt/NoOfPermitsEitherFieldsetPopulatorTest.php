@@ -23,7 +23,7 @@ class NoOfPermitsEitherFieldsetPopulatorTest extends MockeryTestCase
     /**
      * @dataProvider dpPopulate
      */
-    public function testPopulate($euro5Value, $euro6Value, $expectedRadioValue, $expectedTextboxValue)
+    public function testPopulate($euro5Value, $euro6Value, $expectedRadioValue, $expectedTextboxValue): void
     {
         $maxCanApplyFor = 30;
         $maxPermitted = 50;
@@ -41,8 +41,7 @@ class NoOfPermitsEitherFieldsetPopulatorTest extends MockeryTestCase
             '<p class="govuk-body"><strong>1. translated section 1 heading</strong></p>' .
             '<p class="govuk-body">translated section 1 blurb</p>';
 
-        $expectedSection2HeaderMarkup = '<p class="govuk-body govuk-!-margin-top-6">' .
-            '<strong>2. translated section 2 heading</strong></p>';
+        $expectedSection2HeaderMarkup = '<p class="govuk-body govuk-!-margin-top-6"><strong>2. translated section 2 heading</strong></p>';
 
         $options = [
             'maxCanApplyFor' => $maxCanApplyFor,

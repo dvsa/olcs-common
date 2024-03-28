@@ -16,6 +16,7 @@ class VehicleSelfserve extends InternalSearchAbstract
      * @var string
      */
     protected $title = 'Vehicle';
+
     /**
      * @var string
      */
@@ -58,7 +59,6 @@ class VehicleSelfserve extends InternalSearchAbstract
     public function getFilters()
     {
         if (empty($this->filters)) {
-
             $this->filters = [
                 new Filter\LicenceStatus(),
                 new Filter\LicenceType(),
@@ -79,8 +79,8 @@ class VehicleSelfserve extends InternalSearchAbstract
         return [
             [
                 'title' => 'Licence number',
-                'name'=> 'licNo',
-                'formatter' => fn($data) => '<a class="govuk-link" href="/view-details/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>'
+                'name' => 'licNo',
+                'formatter' => static fn($data) => '<a class="govuk-link" href="/view-details/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>'
             ],
             [
                 'title' => 'Licence status',
@@ -89,19 +89,19 @@ class VehicleSelfserve extends InternalSearchAbstract
             ],
             [
                 'title' => 'Operator name',
-                'name'=> 'orgName'
+                'name' => 'orgName'
             ],
-            ['title' => 'VRM', 'name'=> 'vrm'],
-            ['title' => 'Disc Number', 'name'=> 'discNo'],
+            ['title' => 'VRM', 'name' => 'vrm'],
+            ['title' => 'Disc Number', 'name' => 'discNo'],
             [
                 'title' => 'Specified date',
                 'formatter' => Date::class,
-                'name'=> 'specifiedDate'
+                'name' => 'specifiedDate'
             ],
             [
                 'title' => 'Removed date',
                 'formatter' => Date::class,
-                'name'=> 'removalDate'
+                'name' => 'removalDate'
             ],
         ];
     }

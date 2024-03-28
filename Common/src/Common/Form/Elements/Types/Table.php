@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Form\Elements\Types;
 
 use Laminas\Form\Element;
@@ -28,7 +29,7 @@ class Table extends Element
      *
      * @param object $table
      */
-    public function setTable($table, $fieldset = null)
+    public function setTable($table, $fieldset = null): void
     {
         $this->table = $table;
 

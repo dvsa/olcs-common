@@ -22,7 +22,7 @@ class NoOfPermitsEitherValidatorTest extends MockeryTestCase
         $selectedEmissionsCategory,
         $expectedIsValid,
         $expectedMessages
-    ) {
+    ): void {
         $context = [
             'emissionsCategory' => $selectedEmissionsCategory
         ];

@@ -19,6 +19,7 @@ use Mockery as m;
  */
 class AddressTest extends \PHPUnit\Framework\TestCase
 {
+    public $sut;
     protected $dataHelper;
 
     protected function setUp(): void
@@ -40,7 +41,7 @@ class AddressTest extends \PHPUnit\Framework\TestCase
      *
      * @dataProvider provider
      */
-    public function testFormat($data, $column, $expected)
+    public function testFormat($data, $column, $expected): void
     {
         $this->assertEquals($expected, $this->sut->format($data, $column));
     }
@@ -143,7 +144,7 @@ class AddressTest extends \PHPUnit\Framework\TestCase
      * @group Formatters
      * @group AddressFormatter
      */
-    public function testFormatWithNestedKeys()
+    public function testFormatWithNestedKeys(): void
     {
         $this->dataHelper->shouldReceive('fetchNestedData')
             ->with(['foo' => 'bar'], 'bar->baz')

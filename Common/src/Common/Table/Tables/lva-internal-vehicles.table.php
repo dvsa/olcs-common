@@ -34,7 +34,7 @@ return [
         ],
         'actionFormat' => Common\Service\Table\TableBuilder::ACTION_FORMAT_BUTTONS,
         'collapseAt' => 1,
-        'row-disabled-callback' => fn($row) => $row['removalDate'] !== null
+        'row-disabled-callback' => static fn($row) => $row['removalDate'] !== null
     ],
     'columns' => [
         [
@@ -71,9 +71,9 @@ return [
         ],
         [
             'title' => 'markup-table-th-remove', //this is a view partial from olcs-common
-            'ariaDescription' => fn($row) => $row['vehicle']['vrm'],
+            'ariaDescription' => static fn($row) => $row['vehicle']['vrm'],
             'type' => 'ActionLinks',
-            'isRemoveVisible' => fn($data) => empty($data['removalDate'])
+            'isRemoveVisible' => static fn($data) => empty($data['removalDate'])
         ],
         [
             'name' => 'action',

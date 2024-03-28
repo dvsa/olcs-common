@@ -15,8 +15,6 @@ class NoOfPermitsForm extends Form
 
     /**
      * Add a further error message if all fields are found to have a zero value
-     *
-     * @return array
      */
     public function getMessages(?string $elementName = null): array
     {
@@ -31,8 +29,6 @@ class NoOfPermitsForm extends Form
 
     /**
      * Check all NoOfPermits elements if the form is found to be otherwise valid
-     *
-     * @return bool
      */
     public function isValid(): bool
     {
@@ -86,8 +82,6 @@ class NoOfPermitsForm extends Form
     /**
      * Append the NoOfPermits elements from the specified fieldset and all child fieldsets to the provided array
      *
-     * @param array $noOfPermitsElements
-     * @param Fieldset $fieldset
      *
      * @return array
      */

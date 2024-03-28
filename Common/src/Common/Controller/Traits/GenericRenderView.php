@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Controller\Traits;
 
 use Laminas\View\Model\ViewModel;
@@ -76,7 +77,6 @@ trait GenericRenderView
     /**
      * Gets a view model with optional params
      *
-     * @param array $params
      * @return ViewModel
      */
     public function getView(array $params = null)

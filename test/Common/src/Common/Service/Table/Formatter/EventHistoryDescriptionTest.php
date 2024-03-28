@@ -23,8 +23,11 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class EventHistoryDescriptionTest extends MockeryTestCase
 {
     protected $urlHelper;
+
     protected $router;
+
     protected $request;
+
     protected $sut;
 
     protected function setUp(): void
@@ -51,7 +54,7 @@ class EventHistoryDescriptionTest extends MockeryTestCase
         $expectedUrlParams,
         $expectedUrl,
         $expectedOutput
-    ) {
+    ): void {
         $this->urlHelper
             ->shouldReceive('fromRoute')
             ->with($expectedRouteName, $expectedUrlParams, [], true)
@@ -218,7 +221,7 @@ class EventHistoryDescriptionTest extends MockeryTestCase
     /**
      * Test format with exception
      */
-    public function testFormatWithException()
+    public function testFormatWithException(): void
     {
         $this->expectException(\Exception::class);
 

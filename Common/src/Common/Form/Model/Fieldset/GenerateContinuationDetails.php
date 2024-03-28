@@ -20,7 +20,7 @@ class GenerateContinuationDetails
      * })
      * @Form\Type("Select")
      */
-    public $type = null;
+    public $type;
 
     /**
      * @Form\Attributes({"id":"generate-continuation-date","placeholder":""})
@@ -32,7 +32,7 @@ class GenerateContinuationDetails
      * })
      * @Form\Type("MonthSelect")
      */
-    public $date = null;
+    public $date;
 
     /**
      * @Form\Attributes({"id":"generate-continuation-trafficArea","placeholder":""})
@@ -43,5 +43,5 @@ class GenerateContinuationDetails
      * })
      * @Form\Type("DynamicSelect")
      */
-    public $trafficArea = null;
+    public $trafficArea;
 }

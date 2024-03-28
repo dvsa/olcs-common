@@ -20,8 +20,6 @@ class Venue extends AbstractDataService implements ListData
     /**
      * Create service instance
      *
-     * @param AbstractDataServiceServices $abstractDataServiceServices
-     * @param Licence $licenceDataService
      *
      * @return RefData
      */
@@ -85,7 +83,7 @@ class Venue extends AbstractDataService implements ListData
         if (is_null($this->getData('Venue'))) {
             $dtoData = VenueList::create(
                 [
-                    'trafficArea' => !empty($params['trafficArea']) ? $params['trafficArea'] : null
+                    'trafficArea' => empty($params['trafficArea']) ? null : $params['trafficArea']
                 ]
             );
 

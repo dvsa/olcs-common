@@ -20,14 +20,11 @@ use Laminas\Router\Http\TreeRouteStack;
 class CommunityLicenceStatus implements FormatterPluginManagerInterface
 {
     private UrlHelperService $urlHelper;
+
     private TreeRouteStack $router;
+
     private Request $request;
 
-    /**
-     * @param UrlHelperService $urlHelper
-     * @param TreeRouteStack   $router
-     * @param Request          $request
-     */
     public function __construct(UrlHelperService $urlHelper, TreeRouteStack $router, Request $request)
     {
         $this->urlHelper = $urlHelper;
@@ -60,16 +57,16 @@ class CommunityLicenceStatus implements FormatterPluginManagerInterface
         if ($futureSuspension && isset($futureSuspension['startDate']) && isset($futureSuspension['endDate'])) {
             return '<a class="govuk-link" href="' . $url . '">' .
                 'Suspension due: ' .
-                self::formatDate($futureSuspension['startDate']) .
+                $this->formatDate($futureSuspension['startDate']) .
                 ' to ' .
-                self::formatDate($futureSuspension['endDate']) .
+                $this->formatDate($futureSuspension['endDate']) .
                 '</a>';
         }
 
         if ($futureSuspension && isset($futureSuspension['startDate']) && !isset($futureSuspension['endDate'])) {
             return '<a class="govuk-link" href="' . $url . '">' .
                 'Suspension due: ' .
-                self::formatDate($futureSuspension['startDate']) .
+                $this->formatDate($futureSuspension['startDate']) .
                 '</a>';
         }
 
@@ -78,27 +75,27 @@ class CommunityLicenceStatus implements FormatterPluginManagerInterface
         if ($currentSuspension && isset($currentSuspension['startDate']) && isset($currentSuspension['endDate'])) {
             return '<a class="govuk-link" href="' . $url . '">' .
                 'Suspended: ' .
-                self::formatDate($currentSuspension['startDate']) .
+                $this->formatDate($currentSuspension['startDate']) .
                 ' to ' .
-                self::formatDate($currentSuspension['endDate']) .
+                $this->formatDate($currentSuspension['endDate']) .
                 '</a>';
         }
 
         if ($currentSuspension && isset($currentSuspension['startDate']) && !isset($currentSuspension['endDate'])) {
             return '<a class="govuk-link" href="' . $url . '">' .
                 'Suspended: ' .
-                self::formatDate($currentSuspension['startDate']) .
+                $this->formatDate($currentSuspension['startDate']) .
                 '</a>';
         }
 
         $currentWithdrawal = $data['currentWithdrawal'];
 
         if ($currentWithdrawal && isset($currentWithdrawal['startDate'])) {
-            return 'Withdrawn: ' . self::formatDate($currentWithdrawal['startDate']);
+            return 'Withdrawn: ' . $this->formatDate($currentWithdrawal['startDate']);
         }
 
         if (isset($data['expiredDate'])) {
-            return $data['status']['description'] . ': ' . self::formatDate($data['expiredDate']);
+            return $data['status']['description'] . ': ' . $this->formatDate($data['expiredDate']);
         }
 
         return $data['status']['description'];
@@ -111,7 +108,7 @@ class CommunityLicenceStatus implements FormatterPluginManagerInterface
      *
      * @return bool|string
      */
-    private static function formatDate($date)
+    private function formatDate($date)
     {
         return date('d/m/Y', strtotime($date));
     }

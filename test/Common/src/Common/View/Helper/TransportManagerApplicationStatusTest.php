@@ -15,13 +15,14 @@ class TransportManagerApplicationStatusTest extends MockeryTestCase
 {
     /** @var TransportManagerApplicationStatus */
     private $sut;
+
     /** @var  m\MockInterface */
     private $mockView;
 
     /**
      * Setup the view helper
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->mockView = m::mock(RendererInterface::class);
 
@@ -45,13 +46,13 @@ class TransportManagerApplicationStatusTest extends MockeryTestCase
     /**
      * @dataProvider dataProviderRender
      */
-    public function testInvoke($expectedClass, $status)
+    public function testInvoke($expectedClass, $status): void
     {
         $this->mockView
             ->shouldReceive('translate')
             ->once()
             ->andReturnUsing(
-                fn($desciption) => '_TRANSL_' . $desciption
+                static fn($desciption) => '_TRANSL_' . $desciption
             );
 
         static::assertEquals(
@@ -60,7 +61,7 @@ class TransportManagerApplicationStatusTest extends MockeryTestCase
         );
     }
 
-    public function testRenderDescEmpty()
+    public function testRenderDescEmpty(): void
     {
         $sut = new TransportManagerApplicationStatus();
 

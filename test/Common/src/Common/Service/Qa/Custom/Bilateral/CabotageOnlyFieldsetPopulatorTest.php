@@ -18,7 +18,7 @@ use Laminas\Form\Form;
  */
 class CabotageOnlyFieldsetPopulatorTest extends MockeryTestCase
 {
-    public function testPopulate()
+    public function testPopulate(): void
     {
         $cabotageOnlyNoBlurb = 'Cabotage only no blurb %s';
 

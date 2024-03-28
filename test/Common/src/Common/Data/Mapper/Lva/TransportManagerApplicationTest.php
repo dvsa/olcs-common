@@ -10,7 +10,7 @@ use Common\Data\Mapper\Lva\TransportManagerApplication;
 
 class TransportManagerApplicationTest extends MockeryTestCase
 {
-    public function testMapFromError()
+    public function testMapFromError(): void
     {
         $formMessages = [
             'data' => [
@@ -41,7 +41,7 @@ class TransportManagerApplicationTest extends MockeryTestCase
      *
      * @dataProvider transportManagerDataProvider
      */
-    public function testMapForSections($data)
+    public function testMapForSections($data): void
     {
         $translationHelper = m::mock(TranslationHelperService::class);
 
@@ -76,12 +76,12 @@ class TransportManagerApplicationTest extends MockeryTestCase
                     'hoursSun' => '__TEST__',
                     'otherLicences' => [
                     ],
-                    'additionalInformation'=>'__TEST__',
+                    'additionalInformation' => '__TEST__',
                     'hasUndertakenTraining' => 'N',
                     'transportManager' =>
                         [
-                            'otherLicences' =>[],
-                            'employments'=>[],
+                            'otherLicences' => [],
+                            'employments' => [],
                             'previousConvictions' => [],
                             'documents' => [],
                             'homeCd' => [

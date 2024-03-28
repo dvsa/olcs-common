@@ -15,12 +15,12 @@ class VehicleSearchTraitTest extends MockeryTestCase
     /** @var  VehicleSearchTraitStub | m\MockInterface */
     private $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = new VehicleSearchTraitStub();
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         m::close();
     }
@@ -28,8 +28,10 @@ class VehicleSearchTraitTest extends MockeryTestCase
     /**
      * @dataProvider dpTestAddRemovedVehiclesActions
      */
-    public function testAddRemovedVehiclesActions($filters, $actionParams)
+    public function testAddRemovedVehiclesActions($filters, $actionParams): void
     {
+        self::expectNotToPerformAssertions();
+
         /** @var TableBuilder | m\MockInterface $mockTbl */
         $mockTbl = m::mock(TableBuilder::class);
 

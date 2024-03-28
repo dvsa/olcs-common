@@ -22,6 +22,7 @@ class FileUploadCountV2 extends FileUploadCount
         if ($count >= $this->getMin()) {
             return true;
         }
+
         $this->error(self::TOO_FEW);
 
         return false;

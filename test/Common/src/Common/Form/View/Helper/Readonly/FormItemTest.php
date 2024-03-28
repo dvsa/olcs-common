@@ -10,7 +10,7 @@ use Common\Form\View\Helper\Readonly\FormItem;
  */
 class FormItemTest extends \PHPUnit\Framework\TestCase
 {
-    public function testInvokeSelf()
+    public function testInvokeSelf(): void
     {
         $sut = new FormItem();
 
@@ -20,7 +20,7 @@ class FormItemTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider dpTestRender
      */
-    public function testRender($element, $expect)
+    public function testRender($element, $expect): void
     {
         $sut = new FormItem();
         static::assertSame($expect, $sut->render($element));

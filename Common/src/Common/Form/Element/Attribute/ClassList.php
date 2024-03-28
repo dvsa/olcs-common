@@ -19,28 +19,30 @@ class ClassList
     /**
      * @param string|string[] $classes
      */
-    public function __construct($classes = [])
+    final public function __construct($classes = [])
     {
         $this->add($classes);
     }
 
     /**
      * @param string|string[] $classes
-     * @return bool
      */
     public function has($classes): bool
     {
         if ($classes instanceof ClassList) {
             $classes = $classes->toArray();
         }
+
         if (! is_array($classes)) {
             $classes = [$classes];
         }
+
         foreach ($classes as $class) {
             if (! array_key_exists($class, $this->items)) {
                 return false;
             }
         }
+
         return true;
     }
 
@@ -53,13 +55,16 @@ class ClassList
         if ($classes instanceof ClassList) {
             $classes = $classes->toArray();
         }
+
         if (! is_array($classes)) {
             $classes = [$classes];
         }
+
         foreach ($classes as $class) {
             assert(is_string($class));
             $this->items[$class] = null;
         }
+
         return $this;
     }
 
@@ -72,19 +77,19 @@ class ClassList
         if (is_string($classes)) {
             $classes = static::fromString($classes);
         }
+
         if ($classes instanceof ClassList) {
             $classes = $classes->toArray();
         }
+
         foreach ($classes as $class) {
             assert(is_string($class));
             unset($this->items[$class]);
         }
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function __toString(): string
     {
         return implode(' ', $this->toArray());
@@ -99,7 +104,6 @@ class ClassList
     }
 
     /**
-     * @param string $str
      * @return static
      */
     public static function fromString(string $str): self

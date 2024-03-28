@@ -14,10 +14,8 @@ use LmcRbacMvc\Service\AuthorizationService;
 class DeclarationControllerFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
-     * @return DeclarationController
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): DeclarationController
     {

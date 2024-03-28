@@ -15,6 +15,7 @@ class IrfoOrganisation extends InternalSearchAbstract
      * @var string
      */
     protected $title = 'IRFO';
+
     /**
      * @var string
      */

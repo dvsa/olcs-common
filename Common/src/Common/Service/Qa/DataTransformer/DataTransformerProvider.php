@@ -27,9 +27,8 @@ class DataTransformerProvider
      * Register a DataTransformerInterface instance against a slug
      *
      * @param string $slug
-     * @param DataTransformerInterface $dataTransformer
      */
-    public function registerTransformer($slug, DataTransformerInterface $dataTransformer)
+    public function registerTransformer($slug, DataTransformerInterface $dataTransformer): void
     {
         $this->dataTransformers[$slug] = $dataTransformer;
     }

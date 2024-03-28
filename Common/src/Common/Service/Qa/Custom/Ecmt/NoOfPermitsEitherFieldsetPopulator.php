@@ -23,9 +23,6 @@ class NoOfPermitsEitherFieldsetPopulator implements FieldsetPopulatorInterface
     /**
      * Create service instance
      *
-     * @param TranslationHelperService $translator
-     * @param NoOfPermitsBaseInsetTextGenerator $noOfPermitsBaseInsetTextGenerator
-     * @param HtmlAdder $htmlAdder
      *
      * @return NoOfPermitsEitherFieldsetPopulator
      */
@@ -43,11 +40,9 @@ class NoOfPermitsEitherFieldsetPopulator implements FieldsetPopulatorInterface
      * Populate the fieldset with elements based on the supplied options array
      *
      * @param mixed $form
-     * @param Fieldset $fieldset
-     * @param array $options
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function populate($form, Fieldset $fieldset, array $options)
+    public function populate($form, Fieldset $fieldset, array $options): void
     {
         $insetAndSection1Header = sprintf(
             '%s<p class="govuk-body"><strong>1. %s</strong></p><p class="govuk-body">%s</p>',

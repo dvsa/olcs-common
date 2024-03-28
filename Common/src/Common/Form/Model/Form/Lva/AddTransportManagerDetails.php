@@ -16,11 +16,11 @@ class AddTransportManagerDetails
      * @Form\Name("data")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\AddTransportManagerDetails")
      */
-    public $data = null;
+    public $data;
 
     /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\SendTmFormActions")
      */
-    public $formActions = null;
+    public $formActions;
 }

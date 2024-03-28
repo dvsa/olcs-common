@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Service\Qa\Custom\CertRoadworthiness;
 
 use Common\Service\Helper\TranslationHelperService;
@@ -11,16 +13,11 @@ use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Form\Fieldset;
 use Laminas\Form\Form;
-use Laminas\Form\InputFilterProviderFieldset;
 
-/**
- * MotExpiryDateFieldsetPopulatorTest
- *
- * @author Jonathan Thomas <jonathan@opalise.co.uk>
- */
 class MotExpiryDateFieldsetPopulatorTest extends MockeryTestCase
 {
     public const REQUESTED_DATE = '2020-03-15';
+
     public const DATE_MUST_BE_BEFORE = '2020-05-01';
 
     private $translator;
@@ -35,7 +32,7 @@ class MotExpiryDateFieldsetPopulatorTest extends MockeryTestCase
 
     private $motExpiryDateFieldsetPopulator;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->translator = m::mock(TranslationHelperService::class);
         $this->translator->shouldReceive('translate')
@@ -68,7 +65,8 @@ class MotExpiryDateFieldsetPopulatorTest extends MockeryTestCase
                 'dateMustBeBefore' => self::DATE_MUST_BE_BEFORE,
                 'invalidDateKey' => 'qanda.certificate-of-roadworthiness.mot-expiry-date.error.date-invalid',
                 'dateInPastKey' => 'qanda.certificate-of-roadworthiness.mot-expiry-date.error.date-in-past',
-                'dateNotBeforeKey' => 'qanda.certificate-of-roadworthiness.mot-expiry-date.error.date-too-far'
+                'dateNotBeforeKey' => 'qanda.certificate-of-roadworthiness.mot-expiry-date.error.date-too-far',
+                'create_empty_option' => true,
             ],
             'attributes' => [
                 'value' => self::REQUESTED_DATE
@@ -88,7 +86,7 @@ class MotExpiryDateFieldsetPopulatorTest extends MockeryTestCase
         );
     }
 
-    public function testPopulateEnableFileUploadsFalse()
+    public function testPopulateEnableFileUploadsFalse(): void
     {
         $options = [
             'enableFileUploads' => false,
@@ -103,7 +101,7 @@ class MotExpiryDateFieldsetPopulatorTest extends MockeryTestCase
         $this->motExpiryDateFieldsetPopulator->populate($this->form, $this->fieldset, $options);
     }
 
-    public function testPopulateEnableFileUploadsTrue()
+    public function testPopulateEnableFileUploadsTrue(): void
     {
         $this->translator->shouldReceive('translate')
             ->with('qanda.certificate-of-roadworthiness.mot-expiry-date.upload.legend')
@@ -112,7 +110,7 @@ class MotExpiryDateFieldsetPopulatorTest extends MockeryTestCase
             ->with('qanda.certificate-of-roadworthiness.mot-expiry-date.upload.hint')
             ->andReturn('You need to upload a scanned copy or clear photo of your latest MOT certificate.');
 
-        $fileUploadFieldset = m::mock(InputFilterProviderFieldset::class);
+        $fileUploadFieldset = m::mock(Fieldset::class);
 
         $this->fileUploadFieldsetGenerator->shouldReceive('generate')
             ->withNoArgs()

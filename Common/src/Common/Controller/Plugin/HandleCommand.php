@@ -27,7 +27,6 @@ class HandleCommand extends AbstractPlugin
 
     /**
      * @param CommandSender $commandService
-     * @param FlashMessengerHelperService $fm
      */
     public function __construct(CommandSender $sender, FlashMessengerHelperService $fm)
     {
@@ -36,14 +35,13 @@ class HandleCommand extends AbstractPlugin
     }
 
     /**
-     * @param CommandInterface $command
      * @return \Common\Service\Cqrs\Response
      */
     public function __invoke(CommandInterface $command)
     {
         try {
             return $this->commandSender->send($command);
-        } catch (ResourceConflictException $ex) {
+        } catch (ResourceConflictException $resourceConflictException) {
             $this->fm->addConflictError();
             throw new BailOutException('', $this->getController()->redirect()->refresh());
         }

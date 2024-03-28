@@ -9,7 +9,6 @@
 namespace Common\View\Helper;
 
 use Laminas\ServiceManager\Factory\FactoryInterface;
-
 use Laminas\View\Helper\AbstractHelper;
 use Common\Preference\Language;
 
@@ -31,8 +30,7 @@ class LanguageLink extends AbstractHelper
     {
         if ($this->languagePref->getPreference() === Language::OPTION_CY) {
             return '<a class="govuk-footer__link" href="?lang=en">English</a>';
-        } else {
-            return '<a class="govuk-footer__link" href="?lang=cy">Cymraeg</a>';
         }
+        return '<a class="govuk-footer__link" href="?lang=cy">Cymraeg</a>';
     }
 }

@@ -2,7 +2,7 @@
 
 namespace CommonTest\View\Helper;
 
-use \Common\View\Helper\CurrencyFormatter;
+use Common\View\Helper\CurrencyFormatter;
 
 /**
  * Test CurrencyFormatter view helper
@@ -11,10 +11,11 @@ use \Common\View\Helper\CurrencyFormatter;
  */
 class CurrencyFormatterTest extends \PHPUnit\Framework\TestCase
 {
+    public $viewHelper;
     /**
      * Setup the view helper
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->viewHelper = new CurrencyFormatter();
     }
@@ -23,7 +24,7 @@ class CurrencyFormatterTest extends \PHPUnit\Framework\TestCase
      * Test invoke
      * @dataProvider currencyDataProvider
      */
-    public function testInvokeDefaultFields($value, $expected)
+    public function testInvokeDefaultFields($value, $expected): void
     {
         $viewHelper = $this->viewHelper;
         $this->assertEquals($expected, $viewHelper($value));

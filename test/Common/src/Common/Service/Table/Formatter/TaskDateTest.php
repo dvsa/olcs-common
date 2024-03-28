@@ -21,7 +21,7 @@ class TaskDateTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider provider
      */
-    public function testFormat($data, $column, $expected)
+    public function testFormat($data, $column, $expected): void
     {
         $this->assertEquals($expected, (new TaskDate(new Date()))->format($data, $column));
     }

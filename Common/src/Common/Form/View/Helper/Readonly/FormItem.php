@@ -23,7 +23,7 @@ class FormItem extends AbstractHelper
      */
     public function __invoke(ElementInterface $element = null)
     {
-        if (!$element) {
+        if (!$element instanceof \Laminas\Form\ElementInterface) {
             return $this;
         }
 
@@ -34,12 +34,11 @@ class FormItem extends AbstractHelper
      * Render
      *
      * @param ElementInterface $element Element
-     *
-     * @return string
      */
     public function render(ElementInterface $element): string
     {
-        if ($element instanceof Elements\InputFilters\ActionButton
+        if (
+            $element instanceof Elements\InputFilters\ActionButton
             || $element instanceof Elements\Types\AttachFilesButton
             || $element instanceof \Laminas\Form\Element\Submit
             || $element instanceof \Laminas\Form\Element\Hidden

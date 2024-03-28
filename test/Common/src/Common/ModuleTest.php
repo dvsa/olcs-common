@@ -28,14 +28,17 @@ class ModuleTest extends MockeryTestCase
 
     /** @var  m\MockInterface */
     private $mockReq;
+
     /** @var  \Laminas\Mvc\MvcEvent | m\MockInterface */
     private $mockEvent;
+
     /** @var  ContainerInterface | m\MockInterface */
     private $mockSm;
+
     /** @var  m\MockInterface */
     private $mockApp;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = new Module();
 
@@ -52,7 +55,7 @@ class ModuleTest extends MockeryTestCase
             ->shouldReceive('getRequest')->andReturn($this->mockReq);
     }
 
-    public function testValidateCsrfTokenNotPost()
+    public function testValidateCsrfTokenNotPost(): void
     {
         $this->mockReq->shouldReceive('isPost')->andReturn(false);
 
@@ -61,7 +64,7 @@ class ModuleTest extends MockeryTestCase
         static::assertNull($this->sut->validateCsrfToken($this->mockEvent));
     }
 
-    public function testValidateCsrfTokenWitelisted()
+    public function testValidateCsrfTokenWitelisted(): void
     {
         $this->mockReq
             ->shouldReceive('isPost')->andReturn(true)
@@ -73,7 +76,7 @@ class ModuleTest extends MockeryTestCase
         static::assertNull($this->sut->validateCsrfToken($this->mockEvent));
     }
 
-    public function testValidateCsrfTokenEmptyPost()
+    public function testValidateCsrfTokenEmptyPost(): void
     {
         $this->mockReq->shouldReceive('isPost')->andReturn(false);
         $this->mockReq->shouldReceive('getPost->count')->never();
@@ -83,7 +86,7 @@ class ModuleTest extends MockeryTestCase
         static::assertNull($this->sut->validateCsrfToken($this->mockEvent));
     }
 
-    public function testValidateCsrfTokenValid()
+    public function testValidateCsrfTokenValid(): void
     {
         $validator = new Csrf(['name' => 'security']);
         $hash = $validator->getHash();
@@ -103,7 +106,7 @@ class ModuleTest extends MockeryTestCase
         static::assertNull($this->sut->validateCsrfToken($this->mockEvent));
     }
 
-    public function testValidateCsrfTokenNotValid()
+    public function testValidateCsrfTokenNotValid(): void
     {
         $mockFlashHlp = m::mock(\Common\Service\Helper\FlashMessengerHelperService::class);
         $mockFlashHlp->shouldReceive('addErrorMessage')->once()->with('csrf-message');

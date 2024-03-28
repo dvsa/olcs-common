@@ -79,7 +79,7 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
         $rowsInput = $form->getInputFilter()->get('table')->get('rows');
         $validatorChain = $rowsInput->getValidatorChain();
 
-        $validatorExists = array_reduce($validatorChain->getValidators(), fn($found, $item) => $found || $item['instance'] instanceof TableRequiredValidator, false);
+        $validatorExists = array_reduce($validatorChain->getValidators(), static fn($found, $item) => $found || $item['instance'] instanceof TableRequiredValidator, false);
 
         if (!$validatorExists) {
             $tableRequiredValidator = new TableRequiredValidator(['label' => 'record']);
@@ -95,11 +95,7 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
             return $form;
         }
 
-        if (isset($params['licence'])) {
-            $trafficArea = $params['licence']['trafficArea'];
-        } else {
-            $trafficArea = $params['trafficArea'];
-        }
+        $trafficArea = isset($params['licence']) ? $params['licence']['trafficArea'] : $params['trafficArea'];
 
         $trafficAreaId = $trafficArea ? $trafficArea['id'] : null;
 
@@ -181,6 +177,7 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
         if (isset($dataOptions['hint'])) {
             $dataOptions['hint'] .= isset($dataOptions['hint']) ? '.psv' : '';
         }
+
         $dataFieldset->setOptions($dataOptions);
 
         $removeFields = [
@@ -214,10 +211,6 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
 
     /**
      * Alter Form For Goods Licences
-     *
-     * @param Form $form
-     * @param array $params
-     * @return void
      */
     protected function alterFormForGoodsLicences(Form $form, array $params): void
     {
@@ -237,10 +230,7 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
     /**
      * Alter form for vehicle type
      *
-     * @param Form $form
-     * @param array $params
      *
-     * @return void
      */
     protected function alterFormForVehicleType(Form $form, array $params): void
     {
@@ -275,6 +265,7 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
                     // set max to the same as what LGV field is set to
                     $comLicBetweenValidator->setMax($lgvBetweenValidator->getMax());
                 }
+
                 break;
             case RefData::APP_VEHICLE_TYPE_HGV:
             case RefData::APP_VEHICLE_TYPE_PSV:
@@ -290,11 +281,8 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
 
     /**
      * Alter the table in accordance with lgv requirements
-     *
-     * @param TableBuilder $tableBuilder
-     * @param array $params
      */
-    private function alterTableForLgv(TableBuilder $tableBuilder, array $params)
+    private function alterTableForLgv(TableBuilder $tableBuilder, array $params): void
     {
         $isMixedWithLgv = ($params['vehicleType']['id'] === RefData::APP_VEHICLE_TYPE_MIXED) && ($params['totAuthLgvVehicles'] !== null);
 

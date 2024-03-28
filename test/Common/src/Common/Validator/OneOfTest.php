@@ -11,10 +11,8 @@ class OneOfTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test setOptions
-     *
-     * @return void
      */
-    public function testSetOptions()
+    public function testSetOptions(): void
     {
         $sut = new OneOf();
         $sut->setOptions(
@@ -37,10 +35,8 @@ class OneOfTest extends \PHPUnit\Framework\TestCase
      * @param bool  $expected expected result
      * @param array $options  options
      * @param array $context  context
-     *
-     * @return void
      */
-    public function testIsValid($expected, $options, $context)
+    public function testIsValid($expected, $options, $context): void
     {
         $sut = new OneOf();
         $sut->setOptions($options);
@@ -55,13 +51,13 @@ class OneOfTest extends \PHPUnit\Framework\TestCase
     public function provideIsValid()
     {
         return [
-            [true, ['fields' => ['test1', 'test2']], ['test1'=>'notempty']],
-            [true, ['fields' => ['test1', 'test2']], ['test2'=>'notempty']],
-            [true, ['fields' => ['test1', 'test2']], ['test1'=>'notempty', 'test2'=>'notempty']],
-            [false, ['fields' => ['test1', 'test2']], ['test1'=>'', 'test2'=>'']],
+            [true, ['fields' => ['test1', 'test2']], ['test1' => 'notempty']],
+            [true, ['fields' => ['test1', 'test2']], ['test2' => 'notempty']],
+            [true, ['fields' => ['test1', 'test2']], ['test1' => 'notempty', 'test2' => 'notempty']],
+            [false, ['fields' => ['test1', 'test2']], ['test1' => '', 'test2' => '']],
             [false, ['fields' => ['test1', 'test2'], 'allowZero' => true], []],
-            [true, ['fields' => ['test1', 'test2'], 'allowZero' => true], ['test1'=>'0']],
-            [false, ['fields' => ['test1', 'test2'], 'allowZero' => false], ['test1'=>'0']],
+            [true, ['fields' => ['test1', 'test2'], 'allowZero' => true], ['test1' => '0']],
+            [false, ['fields' => ['test1', 'test2'], 'allowZero' => false], ['test1' => '0']],
         ];
     }
 }

@@ -17,20 +17,12 @@ class FeaturesEnabled extends AbstractPlugin
      */
     private $querySender;
 
-    /**
-     * @param QuerySender $sender
-     */
     public function __construct(QuerySender $sender)
     {
         $this->querySender = $sender;
     }
 
-    /**
-     * @param array    $toggleConfig
-     * @param MvcEvent $e
-     *
-     * @return bool
-     */
+
     public function __invoke(array $toggleConfig, MvcEvent $e): bool
     {
         $action = strtolower($e->getRouteMatch()->getParam('action'));

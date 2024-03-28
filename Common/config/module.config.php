@@ -150,7 +150,6 @@ return [
     'service_manager' => [
         'shared' => [
             'Helper\FileUpload' => false,
-            'CantIncreaseValidator' => false,
             // Create a new request each time
             'CqrsRequest' => false
         ],
@@ -209,7 +208,6 @@ return [
         'invokables' => [
             \Common\Service\NavigationFactory::class => \Common\Service\NavigationFactory::class,
             'SectionConfig' => \Common\Service\Data\SectionConfig::class,
-            'CantIncreaseValidator' => \Common\Form\Elements\Validators\CantIncreaseValidator::class,
             \Common\Filesystem\Filesystem::class => \Common\Filesystem\Filesystem::class,
             'VehicleList' => '\Common\Service\VehicleList\VehicleList',
             'postcode' => 'Common\Service\Postcode\Postcode',
@@ -236,8 +234,6 @@ return [
                 QaService\Custom\Ecmt\AnnualTripsAbroadIsValidHandler::class,
             'QaBilateralYesNoValueOptionsGenerator' =>
                 QaService\Custom\Bilateral\YesNoValueOptionsGenerator::class,
-            'QaBilateralCabotageOnlyYesNoRadioFactory' =>
-                QaService\Custom\Bilateral\CabotageOnlyYesNoRadioFactory::class,
             'QaBilateralStandardAndCabotageYesNoRadioFactory' =>
                 QaService\Custom\Bilateral\StandardAndCabotageYesNoRadioFactory::class,
             'QaBilateralRadioFactory' =>
@@ -338,7 +334,6 @@ return [
             \Common\Rbac\Service\Permission::class => \Common\Rbac\Service\PermissionFactory::class,
             \Common\Service\Data\Search\SearchTypeManager::class =>
                 \Common\Service\Data\Search\SearchTypeManagerFactory::class,
-            \Common\Rbac\PidIdentityProvider::class => \Common\Rbac\PidIdentityProviderFactory::class,
             \Common\Rbac\JWTIdentityProvider::class => \Common\Rbac\JWTIdentityProviderFactory::class,
             \Common\Service\AntiVirus\Scan::class => \Common\Service\AntiVirus\Scan::class,
             'QaCommonWarningAdder' => QaService\Custom\Common\WarningAdderFactory::class,
@@ -456,7 +451,7 @@ return [
             \Common\Controller\Lva\Adapters\VariationTransportManagerAdapter::class => \Common\Controller\Lva\Factories\Adapter\VariationTransportManagerAdapterFactory::class,
             LicenceConditionsUndertakingsReviewService::class => Common\Service\Review\LicenceConditionsUndertakingsReviewServiceFactory::class,
             'MvcTranslator' => \Laminas\I18n\Translator\TranslatorServiceFactory::class,
-            FormatterPluginManager::class => function ($container) {
+            FormatterPluginManager::class => static function ($container) {
                 $config = $container->get('config');
                 $formatterConfig = $config['formatter_plugins'] ?? [];
                 return new FormatterPluginManager($container, $formatterConfig);

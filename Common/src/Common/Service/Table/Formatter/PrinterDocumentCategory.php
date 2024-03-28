@@ -19,13 +19,11 @@ class PrinterDocumentCategory implements FormatterPluginManagerInterface
 {
     private UrlHelperService $urlHelper;
 
-    /**
-     * @param UrlHelperService $urlHelper
-     */
     public function __construct(UrlHelperService $urlHelper)
     {
         $this->urlHelper = $urlHelper;
     }
+
     /**
      * @param array $data
      * @param array $column

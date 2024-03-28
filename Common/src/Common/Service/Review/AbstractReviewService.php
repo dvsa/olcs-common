@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Service\Review;
 
 use Common\RefData;
@@ -23,12 +24,12 @@ abstract class AbstractReviewService implements ReviewServiceInterface
 {
     /** @var TranslationHelperService */
     protected $translationHelper;
+
     private Address $addressFormatter;
 
     /**
      * Create service instance
      *
-     * @param AbstractReviewServiceServices $abstractReviewServiceServices
      *
      * @return AbstractReviewService
      */
@@ -48,9 +49,13 @@ abstract class AbstractReviewService implements ReviewServiceInterface
         $foundFiles = [];
 
         foreach ($files as $file) {
-            if ($file['category']['id'] == $category && $file['subCategory']['id'] == $subCategory) {
-                $foundFiles[] = $file;
+            if ($file['category']['id'] != $category) {
+                continue;
             }
+            if ($file['subCategory']['id'] != $subCategory) {
+                continue;
+            }
+            $foundFiles[] = $file;
         }
 
         return $foundFiles;

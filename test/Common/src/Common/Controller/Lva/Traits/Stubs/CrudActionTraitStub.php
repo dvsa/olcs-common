@@ -16,7 +16,9 @@ class CrudActionTraitStub extends AbstractActionController
     use CrudActionTrait;
 
     public $baseRoute;
+
     public $lva;
+
     public $flashMessengerHelper;
 
     public function __construct(FlashMessengerHelperService $flashMessengerHelper)

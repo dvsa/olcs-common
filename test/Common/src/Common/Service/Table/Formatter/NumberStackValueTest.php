@@ -12,6 +12,7 @@ use Mockery as m;
 class NumberStackValueTest extends \PHPUnit\Framework\TestCase
 {
     protected $stackHelper;
+
     protected $sut;
 
     protected function setUp(): void
@@ -24,7 +25,8 @@ class NumberStackValueTest extends \PHPUnit\Framework\TestCase
     {
         m::close();
     }
-    public function testFormatWithoutStack()
+
+    public function testFormatWithoutStack(): void
     {
         $this->expectException('\InvalidArgumentException');
         $data = [];
@@ -33,7 +35,7 @@ class NumberStackValueTest extends \PHPUnit\Framework\TestCase
         $this->sut->format($data, $column);
     }
 
-    public function testWithThousandFormatter()
+    public function testWithThousandFormatter(): void
     {
         $data = [
             'foo' => [

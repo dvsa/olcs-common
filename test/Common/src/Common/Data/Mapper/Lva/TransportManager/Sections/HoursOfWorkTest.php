@@ -1,6 +1,5 @@
 <?php
 
-
 namespace CommonTest\Data\Mapper\Lva\TransportManager\Sections;
 
 use Common\Data\Mapper\Lva\TransportManager\Sections\HoursOfWork;
@@ -10,17 +9,17 @@ use Mockery as m;
 
 class HoursOfWorkTest extends MockeryTestCase
 {
-
     private $sut;
+
     private $mockTranslator;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->mockTranslator = m::mock(TranslationHelperService::class);
         $this->sut = new HoursOfWork($this->mockTranslator);
     }
 
-    public function testPopulateObject()
+    public function testPopulateObject(): void
     {
 
         $actual = $this->sut->populate(

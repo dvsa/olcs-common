@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace CommonTest\Service\Helper;
 
 use Laminas\View\Helper\Placeholder;
@@ -24,14 +25,14 @@ class GuidanceHelperServiceTest extends MockeryTestCase
     /** @var Placeholder */
     private $placeholder;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->placeholder = m::mock(Placeholder::class);
 
         $this->sut = new GuidanceHelperService($this->placeholder);
     }
 
-    public function testAppend()
+    public function testAppend(): void
     {
         $message = 'foo';
 

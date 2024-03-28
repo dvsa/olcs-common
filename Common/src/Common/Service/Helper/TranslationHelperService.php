@@ -1,31 +1,13 @@
 <?php
 
-/**
- * Translation Helper Service
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Service\Helper;
 
 use Laminas\I18n\Translator\TranslatorInterface;
 
-/**
- * Translation Helper Service
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class TranslationHelperService
 {
-    /** @var TranslatorInterface */
-    protected $translator;
+    protected TranslatorInterface $translator;
 
-    /**
-     * Create service instance
-     *
-     * @param TranslatorInterface $translator
-     *
-     * @return TranslationHelperService
-     */
     public function __construct(
         TranslatorInterface $translator
     ) {
@@ -36,7 +18,6 @@ class TranslationHelperService
      * Allows you to replace variables after the string is translated
      *
      * @param string $translationKey
-     * @param array  $arguments
      * @param string $translateToWelsh 'Y' or 'N', Force the translation into welsh
      * @return string
      */
@@ -51,6 +32,8 @@ class TranslationHelperService
      * @param string $format
      * @param array $messages
      * @return string
+     *
+     * @psalm-suppress NoValue
      */
     public function formatTranslation($format, $messages)
     {

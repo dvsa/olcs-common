@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace CommonTest\Controller\Traits;
 
 /**
@@ -33,7 +34,7 @@ class GenericSectionIndexActionTest extends \PHPUnit\Framework\TestCase
      * @group controller_traits
      * @group generic_section_controller_traits
      */
-    public function testIndexAction()
+    public function testIndexAction(): void
     {
         $this->sut->expects($this->once())
             ->method('goToFirstSubSection');

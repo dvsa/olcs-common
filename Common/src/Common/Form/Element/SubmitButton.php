@@ -11,10 +11,6 @@ namespace Common\Form\Element;
  */
 class SubmitButton extends Button
 {
-    /**
-     * @param string $name
-     * @param string $label
-     */
     public function __construct(string $name, string $label)
     {
         parent::__construct($name, $label);

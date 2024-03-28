@@ -11,20 +11,16 @@ class FieldsetModifier
 
     /**
      * Add an implementation of FieldsetModifierInterface to be evaluated against each fieldset
-     *
-     * @param FieldsetModifierInterface $fieldsetModifier
      */
-    public function registerModifier(FieldsetModifierInterface $fieldsetModifier)
+    public function registerModifier(FieldsetModifierInterface $fieldsetModifier): void
     {
         $this->fieldsetModifiers[] = $fieldsetModifier;
     }
 
     /**
      * Apply all registered fieldset modifiers to the specified fieldset
-     *
-     * @param Fieldset $fieldset
      */
-    public function modify(Fieldset $fieldset)
+    public function modify(Fieldset $fieldset): void
     {
         foreach ($this->fieldsetModifiers as $fieldsetModifier) {
             if ($fieldsetModifier->shouldModify($fieldset)) {

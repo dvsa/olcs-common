@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace CommonTest\Service\Helper;
 
 use Common\Service\Helper\UrlHelperService;
@@ -50,7 +51,7 @@ class UrlHelperServiceTest extends MockeryTestCase
      * @group helper_service
      * @group url_helper_service
      */
-    public function testFromRoute()
+    public function testFromRoute(): void
     {
         $route = 'foo/bar';
         $params = ['foo' => 'bar'];
@@ -70,7 +71,7 @@ class UrlHelperServiceTest extends MockeryTestCase
      * @group helper_service
      * @group url_helper_service
      */
-    public function testFromRouteWithDefaults()
+    public function testFromRouteWithDefaults(): void
     {
         $route = 'foo/bar';
         $builtUrl = 'some/url';
@@ -83,7 +84,7 @@ class UrlHelperServiceTest extends MockeryTestCase
         $this->assertEquals($builtUrl, $this->sut->fromRoute($route));
     }
 
-    public function testFromRouteWithHostWithNoMatchingKey()
+    public function testFromRouteWithHostWithNoMatchingKey(): void
     {
         $config = [
             'hostnames' => []
@@ -93,15 +94,15 @@ class UrlHelperServiceTest extends MockeryTestCase
 
         try {
             $this->sut->fromRouteWithHost('foo');
-        } catch (\RuntimeException $e) {
-            $this->assertEquals("Hostname for 'foo' not found", $e->getMessage());
+        } catch (\RuntimeException $runtimeException) {
+            $this->assertEquals("Hostname for 'foo' not found", $runtimeException->getMessage());
             return;
         }
 
         $this->fail('Expected exception not raised');
     }
 
-    public function testFromRouteWithHostWithAndMatchingKey()
+    public function testFromRouteWithHostWithAndMatchingKey(): void
     {
         $urlMock = function ($route, $params, $options) {
             $this->assertEquals('a_route', $route);

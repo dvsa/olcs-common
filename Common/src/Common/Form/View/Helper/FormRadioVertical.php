@@ -31,7 +31,6 @@ class FormRadioVertical extends \Common\Form\View\Helper\Extended\FormCollection
 
     /**
      * @param mixed $element
-     * @return Fieldset
      */
     protected function wrapInFieldSet($element): Fieldset
     {
@@ -41,14 +40,10 @@ class FormRadioVertical extends \Common\Form\View\Helper\Extended\FormCollection
             $fieldset->add($element);
             $fieldset->setOption('radio-element', $element->getName());
         }
+
         return $fieldset;
     }
 
-    /**
-     * @param Fieldset $parentFieldset
-     * @param MultiCheckbox $element
-     * @return array
-     */
     protected function parseElementValueOptions(Fieldset $parentFieldset, MultiCheckbox $element): array
     {
         $valueOptions = [];
@@ -66,6 +61,7 @@ class FormRadioVertical extends \Common\Form\View\Helper\Extended\FormCollection
 
             $valueOptions[$key] = $valueOption;
         }
+
         return $valueOptions;
     }
 }

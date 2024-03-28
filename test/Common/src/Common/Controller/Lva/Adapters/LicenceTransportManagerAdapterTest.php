@@ -18,12 +18,16 @@ class LicenceTransportManagerAdapterTest extends MockeryTestCase
 {
     /** @var LicenceTransportManagerAdapter */
     protected $sut;
+
     /** @var  ContainerInterface|\Mockery\MockInterface */
     protected $container;
+
     /** @var TransferAnnotationBuilder $mockAnnotationBuilder */
     protected $mockAnnotationBuilder;
+
     /** @var CachingQueryService $mockQuerySrv */
     protected $mockQuerySrv;
+
     /** @var CommandService $mockCommandSrv */
     protected $mockCommandSrv;
 
@@ -42,7 +46,7 @@ class LicenceTransportManagerAdapterTest extends MockeryTestCase
         );
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $responseIsOk = true;
         $httpResponse = m::mock(HttpResponse::class);

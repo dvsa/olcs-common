@@ -17,7 +17,7 @@ class FormRadioTest extends MockeryTestCase
     /**
      * @dataProvider renderOptionsProvider
      */
-    public function testRenderOptions($options, $selectedOptions, $attributes, $globalAttributes, $labelPosition, $expected)
+    public function testRenderOptions($options, $selectedOptions, $attributes, $globalAttributes, $labelPosition, $expected): void
     {
         $_SERVER['REQUEST_URI'] = '/test/uri';
         $idGenerator = null;
@@ -25,16 +25,19 @@ class FormRadioTest extends MockeryTestCase
             $idGenerator = m::mock(UniqidGenerator::class);
             $idGenerator->shouldReceive('generateId')->once()->andReturn('generated_id');
         }
+
         $sut = new FormRadioStub($idGenerator);
         $translator = m::mock(TranslatorInterface::class);
-        $translator->shouldReceive('translate')->andReturnUsing(fn($string, $domain) => $domain.'-translated-'.$string);
+        $translator->shouldReceive('translate')->andReturnUsing(static fn($string, $domain) => $domain . '-translated-' . $string);
         $sut->setTranslator($translator);
         if (!is_null($globalAttributes)) {
             $sut->setLabelAttributes($globalAttributes);
         }
+
         if (!is_null($labelPosition)) {
             $sut->setLabelPosition($labelPosition);
         }
+
         $renderer = m::mock(\Laminas\View\Renderer\RendererInterface::class);
         $formCollection = m::mock(FormCollection::class);
         $formCollection->shouldReceive('setReadOnly');
@@ -136,7 +139,7 @@ class FormRadioTest extends MockeryTestCase
                 ],
                 'globalAttributes' => [],
                 'labelPosition' => null,
-                'expected' => '<div class="govuk-radios"><div class="govuk-radios__item"><input class="input_class govuk-radios__input" value="B" checked="1" id="generated_id"><label class="label_class govuk-label govuk-radios__label" for="generated_id">default-translated-bbb</label><div class="hint_class govuk-hint govuk-radios__hint">default-translated-hint_text</div></div></div>'
+                'expected' => '<div class="govuk-radios"><div class="govuk-radios__item"><input class="input_class govuk-radios__input" value="B" checked="checked" id="generated_id"><label class="label_class govuk-label govuk-radios__label" for="generated_id">default-translated-bbb</label><div class="hint_class govuk-hint govuk-radios__hint">default-translated-hint_text</div></div></div>'
             ],
         ];
     }

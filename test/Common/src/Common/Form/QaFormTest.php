@@ -16,7 +16,7 @@ use Laminas\Form\Fieldset;
  */
 class QaFormTest extends MockeryTestCase
 {
-    public function testSetData()
+    public function testSetData(): void
     {
         $unprocessedData = [
             'unprocessedKey1' => 'unprocessedValue1',
@@ -42,7 +42,7 @@ class QaFormTest extends MockeryTestCase
         $qaForm->setData($unprocessedData);
     }
 
-    public function testSetDataForRedisplayWithHandler()
+    public function testSetDataForRedisplayWithHandler(): void
     {
         $formControlType = 'form_control_type';
 
@@ -75,7 +75,7 @@ class QaFormTest extends MockeryTestCase
         $qaForm->setDataForRedisplay($data);
     }
 
-    public function testSetDataForRedisplayWithoutHandler()
+    public function testSetDataForRedisplayWithoutHandler(): void
     {
         $formControlType = 'form_control_type';
 
@@ -99,7 +99,7 @@ class QaFormTest extends MockeryTestCase
         $qaForm->setDataForRedisplay($data);
     }
 
-    public function testIsValidParentReturnsFalse()
+    public function testIsValidParentReturnsFalse(): void
     {
         $qaForm = m::mock(QaForm::class)->makePartial()
             ->shouldAllowMockingProtectedMethods();
@@ -112,7 +112,7 @@ class QaFormTest extends MockeryTestCase
     /**
      * @dataProvider dpIsValidParentReturnsTrueWithHandler
      */
-    public function testIsValidParentReturnsTrueWithHandler($isValidHandlerResponse)
+    public function testIsValidParentReturnsTrueWithHandler($isValidHandlerResponse): void
     {
         $formControlType = 'form_control_type';
 
@@ -148,7 +148,7 @@ class QaFormTest extends MockeryTestCase
         ];
     }
 
-    public function testIsValidParentReturnsTrueWithoutHandler()
+    public function testIsValidParentReturnsTrueWithoutHandler(): void
     {
         $formControlType = 'form_control_type';
 
@@ -166,7 +166,7 @@ class QaFormTest extends MockeryTestCase
         $this->assertTrue($qaForm->isValid());
     }
 
-    public function testIsValidParentReturnsTrueValidationPreventedWithoutHandler()
+    public function testIsValidParentReturnsTrueValidationPreventedWithoutHandler(): void
     {
         $formControlType = 'form_control_type';
 
@@ -185,7 +185,7 @@ class QaFormTest extends MockeryTestCase
         $this->assertFalse($qaForm->isValid());
     }
 
-    public function testSetGetApplicationStep()
+    public function testSetGetApplicationStep(): void
     {
         $applicationStep = [
             'prop1' => 'value1',
@@ -201,7 +201,7 @@ class QaFormTest extends MockeryTestCase
         );
     }
 
-    public function testGetQuestionFieldsetData()
+    public function testGetQuestionFieldsetData(): void
     {
         $fieldset87Data = [
             'qaElement' => 'qaElementValue',
@@ -240,7 +240,7 @@ class QaFormTest extends MockeryTestCase
         );
     }
 
-    public function testGetQuestionFieldset()
+    public function testGetQuestionFieldset(): void
     {
         $qaForm = new QaForm();
 

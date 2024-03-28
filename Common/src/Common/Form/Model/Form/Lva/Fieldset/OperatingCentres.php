@@ -13,7 +13,7 @@ class OperatingCentres
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\OperatingCentresTotAuthHgvVehicles")
@@ -23,7 +23,7 @@ class OperatingCentres
      *     "hint-position": "below"
      * })
      */
-    public $totAuthHgvVehiclesFieldset = null;
+    public $totAuthHgvVehiclesFieldset;
 
     /**
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\OperatingCentresTotAuthLgvVehicles")
@@ -31,7 +31,7 @@ class OperatingCentres
      *     "label": "application_operating-centres_authorisation.data.totAuthLgvVehiclesFieldset.label"
      * })
      */
-    public $totAuthLgvVehiclesFieldset = null;
+    public $totAuthLgvVehiclesFieldset;
 
     /**
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\OperatingCentresTotAuthTrailers")
@@ -39,7 +39,7 @@ class OperatingCentres
      *     "label": "application_operating-centres_authorisation.data.totAuthTrailersFieldset.label"
      * })
      */
-    public $totAuthTrailersFieldset = null;
+    public $totAuthTrailersFieldset;
 
     /**
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\OperatingCentresTotCommunityLicences")
@@ -47,5 +47,5 @@ class OperatingCentres
      *     "label": "application_operating-centres_authorisation.data.totCommunityLicencesFieldset.label"
      * })
      */
-    public $totCommunityLicencesFieldset = null;
+    public $totCommunityLicencesFieldset;
 }

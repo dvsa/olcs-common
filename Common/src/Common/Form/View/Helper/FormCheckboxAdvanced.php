@@ -19,7 +19,6 @@ class FormCheckboxAdvanced extends \Common\Form\View\Helper\Extended\FormCollect
      */
     public function render(ElementInterface $element): string
     {
-        /** @var PhpRenderer $v */
         $view = $this->view;
         return $view->partial(
             'partials/form/checkbox-advanced',

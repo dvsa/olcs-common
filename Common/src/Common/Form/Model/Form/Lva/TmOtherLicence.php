@@ -16,11 +16,11 @@ class TmOtherLicence
      * @Form\Name("data")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\TmOtherLicenceDetails")
      */
-    public $data = null;
+    public $data;
 
     /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormCrudActions")
      */
-    public $formActions = null;
+    public $formActions;
 }

@@ -17,7 +17,7 @@ class OcComplaintsTest extends TestCase
     /**
      * @dataProvider dpFormatDataProvider
      */
-    public function testFormat($data, $complaints)
+    public function testFormat($data, $complaints): void
     {
         $this->assertEquals((new OcComplaints())->format($data), $complaints);
     }

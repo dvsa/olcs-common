@@ -13,6 +13,7 @@ use LmcRbacMvc\Service\AuthorizationService;
 class VariationConditionsUndertakings extends AbstractConditionsUndertakings
 {
     protected FormHelperService $formHelper;
+
     protected AuthorizationService $authService;
 
     public function __construct(FormHelperService $formHelper, AuthorizationService $authService)
@@ -20,6 +21,7 @@ class VariationConditionsUndertakings extends AbstractConditionsUndertakings
         $this->formHelper = $formHelper;
         $this->authService = $authService;
     }
+
     protected function alterForm($form)
     {
         parent::alterForm($form);

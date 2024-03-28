@@ -31,7 +31,7 @@ class SearchTest extends MockeryTestCase
     /** @var Search */
     private $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->tableService = m::mock(TableFactory::class);
         $this->viewHelperManager = m::mock(ViewHelperManager::class);
@@ -47,7 +47,7 @@ class SearchTest extends MockeryTestCase
     /**
      * @dataProvider provideGetLimit
      */
-    public function testGetLimit($query, $expected)
+    public function testGetLimit($query, $expected): void
     {
         $this->sut->setQuery($query);
 
@@ -69,7 +69,7 @@ class SearchTest extends MockeryTestCase
     /**
      * @dataProvider provideGetPage
      */
-    public function testGetPage($query, $expected)
+    public function testGetPage($query, $expected): void
     {
         $this->sut->setQuery($query);
 
@@ -88,7 +88,7 @@ class SearchTest extends MockeryTestCase
         ];
     }
 
-    public function testFetchResultsTable()
+    public function testFetchResultsTable(): void
     {
         $this->searchTypeManager->shouldReceive('get')->with('application')->andReturn(new SearchType());
 
@@ -104,7 +104,7 @@ class SearchTest extends MockeryTestCase
         $this->assertEquals('table', $this->sut->fetchResultsTable());
     }
 
-    public function testFetchResultsTableNoResults()
+    public function testFetchResultsTableNoResults(): void
     {
         $this->searchTypeManager->shouldReceive('get')->with('application')->andReturn(new SearchType());
 
@@ -120,7 +120,7 @@ class SearchTest extends MockeryTestCase
         $this->assertEquals('table', $this->sut->fetchResultsTable());
     }
 
-    public function testFetchResults()
+    public function testFetchResults(): void
     {
         $index = 'INDEX_NAME';
 
@@ -154,7 +154,7 @@ class SearchTest extends MockeryTestCase
         $this->sut->fetchResults();
     }
 
-    public function testFetchResultsNoSortOrder()
+    public function testFetchResultsNoSortOrder(): void
     {
         $index = 'INDEX_NAME';
 

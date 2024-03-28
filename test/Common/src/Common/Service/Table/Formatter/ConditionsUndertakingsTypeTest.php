@@ -14,6 +14,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
  */
 class ConditionsUndertakingsTypeTest extends TestCase
 {
+    public $sut;
     protected $translator;
 
     protected function setUp(): void
@@ -26,7 +27,8 @@ class ConditionsUndertakingsTypeTest extends TestCase
     {
         m::close();
     }
-    public function testFormatNoS4()
+
+    public function testFormatNoS4(): void
     {
         $data = [
             'conditionType' => [
@@ -39,7 +41,7 @@ class ConditionsUndertakingsTypeTest extends TestCase
         $this->assertSame('DESCRIPTION', $this->sut->format($data, $column));
     }
 
-    public function testFormatWithS4()
+    public function testFormatWithS4(): void
     {
         $data = [
             'conditionType' => [

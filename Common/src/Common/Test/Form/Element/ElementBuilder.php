@@ -6,7 +6,7 @@ namespace Common\Test\Form\Element;
 
 use Laminas\Form\Element;
 
-class ElementBuilder
+final class ElementBuilder
 {
     /**
      * @var string|null
@@ -31,10 +31,6 @@ class ElementBuilder
         return new static();
     }
 
-    /**
-     * @param string $label
-     * @return self
-     */
     public function withLabel(string $label): self
     {
         $instance = $this->clone();
@@ -43,7 +39,6 @@ class ElementBuilder
     }
 
     /**
-     * @param string $label
      * @return $this
      */
     public function withShortLabel(string $label): self
@@ -54,7 +49,6 @@ class ElementBuilder
     }
 
     /**
-     * @param string $type
      * @return $this
      */
     public function withType(string $type): self
@@ -64,9 +58,6 @@ class ElementBuilder
         return $instance;
     }
 
-    /**
-     * @return self
-     */
     protected function clone(): self
     {
         $instance = new static();
@@ -75,9 +66,6 @@ class ElementBuilder
         return $instance;
     }
 
-    /**
-     * @return Element
-     */
     public function build(): Element
     {
         $element = new Element();

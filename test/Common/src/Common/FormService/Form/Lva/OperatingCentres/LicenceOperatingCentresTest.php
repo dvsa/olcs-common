@@ -1,16 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Common\FormService\Form\Lva\OperatingCentres;
 
 use Common\Form\Elements\Types\Table;
+use Common\Form\Elements\Validators\TableRequiredValidator;
 use Common\Form\Form;
+use Common\FormService\Form\Lva\Licence;
 use Common\FormService\Form\Lva\OperatingCentres\LicenceOperatingCentres;
-use Common\FormService\Form\Lva\OperatingCentres\VariationOperatingCentres;
 use Common\FormService\FormServiceManager;
 use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Table\TableBuilder;
 use Common\Service\Table\TableFactory;
 use Laminas\Form\ElementInterface;
+use Laminas\InputFilter\Input;
+use Laminas\InputFilter\InputFilter;
+use Laminas\Validator\ValidatorChain;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Form\Element;
@@ -19,17 +25,20 @@ use Common\Service\Helper\FormHelperService;
 use Common\RefData;
 use LmcRbacMvc\Service\AuthorizationService;
 
-/**
- * Variation Operating Centres Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class LicenceOperatingCentresTest extends MockeryTestCase
 {
+    /**
+     * @var \Mockery\LegacyMockInterface
+     */
+    public $authService;
+    public $validatorChain;
+    public $rowsInput;
+    public $tableElement;
+    public $inputFilter;
     protected $form;
 
     /**
-     * @var VariationOperatingCentres
+     * @var LicenceOperatingCentres
      */
     protected $sut;
 
@@ -39,7 +48,7 @@ class LicenceOperatingCentresTest extends MockeryTestCase
 
     protected $translator;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->tableBuilder = m::mock(TableFactory::class);
         $this->authService = m::mock(AuthorizationService::class);
@@ -47,14 +56,31 @@ class LicenceOperatingCentresTest extends MockeryTestCase
 
         $fsm = m::mock(FormServiceManager::class)->makePartial();
 
-        $this->form = m::mock(Form::class);
+        $validators = [
+            0 => [
+                'instance' => m::mock(TableRequiredValidator::class),
+            ],
+        ];
 
-        $lvaVariation = m::mock(FormServiceInterface::class);
-        $lvaVariation->shouldReceive('alterForm')
-            ->once()
+        $this->validatorChain = m::mock(ValidatorChain::class);
+        $this->validatorChain->expects('getValidators')->andReturn($validators);
+        $this->rowsInput = m::mock(Input::class);
+        $this->rowsInput->expects('getValidatorChain')->withNoArgs()->andReturn($this->validatorChain);
+
+        $this->tableElement = m::mock(Table::class);
+        $this->tableElement->expects('get')->with('rows')->andReturn($this->rowsInput);
+
+        $this->inputFilter = m::mock(InputFilter::class);
+        $this->inputFilter->expects('get')->with('table')->andReturn($this->tableElement);
+
+        $this->form = m::mock(Form::class);
+        $this->form->expects('getInputFilter')->withNoArgs()->andReturn($this->inputFilter);
+
+        $lvaLicence = m::mock(Licence::class);
+        $lvaLicence->expects('alterForm')
             ->with($this->form);
 
-        $fsm->setService('lva-licence', $lvaVariation);
+        $fsm->setService('lva-licence', $lvaLicence);
 
         $this->mockFormHelper = m::mock(FormHelperService::class);
         $this->mockFormHelper->shouldReceive('createForm')
@@ -65,7 +91,7 @@ class LicenceOperatingCentresTest extends MockeryTestCase
         $this->sut = new LicenceOperatingCentres($this->mockFormHelper, $this->authService, $this->tableBuilder, $fsm);
     }
 
-    public function testGetForm()
+    public function testGetForm(): void
     {
         $params = [
             'operatingCentres' => [],

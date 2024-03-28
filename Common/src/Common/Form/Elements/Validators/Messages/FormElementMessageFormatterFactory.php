@@ -15,10 +15,8 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
 class FormElementMessageFormatterFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param mixed $requestedName
      * @param array|null $options
-     * @return FormElementMessageFormatter
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): FormElementMessageFormatter
     {

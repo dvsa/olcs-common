@@ -5,6 +5,7 @@
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
+
 namespace CommonTest\Data\Mapper\Lva;
 
 use Common\Data\Mapper\Lva\LicenceHistory;
@@ -16,7 +17,7 @@ use Common\Data\Mapper\Lva\LicenceHistory;
  */
 class LicenceHistoryTest extends \PHPUnit\Framework\TestCase
 {
-    public function testMapFromResult()
+    public function testMapFromResult(): void
     {
         $input = [
             'foo' => 'bar'

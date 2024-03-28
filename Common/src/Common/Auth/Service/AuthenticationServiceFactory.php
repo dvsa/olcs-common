@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Common\Auth\Service;
 
@@ -10,10 +11,8 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
 class AuthenticationServiceFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
-     * @return AuthenticationService
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): AuthenticationService
     {

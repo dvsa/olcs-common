@@ -1,6 +1,5 @@
 <?php
 
-
 namespace CommonTest\Data\Mapper\Lva\TransportManager\Sections;
 
 use Common\Data\Mapper\Lva\TransportManager\Sections\RevokedLicences;
@@ -11,16 +10,17 @@ use Mockery as m;
 class RevokedLicencesTest extends MockeryTestCase
 {
     private $mockTranslator;
+
     private $sut;
 
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->mockTranslator = m::mock(TranslationHelperService::class);
         $this->sut = new RevokedLicences($this->mockTranslator);
     }
 
-    public function testPopulatedObject()
+    public function testPopulatedObject(): void
     {
         $actual = $this->sut->populate(
             [
@@ -38,7 +38,7 @@ class RevokedLicencesTest extends MockeryTestCase
         );
     }
 
-    public function testPopulatedObjectWithLicences()
+    public function testPopulatedObjectWithLicences(): void
     {
         $this->mockTranslator->shouldReceive(
             'translateReplace'

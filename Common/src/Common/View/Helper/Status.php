@@ -123,6 +123,6 @@ class Status extends AbstractHelper
             RefData::PERMIT_VALID                               => 'green',
         ];
 
-        return !empty($colors[$id]) ? $colors[$id] : 'grey';
+        return empty($colors[$id]) ? 'grey' : $colors[$id];
     }
 }

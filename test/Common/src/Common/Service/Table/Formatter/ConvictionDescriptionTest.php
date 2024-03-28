@@ -13,7 +13,7 @@ class ConvictionDescriptionTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider convictionDataProvider
      */
-    public function testFormat($convictionData, $expected)
+    public function testFormat($convictionData, $expected): void
     {
         $sut = new ConvictionDescription();
         $result = $sut->format(

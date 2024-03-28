@@ -33,11 +33,7 @@ class TaskOwner implements FormatterPluginManagerInterface
         // trim leading/trailing spaces and commas
         $data['ownerName'] = trim($data['ownerName'], ' ,');
 
-        if (empty($data['ownerName'])) {
-            $user = 'Unassigned';
-        } else {
-            $user = $data['ownerName'];
-        }
+        $user = empty($data['ownerName']) ? 'Unassigned' : $data['ownerName'];
 
         return $owner . '(' . $user . ')';
     }

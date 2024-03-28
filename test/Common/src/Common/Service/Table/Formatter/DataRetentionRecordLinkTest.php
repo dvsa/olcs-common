@@ -25,6 +25,7 @@ class DataRetentionRecordLinkTest extends TestCase
     private const ENTITY_ID = 9;
 
     protected $urlHelper;
+
     protected $viewHelperManager;
 
     protected $sut;
@@ -46,7 +47,7 @@ class DataRetentionRecordLinkTest extends TestCase
      *
      * @dataProvider entityTypeDataProviderWithUrl
      */
-    public function testFormat($queryData, $statusArray)
+    public function testFormat($queryData, $statusArray): void
     {
         $queryData = array_merge(
             [
@@ -151,7 +152,7 @@ class DataRetentionRecordLinkTest extends TestCase
         ];
     }
 
-    public function testWithoutLicenceNumberAndUndefinedEntity()
+    public function testWithoutLicenceNumberAndUndefinedEntity(): void
     {
         $statusLabel = 'statusLabel';
 
@@ -178,7 +179,7 @@ class DataRetentionRecordLinkTest extends TestCase
         );
     }
 
-    public function testWithoutLicenceNumberAndOrganisationAndUndefinedEntity()
+    public function testWithoutLicenceNumberAndOrganisationAndUndefinedEntity(): void
     {
         $statusLabel = 'statusLabel';
 
@@ -204,7 +205,7 @@ class DataRetentionRecordLinkTest extends TestCase
         );
     }
 
-    private function getViewHelperWithStatusMock($statusArray, $statusLabel)
+    private function getViewHelperWithStatusMock($statusArray, $statusLabel): void
     {
         $mockStatusHelper = m::mock(StatusHelper::class);
         $mockStatusHelper->shouldReceive('__invoke')
@@ -215,10 +216,7 @@ class DataRetentionRecordLinkTest extends TestCase
         $this->viewHelperManager->shouldReceive('get')->with('status')->andReturn($mockStatusHelper);
     }
 
-    /**
-     * @return mixed
-     */
-    private function getUrlHelperMock()
+    private function getUrlHelperMock(): void
     {
         $this->urlHelper
             ->shouldReceive('fromRoute')

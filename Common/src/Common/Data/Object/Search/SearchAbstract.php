@@ -15,6 +15,7 @@ abstract class SearchAbstract
      * @var
      */
     protected $title;
+
     /**
      * @var
      */

@@ -10,8 +10,11 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class NameActionAndStatusTest extends MockeryTestCase
 {
     private const TEST_ID = 12345;
+
     private const TEST_TITLE = 'TEST_TITLE';
+
     private const TEST_FORENAME = '';
+
     private const TEST_FAMILY_NAME = '';
 
     /**

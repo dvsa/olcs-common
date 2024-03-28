@@ -27,7 +27,9 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class CommandServiceTest extends MockeryTestCase
 {
+    public $mockContainer;
     public const ROUTE_NAME = 'backend/aaa/bbb';
+
     public const METHOD = 'POST';
 
     /** @var  CommandService */
@@ -35,20 +37,24 @@ class CommandServiceTest extends MockeryTestCase
 
     /** @var  m\MockInterface */
     private $mockDto;
+
     /** @var  m\MockInterface | CommandContainerInterface */
     private $mockCmd;
 
     /** @var  m\MockInterface | \Laminas\Router\RouteInterface */
     private $mockRouter;
+
     /** @var  m\MockInterface | \Laminas\Http\Client */
     private $mockClient;
+
     /** @var  m\MockInterface | \Laminas\Http\Request */
     private $mockRequest;
+
     /** @var  m\MockInterface | \Common\Service\Helper\FlashMessengerHelperService */
     private $mockFlashMsgr;
 
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->mockDto = m::mock(CommandInterface::class);
         $this->mockDto->shouldReceive('getArrayCopy')->atMost(1)->andReturn([]);
@@ -76,7 +82,7 @@ class CommandServiceTest extends MockeryTestCase
         );
     }
 
-    public function testSend404ErrorWithRoute()
+    public function testSend404ErrorWithRoute(): void
     {
         $this->mockCmd->shouldReceive('isValid')->once()->andReturn(true);
         $this->mockRouter->shouldReceive('assemble')->andThrow(new RouterRuntimeException('err_message'));
@@ -86,7 +92,7 @@ class CommandServiceTest extends MockeryTestCase
         $this->sut->send($this->mockCmd);
     }
 
-    public function testSend422()
+    public function testSend422(): void
     {
         $this->mockCmd
             ->shouldReceive('isValid')->once()->andReturn(false)
@@ -99,7 +105,7 @@ class CommandServiceTest extends MockeryTestCase
         $this->assertInvalidResponse($actual, 'EXPECT_MESSAGES', HttpResponse::STATUS_CODE_422);
     }
 
-    public function testSend404()
+    public function testSend404(): void
     {
         $this->mockCmd->shouldReceive('isValid')->once()->andReturn(true);
         $this->mockRouter->shouldReceive('assemble')->once()->andReturn('unit_uri');
@@ -117,7 +123,7 @@ class CommandServiceTest extends MockeryTestCase
         $this->sut->send($this->mockCmd);
     }
 
-    public function testSend403()
+    public function testSend403(): void
     {
         $this->mockCmd->shouldReceive('isValid')->once()->andReturn(true);
         $this->mockRouter->shouldReceive('assemble')->once()->andReturn('unit_uri');
@@ -134,7 +140,7 @@ class CommandServiceTest extends MockeryTestCase
         $this->sut->send($this->mockCmd);
     }
 
-    public function testSend500()
+    public function testSend500(): void
     {
         $this->mockCmd->shouldReceive('isValid')->once()->andReturn(true);
         $this->mockRouter->shouldReceive('assemble')->once()->andReturn('unit_uri');
@@ -151,7 +157,7 @@ class CommandServiceTest extends MockeryTestCase
         $this->sut->send($this->mockCmd);
     }
 
-    public function testSendOtherException()
+    public function testSendOtherException(): void
     {
         $this->mockCmd->shouldReceive('isValid')->once()->andReturn(true);
         $this->mockRouter->shouldReceive('assemble')->once()->andReturn('unit_uri');
@@ -164,7 +170,7 @@ class CommandServiceTest extends MockeryTestCase
         $this->sut->send($this->mockCmd);
     }
 
-    public function testSend409()
+    public function testSend409(): void
     {
         $this->expectException(ResourceConflictException::class);
 
@@ -181,7 +187,7 @@ class CommandServiceTest extends MockeryTestCase
         $this->sut->send($this->mockCmd);
     }
 
-    public function testSendFile()
+    public function testSendFile(): void
     {
         //  mock command
         $dtoData = [
@@ -200,10 +206,9 @@ class CommandServiceTest extends MockeryTestCase
         //  mock
         $this->mockRouter
             ->shouldReceive('assemble')->once()->andReturnUsing(
-                function ($data, $path) use ($dtoData) {
+                static function ($data, $path) use ($dtoData) {
                     static::assertEquals($dtoData, $data);
                     static::assertEquals(['name' => 'api/backend/api/aaa/bbb/' . self::METHOD], $path);
-
                     return 'unit_uri';
                 }
             );
@@ -241,7 +246,7 @@ class CommandServiceTest extends MockeryTestCase
         static::assertEquals(['key' => 'EXPECTED'], $actual->getResult());
     }
 
-    public function testWhenCommandHasSecureTokenThenTokenIsApplied()
+    public function testWhenCommandHasSecureTokenThenTokenIsApplied(): void
     {
         //  mock command
         $dtoData = [
@@ -290,7 +295,7 @@ class CommandServiceTest extends MockeryTestCase
         static::assertEquals(['key' => 'EXPECTED'], $actual->getResult());
     }
 
-    public function testWhenCommandHasSecureTokenThenTokenIsOverridden()
+    public function testWhenCommandHasSecureTokenThenTokenIsOverridden(): void
     {
         //  mock command
         $dtoData = [
@@ -340,7 +345,7 @@ class CommandServiceTest extends MockeryTestCase
         static::assertEquals(['key' => 'EXPECTED'], $actual->getResult());
     }
 
-    public function testWhenCommandHasNoSecureTokenThenTokenIsLeftIntact()
+    public function testWhenCommandHasNoSecureTokenThenTokenIsLeftIntact(): void
     {
         //  mock command
         $dtoData = [];
@@ -388,7 +393,7 @@ class CommandServiceTest extends MockeryTestCase
         static::assertEquals(['key' => 'EXPECTED'], $actual->getResult());
     }
 
-    private function assertInvalidResponse(CqrsResponse $actual, $message, $statusCode)
+    private function assertInvalidResponse(CqrsResponse $actual, $message, $statusCode): void
     {
         static::assertInstanceOf(CqrsResponse::class, $actual);
         static::assertStringStartsWith($message, current($actual->getResult()['messages']));
@@ -441,5 +446,4 @@ class CommandServiceTest extends MockeryTestCase
         $this->assertArrayHasKey('Authorization', $headers->toArray());
         $this->assertSame('Bearer access_token', $headers->get('Authorization')->getFieldValue());
     }
-
 }

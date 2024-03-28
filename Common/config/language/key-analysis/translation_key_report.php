@@ -3,7 +3,9 @@
 
 if ($argc === 1) {
     echo "Please specify at least one argument: the path to the olcs-* respository folders\n";
-    echo "{$argv[0]} PATH [CSV Ignore Keys]\n\n";
+    echo $argv[0] . ' PATH [CSV Ignore Keys]
+
+';
     echo "e.g:\n        {$argv[0]} /home/developer/olcs/ Name,Email,Home,Controller\n\n";
     exit(1);
 }
@@ -11,10 +13,9 @@ if ($argc === 1) {
 if (!is_dir($argv[1])) {
     echo "First argument must be a valid path to a directory!\n\n";
     exit(1);
-} else {
-    // Make sure provided path has a trailing slash for later use.
-    $path = rtrim($argv[1], '/') . '/';
 }
+// Make sure provided path has a trailing slash for later use.
+$path = rtrim($argv[1], '/') . '/';
 
 $ignoreKeys = [];
 if (isset($argv[2])) {
@@ -30,7 +31,6 @@ getMarkupUsage($path);
 /**
  * Load translations from OLCS-Common language files
  *
- * @param string $path
  * @return array
  */
 function loadCommonTranslations(string $path)
@@ -40,15 +40,13 @@ function loadCommonTranslations(string $path)
     foreach ($commonLanguages as $language) {
         $commonTranslations[$language] = include($path . 'olcs-common/Common/config/language/' . $language . '.php');
     }
+
     return $commonTranslations;
 }
 
 /**
  * Execute system grep command to find usages of each translation key
  *
- * @param array $translations
- * @param string $path
- * @param array $ignoreKeys
  * @return array
  */
 function findTranslationKeyUsages(array $translations, string $path, array $ignoreKeys)
@@ -57,7 +55,7 @@ function findTranslationKeyUsages(array $translations, string $path, array $igno
     $allKeys = [];
     foreach ($translations as $langKey => $language) {
         $totalLangKeys = count($language) - count($ignoreKeys);
-        echo "Processing $totalLangKeys keys in $langKey ...\n";
+        echo "Processing {$totalLangKeys} keys in {$langKey} ...\n";
         $usages[$langKey] = [];
         $i = 1;
         foreach ($language as $key => $translated) {
@@ -78,34 +76,35 @@ function findTranslationKeyUsages(array $translations, string $path, array $igno
                     }
                 }
             }
-            $i++;
+
+            ++$i;
         }
+
         keyStats($langKey, $usages[$langKey]);
-        file_put_contents("reports/{$langKey}_key_usage_report.json", jsonEncodeWrap($usages[$langKey]));
+        file_put_contents(sprintf('reports/%s_key_usage_report.json', $langKey), jsonEncodeWrap($usages[$langKey]));
     }
+
     return $usages;
 }
 
 /**
  * Finds markup partial filenames in PHP and Template files
- *
- * @param string $path
  */
 function getMarkupUsage(string $path)
 {
     echo "Generating markup partial report\n";
-    $dirContents = array_diff(scandir("$path/olcs-common/Common/config/language/partials/"), ['..', '.']);
+    $dirContents = array_diff(scandir($path . '/olcs-common/Common/config/language/partials/'), ['..', '.']);
     $markups = [];
-    foreach($dirContents as $item) {
-        if(is_dir($path.'/olcs-common/Common/config/language/partials/'.$item)){
-            $markups[$item] = str_replace('.phtml', '', array_diff(scandir($path.'/olcs-common/Common/config/language/partials/'.$item), ['..', '.']));
+    foreach ($dirContents as $item) {
+        if (is_dir($path . '/olcs-common/Common/config/language/partials/' . $item)) {
+            $markups[$item] = str_replace('.phtml', '', array_diff(scandir($path . '/olcs-common/Common/config/language/partials/' . $item), ['..', '.']));
         }
     }
 
     $usages = [];
 
-    foreach ($markups as $langKey => $langKeyFiles) {
-        foreach($langKeyFiles as $markupFilename) {
+    foreach ($markups as $langKeyFiles) {
+        foreach ($langKeyFiles as $markupFilename) {
             $output = [];
             $usages[$markupFilename] = [];
             exec('grep -rl -m 1 --exclude-dir=vendor --include=\*.php --include \*.phtml "' . $markupFilename . '" ' . $path, $output);
@@ -116,15 +115,13 @@ function getMarkupUsage(string $path)
             }
         }
     }
+
     file_put_contents("reports/markup-partial_statistics.json", jsonEncodeWrap($usages));
     echo "Markup partial report complete\n";
 }
 
 /**
  * Outputs and saves aggregate stats on key uses. Might be useful source for choosing ignore keys cmdline parameter
- *
- * @param string $langKey
- * @param array $keyArray
  */
 function keyStats(string $langKey, array $keyArray)
 {
@@ -132,35 +129,30 @@ function keyStats(string $langKey, array $keyArray)
     foreach ($keyArray as $key => $keyUses) {
         $stats[$key] = count($keyUses);
     }
-    echo "Top 20 used keys for: $langKey\n\n";
+
+    echo "Top 20 used keys for: {$langKey}\n\n";
     arsort($stats);
     print_r(array_slice($stats, 0, 20));
-    file_put_contents("reports/{$langKey}_key_statistics.json", jsonEncodeWrap($stats));
+    file_put_contents(sprintf('reports/%s_key_statistics.json', $langKey), jsonEncodeWrap($stats));
 }
 
 /**
  * Output and save list of keys unused in any files.
- *
- * @param array $translations
- * @param array $usages
  */
 function findUnusedTranslationKeys(array $translations, array $usages)
 {
-    foreach ($translations as $langKey => $language) {
+    foreach (array_keys($translations) as $langKey) {
         $unusedKeys = array_diff_key($translations[$langKey], $usages[$langKey]);
-        if (!empty($unusedKeys)) {
-            echo "Unused Keys in $langKey:\n";
+        if ($unusedKeys !== []) {
+            echo "Unused Keys in {$langKey}:\n";
             echo jsonEncodeWrap($unusedKeys);
-            file_put_contents("reports/{$langKey}_unused_keys.json", jsonEncodeWrap($unusedKeys));
+            file_put_contents(sprintf('reports/%s_unused_keys.json', $langKey), jsonEncodeWrap($unusedKeys));
         }
     }
 }
 
 /**
  * Check for keys set in common and backend, which have different values.
- *
- * @param array $translations
- * @param string $path
  */
 function findMismatchedCommonBackendValues(array $translations, string $path)
 {
@@ -193,11 +185,11 @@ function findMismatchedCommonBackendValues(array $translations, string $path)
 
     foreach ($mismatched as $lang => $mismatches) {
         if (!empty($mismatches)) {
-            echo "Mismatch found between olcs-common and olcs-backend $lang translations.\n";
+            echo "Mismatch found between olcs-common and olcs-backend {$lang} translations.\n";
             echo "The following keys have different values\n";
             print_r(jsonEncodeWrap(array_keys($mismatches)));
             echo "\n\n";
-            file_put_contents("reports/backend_{$lang}_mismatched_values.json", jsonEncodeWrap($mismatches));
+            file_put_contents(sprintf('reports/backend_%s_mismatched_values.json', $lang), jsonEncodeWrap($mismatches));
         }
     }
 }
@@ -205,7 +197,6 @@ function findMismatchedCommonBackendValues(array $translations, string $path)
 /**
  * Wrapper for json_encode, the const option list might need to be expanded or tweaked to perfect the output, easier this way
  *
- * @param array $array
  * @return false|string
  */
 function jsonEncodeWrap(array $array)
@@ -237,11 +228,11 @@ function progressBar(int $completed, int $total)
     }
 
     $disp = number_format($percent * 100, 0);
-    $displayString .= "} $disp%  $completed/$total";
-    echo "$displayString  ";
+    $displayString .= sprintf('} %s%%  %d/%d', $disp, $completed, $total);
+    echo $displayString . '  ';
     flush();
 
-    if ($completed == $total) {
+    if ($completed === $total) {
         echo "\n\n";
     }
 }

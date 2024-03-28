@@ -19,7 +19,7 @@ use Common\Service\Table\Formatter\StackValueReplacer;
  */
 class StackValueReplacerTest extends \PHPUnit\Framework\TestCase
 {
-    public function testFormat()
+    public function testFormat(): void
     {
         $data = [
             'foo' => [

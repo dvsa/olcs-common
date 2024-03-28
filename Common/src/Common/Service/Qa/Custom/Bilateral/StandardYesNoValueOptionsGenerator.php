@@ -10,7 +10,6 @@ class StandardYesNoValueOptionsGenerator
     /**
      * Create service instance
      *
-     * @param YesNoValueOptionsGenerator $yesNoValueOptionsGenerator
      *
      * @return StandardYesNoValueOptionsGenerator
      */

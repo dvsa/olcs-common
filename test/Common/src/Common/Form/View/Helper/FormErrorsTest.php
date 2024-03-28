@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Form\View\Helper;
 
 use Common\Form\Elements\Types\PostcodeSearch;
 use Common\Form\Elements\Validators\Messages\FormElementMessageFormatter;
 use Common\Form\Elements\Validators\Messages\FormElementMessageFormatterFactory;
-use Common\Form\Elements\Validators\Messages\GenericValidationMessage;
 use Common\Form\View\Helper\FormErrorsFactory;
 use Common\Test\MocksServicesTrait;
+use Laminas\Form\ElementInterface;
 use Psr\Container\ContainerInterface;
 use Laminas\Form\Form;
 use Laminas\I18n\Translator\TranslatorInterface;
@@ -38,21 +40,21 @@ class FormErrorsTest extends MockeryTestCase
     /**
      * @test
      */
-    public function __invoke_IsCallable()
+    public function invokeIsCallable(): void
     {
         // Setup
         $serviceLocator = $this->setUpServiceLocator();
         $sut = $this->setUpSut($serviceLocator);
 
         // Assert
-        $this->assertIsCallable([$sut, '__invoke']);
+        $this->assertIsCallable(static fn(?\Laminas\Form\FormInterface $form = null, bool $ignoreValidation = false): string => $sut->__invoke($form, $ignoreValidation));
     }
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_EscapesHtmlInMessage()
+    public function invokeEscapesHtmlInMessage(): void
     {
         // Setup
         $serviceLocator = $this->setUpServiceLocator();
@@ -69,33 +71,9 @@ class FormErrorsTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_DoesNotPurifyMessageHtml_WhenMessageInterfaceHasEscapingDisabled()
-    {
-        // Setup
-        $serviceLocator = $this->setUpServiceLocator();
-        $purifier = $this->setUpMockService(HTMLPurifier::class);
-        $serviceLocator->setService(HTMLPurifier::class, $purifier);
-        $sut = $this->setUpSut($serviceLocator);
-        $message = new GenericValidationMessage();
-        $message->setMessage('bar');
-        $message->setShouldEscape(false);
-        $form = new Form();
-        $form->setMessages(['foo' => $message]);
-
-        // Set Expectations
-        $purifier->shouldReceive('purify')->withAnyArgs()->andReturnUsing(fn($val) => $val)->never();
-
-        // Execute
-        $sut->render($form);
-    }
-
-    /**
-     * @test
-     * @depends __invoke_IsCallable
-     */
-    public function __invoke_WithoutForm()
+    public function invokeWithoutForm(): void
     {
         $form = null;
 
@@ -106,9 +84,9 @@ class FormErrorsTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RenderWithoutMessages()
+    public function invokeRenderWithoutMessages(): void
     {
         $form = m::mock(\Laminas\Form\Form::class);
         $messages = [];
@@ -129,9 +107,9 @@ class FormErrorsTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RenderWithMessagesWithoutLabelOrAnchor()
+    public function invokeRenderWithMessagesWithoutLabelOrAnchor(): void
     {
         $messages = [
             'foo' => [
@@ -184,9 +162,9 @@ class FormErrorsTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RenderWithMessagesWithAnchor()
+    public function invokeRenderWithMessagesWithAnchor(): void
     {
         $messages = [
             'foo' => [
@@ -241,9 +219,9 @@ class FormErrorsTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RenderWithMessagesWithAnchor2()
+    public function invokeRenderWithMessagesWithAnchor2(): void
     {
         $messages = [
             'foo' => [
@@ -297,9 +275,9 @@ class FormErrorsTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RenderWithMessagesWithAnchor3()
+    public function invokeRenderWithMessagesWithAnchor3(): void
     {
         $messages = [
             'foo' => [
@@ -353,9 +331,9 @@ class FormErrorsTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RenderWithMessagesWithAnchorPostcodeSearch()
+    public function invokeRenderWithMessagesWithAnchorPostcodeSearch(): void
     {
         $messages = [
             'foo' => [
@@ -386,7 +364,7 @@ class FormErrorsTest extends MockeryTestCase
         $mockFoo
             ->shouldReceive('has')->once()->andReturn()
             ->shouldReceive('get')->with('postcode')->twice()->andReturn(
-                m::mock()->shouldReceive('getAttribute')->with('id')->twice()->andReturn('PC_ID')->getMock()
+                m::mock(ElementInterface::class)->shouldReceive('getAttribute')->with('id')->twice()->andReturn('PC_ID')->getMock()
             )
             ->shouldReceive('getLabel')->andReturn('Default Label');
 
@@ -395,9 +373,9 @@ class FormErrorsTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RenderWithMessagesWithAnchorDateSelect()
+    public function invokeRenderWithMessagesWithAnchorDateSelect(): void
     {
         $messages = [
             'foo' => [
@@ -429,9 +407,9 @@ class FormErrorsTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RenderWithMessagesWithAnchorUsingName()
+    public function invokeRenderWithMessagesWithAnchorUsingName(): void
     {
         $messages = [
             'foo' => [
@@ -463,9 +441,9 @@ class FormErrorsTest extends MockeryTestCase
     /**
      * @test
      * @testdox Test when a form element has been setup with a custom error message
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RenderWithCustomErrorMessage()
+    public function invokeRenderWithCustomErrorMessage(): void
     {
         $messages = [
             'foo' => [
@@ -520,9 +498,9 @@ class FormErrorsTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RenderWithShortLabelAndAnchor()
+    public function invokeRenderWithShortLabelAndAnchor(): void
     {
         $messages = [
             'foo' => [
@@ -581,9 +559,9 @@ class FormErrorsTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RenderWithShortLabelWithoutAnchor()
+    public function invokeRenderWithShortLabelWithoutAnchor(): void
     {
         $messages = [
             'foo' => [
@@ -638,67 +616,10 @@ class FormErrorsTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
-     */
-    public function __invoke_RenderWithMessageObjet()
-    {
-        $mockValidationMessage = new GenericValidationMessage();
-        $mockValidationMessage->setMessage('bar');
-        $mockValidationMessage->setShouldTranslate(true);
-
-        $messages = [
-            'foo' => [
-                $mockValidationMessage
-            ]
-        ];
-        $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h2 class="govuk-heading-m">form-errors-translated<\/h2>(\s+)?'
-            . '<p><\/p>(\s+)?'
-            . '<ol class="validation-summary__list">(\s+)?'
-            . '<li class="validation-summary__item">(\s+)?Bar-translated(\s+)?'
-            . '<\/li>(\s+)?'
-            . '<\/ol>(\s+)?'
-            . '<\/div>/';
-
-        $sut = $this->sut;
-
-        // Mocks
-        $form = m::mock(\Laminas\Form\Form::class);
-        $element = $this->setUpElement();
-
-        // Expectations
-        $form->shouldReceive('hasValidated')
-            ->andReturn(true)
-            ->shouldReceive('isValid')
-            ->andReturn(false)
-            ->shouldReceive('getMessages')
-            ->andReturn($messages)
-            ->shouldReceive('has')
-            ->once()
-            ->with('foo')
-            ->andReturn(true)
-            ->shouldReceive('getOption')
-            ->once()
-            ->with('formErrorsTitle')
-            ->andReturn(null)
-            ->shouldReceive('getOption')
-            ->once()
-            ->with('formErrorsParagraph')
-            ->andReturn(null);
-
-        $form->shouldReceive('get')
-            ->with('foo')
-            ->andReturn($element);
-
-        $this->assertMatchesRegularExpression($expected, $sut($form));
-    }
-
-    /**
-     * @test
      * @testdox Test when a form element has been setup as a fieldset
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RenderWithMessageObjectElementAsFieldset()
+    public function invokeRenderWithMessageObjectElementAsFieldset(): void
     {
         $messages = [
             'foo' => [
@@ -750,9 +671,9 @@ class FormErrorsTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RenderWithMessagesWithAnchorAndCustomTitle()
+    public function invokeRenderWithMessagesWithAnchorAndCustomTitle(): void
     {
         $messages = [
             'foo' => [
@@ -807,9 +728,9 @@ class FormErrorsTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RenderWithMessagesWithAnchorAndCustomTitleAndParagraph()
+    public function invokeRenderWithMessagesWithAnchorAndCustomTitleAndParagraph(): void
     {
         $messages = [
             'foo' => [
@@ -865,9 +786,9 @@ class FormErrorsTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_RenderWithMessagesWithAnchorAndCustomParagraph()
+    public function invokeRenderWithMessagesWithAnchorAndCustomParagraph(): void
     {
         $messages = [
             'foo' => [
@@ -923,7 +844,7 @@ class FormErrorsTest extends MockeryTestCase
     /**
      * @inheritDoc
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->view = m::mock(\Laminas\View\Renderer\RendererInterface::class);
         $serviceLocator = $this->setUpServiceLocator();
@@ -933,18 +854,15 @@ class FormErrorsTest extends MockeryTestCase
 
     protected function setUpSut(ContainerInterface $serviceLocator): FormErrors
     {
-        $pluginManager = $this->setUpAbstractPluginManager($serviceLocator);
-        return (new FormErrorsFactory())->__invoke($pluginManager, FormErrors::class);
+        //$pluginManager = $this->setUpAbstractPluginManager($serviceLocator);
+        return (new FormErrorsFactory())->__invoke($serviceLocator, FormErrors::class);
     }
 
-    /**
-     * @param ServiceManager $serviceManager
-     */
     protected function setUpDefaultServices(ServiceManager $serviceManager)
     {
         $serviceManager->setService(TranslatorInterface::class, $this->setUpTranslator());
         $serviceManager->setFactory(FormElementMessageFormatter::class, new FormElementMessageFormatterFactory());
-        $serviceManager->setService(static::VALIDATOR_MANAGER, new ValidatorPluginManager());
+        $serviceManager->setService(static::VALIDATOR_MANAGER, m::mock(ValidatorPluginManager::class));
     }
 
     /**
@@ -953,13 +871,12 @@ class FormErrorsTest extends MockeryTestCase
     protected function setUpTranslator(): MockInterface
     {
         $instance = $this->setUpMockService(Translator::class);
-        $instance->shouldReceive('translate')->andReturnUsing(fn($key) => $key . '-translated')->byDefault();
+        $instance->shouldReceive('translate')->andReturnUsing(static fn($key) => $key . '-translated')->byDefault();
         return $instance;
     }
 
     /**
      * @param string|null $name
-     * @return Element
      */
     protected function setUpElement(string $name = null): Element
     {

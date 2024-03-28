@@ -59,7 +59,6 @@ class PeopleSelfserve extends InternalSearchAbstract
     public function getFilters()
     {
         if (empty($this->filters)) {
-
             $this->filters = [
                 new Filter\OrgType(),
                 new Filter\LicenceType(),
@@ -81,25 +80,22 @@ class PeopleSelfserve extends InternalSearchAbstract
         return [
             [
                 'title' => 'Licence number',
-                'name'=> 'licNo',
-                'formatter' => fn($data) => '<a class="govuk-link" href="/view-details/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>'
+                'name' => 'licNo',
+                'formatter' => static fn($data) => '<a class="govuk-link" href="/view-details/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>'
             ],
             [
                 'title' => 'Licence status',
-                'name'=> 'licStatusDesc',
-                'formatter'=> Translate::class,
+                'name' => 'licStatusDesc',
+                'formatter' => Translate::class,
             ],
             [
                 'title' => 'Operator name',
-                'name'=> 'orgName',
-                'formatter' => function ($data) {
-                    $orgName = $data['orgName'];
-                    return $orgName;
-                }
+                'name' => 'orgName',
+                'formatter' => static fn($data) => $data['orgName']
             ],
             [
                 'title' => 'Name',
-                'formatter' => fn($row) => $row['personFullname']
+                'formatter' => static fn($row) => $row['personFullname']
             ],
             [
                 'permissionRequisites' => ['partner-user', 'partner-admin'],

@@ -34,7 +34,7 @@ class YesNoRadio extends Radio
     /**
      * Set the standard value options for this type
      */
-    public function setStandardValueOptions()
+    public function setStandardValueOptions(): void
     {
         $this->setValueOptions($this->standardValueOptions);
     }

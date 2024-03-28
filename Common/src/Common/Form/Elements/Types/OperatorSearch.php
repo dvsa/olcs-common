@@ -5,6 +5,7 @@
  *
  * @author Shaun Lizzio <shaun.lizzio@valtech.co.uk>
  */
+
 namespace Common\Form\Elements\Types;
 
 use Laminas\Form\Fieldset;
@@ -92,7 +93,7 @@ class OperatorSearch extends Fieldset
         $this->add($addNewButton);
     }
 
-    public function setMessages($messages)
+    public function setMessages($messages): void
     {
         $this->messages = $messages;
     }

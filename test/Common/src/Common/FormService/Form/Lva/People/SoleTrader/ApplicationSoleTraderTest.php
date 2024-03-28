@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\FormService\Form\Lva\People\SoleTrader;
 
 use Common\Form\Form;
-use Common\FormService\FormServiceInterface;
+use Common\FormService\Form\Lva\Application;
 use Common\FormService\FormServiceManager;
 use Common\Service\Lva\PeopleLvaService;
 use Laminas\Form\ElementInterface;
@@ -12,13 +14,15 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Lva\People\SoleTrader\ApplicationSoleTrader as Sut;
 use LmcRbacMvc\Service\AuthorizationService;
 
-/**
- * Application Sole Trader Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class ApplicationSoleTraderTest extends MockeryTestCase
 {
+    /**
+     * @var \Mockery\LegacyMockInterface
+     */
+    public $authService;
+    public $peopleLvaService;
+    public $fsl;
+    public $mockApplicationService;
     protected $sut;
 
     protected $formHelper;
@@ -27,14 +31,14 @@ class ApplicationSoleTraderTest extends MockeryTestCase
 
     protected $sm;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);
         $this->authService = m::mock(AuthorizationService::class);
         $this->peopleLvaService = m::mock(PeopleLvaService::class);
         $this->fsl = m::mock(FormServiceManager::class)->makePartial();
 
-        $this->mockApplicationService = m::mock(FormServiceInterface::class);
+        $this->mockApplicationService = m::mock(Application::class);
 
         $this->fsl->shouldReceive('get')
             ->with('lva-application')
@@ -46,7 +50,7 @@ class ApplicationSoleTraderTest extends MockeryTestCase
     /**
      * @dataProvider noDisqualifyProvider
      */
-    public function testGetFormNoDisqualify($params)
+    public function testGetFormNoDisqualify($params): void
     {
         $params['canModify'] = true;
 
@@ -66,7 +70,7 @@ class ApplicationSoleTraderTest extends MockeryTestCase
         $this->sut->getForm($params);
     }
 
-    public function testGetForm()
+    public function testGetForm(): void
     {
         $params = [
             'location' => 'internal',
@@ -93,7 +97,7 @@ class ApplicationSoleTraderTest extends MockeryTestCase
         $this->sut->getForm($params);
     }
 
-    public function testGetFormCantModify()
+    public function testGetFormCantModify(): void
     {
         $params = [
             'location' => 'internal',

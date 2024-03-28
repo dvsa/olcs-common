@@ -17,13 +17,11 @@ class TaskDate implements FormatterPluginManagerInterface
 {
     private Date $dateFormatter;
 
-    /**
-     * @param Date $dateFormatter
-     */
     public function __construct(Date $dateFormatter)
     {
         $this->dateFormatter = $dateFormatter;
     }
+
     /**
      * Format a task date
      *
@@ -35,8 +33,6 @@ class TaskDate implements FormatterPluginManagerInterface
     {
         $date = $this->dateFormatter->format($data, $column);
         if (isset($data['urgent']) && $data['urgent'] === 'Y') {
-            // @TODO no AC for what the urgent marker looks like
-            // $date .= ' <span class="status orange">urgent</span>';
             $date .= ' (urgent)';
         }
 

@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Service\Utility;
 
 /**
@@ -17,7 +18,6 @@ interface ApplicationUtilityInterface
     /**
      * Alter the create application data
      *
-     * @param array $data
      * @return array
      */
     public function alterCreateApplicationData(array $data);

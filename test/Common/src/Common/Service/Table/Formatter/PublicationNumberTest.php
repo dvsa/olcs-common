@@ -21,7 +21,7 @@ class PublicationNumberTest extends MockeryTestCase
     /**
      * @dataProvider provider
      */
-    public function testFormat($data, $column, $expected)
+    public function testFormat($data, $column, $expected): void
     {
         $this->assertEquals($expected, (new PublicationNumber())->format($data, $column));
     }
@@ -67,8 +67,7 @@ class PublicationNumberTest extends MockeryTestCase
                     ],
                 ],
                 [],
-                '<a class="govuk-link" href="/file/987654">'
-                . '12345</a>'
+                '<a class="govuk-link" href="/file/987654">12345</a>'
             ]
         ];
     }

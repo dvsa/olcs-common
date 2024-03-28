@@ -18,7 +18,7 @@ use Laminas\Form\Form;
  */
 class SectorsFieldsetPopulatorTest extends MockeryTestCase
 {
-    public function testPopulate()
+    public function testPopulate(): void
     {
         $options = [
             'key1' => 'value1',

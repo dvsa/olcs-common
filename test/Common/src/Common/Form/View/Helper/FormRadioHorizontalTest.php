@@ -15,12 +15,12 @@ class FormRadioHorizontalTest extends TestCase
      */
     protected $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = new FormRadioHorizontal();
     }
 
-    public function testInvoke()
+    public function testInvoke(): void
     {
         $returnValue = 'string';
         $mockElement = m::mock(ElementInterface::class);

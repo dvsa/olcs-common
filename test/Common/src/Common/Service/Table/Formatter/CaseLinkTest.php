@@ -18,6 +18,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
  */
 class CaseLinkTest extends TestCase
 {
+    public $sut;
     protected $urlHelper;
 
     protected function setUp(): void
@@ -36,7 +37,7 @@ class CaseLinkTest extends TestCase
      *
      * @dataProvider provider
      */
-    public function testFormat($data, $expected)
+    public function testFormat($data, $expected): void
     {
         $this->urlHelper->shouldReceive('fromRoute')
             ->with(

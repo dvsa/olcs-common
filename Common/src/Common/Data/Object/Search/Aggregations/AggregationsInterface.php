@@ -1,9 +1,9 @@
 <?php
+
 namespace Common\Data\Object\Search\Aggregations;
 
 interface AggregationsInterface
 {
-
     /**
      * Contains the key of the aggregation / filter, set in class definition.
      *

@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace CommonTest\Form\Elements\Types;
 
 use Common\Form\Elements\Types\MultipleFileUpload;
@@ -19,7 +20,7 @@ class MultipleFileUploadTest extends \PHPUnit\Framework\TestCase
     /**
      * Test the element configuration
      */
-    public function testElement()
+    public function testElement(): void
     {
         $element = new MultipleFileUpload();
 

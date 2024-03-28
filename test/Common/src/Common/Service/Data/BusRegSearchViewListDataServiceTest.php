@@ -29,14 +29,14 @@ class BusRegSearchViewListDataServiceTest extends AbstractDataServiceTestCase
      * @param $mockResultData
      * @param $expected
      */
-    public function testFetchListOptions($context, $mockResultData, $expected)
+    public function testFetchListOptions($context, $mockResultData, $expected): void
     {
         $this->sut->setData('BusRegSearchView' . ucfirst($context), $mockResultData);
 
         $this->assertEquals($expected, $this->sut->fetchListOptions($context));
     }
 
-    public function testFetchListOptionsInvalidContext()
+    public function testFetchListOptionsInvalidContext(): void
     {
         $this->expectException(DataServiceException::class);
 
@@ -48,7 +48,7 @@ class BusRegSearchViewListDataServiceTest extends AbstractDataServiceTestCase
     /**
      * @dataProvider provideFetchListData
      */
-    public function testFetchListData($context, $expected)
+    public function testFetchListData($context, $expected): void
     {
         $params = [
             'context' => $context,

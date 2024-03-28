@@ -8,11 +8,9 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
 class TranslateReplaceFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
      *
-     * @return TranslateReplace
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): TranslateReplace
     {

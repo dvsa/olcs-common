@@ -16,7 +16,7 @@ class EscapeHtmlFactoryTest extends TestCase
         $container = m::mock(ContainerInterface::class);
         $container->expects('get')
             ->andReturnUsing(
-                function ($class) {
+                static function ($class) {
                     $map = [
                         'HtmlPurifier' => m::mock(HtmlPurifier::class)
                     ];

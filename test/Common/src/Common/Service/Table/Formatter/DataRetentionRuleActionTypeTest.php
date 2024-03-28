@@ -9,7 +9,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
  */
 class DataRetentionRuleActionTypeTest extends TestCase
 {
-    public function testFormat()
+    public function testFormat(): void
     {
         $data = [
             "actionType" => [

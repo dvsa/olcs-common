@@ -13,5 +13,5 @@ class CommunityLicencesDataAnnul
      * @Form\Attributes({"value": "internal.community_licence.confirm_annul_licences"})
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $confirm = null;
+    public $confirm;
 }

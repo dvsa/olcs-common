@@ -2,7 +2,7 @@
 
 namespace CommonTest\View\Helper;
 
-use \Common\View\Helper\ApplicationName;
+use Common\View\Helper\ApplicationName;
 
 /**
  * Test ApplicationName view helper
@@ -14,7 +14,7 @@ class ApplicationNameTest extends \PHPUnit\Framework\TestCase
     /**
      * Test render without version
      */
-    public function testRenderWithoutApplicationName()
+    public function testRenderWithoutApplicationName(): void
     {
         $config = [];
         $sut = new ApplicationName($config);
@@ -26,7 +26,7 @@ class ApplicationNameTest extends \PHPUnit\Framework\TestCase
     /**
      * Test render with version
      */
-    public function testRenderWithApplicationName()
+    public function testRenderWithApplicationName(): void
     {
         $config = ['application-name' => 'Yo'];
         $sut = new ApplicationName($config);

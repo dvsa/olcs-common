@@ -1,6 +1,5 @@
 <?php
 
-
 namespace CommonTest\Validation\Service;
 
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
@@ -23,7 +22,7 @@ class ChainedValidatorTest extends TestCase
      * @param $validator
      * @param $expected
      */
-    public function testValidate($command, $validator, $expected)
+    public function testValidate($command, $validator, $expected): void
     {
         $sut = new ChainedValidator();
         $sut->addValidationChain($validator);

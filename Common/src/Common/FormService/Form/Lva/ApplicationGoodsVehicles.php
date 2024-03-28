@@ -14,7 +14,9 @@ use LmcRbacMvc\Service\AuthorizationService;
 class ApplicationGoodsVehicles extends AbstractGoodsVehicles
 {
     protected FormHelperService $formHelper;
+
     protected AuthorizationService $authService;
+
     private FormServiceManager $formServiceLocator;
 
     public function __construct(

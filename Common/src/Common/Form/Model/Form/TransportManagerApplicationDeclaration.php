@@ -13,16 +13,16 @@ class TransportManagerApplicationDeclaration
     /**
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TransportManager\ApplicationDeclaration")
      */
-    public $content = null;
+    public $content;
 
     /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("\Common\Form\Model\Fieldset\SubmitButton")
      */
-    public $formActions = null;
+    public $formActions;
 }

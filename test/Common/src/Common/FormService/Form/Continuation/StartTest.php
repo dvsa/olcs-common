@@ -15,17 +15,18 @@ class StartTest extends MockeryTestCase
 {
     /** @var StartForm */
     protected $sut;
+
     /** @var  m\MockInterface */
     private $formHelper;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->formHelper = m::mock(FormHelperService::class);
 
         $this->sut = new Start($this->formHelper);
     }
 
-    public function testGetForm()
+    public function testGetForm(): void
     {
         $form = m::mock(StartForm::class);
 

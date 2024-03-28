@@ -26,10 +26,6 @@ class AnnualTripsAbroadFieldsetPopulator implements FieldsetPopulatorInterface
     /**
      * Create service instance
      *
-     * @param TextFieldsetPopulator $textFieldsetPopulator
-     * @param TranslationHelperService $translator
-     * @param NiWarningConditionalAdder $niWarningConditionalAdder
-     * @param HtmlAdder $htmlAdder
      *
      * @return AnnualTripsAbroadFieldsetPopulator
      */
@@ -49,10 +45,8 @@ class AnnualTripsAbroadFieldsetPopulator implements FieldsetPopulatorInterface
      * Populate the fieldset with elements based on the supplied options array
      *
      * @param mixed $form
-     * @param Fieldset $fieldset
-     * @param array $options
      */
-    public function populate($form, Fieldset $fieldset, array $options)
+    public function populate($form, Fieldset $fieldset, array $options): void
     {
         $this->niWarningConditionalAdder->addIfRequired($fieldset, $options['showNiWarning']);
 

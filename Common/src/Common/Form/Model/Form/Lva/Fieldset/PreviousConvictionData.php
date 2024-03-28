@@ -13,7 +13,7 @@ class PreviousConvictionData
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\Attributes({"id":"","placeholder":""})
@@ -26,7 +26,7 @@ class PreviousConvictionData
      * })
      * @Form\Type("DynamicSelect")
      */
-    public $title = null;
+    public $title;
 
     /**
      * @Form\Attributes({"class":"long","id":""})
@@ -38,7 +38,7 @@ class PreviousConvictionData
      * @Form\Type("Text")
      * @Form\Filter("Laminas\Filter\StringTrim")
      */
-    public $forename = null;
+    public $forename;
 
     /**
      * @Form\Attributes({"class":"long","id":""})
@@ -50,7 +50,7 @@ class PreviousConvictionData
      * @Form\Type("Text")
      * @Form\Filter("Laminas\Filter\StringTrim")
      */
-    public $familyName = null;
+    public $familyName;
 
     /**
      * @Form\Required(true)
@@ -68,7 +68,7 @@ class PreviousConvictionData
      * @Form\Validator("Date", options={"format":"Y-m-d"})
      * @Form\Validator("\Common\Form\Elements\Validators\DateNotInFuture")
      */
-    public $convictionDate = null;
+    public $convictionDate;
 
     /**
      * @Form\Attributes({"class":"long","id":""})
@@ -79,7 +79,7 @@ class PreviousConvictionData
      * @Form\Required(true)
      * @Form\Type("Text")
      */
-    public $categoryText = null;
+    public $categoryText;
 
     /**
      * @Form\Attributes({"id":"","class":"long"})
@@ -93,7 +93,7 @@ class PreviousConvictionData
      * @Form\Type("TextArea")
      * @Form\Filter("Laminas\Filter\StringTrim")
      */
-    public $notes = null;
+    public $notes;
 
     /**
      * @Form\Attributes({"class":"long","id":""})
@@ -105,7 +105,7 @@ class PreviousConvictionData
      * @Form\Type("Text")
      * @Form\Filter("Laminas\Filter\StringTrim")
      */
-    public $courtFpn = null;
+    public $courtFpn;
 
     /**
      * @Form\Attributes({"class":"long","id":""})
@@ -117,5 +117,5 @@ class PreviousConvictionData
      * @Form\Type("Text")
      * @Form\Filter("Laminas\Filter\StringTrim")
      */
-    public $penalty = null;
+    public $penalty;
 }

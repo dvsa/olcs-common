@@ -10,12 +10,11 @@ class HtmlAdder
     /**
      * Populate the fieldset with a HTML element containing the specified markup
      *
-     * @param Fieldset $fieldset
      * @param string $name
      * @param string $markup
      * @param int $priority (optional)
      */
-    public function add(Fieldset $fieldset, $name, $markup, $priority = null)
+    public function add(Fieldset $fieldset, $name, $markup, $priority = null): void
     {
         $flags = [];
         if ($priority) {

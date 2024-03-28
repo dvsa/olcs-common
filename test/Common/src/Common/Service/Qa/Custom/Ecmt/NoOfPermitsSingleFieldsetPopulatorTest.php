@@ -23,7 +23,7 @@ class NoOfPermitsSingleFieldsetPopulatorTest extends MockeryTestCase
     /**
      * @dataProvider dpPopulate
      */
-    public function testPopulate($emissionsCategoryType, $expectedTextboxLabelKey, $expectedInsetSupplementKey)
+    public function testPopulate($emissionsCategoryType, $expectedTextboxLabelKey, $expectedInsetSupplementKey): void
     {
         $maxCanApplyFor = 21;
         $maxPermitted = 25;
@@ -36,8 +36,7 @@ class NoOfPermitsSingleFieldsetPopulatorTest extends MockeryTestCase
         $permitsRemaining = 40;
         $value = 20;
 
-        $expectedInsetAndBlurbMarkup = '<div class="govuk-inset-text">base inset text<br><br>' .
-            'translated inset supplement</div>' .
+        $expectedInsetAndBlurbMarkup = '<div class="govuk-inset-text">base inset text<br><br>translated inset supplement</div>' .
             '<p class="govuk-body"><strong>translated caption</strong><br>' .
             '<span class="hint">translated hint, maxPermitted = 21</span></p>';
 

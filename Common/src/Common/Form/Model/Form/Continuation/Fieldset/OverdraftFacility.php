@@ -17,7 +17,7 @@ class OverdraftFacility
      * })
      * @Form\ErrorMessage("continuations.finances.overdraftFacility.error")
      */
-    public $yesNo = null;
+    public $yesNo;
 
     /**
      * @Form\Type("Text")
@@ -67,5 +67,5 @@ class OverdraftFacility
      *      }
      * )
      */
-    public $yesContent = null;
+    public $yesContent;
 }

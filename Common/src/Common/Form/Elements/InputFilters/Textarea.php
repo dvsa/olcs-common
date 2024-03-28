@@ -1,9 +1,10 @@
 <?php
+
 namespace Common\Form\Elements\InputFilters;
 
 use Laminas\Form\Element\Textarea as LaminasElement;
 use Laminas\Validator as LaminasValidator;
-use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\InputFilter\InputProviderInterface;
 
 /**
  * @deprecated This only gets used once in \Olcs\Form\Model\Fieldset\ReverseTransactionDetails
@@ -15,9 +16,12 @@ use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
 class Textarea extends LaminasElement implements InputProviderInterface
 {
     protected $continueIfEmpty = false;
+
     protected $allowEmpty = false;
+
     protected $required = false;
-    protected $max = null;
+
+    protected $max;
 
     public function __construct($name = null, $options = [])
     {
@@ -26,8 +30,6 @@ class Textarea extends LaminasElement implements InputProviderInterface
 
     /**
      * Provide default input rules for this element.
-     *
-     * @return array
      */
     public function getInputSpecification(): array
     {
