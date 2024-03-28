@@ -57,7 +57,6 @@ class People extends InternalSearchAbstract
                 new Filter\FoundType(),
                 new Filter\FoundBy(),
                 new Filter\LicenceStatus(),
-                new Filter\DeletedStatus(),
                 new Filter\MergedStatus(),
             ];
         }
