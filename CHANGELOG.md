@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.7.0](https://github.com/dvsa/olcs-common/compare/v6.6.1...v6.7.0) (2024-03-28)
+
+
+### Features
+
+* Remove deleted status filter ([#82](https://github.com/dvsa/olcs-common/issues/82)) ([613ab07](https://github.com/dvsa/olcs-common/commit/613ab07ac63ede8a2dbffd38f4670bee2247e4b7))
+
 ## [6.6.1](https://github.com/dvsa/olcs-common/compare/v6.6.0...v6.6.1) (2024-03-26)
 
 
