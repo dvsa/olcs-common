@@ -3,7 +3,7 @@
 namespace Common\Form\Elements\InputFilters;
 
 use Common\Form\Elements\Types\Table;
-use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\InputFilter\InputProviderInterface;
 use Common\Form\Elements\Validators\TableRequiredValidator;
 use Common\Service\Table\TableBuilder;
 
@@ -19,8 +19,6 @@ class TableRequired extends Table implements InputProviderInterface
 {
     /**
      * Provide default input rules for this element.
-     *
-     * @return array
      */
     public function getInputSpecification(): array
     {
@@ -32,7 +30,7 @@ class TableRequired extends Table implements InputProviderInterface
             $label = $table->getVariable('required_label');
         }
 
-        $specification = [
+        return [
             'name' => $this->getName(),
             'required' => true,
             'continue_if_empty' => true,
@@ -44,7 +42,5 @@ class TableRequired extends Table implements InputProviderInterface
                 new TableRequiredValidator(['label' => $label])
             ]
         ];
-
-        return $specification;
     }
 }

@@ -17,13 +17,13 @@ class FormDateSelectTest extends MockeryTestCase
 {
     private $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $formInput = m::mock(FormInput::class)->makePartial();
 
         $translator = m::mock(Translator::class);
         $translator->shouldReceive('translate')->andReturnUsing(
-            fn($key) => 'translated-' . $key
+            static fn($key) => 'translated-' . $key
         );
 
         $container = m::mock(ContainerInterface::class);
@@ -40,17 +40,17 @@ class FormDateSelectTest extends MockeryTestCase
         $this->sut->setTranslator($translator);
     }
 
-    public function testRender()
+    public function testRender(): void
     {
         $element = new DateSelect('date');
         $markup = $this->sut->render($element);
 
-          $expected = '<div class="field inline-text"><label for="_month">translated-date-Month</label><input type="select" name="month" id="_month" pattern="&#x5C;d&#x2A;" maxlength="2" class="govuk-input&#x20;govuk-date-input__input&#x20;govuk-input--width-2" value=""></div> <div class="field inline-text"><label for="_day">translated-date-Day</label><input type="select" name="day" id="_day" pattern="&#x5C;d&#x2A;" maxlength="2" class="govuk-input&#x20;govuk-date-input__input&#x20;govuk-input--width-2" value=""></div>, <div class="field inline-text"><label for="_year">translated-date-Year</label><input type="select" name="year" id="_year" pattern="&#x5C;d&#x2A;" maxlength="4" class="govuk-input&#x20;govuk-date-input__input&#x20;govuk-input--width-4" value=""></div>';
+          $expected = '<div class="field inline-text"><label for="_day">translated-date-Day</label><input type="select" name="day" id="_day" pattern="&#x5C;d&#x2A;" maxlength="2" class="govuk-input&#x20;govuk-date-input__input&#x20;govuk-input--width-2" value=""></div> <div class="field inline-text"><label for="_month">translated-date-Month</label><input type="select" name="month" id="_month" pattern="&#x5C;d&#x2A;" maxlength="2" class="govuk-input&#x20;govuk-date-input__input&#x20;govuk-input--width-2" value=""></div> <div class="field inline-text"><label for="_year">translated-date-Year</label><input type="select" name="year" id="_year" pattern="&#x5C;d&#x2A;" maxlength="4" class="govuk-input&#x20;govuk-date-input__input&#x20;govuk-input--width-4" value=""></div>';
 
         $this->assertEquals($expected, $markup);
     }
 
-    public function testRenderWrongElement()
+    public function testRenderWrongElement(): void
     {
         $this->expectException(\Laminas\Form\Exception\InvalidArgumentException::class);
 
@@ -59,7 +59,7 @@ class FormDateSelectTest extends MockeryTestCase
         $this->sut->render($element);
     }
 
-    public function testRenderElementWithNoName()
+    public function testRenderElementWithNoName(): void
     {
         $this->expectException(\Laminas\Form\Exception\DomainException::class);
 

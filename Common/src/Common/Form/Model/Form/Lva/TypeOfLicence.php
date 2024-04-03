@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Form\Model\Form\Lva;
 
 use Laminas\Form\Annotation as Form;
@@ -25,12 +26,12 @@ class TypeOfLicence
      * @Form\Name("type-of-licence")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TypeOfLicence")
      */
-    public $typeOfLicence = null;
+    public $typeOfLicence;
 
     /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
      * @Form\Attributes({"class":"govuk-button-group"})
      */
-    public $formActions = null;
+    public $formActions;
 }

@@ -8,12 +8,10 @@ use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
-/**
- * IrhpPermitRangeType test
- */
 class IrhpPermitRangeTypeTest extends MockeryTestCase
 {
     protected $translator;
+
     protected $sut;
 
     protected function setUp(): void
@@ -25,13 +23,13 @@ class IrhpPermitRangeTypeTest extends MockeryTestCase
     /**
      * @dataProvider dpFormat
      */
-    public function testFormat($row, $expectedOutput)
+    public function testFormat($row, $expectedOutput): void
     {
         $column = ['name' => 'typeDescription'];
 
         $this->translator->shouldReceive('translate')
             ->andReturnUsing(
-                fn($key) => '_TRNSLT_' . $key
+                static fn($key) => '_TRNSLT_' . $key
             );
 
         $this->assertEquals(

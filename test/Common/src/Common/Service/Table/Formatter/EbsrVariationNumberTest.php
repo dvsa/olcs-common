@@ -3,6 +3,7 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\EbsrVariationNumber;
+use Common\View\Helper\Status;
 use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 use Laminas\View\HelperPluginManager;
 use Mockery as m;
@@ -16,7 +17,9 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class EbsrVariationNumberTest extends MockeryTestCase
 {
     protected $translator;
+
     protected $viewHelperManager;
+
     protected $sut;
 
     protected function setUp(): void
@@ -34,7 +37,7 @@ class EbsrVariationNumberTest extends MockeryTestCase
     /**
      * Tests empty string returned if there's no variation number set
      */
-    public function testFormatWithNoVariationNumber()
+    public function testFormatWithNoVariationNumber(): void
     {
         $this->assertEquals('', $this->sut->format([]));
     }
@@ -46,7 +49,7 @@ class EbsrVariationNumberTest extends MockeryTestCase
      *
      * @dataProvider dpNotShortNoticeProvider
      */
-    public function testFormatNotShortNotice($data)
+    public function testFormatNotShortNotice($data): void
     {
         $this->assertEquals(1234, $this->sut->format($data));
     }
@@ -82,7 +85,7 @@ class EbsrVariationNumberTest extends MockeryTestCase
      *
      * @dataProvider dpShortNoticeProvider
      */
-    public function testFormatWithShortNotice($data)
+    public function testFormatWithShortNotice($data): void
     {
         $statusLabel = 'status label';
 

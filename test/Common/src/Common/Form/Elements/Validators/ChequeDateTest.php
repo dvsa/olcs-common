@@ -5,6 +5,7 @@
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
+
 namespace CommonTest\Form\Elements\Validators;
 
 use Common\Form\Elements\Validators\ChequeDate;
@@ -16,6 +17,7 @@ use Common\Form\Elements\Validators\ChequeDate;
  */
 class ChequeDateTest extends \PHPUnit\Framework\TestCase
 {
+    public $sut;
     protected function setUp(): void
     {
         $this->sut = new ChequeDate();
@@ -26,7 +28,7 @@ class ChequeDateTest extends \PHPUnit\Framework\TestCase
      * @group date_validators
      * @dataProvider providerIsValid
      */
-    public function testIsValid($input, $expected)
+    public function testIsValid($input, $expected): void
     {
         $this->assertEquals($expected, $this->sut->isValid($input));
     }

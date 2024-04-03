@@ -19,7 +19,6 @@ class RefData extends AbstractListDataService
     /**
      * Create service instance
      *
-     * @param RefDataServices $refDataServices
      *
      * @return RefData
      */

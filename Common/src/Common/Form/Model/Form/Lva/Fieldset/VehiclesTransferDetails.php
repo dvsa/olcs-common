@@ -23,5 +23,5 @@ class VehiclesTransferDetails
      *      }
      * )
      */
-    public $licence = null;
+    public $licence;
 }

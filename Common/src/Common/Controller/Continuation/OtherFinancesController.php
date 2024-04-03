@@ -21,14 +21,9 @@ class OtherFinancesController extends AbstractContinuationController
     protected $currentStep = self::STEP_FINANCE;
 
     protected FormHelperService $formHelper;
+
     protected GuidanceHelperService $guidanceHelper;
 
-    /**
-     * @param NiTextTranslation $niTextTranslationUtil
-     * @param AuthorizationService $authService
-     * @param FormServiceManager $formServiceManager
-     * @param TranslationHelperService $translationHelper
-     */
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
@@ -74,8 +69,10 @@ class OtherFinancesController extends AbstractContinuationController
                     if ($totalFunds >= (float)$continuationDetail['financeRequired']) {
                         return $this->redirect()->toRoute('continuation/declaration', [], [], true);
                     }
+
                     return $this->redirect()->toRoute('continuation/insufficient-finances', [], [], true);
                 }
+
                 $this->addErrorMessage('unknown-error');
             }
         }
@@ -102,10 +99,8 @@ class OtherFinancesController extends AbstractContinuationController
      * Set the guidance message
      *
      * @param array $continuationDetail Continuation Detail data
-     *
-     * @return void
      */
-    private function setGuidanceMessage($continuationDetail)
+    private function setGuidanceMessage($continuationDetail): void
     {
         $financeRequired = number_format((int)$continuationDetail['financeRequired']);
         $shortByAmount = number_format(

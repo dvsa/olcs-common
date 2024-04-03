@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * @author Ian Lindsay <ian@hemera-business-services.co.uk>
@@ -9,7 +10,7 @@ namespace Common\Form\Elements\InputFilters;
 
 use Laminas\Form\Element\DateSelect as LaminasDateSelect;
 use Laminas\Validator as LaminasValidator;
-use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\InputFilter\InputProviderInterface;
 use Laminas\Validator\Date as DateValidator;
 
 /**
@@ -19,25 +20,24 @@ class HearingDateHasTime extends LaminasDateSelect implements InputProviderInter
 {
     /**
      * Provide default input rules for this element.
-     *
-     * @return array
      */
     public function getInputSpecification(): array
     {
-        $specification = [
+        return [
             'name' => $this->getName(),
             'required' => false,
             'filters' => [
                 [
                     'name'    => 'Callback',
                     'options' => [
-                        'callback' => function ($date) {
-                        // Convert the date to a specific format
-                            if (!is_array($date) || empty($date['year']) ||
-                                empty($date['month']) || empty($date['day'])) {
+                        'callback' => static function ($date) {
+                            // Convert the date to a specific format
+                            if (
+                                !is_array($date) || empty($date['year']) ||
+                                empty($date['month']) || empty($date['day'])
+                            ) {
                                 return null;
                             }
-
                             return $date['year'] . '-' . $date['month'] . '-' . $date['day'];
                         }
                     ]
@@ -48,7 +48,5 @@ class HearingDateHasTime extends LaminasDateSelect implements InputProviderInter
                 new \Common\Form\Elements\Validators\DateWithTime('hearingTime')
             ]
         ];
-
-        return $specification;
     }
 }

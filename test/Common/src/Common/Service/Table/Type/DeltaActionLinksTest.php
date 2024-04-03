@@ -18,10 +18,12 @@ use Common\Service\Table\Type\DeltaActionLinks;
 class DeltaActionLinksTest extends MockeryTestCase
 {
     protected $sut;
+
     protected $table;
+
     protected $sm;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sm = new ServiceManager();
 
@@ -35,7 +37,7 @@ class DeltaActionLinksTest extends MockeryTestCase
     /**
      * @dataProvider tableDataProvider
      */
-    public function testRender($data, $expected)
+    public function testRender($data, $expected): void
     {
         $mockTranslate = $this->getTranslator($data['action'] ?? null);
 
@@ -55,7 +57,7 @@ class DeltaActionLinksTest extends MockeryTestCase
                     'id' => 123,
                     'action' => 'A'
                 ],
-                '<button data-prevent-double-click="true" data-module="govuk-button" type="submit" class="right-aligned govuk-button govuk-button--secondary trigger-modal" '.
+                '<button data-prevent-double-click="true" data-module="govuk-button" type="submit" class="right-aligned govuk-button govuk-button--secondary trigger-modal" ' .
                     'name="table[action][delete][123]" aria-label="' . $escapedAriaRemove . '">Remove</button>'
             ],
             [
@@ -63,7 +65,7 @@ class DeltaActionLinksTest extends MockeryTestCase
                     'id' => 456,
                     'action' => 'D'
                 ],
-                '<button data-prevent-double-click="true" data-module="govuk-button" type="submit" class="right-aligned govuk-button govuk-button--secondary" '.
+                '<button data-prevent-double-click="true" data-module="govuk-button" type="submit" class="right-aligned govuk-button govuk-button--secondary" ' .
                     'name="table[action][restore][456]" aria-label="' . $escapedAriaRestore . '">Restore</button>'
             ],
             [
@@ -90,9 +92,12 @@ class DeltaActionLinksTest extends MockeryTestCase
 
         $translator = m::mock(Translator::class);
         $translator->expects('translate')->with(DeltaActionLinks::KEY_ACTION_LINKS_REMOVE)->andReturn('Remove')->times($removeTimes);
-        $translator->expects('translate')->with(DeltaActionLinks::KEY_ACTION_LINKS_REMOVE_ARIA)->andReturn('Remove Aria')->times($removeTimes);;
-        $translator->expects('translate')->with(DeltaActionLinks::KEY_ACTION_LINKS_RESTORE)->andReturn('Restore')->times($restoreTimes);;
-        $translator->expects('translate')->with(DeltaActionLinks::KEY_ACTION_LINKS_RESTORE_ARIA)->andReturn('Restore Aria')->times($restoreTimes);;
+        $translator->expects('translate')->with(DeltaActionLinks::KEY_ACTION_LINKS_REMOVE_ARIA)->andReturn('Remove Aria')->times($removeTimes);
+        ;
+        $translator->expects('translate')->with(DeltaActionLinks::KEY_ACTION_LINKS_RESTORE)->andReturn('Restore')->times($restoreTimes);
+        ;
+        $translator->expects('translate')->with(DeltaActionLinks::KEY_ACTION_LINKS_RESTORE_ARIA)->andReturn('Restore Aria')->times($restoreTimes);
+        ;
 
         return $translator;
     }

@@ -18,13 +18,13 @@ class OperatorRegisteredAddress
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $id = null;
+    public $id;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\Attributes({
@@ -36,7 +36,7 @@ class OperatorRegisteredAddress
      * @Form\Type("Text")
      * @Form\Filter("Laminas\Filter\StringTrim")
      */
-    public $addressLine1 = null;
+    public $addressLine1;
 
     /**
      * @Form\Attributes({
@@ -48,7 +48,7 @@ class OperatorRegisteredAddress
      * @Form\Required(false)
      * @Form\Type("Text")
      */
-    public $addressLine2 = null;
+    public $addressLine2;
 
     /**
      * @Form\Attributes({
@@ -60,7 +60,7 @@ class OperatorRegisteredAddress
      * @Form\Required(false)
      * @Form\Type("Text")
      */
-    public $addressLine3 = null;
+    public $addressLine3;
 
     /**
      * @Form\Attributes({
@@ -72,7 +72,7 @@ class OperatorRegisteredAddress
      * @Form\Required(false)
      * @Form\Type("Text")
      */
-    public $addressLine4 = null;
+    public $addressLine4;
 
     /**
      * @Form\Attributes({"class":"long","id":""})
@@ -80,7 +80,7 @@ class OperatorRegisteredAddress
      * @Form\Required(false)
      * @Form\Type("Text")
      */
-    public $town = null;
+    public $town;
 
     /**
      * @Form\Attributes({"id":""})
@@ -89,5 +89,5 @@ class OperatorRegisteredAddress
      * @Form\Filter("Dvsa\Olcs\Transfer\Filter\Postcode")
      * @Form\Validator("Dvsa\Olcs\Transfer\Validators\Postcode");
      */
-    public $postcode = null;
+    public $postcode;
 }

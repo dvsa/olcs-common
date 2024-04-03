@@ -17,25 +17,25 @@ class Addresses
      * @Form\Options({"label":"application_your-business_business-type.correspondence.label"})
      * @Form\Attributes({"id":"correspondenceAddress"})
      */
-    public $correspondence = null;
+    public $correspondence;
 
     /**
      * @Form\Name("correspondence_address")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Address")
      */
-    public $correspondenceAddress = null;
+    public $correspondenceAddress;
 
     /**
      * @Form\Name("contact")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\Contact")
      * @Form\Attributes({"id":"contactDetails"})
      */
-    public $contact = null;
+    public $contact;
 
     /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\SaveAndReturn")
      * @Form\Attributes({"class":"govuk-button-group"})
      */
-    public $formActions = null;
+    public $formActions;
 }

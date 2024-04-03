@@ -12,7 +12,6 @@ abstract class AbstractListDataService extends AbstractDataService implements Li
     /**
      * Create service instance
      *
-     * @param AbstractListDataServiceServices $abstractListDataServiceServices
      *
      * @return AbstractDataService
      */

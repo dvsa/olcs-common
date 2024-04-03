@@ -1,7 +1,8 @@
 <?php
+
 namespace Common\Form\Elements\Validators;
 
-use Laminas\Validator\AbstractValidator as AbstractValidator;
+use Laminas\Validator\AbstractValidator;
 use Traversable;
 use Laminas\Stdlib\ArrayUtils;
 
@@ -15,6 +16,7 @@ class DateLessThanOrEqual extends AbstractValidator
      * @const string
      */
     public const NOT_LESS_THAN_OR_EQUAL = 'notLessThanOrEqual';
+
     public const MISSING_TOKEN = 'missingToken';
 
     /**
@@ -38,6 +40,7 @@ class DateLessThanOrEqual extends AbstractValidator
      * @var string
      */
     protected $tokenString;
+
     protected $token;
 
     /**
@@ -74,7 +77,7 @@ class DateLessThanOrEqual extends AbstractValidator
      * Set token against which to compare
      *
      * @param  mixed $token
-     * @return Identical
+     * @return DateLessThanOrEqual
      */
     public function setToken($token)
     {
@@ -88,9 +91,7 @@ class DateLessThanOrEqual extends AbstractValidator
      * matches that token.
      *
      * @param  mixed $value
-     * @param  array $context
      * @return bool
-     * @throws Exception\RuntimeException if the token doesn't exist in the context array
      */
     public function isValid($value, array $context = null)
     {
@@ -99,7 +100,7 @@ class DateLessThanOrEqual extends AbstractValidator
         $c = $context[$this->getToken()];
         $compareValue = implode('-', [$c['year'], $c['month'], $c['day']]);
 
-        if (!($thisValue <= $compareValue)) {
+        if ($thisValue > $compareValue) {
             $this->error(self::NOT_LESS_THAN_OR_EQUAL);
             return false;
         }

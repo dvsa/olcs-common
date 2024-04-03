@@ -21,7 +21,7 @@ class TranslateableTextParameterHandlerTest extends MockeryTestCase
 
     private $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = new TranslateableTextParameterHandler();
 
@@ -31,7 +31,7 @@ class TranslateableTextParameterHandlerTest extends MockeryTestCase
         $this->sut->registerFormatter($this->helperName, $this->helper);
     }
 
-    public function testWithNoFormatter()
+    public function testWithNoFormatter(): void
     {
         $parameter = ['value' => '87'];
 
@@ -41,7 +41,7 @@ class TranslateableTextParameterHandlerTest extends MockeryTestCase
         );
     }
 
-    public function testWithFormatter()
+    public function testWithFormatter(): void
     {
         $unformattedValue = '42.00';
         $formattedValue = '42';
@@ -61,7 +61,7 @@ class TranslateableTextParameterHandlerTest extends MockeryTestCase
         );
     }
 
-    public function testExceptionWithUnknownFormatter()
+    public function testExceptionWithUnknownFormatter(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Unknown formatter permitStatus');

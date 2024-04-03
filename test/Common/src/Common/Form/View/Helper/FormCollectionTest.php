@@ -34,7 +34,7 @@ class FormCollectionTest extends MockeryTestCase
     /** @var  \Laminas\Form\FieldsetInterface | \Laminas\Form\ElementInterface */
     protected $element;
 
-    private function prepareElement($targetElement = 'Text')
+    private function prepareElement($targetElement = 'Text'): void
     {
         $this->element = new Collection('test');
         $this->element->setOptions(
@@ -55,7 +55,7 @@ class FormCollectionTest extends MockeryTestCase
     /**
      * @outputBuffering disabled
      */
-    public function testRenderWithNoRendererPlugin()
+    public function testRenderWithNoRendererPlugin(): void
     {
         $this->prepareElement();
         $view = new JsonRenderer();
@@ -70,7 +70,7 @@ class FormCollectionTest extends MockeryTestCase
     /**
      * @outputBuffering disabled
      */
-    public function testRenderWithHintAtBottom()
+    public function testRenderWithHintAtBottom(): void
     {
         $this->prepareElement();
 
@@ -89,7 +89,7 @@ class FormCollectionTest extends MockeryTestCase
     /**
      * @outputBuffering disabled
      */
-    public function testRender()
+    public function testRender(): void
     {
         $this->prepareElement();
 
@@ -106,7 +106,7 @@ class FormCollectionTest extends MockeryTestCase
     /**
      * @outputBuffering disabled
      */
-    public function testRenderWithFieldsetAsTargetElement()
+    public function testRenderWithFieldsetAsTargetElement(): void
     {
         $this->prepareElement('Fieldset');
 
@@ -123,7 +123,7 @@ class FormCollectionTest extends MockeryTestCase
     /**
      * @outputBuffering disabled
      */
-    public function testRenderForPostCodeElement()
+    public function testRenderForPostCodeElement(): void
     {
         $this->element = new PostcodeSearch('postcode');
 
@@ -142,7 +142,7 @@ class FormCollectionTest extends MockeryTestCase
     /**
      * @outputBuffering disabled
      */
-    public function testRenderForPostCodeElementWithMessages()
+    public function testRenderForPostCodeElementWithMessages(): void
     {
         $this->element = new PostcodeSearch('postcode');
         $this->element->setMessages(['Message']);
@@ -170,6 +170,7 @@ class FormCollectionTest extends MockeryTestCase
         $translator = new Translator();
         $translateHelper = new Translate();
         $translateHelper->setTranslator($translator);
+
         $doctype = m::mock(Doctype::class);
 
         $container = m::mock(ContainerInterface::class);
@@ -178,6 +179,7 @@ class FormCollectionTest extends MockeryTestCase
         $helpers->setService('form_element_errors', new Helper\FormElementErrors());
         $helpers->setService('translate', $translateHelper);
         $helpers->setService('doctype', $doctype);
+
         $view = new PhpRenderer();
         $view->setHelperPluginManager($helpers);
 
@@ -188,7 +190,7 @@ class FormCollectionTest extends MockeryTestCase
         return $viewHelper;
     }
 
-    public function testReadOnly()
+    public function testReadOnly(): void
     {
         $mockElement = m::mock(\Laminas\Form\ElementInterface::class);
         $mockElement->shouldReceive('getOption')->with('hint')->andReturnNull();
@@ -226,14 +228,14 @@ class FormCollectionTest extends MockeryTestCase
         $this->assertEquals('<ul class="definition-list readonly">element</ul>', $markup);
     }
 
-    public function testRenderForFileUploadListElementNotItems()
+    public function testRenderForFileUploadListElementNotItems(): void
     {
         $viewHelper = $this->prepareViewHelper();
 
         static::assertEquals('', $viewHelper(new FileUploadList('files'), 'formCollection'));
     }
 
-    public function testRenderForFileUploadListElement()
+    public function testRenderForFileUploadListElement(): void
     {
         $this->element = new FileUploadList('files');
         $this->element
@@ -256,7 +258,7 @@ class FormCollectionTest extends MockeryTestCase
         $mockView = m::mock($viewHelper->getView())->makePartial();
         $mockView
             ->shouldReceive('translate')->andReturnUsing(
-                fn($arg) => '_TRANSL_' . $arg
+                static fn($arg) => '_TRANSL_' . $arg
             );
         $viewHelper->setView($mockView);
 
@@ -266,8 +268,8 @@ class FormCollectionTest extends MockeryTestCase
             '<div class="help__text">' .
             '<h3 class="file__heading">_TRANSL_common.file-upload.table.col.FileName</h3>' .
             '<ul name="files" title="unit_attr1" data-group="files">' .
-            '<p class="hint">_TRANSL_@unit_hint@</p>'.
-            '<li name="file1" data-group="file1"></li>'.
+            '<p class="hint">_TRANSL_@unit_hint@</p>' .
+            '<li name="file1" data-group="file1"></li>' .
             '</ul>' .
             '</div>',
             $actual
@@ -277,7 +279,7 @@ class FormCollectionTest extends MockeryTestCase
     /**
      * @outputBuffering disabled
      */
-    public function testRenderForFileUploadListItemElement()
+    public function testRenderForFileUploadListItemElement(): void
     {
         $this->element = new FileUploadListItem('files');
 
@@ -291,7 +293,7 @@ class FormCollectionTest extends MockeryTestCase
     /**
      * @outputBuffering disabled
      */
-    public function testRenderForHoursWithMessages()
+    public function testRenderForHoursWithMessages(): void
     {
         $this->element = new HoursPerWeek('hpw');
         $this->element->setMessages(
@@ -314,7 +316,7 @@ class FormCollectionTest extends MockeryTestCase
         );
     }
 
-    public function testRenderRadioHorizontal()
+    public function testRenderRadioHorizontal(): void
     {
         $mockView = m::mock(PhpRenderer::class);
         $mockView->shouldReceive('plugin')->with('formrow')->once()->andReturn(
@@ -327,7 +329,7 @@ class FormCollectionTest extends MockeryTestCase
             m::mock(Helper\AbstractHelper::class)->shouldReceive('render')->getMock()
         );
         $mockView->shouldReceive('plugin')->with('formRadioHorizontal')->once()->andReturn(
-            fn() => "formRadioHorizontal MARKUP"
+            static fn() => "formRadioHorizontal MARKUP"
         );
         $mockView->expects('plugin')->with('doctype')->andReturn(
             m::mock(Doctype::class)
@@ -343,11 +345,11 @@ class FormCollectionTest extends MockeryTestCase
         $this->assertSame('<fieldset>formRadioHorizontal MARKUP</fieldset>', $output);
     }
 
-    public function testRenderRadioVertical()
+    public function testRenderRadioVertical(): void
     {
         $mockView = m::mock(PhpRenderer::class);
         $mockView->shouldReceive('plugin')->with('formRadioVertical')->once()->andReturn(
-            fn() => "formRadioVertical MARKUP"
+            static fn() => "formRadioVertical MARKUP"
         );
 
         $sut = new FormCollection();
@@ -364,7 +366,7 @@ class FormCollectionTest extends MockeryTestCase
      *
      * @outputBuffering disabled
      */
-    public function testRenderWithHintAndClass()
+    public function testRenderWithHintAndClass(): void
     {
         $this->prepareElement();
 

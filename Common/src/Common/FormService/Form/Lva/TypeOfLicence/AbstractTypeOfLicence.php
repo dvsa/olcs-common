@@ -15,6 +15,7 @@ use Laminas\Form\Form;
 abstract class AbstractTypeOfLicence extends AbstractLvaFormService
 {
     public const ALLOWED_OPERATOR_LOCATION_NI = 'NI';
+
     public const ALLOWED_OPERATOR_LOCATION_GB = 'GB';
 
     /**
@@ -123,10 +124,8 @@ abstract class AbstractTypeOfLicence extends AbstractLvaFormService
      *
      * @param Form   $form     Form
      * @param string $location Operator Location Code
-     *
-     * @return void
      */
-    public function setAndLockOperatorLocation($form, $location)
+    public function setAndLockOperatorLocation($form, $location): void
     {
         /** @var \Laminas\Form\Fieldset $typeOfLicenceFieldset */
         $typeOfLicenceFieldset = $form->get('type-of-licence');
@@ -155,10 +154,8 @@ abstract class AbstractTypeOfLicence extends AbstractLvaFormService
      * Alter form for NI applications
      *
      * @param Form $form Form
-     *
-     * @return void
      */
-    public function maybeAlterFormForNi($form)
+    public function maybeAlterFormForNi($form): void
     {
         if ($form->get('type-of-licence')->get('operator-location')->getValue() === 'Y') {
             $form->getInputFilter()->get('type-of-licence')->get('operator-type')->setRequired(false);
@@ -170,7 +167,7 @@ abstract class AbstractTypeOfLicence extends AbstractLvaFormService
      *
      * @param Form $form
      */
-    public function maybeAlterFormForGoodsStandardInternational($form)
+    public function maybeAlterFormForGoodsStandardInternational($form): void
     {
         $fieldset = $form->get('type-of-licence');
         $licenceTypeFieldset = $fieldset->get('licence-type');

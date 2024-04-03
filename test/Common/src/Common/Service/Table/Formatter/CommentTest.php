@@ -10,7 +10,7 @@ use Common\Service\Table\Formatter\Comment;
  */
 class CommentTest extends \PHPUnit\Framework\TestCase
 {
-    public function testFormat()
+    public function testFormat(): void
     {
         $sut = new Comment();
         $result = $sut->format(

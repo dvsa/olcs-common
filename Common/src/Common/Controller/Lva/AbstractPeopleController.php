@@ -28,27 +28,26 @@ abstract class AbstractPeopleController extends AbstractController
      * Needed by the Crud Table Trait
      */
     protected $section = 'people';
+
     protected string $baseRoute = 'lva-%s/people';
 
 
     protected FormHelperService $formHelper;
+
     protected FormServiceManager $formServiceManager;
+
     protected ScriptFactory $scriptFactory;
+
     protected VariationLvaService $variationLvaService;
+
     protected GuidanceHelperService $guidanceHelper;
-    protected $lvaAdapter; //ToDo: Use Union Type Hint when available in php 8.0
+
+    protected $lvaAdapter;
+
     protected FlashMessengerHelperService $flashMessengerHelper;
 
     /**
-     * @param NiTextTranslation $niTextTranslationUtil
-     * @param AuthorizationService $authService
-     * @param FormHelperService $formHelper
-     * @param FormServiceManager $formServiceManager
-     * @param ScriptFactory $scriptFactory
-     * @param VariationLvaService $variationLvaService
-     * @param GuidanceHelperService $guidanceHelper
      * @param $lvaAdapter
-     * @param FlashMessengerHelperService $flashMessengerHelper
      */
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
@@ -82,7 +81,7 @@ abstract class AbstractPeopleController extends AbstractController
         /* @var $adapter Adapters\AbstractPeopleAdapter */
         try {
             $this->lvaAdapter->loadPeopleData($this->lva, $this->getIdentifier());
-        } catch (\RuntimeException $ex) {
+        } catch (\RuntimeException $runtimeException) {
             return $this->notFoundAction();
         }
 
@@ -170,13 +169,11 @@ abstract class AbstractPeopleController extends AbstractController
         $request = $this->getRequest();
         if ($request->isPost()) {
             $data = (array) $request->getPost();
+        } elseif ($personData === false) {
+            $data['data'] = [];
         } else {
-            if ($personData === false) {
-                $data['data'] = [];
-            } else {
-                $data['data'] = $personData['person'];
-                $data['data']['position'] = $personData['position'];
-            }
+            $data['data'] = $personData['person'];
+            $data['data']['position'] = $personData['position'];
         }
 
         $params = [
@@ -267,10 +264,8 @@ abstract class AbstractPeopleController extends AbstractController
      * save person
      *
      * @param array $data data
-     *
-     * @return void
      */
-    private function savePerson($data)
+    private function savePerson($data): void
     {
         /* @var Adapters\AbstractPeopleAdapter $adapter */
         $adapter = $this->lvaAdapter;
@@ -319,10 +314,8 @@ abstract class AbstractPeopleController extends AbstractController
      * @param Form                               $form               form
      * @param \Common\Service\Table\TableBuilder $table              table builder
      * @param int                                $organisationTypeId organisation id
-     *
-     * @return void
      */
-    private function alterForm($form, \Common\Service\Table\TableBuilder $table, $organisationTypeId)
+    private function alterForm($form, \Common\Service\Table\TableBuilder $table, $organisationTypeId): void
     {
         $this->alterFormForLva($form);
 
@@ -339,10 +332,8 @@ abstract class AbstractPeopleController extends AbstractController
 
     /**
      * add guidance message
-     *
-     * @return void
      */
-    private function addGuidanceMessage()
+    private function addGuidanceMessage(): void
     {
         $guidanceLabel = 'selfserve-app-subSection-your-business-people-guidance';
         switch ($this->lvaAdapter->getOrganisationType()) {
@@ -374,25 +365,24 @@ abstract class AbstractPeopleController extends AbstractController
             if ($guidanceLabel !== null) {
                 $this->guidanceHelper->append($guidanceLabel);
             }
+
             if ($additionalGuidanceLabel !== null) {
                 $this->guidanceHelper->append($additionalGuidanceLabel);
             }
+        } elseif (
+            $this->lva === self::LVA_LIC
+            &&
+            (
+            ($this->lvaAdapter->isOrganisationLimited() &&
+                $this->lvaAdapter->getLicenceType() !== \Common\RefData::LICENCE_TYPE_SPECIAL_RESTRICTED) ||
+            $this->lvaAdapter->isOrganisationOther()
+            )
+        ) {
+            $this->variationLvaService->addVariationMessage($this->getLicenceId(), 'people');
         } else {
-            if (
-                $this->lva === self::LVA_LIC
-                &&
-                (
-                    ($this->lvaAdapter->isOrganisationLimited() &&
-                        $this->lvaAdapter->getLicenceType() !== \Common\RefData::LICENCE_TYPE_SPECIAL_RESTRICTED) ||
-                    $this->lvaAdapter->isOrganisationOther()
-                )
-            ) {
-                $this->variationLvaService->addVariationMessage($this->getLicenceId(), 'people');
-            } else {
-                $this->guidanceHelper->append(
-                    'selfserve-app-subSection-your-business-people-guidance-disabled'
-                );
-            }
+            $this->guidanceHelper->append(
+                'selfserve-app-subSection-your-business-people-guidance-disabled'
+            );
         }
     }
 
@@ -402,10 +392,8 @@ abstract class AbstractPeopleController extends AbstractController
      * @param Form   $form    form
      * @param string $mode    mode
      * @param array  $orgData organisation data
-     *
-     * @return void
      */
-    private function alterCrudForm($form, $mode, $orgData)
+    private function alterCrudForm($form, $mode, $orgData): void
     {
         if ($mode !== 'add') {
             $form->get('form-actions')->remove('addAnother');
@@ -543,7 +531,7 @@ abstract class AbstractPeopleController extends AbstractController
     {
         return array_filter(
             $data['data'],
-            fn($v) => $v !== null
+            static fn($v) => $v !== null
         );
     }
 
@@ -606,6 +594,7 @@ abstract class AbstractPeopleController extends AbstractController
         /* @var $adapter Adapters\AbstractPeopleAdapter */
         $adapter = $this->lvaAdapter;
         $adapter->loadPeopleData($this->lva, $this->getIdentifier());
+
         $id = $this->params('child_id');
         $ids = explode(',', $id);
         $adapter->restore($ids);
@@ -628,6 +617,7 @@ abstract class AbstractPeopleController extends AbstractController
         if (isset($personData['person']['disqualificationStatus'])) {
             return $personData['person']['disqualificationStatus'] !== 'None';
         }
+
         return false;
     }
 }

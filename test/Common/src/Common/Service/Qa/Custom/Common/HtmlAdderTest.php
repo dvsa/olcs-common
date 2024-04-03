@@ -29,16 +29,12 @@ class HtmlAdderTest extends MockeryTestCase
 
     private $fieldset;
 
-    private $htmlAdder;
-
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->fieldset = m::mock(Fieldset::class);
-
-        $this->htmlAdder = new HtmlAdder();
     }
 
-    public function testAddWithoutPriority()
+    public function testAddWithoutPriority(): void
     {
         $expectedFlags = [];
 
@@ -50,7 +46,7 @@ class HtmlAdderTest extends MockeryTestCase
         $htmlAdder->add($this->fieldset, self::ELEMENT_NAME, self::MARKUP);
     }
 
-    public function testAddWithPriority()
+    public function testAddWithPriority(): void
     {
         $priority = -100;
 

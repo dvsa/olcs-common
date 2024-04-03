@@ -24,18 +24,18 @@ class FormRowTest extends MockeryTestCase
     /**
      * @dataProvider provideTestInvoke
      */
-    public function testInvoke($element, $expected)
+    public function testInvoke($element, $expected): void
     {
         $mockHtmlHelper = m::mock(\Laminas\View\Helper\EscapeHtml::class);
         $mockHtmlHelper
             ->shouldReceive('__invoke')
             ->andReturnUsing(
-                fn($v) => $v === null ? $v : '@' . $v . '@'
+                static fn($v) => $v === null ? $v : '@' . $v . '@'
             );
 
         $mockElementHelper = m::mock(\Common\Form\View\Helper\Readonly\FormItem::class);
         $mockElementHelper->shouldReceive('__invoke')->andReturnUsing(
-            fn($v) => $v->getValue()
+            static fn($v) => $v->getValue()
         );
 
         $mockTableHelper = m::mock(\Common\Form\View\Helper\Readonly\FormTable::class);
@@ -45,7 +45,7 @@ class FormRowTest extends MockeryTestCase
         $mockTranslater
             ->shouldReceive('translate')
             ->andReturnUsing(
-                fn($v) => '_' . $v . '_'
+                static fn($v) => '_' . $v . '_'
             );
 
         $mockFormElm = m::mock(\Laminas\Form\ElementInterface::class);
@@ -141,8 +141,7 @@ class FormRowTest extends MockeryTestCase
             [$mockRemoveIfReadOnly, ''],
             'text' => [
                 'element' => $mockText,
-                'expect' => '<li class="definition-list__item readonly">' .
-                    '<dt>@_Label_@</dt><dd>_Value_</dd></li>',
+                'expect' => '<li class="definition-list__item readonly"><dt>@_Label_@</dt><dd>_Value_</dd></li>',
             ],
             'select' => [
                 'element' => $mockSelect,
@@ -151,8 +150,7 @@ class FormRowTest extends MockeryTestCase
             [$mockTable, '<table></table>'],
             'htmlTranslated' => [
                 'element' => $mockHtmlTranslated,
-                'expect' => '<li class="definition-list__item readonly">' .
-                    '<dt>@@</dt><dd>' . self::STANDARD_RENDER_RESULT . '</dd></li>',
+                'expect' => '<li class="definition-list__item readonly"><dt>@@</dt><dd>' . self::STANDARD_RENDER_RESULT . '</dd></li>',
             ],
             'htmlTranslatedNoLabel' => [
                 'element' => m::mock(\Common\Form\Elements\Types\HtmlTranslated::class)

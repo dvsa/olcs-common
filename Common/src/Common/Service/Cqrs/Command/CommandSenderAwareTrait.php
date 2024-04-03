@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Service\Cqrs\Command;
 
 /**
@@ -21,10 +22,8 @@ trait CommandSenderAwareTrait
 
     /**
      * Set Command sender
-     *
-     * @param CommandSender $commandSender
      */
-    public function setCommandSender(CommandSender $commandSender)
+    public function setCommandSender(CommandSender $commandSender): void
     {
         $this->commandSender = $commandSender;
     }

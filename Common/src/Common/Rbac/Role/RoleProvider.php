@@ -36,7 +36,7 @@ class RoleProvider implements RoleProviderInterface
      */
     public function getRoles(array $roleNames)
     {
-        if (empty($this->roles)) {
+        if ($this->roles === []) {
             $data = $this->queryService->send(RoleList::create([]));
 
             if (!$data->isOk()) {

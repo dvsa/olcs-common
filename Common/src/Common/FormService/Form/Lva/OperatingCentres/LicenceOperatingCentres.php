@@ -15,8 +15,11 @@ use LmcRbacMvc\Service\AuthorizationService;
 class LicenceOperatingCentres extends AbstractOperatingCentres
 {
     protected FormHelperService $formHelper;
+
     protected AuthorizationService $authService;
+
     protected $tableBuilder;
+
     protected FormServiceManager $formServiceLocator;
 
     public function __construct(
@@ -34,7 +37,7 @@ class LicenceOperatingCentres extends AbstractOperatingCentres
     protected function alterForm(Form $form, array $params)
     {
         $this->formServiceLocator->get('lva-licence')->alterForm($form);
-        parent::alterForm($form, $params);
+        return parent::alterForm($form, $params);
     }
 
     protected function alterFormForPsvLicences(Form $form, array $params)
@@ -59,9 +62,7 @@ class LicenceOperatingCentres extends AbstractOperatingCentres
     /**
      * Apply a padlock to the totCommunityLicences field using the specified translation key
      *
-     * @param Form $form
      * @param string $translationKey
-     *
      * @return void
      */
     protected function alterFormWithTranslationKey(Form $form, $translationKey)

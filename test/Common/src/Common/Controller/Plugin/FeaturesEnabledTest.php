@@ -16,7 +16,9 @@ use Laminas\Mvc\MvcEvent;
 class FeaturesEnabledTest extends MockeryTestCase
 {
     protected $action = 'action';
+
     protected $mvcEvent;
+
     protected $querySender;
 
     protected function setUp(): void
@@ -26,7 +28,7 @@ class FeaturesEnabledTest extends MockeryTestCase
         $this->querySender = m::mock(QuerySender::class);
     }
 
-    public function testInvokeWithEmptyConfig()
+    public function testInvokeWithEmptyConfig(): void
     {
         $this->querySender->shouldNotReceive('featuresEnabled');
         $sut = new FeaturesEnabled($this->querySender);
@@ -36,7 +38,7 @@ class FeaturesEnabledTest extends MockeryTestCase
     /**
      * @dataProvider dpTestInvoke
      */
-    public function testInvoke($config, $checkedToggles, $expectedResult, $numChecks)
+    public function testInvoke($config, $checkedToggles, $expectedResult, $numChecks): void
     {
         $this->querySender->shouldReceive('featuresEnabled')->times($numChecks)->with($checkedToggles)->andReturn($expectedResult);
         $sut = new FeaturesEnabled($this->querySender);

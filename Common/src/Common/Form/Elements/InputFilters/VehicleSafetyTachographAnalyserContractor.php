@@ -12,6 +12,7 @@ use Common\Form\Elements\Validators\VehicleSafetyTachographAnalyserContractorVal
 class VehicleSafetyTachographAnalyserContractor extends Text
 {
     protected $continueIfEmpty = true;
+
     protected $isAllowEmpty = false;
 
     /**

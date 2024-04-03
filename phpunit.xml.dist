@@ -9,6 +9,7 @@
 >
   <php>
     <ini name="date.timezone" value="UTC"/>
+    <ini name="intl.default_locale" value="en_GB"/>
     <ini name="memory_limit" value="4G"/>
   </php>
   <testsuites>

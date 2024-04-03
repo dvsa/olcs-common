@@ -27,21 +27,17 @@ abstract class AbstractAddressesController extends AbstractController
     ];
 
     protected string $section = 'addresses';
+
     protected string $baseRoute = 'lva-%s/addresses';
 
     protected FormHelperService $formHelper;
+
     protected FlashMessengerHelperService $flashMessengerHelper;
+
     protected FormServiceManager $formServiceManager;
+
     protected ScriptFactory $scriptFactory;
 
-    /**
-     * @param NiTextTranslation $niTextTranslationUtil
-     * @param AuthorizationService $authService
-     * @param FormHelperService $formHelper
-     * @param FlashMessengerHelperService $flashMessengerHelper
-     * @param FormServiceManager $formServiceManager
-     * @param ScriptFactory $scriptFactory
-     */
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
@@ -104,17 +100,14 @@ abstract class AbstractAddressesController extends AbstractController
 
         $hasProcessed = $this->formHelper->processAddressLookupForm($form, $request);
 
-        if (!$hasProcessed && $request->isPost()) {
-            if ($this->isValid($form, $formData)) {
-                $response = $this->save($formData);
-
-                if ($response !== null) {
-                    if ($response === true) {
-                        return $this->completeSection('addresses');
-                    }
-
-                    return $response;
+        if (!$hasProcessed && $request->isPost() && $this->isValid($form, $formData)) {
+            $response = $this->save($formData);
+            if ($response !== null) {
+                if ($response === true) {
+                    return $this->completeSection('addresses');
                 }
+
+                return $response;
             }
         }
 
@@ -184,7 +177,7 @@ abstract class AbstractAddressesController extends AbstractController
                 }
             }
 
-            if (!empty($error)) {
+            if ($error !== '' && $error !== '0') {
                 $this->flashMessengerHelper->addCurrentErrorMessage($error);
             } else {
                 $this->flashMessengerHelper->addUnknownError();
@@ -201,10 +194,8 @@ abstract class AbstractAddressesController extends AbstractController
      *
      * @param Form  $form Form
      * @param array $data Data
-     *
-     * @return void
      */
-    private function disableConsultantValidation(Form $form, array $data)
+    private function disableConsultantValidation(Form $form, array $data): void
     {
         if (!isset($data['consultant']) || $data['consultant']['add-transport-consultant'] !== 'N') {
             return;

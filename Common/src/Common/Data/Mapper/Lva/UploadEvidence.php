@@ -21,7 +21,8 @@ class UploadEvidence implements MapperInterface
     public static function mapFromResult(array $data)
     {
         $formData = [];
-        for ($i = 0; $i < count($data['operatingCentres']); $i++) {
+        $counter = count($data['operatingCentres']);
+        for ($i = 0; $i < $counter; ++$i) {
             $formData['operatingCentres'][$i]['adPlacedIn'] = $data['operatingCentres'][$i]['adPlacedIn'];
             $formData['operatingCentres'][$i]['aocId'] = $data['operatingCentres'][$i]['id'];
 
@@ -41,14 +42,13 @@ class UploadEvidence implements MapperInterface
      *
      * @param array $data API data
      * @param Form  $form The form
-     *
-     * @return void
      */
-    public static function mapFromResultForm(array $data, Form $form)
+    public static function mapFromResultForm(array $data, Form $form): void
     {
         $form->setData(self::mapFromResult($data));
+        $counter = count($data['operatingCentres']);
 
-        for ($i = 0; $i < count($data['operatingCentres']); $i++) {
+        for ($i = 0; $i < $counter; ++$i) {
             /** @var \Laminas\Form\InputFilterProviderFieldset $fieldset */
             $fieldset = $form->get('operatingCentres')->getFieldsets()[$i];
 
@@ -57,6 +57,7 @@ class UploadEvidence implements MapperInterface
             if (!empty($data['operatingCentres'][$i]['operatingCentre']['address']['postcode'])) {
                 $label .= ', ' . $data['operatingCentres'][$i]['operatingCentre']['address']['postcode'];
             }
+
             $fieldset->setLabel($label);
         }
     }
@@ -65,8 +66,6 @@ class UploadEvidence implements MapperInterface
      * Prepare form data for Save command
      *
      * @param array $data form data
-     *
-     * @return array
      */
     public static function mapFromForm(array $data): array
     {

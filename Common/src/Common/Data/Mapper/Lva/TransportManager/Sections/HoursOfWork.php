@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Common\Data\Mapper\Lva\TransportManager\Sections;
 
 class HoursOfWork extends AbstractSection implements TransportManagerSectionInterface
@@ -8,11 +7,17 @@ class HoursOfWork extends AbstractSection implements TransportManagerSectionInte
     use SectionSerializeTrait;
 
     private $hoursMon;
+
     private $hoursTue;
+
     private $hoursWed;
+
     private $hoursThu;
+
     private $hoursFri;
+
     private $hoursSat;
+
     private $hoursSun;
 
     /**

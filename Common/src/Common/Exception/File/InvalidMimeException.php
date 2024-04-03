@@ -9,5 +9,4 @@ namespace Common\Exception\File;
  */
 class InvalidMimeException extends \Exception
 {
-
 }

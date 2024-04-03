@@ -67,12 +67,12 @@ class TransportManagerHelperService
         ];
     }
 
-    public function removeTmTypeBothOption(Element $tmType)
+    public function removeTmTypeBothOption(Element $tmType): void
     {
         $this->formHelper->removeOption($tmType, 'tm_t_b');
     }
 
-    public function populateOtherLicencesTable(Fieldset $otherLicencesField, TableBuilder $otherLicencesTable)
+    public function populateOtherLicencesTable(Fieldset $otherLicencesField, TableBuilder $otherLicencesTable): void
     {
         $this->formHelper->populateFormTable($otherLicencesField, $otherLicencesTable);
     }
@@ -114,7 +114,7 @@ class TransportManagerHelperService
         $response = $this->queryService->send($this->transferAnnotationBuilder->createQuery($dto));
 
         if (!$response->isOk()) {
-            throw new \RuntimeException('Error fetching query '. get_class($dto));
+            throw new \RuntimeException('Error fetching query ' . get_class($dto));
         }
 
         return $response->getResult();
@@ -141,7 +141,7 @@ class TransportManagerHelperService
      * @param \Laminas\Form\Fieldset $fieldset
      * @param array               $tm
      */
-    public function alterPreviousHistoryFieldsetTm($fieldset, $tm)
+    public function alterPreviousHistoryFieldsetTm($fieldset, $tm): void
     {
         $convictionsAndPenaltiesTable = $this->tableService->prepareTable(
             'tm.convictionsandpenalties',
@@ -157,7 +157,7 @@ class TransportManagerHelperService
         $this->setConvictionsReadMoreLink($fieldset);
     }
 
-    public function alterPreviousHistoryFieldset(\Laminas\Form\Fieldset $fieldset, $tmId)
+    public function alterPreviousHistoryFieldset(\Laminas\Form\Fieldset $fieldset, $tmId): void
     {
         $transportManager = $this->getTransportManager($tmId);
         $convictionsAndPenaltiesTable = $this->getConvictionsAndPenaltiesTable($transportManager['id']);
@@ -205,7 +205,7 @@ class TransportManagerHelperService
      * @param \Laminas\Form\Element $element
      * @param array              $tm      Transport Manager data
      */
-    public function prepareOtherEmploymentTableTm($element, $tm)
+    public function prepareOtherEmploymentTableTm($element, $tm): void
     {
         $table = $this->tableService->prepareTable('tm.employments', $tm['employments']);
 

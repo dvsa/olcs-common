@@ -16,17 +16,17 @@ class PaymentSubmission
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $amount = null;
+    public $amount;
 
     /**
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $description = null;
+    public $description;
 
     /**
      * @Form\Attributes({
@@ -37,5 +37,5 @@ class PaymentSubmission
      * @Form\Options({"label": "submit-pay.button"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $submitPay = null;
+    public $submitPay;
 }

@@ -17,19 +17,20 @@ class LicenceChecklistTest extends MockeryTestCase
 {
     protected $mockTranslator;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->mockTranslator = m::mock(TranslationHelperService::class)
             ->shouldReceive('translate')
             ->andReturnUsing(
-                fn($arg) => $arg . '_translated'
+                static fn($arg) => $arg . '_translated'
             )
             ->getMock();
     }
+
     /**
      * @dataProvider operatingFromProvider
      */
-    public function testMapFromResultToView($key, $code)
+    public function testMapFromResultToView($key, $code): void
     {
         $in = [
             'licence' => [
@@ -396,7 +397,7 @@ class LicenceChecklistTest extends MockeryTestCase
         ];
     }
 
-    public function testMapPeopleSectionToView()
+    public function testMapPeopleSectionToView(): void
     {
         $in = [
             [
@@ -445,7 +446,7 @@ class LicenceChecklistTest extends MockeryTestCase
         );
     }
 
-    public function testMapVehiclesSectionToView()
+    public function testMapVehiclesSectionToView(): void
     {
         $in = [
             'goodsOrPsv' => [
@@ -487,7 +488,7 @@ class LicenceChecklistTest extends MockeryTestCase
         $this->assertEquals($out, LicenceChecklist::mapVehiclesSectionToView($in, $this->mockTranslator));
     }
 
-    public function testMapUsersSectionToView()
+    public function testMapUsersSectionToView(): void
     {
         $in = [
             'licNo' => '1234',
@@ -573,7 +574,7 @@ class LicenceChecklistTest extends MockeryTestCase
     /**
      * @dataProvider dpMapOperatingCentresSectionToView
      */
-    public function testMapOperatingCentresSectionToView($canHaveTrailers, $isMixedWithLgv, $expected)
+    public function testMapOperatingCentresSectionToView($canHaveTrailers, $isMixedWithLgv, $expected): void
     {
         $in = [
             'licence' => [
@@ -703,7 +704,7 @@ class LicenceChecklistTest extends MockeryTestCase
         ];
     }
 
-    public function testMapTransportManagerSectionToView()
+    public function testMapTransportManagerSectionToView(): void
     {
         $in = [
             'tmLicences' => [
@@ -758,7 +759,7 @@ class LicenceChecklistTest extends MockeryTestCase
         $this->assertEquals($out, LicenceChecklist::mapTransportManagerSectionToView($in, $this->mockTranslator));
     }
 
-    public function testMapSafetyInspectorsSectionToView()
+    public function testMapSafetyInspectorsSectionToView(): void
     {
         $in = [
             'workshops' => [

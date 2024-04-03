@@ -18,8 +18,6 @@ class RefDataServices
     /**
      * Create service instance
      *
-     * @param AbstractListDataServiceServices $abstractListDataServiceServices
-     * @param LanguagePreference $languagePreferenceService
      *
      * @return RefDataServices
      */
@@ -33,8 +31,6 @@ class RefDataServices
 
     /**
      * Return the AbstractListDataServiceServices
-     *
-     * @return AbstractListDataServiceServices
      */
     public function getAbstractListDataServiceServices(): AbstractListDataServiceServices
     {
@@ -43,8 +39,6 @@ class RefDataServices
 
     /**
      * Return the LanguagePreference service
-     *
-     * @return LanguagePreference
      */
     public function getLanguagePreferenceService(): LanguagePreference
     {

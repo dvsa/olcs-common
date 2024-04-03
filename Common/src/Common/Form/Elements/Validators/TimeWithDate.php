@@ -1,14 +1,8 @@
 <?php
 
-/**
- * Checks that if a time is entered then the corresponding date is also set
- * (Used on Impoundings)
- *
- * @author Ian Lindsay <ian.lindsay@valtech.co.uk>
- */
 namespace Common\Form\Elements\Validators;
 
-use Laminas\Validator\AbstractValidator as AbstractValidator;
+use Laminas\Validator\AbstractValidator;
 use Traversable;
 use Laminas\Stdlib\ArrayUtils;
 use Laminas\Validator\Date as DateValidator;
@@ -16,8 +10,6 @@ use Laminas\Validator\Date as DateValidator;
 /**
  * Checks that if a time is entered then the corresponding date is also set
  * (Used on Impoundings)
- *
- * @author Ian Lindsay <ian.lindsay@valtech.co.uk>
  */
 class TimeWithDate extends AbstractValidator
 {
@@ -26,6 +18,7 @@ class TimeWithDate extends AbstractValidator
      * @const string
      */
     public const MISSING_DATE = 'missingDate';
+
     public const MISSING_TOKEN = 'missingToken';
 
     /**
@@ -49,6 +42,7 @@ class TimeWithDate extends AbstractValidator
      * @var string
      */
     protected $tokenString;
+
     protected $token;
 
     /**
@@ -85,7 +79,7 @@ class TimeWithDate extends AbstractValidator
      * Set token against which to compare
      *
      * @param  mixed $token
-     * @return Identical
+     * @return TimeWithDate
      */
     public function setToken($token)
     {
@@ -97,9 +91,7 @@ class TimeWithDate extends AbstractValidator
     /**
      * Checks whether the corresponding date field contains a valid date
      *
-     * @param  array $context
      * @return bool
-     * @throws Exception\RuntimeException if the token doesn't exist in the context array
      */
     public function isValid($value, array $context = null)
     {

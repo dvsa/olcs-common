@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Controller\Traits;
 
 use Common\Controller\Traits\GenericMethods;
@@ -11,23 +13,23 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 
 /**
- * @covers \Common\Controller\Traits\GenericMethods
+ * @covers GenericMethods
  */
 class GenericMethodsTest extends MockeryTestCase
 {
-    /** @var  GenericMethods | m\MockInterface */
+    /** @var  GenericMethodsStub | m\MockInterface */
     private $sut;
 
     /** @var  m\MockInterface | FormHelperService */
     private $mockHlpForm;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->mockHlpForm = m::mock(FormHelperService::class);
         $this->sut = m::mock(GenericMethodsStub::class, [$this->mockHlpForm])->makePartial();
     }
 
-    public function testGetForm()
+    public function testGetForm(): void
     {
         $class = 'unit_path_to_class';
 
@@ -45,10 +47,10 @@ class GenericMethodsTest extends MockeryTestCase
         static::assertSame($mockForm, $this->sut->getForm($class));
     }
 
-    public function testGenerateFormWithData()
+    public function testGenerateFormWithData(): void
     {
         $class = 'unit_path_to_class';
-        $callback = function () {
+        $callback = static function () {
         };
         $data = ['unit_data'];
         $fieldVals = ['unit_fieldValues'];

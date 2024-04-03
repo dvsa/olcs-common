@@ -17,8 +17,6 @@ class CurrencyFormatter extends AbstractHelper
      * Return a formatted Monetary Value
      *
      * @param string|null $value Parameters
-     *
-     * @return string
      */
     public function __invoke(?string $value): string
     {
@@ -35,7 +33,7 @@ class CurrencyFormatter extends AbstractHelper
         }
 
         $formatted = self::PREFIX . $pounds;
-        if ($pence != '00') {
+        if ($pence !== '00') {
             $formatted .= '.' . $pence;
         }
 

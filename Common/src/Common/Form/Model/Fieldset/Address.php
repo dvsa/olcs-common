@@ -18,13 +18,13 @@ class Address
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $id = null;
+    public $id;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\Options({
@@ -34,7 +34,7 @@ class Address
      * @Form\Type("Common\Form\Elements\Types\PostcodeSearch")
      * @Form\Flags({"priority": 100})
      */
-    public $searchPostcode = null;
+    public $searchPostcode;
 
     /**
      * @Form\Attributes({
@@ -54,7 +54,7 @@ class Address
      * @Form\Filter("Laminas\Filter\StringTrim")
      * @Form\Validator("Laminas\Validator\StringLength", options={"min":0,"max":90})
      */
-    public $addressLine1 = null;
+    public $addressLine1;
 
     /**
      * @Form\Attributes({
@@ -67,7 +67,7 @@ class Address
      * @Form\Type("Text")
      * @Form\Validator("Laminas\Validator\StringLength", options={"min":0,"max":90})
      */
-    public $addressLine2 = null;
+    public $addressLine2;
 
     /**
      * @Form\Attributes({
@@ -80,7 +80,7 @@ class Address
      * @Form\Type("Text")
      * @Form\Validator("Laminas\Validator\StringLength", options={"min":0,"max":100})
      */
-    public $addressLine3 = null;
+    public $addressLine3;
 
     /**
      * @Form\Attributes({"class":"long","id":""})
@@ -89,7 +89,7 @@ class Address
      * @Form\Type("Text")
      * @Form\Validator("Laminas\Validator\StringLength", options={"min":0,"max":35})
      */
-    public $addressLine4 = null;
+    public $addressLine4;
 
     /**
      * @Form\Attributes({"class":"long","id":"addressTown"})
@@ -105,7 +105,7 @@ class Address
      * @Form\Filter("Laminas\Filter\StringTrim")
      * @Form\Validator("Laminas\Validator\StringLength", options={"min":0,"max":30})
      */
-    public $town = null;
+    public $town;
 
     /**
      * @Form\Options({
@@ -119,7 +119,7 @@ class Address
      * @Form\Validator("Laminas\Validator\NotEmpty", options={"null"})
      * @Form\Validator("Dvsa\Olcs\Transfer\Validators\Postcode")
      */
-    public $postcode = null;
+    public $postcode;
 
     /**
      * @Form\Attributes({"id":"","placeholder":"","value":"GB"})
@@ -135,5 +135,5 @@ class Address
      * })
      * @Form\Type("DynamicSelect")
      */
-    public $countryCode = null;
+    public $countryCode;
 }

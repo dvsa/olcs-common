@@ -34,7 +34,7 @@ class QueryServiceFactory implements FactoryInterface
             $container->get('ApiRouter'),
             $client,
             $container->get('CqrsRequest'),
-            isset($config['debug']['showApiMessages']) && $config['debug']['showApiMessages'] ? true : false,
+            isset($config['debug']['showApiMessages']) && $config['debug']['showApiMessages'],
             $container->get('Helper\FlashMessenger'),
             new Container($sessionName)
         );

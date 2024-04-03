@@ -12,7 +12,6 @@ class StandardAndCabotageYesNoRadioValidator extends AbstractValidator
     /**
      * Create service instance
      *
-     * @param Radio $yesContentElement
      *
      * @return StandardAndCabotageYesNoRadioValidator
      */
@@ -30,7 +29,7 @@ class StandardAndCabotageYesNoRadioValidator extends AbstractValidator
             $this->yesContentElement->setMessages(
                 ['qanda.bilaterals.standard-and-cabotage.not-selected-message']
             );
-    
+
             return false;
         }
 

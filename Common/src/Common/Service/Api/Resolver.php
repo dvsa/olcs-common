@@ -7,10 +7,11 @@ use Laminas\ServiceManager\AbstractPluginManager;
 /**
  * Class Resolver
  * @package Common\Service\Api
+ * @template-extends AbstractPluginManager<object>
  */
 class Resolver extends AbstractPluginManager
 {
-    protected $instanceOf = null;
+    protected $instanceOf;
 
     /**
      * @deprecated

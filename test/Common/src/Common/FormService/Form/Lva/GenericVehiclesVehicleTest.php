@@ -17,14 +17,14 @@ class GenericVehiclesVehicleTest extends MockeryTestCase
 
     protected $formHelper;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);
 
         $this->sut = new GenericVehiclesVehicle($this->formHelper);
     }
 
-    public function testAlterFormNoOp()
+    public function testAlterFormNoOp(): void
     {
         $mockForm = m::mock();
         $params = [
@@ -36,7 +36,7 @@ class GenericVehiclesVehicleTest extends MockeryTestCase
         $this->assertNull($this->sut->alterForm($mockForm, $params));
     }
 
-    public function testAlterFormAddCantAddAnother()
+    public function testAlterFormAddCantAddAnother(): void
     {
         $mockForm = m::mock();
         $params = [
@@ -57,7 +57,7 @@ class GenericVehiclesVehicleTest extends MockeryTestCase
         $this->assertNull($this->sut->alterForm($mockForm, $params));
     }
 
-    public function testAlterFormEdit()
+    public function testAlterFormEdit(): void
     {
         $mockForm = m::mock();
         $params = [

@@ -15,21 +15,21 @@ class OperatingCentre
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\Name("address")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Address")
      * @Form\Options({"label":"Address"})
      */
-    public $address = null;
+    public $address;
 
     /**
      * @Form\Name("data")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\OperatingCentreData")
      * @Form\Options({"label":"application_operating-centres_authorisation-sub-action.data"})
      */
-    public $data = null;
+    public $data;
 
     /**
      * @Form\Name("advertisements")
@@ -40,12 +40,12 @@ class OperatingCentre
      *     "fieldset-data-group": "advertisements",
      * })
      */
-    public $advertisements = null;
+    public $advertisements;
 
     /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormCrudActions")
      * @Form\Attributes({"class":"govuk-button-group"})
      */
-    public $formActions = null;
+    public $formActions;
 }

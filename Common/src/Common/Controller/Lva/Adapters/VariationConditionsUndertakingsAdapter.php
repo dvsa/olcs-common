@@ -10,11 +10,16 @@ class VariationConditionsUndertakingsAdapter extends AbstractConditionsUndertaki
 {
     protected $tableName = 'lva-variation-conditions-undertakings';
 
-    public const ACTION_ADDED = 'A'; // Record added to the application
-    public const ACTION_EXISTING = 'E'; // Unchanged record against the licence
-    public const ACTION_CURRENT = 'C'; // Current version of record updated on the application
-    public const ACTION_UPDATED = 'U'; // Record updated on the application
-    public const ACTION_DELETED = 'D'; // Record deleted on the application
+    public const ACTION_ADDED = 'A';
+     // Record added to the application
+    public const ACTION_EXISTING = 'E';
+     // Unchanged record against the licence
+    public const ACTION_CURRENT = 'C';
+     // Current version of record updated on the application
+    public const ACTION_UPDATED = 'U';
+     // Record updated on the application
+    public const ACTION_DELETED = 'D';
+     // Record deleted on the application
     public const ACTION_REMOVED = 'R'; // The corresponding licence record, to the delta delete record
 
     public function __construct(ContainerInterface $container)
@@ -25,7 +30,7 @@ class VariationConditionsUndertakingsAdapter extends AbstractConditionsUndertaki
     /**
      * Attach the relevant scripts to the main page
      */
-    public function attachMainScripts()
+    public function attachMainScripts(): void
     {
         $this->container->get(ScriptFactory::class)->loadFile('lva-crud-delta');
     }
@@ -41,15 +46,14 @@ class VariationConditionsUndertakingsAdapter extends AbstractConditionsUndertaki
         if (!isset($data['action'])) {
             return true;
         }
+
         return in_array($data['action'], ['', self::ACTION_ADDED, self::ACTION_EXISTING, self::ACTION_UPDATED]);
     }
 
     /**
      * Remove the restore button
-     *
-     * @param TableBuilder $table
      */
-    public function alterTable(TableBuilder $table)
+    public function alterTable(TableBuilder $table): void
     {
         // prevent PMD error
         unset($table);

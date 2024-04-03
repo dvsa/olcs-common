@@ -89,6 +89,7 @@ trait LicenceSafetyControllerTrait
                 'safetyDocuments' => $licence['safetyDocuments']
             ];
         }
+
         return $this->safetyData;
     }
 

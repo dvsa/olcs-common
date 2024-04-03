@@ -11,5 +11,4 @@ use Common\Service\Data\Interfaces\ListData;
  */
 interface ListDataInterface extends ListData
 {
-
 }

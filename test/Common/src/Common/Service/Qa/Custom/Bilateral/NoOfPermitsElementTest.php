@@ -21,12 +21,12 @@ class NoOfPermitsElementTest extends MockeryTestCase
 
     private $noOfPermitsElement;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->noOfPermitsElement = new NoOfPermitsElement(self::ELEMENT_NAME);
     }
 
-    public function testGetInputSpecification()
+    public function testGetInputSpecification(): void
     {
         $expectedInputSpecification = [
             'name' => self::ELEMENT_NAME,
@@ -78,7 +78,7 @@ class NoOfPermitsElementTest extends MockeryTestCase
         );
     }
 
-    public function testGetMaxLengthAttribute()
+    public function testGetMaxLengthAttribute(): void
     {
         $this->assertEquals(
             NoOfPermitsElement::MAX_LENGTH,

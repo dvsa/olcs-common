@@ -1,10 +1,10 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Internal licence conversation link
  */
+
+declare(strict_types=1);
 
 namespace Common\Service\Table\Formatter;
 
@@ -21,13 +21,11 @@ use Laminas\Router\Http\RouteMatch;
 class InternalConversationLink implements FormatterPluginManagerInterface
 {
     private UrlHelperService $urlHelper;
-    private RefDataStatus $refDataStatus;
     private RouteMatch $route;
 
     public function __construct(UrlHelperService $urlHelper, RefDataStatus $refDataStatus, RouteMatch $route)
     {
         $this->urlHelper = $urlHelper;
-        $this->refDataStatus = $refDataStatus;
         $this->route = $route;
     }
 

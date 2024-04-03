@@ -20,19 +20,21 @@ class LicenceChecklistTest extends MockeryTestCase
 {
     /** @var LicenceChecklist */
     protected $sut;
+
     /** @var  m\MockInterface */
     private $formHelper;
+
     /** @var  m\MockInterface */
     protected $urlHelper;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->formHelper = m::mock(FormHelperService::class);
         $this->urlHelper = m::mock(UrlHelperService::class);
         $this->sut = new LicenceChecklist($this->formHelper, $this->urlHelper);
     }
 
-    public function testAlterForm()
+    public function testAlterForm(): void
     {
         $form = m::mock(LicenceChecklistForm::class)
             ->shouldReceive('get')
@@ -163,7 +165,7 @@ class LicenceChecklistTest extends MockeryTestCase
     /**
      * @dataProvider dpAlterOperatingCentresSection
      */
-    public function testAlterOperatingCentresSection($vehicleTypeId, $updatedLabel, $updatedNotCheckedMessage)
+    public function testAlterOperatingCentresSection($vehicleTypeId, $updatedLabel, $updatedNotCheckedMessage): void
     {
         $operatingCentresCheckbox = m::mock(CheckboxAdvanced::class)->makePartial();
         $operatingCentresCheckbox->setLabel('existing-label');
@@ -217,7 +219,7 @@ class LicenceChecklistTest extends MockeryTestCase
         ];
     }
 
-    public function testAlterContinueButton()
+    public function testAlterContinueButton(): void
     {
         $sut = m::mock(LicenceChecklist::class)->makePartial()->shouldAllowMockingProtectedMethods();
 

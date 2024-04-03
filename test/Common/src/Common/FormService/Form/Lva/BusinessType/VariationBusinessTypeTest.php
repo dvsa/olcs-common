@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Common\FormService\Form\Lva\BusinessType;
 
+use Common\FormService\Form\Lva\Variation;
 use Common\Service\Helper\FormHelperService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -18,6 +21,14 @@ use LmcRbacMvc\Service\AuthorizationService;
 class VariationBusinessTypeTest extends MockeryTestCase
 {
     /**
+     * @var \Mockery\LegacyMockInterface
+     */
+    public $authService;
+    /**
+     * @var \Mockery\LegacyMockInterface
+     */
+    public $guidanceService;
+    /**
      * @var VariationBusinessType
      */
     protected $sut;
@@ -26,7 +37,7 @@ class VariationBusinessTypeTest extends MockeryTestCase
 
     protected $fh;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->fsm = m::mock(\Common\FormService\FormServiceManager::class)->makePartial();
         $this->fh = m::mock(FormHelperService::class)->makePartial();
@@ -36,7 +47,7 @@ class VariationBusinessTypeTest extends MockeryTestCase
         $this->sut = new VariationBusinessType($this->fh, $this->authService, $this->guidanceService, $this->fsm);
     }
 
-    public function testGetForm()
+    public function testGetForm(): void
     {
         $hasInforceLicences = true;
         $hasOrganisationSubmittedLicenceApplication = false;
@@ -48,12 +59,11 @@ class VariationBusinessTypeTest extends MockeryTestCase
             ->with('Lva\BusinessType')
             ->andReturn($mockForm);
 
-        $mockApplication = m::mock(FormServiceInterface::class);
-        $mockApplication->shouldReceive('alterForm')
-            ->once()
+        $mockVariation = m::mock(Variation::class);
+        $mockVariation->expects('alterForm')
             ->with($mockForm);
 
-        $this->fsm->setService('lva-variation', $mockApplication);
+        $this->fsm->setService('lva-variation', $mockVariation);
 
         $form = $this->sut->getForm($hasInforceLicences, $hasOrganisationSubmittedLicenceApplication);
 

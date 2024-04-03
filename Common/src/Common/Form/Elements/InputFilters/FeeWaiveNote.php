@@ -3,9 +3,10 @@
 /**
  * Fee waive note
  */
+
 namespace Common\Form\Elements\InputFilters;
 
-use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\InputFilter\InputProviderInterface;
 
 /**
  * Fee waive note
@@ -14,12 +15,10 @@ class FeeWaiveNote extends TexareatMax255Min5 implements InputProviderInterface
 {
     /**
      * Provide default input rules for this element.
-     *
-     * @return array
      */
     public function getInputSpecification(): array
     {
-        $specification = [
+        return [
             'name' => $this->getName(),
             'required' => true,
             'filters' => [
@@ -28,7 +27,7 @@ class FeeWaiveNote extends TexareatMax255Min5 implements InputProviderInterface
             'validators' => [
                 [
                     'name' => \Laminas\Validator\StringLength::class,
-                    'options'=> [
+                    'options' => [
                         'min' => 5,
                         'max' => 255,
                         'messages' => [
@@ -39,13 +38,11 @@ class FeeWaiveNote extends TexareatMax255Min5 implements InputProviderInterface
                 ],
                 [
                     'name' => \Laminas\Validator\NotEmpty::class,
-                    'options'=> [
+                    'options' => [
                         'type' => \Laminas\Validator\NotEmpty::NULL
                     ]
                 ]
             ]
         ];
-
-        return $specification;
     }
 }

@@ -9,8 +9,6 @@ class InsufficientFinancesForm extends Form
 {
     /**
      * Override how this form is validated
-     *
-     * @return bool
      */
     public function isValid(): bool
     {

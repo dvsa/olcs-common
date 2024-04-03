@@ -40,7 +40,6 @@ class OperatingCentre extends InternalSearchAbstract
     public function getFilters()
     {
         if (empty($this->filters)) {
-
             $this->filters = [
                 new Filter\EntityType(),
                 new Filter\LicenceType(),
@@ -66,19 +65,18 @@ class OperatingCentre extends InternalSearchAbstract
         return [
             [
                 'title' => 'Licence number',
-                'name'=> 'licNo',
-                'formatter' => fn($data) => '<a class="govuk-link" href="/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>/'
+                'name' => 'licNo',
+                'formatter' => static fn($data) => '<a class="govuk-link" href="/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>/'
                 . '<br />' . $data['licStatusDesc']
             ],
             [
                 'title' => 'Operator name',
-                'name'=> 'orgName',
-                'formatter' => fn($data) => '<a class="govuk-link" href="/operator/' . $data['orgId'] . '">' . $data['orgName'] . '</a>'
+                'name' => 'orgName',
+                'formatter' => static fn($data) => '<a class="govuk-link" href="/operator/' . $data['orgId'] . '">' . $data['orgName'] . '</a>'
             ],
             [
                 'title' => 'Address',
-                'formatter' => function ($row) {
-
+                'formatter' => static function ($row) {
                     $address = [
 
                         $row['street'],
@@ -86,7 +84,6 @@ class OperatingCentre extends InternalSearchAbstract
                         '<br />' . $row['town'],
                         $row['postcode']
                     ];
-
                     return implode(', ', $address);
                 }
             ],

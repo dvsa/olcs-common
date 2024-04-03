@@ -20,12 +20,6 @@ class SuccessController extends AbstractContinuationController
     /** @var string */
     protected $layout = 'pages/continuation-success';
 
-    /**
-     * @param NiTextTranslation $niTextTranslationUtil
-     * @param AuthorizationService $authService
-     * @param FormServiceManager $formServiceManager
-     * @param TranslationHelperService $translationHelper
-     */
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,

@@ -12,7 +12,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class UserTypesListDataServiceTest extends MockeryTestCase
 {
-    public function testFetchListOptions()
+    public function testFetchListOptions(): void
     {
         $sut = new UserTypesListDataService();
 

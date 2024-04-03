@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace CommonTest\Form\Elements\Custom;
 
 use Common\Form\Elements\Custom\MonthSelect;
@@ -18,12 +19,12 @@ class MonthSelectTest extends \PHPUnit\Framework\TestCase
 {
     protected $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = new MonthSelect('foo');
     }
 
-    public function testGetInputSpecification()
+    public function testGetInputSpecification(): void
     {
         $spec = $this->sut->getInputSpecification();
 

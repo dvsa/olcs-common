@@ -19,13 +19,11 @@ class IssuedPermitLicencePermitReference implements FormatterPluginManagerInterf
 {
     private UrlHelperService $urlHelper;
 
-    /**
-     * @param UrlHelperService $urlHelper
-     */
     public function __construct(UrlHelperService $urlHelper)
     {
         $this->urlHelper = $urlHelper;
     }
+
     /**
      * Issued permit licence permit reference
      *

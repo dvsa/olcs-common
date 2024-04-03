@@ -2,7 +2,6 @@
 
 namespace Common\Service\Cqrs;
 
-
 /**
  * Recover HttpClientExceptionTrait Trait
  *
@@ -16,10 +15,8 @@ trait RecoverHttpClientExceptionTrait
      * Set RecoverHttpClientException
      *
      * @param bool $value value
-     *
-     * @return void
      */
-    public function setRecoverHttpClientException($value)
+    public function setRecoverHttpClientException($value): void
     {
         $this->recoverHttpClientException = $value;
     }

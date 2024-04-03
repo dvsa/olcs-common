@@ -20,20 +20,18 @@ use Laminas\Router\Http\TreeRouteStack;
 class InspectionRequestId implements FormatterPluginManagerInterface
 {
     private UrlHelperService $urlHelper;
+
     private TreeRouteStack $router;
+
     private Request $request;
 
-    /**
-     * @param UrlHelperService $urlHelper
-     * @param TreeRouteStack   $router
-     * @param Request          $request
-     */
     public function __construct(UrlHelperService $urlHelper, TreeRouteStack $router, Request $request)
     {
         $this->urlHelper = $urlHelper;
         $this->router = $router;
         $this->request = $request;
     }
+
     /**
      * Inspection request ID as URL
      *
@@ -70,6 +68,7 @@ class InspectionRequestId implements FormatterPluginManagerInterface
                 ]
             );
         }
+
         return '<a href="'
             . $url
             . '" class="govuk-link js-modal-ajax">'

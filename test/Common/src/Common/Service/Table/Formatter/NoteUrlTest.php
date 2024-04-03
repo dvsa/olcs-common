@@ -22,7 +22,9 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class NoteUrlTest extends MockeryTestCase
 {
+    public $request;
     protected $urlHelper;
+
     protected $sut;
 
     protected function setUp(): void
@@ -35,7 +37,7 @@ class NoteUrlTest extends MockeryTestCase
     /**
      * Test the format method
      */
-    public function testFormat()
+    public function testFormat(): void
     {
         $data = [
             'id' => 1,

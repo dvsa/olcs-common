@@ -15,14 +15,14 @@ class PeopleTest extends SearchAbstractTest
     /**
      * @dataProvider dataProviderTestDisqualifiedFormatter
      */
-    public function testDisqualifiedFormatter($expected, $row)
+    public function testDisqualifiedFormatter($expected, $row): void
     {
         $columns = $this->sut->getColumns();
 
         $this->assertSame($expected, $columns[6]['formatter']($row));
     }
 
-    public function testGetDateRanges()
+    public function testGetDateRanges(): void
     {
         $dateRanges = $this->sut->getDateRanges();
 

@@ -17,6 +17,7 @@ class Application extends InternalSearchAbstract
      * @var string
      */
     protected $title = 'Applications';
+
     /**
      * @var string
      */
@@ -64,7 +65,7 @@ class Application extends InternalSearchAbstract
             [
                 'title' => 'Application id',
                 'name' => 'appId',
-                'formatter' => fn($data) => '<a class="govuk-link" href="/application/' . $data['appId'] . '">' . $data['appId'] . '</a>'
+                'formatter' => static fn($data) => '<a class="govuk-link" href="/application/' . $data['appId'] . '">' . $data['appId'] . '</a>'
             ],
             ['title' => 'Application status', 'name' => 'appStatusDesc'],
             [

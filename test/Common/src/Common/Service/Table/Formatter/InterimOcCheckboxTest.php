@@ -23,7 +23,7 @@ class InterimOcCheckboxTest extends MockeryTestCase
      * @group interimFormatter
      * @dataProvider formatProvider
      */
-    public function testFormat($data, $expected)
+    public function testFormat($data, $expected): void
     {
         $this->assertEquals($expected, (new \Common\Service\Table\Formatter\InterimOcCheckbox())->format($data));
     }

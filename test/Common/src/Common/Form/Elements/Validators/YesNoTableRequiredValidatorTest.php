@@ -13,10 +13,11 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class YesNoTableRequiredValidatorTest extends MockeryTestCase
 {
+    public $validator;
     /**
      * Set up the validator
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->validator = new YesNoTableRequiredValidator([
             'table' => 'testTable',
@@ -29,7 +30,7 @@ class YesNoTableRequiredValidatorTest extends MockeryTestCase
      *
      * @dataProvider providerIsValid
      */
-    public function testIsValid($value, $context, $expected)
+    public function testIsValid($value, $context, $expected): void
     {
         $this->assertEquals($expected, $this->validator->isValid($value, $context));
     }
@@ -44,22 +45,22 @@ class YesNoTableRequiredValidatorTest extends MockeryTestCase
         return [
             [
                 'Y',
-                ['testTable'=> ['rows' => 1]],
+                ['testTable' => ['rows' => 1]],
                 true
             ],
             [
                 'Y',
-                ['testTable'=> ['rows' => 0]],
+                ['testTable' => ['rows' => 0]],
                 false
             ],
             [
                 'N',
-                ['testTable'=> ['rows' => 1]],
+                ['testTable' => ['rows' => 1]],
                 true
             ],
             [
                 'N',
-                ['testTable'=> ['rows' => 0]],
+                ['testTable' => ['rows' => 0]],
                 true
             ],
         ];

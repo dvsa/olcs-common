@@ -16,6 +16,7 @@ class Vehicle extends InternalSearchAbstract
      * @var string
      */
     protected $title = 'Vehicle';
+
     /**
      * @var string
      */
@@ -40,7 +41,7 @@ class Vehicle extends InternalSearchAbstract
      */
     public function getFilters()
     {
-        if (empty($this->filters)) {
+        if ($this->filters === []) {
             $this->filters = [
                 new Filter\LicenceStatus(),
             ];
@@ -83,7 +84,7 @@ class Vehicle extends InternalSearchAbstract
             [
                 'title' => 'Licence number',
                 'name' => 'licNo',
-                'formatter' => fn($data) => '<a class="govuk-link" href="/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>'
+                'formatter' => static fn($data) => '<a class="govuk-link" href="/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>'
             ],
             ['title' => 'Licence status', 'name' => 'licStatusDesc'],
             [
@@ -93,7 +94,7 @@ class Vehicle extends InternalSearchAbstract
             ],
             [
                 'title' => 'VRM',
-                'formatter' => function ($data) {
+                'formatter' => static function ($data) {
                     $section26 = (isset($data['section_26']) && $data['section_26']) ? ' (sec26)' : '';
                     return $data['vrm'] . $section26;
                 }

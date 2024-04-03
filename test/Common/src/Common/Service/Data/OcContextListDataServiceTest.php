@@ -46,7 +46,7 @@ class OcContextListDataServiceTest extends MockeryTestCase
     }
 
 
-    public function testFetchListOptionsApplicationContext()
+    public function testFetchListOptionsApplicationContext(): void
     {
         $useGroups = false;
 
@@ -63,7 +63,7 @@ class OcContextListDataServiceTest extends MockeryTestCase
         $this->assertEquals($applicationOperatingCentres, $appOptions);
     }
 
-    public function testFetchListOptionsLicenceContext()
+    public function testFetchListOptionsLicenceContext(): void
     {
         $useGroups = false;
 
@@ -79,7 +79,7 @@ class OcContextListDataServiceTest extends MockeryTestCase
         $this->assertEquals($licenceOperatingCentres, $lOptions);
     }
 
-    public function testFetchListOptionsNullContext()
+    public function testFetchListOptionsNullContext(): void
     {
         $useGroups = false;
 

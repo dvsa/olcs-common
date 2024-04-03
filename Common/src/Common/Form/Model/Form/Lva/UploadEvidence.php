@@ -19,7 +19,7 @@ class UploadEvidence
      * })
      * @Form\Name("financialEvidence")
      */
-    public $financialEvidence = null;
+    public $financialEvidence;
 
     /**
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\UploadEvidenceOperatingCentre",
@@ -31,7 +31,7 @@ class UploadEvidence
      * )
      * @Form\Name("operatingCentres")
      */
-    public $operatingCentres = null;
+    public $operatingCentres;
 
     /**
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\UploadEvidenceSupportingEvidence",
@@ -43,7 +43,7 @@ class UploadEvidence
      * )
      * @Form\Name("supportingEvidence")
      */
-    public $supportingEvidence = null;
+    public $supportingEvidence;
 
 
     /**
@@ -55,5 +55,5 @@ class UploadEvidence
      * @Form\Options({"label": "Save and continue"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $saveAndContinue = null;
+    public $saveAndContinue;
 }

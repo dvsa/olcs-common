@@ -18,7 +18,7 @@ class StandardAndCabotageSubmittedAnswerGeneratorTest extends MockeryTestCase
     /**
      * @dataProvider dpGenerate
      */
-    public function testGenerate($questionData, $expectedSubmittedAnswer)
+    public function testGenerate($questionData, $expectedSubmittedAnswer): void
     {
         $qaForm = m::mock(QaForm::class);
         $qaForm->shouldReceive('getQuestionFieldsetData')

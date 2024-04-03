@@ -22,11 +22,11 @@ class SafetyProvidersContactDetails
      * @Form\Filter("Laminas\Filter\StringTrim")
      * @Form\Validator("Laminas\Validator\StringLength", options={"min":1,"max":90})
      */
-    public $fao = null;
+    public $fao;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 }

@@ -19,12 +19,9 @@ use Laminas\View\HelperPluginManager;
 class ValidityPeriod implements FormatterPluginManagerInterface
 {
     private HelperPluginManager $viewHelperManager;
+
     private TranslatorDelegator $translator;
 
-    /**
-     * @param HelperPluginManager $viewHelperManager
-     * @param TranslatorDelegator $translator
-     */
     public function __construct(HelperPluginManager $viewHelperManager, TranslatorDelegator $translator)
     {
         $this->viewHelperManager = $viewHelperManager;
@@ -45,8 +42,8 @@ class ValidityPeriod implements FormatterPluginManagerInterface
 
         return sprintf(
             $this->translator->translate('permits.irhp.fee-breakdown.validity-period.cell'),
-            self::generateDateString($dateFormatter, $row['validFromTimestamp'], $locale, $year),
-            self::generateDateString($dateFormatter, $row['validToTimestamp'], $locale, $year)
+            $this->generateDateString($dateFormatter, $row['validFromTimestamp'], $locale, $year),
+            $this->generateDateString($dateFormatter, $row['validToTimestamp'], $locale, $year)
         );
     }
 
@@ -58,7 +55,7 @@ class ValidityPeriod implements FormatterPluginManagerInterface
      *
      * @return string
      */
-    private static function generateDateString($dateFormatter, $timestamp, $locale, $year)
+    private function generateDateString($dateFormatter, $timestamp, $locale, $year)
     {
         $dateString = $dateFormatter(
             date($timestamp),

@@ -22,9 +22,13 @@ class Sum implements FormatterPluginManagerInterface
 
         if (isset($column['name'])) {
             foreach ($data as $row) {
-                if (isset($row[$column['name']]) && is_numeric($row[$column['name']])) {
-                    $sum += (float)$row[$column['name']];
+                if (!isset($row[$column['name']])) {
+                    continue;
                 }
+                if (!is_numeric($row[$column['name']])) {
+                    continue;
+                }
+                $sum += (float)$row[$column['name']];
             }
         }
 

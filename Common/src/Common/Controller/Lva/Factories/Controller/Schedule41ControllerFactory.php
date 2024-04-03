@@ -14,10 +14,8 @@ use LmcRbacMvc\Service\AuthorizationService;
 class Schedule41ControllerFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
-     * @return Schedule41Controller
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): Schedule41Controller
     {

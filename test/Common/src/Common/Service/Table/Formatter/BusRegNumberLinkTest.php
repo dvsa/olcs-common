@@ -15,9 +15,13 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class BusRegNumberLinkTest extends MockeryTestCase
 {
+    public $sut;
     protected $urlHelper;
+
     protected $translator;
+
     protected $viewHelperManager;
+
     protected $statusHelper;
 
     protected function setUp(): void
@@ -33,12 +37,13 @@ class BusRegNumberLinkTest extends MockeryTestCase
     {
         m::close();
     }
+
     /**
      * Tests the formatting for the different possible input array formats
      *
      * @dataProvider dpFormat
      */
-    public function testFormat($isTxcApp, $expectedOutputStatus)
+    public function testFormat($isTxcApp, $expectedOutputStatus): void
     {
         $id = 1234;
         $translatedLabel = 'translated status label';

@@ -84,6 +84,7 @@ trait ApplicationSafetyControllerTrait
             $this->isShowTrailers = $application['isShowTrailers'];
             $this->workshops = $application['workshops'];
         }
+
         return $this->safetyData;
     }
 }

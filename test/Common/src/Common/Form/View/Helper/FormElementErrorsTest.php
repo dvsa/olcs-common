@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Form\View\Helper;
 
 use Common\Form\Elements\Validators\Messages\FormElementMessageFormatter;
@@ -17,8 +19,10 @@ use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\I18n\View\Helper\Translate;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Validator\ValidatorPluginManager;
+use Laminas\View\Helper\Doctype;
 use Laminas\View\HelperPluginManager;
 use Laminas\View\Renderer\PhpRenderer;
+use Mockery as m;
 use Mockery\MockInterface;
 use Psr\Container\ContainerInterface;
 
@@ -34,21 +38,21 @@ class FormElementErrorsTest extends MockeryTestCase
     /**
      * @test
      */
-    public function render_IsCallable()
+    public function renderIsCallable(): void
     {
         // Setup
         $serviceLocator = $this->setUpServiceLocator();
         $sut = $this->setUpSut($serviceLocator);
 
         // Assert
-        $this->assertIsCallable([$sut, 'render']);
+        $this->assertIsCallable(static fn(\Laminas\Form\ElementInterface $element, array $attributes = []): string => $sut->render($element, $attributes));
     }
 
     /**
      * @test
-     * @depends render_IsCallable
+     * @depends renderIsCallable
      */
-    public function render_EscapesHtmlInMessage()
+    public function renderEscapesHtmlInMessage(): void
     {
         // Setup
         $serviceLocator = $this->setUpServiceLocator();
@@ -64,20 +68,24 @@ class FormElementErrorsTest extends MockeryTestCase
     }
 
     /**
-     * @depends render_IsCallable
+     * @depends renderIsCallable
      */
-    public function testRender()
+    public function testRender(): void
     {
         $element = new \Laminas\Form\Element\Text('test');
         $element->setLabel('Test');
         $element->setMessages(['Message']);
+
         $translator = new Translator();
         $translateHelper = new Translate();
         $translateHelper->setTranslator($translator);
 
+        $doctype = m::mock(Doctype::class);
+
         $container = m::mock(ContainerInterface::class);
         $helpers = new HelperPluginManager($container);
         $helpers->setService('translate', $translateHelper);
+        $helpers->setService(Doctype::class, $doctype);
 
         $view = new PhpRenderer();
         $view->setHelperPluginManager($helpers);
@@ -85,6 +93,7 @@ class FormElementErrorsTest extends MockeryTestCase
         $serviceLocator = $this->setUpServiceLocator();
         $viewHelper = $this->setUpSut($serviceLocator);
         $viewHelper->setView($view);
+
         $markup = $viewHelper($element);
 
         $expectedMarkup = '<p class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span>Message</p>';
@@ -92,9 +101,6 @@ class FormElementErrorsTest extends MockeryTestCase
         $this->assertSame($expectedMarkup, $markup);
     }
 
-    /**
-     * @return Element
-     */
     protected function setUpElement(): Element
     {
         $element = new Element();
@@ -105,9 +111,7 @@ class FormElementErrorsTest extends MockeryTestCase
 
     protected function setUpSut(ContainerInterface $container): FormElementErrors
     {
-        $pluginManager = $this->setUpAbstractPluginManager($container);
-        $instance = (new FormElementErrorsFactory())->__invoke($pluginManager, FormElementErrors::class);
-        return $instance;
+        return (new FormElementErrorsFactory())->__invoke($container, FormElementErrors::class);
     }
 
     /**
@@ -116,25 +120,21 @@ class FormElementErrorsTest extends MockeryTestCase
     protected function setUpTranslator(): MockInterface
     {
         $instance = $this->setUpMockService(Translator::class);
-        $instance->shouldReceive('translate')->andReturnUsing(fn($key) => $key)->byDefault();
+        $instance->shouldReceive('translate')->andReturnUsing(static fn($key) => $key)->byDefault();
         return $instance;
     }
 
     protected function setUpFormLabel(ContainerInterface $container): FormLabel
     {
-        $instance = (new FormLabelFactory())->__invoke($container, FormLabel::class);
-        return $instance;
+        return (new FormLabelFactory())->__invoke($container, FormLabel::class);
     }
 
-    /**
-     * @param ServiceManager $serviceManager
-     */
     protected function setUpDefaultServices(ServiceManager $serviceManager)
     {
         $serviceManager->setService(TranslatorInterface::class, $this->setUpTranslator());
         $serviceManager->setService(HTMLPurifier::class, new HTMLPurifier());
         $serviceManager->setFactory(FormLabel::class, new FormLabelFactory());
         $serviceManager->setFactory(FormElementMessageFormatter::class, new FormElementMessageFormatterFactory());
-        $serviceManager->setService(static::VALIDATOR_MANAGER, new ValidatorPluginManager());
+        $serviceManager->setService(static::VALIDATOR_MANAGER, m::mock(ValidatorPluginManager::class));
     }
 }

@@ -8,12 +8,12 @@ class CqrsTraitStub
 {
     use CqrsTrait;
 
-    public function testShowApiMessagesFromResponse($response)
+    public function testShowApiMessagesFromResponse($response): void
     {
         $this->showApiMessagesFromResponse($response);
     }
 
-    public function setFlashMessenger($msngr)
+    public function setFlashMessenger($msngr): void
     {
         $this->flashMessenger = $msngr;
     }

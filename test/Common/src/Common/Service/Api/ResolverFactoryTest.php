@@ -1,6 +1,5 @@
 <?php
 
-
 namespace CommonTest\Service\Api;
 
 use Common\Service\Api\Resolver;

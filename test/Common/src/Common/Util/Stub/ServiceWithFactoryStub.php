@@ -11,10 +11,8 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
 class ServiceWithFactoryStub implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
-     * @return $this
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

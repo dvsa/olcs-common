@@ -4,6 +4,7 @@ namespace Common\Data\Mapper\Licence\Surrender\Sections;
 
 class CorrespondenceAddress extends AbstractSection
 {
+    public $licence;
     protected $heading = 'correspondence-address';
 
     protected function makeQuestions()
@@ -13,7 +14,7 @@ class CorrespondenceAddress extends AbstractSection
 
         $address = '';
 
-        for ($n = 1; $n <= 4; $n++) {
+        for ($n = 1; $n <= 4; ++$n) {
             $addressLine = trim($this->licence['correspondenceCd']['address']['addressLine' . $n]);
             if (strlen($addressLine) > 0) {
                 $address .= strlen($address) > 0 ? "<br>" . $addressLine : $addressLine;

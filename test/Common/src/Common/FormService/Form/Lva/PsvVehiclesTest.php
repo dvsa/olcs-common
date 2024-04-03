@@ -8,18 +8,22 @@ use LmcRbacMvc\Service\AuthorizationService;
 
 class PsvVehiclesTest extends AbstractLvaFormServiceTestCase
 {
+    /**
+     * @var \Mockery\LegacyMockInterface
+     */
+    public $authService;
     protected $classToTest = PsvVehicles::class;
 
     protected $formName = 'Lva\PsvVehicles';
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->authService = m::mock(AuthorizationService::class);
         $this->classArgs = [$this->authService];
         parent::setUp();
     }
 
-    public function testGetForm()
+    public function testGetForm(): void
     {
         $mockForm = m::mock();
 

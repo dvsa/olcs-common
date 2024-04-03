@@ -41,6 +41,7 @@ class FeeStatus implements FormatterPluginManagerInterface
                 $statusClass = 'grey';
                 break;
         }
+
         return vsprintf(
             '<strong class="govuk-tag govuk-tag--%s">%s</strong>',
             [$statusClass, $row['feeStatus']['description']]

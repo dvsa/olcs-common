@@ -14,12 +14,10 @@ class VehicleVrmAny extends LaminasElement implements InputProviderInterface
 {
     /**
      * Provide default input rules for this element.
-     *
-     * @return array
      */
     public function getInputSpecification(): array
     {
-        $specification = [
+        return [
             'name' => $this->getName(),
             'required' => true,
             'filters' => [
@@ -35,7 +33,5 @@ class VehicleVrmAny extends LaminasElement implements InputProviderInterface
                 ],
             ],
         ];
-
-        return $specification;
     }
 }

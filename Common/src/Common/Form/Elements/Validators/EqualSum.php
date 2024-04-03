@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Form\Elements\Validators;
 
 use Laminas\Validator\AbstractValidator;
@@ -40,7 +41,7 @@ class EqualSum extends AbstractValidator
 
         $message .= implode('-', $fields);
 
-        if ((int)$value != $sum) {
+        if ((int)$value !== $sum) {
             $this->setMessage($message, 'error');
 
             $this->error('error');

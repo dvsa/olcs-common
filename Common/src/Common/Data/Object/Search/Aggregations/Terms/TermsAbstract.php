@@ -1,4 +1,5 @@
 <?php
+
 namespace Common\Data\Object\Search\Aggregations\Terms;
 
 use Common\Data\Object\Search\Aggregations\AggregationsAbstract;
@@ -48,10 +49,7 @@ abstract class TermsAbstract extends AggregationsAbstract
         return $this->options;
     }
 
-    /**
-     * @param array $options
-     */
-    public function setOptions(array $options)
+    public function setOptions(array $options): void
     {
         $this->options = $options;
     }

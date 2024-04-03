@@ -11,6 +11,7 @@ class FileContent
 {
     /** @var string */
     private $fileName;
+
     /** @var string */
     private $mimeType;
 

@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Service\Helper;
 
 /**
@@ -26,7 +27,6 @@ class DateHelperService
 
     /**
      * Convert DateSelect style array data to a DateTime object
-     * @param array $date
      * @return \DateTime
      */
     public function getDateObjectFromArray(array $date)

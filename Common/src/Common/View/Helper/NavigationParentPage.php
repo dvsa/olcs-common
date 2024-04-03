@@ -3,7 +3,6 @@
 namespace Common\View\Helper;
 
 use Laminas\ServiceManager\Factory\FactoryInterface;
-
 use Laminas\View\Helper\AbstractHelper;
 
 /**

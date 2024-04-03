@@ -16,6 +16,16 @@ class CrudTableTraitStub extends AbstractActionController
 {
     use CrudTableTrait;
 
+    /**
+     * @var \Common\Service\Helper\FlashMessengerHelperService
+     */
+    public $flashMessengerHelper;
+
+    /**
+     * @var \Common\Service\Helper\FormHelperService
+     */
+    public $formHelper;
+
     protected $section = 'fake-section';
 
     public function __construct(FlashMessengerHelperService $flashMessengerHelper, FormHelperService $formHelper)

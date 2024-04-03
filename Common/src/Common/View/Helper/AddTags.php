@@ -5,6 +5,7 @@
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
+
 namespace Common\View\Helper;
 
 use Laminas\View\Helper\AbstractHelper;
@@ -20,8 +21,7 @@ class AddTags extends AbstractHelper
         // yes, slight repetition of the key phrase
         // but it'll be faster than using a back reference
         '\(if\s+applicable\)' => '<span class=js-hidden>(if applicable)</span>',
-        // @TODO check welsh equivalent
-        '\(os\s+yw\'n\s+berthnasol\)' => '<span class=js-hidden>(os yw\'n berthnasol)</span>',
+        '\(os\s+yw\'n\s+berthnasol\)' => "<span class=js-hidden>(os yw'n berthnasol)</span>",
     ];
 
     /**
@@ -35,9 +35,10 @@ class AddTags extends AbstractHelper
         $replace = [];
 
         foreach ($this->tags as $s => $r) {
-            $search[] = '#'.$s.'#';
+            $search[] = '#' . $s . '#';
             $replace[] = $r;
         }
+
         return preg_replace($search, $replace, $str);
     }
 }

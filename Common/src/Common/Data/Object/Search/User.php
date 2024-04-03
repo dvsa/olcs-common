@@ -14,6 +14,7 @@ class User extends InternalSearchAbstract
      * @var string
      */
     protected $title = 'Users';
+
     /**
      * @var string
      */
@@ -39,7 +40,6 @@ class User extends InternalSearchAbstract
     public function getFilters()
     {
         if (empty($this->filters)) {
-
             $this->filters = [
                 new Filter\UserType(),
                 new Filter\Partner(),
@@ -75,16 +75,16 @@ class User extends InternalSearchAbstract
             'crud' => [
                 'actions' => [
                     'add' => [
-                        'class' => 'govuk-button', 
+                        'class' => 'govuk-button',
                         'requireRows' => false
                     ],
                     'edit' => [
-                        'requireRows' => true, 
+                        'requireRows' => true,
                         'class' => 'govuk-button govuk-button--secondary js-require--one'
                     ],
                     'delete' => [
                         'label' => 'action_links.remove',
-                        'requireRows' => true, 
+                        'requireRows' => true,
                         'class' => 'govuk-button govuk-button--secondary js-require--one'
                     ]
                 ]
@@ -106,12 +106,12 @@ class User extends InternalSearchAbstract
          return [
             [
                 'title' => 'Username',
-                'formatter' => fn($data) => '<a class="govuk-link" href="/admin/user-management/users/edit/' . $data['userId']
+                'formatter' => static fn($data) => '<a class="govuk-link" href="/admin/user-management/users/edit/' . $data['userId']
                  . '">' . $data['loginId'] . '</a>'
             ],
             [
                 'title' => 'Name',
-                'formatter' => fn($data) => $data['forename'] . ' ' .
+                'formatter' => static fn($data) => $data['forename'] . ' ' .
                 $data['familyName']
             ],
             [
@@ -132,6 +132,6 @@ class User extends InternalSearchAbstract
                 'data-field' => 'userId',
                 'type' => 'CustomSelector',
             ]
-        ];
+         ];
     }
 }

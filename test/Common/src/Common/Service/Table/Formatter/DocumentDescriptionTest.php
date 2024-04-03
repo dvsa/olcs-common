@@ -16,7 +16,9 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class DocumentDescriptionTest extends MockeryTestCase
 {
     protected $urlHelper;
+
     protected $translator;
+
     protected $sut;
 
     protected function setUp(): void
@@ -31,7 +33,7 @@ class DocumentDescriptionTest extends MockeryTestCase
         m::close();
     }
 
-    public function testFormat()
+    public function testFormat(): void
     {
         // Params
         $data = [
@@ -41,7 +43,6 @@ class DocumentDescriptionTest extends MockeryTestCase
         ];
         $column = [];
 
-
         $this->urlHelper->shouldReceive('fromRoute')
             ->with('getfile', ['identifier' => 666])
             ->andReturn('URL');
@@ -50,7 +51,7 @@ class DocumentDescriptionTest extends MockeryTestCase
         $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 
-    public function testFormatNoIdentifier()
+    public function testFormatNoIdentifier(): void
     {
         // Params
         $data = [
@@ -62,7 +63,7 @@ class DocumentDescriptionTest extends MockeryTestCase
         $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 
-    public function testFormatEmptyIdentifier()
+    public function testFormatEmptyIdentifier(): void
     {
         // Params
         $data = [
@@ -75,7 +76,7 @@ class DocumentDescriptionTest extends MockeryTestCase
         $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 
-    public function testFormatWithFilename()
+    public function testFormatWithFilename(): void
     {
         $data = [
             'description' => null,
@@ -87,7 +88,7 @@ class DocumentDescriptionTest extends MockeryTestCase
         $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 
-    public function testFormatWithNoDecriptionNoFilename()
+    public function testFormatWithNoDecriptionNoFilename(): void
     {
         $data = [
             'description' => null,
@@ -106,7 +107,7 @@ class DocumentDescriptionTest extends MockeryTestCase
         $this->assertEquals($expected, $this->sut->format($data, $column));
     }
 
-    public function testFormatWithHtml()
+    public function testFormatWithHtml(): void
     {
         // Params
         $data = [

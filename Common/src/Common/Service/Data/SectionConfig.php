@@ -354,6 +354,7 @@ class SectionConfig
                     ],
                 ];
             }
+
             $routes[$baseRouteName]['child_routes'] = $childRoutes;
         }
 

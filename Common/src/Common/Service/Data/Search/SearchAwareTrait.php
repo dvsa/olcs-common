@@ -1,4 +1,5 @@
 <?php
+
 namespace Common\Service\Data\Search;
 
 use Common\Service\Data\Search\Search as SearchService;
@@ -18,9 +19,6 @@ trait SearchAwareTrait
         return $this->searchService;
     }
 
-    /**
-     * @param SearchService $searchService
-     */
     public function setSearchService(SearchService $searchService)
     {
         $this->searchService = $searchService;

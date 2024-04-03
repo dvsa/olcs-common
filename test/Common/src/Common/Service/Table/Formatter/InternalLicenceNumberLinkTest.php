@@ -19,10 +19,15 @@ use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 class InternalLicenceNumberLinkTest extends TestCase
 {
     protected $urlHelper;
+
     protected $translator;
+
     protected $viewHelperManager;
+
     protected $router;
+
     protected $request;
+
     protected $sut;
 
     protected function setUp(): void
@@ -36,7 +41,7 @@ class InternalLicenceNumberLinkTest extends TestCase
         m::close();
     }
 
-    public function testFormat()
+    public function testFormat(): void
     {
         $licence = [
             'licence' => [

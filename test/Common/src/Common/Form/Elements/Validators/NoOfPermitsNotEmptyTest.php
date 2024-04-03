@@ -5,6 +5,7 @@
  *
  * @author Jonathan Thomas <jonathan@opalise.co.uk>
  */
+
 namespace CommonTest\Form\Elements\Validators;
 
 use Common\Form\Elements\Validators\NoOfPermitsNotEmpty;
@@ -17,10 +18,11 @@ use Laminas\Validator\NotEmpty;
  */
 class NoOfPermitsNotEmptyTest extends \PHPUnit\Framework\TestCase
 {
+    public $validator;
     /**
      * Set up the validator
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->validator = new NoOfPermitsNotEmpty();
     }
@@ -30,12 +32,12 @@ class NoOfPermitsNotEmptyTest extends \PHPUnit\Framework\TestCase
      *
      * @dataProvider providerIsValid
      */
-    public function testIsValid($value, $expected)
+    public function testIsValid($value, $expected): void
     {
         $this->assertEquals($expected, $this->validator->isValid($value, null));
     }
 
-    public function testMessageTemplates()
+    public function testMessageTemplates(): void
     {
         $expectedValue = [
             NotEmpty::IS_EMPTY => 'permits.page.no-of-permits.error.general',

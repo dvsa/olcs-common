@@ -19,8 +19,6 @@ class EarliestPermitDateFieldsetPopulator implements FieldsetPopulatorInterface
     /**
      * Create service instance
      *
-     * @param TranslationHelperService $translator
-     * @param HtmlAdder $htmlAdder
      *
      * @return EarliestPermitDateFieldsetPopulator
      */
@@ -34,10 +32,8 @@ class EarliestPermitDateFieldsetPopulator implements FieldsetPopulatorInterface
      * Populate the fieldset with elements based on the supplied options array
      *
      * @param mixed $form
-     * @param Fieldset $fieldset
-     * @param array $options
      */
-    public function populate($form, Fieldset $fieldset, array $options)
+    public function populate($form, Fieldset $fieldset, array $options): void
     {
         $markup = sprintf(
             '<div class="govuk-inset-text">%s</div><div class="govuk-hint">%s<br>%s</div>',

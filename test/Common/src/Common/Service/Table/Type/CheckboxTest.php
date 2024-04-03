@@ -6,6 +6,7 @@
  * @author Rob Caiger <rob@clocal.co.uk>
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
+
 namespace CommonTest\Service\Table\Type;
 
 use Mockery as m;
@@ -21,12 +22,13 @@ use Common\Service\Table\Type\Checkbox;
 class CheckboxTest extends MockeryTestCase
 {
     protected $sut;
+
     protected $table;
 
     /**
      * Set up
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->table = m::mock();
         $this->sut = new Checkbox($this->table);
@@ -37,7 +39,7 @@ class CheckboxTest extends MockeryTestCase
      *
      * @group checkboxTest
      */
-    public function testRenderWithDisabledAttribute()
+    public function testRenderWithDisabledAttribute(): void
     {
         $fieldset = 'table';
         $data = [
@@ -67,7 +69,7 @@ class CheckboxTest extends MockeryTestCase
      *
      * @group checkboxTest
      */
-    public function testRender()
+    public function testRender(): void
     {
         $fieldset = 'table';
         $data = [
@@ -91,7 +93,7 @@ class CheckboxTest extends MockeryTestCase
      *
      * @group checkboxTest
      */
-    public function testRenderWithAttributes()
+    public function testRenderWithAttributes(): void
     {
         $fieldset = 'table';
         $data = [

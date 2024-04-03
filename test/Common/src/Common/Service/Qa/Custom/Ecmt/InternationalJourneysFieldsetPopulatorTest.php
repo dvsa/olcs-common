@@ -21,7 +21,7 @@ class InternationalJourneysFieldsetPopulatorTest extends MockeryTestCase
     /**
      * @dataProvider dpTrueFalse
      */
-    public function testPopulate($showNiWarning)
+    public function testPopulate($showNiWarning): void
     {
         $radioOptions = [
             'radioKey1' => 'radioValue1',
@@ -66,7 +66,7 @@ class InternationalJourneysFieldsetPopulatorTest extends MockeryTestCase
             $radioFieldsetPopulator,
             $niWarningConditionalAdder
         );
- 
+
         $internationalJourneysFieldsetPopulator->populate($form, $fieldset, $options);
     }
 

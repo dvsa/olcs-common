@@ -108,7 +108,7 @@ class DecompressToTmp extends AbstractFilter
         $tmpDir = $filesystem->createTmpDir($this->getTempRootDir(), 'zip');
 
         register_shutdown_function(
-            function () use ($tmpDir, $filesystem) {
+            static function () use ($tmpDir, $filesystem) {
                 $filesystem->remove($tmpDir);
             }
         );

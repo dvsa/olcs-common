@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Controller\Lva\Interfaces;
 
 use Laminas\Form\Form;
@@ -28,7 +29,6 @@ interface ConditionsUndertakingsAdapterInterface
     /**
      * Alter the form based upon the id
      *
-     * @param Form $form
      * @param array $data
      */
     public function alterForm(Form $form, $data);

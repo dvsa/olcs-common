@@ -16,8 +16,6 @@ class NoOfPermitsStrategySelectingFieldsetPopulator implements FieldsetPopulator
     /**
      * Create service instance
      *
-     * @param FieldsetPopulatorInterface $singleEmissionsCategoryFieldsetPopulator
-     * @param FieldsetPopulatorInterface $multipleEmissionsCategoryFieldsetPopulator
      *
      * @return NoOfPermitsStrategySelectingFieldsetPopulator
      */
@@ -33,10 +31,8 @@ class NoOfPermitsStrategySelectingFieldsetPopulator implements FieldsetPopulator
      * Populate the fieldset with elements based on the supplied options array
      *
      * @param mixed $form
-     * @param Fieldset $fieldset
-     * @param array $options
      */
-    public function populate($form, Fieldset $fieldset, array $options)
+    public function populate($form, Fieldset $fieldset, array $options): void
     {
         if (count($options['emissionsCategories']) == 1) {
             $this->singleEmissionsCategoryFieldsetPopulator->populate($form, $fieldset, $options);

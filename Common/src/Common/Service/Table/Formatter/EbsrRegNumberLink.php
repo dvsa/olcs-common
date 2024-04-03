@@ -7,13 +7,11 @@ use Common\Service\Helper\UrlHelperService;
 class EbsrRegNumberLink implements FormatterPluginManagerInterface
 {
     public const LINK_PATTERN = '<a class="govuk-link" href="%s">%s</a>';
+
     public const URL_ROUTE = 'bus-registration/details';
 
     private UrlHelperService $urlHelper;
 
-    /**
-     * @param UrlHelperService $urlHelper
-     */
     public function __construct(UrlHelperService $urlHelper)
     {
         $this->urlHelper = $urlHelper;

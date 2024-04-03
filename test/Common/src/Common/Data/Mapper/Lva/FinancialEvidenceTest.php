@@ -15,7 +15,7 @@ class FinancialEvidenceTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider mapFromResultProvider
      */
-    public function testMapFromResult($input, $expected)
+    public function testMapFromResult($input, $expected): void
     {
         $this->assertEquals($expected, FinancialEvidence::mapFromResult($input));
     }
@@ -93,7 +93,7 @@ class FinancialEvidenceTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider mapFromPostProvider
      */
-    public function testMapFromPost($input, $expected)
+    public function testMapFromPost($input, $expected): void
     {
         $this->assertEquals($expected, FinancialEvidence::mapFromPost($input));
     }
@@ -195,7 +195,7 @@ class FinancialEvidenceTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider mapFromFormProvider
      */
-    public function testMapFromForm($input, $expected)
+    public function testMapFromForm($input, $expected): void
     {
         $this->assertEquals($expected, FinancialEvidence::mapFromForm($input));
     }

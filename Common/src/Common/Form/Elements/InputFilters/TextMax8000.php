@@ -3,9 +3,10 @@
 /**
  * Text Max 4000
  */
+
 namespace Common\Form\Elements\InputFilters;
 
-use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\InputFilter\InputProviderInterface;
 
 /**
  * Text Max 4000

@@ -36,16 +36,15 @@ trait CommonVariationControllerTrait
     {
         $sections = $this->getAccessibleSections();
 
-        $index = array_search($currentSection, $sections);
+        $index = array_search($currentSection, $sections, true);
 
         // If there is no next section, or the next section is disabled
         if (!isset($sections[$index + 1])) {
             return $this->goToOverview($this->getApplicationId());
-        } else {
-            $params = [$this->getIdentifierIndex() => $this->getApplicationId()];
-            return $this->redirect()
-                ->toRouteAjax('lva-variation/' . $sections[$index + 1], $params);
         }
+        $params = [$this->getIdentifierIndex() => $this->getApplicationId()];
+        return $this->redirect()
+            ->toRouteAjax('lva-variation/' . $sections[$index + 1], $params);
     }
 
     /**

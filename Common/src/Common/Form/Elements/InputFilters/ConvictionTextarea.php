@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Input Specification for Conviction offence details
  *
@@ -8,7 +9,7 @@
 namespace Common\Form\Elements\InputFilters;
 
 use Laminas\Form\Element\Textarea as LaminasElement;
-use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\InputFilter\InputProviderInterface;
 
 /**
  * Input Specification for Convition additional info
@@ -17,7 +18,6 @@ use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
  */
 class ConvictionTextarea extends LaminasElement implements InputProviderInterface
 {
-
     public function __construct($name = null, $options = [])
     {
         parent::__construct($name, $options);
@@ -25,19 +25,15 @@ class ConvictionTextarea extends LaminasElement implements InputProviderInterfac
 
     /**
      * Provide default input rules for this element.
-     *
-     * @return array
      */
     public function getInputSpecification(): array
     {
-        $specification = [
+        return [
             'name' => $this->getName(),
             'required' => true,
             'allow_empty' => false,
             'validators' => [
             ]
         ];
-
-        return $specification;
     }
 }

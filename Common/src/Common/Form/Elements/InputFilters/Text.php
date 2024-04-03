@@ -15,10 +15,12 @@ use Laminas\InputFilter\InputProviderInterface;
 class Text extends LaminasElement\Text implements InputProviderInterface
 {
     protected $isRequired = false;
+
     protected $isAllowEmpty = true;
 
     protected $min = 2;
-    protected $max = null;
+
+    protected $max;
 
     /**
      * Text constructor.
@@ -105,8 +107,6 @@ class Text extends LaminasElement\Text implements InputProviderInterface
 
     /**
      * Provide default input rules for this element.
-     *
-     * @return array
      */
     public function getInputSpecification(): array
     {

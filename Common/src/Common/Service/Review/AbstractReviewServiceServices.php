@@ -17,7 +17,6 @@ class AbstractReviewServiceServices
     /**
      * Create service instance
      *
-     * @param TranslationHelperService $translationHelper
      *
      * @return AbstractReviewServiceServices
      */
@@ -28,8 +27,6 @@ class AbstractReviewServiceServices
 
     /**
      * Return the translation helper service
-     *
-     * @return TranslationHelperService
      */
     public function getTranslationHelper(): TranslationHelperService
     {

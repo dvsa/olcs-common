@@ -1,11 +1,9 @@
 <?php
 
-
 namespace Common\Data\Mapper\Lva\TransportManager\Sections;
 
 class OtherEmployment extends AbstractSection implements TransportManagerSectionInterface
 {
-
     use SectionSerializeTrait;
 
     private $employments;
@@ -14,9 +12,10 @@ class OtherEmployment extends AbstractSection implements TransportManagerSection
     {
         $employments = $transportManagerApplication['transportManager']['employments'];
         $employments = $this->sortByCreated($employments);
+
         $noOfPreviousRoles = count($employments);
 
-        for ($x = 0; ($x < $noOfPreviousRoles) && ($x < 3); $x++) {
+        for ($x = 0; ($x < $noOfPreviousRoles) && ($x < 3); ++$x) {
             $template = 'markup-' . $this->getTranslationTemplate() . "answer-otherEmployments";
             $this->employments .= $this->populateTemplate($template, [$employments[$x]['employerName']]);
         }
@@ -32,8 +31,9 @@ class OtherEmployment extends AbstractSection implements TransportManagerSection
         $suffix = '';
         if ($noOfPreviousRoles > 3) {
             $template = 'markup-' . $this->getTranslationTemplate() . "answer-otherEmployments-more";
-            $suffix = $this->populateTemplate($template, [$noOfPreviousRoles-3]);
+            $suffix = $this->populateTemplate($template, [$noOfPreviousRoles - 3]);
         }
+
         $this->employments .= $suffix;
     }
 }

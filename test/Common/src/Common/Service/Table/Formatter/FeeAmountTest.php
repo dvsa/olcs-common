@@ -22,7 +22,7 @@ class FeeAmountTest extends \PHPUnit\Framework\TestCase
      *
      * @dataProvider provider
      */
-    public function testFormat($data, $column, $expected)
+    public function testFormat($data, $column, $expected): void
     {
         $this->assertSame($expected, (new \Common\Service\Table\Formatter\FeeAmount())->format($data, $column));
     }

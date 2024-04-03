@@ -9,7 +9,6 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
 class LicenceNumberAndStatusFactory implements FactoryInterface
 {
     /**
-     * @param  ContainerInterface $container
      * @param  $requestedName
      * @param  array|null         $options
      * @return LicenceNumberAndStatus

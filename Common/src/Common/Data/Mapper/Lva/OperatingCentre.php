@@ -17,9 +17,13 @@ use Common\RefData;
 class OperatingCentre implements MapperInterface
 {
     public const VALUE_OPTION_AD_PLACED_NOW = 'adPlaced';
+
     public const VALUE_OPTION_AD_POST = 'adSendByPost';
+
     public const VALUE_OPTION_AD_UPLOAD_LATER = 'adPlacedLater';
+
     public const LOC_INTERNAL = 'internal';
+
     public const LOC_EXTERNAL = 'external';
 
     /**
@@ -96,13 +100,16 @@ class OperatingCentre implements MapperInterface
             if (isset($adv['radio'])) {
                 $mappedData['adPlaced'] = $adPlaceMapping[$adv['radio']];
             }
+
             if (isset($adv['adPlacedContent']['adPlacedIn'])) {
                 $mappedData['adPlacedIn'] = $adv['adPlacedContent']['adPlacedIn'];
             }
+
             if (isset($adv['adPlacedContent']['adPlacedDate'])) {
                 $mappedData['adPlacedDate'] = $adv['adPlacedContent']['adPlacedDate'];
             }
         }
+
         if (isset($data['data']['permission']['permission'])) {
             $mappedData['permission'] = $data['data']['permission']['permission'];
         }
@@ -122,6 +129,7 @@ class OperatingCentre implements MapperInterface
         if (!isset($data['advertisements']) || !is_array($data['advertisements'])) {
             $data['advertisements'] = [];
         }
+
         $data['advertisements']['uploadedFileCount'] =
             isset($data['advertisements']['adPlacedContent']['file']['list'])
                 ? count($data['advertisements']['adPlacedContent']['file']['list'])
@@ -139,8 +147,6 @@ class OperatingCentre implements MapperInterface
      * @param TranslationHelperService    $translator  translator service
      * @param string                      $location    location
      * @param string                      $taGuidesUrl guides url
-     *
-     * @return void
      */
     public static function mapFormErrors(
         Form $form,
@@ -149,11 +155,11 @@ class OperatingCentre implements MapperInterface
         TranslationHelperService $translator,
         $location,
         $taGuidesUrl
-    ) {
+    ): void {
         $formMessages = [];
 
         if (isset($errors['noOfVehiclesRequired'])) {
-            foreach ($errors['noOfVehiclesRequired'] as $key => $message) {
+            foreach ($errors['noOfVehiclesRequired'] as $message) {
                 $formMessages['data']['noOfVehiclesRequired'][] = $message;
             }
 
@@ -161,7 +167,7 @@ class OperatingCentre implements MapperInterface
         }
 
         if (isset($errors['noOfTrailersRequired'])) {
-            foreach ($errors['noOfTrailersRequired'] as $key => $message) {
+            foreach ($errors['noOfTrailersRequired'] as $message) {
                 $formMessages['data']['noOfTrailersRequired'][] = $message;
             }
 
@@ -169,7 +175,7 @@ class OperatingCentre implements MapperInterface
         }
 
         if (isset($errors['adPlacedIn'])) {
-            foreach ($errors['adPlacedIn'] as $key => $message) {
+            foreach ($errors['adPlacedIn'] as $message) {
                 $formMessages['advertisements']['adPlacedIn'][] = $message;
             }
 
@@ -177,7 +183,7 @@ class OperatingCentre implements MapperInterface
         }
 
         if (isset($errors['adPlacedDate'])) {
-            foreach ($errors['adPlacedDate'] as $key => $message) {
+            foreach ($errors['adPlacedDate'] as $message) {
                 $formMessages['advertisements']['adPlacedDate'][] = $message;
             }
 
@@ -185,16 +191,17 @@ class OperatingCentre implements MapperInterface
         }
 
         if (isset($errors['file'])) {
-            foreach ($errors['file'] as $key => $message) {
+            foreach ($errors['file'] as $message) {
                 $formMessages['advertisements']['file']['upload'][] = $message;
             }
 
             unset($errors['file']);
         }
+
         $isExternal = ($location === self::LOC_EXTERNAL);
 
         if (isset($errors['postcode'])) {
-            foreach ($errors['postcode'] as $key => $message) {
+            foreach ($errors['postcode'] as $message) {
                 foreach ($message as $k => $v) {
                     if ($k === 'ERR_OC_PC_TA_GB') {
                         $message[$k] = $translator->translateReplace($k, [$taGuidesUrl]);
@@ -203,6 +210,7 @@ class OperatingCentre implements MapperInterface
                         $message[$k] = $translator->translateReplace($k . '_' . strtoupper($location), [$v]);
                     }
                 }
+
                 if (!$isExternal) {
                     $formMessages['form-actions'][] = $message;
                 } else {
@@ -214,27 +222,22 @@ class OperatingCentre implements MapperInterface
         }
 
         if (isset($errors['permission'])) {
-            foreach ($errors['permission'] as $key => $message) {
+            foreach ($errors['permission'] as $message) {
                 $formMessages['data']['permission']['permission'][] = $message;
             }
 
             unset($errors['permission']);
         }
 
-        if (!empty($errors)) {
-            foreach ($errors as $error) {
-                $fm->addCurrentErrorMessage($error);
-            }
+        foreach ($errors as $error) {
+            $fm->addCurrentErrorMessage($error);
         }
 
         $form->setMessages($formMessages);
     }
 
     /**
-     * @param Form                     $form
-     * @param TranslationHelperService $translator
      * @param                          $isExternal
-     * @param string                   $k
      */
     protected static function setConfirmation(
         Form $form,

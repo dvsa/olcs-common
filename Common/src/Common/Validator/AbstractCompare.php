@@ -19,11 +19,17 @@ abstract class AbstractCompare extends AbstractValidator
      * @const string
      */
     public const NOT_GTE = 'notGreaterThanOrEqual';
+
     public const NOT_GT = 'notGreaterThan';
+
     public const NOT_LTE = 'notLessThanOrEqual';
+
     public const NOT_LT = 'notLessThan';
+
     public const INVALID_OPERATOR = 'invalidOperator';
+
     public const INVALID_FIELD = 'invalidField';
+
     public const NO_COMPARE = 'noCompare';
 
     /**
@@ -131,7 +137,6 @@ abstract class AbstractCompare extends AbstractValidator
      * Returns true if and only if a value is valid.
      *
      * @param  mixed $value
-     * @param  array $context
      * @return bool
      */
     abstract public function isValid($value, array $context = null);
@@ -147,28 +152,32 @@ abstract class AbstractCompare extends AbstractValidator
     {
         switch ($this->getOperator()) {
             case 'gte':
-                if (!($value >= $compareToValue)) {
+                if ($value < $compareToValue) {
                     $this->error(self::NOT_GTE);
                     return false;
                 }
+
                 break;
             case 'lte':
-                if (!($value <= $compareToValue)) {
+                if ($value > $compareToValue) {
                     $this->error(self::NOT_LTE);
                     return false;
                 }
+
                 break;
             case 'gt':
-                if (!($value > $compareToValue)) {
+                if ($value <= $compareToValue) {
                     $this->error(self::NOT_GT);
                     return false;
                 }
+
                 break;
             case 'lt':
-                if (!($value < $compareToValue)) {
+                if ($value >= $compareToValue) {
                     $this->error(self::NOT_LT);
                     return false;
                 }
+
                 break;
             default:
                 $this->error(self::INVALID_OPERATOR);

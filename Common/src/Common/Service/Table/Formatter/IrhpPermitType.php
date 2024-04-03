@@ -20,7 +20,6 @@ class IrhpPermitType implements FormatterPluginManagerInterface
      */
     public function format($data, $column = [])
     {
-        // TODO: Remove ternary when ECMT permits are removed.
         $type = isset($data['irhpPermitType']) ?
             $data['irhpPermitType']['name']['description'] :
             $data['permitType']['description'];

@@ -13,9 +13,6 @@ class IrhpPermitStockType implements FormatterPluginManagerInterface
 {
     private UrlHelperService $urlHelper;
 
-    /**
-     * @param UrlHelperService $urlHelper
-     */
     public function __construct(UrlHelperService $urlHelper)
     {
         $this->urlHelper = $urlHelper;
@@ -45,7 +42,7 @@ class IrhpPermitStockType implements FormatterPluginManagerInterface
         $canDelete = $data['canDelete'];
 
         return sprintf(
-            "<a class='govuk-link' data-stock-delete='$canDelete' href='%s'>%s</a>",
+            sprintf('<a class=\'govuk-link\' data-stock-delete=\'%s\' href=\'%%s\'>%%s</a>', $canDelete),
             $url,
             $data['irhpPermitType']['name']['description']
         );

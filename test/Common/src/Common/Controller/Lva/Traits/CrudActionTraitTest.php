@@ -12,10 +12,12 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class CrudActionTraitTest extends MockeryTestCase
 {
+    public $mockFlashMessengerHelper;
     public const ID = 9999;
 
     /** @var Stubs\CrudActionTraitStub | m\MockInterface */
     protected $sut;
+
     /** @var \Laminas\ServiceManager\ServiceManager | m\MockInterface */
     protected $sm;
 
@@ -27,7 +29,7 @@ class CrudActionTraitTest extends MockeryTestCase
             ->shouldAllowMockingProtectedMethods();
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         m::close();
     }
@@ -35,7 +37,7 @@ class CrudActionTraitTest extends MockeryTestCase
     /**
      * @dataProvider providerGetCrudAction
      */
-    public function testGetCrudAction($input, $expected)
+    public function testGetCrudAction($input, $expected): void
     {
         $this->assertEquals($expected, $this->sut->callGetCrudAction($input));
     }
@@ -43,7 +45,7 @@ class CrudActionTraitTest extends MockeryTestCase
     /**
      * @dataProvider providerGetActionFromCrudAction
      */
-    public function testGetActionFromCrudAction($input, $expected)
+    public function testGetActionFromCrudAction($input, $expected): void
     {
         $this->assertEquals($expected, $this->sut->callGetActionFromCrudAction($input));
     }
@@ -113,7 +115,7 @@ class CrudActionTraitTest extends MockeryTestCase
     /**
      * @dataProvider dpTestHandleCrudAction
      */
-    public function testHandleCrudAction($route, $data, $childIdPrmName, $baseRoute, $expectRoute, $expectRoutePrms)
+    public function testHandleCrudAction($route, $data, $childIdPrmName, $baseRoute, $expectRoute, $expectRoutePrms): void
     {
         $rowsNotRequired = ['add'];
         $childIdPrmName = $childIdPrmName ?: 'child_id';
@@ -220,7 +222,7 @@ class CrudActionTraitTest extends MockeryTestCase
         ];
     }
 
-    public function testHandleCrudActionWithoutIdWhenIdRequired()
+    public function testHandleCrudActionWithoutIdWhenIdRequired(): void
     {
         $data = [
             'action' => 'edit'
@@ -245,7 +247,7 @@ class CrudActionTraitTest extends MockeryTestCase
     /**
      * @dataProvider dpTestGetBaseRoute
      */
-    public function testGetBaseRoute($baseRoute, $lva, $expect)
+    public function testGetBaseRoute($baseRoute, $lva, $expect): void
     {
         $this->sut->baseRoute = $baseRoute;
         $this->sut->lva = $lva;

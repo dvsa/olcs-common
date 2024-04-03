@@ -4,6 +4,7 @@ namespace Common\Data\Mapper\Licence\Surrender\Sections;
 
 class ContactDetails extends AbstractSection
 {
+    public $licence;
     protected $heading = 'contact-details';
 
     protected function makeQuestions()

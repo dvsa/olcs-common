@@ -16,5 +16,5 @@ class TradingNames extends Base
      * @Form\Filter("Laminas\Filter\StringTrim")
      * @Form\Validator("Laminas\Validator\StringLength", options={"min":1,"max":70})
      */
-    public $name = null;
+    public $name;
 }

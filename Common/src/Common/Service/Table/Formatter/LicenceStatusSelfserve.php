@@ -12,11 +12,9 @@ use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 class LicenceStatusSelfserve implements FormatterPluginManagerInterface
 {
     private const MARKUP_FORMAT = '<span class="govuk-tag govuk-tag--%s">%s</span>';
+
     private TranslatorDelegator $translator;
 
-    /**
-     * @param TranslatorDelegator $translator
-     */
     public function __construct(TranslatorDelegator $translator)
     {
         $this->translator = $translator;
@@ -79,6 +77,7 @@ class LicenceStatusSelfserve implements FormatterPluginManagerInterface
             $row['status']['description'] = 'licence.status.expiring';
             $statusClass = 'red';
         }
+
         return [$row, $statusClass];
     }
 }

@@ -12,9 +12,13 @@ use Common\Test\MockeryTestCase;
 class InputTest extends MockeryTestCase
 {
     protected const AN_INPUT_NAME = 'AN INPUT NAME';
+
     protected const A_RAW_INPUT_VALUE = 'A RAW INPUT VALUE';
+
     protected const A_SECOND_RAW_INPUT_VALUE = 'A SECOND RAW INPUT VALUE';
+
     protected const A_FILTERED_INPUT_VALUE = 'A FILTERED INPUT VALUE';
+
     protected const A_SECOND_FILTERED_INPUT_VALUE = 'A SECOND FILTERED INPUT VALUE';
 
     /**
@@ -25,32 +29,34 @@ class InputTest extends MockeryTestCase
     /**
      * @test
      */
-    public function setValue_IsCallable()
+    public function setValueIsCallable(): void
     {
         // Setup
         $this->setUpSut();
 
         // Assert
-        $this->assertIsCallable([$this->sut, 'setValue']);
+        $this->assertIsCallable(function ($value): void {
+            $this->sut->setValue($value);
+        });
     }
 
     /**
      * @test
      */
-    public function getValue_IsCallable()
+    public function getValueIsCallable(): void
     {
         // Setup
         $this->setUpSut();
 
         // Assert
-        $this->assertIsCallable([$this->sut, 'getValue']);
+        $this->assertIsCallable(fn() => $this->sut->getValue());
     }
 
     /**
      * @test
-     * @depends getValue_IsCallable
+     * @depends getValueIsCallable
      */
-    public function getValue_FiltersValue()
+    public function getValueFiltersValue(): void
     {
         // Setup
         $this->setUpSut();
@@ -66,9 +72,9 @@ class InputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends getValue_FiltersValue
+     * @depends getValueFiltersValue
      */
-    public function getValue_FiltersValue_OnceWhenTheValueHasNotBeenSetAgain()
+    public function getValueFiltersValueOnceWhenTheValueHasNotBeenSetAgain(): void
     {
         // Setup
         $this->setUpSut();
@@ -77,6 +83,7 @@ class InputTest extends MockeryTestCase
         // Execute
         $this->sut->getValue();
         $this->sut->setFilterChain($this->aFilterChainThatReturns(static::A_FILTERED_INPUT_VALUE));
+
         $result = $this->sut->getValue();
 
         // Assert
@@ -85,10 +92,10 @@ class InputTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends getValue_IsCallable
-     * @depends setValue_IsCallable
+     * @depends getValueIsCallable
+     * @depends setValueIsCallable
      */
-    public function getValue_FiltersValue_TwiceWhenTheValueHasBeenSetSinceFirstBeingGotten()
+    public function getValueFiltersValueTwiceWhenTheValueHasBeenSetSinceFirstBeingGotten(): void
     {
         // Setup
         $this->setUpSut();
@@ -98,6 +105,7 @@ class InputTest extends MockeryTestCase
         $this->sut->getValue();
         $this->sut->setFilterChain($this->aFilterChainThatReturns(static::A_FILTERED_INPUT_VALUE));
         $this->sut->setValue(static::A_RAW_INPUT_VALUE);
+
         $result = $this->sut->getValue();
 
         // Assert
@@ -114,12 +122,11 @@ class InputTest extends MockeryTestCase
 
     /**
      * @param $value
-     * @return FilterChain
      */
     protected function aFilterChainThatReturns($value): FilterChain
     {
         $chain = new FilterChain();
-        $chain->attach(fn() => $value);
+        $chain->attach(static fn() => $value);
         return $chain;
     }
 }

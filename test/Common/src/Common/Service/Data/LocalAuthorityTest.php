@@ -23,7 +23,7 @@ class LocalAuthorityTest extends AbstractDataServiceTestCase
         $this->sut = new LocalAuthority($this->abstractDataServiceServices);
     }
 
-    public function testFormatData()
+    public function testFormatData(): void
     {
         $source = $this->getSingleSource();
         $expected = $this->getSingleExpected();
@@ -31,7 +31,7 @@ class LocalAuthorityTest extends AbstractDataServiceTestCase
         $this->assertEquals($expected, $this->sut->formatData($source));
     }
 
-    public function testFormatDataForGroups()
+    public function testFormatDataForGroups(): void
     {
         $source = $this->getSingleSource();
         $expected = $this->getGroupsExpected();
@@ -45,7 +45,7 @@ class LocalAuthorityTest extends AbstractDataServiceTestCase
      * @param $expected
      * @param $useGroups
      */
-    public function testFetchListOptions($input, $expected, $useGroups)
+    public function testFetchListOptions($input, $expected, $useGroups): void
     {
         $this->sut->setData('LocalAuthority', $input);
 
@@ -61,7 +61,7 @@ class LocalAuthorityTest extends AbstractDataServiceTestCase
         ];
     }
 
-    public function testFetchListData()
+    public function testFetchListData(): void
     {
         $results = ['results' => 'results'];
 
@@ -85,7 +85,7 @@ class LocalAuthorityTest extends AbstractDataServiceTestCase
         $this->assertEquals($results['results'], $this->sut->fetchListData()); //ensure data is cached
     }
 
-    public function testFetchLicenceDataWithException()
+    public function testFetchLicenceDataWithException(): void
     {
         $this->expectException(DataServiceException::class);
 
@@ -119,13 +119,12 @@ class LocalAuthorityTest extends AbstractDataServiceTestCase
      */
     protected function getSingleExpected()
     {
-        $expected = [
+        return [
             '1' => 'A1 Council',
             '2' => 'B Council',
             '3' => 'C Council',
             '4' => 'A2 Council',
         ];
-        return $expected;
     }
 
     /**
@@ -133,7 +132,7 @@ class LocalAuthorityTest extends AbstractDataServiceTestCase
      */
     protected function getGroupsExpected()
     {
-        $expected = [
+        return [
             'A' => [
                 'label' => 'AAA',
                 'options' => [
@@ -154,7 +153,6 @@ class LocalAuthorityTest extends AbstractDataServiceTestCase
                 ],
             ]
         ];
-        return $expected;
     }
 
     /**
@@ -162,12 +160,11 @@ class LocalAuthorityTest extends AbstractDataServiceTestCase
      */
     protected function getSingleSource()
     {
-        $source = [
+        return [
             ['id' => '1', 'description' => 'A1 Council', 'trafficArea' => ['name' => 'AAA', 'id' => 'A']],
             ['id' => '2', 'description' => 'B Council', 'trafficArea' => ['name' => 'BBB', 'id' => 'B']],
             ['id' => '3', 'description' => 'C Council', 'trafficArea' => ['name' => 'CCC', 'id' => 'C']],
             ['id' => '4', 'description' => 'A2 Council', 'trafficArea' => ['name' => 'AAA', 'id' => 'A']],
         ];
-        return $source;
     }
 }

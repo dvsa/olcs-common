@@ -13,13 +13,13 @@ class LicenceHistoryLicenceData
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $previousLicenceType = null;
+    public $previousLicenceType;
 
     /**
      * @Form\Attributes({"class":"long","id":""})
@@ -31,7 +31,7 @@ class LicenceHistoryLicenceData
      * @Form\Type("Text")
      * @Form\Filter("Laminas\Filter\StringTrim")
      */
-    public $licNo = null;
+    public $licNo;
 
     /**
      * @Form\Attributes({"class":"long","id":""})
@@ -43,7 +43,7 @@ class LicenceHistoryLicenceData
      * @Form\Type("Text")
      * @Form\Filter("Laminas\Filter\StringTrim")
      */
-    public $holderName = null;
+    public $holderName;
 
     /**
      * @Form\Attributes({"id":"","placeholder":""})
@@ -55,7 +55,7 @@ class LicenceHistoryLicenceData
      * })
      * @Form\Type("\Laminas\Form\Element\Radio")
      */
-    public $willSurrender = null;
+    public $willSurrender;
 
     /**
      * @Form\Attributes({
@@ -66,7 +66,7 @@ class LicenceHistoryLicenceData
      * })
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $willSurrenderMessage = null;
+    public $willSurrenderMessage;
 
     /**
      * @Form\Required(true)
@@ -82,7 +82,7 @@ class LicenceHistoryLicenceData
      * @Form\Validator("Date", options={"format":"Y-m-d"})
      * @Form\Validator("\Common\Form\Elements\Validators\DateNotInFuture")
      */
-    public $disqualificationDate = null;
+    public $disqualificationDate;
 
     /**
      * @Form\Attributes({"class":"long","id":""})
@@ -93,7 +93,7 @@ class LicenceHistoryLicenceData
      * @Form\Required(false)
      * @Form\Type("Text")
      */
-    public $disqualificationLength = null;
+    public $disqualificationLength;
 
     /**
      * @Form\Required(true)
@@ -109,5 +109,5 @@ class LicenceHistoryLicenceData
      * @Form\Validator("Date", options={"format":"Y-m-d"})
      * @Form\Validator("\Common\Form\Elements\Validators\DateNotInFuture")
      */
-    public $purchaseDate = null;
+    public $purchaseDate;
 }

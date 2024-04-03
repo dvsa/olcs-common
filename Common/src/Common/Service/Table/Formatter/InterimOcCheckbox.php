@@ -29,11 +29,9 @@ class InterimOcCheckbox implements FormatterPluginManagerInterface
             isset($data['isInterim'])
             && $data['isInterim'] == 'Y'
         ) {
-            $result = sprintf($format, 'checked');
-        } else {
-            $result = sprintf($format, '');
+            return sprintf($format, 'checked');
         }
 
-        return $result;
+        return sprintf($format, '');
     }
 }

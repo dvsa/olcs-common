@@ -47,7 +47,7 @@ class AbstractDataServiceTestCase extends MockeryTestCase
         );
     }
 
-    public function mockHandleQuery($mockResponse, $query = null)
+    public function mockHandleQuery($mockResponse, $query = null): void
     {
         $query ??= $this->query;
 

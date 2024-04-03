@@ -16,7 +16,7 @@ class ApplicationLvaAdapter extends AbstractLvaAdapter
         $id = $this->getController()->params('application');
 
         if ($id === null) {
-            throw new \Exception('Can\'t get the application id from this controller');
+            throw new \Exception("Can't get the application id from this controller");
         }
 
         return $id;

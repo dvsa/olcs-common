@@ -14,7 +14,7 @@ class CommunityLicenceMapperTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider dataProvider
      */
-    public function testMapFromResult($data)
+    public function testMapFromResult($data): void
     {
         $result = CommunityLicence::mapFromResult($data);
 
@@ -68,7 +68,7 @@ class CommunityLicenceMapperTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
-    public function testMapFromForm()
+    public function testMapFromForm(): void
     {
         $data = [
             'data' => [

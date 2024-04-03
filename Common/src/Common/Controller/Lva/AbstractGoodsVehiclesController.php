@@ -47,14 +47,17 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
     }
 
     public const DEF_TABLE_FIRST_PAGE_NR = 1;
+
     public const DEF_TABLE_ITEMS_COUNT = 25;
 
     public const SEARCH_VEHICLES_COUNT = 20;
 
     protected $section = 'vehicles';
+
     protected string $baseRoute = 'lva-%s/vehicles';
 
     protected $totalAuthorisedVehicles = [];
+
     protected $totalVehicles = [];
 
     protected $loadDataMap = [
@@ -81,31 +84,26 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         'application' => ApplicationDeleteGoodsVehicle::class
     ];
 
-    protected $headerData = null;
+    protected $headerData;
 
     protected FormHelperService $formHelper;
+
     protected FlashMessengerHelperService $flashMessengerHelper;
+
     protected FormServiceManager $formServiceManager;
+
     protected ScriptFactory $scriptFactory;
+
     protected TableFactory $tableFactory;
+
     protected GuidanceHelperService $guidanceHelper;
+
     protected VariationLvaService $variationLvaService;
+
     protected GoodsVehiclesVehicle $goodsVehiclesVehicleMapper;
+
     protected TranslationHelperService $translationHelper;
 
-    /**
-     * @param NiTextTranslation $niTextTranslationUtil
-     * @param AuthorizationService $authService
-     * @param FormHelperService $formHelper
-     * @param FlashMessengerHelperService $flashMessengerHelper
-     * @param FormServiceManager $formServiceManager
-     * @param TableFactory $tableFactory
-     * @param GuidanceHelperService $guidanceHelper
-     * @param TranslationHelperService $translationHelper
-     * @param ScriptFactory $scriptFactory
-     * @param VariationLvaService $variationLvaService
-     * @param GoodsVehiclesVehicle $goodsVehiclesVehicleMapper
-     */
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
@@ -185,12 +183,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
                 if ($response !== null) {
                     return $response;
                 }
-
-                if ($haveCrudAction) {
-                    return $this->handleCrudAction($crudAction);
-                }
-
-                return $this->completeSection('vehicles');
+                return $this->handleCrudAction($crudAction);
             }
         }
 
@@ -635,6 +628,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
     {
         return ['lva-crud', 'vehicle-goods'];
     }
+
     /**
      * Build table
      *
@@ -714,14 +708,16 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
                 ]
             );
         }
-
-        if (
-            isset($params['allVehicleCount'])
-            && isset($params['activeVehicleCount'])
-            && (int)$params['allVehicleCount'] > (int)$params['activeVehicleCount']
-        ) {
-            $this->addRemovedVehiclesActions($filters, $table);
+        if (!isset($params['allVehicleCount'])) {
+            return;
         }
+        if (!isset($params['activeVehicleCount'])) {
+            return;
+        }
+        if ((int)$params['allVehicleCount'] <= (int)$params['activeVehicleCount']) {
+            return;
+        }
+        $this->addRemovedVehiclesActions($filters, $table);
     }
 
     /**
@@ -747,11 +743,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
-        if ($request->isPost()) {
-            $query = $request->getPost('query');
-        } else {
-            $query = $request->getQuery();
-        }
+        $query = $request->isPost() ? $request->getPost('query') : $request->getQuery();
 
         return $this->formatFilters((array)$query);
     }
@@ -827,7 +819,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
 
         $form->setMessages($formMessages);
 
-        if (!empty($errors)) {
+        if ($errors !== []) {
             $fm = $this->flashMessengerHelper;
 
             foreach ($errors as $error) {

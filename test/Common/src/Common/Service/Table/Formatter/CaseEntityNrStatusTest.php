@@ -11,16 +11,17 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class CaseEntityNrStatusTest extends MockeryTestCase
 {
+    public $sut;
     /** @var  \Common\Service\Helper\UrlHelperService | m\MockInterface */
     private $mockUrlHlp;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->mockUrlHlp = m::mock(\Common\Service\Helper\UrlHelperService::class);
         $this->sut = new CaseEntityNrStatus($this->mockUrlHlp);
     }
 
-    public function testFormatTm()
+    public function testFormatTm(): void
     {
         $tmId = 9999;
 
@@ -45,7 +46,7 @@ class CaseEntityNrStatusTest extends MockeryTestCase
         );
     }
 
-    public function testFormatLic()
+    public function testFormatLic(): void
     {
         $licId = 9999;
 
@@ -74,7 +75,7 @@ class CaseEntityNrStatusTest extends MockeryTestCase
         );
     }
 
-    public function testFormatApp()
+    public function testFormatApp(): void
     {
         $licId = 9999;
         $appId = 8888;

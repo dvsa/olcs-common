@@ -13,6 +13,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class LicenceStatusSelfserveTest extends MockeryTestCase
 {
     protected $translator;
+
     protected $sut;
 
     protected function setUp(): void
@@ -33,10 +34,10 @@ class LicenceStatusSelfserveTest extends MockeryTestCase
      * @param array $data
      * @param string $expected
      */
-    public function testFormat($data, $expected)
+    public function testFormat($data, $expected): void
     {
         $this->translator->shouldReceive('translate')->andReturnUsing(
-            fn($message) => 'TRANSLATED_' . $message
+            static fn($message) => 'TRANSLATED_' . $message
         );
 
         $this->assertEquals($expected, $this->sut->format($data, []));

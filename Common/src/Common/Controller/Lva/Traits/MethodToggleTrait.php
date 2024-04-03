@@ -9,7 +9,7 @@ use Common\Controller\Plugin\FeaturesEnabledForMethod as FeaturesEnabledForMetho
  */
 trait MethodToggleTrait
 {
-    public function togglableMethod($class, $method, ...$args)
+    public function togglableMethod($class, $method, ...$args): void
     {
         if ($this->featuresEnabledForMethod($this->methodToggles, $method)) {
             call_user_func_array([$class, $method], $args);

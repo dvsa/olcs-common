@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Common\Data\Mapper\Lva\TransportManager\Sections;
 
 class RevokedLicences extends AbstractSection implements TransportManagerSectionInterface
@@ -25,6 +24,7 @@ class RevokedLicences extends AbstractSection implements TransportManagerSection
             $template = 'markup-' . $this->getTranslationTemplate() . "answer-revokedLicences";
             $this->revokedLicences .= $this->populateTemplate($template, [$licence['licNo']]);
         }
+
         return $this;
     }
 }

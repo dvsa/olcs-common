@@ -18,8 +18,6 @@ class AnnualTripsAbroadDataHandler implements DataHandlerInterface
     /**
      * Create service instance
      *
-     * @param IsValidBasedWarningAdder $isValidBasedWarningAdder
-     * @param AnnualTripsAbroadIsValidHandler $annualTripsAbroadIsValidHandler
      *
      * @return AnnualTripsAbroadDataHandler
      */
@@ -34,7 +32,7 @@ class AnnualTripsAbroadDataHandler implements DataHandlerInterface
     /**
      * {@inheritdoc}
      */
-    public function setData(QaForm $form)
+    public function setData(QaForm $form): void
     {
         $this->isValidBasedWarningAdder->add(
             $this->annualTripsAbroadIsValidHandler,

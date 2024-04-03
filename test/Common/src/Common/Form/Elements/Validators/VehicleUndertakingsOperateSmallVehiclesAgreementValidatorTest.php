@@ -6,6 +6,7 @@
  * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace CommonTest\Form\Elements\Validators;
 
 use Common\Form\Elements\Validators\VehicleUndertakingsOperateSmallVehiclesAgreementValidator;
@@ -18,7 +19,8 @@ use Common\Form\Elements\Validators\VehicleUndertakingsOperateSmallVehiclesAgree
  */
 class VehicleUndertakingsOperateSmallVehiclesAgreementValidatorTest extends \PHPUnit\Framework\TestCase
 {
-    public function setUp(): void
+    public $validator;
+    protected function setUp(): void
     {
         $this->validator = new VehicleUndertakingsOperateSmallVehiclesAgreementValidator();
     }
@@ -26,7 +28,7 @@ class VehicleUndertakingsOperateSmallVehiclesAgreementValidatorTest extends \PHP
     /**
      * @dataProvider providerIsValid
      */
-    public function testIsValid($value, $context, $expected)
+    public function testIsValid($value, $context, $expected): void
     {
         $this->assertEquals($expected, $this->validator->isValid($value, $context));
     }

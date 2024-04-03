@@ -1,16 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Common\Controller\Plugin;
 
-use Common\Controller\Traits\ViewHelperManagerAware;
 use Laminas\Mvc\Controller\AbstractActionController as LaminasAbstractActionController;
 use Laminas\View\Helper\Placeholder;
+use Laminas\View\Model\ViewModel;
 
 /**
- * Class TestController
- * Provuides a controlled and consistent environment with which to test the plugin.
- *
- * @package OlcsTest\Controller\Plugin
+ * Provides a controlled and consistent environment with which to test the plugin.
  */
 class ControllerStub extends LaminasAbstractActionController
 {
@@ -33,9 +32,7 @@ class ControllerStub extends LaminasAbstractActionController
      */
     public function pluginInvoke($options)
     {
-        $plugin = $this->ElasticSearch($options);
-
-        return $plugin;
+        return $this->ElasticSearch($options);
     }
 
     /**
@@ -44,9 +41,7 @@ class ControllerStub extends LaminasAbstractActionController
      */
     public function getPlugin()
     {
-        $plugin = $this->ElasticSearch();
-
-        return $plugin;
+        return $this->ElasticSearch();
     }
 
     /**

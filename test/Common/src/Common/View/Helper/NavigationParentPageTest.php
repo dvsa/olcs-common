@@ -20,7 +20,7 @@ class NavigationParentPageTest extends MockeryTestCase
     /**
      * Setup the view helper
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->mockBreadcrumbs = m::mock();
 
@@ -31,7 +31,7 @@ class NavigationParentPageTest extends MockeryTestCase
     /**
      * @dataProvider dpTestInvoke
      */
-    public function testInvoke($activePage, $expect)
+    public function testInvoke($activePage, $expect): void
     {
         $mockContainer = m::mock();
 

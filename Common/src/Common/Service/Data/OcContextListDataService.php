@@ -9,20 +9,10 @@ namespace Common\Service\Data;
  */
 class OcContextListDataService implements ListDataInterface
 {
-    /**
-     * @var LicenceOperatingCentre
-     */
     private LicenceOperatingCentre $licenceOperatingCentreDataService;
 
-    /**
-     * @var ApplicationOperatingCentre
-     */
     private ApplicationOperatingCentre $applicationOperatingCentreDataService;
 
-    /**
-     * @param LicenceOperatingCentre $licenceOperatingCentreDataService
-     * @param ApplicationOperatingCentre $applicationOperatingCentreDataService
-     */
     public function __construct(
         LicenceOperatingCentre $licenceOperatingCentreDataService,
         ApplicationOperatingCentre $applicationOperatingCentreDataService
@@ -44,7 +34,8 @@ class OcContextListDataService implements ListDataInterface
     {
         if ($context == 'licence') {
             return $this->licenceOperatingCentreDataService->fetchListOptions($context, $useGroups);
-        } elseif ($context == 'application') {
+        }
+        if ($context == 'application') {
             return $this->applicationOperatingCentreDataService->fetchListOptions($context, $useGroups);
         }
 

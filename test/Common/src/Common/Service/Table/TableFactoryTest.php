@@ -39,7 +39,7 @@ class TableFactoryTest extends MockeryTestCase
     /**
      * Test buildTable
      */
-    public function testBuildTable()
+    public function testBuildTable(): void
     {
         $name = 'foo';
         $data = ['foo' => 'var'];

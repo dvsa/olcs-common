@@ -11,7 +11,8 @@ class Permission
 {
     private AuthorizationService $authService;
 
-    public function __construct(AuthorizationService $authService) {
+    public function __construct(AuthorizationService $authService)
+    {
         $this->authService = $authService;
     }
 
@@ -40,6 +41,6 @@ class Permission
             return false;
         }
 
-        return strval($currentUserId) === $userId;
+        return (string) $currentUserId === $userId;
     }
 }

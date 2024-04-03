@@ -10,10 +10,12 @@ use Common\Controller\Lva\Adapters\ApplicationLvaAdapter;
 class ApplicationLvaAdapterTest extends MockeryTestCase
 {
     protected $sut;
+
     protected $container;
+
     protected $controller;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
 
         $this->container = m::mock(ContainerInterface::class);
@@ -22,7 +24,7 @@ class ApplicationLvaAdapterTest extends MockeryTestCase
         $this->sut->setController($this->controller);
     }
 
-    public function testAlterForm()
+    public function testAlterForm(): void
     {
         // This method should do nothing
         // So we don't really need expectations or assertions
@@ -30,7 +32,7 @@ class ApplicationLvaAdapterTest extends MockeryTestCase
         $this->assertNull($this->sut->alterForm($mockForm));
     }
 
-    public function testGetIdentifierThrowsException()
+    public function testGetIdentifierThrowsException(): void
     {
         $this->expectException('\Exception');
 
@@ -43,7 +45,7 @@ class ApplicationLvaAdapterTest extends MockeryTestCase
         $this->sut->getIdentifier();
     }
 
-    public function testGetIdentifier()
+    public function testGetIdentifier(): void
     {
         $this->controller->shouldReceive('params')
             ->with('application')

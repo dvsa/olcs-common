@@ -18,15 +18,17 @@ use Laminas\Form\Form;
 
 class ApplicationTypeOfLicenceTest extends MockeryTestCase
 {
+    public $permissionService;
     /** @var ApplicationTypeOfLicence */
     protected $sut;
 
     /** @var  m\MockInterface|FormServiceManager */
     protected $fsm;
+
     /** @var  m\MockInterface|FormHelperService */
     protected $fh;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->fsm = m::mock(FormServiceManager::class)->makePartial();
         $this->fh = m::mock(FormHelperService::class)->makePartial();
@@ -34,7 +36,7 @@ class ApplicationTypeOfLicenceTest extends MockeryTestCase
         $this->sut = new ApplicationTypeOfLicence($this->fh, $this->permissionService, $this->fsm);
     }
 
-    public function testGetForm()
+    public function testGetForm(): void
     {
         $this->permissionService->expects('isInternalReadOnly')->withNoArgs()->andReturnFalse();
         $mockForm = m::mock(Form::class);
@@ -56,7 +58,7 @@ class ApplicationTypeOfLicenceTest extends MockeryTestCase
         $this->assertSame($mockForm, $form);
     }
 
-    public function testGetFormInternalReadOnly()
+    public function testGetFormInternalReadOnly(): void
     {
         $this->permissionService->expects('isInternalReadOnly')->withNoArgs()->andReturnTrue();
         $mockForm = m::mock(Form::class);
@@ -88,7 +90,7 @@ class ApplicationTypeOfLicenceTest extends MockeryTestCase
      * @param string $locationValue
      * @param string $location
      */
-    public function testSetAndLockOperatorLocation($message, $location, $locationValue)
+    public function testSetAndLockOperatorLocation($message, $location, $locationValue): void
     {
         $mockOperatorLocation = m::mock(\Laminas\Form\Element::class)
             ->shouldReceive('setValue')
@@ -132,7 +134,7 @@ class ApplicationTypeOfLicenceTest extends MockeryTestCase
         ];
     }
 
-    public function testMaybeAlterFormForNi()
+    public function testMaybeAlterFormForNi(): void
     {
         $mockOperatorLocation = m::mock(\Laminas\Form\Element::class)
             ->shouldReceive('getValue')
@@ -188,7 +190,9 @@ class ApplicationTypeOfLicenceTest extends MockeryTestCase
         $operatorTypeValue,
         $licenceTypeValue,
         $vehicleTypeValue
-    ) {
+    ): void {
+        self::expectNotToPerformAssertions();
+
         $licenceType = m::mock(Element::class);
         $licenceType->shouldReceive('getValue')
             ->withNoArgs()
@@ -273,7 +277,7 @@ class ApplicationTypeOfLicenceTest extends MockeryTestCase
         $operatorTypeValue,
         $licenceTypeValue,
         $vehicleTypeValue
-    ) {
+    ): void {
         $licenceType = m::mock(Element::class);
         $licenceType->shouldReceive('getValue')
             ->withNoArgs()
@@ -380,7 +384,7 @@ class ApplicationTypeOfLicenceTest extends MockeryTestCase
         $operatorLocationValue,
         $operatorTypeValue,
         $licenceTypeValue
-    ) {
+    ): void {
         $vehicleTypeValue = '';
 
         $licenceType = m::mock(Element::class);

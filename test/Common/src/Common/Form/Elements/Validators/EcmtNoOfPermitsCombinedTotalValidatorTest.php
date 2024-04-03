@@ -12,7 +12,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class EcmtNoOfPermitsCombinedTotalValidatorTest extends MockeryTestCase
 {
-    public function testValidateMinTrue()
+    public function testValidateMinTrue(): void
     {
         $context = [
             'euro5' => null,
@@ -25,7 +25,7 @@ class EcmtNoOfPermitsCombinedTotalValidatorTest extends MockeryTestCase
         );
     }
 
-    public function testValidateMinFalse()
+    public function testValidateMinFalse(): void
     {
         $context = [
             'euro5' => '0',
@@ -38,7 +38,7 @@ class EcmtNoOfPermitsCombinedTotalValidatorTest extends MockeryTestCase
         );
     }
 
-    public function testValidateMaxTrue()
+    public function testValidateMaxTrue(): void
     {
         $context = [
             'euro5' => '3',
@@ -51,7 +51,7 @@ class EcmtNoOfPermitsCombinedTotalValidatorTest extends MockeryTestCase
         );
     }
 
-    public function testValidateMaxFalse()
+    public function testValidateMaxFalse(): void
     {
         $context = [
             'euro5' => '3',

@@ -13,6 +13,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class RefDataTest extends MockeryTestCase
 {
     protected $translator;
+
     protected $sut;
 
     protected function setUp(): void
@@ -25,15 +26,16 @@ class RefDataTest extends MockeryTestCase
     {
         m::close();
     }
+
     /**
      * @dataProvider dpTestFormat
      */
-    public function testFormat($data, $expect)
+    public function testFormat($data, $expect): void
     {
         $this->translator
             ->shouldReceive('translate')
             ->andReturnUsing(
-                fn($text) => '_TRNSLT_' . $text
+                static fn($text) => '_TRNSLT_' . $text
             );
 
         $col = [

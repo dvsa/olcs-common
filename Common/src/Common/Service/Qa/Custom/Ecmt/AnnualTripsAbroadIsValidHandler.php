@@ -16,7 +16,7 @@ class AnnualTripsAbroadIsValidHandler implements IsValidHandlerInterface
         $questionData = $form->getQuestionFieldsetData();
 
         $intensityWarningThreshold = $applicationStep['element']['intensityWarningThreshold'];
-        $permitsRequired = intval($questionData['qaElement']);
+        $permitsRequired = (int) $questionData['qaElement'];
 
         return ($permitsRequired <= $intensityWarningThreshold || $questionData['warningVisible'] != 0);
     }

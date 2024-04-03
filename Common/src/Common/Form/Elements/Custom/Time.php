@@ -5,6 +5,7 @@
  *
  * @author Someone <someone@valtech.co.uk>
  */
+
 namespace Common\Form\Elements\Custom;
 
 use Laminas\Form\Element as LaminasElement;
@@ -19,8 +20,6 @@ class Time extends LaminasElement\Time
     /**
      * Should return an array specification compatible with
      * {@link Laminas\InputFilter\Factory::createInput()}.
-     *
-     * @return array
      */
     public function getInputSpecification(): array
     {

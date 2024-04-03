@@ -100,7 +100,6 @@ class SumCompare extends AbstractCompare
      * matches that token.
      *
      * @param  mixed $value
-     * @param  array $context
      * @return bool
      */
     public function isValid($value, array $context = null)
@@ -121,6 +120,6 @@ class SumCompare extends AbstractCompare
 
         $compareToValue = $context[$this->getCompareTo()];
         $sumWithValue = $context[$this->getSumWith()];
-        return ($this->isValidForOperator($value+$sumWithValue, $compareToValue));
+        return ($this->isValidForOperator($value + $sumWithValue, $compareToValue));
     }
 }

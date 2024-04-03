@@ -33,7 +33,7 @@ class VenueTest extends AbstractDataServiceTestCase
         );
     }
 
-    public function testFormatData()
+    public function testFormatData(): void
     {
         $source = $this->getSingleSource();
         $expected = $this->getSingleExpected();
@@ -46,15 +46,15 @@ class VenueTest extends AbstractDataServiceTestCase
      * @param $input
      * @param $expected
      */
-    public function testFetchListOptions($input, $expected)
+    public function testFetchListOptions($input, $expected): void
     {
         $this->licenceDataService->shouldReceive('fetchLicenceData')
             ->once()
             ->andReturn(
                 [
                     'id' => 7,
-                    'niFlag'=> true,
-                    'goodsOrPsv' => ['id'=>'lcat_gv'],
+                    'niFlag' => true,
+                    'goodsOrPsv' => ['id' => 'lcat_gv'],
                     'trafficArea' => ['id' => 'B']
                 ]
             );
@@ -77,7 +77,7 @@ class VenueTest extends AbstractDataServiceTestCase
      * @param $input
      * @param $expectedTrafficArea
      */
-    public function testFetchListData($input, $expectedTrafficArea)
+    public function testFetchListData($input, $expectedTrafficArea): void
     {
         $results = ['results' => 'results'];
 
@@ -113,7 +113,7 @@ class VenueTest extends AbstractDataServiceTestCase
         ];
     }
 
-    public function testFetchLicenceDataWithException()
+    public function testFetchLicenceDataWithException(): void
     {
         $this->expectException(DataServiceException::class);
 
@@ -138,12 +138,11 @@ class VenueTest extends AbstractDataServiceTestCase
      */
     protected function getSingleExpected()
     {
-        $expected = [
+        return [
             'val-1' => 'Value 1',
             'val-2' => 'Value 2',
             'val-3' => 'Value 3',
         ];
-        return $expected;
     }
 
     /**
@@ -151,11 +150,10 @@ class VenueTest extends AbstractDataServiceTestCase
      */
     protected function getSingleSource()
     {
-        $source = [
+        return [
             ['id' => 'val-1', 'name' => 'Value 1'],
             ['id' => 'val-2', 'name' => 'Value 2'],
             ['id' => 'val-3', 'name' => 'Value 3'],
         ];
-        return $source;
     }
 }

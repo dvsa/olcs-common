@@ -14,5 +14,5 @@ class CommunityLicencesData
      * @Form\Options({"label":"application_community_licence_total_community_licences"})
      * @Form\Type("Text")
      */
-    public $totalActiveCommunityLicences = null;
+    public $totalActiveCommunityLicences;
 }

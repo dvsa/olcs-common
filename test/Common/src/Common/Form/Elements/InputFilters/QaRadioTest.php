@@ -11,7 +11,7 @@ use Laminas\Validator\InArray;
  */
 class QaRadioTest extends MockeryTestCase
 {
-    public function testGetInputSpecification()
+    public function testGetInputSpecification(): void
     {
         $name = 'qaRadioName';
         $notSelectedMessage = 'not selected message';

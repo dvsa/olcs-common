@@ -34,25 +34,23 @@ abstract class AbstractBusinessDetailsController extends AbstractController
     public const COMPANY_NUMBER_LENGTH = 8;
 
     protected $section = 'business_details';
+
     protected string $baseRoute = 'lva-%s/business_details';
 
     protected FormHelperService $formHelper;
+
     protected FlashMessengerHelperService $flashMessengerHelper;
+
     protected FormServiceManager $formServiceManager;
+
     protected ScriptFactory $scriptFactory;
+
     protected IdentityProviderInterface $identityProvider;
+
     protected TableFactory $tableFactory;
+
     protected FileUploadHelperService $uploadHelper;
 
-    /**
-     * @param NiTextTranslation $niTextTranslationUtil
-     * @param AuthorizationService $authService
-     * @param FormHelperService $formHelper
-     * @param FlashMessengerHelperService $flashMessengerHelper
-     * @param FormServiceManager $formServiceManager
-     * @param ScriptFactory $scriptFactory
-     * @param IdentityProviderInterface $identityProvider
-     */
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
@@ -225,6 +223,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
                 $result[] = $tradingNameElement['name'];
             }
         }
+
         return $result;
     }
 
@@ -336,13 +335,11 @@ abstract class AbstractBusinessDetailsController extends AbstractController
             $data = CompanySubsidiaryMapper::mapFromResult($response->getResult());
         }
 
-        // @todo Move this into a form service
         /** @var \Common\Form\Form $form */
         $form = $this->formHelper
             ->createFormWithRequest('Lva\BusinessDetailsSubsidiaryCompany', $request)
             ->setData($data);
 
-        // @todo Add this generic behaviour to a form service
         if ($mode !== 'add') {
             $form->get('form-actions')->remove('addAnother');
         }
@@ -459,7 +456,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
             unset($errors['natureOfBusiness']);
         }
 
-        if (!empty($errors)) {
+        if ($errors !== []) {
             $fm = $this->flashMessengerHelper;
 
             foreach ($errors as $error) {

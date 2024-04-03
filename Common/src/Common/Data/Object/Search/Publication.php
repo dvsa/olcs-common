@@ -3,7 +3,7 @@
 namespace Common\Data\Object\Search;
 
 use Common\Data\Object\Search\Aggregations\Terms as Filter;
-use Common\Data\Object\Search\Aggregations\DateRange as DateRange;
+use Common\Data\Object\Search\Aggregations\DateRange;
 use Common\Service\Table\Formatter\Date;
 
 /**
@@ -67,7 +67,6 @@ class Publication extends InternalSearchAbstract
     public function getDateRanges()
     {
         if (empty($this->dateRanges)) {
-
             $this->dateRanges = [
                 new DateRange\PublishedDateFrom(),
                 new DateRange\PublishedDateTo(),
@@ -85,7 +84,6 @@ class Publication extends InternalSearchAbstract
     public function getFilters()
     {
         if (empty($this->filters)) {
-
             $this->filters = [
                 new Filter\TrafficArea(),
                 new Filter\PublicationType(),

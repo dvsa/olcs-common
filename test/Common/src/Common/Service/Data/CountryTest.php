@@ -23,7 +23,7 @@ class CountryTest extends AbstractDataServiceTestCase
         $this->sut = new Country($this->abstractDataServiceServices);
     }
 
-    public function testFormatData()
+    public function testFormatData(): void
     {
         $source = $this->getSingleSource();
         $expected = $this->getSingleExpected();
@@ -36,7 +36,7 @@ class CountryTest extends AbstractDataServiceTestCase
      * @param $input
      * @param $expected
      */
-    public function testFetchListOptions($input, $category, $expected)
+    public function testFetchListOptions($input, $category, $expected): void
     {
         $this->sut->setData('Country', $input);
 
@@ -76,7 +76,7 @@ class CountryTest extends AbstractDataServiceTestCase
         ];
     }
 
-    public function testFetchListData()
+    public function testFetchListData(): void
     {
         $results = ['results' => 'results'];
         $params = [
@@ -110,7 +110,7 @@ class CountryTest extends AbstractDataServiceTestCase
         $this->assertEquals($results['results'], $this->sut->fetchListData());
     }
 
-    public function testFetchListDataWithException()
+    public function testFetchListDataWithException(): void
     {
         $this->expectException(DataServiceException::class);
 
@@ -135,7 +135,7 @@ class CountryTest extends AbstractDataServiceTestCase
      */
     protected function getSingleExpected()
     {
-        $expected = [
+        return [
             'val-1' => 'Value 1',
             'val-2' => 'Value 2',
             'val-3' => 'Value 3',
@@ -143,7 +143,6 @@ class CountryTest extends AbstractDataServiceTestCase
             'val-5' => 'Value 5',
             'val-6' => 'Value 6',
         ];
-        return $expected;
     }
 
     /**
@@ -151,7 +150,7 @@ class CountryTest extends AbstractDataServiceTestCase
      */
     protected function getSingleSource()
     {
-        $source = [
+        return [
             [
                 'id' => 'val-1',
                 'countryDesc' => 'Value 1',
@@ -195,6 +194,5 @@ class CountryTest extends AbstractDataServiceTestCase
                 'isPermitState' => true,
             ],
         ];
-        return $source;
     }
 }

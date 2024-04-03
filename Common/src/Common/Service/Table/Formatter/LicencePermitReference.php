@@ -58,6 +58,7 @@ class LicencePermitReference implements FormatterPluginManagerInterface
     ];
 
     private TranslatorDelegator $translator;
+
     private UrlHelperService $urlHelper;
 
     public function __construct(TranslatorDelegator $translator, UrlHelperService $urlHelper)
@@ -113,15 +114,13 @@ class LicencePermitReference implements FormatterPluginManagerInterface
             'id' => $row['id'],
         ];
 
-        switch ($route) {
-            case 'valid':
-                // specific for valid IRHP application
-                $params = [
-                'licence' => $row['licenceId'],
-                'type' => $row['typeId'],
-                ];
-                $text = $row['licNo'];
-                break;
+        if ($route === 'valid') {
+            // specific for valid IRHP application
+            $params = [
+            'licence' => $row['licenceId'],
+            'type' => $row['typeId'],
+            ];
+            $text = $row['licNo'];
         }
 
         return sprintf(

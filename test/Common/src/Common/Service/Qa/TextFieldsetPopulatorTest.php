@@ -50,7 +50,7 @@ class TextFieldsetPopulatorTest extends MockeryTestCase
 
     private $value = 'value';
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->text = m::mock(Text::class);
         $this->text->shouldReceive('setValue')
@@ -81,7 +81,7 @@ class TextFieldsetPopulatorTest extends MockeryTestCase
         );
     }
 
-    public function testPopulateWithLabelAndHint()
+    public function testPopulateWithLabelAndHint(): void
     {
         $options = [
             'label' => $this->labelOptions,
@@ -113,7 +113,7 @@ class TextFieldsetPopulatorTest extends MockeryTestCase
         $this->textFieldsetPopulator->populate($this->form, $this->fieldset, $options);
     }
 
-    public function testPopulateWithLabelOnly()
+    public function testPopulateWithLabelOnly(): void
     {
         $options = [
             'label' => $this->labelOptions,
@@ -131,7 +131,7 @@ class TextFieldsetPopulatorTest extends MockeryTestCase
         $this->textFieldsetPopulator->populate($this->form, $this->fieldset, $options);
     }
 
-    public function testPopulateWithHintOnly()
+    public function testPopulateWithHintOnly(): void
     {
         $options = [
             'hint' => $this->hintOptions,

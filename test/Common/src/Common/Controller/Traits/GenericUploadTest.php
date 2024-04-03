@@ -17,10 +17,11 @@ class GenericUploadTest extends MockeryTestCase
 {
     /** @var  GenericUploadStub */
     private $sut;
+
     /** @var  m\MockInterface */
     private $mockResp;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->mockResp = m::mock(\Laminas\Http\Response::class);
 
@@ -31,7 +32,7 @@ class GenericUploadTest extends MockeryTestCase
     /**
      * @dataProvider dpTestUploadFile
      */
-    public function testUploadFile($fileData, $data, $expect)
+    public function testUploadFile($fileData, $data, $expect): void
     {
         $this->mockResp
             ->shouldReceive('isOk')->andReturn(true)
@@ -88,7 +89,7 @@ class GenericUploadTest extends MockeryTestCase
         ];
     }
 
-    public function testUploadFileServerFail()
+    public function testUploadFileServerFail(): void
     {
         $this->expectException(\Exception::class);
 
@@ -103,7 +104,7 @@ class GenericUploadTest extends MockeryTestCase
         $this->sut->callUploadFile($fileData, []);
     }
 
-    public function testUploadFileInvalidMime()
+    public function testUploadFileInvalidMime(): void
     {
         $this->expectException(InvalidMimeException::class);
 
@@ -125,7 +126,7 @@ class GenericUploadTest extends MockeryTestCase
         $this->sut->callUploadFile($fileData, []);
     }
 
-    public function testUploadFileInvalidEbrsMime()
+    public function testUploadFileInvalidEbrsMime(): void
     {
         $this->expectException(InvalidMimeException::class);
         $this->expectExceptionMessage('EXPECT_ERROR_MESSAGE');
@@ -148,7 +149,7 @@ class GenericUploadTest extends MockeryTestCase
         $this->sut->callUploadFile($fileData, []);
     }
 
-    public function testDeleteFile()
+    public function testDeleteFile(): void
     {
         $this->sut->stubResponse = m::mock()->makePartial();
         $this->sut->stubResponse->shouldReceive('isOk')

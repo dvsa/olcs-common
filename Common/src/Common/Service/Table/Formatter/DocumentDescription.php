@@ -13,17 +13,15 @@ use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
 class DocumentDescription implements FormatterPluginManagerInterface
 {
     private TranslatorDelegator $translator;
+
     private UrlHelperService $urlHelper;
 
-    /**
-     * @param TranslatorDelegator $translator
-     * @param UrlHelperService    $urlHelper
-     */
     public function __construct(TranslatorDelegator $translator, UrlHelperService $urlHelper)
     {
         $this->translator = $translator;
         $this->urlHelper = $urlHelper;
     }
+
     /**
      * Format a cell
      *
@@ -66,6 +64,7 @@ class DocumentDescription implements FormatterPluginManagerInterface
         if (isset($data['description'])) {
             return $data['description'];
         }
+
         if (isset($data['filename'])) {
             return basename($data['filename']);
         }

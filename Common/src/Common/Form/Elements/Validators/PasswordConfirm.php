@@ -3,6 +3,7 @@
 /**
  * Custom validator for confirming a password
  */
+
 namespace Common\Form\Elements\Validators;
 
 use Laminas\Validator\Identical;

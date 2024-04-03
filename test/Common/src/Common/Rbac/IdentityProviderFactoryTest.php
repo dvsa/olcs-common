@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace CommonTest\Common\Rbac;
@@ -21,7 +22,7 @@ class IdentityProviderFactoryTest extends MockeryTestCase
      */
     protected $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->setUpServiceManager();
     }
@@ -29,20 +30,20 @@ class IdentityProviderFactoryTest extends MockeryTestCase
     /**
      * @test
      */
-    public function __invoke_IsCallable(): void
+    public function invokeIsCallable(): void
     {
         // Setup
         $this->setUpSut();
 
         // Assert
-        $this->assertIsCallable([$this->sut, '__invoke']);
+        $this->assertIsCallable(fn(\Psr\Container\ContainerInterface $container, string $requestedName, ?array $options = null): \Common\Rbac\JWTIdentityProvider => $this->sut->__invoke($container, $requestedName, $options));
     }
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_ReturnsInstance_WhenItImplementsIdentityProviderInterface()
+    public function invokeReturnsInstanceWhenItImplementsIdentityProviderInterface(): void
     {
         // Setup
         $this->setUpSut();
@@ -58,9 +59,9 @@ class IdentityProviderFactoryTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_ThrowsException_WhenConfigIsMissing()
+    public function invokeThrowsExceptionWhenConfigIsMissing(): void
     {
         // Setup
         $this->setUpSut();
@@ -76,9 +77,9 @@ class IdentityProviderFactoryTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_ThrowsException_WhenContainerDoesNotHaveRequestedInstance()
+    public function invokeThrowsExceptionWhenContainerDoesNotHaveRequestedInstance(): void
     {
         // Setup
         $this->setUpSut();
@@ -94,9 +95,9 @@ class IdentityProviderFactoryTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_ThrowsException_WhenInstanceDoesNotImplementIdentityProviderInterface()
+    public function invokeThrowsExceptionWhenInstanceDoesNotImplementIdentityProviderInterface(): void
     {
         // Setup
         $this->setUpSut();

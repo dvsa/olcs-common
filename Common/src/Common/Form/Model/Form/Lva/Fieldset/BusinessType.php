@@ -22,5 +22,5 @@ class BusinessType
      * })
      * @Form\Type("DynamicRadio")
      */
-    public $type = null;
+    public $type;
 }

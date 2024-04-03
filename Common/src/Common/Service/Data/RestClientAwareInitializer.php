@@ -2,6 +2,7 @@
 
 namespace Common\Service\Data;
 
+use Common\Service\Api\Resolver;
 use Common\Service\Data\Interfaces\RestClientAware;
 use Laminas\ServiceManager\Initializer\InitializerInterface;
 use Psr\Container\ContainerInterface;
@@ -14,7 +15,6 @@ use Psr\Container\ContainerInterface;
 class RestClientAwareInitializer implements InitializerInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param mixed $instance
      *
      * return mixed
@@ -22,7 +22,7 @@ class RestClientAwareInitializer implements InitializerInterface
     public function __invoke(ContainerInterface $container, $instance)
     {
         if ($instance instanceof RestClientAware) {
-            /** @var \Common\Util\ResolveApi $apiResolver */
+            /** @var Resolver $apiResolver */
             $apiResolver = $container->get('ServiceApiResolver');
             /** @var \Laminas\Mvc\I18n\Translator $translator */
             $translator = $container->get('translator');

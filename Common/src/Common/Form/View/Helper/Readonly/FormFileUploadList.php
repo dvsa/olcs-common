@@ -13,10 +13,7 @@ use Laminas\Form\View\Helper\AbstractHelper;
 class FormFileUploadList extends AbstractHelper
 {
     private static $htmlCntr =
-        '<div class="help__text">' .
-            '<h3 class="file__heading">%s</h3>' .
-            '<ul class="js-upload-list">%s</ul>' .
-        '</div>';
+        '<div class="help__text"><h3 class="file__heading">%s</h3><ul class="js-upload-list">%s</ul></div>';
 
     /**
      * Invoke helper as function. Proxies to {@link render()}.
@@ -39,10 +36,6 @@ class FormFileUploadList extends AbstractHelper
      */
     public function render(FieldsetInterface $fs)
     {
-        if (!($fs instanceof FileUploadList)) {
-            throw new \Exception('Parameter must be instance of ' . FileUploadList::class);
-        }
-
         if ($fs->count() == 0) {
             return '';
         }

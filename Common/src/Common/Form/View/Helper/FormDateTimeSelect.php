@@ -5,6 +5,7 @@
  *
  * @author Ian Lindsay <ian@hemera-business-services.co.uk>
  */
+
 namespace Common\Form\View\Helper;
 
 use Laminas\Form\ElementInterface;
@@ -31,8 +32,6 @@ class FormDateTimeSelect extends \Common\Form\View\Helper\Extended\FormDateTimeS
     /**
      * Render a date element that is composed of six selects
      *
-     * @param  ElementInterface $element
-     * @return string
      * @throws \Laminas\Form\Exception\InvalidArgumentException
      * @throws \Laminas\Form\Exception\DomainException
      */
@@ -58,6 +57,7 @@ class FormDateTimeSelect extends \Common\Form\View\Helper\Extended\FormDateTimeS
                 )
             );
         }
+
         $this->setDisplayEveryMinute((bool) $element->getOption('display_every_minute'));
 
         $shouldRenderDelimiters = $element->shouldRenderDelimiters();
@@ -174,7 +174,6 @@ class FormDateTimeSelect extends \Common\Form\View\Helper\Extended\FormDateTimeS
      * Create a key => value options for minutes
      *
      * @param  string $pattern Pattern to use for minutes
-     * @return array
      */
     protected function getMinutesOptions(string $pattern): array
     {
@@ -195,7 +194,7 @@ class FormDateTimeSelect extends \Common\Form\View\Helper\Extended\FormDateTimeS
 
         $result = [];
 
-        for ($min = $from; $min <= $to; $min++) {
+        for ($min = $from; $min <= $to; ++$min) {
             $key   = $keyFormatter->format($date);
             $value = $valueFormatter->format($date);
             $result[$key] = $value;

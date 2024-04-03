@@ -10,7 +10,6 @@ use Psr\Container\NotFoundExceptionInterface;
 class StackValueReplacerFactory implements FactoryInterface
 {
     /**
-     * @param  ContainerInterface $container
      * @param  $requestedName
      * @param  array|null         $options
      * @return StackValueReplacer

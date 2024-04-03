@@ -19,7 +19,7 @@ class FieldsetPopulatorProviderTest extends MockeryTestCase
 
     private $populator2;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->populator2 = m::mock(FieldsetPopulatorInterface::class);
 
@@ -29,7 +29,7 @@ class FieldsetPopulatorProviderTest extends MockeryTestCase
         $this->sut->registerPopulator('type3', m::mock(FieldsetPopulatorInterface::class));
     }
 
-    public function testGet()
+    public function testGet(): void
     {
         $this->assertSame(
             $this->populator2,
@@ -37,7 +37,7 @@ class FieldsetPopulatorProviderTest extends MockeryTestCase
         );
     }
 
-    public function testExceptionOnUnknownType()
+    public function testExceptionOnUnknownType(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Fieldset populator not found: type4');

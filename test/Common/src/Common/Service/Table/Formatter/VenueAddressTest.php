@@ -23,7 +23,7 @@ class VenueAddressTest extends \PHPUnit\Framework\TestCase
      *
      * @dataProvider provider
      */
-    public function testFormat($data, $expected)
+    public function testFormat($data, $expected): void
     {
         $this->assertEquals($expected, (new VenueAddress(new Address(new DataHelperService())))->format($data));
     }

@@ -11,7 +11,6 @@ use Common\Util\RestClient;
 interface RestClientAware
 {
     /**
-     * @param RestClient $restClient
      * @return mixed
      */
     public function setRestClient(RestClient $restClient);

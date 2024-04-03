@@ -9,7 +9,7 @@ class CommunityLicenceTest extends MockeryTestCase
 {
     private $communityLicence;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->communityLicence = new CommunityLicence();
     }
@@ -20,7 +20,7 @@ class CommunityLicenceTest extends MockeryTestCase
      * @param $apiData
      * @param $formData
      */
-    public function testMapFromResult($apiData, $formData)
+    public function testMapFromResult($apiData, $formData): void
     {
         static::assertEquals(
             $formData,
@@ -33,7 +33,7 @@ class CommunityLicenceTest extends MockeryTestCase
      * @param $apiData
      * @param $formData
      */
-    public function testMapFromForm($apiData, $formData)
+    public function testMapFromForm($apiData, $formData): void
     {
         $apiData['communityLicenceDocumentStatus'] = $apiData['communityLicenceDocumentStatus']['id'];
 
@@ -104,6 +104,7 @@ class CommunityLicenceTest extends MockeryTestCase
             case 'doc_sts_stolen':
                 return 'stolen';
         }
+
         return '';
     }
 }

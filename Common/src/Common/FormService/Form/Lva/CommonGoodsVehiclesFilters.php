@@ -17,6 +17,7 @@ class CommonGoodsVehiclesFilters
     {
         $this->formHelper = $formHelper;
     }
+
     /**
      * Get Form
      *

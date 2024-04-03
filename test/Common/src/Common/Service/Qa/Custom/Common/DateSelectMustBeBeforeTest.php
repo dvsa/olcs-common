@@ -14,7 +14,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class DateSelectMustBeBeforeTest extends MockeryTestCase
 {
-    public function testGetInputSpecification()
+    public function testGetInputSpecification(): void
     {
         $dateMustBeBefore = '2020-05-02';
         $dateNotBeforeKey = 'date.not.before.key';

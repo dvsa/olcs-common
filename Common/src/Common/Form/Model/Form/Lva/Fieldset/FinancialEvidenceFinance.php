@@ -14,5 +14,5 @@ class FinancialEvidenceFinance
      *
      * (value is set by individual LVA adapters)
      */
-    public $requiredFinance = null;
+    public $requiredFinance;
 }

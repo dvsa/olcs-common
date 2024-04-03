@@ -13,7 +13,6 @@ class StandardAndCabotageIsValidHandler implements IsValidHandlerInterface
     /**
      * Create service instance
      *
-     * @param StandardAndCabotageSubmittedAnswerGenerator $standardAndCabotageSubmittedAnswerGenerator
      *
      * @return StandardAndCabotageIsValidHandler
      */

@@ -28,9 +28,11 @@ class DocumentSubcategory implements FormatterPluginManagerInterface
         if ($data['isExternal']) {
             $str .= ' (selfserve)';
         }
+
         if ($data['ciId']) {
             $str .= ' (emailed)';
         }
+
         return $str;
     }
 }

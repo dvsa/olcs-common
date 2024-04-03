@@ -22,7 +22,7 @@ class OperatingCentreTest extends MockeryTestCase
     /**
      * @dataProvider adProvider
      */
-    public function testMapFromResult($adPlaced, $radio)
+    public function testMapFromResult($adPlaced, $radio): void
     {
         $result = [
             'version' => 1,
@@ -86,7 +86,7 @@ class OperatingCentreTest extends MockeryTestCase
     /**
      * @dataProvider mapFromFormProvider
      */
-    public function testMapFromForm($data, $expected)
+    public function testMapFromForm($data, $expected): void
     {
         $this->assertEquals($expected, OperatingCentre::mapFromForm($data));
     }
@@ -193,7 +193,7 @@ class OperatingCentreTest extends MockeryTestCase
         ];
     }
 
-    public function testMapFormErrors()
+    public function testMapFormErrors(): void
     {
         $location = OperatingCentre::LOC_EXTERNAL;
         $form = m::mock(\Laminas\Form\Form::class);
@@ -277,7 +277,7 @@ class OperatingCentreTest extends MockeryTestCase
     /**
      * @dataProvider mapFromPostProvider
      */
-    public function testMapFromPost($data, $expected)
+    public function testMapFromPost($data, $expected): void
     {
         $this->assertEquals($expected, OperatingCentre::mapFromPost($data));
     }
@@ -346,7 +346,7 @@ class OperatingCentreTest extends MockeryTestCase
     /**
      * @dataProvider dpConfirmation
      */
-    public function testMapFormErrorsConfirmation($location, $expected)
+    public function testMapFormErrorsConfirmation($location, $expected): void
     {
         $form = m::mock(Form::class);
         $errors = [

@@ -24,18 +24,18 @@ class LicenceTest extends AbstractDataServiceTestCase
         $this->sut = new Licence($this->abstractDataServiceServices);
     }
 
-    public function testSetId()
+    public function testSetId(): void
     {
         $this->sut->setId(78);
         $this->assertEquals(78, $this->sut->getId());
     }
 
-    public function testGetId()
+    public function testGetId(): void
     {
         $this->assertNull($this->sut->getId());
     }
 
-    public function testFetchLicenceData()
+    public function testFetchLicenceData(): void
     {
         $licence = [
             'id' => 78,
@@ -84,12 +84,12 @@ class LicenceTest extends AbstractDataServiceTestCase
         $this->assertEquals($expected, $this->sut->fetchLicenceData(78));
     }
 
-    public function testFetchLicenceDataWithoutId()
+    public function testFetchLicenceDataWithoutId(): void
     {
         $this->assertEquals([], $this->sut->fetchLicenceData());
     }
 
-    public function testFetchLicenceDataWithException()
+    public function testFetchLicenceDataWithException(): void
     {
         $this->expectException(DataServiceException::class);
 
@@ -109,7 +109,7 @@ class LicenceTest extends AbstractDataServiceTestCase
         $this->sut->fetchLicenceData(78);
     }
 
-    public function testFetchOperatingCentreData()
+    public function testFetchOperatingCentreData(): void
     {
         $licence = [
             'id' => 78,
@@ -154,7 +154,7 @@ class LicenceTest extends AbstractDataServiceTestCase
         $this->assertEquals($expected, $this->sut->fetchOperatingCentreData(78));
     }
 
-    public function testFetchOperatingCentresDataWithException()
+    public function testFetchOperatingCentresDataWithException(): void
     {
         $this->expectException(DataServiceException::class);
 

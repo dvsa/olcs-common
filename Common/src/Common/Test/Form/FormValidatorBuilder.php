@@ -12,7 +12,7 @@ use Laminas\Form\Element\Csrf;
  * @see FormValidator
  * @see \CommonTest\Test\Form\FormValidationBuilderTest
  */
-class FormValidatorBuilder
+final class FormValidatorBuilder
 {
     /**
      * @var bool
@@ -30,8 +30,6 @@ class FormValidatorBuilder
     /**
      * When disabled, a form validator will disable any validation on the csrf elements of any forms that it is asked to
      * validate.
-     *
-     * @return self
      */
     public function populateCsrfDataBeforeValidating(): self
     {
@@ -39,9 +37,6 @@ class FormValidatorBuilder
         return $this;
     }
 
-    /**
-     * @return FormValidator
-     */
     public function build(): FormValidator
     {
         $instance = new class extends FormValidator {
@@ -50,18 +45,11 @@ class FormValidatorBuilder
              */
             private $populateCsrfDataBeforeValidating = false;
 
-            /**
-             * @param bool $disabled
-             */
-            public function setPopulateCsrfDataBeforeValidating(bool $disabled = true)
+            public function setPopulateCsrfDataBeforeValidating(bool $disabled = true): void
             {
                 $this->populateCsrfDataBeforeValidating = $disabled;
             }
 
-            /**
-             * @param Form $form
-             * @return bool
-             */
             public function isValid(Form $form): bool
             {
                 if ($this->populateCsrfDataBeforeValidating) {
@@ -72,10 +60,12 @@ class FormValidatorBuilder
                             $csrfData[$element->getName()] = $element->getCsrfValidator()->getHash();
                         }
                     }
-                    if (! empty($csrfData)) {
+
+                    if ($csrfData !== []) {
                         $form->setData(array_merge($form->getInputFilter()->getRawValues(), $csrfData));
                     }
                 }
+
                 return parent::isValid($form);
             }
         };

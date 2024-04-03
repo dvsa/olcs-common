@@ -15,12 +15,12 @@ class DateCompareWithIntervalTest extends MockeryTestCase
     /**
      * test setOptions
      */
-    public function testSetOptions()
+    public function testSetOptions(): void
     {
         $sut = new DateCompareWithInterval();
         $sut->setOptions(
             [
-                'compare_to' =>'test',
+                'compare_to' => 'test',
                 'compare_to_label' => [null],
                 'interval_label' => 'X days',
                 'date_interval' => 'P5D',
@@ -40,7 +40,7 @@ class DateCompareWithIntervalTest extends MockeryTestCase
     /**
      * @dataProvider provideIsValid
      */
-    public function testIsValid($expected, $options, $value, $context, $errorMessages = [])
+    public function testIsValid($expected, $options, $value, $context, $errorMessages = []): void
     {
         $errorMessages = empty($errorMessages) ? ['error' => 'message'] : $errorMessages;
 
@@ -65,7 +65,7 @@ class DateCompareWithIntervalTest extends MockeryTestCase
                 ['compare_to' => 'other_field', 'operator' => 'gt', 'compare_to_label' => 'Other field',
                     'date_interval' => 'P2D', 'interval_label' => '2 days'],
                 '2014-01-11',
-                ['other_field'=>
+                ['other_field' =>
                     ['day' => '09', 'month' => '01', 'year' => '2014'], true],
                 true
             ],
@@ -75,8 +75,8 @@ class DateCompareWithIntervalTest extends MockeryTestCase
                 ['compare_to' => 'other_field', 'operator' => 'gt', 'compare_to_label' => 'Other field',
                     'date_interval' => 'P2D', 'interval_label' => '2 days'],
                 '2014-01-10',
-                ['other_field'=> ['day' => '11', 'month' => '01', 'year' => '2014']],
-                [DateCompareWithInterval::NOT_GT => 'This date must be 2 days after the \'Other field\'']
+                ['other_field' => ['day' => '11', 'month' => '01', 'year' => '2014']],
+                [DateCompareWithInterval::NOT_GT => "This date must be 2 days after the 'Other field'"]
             ],
             //context doesn't match, field is invalid
             [
@@ -85,7 +85,7 @@ class DateCompareWithIntervalTest extends MockeryTestCase
                     'date_interval' => 'P2D', 'interval_label' => '2 days'],
                 '2014-01-10',
                 [],
-                [DateCompareWithInterval::INVALID_FIELD => 'Input field being compared to doesn\'t exist']
+                [DateCompareWithInterval::INVALID_FIELD => "Input field being compared to doesn't exist"]
             ],
             //missing context
             [
@@ -94,7 +94,7 @@ class DateCompareWithIntervalTest extends MockeryTestCase
                     'date_interval' => 'P2D', 'interval_label' => '2 days'],
                 '2014-01-10',
                 [],
-                [DateCompareWithInterval::INVALID_FIELD => 'Input field being compared to doesn\'t exist']
+                [DateCompareWithInterval::INVALID_FIELD => "Input field being compared to doesn't exist"]
             ],
             //Context field partially empty
             [
@@ -102,8 +102,8 @@ class DateCompareWithIntervalTest extends MockeryTestCase
                 ['compare_to' => 'other_field', 'operator' => 'invalid', 'compare_to_label' => 'Other field',
                     'date_interval' => 'P2D', 'interval_label' => '2 days'],
                 '2014-01-10',
-                ['other_field'=> ['day' => '', 'month' => '', 'year' => '2014']],
-                [DateCompareWithInterval::INVALID_FIELD => 'Input field being compared to doesn\'t exist']
+                ['other_field' => ['day' => '', 'month' => '', 'year' => '2014']],
+                [DateCompareWithInterval::INVALID_FIELD => "Input field being compared to doesn't exist"]
             ],
             //context matches value is empty
             [
@@ -111,8 +111,8 @@ class DateCompareWithIntervalTest extends MockeryTestCase
                 ['compare_to' => 'other_field', 'operator' => 'gt', 'compare_to_label' => 'Other field',
                     'date_interval' => 'P2D', 'interval_label' => '2 days'],
                 '',
-                ['other_field'=> ['day' => '11', 'month' => '01', 'year' => '2014']],
-                [DateCompareWithInterval::INVALID_FIELD => 'Input field being compared to doesn\'t exist']
+                ['other_field' => ['day' => '11', 'month' => '01', 'year' => '2014']],
+                [DateCompareWithInterval::INVALID_FIELD => "Input field being compared to doesn't exist"]
             ],
             //context matches, field is valid, invalid operator gte
             [
@@ -120,7 +120,7 @@ class DateCompareWithIntervalTest extends MockeryTestCase
                 ['compare_to' => 'other_field', 'operator' => 'gte', 'compare_to_label' => 'Other field',
                     'date_interval' => 'P2D', 'interval_label' => '2 days'],
                 '2014-01-10',
-                ['other_field'=> ['day' => '10', 'month' => '01', 'year' => '2014']],
+                ['other_field' => ['day' => '10', 'month' => '01', 'year' => '2014']],
                 [DateCompareWithInterval::INVALID_OPERATOR => 'Invalid operator']
             ],
             //context matches, field has time and is valid, valid gt
@@ -152,8 +152,8 @@ class DateCompareWithIntervalTest extends MockeryTestCase
                 ['compare_to' => 'other_field', 'operator' => 'gt', 'compare_to_label' => 'Other field',
                     'date_interval' => 'P2D', 'interval_label' => '2 days'],
                 '2014-01-12',
-                ['other_field'=> ['day' => '11', 'month' => '01', 'year' => '2014']],
-                [DateCompareWithInterval::NOT_GT => 'This date must be 2 days after the \'Other field\'']
+                ['other_field' => ['day' => '11', 'month' => '01', 'year' => '2014']],
+                [DateCompareWithInterval::NOT_GT => "This date must be 2 days after the 'Other field'"]
             ],
             //context matches, field is valid lt
             [
@@ -161,7 +161,7 @@ class DateCompareWithIntervalTest extends MockeryTestCase
                 ['compare_to' => 'other_field', 'operator' => 'lt', 'compare_to_label' => 'Other field',
                     'date_interval' => 'P2D', 'interval_label' => '2 days'],
                 '2014-01-09',
-                ['other_field'=> ['day' => '11', 'month' => '01', 'year' => '2014']],
+                ['other_field' => ['day' => '11', 'month' => '01', 'year' => '2014']],
                 true
             ],
             //context matches, field is invalid lt
@@ -170,8 +170,8 @@ class DateCompareWithIntervalTest extends MockeryTestCase
                 ['compare_to' => 'other_field', 'operator' => 'lt', 'compare_to_label' => 'Other field',
                     'date_interval' => 'P2D', 'interval_label' => '2 days'],
                 '2014-01-08',
-                ['other_field'=> ['day' => '09', 'month' => '01', 'year' => '2014']],
-                [DateCompareWithInterval::NOT_LT => 'This date must be 2 days before \'Other field\'']
+                ['other_field' => ['day' => '09', 'month' => '01', 'year' => '2014']],
+                [DateCompareWithInterval::NOT_LT => "This date must be 2 days before 'Other field'"]
             ],
             // Invalid Interval
             [
@@ -179,7 +179,7 @@ class DateCompareWithIntervalTest extends MockeryTestCase
                 ['compare_to' => 'other_field', 'operator' => 'lt', 'compare_to_label' => 'Other field',
                     'date_interval' => 'INVALID', 'interval_label' => '2 days'],
                 '2014-01-08',
-                ['other_field'=> ['day' => '09', 'month' => '01', 'year' => '2014']],
+                ['other_field' => ['day' => '09', 'month' => '01', 'year' => '2014']],
                 [DateCompareWithInterval::INVALID_INTERVAL => 'Invalid interval']
             ],
             //Invalid operator
@@ -188,7 +188,7 @@ class DateCompareWithIntervalTest extends MockeryTestCase
                 ['compare_to' => 'other_field', 'operator' => 'invalid', 'compare_to_label' => 'Other field',
                     'date_interval' => 'P2D', 'interval_label' => '2 days'],
                 '2014-01-10',
-                ['other_field'=> ['day' => '09', 'month' => '01', 'year' => '2014']],
+                ['other_field' => ['day' => '09', 'month' => '01', 'year' => '2014']],
                 [DateCompareWithInterval::INVALID_OPERATOR => 'Invalid operator']
             ],
             //Can't compare
@@ -197,7 +197,7 @@ class DateCompareWithIntervalTest extends MockeryTestCase
                 ['compare_to' => 'other_field', 'operator' => 'invalid', 'compare_to_label' => 'Other field',
                     'date_interval' => 'P2D', 'interval_label' => '2 days'],
                 '2014-01-',
-                ['other_field'=> ['day' => '09', 'month' => '01', 'year' => '2014']],
+                ['other_field' => ['day' => '09', 'month' => '01', 'year' => '2014']],
                 [DateCompareWithInterval::NO_COMPARE => "Unable to compare with 'Other field'"]
             ]
         ];

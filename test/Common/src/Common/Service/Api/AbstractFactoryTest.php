@@ -27,11 +27,11 @@ class AbstractFactoryTest extends MockeryTestCase
     protected $mockTranslator;
 
     /**
-     * @var Laminas\Authentication\Storage\Session|m\LegacyMockInterface|m\MockInterface
+     * @var Session|m\LegacyMockInterface|m\MockInterface
      */
     private $mockSession;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = new AbstractFactory();
 

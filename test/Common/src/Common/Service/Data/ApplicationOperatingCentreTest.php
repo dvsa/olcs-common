@@ -30,7 +30,7 @@ class ApplicationOperatingCentreTest extends AbstractDataServiceTestCase
         );
     }
 
-    public function testGetId()
+    public function testGetId(): void
     {
         $id = 1;
 
@@ -41,7 +41,7 @@ class ApplicationOperatingCentreTest extends AbstractDataServiceTestCase
         $this->assertEquals($id, $this->sut->getId());
     }
 
-    public function testFetchListOptionsFullAddress()
+    public function testFetchListOptionsFullAddress(): void
     {
         $context = 'application';
         $useGroups = false;
@@ -77,7 +77,7 @@ class ApplicationOperatingCentreTest extends AbstractDataServiceTestCase
         $this->assertEquals([99 => 'a1, a2, a3, a4, anytown, pc'], $output);
     }
 
-    public function testFetchListOptionsPartialAddress()
+    public function testFetchListOptionsPartialAddress(): void
     {
         $context = 'application';
         $useGroups = false;

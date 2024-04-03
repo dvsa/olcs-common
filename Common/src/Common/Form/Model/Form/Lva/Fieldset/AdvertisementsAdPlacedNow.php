@@ -17,7 +17,7 @@ class AdvertisementsAdPlacedNow
      * })
      * @Form\Type("Text")
      */
-    public $adPlacedIn = null;
+    public $adPlacedIn;
 
     /**
      * @Form\Required(false)
@@ -37,7 +37,7 @@ class AdvertisementsAdPlacedNow
      * @Form\Validator("\Common\Validator\Date")
      * @Form\Validator("Date", options={"format":"Y-m-d"})
      */
-    public $adPlacedDate = null;
+    public $adPlacedDate;
 
     /**
      * @Form\Name("file")
@@ -48,5 +48,5 @@ class AdvertisementsAdPlacedNow
      *     "label_attributes": {"class": "form-element__label"}
      * })
      */
-    public $file = null;
+    public $file;
 }

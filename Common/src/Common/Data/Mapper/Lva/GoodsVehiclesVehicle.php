@@ -52,15 +52,18 @@ class GoodsVehiclesVehicle
         $formMessages = [];
         foreach ($errors as $key => $error) {
             if (in_array($key, $dataFields, false)) {
-                foreach ($error as $subKey => $subError) {
+                foreach ($error as $subError) {
                     $formMessages['data'][$key][] = $subError;
                 }
+
                 unset($errors[$key]);
             }
+
             if (in_array($key, $licenceVehicleFields, false)) {
-                foreach ($error as $subKey => $subError) {
+                foreach ($error as $subError) {
                     $formMessages['licenceVehicle'][$key][] = $subError;
                 }
+
                 unset($errors[$key]);
             }
         }

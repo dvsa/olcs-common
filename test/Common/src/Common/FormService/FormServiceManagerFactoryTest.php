@@ -13,13 +13,13 @@ class FormServiceManagerFactoryTest extends \PHPUnit\Framework\TestCase
 
     protected $sm;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = new FormServiceManagerFactory();
         $this->sm = new ServiceManager();
     }
 
-    public function testInvoke()
+    public function testInvoke(): void
     {
         // Params
         $config = [

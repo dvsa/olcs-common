@@ -13,17 +13,18 @@ class CommonGoodsVehiclesFiltersTest extends MockeryTestCase
 {
     /** @var  CommonGoodsVehiclesFilters */
     protected $sut;
+
     /** @var  \Common\Service\Helper\FormHelperService | m\MockInterface */
     protected $formHelper;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);
 
         $this->sut = new CommonGoodsVehiclesFilters($this->formHelper);
     }
 
-    public function testGetForm()
+    public function testGetForm(): void
     {
         // Mocks
         $mockForm = m::mock();

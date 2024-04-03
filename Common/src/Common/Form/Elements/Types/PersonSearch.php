@@ -5,6 +5,7 @@
  *
  * @author Shaun Lizzio <shaun.lizzio@valtech.co.uk>
  */
+
 namespace Common\Form\Elements\Types;
 
 use Laminas\Form\Fieldset;
@@ -21,7 +22,6 @@ use Common\Form\Elements\Custom\DateSelect;
  */
 class PersonSearch extends Fieldset
 {
-
     /**
      * Setup the elements
      *
@@ -125,7 +125,7 @@ class PersonSearch extends Fieldset
         $this->add($addNewButton);
     }
 
-    public function setMessages($messages)
+    public function setMessages($messages): void
     {
         $this->messages = $messages;
     }

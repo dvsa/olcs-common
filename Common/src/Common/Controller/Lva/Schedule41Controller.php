@@ -24,13 +24,11 @@ use LmcRbacMvc\Service\AuthorizationService;
 class Schedule41Controller extends AbstractController
 {
     protected FormHelperService $formHelper;
+
     protected TableFactory $tableFactory;
+
     protected FlashMessengerHelperService $flashMessengerHelper;
 
-    /**
-     * @param NiTextTranslation $niTextTranslationUtil
-     * @param AuthorizationService $authService
-     */
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
@@ -382,7 +380,7 @@ class Schedule41Controller extends AbstractController
             $errors['is-psv'][] = 'application.schedule41.licence-is-psv';
         }
 
-        if (empty($errors)) {
+        if ($errors === []) {
             return true;
         }
 
@@ -418,13 +416,11 @@ class Schedule41Controller extends AbstractController
      */
     public function getOcTable($data)
     {
-        $table = $this->tableFactory
+        return $this->tableFactory
             ->prepareTable(
                 'schedule41.operating-centres',
                 $data
             );
-
-        return $table;
     }
 
     /**
@@ -436,8 +432,8 @@ class Schedule41Controller extends AbstractController
      */
     public function formatDataForTable($data)
     {
-        $operatingCentres = array_map(
-            fn($operatingCentre) => [
+        return array_map(
+            static fn($operatingCentre) => [
                 'id' => $operatingCentre['id'],
                 'address' => $operatingCentre['operatingCentre']['address'],
                 'noOfVehiclesRequired' => $operatingCentre['noOfVehiclesRequired'],
@@ -448,8 +444,6 @@ class Schedule41Controller extends AbstractController
             ],
             $data['operatingCentres']
         );
-
-        return $operatingCentres;
     }
 
     /**
@@ -457,15 +451,13 @@ class Schedule41Controller extends AbstractController
      *
      * @param Form  $form   Form
      * @param array $errors Errors
-     *
-     * @return void
      */
-    public function mapLicenceSearchErrors(Form $form, array $errors)
+    public function mapLicenceSearchErrors(Form $form, array $errors): void
     {
         $formMessages = [];
 
         if (isset($errors['number-not-valid'])) {
-            foreach ($errors['number-not-valid'] as $key => $message) {
+            foreach ($errors['number-not-valid'] as $message) {
                 $formMessages['licence-number']['licenceNumber'][] = $message;
             }
 
@@ -473,7 +465,7 @@ class Schedule41Controller extends AbstractController
         }
 
         if (isset($errors['not-valid'])) {
-            foreach ($errors['not-valid'] as $key => $message) {
+            foreach ($errors['not-valid'] as $message) {
                 $formMessages['licence-number']['licenceNumber'][] = $message;
             }
 
@@ -481,14 +473,14 @@ class Schedule41Controller extends AbstractController
         }
 
         if (isset($errors['is-psv'])) {
-            foreach ($errors['is-psv'] as $key => $message) {
+            foreach ($errors['is-psv'] as $message) {
                 $formMessages['licence-number']['licenceNumber'][] = $message;
             }
 
             unset($errors['not-valid']);
         }
 
-        if (!empty($errors)) {
+        if ($errors !== []) {
             $fm = $this->flashMessengerHelper;
 
             foreach ($errors as $error) {
@@ -506,7 +498,7 @@ class Schedule41Controller extends AbstractController
      *
      * @return void
      */
-    public function checkForRedirect($lvaId)
+    protected function checkForRedirect($lvaId)
     {
         unset($lvaId);
     }

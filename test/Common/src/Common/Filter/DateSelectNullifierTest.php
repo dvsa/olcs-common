@@ -15,7 +15,7 @@ class DateSelectNullifierTest extends \PHPUnit\Framework\TestCase
      * @param $input
      * @param $output
      */
-    public function testFilter($input, $output)
+    public function testFilter($input, $output): void
     {
         $sut = new DateSelectNullifier();
         $this->assertEquals($output, $sut->filter($input));
@@ -30,9 +30,9 @@ class DateSelectNullifierTest extends \PHPUnit\Framework\TestCase
             [null, null],
             ['', null],
             ['string', 'string'],
-            [['day'=>'', 'year'=>'', 'month'=>''], null],
-            [['day'=>'04', 'year'=>'2012', 'month'=>''], null],
-            [['day'=>'04', 'year'=>'2012', 'month'=>'10'], '2012-10-04'],
+            [['day' => '', 'year' => '', 'month' => ''], null],
+            [['day' => '04', 'year' => '2012', 'month' => ''], null],
+            [['day' => '04', 'year' => '2012', 'month' => '10'], '2012-10-04'],
         ];
     }
 }

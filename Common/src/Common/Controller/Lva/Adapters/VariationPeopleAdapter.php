@@ -16,6 +16,7 @@ class VariationPeopleAdapter extends AbstractPeopleAdapter
         if (!$this->useDeltas()) {
             return 'lva-people';
         }
+
         return 'lva-variation-people';
     }
 

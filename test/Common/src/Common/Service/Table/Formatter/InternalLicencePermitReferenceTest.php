@@ -11,7 +11,9 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class InternalLicencePermitReferenceTest extends MockeryTestCase
 {
     protected $urlHelper;
+
     protected $permissionService;
+
     protected $sut;
 
     protected function setUp(): void

@@ -23,7 +23,7 @@ class FileExtensionTest extends \PHPUnit\Framework\TestCase
      *
      * @dataProvider provider
      */
-    public function testFormat($data, $column, $expected)
+    public function testFormat($data, $column, $expected): void
     {
         $this->assertEquals($expected, (new \Common\Service\Table\Formatter\FileExtension())->format($data, $column));
     }

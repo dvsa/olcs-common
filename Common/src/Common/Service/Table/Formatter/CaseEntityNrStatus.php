@@ -12,13 +12,11 @@ class CaseEntityNrStatus implements FormatterPluginManagerInterface
     private const URL_TEMPLATE = '<a class="govuk-link" href="%s">%s</a>';
 
     private const TEMPLATE_LIC = '%s (%s)';
+
     private const TEMPLATE_APP = '%s (%s)<br />/%s (%s)';
 
     private UrlHelperService $urlHelper;
 
-    /**
-     * @param UrlHelperService $urlHelper
-     */
     public function __construct(UrlHelperService $urlHelper)
     {
         $this->urlHelper = $urlHelper;

@@ -14,7 +14,13 @@ use LmcRbacMvc\Service\AuthorizationService;
 
 class ChecklistControllerTest extends MockeryTestCase
 {
-    public function setUp(): void
+    public $mockNiTextTranslationUtil;
+    public $mockAuthService;
+    public $mockFormServiceManager;
+    public $mockTranslationHelper;
+    public $request;
+    public $sut;
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -32,7 +38,7 @@ class ChecklistControllerTest extends MockeryTestCase
 
         $this->mockTranslationHelper->shouldReceive('translate')
             ->andReturnUsing(
-                fn($input) => $input
+                static fn($input) => $input
             );
     }
 
@@ -41,7 +47,7 @@ class ChecklistControllerTest extends MockeryTestCase
         $this->request = m::mock(\Laminas\Http\Request::class)->makePartial();
 
         // If constructor params are provided, pass them to the mock, otherwise mock without them
-        if (!empty($constructorParams)) {
+        if ($constructorParams !== []) {
             $this->sut = m::mock($className, $constructorParams)
                 ->makePartial()
                 ->shouldAllowMockingProtectedMethods();
@@ -56,7 +62,7 @@ class ChecklistControllerTest extends MockeryTestCase
             ->andReturn($this->request);
     }
 
-    public function testUsersAction()
+    public function testUsersAction(): void
     {
         $continuationId = 99;
 

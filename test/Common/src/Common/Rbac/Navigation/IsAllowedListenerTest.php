@@ -19,16 +19,17 @@ class IsAllowedListenerTest extends MockeryTestCase
 {
     /** @var  m\MockInterface|ModuleOptions */
     private $mockModuleOptions;
+
     /** @var  m\MockInterface|AuthorizationService */
     private $mockAuthSrv;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->mockModuleOptions = m::mock(ModuleOptions::class);
         $this->mockAuthSrv = m::mock(AuthorizationService::class);
     }
 
-    public function testAcceptNotMvcPage()
+    public function testAcceptNotMvcPage(): void
     {
         $mockPage = m::mock(Navigation\Page\AbstractPage::class);
 
@@ -44,7 +45,7 @@ class IsAllowedListenerTest extends MockeryTestCase
         static::assertTrue($sut->accept($mockEvent));
     }
 
-    public function testAcceptOk()
+    public function testAcceptOk(): void
     {
         $mockPage = m::mock(Navigation\Page\Mvc::class)->makePartial();
 
@@ -67,7 +68,7 @@ class IsAllowedListenerTest extends MockeryTestCase
     /**
      * @dataProvider  dataProviderTestIsGranted
      */
-    public function testIsGranted($route, $rules, $policy, $isGranted, $expect)
+    public function testIsGranted($route, $rules, $policy, $isGranted, $expect): void
     {
         if ($isGranted !== null) {
             $this->mockAuthSrv

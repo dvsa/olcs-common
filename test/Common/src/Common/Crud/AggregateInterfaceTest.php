@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Class AggregateInterfaceTest
  *
  * @package CommonTest\Crud
  * @author Craig Reasbeck <craig.reasbeck@valtech.co.uk>
  */
+
 namespace CommonTest\Crud;
 
 /**
@@ -18,7 +20,7 @@ class AggregateInterfaceTest extends \PHPUnit\Framework\TestCase
     /**
      * Tests the aggregate interface and in turn also tests the individual interfaces.
      */
-    public function testAggregateInterfaceMethodsExist()
+    public function testAggregateInterfaceMethodsExist(): void
     {
         $interface = $this->createMock(\Common\Crud\AggregateInterface::class);
 

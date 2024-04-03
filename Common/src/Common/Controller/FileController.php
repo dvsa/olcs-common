@@ -63,6 +63,7 @@ class FileController extends LaminasAbstractActionController
                 $headers->addHeader($header);
             }
         }
+
         $response->setHeaders($headers);
 
         return $response;

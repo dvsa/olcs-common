@@ -11,8 +11,6 @@ class OperatorLicence implements MapperInterface
      * Map data from form to DTO
      *
      * @param array $formData Form data
-     *
-     * @return array
      */
     public function mapFromForm(array $formData): array
     {

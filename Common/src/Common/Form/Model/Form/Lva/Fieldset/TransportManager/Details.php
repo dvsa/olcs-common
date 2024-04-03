@@ -15,7 +15,7 @@ class Details
      * @Form\Type("\Common\Form\Elements\Types\Readonly")
      * @Form\Flags({"priority": -10})
      */
-    public $name = null;
+    public $name;
 
     /**
      * @Form\Required(true)
@@ -33,7 +33,7 @@ class Details
      * @Form\Validator("\Common\Form\Elements\Validators\DateNotInFuture")
      * @Form\Flags({"priority": -20})
      */
-    public $birthDate = null;
+    public $birthDate;
 
     /**
      * @Form\Attributes({"class":"extra-long","id":"emailAddress"})
@@ -47,7 +47,7 @@ class Details
      * @Form\Validator("Dvsa\Olcs\Transfer\Validators\EmailAddress")
      * @Form\Flags({"priority": -30})
      */
-    public $emailAddress = null;
+    public $emailAddress;
 
     /**
      * @Form\Attributes({"id":"birthPlace","class":"medium"})
@@ -62,14 +62,14 @@ class Details
      * @Form\Validator("\Laminas\Validator\NotEmpty")
      * @Form\Flags({"priority": -40})
      */
-    public $birthPlace = null;
+    public $birthPlace;
 
     /**
      * @Form\Attributes({"value": "markup-lva-tm-details-details-certificateHtml"})
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      * @Form\Flags({"priority": -50})
      */
-    public $certificateHtml = null;
+    public $certificateHtml;
 
     /**
      * @Form\Attributes({"id":"certificate", "class": "file-upload"})
@@ -85,14 +85,14 @@ class Details
      * })
      * @Form\Flags({"priority": -60})
      */
-    public $certificate = null;
+    public $certificate;
 
     /**
      * @Form\Attributes({"value": "markup-lva-tm-details-details-lgvAcquiredRightsHtml"})
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      * @Form\Flags({"priority": -70})
      */
-    public $lgvAcquiredRightsHtml = null;
+    public $lgvAcquiredRightsHtml;
 
     /**
      * @Form\Required(false)
@@ -117,7 +117,7 @@ class Details
      * )
      * @Form\Flags({"priority": -80})
      */
-    public $lgvAcquiredRightsReferenceNumber = null;
+    public $lgvAcquiredRightsReferenceNumber;
 
     /**
      * @Form\Options({
@@ -131,5 +131,5 @@ class Details
      * @Form\Type("Radio")
      * @Form\Flags({"priority": -90})
      */
-    public $hasUndertakenTraining = null;
+    public $hasUndertakenTraining;
 }

@@ -15,12 +15,12 @@ class OtherFinancesTest extends MockeryTestCase
      */
     private $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = new OtherFinances();
     }
 
-    public function testMapFromResult()
+    public function testMapFromResult(): void
     {
         $data = [
             'version' => 99,
@@ -43,7 +43,7 @@ class OtherFinancesTest extends MockeryTestCase
         $this->assertSame($expected, $this->sut->mapFromResult($data));
     }
 
-    public function testMapFromResultDefaults()
+    public function testMapFromResultDefaults(): void
     {
         $data = [
             'version' => 99,
@@ -66,7 +66,7 @@ class OtherFinancesTest extends MockeryTestCase
         $this->assertSame($expected, $this->sut->mapFromResult($data));
     }
 
-    public function testMapFromForm()
+    public function testMapFromForm(): void
     {
         $formData = [
             'version' => 99,
@@ -89,7 +89,7 @@ class OtherFinancesTest extends MockeryTestCase
         $this->assertSame($expected, $this->sut->mapFromForm($formData));
     }
 
-    public function testMapFromFormNo()
+    public function testMapFromFormNo(): void
     {
         $formData = [
             'version' => 99,

@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Form\Elements\Custom\Traits;
 
 /**
@@ -14,7 +15,7 @@ namespace Common\Form\Elements\Custom\Traits;
  */
 trait YearDelta
 {
-    public function setOptions($options)
+    public function setOptions($options): void
     {
         parent::setOptions($options);
 
@@ -25,7 +26,6 @@ trait YearDelta
         $defaultDate = $this->getOption('default_date');
 
         if ($defaultDate) {
-
             $dateTime = new \DateTime();
 
             if ($defaultDate !== 'now') {
@@ -41,9 +41,8 @@ trait YearDelta
      *
      * @param string $minYearDelta
      * @param string $maxYearDelta
-     * @return void
      */
-    public function setMinMaxYear($minYearDelta, $maxYearDelta)
+    public function setMinMaxYear($minYearDelta, $maxYearDelta): void
     {
         $setMaxYear = false;
         if ($maxYearDelta) {
@@ -62,9 +61,12 @@ trait YearDelta
         if ($setMaxYear && !$setMinYear) {
             $this->setMinYear(date('Y'));
         }
-
-        if ($setMinYear && !$setMaxYear) {
-            $this->setMaxYear(date('Y'));
+        if (!$setMinYear) {
+            return;
         }
+        if ($setMaxYear) {
+            return;
+        }
+        $this->setMaxYear(date('Y'));
     }
 }

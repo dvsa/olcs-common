@@ -4,6 +4,7 @@ use Common\Service\Table\Formatter\Address;
 use Common\Service\Table\Formatter\ConditionsUndertakingsType;
 use Common\Service\Table\Formatter\Translate;
 use Common\Service\Table\Formatter\YesNo;
+use Common\Service\Table\TableBuilder;
 
 return [
     'variables' => [
@@ -18,18 +19,17 @@ return [
                 ],
             ]
         ],
-        'row-disabled-callback' => fn($row) => in_array($row['action'], ['D', 'C']),
+        'row-disabled-callback' => static fn($row) => in_array($row['action'], ['D', 'C']),
     ],
     'columns' => [
         [
             'title' => 'lva-conditions-undertakings-table-no',
             'type' => 'VariationRecordAction',
             'action' => 'edit',
-            'formatter' => function ($data, $column) {
+            'formatter' => static function ($data, $column) {
                 if (in_array($data['action'], ['U', 'D'])) {
                     return $data['licConditionVariation']['id'];
                 }
-
                 return $data['id'];
             }
         ],
@@ -49,16 +49,18 @@ return [
         ],
         [
             'title' => 'lva-conditions-undertakings-table-status',
-            'formatter' => fn($data) => $data['isDraft'] == 'Y' ? 'Draft' : 'Approved',
+            'formatter' => static fn($data) => $data['isDraft'] == 'Y' ? 'Draft' : 'Approved',
         ],
         [
             'title' => 'lva-conditions-undertakings-table-attached-to',
             'formatter' => function ($data, $column) {
 
                 if (isset($data['operatingCentre']['address'])) {
-
                     $column['formatter'] = Address::class;
-
+                    /**
+                     * @var TableBuilder $this
+                     * @psalm-scope-this TableBuilder
+                     */
                     return $this->callFormatter($column, $data['operatingCentre']['address']);
                 }
 

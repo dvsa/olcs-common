@@ -1,6 +1,5 @@
 <?php
 
-
 namespace CommonTest\Common\Service\Data;
 
 use Common\Exception\DataServiceException;
@@ -20,7 +19,7 @@ class SurrenderTest extends AbstractDataServiceTestCase
         $this->sut = new Surrender($this->abstractDataServiceServices);
     }
 
-    public function testFetchSurrender()
+    public function testFetchSurrender(): void
     {
         $params = ['id' => 7];
         $expected = [];
@@ -50,7 +49,7 @@ class SurrenderTest extends AbstractDataServiceTestCase
         $this->assertEquals($expected, $this->sut->fetchSurrenderData(7));
     }
 
-    public function testThrowsExceptionIfNot200Response()
+    public function testThrowsExceptionIfNot200Response(): void
     {
         $this->expectException(DataServiceException::class);
 

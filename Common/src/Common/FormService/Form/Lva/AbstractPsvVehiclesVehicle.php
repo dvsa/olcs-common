@@ -14,7 +14,9 @@ use LmcRbacMvc\Service\AuthorizationService;
 abstract class AbstractPsvVehiclesVehicle
 {
     protected FormHelperService $formHelper;
+
     protected FormServiceManager $formServiceLocator;
+
     public function getForm($request, $params)
     {
         $form = $this->formHelper->createFormWithRequest('Lva\PsvVehiclesVehicle', $request);
@@ -29,13 +31,13 @@ abstract class AbstractPsvVehiclesVehicle
      *
      * @param \Laminas\Form\Form $form
      * @param array $params
-     * @return \Laminas\Form\Form
      */
     protected function alterForm($form, $params)
     {
         if ($params['mode'] == 'add' || $params['location'] == 'external') {
             $this->formHelper->remove($form, 'vehicle-history-table');
         }
+
         $this->formServiceLocator->get('lva-psv-vehicles-vehicle')->alterForm($form);
 
         $this->formHelper->remove($form, 'licence-vehicle->discNo');

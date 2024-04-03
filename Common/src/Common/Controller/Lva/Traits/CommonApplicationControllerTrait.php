@@ -140,17 +140,16 @@ trait CommonApplicationControllerTrait
 
         $sections = array_keys($sectionStatus);
 
-        $index = array_search($currentSection, $sections);
+        $index = array_search($currentSection, $sections, true);
 
         // If there is no next section, or the next section is disabled
         if (!isset($sections[$index + 1]) || !$sectionStatus[$sections[$index + 1]]['enabled']) {
             return $this->goToOverview($this->getApplicationId());
-        } else {
-            return $this->redirect()
-                ->toRouteAjax(
-                    'lva-' . $this->lva . '/' . $sections[$index + 1],
-                    [$this->getIdentifierIndex() => $this->getApplicationId()]
-                );
         }
+        return $this->redirect()
+            ->toRouteAjax(
+                'lva-' . $this->lva . '/' . $sections[$index + 1],
+                [$this->getIdentifierIndex() => $this->getApplicationId()]
+            );
     }
 }

@@ -23,10 +23,6 @@ class HandleQuery extends AbstractPlugin
      */
     private $queryService;
 
-    /**
-     * @param TransferAnnotationBuilder $annotationBuilder
-     * @param QueryServiceInterface $queryService
-     */
     public function __construct(TransferAnnotationBuilder $annotationBuilder, QueryServiceInterface $queryService)
     {
         $this->queryService = $queryService;
@@ -34,7 +30,6 @@ class HandleQuery extends AbstractPlugin
     }
 
     /**
-     * @param QueryInterface $query
      * @return \Common\Service\Cqrs\Response
      */
     public function __invoke(QueryInterface $query)

@@ -11,14 +11,13 @@ use Common\Form\Elements\Validators\Date;
  */
 class DateTest extends \PHPUnit\Framework\TestCase
 {
-
     /**
      * @dataProvider providerIsValid
      * @param $expected
      * @param $value
      * @param array $errorMessages
      */
-    public function testIsValid($expected, $value, $errorMessages = [])
+    public function testIsValid($expected, $value, $errorMessages = []): void
     {
         $errorMessages = empty($errorMessages) ? ['error' => 'message'] : $errorMessages;
 

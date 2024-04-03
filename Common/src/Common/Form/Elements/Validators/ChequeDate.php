@@ -5,9 +5,10 @@
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
+
 namespace Common\Form\Elements\Validators;
 
-use Laminas\Validator\AbstractValidator as AbstractValidator;
+use Laminas\Validator\AbstractValidator;
 
 /**
  * Checks a date for a cheque payment is valid
@@ -41,7 +42,7 @@ class ChequeDate extends AbstractValidator
      */
     public function isValid($value)
     {
-        $date = strtotime('noon '. $value);
+        $date = strtotime('noon ' . $value);
         $limit = strtotime('noon' . self::MIN_INTERVAL);
 
         if ($date < $limit) {

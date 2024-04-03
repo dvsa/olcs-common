@@ -11,7 +11,6 @@ use Laminas\Form\Annotation as Form;
  */
 class BusinessDetailsAllowEmail
 {
-
     /**
      * @Form\Attributes({"id":"","placeholder":"","class":"js-enabled"})
      * @Form\Options({

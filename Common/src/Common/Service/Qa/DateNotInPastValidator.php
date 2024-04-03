@@ -20,8 +20,6 @@ class DateNotInPastValidator extends AbstractValidator
     /**
      * Create service instance
      *
-     * @param DateTimeFactory $dateTimeFactory
-     * @param array $options
      *
      * @return DateNotInPastValidator
      */

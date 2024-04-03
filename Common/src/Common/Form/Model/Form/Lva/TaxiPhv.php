@@ -16,18 +16,18 @@ class TaxiPhv
      * @Form\Name("table")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\TableRequired")
      */
-    public $table = null;
+    public $table;
 
     /**
      * @Form\Name("dataTrafficArea")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TrafficArea")
      */
-    public $dataTrafficArea = null;
+    public $dataTrafficArea;
 
     /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
      * @Form\Attributes({"class":"govuk-button-group"})
      */
-    public $formActions = null;
+    public $formActions;
 }

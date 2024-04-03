@@ -20,6 +20,7 @@ use Mockery as m;
  */
 class AddressLinesTest extends MockeryTestCase
 {
+    public $sut;
     protected $dataHelper;
 
     protected function setUp(): void
@@ -41,7 +42,7 @@ class AddressLinesTest extends MockeryTestCase
      *
      * @dataProvider provider
      */
-    public function testFormat($data, $column, $expected)
+    public function testFormat($data, $column, $expected): void
     {
         $this->assertEquals($expected, $this->sut->format($data, $column));
     }
@@ -108,7 +109,7 @@ class AddressLinesTest extends MockeryTestCase
      * @group Formatters
      * @group AddressLinesFormatter
      */
-    public function testFormatWithNestedKeys()
+    public function testFormatWithNestedKeys(): void
     {
         $this->dataHelper->shouldReceive('fetchNestedData')
             ->with(['foo' => 'bar'], 'bar->baz')

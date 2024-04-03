@@ -19,13 +19,13 @@ class GenericConfirmationTest extends TestCase
      */
     private $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = m::mock(\Common\Form\GenericConfirmation::class)->makePartial();
         parent::setUp();
     }
 
-    public function testSetSubmitLabel()
+    public function testSetSubmitLabel(): void
     {
         $fieldset = m::mock(Fieldset::class);
         $element = m::mock(ElementInterface::class);
@@ -37,7 +37,7 @@ class GenericConfirmationTest extends TestCase
         $this->sut->setSubmitLabel('LABEL');
     }
 
-    public function testRemoveCancel()
+    public function testRemoveCancel(): void
     {
         $fieldset = m::mock(Fieldset::class);
 
@@ -47,7 +47,7 @@ class GenericConfirmationTest extends TestCase
         $this->sut->removeCancel();
     }
 
-    public function testSetMessage()
+    public function testSetMessage(): void
     {
         $fieldset = m::mock(Fieldset::class);
         $element = m::mock(ElementInterface::class);

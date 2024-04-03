@@ -10,7 +10,7 @@ class CurrentDiscsTest extends MockeryTestCase
     /**
      * @dataProvider dpMapFromResult
      */
-    public function testMapFromResult($apiData, $formData)
+    public function testMapFromResult($apiData, $formData): void
     {
         static::assertEquals(
             $formData,
@@ -21,7 +21,7 @@ class CurrentDiscsTest extends MockeryTestCase
     /**
      * @dataProvider dpMapFromForm
      */
-    public function testMapFromForm($apiData, $formData)
+    public function testMapFromForm($apiData, $formData): void
     {
         static::assertEquals(
             $apiData,

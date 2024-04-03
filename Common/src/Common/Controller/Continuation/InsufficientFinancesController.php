@@ -23,15 +23,11 @@ class InsufficientFinancesController extends AbstractContinuationController
     protected $currentStep = self::STEP_FINANCE;
 
     protected FormHelperService $formHelper;
+
     protected GuidanceHelperService $guidanceHelper;
+
     protected FileUploadHelperService $uploadHelper;
 
-    /**
-     * @param NiTextTranslation $niTextTranslationUtil
-     * @param AuthorizationService $authService
-     * @param FormServiceManager $formServiceManager
-     * @param TranslationHelperService $translationHelper
-     */
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
@@ -56,7 +52,7 @@ class InsufficientFinancesController extends AbstractContinuationController
     {
         $continuationDetail = $this->getContinuationDetailData();
 
-        $this->setGuidanceMessage($continuationDetail);
+        $this->setGuidanceMessage();
 
         $form = $this->getInsufficientFinancesForm();
         $form->setData(InsufficientFinances::mapFromResult($continuationDetail));
@@ -64,9 +60,11 @@ class InsufficientFinancesController extends AbstractContinuationController
         $hasProcessedFiles = $this->processFiles(
             $form,
             'insufficientFinances->yesContent->uploadContent',
-            [$this, 'processFinancialFileUpload'],
-            [$this, 'deleteFile'],
-            [$this, 'getDocuments']
+            function (array $file): void {
+                $this->processFinancialFileUpload($file);
+            },
+            fn(int $id): bool => $this->deleteFile($id),
+            fn(): array => $this->getDocuments()
         );
 
         if ($this->getRequest()->isPost()) {
@@ -113,11 +111,9 @@ class InsufficientFinancesController extends AbstractContinuationController
     /**
      * Set the guidance message
      *
-     * @param array $continuationDetail Continuation Detail data
      *
-     * @return void
      */
-    private function setGuidanceMessage($continuationDetail)
+    private function setGuidanceMessage(): void
     {
         $guideMessage = $this->translationHelper->translate('continuations.insufficient-finances.hint');
         $this->guidanceHelper->append($guideMessage);
@@ -127,10 +123,8 @@ class InsufficientFinancesController extends AbstractContinuationController
      * Process uploading of files
      *
      * @param array $file Uploaded file info
-     *
-     * @return void
      */
-    public function processFinancialFileUpload($file)
+    public function processFinancialFileUpload($file): void
     {
         $continuationDetail = $this->getContinuationDetailData();
         $this->uploadFile(

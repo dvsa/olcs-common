@@ -10,6 +10,7 @@ use Laminas\ServiceManager\AbstractPluginManager;
  *
  * Class SearchTypeManager
  * @package Olcs\Service\Data\Search
+ * @template-extends AbstractPluginManager<SearchAbstract>
  */
 class SearchTypeManager extends AbstractPluginManager
 {

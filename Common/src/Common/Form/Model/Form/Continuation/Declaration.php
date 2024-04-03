@@ -13,21 +13,21 @@ class Declaration
     /**
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\ComposedObject("\Common\Form\Model\Form\Continuation\Fieldset\DeclarationContent")
      */
-    public $content = null;
+    public $content;
 
     /**
      * @Form\ComposedObject("\Common\Form\Model\Form\Continuation\Fieldset\DeclarationSignatureDetails")
      */
-    public $signatureDetails = null;
+    public $signatureDetails;
 
     /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("\Common\Form\Model\Form\Continuation\Fieldset\DeclarationFormActions")
      */
-    public $formActions = null;
+    public $formActions;
 }

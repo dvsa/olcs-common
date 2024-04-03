@@ -16,7 +16,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class AnnualTripsAbroadDataHandlerTest extends MockeryTestCase
 {
-    public function testSetData()
+    public function testSetData(): void
     {
         $qaForm = m::mock(QaForm::class);
 

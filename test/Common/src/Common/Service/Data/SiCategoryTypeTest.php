@@ -23,7 +23,7 @@ class SiCategoryTypeTest extends AbstractDataServiceTestCase
         $this->sut = new SiCategoryType($this->abstractDataServiceServices);
     }
 
-    public function testFormatData()
+    public function testFormatData(): void
     {
         $source = $this->getSingleSource();
         $expected = $this->getSingleExpected();
@@ -36,7 +36,7 @@ class SiCategoryTypeTest extends AbstractDataServiceTestCase
      * @param $input
      * @param $expected
      */
-    public function testFetchListOptions($input, $expected)
+    public function testFetchListOptions($input, $expected): void
     {
         $this->sut->setData('SiCategoryType', $input);
 
@@ -51,7 +51,7 @@ class SiCategoryTypeTest extends AbstractDataServiceTestCase
         ];
     }
 
-    public function testFetchListData()
+    public function testFetchListData(): void
     {
         $results = ['results' => 'results'];
         $params = [
@@ -86,7 +86,7 @@ class SiCategoryTypeTest extends AbstractDataServiceTestCase
         $this->assertEquals($results['results'], $this->sut->fetchListData());
     }
 
-    public function testFetchListDataWithException()
+    public function testFetchListDataWithException(): void
     {
         $this->expectException(DataServiceException::class);
 

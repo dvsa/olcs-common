@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Controller\Lva\Interfaces;
 
 /**
@@ -14,5 +15,4 @@ namespace Common\Controller\Lva\Interfaces;
  */
 interface AdapterInterface
 {
-
 }

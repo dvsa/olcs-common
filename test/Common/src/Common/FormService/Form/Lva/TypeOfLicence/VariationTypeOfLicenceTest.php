@@ -21,6 +21,10 @@ use LmcRbacMvc\Service\AuthorizationService;
 class VariationTypeOfLicenceTest extends MockeryTestCase
 {
     /**
+     * @var \Mockery\LegacyMockInterface
+     */
+    public $authService;
+    /**
      * @var VariationTypeOfLicence
      */
     protected $sut;
@@ -29,7 +33,7 @@ class VariationTypeOfLicenceTest extends MockeryTestCase
 
     protected $fh;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->fsm = m::mock(FormServiceManager::class)->makePartial();
         $this->fh = m::mock(FormHelperService::class)->makePartial();
@@ -38,7 +42,7 @@ class VariationTypeOfLicenceTest extends MockeryTestCase
         $this->sut = new VariationTypeOfLicence($this->fh, $this->authService, $this->fsm);
     }
 
-    public function testGetForm()
+    public function testGetForm(): void
     {
         $params = [
             'canUpdateLicenceType' => true,
@@ -128,7 +132,7 @@ class VariationTypeOfLicenceTest extends MockeryTestCase
         $this->assertSame($mockForm, $form);
     }
 
-    public function testGetFormWithFalse()
+    public function testGetFormWithFalse(): void
     {
         $params = [
             'canUpdateLicenceType' => false,

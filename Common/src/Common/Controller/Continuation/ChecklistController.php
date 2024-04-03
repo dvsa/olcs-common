@@ -17,19 +17,17 @@ use LmcRbacMvc\Service\AuthorizationService;
 class ChecklistController extends AbstractContinuationController
 {
     public const FINANCES_ROUTE = 'continuation/finances';
+
     public const DECLARATION_ROUTE = 'continuation/declaration';
+
     public const CONDITIONS_UNDERTAKINGS_ROUTE = 'continuation/conditions-undertakings';
 
     protected $layout = 'pages/continuation-checklist';
+
     protected $checklistSectionLayout = 'layouts/simple';
+
     protected $currentStep = self::STEP_CHECKLIST;
 
-    /**
-     * @param NiTextTranslation $niTextTranslationUtil
-     * @param AuthorizationService $authService
-     * @param FormServiceManager $formServiceManager
-     * @param TranslationHelperService $translationHelper
-     */
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
@@ -82,6 +80,7 @@ class ChecklistController extends AbstractContinuationController
         if (!$response->isOk()) {
             $this->addErrorMessage('unknown-error');
         }
+
         return $response->getResult();
     }
 
@@ -290,9 +289,11 @@ class ChecklistController extends AbstractContinuationController
         ) {
             return self::DECLARATION_ROUTE;
         }
+
         if ($data['hasConditionsUndertakings'] || $this->isPsvRestricted($licenceData)) {
             return self::CONDITIONS_UNDERTAKINGS_ROUTE;
         }
+
         return self::FINANCES_ROUTE;
     }
 }

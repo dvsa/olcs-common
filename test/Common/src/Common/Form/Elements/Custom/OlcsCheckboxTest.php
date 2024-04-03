@@ -5,6 +5,7 @@
  *
  * @author Shaun Lizzio <shaun.lizzio@valtech.co.uk>
  */
+
 namespace CommonTest\Form\Elements\Custom;
 
 use Common\Form\Elements\Custom\OlcsCheckbox;
@@ -25,7 +26,7 @@ class OlcsCheckboxTest extends \PHPUnit\Framework\TestCase
     /**
      * Setup the element
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->element = new OlcsCheckbox();
     }
@@ -33,10 +34,10 @@ class OlcsCheckboxTest extends \PHPUnit\Framework\TestCase
     /**
      * Test validators
      */
-    public function testGetInputSpecification()
+    public function testGetInputSpecification(): void
     {
-        $labelPosition = $this->element->getLabelOption('label_position');
-        $alwaysWrap = $this->element->getLabelOption('always_wrap');
+        $this->element->getLabelOption('label_position');
+        $this->element->getLabelOption('always_wrap');
 
         $this->assertEquals(
             \Laminas\Form\View\Helper\FormRow::LABEL_APPEND,

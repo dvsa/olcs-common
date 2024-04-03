@@ -23,7 +23,7 @@ class AnnualTripsAbroadFieldsetPopulatorTest extends MockeryTestCase
     /**
      * @dataProvider dpTrueFalse
      */
-    public function testPopulate($showNiWarning)
+    public function testPopulate($showNiWarning): void
     {
         $markup = '<div class="govuk-inset-text">Trips abroad guidance</div><p>paragraph 1</p><p>paragraph</p>';
 

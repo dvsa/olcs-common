@@ -17,5 +17,4 @@ use Laminas\Form\Element\Button as LaminasElement;
  */
 class ActionLink extends LaminasElement
 {
-
 }

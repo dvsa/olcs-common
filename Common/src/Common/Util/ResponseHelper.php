@@ -1,13 +1,5 @@
 <?php
 
-/**
- * Response Helper
- *
- * Handle responses from the rest service
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
-
 namespace Common\Util;
 
 use Laminas\Http\Response;
@@ -21,13 +13,12 @@ use Laminas\Http\Response;
  */
 class ResponseHelper
 {
+    public $body;
     public $response;
 
     public $method;
 
     protected $responseData;
-
-    private $params;
 
     private $data;
 
@@ -59,7 +50,7 @@ class ResponseHelper
         ]
     ];
 
-    public function setResponse(Response $response)
+    public function setResponse(Response $response): void
     {
         $this->response = $response;
     }
@@ -69,14 +60,13 @@ class ResponseHelper
         return $this->response;
     }
 
-    public function setMethod($method)
+    public function setMethod($method): void
     {
         $this->method = $method;
     }
 
     public function setParams($params)
     {
-        $this->params = $params;
     }
 
     public function getData()
@@ -97,7 +87,7 @@ class ResponseHelper
         return $this->processResponse();
     }
 
-    public function checkForValidResponseBody($body)
+    public function checkForValidResponseBody($body): void
     {
         if (!is_string($body)) {
             throw new \Exception('Invalid response body, expected string' . $body);
@@ -112,7 +102,7 @@ class ResponseHelper
         $this->responseData = ($data['Response'] ?? $data);
     }
 
-    public function checkForInternalServerError($body)
+    public function checkForInternalServerError($body): void
     {
         if ($this->response->getStatusCode() == Response::STATUS_CODE_500) {
             $data = json_decode($body, true);
@@ -125,7 +115,7 @@ class ResponseHelper
         }
     }
 
-    public function checkForUnexpectedResponseCode($body)
+    public function checkForUnexpectedResponseCode($body): void
     {
         if (!in_array($this->response->getStatusCode(), $this->expectedCodes[$this->method])) {
             $data = json_decode($body, true);
@@ -140,7 +130,7 @@ class ResponseHelper
     }
 
     /**
-     * @return bool
+     * @return ?bool
      */
     protected function processResponse()
     {
@@ -152,7 +142,8 @@ class ResponseHelper
 
                 return false;
             case 'POST':
-                if ($this->response->getStatusCode() === Response::STATUS_CODE_201 ||
+                if (
+                    $this->response->getStatusCode() === Response::STATUS_CODE_201 ||
                     $this->response->getStatusCode() === Response::STATUS_CODE_202
                 ) {
                     return $this->responseData['Data'] ?? null;

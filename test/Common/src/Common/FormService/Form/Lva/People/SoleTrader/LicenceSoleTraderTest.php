@@ -14,6 +14,11 @@ use LmcRbacMvc\Service\AuthorizationService;
 
 class LicenceSoleTraderTest extends MockeryTestCase
 {
+    /**
+     * @var \Mockery\LegacyMockInterface
+     */
+    public $authService;
+    public $peopleLvaService;
     protected $sut;
 
     protected $formHelper;
@@ -24,7 +29,7 @@ class LicenceSoleTraderTest extends MockeryTestCase
 
     protected $mockLicenceService;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);
         $this->authService = m::mock(AuthorizationService::class);
@@ -47,7 +52,7 @@ class LicenceSoleTraderTest extends MockeryTestCase
     /**
      * @dataProvider noDisqualifyProvider
      */
-    public function testGetFormNoDisqualify($params)
+    public function testGetFormNoDisqualify($params): void
     {
         $params['canModify'] = true;
 
@@ -71,7 +76,7 @@ class LicenceSoleTraderTest extends MockeryTestCase
         $this->sut->getForm($params);
     }
 
-    public function testGetForm()
+    public function testGetForm(): void
     {
         $params = [
             'location' => 'internal',
@@ -102,7 +107,7 @@ class LicenceSoleTraderTest extends MockeryTestCase
         $this->sut->getForm($params);
     }
 
-    public function testGetFormCantModify()
+    public function testGetFormCantModify(): void
     {
         $params = [
             'location' => 'internal',

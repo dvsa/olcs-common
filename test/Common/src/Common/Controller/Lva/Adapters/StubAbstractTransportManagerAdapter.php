@@ -11,7 +11,7 @@ use Common\Controller\Lva\Adapters\AbstractTransportManagerAdapter;
  */
 class StubAbstractTransportManagerAdapter extends AbstractTransportManagerAdapter
 {
-    protected $tableSortMethod = null;
+    protected $tableSortMethod;
 
     public function mapResultForTable(array $applicationTms, array $licenceTms = [])
     {
@@ -31,6 +31,11 @@ class StubAbstractTransportManagerAdapter extends AbstractTransportManagerAdapte
         ];
     }
 
+    /**
+     * Only here to ensure interface implemented (so phpstan ignored)
+     *
+     * @phpstan-ignore-next-line
+     */
     public function delete(array $ids, $applicationId)
     {
     }

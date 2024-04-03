@@ -34,7 +34,7 @@ class HoursOfWeekContent
      *     }
      *})
      */
-    public $hoursMon = null;
+    public $hoursMon;
 
     /**
      * @Form\Required(false)
@@ -59,7 +59,7 @@ class HoursOfWeekContent
      *     }
      *})
      */
-    public $hoursTue = null;
+    public $hoursTue;
 
     /**
      * @Form\Required(false)
@@ -84,7 +84,7 @@ class HoursOfWeekContent
      *     }
      *})
      */
-    public $hoursWed = null;
+    public $hoursWed;
 
     /**
      * @Form\Required(false)
@@ -109,7 +109,7 @@ class HoursOfWeekContent
      *     }
      *})
      */
-    public $hoursThu = null;
+    public $hoursThu;
 
     /**
      * @Form\Required(false)
@@ -134,7 +134,7 @@ class HoursOfWeekContent
      *     }
      *})
      */
-    public $hoursFri = null;
+    public $hoursFri;
 
     /**
      * @Form\Required(false)
@@ -159,7 +159,7 @@ class HoursOfWeekContent
      *     }
      *})
      */
-    public $hoursSat = null;
+    public $hoursSat;
 
     /**
      * @Form\Required(false)
@@ -184,5 +184,5 @@ class HoursOfWeekContent
      *     }
      *})
      */
-    public $hoursSun = null;
+    public $hoursSun;
 }

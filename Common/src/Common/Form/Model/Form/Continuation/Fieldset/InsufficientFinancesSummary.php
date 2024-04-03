@@ -13,5 +13,5 @@ class InsufficientFinancesSummary
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      * @Form\Attributes({"value": "markup-continuation-finances-overview"})
      */
-    public $financialOverview = null;
+    public $financialOverview;
 }

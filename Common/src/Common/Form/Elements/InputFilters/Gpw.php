@@ -9,7 +9,7 @@
 namespace Common\Form\Elements\InputFilters;
 
 use Laminas\Form\Element as LaminasElement;
-use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\InputFilter\InputProviderInterface;
 use Laminas\Validator\Digits;
 use Laminas\Validator\GreaterThan;
 use Laminas\I18n\Validator\Alnum;
@@ -21,7 +21,6 @@ use Laminas\I18n\Validator\Alnum;
  */
 class Gpw extends LaminasElement implements InputProviderInterface
 {
-
     public function __construct($name = null, $options = [])
     {
         parent::__construct($name, $options);
@@ -29,20 +28,16 @@ class Gpw extends LaminasElement implements InputProviderInterface
 
     /**
      * Provide default input rules for this element.
-     *
-     * @return array
      */
     public function getInputSpecification(): array
     {
-        $specification = [
+        return [
             'name' => $this->getName(),
             'required' => true,
             'validators' => [
                 ['name' => \Laminas\Validator\Digits::class],
-                ['name' => \Laminas\Validator\GreaterThan::class, 'options' =>['min' => 0]],
+                ['name' => \Laminas\Validator\GreaterThan::class, 'options' => ['min' => 0]],
             ]
         ];
-
-        return $specification;
     }
 }

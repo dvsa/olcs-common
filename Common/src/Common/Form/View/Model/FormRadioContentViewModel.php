@@ -16,9 +16,6 @@ class FormRadioContentViewModel extends ViewModel
      */
     protected $template = 'partials/form/radio-content';
 
-    /**
-     * @param array $valueOption
-     */
     public function __construct(array $valueOption)
     {
         parent::__construct([
@@ -28,10 +25,6 @@ class FormRadioContentViewModel extends ViewModel
         ]);
     }
 
-    /**
-     * @param array $valueOption
-     * @return string
-     */
     protected function buildClass(array $valueOption): string
     {
         $classList = ['govuk-radios__conditional', 'govuk-body'];
@@ -41,6 +34,7 @@ class FormRadioContentViewModel extends ViewModel
             if (is_string($customClassList)) {
                 $customClassList = explode(' ', $customClassList);
             }
+
             $classList = array_unique(array_merge($classList, $customClassList));
         }
 

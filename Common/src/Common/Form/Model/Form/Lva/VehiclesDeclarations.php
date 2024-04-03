@@ -16,45 +16,45 @@ class VehiclesDeclarations
      * @Form\Name("version")
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\Name("psvVehicleSize")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\PsvVehiclesSize")
      */
-    public $psvVehicleSize = null;
+    public $psvVehicleSize;
 
     /**
      * @Form\Name("smallVehiclesIntention")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\VehiclesDeclarationsSmallVehiclesIntention")
      */
-    public $smallVehiclesIntention = null;
+    public $smallVehiclesIntention;
 
     /**
      * @Form\Name("nineOrMore")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\VehiclesDeclarationsNineOrMore")
      * @Form\Options({"label":"application_vehicle-safety_undertakings-nineOrMore"})
      */
-    public $nineOrMore = null;
+    public $nineOrMore;
 
     /**
      * @Form\Name("mainOccupation")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\VehiclesDeclarationsMainOccupation")
      * @Form\Options({"label":"application_vehicle-safety_undertakings.mainOccupation"})
      */
-    public $mainOccupation = null;
+    public $mainOccupation;
 
     /**
      * @Form\Name("limousinesNoveltyVehicles")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\VehiclesDeclarationsLimousinesNoveltyVehicles")
      * @Form\Options({"label":"application_vehicle-safety_undertakings-limousines"})
      */
-    public $limousinesNoveltyVehicles = null;
+    public $limousinesNoveltyVehicles;
 
     /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
      * @Form\Attributes({"class":"govuk-button-group"})
      */
-    public $formActions = null;
+    public $formActions;
 }

@@ -16,7 +16,7 @@ class SubsidiaryCompany
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $id = null;
+    public $id;
 
     /**
      * @Form\Attributes({"class":"long","id":"name"})
@@ -28,7 +28,7 @@ class SubsidiaryCompany
      * @Form\Type("Text")
      * @Form\Filter("Laminas\Filter\StringTrim")
      */
-    public $name = null;
+    public $name;
 
     /**
      * @Form\Attributes({
@@ -43,5 +43,5 @@ class SubsidiaryCompany
      * })
      * @Form\Type("Common\Form\Elements\InputFilters\CompanyNumber")
      */
-    public $companyNo = null;
+    public $companyNo;
 }

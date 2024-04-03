@@ -12,7 +12,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class YesNoValueOptionsGeneratorTest extends MockeryTestCase
 {
-    public function testGenerate()
+    public function testGenerate(): void
     {
         $yesCaption = 'yes.caption';
         $noCaption = 'no.caption';

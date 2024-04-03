@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace CommonTest\Data\Mapper\Lva;
 
 use Mockery as m;
@@ -19,7 +20,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class InterimTest extends MockeryTestCase
 {
-    public function testMapFromResult()
+    public function testMapFromResult(): void
     {
         $data = [
             'version' => 1,
@@ -54,7 +55,7 @@ class InterimTest extends MockeryTestCase
         $this->assertEquals($expected, Interim::mapFromResult($data));
     }
 
-    public function testMapFromForm()
+    public function testMapFromForm(): void
     {
         $data = [
             'version' => 1,
@@ -92,7 +93,7 @@ class InterimTest extends MockeryTestCase
         $this->assertEquals($expected, Interim::mapFromForm($data));
     }
 
-    public function testMapFormErrors()
+    public function testMapFormErrors(): void
     {
         $messages = [
             'reason' => [

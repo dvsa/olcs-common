@@ -19,5 +19,5 @@ class SaveAndReturn
      * @Form\Options({"label": "save.button"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $save = null;
+    public $save;
 }

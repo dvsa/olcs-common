@@ -16,7 +16,7 @@ class ConvictionsPenaltiesData
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\Attributes({"id":"","placeholder":""})
@@ -31,11 +31,11 @@ class ConvictionsPenaltiesData
      *     options={"name": "noConviction"}
      * )
      */
-    public $question = null;
+    public $question;
 
     /**
      * @Form\Name("table")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
      */
-    public $table = null;
+    public $table;
 }

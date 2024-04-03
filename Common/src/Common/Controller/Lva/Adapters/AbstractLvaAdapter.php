@@ -15,8 +15,6 @@ abstract class AbstractLvaAdapter extends AbstractControllerAwareAdapter impleme
 
     /**
      * Alter the form based on the LVA rules
-     *
-     * @param \Laminas\Form\Form $form
      */
     public function alterForm(Form $form)
     {

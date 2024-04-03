@@ -18,7 +18,9 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class ValidityPeriodTest extends MockeryTestCase
 {
     protected $translator;
+
     protected $viewHelperManager;
+
     protected $sut;
 
     protected function setUp(): void
@@ -32,7 +34,8 @@ class ValidityPeriodTest extends MockeryTestCase
     {
         m::close();
     }
-    public function testFormat()
+
+    public function testFormat(): void
     {
         $locale = 'cy_GB';
         $validFromTimestamp = 12345678;

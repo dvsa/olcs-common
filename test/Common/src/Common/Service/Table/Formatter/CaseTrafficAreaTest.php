@@ -13,7 +13,7 @@ class CaseTrafficAreaTest extends MockeryTestCase
     /**
      * @dataProvider  dpTestFormat
      */
-    public function testFormat($data, $expect)
+    public function testFormat($data, $expect): void
     {
         $sut = new CaseTrafficArea();
         static::assertSame($expect, $sut->format($data));

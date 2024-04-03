@@ -1,15 +1,9 @@
 <?php
 
-/**
- * Year Select
- */
 namespace Common\Form\Elements\Custom;
 
 use Laminas\Form\Element as LaminasElement;
 
-/**
- * Year Select
- */
 class YearSelect extends LaminasElement\Select
 {
     use Traits\YearDelta;
@@ -44,19 +38,20 @@ class YearSelect extends LaminasElement\Select
 
     /**
      * @param  array $options
-     * @return Select
+     * @return YearSelect
      */
     public function setOptions($options)
     {
         // set Min/Max Year based on element's options
-        $minYearDelta = !empty($options['min_year_delta']) ? $options['min_year_delta'] : null;
-        $maxYearDelta = !empty($options['max_year_delta']) ? $options['max_year_delta'] : null;
+        $minYearDelta = empty($options['min_year_delta']) ? null : $options['min_year_delta'];
+        $maxYearDelta = empty($options['max_year_delta']) ? null : $options['max_year_delta'];
         $this->setMinMaxYear($minYearDelta, $maxYearDelta);
 
         $years = [];
-        for ($i = $this->maxYear; $i >= $this->minYear; $i--) {
+        for ($i = $this->maxYear; $i >= $this->minYear; --$i) {
             $years[$i] = $i;
         }
+
         $options['options'] = $years;
 
         return parent::setOptions($options);

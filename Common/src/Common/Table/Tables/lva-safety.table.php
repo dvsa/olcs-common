@@ -1,4 +1,5 @@
 <?php
+
 use Common\Controller\Lva\AbstractSafetyController;
 use Common\Service\Table\Formatter\Address;
 use Common\Service\Table\Formatter\StackValue;
@@ -47,7 +48,7 @@ return [
         ],
         [
             'title' => 'markup-table-th-remove',
-            'ariaDescription' => fn($row) => $row['contactDetails']['fao'] ?? 'safety inspector',
+            'ariaDescription' => static fn($row) => $row['contactDetails']['fao'] ?? 'safety inspector',
             'type' => 'ActionLinks',
         ],
     ]

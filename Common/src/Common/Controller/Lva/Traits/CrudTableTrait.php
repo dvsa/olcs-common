@@ -53,6 +53,8 @@ trait CrudTableTrait
      * can be overridden if not
      *
      * @return \Laminas\Http\Response
+     *
+     * @psalm-suppress all
      */
     public function deleteAction()
     {
@@ -60,8 +62,15 @@ trait CrudTableTrait
         $request = $this->getRequest();
 
         if ($request->isPost()) {
+            /**
+             * @VOL VOL-5192 has been created to refactor this piece of code ($this->delete sometimes returns void)
+             * @phpstan-ignore-next-line
+             */
             $response = $this->delete();
-
+            /**
+             * @VOL VOL-5191 has been created to refactor this piece of code (location of ViewModel)
+             * @phpstan-ignore-next-line
+             */
             if ($response instanceof Response || $response instanceof ViewModel) {
                 return $response;
             }

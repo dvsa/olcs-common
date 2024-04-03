@@ -14,6 +14,7 @@ use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 class AbstractPeopleAdapterTest extends MockeryTestCase
 {
     protected const ID = 9001;
+
     protected const LIC_ID = 8001;
 
     /** @var  m\MockInterface | AbstractPeopleAdapter */
@@ -24,7 +25,7 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
 
     private $container;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->container = m::mock(ContainerInterface::class);
         $this->mockResp = m::mock(\Laminas\Http\Response::class);
@@ -37,14 +38,14 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
         $this->sut->shouldReceive('handleQuery')->andReturn($this->mockResp);
     }
 
-    public function testLoadPeopleDataLic()
+    public function testLoadPeopleDataLic(): void
     {
         $this->sut->shouldReceive('loadPeopleDataForLicence')->once()->with(self::ID);
 
         static::assertTrue($this->sut->loadPeopleData(AbstractController::LVA_LIC, self::ID));
     }
 
-    public function testLoadPeopleDataOth()
+    public function testLoadPeopleDataOth(): void
     {
         $this->sut->shouldReceive('loadPeopleDataForApplication')->twice()->with(self::ID);
 
@@ -52,7 +53,7 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
         static::assertTrue($this->sut->loadPeopleData(AbstractController::LVA_APP, self::ID));
     }
 
-    public function testHasInforceLicences()
+    public function testHasInforceLicences(): void
     {
         $this->mockResp->shouldReceive('getResult')->once()->andReturn(['hasInforceLicences' => 'unit_EXPECT']);
 
@@ -61,7 +62,7 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
         static::assertEquals('unit_EXPECT', $this->sut->hasInforceLicences());
     }
 
-    public function testIsExceptionalOrganisation()
+    public function testIsExceptionalOrganisation(): void
     {
         $this->mockResp->shouldReceive('getResult')->once()->andReturn(['isExceptionalType' => 'unit_EXPECT']);
 
@@ -70,7 +71,7 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
         static::assertEquals('unit_EXPECT', $this->sut->isExceptionalOrganisation());
     }
 
-    public function testIsSoleTrader()
+    public function testIsSoleTrader(): void
     {
         $this->mockResp->shouldReceive('getResult')->once()->andReturn(['isSoleTrader' => 'unit_EXPECT']);
 
@@ -79,7 +80,7 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
         static::assertEquals('unit_EXPECT', $this->sut->isSoleTrader());
     }
 
-    public function testIsPartnership()
+    public function testIsPartnership(): void
     {
         $this->mockResp->shouldReceive('getResult')
             ->once()
@@ -101,7 +102,7 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
     /**
      * @dataProvider dpTestAlterFormForOrganisation
      */
-    public function testAlterFormForOrganisation($type, $expected)
+    public function testAlterFormForOrganisation($type, $expected): void
     {
         $mockTable = m::mock(TableBuilder::class)
             ->shouldReceive('getAction')
@@ -149,7 +150,7 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
         ];
     }
 
-    public function testGetAddLabelTextForOrganisationReturnsNullIfNoOrganisationType()
+    public function testGetAddLabelTextForOrganisationReturnsNullIfNoOrganisationType(): void
     {
         $this->assertNull($this->sut->getAddLabelTextForOrganisation());
     }
@@ -157,7 +158,7 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
     /**
      * @dataProvider dpTestAlterFormForOrganisation
      */
-    public function testGetAddLabelTextForOrganisationReturnsAppropriateLabel($type, $expected)
+    public function testGetAddLabelTextForOrganisationReturnsAppropriateLabel($type, $expected): void
     {
         $this->sut->shouldReceive('getOrganisationType')
             ->andReturn($type)
@@ -169,7 +170,7 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
     /**
      * @dataProvider  dpTestAlterFormForOrganisation
      */
-    public function testAmendLicencePeopleListTableAltersTable($type, $expected)
+    public function testAmendLicencePeopleListTableAltersTable($type, $expected): void
     {
         $settingsArray = [
             'actions' => [
@@ -196,7 +197,7 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
         $this->sut->amendLicencePeopleListTable($mockTable);
     }
 
-    public function testStatusesAreAddedToPeopleFromFlashMessenger()
+    public function testStatusesAreAddedToPeopleFromFlashMessenger(): void
     {
         $mockFM = m::mock(FlashMessenger::class);
 

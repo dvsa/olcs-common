@@ -24,9 +24,10 @@ class FormRadioOption extends \Common\Form\View\Helper\Extended\FormRadio
      */
     public function __invoke(ElementInterface $element = null, $labelPosition = null)
     {
-        if (!$element) {
+        if (!$element instanceof \Laminas\Form\ElementInterface) {
             return $this;
         }
+
         $key = $labelPosition;
 
         // Only want to render one option, so store all options in tmp varaiable

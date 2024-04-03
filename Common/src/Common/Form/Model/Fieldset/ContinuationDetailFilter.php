@@ -17,7 +17,7 @@ class ContinuationDetailFilter
      * })
      * @Form\Type("Text")
      */
-    public $licenceNo = null;
+    public $licenceNo;
 
     /**
      * @Form\Required(false)
@@ -35,7 +35,7 @@ class ContinuationDetailFilter
      * })
      * @Form\Type("MultiCheckbox")
      */
-    public $licenceStatus = null;
+    public $licenceStatus;
 
     /**
      * @Form\Required(false)
@@ -50,7 +50,7 @@ class ContinuationDetailFilter
      * })
      * @Form\Type("Select")
      */
-    public $method = null;
+    public $method;
 
     /**
      * @Form\Required(false)
@@ -63,5 +63,5 @@ class ContinuationDetailFilter
      * })
      * @Form\Type("DynamicSelect")
      */
-    public $status = null;
+    public $status;
 }

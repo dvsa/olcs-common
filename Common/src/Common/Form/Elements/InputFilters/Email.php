@@ -5,11 +5,12 @@
  *
  * @author Jakub Igla <jakub.igla@valtech.co.uk>
  */
+
 namespace Common\Form\Elements\InputFilters;
 
 use Laminas\Form\Element as LaminasElement;
 use Laminas\Validator as LaminasValidator;
-use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\InputFilter\InputProviderInterface;
 
 /**
  * Email Filter
@@ -20,12 +21,10 @@ class Email extends LaminasElement implements InputProviderInterface
 {
     /**
      * Provide default input rules for this element.
-     *
-     * @return array
      */
     public function getInputSpecification(): array
     {
-        $specification = [
+        return [
             'name' => $this->getName(),
             'required' => false,
             'filters' => [
@@ -34,10 +33,8 @@ class Email extends LaminasElement implements InputProviderInterface
             'validators' => [
                 // @NOTE don't know if this is still used but I'll update it anyway
                 ['name' => \Dvsa\Olcs\Transfer\Validators\EmailAddress::class],
-                ['name' => \Laminas\Validator\StringLength::class, 'options'=> ['min' => 5, 'max' => 255]],
+                ['name' => \Laminas\Validator\StringLength::class, 'options' => ['min' => 5, 'max' => 255]],
             ]
         ];
-
-        return $specification;
     }
 }

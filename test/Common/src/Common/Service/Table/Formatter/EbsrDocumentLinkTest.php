@@ -13,6 +13,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class EbsrDocumentLinkTest extends MockeryTestCase
 {
     protected $urlHelper;
+
     protected $sut;
 
     protected function setUp(): void
@@ -32,10 +33,8 @@ class EbsrDocumentLinkTest extends MockeryTestCase
      * @param string $ebsrStatus
      * @param string $colour
      * @param string $label
-     *
-     * @return void
      */
-    public function testFormat()
+    public function testFormat(): void
     {
         $submissionId = 123;
         $documentDescription = 'description';

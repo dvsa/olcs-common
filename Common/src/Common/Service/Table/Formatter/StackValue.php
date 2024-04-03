@@ -19,9 +19,6 @@ class StackValue implements FormatterPluginManagerInterface
 {
     private StackHelperService $stackHelper;
 
-    /**
-     * @param StackHelperService $stackHelper
-     */
     public function __construct(StackHelperService $stackHelper)
     {
         $this->stackHelper = $stackHelper;

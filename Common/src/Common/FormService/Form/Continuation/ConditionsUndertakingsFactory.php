@@ -11,10 +11,8 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
 class ConditionsUndertakingsFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
-     * @return ConditionsUndertakings
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

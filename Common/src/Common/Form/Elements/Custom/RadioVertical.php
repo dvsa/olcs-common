@@ -8,5 +8,4 @@ use Common\Form\Elements\Types\Radio;
 
 class RadioVertical extends Radio
 {
-
 }

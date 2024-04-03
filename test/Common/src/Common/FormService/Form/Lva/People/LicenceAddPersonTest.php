@@ -11,9 +11,10 @@ use LmcRbacMvc\Service\AuthorizationService;
 
 class LicenceAddPersonTest extends MockeryTestCase
 {
+    public $authService;
     public const TEST_ORGANISATION_TYPE = 'AOEOaedrTUIDAoeua';
 
-    public function testGetForm()
+    public function testGetForm(): void
     {
         $form = new AddPerson();
 

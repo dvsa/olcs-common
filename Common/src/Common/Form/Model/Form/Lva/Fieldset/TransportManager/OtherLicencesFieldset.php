@@ -26,7 +26,7 @@ class OtherLicencesFieldset
      * )
      * @Form\Type("Radio")
      */
-    public $hasOtherLicences = null;
+    public $hasOtherLicences;
 
     /**
      * @Form\Name("otherLicences")
@@ -36,5 +36,5 @@ class OtherLicencesFieldset
      *     "class": "help__text help__text--removePadding"
      * })
      */
-    public $otherLicences = null;
+    public $otherLicences;
 }

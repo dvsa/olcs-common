@@ -16,8 +16,6 @@ class NoOfPermitsBaseInsetTextGenerator
     /**
      * Create service instance
      *
-     * @param TranslationHelperService $translator
-     * @param CurrencyFormatter $currencyFormatter
      *
      * @return NoOfPermitsBaseInsetTextGenerator
      */
@@ -31,9 +29,7 @@ class NoOfPermitsBaseInsetTextGenerator
      * Generate the base inset text wrapped in the specified format for use on the number of permits page, or return an
      * empty string if the issue fee is 'N/A'
      *
-     * @param array $options
      * @param string $format
-     *
      * @return string
      */
     public function generate(array $options, $format)

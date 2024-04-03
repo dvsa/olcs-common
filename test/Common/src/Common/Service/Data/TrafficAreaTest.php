@@ -23,7 +23,7 @@ class TrafficAreaTest extends AbstractDataServiceTestCase
         $this->sut = new TrafficArea($this->abstractDataServiceServices);
     }
 
-    public function testFormatData()
+    public function testFormatData(): void
     {
         $source = $this->getSingleSource();
         $expected = $this->getSingleExpected();
@@ -36,7 +36,7 @@ class TrafficAreaTest extends AbstractDataServiceTestCase
      * @param $input
      * @param $expected
      */
-    public function testFetchListOptions($input, $expected)
+    public function testFetchListOptions($input, $expected): void
     {
         $this->sut->setData('TrafficArea', $input);
 
@@ -51,7 +51,7 @@ class TrafficAreaTest extends AbstractDataServiceTestCase
         ];
     }
 
-    public function testFetchListData()
+    public function testFetchListData(): void
     {
         $results = ['results' => 'results'];
         $params = [
@@ -85,7 +85,7 @@ class TrafficAreaTest extends AbstractDataServiceTestCase
         $this->assertEquals($results['results'], $this->sut->fetchListData());
     }
 
-    public function testFetchListDataWithException()
+    public function testFetchListDataWithException(): void
     {
         $this->expectException(DataServiceException::class);
 
@@ -110,12 +110,11 @@ class TrafficAreaTest extends AbstractDataServiceTestCase
      */
     protected function getSingleExpected()
     {
-        $expected = [
+        return [
             'val-1' => 'Value 1',
             'val-2' => 'Value 2',
             'val-3' => 'Value 3',
         ];
-        return $expected;
     }
 
     /**
@@ -123,11 +122,10 @@ class TrafficAreaTest extends AbstractDataServiceTestCase
      */
     protected function getSingleSource()
     {
-        $source = [
+        return [
             ['id' => 'val-1', 'name' => 'Value 1'],
             ['id' => 'val-2', 'name' => 'Value 2'],
             ['id' => 'val-3', 'name' => 'Value 3'],
         ];
-        return $source;
     }
 }

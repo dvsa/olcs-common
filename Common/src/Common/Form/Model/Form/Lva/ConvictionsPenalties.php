@@ -16,24 +16,24 @@ class ConvictionsPenalties
      * @Form\Name("data")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\ConvictionsPenaltiesData")
      */
-    public $data = null;
+    public $data;
 
     /**
      * @Form\Name("convictionsConfirmation")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\ConvictionsPenaltiesConfirmation")
      */
-    public $convictionsConfirmation = null;
+    public $convictionsConfirmation;
 
     /**
      * @Form\Name("convictionsReadMoreLink")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\ConvictionsPenaltiesReadMoreLink")
      */
-    public $convictionsReadMoreLink = null;
+    public $convictionsReadMoreLink;
 
     /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
      * @Form\Attributes({"class":"govuk-button-group"})
      */
-    public $formActions = null;
+    public $formActions;
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * @author Ian Lindsay <ian@hemera-business-services.co.uk>
@@ -7,7 +8,7 @@
 
 namespace Common\Form\Elements\InputFilters;
 
-use Laminas\InputFilter\InputProviderInterface as InputProviderInterface;
+use Laminas\InputFilter\InputProviderInterface;
 use Laminas\Validator\Date as DateValidator;
 
 /**

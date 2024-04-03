@@ -17,6 +17,7 @@ class CommonVehiclesSearch
     {
         $this->formHelper = $formHelper;
     }
+
     /**
      * Get form
      *

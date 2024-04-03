@@ -39,18 +39,15 @@ class CurrentDiscs implements MapperInterface
 
     public static function mapFromForm(array $data): array
     {
-        $inPossession = $data['possessionSection']['inPossession'] == "Y" ? true:false;
+        $inPossession = $data['possessionSection']['inPossession'] == "Y";
         $possessionData = $data['possessionSection']['info'];
-        $lost = $data['lostSection']['lost'] == "Y" ? true:false;
-        $stolen = $data['stolenSection']['stolen'] == "Y" ? true:false;
+        $lost = $data['lostSection']['lost'] == "Y";
+        $stolen = $data['stolenSection']['stolen'] == "Y";
 
         $return = [];
         $self = new self();
-        if ($inPossession && !empty($possessionData['number'])) {
-            $return['discDestroyed'] = $possessionData['number'];
-        } else {
-            $return['discDestroyed'] = null;
-        }
+        $return['discDestroyed'] = $inPossession && !empty($possessionData['number']) ? $possessionData['number'] : null;
+
         if ($lost) {
             $lostData = $self->getLostInfo($data['lostSection']['info']);
             $return = array_merge($return, $lostData);
@@ -58,6 +55,7 @@ class CurrentDiscs implements MapperInterface
             $return['discLost'] = null;
             $return['discLostInfo'] = null;
         }
+
         if ($stolen) {
             $stolenData = $self->getStolenInfo($data['stolenSection']['info']);
             $return = array_merge($return, $stolenData);
@@ -75,9 +73,11 @@ class CurrentDiscs implements MapperInterface
         if (!empty($section['number'])) {
             $return['discLost'] = $section['number'];
         }
+
         if (!empty($section['details'])) {
             $return['discLostInfo'] = $section['details'];
         }
+
         return $return;
     }
 
@@ -87,9 +87,11 @@ class CurrentDiscs implements MapperInterface
         if (!empty($section['number'])) {
             $return['discStolen'] = $section['number'];
         }
+
         if (!empty($section['details'])) {
             $return['discStolenInfo'] = $section['details'];
         }
+
         return $return;
     }
 }

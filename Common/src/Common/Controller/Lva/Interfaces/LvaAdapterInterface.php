@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Controller\Lva\Interfaces;
 
 use Laminas\Form\Form;
@@ -20,8 +21,6 @@ interface LvaAdapterInterface
 
     /**
      * Alter the form based on the LVA rules
-     *
-     * @param \Laminas\Form\Form $form
      */
     public function alterForm(Form $form);
 }

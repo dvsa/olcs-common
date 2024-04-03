@@ -5,6 +5,7 @@
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
+
 namespace CommonTest\Filter;
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -22,7 +23,7 @@ class VrmTest extends MockeryTestCase
      * @param $input
      * @param $output
      */
-    public function testFilter($input, $output)
+    public function testFilter($input, $output): void
     {
         $sut = new Vrm();
         $this->assertEquals($output, $sut->filter($input));

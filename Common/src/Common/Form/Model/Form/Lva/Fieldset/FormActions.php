@@ -10,7 +10,6 @@ use Laminas\Form\Annotation as Form;
  */
 class FormActions
 {
-
     /**
      * @Form\Attributes({
      *     "data-module": "govuk-button",
@@ -20,7 +19,7 @@ class FormActions
      * @Form\Options({"label": "save.continue.button"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $saveAndContinue = null;
+    public $saveAndContinue;
 
     /**
      * @Form\Attributes({
@@ -31,7 +30,7 @@ class FormActions
      * @Form\Options({"label": "save.button"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $save = null;
+    public $save;
 
     /**
      * @Form\Attributes({
@@ -42,5 +41,5 @@ class FormActions
      * @Form\Options({"label": "cancel.button"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $cancel = null;
+    public $cancel;
 }

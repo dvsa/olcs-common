@@ -15,8 +15,6 @@ class RadioFieldsetPopulator implements FieldsetPopulatorInterface
     /**
      * Create service instance
      *
-     * @param RadioFactory $radioFactory
-     * @param TranslateableTextHandler $translateableTextHandler
      *
      * @return RadioFieldsetPopulator
      */
@@ -32,10 +30,8 @@ class RadioFieldsetPopulator implements FieldsetPopulatorInterface
      * Populate the fieldset with a radio element based on the supplied options array
      *
      * @param mixed $form
-     * @param Fieldset $fieldset
-     * @param array $options
      */
-    public function populate($form, Fieldset $fieldset, array $options)
+    public function populate($form, Fieldset $fieldset, array $options): void
     {
         $radio = $this->radioFactory->create('qaElement');
 

@@ -15,9 +15,10 @@ use Common\Service\Table\Type\OperatingCentreAction;
 class OperatingCentreActionTest extends MockeryTestCase
 {
     protected $sut;
+
     protected $table;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->table = m::mock(TableBuilder::class);
         $this->table->expects('isInternalReadOnly')->andReturnFalse();
@@ -25,7 +26,7 @@ class OperatingCentreActionTest extends MockeryTestCase
         $this->sut = new OperatingCentreAction($this->table);
     }
 
-    public function testRenderNoS4()
+    public function testRenderNoS4(): void
     {
         $this->table->shouldReceive('getFieldset')->with()->once()->andReturn(null);
 
@@ -35,7 +36,7 @@ class OperatingCentreActionTest extends MockeryTestCase
         $this->assertStringNotContainsString('(Schedule 4/1)', $this->sut->render($data, $column));
     }
 
-    public function testRenderWithS4()
+    public function testRenderWithS4(): void
     {
         $this->table->shouldReceive('getFieldset')->with()->once()->andReturn(null);
 

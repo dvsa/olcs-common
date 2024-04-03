@@ -20,7 +20,7 @@ class PageIdTest extends MockeryTestCase
      */
     private $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $action = 'someaction';
         $routeMatchName = 'foo/bar';
@@ -31,7 +31,7 @@ class PageIdTest extends MockeryTestCase
         $this->sut = new PageId($routeMatchName, $action);
     }
 
-    public function testInvoke()
+    public function testInvoke(): void
     {
         $routeMatch = m::mock(RouteMatch::class);
         $routeMatch->shouldReceive('getMatchedRouteName')->andReturn('foo/bar');

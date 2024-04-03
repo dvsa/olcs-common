@@ -9,6 +9,7 @@ use Mockery as m;
 class VehicleRegistrationMarkTest extends \PHPUnit\Framework\TestCase
 {
     protected $translator;
+
     protected $sut;
 
     protected function setUp(): void
@@ -26,9 +27,10 @@ class VehicleRegistrationMarkTest extends \PHPUnit\Framework\TestCase
     {
         m::close();
     }
+
     /** @var Mockery\MockInterface */
 
-    public function testThatNonInterimVrmIsDisplayed()
+    public function testThatNonInterimVrmIsDisplayed(): void
     {
         $data = [
             'vehicle' => ['vrm' => 'TEST_VRM'],
@@ -40,7 +42,7 @@ class VehicleRegistrationMarkTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testThatInterimVrmIsDisplayed()
+    public function testThatInterimVrmIsDisplayed(): void
     {
         $data = [
             'vehicle' => ['vrm' => 'TEST_VRM'],
@@ -52,7 +54,7 @@ class VehicleRegistrationMarkTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testThatNonInterimVrmIsDisplayedWhenInterimApplicationIndexIsMissing()
+    public function testThatNonInterimVrmIsDisplayedWhenInterimApplicationIndexIsMissing(): void
     {
         $data = [
             'vehicle' => ['vrm' => 'TEST_VRM'],

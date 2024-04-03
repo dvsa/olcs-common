@@ -12,6 +12,7 @@ class ApplicationOperatingCentre extends AbstractDataService implements ListData
     use ApplicationServiceTrait;
 
     public const OUTPUT_TYPE_FULL = 1;
+
     public const OUTPUT_TYPE_PARTIAL = 2;
 
     /**
@@ -27,8 +28,6 @@ class ApplicationOperatingCentre extends AbstractDataService implements ListData
     /**
      * Create service instance
      *
-     * @param AbstractDataServiceServices $abstractDataServiceServices
-     * @param Application $applicationDataService
      *
      * @return ApplicationOperatingCentre
      */
@@ -68,8 +67,8 @@ class ApplicationOperatingCentre extends AbstractDataService implements ListData
                     $addressString = '';
 
                     foreach ($fields as $field) {
-                        $addressString .= !empty($applicationOperatingCentre['operatingCentre']['address'][$field]) ?
-                            $applicationOperatingCentre['operatingCentre']['address'][$field] . ', ' : '';
+                        $addressString .= empty($applicationOperatingCentre['operatingCentre']['address'][$field]) ?
+                            '' : $applicationOperatingCentre['operatingCentre']['address'][$field] . ', ';
                     }
 
                     $data[$applicationOperatingCentre['operatingCentre']['id']] = substr($addressString, 0, -2);

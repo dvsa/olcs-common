@@ -14,10 +14,8 @@ class TextTest extends \PHPUnit\Framework\TestCase
 
     /**
      * test setup
-     *
-     * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->filter = new InputFilters\Text("test");
     }
@@ -36,30 +34,24 @@ class TextTest extends \PHPUnit\Framework\TestCase
 
     /**
      * test basic name
-     *
-     * @return void
      */
-    public function testGetInputSpecificationReturnsCorrectName()
+    public function testGetInputSpecificationReturnsCorrectName(): void
     {
         $this->assertEquals('test', $this->getSpecificationElement('name'));
     }
 
     /**
      * ensure text fields aren't required by default
-     *
-     * @return void
      */
-    public function testTextNotRequired()
+    public function testTextNotRequired(): void
     {
         $this->assertFalse($this->getSpecificationElement('required'));
     }
 
     /**
      * ensure we trim all input strings
-     *
-     * @return void
      */
-    public function testStringTrimFilterIsUsed()
+    public function testStringTrimFilterIsUsed(): void
     {
         $this->assertEquals(
             [['name' => \Laminas\Filter\StringTrim::class]],
@@ -69,10 +61,8 @@ class TextTest extends \PHPUnit\Framework\TestCase
 
     /**
      * Test set max
-     *
-     * @return void
      */
-    public function testSetMinMax()
+    public function testSetMinMax(): void
     {
         $this->filter
             ->setMin(99)
@@ -87,10 +77,8 @@ class TextTest extends \PHPUnit\Framework\TestCase
 
     /**
      * Test set max
-     *
-     * @return void
      */
-    public function testIsAllowEmpty()
+    public function testIsAllowEmpty(): void
     {
         $this->filter
             ->setMin(0)

@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Form\Elements\Validators;
 
 use Laminas\Validator\AbstractValidator;
@@ -22,7 +23,7 @@ class VehicleSafetyTachographAnalyserContractorValidator extends AbstractValidat
      * @var array
      */
     protected $messageTemplates = [
-        'required' => 'Value is required and can\'t be empty'
+        'required' => "Value is required and can't be empty"
     ];
 
     /**
@@ -35,8 +36,8 @@ class VehicleSafetyTachographAnalyserContractorValidator extends AbstractValidat
     {
         unset($value);
 
-        // @todo Maybe need a better place to store these ref data keys
-        if ($context['tachographIns'] === 'tach_external'
+        if (
+            $context['tachographIns'] === 'tach_external'
             && trim($context['tachographInsName']) === ''
         ) {
             $this->error('required');

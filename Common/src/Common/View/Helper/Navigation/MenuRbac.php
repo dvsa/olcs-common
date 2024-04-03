@@ -39,7 +39,7 @@ class MenuRbac extends Menu
      */
     public function filter(AbstractContainer $container = null)
     {
-        if ($container === null) {
+        if (!$container instanceof \Laminas\Navigation\AbstractContainer) {
             $container = $this->getContainer();
         }
 

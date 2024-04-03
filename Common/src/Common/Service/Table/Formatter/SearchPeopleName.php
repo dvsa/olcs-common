@@ -14,9 +14,6 @@ class SearchPeopleName implements FormatterPluginManagerInterface
 {
     protected UrlHelperService $urlHelper;
 
-    /**
-     * @param UrlHelperService    $urlHelper
-     */
     public function __construct(UrlHelperService $urlHelper)
     {
         $this->urlHelper = $urlHelper;
@@ -37,8 +34,7 @@ class SearchPeopleName implements FormatterPluginManagerInterface
                 $this->urlHelper->fromRoute('historic-tm', ['historicId' => $data['tmId']]),
                 $data['personFullname']
             );
-        } else {
-            return $data['personFullname'];
         }
+        return $data['personFullname'];
     }
 }

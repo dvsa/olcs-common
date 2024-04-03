@@ -15,12 +15,12 @@ class ResponseHelperServiceTest extends MockeryTestCase
     /** @var  ResponseHelperService */
     protected $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = new ResponseHelperService();
     }
 
-    public function testTableToCsv()
+    public function testTableToCsv(): void
     {
         $body = 'unit_body';
 

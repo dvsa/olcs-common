@@ -20,7 +20,7 @@ class TaskOwnerTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider providerFormat
      */
-    public function testFormat($data, $expected)
+    public function testFormat($data, $expected): void
     {
         $this->assertEquals($expected, (new TaskOwner())->format($data));
     }

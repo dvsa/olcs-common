@@ -9,11 +9,9 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
 class PageTitleFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
      *
-     * @return PageTitle
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): PageTitle
     {

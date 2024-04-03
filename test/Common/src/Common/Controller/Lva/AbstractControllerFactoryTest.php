@@ -33,9 +33,8 @@ class AbstractControllerFactoryTest extends MockeryTestCase
     /**
      * @group lva_abstract_factory
      */
-    public function testCanCreate()
+    public function testCanCreate(): void
     {
-        $name = 'bar';
         $requestedName = 'foo';
 
         $config = [
@@ -54,9 +53,8 @@ class AbstractControllerFactoryTest extends MockeryTestCase
     /**
      * @group lva_abstract_factory
      */
-    public function testCanCreateWithoutConfigMatch()
+    public function testCanCreateWithoutConfigMatch(): void
     {
-        $name = 'foo';
         $requestedName = 'bar';
 
         $config = [
@@ -75,9 +73,8 @@ class AbstractControllerFactoryTest extends MockeryTestCase
     /**
      * @group lva_abstract_factory
      */
-    public function testInvoke()
+    public function testInvoke(): void
     {
-        $name = 'bar';
         $requestedName = 'foo';
 
         $config = [
@@ -93,9 +90,8 @@ class AbstractControllerFactoryTest extends MockeryTestCase
         $this->assertInstanceOf('\stdClass', ($this->sut)($this->mockSm, $requestedName));
     }
 
-    public function testInvokeUsingFactory()
+    public function testInvokeUsingFactory(): void
     {
-        $name = 'unit_Name';
         $requestedName = 'unit_reqName';
 
         $config = [

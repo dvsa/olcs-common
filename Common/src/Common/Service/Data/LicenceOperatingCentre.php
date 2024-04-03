@@ -12,6 +12,7 @@ class LicenceOperatingCentre extends AbstractDataService implements ListDataInte
     use LicenceServiceTrait;
 
     public const OUTPUT_TYPE_FULL = 1;
+
     public const OUTPUT_TYPE_PARTIAL = 2;
 
     /**
@@ -27,8 +28,6 @@ class LicenceOperatingCentre extends AbstractDataService implements ListDataInte
     /**
      * Create service instance
      *
-     * @param AbstractDataServiceServices $abstractDataServiceServices
-     * @param Licence $licenceDataService
      *
      * @return LicenceOperatingCentre
      */
@@ -68,8 +67,8 @@ class LicenceOperatingCentre extends AbstractDataService implements ListDataInte
                     $addressString = '';
 
                     foreach ($fields as $field) {
-                        $addressString .= !empty($licenceOperatingCentre['operatingCentre']['address'][$field]) ?
-                            $licenceOperatingCentre['operatingCentre']['address'][$field] . ', ' : '';
+                        $addressString .= empty($licenceOperatingCentre['operatingCentre']['address'][$field]) ?
+                            '' : $licenceOperatingCentre['operatingCentre']['address'][$field] . ', ';
                     }
 
                     $data[$licenceOperatingCentre['operatingCentre']['id']] = substr($addressString, 0, -2);

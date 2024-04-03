@@ -17,7 +17,9 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class LicencePermitReferenceTest extends MockeryTestCase
 {
     protected $urlHelper;
+
     protected $translator;
+
     protected $sut;
 
     protected function setUp(): void
@@ -31,10 +33,11 @@ class LicencePermitReferenceTest extends MockeryTestCase
     {
         m::close();
     }
+
     /**
      * @dataProvider scenariosProvider
      */
-    public function testFormat($row, $expectedOutput)
+    public function testFormat($row, $expectedOutput): void
     {
         $this->urlHelper->shouldReceive('fromRoute')
             ->with('permits/application', ['id' => 100])

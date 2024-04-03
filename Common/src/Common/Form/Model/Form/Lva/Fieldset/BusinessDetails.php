@@ -11,13 +11,12 @@ use Laminas\Form\Annotation as Form;
  */
 class BusinessDetails
 {
-
     /**
      * @Form\Options({"label":"application_your-business_business-details.data.company_number"})
      * @Form\Attributes({"id": "companyNumber"})
      * @Form\Type("Common\Form\Elements\Types\CompanyNumber")
      */
-    public $companyNumber = null;
+    public $companyNumber;
 
     /**
      * @Form\Attributes({"class":"long"})
@@ -31,7 +30,7 @@ class BusinessDetails
 *     "min": 0, "max": 200
      *})
      */
-    public $name = null;
+    public $name;
 
     /**
      * @Form\Attributes({"class":"add-another"})
@@ -45,7 +44,7 @@ class BusinessDetails
      *      }
      * )
      */
-    public $tradingNames = null;
+    public $tradingNames;
 
     /**
      * @Form\Attributes({"id":"natureOfBusiness","placeholder":"","class":"extra-long"})
@@ -61,5 +60,5 @@ class BusinessDetails
      *     "min": 0, "max": 200
      *})
      */
-    public $natureOfBusiness = null;
+    public $natureOfBusiness;
 }

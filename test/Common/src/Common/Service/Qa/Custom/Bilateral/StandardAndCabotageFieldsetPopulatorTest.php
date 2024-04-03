@@ -39,7 +39,7 @@ class StandardAndCabotageFieldsetPopulatorTest extends MockeryTestCase
 
     private $standardAndCabotageFieldsetPopulator;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $expectedValueOptionsForYes = [
             StandardAndCabotageFieldsetPopulator::ANSWER_CABOTAGE_ONLY
@@ -119,7 +119,7 @@ class StandardAndCabotageFieldsetPopulatorTest extends MockeryTestCase
         );
     }
 
-    public function testPopulateNull()
+    public function testPopulateNull(): void
     {
         $options = [
             'value' => null
@@ -137,7 +137,7 @@ class StandardAndCabotageFieldsetPopulatorTest extends MockeryTestCase
         $this->standardAndCabotageFieldsetPopulator->populate($this->form, $this->fieldset, $options);
     }
 
-    public function testPopulateCabotageNotRequired()
+    public function testPopulateCabotageNotRequired(): void
     {
         $options = [
             'value' => StandardAndCabotageFieldsetPopulator::ANSWER_STANDARD_ONLY
@@ -158,7 +158,7 @@ class StandardAndCabotageFieldsetPopulatorTest extends MockeryTestCase
     /**
      * @dataProvider dpPopulateCabotageRequired
      */
-    public function testPopulateCabotageRequired($answerValue)
+    public function testPopulateCabotageRequired($answerValue): void
     {
         $options = [
             'value' => $answerValue

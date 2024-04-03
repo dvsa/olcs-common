@@ -17,18 +17,12 @@ class SystemInfoMessagesFactoryTest extends TestCase
 {
     public function testInvoke(): void
     {
-        $container = m::mock(ContainerInterface::class);
-        $container->expects('get')
-            ->andReturnUsing(
-                function ($class) {
-                    $map = [
-                        'QueryService' => m::mock(CachingQueryService::class),
-                        'TransferAnnotationBuilder' => m::mock(AnnotationBuilder::class),
-                    ];
+        $queryService = m::mock(CachingQueryService::class);
+        $transferAnnotationBuilder = m::mock(AnnotationBuilder::class);
 
-                    return $map[$class];
-                }
-            );
+        $container = m::mock(ContainerInterface::class);
+        $container->expects('get')->with('QueryService')->andReturn($queryService);
+        $container->expects('get')->with('TransferAnnotationBuilder')->andReturn($transferAnnotationBuilder);
 
         static::assertInstanceOf(
             SystemInfoMessages::class,

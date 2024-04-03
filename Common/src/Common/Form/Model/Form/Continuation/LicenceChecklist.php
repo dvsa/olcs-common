@@ -25,7 +25,7 @@ class LicenceChecklist
      *     "shouldWrap": true,
      *  })
      */
-    public $data = null;
+    public $data;
 
     /**
      * @Form\ComposedObject("Common\Form\Model\Form\Continuation\Fieldset\LicenceChecklistConfirmation")
@@ -35,5 +35,5 @@ class LicenceChecklist
      *     }
      * )
      */
-    public $licenceChecklistConfirmation = null;
+    public $licenceChecklistConfirmation;
 }

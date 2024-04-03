@@ -23,5 +23,5 @@ class OperatingCentresTotAuthTrailers
      * @Form\Validator("Between", options={"min":0, "max": 5000})
      * @Form\Filter("\Laminas\Filter\ToNull", options={"type":"string"})
      */
-    public $totAuthTrailers = null;
+    public $totAuthTrailers;
 }

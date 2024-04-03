@@ -43,6 +43,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
     }
 
     protected $section = 'operating_centres';
+
     protected string $baseRoute = 'lva-%s/operating_centres';
 
     protected $listQueryMap = [
@@ -91,24 +92,19 @@ abstract class AbstractOperatingCentresController extends AbstractController
     protected $operatingCentreId;
 
     protected FormHelperService $formHelper;
+
     protected FlashMessengerHelperService $flashMessengerHelper;
+
     protected FormServiceManager $formServiceManager;
+
     protected ScriptFactory $scriptFactory;
+
     protected VariationLvaService $variationLvaService;
+
     protected TranslationHelperService $translationHelper;
+
     protected FileUploadHelperService $uploadHelper;
 
-    /**
-     * @param NiTextTranslation $niTextTranslationUtil
-     * @param AuthorizationService $authService
-     * @param FormHelperService $formHelper
-     * @param FlashMessengerHelperService $flashMessengerHelper
-     * @param FormServiceManager $formServiceManager
-     * @param TranslationHelperService $translationHelper
-     * @param ScriptFactory $scriptFactory
-     * @param VariationLvaService $variationLvaService
-     * @param FileUploadHelperService $uploadHelper
-     */
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
@@ -174,6 +170,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
                 if ($this->isInternalReadOnly()) {
                     return $this->handleCrudAction($crudAction);
                 }
+
                 $this->formHelper->disableValidation($form->getInputFilter());
             }
 
@@ -256,10 +253,8 @@ abstract class AbstractOperatingCentresController extends AbstractController
      * Display error from updating OC page after a CRUD action
      *
      * @param array $errors Errors
-     *
-     * @return void
      */
-    private function displayCrudErrors($errors)
+    private function displayCrudErrors($errors): void
     {
         if (empty($errors)) {
             $this->flashMessengerHelper->addUnknownError();
@@ -315,9 +310,11 @@ abstract class AbstractOperatingCentresController extends AbstractController
             $hasProcessedFiles = $this->processFiles(
                 $form,
                 'advertisements->adPlacedContent->file',
-                [$this, 'processAdvertisementFileUpload'],
-                [$this, 'deleteFile'],
-                [$this, 'getDocuments']
+                function (array $file): void {
+                    $this->processAdvertisementFileUpload($file);
+                },
+                fn(int $id): bool => $this->deleteFile($id),
+                fn(): array => $this->getDocuments()
             );
         } else {
             $hasProcessedFiles = false;
@@ -428,9 +425,11 @@ abstract class AbstractOperatingCentresController extends AbstractController
             $hasProcessedFiles = $this->processFiles(
                 $form,
                 'advertisements->adPlacedContent->file',
-                [$this, 'processAdvertisementFileUpload'],
-                [$this, 'deleteFile'],
-                [$this, 'getDocuments']
+                function (array $file): void {
+                    $this->processAdvertisementFileUpload($file);
+                },
+                fn(int $id): bool => $this->deleteFile($id),
+                fn(): array => $this->getDocuments()
             );
         } else {
             $hasProcessedFiles = false;
@@ -504,7 +503,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
     /**
      * Delete
      *
-     * @return bool
+     * @return bool|void
      */
     protected function delete()
     {
@@ -556,10 +555,8 @@ abstract class AbstractOperatingCentresController extends AbstractController
      * Handle the file upload
      *
      * @param array $file File
-     *
-     * @return void
      */
-    public function processAdvertisementFileUpload($file)
+    public function processAdvertisementFileUpload($file): void
     {
         // Reset the list, so we have to fetch it again
         $this->documents = null;
@@ -579,6 +576,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
         if (!empty($this->operatingCentreId)) {
             $data['operatingCentre'] = $this->operatingCentreId;
         }
+
         $this->uploadFile($file, $data);
     }
 
@@ -624,11 +622,8 @@ abstract class AbstractOperatingCentresController extends AbstractController
     protected function fetchOcData()
     {
         $queryDtoClass = $this->listQueryMap[$this->lva];
-        if ($this->getRequest()->isPost()) {
-            $query = $this->getRequest()->getPost('query');
-        } else {
-            $query = $this->getRequest()->getQuery();
-        }
+        $query = $this->getRequest()->isPost() ? $this->getRequest()->getPost('query') : $this->getRequest()->getQuery();
+
         $defaultSort = $this->lva == 'variation' ? 'lastModifiedOn' : 'createdOn';
         $params = [
             'id' => $this->getIdentifier(),

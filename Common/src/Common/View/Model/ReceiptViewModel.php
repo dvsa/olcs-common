@@ -5,6 +5,7 @@
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
+
 namespace Common\View\Model;
 
 use Laminas\View\Model\ViewModel;
@@ -17,5 +18,6 @@ use Laminas\View\Model\ViewModel;
 class ReceiptViewModel extends ViewModel
 {
     protected $terminate = true;
+
     protected $template = 'pages/fees/payment-success-print';
 }

@@ -18,7 +18,7 @@ class HideIfClosedRadioTest extends MockeryTestCase
      *
      * @dataProvider formatProvider
      */
-    public function testFormat($data, $expected)
+    public function testFormat($data, $expected): void
     {
         $this->assertEquals($expected, (new \Common\Service\Table\Formatter\HideIfClosedRadio())->format($data));
     }

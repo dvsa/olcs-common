@@ -37,7 +37,7 @@ class FinancialEvidenceEvidence
      *      }
      * )
      */
-    public $uploadedFileCount = null;
+    public $uploadedFileCount;
 
     /**
      * @Form\Required(false)
@@ -51,13 +51,13 @@ class FinancialEvidenceEvidence
      * })
      * @Form\Type("\Laminas\Form\Element\Radio")
      */
-    public $uploadNowRadio = null;
+    public $uploadNowRadio;
 
     /**
      * @Form\ComposedObject("\Common\Form\Model\Fieldset\MultipleFileUpload")
      * @Form\Attributes({"id":"files", "class":"help__text file-uploader"})
      */
-    public $files = null;
+    public $files;
 
     /**
      * @Form\Required(false)
@@ -71,7 +71,7 @@ class FinancialEvidenceEvidence
      * })
      * @Form\Type("\Laminas\Form\Element\Radio")
      */
-    public $uploadLaterRadio = null;
+    public $uploadLaterRadio;
 
     /**
      * @Form\Attributes({
@@ -83,7 +83,7 @@ class FinancialEvidenceEvidence
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      * @Form\Name("uploadLaterMessage")
      */
-    public $uploadLater = null;
+    public $uploadLater;
 
     /**
      * @Form\Required(false)
@@ -97,7 +97,7 @@ class FinancialEvidenceEvidence
      * })
      * @Form\Type("\Laminas\Form\Element\Radio")
      */
-    public $sendByPostRadio = null;
+    public $sendByPostRadio;
 
     /**
      * @Form\Attributes({
@@ -108,5 +108,5 @@ class FinancialEvidenceEvidence
      * })
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $sendByPost = null;
+    public $sendByPost;
 }

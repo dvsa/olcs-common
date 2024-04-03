@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace CommonTest\Common\Auth\Service;
@@ -15,12 +16,9 @@ class RefreshTokenServiceFactoryTest extends MockeryTestCase
 {
     use MocksServicesTrait;
 
-    /**
-     * @var RefreshTokenServiceFactory
-     */
     protected RefreshTokenServiceFactory $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->setUpServiceManager();
     }
@@ -28,20 +26,20 @@ class RefreshTokenServiceFactoryTest extends MockeryTestCase
     /**
      * @test
      */
-    public function __invoke_IsCallable(): void
+    public function invokeIsCallable(): void
     {
         // Setup
         $this->setUpSut();
 
         // Assert
-        $this->assertIsCallable([$this->sut, '__invoke']);
+        $this->assertIsCallable(fn(\Psr\Container\ContainerInterface $container, string $requestedName, ?array $options = null): \Common\Auth\Service\RefreshTokenService => $this->sut->__invoke($container, $requestedName, $options));
     }
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_ReturnsAnInstanceOfRefreshTokenService()
+    public function invokeReturnsAnInstanceOfRefreshTokenService(): void
     {
         // Setup
         $this->setUpSut();

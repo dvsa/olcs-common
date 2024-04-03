@@ -17,7 +17,6 @@ class FormValidator
      * Validates a form.
      *
      * @param Form $form
-     * @return bool
      */
     public function isValid(Form $form): bool
     {

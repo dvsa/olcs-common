@@ -8,7 +8,6 @@ use Dvsa\Olcs\Transfer\Command\User\UpdateUserLastLoginAt;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 
-
 /**
  * Class LastLoginServiceTest
  * @package CommonTest\Service\User
@@ -25,18 +24,18 @@ class LastLoginServiceTest extends MockeryTestCase
      */
     private $commandSender;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->commandSender = m::mock(CommandSender::class);
         $this->sut = new LastLoginService($this->commandSender);
     }
 
-    public function testCommandIsInstantiatedWithToken()
+    public function testCommandIsInstantiatedWithToken(): void
     {
         $this->commandSender
             ->shouldReceive('send')
             ->with(
-                m::on(function($command) {
+                m::on(function ($command) {
                     $this->assertInstanceOf(UpdateUserLastLoginAt::class, $command);
                     $this->assertEquals($command->getSecureToken(), self::TOKEN);
                     return true;

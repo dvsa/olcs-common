@@ -1,6 +1,5 @@
 <?php
 
-
 namespace CommonTest\Data\Mapper\Lva\TransportManager\Sections;
 
 use Common\Data\Mapper\Lva\TransportManager\Sections\OtherLicences;
@@ -11,15 +10,16 @@ use Mockery as m;
 class OtherLicencesTest extends MockeryTestCase
 {
     private $mockTranslator;
+
     private $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->mockTranslator = m::mock(TranslationHelperService::class);
         $this->sut = new OtherLicences($this->mockTranslator);
     }
 
-    public function testObjectPopulates()
+    public function testObjectPopulates(): void
     {
         $this->mockTranslator->shouldReceive(
             'translateReplace'
@@ -38,7 +38,7 @@ class OtherLicencesTest extends MockeryTestCase
         $this->assertEquals(['lva-tmverify-details-checkanswer-licences' => '__TEST__'], $actual->sectionSerialize());
     }
 
-    public function testObjectPopulatesNoneAdded()
+    public function testObjectPopulatesNoneAdded(): void
     {
         $actual = $this->sut->populate(
             [

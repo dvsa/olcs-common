@@ -28,7 +28,7 @@ class CommunityLicencesEditSuspensionDates
      *      }
      * )
      */
-    public $startDate = null;
+    public $startDate;
 
     /**
      * @Form\Required(false)
@@ -58,5 +58,5 @@ class CommunityLicencesEditSuspensionDates
      *      }
      * )
      */
-    public $endDate = null;
+    public $endDate;
 }

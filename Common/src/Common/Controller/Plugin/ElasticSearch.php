@@ -2,17 +2,24 @@
 
 namespace Common\Controller\Plugin;
 
+use Common\Controller\Traits\GenericMethods;
+use Common\Service\Data\Search\Search;
+use Common\Service\Data\Search\SearchType;
 use Laminas\Mvc\Controller\Plugin\AbstractPlugin;
+use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
+use Laminas\Navigation\Navigation;
 use Laminas\Session\Container;
 use Laminas\View\Model\ViewModel;
 
 /**
  * Class ElasticSearch - Generates and processes calls to Elastic Search
  *
- * @package Olcs\Mvc\Controller\Plugin
+ * @method FlashMessenger flashMessenger()
+ * @method GenericMethods redirectToRoute($route = null, $params = [], $options = [], $reuse = false)
  */
 class ElasticSearch extends AbstractPlugin
 {
+    public $navigationId;
     /**
      * Session container name
      * @var string
@@ -33,19 +40,19 @@ class ElasticSearch extends AbstractPlugin
 
     /**
      * Search type service
-     * @var \Common\Service\Data\Search\SearchType
+     * @var SearchType
      */
     protected $searchTypeService;
 
     /**
      * Search service
-     * @var \Common\Service\Data\Search
+     * @var Search
      */
     protected $searchService;
 
     /**
      * Navigation service
-     * @var \Laminas\Navigation\Navigation
+     * @var Navigation
      */
     protected $navigationService;
 
@@ -119,7 +126,7 @@ class ElasticSearch extends AbstractPlugin
         );
     }
 
-    public function processSearchData()
+    public function processSearchData(): void
     {
         $incomingParameters = [];
 
@@ -131,7 +138,7 @@ class ElasticSearch extends AbstractPlugin
             $incomingParameters += $postParams;
         }
 
-        if ($queryParams = (array) $this->getController()->getRequest()->getQuery()) {
+        if (($queryParams = (array) $this->getController()->getRequest()->getQuery()) !== []) {
             $incomingParameters = array_merge($incomingParameters, $queryParams);
         }
 
@@ -160,23 +167,21 @@ class ElasticSearch extends AbstractPlugin
     }
 
     /**
-     * Returns the header search form.
-     *
-     * @return \Olcs\Form\Model\Form\HeaderSearch
+     * Returns the header search form
+     * This is Olcs\Form\Model\Form\HeaderSearch from within olcs-internal,
+     * so we can't use a return type due to static analysis
      */
     public function getSearchForm()
     {
-        $form = $this->getController()->getPlaceholder()
+        return $this->getController()->getPlaceholder()
             ->getContainer('headerSearch')
             ->getValue();
-
-        return $form;
     }
 
     /**
      * Returns the search filter form.
-     *
-     * @return \Olcs\Form\Model\Form\SearchFilter
+     *  This is Olcs\Form\Model\Form\SearchFilter from within olcs-internal,
+     *  so we can't use a return type due to static analysis
      */
     public function getFiltersForm()
     {
@@ -264,11 +269,11 @@ class ElasticSearch extends AbstractPlugin
             $incomingParameters += $routeParams;
         }
 
-        if ($queryParams = (array) $this->getController()->params()->fromQuery()) {
+        if (($queryParams = (array) $this->getController()->params()->fromQuery()) !== []) {
             $incomingParameters = array_merge($incomingParameters, $queryParams);
         }
 
-        if ($postParams = (array) $this->getController()->params()->fromPost()) {
+        if (($postParams = (array) $this->getController()->params()->fromPost()) !== []) {
             $incomingParameters = array_merge($incomingParameters, $postParams);
         }
 
@@ -285,7 +290,7 @@ class ElasticSearch extends AbstractPlugin
         return $incomingParameters;
     }
 
-    public function configureNavigation($removeNavIds = [])
+    public function configureNavigation($removeNavIds = []): void
     {
         $sd = $this->getSearchData();
 
@@ -346,7 +351,7 @@ class ElasticSearch extends AbstractPlugin
     /**
      * @param string $searchTerm
      */
-    public function setSearchTerm($searchTerm)
+    public function setSearchTerm($searchTerm): void
     {
         $this->searchTerm = $searchTerm;
     }
@@ -386,7 +391,7 @@ class ElasticSearch extends AbstractPlugin
     }
 
     /**
-     * @param \Common\Service\Data\Search\Search $searchService
+     * @param Search $searchService
      * @return ElasticSearch
      */
     public function setSearchService($searchService)
@@ -396,7 +401,7 @@ class ElasticSearch extends AbstractPlugin
     }
 
     /**
-     * @return \Common\Service\Data\Search\Search
+     * @return Search
      */
     public function getSearchService()
     {
@@ -404,7 +409,7 @@ class ElasticSearch extends AbstractPlugin
     }
 
     /**
-     * @param \Common\Service\Data\Search\SearchType $searchTypeService
+     * @param SearchType $searchTypeService
      * @return ElasticSearch
      */
     public function setSearchTypeService($searchTypeService)
@@ -414,7 +419,7 @@ class ElasticSearch extends AbstractPlugin
     }
 
     /**
-     * @return \Common\Service\Data\Search\SearchType
+     * @return SearchType
      */
     public function getSearchTypeService()
     {
@@ -422,22 +427,22 @@ class ElasticSearch extends AbstractPlugin
     }
 
     /**
-     * @param \Laminas\Navigation\Navigation $navigationService
+     * @param Navigation $navigationService
      */
-    public function setNavigationService($navigationService)
+    public function setNavigationService($navigationService): void
     {
         $this->navigationService = $navigationService;
     }
 
     /**
-     * @return \Laminas\Navigation\Navigation
+     * @return Navigation
      */
     public function getNavigationService()
     {
         return $this->navigationService;
     }
 
-    public function resetSearchSession($term)
+    public function resetSearchSession($term): void
     {
         // A bit fudgy way to clear session container.
 

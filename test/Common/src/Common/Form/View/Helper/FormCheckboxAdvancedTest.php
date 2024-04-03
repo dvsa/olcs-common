@@ -7,22 +7,20 @@ use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Form\ElementInterface;
 use Laminas\View\Renderer\RendererInterface;
-use Laminas\View\Model\ViewModel;
 
 class FormCheckboxAdvancedTest extends MockeryTestCase
 {
-    /**
-     * @var FormCheckboxAdvanced
-     */
-    protected $sut;
+    protected FormCheckboxAdvanced $sut;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sut = new FormCheckboxAdvanced();
     }
 
-    public function testInvoke()
+    public function testInvoke(): void
     {
+        $viewContent = 'view content';
+
         $mockElement = m::mock(ElementInterface::class)
             ->shouldReceive('getOption')
             ->with('content')
@@ -32,15 +30,15 @@ class FormCheckboxAdvancedTest extends MockeryTestCase
         $mockView = m::mock(RendererInterface::class)->makePartial();
         $mockView->data = 'data';
         $mockView
-            ->shouldReceive('partial')
+            ->expects('partial')
             ->with(
                 'partials/form/checkbox-advanced',
                 ['element' => $mockElement, 'content' => 'content', 'data' => 'data']
             )
-            ->once()
+            ->andReturn($viewContent)
             ->getMock();
 
         $this->sut->setView($mockView);
-        $this->sut->__invoke($mockElement);
+        $this->assertEquals($viewContent, $this->sut->__invoke($mockElement));
     }
 }

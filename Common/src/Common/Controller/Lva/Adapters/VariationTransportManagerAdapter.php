@@ -41,7 +41,7 @@ class VariationTransportManagerAdapter extends AbstractTransportManagerAdapter
      *
      * @param array $ids Transport Manager and Transport Manager Application ID's, Licence TM's are prefixed with "L"
      */
-    public function delete(array $ids, $applicationId)
+    public function delete(array $ids, $applicationId): void
     {
         $tmlIds = [];
         $tmaIds = [];
@@ -54,14 +54,14 @@ class VariationTransportManagerAdapter extends AbstractTransportManagerAdapter
             }
         }
 
-        if (count($tmaIds) !== 0) {
+        if ($tmaIds !== []) {
             $command = $this->transferAnnotationBuilder->createCommand(
                 Command\TransportManagerApplication\Delete::create(['ids' => $tmaIds])
             );
             $this->commandSrv->send($command);
         }
 
-        if (count($tmlIds) !== 0) {
+        if ($tmlIds !== []) {
             $command = $this->transferAnnotationBuilder->createCommand(
                 Command\Variation\TransportManagerDeleteDelta::create(
                     ['id' => $applicationId, 'transportManagerLicenceIds' => $tmlIds]

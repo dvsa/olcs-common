@@ -19,7 +19,7 @@ class CreateButtons
      * @Form\Options({"label":"Create"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $submit = null;
+    public $submit;
 
     /**
      * @Form\Attributes({
@@ -31,5 +31,5 @@ class CreateButtons
      * @Form\Options({"label":"Cancel"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $cancel = null;
+    public $cancel;
 }

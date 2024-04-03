@@ -23,5 +23,5 @@ class OperatingCentresTotAuthHgvVehicles
      * @Form\Validator("Between", options={"min":1, "max": 5000})
      * @Form\Filter("\Laminas\Filter\ToNull", options={"type":"string"})
      */
-    public $totAuthHgvVehicles = null;
+    public $totAuthHgvVehicles;
 }

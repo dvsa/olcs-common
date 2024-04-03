@@ -37,6 +37,7 @@ class TransportManagerApplication
                 unset($errors[$field]);
             }
         }
+
         $form->setMessages($formMessages);
         return $errors;
     }
@@ -50,7 +51,7 @@ class TransportManagerApplication
         $data [] = $details->makeSection('Details', $detailsQuestions, 'details');
         $responsibilities = (new Responsibilities($translationHelperService))->populate($transportManagerApplication);
         $responsibilitiesQuestions = $responsibilities->createSectionFormat();
-        $data [] =$responsibilities->makeSection('Responsibilities', $responsibilitiesQuestions, 'responsibilities');
+        $data [] = $responsibilities->makeSection('Responsibilities', $responsibilitiesQuestions, 'responsibilities');
         $hours = (new HoursOfWork($translationHelperService))->populate($transportManagerApplication);
         $hoursQuestions = $hours->createSectionFormat();
         $data [] = $hours->makeSection('HoursOfWork', $hoursQuestions, 'hoursOfWeek');
@@ -65,7 +66,7 @@ class TransportManagerApplication
         $otherEmploymentQuestions = $otherEmployment->createSectionFormat();
         $data [] = $otherEmployment->makeSection('OtherEmployment', $otherEmploymentQuestions, 'hasOtherEmployments');
 
-        $convictions= (new ConvictionsPenalties($translationHelperService))->populate($transportManagerApplication);
+        $convictions = (new ConvictionsPenalties($translationHelperService))->populate($transportManagerApplication);
         $convictionsQuestions = $convictions->createSectionFormat();
         $data [] = $convictions->makeSection('Convictions', $convictionsQuestions, 'previousHistory');
         $revocations = (new RevokedLicences($translationHelperService))->populate($transportManagerApplication);

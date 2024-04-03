@@ -10,7 +10,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class PrepareAttributesTraitTest extends MockeryTestCase
 {
-    public function test()
+    public function test(): void
     {
         $sut = new PrepareAttributesTraitStub();
 

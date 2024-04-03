@@ -17,7 +17,6 @@ interface DataMapperInterface
 {
     /**
      * Maps array data
-     * @param array $data
      * @return array Flattened/converted data
      */
     public function map(array $data);

@@ -24,14 +24,14 @@ class CommonLicenceTrailersTest extends MockeryTestCase
      */
     private $formHelper;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->formHelper = m::mock(FormHelperService::class);
 
         $this->sut = new CommonLicenceTrailers($this->formHelper);
     }
 
-    public function testGetForm()
+    public function testGetForm(): void
     {
         $mockSaveButton = m::mock()
             ->shouldReceive('setAttribute')

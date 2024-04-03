@@ -13,13 +13,13 @@ class Trailer
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $id = null;
+    public $id;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\Type("Text")
@@ -31,7 +31,7 @@ class Trailer
      * @Form\Filter("Laminas\Filter\StringTrim")
      * @Form\Validator("Laminas\I18n\Validator\Alnum")
      */
-    public $trailerNo = null;
+    public $trailerNo;
 
     /**
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\IsLongerSemiTrailer")
@@ -40,5 +40,5 @@ class Trailer
      *     "hint": "licence_goods-trailers_trailer.form.add.islongersemitrailer.hint"
      * })
      */
-    public $longerSemiTrailer = null;
+    public $longerSemiTrailer;
 }

@@ -16,7 +16,6 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
 class FormElementErrorsFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param string $requestedName
      * @param null|array $options
      * @return object

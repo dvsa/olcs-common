@@ -18,8 +18,6 @@ class WarningAdder
     /**
      * Create service instance
      *
-     * @param Partial $partial
-     * @param HtmlAdder $htmlAdder
      *
      * @return WarningAdder
      */
@@ -32,7 +30,6 @@ class WarningAdder
     /**
      * Add a warning partial to the fieldset
      *
-     * @param Fieldset $fieldset
      * @param string $translationKey
      * @param int $priority
      * @param string $elementName
@@ -42,7 +39,7 @@ class WarningAdder
         $translationKey,
         $priority = self::DEFAULT_PRIORITY,
         $elementName = 'warning'
-    ) {
+    ): void {
         $markup = $this->partial->__invoke(
             'partials/warning-component',
             ['translationKey' => $translationKey]

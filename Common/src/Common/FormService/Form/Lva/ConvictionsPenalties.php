@@ -16,7 +16,9 @@ use Dvsa\Olcs\Api\Entity\Licence;
 class ConvictionsPenalties
 {
     protected TranslationHelperService $translator;
+
     protected UrlHelperService $urlHelper;
+
     protected FormHelperService $formHelper;
 
     public function __construct(
@@ -84,10 +86,9 @@ class ConvictionsPenalties
      *
      * @param \Laminas\Form\Form $form form
      *
-     * @return void
      *
      */
-    private function alterFormButtons($form)
+    private function alterFormButtons($form): void
     {
         $formActions = $form->get('form-actions');
         $formActions->get('saveAndContinue')->setLabel('Submit details');
@@ -97,10 +98,8 @@ class ConvictionsPenalties
      * Alter the confirmation message
      *
      * @param \Laminas\Form\Form $form form
-     *
-     * @return void
      */
-    private function removeConfirmation($form)
+    private function removeConfirmation($form): void
     {
         $form->remove('convictionsConfirmation');
     }
@@ -110,10 +109,8 @@ class ConvictionsPenalties
      *
      * @param \Laminas\Form\Fieldset $dataTable fieldset for table
      * @param array               $params    parameters
-     *
-     * @return void
      */
-    private function alterFormHeading($dataTable, array $params)
+    private function alterFormHeading($dataTable, array $params): void
     {
         $label = $dataTable->getLabel();
         $dataTable->setLabel($label . '-' . $params['organisationType'] . "-dc");
@@ -125,10 +122,8 @@ class ConvictionsPenalties
      * remove form question text
      *
      * @param \Laminas\Form\Fieldset $dataTable data table
-     *
-     * @return void
      */
-    private function alterFormQuestion($dataTable)
+    private function alterFormQuestion($dataTable): void
     {
         $question = $dataTable->get('question');
         $question->setLabel('');
@@ -139,10 +134,8 @@ class ConvictionsPenalties
      *
      * @param \Laminas\Form\Form $form   form
      * @param array           $params params
-     *
-     * @return void
      */
-    public function changeFormForDirectorVariation($form, array $params)
+    public function changeFormForDirectorVariation($form, array $params): void
     {
         if ($this->isDirectorChange($params)) {
             $dataTable = $form->get('data');

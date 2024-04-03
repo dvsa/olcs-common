@@ -18,7 +18,7 @@ class IrhpPermitsRequiredTest extends \PHPUnit\Framework\TestCase
      *
      * @dataProvider dpFormatProvider
      */
-    public function testFormat($data, $expected)
+    public function testFormat($data, $expected): void
     {
         $this->assertEquals($expected, (new IrhpPermitsRequired())->format($data));
     }

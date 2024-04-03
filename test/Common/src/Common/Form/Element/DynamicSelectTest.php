@@ -15,10 +15,12 @@ use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 class DynamicSelectTest extends TestCase
 {
     private $sut;
+
     private $mockRefDataService;
+
     private $pluginManager;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->mockRefDataService = $this->createMock(RefData::class);
         $this->pluginManager = m::mock(PluginManager::class);
@@ -27,9 +29,9 @@ class DynamicSelectTest extends TestCase
         $this->sut = new DynamicSelect($this->pluginManager, 'name', []);
     }
 
-    public function testSetOptions()
+    public function testSetOptions(): void
     {
-        $this->sut->setOptions(['context' => 'testing', 'use_groups'=>true, 'other_option'=>true, 'label' => 'Testing']);
+        $this->sut->setOptions(['context' => 'testing', 'use_groups' => true, 'other_option' => true, 'label' => 'Testing']);
 
         $this->assertEquals('testing', $this->sut->getContext());
         $this->assertTrue($this->sut->useGroups());
@@ -37,49 +39,49 @@ class DynamicSelectTest extends TestCase
         $this->assertEquals('Testing', $this->sut->getLabel());
     }
 
-    public function testBcSetOptions()
+    public function testBcSetOptions(): void
     {
         $this->sut->setOptions(['category' => 'testing']);
 
         $this->assertEquals('testing', $this->sut->getContext());
     }
 
-    public function testGetValueOptions()
+    public function testGetValueOptions(): void
     {
         $this->mockRefDataService
             ->expects($this->once())
             ->method('fetchListOptions')
             ->with($this->equalTo('category'), $this->equalTo(false))
-            ->willReturn(['key'=>'value']);
+            ->willReturn(['key' => 'value']);
 
         $this->sut->setDataService($this->mockRefDataService);
         $this->sut->setContext('category');
 
-        $this->assertEquals(['key'=>'value'], $this->sut->getValueOptions());
+        $this->assertEquals(['key' => 'value'], $this->sut->getValueOptions());
 
         //check that the values are only fetched once
         $this->sut->getValueOptions();
     }
 
-    public function testGetValueOptionsWithOtherOption()
+    public function testGetValueOptionsWithOtherOption(): void
     {
         $this->mockRefDataService
             ->expects($this->once())
             ->method('fetchListOptions')
             ->with($this->equalTo('category'), $this->equalTo(false))
-            ->willReturn(['key'=>'value']);
+            ->willReturn(['key' => 'value']);
 
         $this->sut->setOtherOption(true);
         $this->sut->setDataService($this->mockRefDataService);
         $this->sut->setContext('category');
 
-        $this->assertEquals(['key'=>'value', 'other' => 'Other'], $this->sut->getValueOptions());
+        $this->assertEquals(['key' => 'value', 'other' => 'Other'], $this->sut->getValueOptions());
 
         //check that the values are only fetched once
         $this->sut->getValueOptions();
     }
 
-    public function testGetValueOptionsWithExclude()
+    public function testGetValueOptionsWithExclude(): void
     {
         $this->mockRefDataService
             ->expects($this->once())
@@ -91,25 +93,25 @@ class DynamicSelectTest extends TestCase
         $this->sut->setDataService($this->mockRefDataService);
         $this->sut->setContext('category');
 
-        $this->assertEquals(['key'=>'value', 'one_more' => 'one more value'], $this->sut->getValueOptions());
+        $this->assertEquals(['key' => 'value', 'one_more' => 'one more value'], $this->sut->getValueOptions());
 
         //check that the values are only fetched once
         $this->sut->getValueOptions();
     }
 
-    public function testGetValueOptionsWithEmptyOption()
+    public function testGetValueOptionsWithEmptyOption(): void
     {
         $this->mockRefDataService
             ->expects($this->once())
             ->method('fetchListOptions')
             ->with($this->equalTo('category'), $this->equalTo(false))
-            ->willReturn(['key'=>'value']);
+            ->willReturn(['key' => 'value']);
 
         $this->sut->setOtherOption(false);
         $this->sut->setEmptyOption('choose one');
         $this->sut->setContext('category');
 
-        $this->assertEquals(['key'=>'value'], $this->sut->getValueOptions());
+        $this->assertEquals(['key' => 'value'], $this->sut->getValueOptions());
 
         // empty option does not get returned from getValueOptions,
         // it's appended in the view helper - @see Laminas\Form\View\Helper\FormSelect::render
@@ -121,7 +123,7 @@ class DynamicSelectTest extends TestCase
      * @param $expected
      * @dataProvider provideSetValue
      */
-    public function testSetValue($value, $expected, $multiple = false)
+    public function testSetValue($value, $expected, $multiple = false): void
     {
         $this->sut->setAttribute('multiple', $multiple);
         $this->sut->setValue($value);
@@ -133,15 +135,15 @@ class DynamicSelectTest extends TestCase
     {
         return [
             ['test', 'test'],
-            [[0=>'test', 1=> 'test2'], [0=>'test', 1=> 'test2']],
-            [['id'=>'test', 'desc' => 'Test Item'], 'test'],
+            [[0 => 'test', 1 => 'test2'], [0 => 'test', 1 => 'test2']],
+            [['id' => 'test', 'desc' => 'Test Item'], 'test'],
             [[], null],
-            [[['id'=>'test', 'desc' => 'Test Item'], [0 => 'test2']], ['test', [0 => 'test2']], true],
-            [[['id'=>'test', 'desc' => 'Test Item'], ['id'=>'test2', 'desc' => 'Test Item']], ['test', 'test2'], true]
+            [[['id' => 'test', 'desc' => 'Test Item'], [0 => 'test2']], ['test', [0 => 'test2']], true],
+            [[['id' => 'test', 'desc' => 'Test Item'], ['id' => 'test2', 'desc' => 'Test Item']], ['test', 'test2'], true]
         ];
     }
 
-    public function testGetDataServiceThrows()
+    public function testGetDataServiceThrows(): void
     {
         $serviceName = 'testListService';
         $this->expectException(\Exception::class);
@@ -155,7 +157,7 @@ class DynamicSelectTest extends TestCase
         $this->assertEquals($mockService, $this->sut->getDataService());
     }
 
-    public function testAddValueOption()
+    public function testAddValueOption(): void
     {
         $original = [
             1 => 2,
@@ -172,7 +174,7 @@ class DynamicSelectTest extends TestCase
         $this->assertEquals($this->sut->getValueOptions(), array_merge($original, $additional));
     }
 
-    public function testExtraOption()
+    public function testExtraOption(): void
     {
         $this->mockRefDataService
             ->expects($this->once())
@@ -186,7 +188,7 @@ class DynamicSelectTest extends TestCase
         $this->assertSame(['an' => 'option', 'foo' => 'bar'], $this->sut->getValueOptions());
     }
 
-    public function testExtraSetOption()
+    public function testExtraSetOption(): void
     {
         $this->sut->setOptions(['extra_option' => ['an' => 'option']]);
         $this->assertSame(['an' => 'option'], $this->sut->getExtraOption());

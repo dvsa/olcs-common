@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Data\Mapper\Lva;
 
 use Common\Data\Mapper\MapperInterface;
@@ -23,12 +24,12 @@ class NewTmUser implements MapperInterface
         return $data;
     }
 
-    public static function mapFormErrors(Form $form, array $errors, FlashMessengerHelperService $fm)
+    public static function mapFormErrors(Form $form, array $errors, FlashMessengerHelperService $fm): void
     {
         $formMessages = [];
 
         if (isset($errors['username'])) {
-            foreach ($errors['username'] as $key => $message) {
+            foreach ($errors['username'] as $message) {
                 $formMessages['data']['username'][] = $message;
             }
 
@@ -36,17 +37,15 @@ class NewTmUser implements MapperInterface
         }
 
         if (isset($errors['emailAddress'])) {
-            foreach ($errors['emailAddress'] as $key => $message) {
+            foreach ($errors['emailAddress'] as $message) {
                 $formMessages['data']['emailAddress'][] = $message;
             }
 
             unset($errors['emailAddress']);
         }
 
-        if (!empty($errors)) {
-            foreach ($errors as $error) {
-                $fm->addCurrentErrorMessage($error);
-            }
+        foreach ($errors as $error) {
+            $fm->addCurrentErrorMessage($error);
         }
 
         $form->setMessages($formMessages);

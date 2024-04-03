@@ -54,8 +54,6 @@ class Form extends LaminasForm\Form
 
     /**
      * Prevent a form from being validated (and thus saved) if it is set read only
-     *
-     * @return bool
      */
     public function isValid(): bool
     {
@@ -70,10 +68,10 @@ class Form extends LaminasForm\Form
     {
         $populateDepth = &self::getPopulateDepth();
         try {
-            $populateDepth += 1;
+            ++$populateDepth;
             parent::populateValues($data, $onlyBase);
         } finally {
-            $populateDepth -= 1;
+            --$populateDepth;
         }
     }
 

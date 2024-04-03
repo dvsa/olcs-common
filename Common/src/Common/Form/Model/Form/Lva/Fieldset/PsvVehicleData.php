@@ -14,13 +14,13 @@ class PsvVehicleData
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $id = null;
+    public $id;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $version;
 
     /**
      * @Form\Attributes({"id":"vrm","placeholder":""})
@@ -30,7 +30,7 @@ class PsvVehicleData
      * })
      * @Form\Type("\Common\Form\Elements\Custom\VehicleVrm")
      */
-    public $vrm = null;
+    public $vrm;
 
     /**
      * @Form\Options({
@@ -47,5 +47,5 @@ class PsvVehicleData
      *     },
      * )
      */
-    public $makeModel = null;
+    public $makeModel;
 }

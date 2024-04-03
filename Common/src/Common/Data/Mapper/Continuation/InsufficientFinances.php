@@ -42,7 +42,7 @@ class InsufficientFinances implements MapperInterface
         return [
             'version' => $formData['version'],
             'financialEvidenceUploaded' =>
-                $formData['insufficientFinances']['yesContent']['radio'] === 'upload' ? true : false,
+                $formData['insufficientFinances']['yesContent']['radio'] === 'upload',
         ];
     }
 }

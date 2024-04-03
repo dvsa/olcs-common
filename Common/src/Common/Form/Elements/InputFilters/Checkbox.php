@@ -19,20 +19,20 @@ class Checkbox extends LaminasElement\Checkbox
 
     /**
      * Provide default input rules for checkbox element.
-     *
-     * @return array
      */
     public function getInputSpecification(): array
     {
         $options = $this->getOptions();
 
-        if (!isset($options['must_be_value'])
+        if (
+            !isset($options['must_be_value'])
             || $options['must_be_value'] === false
-            || $options['must_be_value'] === null) {
+            || $options['must_be_value'] === null
+        ) {
             return [];
         }
 
-        $specification = [
+        return [
             'name' => $this->getName(),
             'required' => true,
             'validators' => [
@@ -48,7 +48,5 @@ class Checkbox extends LaminasElement\Checkbox
                 ]
             ]
         ];
-
-        return $specification;
     }
 }

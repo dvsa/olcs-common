@@ -17,7 +17,6 @@ class EscapeHtml extends AbstractHelper
 
     /**
      * EscapeHtml constructor.
-     * @param HTMLPurifier $htmlPurifierService
      *
      * @return void
      */
@@ -28,7 +27,6 @@ class EscapeHtml extends AbstractHelper
 
     /**
      * @param string $toEscape
-     * @return string
      */
     public function __invoke($toEscape): string
     {

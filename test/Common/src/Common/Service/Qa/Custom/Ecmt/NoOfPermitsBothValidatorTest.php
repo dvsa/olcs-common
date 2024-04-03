@@ -22,7 +22,7 @@ class NoOfPermitsBothValidatorTest extends MockeryTestCase
         $emissionsCategory,
         $expectedMessages,
         $expectedIsValid
-    ) {
+    ): void {
         $options = [
             'permitsRemaining' => $permitsRemaining,
             'emissionsCategory' => $emissionsCategory,

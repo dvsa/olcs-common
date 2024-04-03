@@ -19,7 +19,7 @@ class EcmtNoOfPermitsBothElementTest extends MockeryTestCase
     /**
      * @dataProvider dpGetInputSpecification
      */
-    public function testGetInputSpecification($emissionsCategory, $skipAvailabilityValidation, $expectAvailabilityValidator)
+    public function testGetInputSpecification($emissionsCategory, $skipAvailabilityValidation, $expectAvailabilityValidator): void
     {
         $permitsRemaining = 55;
 

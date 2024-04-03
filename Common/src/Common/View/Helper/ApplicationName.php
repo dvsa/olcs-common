@@ -23,7 +23,6 @@ class ApplicationName extends AbstractHelper
     /**
      * Create service instance
      *
-     * @param array $config
      *
      * @return ApplicationName
      */
@@ -50,6 +49,6 @@ class ApplicationName extends AbstractHelper
      */
     public function render()
     {
-        return !empty($this->config['application-name']) ? $this->config['application-name'] : '';
+        return empty($this->config['application-name']) ? '' : $this->config['application-name'];
     }
 }

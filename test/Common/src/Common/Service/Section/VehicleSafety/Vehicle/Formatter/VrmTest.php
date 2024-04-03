@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace CommonTest\Service\Section\VehicleSafety\Vehicle\Formatter;
 
 use Common\Service\Helper\UrlHelperService;
@@ -28,12 +29,12 @@ class VrmTest extends \PHPUnit\Framework\TestCase
      * @group VrmFormatter
      * @dataProvider provider
      */
-    public function testFormat($data, $column, $expected)
+    public function testFormat($data, $column, $expected): void
     {
         $mockUrlHelper = m::mock(UrlHelperService::class);
         $mockUrlHelper->shouldReceive('fromRoute')
             ->once()
-            ->andReturnUsing(fn($route, $params, $args, $routeMatch) => json_encode($params));
+            ->andReturnUsing(static fn($route, $params, $args, $routeMatch) => json_encode($params));
 
         $sut = new Vrm($mockUrlHelper);
         $output = $sut->format($data, $column);

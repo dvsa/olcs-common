@@ -19,8 +19,11 @@ use Laminas\View\Helper\AbstractHelper;
 class LinkNewWindow extends AbstractHelper
 {
     public const NEW_TAB_MESSAGE = 'link.opens-new-window';
+
     public const HIDDEN_NEW_TAB_SPAN = '<span class="govuk-visually-hidden">%s</span>';
+
     public const LINK_FORMAT = '<a href="%s" class="%s" target="_blank">%s%s</a>';
+
     public const LINK_FORMAT_EXTERNAL = '<a href="%s" class="%s" target="_blank" rel="external noreferrer noopener">%s%s</a>';
 
     public function __invoke(
@@ -29,8 +32,7 @@ class LinkNewWindow extends AbstractHelper
         string $class = 'govuk-link',
         bool $hideNewTabMessage = false,
         bool $isExternal = false
-    ): string
-    {
+    ): string {
         //we have the option to hide the new tab message, this is defaulted to off
         $hiddenNewTabMarkup = '';
 
@@ -43,7 +45,7 @@ class LinkNewWindow extends AbstractHelper
         //decide whether the new tab text goes in the hidden span or is appended to the link text itself
         if ($hideNewTabMessage) {
             $hiddenNewTabMarkup = sprintf(self::HIDDEN_NEW_TAB_SPAN, $escapedNewTabText);
-        } else{
+        } else {
             $escapedText = $escapedText . ' ' . $escapedNewTabText;
         }
 
