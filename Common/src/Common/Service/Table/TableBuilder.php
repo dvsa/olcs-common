@@ -1710,7 +1710,7 @@ class TableBuilder
 
             // Check if the formatter class contains a namespace
             if (strpos($formatterClass, '\\') === false) {
-                @trigger_error(sprintf('Table formatter "%s" should be using the FQCN.', $column['formatter']), \E_USER_ERROR);
+                @trigger_error(sprintf('Table formatter "%s" should be using the FQCN.', $column['formatter']), \E_ERROR);
             }
 
             if (!class_exists($formatterClass) || !$this->formatterPluginManager->has($formatterClass)) {
