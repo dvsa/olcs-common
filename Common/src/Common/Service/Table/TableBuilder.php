@@ -1701,6 +1701,8 @@ class TableBuilder
      * @param array $data
      *
      * @return mixed
+     *
+     * @throws \Exception
      */
     private function callFormatter($column, $data)
     {
@@ -1708,13 +1710,14 @@ class TableBuilder
             // Remove the leading namespace separator if exists
             $formatterClass = ltrim($column['formatter'], '\\');
 
-            // Check if the formatter class contains a namespace
-            if (strpos($formatterClass, '\\') === false) {
-                @trigger_error(sprintf('Table formatter "%s" should be using the FQCN.', $column['formatter']), \E_ERROR);
-            }
-
+            // Check if formatterClass exists
             if (!class_exists($formatterClass) || !$this->formatterPluginManager->has($formatterClass)) {
                 throw new MissingFormatterException('Missing table formatter: ' . $column['formatter']);
+            }
+
+            // Check if the formatter class contains a namespace
+            if (strpos($formatterClass, '\\') === false) {
+                throw new \Exception('Table formatter "%s" should be using the FQCN.' . $column['formatter']);
             }
 
             $column['formatter'] = $this->formatterPluginManager->get($formatterClass);
