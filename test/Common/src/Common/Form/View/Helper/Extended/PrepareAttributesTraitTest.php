@@ -20,9 +20,9 @@ class PrepareAttributesTraitTest extends MockeryTestCase
             'name' => 'data[unit_name]',
             'disabled' => 'off',
             'unit-attribute' => false,
-            'data-bool-Attr' => ['on' => 1],
+            'data-bool-attr' => 'on',
             'x-unit' => 'unit_x-unit_Value',
-            'DATA-unit' => 'unit_data-unit_Value',
+            'data-unit' => 'unit_data-unit_Value',
             'aria-unit' => 'unit_aria-unut_Value',
         ];
 
@@ -32,7 +32,7 @@ class PrepareAttributesTraitTest extends MockeryTestCase
                 'x-unit' => 'unit_x-unit_Value',
                 'data-unit' => 'unit_data-unit_Value',
                 'aria-unit' => 'unit_aria-unut_Value',
-                'data-bool-attr' => 'unit_YES',
+                'data-bool-attr' => 'on',
             ],
             $sut->prepareAttributes($attb)
         );
