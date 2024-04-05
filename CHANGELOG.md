@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.7.2](https://github.com/dvsa/olcs-common/compare/v6.7.1...v6.7.2) (2024-04-05)
+
+
+### Bug Fixes
+
+* removed non-FQCN support in TableBuilder ([#84](https://github.com/dvsa/olcs-common/issues/84)) ([8bff6bc](https://github.com/dvsa/olcs-common/commit/8bff6bcf5e2eb059883b8dcd17a676c04e5817bb))
+
 ## [6.7.1](https://github.com/dvsa/olcs-common/compare/v6.7.0...v6.7.1) (2024-04-05)
 
 
