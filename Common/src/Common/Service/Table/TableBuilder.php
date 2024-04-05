@@ -1712,12 +1712,7 @@ class TableBuilder
 
             // Check if formatterClass exists
             if (!class_exists($formatterClass) || !$this->formatterPluginManager->has($formatterClass)) {
-                throw new MissingFormatterException('Missing table formatter: ' . $column['formatter']);
-            }
-
-            // Check if the formatter class contains a namespace
-            if (strpos($formatterClass, '\\') === false) {
-                throw new \Exception('Table formatter "%s" should be using the FQCN.' . $column['formatter']);
+                throw new MissingFormatterException('Missing table formatter or formatter is not using the FQCN: ' . $column['formatter']);
             }
 
             $column['formatter'] = $this->formatterPluginManager->get($formatterClass);
