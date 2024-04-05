@@ -1701,8 +1701,6 @@ class TableBuilder
      * @param array $data
      *
      * @return mixed
-     *
-     * @throws \Exception
      */
     private function callFormatter($column, $data)
     {
