@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.7.1](https://github.com/dvsa/olcs-common/compare/v6.7.0...v6.7.1) (2024-04-05)
+
+
+### Bug Fixes
+
+* Reinstate casting attributes to string ([#85](https://github.com/dvsa/olcs-common/issues/85)) ([7758876](https://github.com/dvsa/olcs-common/commit/775887637c823679d7bc8a4f2b9e20855eac1847))
+
 ## [6.7.0](https://github.com/dvsa/olcs-common/compare/v6.6.1...v6.7.0) (2024-04-03)
 
 
