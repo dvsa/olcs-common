@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.7.3](https://github.com/dvsa/olcs-common/compare/v6.7.2...v6.7.3) (2024-04-08)
+
+
+### Bug Fixes
+
+* fix regression in `AbstractGoodsVehiclesController.php` ([#88](https://github.com/dvsa/olcs-common/issues/88)) ([6474555](https://github.com/dvsa/olcs-common/commit/647455518391ebb87ed746d1a4992258d9e1f4b0))
+
 ## [6.7.2](https://github.com/dvsa/olcs-common/compare/v6.7.1...v6.7.2) (2024-04-05)
 
 
