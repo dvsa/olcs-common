@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.7.6](https://github.com/dvsa/olcs-common/compare/v6.7.5...v6.7.6) (2024-04-08)
+
+
+### Bug Fixes
+
+* String '0' should not be ignore when running filtering on search ([#94](https://github.com/dvsa/olcs-common/issues/94)) ([8cfce17](https://github.com/dvsa/olcs-common/commit/8cfce17de6063bec5364c934ba11bb2d6107ae4c))
+
 ## [6.7.5](https://github.com/dvsa/olcs-common/compare/v6.7.4...v6.7.5) (2024-04-08)
 
 
