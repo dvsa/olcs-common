@@ -24,7 +24,7 @@
         "laminas/laminas-text": "^2.9",
         "laminas/laminas-validator": "^2.11",
         "laminas/laminas-view": "^2.23",
-        "olcs/olcs-logging": "^6.0",
+        "olcs/olcs-logging": "^6.0|^7.0",
         "olcs/olcs-transfer": "^6.0",
         "olcs/olcs-utils": "^6.0",
         "psr/container": "^1.1|^2"
