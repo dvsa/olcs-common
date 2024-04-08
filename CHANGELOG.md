@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.7.4](https://github.com/dvsa/olcs-common/compare/v6.7.3...v6.7.4) (2024-04-08)
+
+
+### Bug Fixes
+
+* restore fallback CRUD actions ([#90](https://github.com/dvsa/olcs-common/issues/90)) ([f552ffe](https://github.com/dvsa/olcs-common/commit/f552ffe45fe87cf3b27f7d22ec5dce712e6eb653))
+
 ## [6.7.3](https://github.com/dvsa/olcs-common/compare/v6.7.2...v6.7.3) (2024-04-08)
 
 
