@@ -138,18 +138,22 @@ abstract class AbstractVehiclesPsvController extends AbstractController
 
         if ($request->isPost()) {
             $crudAction = $this->getCrudAction([$data['vehicles']]);
-            $haveCrudAction = ($crudAction !== null);
 
-            if ($haveCrudAction && $this->isInternalReadOnly()) {
+            if (($crudAction !== null) && $this->isInternalReadOnly()) {
                 return $this->handleCrudAction($crudAction);
             }
 
             if ($form->isValid()) {
-                $response = $this->updateVehiclesSection($form, $haveCrudAction);
+                $response = $this->updateVehiclesSection($form, ($crudAction !== null));
                 if ($response !== null) {
                     return $response;
                 }
-                return $this->handleCrudAction($crudAction);
+
+                if ($crudAction !== null) {
+                    return $this->handleCrudAction($crudAction);
+                }
+
+                return $this->completeSection('vehicles_psv');
             }
         }
 

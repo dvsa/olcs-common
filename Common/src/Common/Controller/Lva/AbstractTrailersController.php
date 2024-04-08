@@ -106,10 +106,14 @@ abstract class AbstractTrailersController extends AbstractController
         if ($request->isPost()) {
             $crudAction = $this->getCrudAction([$data['table']]);
             $haveCrudAction = ($crudAction !== null);
-            if ($this->isInternalReadOnly()) {
-                return $this->handleCrudAction($crudAction);
+
+            if ($crudAction !== null) {
+                if ($this->isInternalReadOnly()) {
+                    return $this->handleCrudAction($crudAction);
+                }
+
+                $this->formHelper->disableValidation($form->getInputFilter());
             }
-            $this->formHelper->disableValidation($form->getInputFilter());
 
             if ($form->isValid()) {
                 $formData = (array)$form->getData();
@@ -124,7 +128,11 @@ abstract class AbstractTrailersController extends AbstractController
                 $response = $this->handleCommand($cmd);
 
                 if ($response->isOk()) {
-                    return $this->handleCrudAction($crudAction);
+                    if ($crudAction !== null) {
+                        return $this->handleCrudAction($crudAction);
+                    }
+
+                    return $this->completeSection('trailers');
                 }
 
                 if ($response->isServerError()) {

@@ -170,16 +170,24 @@ abstract class AbstractSafetyController extends AbstractController
         if ($request->isPost()) {
             $crudAction = $this->getCrudAction([$data['table']]);
             $haveCrudAction = ($crudAction !== null);
-            if ($this->isInternalReadOnly()) {
-                return $this->handleCrudAction($crudAction);
+
+            if ($crudAction !== null) {
+                if ($this->isInternalReadOnly()) {
+                    return $this->handleCrudAction($crudAction);
+                }
+
+                $this->formHelper->disableEmptyValidation($form);
             }
-            $this->formHelper->disableEmptyValidation($form);
 
             if ($form->isValid()) {
-                $response = $this->save($data, $haveCrudAction);
+                $response = $this->save($data, $crudAction !== null);
 
                 if ($response->isOk()) {
-                    return $this->handleCrudAction($crudAction);
+                    if ($crudAction !== null) {
+                        return $this->handleCrudAction($crudAction);
+                    }
+
+                    return $this->completeSection('safety');
                 }
 
                 if ($response->isServerError()) {
