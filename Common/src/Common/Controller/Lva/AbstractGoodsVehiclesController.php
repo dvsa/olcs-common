@@ -172,18 +172,22 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
 
         if ($request->isPost()) {
             $crudAction = $this->getCrudAction([$formData['table']]);
-            $haveCrudAction = ($crudAction !== null);
 
-            if ($haveCrudAction && $this->isInternalReadOnly()) {
+            if ($crudAction !== null && $this->isInternalReadOnly()) {
                 return $this->handleCrudAction($crudAction);
             }
 
             if ($form->isValid()) {
-                $response = $this->updateVehiclesSection($form, $haveCrudAction, $headerData);
+                $response = $this->updateVehiclesSection($form, ($crudAction !== null), $headerData);
                 if ($response !== null) {
                     return $response;
                 }
-                return $this->handleCrudAction($crudAction);
+
+                if ($crudAction !== null) {
+                    return $this->handleCrudAction($crudAction);
+                }
+
+                return $this->completeSection('vehicles');
             }
         }
 
