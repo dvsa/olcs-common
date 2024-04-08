@@ -2,11 +2,15 @@
 
 namespace CommonTest\Common\Service\Data\Search;
 
+use Common\Data\Object\Search\Aggregations\Terms\MergedStatus;
+use Common\Data\Object\Search\Aggregations\Terms\TermsAbstract;
+use Common\Data\Object\Search\InternalSearchAbstract;
 use Common\Service\Data\Search\Search;
 use Common\Service\Data\Search\SearchTypeManager;
 use Common\Service\Table\TableFactory;
 use Common\Util\RestClient;
 use CommonTest\Common\Service\Data\Search\Asset\SearchType;
+use Laminas\Http\Request;
 use Laminas\Http\Request as HttpRequest;
 use Laminas\Stdlib\ArrayObject;
 use Laminas\View\HelperPluginManager as ViewHelperManager;
@@ -185,5 +189,41 @@ class SearchTest extends MockeryTestCase
         $this->sut->setRestClient($mockRestClient);
         $this->sut->setSearch('SEARCH');
         $this->sut->fetchResults();
+    }
+
+    public function testUpdateFilterValuesFromFormHandlesBoolean(): void
+    {
+        $request = m::mock(Request::class);
+        $request->shouldReceive('getPost')
+                ->once()
+                ->andReturn([
+                    'filter' => [
+                        'merged' => '0',
+                    ],
+                ]);
+        $request->shouldReceive('getQuery')
+                ->once()
+                ->andReturn([]);
+        $this->sut->setRequest($request);
+
+        $booleanTerm = m::mock(MergedStatus::class);
+        $booleanTerm->shouldReceive('getKey')
+                    ->times(3)
+                    ->andReturn('merged');
+        $booleanTerm->shouldReceive('setValue')
+                    ->once()
+                    ->with('0');
+
+        $internalSearchAbstract = m::mock(InternalSearchAbstract::class);
+        $internalSearchAbstract->shouldReceive('getFilters')
+                               ->once()
+                               ->andReturn([$booleanTerm]);
+
+        $this->searchTypeManager->shouldReceive('get')
+                                ->with('')
+                                ->once()
+                                ->andReturn($internalSearchAbstract);
+
+        $this->sut->updateFilterValuesFromForm();
     }
 }

@@ -342,13 +342,9 @@ class Search extends AbstractData
         );
 
         foreach ($this->getFilters() as $filterClass) {
-            if (!isset($post['filter'][$filterClass->getKey()])) {
-                continue;
+            if (isset($post['filter'][$filterClass->getKey()]) && $post['filter'][$filterClass->getKey()] !== '') {
+                $filterClass->setValue($post['filter'][$filterClass->getKey()]);
             }
-            if (empty($post['filter'][$filterClass->getKey()]) && $post['filter'][$filterClass->getKey()] !== '0') {
-                continue;
-            }
-            $filterClass->setValue($post['filter'][$filterClass->getKey()]);
         }
     }
 
