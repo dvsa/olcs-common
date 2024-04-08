@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.7.5](https://github.com/dvsa/olcs-common/compare/v6.7.4...v6.7.5) (2024-04-08)
+
+
+### Miscellaneous Chores
+
+* add support for `^7.0` for `olcs-logging` ([#92](https://github.com/dvsa/olcs-common/issues/92)) ([829e88d](https://github.com/dvsa/olcs-common/commit/829e88d1e284fca338b1da09ce8158546ae5da8f))
+
 ## [6.7.4](https://github.com/dvsa/olcs-common/compare/v6.7.3...v6.7.4) (2024-04-08)
 
 
