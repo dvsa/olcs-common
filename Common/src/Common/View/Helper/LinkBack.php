@@ -15,8 +15,7 @@ class LinkBack extends AbstractHelper
     public function __construct(
         /** @var  \Laminas\Http\PhpEnvironment\Request */
         private Request $request
-    )
-    {
+    ) {
     }
 
     /**

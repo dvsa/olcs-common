@@ -50,11 +50,12 @@ class ContentHelper
      * @param string $location
      * @param object $object
      */
-    public function __construct($location = '', /**
-     * $object to be used in scope
-     */
-    private $object = null)
-    {
+    public function __construct(
+        $location = '', /**
+         * $object to be used in scope
+         */
+        private $object = null
+    ) {
         $this->location = rtrim($location, '/') . '/';
 
         if (method_exists($this->object, 'getTranslator')) {

@@ -20,8 +20,7 @@ class EscapeHtml extends AbstractHelper
     public function __construct(
         /** @var HtmlPurifier $htmlPurifierService */
         private HtmlPurifier $htmlPurifierService
-    )
-    {
+    ) {
     }
 
     /**

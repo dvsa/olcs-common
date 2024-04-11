@@ -257,8 +257,7 @@ class TableBuilder implements \Stringable
          */
         private array $applicationConfig,
         private FormatterPluginManager $formatterPluginManager
-    )
-    {
+    ) {
     }
 
     /**

@@ -34,10 +34,10 @@ class VehiclesNumber extends AbstractValidator
      * @param string $name
      */
     public function __construct(/**
-     * Holds the name
-     */
-    private $name)
-    {
+         * Holds the name
+         */
+        private $name
+    ) {
         parent::__construct([]);
     }
 

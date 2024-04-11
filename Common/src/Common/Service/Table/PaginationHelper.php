@@ -54,8 +54,7 @@ class PaginationHelper
          * Limit per page
          */
         private $limit
-    )
-    {
+    ) {
     }
 
     /**

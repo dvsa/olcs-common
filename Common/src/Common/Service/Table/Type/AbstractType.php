@@ -21,8 +21,7 @@ abstract class AbstractType
          * Holds the table
          */
         protected $table
-    )
-    {
+    ) {
     }
 
     /**
