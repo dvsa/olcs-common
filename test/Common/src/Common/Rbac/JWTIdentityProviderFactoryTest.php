@@ -12,6 +12,7 @@ use Common\Service\Cqrs\Query\QuerySender;
 use Common\Test\MocksServicesTrait;
 use Dvsa\Olcs\Transfer\Service\CacheEncryption;
 use Laminas\Authentication\Storage\Session;
+use Laminas\ServiceManager\ServiceManager;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
@@ -77,13 +78,15 @@ class JWTIdentityProviderFactoryTest extends MockeryTestCase
         $this->sut = new JWTIdentityProviderFactory();
     }
 
-    protected function setUpDefaultServices(\Laminas\ServiceManager\ServiceManager $serviceManager): void
+    protected function setUpDefaultServices(ServiceManager $serviceManager): ServiceManager
     {
         $this->serviceManager->setService('QuerySender', $this->setUpMockService(QuerySender::class));
         $this->serviceManager->setService(CacheEncryption::class, $this->setUpMockService(CacheEncryption::class));
         $this->config();
         $this->serviceManager->setService(RefreshTokenService::class, $this->setUpMockService(RefreshTokenService::class));
         $this->serviceManager->setService(Session::class, $this->setUpMockService(Session::class));
+
+        return $this->serviceManager;
     }
 
     protected function config(array $config = []): void
