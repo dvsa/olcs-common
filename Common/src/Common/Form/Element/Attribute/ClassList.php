@@ -9,7 +9,7 @@ namespace Common\Form\Element\Attribute;
  *
  * @see \CommonTest\Form\Element\Attribute\ClassListTest
  */
-class ClassList
+class ClassList implements \Stringable
 {
     /**
      * @var array

@@ -12,14 +12,8 @@ use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
  */
 class Translate implements FormatterPluginManagerInterface
 {
-    private TranslatorDelegator $translator;
-
-    private DataHelperService $dataHelper;
-
-    public function __construct(TranslatorDelegator $translator, DataHelperService $dataHelper)
+    public function __construct(private TranslatorDelegator $translator, private DataHelperService $dataHelper)
     {
-        $this->translator = $translator;
-        $this->dataHelper = $dataHelper;
     }
 
     /**

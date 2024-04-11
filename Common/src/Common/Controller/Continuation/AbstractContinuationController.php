@@ -60,18 +60,12 @@ abstract class AbstractContinuationController extends AbstractController
 
     protected $currentStep = self::STEP_DEFAULT;
 
-    protected FormServiceManager $formServiceManager;
-
-    protected TranslationHelperService $translationHelper;
-
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
-        FormServiceManager $formServiceManager,
-        TranslationHelperService $translationHelper
+        protected FormServiceManager $formServiceManager,
+        protected TranslationHelperService $translationHelper
     ) {
-        $this->formServiceManager = $formServiceManager;
-        $this->translationHelper = $translationHelper;
         parent::__construct($niTextTranslationUtil, $authService);
     }
 

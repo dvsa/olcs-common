@@ -12,15 +12,12 @@ use Common\Service\Table\Formatter\Address;
  */
 class LicenceConditionsUndertakingsReviewService extends AbstractReviewService
 {
-    protected ConditionsUndertakingsReviewService $helper;
-
     public function __construct(
         AbstractReviewServiceServices $abstractReviewServiceServices,
-        ConditionsUndertakingsReviewService $helper,
+        protected ConditionsUndertakingsReviewService $helper,
         Address $addressFormatter
     ) {
         parent::__construct($abstractReviewServiceServices, $addressFormatter);
-        $this->helper = $helper;
     }
 
     /**

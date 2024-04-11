@@ -59,30 +59,18 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
     protected FlashMessengerHelperService $flashMessengerHelper;
 
-    protected FormServiceManager $formServiceManager;
-
-    protected ScriptFactory $scriptFactory;
-
-    protected TableFactory $tableFactory;
-
-    protected StringHelperService $stringHelper;
-
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
         FlashMessengerHelperService $flashMessengerHelper,
-        FormServiceManager $formServiceManager,
-        ScriptFactory $scriptFactory,
-        StringHelperService $stringHelper,
-        TableFactory $tableFactory,
+        protected FormServiceManager $formServiceManager,
+        protected ScriptFactory $scriptFactory,
+        protected StringHelperService $stringHelper,
+        protected TableFactory $tableFactory,
         FormHelperService $formHelper
     ) {
         $this->flashMessengerHelper = $flashMessengerHelper;
-        $this->formServiceManager = $formServiceManager;
-        $this->scriptFactory = $scriptFactory;
         $this->formHelper = $formHelper;
-        $this->tableFactory = $tableFactory;
-        $this->stringHelper = $stringHelper;
 
         parent::__construct($niTextTranslationUtil, $authService);
     }

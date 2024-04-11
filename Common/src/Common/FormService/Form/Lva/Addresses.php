@@ -17,11 +17,8 @@ class Addresses
         RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
     ];
 
-    protected FormHelperService $formHelper;
-
-    public function __construct(FormHelperService $formHelper)
+    public function __construct(protected FormHelperService $formHelper)
     {
-        $this->formHelper = $formHelper;
     }
 
     /**

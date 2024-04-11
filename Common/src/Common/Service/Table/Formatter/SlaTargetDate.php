@@ -20,20 +20,8 @@ use Laminas\Router\Http\TreeRouteStack;
  */
 class SlaTargetDate implements FormatterPluginManagerInterface
 {
-    private TreeRouteStack $router;
-
-    private Request $request;
-
-    private UrlHelperService $urlHelper;
-
-    private Date $dateFormatter;
-
-    public function __construct(TreeRouteStack $router, Request $request, UrlHelperService $urlHelper, Date $dateFormatter)
+    public function __construct(private TreeRouteStack $router, private Request $request, private UrlHelperService $urlHelper, private Date $dateFormatter)
     {
-        $this->router = $router;
-        $this->request = $request;
-        $this->urlHelper = $urlHelper;
-        $this->dateFormatter = $dateFormatter;
     }
 
     /**

@@ -28,15 +28,9 @@ class LicenceChecklist
         'users'
     ];
 
-    private UrlHelperService $urlHelper;
 
-    protected FormHelperService $formHelper;
-
-
-    public function __construct(FormHelperService $formHelper, UrlHelperService $urlHelper)
+    public function __construct(protected FormHelperService $formHelper, private UrlHelperService $urlHelper)
     {
-        $this->formHelper = $formHelper;
-        $this->urlHelper = $urlHelper;
     }
 
     /**

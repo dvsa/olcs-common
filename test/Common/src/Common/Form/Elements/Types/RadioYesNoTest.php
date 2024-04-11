@@ -3,7 +3,6 @@
 namespace CommonTest\Form\Elements\Types;
 
 use Common\Form\Elements\Types\RadioYesNo;
-use DMS\PHPUnitExtensions\ArraySubset\Assert;
 
 /**
  * RadioYesNoTest
@@ -20,13 +19,24 @@ class RadioYesNoTest extends \PHPUnit\Framework\TestCase
         $this->sut = new RadioYesNo();
     }
 
-    public function testInit()
+    public function testInit(): void
     {
         $this->sut->init();
 
-        Assert::assertArraySubset(
-            ['Y' => ['label' => 'Yes', 'value' => 'Y'], 'N' => ['label' => 'No', 'value' => 'N']],
-            $this->sut->getValueOptions()
-        );
+        $subset = ['Y' => ['label' => 'Yes', 'value' => 'Y'], 'N' => ['label' => 'No', 'value' => 'N']];
+        $actual = $this->sut->getValueOptions();
+        $this->assertArraySubsetRecursive($subset, $actual);
+    }
+
+    private function assertArraySubsetRecursive($subset, $array): void
+    {
+        foreach ($subset as $key => $value) {
+            $this->assertArrayHasKey($key, $array);
+            if (is_array($value)) {
+                $this->assertArraySubsetRecursive($value, $array[$key]);
+            } else {
+                $this->assertEquals($value, $array[$key]);
+            }
+        }
     }
 }

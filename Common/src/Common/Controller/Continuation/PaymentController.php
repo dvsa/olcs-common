@@ -26,20 +26,14 @@ class PaymentController extends AbstractContinuationController
 
     protected $layout = 'pages/fees/pay-one';
 
-    protected UrlHelperService $urlHelper;
-
-    protected TableFactory $tableFactory;
-
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
         FormServiceManager $formServiceManager,
         TranslationHelperService $translationHelper,
-        UrlHelperService $urlHelper,
-        TableFactory $tableFactory
+        protected UrlHelperService $urlHelper,
+        protected TableFactory $tableFactory
     ) {
-        $this->urlHelper = $urlHelper;
-        $this->tableFactory = $tableFactory;
         parent::__construct($niTextTranslationUtil, $authService, $formServiceManager, $translationHelper);
     }
 

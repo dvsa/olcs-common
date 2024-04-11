@@ -44,14 +44,8 @@ class DataRetentionRecordLink implements FormatterPluginManagerInterface
         'colour' => 'green'
     ];
 
-    protected UrlHelperService $urlHelper;
-
-    protected HelperPluginManager $viewHelperManager;
-
-    public function __construct(UrlHelperService $urlHelper, HelperPluginManager $viewHelperManager)
+    public function __construct(protected UrlHelperService $urlHelper, protected HelperPluginManager $viewHelperManager)
     {
-        $this->urlHelper = $urlHelper;
-        $this->viewHelperManager = $viewHelperManager;
     }
 
     /**
@@ -66,75 +60,58 @@ class DataRetentionRecordLink implements FormatterPluginManagerInterface
     {
         $statusHelper = $this->viewHelperManager->get('status');
 
-        switch ($data['entityName']) {
-            case self::ENTITY_LICENCE:
-                $url = $this->urlHelper->fromRoute('licence', ['licence' => $data['entityPk']], [], true);
-                break;
-            case self::ENTITY_APPLICATION:
-                $url = $this->urlHelper->fromRoute('lva-application', ['application' => $data['entityPk']], [], true);
-                break;
-            case self::ENTITY_TRANSPORT_MANAGER:
-                $url = $this->urlHelper->fromRoute(
-                    'transport-manager',
-                    ['transportManager' => $data['entityPk']],
-                    [],
-                    true
-                );
-                break;
-            case self::ENTITY_IRFO_GV_PERMIT:
-                $url = $this->urlHelper->fromRoute(
-                    'operator/irfo/gv-permits',
-                    [
-                    'organisation' => $data['organisationId'],
-                    'action' => 'details',
-                    'id' => $data['entityPk']
-                    ],
-                    [],
-                    true
-                );
-                break;
-            case self::ENTITY_IRFO_PSV_AUTH:
-                $url = $this->urlHelper->fromRoute(
-                    'operator/irfo/psv-authorisations',
-                    [
-                    'organisation' => $data['organisationId'],
-                    'action' => 'edit',
-                    'id' => $data['entityPk']
-                    ],
-                    [],
-                    true
-                );
-                break;
-            case self::ENTITY_ORGANISATION:
-                $url = $this->urlHelper->fromRoute(
-                    'operator/business-details',
-                    ['organisation' => $data['organisationId']],
-                    [],
-                    true
-                );
-                break;
-            case self::ENTITY_CASES:
-                $url = $this->urlHelper->fromRoute(
-                    'case',
-                    ['action' => 'details', 'case' => $data['entityPk']],
-                    [],
-                    true
-                );
-                break;
-            case self::ENTITY_BUS_REG:
-                $url = $this->urlHelper->fromRoute(
-                    'licence/bus-details',
-                    [
-                    'licence' => $data['licenceId'],
-                    'busRegId' => $data['entityPk']
-                    ],
-                    [],
-                    true
-                );
-                break;
-            default:
-                $url = null;
-        }
+        $url = match ($data['entityName']) {
+            self::ENTITY_LICENCE => $this->urlHelper->fromRoute('licence', ['licence' => $data['entityPk']], [], true),
+            self::ENTITY_APPLICATION => $this->urlHelper->fromRoute('lva-application', ['application' => $data['entityPk']], [], true),
+            self::ENTITY_TRANSPORT_MANAGER => $this->urlHelper->fromRoute(
+                'transport-manager',
+                ['transportManager' => $data['entityPk']],
+                [],
+                true
+            ),
+            self::ENTITY_IRFO_GV_PERMIT => $this->urlHelper->fromRoute(
+                'operator/irfo/gv-permits',
+                [
+                'organisation' => $data['organisationId'],
+                'action' => 'details',
+                'id' => $data['entityPk']
+                ],
+                [],
+                true
+            ),
+            self::ENTITY_IRFO_PSV_AUTH => $this->urlHelper->fromRoute(
+                'operator/irfo/psv-authorisations',
+                [
+                'organisation' => $data['organisationId'],
+                'action' => 'edit',
+                'id' => $data['entityPk']
+                ],
+                [],
+                true
+            ),
+            self::ENTITY_ORGANISATION => $this->urlHelper->fromRoute(
+                'operator/business-details',
+                ['organisation' => $data['organisationId']],
+                [],
+                true
+            ),
+            self::ENTITY_CASES => $this->urlHelper->fromRoute(
+                'case',
+                ['action' => 'details', 'case' => $data['entityPk']],
+                [],
+                true
+            ),
+            self::ENTITY_BUS_REG => $this->urlHelper->fromRoute(
+                'licence/bus-details',
+                [
+                'licence' => $data['licenceId'],
+                'busRegId' => $data['entityPk']
+                ],
+                [],
+                true
+            ),
+            default => null,
+        };
 
         $output = self::getOutput(
             Escape::html($data['organisationId']),

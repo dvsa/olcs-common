@@ -15,14 +15,8 @@ class EbsrVariationNumber implements FormatterPluginManagerInterface
 {
     public const SN_TRANSLATION_KEY = 'ebsr-variation-short-notice';
 
-    private HelperPluginManager $viewHelperManager;
-
-    private TranslatorDelegator $translator;
-
-    public function __construct(HelperPluginManager $viewHelperManager, TranslatorDelegator $translator)
+    public function __construct(private HelperPluginManager $viewHelperManager, private TranslatorDelegator $translator)
     {
-        $this->viewHelperManager = $viewHelperManager;
-        $this->translator = $translator;
     }
 
     /**

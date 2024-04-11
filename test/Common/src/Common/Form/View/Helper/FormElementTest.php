@@ -39,7 +39,7 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
 
     private function prepareElement($type = 'Text', $options = []): void
     {
-        if (strpos($type, '\\') === false) {
+        if (!str_contains($type, '\\')) {
             $type = '\Laminas\Form\Element\\' . ucfirst($type);
         }
 

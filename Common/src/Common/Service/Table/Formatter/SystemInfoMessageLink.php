@@ -13,11 +13,8 @@ class SystemInfoMessageLink implements FormatterPluginManagerInterface
 {
     public const MAX_DESC_LEN = 50;
 
-    private UrlHelperService $urlHelper;
-
-    public function __construct(UrlHelperService $urlHelper)
+    public function __construct(private UrlHelperService $urlHelper)
     {
-        $this->urlHelper = $urlHelper;
     }
 
     /**

@@ -131,9 +131,8 @@ class FormErrors extends AbstractHelper
      * Format a message
      *
      * @param string $message
-     * @param mixed $messageKey
      */
-    protected function formatMessage(ElementInterface $element, $message, $messageKey): string
+    protected function formatMessage(ElementInterface $element, $message, mixed $messageKey): string
     {
         $elementShouldEscape = $element->getOption('shouldEscapeMessages');
         $shouldEscape = true;

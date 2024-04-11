@@ -15,29 +15,8 @@ use LmcRbacMvc\Service\AuthorizationService;
  */
 class VariationFinancialEvidence extends FinancialEvidence
 {
-    protected FormHelperService $formHelper;
-
-    protected AuthorizationService $authService;
-
-    protected UrlHelperService $urlHelper;
-
-    protected TranslationHelperService $translator;
-
-    protected ValidatorPluginManager $validatorPluginManager;
-
-
-    public function __construct(
-        FormHelperService $formHelper,
-        AuthorizationService $authService,
-        TranslationHelperService $translator,
-        UrlHelperService $urlHelper,
-        ValidatorPluginManager $validatorPluginManager
-    ) {
-        $this->formHelper = $formHelper;
-        $this->authService = $authService;
-        $this->urlHelper = $urlHelper;
-        $this->translator = $translator;
-        $this->validatorPluginManager = $validatorPluginManager;
+    public function __construct(protected FormHelperService $formHelper, protected AuthorizationService $authService, protected TranslationHelperService $translator, protected UrlHelperService $urlHelper, protected ValidatorPluginManager $validatorPluginManager)
+    {
     }
 
     protected function alterForm($form)

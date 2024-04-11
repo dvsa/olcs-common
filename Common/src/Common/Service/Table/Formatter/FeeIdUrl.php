@@ -19,17 +19,8 @@ use Laminas\Router\Http\TreeRouteStack;
  */
 class FeeIdUrl implements FormatterPluginManagerInterface
 {
-    private TreeRouteStack $router;
-
-    private Request $request;
-
-    private UrlHelperService $urlHelper;
-
-    public function __construct(TreeRouteStack $router, Request $request, UrlHelperService $urlHelper)
+    public function __construct(private TreeRouteStack $router, private Request $request, private UrlHelperService $urlHelper)
     {
-        $this->router = $router;
-        $this->request = $request;
-        $this->urlHelper = $urlHelper;
     }
 
     /**

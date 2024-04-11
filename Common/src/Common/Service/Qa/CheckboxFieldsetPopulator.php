@@ -6,24 +6,14 @@ use Laminas\Form\Fieldset;
 
 class CheckboxFieldsetPopulator implements FieldsetPopulatorInterface
 {
-    /** @var CheckboxFactory */
-    private $checkboxFactory;
-
-    /** @var TranslateableTextHandler */
-    private $translateableTextHandler;
-
     /**
      * Create service instance
      *
      *
      * @return CheckboxFieldsetPopulator
      */
-    public function __construct(
-        CheckboxFactory $checkboxFactory,
-        TranslateableTextHandler $translateableTextHandler
-    ) {
-        $this->checkboxFactory = $checkboxFactory;
-        $this->translateableTextHandler = $translateableTextHandler;
+    public function __construct(private CheckboxFactory $checkboxFactory, private TranslateableTextHandler $translateableTextHandler)
+    {
     }
 
     /**

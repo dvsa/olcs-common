@@ -17,14 +17,8 @@ use Common\Util\Escape;
  */
 class InternalLicencePermitReference implements FormatterPluginManagerInterface
 {
-    private UrlHelperService $urlHelper;
-
-    private Permission $permissionService;
-
-    public function __construct(UrlHelperService $urlHelper, Permission $permissionService)
+    public function __construct(private UrlHelperService $urlHelper, private Permission $permissionService)
     {
-        $this->urlHelper = $urlHelper;
-        $this->permissionService = $permissionService;
     }
 
     /**

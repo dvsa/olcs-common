@@ -11,14 +11,8 @@ use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
  */
 class IrhpPermitTypeWithValidityDate implements FormatterPluginManagerInterface
 {
-    private Date $dateFormatter;
-
-    private TranslatorDelegator $translator;
-
-    public function __construct(Date $dateFormatter, TranslatorDelegator $translator)
+    public function __construct(private Date $dateFormatter, private TranslatorDelegator $translator)
     {
-        $this->dateFormatter = $dateFormatter;
-        $this->translator = $translator;
     }
 
     /**
@@ -45,13 +39,10 @@ class IrhpPermitTypeWithValidityDate implements FormatterPluginManagerInterface
         }
 
         if ($data['typeId'] == RefData::ECMT_SHORT_TERM_PERMIT_TYPE_ID && !empty($data['stockValidTo'])) {
-            switch (date('Y', strtotime($data['stockValidTo']))) {
-                case '2019':
-                    $value = sprintf('%s %s', $value, '2019');
-                    break;
-                default:
-                    $value = sprintf('%s %s', $value, $this->translator->translate($data['periodNameKey']));
-            }
+            $value = match (date('Y', strtotime($data['stockValidTo']))) {
+                '2019' => sprintf('%s %s', $value, '2019'),
+                default => sprintf('%s %s', $value, $this->translator->translate($data['periodNameKey'])),
+            };
         }
 
         return Escape::html($value);

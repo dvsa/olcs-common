@@ -87,7 +87,7 @@ abstract class AbstractDataService
      *
      * @return $this
      */
-    public function setData($key, $data)
+    public function setData($key, mixed $data)
     {
         $this->data[$key] = $data;
 

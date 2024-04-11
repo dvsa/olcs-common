@@ -44,29 +44,14 @@ class Search extends AbstractData
      */
     protected $request;
 
-    /** @var TableFactory */
-    private $tableService;
-
-    /** @var ViewHelperManager */
-    private $viewHelperManager;
-
-    /** @var SearchTypeManager */
-    private $searchTypeManager;
-
     /**
      * Create service instance
      *
      *
      * @return Search
      */
-    public function __construct(
-        TableFactory $tableService,
-        ViewHelperManager $viewHelperManager,
-        SearchTypeManager $searchTypeManager
-    ) {
-        $this->tableService = $tableService;
-        $this->viewHelperManager = $viewHelperManager;
-        $this->searchTypeManager = $searchTypeManager;
+    public function __construct(private TableFactory $tableService, private ViewHelperManager $viewHelperManager, private SearchTypeManager $searchTypeManager)
+    {
     }
 
     /**
@@ -85,10 +70,9 @@ class Search extends AbstractData
     }
 
     /**
-     * @param mixed $index
      * @return $this
      */
-    public function setIndex($index)
+    public function setIndex(mixed $index)
     {
         $this->index = $index;
         return $this;
@@ -103,10 +87,9 @@ class Search extends AbstractData
     }
 
     /**
-     * @param mixed $search
      * @return $this
      */
-    public function setSearch($search)
+    public function setSearch(mixed $search)
     {
         $this->search = $search;
         return $this;

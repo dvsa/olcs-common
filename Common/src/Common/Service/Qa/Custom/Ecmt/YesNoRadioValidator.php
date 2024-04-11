@@ -6,9 +6,6 @@ use Laminas\Validator\AbstractValidator;
 
 class YesNoRadioValidator extends AbstractValidator
 {
-    /** @var RestrictedCountriesMultiCheckbox */
-    private $yesContentElement;
-
     /**
      * Create service instance
      *
@@ -16,9 +13,8 @@ class YesNoRadioValidator extends AbstractValidator
      *
      * @return YesNoRadioValidator
      */
-    public function __construct($yesContentElement)
+    public function __construct(private $yesContentElement)
     {
-        $this->yesContentElement = $yesContentElement;
     }
 
     /**

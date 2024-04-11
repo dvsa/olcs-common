@@ -20,15 +20,12 @@ class VariationSoleTrader extends AbstractSoleTrader
 
     protected PeopleLvaService $peopleLvaService;
 
-    protected FormServiceManager $formServiceLocator;
-
     public function __construct(
         FormHelperService $formHelper,
         AuthorizationService $authService,
         PeopleLvaService $peopleLvaService,
-        FormServiceManager $formServiceLocator
+        protected FormServiceManager $formServiceLocator
     ) {
-        $this->formServiceLocator = $formServiceLocator;
         parent::__construct($formHelper, $authService, $peopleLvaService);
     }
 

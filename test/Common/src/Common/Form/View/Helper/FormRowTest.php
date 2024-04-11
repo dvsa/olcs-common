@@ -615,7 +615,7 @@ class FormRowTest extends MockeryTestCase
      */
     private function setUpElement($type = 'Text', $options = [], $attributes = ['class' => 'class'])
     {
-        if (strpos($type, '\\') === false) {
+        if (!str_contains($type, '\\')) {
             $type = '\Laminas\Form\Element\\' . ucfirst($type);
         }
 

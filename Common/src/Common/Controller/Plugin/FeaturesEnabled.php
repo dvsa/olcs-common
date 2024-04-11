@@ -12,14 +12,8 @@ use Laminas\Mvc\MvcEvent;
  */
 class FeaturesEnabled extends AbstractPlugin
 {
-    /**
-     * @var QuerySender
-     */
-    private $querySender;
-
-    public function __construct(QuerySender $sender)
+    public function __construct(private QuerySender $querySender)
     {
-        $this->querySender = $sender;
     }
 
 

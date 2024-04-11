@@ -13,11 +13,8 @@ use Laminas\Form\FormInterface;
  */
 class GoodsVehiclesVehicle
 {
-    protected VehicleDiscNo $vehicleDiscNo;
-
-    public function __construct(VehicleDiscNo $vehicleDiscNo)
+    public function __construct(protected VehicleDiscNo $vehicleDiscNo)
     {
-        $this->vehicleDiscNo = $vehicleDiscNo;
     }
 
     /**

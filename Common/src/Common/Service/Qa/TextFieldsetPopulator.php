@@ -6,24 +6,14 @@ use Laminas\Form\Fieldset;
 
 class TextFieldsetPopulator implements FieldsetPopulatorInterface
 {
-    /** @var TextFactory */
-    private $textFactory;
-
-    /** @var TranslateableTextHandler */
-    private $translateableTextHandler;
-
     /**
      * Create service instance
      *
      *
      * @return TextFieldsetPopulator
      */
-    public function __construct(
-        TextFactory $textFactory,
-        TranslateableTextHandler $translateableTextHandler
-    ) {
-        $this->textFactory = $textFactory;
-        $this->translateableTextHandler = $translateableTextHandler;
+    public function __construct(private TextFactory $textFactory, private TranslateableTextHandler $translateableTextHandler)
+    {
     }
 
     /**

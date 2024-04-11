@@ -36,10 +36,8 @@ class DateSelect extends LaminasDateSelect
 
     /**
      * Call setValue from parent class (to facilitate unit testing)
-     *
-     * @param mixed $value
      */
-    protected function callParentSetValue($value)
+    protected function callParentSetValue(mixed $value)
     {
         parent::setValue($value);
     }

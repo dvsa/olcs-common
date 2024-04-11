@@ -14,11 +14,8 @@ use Common\Service\Helper\FormHelperService;
  */
 abstract class AbstractBusinessDetails
 {
-    protected FormHelperService $formHelper;
-
-    public function __construct(FormHelperService $formHelper)
+    public function __construct(protected FormHelperService $formHelper)
     {
-        $this->formHelper = $formHelper;
     }
 
     public function getForm($orgType, $hasInforceLicences, bool $hasOrganisationSubmittedLicenceApplication)

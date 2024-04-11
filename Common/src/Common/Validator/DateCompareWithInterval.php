@@ -127,7 +127,7 @@ class DateCompareWithInterval extends DateCompare
                 } else {
                     $compareDateValue->add($dv);
                 }
-            } catch (\Exception $e) {
+            } catch (\Exception) {
                 $this->error(self::INVALID_INTERVAL); //@TO~DO~
                 return false;
             }

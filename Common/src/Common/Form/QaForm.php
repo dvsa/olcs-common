@@ -36,10 +36,8 @@ class QaForm extends BaseQaForm
 
     /**
      * Prepare form for redisplay by calling any required dataHandler instances appropriate to the form control type
-     *
-     * @param mixed $data
      */
-    public function setDataForRedisplay($data): void
+    public function setDataForRedisplay(mixed $data): void
     {
         $this->setData($data);
 
@@ -172,10 +170,8 @@ class QaForm extends BaseQaForm
 
     /**
      * Call the setData function of the parent class (to assist in unit testing)
-     *
-     * @param mixed $data
      */
-    protected function callParentSetData($data)
+    protected function callParentSetData(mixed $data)
     {
         return parent::setData($data);
     }

@@ -19,17 +19,8 @@ use Laminas\Router\Http\TreeRouteStack;
  */
 class InspectionRequestId implements FormatterPluginManagerInterface
 {
-    private UrlHelperService $urlHelper;
-
-    private TreeRouteStack $router;
-
-    private Request $request;
-
-    public function __construct(UrlHelperService $urlHelper, TreeRouteStack $router, Request $request)
+    public function __construct(private UrlHelperService $urlHelper, private TreeRouteStack $router, private Request $request)
     {
-        $this->urlHelper = $urlHelper;
-        $this->router = $router;
-        $this->request = $request;
     }
 
     /**
@@ -46,7 +37,7 @@ class InspectionRequestId implements FormatterPluginManagerInterface
         $routeMatch = $this->router->match($this->request);
         $matchedRouteName = $routeMatch->getMatchedRouteName();
 
-        if (substr($matchedRouteName, 0, 7) === 'licence') {
+        if (str_starts_with($matchedRouteName, 'licence')) {
             // licence inspection request
             $url = $this->urlHelper->fromRoute(
                 'licence/processing/inspection-request',

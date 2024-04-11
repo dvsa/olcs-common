@@ -19,11 +19,8 @@ use Common\Preference\Language;
  */
 class LanguageLink extends AbstractHelper
 {
-    private Language $languagePref;
-
-    public function __construct(Language $languagePref)
+    public function __construct(private Language $languagePref)
     {
-        $this->languagePref = $languagePref;
     }
 
     public function __invoke()

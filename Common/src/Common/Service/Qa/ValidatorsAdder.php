@@ -8,10 +8,8 @@ class ValidatorsAdder
 {
     /**
      * Add validators for a single fieldset to the specified form using the supplied array representation
-     *
-     * @param mixed $form
      */
-    public function add($form, array $options): void
+    public function add(mixed $form, array $options): void
     {
         $validators = $options['validators'];
 

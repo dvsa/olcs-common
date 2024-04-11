@@ -101,16 +101,12 @@ class BusRegSearchViewListDataService extends AbstractDataService implements Lis
      */
     private function getValueField($context)
     {
-        switch ($context) {
-            case 'licence':
-                return 'licNo';
-            case 'organisation':
-                return 'organisationName';
-            case 'busRegStatus':
-                return 'busRegStatusDesc';
-            default:
-                throw new DataServiceException('Invalid context value used in data service');
-        }
+        return match ($context) {
+            'licence' => 'licNo',
+            'organisation' => 'organisationName',
+            'busRegStatus' => 'busRegStatusDesc',
+            default => throw new DataServiceException('Invalid context value used in data service'),
+        };
     }
 
     /**
@@ -123,15 +119,11 @@ class BusRegSearchViewListDataService extends AbstractDataService implements Lis
      */
     private function getKeyField($context)
     {
-        switch ($context) {
-            case 'licence':
-                return 'licId';
-            case 'organisation':
-                return 'organisationId';
-            case 'busRegStatus':
-                return 'busRegStatus';
-            default:
-                throw new DataServiceException('Invalid context key used in data service');
-        }
+        return match ($context) {
+            'licence' => 'licId',
+            'organisation' => 'organisationId',
+            'busRegStatus' => 'busRegStatus',
+            default => throw new DataServiceException('Invalid context key used in data service'),
+        };
     }
 }

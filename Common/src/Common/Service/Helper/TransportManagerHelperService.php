@@ -23,37 +23,17 @@ class TransportManagerHelperService
     /** @var QueryService */
     protected $queryService;
 
-    /** @var FormHelperService */
-    private $formHelper;
-
-    /** @var DateHelperService */
-    private $dateHelper;
-
-    /** @var TranslationHelperService */
-    private $translationHelper;
-
-    /** @var UrlHelperService */
-    private $urlHelper;
-
-    /** @var TableFactory */
-    private $tableService;
-
     public function __construct(
         TransferAnnotationBuilder $transferAnnotationBuilder,
         QueryService $queryService,
-        FormHelperService $formHelper,
-        DateHelperService $dateHelper,
-        TranslationHelperService $translationHelper,
-        UrlHelperService $urlHelper,
-        TableFactory $tableService
+        private FormHelperService $formHelper,
+        private DateHelperService $dateHelper,
+        private TranslationHelperService $translationHelper,
+        private UrlHelperService $urlHelper,
+        private TableFactory $tableService
     ) {
         $this->transferAnnotationBuilder = $transferAnnotationBuilder;
         $this->queryService = $queryService;
-        $this->formHelper = $formHelper;
-        $this->dateHelper = $dateHelper;
-        $this->translationHelper = $translationHelper;
-        $this->urlHelper = $urlHelper;
-        $this->tableService = $tableService;
     }
 
     public function getCertificateFileData($tmId, $file)
@@ -114,7 +94,7 @@ class TransportManagerHelperService
         $response = $this->queryService->send($this->transferAnnotationBuilder->createQuery($dto));
 
         if (!$response->isOk()) {
-            throw new \RuntimeException('Error fetching query ' . get_class($dto));
+            throw new \RuntimeException('Error fetching query ' . $dto::class);
         }
 
         return $response->getResult();

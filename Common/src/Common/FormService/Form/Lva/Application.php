@@ -12,14 +12,8 @@ use LmcRbacMvc\Service\AuthorizationService;
  */
 class Application extends AbstractLvaFormService
 {
-    protected FormHelperService $formHelper;
-
-    protected AuthorizationService $authService;
-
-    public function __construct(FormHelperService $formHelper, AuthorizationService $authService)
+    public function __construct(protected FormHelperService $formHelper, protected AuthorizationService $authService)
     {
-        $this->formHelper = $formHelper;
-        $this->authService = $authService;
     }
 
     public function alterForm($form): void

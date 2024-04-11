@@ -14,11 +14,8 @@ use Laminas\I18n\View\Helper\Translate;
  */
 class Date extends AbstractHelper
 {
-    private Translate $translator;
-
-    public function __construct(Translate $translator)
+    public function __construct(private Translate $translator)
     {
-        $this->translator = $translator;
     }
 
     /**

@@ -17,25 +17,13 @@ use LmcRbacMvc\Service\AuthorizationService;
  */
 class VariationOperatingCentres extends AbstractOperatingCentres
 {
-    protected AuthorizationService $authService;
-
-    protected $tableBuilder;
-
-    protected FormServiceManager $formServiceLocator;
-
-    private TranslationHelperService $translator;
-
     public function __construct(
         FormHelperService $formHelper,
-        AuthorizationService $authService,
-        $tableBuilder,
-        FormServiceManager $formServiceLocator,
-        TranslationHelperService $translator
+        protected AuthorizationService $authService,
+        protected $tableBuilder,
+        protected FormServiceManager $formServiceLocator,
+        private TranslationHelperService $translator
     ) {
-        $this->authService = $authService;
-        $this->tableBuilder = $tableBuilder;
-        $this->formServiceLocator = $formServiceLocator;
-        $this->translator = $translator;
         parent::__construct($formHelper);
     }
 

@@ -22,24 +22,8 @@ class Declaration
     /** @var array */
     private $continuationDetailData = [];
 
-    private TranslationHelperService $translator;
-
-    private ScriptFactory $scriptFactory;
-
-    private UrlHelperService $urlHelper;
-
-    protected FormHelperService $formHelper;
-
-    public function __construct(
-        FormHelperService $formHelper,
-        TranslationHelperService $translator,
-        ScriptFactory $scriptFactory,
-        UrlHelperService $urlHelper
-    ) {
-        $this->formHelper = $formHelper;
-        $this->translator = $translator;
-        $this->scriptFactory = $scriptFactory;
-        $this->urlHelper = $urlHelper;
+    public function __construct(protected FormHelperService $formHelper, private TranslationHelperService $translator, private ScriptFactory $scriptFactory, private UrlHelperService $urlHelper)
+    {
     }
 
     /**

@@ -15,11 +15,8 @@ namespace Common\Service\Table\Formatter;
  */
 class FeeNoAndStatus implements FormatterPluginManagerInterface
 {
-    private FeeStatus $feeStatusFormatter;
-
-    public function __construct(FeeStatus $feeStatusFormatter)
+    public function __construct(private FeeStatus $feeStatusFormatter)
     {
-        $this->feeStatusFormatter = $feeStatusFormatter;
     }
 
     /**

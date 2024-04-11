@@ -27,7 +27,7 @@ class FormatterPluginManager extends PluginManager
         if (!($plugin instanceof $this->instanceOf)) {
             throw new InvalidServiceException(sprintf(
                 'Plugin of type %s is invalid; must implement %s',
-                (is_object($plugin) ? get_class($plugin) : gettype($plugin)),
+                (get_debug_type($plugin)),
                 $this->instanceOf
             ));
         }

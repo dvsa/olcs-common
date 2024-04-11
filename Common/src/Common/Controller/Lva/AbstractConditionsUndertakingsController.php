@@ -22,13 +22,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
 
     protected FlashMessengerHelperService $flashMessengerHelper;
 
-    protected FormServiceManager $formServiceManager;
-
     protected ScriptFactory $scriptFactory;
-
-    protected TableFactory $tableFactory;
-
-    protected $lvaAdapter;
     /**
      * @param $lvaAdapter
      */
@@ -37,15 +31,12 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
         AuthorizationService $authService,
         FormHelperService $formHelper,
         FlashMessengerHelperService $flashMessengerHelper,
-        FormServiceManager $formServiceManager,
-        TableFactory $tableFactory,
-        $lvaAdapter
+        protected FormServiceManager $formServiceManager,
+        protected TableFactory $tableFactory,
+        protected $lvaAdapter
     ) {
         $this->formHelper = $formHelper;
         $this->flashMessengerHelper = $flashMessengerHelper;
-        $this->formServiceManager = $formServiceManager;
-        $this->tableFactory = $tableFactory;
-        $this->lvaAdapter = $lvaAdapter;
 
         parent::__construct($niTextTranslationUtil, $authService);
     }

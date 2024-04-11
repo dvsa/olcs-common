@@ -102,7 +102,7 @@ class DateTimeSelect extends LaminasElement\DateTimeSelect
             if (is_string($value)) {
                 try {
                     $value = new \DateTime($value);
-                } catch (\Exception $e) {
+                } catch (\Exception) {
                     throw new InvalidArgumentException('Value should be a parsable string or an instance of \DateTime');
                 }
             }

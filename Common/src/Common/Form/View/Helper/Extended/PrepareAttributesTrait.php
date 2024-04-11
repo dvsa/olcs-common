@@ -31,8 +31,8 @@ trait PrepareAttributesTrait
             $attribute = strtolower($key);
 
             if (
-                0 === strpos($attribute, 'aria-')
-                || 0 === strpos($attribute, 'x-')
+                str_starts_with($attribute, 'aria-')
+                || str_starts_with($attribute, 'x-')
             ) {
                 $this->translatableAttributes += [$attribute => true];
             }
@@ -40,9 +40,9 @@ trait PrepareAttributesTrait
             if (
                 !isset($this->validGlobalAttributes[$attribute])
                 && !isset($this->validTagAttributes[$attribute])
-                && 'data-' != substr($attribute, 0, 5)
-                && 'aria-' != substr($attribute, 0, 5)
-                && 'x-' != substr($attribute, 0, 2)
+                && !str_starts_with($attribute, 'data-')
+                && !str_starts_with($attribute, 'aria-')
+                && !str_starts_with($attribute, 'x-')
             ) {
                 // Invalid attribute for the current tag
                 unset($attributes[$key]);

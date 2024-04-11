@@ -17,11 +17,8 @@ use Common\Service\Table\TableBuilder;
  */
 class TaskCheckbox implements FormatterPluginManagerInterface
 {
-    private TableBuilder $tableBuilder;
-
-    public function __construct(TableBuilder $tableBuilder)
+    public function __construct(private TableBuilder $tableBuilder)
     {
-        $this->tableBuilder = $tableBuilder;
     }
 
     /**

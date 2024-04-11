@@ -17,11 +17,8 @@ class EbsrDocumentLink implements FormatterPluginManagerInterface
 
     public const URL_ACTION = 'detail';
 
-    private UrlHelperService $urlHelper;
-
-    public function __construct(UrlHelperService $urlHelper)
+    public function __construct(private UrlHelperService $urlHelper)
     {
-        $this->urlHelper = $urlHelper;
     }
 
     /**

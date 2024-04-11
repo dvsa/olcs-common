@@ -13,11 +13,8 @@ use Common\Util\Escape;
  */
 class SearchAddressComplaint implements FormatterPluginManagerInterface
 {
-    protected UrlHelperService $urlHelper;
-
-    public function __construct(UrlHelperService $urlHelper)
+    public function __construct(protected UrlHelperService $urlHelper)
     {
-        $this->urlHelper = $urlHelper;
     }
 
     /**

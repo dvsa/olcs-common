@@ -19,17 +19,8 @@ use Laminas\Mvc\Application;
  */
 class TmApplicationManagerType implements FormatterPluginManagerInterface
 {
-    private Application $application;
-
-    private UrlHelperService $urlHelper;
-
-    private TranslatorDelegator $translator;
-
-    public function __construct(Application $application, UrlHelperService $urlHelper, TranslatorDelegator $translator)
+    public function __construct(private Application $application, private UrlHelperService $urlHelper, private TranslatorDelegator $translator)
     {
-        $this->application = $application;
-        $this->urlHelper = $urlHelper;
-        $this->translator = $translator;
     }
 
     /**
@@ -50,19 +41,12 @@ class TmApplicationManagerType implements FormatterPluginManagerInterface
                 ->getParam('transportManager')
         ];
         $url = $this->urlHelper->fromRoute(null, $routeParams);
-        switch ($row['action']) {
-            case 'A':
-                $status = $this->translator->translate('tm_application.table.status.new');
-                break;
-            case 'U':
-                $status = $this->translator->translate('tm_application.table.status.updated');
-                break;
-            case 'D':
-                $status = $this->translator->translate('tm_application.table.status.removed');
-                break;
-            default:
-                $status = '';
-        }
+        $status = match ($row['action']) {
+            'A' => $this->translator->translate('tm_application.table.status.new'),
+            'U' => $this->translator->translate('tm_application.table.status.updated'),
+            'D' => $this->translator->translate('tm_application.table.status.removed'),
+            default => '',
+        };
 
         return $row['action'] === 'D' ? trim($row['tmType']['description']  . ' ' . $status) :
             '<a class="govuk-link" href="' . $url . '">' . trim($row['tmType']['description']  . ' ' . $status) . '</a>';

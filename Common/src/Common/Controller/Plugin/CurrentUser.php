@@ -12,18 +12,12 @@ use LmcRbacMvc\Service\AuthorizationServiceInterface;
 class CurrentUser extends AbstractPlugin implements CurrentUserInterface
 {
     /**
-     * @var \LmcRbacMvc\Service\AuthorizationService
-     */
-    private $authService;
-
-    /**
      * Constructor
      *
      * @param AuthorizationServiceInterface $authService Auth service
      */
-    public function __construct(AuthorizationServiceInterface $authService)
+    public function __construct(private AuthorizationServiceInterface $authService)
     {
-        $this->authService = $authService;
     }
 
     /**

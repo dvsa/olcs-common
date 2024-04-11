@@ -7,13 +7,10 @@ use Laminas\View\HelperPluginManager;
 
 class BusRegStatus implements FormatterPluginManagerInterface
 {
-    protected TranslatorDelegator $translator;
-
     protected $viewHelperManager;
 
-    public function __construct(TranslatorDelegator $translator, HelperPluginManager $viewHelperManager)
+    public function __construct(protected TranslatorDelegator $translator, HelperPluginManager $viewHelperManager)
     {
-        $this->translator = $translator;
         $this->viewHelperManager = $viewHelperManager;
     }
 

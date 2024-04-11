@@ -299,13 +299,6 @@ class Repo
     private $version;
 
     /**
-     * The script runner
-     *
-     * @var object
-     */
-    private $runner;
-
-    /**
      * The repo location
      *
      * @var string
@@ -332,10 +325,11 @@ class Repo
      * @param string $location
      * @param object $runner
      */
-    public function __construct($location, $runner)
+    public function __construct($location, /**
+     * The script runner
+     */
+    private $runner)
     {
-        $this->runner = $runner;
-
         $this->location = realpath($location);
 
         $parts = explode('/', $this->location);
@@ -479,7 +473,7 @@ class Repo
      */
     public function pullDevelop(): void
     {
-        if (strstr($this->getStatus(), "Your branch is up-to-date with 'origin/develop'") === '' || strstr($this->getStatus(), "Your branch is up-to-date with 'origin/develop'") === '0' || strstr($this->getStatus(), "Your branch is up-to-date with 'origin/develop'") === false) {
+        if (strstr($this->getStatus(), "Your branch is up-to-date with 'origin/develop'") === '' || strstr($this->getStatus(), "Your branch is up-to-date with 'origin/develop'") === '0' || !str_contains($this->getStatus(), "Your branch is up-to-date with 'origin/develop'")) {
             $this->output('Pulling latest develop');
             shell_exec('cd ' . $this->getLocation() . ' && git pull origin develop');
             $this->loadStatus();
@@ -518,7 +512,7 @@ class Repo
      */
     public function hasUncommittedChanges()
     {
-        return strstr($this->getStatus(), 'nothing to commit') === '' || strstr($this->getStatus(), 'nothing to commit') === '0' || strstr($this->getStatus(), 'nothing to commit') === false;
+        return strstr($this->getStatus(), 'nothing to commit') === '' || strstr($this->getStatus(), 'nothing to commit') === '0' || !str_contains($this->getStatus(), 'nothing to commit');
     }
 
     /**

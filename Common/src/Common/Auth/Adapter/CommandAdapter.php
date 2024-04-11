@@ -16,11 +16,6 @@ use Laminas\Authentication\Result;
 class CommandAdapter extends AbstractAdapter
 {
     /**
-     * @var CommandSender
-     */
-    private $commandSender;
-
-    /**
      * This adapter is extended in selfserve/internal and realm is set accordingly
      *
      * @var string|null
@@ -31,9 +26,8 @@ class CommandAdapter extends AbstractAdapter
      * CognitoAdapter constructor.
      * @param $client
      */
-    public function __construct(CommandSender $commandSender)
+    public function __construct(private CommandSender $commandSender)
     {
-        $this->commandSender = $commandSender;
     }
 
     public function authenticate()

@@ -15,18 +15,12 @@ class Responsibilities extends AbstractSection implements TransportManagerSectio
 
     private $ownerTm;
 
-    /**
-     * @param mixed $ownerTm
-     */
-    public function setOwnerTm($ownerTm): void
+    public function setOwnerTm(mixed $ownerTm): void
     {
         $this->ownerTm = $ownerTm;
     }
 
-    /**
-     * @param mixed $typeOfTransportManager
-     */
-    public function setTypeOfTransportManager($typeOfTransportManager): void
+    public function setTypeOfTransportManager(mixed $typeOfTransportManager): void
     {
         $this->typeOfTransportManager = $typeOfTransportManager;
     }

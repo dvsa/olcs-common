@@ -9,22 +9,14 @@ use Laminas\Form\Fieldset;
 
 class SectorsFieldsetPopulator implements FieldsetPopulatorInterface
 {
-    /** @var TranslationHelperService */
-    private $translator;
-
-    /** @var RadioFieldsetPopulator */
-    private $radioFieldsetPopulator;
-
     /**
      * Create service instance
      *
      *
      * @return SectorsFieldsetPopulator
      */
-    public function __construct(TranslationHelperService $translator, RadioFieldsetPopulator $radioFieldsetPopulator)
+    public function __construct(private TranslationHelperService $translator, private RadioFieldsetPopulator $radioFieldsetPopulator)
     {
-        $this->translator = $translator;
-        $this->radioFieldsetPopulator = $radioFieldsetPopulator;
     }
 
     /**

@@ -15,12 +15,9 @@ namespace Common\Exception;
  */
 class BailOutException extends \Exception
 {
-    protected $response;
-
-    public function __construct($message, $response)
+    public function __construct($message, protected $response)
     {
         $this->message = $message;
-        $this->response = $response;
     }
 
     /**

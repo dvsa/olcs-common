@@ -4,18 +4,14 @@ namespace Common\Service\Qa\Custom\Bilateral;
 
 class StandardYesNoValueOptionsGenerator
 {
-    /** @var YesNoValueOptionsGenerator */
-    private $yesNoValueOptionsGenerator;
-
     /**
      * Create service instance
      *
      *
      * @return StandardYesNoValueOptionsGenerator
      */
-    public function __construct(YesNoValueOptionsGenerator $yesNoValueOptionsGenerator)
+    public function __construct(private YesNoValueOptionsGenerator $yesNoValueOptionsGenerator)
     {
-        $this->yesNoValueOptionsGenerator = $yesNoValueOptionsGenerator;
     }
 
     /**

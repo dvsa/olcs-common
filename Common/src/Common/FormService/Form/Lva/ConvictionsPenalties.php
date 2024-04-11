@@ -15,20 +15,8 @@ use Dvsa\Olcs\Api\Entity\Licence;
  */
 class ConvictionsPenalties
 {
-    protected TranslationHelperService $translator;
-
-    protected UrlHelperService $urlHelper;
-
-    protected FormHelperService $formHelper;
-
-    public function __construct(
-        FormHelperService $formHelper,
-        TranslationHelperService $translator,
-        UrlHelperService $urlHelper
-    ) {
-        $this->formHelper = $formHelper;
-        $this->translator = $translator;
-        $this->urlHelper = $urlHelper;
+    public function __construct(protected FormHelperService $formHelper, protected TranslationHelperService $translator, protected UrlHelperService $urlHelper)
+    {
     }
 
     /**

@@ -139,12 +139,11 @@ class FormWithCsrfTraitTest extends MockeryTestCase
     }
 
     /**
-     * @param mixed $value
      * @test
      * @depends getCsrfInputReturnsInstanceOfInput
      * @dataProvider csrfInvalidValueDataProvider
      */
-    public function getCsrfInputReturnsInstanceOfInputThatRejectsAnInvalidValue($value): void
+    public function getCsrfInputReturnsInstanceOfInputThatRejectsAnInvalidValue(mixed $value): void
     {
         // Setup
         $this->setUpSut();

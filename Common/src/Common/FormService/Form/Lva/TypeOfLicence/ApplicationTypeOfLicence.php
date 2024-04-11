@@ -12,17 +12,8 @@ use Laminas\Form\Form;
  */
 class ApplicationTypeOfLicence extends AbstractTypeOfLicence
 {
-    protected FormHelperService $formHelper;
-
-    protected Permission $permissionService;
-
-    protected FormServiceManager $formServiceLocator;
-
-    public function __construct(FormHelperService $formHelper, Permission $permissionService, FormServiceManager $formServiceLocator)
+    public function __construct(protected FormHelperService $formHelper, protected Permission $permissionService, protected FormServiceManager $formServiceLocator)
     {
-        $this->formHelper = $formHelper;
-        $this->permissionService = $permissionService;
-        $this->formServiceLocator = $formServiceLocator;
     }
 
     protected function alterForm(Form $form, $params = [])

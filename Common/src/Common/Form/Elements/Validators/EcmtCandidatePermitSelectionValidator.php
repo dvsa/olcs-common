@@ -9,15 +9,13 @@ class EcmtCandidatePermitSelectionValidator
     /**
      * Verify that at least one checkbox has been ticked amongst all candidate permit checkboxes
      *
-     * @param mixed $value
      * @param array $context
-     *
      * @return bool
      */
-    public static function validate($value, $context)
+    public static function validate(mixed $value, $context)
     {
         foreach ($context as $name => $value) {
-            if (strpos($name, self::CANDIDATE_VALUE_PREFIX) !== 0) {
+            if (!str_starts_with($name, self::CANDIDATE_VALUE_PREFIX)) {
                 continue;
             }
             if ($value != '1') {

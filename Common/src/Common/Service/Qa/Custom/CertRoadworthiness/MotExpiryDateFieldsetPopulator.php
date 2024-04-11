@@ -13,15 +13,6 @@ class MotExpiryDateFieldsetPopulator implements FieldsetPopulatorInterface
 {
     public const UPLOAD_HINT_PRIORITY = 100;
 
-    /** @var TranslationHelperService */
-    private $translator;
-
-    /** @var HtmlAdder */
-    private $htmlAdder;
-
-    /** @var FileUploadFieldsetGenerator */
-    private $fileUploadFieldsetGenerator;
-
     /**
      * Create service instance
      *
@@ -29,14 +20,8 @@ class MotExpiryDateFieldsetPopulator implements FieldsetPopulatorInterface
      *
      * @return MotExpiryDateFieldsetPopulator
      */
-    public function __construct(
-        TranslationHelperService $translator,
-        HtmlAdder $htmlAdder,
-        FileUploadFieldsetGenerator $fileUploadFieldsetGenerator
-    ) {
-        $this->translator = $translator;
-        $this->htmlAdder = $htmlAdder;
-        $this->fileUploadFieldsetGenerator = $fileUploadFieldsetGenerator;
+    public function __construct(private TranslationHelperService $translator, private HtmlAdder $htmlAdder, private FileUploadFieldsetGenerator $fileUploadFieldsetGenerator)
+    {
     }
 
     /**

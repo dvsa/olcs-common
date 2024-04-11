@@ -18,7 +18,7 @@ use LmcRbacMvc\Service\AuthorizationService;
  * @author Rob Caiger <rob@clocal.co.uk>
  * @author Jakub Igla <jakub.igla@valtech.co.uk>
  */
-class TableBuilder
+class TableBuilder implements \Stringable
 {
     public const TYPE_DEFAULT = 1;
 
@@ -78,13 +78,6 @@ class TableBuilder
      * @var string
      */
     private $contentType = self::CONTENT_TYPE_HTML;
-
-    /**
-     * Inject the application config from Laminas
-     *
-     * @var array
-     */
-    private $applicationConfig = [];
 
     /**
      * Table settings
@@ -219,18 +212,6 @@ class TableBuilder
      */
     private $isDisabled = false;
 
-    private ContainerInterface $serviceLocator;
-
-    /**
-     * @var Translator
-     */
-    private $translator;
-
-    /**
-     * @var UrlHelperService
-     */
-    private $urlHelper;
-
     /** @var  \Laminas\Form\Element\Csrf */
     private $elmCsrf;
 
@@ -238,10 +219,6 @@ class TableBuilder
      * @var array<string,string>
      */
     private $urlParameterNameMap = [];
-
-    private FormatterPluginManager $formatterPluginManager;
-
-    private Permission $permissionService;
 
     /**
      * @return array<string,string>
@@ -271,19 +248,17 @@ class TableBuilder
      * @return TableBuilder
      */
     public function __construct(
-        ContainerInterface $serviceLocator,
-        Permission $permissionService,
-        Translator $translator,
-        UrlHelperService $urlHelper,
-        array $applicationConfig,
-        FormatterPluginManager $formatterPluginManager
-    ) {
-        $this->serviceLocator = $serviceLocator;
-        $this->permissionService = $permissionService;
-        $this->translator = $translator;
-        $this->urlHelper = $urlHelper;
-        $this->applicationConfig = $applicationConfig;
-        $this->formatterPluginManager = $formatterPluginManager;
+        private ContainerInterface $serviceLocator,
+        private Permission $permissionService,
+        private Translator $translator,
+        private UrlHelperService $urlHelper,
+        /**
+         * Inject the application config from Laminas
+         */
+        private array $applicationConfig,
+        private FormatterPluginManager $formatterPluginManager
+    )
+    {
     }
 
     /**
@@ -365,10 +340,9 @@ class TableBuilder
      * Return a setting or the default
      *
      * @param string $name
-     * @param mixed $default
      * @return mixed
      */
-    public function getSetting($name, $default = null)
+    public function getSetting($name, mixed $default = null)
     {
         return $this->settings[$name] ?? $default;
     }
@@ -562,9 +536,8 @@ class TableBuilder
      * Set a single variable
      *
      * @param string $name
-     * @param mixed $value
      */
-    public function setVariable($name, $value): void
+    public function setVariable($name, mixed $value): void
     {
         $this->variables[$name] = $value;
     }
@@ -977,7 +950,7 @@ class TableBuilder
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         try {
             return $this->render();

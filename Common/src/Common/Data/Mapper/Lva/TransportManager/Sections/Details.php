@@ -147,7 +147,7 @@ class Details extends AbstractSection
     {
         $formattedAddress = [];
         foreach ($data as $key => $value) {
-            if (strpos($key, 'address') !== false || in_array($key, ['postcode', 'town'])) {
+            if (str_contains($key, 'address') || in_array($key, ['postcode', 'town'])) {
                 $formattedAddress[$key] = $value;
             }
         }

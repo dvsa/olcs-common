@@ -7,11 +7,8 @@ use Laminas\View\HelperPluginManager;
 
 class EbsrDocumentStatus implements FormatterPluginManagerInterface
 {
-    private HelperPluginManager $viewHelperManager;
-
-    public function __construct(HelperPluginManager $viewHelperManager)
+    public function __construct(private HelperPluginManager $viewHelperManager)
     {
-        $this->viewHelperManager = $viewHelperManager;
     }
 
     /**
@@ -30,27 +27,20 @@ class EbsrDocumentStatus implements FormatterPluginManagerInterface
          * Once the EBSR status data has been cleansed, this can be simplified and moved to the
          * Common\View\Helper\Status helper
          */
-        switch ($data['ebsrSubmissionStatus']['id']) {
-            case RefData::EBSR_STATUS_PROCESSING:
-            case RefData::EBSR_STATUS_VALIDATING:
-            case RefData::EBSR_STATUS_SUBMITTED:
-                $status = [
-                'colour' => 'orange',
-                'value' => 'processing'
-                ];
-                break;
-            case RefData::EBSR_STATUS_PROCESSED:
-                $status = [
-                'colour' => 'green',
-                'value' => 'successful'
-                ];
-                break;
-            default:
-                $status = [
-                'colour' => 'red',
-                'value' => 'failed'
-                ];
-        }
+        $status = match ($data['ebsrSubmissionStatus']['id']) {
+            RefData::EBSR_STATUS_PROCESSING, RefData::EBSR_STATUS_VALIDATING, RefData::EBSR_STATUS_SUBMITTED => [
+            'colour' => 'orange',
+            'value' => 'processing'
+            ],
+            RefData::EBSR_STATUS_PROCESSED => [
+            'colour' => 'green',
+            'value' => 'successful'
+            ],
+            default => [
+            'colour' => 'red',
+            'value' => 'failed'
+            ],
+        };
 
         /**
         * @var \Common\View\Helper\Status $statusHelper

@@ -748,10 +748,7 @@ class ClassListTest extends MockeryTestCase
         $this->assertEquals(true, $result);
     }
 
-    /**
-     * @param mixed ...$args
-     */
-    protected function setUpSut(...$args)
+    protected function setUpSut(mixed ...$args)
     {
         $this->sut = new ClassList(...$args);
     }

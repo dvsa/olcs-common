@@ -12,20 +12,17 @@ use Common\Service\Table\TableBuilder;
 abstract class AbstractType
 {
     /**
-     * Holds the table
-     *
-     * @var TableBuilder
-     */
-    protected $table;
-
-    /**
      * DI the table
      *
      * @param TableBuilder $table Table
      */
-    public function __construct($table)
+    public function __construct(
+        /**
+         * Holds the table
+         */
+        protected $table
+    )
     {
-        $this->table = $table;
     }
 
     /**

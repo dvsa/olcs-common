@@ -21,17 +21,8 @@ use Laminas\Router\Http\TreeRouteStack;
  */
 class TransactionFeeStatus implements FormatterPluginManagerInterface
 {
-    private TreeRouteStack $router;
-
-    private Request $request;
-
-    private UrlHelperService $urlHelper;
-
-    public function __construct(TreeRouteStack $router, Request $request, UrlHelperService $urlHelper)
+    public function __construct(private TreeRouteStack $router, private Request $request, private UrlHelperService $urlHelper)
     {
-        $this->router = $router;
-        $this->request = $request;
-        $this->urlHelper = $urlHelper;
     }
 
     /**
@@ -55,17 +46,11 @@ class TransactionFeeStatus implements FormatterPluginManagerInterface
             ];
             $url = $this->urlHelper->fromRoute($matchedRouteName, $params, [], true);
 
-            switch ($row['reversingTransaction']['type']) {
-                case Ref::TRANSACTION_TYPE_REFUND:
-                    $status = 'Refunded';
-                    break;
-                case Ref::TRANSACTION_TYPE_REVERSAL:
-                    $status = 'Reversed';
-                    break;
-                default:
-                    $status = 'Adjusted';
-                    break;
-            }
+            $status = match ($row['reversingTransaction']['type']) {
+                Ref::TRANSACTION_TYPE_REFUND => 'Refunded',
+                Ref::TRANSACTION_TYPE_REVERSAL => 'Reversed',
+                default => 'Adjusted',
+            };
 
             return '<a class="govuk-link" href="' . $url . '">' . $status . '</a>';
         }

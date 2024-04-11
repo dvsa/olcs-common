@@ -16,27 +16,6 @@ class PaginationHelper
     public const CLASS_PAGINATION_ITEM_CURRENT = 'govuk-pagination__item--current';
 
     /**
-     * Current page
-     *
-     * @var int
-     */
-    private $page;
-
-    /**
-     * Total result count
-     *
-     * @var int
-     */
-    private $total;
-
-    /**
-     * Limit per page
-     *
-     * @var int
-     */
-    private $limit;
-
-    /**
      * Current page deviation
      *
      * @var int
@@ -62,11 +41,21 @@ class PaginationHelper
      * @param int $total
      * @param int $limit
      */
-    public function __construct($page, $total, $limit)
+    public function __construct(
+        /**
+         * Current page
+         */
+        private $page,
+        /**
+         * Total result count
+         */
+        private $total,
+        /**
+         * Limit per page
+         */
+        private $limit
+    )
     {
-        $this->page = $page;
-        $this->total = $total;
-        $this->limit = $limit;
     }
 
     /**

@@ -7,18 +7,14 @@ use Common\Service\Qa\IsValidHandlerInterface;
 
 class IsValidBasedWarningAdder
 {
-    /** @var WarningAdder */
-    private $warningAdder;
-
     /**
      * Create service instance
      *
      *
      * @return IsValidBasedWarningAdder
      */
-    public function __construct(WarningAdder $warningAdder)
+    public function __construct(private WarningAdder $warningAdder)
     {
-        $this->warningAdder = $warningAdder;
     }
 
     /**

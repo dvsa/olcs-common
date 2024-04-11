@@ -16,20 +16,12 @@ class ExternalConversationStatus implements FormatterPluginManagerInterface
      */
     public function format($row, $column = null): string
     {
-        switch ($row['userContextStatus']) {
-            case "NEW_MESSAGE":
-                $tagColor = 'govuk-tag--red';
-                break;
-            case "OPEN":
-                $tagColor = 'govuk-tag--blue';
-                break;
-            case "CLOSED":
-                $tagColor = 'govuk-tag--grey';
-                break;
-            default:
-                $tagColor = 'govuk-tag--green';
-                break;
-        }
+        $tagColor = match ($row['userContextStatus']) {
+            "NEW_MESSAGE" => 'govuk-tag--red',
+            "OPEN" => 'govuk-tag--blue',
+            "CLOSED" => 'govuk-tag--grey',
+            default => 'govuk-tag--green',
+        };
 
         return sprintf(
             '<strong class="govuk-tag %s">%s</strong>',

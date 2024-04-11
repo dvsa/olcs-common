@@ -7,19 +7,14 @@ use Common\Service\Qa\IsValidHandlerInterface;
 
 class StandardAndCabotageIsValidHandler implements IsValidHandlerInterface
 {
-    /** @var StandardAndCabotageSubmittedAnswerGenerator */
-    private $standardAndCabotageSubmittedAnswerGenerator;
-
     /**
      * Create service instance
      *
      *
      * @return StandardAndCabotageIsValidHandler
      */
-    public function __construct(
-        StandardAndCabotageSubmittedAnswerGenerator $standardAndCabotageSubmittedAnswerGenerator
-    ) {
-        $this->standardAndCabotageSubmittedAnswerGenerator = $standardAndCabotageSubmittedAnswerGenerator;
+    public function __construct(private StandardAndCabotageSubmittedAnswerGenerator $standardAndCabotageSubmittedAnswerGenerator)
+    {
     }
 
     /**

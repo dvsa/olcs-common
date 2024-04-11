@@ -22,24 +22,15 @@ class InsufficientFinancesController extends AbstractContinuationController
 {
     protected $currentStep = self::STEP_FINANCE;
 
-    protected FormHelperService $formHelper;
-
-    protected GuidanceHelperService $guidanceHelper;
-
-    protected FileUploadHelperService $uploadHelper;
-
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
         FormServiceManager $formServiceManager,
         TranslationHelperService $translationHelper,
-        FormHelperService $formHelper,
-        FileUploadHelperService $uploadHelper,
-        GuidanceHelperService $guidanceHelper
+        protected FormHelperService $formHelper,
+        protected FileUploadHelperService $uploadHelper,
+        protected GuidanceHelperService $guidanceHelper
     ) {
-        $this->uploadHelper = $uploadHelper;
-        $this->formHelper = $formHelper;
-        $this->guidanceHelper = $guidanceHelper;
         parent::__construct($niTextTranslationUtil, $authService, $formServiceManager, $translationHelper);
     }
 

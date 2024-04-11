@@ -23,23 +23,13 @@ use LmcRbacMvc\Service\AuthorizationService;
  */
 class Schedule41Controller extends AbstractController
 {
-    protected FormHelperService $formHelper;
-
-    protected TableFactory $tableFactory;
-
-    protected FlashMessengerHelperService $flashMessengerHelper;
-
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
-        FormHelperService $formHelper,
-        TableFactory $tableFactory,
-        FlashMessengerHelperService $flashMessengerHelper
+        protected FormHelperService $formHelper,
+        protected TableFactory $tableFactory,
+        protected FlashMessengerHelperService $flashMessengerHelper
     ) {
-        $this->formHelper = $formHelper;
-        $this->tableFactory = $tableFactory;
-        $this->flashMessengerHelper = $flashMessengerHelper;
-
         parent::__construct($niTextTranslationUtil, $authService);
     }
 

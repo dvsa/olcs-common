@@ -11,23 +11,14 @@ class CurrentUser extends AbstractHelper
     protected $userData;
 
     /**
-     * @var AuthorizationService
-     */
-    private $authService;
-
-    private string $userUniqueIdSalt;
-
-    /**
      * Construct
      *
      * @param AuthorizationService $authService Authorization service
      *
      * @return void
      */
-    public function __construct(AuthorizationService $authService, string $userUniqueIdSalt)
+    public function __construct(private AuthorizationService $authService, private string $userUniqueIdSalt)
     {
-        $this->authService = $authService;
-        $this->userUniqueIdSalt = $userUniqueIdSalt;
     }
 
     /**
@@ -64,18 +55,12 @@ class CurrentUser extends AbstractHelper
         }
 
         $userData = $this->getUserData();
-
-        switch ($userData['userType']) {
-            case User::USER_TYPE_OPERATOR:
-            case User::USER_TYPE_TRANSPORT_MANAGER:
-                return current($userData['organisationUsers'])['organisation']['name'];
-            case User::USER_TYPE_PARTNER:
-                return $userData['partnerContactDetails']['description'];
-            case User::USER_TYPE_LOCAL_AUTHORITY:
-                return $userData['localAuthority']['description'];
-        }
-
-        return '';
+        return match ($userData['userType']) {
+            User::USER_TYPE_OPERATOR, User::USER_TYPE_TRANSPORT_MANAGER => current($userData['organisationUsers'])['organisation']['name'],
+            User::USER_TYPE_PARTNER => $userData['partnerContactDetails']['description'],
+            User::USER_TYPE_LOCAL_AUTHORITY => $userData['localAuthority']['description'],
+            default => '',
+        };
     }
 
     /**

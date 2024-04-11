@@ -10,11 +10,8 @@ use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
  */
 class IrhpPermitRangeType implements FormatterPluginManagerInterface
 {
-    private TranslatorDelegator $translator;
-
-    public function __construct(TranslatorDelegator $translator)
+    public function __construct(private TranslatorDelegator $translator)
     {
-        $this->translator = $translator;
     }
 
      /**

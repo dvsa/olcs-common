@@ -12,17 +12,14 @@ use Common\Util\Escape;
  */
 class FeatureToggleEditLink implements FormatterPluginManagerInterface
 {
-    private UrlHelperService $urlHelper;
-
     public const LINK_PATTERN = '<a href="%s" class="govuk-link js-modal-ajax">%s</a>';
 
     public const URL_ROUTE = 'admin-dashboard/admin-feature-toggle';
 
     public const URL_ACTION = 'edit';
 
-    public function __construct(UrlHelperService $urlHelper)
+    public function __construct(private UrlHelperService $urlHelper)
     {
-        $this->urlHelper = $urlHelper;
     }
 
     /**

@@ -9,24 +9,14 @@ use Laminas\View\Helper\Partial;
 
 class AnnualTripsAbroadDataHandler implements DataHandlerInterface
 {
-    /** @var IsValidBasedWarningAdder */
-    private $isValidBasedWarningAdder;
-
-    /** @var AnnualTripsAbroadIsValidHandler */
-    private $annualTripsAbroadIsValidHandler;
-
     /**
      * Create service instance
      *
      *
      * @return AnnualTripsAbroadDataHandler
      */
-    public function __construct(
-        IsValidBasedWarningAdder $isValidBasedWarningAdder,
-        AnnualTripsAbroadIsValidHandler $annualTripsAbroadIsValidHandler
-    ) {
-        $this->isValidBasedWarningAdder = $isValidBasedWarningAdder;
-        $this->annualTripsAbroadIsValidHandler = $annualTripsAbroadIsValidHandler;
+    public function __construct(private IsValidBasedWarningAdder $isValidBasedWarningAdder, private AnnualTripsAbroadIsValidHandler $annualTripsAbroadIsValidHandler)
+    {
     }
 
     /**

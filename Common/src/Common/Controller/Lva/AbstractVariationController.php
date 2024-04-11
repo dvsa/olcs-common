@@ -17,8 +17,6 @@ abstract class AbstractVariationController extends AbstractController
 {
     use Traits\CreateVariationTrait;
 
-    protected TranslationHelperService $translationHelper;
-
     protected $processingCreateVariation;
 
     protected FlashMessengerHelperService $flashMessengerHelper;
@@ -29,12 +27,11 @@ abstract class AbstractVariationController extends AbstractController
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
-        TranslationHelperService $translationHelper,
+        protected TranslationHelperService $translationHelper,
         $processingCreateVariation,
         FlashMessengerHelperService $flashMessengerHelper
     ) {
         $this->processingCreateVariation = $processingCreateVariation;
-        $this->translationHelper = $translationHelper;
         $this->flashMessengerHelper = $flashMessengerHelper;
         parent::__construct($niTextTranslationUtil, $authService);
     }

@@ -6,12 +6,8 @@ use Laminas\I18n\Translator\TranslatorInterface;
 
 class TranslationHelperService
 {
-    protected TranslatorInterface $translator;
-
-    public function __construct(
-        TranslatorInterface $translator
-    ) {
-        $this->translator = $translator;
+    public function __construct(protected TranslatorInterface $translator)
+    {
     }
 
     /**

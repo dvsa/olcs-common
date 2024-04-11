@@ -25,18 +25,15 @@ abstract class AbstractReviewService implements ReviewServiceInterface
     /** @var TranslationHelperService */
     protected $translationHelper;
 
-    private Address $addressFormatter;
-
     /**
      * Create service instance
      *
      *
      * @return AbstractReviewService
      */
-    public function __construct(AbstractReviewServiceServices $abstractReviewServiceServices, Address $addressFormatter)
+    public function __construct(AbstractReviewServiceServices $abstractReviewServiceServices, private Address $addressFormatter)
     {
         $this->translationHelper = $abstractReviewServiceServices->getTranslationHelper();
-        $this->addressFormatter = $addressFormatter;
     }
 
     protected function formatText($text)

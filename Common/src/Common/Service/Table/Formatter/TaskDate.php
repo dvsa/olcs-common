@@ -15,11 +15,8 @@ namespace Common\Service\Table\Formatter;
  */
 class TaskDate implements FormatterPluginManagerInterface
 {
-    private Date $dateFormatter;
-
-    public function __construct(Date $dateFormatter)
+    public function __construct(private Date $dateFormatter)
     {
-        $this->dateFormatter = $dateFormatter;
     }
 
     /**

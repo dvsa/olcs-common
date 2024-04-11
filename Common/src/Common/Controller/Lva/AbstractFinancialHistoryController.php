@@ -42,31 +42,15 @@ abstract class AbstractFinancialHistoryController extends AbstractController
 
     protected FormHelperService $formHelper;
 
-    protected FlashMessengerHelperService $flashMessengerHelper;
-
-    protected FormServiceManager $formServiceManager;
-
-    protected ScriptFactory $scriptFactory;
-
-    protected DataHelperService $dataHelper;
-
-    protected FileUploadHelperService $uploadHelper;
-
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
-        FlashMessengerHelperService $flashMessengerHelper,
-        FormServiceManager $formServiceManager,
-        ScriptFactory $scriptFactory,
-        DataHelperService $dataHelper,
-        FileUploadHelperService $uploadHelper
+        protected FlashMessengerHelperService $flashMessengerHelper,
+        protected FormServiceManager $formServiceManager,
+        protected ScriptFactory $scriptFactory,
+        protected DataHelperService $dataHelper,
+        protected FileUploadHelperService $uploadHelper
     ) {
-        $this->flashMessengerHelper = $flashMessengerHelper;
-        $this->formServiceManager = $formServiceManager;
-        $this->scriptFactory = $scriptFactory;
-        $this->dataHelper = $dataHelper;
-        $this->uploadHelper = $uploadHelper;
-
         parent::__construct($niTextTranslationUtil, $authService);
     }
 

@@ -96,15 +96,11 @@ class CommunityLicenceTest extends MockeryTestCase
 
     public function getStatusForId(string $id)
     {
-        switch ($id) {
-            case 'doc_sts_destroyed':
-                return 'possession';
-            case 'doc_sts_lost':
-                return 'lost';
-            case 'doc_sts_stolen':
-                return 'stolen';
-        }
-
-        return '';
+        return match ($id) {
+            'doc_sts_destroyed' => 'possession',
+            'doc_sts_lost' => 'lost',
+            'doc_sts_stolen' => 'stolen',
+            default => '',
+        };
     }
 }

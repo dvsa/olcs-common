@@ -11,29 +11,14 @@ use Laminas\Form\Fieldset;
 
 class NoOfPermitsSingleFieldsetPopulator implements FieldsetPopulatorInterface
 {
-    /** @var TranslationHelperService */
-    private $translator;
-
-    /** @var NoOfPermitsBaseInsetTextGenerator */
-    private $noOfPermitsBaseInsetTextGenerator;
-
-    /** @var HtmlAdder */
-    private $htmlAdder;
-
     /**
      * Create service instance
      *
      *
      * @return NoOfPermitsSingleFieldsetPopulator
      */
-    public function __construct(
-        TranslationHelperService $translator,
-        NoOfPermitsBaseInsetTextGenerator $noOfPermitsBaseInsetTextGenerator,
-        HtmlAdder $htmlAdder
-    ) {
-        $this->translator = $translator;
-        $this->noOfPermitsBaseInsetTextGenerator = $noOfPermitsBaseInsetTextGenerator;
-        $this->htmlAdder = $htmlAdder;
+    public function __construct(private TranslationHelperService $translator, private NoOfPermitsBaseInsetTextGenerator $noOfPermitsBaseInsetTextGenerator, private HtmlAdder $htmlAdder)
+    {
     }
 
     /**

@@ -41,10 +41,9 @@ class SumCompare extends AbstractCompare
     protected $sumWith;
 
     /**
-     * @param mixed $sumWith
      * @return $this
      */
-    public function setSumWith($sumWith)
+    public function setSumWith(mixed $sumWith)
     {
         $this->sumWith = $sumWith;
         return $this;

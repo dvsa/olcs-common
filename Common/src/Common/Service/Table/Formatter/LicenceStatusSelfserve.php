@@ -13,11 +13,8 @@ class LicenceStatusSelfserve implements FormatterPluginManagerInterface
 {
     private const MARKUP_FORMAT = '<span class="govuk-tag govuk-tag--%s">%s</span>';
 
-    private TranslatorDelegator $translator;
-
-    public function __construct(TranslatorDelegator $translator)
+    public function __construct(private TranslatorDelegator $translator)
     {
-        $this->translator = $translator;
     }
 
     /**
@@ -29,31 +26,12 @@ class LicenceStatusSelfserve implements FormatterPluginManagerInterface
      */
     public function format($row, $column = null)
     {
-        switch ($row['status']['id']) {
-            case RefData::LICENCE_STATUS_VALID:
-            case RefData::LICENCE_STATUS_SURRENDER_UNDER_CONSIDERATION:
-                $statusClass = 'green';
-                break;
-            case RefData::LICENCE_STATUS_SUSPENDED:
-            case RefData::LICENCE_STATUS_CURTAILED:
-            case RefData::LICENCE_STATUS_UNDER_CONSIDERATION:
-            case RefData::LICENCE_STATUS_GRANTED:
-                $statusClass = 'orange';
-                break;
-            case RefData::LICENCE_STATUS_SURRENDERED:
-            case RefData::LICENCE_STATUS_REVOKED:
-            case RefData::LICENCE_STATUS_TERMINATED:
-            case RefData::LICENCE_STATUS_CONTINUATION_NOT_SOUGHT:
-            case RefData::LICENCE_STATUS_WITHDRAWN:
-            case RefData::LICENCE_STATUS_REFUSED:
-            case RefData::LICENCE_STATUS_NOT_TAKEN_UP:
-                $statusClass = 'red';
-                break;
-            case RefData::LICENCE_STATUS_CANCELLED:
-            default:
-                $statusClass = 'grey';
-                break;
-        }
+        $statusClass = match ($row['status']['id']) {
+            RefData::LICENCE_STATUS_VALID, RefData::LICENCE_STATUS_SURRENDER_UNDER_CONSIDERATION => 'green',
+            RefData::LICENCE_STATUS_SUSPENDED, RefData::LICENCE_STATUS_CURTAILED, RefData::LICENCE_STATUS_UNDER_CONSIDERATION, RefData::LICENCE_STATUS_GRANTED => 'orange',
+            RefData::LICENCE_STATUS_SURRENDERED, RefData::LICENCE_STATUS_REVOKED, RefData::LICENCE_STATUS_TERMINATED, RefData::LICENCE_STATUS_CONTINUATION_NOT_SOUGHT, RefData::LICENCE_STATUS_WITHDRAWN, RefData::LICENCE_STATUS_REFUSED, RefData::LICENCE_STATUS_NOT_TAKEN_UP => 'red',
+            default => 'grey',
+        };
 
         if ($row['status']['id'] !== RefData::LICENCE_STATUS_SURRENDER_UNDER_CONSIDERATION) {
             [$row, $statusClass] = $this->changeStateIfExpired($row, $statusClass);

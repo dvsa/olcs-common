@@ -73,30 +73,18 @@ abstract class AbstractCommunityLicencesController extends AbstractController
 
     protected FlashMessengerHelperService $flashMessengerHelper;
 
-    protected FormServiceManager $formServiceManager;
-
-    protected ScriptFactory $scriptFactory;
-
-    protected AnnotationBuilder $transferAnnotationBuilder;
-
-    protected CommandService $commandService;
-
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
         FormHelperService $formHelper,
         FlashMessengerHelperService $flashMessengerHelper,
-        FormServiceManager $formServiceManager,
-        ScriptFactory $scriptFactory,
-        AnnotationBuilder $transferAnnotationBuilder,
-        CommandService $commandService
+        protected FormServiceManager $formServiceManager,
+        protected ScriptFactory $scriptFactory,
+        protected AnnotationBuilder $transferAnnotationBuilder,
+        protected CommandService $commandService
     ) {
         $this->formHelper = $formHelper;
         $this->flashMessengerHelper = $flashMessengerHelper;
-        $this->formServiceManager = $formServiceManager;
-        $this->scriptFactory = $scriptFactory;
-        $this->transferAnnotationBuilder = $transferAnnotationBuilder;
-        $this->commandService = $commandService;
 
         parent::__construct($niTextTranslationUtil, $authService);
     }

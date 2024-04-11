@@ -14,19 +14,14 @@ class DateNotInPastValidator extends AbstractValidator
         self::ERR_DATE_IN_PAST => 'Date is in the past'
     ];
 
-    /** @var DateTimeFactory */
-    private $dateTimeFactory;
-
     /**
      * Create service instance
      *
      *
      * @return DateNotInPastValidator
      */
-    public function __construct(DateTimeFactory $dateTimeFactory, array $options)
+    public function __construct(private DateTimeFactory $dateTimeFactory, array $options)
     {
-        $this->dateTimeFactory = $dateTimeFactory;
-
         parent::__construct($options);
     }
 

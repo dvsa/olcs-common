@@ -72,11 +72,10 @@ trait OptionTrait
      * Set a single option for an element
      *
      * @param  string $key
-     * @param  mixed $value
      *
      * @return OptionTrait
      */
-    public function setOption($key, $value)
+    public function setOption($key, mixed $value)
     {
         $this->options[$key] = $value;
 

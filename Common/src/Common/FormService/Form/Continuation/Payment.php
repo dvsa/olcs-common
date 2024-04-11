@@ -14,14 +14,8 @@ use Common\Service\Helper\GuidanceHelperService;
  */
 class Payment
 {
-    protected FormHelperService $formHelper;
-
-    private GuidanceHelperService $guidanceHelper;
-
-    public function __construct(FormHelperService $formHelper, GuidanceHelperService $guidanceHelper)
+    public function __construct(protected FormHelperService $formHelper, private GuidanceHelperService $guidanceHelper)
     {
-        $this->formHelper = $formHelper;
-        $this->guidanceHelper = $guidanceHelper;
     }
 
     /**

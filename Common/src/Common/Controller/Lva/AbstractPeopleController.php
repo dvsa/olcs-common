@@ -34,16 +34,6 @@ abstract class AbstractPeopleController extends AbstractController
 
     protected FormHelperService $formHelper;
 
-    protected FormServiceManager $formServiceManager;
-
-    protected ScriptFactory $scriptFactory;
-
-    protected VariationLvaService $variationLvaService;
-
-    protected GuidanceHelperService $guidanceHelper;
-
-    protected $lvaAdapter;
-
     protected FlashMessengerHelperService $flashMessengerHelper;
 
     /**
@@ -53,19 +43,14 @@ abstract class AbstractPeopleController extends AbstractController
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
         FormHelperService $formHelper,
-        FormServiceManager $formServiceManager,
-        ScriptFactory $scriptFactory,
-        VariationLvaService $variationLvaService,
-        GuidanceHelperService $guidanceHelper,
-        $lvaAdapter,
+        protected FormServiceManager $formServiceManager,
+        protected ScriptFactory $scriptFactory,
+        protected VariationLvaService $variationLvaService,
+        protected GuidanceHelperService $guidanceHelper,
+        protected $lvaAdapter,
         FlashMessengerHelperService $flashMessengerHelper
     ) {
         $this->formHelper = $formHelper;
-        $this->formServiceManager = $formServiceManager;
-        $this->scriptFactory = $scriptFactory;
-        $this->variationLvaService = $variationLvaService;
-        $this->guidanceHelper = $guidanceHelper;
-        $this->lvaAdapter = $lvaAdapter;
         $this->flashMessengerHelper = $flashMessengerHelper;
 
         parent::__construct($niTextTranslationUtil, $authService);
@@ -81,7 +66,7 @@ abstract class AbstractPeopleController extends AbstractController
         /* @var $adapter Adapters\AbstractPeopleAdapter */
         try {
             $this->lvaAdapter->loadPeopleData($this->lva, $this->getIdentifier());
-        } catch (\RuntimeException $runtimeException) {
+        } catch (\RuntimeException) {
             return $this->notFoundAction();
         }
 
@@ -287,23 +272,13 @@ abstract class AbstractPeopleController extends AbstractController
     {
         $pageTitle = 'selfserve-app-subSection-your-business-people-tableHeader';
 
-        switch ($organisationTypeId) {
-            case RefData::ORG_TYPE_REGISTERED_COMPANY:
-                $pageTitle .= 'Directors';
-                break;
-
-            case RefData::ORG_TYPE_LLP:
-                $pageTitle .= 'PartnersMembers';
-                break;
-
-            case RefData::ORG_TYPE_PARTNERSHIP:
-                $pageTitle .= 'Partners';
-                break;
-
-            case RefData::ORG_TYPE_OTHER:
-                $pageTitle .= 'People';
-                break;
-        }
+        match ($organisationTypeId) {
+            RefData::ORG_TYPE_REGISTERED_COMPANY => $pageTitle .= 'Directors',
+            RefData::ORG_TYPE_LLP => $pageTitle .= 'PartnersMembers',
+            RefData::ORG_TYPE_PARTNERSHIP => $pageTitle .= 'Partners',
+            RefData::ORG_TYPE_OTHER => $pageTitle .= 'People',
+            default => $pageTitle,
+        };
 
         return $pageTitle;
     }

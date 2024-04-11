@@ -15,17 +15,8 @@ use Laminas\View\HelperPluginManager;
  */
 class DashboardTmActionLink implements FormatterPluginManagerInterface
 {
-    private UrlHelperService $urlHelper;
-
-    private TranslatorDelegator $translator;
-
-    private HelperPluginManager $viewHelperManager;
-
-    public function __construct(UrlHelperService $urlHelper, HelperPluginManager $viewHelperManager, TranslatorDelegator $translator)
+    public function __construct(private UrlHelperService $urlHelper, private HelperPluginManager $viewHelperManager, private TranslatorDelegator $translator)
     {
-        $this->urlHelper = $urlHelper;
-        $this->translator = $translator;
-        $this->viewHelperManager = $viewHelperManager;
     }
 
     /**

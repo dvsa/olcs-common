@@ -106,7 +106,7 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow
 
         if (! ($element instanceof Hidden) && $wrap) {
             $class = $element->getMessages() === [] ? $element->getAttribute('data-container-class') : '';
-            if (strpos($element->getAttribute('class'), 'govuk-visually-hidden') === 0) {
+            if (str_starts_with($element->getAttribute('class'), 'govuk-visually-hidden')) {
                 $markup = sprintf(self::$format, 'govuk-visually-hidden', $markup);
             } elseif ($element->getOption('render-container') !== false) {
                 $renderAsFieldset = $element->getOption('render_as_fieldset');
@@ -316,14 +316,10 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow
                     $labelPosition = $element->getLabelOption('label_position');
                 }
 
-                switch ($labelPosition) {
-                    case self::LABEL_PREPEND:
-                        $markup = $labelOpen . $label . $elementString . $labelClose;
-                        break;
-                    case self::LABEL_APPEND:
-                    default:
-                        $markup = $labelOpen . $elementString . $label . $labelClose;
-                }
+                $markup = match ($labelPosition) {
+                    self::LABEL_PREPEND => $labelOpen . $label . $elementString . $labelClose,
+                    default => $labelOpen . $elementString . $label . $labelClose,
+                };
             }
         } else {
             $markup = $elementString;

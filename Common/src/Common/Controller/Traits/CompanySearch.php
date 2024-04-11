@@ -15,7 +15,7 @@ trait CompanySearch
     {
         try {
             $response = $this->handleQuery(ByNumber::create(['companyNumber' => $companyNumber]));
-        } catch (NotFoundException $notFoundException) {
+        } catch (NotFoundException) {
             $formHelper->setCompanyNotFoundError($form, $detailsFieldset);
             return $form;
         }

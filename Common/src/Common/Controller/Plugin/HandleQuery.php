@@ -13,20 +13,8 @@ use Laminas\Mvc\Controller\Plugin\AbstractPlugin;
  */
 class HandleQuery extends AbstractPlugin
 {
-    /**
-     * @var TransferAnnotationBuilder
-     */
-    private $annotationBuilder;
-
-    /**
-     * @var QueryServiceInterface
-     */
-    private $queryService;
-
-    public function __construct(TransferAnnotationBuilder $annotationBuilder, QueryServiceInterface $queryService)
+    public function __construct(private TransferAnnotationBuilder $annotationBuilder, private QueryServiceInterface $queryService)
     {
-        $this->queryService = $queryService;
-        $this->annotationBuilder = $annotationBuilder;
     }
 
     /**

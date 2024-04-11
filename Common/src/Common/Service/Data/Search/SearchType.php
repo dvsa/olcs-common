@@ -37,10 +37,7 @@ class SearchType implements ListDataInterface, FactoryInterface
         return $this->searchTypeManager;
     }
 
-    /**
-     * @param mixed $searchTypeManager
-     */
-    public function setSearchTypeManager($searchTypeManager): void
+    public function setSearchTypeManager(mixed $searchTypeManager): void
     {
         $this->searchTypeManager = $searchTypeManager;
     }
@@ -53,10 +50,7 @@ class SearchType implements ListDataInterface, FactoryInterface
         return $this->navigationFactory;
     }
 
-    /**
-     * @param mixed $navigationFactory
-     */
-    public function setNavigationFactory($navigationFactory): void
+    public function setNavigationFactory(mixed $navigationFactory): void
     {
         $this->navigationFactory = $navigationFactory;
     }

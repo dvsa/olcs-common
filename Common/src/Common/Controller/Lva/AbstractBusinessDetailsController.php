@@ -41,34 +41,19 @@ abstract class AbstractBusinessDetailsController extends AbstractController
 
     protected FlashMessengerHelperService $flashMessengerHelper;
 
-    protected FormServiceManager $formServiceManager;
-
-    protected ScriptFactory $scriptFactory;
-
-    protected IdentityProviderInterface $identityProvider;
-
-    protected TableFactory $tableFactory;
-
-    protected FileUploadHelperService $uploadHelper;
-
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
         FormHelperService $formHelper,
         FlashMessengerHelperService $flashMessengerHelper,
-        FormServiceManager $formServiceManager,
-        ScriptFactory $scriptFactory,
-        IdentityProviderInterface $identityProvider,
-        TableFactory $tableFactory,
-        FileUploadHelperService $uploadHelper
+        protected FormServiceManager $formServiceManager,
+        protected ScriptFactory $scriptFactory,
+        protected IdentityProviderInterface $identityProvider,
+        protected TableFactory $tableFactory,
+        protected FileUploadHelperService $uploadHelper
     ) {
         $this->formHelper = $formHelper;
         $this->flashMessengerHelper = $flashMessengerHelper;
-        $this->formServiceManager = $formServiceManager;
-        $this->scriptFactory = $scriptFactory;
-        $this->identityProvider = $identityProvider;
-        $this->tableFactory = $tableFactory;
-        $this->uploadHelper = $uploadHelper;
 
         parent::__construct($niTextTranslationUtil, $authService);
     }

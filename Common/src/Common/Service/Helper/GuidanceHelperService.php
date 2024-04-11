@@ -17,13 +17,8 @@ use Laminas\View\Helper\Placeholder;
  */
 class GuidanceHelperService
 {
-    /** @var Placeholder */
-    private $placeholder;
-
-    public function __construct(
-        Placeholder $placeholder
-    ) {
-        $this->placeholder = $placeholder;
+    public function __construct(private Placeholder $placeholder)
+    {
     }
 
     public function append($message): void

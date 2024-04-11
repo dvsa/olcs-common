@@ -36,26 +36,14 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
 
     protected $data;
 
-    protected DataHelperService $dataHelper;
-
-    protected ScriptFactory $scriptFactory;
-
-    protected FormServiceManager $formServiceManager;
-
-    protected FormHelperService $formHelper;
-
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
-        FormHelperService $formHelper,
-        FormServiceManager $formServiceManager,
-        ScriptFactory $scriptFactory,
-        DataHelperService $dataHelper
+        protected FormHelperService $formHelper,
+        protected FormServiceManager $formServiceManager,
+        protected ScriptFactory $scriptFactory,
+        protected DataHelperService $dataHelper
     ) {
-        $this->dataHelper = $dataHelper;
-        $this->scriptFactory = $scriptFactory;
-        $this->formServiceManager = $formServiceManager;
-        $this->formHelper = $formHelper;
         parent::__construct($niTextTranslationUtil, $authService);
     }
 

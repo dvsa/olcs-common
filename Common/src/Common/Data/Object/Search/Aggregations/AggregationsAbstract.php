@@ -33,10 +33,7 @@ abstract class AggregationsAbstract implements AggregationsInterface
         return $this->key;
     }
 
-    /**
-     * @param mixed $key
-     */
-    public function setKey($key): void
+    public function setKey(mixed $key): void
     {
         $this->key = $key;
     }
@@ -65,10 +62,7 @@ abstract class AggregationsAbstract implements AggregationsInterface
         return $this->title;
     }
 
-    /**
-     * @param mixed $title
-     */
-    public function setTitle($title): void
+    public function setTitle(mixed $title): void
     {
         $this->title = $title;
     }

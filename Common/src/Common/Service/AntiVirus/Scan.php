@@ -97,7 +97,7 @@ class Scan implements FactoryInterface
             throw new \Common\Exception\ConfigurationException('Scan cliCommand is not set.');
         }
 
-        if (strpos($this->getCliCommand(), '%s') === false) {
+        if (!str_contains($this->getCliCommand(), '%s')) {
             throw new \Common\Exception\ConfigurationException(
                 '%s must be in the cliCommand, this is where the file to be scanned is inserted'
             );

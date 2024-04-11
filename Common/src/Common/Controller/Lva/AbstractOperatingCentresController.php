@@ -95,34 +95,19 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
     protected FlashMessengerHelperService $flashMessengerHelper;
 
-    protected FormServiceManager $formServiceManager;
-
-    protected ScriptFactory $scriptFactory;
-
-    protected VariationLvaService $variationLvaService;
-
-    protected TranslationHelperService $translationHelper;
-
-    protected FileUploadHelperService $uploadHelper;
-
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
         FormHelperService $formHelper,
         FlashMessengerHelperService $flashMessengerHelper,
-        FormServiceManager $formServiceManager,
-        TranslationHelperService $translationHelper,
-        ScriptFactory $scriptFactory,
-        VariationLvaService $variationLvaService,
-        FileUploadHelperService $uploadHelper
+        protected FormServiceManager $formServiceManager,
+        protected TranslationHelperService $translationHelper,
+        protected ScriptFactory $scriptFactory,
+        protected VariationLvaService $variationLvaService,
+        protected FileUploadHelperService $uploadHelper
     ) {
         $this->formHelper = $formHelper;
         $this->flashMessengerHelper = $flashMessengerHelper;
-        $this->formServiceManager = $formServiceManager;
-        $this->scriptFactory = $scriptFactory;
-        $this->variationLvaService = $variationLvaService;
-        $this->translationHelper = $translationHelper;
-        $this->uploadHelper = $uploadHelper;
 
         parent::__construct($niTextTranslationUtil, $authService);
     }

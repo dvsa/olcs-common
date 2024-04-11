@@ -8,15 +8,6 @@ use Laminas\Form\Fieldset;
 
 class YesNoWithMarkupForNoPopulator
 {
-    /** @var RadioFactory */
-    private $radioFactory;
-
-    /** @var YesNoRadioOptionsApplier */
-    private $yesNoRadioOptionsApplier;
-
-    /** @var HtmlAdder */
-    private $htmlAdder;
-
     /**
      * Create service instance
      *
@@ -24,14 +15,8 @@ class YesNoWithMarkupForNoPopulator
      *
      * @return YesNoWithMarkupForNoPopulator
      */
-    public function __construct(
-        RadioFactory $radioFactory,
-        YesNoRadioOptionsApplier $yesNoRadioOptionsApplier,
-        HtmlAdder $htmlAdder
-    ) {
-        $this->radioFactory = $radioFactory;
-        $this->yesNoRadioOptionsApplier = $yesNoRadioOptionsApplier;
-        $this->htmlAdder = $htmlAdder;
+    public function __construct(private RadioFactory $radioFactory, private YesNoRadioOptionsApplier $yesNoRadioOptionsApplier, private HtmlAdder $htmlAdder)
+    {
     }
 
     /**
@@ -40,10 +25,9 @@ class YesNoWithMarkupForNoPopulator
      * error if the form is submitted with neither option selected
      *
      * @param string $noMarkup
-     * @param mixed $yesNo
      * @param string $notSelectedMessage
      */
-    public function populate(Fieldset $fieldset, array $valueOptions, $noMarkup, $yesNo, $notSelectedMessage): void
+    public function populate(Fieldset $fieldset, array $valueOptions, $noMarkup, mixed $yesNo, $notSelectedMessage): void
     {
         $yesNoRadio = $this->radioFactory->create('qaElement');
         $yesNoValue = is_null($yesNo) ? null : 'Y';

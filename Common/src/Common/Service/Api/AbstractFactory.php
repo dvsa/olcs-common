@@ -16,7 +16,7 @@ class AbstractFactory implements AbstractFactoryInterface
 {
     public function canCreate(ContainerInterface $container, $requestedName): bool
     {
-        return strpos($requestedName, 'Olcs\\RestService\\') !== false;
+        return str_contains($requestedName, 'Olcs\\RestService\\');
     }
 
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): RestClient

@@ -20,13 +20,8 @@ use Laminas\Form\Form;
  */
 class PeopleLvaService
 {
-    /** @var FormHelperService */
-    private $formHelper;
-
-    public function __construct(
-        FormHelperService $formHelper
-    ) {
-        $this->formHelper = $formHelper;
+    public function __construct(private FormHelperService $formHelper)
+    {
     }
 
     /**
@@ -35,7 +30,7 @@ class PeopleLvaService
      * @param Form  $form    form
      * @param mixed $orgType organisation type
      */
-    public function lockPersonForm(Form $form, $orgType): void
+    public function lockPersonForm(Form $form, mixed $orgType): void
     {
         /** @var FieldsetInterface $fieldset */
         $fieldset = $form->get('data');
@@ -63,7 +58,7 @@ class PeopleLvaService
      * @param Form  $form  form
      * @param mixed $table table
      */
-    public function lockPartnershipForm(Form $form, $table): void
+    public function lockPartnershipForm(Form $form, mixed $table): void
     {
         $table->removeActions();
         $table->removeColumn('select');
@@ -75,7 +70,7 @@ class PeopleLvaService
      * @param Form  $form  form
      * @param mixed $table table
      */
-    public function lockOrganisationForm(Form $form, $table): void
+    public function lockOrganisationForm(Form $form, mixed $table): void
     {
         $table->removeActions();
         $table->removeColumn('select');

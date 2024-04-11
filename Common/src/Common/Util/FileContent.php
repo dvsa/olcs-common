@@ -7,24 +7,16 @@ namespace Common\Util;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FileContent
+class FileContent implements \Stringable
 {
-    /** @var string */
-    private $fileName;
-
-    /** @var string */
-    private $mimeType;
-
     /**
      * FileContent constructor.
      *
-     * @param string $name     File name
+     * @param string $fileName File name
      * @param string $mimeType Mime type
      */
-    public function __construct($name, $mimeType = null)
+    public function __construct(private $fileName, private $mimeType = null)
     {
-        $this->fileName = $name;
-        $this->mimeType = $mimeType;
     }
 
     /**
@@ -52,7 +44,7 @@ class FileContent
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->fileName;
     }

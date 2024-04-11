@@ -17,11 +17,10 @@ class RestrictionHelperService
     /**
      * Check restriction
      *
-     * @param mixed $restrictions
      * @param bool $strict
      * @return boolean
      */
-    private function checkRestriction($restrictions, array $accessKeys = [], $strict = true, $reference = null)
+    private function checkRestriction(mixed $restrictions, array $accessKeys = [], $strict = true, $reference = null)
     {
         // Check for a callable first
         if (is_callable($restrictions)) {

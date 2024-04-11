@@ -16,28 +16,8 @@ use LmcRbacMvc\Service\AuthorizationService;
  */
 class FinancialEvidence extends AbstractLvaFormService
 {
-    protected AuthorizationService $authService;
-
-    protected FormHelperService $formHelper;
-
-    protected TranslationHelperService $translator;
-
-    protected UrlHelperService $urlHelper;
-
-    protected ValidatorPluginManager $validatorPluginManager;
-
-    public function __construct(
-        FormHelperService $formHelper,
-        AuthorizationService $authService,
-        TranslationHelperService $translator,
-        UrlHelperService $urlHelper,
-        ValidatorPluginManager $validatorPluginManager
-    ) {
-        $this->authService = $authService;
-        $this->formHelper = $formHelper;
-        $this->translator = $translator;
-        $this->urlHelper = $urlHelper;
-        $this->validatorPluginManager = $validatorPluginManager;
+    public function __construct(protected FormHelperService $formHelper, protected AuthorizationService $authService, protected TranslationHelperService $translator, protected UrlHelperService $urlHelper, protected ValidatorPluginManager $validatorPluginManager)
+    {
     }
 
     /**

@@ -76,10 +76,9 @@ class DateLessThanOrEqual extends AbstractValidator
     /**
      * Set token against which to compare
      *
-     * @param  mixed $token
      * @return DateLessThanOrEqual
      */
-    public function setToken($token)
+    public function setToken(mixed $token)
     {
         $this->tokenString = (is_array($token) ? var_export($token, true) : (string) $token);
         $this->token = $token;

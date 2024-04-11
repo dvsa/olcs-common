@@ -11,14 +11,8 @@ use Laminas\View\Helper\AbstractHelper;
  */
 class PageId extends AbstractHelper
 {
-    private $routeMatchName;
-
-    private $action;
-
-    public function __construct(string $routeMatchName, string $action)
+    public function __construct(private string $routeMatchName, private string $action)
     {
-        $this->routeMatchName = $routeMatchName;
-        $this->action = $action;
     }
 
     /**

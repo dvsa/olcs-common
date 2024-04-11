@@ -9,7 +9,7 @@ use Laminas\Form as LaminasForm;
 /**
  * Form
  */
-class Form extends LaminasForm\Form
+class Form extends LaminasForm\Form implements \Stringable
 {
     /**
      * Form constructor. Prevents browser HTML5 form validations
@@ -27,9 +27,9 @@ class Form extends LaminasForm\Form
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
-        return get_class($this);
+        return static::class;
     }
 
     /**

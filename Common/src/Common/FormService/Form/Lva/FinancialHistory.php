@@ -18,16 +18,8 @@ use Laminas\Http\Request;
  */
 class FinancialHistory
 {
-    protected TranslationHelperService $translator;
-
-    protected FormHelperService $formHelper;
-
-    public function __construct(
-        FormHelperService $formHelper,
-        TranslationHelperService $translator
-    ) {
-        $this->formHelper = $formHelper;
-        $this->translator = $translator;
+    public function __construct(protected FormHelperService $formHelper, protected TranslationHelperService $translator)
+    {
     }
 
     /**
@@ -115,14 +107,10 @@ class FinancialHistory
      */
     private function getCorrectHasAnyPersonKey($organisationType)
     {
-        switch ($organisationType) {
-            case RefData::ORG_TYPE_REGISTERED_COMPANY:
-                return 'selfserve-app-subSection-person-financial-history-has-director';
-            case RefData::ORG_TYPE_LLP:
-            case RefData::ORG_TYPE_PARTNERSHIP:
-                return 'selfserve-app-subSection-person-financial-history-has-partner';
-            default:
-                return 'selfserve-app-subSection-person-financial-history-has-person';
-        }
+        return match ($organisationType) {
+            RefData::ORG_TYPE_REGISTERED_COMPANY => 'selfserve-app-subSection-person-financial-history-has-director',
+            RefData::ORG_TYPE_LLP, RefData::ORG_TYPE_PARTNERSHIP => 'selfserve-app-subSection-person-financial-history-has-partner',
+            default => 'selfserve-app-subSection-person-financial-history-has-person',
+        };
     }
 }

@@ -24,19 +24,14 @@ class Version extends AbstractHelper
     <p class="version">Version: <span>%s</span></p>
 </div>';
 
-    /** @var array */
-    private $config;
-
     /**
      * Create service instance
      *
      *
      * @return Version
      */
-    public function __construct(
-        array $config
-    ) {
-        $this->config = $config;
+    public function __construct(private array $config)
+    {
     }
 
     /**

@@ -323,10 +323,7 @@ class ElasticSearch extends AbstractPlugin
         return $view;
     }
 
-    /**
-     * @param mixed $containerName
-     */
-    public function setContainerName($containerName)
+    public function setContainerName(mixed $containerName)
     {
         $this->containerName = $containerName;
         return $this;
@@ -356,10 +353,7 @@ class ElasticSearch extends AbstractPlugin
         $this->searchTerm = $searchTerm;
     }
 
-    /**
-     * @param mixed $searchData
-     */
-    public function setSearchData($searchData)
+    public function setSearchData(mixed $searchData)
     {
         $this->searchData = $searchData;
         return $this;

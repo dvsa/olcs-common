@@ -31,10 +31,9 @@ class OneOf extends AbstractValidator
     protected $allowZero;
 
     /**
-     * @param mixed $fields
      * @return $this
      */
-    public function setFields($fields)
+    public function setFields(mixed $fields)
     {
         $this->fields = $fields;
         return $this;

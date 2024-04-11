@@ -82,14 +82,8 @@ abstract class AbstractController extends AbstractActionController
         'application' => Application::class
     ];
 
-    protected NiTextTranslation $niTextTranslationUtil;
-
-    protected AuthorizationService $authService;
-
-    public function __construct(NiTextTranslation $niTextTranslationUtil, AuthorizationService $authService)
+    public function __construct(protected NiTextTranslation $niTextTranslationUtil, protected AuthorizationService $authService)
     {
-        $this->niTextTranslationUtil = $niTextTranslationUtil;
-        $this->authService = $authService;
     }
 
     /**
@@ -116,7 +110,7 @@ abstract class AbstractController extends AbstractActionController
         if ($routeMatch->getParam('skipPreDispatch', false) || ($actionResponse = $this->preDispatch()) === null) {
             try {
                 $actionResponse = $this->$method();
-            } catch (ResourceConflictException $ex) {
+            } catch (ResourceConflictException) {
                 $this->addErrorMessage('version-conflict-message');
                 $actionResponse = $this->reload();
             }

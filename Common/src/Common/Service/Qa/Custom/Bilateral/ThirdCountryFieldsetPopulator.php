@@ -8,29 +8,14 @@ use Laminas\Form\Fieldset;
 
 class ThirdCountryFieldsetPopulator implements FieldsetPopulatorInterface
 {
-    /** @var TranslationHelperService */
-    private $translator;
-
-    /** @var YesNoWithMarkupForNoPopulator */
-    private $yesNoWithMarkupForNoPopulator;
-
-    /** @var StandardYesNoValueOptionsGenerator */
-    private $standardYesNoValueOptionsGenerator;
-
     /**
      * Create service instance
      *
      *
      * @return ThirdCountryFieldsetPopulator
      */
-    public function __construct(
-        TranslationHelperService $translator,
-        YesNoWithMarkupForNoPopulator $yesNoWithMarkupForNoPopulator,
-        StandardYesNoValueOptionsGenerator $standardYesNoValueOptionsGenerator
-    ) {
-        $this->translator = $translator;
-        $this->yesNoWithMarkupForNoPopulator = $yesNoWithMarkupForNoPopulator;
-        $this->standardYesNoValueOptionsGenerator = $standardYesNoValueOptionsGenerator;
+    public function __construct(private TranslationHelperService $translator, private YesNoWithMarkupForNoPopulator $yesNoWithMarkupForNoPopulator, private StandardYesNoValueOptionsGenerator $standardYesNoValueOptionsGenerator)
+    {
     }
 
     /**

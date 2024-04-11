@@ -6,24 +6,14 @@ use Laminas\Form\Fieldset;
 
 class RadioFieldsetPopulator implements FieldsetPopulatorInterface
 {
-    /** @var RadioFactory */
-    private $radioFactory;
-
-    /** @var TranslateableTextHandler */
-    private $translateableTextHandler;
-
     /**
      * Create service instance
      *
      *
      * @return RadioFieldsetPopulator
      */
-    public function __construct(
-        RadioFactory $radioFactory,
-        TranslateableTextHandler $translateableTextHandler
-    ) {
-        $this->radioFactory = $radioFactory;
-        $this->translateableTextHandler = $translateableTextHandler;
+    public function __construct(private RadioFactory $radioFactory, private TranslateableTextHandler $translateableTextHandler)
+    {
     }
 
     /**

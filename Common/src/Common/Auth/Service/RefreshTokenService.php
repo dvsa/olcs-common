@@ -21,16 +21,13 @@ class RefreshTokenService
 
     public const EXPIRES_WITHIN_SECONDS = 60;
 
-    protected CommandSender $commandSender;
-
     protected Session $session;
 
     /**
      * RefreshTokenService constructor.
      */
-    public function __construct(CommandSender $commandSender)
+    public function __construct(protected CommandSender $commandSender)
     {
-        $this->commandSender = $commandSender;
     }
 
     /**

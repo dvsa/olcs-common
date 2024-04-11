@@ -10,11 +10,8 @@ use Common\Util\Escape;
  */
 class IrhpPermitApplicationRefLink implements FormatterPluginManagerInterface
 {
-    private UrlHelperService $urlHelper;
-
-    public function __construct(UrlHelperService $urlHelper)
+    public function __construct(private UrlHelperService $urlHelper)
     {
-        $this->urlHelper = $urlHelper;
     }
 
     /**

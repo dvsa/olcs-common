@@ -267,10 +267,9 @@ trait DynamicTrait
      * Sets the value, if an array is passed in with an id key it assumes it's a ref_data entity and sets the value
      * to be equal to the id
      *
-     * @param mixed $value
      * @return \Laminas\Form\Element
      */
-    public function setValue($value)
+    public function setValue(mixed $value)
     {
         if ($value === []) {
             $value = null;

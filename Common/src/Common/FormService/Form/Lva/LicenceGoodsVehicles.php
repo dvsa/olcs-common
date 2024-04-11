@@ -13,17 +13,8 @@ use LmcRbacMvc\Service\AuthorizationService;
  */
 class LicenceGoodsVehicles extends AbstractGoodsVehicles
 {
-    protected FormHelperService $formHelper;
-
-    protected AuthorizationService $authService;
-
-    protected FormServiceManager $formServiceLocator;
-
-    public function __construct(FormHelperService $formHelper, AuthorizationService $authService, FormServiceManager $formServiceLocator)
+    public function __construct(protected FormHelperService $formHelper, protected AuthorizationService $authService, protected FormServiceManager $formServiceLocator)
     {
-        $this->formHelper = $formHelper;
-        $this->authService = $authService;
-        $this->formServiceLocator = $formServiceLocator;
     }
 
     protected function alterForm($form)

@@ -11,18 +11,14 @@ use Common\Service\Helper\TranslationHelperService;
  */
 class AbstractReviewServiceServices
 {
-    /** @var TranslationHelperService */
-    private $translationHelper;
-
     /**
      * Create service instance
      *
      *
      * @return AbstractReviewServiceServices
      */
-    public function __construct(TranslationHelperService $translationHelper)
+    public function __construct(private TranslationHelperService $translationHelper)
     {
-        $this->translationHelper = $translationHelper;
     }
 
     /**

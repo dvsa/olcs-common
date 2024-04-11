@@ -37,48 +37,8 @@ class FormHelperService
 
     public const ALTER_LABEL_PREPEND = 2;
 
-    /** @var AnnotationBuilder */
-    private $formAnnotationBuilder;
-
-    /** @var array */
-    private $config;
-
-    /** @var AuthorizationService */
-    private $authorizationService;
-
-    /** @var RendererInterface */
-    private $viewRenderer;
-
-    /** @var AddressDataService */
-    private $addressData;
-
-    /** @var AddressHelperService */
-    private $addressHelper;
-
-    /** @var DateHelperService */
-    private $dateHelper;
-
-    /** @var TranslationHelperService */
-    private $translationHelper;
-
-    public function __construct(
-        AnnotationBuilder $formAnnotationBuilder,
-        array $config,
-        AuthorizationService $authorizationService,
-        RendererInterface $viewRenderer,
-        AddressDataService $addressData,
-        AddressHelperService $addressHelper,
-        DateHelperService $dateHelper,
-        TranslationHelperService $translationHelper
-    ) {
-        $this->formAnnotationBuilder = $formAnnotationBuilder;
-        $this->config = $config;
-        $this->authorizationService = $authorizationService;
-        $this->viewRenderer = $viewRenderer;
-        $this->addressData = $addressData;
-        $this->addressHelper = $addressHelper;
-        $this->dateHelper = $dateHelper;
-        $this->translationHelper = $translationHelper;
+    public function __construct(private AnnotationBuilder $formAnnotationBuilder, private array $config, private AuthorizationService $authorizationService, private RendererInterface $viewRenderer, private AddressDataService $addressData, private AddressHelperService $addressHelper, private DateHelperService $dateHelper, private TranslationHelperService $translationHelper)
+    {
     }
 
     /**
@@ -156,7 +116,7 @@ class FormHelperService
 
             if ($query !== '') {
                 $url .= '?' . $query;
-            } elseif (substr($url, -1) === '/') {
+            } elseif (str_ends_with($url, '/')) {
                 // @NOTE Had to add the following check in, as the trailing space hack was breaking filter forms
                 if (strtoupper($form->getAttribute('method')) === 'GET') {
                     $url .= '?i=e';
@@ -335,7 +295,7 @@ class FormHelperService
 
         try {
             $addressList = $this->addressData->getAddressesForPostcode($postcode);
-        } catch (\Exception $exception) {
+        } catch (\Exception) {
             // RestClient / ResponseHelper throw root exceptions :(
             $fieldset->get('searchPostcode')->setMessages(['postcode.error.not-available']);
             $this->removeAddressSelectFields($fieldset);
@@ -447,7 +407,7 @@ class FormHelperService
      */
     public function getElementAndInputParents($form, InputFilterInterface $filter, $elementReference)
     {
-        if (false !== strpos($elementReference, '->')) {
+        if (str_contains($elementReference, '->')) {
             [$container, $elementReference] = explode('->', $elementReference, 2);
 
             return $this->getElementAndInputParents(
@@ -527,7 +487,7 @@ class FormHelperService
             $filter = $form->getInputFilter();
         }
 
-        if (false !== strpos($reference, '->')) {
+        if (str_contains($reference, '->')) {
             [$index, $reference] = explode('->', $reference, 2);
 
             return $this->disableElement($form->get($index), $reference, $filter->get($index));

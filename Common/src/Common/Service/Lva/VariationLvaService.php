@@ -19,23 +19,8 @@ use Common\Service\Helper\UrlHelperService;
  */
 class VariationLvaService
 {
-    /** @var TranslationHelperService */
-    private $translationHelper;
-
-    /** @var GuidanceHelperService */
-    private $guidanceHelper;
-
-    /** @var UrlHelperService */
-    private $urlHelper;
-
-    public function __construct(
-        TranslationHelperService $translationHelper,
-        GuidanceHelperService $guidanceHelper,
-        UrlHelperService $urlHelper
-    ) {
-        $this->translationHelper = $translationHelper;
-        $this->guidanceHelper = $guidanceHelper;
-        $this->urlHelper = $urlHelper;
+    public function __construct(private TranslationHelperService $translationHelper, private GuidanceHelperService $guidanceHelper, private UrlHelperService $urlHelper)
+    {
     }
 
     /**

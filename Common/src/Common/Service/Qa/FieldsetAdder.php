@@ -6,38 +6,22 @@ use Common\Service\Qa\FieldsetModifier\FieldsetModifier;
 
 class FieldsetAdder
 {
-    /** @var FieldsetPopulatorProvider */
-    private $fieldsetPopulatorProvider;
-
-    /** @var FieldsetFactory */
-    private $fieldsetFactory;
-
-    /** @var FieldsetModifier */
-    private $fieldsetModifier;
-
     /**
      * Create service instance
      *
      *
      * @return FieldsetAdder
      */
-    public function __construct(
-        FieldsetPopulatorProvider $fieldsetPopulatorProvider,
-        FieldsetFactory $fieldsetFactory,
-        FieldsetModifier $fieldsetModifier
-    ) {
-        $this->fieldsetPopulatorProvider = $fieldsetPopulatorProvider;
-        $this->fieldsetFactory = $fieldsetFactory;
-        $this->fieldsetModifier = $fieldsetModifier;
+    public function __construct(private FieldsetPopulatorProvider $fieldsetPopulatorProvider, private FieldsetFactory $fieldsetFactory, private FieldsetModifier $fieldsetModifier)
+    {
     }
 
     /**
      * Add a question fieldset to the qa fieldset based on the supplied options array
      *
-     * @param mixed $form
      * @param string $usageContext
      */
-    public function add($form, array $options, $usageContext): void
+    public function add(mixed $form, array $options, $usageContext): void
     {
         $fieldset = $this->fieldsetFactory->create($options['fieldsetName'], $options['type']);
 

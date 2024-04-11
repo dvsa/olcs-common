@@ -14,7 +14,7 @@ use Laminas\Form\Element\MultiCheckbox;
  */
 class RestrictedCountriesMultiCheckboxFactoryTest extends MockeryTestCase
 {
-    public function testCreate()
+    public function testCreate(): void
     {
         $name = 'yesContent';
 
@@ -38,7 +38,19 @@ class RestrictedCountriesMultiCheckboxFactoryTest extends MockeryTestCase
 
         $this->assertInstanceOf(MultiCheckbox::class, $multiCheckbox);
         $this->assertEquals($name, $multiCheckbox->getName());
-        Assert::assertArraySubset($expectedOptions, $multiCheckbox->getOptions());
-        Assert::assertArraySubset($expectedAttributes, $multiCheckbox->getAttributes());
+        $this->assertArraySubsetRecursive($expectedOptions, $multiCheckbox->getOptions());
+        $this->assertArraySubsetRecursive($expectedAttributes, $multiCheckbox->getAttributes());
+    }
+
+    private function assertArraySubsetRecursive($subset, $array): void
+    {
+        foreach ($subset as $key => $value) {
+            $this->assertArrayHasKey($key, $array);
+            if (is_array($value)) {
+                $this->assertArraySubsetRecursive($value, $array[$key]);
+            } else {
+                $this->assertEquals($value, $array[$key]);
+            }
+        }
     }
 }

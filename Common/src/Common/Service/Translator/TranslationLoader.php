@@ -20,18 +20,14 @@ class TranslationLoader implements RemoteLoaderInterface
 
     public const ERR_UNABLE_TO_LOAD = 'Translations could not be loaded: %s';
 
-    /** @var CachingQueryService $queryService */
-    private $queryService;
-
     /**
      * TranslationLoader constructor.
      *
      *
      * @return void
      */
-    public function __construct(CachingQueryService $queryService)
+    public function __construct(private CachingQueryService $queryService)
     {
-        $this->queryService = $queryService;
     }
 
     /**

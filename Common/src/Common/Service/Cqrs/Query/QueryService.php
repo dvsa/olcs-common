@@ -40,11 +40,6 @@ class QueryService implements QueryServiceInterface
     protected $request;
 
     /**
-     * @var Container
-     */
-    private $session;
-
-    /**
      * QueryService constructor.
      *
      * @param RouteInterface $router Router
@@ -59,14 +54,13 @@ class QueryService implements QueryServiceInterface
         Request $request,
         $showApiMessages,
         FlashMessengerHelperService $flashMessenger,
-        Container $session
+        private Container $session
     ) {
         $this->router = $router;
         $this->client = $client;
         $this->request = $request;
         $this->showApiMessages = $showApiMessages;
         $this->flashMessenger = $flashMessenger;
-        $this->session = $session;
     }
 
     /**

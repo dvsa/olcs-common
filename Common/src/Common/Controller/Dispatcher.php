@@ -8,14 +8,8 @@ use Laminas\View\Model\ViewModel;
 
 class Dispatcher extends AbstractOlcsController
 {
-    /**
-     * @var object
-     */
-    private $delegate;
-
-    public function __construct(object $delegate)
+    public function __construct(private object $delegate)
     {
-        $this->delegate = $delegate;
     }
 
     public function getDelegate(): object

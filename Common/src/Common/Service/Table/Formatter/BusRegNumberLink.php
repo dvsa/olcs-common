@@ -22,20 +22,14 @@ class BusRegNumberLink implements FormatterPluginManagerInterface
 
     public const LABEL_COLOUR = 'orange';
 
-    protected TranslatorDelegator $translator;
-
     protected $viewHelperManager;
-
-    protected UrlHelperService $urlHelper;
 
     /**
      * @param $viewHelperManager
      */
-    public function __construct(TranslatorDelegator $translator, HelperPluginManager $viewHelperManager, UrlHelperService $urlHelper)
+    public function __construct(protected TranslatorDelegator $translator, HelperPluginManager $viewHelperManager, protected UrlHelperService $urlHelper)
     {
-        $this->translator = $translator;
         $this->viewHelperManager = $viewHelperManager;
-        $this->urlHelper = $urlHelper;
     }
 
     /**

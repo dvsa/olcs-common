@@ -6,24 +6,14 @@ use Common\Service\Helper\TranslationHelperService;
 
 class TranslateableTextHandler
 {
-    /** @var FormattedTranslateableTextParametersGenerator */
-    private $formattedTranslateableTextParametersGenerator;
-
-    /** @var TranslationHelperService */
-    private $translationHelper;
-
     /**
      * Create service instance
      *
      *
      * @return TranslateableTextHandler
      */
-    public function __construct(
-        FormattedTranslateableTextParametersGenerator $formattedTranslateableTextParametersGenerator,
-        TranslationHelperService $translationHelper
-    ) {
-        $this->formattedTranslateableTextParametersGenerator = $formattedTranslateableTextParametersGenerator;
-        $this->translationHelper = $translationHelper;
+    public function __construct(private FormattedTranslateableTextParametersGenerator $formattedTranslateableTextParametersGenerator, private TranslationHelperService $translationHelper)
+    {
     }
 
     /**

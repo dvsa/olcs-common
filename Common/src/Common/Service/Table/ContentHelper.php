@@ -28,13 +28,6 @@ class ContentHelper
     private $location;
 
     /**
-     * $object to be used in scope
-     *
-     * @var object
-     */
-    private $object;
-
-    /**
      * Cached partials
      *
      * @var array
@@ -57,14 +50,15 @@ class ContentHelper
      * @param string $location
      * @param object $object
      */
-    public function __construct($location = '', $object = null)
+    public function __construct($location = '', /**
+     * $object to be used in scope
+     */
+    private $object = null)
     {
         $this->location = rtrim($location, '/') . '/';
 
-        $this->object = $object;
-
-        if (method_exists($object, 'getTranslator')) {
-            $this->setTranslator($object->getTranslator());
+        if (method_exists($this->object, 'getTranslator')) {
+            $this->setTranslator($this->object->getTranslator());
         }
 
         $escaper = new \Laminas\Escaper\Escaper('utf-8');

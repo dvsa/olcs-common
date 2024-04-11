@@ -15,11 +15,8 @@ class CaseEntityNrStatus implements FormatterPluginManagerInterface
 
     private const TEMPLATE_APP = '%s (%s)<br />/%s (%s)';
 
-    private UrlHelperService $urlHelper;
-
-    public function __construct(UrlHelperService $urlHelper)
+    public function __construct(private UrlHelperService $urlHelper)
     {
-        $this->urlHelper = $urlHelper;
     }
 
     /**

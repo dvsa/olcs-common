@@ -15,15 +15,12 @@ namespace Common\Service\Table\Formatter;
  */
 class StackValueReplacer implements FormatterPluginManagerInterface
 {
-    private StackValue $stackValueFormatter;
-
     /**
      * @param Sum       $sumFormatter
      * @param FeeAmount $feeAmountFormatter
      */
-    public function __construct(StackValue $stackValueFormatter)
+    public function __construct(private StackValue $stackValueFormatter)
     {
-        $this->stackValueFormatter = $stackValueFormatter;
     }
 
     /**

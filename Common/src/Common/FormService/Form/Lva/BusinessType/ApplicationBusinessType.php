@@ -17,24 +17,8 @@ class ApplicationBusinessType extends AbstractBusinessType
 {
     protected $lva = 'application';
 
-    protected FormHelperService $formHelper;
-
-    protected AuthorizationService $authService;
-
-    protected GuidanceHelperService $guidanceHelper;
-
-    protected FormServiceManager $formServiceLocator;
-
-    public function __construct(
-        FormHelperService $formHelper,
-        AuthorizationService $authService,
-        GuidanceHelperService $guidanceHelper,
-        FormServiceManager $formServiceLocator
-    ) {
-        $this->formHelper = $formHelper;
-        $this->authService = $authService;
-        $this->guidanceHelper = $guidanceHelper;
-        $this->formServiceLocator = $formServiceLocator;
+    public function __construct(protected FormHelperService $formHelper, protected AuthorizationService $authService, protected GuidanceHelperService $guidanceHelper, protected FormServiceManager $formServiceLocator)
+    {
     }
 
     protected function alterForm(Form $form, $params)

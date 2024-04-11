@@ -48,11 +48,6 @@ class CommandService
     protected $request;
 
     /**
-     * @var Container
-     */
-    private $session;
-
-    /**
      * CommandService constructor.
      *
      * @param RouteInterface              $router          Router
@@ -67,14 +62,13 @@ class CommandService
         Request $request,
         $showApiMessages,
         $flashMessenger,
-        Container $session
+        private Container $session
     ) {
         $this->router = $router;
         $this->client = $client;
         $this->request = $request;
         $this->showApiMessages = $showApiMessages;
         $this->flashMessenger = $flashMessenger;
-        $this->session = $session;
     }
 
     /**

@@ -29,20 +29,15 @@ class VehiclesNumber extends AbstractValidator
     ];
 
     /**
-     * Holds the name
-     *
-     * @var string
-     */
-    private $name;
-
-    /**
      * Pass in the element name
      *
      * @param string $name
      */
-    public function __construct($name)
+    public function __construct(/**
+     * Holds the name
+     */
+    private $name)
     {
-        $this->name = $name;
         parent::__construct([]);
     }
 

@@ -8,22 +8,14 @@ use Laminas\Form\Fieldset;
 
 class InfoIconAdder
 {
-    /** @var TranslationHelperService */
-    private $translator;
-
-    /** @var HtmlAdder */
-    private $htmlAdder;
-
     /**
      * Create service instance
      *
      *
      * @return InfoIconAdder
      */
-    public function __construct(TranslationHelperService $translator, HtmlAdder $htmlAdder)
+    public function __construct(private TranslationHelperService $translator, private HtmlAdder $htmlAdder)
     {
-        $this->translator = $translator;
-        $this->htmlAdder = $htmlAdder;
     }
 
     /**
