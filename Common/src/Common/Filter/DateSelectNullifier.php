@@ -13,22 +13,22 @@ class DateSelectNullifier extends AbstractFilter
     /**
      * Returns the result of filtering $value
      *
-     * @param  array|string $date Date
+     * @param  array|string $value Date
      *
-     * @return mixed
+     * @return string|null
      */
-    public function filter($date)
+    public function filter($value): ?string
     {
-        if (empty($date)) {
+        if (empty($value)) {
             return null;
         }
-        if (is_string($date)) {
-            return $date;
+        if (is_string($value)) {
+            return $value;
         }
-        if (!is_array($date) || empty($date['year']) || empty($date['month']) || empty($date['day'])) {
+        if (!is_array($value) || empty($value['year']) || empty($value['month']) || empty($value['day'])) {
             return null;
         }
 
-        return $date['year'] . '-' . $date['month'] . '-' . $date['day'];
+        return $value['year'] . '-' . $value['month'] . '-' . $value['day'];
     }
 }
