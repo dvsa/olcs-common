@@ -53,10 +53,14 @@ abstract class AbstractData implements RestClientAware
 
     /**
      * @param $key
-     * @param $data
+     * @param false|string[] $data
+     *
      * @return $this
+     *
+     * @psalm-param 'results' $key
+     * @psalm-param false|list{'results'} $data
      */
-    public function setData($key, $data)
+    public function setData(string $key, array|false $data)
     {
         $this->data[$key] = $data;
         return $this;
@@ -64,8 +68,10 @@ abstract class AbstractData implements RestClientAware
 
     /**
      * @return array
+     *
+     * @psalm-param 'results' $key
      */
-    public function getData($key)
+    public function getData(string $key)
     {
         return $this->data[$key] ?? null;
     }

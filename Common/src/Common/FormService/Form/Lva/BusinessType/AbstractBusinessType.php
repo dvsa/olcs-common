@@ -19,7 +19,7 @@ abstract class AbstractBusinessType extends AbstractLvaFormService
 
     protected GuidanceHelperService $guidanceHelper;
 
-    public function getForm($inForceLicences, bool $hasOrganisationSubmittedLicenceApplication)
+    public function getForm(bool $inForceLicences, bool $hasOrganisationSubmittedLicenceApplication): \Common\Form\Form
     {
         $form = $this->formHelper->createForm('Lva\BusinessType');
 
@@ -33,12 +33,19 @@ abstract class AbstractBusinessType extends AbstractLvaFormService
         return $form;
     }
 
-    protected function alterForm(Form $form, $params)
+    /**
+     * @param (bool|mixed)[] $params
+     *
+     * @psalm-param array{inForceLicences: mixed, hasOrganisationSubmittedLicenceApplication: bool} $params
+     *
+     * @return void
+     */
+    protected function alterForm(Form $form, array $params)
     {
         // Noop
     }
 
-    protected function lockForm(Form $form, $removeStandardActions = true)
+    protected function lockForm(Form $form, $removeStandardActions = true): void
     {
         $element = $form->get('data')->get('type');
 

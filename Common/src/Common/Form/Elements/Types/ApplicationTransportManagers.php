@@ -55,7 +55,12 @@ class ApplicationTransportManagers extends Fieldset
         $this->add($searchButton);
     }
 
-    public function setMessages($messages): void
+    /**
+     * @param string[] $messages
+     *
+     * @psalm-param list{'messages'} $messages
+     */
+    public function setMessages(array $messages): void
     {
         $this->messages = $messages;
     }

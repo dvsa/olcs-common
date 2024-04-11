@@ -10,10 +10,7 @@ use Laminas\Http\Response;
  */
 class MultiResponseHelper extends ResponseHelper
 {
-    /**
-     * @return array|bool
-     */
-    public function handleResponse()
+    public function handleResponse(): array|bool|null
     {
         $this->body = $this->response->getBody();
         $this->checkForValidResponseBody($this->body);

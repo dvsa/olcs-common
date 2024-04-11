@@ -32,7 +32,12 @@ class UnlicensedVehicleWeightTest extends TestCase
         $this->assertEquals($expected, (new \Common\Service\Table\Formatter\UnlicensedVehicleWeight(new StackHelperService()))->format($data, $column));
     }
 
-    public function formatProvider()
+    /**
+     * @return ((int|null)[][]|string)[][]
+     *
+     * @psalm-return array{'empty weight': list{array{vehicle: array{platedWeight: null}}, ''}, 'weight specified': list{array{vehicle: array{platedWeight: 99}}, '99 kg'}}
+     */
+    public function formatProvider(): array
     {
         return [
             'empty weight' => [

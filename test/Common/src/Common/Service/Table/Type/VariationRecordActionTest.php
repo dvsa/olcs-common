@@ -66,7 +66,12 @@ class VariationRecordActionTest extends MockeryTestCase
         );
     }
 
-    public function provider()
+    /**
+     * @return (null|string)[][]
+     *
+     * @psalm-return list{array{action: 'A', expectPrefix: 'new', expect: '(TRSLTD_STATUS) <button data-prevent-double-click="true" data-module="govuk-button" role="link" type="submit" class="action-button-link " name="table[action][foo][7]" >link-text</button>'}, array{action: 'U', expectPrefix: 'updated', expect: '(TRSLTD_STATUS) <button data-prevent-double-click="true" data-module="govuk-button" role="link" type="submit" class="action-button-link " name="table[action][foo][7]" >link-text</button>'}, array{action: 'C', expectPrefix: 'current', expect: '(TRSLTD_STATUS) <button data-prevent-double-click="true" data-module="govuk-button" role="link" type="submit" class="action-button-link " name="table[action][foo][7]" disabled="disabled">link-text</button>'}, array{action: 'D', expectPrefix: 'removed', expect: '(TRSLTD_STATUS) <button data-prevent-double-click="true" data-module="govuk-button" role="link" type="submit" class="action-button-link " name="table[action][foo][7]" disabled="disabled">link-text</button>'}, array{action: 'ABC', expectPrefix: null, expect: '<button data-prevent-double-click="true" data-module="govuk-button" role="link" type="submit" class="action-button-link " name="table[action][foo][7]" >link-text</button>'}}
+     */
+    public function provider(): array
     {
         return [
             [

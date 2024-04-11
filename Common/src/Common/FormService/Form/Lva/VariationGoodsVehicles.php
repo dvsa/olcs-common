@@ -19,6 +19,9 @@ class VariationGoodsVehicles extends AbstractGoodsVehicles
         $this->authService = $authService;
     }
 
+    /**
+     * @return void
+     */
     protected function alterForm($form)
     {
         $this->removeStandardFormActions($form);

@@ -611,9 +611,13 @@ class FormRowTest extends MockeryTestCase
      *
      * @param string $type    Element type
      * @param array  $options Options for element
+     * @param string[] $attributes
+     *
      * @return \Laminas\Form\Element
+     *
+     * @psalm-param array{id?: 'security', class?: 'class'|'govuk-visually-hidden'} $attributes
      */
-    private function setUpElement($type = 'Text', $options = [], $attributes = ['class' => 'class'])
+    private function setUpElement($type = 'Text', $options = [], array $attributes = ['class' => 'class'])
     {
         if (!str_contains($type, '\\')) {
             $type = '\Laminas\Form\Element\\' . ucfirst($type);
@@ -640,7 +644,7 @@ class FormRowTest extends MockeryTestCase
         $this->setUpServiceManager();
     }
 
-    protected function setUpSut()
+    protected function setUpSut(): void
     {
         $this->sut = new CommonHelper\FormRow([]);
         $this->sut->setView($this->phpRenderer());
@@ -652,6 +656,9 @@ class FormRowTest extends MockeryTestCase
         return (new CommonHelper\FormElementErrorsFactory())->__invoke($serviceLocator, CommonHelper\FormElementErrors::class);
     }
 
+    /**
+     * @return void
+     */
     protected function setUpDefaultServices(ServiceManager $serviceManager)
     {
         $serviceManager->setFactory(FormElementMessageFormatter::class, new FormElementMessageFormatterFactory());
@@ -659,9 +666,6 @@ class FormRowTest extends MockeryTestCase
         $this->phpRenderer();
     }
 
-    /**
-     * @return MockInterface|PhpRenderer
-     */
     protected function phpRenderer(): MockObject
     {
         if (! $this->serviceManager->has(PhpRenderer::class)) {

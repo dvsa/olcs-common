@@ -41,7 +41,7 @@ class SurrenderSection
         $this->translator = $translator;
     }
 
-    public function setHeading(mixed $heading): void
+    public function setHeading(string $heading): void
     {
         $this->heading = $heading;
     }
@@ -78,6 +78,11 @@ class SurrenderSection
     }
 
 
+    /**
+     * @param (int|string)|false|null $label
+     *
+     * @psalm-param array-key|false|null $label
+     */
     protected function makeChangeLink($label = null)
     {
         $returnRoutes = [

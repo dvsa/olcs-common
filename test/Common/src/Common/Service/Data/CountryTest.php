@@ -43,7 +43,12 @@ class CountryTest extends AbstractDataServiceTestCase
         $this->assertEquals($expected, $this->sut->fetchListOptions($category));
     }
 
-    public function provideFetchListOptions()
+    /**
+     * @return (array|false|string)[][]
+     *
+     * @psalm-return list{list{array, '', array}, list{false, '', array<never, never>}, list{array, 'isMemberState', array{'val-1': 'Value 1', 'val-2': 'Value 2', 'val-3': 'Value 3'}}, list{array, 'ecmtConstraint', array{'val-2': 'Value 2', 'val-5': 'Value 5'}}, list{array, 'isPermitState', array{'val-3': 'Value 3', 'val-6': 'Value 6'}}}
+     */
+    public function provideFetchListOptions(): array
     {
         return [
             [$this->getSingleSource(), '', $this->getSingleExpected()],

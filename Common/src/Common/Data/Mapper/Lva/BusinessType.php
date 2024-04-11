@@ -17,6 +17,11 @@ use Common\Data\Mapper\MapperInterface;
  */
 class BusinessType implements MapperInterface
 {
+    /**
+     * @return (array|mixed)[]
+     *
+     * @psalm-return array{version: mixed, data: array{type: mixed}}
+     */
     public static function mapFromResult(array $data)
     {
         return [

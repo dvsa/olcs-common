@@ -21,6 +21,9 @@ class VariationBusinessType extends AbstractBusinessType
     {
     }
 
+    /**
+     * @return void
+     */
     protected function alterForm(Form $form, $params)
     {
         $this->formServiceLocator->get('lva-variation')->alterForm($form);

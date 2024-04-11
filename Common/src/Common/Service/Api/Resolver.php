@@ -18,7 +18,7 @@ class Resolver extends AbstractPluginManager
      * @param $api
      * @return object
      */
-    public function getClient($api)
+    public function getClient(string $api)
     {
         return $this->get('Olcs\\RestService\\' . $api);
     }

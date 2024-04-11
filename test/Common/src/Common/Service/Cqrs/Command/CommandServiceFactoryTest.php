@@ -88,6 +88,9 @@ class CommandServiceFactoryTest extends MockeryTestCase
         $this->sut = new CommandServiceFactory();
     }
 
+    /**
+     * @return void
+     */
     protected function setUpDefaultServices(ServiceManager $serviceManager)
     {
         $this->config();
@@ -96,7 +99,7 @@ class CommandServiceFactoryTest extends MockeryTestCase
         $this->serviceManager->setService('Helper\FlashMessenger', $this->setUpMockService(FlashMessengerHelperService::class));
     }
 
-    protected function config(array $config = [])
+    protected function config(array $config = []): void
     {
         $this->serviceManager->setService('Config', $config);
     }

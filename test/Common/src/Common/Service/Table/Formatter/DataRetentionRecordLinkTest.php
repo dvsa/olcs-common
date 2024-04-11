@@ -205,7 +205,13 @@ class DataRetentionRecordLinkTest extends TestCase
         );
     }
 
-    private function getViewHelperWithStatusMock($statusArray, $statusLabel): void
+    /**
+     * @param string[] $statusArray
+     *
+     * @psalm-param 'status label'|'statusLabel' $statusLabel
+     * @psalm-param array{value: 'To review', colour: 'green'} $statusArray
+     */
+    private function getViewHelperWithStatusMock(array $statusArray, string $statusLabel): void
     {
         $mockStatusHelper = m::mock(StatusHelper::class);
         $mockStatusHelper->shouldReceive('__invoke')

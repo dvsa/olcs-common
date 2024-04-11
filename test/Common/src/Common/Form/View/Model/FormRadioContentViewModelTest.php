@@ -167,7 +167,7 @@ class FormRadioContentViewModelTest extends MockeryTestCase
         $this->assertEquals(static::ELEMENT_CLASS_STRING_WITH_CUSTOM_CLASS, $this->sut->getVariable(static::CLASS_VARIABLE_KEY));
     }
 
-    protected function setUpSut(...$args)
+    protected function setUpSut(...$args): void
     {
         $this->sut = new FormRadioContentViewModel(...$args);
     }

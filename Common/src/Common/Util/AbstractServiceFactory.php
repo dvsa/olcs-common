@@ -40,9 +40,9 @@ class AbstractServiceFactory implements AbstractFactoryInterface
      *
      * @param string $name Class name
      *
-     * @return string
+     * @return class-string|false
      */
-    protected function getClassName($name)
+    protected function getClassName($name): string|false
     {
         $namespaces = [
             'Olcs\Service\\',

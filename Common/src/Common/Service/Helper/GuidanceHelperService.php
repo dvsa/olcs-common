@@ -21,7 +21,7 @@ class GuidanceHelperService
     {
     }
 
-    public function append($message): void
+    public function append(string $message): void
     {
         $this->placeholder->getContainer('guidance')->append($message);
     }

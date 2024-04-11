@@ -117,11 +117,14 @@ class IdentityProviderFactoryTest extends MockeryTestCase
         $this->sut = new IdentityProviderFactory();
     }
 
-    protected function config(array $config = [])
+    protected function config(array $config = []): void
     {
         $this->serviceManager->setService('config', $config);
     }
 
+    /**
+     * @return void
+     */
     protected function setUpDefaultServices(ServiceManager $serviceManager)
     {
         $this->serviceManager->setService('CommandSender', m::mock(CommandSender::class));

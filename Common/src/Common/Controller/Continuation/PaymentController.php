@@ -39,10 +39,8 @@ class PaymentController extends AbstractContinuationController
 
     /**
      * Index page
-     *
-     * @return ViewModel
      */
-    public function indexAction()
+    public function indexAction(): ViewModel|\Laminas\Http\Response
     {
         $data = $this->getContinuationDetailData();
         $fees = $data['fees'];
@@ -95,10 +93,8 @@ class PaymentController extends AbstractContinuationController
      * @param array        $feeIds              fee id
      * @param int          $organisationId      organisation id
      * @param string|false $storedCardReference a reference to the stored card to use
-     *
-     * @return ViewModel
      */
-    protected function payFees($feeIds, $organisationId, $storedCardReference = false)
+    protected function payFees($feeIds, $organisationId, $storedCardReference = false): ViewModel|\Laminas\Http\Response
     {
         $cpmsRedirectUrl = $this->url()->fromRoute(
             'continuation/payment/result',

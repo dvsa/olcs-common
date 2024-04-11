@@ -114,9 +114,6 @@ class FormElementErrorsTest extends MockeryTestCase
         return (new FormElementErrorsFactory())->__invoke($container, FormElementErrors::class);
     }
 
-    /**
-     * @return MockInterface|Translator
-     */
     protected function setUpTranslator(): MockInterface
     {
         $instance = $this->setUpMockService(Translator::class);
@@ -129,6 +126,9 @@ class FormElementErrorsTest extends MockeryTestCase
         return (new FormLabelFactory())->__invoke($container, FormLabel::class);
     }
 
+    /**
+     * @return void
+     */
     protected function setUpDefaultServices(ServiceManager $serviceManager)
     {
         $serviceManager->setService(TranslatorInterface::class, $this->setUpTranslator());

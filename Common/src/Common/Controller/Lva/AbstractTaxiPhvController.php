@@ -513,9 +513,8 @@ abstract class AbstractTaxiPhvController extends AbstractController
      * get traffic area validation message
      *
      * @param array $message message array
-     *
      */
-    private function getTrafficAreaValidationMessage(array $message)
+    private function getTrafficAreaValidationMessage(array $message): array|string
     {
         if (key($message) === 'PHL_INVALID_TA') {
             return $message;

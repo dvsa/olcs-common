@@ -28,7 +28,12 @@ class InterimOcCheckboxTest extends MockeryTestCase
         $this->assertEquals($expected, (new \Common\Service\Table\Formatter\InterimOcCheckbox())->format($data));
     }
 
-    public function formatProvider()
+    /**
+     * @return ((int|string)[]|string)[][]
+     *
+     * @psalm-return list{list{array{isInterim: 'Y', id: 1}, '<input type="checkbox" value="1" name="operatingCentres[id][]" checked>'}, list{array{isInterim: 'N', id: 1}, '<input type="checkbox" value="1" name="operatingCentres[id][]" >'}, list{array{id: 1}, '<input type="checkbox" value="1" name="operatingCentres[id][]" >'}}
+     */
+    public function formatProvider(): array
     {
         return [
             [

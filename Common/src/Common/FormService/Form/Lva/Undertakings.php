@@ -15,7 +15,7 @@ class Undertakings
     {
     }
 
-    public function getForm()
+    public function getForm(): \Common\Form\Form
     {
         $form = $this->formHelper->createForm('Lva\ApplicationUndertakings');
 

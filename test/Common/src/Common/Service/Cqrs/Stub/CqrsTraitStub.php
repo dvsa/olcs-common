@@ -8,12 +8,15 @@ class CqrsTraitStub
 {
     use CqrsTrait;
 
-    public function testShowApiMessagesFromResponse($response): void
+    public function testShowApiMessagesFromResponse(\Mockery\LegacyMockInterface $response): void
     {
         $this->showApiMessagesFromResponse($response);
     }
 
-    public function setFlashMessenger($msngr): void
+    /**
+     * @param \Mockery\LegacyMockInterface&\Mockery\MockInterface&\Common\Service\Helper\FlashMessengerHelperService $msngr
+     */
+    public function setFlashMessenger(\Common\Service\Helper\FlashMessengerHelperService $msngr): void
     {
         $this->flashMessenger = $msngr;
     }

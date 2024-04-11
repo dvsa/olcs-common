@@ -17,7 +17,7 @@ class ControllerStub extends LaminasAbstractActionController
     {
     }
 
-    public function getPlaceholder()
+    public function getPlaceholder(): Placeholder
     {
         return $this->placeholder;
     }

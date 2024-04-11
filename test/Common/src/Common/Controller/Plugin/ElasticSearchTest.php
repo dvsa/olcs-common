@@ -267,7 +267,12 @@ class ElasticSearchTest extends MockeryTestCase
         $plugin->configureNavigation(['remove-id']);
     }
 
-    private function getMockSearchObjectArray()
+    /**
+     * @return string[]
+     *
+     * @psalm-return array{index: 'foo', search: 'SEARCH'}
+     */
+    private function getMockSearchObjectArray(): array
     {
         return [
             'index' => 'foo',

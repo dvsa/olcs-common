@@ -60,12 +60,15 @@ class ResponseHelper
         return $this->response;
     }
 
-    public function setMethod($method): void
+    /**
+     * @psalm-param 'POST'|'blah' $method
+     */
+    public function setMethod(string $method): void
     {
         $this->method = $method;
     }
 
-    public function setParams($params)
+    public function setParams(array $params): void
     {
     }
 
@@ -74,6 +77,9 @@ class ResponseHelper
         return $this->data;
     }
 
+    /**
+     * @return bool|null
+     */
     public function handleResponse()
     {
         $this->body = $this->response->getBody();

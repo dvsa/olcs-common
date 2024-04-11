@@ -56,6 +56,9 @@ class RefreshTokenServiceFactoryTest extends MockeryTestCase
         $this->sut = new RefreshTokenServiceFactory();
     }
 
+    /**
+     * @return void
+     */
     protected function setUpDefaultServices(ServiceManager $serviceManager)
     {
         $serviceManager->setService('CommandSender', $this->setUpMockService(CommandSender::class));

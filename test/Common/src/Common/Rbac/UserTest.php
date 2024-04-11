@@ -29,7 +29,12 @@ class UserTest extends TestCase
         $this->assertEquals($isLocalAuthority, $this->sut->isLocalAuthority());
     }
 
-    public function dpIsLocalAuthority()
+    /**
+     * @return (bool|string)[][]
+     *
+     * @psalm-return list{list{'local-authority', true}, list{'anon', false}, list{'operator', false}, list{'partner', false}, list{'transport-manager', false}, list{'internal', false}, list{'not-identified', false}}
+     */
+    public function dpIsLocalAuthority(): array
     {
         return [
             [User::USER_TYPE_LOCAL_AUTHORITY, true],
@@ -51,7 +56,12 @@ class UserTest extends TestCase
         $this->assertEquals($isNotIdentified, $this->sut->isNotIdentified());
     }
 
-    public function dpIsNotIdentified()
+    /**
+     * @return (bool|string)[][]
+     *
+     * @psalm-return list{list{'local-authority', false}, list{'anon', false}, list{'operator', false}, list{'partner', false}, list{'transport-manager', false}, list{'internal', false}, list{'not-identified', true}}
+     */
+    public function dpIsNotIdentified(): array
     {
         return [
             [User::USER_TYPE_LOCAL_AUTHORITY, false],

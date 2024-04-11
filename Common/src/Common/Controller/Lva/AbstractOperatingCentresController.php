@@ -192,10 +192,8 @@ abstract class AbstractOperatingCentresController extends AbstractController
      *
      * @param \Laminas\Form\FormInterface $form       Form
      * @param array                    $crudAction Table parameters
-     *
-     * @return \Laminas\Http\Response
      */
-    protected function processUpdateOc($form, $crudAction)
+    protected function processUpdateOc($form, $crudAction): \Laminas\Http\Response|null
     {
         $dtoData = OperatingCentres::mapFromForm($form->getData());
         $dtoData['id'] = $this->getIdentifier();

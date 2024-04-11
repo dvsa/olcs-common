@@ -63,7 +63,7 @@ class ActionLinks extends Selector
      *
      * @return bool
      */
-    private function isLinkVisible($data, $column, $link, $default = true)
+    private function isLinkVisible($data, $column, $link, bool $default = true)
     {
         $setting = 'is' . $link . 'Visible';
         if (isset($column[$setting]) && is_callable($column[$setting])) {
@@ -83,7 +83,7 @@ class ActionLinks extends Selector
      *
      * @return string
      */
-    private function renderRemoveLink($data, $column, $remove, $removeAria, $ariaDescription)
+    private function renderRemoveLink($data, $column, $remove, $removeAria, string $ariaDescription)
     {
         $content = '';
         if ($this->isLinkVisible($data, $column, 'Remove')) {
@@ -97,7 +97,7 @@ class ActionLinks extends Selector
         return $content;
     }
 
-    private function getClasses($column): string
+    private function getClasses(array $column): string
     {
         if (isset($column['actionClasses'])) {
             return $column['actionClasses'];
@@ -117,7 +117,7 @@ class ActionLinks extends Selector
      *
      * @return string
      */
-    private function renderReplaceLink($data, $column, $replace, $replaceAria, $ariaDescription)
+    private function renderReplaceLink($data, $column, $replace, $replaceAria, string $ariaDescription)
     {
         $content = '';
         if ($this->isLinkVisible($data, $column, 'Replace', false)) {

@@ -255,7 +255,7 @@ class SelectorTest extends MockeryTestCase
     {
         $column = [
             'aria-attributes' => [
-                'label' => static fn() => 'Test translated string'
+                'label' => static fn(): string => 'Test translated string'
             ]
         ];
 
@@ -281,7 +281,7 @@ class SelectorTest extends MockeryTestCase
 
         $column = [
             'aria-attributes' => [
-                'label' => function ($data, $translator) use ($translatorMock) {
+                'label' => function ($data, $translator) use ($translatorMock): void {
                     $this->assertSame($translatorMock, $translator);
                 }
             ]
@@ -303,7 +303,7 @@ class SelectorTest extends MockeryTestCase
 
         $column = [
             'aria-attributes' => [
-                'label' => function ($data) use ($expectedData) {
+                'label' => function ($data) use ($expectedData): void {
                     $this->assertSame($expectedData, $data);
                 }
             ]
@@ -332,7 +332,12 @@ class SelectorTest extends MockeryTestCase
         );
     }
 
-    public function disabledCallbackProvider()
+    /**
+     * @return (int[]|string)[][]
+     *
+     * @psalm-return list{list{array{isExpiredForLicence: 1, id: 7}, '<input type="radio" name="table[id]" value="7" disabled="disabled" id="table[id][7]" />'}, list{array{isExpiredForLicence: 0, id: 7}, '<input type="radio" name="table[id]" value="7" id="table[id][7]" />'}}
+     */
+    public function disabledCallbackProvider(): array
     {
         return [
             [

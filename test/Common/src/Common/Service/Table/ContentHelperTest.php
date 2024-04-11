@@ -12,8 +12,10 @@ class ContentHelperTest extends TestCase
 {
     /**
      * Setup the content helper
+     *
+     * @param \PHPUnit\Framework\MockObject\MockObject&ContentHelper|\PHPUnit\Framework\MockObject\MockObject&Response|null $mock
      */
-    public function getContentHelper($mock)
+    public function getContentHelper(ContentHelper|Response|null $mock): ContentHelper
     {
         return new ContentHelper(__DIR__ . '/TestResources', $mock);
     }
@@ -77,8 +79,12 @@ class ContentHelperTest extends TestCase
 
     /**
      * Provider for renderAttributes
+     *
+     * @return ((int|null|string)[]|string)[][]
+     *
+     * @psalm-return list{list{array{name: 'bob', id: 123, type: 'test'}, 'name="bob" id="123" type="test"'}, list{array{name: null, id: 123, type: 'test'}, 'name="" id="123" type="test"'}, list{array<never, never>, ''}}
      */
-    public function attributesProvider()
+    public function attributesProvider(): array
     {
         return [
             [['name' => 'bob', 'id' => 123, 'type' => 'test'], 'name="bob" id="123" type="test"'],
@@ -101,8 +107,12 @@ class ContentHelperTest extends TestCase
 
     /**
      * Data provider for replaceContent
+     *
+     * @return (string|string[])[][]
+     *
+     * @psalm-return list{list{'<p>No Variables</p>', array<never, never>, '<p>No Variables</p>'}, list{'<p>Foo {{bar}}</p>', array{bar: 'BOB'}, '<p>Foo BOB</p>'}, list{'<p>Foo {{bar}} {{cake}}</p>', array{bar: 'BOB'}, '<p>Foo BOB </p>'}, list{'{{[paragraph]}}', array{content: 'FOO'}, '<p>FOO</p>'}, list{'{{[paragraph]}}{{[paragraph]}}', array{content: 'FOO'}, '<p>FOO</p><p>FOO</p>'}}
      */
-    public function replaceContentProvider()
+    public function replaceContentProvider(): array
     {
         return [
             ['<p>No Variables</p>', [], '<p>No Variables</p>'],

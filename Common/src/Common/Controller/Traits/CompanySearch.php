@@ -34,7 +34,7 @@ trait CompanySearch
         return $form;
     }
 
-    public function isValidCompanyNumber($companyNumber)
+    public function isValidCompanyNumber($companyNumber): bool
     {
         return strlen($companyNumber) === self::$companyNameLength;
     }

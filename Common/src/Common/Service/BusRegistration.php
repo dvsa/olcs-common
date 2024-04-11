@@ -105,10 +105,13 @@ class BusRegistration
     ];
 
     /**
-     * @param $licence
+     * @param (int|string)[] $licence
+     *
      * @return array
+     *
+     * @psalm-param array{id: 123, licNo: 'AB12563'} $licence
      */
-    public function createNew($licence)
+    public function createNew(array $licence)
     {
         $data = array_merge($this->defaultAll, $this->defaultNew);
         $data['status'] = self::STATUS_NEW;
@@ -125,9 +128,13 @@ class BusRegistration
 
     /**
      * @param $previous
+     * @param int[] $mostRecent
+     *
      * @return mixed
+     *
+     * @psalm-param array{variationNo: 3} $mostRecent
      */
-    public function createVariation($previous, $mostRecent)
+    public function createVariation($previous, array $mostRecent)
     {
         $data = $previous;
 
@@ -166,9 +173,12 @@ class BusRegistration
 
     /**
      * @param $parent
+     *
      * @return mixed
+     *
+     * @psalm-param array{variationNo: mixed} $mostRecent
      */
-    public function createCancellation($parent, $mostRecent)
+    public function createCancellation($parent, array $mostRecent)
     {
         $data = $this->createVariation($parent, $mostRecent);
 
@@ -181,7 +191,7 @@ class BusRegistration
     /**
      * @param $entity
      */
-    protected function scrubEntity(&$entity)
+    protected function scrubEntity(&$entity): void
     {
         //unset database metadata
         unset(

@@ -21,6 +21,10 @@ class EcmtNoOfPermitsElement extends Text implements InputProviderInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return (((string|string[]|true)[]|string)[][]|bool|null|string)[]
+     *
+     * @psalm-return array{name: null|string, required: false, continue_if_empty: true, filters: list{array{name: StringTrim::class}}, validators: list{array{name: NotEmpty::class, options: array{break_chain_on_failure: true, messages: array{isEmpty: 'qanda.ecmt.number-of-permits.error.enter-permits-needed'}}}, array{name: StringLength::class, options: array{max: '4', break_chain_on_failure: true, messages: array{stringLengthInvalid: 'qanda.ecmt.number-of-permits.error.enter-permits-needed', stringLengthTooLong: 'qanda.ecmt.number-of-permits.error.enter-permits-needed'}}}, array{name: Digits::class, options: array{break_chain_on_failure: true, messages: array{notDigits: 'qanda.ecmt.number-of-permits.error.enter-permits-needed'}}}}}
      */
     public function getInputSpecification(): array
     {

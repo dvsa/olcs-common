@@ -52,7 +52,12 @@ class DateBeforeValidatorTest extends MockeryTestCase
         );
     }
 
-    public function dpIsValidTrue()
+    /**
+     * @return string[][]
+     *
+     * @psalm-return list{list{'2020-01-02'}, list{'2020-01-01'}, list{'2019-12-31'}, list{'2019-12-30'}}
+     */
+    public function dpIsValidTrue(): array
     {
         return [
             ['2020-01-02'],
@@ -100,7 +105,12 @@ class DateBeforeValidatorTest extends MockeryTestCase
         );
     }
 
-    public function dpIsValidFalse()
+    /**
+     * @return string[][]
+     *
+     * @psalm-return list{list{'2020-01-03'}, list{'2020-01-04'}, list{'2020-01-05'}, list{'2020-02-01'}, list{'2021-03-28'}, list{'2022-01-01'}}
+     */
+    public function dpIsValidFalse(): array
     {
         return [
             ['2020-01-03'],

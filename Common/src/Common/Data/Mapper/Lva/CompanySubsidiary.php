@@ -17,6 +17,11 @@ use Common\Data\Mapper\MapperInterface;
  */
 class CompanySubsidiary implements MapperInterface
 {
+    /**
+     * @return array[]
+     *
+     * @psalm-return array{data: array}
+     */
     public static function mapFromResult(array $data)
     {
         return [

@@ -50,7 +50,12 @@ class TranslateTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public function provider()
+    /**
+     * @return ((string|string[])[]|string)[][]
+     *
+     * @psalm-return list{array{data: array{test: 'foo'}, column: array{name: 'test'}, expect: 'FOO'}, array{data: array{test: 'foo'}, column: array{content: 'test'}, expect: 'TEST'}, array{data: array{test: 'foo'}, column: array<never, never>, expect: ''}, array{data: array{test: array{foo: 'bar'}}, column: array{name: 'test->foo'}, expect: 'BAR'}}
+     */
+    public function provider(): array
     {
         return [
             [

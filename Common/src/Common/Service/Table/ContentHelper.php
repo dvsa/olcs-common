@@ -81,7 +81,7 @@ class ContentHelper
      *
      * @param \Laminas\Escaper\Escaper $escaper
      */
-    public function setEscaper($escaper)
+    public function setEscaper($escaper): static
     {
         $this->escaper = $escaper;
         return $this;

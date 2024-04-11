@@ -21,6 +21,9 @@ class ApplicationBusinessDetails extends AbstractBusinessDetails
         parent::__construct($formHelper);
     }
 
+    /**
+     * @return void
+     */
     protected function alterForm($form, $params)
     {
         $this->formServiceLocator->get('lva-application')->alterForm($form);

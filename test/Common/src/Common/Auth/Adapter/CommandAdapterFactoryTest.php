@@ -59,6 +59,9 @@ class CommandAdapterFactoryTest extends MockeryTestCase
         $this->sut = new CommandAdapterFactory();
     }
 
+    /**
+     * @return void
+     */
     protected function setUpDefaultServices(ServiceManager $serviceManager)
     {
         $this->serviceManager->setService('CommandSender', m::mock(CommandSender::class));

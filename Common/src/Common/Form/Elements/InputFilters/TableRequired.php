@@ -19,6 +19,10 @@ class TableRequired extends Table implements InputProviderInterface
 {
     /**
      * Provide default input rules for this element.
+     *
+     * @return (TableRequiredValidator[]|bool|null|string)[]
+     *
+     * @psalm-return array{name: null|string, required: true, continue_if_empty: true, allow_empty: false, filters: array<never, never>, validators: list{TableRequiredValidator}}
      */
     public function getInputSpecification(): array
     {

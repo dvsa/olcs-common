@@ -109,7 +109,7 @@ class CurrentUser extends AbstractHelper
         return (!empty($userData['userType']) && ($userData['userType'] === User::USER_TYPE_PARTNER));
     }
 
-    public function isTransportManager()
+    public function isTransportManager(): bool
     {
         $userData = $this->getUserData();
 

@@ -47,7 +47,7 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
         parent::__construct($niTextTranslationUtil, $authService);
     }
 
-    public function indexAction()
+    public function indexAction(): \Common\View\Model\Section|\Laminas\Http\Response
     {
         $request = $this->getRequest();
 
@@ -75,7 +75,7 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
             ->getForm();
     }
 
-    protected function getFormData()
+    protected function getFormData(): array
     {
         return $this->formatDataForForm($this->loadData());
     }
@@ -134,7 +134,7 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
      * Add customisation to the form dependent on which of five scenarios
      * is in play for OLCS-2855
      */
-    protected function alterForm(\Laminas\Form\Form $form, $formData)
+    protected function alterForm(\Laminas\Form\Form $form, $formData): void
     {
         $this->alterFormForLva($form);
 
@@ -211,6 +211,8 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
      *
      * @param array $data
      * @param string $service
+     *
+     * @return void
      */
     protected function save($data)
     {

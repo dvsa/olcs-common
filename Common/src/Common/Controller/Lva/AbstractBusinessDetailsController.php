@@ -452,7 +452,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         $form->setMessages($formMessages);
     }
 
-    private function isValidCompanyNumber($companyNumber)
+    private function isValidCompanyNumber($companyNumber): bool
     {
         return strlen($companyNumber) == self::COMPANY_NUMBER_LENGTH;
     }

@@ -31,7 +31,12 @@ class EcmtCandidatePermitSelectionValidatorTest extends MockeryTestCase
         );
     }
 
-    public function dpValidate()
+    /**
+     * @return (bool|string)[][]
+     *
+     * @psalm-return list{list{'0', '0', '0', false}, list{'1', '0', '1', true}, list{'1', '1', '1', true}}
+     */
+    public function dpValidate(): array
     {
         return [
             ['0', '0', '0', false],

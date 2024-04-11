@@ -34,7 +34,12 @@ class CommunityLicenceMapperTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function dataProvider()
+    /**
+     * @return (int|string|string[])[][][][]
+     *
+     * @psalm-return list{list{array{currentSuspension: array{startDate: '2016-01-01', endDate: '2017-01-01', id: 1, version: 2, reasons: list{'foo', 'bar'}}, status: array{id: 'cake'}}}, list{array{futureSuspension: array{startDate: '2016-01-01', endDate: '2017-01-01', id: 1, version: 2, reasons: list{'foo', 'bar'}}, status: array{id: 'cake'}}}}
+     */
+    public function dataProvider(): array
     {
         return [
             [

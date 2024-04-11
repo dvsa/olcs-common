@@ -52,7 +52,12 @@ class StringHelperServiceTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($dash, $this->sut->camelToDash($camel));
     }
 
-    public function provider()
+    /**
+     * @return string[][]
+     *
+     * @psalm-return list{list{'this-that', 'ThisThat'}, list{'foo-bar-baz', 'FooBarBaz'}, list{'foo', 'Foo'}, list{'foo cake this-that', 'Foo cake thisThat'}}
+     */
+    public function provider(): array
     {
         return [
             [

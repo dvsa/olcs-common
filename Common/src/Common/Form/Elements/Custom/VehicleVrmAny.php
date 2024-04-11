@@ -14,6 +14,10 @@ class VehicleVrmAny extends LaminasElement implements InputProviderInterface
 {
     /**
      * Provide default input rules for this element.
+     *
+     * @return (((int[]|string)[]|\Laminas\Filter\StringTrim)[]|null|string|true)[]
+     *
+     * @psalm-return array{name: null|string, required: true, filters: list{\Laminas\Filter\StringTrim}, validators: list{array{name: \Laminas\Validator\StringLength::class, options: array{min: 1, max: 20}}}}
      */
     public function getInputSpecification(): array
     {

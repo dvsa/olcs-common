@@ -8,6 +8,9 @@ class OtherEmployment extends AbstractSection implements TransportManagerSection
 
     private $employments;
 
+    /**
+     * @return static
+     */
     public function populate(array $transportManagerApplication)
     {
         $employments = $transportManagerApplication['transportManager']['employments'];

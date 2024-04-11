@@ -25,7 +25,12 @@ class TaskOwnerTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, (new TaskOwner())->format($data));
     }
 
-    public function providerFormat()
+    /**
+     * @return ((null|string)[]|string)[][]
+     *
+     * @psalm-return list{list{array{teamName: null, ownerName: ' '}, '(Unassigned)'}, list{array{teamName: 'Footeam', ownerName: ' '}, 'Footeam (Unassigned)'}, list{array{teamName: null, ownerName: 'Foo'}, '(Foo)'}, list{array{teamName: 'Foo', ownerName: 'Bar'}, 'Foo (Bar)'}, list{array{teamName: 'Footeam', ownerName: ','}, 'Footeam (Unassigned)'}}
+     */
+    public function providerFormat(): array
     {
         return [
             [

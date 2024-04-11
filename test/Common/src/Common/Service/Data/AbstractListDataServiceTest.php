@@ -81,7 +81,12 @@ class AbstractListDataServiceTest extends AbstractListDataServiceTestCase
         static::assertEquals($expect, $actual);
     }
 
-    public function dpTestFetchListOptions()
+    /**
+     * @return ((((int|string)[]|int|string)[]|string)[]|bool|null)[][]
+     *
+     * @psalm-return list{array{data: null, useGroup: false, expect: array<never, never>}, array{data: list{array{id: 'unit_Id', description: 'unit_Desc'}}, useGroup: false, expect: array{unit_Id: 'unit_Desc'}}, array{data: list{array{parent: array{id: 9001}, id: 7001, description: 'unit_Desc7001'}, array{id: 9001, description: 'unit_WithChilds'}}, useGroup: true, expect: array{9001: array{label: 'unit_WithChilds', options: array{7001: 'unit_Desc7001'}}}}}
+     */
+    public function dpTestFetchListOptions(): array
     {
         return [
             [

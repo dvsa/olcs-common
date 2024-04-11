@@ -252,7 +252,7 @@ class RestClient
         return $responseHelper->handleResponse();
     }
 
-    public function setResponseHelper($helper)
+    public function setResponseHelper(ResponseHelper $helper): static
     {
         $this->responseHelper = $helper;
         return $this;
@@ -272,7 +272,7 @@ class RestClient
      *
      * @see RestClient::request()
      */
-    public function prepareRequest($method, $path, array $params = []): void
+    public function prepareRequest(string $method, string $path, array $params = []): void
     {
         $method = strtoupper($method);
 
@@ -304,17 +304,17 @@ class RestClient
         }
     }
 
-    public function getAccept()
+    public function getAccept(): Accept
     {
         return new Accept();
     }
 
-    public function getAcceptLanguage()
+    public function getAcceptLanguage(): AcceptLanguage
     {
         return new AcceptLanguage();
     }
 
-    public function getClientRequest()
+    public function getClientRequest(): Request
     {
         return new Request();
     }

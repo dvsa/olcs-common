@@ -130,7 +130,7 @@ trait DynamicTrait
         return $this->serviceName;
     }
 
-    public function setDataService($dataService)
+    public function setDataService($dataService): DynamicSelect
     {
         $this->dataService = $dataService;
         return $this;

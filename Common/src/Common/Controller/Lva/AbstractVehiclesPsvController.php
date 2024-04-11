@@ -471,7 +471,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     /**
      * Remove vehicle size tables based on OC data
      *
-     * @param FormInterface $form          Form
+     * @param Form $form Form
      * @param array         $resultData    Api data
      * @param boolean       $removeActions Is need to remove actions
      *
@@ -684,7 +684,12 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         return $filters;
     }
 
-    protected function getScripts()
+    /**
+     * @return string[]
+     *
+     * @psalm-return list{'lva-crud', 'vehicle-psv'}
+     */
+    protected function getScripts(): array
     {
         return ['lva-crud', 'vehicle-psv'];
     }

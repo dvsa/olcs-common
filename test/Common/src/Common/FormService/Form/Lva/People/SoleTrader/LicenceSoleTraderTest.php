@@ -144,7 +144,12 @@ class LicenceSoleTraderTest extends MockeryTestCase
         $this->sut->getForm($params);
     }
 
-    public function noDisqualifyProvider()
+    /**
+     * @return (int|null|string|true)[][][]
+     *
+     * @psalm-return list{list{array{location: 'external'}}, list{array{location: 'internal', personId: null}}, list{array{location: 'internal', personId: 123, isDisqualified: true}}}
+     */
+    public function noDisqualifyProvider(): array
     {
         return [
             [

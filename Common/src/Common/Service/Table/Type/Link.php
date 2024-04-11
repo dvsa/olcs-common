@@ -24,9 +24,12 @@ class Link extends AbstractType
      *
      * @param array $data
      * @param array $column
-     * @return string
+     *
+     * @return string|string[]
+     *
+     * @psalm-return array<string>|string
      */
-    public function render($data, $column, $formattedContent = null)
+    public function render($data, $column, $formattedContent = null): array|string
     {
         $params = $column['params'] ?? [];
 

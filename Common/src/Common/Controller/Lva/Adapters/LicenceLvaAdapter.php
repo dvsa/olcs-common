@@ -12,6 +12,9 @@ class LicenceLvaAdapter extends AbstractLvaAdapter
         parent::__construct($container);
     }
 
+    /**
+     * @return void
+     */
     public function getIdentifier()
     {
     }

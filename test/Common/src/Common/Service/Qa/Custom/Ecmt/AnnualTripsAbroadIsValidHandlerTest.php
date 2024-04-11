@@ -46,7 +46,12 @@ class AnnualTripsAbroadIsValidHandlerTest extends MockeryTestCase
         );
     }
 
-    public function dpIsValid()
+    /**
+     * @return (bool|int)[][]
+     *
+     * @psalm-return list{list{4, 5, 1, true}, list{5, 5, 1, true}, list{6, 5, 1, true}, list{4, 5, 0, true}, list{5, 5, 0, true}, list{6, 5, 0, false}}
+     */
+    public function dpIsValid(): array
     {
         return [
             [4, 5, 1, true],

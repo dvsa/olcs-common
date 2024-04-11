@@ -74,7 +74,12 @@ class TaskDescriptionTest extends MockeryTestCase
         $this->assertEquals('<a href="URL" class="govuk-link js-modal-ajax">DESC</a>', $this->sut->format($data, []));
     }
 
-    public function dpTestFormat()
+    /**
+     * @return ((int|string)[]|string)[][]
+     *
+     * @psalm-return list{list{'unmatched-route', array<never, never>, array{task: 100, action: 'edit'}}, list{'licence/processing/tasks', array{licence: 201}, array{task: 100, action: 'edit', type: 'licence', typeId: 201}}, list{'lva-application/processing/tasks', array{application: 201}, array{task: 100, action: 'edit', type: 'application', typeId: 201}}, list{'transport-manager/processing/tasks', array{transportManager: 201}, array{task: 100, action: 'edit', type: 'tm', typeId: 201}}, list{'licence/bus-processing/tasks', array{busRegId: 201, licence: 202}, array{task: 100, action: 'edit', type: 'busreg', typeId: 201, licence: 202}}, list{'licence/irhp-application-processing/tasks', array{irhpAppId: 201, licence: 202}, array{task: 100, action: 'edit', type: 'irhpapplication', typeId: 201, licence: 202}}, list{'case_processing_tasks', array{case: 201}, array{task: 100, action: 'edit', type: 'case', typeId: 201}}, list{'operator/processing/tasks', array{organisation: 201}, array{task: 100, action: 'edit', type: 'organisation', typeId: 201}}}
+     */
+    public function dpTestFormat(): array
     {
         return [
             [

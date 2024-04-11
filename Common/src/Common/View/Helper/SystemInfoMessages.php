@@ -47,7 +47,7 @@ class SystemInfoMessages extends AbstractHelper
         return $this->render();
     }
 
-    private function render()
+    private function render(): string|null
     {
         if ($this->mssgs === null || !isset($this->mssgs['results']) || $this->mssgs['count'] === 0) {
             return null;
@@ -61,7 +61,7 @@ class SystemInfoMessages extends AbstractHelper
         return sprintf(self::HTML_BLOCK, implode('', $items));
     }
 
-    private function getData($isInternal)
+    private function getData(bool $isInternal): static
     {
         $qry = GetListActive::create(['isInternal' => $isInternal]);
 

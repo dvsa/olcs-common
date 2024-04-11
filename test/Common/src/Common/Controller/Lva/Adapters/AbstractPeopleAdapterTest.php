@@ -124,7 +124,12 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
         $this->sut->alterFormForOrganisation(m::mock(Form::class), $mockTable);
     }
 
-    public function dpTestAlterFormForOrganisation()
+    /**
+     * @return string[][]
+     *
+     * @psalm-return array{ltd: list{'org_t_rc', 'lva.section.title.add_director'}, llp: list{'org_t_llp', 'lva.section.title.add_partner'}, partnership: list{'org_t_p', 'lva.section.title.add_partner'}, other: list{'org_t_pa', 'lva.section.title.add_person'}, irfo: list{'org_t_ir', 'lva.section.title.add_person'}}
+     */
+    public function dpTestAlterFormForOrganisation(): array
     {
         return [
             'ltd' => [

@@ -133,7 +133,12 @@ class AbstractVariationControllerTest extends MockeryTestCase
         $this->assertEquals('REDIRECT', $this->sut->indexAction());
     }
 
-    public function indexActionConditionalProvider()
+    /**
+     * @return (\Closure)[][]
+     *
+     * @psalm-return list{list{\Closure(mixed):void}, list{\Closure(mixed, mixed):void}}
+     */
+    public function indexActionConditionalProvider(): array
     {
         return [
             [

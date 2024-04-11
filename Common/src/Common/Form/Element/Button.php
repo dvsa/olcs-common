@@ -53,8 +53,10 @@ class Button extends \Laminas\Form\Element\Button
 
     /**
      * @inheritDoc
+     *
+     * @psalm-param 'class'|'type' $key
      */
-    public function setAttribute($key, $value)
+    public function setAttribute(string $key, $value)
     {
         if ($key === 'type' && !in_array($value, static::TYPES)) {
             throw new InvalidArgumentException('Invalid type');

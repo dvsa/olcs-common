@@ -59,7 +59,12 @@ class PrinterDocumentCategoryTest extends MockeryTestCase
         $this->assertEquals($expected, $this->sut->format($data, []));
     }
 
-    public function provider()
+    /**
+     * @return (((int|string|string[])[]|int)[]|string)[][]
+     *
+     * @psalm-return array{'with sub category': list{array{id: 1, team: array{id: 2}, subCategory: array{subCategoryName: 'bar', category: array{description: 'cake'}}}, '<a href="foo" class="govuk-link js-modal-ajax">cake / bar</a>'}, 'defsult setting': list{array{id: 1, team: array{id: 2}}, '<a href="foo" class="govuk-link js-modal-ajax">Default setting</a>'}}
+     */
+    public function provider(): array
     {
         return [
             'with sub category' => [

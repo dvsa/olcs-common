@@ -43,7 +43,12 @@ class StatusTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
         $this->assertEquals($expected, $html);
     }
 
-    public function dataProviderStatus()
+    /**
+     * @return (string|string[])[][]
+     *
+     * @psalm-return list{list{array<never, never>, ''}, list{array{id: 'lsts_cns', description: ''}, ''}, list{array{colour: 'red', value: 'value'}, 'red'}, list{array{id: 'lsts_consideration', description: 'value'}, 'orange'}, list{array{id: 'lsts_not_submitted', description: 'value'}, 'grey'}, list{array{id: 'lsts_suspended', description: 'value'}, 'orange'}, list{array{id: 'lsts_valid', description: 'value'}, 'green'}, list{array{id: 'lsts_curtailed', description: 'value'}, 'orange'}, list{array{id: 'lsts_granted', description: 'value'}, 'orange'}, list{array{id: 'lsts_surrendered', description: 'value'}, 'red'}, list{array{id: 'lsts_withdrawn', description: 'value'}, 'red'}, list{array{id: 'lsts_refused', description: 'value'}, 'red'}, list{array{id: 'lsts_revoked', description: 'value'}, 'red'}, list{array{id: 'lsts_ntu', description: 'value'}, 'red'}, list{array{id: 'lsts_terminated', description: 'value'}, 'red'}, list{array{id: 'lsts_cns', description: 'value'}, 'red'}, list{array{id: 'breg_s_admin', description: 'value'}, 'grey'}, list{array{id: 'breg_s_registered', description: 'value'}, 'green'}, list{array{id: 'breg_s_refused', description: 'value'}, 'grey'}, list{array{id: 'breg_s_cancellation', description: 'value'}, 'orange'}, list{array{id: 'breg_s_withdrawn', description: 'value'}, 'grey'}, list{array{id: 'breg_s_var', description: 'value'}, 'orange'}, list{array{id: 'breg_s_cns', description: 'value'}, 'grey'}, list{array{id: 'breg_s_cancelled', description: 'value'}, 'grey'}, list{array{id: 'breg_s_new', description: 'value'}, 'orange'}}
+     */
+    public function dataProviderStatus(): array
     {
         return [
             [

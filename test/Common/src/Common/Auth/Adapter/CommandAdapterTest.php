@@ -85,7 +85,12 @@ class CommandAdapterTest extends MockeryTestCase
         static::assertEquals($messages, $result->getMessages());
     }
 
-    public function commandResultDataProvider()
+    /**
+     * @return ((int|string)[]|int)[][]
+     *
+     * @psalm-return array{'with id and messages': array{code: 1, identity: array{id: 1}, messages: list{'message'}}, 'with id and mo messages': array{code: 1, identity: array{id: 1}, messages: array<never, never>}, 'with messages and no id': array{code: 1, identity: array<never, never>, messages: list{'message'}}}
+     */
+    public function commandResultDataProvider(): array
     {
         return [
             'with id and messages' => [
@@ -149,6 +154,9 @@ class CommandAdapterTest extends MockeryTestCase
         return new CommandAdapter($commandSender);
     }
 
+    /**
+     * @return void
+     */
     protected function setUpDefaultServices(ServiceManager $serviceManager)
     {
         $this->serviceManager->setService('CommandSender', m::mock(CommandSender::class));

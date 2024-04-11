@@ -10,7 +10,10 @@ use Common\Service\BusRegistration;
  */
 class BusRegistrationTest extends \PHPUnit\Framework\TestCase
 {
-    public function testCreateNew()
+    /**
+     * @psalm-return array{shortNotice: mixed,...}
+     */
+    public function testCreateNew(): array
     {
         $licence = ['id' => 123, 'licNo' => 'AB12563'];
 

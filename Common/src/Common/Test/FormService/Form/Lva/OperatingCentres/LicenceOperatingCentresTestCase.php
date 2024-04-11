@@ -11,6 +11,9 @@ use Mockery as m;
 
 abstract class LicenceOperatingCentresTestCase extends OperatingCentresTestCase
 {
+    /**
+     * @return void
+     */
     protected function setUpDefaultServices()
     {
         parent::setUpDefaultServices();

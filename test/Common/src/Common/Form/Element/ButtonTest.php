@@ -379,7 +379,7 @@ class ButtonTest extends MockeryTestCase
         $this->sut->setTheme(Button::PRIMARY);
     }
 
-    protected function setUpSut(...$args)
+    protected function setUpSut(...$args): void
     {
         $this->sut = new Button(...$args);
     }

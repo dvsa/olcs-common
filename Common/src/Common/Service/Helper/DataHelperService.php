@@ -55,7 +55,7 @@ class DataHelperService
      *
      * @param type $data
      */
-    public function processDataMap($oldData, $map = [], $section = 'main')
+    public function processDataMap(array $oldData, array $map = [], $section = 'main')
     {
         if (empty($map)) {
             return $oldData;
@@ -113,7 +113,7 @@ class DataHelperService
         return $data;
     }
 
-    public function fetchNestedData($data, $search)
+    public function fetchNestedData(array $data, string $search)
     {
         if (str_contains($search, '->')) {
             [$head, $rest] = explode('->', $search, 2);

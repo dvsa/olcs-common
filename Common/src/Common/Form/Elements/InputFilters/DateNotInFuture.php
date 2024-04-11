@@ -18,6 +18,11 @@ use Laminas\Validator\Date as DateValidator;
  */
 class DateNotInFuture extends DateRequired implements InputProviderInterface
 {
+    /**
+     * @return (string|string[])[][]
+     *
+     * @psalm-return list{array{name: 'Date', options: array{format: 'Y-m-d'}}, array{name: \Common\Form\Elements\Validators\DateNotInFuture::class}}
+     */
     public function getValidators()
     {
         return [

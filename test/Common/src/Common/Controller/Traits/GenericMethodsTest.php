@@ -50,7 +50,7 @@ class GenericMethodsTest extends MockeryTestCase
     public function testGenerateFormWithData(): void
     {
         $class = 'unit_path_to_class';
-        $callback = static function () {
+        $callback = static function (): void {
         };
         $data = ['unit_data'];
         $fieldVals = ['unit_fieldValues'];

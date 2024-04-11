@@ -82,7 +82,12 @@ class BusRegSearchViewListDataServiceTest extends AbstractDataServiceTestCase
         $this->assertEquals($expected, $this->sut->fetchListData($context));
     }
 
-    public function provideFetchListOptions()
+    /**
+     * @return ((string|string[])[]|string)[][]
+     *
+     * @psalm-return list{list{'licence', list{array{licNo: 'UB1234', licId: '111'}, array{licNo: 'UB1235', licId: '222'}, array{licNo: 'UB1236', licId: '333'}}, array{111: 'UB1234', 222: 'UB1235', 333: 'UB1236'}}, list{'organisation', list{array{organisationName: 'ABC Ltd', organisationId: '111'}, array{organisationName: 'CDE Ltd', organisationId: '222'}, array{organisationName: 'FGH Ltd', organisationId: '333'}}, array{111: 'ABC Ltd', 222: 'CDE Ltd', 333: 'FGH Ltd'}}, list{'busRegStatus', list{array{busRegStatusDesc: 's1', busRegStatus: '111'}, array{busRegStatusDesc: 's2', busRegStatus: '222'}, array{busRegStatusDesc: 's3', busRegStatus: '333'}}, array{111: 's1', 222: 's2', 333: 's3'}}}
+     */
+    public function provideFetchListOptions(): array
     {
         return [
             [
@@ -128,7 +133,12 @@ class BusRegSearchViewListDataServiceTest extends AbstractDataServiceTestCase
         ];
     }
 
-    public function provideFetchListData()
+    /**
+     * @return (string|string[][])[][]
+     *
+     * @psalm-return list{list{'licence', list{array{licNo: 'UB1234', licId: '111'}, array{licNo: 'UB1235', licId: '222'}, array{licNo: 'UB1236', licId: '333'}}}, list{'organisation', list{array{organisationName: 'ABC Ltd', organisationId: '111'}, array{organisationName: 'CDE Ltd', organisationId: '222'}, array{organisationName: 'FGH Ltd', organisationId: '333'}}}, list{'busRegStatus', list{array{busRegStatusDesc: 's1', busRegStatus: '111'}, array{busRegStatusDesc: 's2', busRegStatus: '222'}, array{busRegStatusDesc: 's3', busRegStatus: '333'}}}}
+     */
+    public function provideFetchListData(): array
     {
         return [
             [

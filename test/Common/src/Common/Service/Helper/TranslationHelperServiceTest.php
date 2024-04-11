@@ -43,7 +43,7 @@ class TranslationHelperServiceTest extends \PHPUnit\Framework\TestCase
     /**
      * Mock translate method
      */
-    public function translate($message, $domain, $locale)
+    public function translate($message, $domain, $locale): string
     {
         $translation = '';
         if ($locale === 'cy_GB') {

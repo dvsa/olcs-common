@@ -63,10 +63,8 @@ class VariationConditionsUndertakingsAdapter extends AbstractConditionsUndertaki
      * Get the command to delete
      *
      * @param array  $ids List of ConditionUndertaking ID to delete
-     *
-     * @return \Dvsa\Olcs\Transfer\Command\ConditionUndertaking\DeleteList
      */
-    public function getDeleteCommand($id, $ids)
+    public function getDeleteCommand($id, $ids): \Dvsa\Olcs\Transfer\Command\Variation\DeleteListConditionUndertaking
     {
         return \Dvsa\Olcs\Transfer\Command\Variation\DeleteListConditionUndertaking::create(
             ['id' => $id, 'ids' => $ids]
@@ -78,10 +76,8 @@ class VariationConditionsUndertakingsAdapter extends AbstractConditionsUndertaki
      *
      * @param array $formData Form data
      * @param int   $id Application ID
-     *
-     * @return \Dvsa\Olcs\Transfer\Command\ConditionUndertaking\Update
      */
-    public function getUpdateCommand($formData, $id)
+    public function getUpdateCommand($formData, $id): \Dvsa\Olcs\Transfer\Command\Variation\UpdateConditionUndertaking
     {
         $data = $this->processDataForSave($formData, null);
         $params = [

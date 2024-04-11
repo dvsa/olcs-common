@@ -393,7 +393,11 @@ class CommandServiceTest extends MockeryTestCase
         static::assertEquals(['key' => 'EXPECTED'], $actual->getResult());
     }
 
-    private function assertInvalidResponse(CqrsResponse $actual, $message, $statusCode): void
+    /**
+     * @psalm-param 'EXPECT_MESSAGES' $message
+     * @psalm-param 422 $statusCode
+     */
+    private function assertInvalidResponse(CqrsResponse $actual, string $message, int $statusCode): void
     {
         static::assertInstanceOf(CqrsResponse::class, $actual);
         static::assertStringStartsWith($message, current($actual->getResult()['messages']));

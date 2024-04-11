@@ -103,7 +103,14 @@ class SectionConfigTest extends MockeryTestCase
         );
     }
 
-    private function getTestChildRoute($key, $parent)
+    /**
+     * @psalm-param 'unit_second_route'|'unit_test_route' $key
+     *
+     * @return (((string|string[])[]|string)[]|string|true)[][]
+     *
+     * @psalm-return array<array{type: LvaRoute::class, options: array{route: string, defaults: array{controller: string, action: 'index'}}, may_terminate: true, child_routes: array{action: array{type: Segment::class, options: array{route: ':action[/:child_id][/]'}}}}>
+     */
+    private function getTestChildRoute(string $key, string $parent): array
     {
         $route = str_replace('_', '-', $key);
         $controller = sprintf(

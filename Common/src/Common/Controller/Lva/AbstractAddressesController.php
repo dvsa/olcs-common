@@ -44,9 +44,9 @@ abstract class AbstractAddressesController extends AbstractController
     /**
      * Process action - Index
      *
-     * @return \Common\Service\Cqrs\Response|\Common\View\Model\Section
+     * @return \Laminas\Http\Response|\Laminas\View\Model\ViewModel|array|false
      */
-    public function indexAction()
+    public function indexAction(): array|false|\Laminas\View\Model\ViewModel|\Laminas\Http\Response
     {
         /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();

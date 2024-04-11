@@ -21,8 +21,11 @@ class YesNoRadioOptionsApplier
      *
      * @param Radio $radio
      * @param string $notSelectedMessage
+     * @param null|string $value
+     *
+     * @psalm-param 'N'|'Y'|'radioValue'|null $value
      */
-    public function applyTo(Radio $radio, array $valueOptions, mixed $value, $notSelectedMessage): void
+    public function applyTo(Radio $radio, array $valueOptions, string|null $value, $notSelectedMessage): void
     {
         $radio->setValueOptions($valueOptions);
         $radio->setAttributes($this->attributes);

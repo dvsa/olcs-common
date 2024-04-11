@@ -194,7 +194,7 @@ abstract class AbstractSafetyController extends AbstractController
     /**
      * Map Errors
      *
-     * @param FormInterface $form   Form
+     * @param Form $form Form
      * @param array         $errors Errors
      *
      * @return void

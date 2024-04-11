@@ -33,10 +33,8 @@ class FinancesController extends AbstractContinuationController
 
     /**
      * Index page
-     *
-     * @return ViewModel
      */
-    public function indexAction()
+    public function indexAction(): ViewModel|\Laminas\Http\Response
     {
         $continuationDetail = $this->getContinuationDetailData();
 

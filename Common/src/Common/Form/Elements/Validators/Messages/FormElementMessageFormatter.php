@@ -37,7 +37,7 @@ class FormElementMessageFormatter
     public function enableReplacementOfMessage(string $messageKey, $defaultMessageOrProvider): void
     {
         if (is_string($defaultMessageOrProvider)) {
-            $defaultMessageOrProvider = static fn() => $defaultMessageOrProvider;
+            $defaultMessageOrProvider = static fn(): string => $defaultMessageOrProvider;
         }
 
         assert(is_callable($defaultMessageOrProvider), 'Expected default message provider to be callable or string');

@@ -28,7 +28,7 @@ class PublicHolidayArea implements FormatterPluginManagerInterface
             'isNi' => 'Northern Ireland',
         ];
 
-        $fncFilter = static fn($key) => isset($data[$key]) && $data[$key] === 'Y';
+        $fncFilter = static fn($key): bool => isset($data[$key]) && $data[$key] === 'Y';
         $result = array_filter($map, $fncFilter, ARRAY_FILTER_USE_KEY);
 
         if ($result === []) {

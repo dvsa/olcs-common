@@ -52,7 +52,12 @@ class PageTitleTest extends MockeryTestCase
         $this->assertEquals('translated', $sut->__invoke());
     }
 
-    public function providerInvoke()
+    /**
+     * @return (null|string)[][]
+     *
+     * @psalm-return array{placeholder: list{'placeholder', 'foo/bar', 'placeholder'}, routingWithTranslation: list{null, 'foo/bar', 'page.title.foo/bar.someaction'}, routingWithoutTranslation: list{null, null, null}}
+     */
+    public function providerInvoke(): array
     {
         return [
             'placeholder' => [

@@ -25,7 +25,7 @@ class TransportManagerDateOfBirthTest extends MockeryTestCase
         m::close();
     }
 
-    protected function mockGetStatusHtml($expectedStatusId, $expectedStatusDescription, $statusHtml = '<STATUS HTML>')
+    protected function mockGetStatusHtml($expectedStatusId, $expectedStatusDescription, $statusHtml = '<STATUS HTML>'): void
     {
         $mockViewHelper = m::mock();
 
@@ -42,8 +42,12 @@ class TransportManagerDateOfBirthTest extends MockeryTestCase
 
     /**
      * Provider for testFormat
+     *
+     * @return ((bool|string|string[])[][]|string)[][]
+     *
+     * @psalm-return list{list{array{data: array{dob: '1980-12-01'}, column: array{name: 'dob'}}, '01/12/1980'}, list{array{data: array{dob: '1980-12-01'}, column: array{name: 'dob', lva: 'application'}}, '01/12/1980'}, list{array{data: array{dob: '1980-12-01'}, column: array{name: 'dob', internal: true}}, '01/12/1980'}, list{array{data: array{dob: '1980-12-01', status: array{id: 'tmap_st_postal_application', description: 'status description'}}, column: array{name: 'dob', lva: 'application', internal: true}}, '<span class="nowrap">01/12/1980 <STATUS HTML></span>'}, list{array{data: array{dob: '1980-12-01', status: array{id: 'tmap_st_postal_application', description: 'status description'}}, column: array{name: 'dob', lva: 'application', internal: false}}, '<span class="nowrap">01/12/1980 <STATUS HTML></span>'}, list{array{data: array{dob: '1980-12-01', status: array{id: 'tmap_st_postal_application', description: 'status description'}}, column: array{name: 'dob', lva: 'variation', internal: true}}, '<span class="nowrap">01/12/1980 <STATUS HTML></span>'}, list{array{data: array{dob: '1980-12-01', status: array{id: 'tmap_st_postal_application', description: 'status description'}}, column: array{name: 'dob', lva: 'variation', internal: false}}, '<span class="nowrap">01/12/1980 <STATUS HTML></span>'}, list{array{data: array{dob: '1980-12-01'}, column: array{name: 'dob', lva: 'licence', internal: true}}, '01/12/1980'}, list{array{data: array{dob: '1980-12-01'}, column: array{name: 'dob', lva: 'licence', internal: false}}, '01/12/1980'}}
      */
-    public function providerFormat()
+    public function providerFormat(): array
     {
         return [
             [ // NoLvaNorInternal

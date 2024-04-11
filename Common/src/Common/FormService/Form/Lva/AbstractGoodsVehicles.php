@@ -11,7 +11,7 @@ abstract class AbstractGoodsVehicles extends AbstractLvaFormService
 {
     protected $showShareInfo = false;
 
-    public function getForm($table)
+    public function getForm($table): \Common\Form\Form
     {
         $form = $this->formHelper->createForm('Lva\GoodsVehicles');
 
@@ -26,5 +26,5 @@ abstract class AbstractGoodsVehicles extends AbstractLvaFormService
         return $form;
     }
 
-    abstract protected function alterForm($form);
+    abstract protected function alterForm(\Common\Form\Form $form);
 }

@@ -51,9 +51,9 @@ class FlashMessenger extends LaminasFlashMessenger
      *
      * @param string $namespace Namespace
      *
-     * @return string
+     * @return static|string
      */
-    public function __invoke($namespace = null)
+    public function __invoke($namespace = null): string|static
     {
         if ($namespace === 'norender') {
             return $this;

@@ -39,7 +39,10 @@ class LicenceConditionsUndertakingsReviewService extends AbstractReviewService
         return ['subSections' => $subSections];
     }
 
-    private function processLicenceSections($licConds, $licUnds)
+    /**
+     * @psalm-return list{0?: mixed, 1?: mixed}
+     */
+    private function processLicenceSections($licConds, $licUnds): array
     {
         $subSections = [];
 
@@ -56,7 +59,10 @@ class LicenceConditionsUndertakingsReviewService extends AbstractReviewService
         return $subSections;
     }
 
-    private function processOcSections($ocConds, $ocUnds)
+    /**
+     * @psalm-return list{0?: mixed, 1?: mixed}
+     */
+    private function processOcSections($ocConds, $ocUnds): array
     {
         $subSections = [];
 

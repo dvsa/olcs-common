@@ -23,7 +23,7 @@ trait FlashMessengerTrait
      * @param string $message
      * @param string $namespace
      */
-    public function addMessage($message, $namespace = 'default')
+    public function addMessage($message, $namespace = 'default'): \Common\Controller\Lva\AbstractController
     {
         $this->getFlashMessenger()->setNamespace($namespace)->addMessage($message)->setNamespace('default');
 

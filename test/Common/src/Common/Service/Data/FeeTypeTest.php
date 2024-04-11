@@ -43,7 +43,12 @@ class FeeTypeTest extends AbstractDataServiceTestCase
         $this->assertEquals($expected, $this->sut->fetchListOptions(''));
     }
 
-    public function provideFetchListOptions()
+    /**
+     * @return (array|false)[][]
+     *
+     * @psalm-return list{list{array, array}, list{false, array<never, never>}}
+     */
+    public function provideFetchListOptions(): array
     {
         return [
             [$this->getSingleSource(), $this->getSingleExpected()],

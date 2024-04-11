@@ -10,7 +10,7 @@ use Common\Service\Cases;
  */
 class CasesTest extends \PHPUnit\Framework\TestCase
 {
-    public function testCreateNrCase()
+    public function testCreateNrCase(): array
     {
         $case = 29;
 

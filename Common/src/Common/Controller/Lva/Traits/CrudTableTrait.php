@@ -52,11 +52,9 @@ trait CrudTableTrait
      * Generic delete functionality; usually does the trick but
      * can be overridden if not
      *
-     * @return \Laminas\Http\Response
-     *
      * @psalm-suppress all
      */
-    public function deleteAction()
+    public function deleteAction(): \Common\View\Model\Section|\Laminas\Http\Response
     {
         /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();

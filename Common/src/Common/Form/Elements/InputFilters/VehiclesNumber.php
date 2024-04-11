@@ -22,6 +22,10 @@ class VehiclesNumber extends LaminasElement implements InputProviderInterface
 {
     /**
      * Provide default input rules for this element.
+     *
+     * @return ((LaminasValidator\Digits|VehiclesNumberValidator)[]|null|string|true)[]
+     *
+     * @psalm-return array{name: null|string, required: true, validators: list{LaminasValidator\Digits, VehiclesNumberValidator}}
      */
     public function getInputSpecification(): array
     {

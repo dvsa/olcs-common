@@ -7,6 +7,11 @@ class CorrespondenceAddress extends AbstractSection
     public $licence;
     protected $heading = 'correspondence-address';
 
+    /**
+     * @return (mixed|string)[][]
+     *
+     * @psalm-return list{array{label: string, answer: string, changeLinkInHeading: mixed}, array{label: string, answer: mixed, changeLinkInHeading: mixed}, array{label: string, answer: mixed, changeLinkInHeading: mixed}}
+     */
     protected function makeQuestions()
     {
 
@@ -42,6 +47,11 @@ class CorrespondenceAddress extends AbstractSection
         return $questions;
     }
 
+    /**
+     * @return string[]
+     *
+     * @psalm-return array{sectionLink: string}
+     */
     protected function makeChangeLink()
     {
         return [

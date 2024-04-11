@@ -32,7 +32,12 @@ class ChainedValidatorTest extends TestCase
         $this->assertEquals($result, $expected);
     }
 
-    public function provideValidate()
+    /**
+     * @return (ValidationFailed|ValidationSuccessful|m\LegacyMockInterface&m\MockInterface&CommandInterface|m\LegacyMockInterface&m\MockInterface&InputInterface)[][]
+     *
+     * @psalm-return list{list{m\LegacyMockInterface&m\MockInterface&CommandInterface, m\LegacyMockInterface&m\MockInterface&InputInterface, ValidationFailed}, list{m\LegacyMockInterface&m\MockInterface&CommandInterface, m\LegacyMockInterface&m\MockInterface&InputInterface, ValidationFailed}, list{m\LegacyMockInterface&m\MockInterface&CommandInterface, m\LegacyMockInterface&m\MockInterface&InputInterface, ValidationSuccessful}}
+     */
+    public function provideValidate(): array
     {
         $command = m::mock(CommandInterface::class);
         $command->shouldReceive('getValue')->andReturn('e34fd6');

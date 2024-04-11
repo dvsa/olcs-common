@@ -43,7 +43,12 @@ class InsufficientFinancesTest extends MockeryTestCase
         $this->assertSame($expected, $this->sut->mapFromResult($data));
     }
 
-    public function dataProviderTestMapFromResult()
+    /**
+     * @return (bool|null|string)[][]
+     *
+     * @psalm-return array{'financialEvidenceUploaded = null': list{null, null, null}, 'financialEvidenceUploaded = true': list{true, 'Y', 'upload'}, 'financialEvidenceUploaded = false': list{false, 'Y', 'send'}}
+     */
+    public function dataProviderTestMapFromResult(): array
     {
         return [
             'financialEvidenceUploaded = null' => [null, null, null],
@@ -75,7 +80,12 @@ class InsufficientFinancesTest extends MockeryTestCase
         $this->assertSame($expected, $this->sut->mapFromForm($formData));
     }
 
-    public function dataProviderTestMapFromForm()
+    /**
+     * @return (bool|string)[][]
+     *
+     * @psalm-return array{'radio = upload': list{'upload', true}, 'radio = send': list{'send', false}}
+     */
+    public function dataProviderTestMapFromForm(): array
     {
         return [
             'radio = upload' => ['upload', true],

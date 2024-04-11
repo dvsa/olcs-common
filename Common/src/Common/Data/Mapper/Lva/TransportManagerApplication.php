@@ -25,7 +25,7 @@ use Common\Service\Helper\TranslationHelperService;
  */
 class TransportManagerApplication
 {
-    public static function mapFromErrors($form, array $errors)
+    public static function mapFromErrors(\Laminas\Form\FormInterface $form, array $errors): array
     {
         $details = [
             'registeredUser'

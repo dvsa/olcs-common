@@ -23,7 +23,7 @@ trait FormWithCsrfTrait
      *
      * Should ideally be called by the constructor of any form that uses this trait.
      */
-    protected function initialiseCsrf()
+    protected function initialiseCsrf(): void
     {
         // Build element
         $csrfElement = new Csrf(FormWithCsrfInterface::SECURITY);
@@ -42,7 +42,7 @@ trait FormWithCsrfTrait
         return $this->get(FormWithCsrfInterface::SECURITY);
     }
 
-    public function getCsrfInput(): InputInterface
+    public function getCsrfInput(): \Laminas\InputFilter\InputInterface|\Laminas\InputFilter\InputFilterInterface
     {
         return $this->getInputFilter()->get(FormWithCsrfInterface::SECURITY);
     }

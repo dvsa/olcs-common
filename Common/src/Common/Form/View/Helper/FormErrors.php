@@ -41,9 +41,9 @@ class FormErrors extends AbstractHelper
      * @param FormInterface|null $form             Form to be rendered
      * @param bool               $ignoreValidation Ignore validation
      *
-     * @return string
+     * @return static|string
      */
-    public function __invoke(FormInterface $form = null, $ignoreValidation = false)
+    public function __invoke(FormInterface $form = null, $ignoreValidation = false): string|static
     {
         if (!$form instanceof \Laminas\Form\FormInterface) {
             return $this;
@@ -131,6 +131,9 @@ class FormErrors extends AbstractHelper
      * Format a message
      *
      * @param string $message
+     * @param (int|string) $messageKey
+     *
+     * @psalm-param array-key $messageKey
      */
     protected function formatMessage(ElementInterface $element, $message, mixed $messageKey): string
     {

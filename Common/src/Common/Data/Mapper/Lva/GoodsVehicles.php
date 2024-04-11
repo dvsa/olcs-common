@@ -17,6 +17,11 @@ use Common\Data\Mapper\MapperInterface;
  */
 class GoodsVehicles implements MapperInterface
 {
+    /**
+     * @return (mixed|string)[][]
+     *
+     * @psalm-return array{data: array{version: mixed, hasEnteredReg: 'N'|'Y'}}
+     */
     public static function mapFromResult(array $data)
     {
         return [

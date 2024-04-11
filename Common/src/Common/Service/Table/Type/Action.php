@@ -21,9 +21,11 @@ class Action extends AbstractType
      *
      * @param array $data
      * @param array $column
+     * @param null|string $formattedContent
+     *
      * @return string
      */
-    public function render($data, $column, $formattedContent = null)
+    public function render($data, $column, string|null $formattedContent = null)
     {
         $class = $column['class'] ?? '';
 

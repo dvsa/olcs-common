@@ -41,7 +41,12 @@ class PersonNameTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function personNameDataProvider()
+    /**
+     * @return ((null|string[])[]|string)[][]
+     *
+     * @psalm-return list{list{array{person: array{title: 't', forename: 'f', familyName: 's'}}, 't f s'}, list{array{person: array{forename: 'f', familyName: 's'}, fields: null}, 'f s'}, list{array{person: array{title: 't', forename: 'f', familyName: 's'}, fields: list{'title', 'familyName'}}, 't s'}}
+     */
+    public function personNameDataProvider(): array
     {
         return [
             [ // include title

@@ -17,6 +17,8 @@ class IrhpPermitNumberInternal implements FormatterPluginManagerInterface
 
     /**
      * @inheritdoc
+     *
+     * @return string
      */
     public function format($row, $column = null)
     {

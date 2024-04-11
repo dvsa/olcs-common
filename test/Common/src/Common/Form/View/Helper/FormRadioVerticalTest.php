@@ -388,14 +388,14 @@ class FormRadioVerticalTest extends MockeryTestCase
         $this->sut->setView($this->renderer());
     }
 
+    /**
+     * @return void
+     */
     protected function setUpDefaultServices(ServiceManager $serviceManager)
     {
         $serviceManager->setService(PhpRenderer::class, $this->renderer());
     }
 
-    /**
-     * @return MockInterface|PhpRenderer
-     */
     protected function renderer(): MockInterface
     {
         if (! $this->serviceManager->has(PhpRenderer::class)) {

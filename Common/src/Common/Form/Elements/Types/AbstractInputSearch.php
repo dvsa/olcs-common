@@ -24,7 +24,12 @@ abstract class AbstractInputSearch extends Fieldset
         $this->addSubmit();
     }
 
-    public function setMessages($messages): void
+    /**
+     * @param string[][] $messages
+     *
+     * @psalm-param list{array{vrm: 'error'}} $messages
+     */
+    public function setMessages(array $messages): void
     {
         $this->messages = $messages;
     }

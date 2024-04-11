@@ -17,6 +17,9 @@ class ApplicationGoodsVehicles extends AbstractGoodsVehicles
     {
     }
 
+    /**
+     * @return void
+     */
     protected function alterForm($form)
     {
         $this->formServiceLocator->get('lva-application')->alterForm($form);

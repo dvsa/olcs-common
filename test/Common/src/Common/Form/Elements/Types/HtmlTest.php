@@ -68,7 +68,7 @@ class HtmlTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(self::INITIAL_HTML_PAYLOAD, $this->render());
     }
 
-    private function render()
+    private function render(): string
     {
         return $this->helper->render($this->htmlElement);
     }

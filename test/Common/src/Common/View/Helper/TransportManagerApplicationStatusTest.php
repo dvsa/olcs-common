@@ -30,7 +30,12 @@ class TransportManagerApplicationStatusTest extends MockeryTestCase
         $this->sut->setView($this->mockView);
     }
 
-    public function dataProviderRender()
+    /**
+     * @return string[][]
+     *
+     * @psalm-return array{0: list{'orange', 'tmap_st_awaiting_signature'}, 1: list{'red', 'tmap_st_incomplete'}, 2: list{'green', 'tmap_st_operator_signed'}, 3: list{'green', 'tmap_st_postal_application'}, 4: list{'orange', 'tmap_st_tm_signed'}, 5: list{'green', 'tmap_st_received'}, invalidStatus: list{'', 'foo'}}
+     */
+    public function dataProviderRender(): array
     {
         return [
             ['orange', RefData::TMA_STATUS_AWAITING_SIGNATURE],

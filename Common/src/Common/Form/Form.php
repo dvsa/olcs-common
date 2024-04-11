@@ -64,7 +64,12 @@ class Form extends LaminasForm\Form implements \Stringable
         return parent::isValid();
     }
 
-    public function populateValues($data, $onlyBase = false): void
+    /**
+     * @param string[] $data
+     *
+     * @psalm-param array{html?: '<script>alert("TEST")</script>', text?: '<script>alert("TEST")</script>'} $data
+     */
+    public function populateValues(array $data, $onlyBase = false): void
     {
         $populateDepth = &self::getPopulateDepth();
         try {
@@ -88,7 +93,7 @@ class Form extends LaminasForm\Form implements \Stringable
         return $populateDepth;
     }
 
-    public static function isPopulating()
+    public static function isPopulating(): bool
     {
         return self::getPopulateDepth() !== 0;
     }

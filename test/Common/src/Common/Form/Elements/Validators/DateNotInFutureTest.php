@@ -33,7 +33,12 @@ class DateNotInFutureTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $this->sut->isValid($input));
     }
 
-    public function providerIsValid()
+    /**
+     * @return (bool|string)[][]
+     *
+     * @psalm-return list{list{string, true}, list{string, false}, list{string, true}}
+     */
+    public function providerIsValid(): array
     {
         return [
             [

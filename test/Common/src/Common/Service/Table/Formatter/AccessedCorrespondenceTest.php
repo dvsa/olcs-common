@@ -52,7 +52,12 @@ class AccessedCorrespondenceTest extends MockeryTestCase
     }
 
 
-    public function formatProvider()
+    /**
+     * @return ((int|string|string[])[][]|bool|string)[][]
+     *
+     * @psalm-return list{array{data: array{correspondence: array{id: 1, accessed: 'N', document: array{description: 'Description', filename: 'filename.doc'}}}, isNew: true, expect: '<a class="govuk-link" href="LICENCE_URL"><b>Description (doc)</b></a><span class="status green">unit_New</span> '}, array{data: array{correspondence: array{id: 1, accessed: 'Y', document: array{description: 'Description', filename: 'filename.doc'}}}, isNew: false, expect: '<a class="govuk-link" href="LICENCE_URL"><b>Description (doc)</b></a>'}, array{data: array{correspondence: array{id: 1, accessed: 'Y', document: array{description: 'Description', filename: 'filename'}}}, isNew: false, expect: '<a class="govuk-link" href="LICENCE_URL"><b>Description</b></a>'}}
+     */
+    public function formatProvider(): array
     {
         return [
             [

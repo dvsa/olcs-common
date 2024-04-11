@@ -146,7 +146,7 @@ abstract class AbstractCompare extends AbstractValidator
      *
      * @return bool
      */
-    protected function isValidForOperator(mixed $value, mixed $compareToValue)
+    protected function isValidForOperator(\DateTime $value, \DateTime $compareToValue)
     {
         switch ($this->getOperator()) {
             case 'gte':

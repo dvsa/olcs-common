@@ -15,7 +15,7 @@ class Escape
     /** @var  callable */
     private static $fncHtml;
 
-    public static function html($html)
+    public static function html(string $html)
     {
         if (self::$fncHtml === null) {
             self::$fncHtml = new EscapeHtml();
@@ -28,7 +28,7 @@ class Escape
     /**
      * @codeCoverageIgnore only a proxy to Laminas escaper
      */
-    public static function htmlAttr($value)
+    public static function htmlAttr(string $value)
     {
         $escaper = new EscapeHtmlAttr();
         return $escaper($value);

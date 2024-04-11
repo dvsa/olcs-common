@@ -24,7 +24,12 @@ class ConvictionDescriptionTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function convictionDataProvider()
+    /**
+     * @return ((null|string|string[])[]|string)[][]
+     *
+     * @psalm-return list{list{array{convictionCategory: array{id: 'conv_c_cat_1144', description: 'User defined'}, categoryText: 'userdefinedtext_01234567890123456789'}, 'userdefinedtext_01234567890123...'}, list{array{convictionCategory: null, categoryText: 'userdefinedtext_01234567890123456789'}, 'userdefinedtext_01234567890123...'}, list{array{convictionCategory: array{id: 'conv_c_cat_someother', description: 'Some Other_012345678901234567890123456789'}, categoryText: 'userdefinedtext_01234567890123456789'}, 'Some Other_0123456789012345678...'}}
+     */
+    public function convictionDataProvider(): array
     {
         return [
             [

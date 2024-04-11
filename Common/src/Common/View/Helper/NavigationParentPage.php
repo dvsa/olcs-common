@@ -14,10 +14,8 @@ class NavigationParentPage extends AbstractHelper
 {
     /**
      * Return a url to navigation Parent
-     *
-     * @return \Laminas\Navigation\Page\Mvc
      */
-    public function __invoke()
+    public function __invoke(): \Laminas\Navigation\AbstractContainer|null
     {
         /** @var \Laminas\View\Helper\Navigation\Breadcrumbs $breadcrumbs */
         $breadcrumbs = $this->view->navigation('navigation')->breadcrumbs();

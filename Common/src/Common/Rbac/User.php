@@ -204,7 +204,7 @@ class User implements IdentityInterface
         return ($this->userType === self::USER_TYPE_NOT_IDENTIFIED);
     }
 
-    public function hasRole($role)
+    public function hasRole($role): bool
     {
         return in_array($role, $this->getRoles(), true);
     }

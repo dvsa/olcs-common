@@ -90,7 +90,7 @@ class NoOfPermits
     /**
      * Populates a fieldset object with form elements in accordance with permit availabilty
      */
-    protected function populateYearFieldset(Fieldset $fieldset, array $years)
+    protected function populateYearFieldset(Fieldset $fieldset, array $years): void
     {
         foreach ($years as $yearAttributes) {
             if ($yearAttributes['maxPermits'] > 0) {
@@ -108,7 +108,7 @@ class NoOfPermits
         array $irhpPermitApplications,
         array $maxPermitsByStock,
         $totAuthVehicles
-    ) {
+    ): void {
         $formElements = [];
 
         foreach ($irhpPermitApplications as $irhpPermitApplication) {
@@ -234,14 +234,18 @@ class NoOfPermits
 
 
     /**
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @SuppressWarnings (PHPMD.UnusedFormalParameter)
+     *
+     * @return ((string|true)[]|mixed|string)[]
+     *
+     * @psalm-return array{browserTitle: 'permits.page.multilateral.no-of-permits.browser.title', question: 'permits.page.multilateral.no-of-permits.question', guidance?: array{value: string, disableHtmlEscape: true}|mixed,...}
      */
     protected function postProcessData(
         array $data,
-        $irhpApplicationDataKey,
-        $feePerPermitDataKey,
-        $maxPermitsByStockDataKey
-    ) {
+        string $irhpApplicationDataKey,
+        string $feePerPermitDataKey,
+        string $maxPermitsByStockDataKey
+    ): array {
         $data['browserTitle'] = 'permits.page.multilateral.no-of-permits.browser.title';
         $data['question'] = 'permits.page.multilateral.no-of-permits.question';
 
@@ -302,7 +306,7 @@ class NoOfPermits
         return $guidanceLines;
     }
 
-    protected function alterSubmitFieldsetOnMaxAllowable(Fieldset $submitFieldset)
+    protected function alterSubmitFieldsetOnMaxAllowable(Fieldset $submitFieldset): void
     {
         $submitFieldset->remove('SubmitButton');
     }

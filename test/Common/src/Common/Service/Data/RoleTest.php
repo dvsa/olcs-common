@@ -37,7 +37,12 @@ class RoleTest extends AbstractDataServiceTestCase
         $this->assertEquals($expected, $this->sut->fetchListOptions(''));
     }
 
-    public function provideFetchListOptions()
+    /**
+     * @return array[][]
+     *
+     * @psalm-return list{list{array, array}, list{array<never, never>, array<never, never>}}
+     */
+    public function provideFetchListOptions(): array
     {
         return [
             [$this->getSingleSource(), $this->getSingleExpected()],

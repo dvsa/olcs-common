@@ -319,7 +319,7 @@ class TableBuilder implements \Stringable
      *
      * @param int $type
      */
-    public function setType($type)
+    public function setType($type): static
     {
         $this->type = $type;
         return $this;
@@ -339,9 +339,13 @@ class TableBuilder implements \Stringable
      * Return a setting or the default
      *
      * @param string $name
+     * @param false|null|string $default
+     *
      * @return mixed
+     *
+     * @psalm-param 'default'|false|null $default
      */
-    public function getSetting($name, mixed $default = null)
+    public function getSetting($name, string|false|null $default = null)
     {
         return $this->settings[$name] ?? $default;
     }
@@ -381,7 +385,7 @@ class TableBuilder implements \Stringable
      *
      * @param array $rows
      */
-    public function setRows($rows)
+    public function setRows($rows): static
     {
         $this->rows = $rows;
         return $this;
@@ -402,7 +406,7 @@ class TableBuilder implements \Stringable
      *
      * @param array $footer
      */
-    public function getFooter()
+    public function getFooter(): array
     {
         return $this->footer;
     }
@@ -440,7 +444,12 @@ class TableBuilder implements \Stringable
         $this->removeColumn('actionLinks');
     }
 
-    public function addAction($key, $settings = []): void
+    /**
+     * @param (bool|mixed|null|string)[]|string $settings
+     *
+     * @psalm-param array{class?: string, value?: 'Annul'|'Reprint'|'Stop', label?: mixed|null|string, requireRows?: bool, keepForReadOnly?: true, key?: 'value'}|string $settings
+     */
+    public function addAction(string $key, array|string $settings = []): void
     {
         $this->settings['crud']['actions'][$key] = $settings;
     }
@@ -491,7 +500,10 @@ class TableBuilder implements \Stringable
         return $this->contentHelper;
     }
 
-    public function setContentType($type): void
+    /**
+     * @psalm-param 'csv' $type
+     */
+    public function setContentType(string $type): void
     {
         $this->contentType = $type;
     }
@@ -536,7 +548,7 @@ class TableBuilder implements \Stringable
      *
      * @param string $name
      */
-    public function setVariable($name, mixed $value): void
+    public function setVariable($name, string $value): void
     {
         $this->variables[$name] = $value;
     }
@@ -730,7 +742,7 @@ class TableBuilder implements \Stringable
     }
 
 
-    public function prepareTable($config, array $data = [], array $params = [])
+    public function prepareTable(array|string $config, array $data = [], array $params = []): static
     {
         $this->loadConfig($config);
 
@@ -767,10 +779,13 @@ class TableBuilder implements \Stringable
     /**
      * Load the configuration if it exists
      *
-     * @param $config
+     * @param (array|string|true)[][][]|string $config
+     *
      * @return bool
+     *
+     * @psalm-param 'test'|array{settings: array{paginate: array, crud: array{actions: array}}, columns: list{list{'bar'}, array{type: 'ActionLinks', keepForReadOnly: true}, array{type: 'ActionLinks'}, array{type: 'DeltaActionLinks'}}} $config
      */
-    public function loadConfig($config)
+    public function loadConfig(array|string $config)
     {
         if (!is_array($config)) {
             $config = $this->getConfigFromFile($config);
@@ -1012,7 +1027,7 @@ class TableBuilder implements \Stringable
      *
      * return string
      */
-    public function renderTableFooter()
+    public function renderTableFooter(): string
     {
         if ($this->footer === []) {
             return '';
@@ -1187,7 +1202,7 @@ class TableBuilder implements \Stringable
         return $this->replaceContent(' {{[elements/total]}}', ['total' => $total]);
     }
 
-    public function renderCaption()
+    public function renderCaption(): string
     {
         return trim($this->renderTotal() . ' ' . $this->getVariable('title'));
     }
@@ -1290,7 +1305,7 @@ class TableBuilder implements \Stringable
         return $content;
     }
 
-    public function renderLinks(array $links = [])
+    public function renderLinks(array $links = []): string
     {
         $content = '';
 
@@ -1301,7 +1316,7 @@ class TableBuilder implements \Stringable
         return $content;
     }
 
-    private function renderMoreActions($actions)
+    private function renderMoreActions(array $actions): string
     {
         $content = '';
         if (!empty($actions)) {
@@ -1361,7 +1376,7 @@ class TableBuilder implements \Stringable
      *
      * @string
      */
-    public function renderLimitOptions()
+    public function renderLimitOptions(): string
     {
         if (empty($this->settings['paginate']['limit']['options'])) {
             return '';
@@ -1444,7 +1459,8 @@ class TableBuilder implements \Stringable
      *
      * @param array $column
      * @param string $wrapper
-     * @return string
+     *
+     * @return null|string
      */
     public function renderHeaderColumn($column, $wrapper = '{{[elements/th]}}')
     {
@@ -1516,9 +1532,13 @@ class TableBuilder implements \Stringable
      * @param array $row
      * @param array $column
      * @param string $wrapper
-     * @return string
+     * @param string[] $customAttributes
+     *
+     * @return null|string
+     *
+     * @psalm-param array{colspan?: '2', class?: 'a-class', 'data-empty'?: ' '} $customAttributes
      */
-    public function renderBodyColumn($row, $column, $wrapper = '{{[elements/td]}}', $customAttributes = [])
+    public function renderBodyColumn($row, $column, $wrapper = '{{[elements/td]}}', array $customAttributes = [])
     {
         if ($this->shouldHide($column)) {
             return;
@@ -1567,7 +1587,7 @@ class TableBuilder implements \Stringable
         return $this->replaceContent($wrapper, $replacements);
     }
 
-    private function processBodyColumnAttributes($column, $customAttributes): string
+    private function processBodyColumnAttributes(array $column, $customAttributes): string
     {
         $plainAttributes = '';
 
@@ -1632,7 +1652,7 @@ class TableBuilder implements \Stringable
     /**
      * Render extra rows
      */
-    public function renderExtraRows()
+    public function renderExtraRows(): string
     {
         $content = '';
 
@@ -1652,12 +1672,15 @@ class TableBuilder implements \Stringable
         return $content;
     }
 
-    public function setEmptyMessage($message): void
+    /**
+     * @psalm-param ''|'foo'|'selfserve-app-subSection-your-business-people-ltd.table.empty-message' $message
+     */
+    public function setEmptyMessage(string $message): void
     {
         $this->variables['empty_message'] = $message;
     }
 
-    public function getEmptyMessage()
+    public function getEmptyMessage(): string
     {
         $message = isset($this->variables['empty_message'])
             ? $this->replaceContent($this->variables['empty_message'], $this->getVariables())
@@ -1728,9 +1751,14 @@ class TableBuilder implements \Stringable
      * Generate url
      *
      * @param array $data
+     * @param true $reuseMatchedParams
+     * @param null|string $route
+     *
      * @return string
+     *
+     * @psalm-param 'licence_case_action'|'licence_case_list/pagination'|null $route
      */
-    private function generateUrl($data = [], $route = null, $options = [], $reuseMatchedParams = true)
+    private function generateUrl($data = [], string|null $route = null, array|false $options = [], bool $reuseMatchedParams = true)
     {
         if (is_bool($options)) {
             $reuseMatchedParams = $options;
@@ -1740,7 +1768,7 @@ class TableBuilder implements \Stringable
         return $this->getUrl()->fromRoute($route, $data, $options, $reuseMatchedParams);
     }
 
-    private function getPageLink($page)
+    private function getPageLink($page): string
     {
         return $this->generatePaginationUrl(
             [
@@ -1794,7 +1822,7 @@ class TableBuilder implements \Stringable
      * @param string $overrideFormat
      * @return string
      */
-    private function formatActionContent($actions, $overrideFormat, $collapseAt = 0, $newLinks = [])
+    private function formatActionContent($actions, $overrideFormat, $collapseAt = 0, array $newLinks = [])
     {
         switch ($overrideFormat) {
             case self::ACTION_FORMAT_DROPDOWN:
@@ -1959,7 +1987,7 @@ class TableBuilder implements \Stringable
         $this->columns[$name] = $column;
     }
 
-    public function hasColumn($name)
+    public function hasColumn(string $name): bool
     {
         return isset($this->columns[$name]);
     }
@@ -1976,7 +2004,7 @@ class TableBuilder implements \Stringable
         }
     }
 
-    private function authorisedToView($column)
+    private function authorisedToView($column): bool
     {
         if (isset($column['permissionRequisites'])) {
             foreach ((array) $column['permissionRequisites'] as $permission) {
@@ -1992,7 +2020,7 @@ class TableBuilder implements \Stringable
         return true;
     }
 
-    private function shouldHide($column)
+    private function shouldHide(array $column): bool
     {
         if (!($this->authorisedToView($column))) {
             return true;
@@ -2000,7 +2028,7 @@ class TableBuilder implements \Stringable
         return $this->isDisabled && isset($column['hideWhenDisabled']) && $column['hideWhenDisabled'];
     }
 
-    public function isRowDisabled($row)
+    public function isRowDisabled(array $row)
     {
         if (!isset($this->settings['row-disabled-callback'])) {
             return false;

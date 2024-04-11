@@ -157,7 +157,7 @@ class DateCompare extends AbstractCompare
      * @param $compareToValue
      * @return \DateTime
      */
-    protected function getCompareToDate($context)
+    protected function getCompareToDate(array|null $context)
     {
         $fieldName = $this->getCompareTo();
 

@@ -30,6 +30,8 @@ class Vrm implements FormatterPluginManagerInterface
      *
      * @param array $data
      * @param array $column
+     *
+     * @return string
      */
     public function format($data, $column = [])
     {

@@ -613,7 +613,12 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         return $this->render('vehicles', $form, $params);
     }
 
-    protected function getScripts()
+    /**
+     * @return string[]
+     *
+     * @psalm-return list{'lva-crud', 'vehicle-goods'}
+     */
+    protected function getScripts(): array
     {
         return ['lva-crud', 'vehicle-goods'];
     }

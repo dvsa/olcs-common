@@ -76,7 +76,7 @@ class ChainValidatedInput implements InputInterface
         return $this;
     }
 
-    public function getValidatorChain(): ValidatorChain
+    public function getValidatorChain(): ValidatorChain|null
     {
         return $this->validatorChain;
     }
@@ -206,7 +206,7 @@ class ChainValidatedInput implements InputInterface
         return $this;
     }
 
-    public function getFilterChain(): FilterChain
+    public function getFilterChain(): FilterChain|null
     {
         return $this->filterChain;
     }

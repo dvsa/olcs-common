@@ -47,7 +47,12 @@ class RefDataTest extends MockeryTestCase
         static::assertEquals($expect, $this->sut->format($data, $col));
     }
 
-    public function dpTestFormat()
+    /**
+     * @return (((string|string[])[]|string)[]|string)[][]
+     *
+     * @psalm-return array{noField: array{data: array{statusField: array<never, never>, unit_field: 'unit_val'}, expect: ''}, simple: array{data: array{statusField: array{id: 'unit_id', description: 'unit_Desc'}}, expect: '_TRNSLT_unit_Desc'}, multi: array{data: array{statusField: list{array{id: 'unit_Id1', description: 'unit_Desc1'}, array{id: 'unit_Id2', description: 'unit_Desc2'}}}, expect: '_TRNSLT_unit_Desc1@unit_Sepr@_TRNSLT_unit_Desc2'}}
+     */
+    public function dpTestFormat(): array
     {
         return [
             'noField' => [

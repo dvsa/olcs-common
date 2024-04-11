@@ -21,6 +21,10 @@ class OneContactPhoneRequired extends LaminasElement\Hidden implements InputProv
 {
     /**
      * Provide default input rules for this element.
+     *
+     * @return (LaminasValidator\Callback[]|bool|null|string)[]
+     *
+     * @psalm-return array{name: null|string, required: false, allow_empty: true, validators: list{LaminasValidator\Callback}}
      */
     public function getInputSpecification(): array
     {

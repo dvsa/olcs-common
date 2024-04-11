@@ -23,7 +23,12 @@ class HideIfClosedRadioTest extends MockeryTestCase
         $this->assertEquals($expected, (new \Common\Service\Table\Formatter\HideIfClosedRadio())->format($data));
     }
 
-    public function formatProvider()
+    /**
+     * @return ((int|string)[]|string)[][]
+     *
+     * @psalm-return list{list{array{closedDate: '2015-03-24', id: 1}, ''}, list{array{closedDate: '', id: 1}, '<input type="radio" value="1" name="id">'}, list{array{id: 1}, '<input type="radio" value="1" name="id">'}}
+     */
+    public function formatProvider(): array
     {
         return [
             [

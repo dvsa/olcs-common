@@ -64,7 +64,12 @@ class VenueTest extends AbstractDataServiceTestCase
         $this->assertEquals($expected, $this->sut->fetchListOptions(''));
     }
 
-    public function provideFetchListOptions()
+    /**
+     * @return (array|false)[][]
+     *
+     * @psalm-return list{list{array, array}, list{false, array<never, never>}}
+     */
+    public function provideFetchListOptions(): array
     {
         return [
             [$this->getSingleSource(), $this->getSingleExpected()],
@@ -105,7 +110,12 @@ class VenueTest extends AbstractDataServiceTestCase
         $this->assertEquals($results['results'], $this->sut->fetchListData($input));
     }
 
-    public function provideFetchListData()
+    /**
+     * @return (null|string|string[])[][]
+     *
+     * @psalm-return list{list{array{trafficArea: 'B'}, 'B'}, list{array<never, never>, null}}
+     */
+    public function provideFetchListData(): array
     {
         return [
             [['trafficArea' => 'B'], 'B'],

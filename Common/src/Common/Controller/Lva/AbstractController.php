@@ -136,7 +136,7 @@ abstract class AbstractController extends AbstractActionController
     /**
      * Hook into the dispatch before the controller action is executed
      */
-    protected function preDispatch()
+    protected function preDispatch(): void
     {
     }
 

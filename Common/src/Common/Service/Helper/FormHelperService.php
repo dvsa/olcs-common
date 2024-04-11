@@ -174,9 +174,9 @@ class FormHelperService
 
     /**
      * Check for address lookups
-     *  Returns true if an address search is present, false otherwise
+     * Returns true if an address search is present, false otherwise
      *
-     * @param \Laminas\Form\FormInterface $form    Form
+     * @param Form $form Form
      * @param \Laminas\Http\Request       $request Request
      *
      * @return boolean
@@ -423,7 +423,7 @@ class FormHelperService
     /**
      * Disable empty validation
      *
-     * @param \Laminas\Form\Fieldset|\Laminas\Form\FormInterface $form   Form fieldset
+     * @param Fieldset $form Form fieldset
      * @param InputFilter                                  $filter Filter
      */
     public function disableEmptyValidation(Fieldset $form, InputFilter $filter = null): void
@@ -466,7 +466,11 @@ class FormHelperService
     }
 
 
-    public function populateFormTable(Fieldset $fieldset, $table, $tableFieldsetName = null): void
+    /**
+     * @param \Common\Service\Table\TableBuilder|\Mockery\LegacyMockInterface&\Mockery\MockInterface&\Common\Service\Table\TableBuilder $table
+     * @param null|string $tableFieldsetName
+     */
+    public function populateFormTable(Fieldset $fieldset, \Common\Service\Table\TableBuilder $table, string|null $tableFieldsetName = null): void
     {
         $fieldset->get('table')->setTable($table, $tableFieldsetName);
         $fieldset->get('rows')->setValue(count($table->getRows()));
@@ -653,7 +657,7 @@ class FormHelperService
     /**
      * Remove a list of form fields
      *
-     * @param \Laminas\Form\FormInterface $form     Form
+     * @param Form $form Form
      * @param string                   $fieldset Name of Fieldset
      * @param array                    $fields   Names of Fields
      */
@@ -667,7 +671,7 @@ class FormHelperService
     /**
      * Check for company number lookups
      *
-     * @param \Laminas\Form\FormInterface $form            Form
+     * @param Form $form Form
      * @param array                    $data            Data
      * @param string                   $detailsFieldset Name of Details fieldset
      * @param string                   $addressFieldset Name of Address fieldset
@@ -697,13 +701,16 @@ class FormHelperService
         );
     }
 
-    public function setCompanyNotFoundError($form, $detailsFieldset): void
+    public function setCompanyNotFoundError(FormInterface $form, string $detailsFieldset): void
     {
         $message = 'company_number.search_no_results.error';
         $this->setCompaniesHouseFormMessage($form, $detailsFieldset, $message);
     }
 
-    public function setInvalidCompanyNumberErrors($form, $detailsFieldset): void
+    /**
+     * @psalm-param 'data' $detailsFieldset
+     */
+    public function setInvalidCompanyNumberErrors(\Common\Form\Form $form, string $detailsFieldset): void
     {
         $message = 'company_number.length.validation.error';
         $this->setCompaniesHouseFormMessage($form, $detailsFieldset, $message);
@@ -797,10 +804,8 @@ class FormHelperService
      * @param \Laminas\Form\FormInterface $form           Form
      * @param string                   $reference      Field Ref
      * @param string                   $validatorClass Validator Class
-     *
-     * @return null
      */
-    public function getValidator(FormInterface $form, $reference, $validatorClass)
+    public function getValidator(FormInterface $form, $reference, $validatorClass): \Laminas\Validator\ValidatorInterface|null
     {
         /** @var InputFilterInterface $filter */
         [, $filter, $field] = $this->getElementAndInputParents($form, $form->getInputFilter(), $reference);
@@ -872,7 +877,7 @@ class FormHelperService
     /**
      * Save form state data
      *
-     * @param \Laminas\Form\FormInterface $form Form
+     * @param Form $form Form
      * @param array                    $data The form data to save
      */
     public function saveFormState(Form $form, $data): void
@@ -884,7 +889,7 @@ class FormHelperService
     /**
      * Restore form state
      *
-     * @param \Laminas\Form\FormInterface $form Form
+     * @param Form $form Form
      */
     public function restoreFormState(Form $form): void
     {
@@ -910,10 +915,10 @@ class FormHelperService
     }
 
     /**
-     * @param        $form
-     * @param        $detailsFieldset
+     * @param $form
+     * @param $detailsFieldset
      */
-    protected function setCompaniesHouseFormMessage($form, $detailsFieldset, string $message)
+    protected function setCompaniesHouseFormMessage($form, $detailsFieldset, string $message): void
     {
         $form->get($detailsFieldset)->get('companyNumber')->setMessages(
             [

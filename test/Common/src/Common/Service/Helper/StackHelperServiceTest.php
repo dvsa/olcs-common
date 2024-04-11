@@ -37,7 +37,12 @@ class StackHelperServiceTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $this->sut->getStackValue($stack, $stackReference));
     }
 
-    public function providerGetStackValue()
+    /**
+     * @return (((string|string[])[]|string)[]|null|string)[][]
+     *
+     * @psalm-return array{'top level': list{array{foo: 'bar'}, list{'foo'}, 'bar'}, 'nested top level': list{array{foo: array{bar: array{cake: 'baz'}}}, list{'foo'}, array{bar: array{cake: 'baz'}}}, 'nested mid level': list{array{foo: array{bar: array{cake: 'baz'}}}, list{'foo', 'bar'}, array{cake: 'baz'}}, 'nested deepest level': list{array{foo: array{bar: array{cake: 'baz'}}}, list{'foo', 'bar', 'cake'}, 'baz'}, 'missing reference 1': list{array{foo: array{bar: array{cake: 'baz'}}}, list{'foo', 'bar', 'cake', 'foo'}, null}, 'missing reference 2': list{array{foo: array{bar: array{cake: 'baz'}}}, list{'foo', 'baz', 'cake', 'foo'}, null}, 'missing reference 3': list{array{foo: array{bar: array{cake: 'baz'}}}, list{'foo', 'baz'}, null}}
+     */
+    public function providerGetStackValue(): array
     {
         return [
             'top level' => [

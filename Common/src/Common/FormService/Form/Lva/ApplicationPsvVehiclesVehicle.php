@@ -11,6 +11,9 @@ class ApplicationPsvVehiclesVehicle extends AbstractPsvVehiclesVehicle
     {
     }
 
+    /**
+     * @return void
+     */
     protected function alterForm($form, $params)
     {
         $dataFieldset = $form->get('licence-vehicle');

@@ -27,7 +27,12 @@ class NullableNumberTest extends MockeryTestCase
         $this->assertEquals($data['expected'], (new NullableNumber())->format($data, ['name' => 'permitsRequired']));
     }
 
-    public function provider()
+    /**
+     * @return (int|null)[][][]
+     *
+     * @psalm-return list{list{array{permitsRequired: null, expected: 0}}, list{array{permitsRequired: 3, expected: 3}}}
+     */
+    public function provider(): array
     {
         return [
             [

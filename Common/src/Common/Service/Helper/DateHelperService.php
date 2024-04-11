@@ -15,12 +15,12 @@ namespace Common\Service\Helper;
  */
 class DateHelperService
 {
-    public function getDate($format = 'Y-m-d')
+    public function getDate(string $format = 'Y-m-d'): string
     {
         return date($format);
     }
 
-    public function getDateObject($time = "now")
+    public function getDateObject($time = "now"): \DateTime
     {
         return new \DateTime($time);
     }

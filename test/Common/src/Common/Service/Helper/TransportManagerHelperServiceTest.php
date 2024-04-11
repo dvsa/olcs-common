@@ -287,7 +287,7 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
         $this->sut->alterPreviousHistoryFieldset($fieldset, $tmId);
     }
 
-    protected function expectedGetConvictionsAndPenaltiesTable($tableData)
+    protected function expectedGetConvictionsAndPenaltiesTable(array $tableData): TableBuilder
     {
         // Mocks
         $mockTable = m::mock(TableBuilder::class);
@@ -318,7 +318,7 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
         return $mockTable;
     }
 
-    protected function expectGetPreviousLicencesTable($tableData)
+    protected function expectGetPreviousLicencesTable(array $tableData): TableBuilder
     {
         // Mocks
         $mockTable = m::mock(TableBuilder::class);

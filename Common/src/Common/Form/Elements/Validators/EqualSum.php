@@ -24,7 +24,12 @@ class EqualSum extends AbstractValidator
         'error' => 'equalsum-error'
     ];
 
-    public function isValid($value, $context = null)
+    /**
+     * @param int[]|null $context
+     *
+     * @psalm-param array{foo: 5, bar?: 5|6}|null $context
+     */
+    public function isValid($value, array|null $context = null)
     {
         $contextFields = $this->getOption('fields');
 

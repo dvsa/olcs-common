@@ -24,7 +24,12 @@ class FormSelectTest extends TestCase
         $this->assertEquals($expected, $sut($element));
     }
 
-    public function provideTestInvoke()
+    /**
+     * @return (m\LegacyMockInterface&m\MockInterface&\Laminas\Form\ElementInterface|m\LegacyMockInterface&m\MockInterface&\Laminas\Form\Element\Select|null|string)[][]
+     *
+     * @psalm-return list{list{m\LegacyMockInterface&m\MockInterface&\Laminas\Form\Element\Select, 'Val 1, Val 2'}, list{m\LegacyMockInterface&m\MockInterface&\Laminas\Form\Element\Select, 'Val 3'}, list{m\LegacyMockInterface&m\MockInterface&\Laminas\Form\ElementInterface, ''}, list{null, null}}
+     */
+    public function provideTestInvoke(): array
     {
         $valueOptions = [
             'group1' => [

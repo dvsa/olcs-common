@@ -64,7 +64,12 @@ class SystemInfoMessageLinkTest extends TestCase
         );
     }
 
-    public function dpTestFormat()
+    /**
+     * @return ((bool|string)[]|string)[][]
+     *
+     * @psalm-return list{array{data: array{description: 'unit_Desc', isActive: true}, expect: '<a href="unit_Url" class="govuk-link js-modal-ajax">unit_Desc</a> <span class="status green">ACTIVE</span>'}, array{data: array{description: string, isActive: false}, expect: string}}
+     */
+    public function dpTestFormat(): array
     {
         return [
             [

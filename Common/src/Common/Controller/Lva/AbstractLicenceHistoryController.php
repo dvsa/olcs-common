@@ -75,7 +75,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         parent::__construct($niTextTranslationUtil, $authService);
     }
 
-    public function indexAction()
+    public function indexAction(): \Common\View\Model\Section|\Laminas\Http\Response
     {
         /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
@@ -139,7 +139,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         return null;
     }
 
-    protected function delete()
+    protected function delete(): bool
     {
         $saveData = [
             'ids' => explode(',', $this->params('child_id'))
@@ -168,7 +168,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         return 'delete-other-licence';
     }
 
-    protected function saveLicenceHistory($form, $data, $inProgress)
+    protected function saveLicenceHistory(\Common\Form\Form $form, iterable $data, bool $inProgress): bool
     {
         $data = $this->formatDataForSave($data);
 
@@ -195,7 +195,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     /**
      * @param \Common\Form\Form $form
      */
-    protected function mapErrorsForLicenceHistory($form, array $errors)
+    protected function mapErrorsForLicenceHistory($form, array $errors): void
     {
         $formMessages = [];
 
@@ -219,7 +219,10 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         $form->setMessages($formMessages);
     }
 
-    protected function formatDataForSave($data)
+    /**
+     * @psalm-return array{version: mixed,...}
+     */
+    protected function formatDataForSave($data): array
     {
         $saveData = [];
 
@@ -262,7 +265,12 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         return $this->handleQuery(LicenceHistory::create(['id' => $this->getIdentifier()]));
     }
 
-    protected function formatDataForForm($data)
+    /**
+     * @return (array|mixed)[]
+     *
+     * @psalm-return array{version: mixed,...}
+     */
+    protected function formatDataForForm($data): array
     {
         $data = $data['data'];
         $formData = [];
@@ -323,15 +331,17 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         return $this->otherLicences[$which];
     }
 
-    protected function getLicenceTypeFromSection($section)
+    protected function getLicenceTypeFromSection(string $section): string
     {
         return $this->stringHelper->camelToUnderscore($section);
     }
 
     /**
      * Add prevHasLicence licence
+     *
+     * @return \Common\View\Model\Section|\Laminas\Http\Response|array
      */
-    public function prevHasLicenceAddAction()
+    public function prevHasLicenceAddAction(): array|\Common\View\Model\Section|\Laminas\Http\Response
     {
         $this->scriptFactory->loadFiles(['add-licence-history']);
         return $this->addOrEdit('add', 'prevHasLicence');
@@ -339,8 +349,10 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
     /**
      * Edit prevHasLicence licence
+     *
+     * @return \Common\View\Model\Section|\Laminas\Http\Response|array
      */
-    public function prevHasLicenceEditAction()
+    public function prevHasLicenceEditAction(): array|\Common\View\Model\Section|\Laminas\Http\Response
     {
         return $this->addOrEdit('edit', 'prevHasLicence');
     }
@@ -348,23 +360,27 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     /**
      * Delete prevHasLicence licence
      */
-    public function prevHasLicenceDeleteAction()
+    public function prevHasLicenceDeleteAction(): \Laminas\Http\Response
     {
         return $this->deleteAction();
     }
 
     /**
      * Add prevHadLicence licence
+     *
+     * @return \Common\View\Model\Section|\Laminas\Http\Response|array
      */
-    public function prevHadLicenceAddAction()
+    public function prevHadLicenceAddAction(): array|\Common\View\Model\Section|\Laminas\Http\Response
     {
         return $this->addOrEdit('add', 'prevHadLicence');
     }
 
     /**
      * Edit prevHadLicence licence
+     *
+     * @return \Common\View\Model\Section|\Laminas\Http\Response|array
      */
-    public function prevHadLicenceEditAction()
+    public function prevHadLicenceEditAction(): array|\Common\View\Model\Section|\Laminas\Http\Response
     {
         return $this->addOrEdit('edit', 'prevHadLicence');
     }
@@ -372,23 +388,27 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     /**
      * Delete prevHadLicence licence
      */
-    public function prevHadLicenceDeleteAction()
+    public function prevHadLicenceDeleteAction(): \Laminas\Http\Response
     {
         return $this->deleteAction();
     }
 
     /**
      * Add prevBeenRefused licence
+     *
+     * @return \Common\View\Model\Section|\Laminas\Http\Response|array
      */
-    public function prevBeenRefusedAddAction()
+    public function prevBeenRefusedAddAction(): array|\Common\View\Model\Section|\Laminas\Http\Response
     {
         return $this->addOrEdit('add', 'prevBeenRefused');
     }
 
     /**
      * Edit prevBeenRefused licence
+     *
+     * @return \Common\View\Model\Section|\Laminas\Http\Response|array
      */
-    public function prevBeenRefusedEditAction()
+    public function prevBeenRefusedEditAction(): array|\Common\View\Model\Section|\Laminas\Http\Response
     {
         return $this->addOrEdit('edit', 'prevBeenRefused');
     }
@@ -396,23 +416,27 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     /**
      * Delete refused licence
      */
-    public function prevBeenRefusedDeleteAction()
+    public function prevBeenRefusedDeleteAction(): \Laminas\Http\Response
     {
         return $this->deleteAction();
     }
 
     /**
      * Add prevBeenRevoked licence
+     *
+     * @return \Common\View\Model\Section|\Laminas\Http\Response|array
      */
-    public function prevBeenRevokedAddAction()
+    public function prevBeenRevokedAddAction(): array|\Common\View\Model\Section|\Laminas\Http\Response
     {
         return $this->addOrEdit('add', 'prevBeenRevoked');
     }
 
     /**
      * Edit prevBeenRevoked licence
+     *
+     * @return \Common\View\Model\Section|\Laminas\Http\Response|array
      */
-    public function prevBeenRevokedEditAction()
+    public function prevBeenRevokedEditAction(): array|\Common\View\Model\Section|\Laminas\Http\Response
     {
         return $this->addOrEdit('edit', 'prevBeenRevoked');
     }
@@ -420,15 +444,17 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     /**
      * Delete prevBeenRevoked licence
      */
-    public function prevBeenRevokedDeleteAction()
+    public function prevBeenRevokedDeleteAction(): \Laminas\Http\Response
     {
         return $this->deleteAction();
     }
 
     /**
      * Add prevBeenDisqualifiedTc licence
+     *
+     * @return \Common\View\Model\Section|\Laminas\Http\Response|array
      */
-    public function prevBeenDisqualifiedTcAddAction()
+    public function prevBeenDisqualifiedTcAddAction(): array|\Common\View\Model\Section|\Laminas\Http\Response
     {
         return $this->addOrEdit('add', 'prevBeenDisqualifiedTc');
     }
@@ -698,7 +724,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         return false;
     }
 
-    protected function mapErrors(\Common\Form\Form $form, array $errors, array $fields = [], $fieldsetName = '')
+    protected function mapErrors(\Common\Form\Form $form, array $errors, array $fields = [], string $fieldsetName = ''): void
     {
         $formMessages = [];
 

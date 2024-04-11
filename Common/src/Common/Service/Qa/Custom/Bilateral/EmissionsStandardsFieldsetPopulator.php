@@ -21,8 +21,10 @@ class EmissionsStandardsFieldsetPopulator implements FieldsetPopulatorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @param \Mockery\LegacyMockInterface&\Mockery\MockInterface&\Laminas\Form\Form $form
      */
-    public function populate($form, Fieldset $fieldset, array $options): void
+    public function populate(\Laminas\Form\Form $form, Fieldset $fieldset, array $options): void
     {
         $valueOptions = $this->yesNoValueOptionsGenerator->generate(
             'qanda.bilaterals.emissions-standards.euro3-or-euro4',

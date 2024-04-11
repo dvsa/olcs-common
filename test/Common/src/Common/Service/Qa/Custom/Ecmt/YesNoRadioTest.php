@@ -61,7 +61,7 @@ class YesNoRadioTest extends MockeryTestCase
         );
     }
 
-    private function assertArraySubsetRecursive($subset, $array): void
+    private function assertArraySubsetRecursive(array $subset, $array): void
     {
         foreach ($subset as $key => $value) {
             $this->assertArrayHasKey($key, $array);

@@ -19,7 +19,12 @@ class CaseEntityNameTest extends MockeryTestCase
         static::assertSame($expect, $sut->format($data));
     }
 
-    public function dpTestFormat()
+    /**
+     * @return ((((string|string[])[]|null|string)[]|string)[][]|string)[][]
+     *
+     * @psalm-return array{'not-dta': array{data: array{caseType: array{id: 'case_t_tm'}, transportManager: array{homeCd: array{person: null}}}, expect: ''}, tm: array{data: array{caseType: array{id: 'case_t_tm'}, transportManager: array{homeCd: array{person: array{title: array{description: 'unit_TitleDesc'}, forename: 'unit_ForeN', familyName: 'unit_FamilyN'}}}}, expect: 'unit_TitleDesc unit_ForeN unit_FamilyN'}, 'lic|app': array{data: array{caseType: array{id: 'case_t_lic'}, licence: array{organisation: array{name: 'unit_Org'}}}, expect: 'unit_Org'}}
+     */
+    public function dpTestFormat(): array
     {
         return [
             'not-dta' => [

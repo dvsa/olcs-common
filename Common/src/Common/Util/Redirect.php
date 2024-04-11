@@ -25,7 +25,7 @@ class Redirect
 
     protected $ajax = false;
 
-    public function toRoute($route = null, $params = [], $options = [], $useRouteMatch = false)
+    public function toRoute($route = null, $params = [], $options = [], $useRouteMatch = false): static
     {
         $this->route = $route;
         $this->params = $params;
@@ -36,7 +36,7 @@ class Redirect
         return $this;
     }
 
-    public function toRouteAjax($route = null, $params = [], $options = [], $useRouteMatch = false)
+    public function toRouteAjax($route = null, $params = [], $options = [], $useRouteMatch = false): static
     {
         $this->route = $route;
         $this->params = $params;
@@ -47,7 +47,7 @@ class Redirect
         return $this;
     }
 
-    public function refresh()
+    public function refresh(): static
     {
         $this->route = null;
         $this->params = [];
@@ -58,7 +58,7 @@ class Redirect
         return $this;
     }
 
-    public function refreshAjax()
+    public function refreshAjax(): static
     {
         $this->route = null;
         $this->params = [];

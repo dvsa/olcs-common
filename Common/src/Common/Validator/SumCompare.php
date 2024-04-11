@@ -78,10 +78,9 @@ class SumCompare extends AbstractCompare
     /**
      * Sets options
      *
-     * @param  array $options
-     * @return NumberCompare
+     * @param array $options
      */
-    public function setOptions($options = [])
+    public function setOptions($options = []): static
     {
         if (isset($options['sum_with'])) {
             $this->setSumWith($options['sum_with']);

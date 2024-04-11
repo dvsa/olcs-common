@@ -55,6 +55,9 @@ abstract class OperatingCentresTestCase extends MockeryTestCase
     protected $filterManager;
 
 
+    /**
+     * @return void
+     */
     protected function setUpDefaultServices()
     {
         $this->formServiceLocator = m::mock(FormServiceManager::class);

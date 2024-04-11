@@ -39,7 +39,12 @@ class OperatingCentresTest extends MockeryTestCase
         $this->assertEquals($expected, OperatingCentres::mapFromResult($result));
     }
 
-    public function dpTestMapFromResult()
+    /**
+     * @return ((((int|string)[]|int|null|string)[]|int|null|string)[]|int|null|string)[][][]
+     *
+     * @psalm-return list{array{result: array{foo: 'bar', licence: array{enforcementArea: array{id: 123}}, totAuthHgvVehicles: null, totAuthLgvVehicles: 0, totAuthTrailers: 1, totCommunityLicences: 2}, expected: array{data: array{foo: 'bar', licence: array{enforcementArea: array{id: 123}}, totAuthHgvVehiclesFieldset: array{totAuthHgvVehicles: null}, totAuthLgvVehiclesFieldset: array{totAuthLgvVehicles: 0}, totAuthTrailersFieldset: array{totAuthTrailers: 1}, totCommunityLicencesFieldset: array{totCommunityLicences: 2}}, dataTrafficArea: array{trafficArea: null, enforcementArea: 123}}}, list{array{foo: 'bar', enforcementArea: array{id: 123}, licence: array{trafficArea: array{id: 'X'}}, totAuthHgvVehicles: null, totAuthLgvVehicles: 0, totAuthTrailers: 1, totCommunityLicences: 2}, array{data: array{foo: 'bar', enforcementArea: array{id: 123}, licence: array{trafficArea: array{id: 'X'}}, totAuthHgvVehiclesFieldset: array{totAuthHgvVehicles: null}, totAuthLgvVehiclesFieldset: array{totAuthLgvVehicles: 0}, totAuthTrailersFieldset: array{totAuthTrailers: 1}, totCommunityLicencesFieldset: array{totCommunityLicences: 2}}, dataTrafficArea: array{trafficArea: 'X', enforcementArea: 123}}}, list{array{foo: 'bar', enforcementArea: array{id: 123}, trafficArea: array{id: 'X'}, totAuthHgvVehicles: null, totAuthLgvVehicles: 0, totAuthTrailers: 1, totCommunityLicences: 2}, array{data: array{foo: 'bar', enforcementArea: array{id: 123}, trafficArea: array{id: 'X'}, totAuthHgvVehiclesFieldset: array{totAuthHgvVehicles: null}, totAuthLgvVehiclesFieldset: array{totAuthLgvVehicles: 0}, totAuthTrailersFieldset: array{totAuthTrailers: 1}, totCommunityLicencesFieldset: array{totCommunityLicences: 2}}, dataTrafficArea: array{trafficArea: 'X', enforcementArea: 123}}}}
+     */
+    public function dpTestMapFromResult(): array
     {
         return [
             [
@@ -149,7 +154,12 @@ class OperatingCentresTest extends MockeryTestCase
         $this->assertEquals($expected, OperatingCentres::mapFromForm($formData));
     }
 
-    public function dpMapFromForm()
+    /**
+     * @return (((int|null)[]|string)[]|int|null|string)[][][]
+     *
+     * @psalm-return array{'all fieldsets included': array{formData: array{data: array{foo: 'bar', totAuthHgvVehiclesFieldset: array{totAuthHgvVehicles: null}, totAuthLgvVehiclesFieldset: array{totAuthLgvVehicles: 0}, totAuthTrailersFieldset: array{totAuthTrailers: 1}, totCommunityLicencesFieldset: array{totCommunityLicences: 2}}, dataTrafficArea: array{bar: 'cake'}}, expected: array{foo: 'bar', bar: 'cake', totAuthHgvVehicles: null, totAuthLgvVehicles: 0, totAuthTrailers: 1, totCommunityLicences: 2}}, 'all fieldsets removed': array{formData: array{data: array{foo: 'bar'}}, expected: array{foo: 'bar'}}}
+     */
+    public function dpMapFromForm(): array
     {
         return [
             'all fieldsets included' => [

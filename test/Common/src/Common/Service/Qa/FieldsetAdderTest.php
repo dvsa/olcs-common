@@ -132,7 +132,12 @@ class FieldsetAdderTest extends MockeryTestCase
         $this->sut->add($this->form, $options, UsageContext::CONTEXT_INTERNAL);
     }
 
-    public function dpEnabled()
+    /**
+     * @return (bool|string)[][]
+     *
+     * @psalm-return list{list{true, 'true'}, list{false, 'false'}}
+     */
+    public function dpEnabled(): array
     {
         return [
             [true, 'true'],

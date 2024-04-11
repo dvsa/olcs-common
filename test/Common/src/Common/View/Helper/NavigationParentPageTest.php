@@ -45,7 +45,12 @@ class NavigationParentPageTest extends MockeryTestCase
         static::assertEquals($expect, $sut->__invoke());
     }
 
-    public function dpTestInvoke()
+    /**
+     * @return (array|null|string)[][]
+     *
+     * @psalm-return list{array{activePage: array<never, never>, expect: null}, array{activePage: array{page: mixed}, expect: 'EXPECT'}}
+     */
+    public function dpTestInvoke(): array
     {
         return [
             [

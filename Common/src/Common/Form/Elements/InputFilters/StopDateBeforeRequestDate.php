@@ -15,6 +15,11 @@ use Laminas\Validator\Date as DateValidator;
  */
 class StopDateBeforeRequestDate extends DateRequired implements InputProviderInterface
 {
+    /**
+     * @return (DateValidator|\Common\Form\Elements\Validators\DateLessThanOrEqual|\Common\Form\Elements\Validators\DateNotInFuture)[]
+     *
+     * @psalm-return list{\Common\Form\Elements\Validators\DateNotInFuture, \Common\Form\Elements\Validators\DateLessThanOrEqual, DateValidator}
+     */
     public function getValidators()
     {
         return [

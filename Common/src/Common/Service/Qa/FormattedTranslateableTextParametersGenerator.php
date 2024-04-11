@@ -16,7 +16,12 @@ class FormattedTranslateableTextParametersGenerator
     {
     }
 
-    public function generate(array $parameters)
+    /**
+     * @return string[]
+     *
+     * @psalm-return list{0?: string,...}
+     */
+    public function generate(array $parameters): array
     {
         $formattedParameters = [];
         foreach ($parameters as $parameter) {

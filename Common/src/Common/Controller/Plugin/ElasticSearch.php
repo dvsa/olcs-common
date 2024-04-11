@@ -180,10 +180,10 @@ class ElasticSearch extends AbstractPlugin
 
     /**
      * Returns the search filter form.
-     *  This is Olcs\Form\Model\Form\SearchFilter from within olcs-internal,
-     *  so we can't use a return type due to static analysis
+     * This is Olcs\Form\Model\Form\SearchFilter from within olcs-internal,
+     * so we can't use a return type due to static analysis
      */
-    public function getFiltersForm()
+    public function getFiltersForm(): \Laminas\Form\Form
     {
         /** @var \Laminas\Form\Form $form */
         $form = $this->getController()->getPlaceholder()
@@ -254,7 +254,7 @@ class ElasticSearch extends AbstractPlugin
         return true;
     }
 
-    public function extractSearchData()
+    public function extractSearchData(): array
     {
         $remove = [
             'controller',
@@ -323,7 +323,7 @@ class ElasticSearch extends AbstractPlugin
         return $view;
     }
 
-    public function setContainerName(mixed $containerName)
+    public function setContainerName(mixed $containerName): static
     {
         $this->containerName = $containerName;
         return $this;
@@ -353,7 +353,7 @@ class ElasticSearch extends AbstractPlugin
         $this->searchTerm = $searchTerm;
     }
 
-    public function setSearchData(mixed $searchData)
+    public function setSearchData(mixed $searchData): static
     {
         $this->searchData = $searchData;
         return $this;
@@ -370,7 +370,7 @@ class ElasticSearch extends AbstractPlugin
     /**
      * @param string $pageRoute
      */
-    public function setPageRoute($pageRoute)
+    public function setPageRoute($pageRoute): static
     {
         $this->pageRoute = $pageRoute;
         return $this;

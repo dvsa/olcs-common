@@ -62,7 +62,11 @@ class Version extends AbstractHelper
         return sprintf($this->markup, $environment, phpversion(), $description, $release);
     }
 
-    protected function valOrAlt($array, $index, $alt = 'unknown')
+    /**
+     * @psalm-param 'description'|'environment'|'release' $index
+     * @psalm-param 'NA'|'unknown' $alt
+     */
+    protected function valOrAlt(array $array, string $index, string $alt = 'unknown')
     {
         return (empty($array[$index]) ? $alt : $array[$index]);
     }

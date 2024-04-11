@@ -38,7 +38,7 @@ class LicenceNumberAndStatus implements FormatterPluginManagerInterface
         return $escapedLicNo;
     }
 
-    private function markupWithLink($row): string
+    private function markupWithLink(array $row): string
     {
         return vsprintf(
             '<a class="govuk-link" href="%s">%s</a>',

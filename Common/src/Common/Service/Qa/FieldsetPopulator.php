@@ -18,8 +18,9 @@ class FieldsetPopulator
      * Populate the specified form with content and validators represented by the supplied application steps array
      *
      * @param string $usageContext
+     * @param \Mockery\LegacyMockInterface&\Mockery\MockInterface&\Laminas\Form\Fieldset $form
      */
-    public function populate(mixed $form, array $applicationSteps, $usageContext): void
+    public function populate(\Laminas\Form\Fieldset $form, array $applicationSteps, $usageContext): void
     {
         foreach ($applicationSteps as $applicationStep) {
             $this->fieldsetAdder->add($form, $applicationStep, $usageContext);

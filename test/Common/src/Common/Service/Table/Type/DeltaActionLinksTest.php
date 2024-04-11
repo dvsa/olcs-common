@@ -46,7 +46,12 @@ class DeltaActionLinksTest extends MockeryTestCase
         $this->assertEquals($expected, $this->sut->render($data, []));
     }
 
-    public function tableDataProvider()
+    /**
+     * @return ((int|string)[]|string)[][]
+     *
+     * @psalm-return list{list{array{id: 123, action: 'A'}, string}, list{array{id: 456, action: 'D'}, string}, list{array{id: 789}, ''}}
+     */
+    public function tableDataProvider(): array
     {
         $escapedAriaRemove = Escape::htmlAttr('Remove Aria (id 123)');
         $escapedAriaRestore = Escape::htmlAttr('Restore Aria (id 456)');

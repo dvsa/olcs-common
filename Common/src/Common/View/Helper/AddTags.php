@@ -27,9 +27,11 @@ class AddTags extends AbstractHelper
     /**
      * Render base asset path
      *
-     * @return string
+     * @return null|string|string[]
+     *
+     * @psalm-return array<string>|null|string
      */
-    public function __invoke($str = null)
+    public function __invoke($str = null): array|string|null
     {
         $search  = [];
         $replace = [];

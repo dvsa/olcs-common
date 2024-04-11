@@ -63,11 +63,8 @@ class Details extends AbstractSection
 
     /**
      * populate
-     *
-     *
-     * @return \Object;
      */
-    public function populate(array $transportManagerApplication)
+    public function populate(array $transportManagerApplication): static
     {
         $person = $transportManagerApplication['transportManager']['homeCd']['person'];
         $this->populatePersonDetails($person);

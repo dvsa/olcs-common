@@ -46,7 +46,12 @@ class PermitUsageIsValidHandlerTest extends MockeryTestCase
         );
     }
 
-    public function dpIsValid()
+    /**
+     * @return (bool|null|string)[][]
+     *
+     * @psalm-return list{list{null, 'journey_multiple', false, true}, list{null, 'journey_multiple', true, true}, list{'journey_multiple', 'journey_multiple', false, true}, list{'journey_multiple', 'journey_multiple', true, true}, list{'journey_single', 'journey_multiple', true, true}, list{'journey_single', 'journey_multiple', false, false}}
+     */
+    public function dpIsValid(): array
     {
         return [
             [null, 'journey_multiple', false, true],

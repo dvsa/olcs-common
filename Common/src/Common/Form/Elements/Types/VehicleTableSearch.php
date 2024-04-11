@@ -9,6 +9,9 @@ use Laminas\Form\Element\Button;
 
 class VehicleTableSearch extends AbstractInputSearch
 {
+    /**
+     * @return void
+     */
     protected function addHint()
     {
         $this->add(
@@ -25,6 +28,9 @@ class VehicleTableSearch extends AbstractInputSearch
         );
     }
 
+    /**
+     * @return void
+     */
     protected function addInput()
     {
         $this->add(
@@ -41,6 +47,9 @@ class VehicleTableSearch extends AbstractInputSearch
         );
     }
 
+    /**
+     * @return void
+     */
     protected function addSubmit()
     {
         $this->add(

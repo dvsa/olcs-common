@@ -151,7 +151,12 @@ class NoOfPermitsEitherFieldsetPopulatorTest extends MockeryTestCase
         $noOfPermitsEitherFieldsetPopulator->populate($form, $fieldset, $options);
     }
 
-    public function dpPopulate()
+    /**
+     * @return (int|null|string)[][]
+     *
+     * @psalm-return list{list{20, null, 'euro5', 20}, list{null, 10, 'euro6', 10}}
+     */
+    public function dpPopulate(): array
     {
         return [
             [20, null, 'euro5', 20],

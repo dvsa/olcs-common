@@ -18,7 +18,12 @@ class PublicHolidayAreaTest extends TestCase
         static::assertEquals($expect, (new PublicHolidayArea())->format($data));
     }
 
-    public function dpTestFormat()
+    /**
+     * @return (string|string[])[][]
+     *
+     * @psalm-return list{array{data: array{isEngland: 'N', isNi: 'N'}, expect: 'none'}, array{data: array{isEngland: 'Y', isWales: 'Y', isScotland: 'Y', isNi: 'Y'}, expect: 'England, Wales, Scotland, Northern Ireland'}}
+     */
+    public function dpTestFormat(): array
     {
         return [
             [

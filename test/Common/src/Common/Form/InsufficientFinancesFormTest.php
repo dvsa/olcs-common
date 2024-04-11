@@ -50,7 +50,12 @@ class InsufficientFinancesFormTest extends TestCase
         $this->sut->isValid();
     }
 
-    public function dataProviderTestIsValid()
+    /**
+     * @return (bool|string)[][]
+     *
+     * @psalm-return list{list{'X', '', false, false, false}, list{'N', '', false, false, true}, list{'Y', '', true, false, false}, list{'Y', 'X', true, false, false}, list{'Y', 'upload', true, true, false}, list{'Y', 'send', true, false, false}}
+     */
+    public function dataProviderTestIsValid(): array
     {
         return [
             ['X', '', false, false, false],
@@ -62,7 +67,12 @@ class InsufficientFinancesFormTest extends TestCase
         ];
     }
 
-    private function initForm($radioValue, $yesNoValue, $yesNoInput, $fileCountInput, $radioInput): void
+    /**
+     * @param m\LegacyMockInterface&m\MockInterface&ElementInterface $yesNoInput
+     * @param m\LegacyMockInterface&m\MockInterface&ElementInterface $fileCountInput
+     * @param m\LegacyMockInterface&m\MockInterface&ElementInterface $radioInput
+     */
+    private function initForm($radioValue, $yesNoValue, ElementInterface $yesNoInput, ElementInterface $fileCountInput, ElementInterface $radioInput): void
     {
         $insufficientFinancesFieldset = m::mock(Fieldset::class)->makePartial();
         $insufficientFinancesFieldset->setName('insufficientFinances');

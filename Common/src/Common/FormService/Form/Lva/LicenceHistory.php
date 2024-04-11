@@ -15,7 +15,7 @@ class LicenceHistory
     {
     }
 
-    public function getForm()
+    public function getForm(): \Common\Form\Form
     {
         $form = $this->formHelper->createForm('Lva\LicenceHistory');
 

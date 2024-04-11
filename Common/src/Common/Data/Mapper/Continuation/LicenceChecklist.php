@@ -708,7 +708,12 @@ class LicenceChecklist
         return empty($date) ? '' : date(Module::$dateFormat, strtotime($date));
     }
 
-    private static function mapUsers(array $data, $translator)
+    /**
+     * @return ((mixed|string)[][]|int|mixed)[]
+     *
+     * @psalm-return array{users: list<array{email: ''|mixed, name: string, permission: string}>, header: mixed, displayUsersCount: 10}
+     */
+    private static function mapUsers(array $data, TranslationHelperService $translator): array
     {
         $users = [];
         if (!empty($data['organisation']['organisationUsers'])) {

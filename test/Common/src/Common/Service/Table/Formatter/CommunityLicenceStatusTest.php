@@ -72,7 +72,12 @@ class CommunityLicenceStatusTest extends MockeryTestCase
         );
     }
 
-    public function dataProvider()
+    /**
+     * @return ((int|null|string|string[])[]|string)[][]
+     *
+     * @psalm-return list{list{array{id: 1, futureSuspension: array{startDate: '2017-01-01', endDate: '2018-01-01'}, currentSuspension: null, currentWithdrawal: null}, '<a class="govuk-link" href="the_url">Suspension due: 01/01/2017 to 01/01/2018</a>'}, list{array{id: 1, futureSuspension: array{startDate: '2017-01-01'}, currentSuspension: null, currentWithdrawal: null}, '<a class="govuk-link" href="the_url">Suspension due: 01/01/2017</a>'}, list{array{id: 1, futureSuspension: null, currentSuspension: array{startDate: '2016-01-01', endDate: '2018-01-01'}, currentWithdrawal: null}, '<a class="govuk-link" href="the_url">Suspended: 01/01/2016 to 01/01/2018</a>'}, list{array{id: 1, futureSuspension: null, currentSuspension: array{startDate: '2016-01-01'}, currentWithdrawal: null}, '<a class="govuk-link" href="the_url">Suspended: 01/01/2016</a>'}, list{array{id: 1, futureSuspension: null, currentSuspension: null, currentWithdrawal: array{startDate: '2016-01-01'}}, 'Withdrawn: 01/01/2016'}, list{array{id: 1, status: array{description: 'Expired'}, futureSuspension: null, currentSuspension: null, currentWithdrawal: null, expiredDate: '2016-01-01'}, 'Expired: 01/01/2016'}, list{array{id: 1, status: array{description: 'Pending'}, futureSuspension: null, currentSuspension: null, currentWithdrawal: null}, 'Pending'}}
+     */
+    public function dataProvider(): array
     {
         return [
             [

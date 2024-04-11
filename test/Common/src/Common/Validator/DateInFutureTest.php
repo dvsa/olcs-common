@@ -21,7 +21,12 @@ class DateInFutureTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
         $this->assertSame($expected, $sut->isValid($value));
     }
 
-    public function dataProvider()
+    /**
+     * @return (bool|string)[][]
+     *
+     * @psalm-return array{'Year ago': list{false, '2014-05-22 15:43'}, 'Weeks ago': list{false, '2015-05-01 15:42'}, 'Minutes ago': list{false, '2015-05-22 15:42'}, Now: list{false, '2015-05-22 15:43'}, '1 minute in future': list{true, '2015-05-22 15:44'}, '1 day in future': list{true, '2015-05-23 15:43'}, 'Days intoo future': list{true, '2015-05-25 15:43'}, 'Year in future': list{true, '2016-05-22 15:43'}, 'Date in past': list{true, '2016-05-22'}, 'Date in future': list{true, '2016-05-23'}}
+     */
+    public function dataProvider(): array
     {
         return [
             'Year ago'           => [false, '2014-05-22 15:43'],

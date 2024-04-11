@@ -171,7 +171,7 @@ class QaForm extends BaseQaForm
     /**
      * Call the setData function of the parent class (to assist in unit testing)
      */
-    protected function callParentSetData(mixed $data)
+    protected function callParentSetData(mixed $data): static
     {
         return parent::setData($data);
     }

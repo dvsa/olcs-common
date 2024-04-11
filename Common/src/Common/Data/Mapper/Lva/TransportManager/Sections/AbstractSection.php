@@ -19,7 +19,7 @@ abstract class AbstractSection
         return $this->translationTemplate;
     }
 
-    protected function populateTemplate($template, $data): string
+    protected function populateTemplate(string $template, array $data): string
     {
         return $this->translator->translateReplace($template, $data);
     }

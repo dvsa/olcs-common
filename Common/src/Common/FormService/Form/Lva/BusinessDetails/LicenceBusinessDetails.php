@@ -19,6 +19,9 @@ class LicenceBusinessDetails extends AbstractBusinessDetails
         parent::__construct($formHelper);
     }
 
+    /**
+     * @return void
+     */
     protected function alterForm($form, $params)
     {
         $this->formServiceLocator->get('lva-licence')->alterForm($form);

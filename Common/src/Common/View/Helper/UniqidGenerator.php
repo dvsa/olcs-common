@@ -11,7 +11,7 @@ class UniqidGenerator
         return $this->id;
     }
 
-    public function generateId(string $prefix = '', bool $more_entropy = false)
+    public function generateId(string $prefix = '', bool $more_entropy = false): string
     {
         $this->id = uniqid($prefix, $more_entropy);
         return $this->id;

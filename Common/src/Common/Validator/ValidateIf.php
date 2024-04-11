@@ -119,7 +119,7 @@ class ValidateIf extends AbstractValidator implements ValidatorPluginManagerAwar
     /**
      * @param boolean $allowEmpty
      */
-    public function setAllowEmpty($allowEmpty)
+    public function setAllowEmpty($allowEmpty): static
     {
         $this->allowEmpty = $allowEmpty;
         return $this;

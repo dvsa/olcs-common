@@ -63,7 +63,7 @@ class Search extends AbstractData
         return $this->request;
     }
 
-    public function setRequest(HttpRequest $request)
+    public function setRequest(HttpRequest $request): static
     {
         $this->request = $request;
         return $this;
@@ -71,8 +71,10 @@ class Search extends AbstractData
 
     /**
      * @return $this
+     *
+     * @psalm-param 'INDEX_NAME'|'application' $index
      */
-    public function setIndex(mixed $index)
+    public function setIndex(string $index)
     {
         $this->index = $index;
         return $this;
@@ -88,8 +90,10 @@ class Search extends AbstractData
 
     /**
      * @return $this
+     *
+     * @psalm-param 'SEARCH' $search
      */
-    public function setSearch(mixed $search)
+    public function setSearch(string $search)
     {
         $this->search = $search;
         return $this;
@@ -236,7 +240,7 @@ class Search extends AbstractData
              ->getValue();
     }
 
-    public function populateFiltersFormOptions()
+    public function populateFiltersFormOptions(): \Common\Form\Form
     {
         /** @var \Common\Form\Form $form */
         $form = $this->fetchFiltersFormObject();

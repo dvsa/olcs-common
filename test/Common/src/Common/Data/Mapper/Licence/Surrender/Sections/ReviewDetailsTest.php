@@ -56,7 +56,12 @@ class ReviewDetailsTest extends TestCase
         $this->assertSame($expected, $sections);
     }
 
-    public function dpReviewDetails()
+    /**
+     * @return array[][][]
+     *
+     * @psalm-return array{StandardLicence: list{list{array}, list{array}}, StandardInternational: list{list{array}, list{array}}}
+     */
+    public function dpReviewDetails(): array
     {
         return [
             'StandardLicence' => [
@@ -101,7 +106,12 @@ class ReviewDetailsTest extends TestCase
         ];
     }
 
-    public function expectedDiscs()
+    /**
+     * @return (((string|string[]|true)[]|string)[]|string|true)[]
+     *
+     * @psalm-return array{sectionHeading: 'DiscHeading', changeLinkInHeading: true, change: array{sectionLink: 'licence/surrender/current-discs/review/GET'}, questions: list{array{label: 'Number to be destroyed', answer: '1', changeLinkInHeading: true, change: array{sectionLink: 'licence/surrender/current-discs/review/GET'}}, array{label: 'Number lost', answer: '0', changeLinkInHeading: true, change: array{sectionLink: 'licence/surrender/current-discs/review/GET'}}, array{label: 'Number stolen', answer: '0', changeLinkInHeading: true, change: array{sectionLink: 'licence/surrender/current-discs/review/GET'}}}}
+     */
+    public function expectedDiscs(): array
     {
         return
             [
@@ -145,7 +155,10 @@ class ReviewDetailsTest extends TestCase
             ];
     }
 
-    private function mockTranslatorForCurrentDiscs($mockTranslator): void
+    /**
+     * @param \Mockery\LegacyMockInterface&\Mockery\MockInterface&TranslationHelperService $mockTranslator
+     */
+    private function mockTranslatorForCurrentDiscs(TranslationHelperService $mockTranslator): void
     {
         $mockTranslator->shouldReceive('translate')->with('licence.surrender.review.discs.heading')->once()->andReturn('DiscHeading');
         $mockTranslator->shouldReceive('translate')->with('licence.surrender.review.label.discs.possession')->once()->andReturn('Number to be destroyed');
@@ -153,21 +166,32 @@ class ReviewDetailsTest extends TestCase
         $mockTranslator->shouldReceive('translate')->with('licence.surrender.review.label.discs.stolen')->once()->andReturn('Number stolen');
     }
 
-    private function mockTranslatorForOperatorLicence($mockTranslator): void
+    /**
+     * @param \Mockery\LegacyMockInterface&\Mockery\MockInterface&TranslationHelperService $mockTranslator
+     */
+    private function mockTranslatorForOperatorLicence(TranslationHelperService $mockTranslator): void
     {
         $mockTranslator->shouldReceive('translate')->with('surrender.review.label.documents.operatorLicenceDocument')->once()->andReturn('OperatorLicenceLabel');
         $mockTranslator->shouldReceive('translate')->with('licence.surrender.review.label.documents.answerpossession')->once()->andReturn('OperatorLicenceAnswer');
         $mockTranslator->shouldReceive('translate')->with('licence.surrender.review.documents.operatorlicence.heading')->once()->andReturn('OperatorLicenceHeading');
     }
 
-    private function mockTranslatorForCommunityLicence($mockTranslator): void
+    /**
+     * @param \Mockery\LegacyMockInterface&\Mockery\MockInterface&TranslationHelperService $mockTranslator
+     */
+    private function mockTranslatorForCommunityLicence(TranslationHelperService $mockTranslator): void
     {
         $mockTranslator->shouldReceive('translate')->with('surrender.review.label.documents.communityLicenceDocument')->once()->andReturn('CommunityLicenceLabel');
         $mockTranslator->shouldReceive('translate')->with('licence.surrender.review.label.documents.answerpossession')->once()->andReturn('CommunityLicenceAnswer');
         $mockTranslator->shouldReceive('translate')->with('licence.surrender.review.documents.communitylicence.heading')->once()->andReturn('CommunityLicenceHeading');
     }
 
-    private function expectedOperatorLicence()
+    /**
+     * @return (((string|string[]|true)[]|string)[]|string|true)[]
+     *
+     * @psalm-return array{sectionHeading: 'OperatorLicenceHeading', changeLinkInHeading: true, change: array{sectionLink: 'licence/surrender/operator-licence/review/GET'}, questions: list{array{label: 'OperatorLicenceLabel', answer: 'OperatorLicenceAnswer', changeLinkInHeading: true, change: array{sectionLink: 'licence/surrender/operator-licence/review/GET'}}}}
+     */
+    private function expectedOperatorLicence(): array
     {
         return [
 
@@ -190,7 +214,12 @@ class ReviewDetailsTest extends TestCase
         ];
     }
 
-    private function expectedCommunityLicence()
+    /**
+     * @return (((string|string[]|true)[]|string)[]|string|true)[]
+     *
+     * @psalm-return array{sectionHeading: 'CommunityLicenceHeading', changeLinkInHeading: true, change: array{sectionLink: 'licence/surrender/community-licence/review/GET'}, questions: list{array{label: 'CommunityLicenceLabel', answer: 'CommunityLicenceAnswer', changeLinkInHeading: true, change: array{sectionLink: 'licence/surrender/community-licence/review/GET'}}}}
+     */
+    private function expectedCommunityLicence(): array
     {
 
         return [

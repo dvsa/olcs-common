@@ -45,7 +45,12 @@ class FeaturesEnabledTest extends MockeryTestCase
         $this->assertEquals($expectedResult, $sut->__invoke($config, $this->mvcEvent));
     }
 
-    public function dpTestInvoke()
+    /**
+     * @return ((string|string[])[]|bool|int)[][]
+     *
+     * @psalm-return list{list{array{default: list{'default toggle 1', 'default toggle 2'},...}, list{'action toggle 1', 'action toggle 2'}, true, 1}, list{array{default: list{'default toggle 1', 'default toggle 2'}}, list{'default toggle 1', 'default toggle 2'}, false, 1}, list{array<list{'action toggle 1', 'action toggle 2'}>, list{'action toggle 1', 'action toggle 2'}, true, 1}, list{array<array<never, never>>, array<never, never>, true, 0}, list{array{default: array<never, never>}, array<never, never>, true, 0}}
+     */
+    public function dpTestInvoke(): array
     {
         $defaultConfig = ['default toggle 1', 'default toggle 2'];
         $actionConfig = ['action toggle 1', 'action toggle 2'];

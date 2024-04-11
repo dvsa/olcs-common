@@ -40,8 +40,12 @@ class DateTest extends MockeryTestCase
 
     /**
      * Data provider
+     *
+     * @return (false|int|null|string)[][]
+     *
+     * @psalm-return list{list{false|int, 'd/m/Y', 'Unknown', '20/03/2010'}, list{false|int, 'Y', 'Unknown', '2010'}, list{null, 'd/m/Y', 'Unknown', 'Unknown-translated'}, list{null, 'd/m/Y', 'N/a', 'N/a-translated'}}
      */
-    public function provider()
+    public function provider(): array
     {
         return [
             [

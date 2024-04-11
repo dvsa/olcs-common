@@ -156,7 +156,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
         return $this->render($mode . '_condition_undertaking', $form);
     }
 
-    protected function updateCompletion()
+    protected function updateCompletion(): void
     {
         if ($this->lva != 'licence') {
             $this->handleCommand(
@@ -193,7 +193,10 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
      * Create a new ConditionUndertaking
      *
      * @param array $formData
+     *
      * @throws \RuntimeException
+     *
+     * @return void
      */
     protected function create($formData)
     {
@@ -211,7 +214,10 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
      * Update a ConditionUndertaking
      *
      * @param array $formData
+     *
      * @throws \RuntimeException
+     *
+     * @return void
      */
     protected function update($formData)
     {
@@ -227,7 +233,10 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
 
     /**
      * Delete one or more ConditionUndertaking
+     *
      * @throws \RuntimeException
+     *
+     * @return void
      */
     protected function delete()
     {

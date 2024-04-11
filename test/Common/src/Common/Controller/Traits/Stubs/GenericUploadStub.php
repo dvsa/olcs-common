@@ -16,17 +16,20 @@ class GenericUploadStub extends AbstractActionController
 
     public $stubResponse;
 
-    public function callUploadFile($fileData, $data)
+    public function callUploadFile(array $fileData, array $data): bool
     {
         return $this->uploadFile($fileData, $data);
     }
 
-    public function callDeleteFile($id)
+    public function callDeleteFile(int $id): bool
     {
         return $this->deleteFile($id);
     }
 
-    public function handleCommand($dto)
+    /**
+     * @param \Dvsa\Olcs\Transfer\Command\Document\DeleteDocument|\Dvsa\Olcs\Transfer\Command\Document\Upload $dto
+     */
+    public function handleCommand(\Dvsa\Olcs\Transfer\Command\Document\Upload|\Dvsa\Olcs\Transfer\Command\Document\DeleteDocument $dto)
     {
         $this->stubResponse->dto = $dto;
 

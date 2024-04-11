@@ -8,9 +8,12 @@ class EcmtNoOfPermitsCombinedTotalValidator
      * Verify that the total requested number of permits across all emission types is greater than zero
      *
      * @param array $context
+     *
      * @return bool
+     *
+     * @psalm-param 3 $value
      */
-    public static function validateMin(mixed $value, $context)
+    public static function validateMin(int $value, $context)
     {
         return (self::getTotal($context) >= 1);
     }
@@ -21,9 +24,12 @@ class EcmtNoOfPermitsCombinedTotalValidator
      *
      * @param array $context
      * @param int $maxValue
+     *
      * @return bool
+     *
+     * @psalm-param 3 $value
      */
-    public static function validateMax(mixed $value, $context, $maxValue)
+    public static function validateMax(int $value, $context, $maxValue)
     {
         return (self::getTotal($context) <= $maxValue);
     }

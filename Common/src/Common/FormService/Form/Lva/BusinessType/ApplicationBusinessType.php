@@ -21,6 +21,9 @@ class ApplicationBusinessType extends AbstractBusinessType
     {
     }
 
+    /**
+     * @return void
+     */
     protected function alterForm(Form $form, $params)
     {
         $this->formServiceLocator->get('lva-application')->alterForm($form);

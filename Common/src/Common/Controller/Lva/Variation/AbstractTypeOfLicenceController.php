@@ -34,10 +34,8 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
 
     /**
      * Licence type of licence section
-     *
-     * @return Response
      */
-    public function indexAction()
+    public function indexAction(): Response|\Laminas\View\Model\ViewModel
     {
         $prg = $this->prg();
 

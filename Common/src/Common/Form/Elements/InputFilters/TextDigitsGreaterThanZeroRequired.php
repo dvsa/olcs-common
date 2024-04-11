@@ -21,6 +21,10 @@ class TextDigitsGreaterThanZeroRequired extends LaminasElement implements InputP
 {
     /**
      * Provide default input rules for this element.
+     *
+     * @return ((int[]|string)[][]|null|string|true)[]
+     *
+     * @psalm-return array{name: null|string, required: true, validators: list{array{name: \Laminas\Validator\Digits::class}, array{name: \Laminas\Validator\GreaterThan::class, options: array{min: 0}}}}
      */
     public function getInputSpecification(): array
     {

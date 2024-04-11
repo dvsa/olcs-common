@@ -234,10 +234,8 @@ abstract class AbstractDiscsController extends AbstractController
 
     /**
      * Get Table of disks form
-     *
-     * @return \Common\Form\Form
      */
-    protected function getDiscsForm()
+    protected function getDiscsForm(): \Common\Form\Form|null
     {
         $formHelper = $this->formHelper;
 
@@ -259,10 +257,8 @@ abstract class AbstractDiscsController extends AbstractController
 
     /**
      * Get disks table
-     *
-     * @return TableBuilder
      */
-    protected function getDiscsTable()
+    protected function getDiscsTable(): TableBuilder|null
     {
         $tableParams = $this->getFilters();
         $tableParams['query'] = $tableParams;

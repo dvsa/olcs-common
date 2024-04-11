@@ -29,7 +29,7 @@ class FormValidationBuilderTest extends MockeryTestCase
     public function aValidatorIsCallable(): void
     {
         // Assert
-        $this->assertIsCallable(static fn(): self => \Common\Test\Form\FormValidatorBuilder::aValidator());
+        $this->assertIsCallable(static fn(): \Common\Test\Form\FormValidatorBuilder => \Common\Test\Form\FormValidatorBuilder::aValidator());
     }
 
     /**
@@ -136,7 +136,7 @@ class FormValidationBuilderTest extends MockeryTestCase
         $this->assertTrue($result);
     }
 
-    protected function setUpSut()
+    protected function setUpSut(): void
     {
         $this->sut = new FormValidatorBuilder();
     }

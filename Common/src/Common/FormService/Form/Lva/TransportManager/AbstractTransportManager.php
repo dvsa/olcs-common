@@ -15,7 +15,7 @@ abstract class AbstractTransportManager extends AbstractLvaFormService
 {
     protected FormHelperService $formHelper;
 
-    public function getForm()
+    public function getForm(): \Common\Form\Form
     {
         $form = $this->formHelper->createForm('Lva\TransportManagers');
 

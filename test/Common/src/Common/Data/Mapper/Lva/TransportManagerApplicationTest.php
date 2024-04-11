@@ -55,7 +55,12 @@ class TransportManagerApplicationTest extends MockeryTestCase
         $this->assertIsArray($data);
     }
 
-    public function transportManagerDataProvider()
+    /**
+     * @return ((((string|string[])[]|string)[]|string)[]|string)[][][]
+     *
+     * @psalm-return list{list{array{application: array{vehicleType: array{id: 'app_veh_type_mixed'}}, isOwner: '__TEST__', tmType: array{description: '__TEST__'}, hoursMon: '__TEST__', hoursTue: '__TEST__', hoursWed: '__TEST__', hoursThu: '__TEST__', hoursFri: '__TEST__', hoursSat: '__TEST__', hoursSun: '__TEST__', otherLicences: array<never, never>, additionalInformation: '__TEST__', hasUndertakenTraining: 'N', transportManager: array{otherLicences: array<never, never>, employments: array<never, never>, previousConvictions: array<never, never>, documents: array<never, never>, homeCd: array{emailAddress: '__TEST__', address: array{countryCode: array{countryDesc: '__TEST__'}}, person: array{forename: '__TEST__', familyName: '__TEST__'}}, workCd: array{address: array{countryCode: array{countryDesc: '__TEST__'}}}}}}}
+     */
+    public function transportManagerDataProvider(): array
     {
         return [
             [

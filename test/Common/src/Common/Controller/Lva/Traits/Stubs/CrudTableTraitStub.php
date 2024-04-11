@@ -34,7 +34,7 @@ class CrudTableTraitStub extends AbstractActionController
         $this->formHelper = $formHelper;
     }
 
-    public function callHandlePostSave($prefix = null, $options = [])
+    public function callHandlePostSave(string|null $prefix = null, array $options = []): \Laminas\Http\Response
     {
         return $this->handlePostSave($prefix, $options);
     }

@@ -9,10 +9,11 @@ class BaseQaForm extends Form
     /**
      * Allow validators to run by filling in missing keys in input data
      *
+     * @return (mixed|string[][])[]
      *
-     * @return $data
+     * @psalm-return array{qa: array<array<''>>|mixed,...}
      */
-    public function updateDataForQa(array $data)
+    public function updateDataForQa(array $data): array
     {
         if (!array_key_exists(self::QA_FIELDSET_NAME, $data)) {
             $data[self::QA_FIELDSET_NAME] = [];

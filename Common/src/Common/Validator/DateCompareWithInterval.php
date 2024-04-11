@@ -62,9 +62,10 @@ class DateCompareWithInterval extends DateCompare
 
     /**
      * @param string $interval_spec
+     *
      * @link http://php.net/manual/en/dateinterval.construct.php
      */
-    public function getDateInterval()
+    public function getDateInterval(): string
     {
         return $this->dateInterval;
     }
@@ -110,9 +111,8 @@ class DateCompareWithInterval extends DateCompare
      * Override to add additional date interval
      *
      * @param array $context
-     * @return \DateTime
      */
-    protected function getCompareToDate($context)
+    protected function getCompareToDate($context): \DateTime|false
     {
         $compareDateValue = parent::getCompareToDate($context);
         if ($compareDateValue === false) {

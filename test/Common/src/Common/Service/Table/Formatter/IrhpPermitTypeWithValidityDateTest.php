@@ -42,7 +42,12 @@ class IrhpPermitTypeWithValidityDateTest extends MockeryTestCase
         );
     }
 
-    public function scenariosProvider()
+    /**
+     * @return ((int|string)[]|string)[][]
+     *
+     * @psalm-return array{'ECMT Annual - without validity date': list{array{typeId: 1, typeDescription: 'Annual ECMT>'}, 'Annual ECMT&gt;'}, 'ECMT Annual - with validity date': list{array{typeId: 1, typeDescription: 'Annual ECMT>', stockValidTo: '2019-12-31'}, 'Annual ECMT&gt; 2019'}, 'ECMT Short Term - without validity date': list{array{typeId: 2, typeDescription: 'Short-term ECMT>'}, 'Short-term ECMT&gt;'}, 'ECMT Short Term - with validity date 2019': list{array{typeId: 2, typeDescription: 'Short-term ECMT>', stockValidTo: '2019-12-31'}, 'Short-term ECMT&gt; 2019'}, 'ECMT Short Term - with validity date 2020': list{array{typeId: 2, typeDescription: 'Short-term ECMT>', stockValidTo: '2020-12-31', periodNameKey: 'imATranslationKey'}, 'Short-term ECMT&gt; _TRNSLT_imATranslationKey'}, 'IRHP Bilateral - without validity date': list{array{typeId: 4, typeDescription: 'Annual Bilateral>'}, 'Annual Bilateral&gt;'}, 'IRHP Bilateral - with validity date': list{array{typeId: 4, typeDescription: 'Annual Bilateral>', stockValidTo: '2019-12-31'}, 'Annual Bilateral&gt;'}, 'IRHP Multilateral - without validity date': list{array{typeId: 5, typeDescription: 'Annual Multilateral>'}, 'Annual Multilateral&gt;'}, 'IRHP Multilateral - with validity date': list{array{typeId: 5, typeDescription: 'Annual Multilateral>', stockValidTo: '2019-12-31'}, 'Annual Multilateral&gt;'}, 'ECMT International Removal - without validity date': list{array{typeId: 3, typeDescription: 'ECMT International Removal>'}, 'ECMT International Removal&gt;'}, 'ECMT International Removal - with validity date': list{array{typeId: 3, typeDescription: 'ECMT International Removal>', stockValidTo: '2019-12-31'}, 'ECMT International Removal&gt;'}}
+     */
+    public function scenariosProvider(): array
     {
         return [
             'ECMT Annual - without validity date' => [

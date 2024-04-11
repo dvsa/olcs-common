@@ -15,10 +15,13 @@ class Cases
     public const NR_DEFAULT_INFRINGEMENT_CATEGORY = 'MSI'; //currently the only one we have
 
     /**
-     * @param $data
+     * @param int[] $data
+     *
      * @return array
+     *
+     * @psalm-param array{case: 29} $data
      */
-    public function createNrCase($data)
+    public function createNrCase(array $data)
     {
         $data['erruCaseType'] = self::NR_CATEGORY_DEFAULT;
         $data['caseType'] = self::CASE_CATEGORY_NR;

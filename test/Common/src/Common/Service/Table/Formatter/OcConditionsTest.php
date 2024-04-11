@@ -27,7 +27,12 @@ class OcConditionsTest extends TestCase
         $this->assertEquals((new OcConditions())->format($data), $conditions);
     }
 
-    public function dpFormatDataProvider()
+    /**
+     * @return ((int|null|string[])[][][]|int)[][]
+     *
+     * @psalm-return list{list{array{conditions: list{array{licence: null, conditionType: array{id: 'cdt_und'}}, array{licence: null, conditionType: array{id: 'cdt_und'}}, array{licence: 1, conditionType: array{id: 'cdt_con'}}, array{licence: 1, conditionType: array{id: 'cdt_con'}}}}, 2}}
+     */
+    public function dpFormatDataProvider(): array
     {
         return [
             [

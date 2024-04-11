@@ -41,7 +41,12 @@ class NoOfPermitsBothValidatorTest extends MockeryTestCase
         );
     }
 
-    public function dpIsValid()
+    /**
+     * @return (bool|int|string|string[])[][]
+     *
+     * @psalm-return array{valid: list{'6', 6, 'euro5', array<never, never>, true}, 'not valid (euro5)': list{'7', 6, 'euro5', array{permitsRemainingThreshold: 'qanda.ecmt.number-of-permits.error.permits-remaining-exceeded.euro5'}, false}, 'not valid (euro6)': list{'7', 6, 'euro6', array{permitsRemainingThreshold: 'qanda.ecmt.number-of-permits.error.permits-remaining-exceeded.euro6'}, false}}
+     */
+    public function dpIsValid(): array
     {
         return [
             'valid' => [

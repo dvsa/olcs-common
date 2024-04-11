@@ -13,6 +13,10 @@ class Text extends LaminasText implements InputProviderInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return (false|null|string|string[][])[]
+     *
+     * @psalm-return array{id: 'qaText', name: null|string, required: false, filters: list{array{name: 'StringTrim'}}, validators: array<never, never>}
      */
     public function getInputSpecification(): array
     {

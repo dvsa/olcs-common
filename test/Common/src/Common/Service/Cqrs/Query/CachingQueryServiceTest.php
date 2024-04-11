@@ -280,7 +280,12 @@ class CachingQueryServiceTest extends MockeryTestCase
         self::assertSame($this->mockResult, $sut->send($mockQuery));
     }
 
-    public function dpPersistentCacheNotPopulated()
+    /**
+     * @return (bool|int)[][]
+     *
+     * @psalm-return list{list{true, 300}, list{false, 43200}}
+     */
+    public function dpPersistentCacheNotPopulated(): array
     {
         return [
             [true, 300],

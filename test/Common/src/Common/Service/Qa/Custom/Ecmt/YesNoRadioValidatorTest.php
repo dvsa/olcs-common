@@ -35,7 +35,12 @@ class YesNoRadioValidatorTest extends MockeryTestCase
         );
     }
 
-    public function dpIsValidTrue()
+    /**
+     * @return ((string|string[])[]|string)[][]
+     *
+     * @psalm-return list{array{value: 'Y', context: array{yesContent: list{'RU', 'IT'}}}, array{value: 'N', context: array{yesContent: ''}}}
+     */
+    public function dpIsValidTrue(): array
     {
         return [
             [

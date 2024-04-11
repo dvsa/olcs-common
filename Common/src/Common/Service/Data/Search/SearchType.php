@@ -37,7 +37,7 @@ class SearchType implements ListDataInterface, FactoryInterface
         return $this->searchTypeManager;
     }
 
-    public function setSearchTypeManager(mixed $searchTypeManager): void
+    public function setSearchTypeManager(\Mockery\MockInterface $searchTypeManager): void
     {
         $this->searchTypeManager = $searchTypeManager;
     }
@@ -50,7 +50,10 @@ class SearchType implements ListDataInterface, FactoryInterface
         return $this->navigationFactory;
     }
 
-    public function setNavigationFactory(mixed $navigationFactory): void
+    /**
+     * @param NavigationFactory|\Mockery\LegacyMockInterface&\Mockery\MockInterface&NavigationFactory $navigationFactory
+     */
+    public function setNavigationFactory(NavigationFactory $navigationFactory): void
     {
         $this->navigationFactory = $navigationFactory;
     }
@@ -106,7 +109,12 @@ class SearchType implements ListDataInterface, FactoryInterface
         return $indexes;
     }
 
-    public function getNavigation($context = null, array $queryParams = []): Navigation
+    /**
+     * @param null|string $context
+     *
+     * @psalm-param 'internal-search'|null $context
+     */
+    public function getNavigation(string|null $context = null, array $queryParams = []): Navigation
     {
         $nav = [];
         foreach ($this->getSearchTypes() as $searchIndex) {

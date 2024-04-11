@@ -30,7 +30,12 @@ class ReturnToAddressTest extends MockeryTestCase
         static::assertEquals($actual, $actualStatic);
     }
 
-    public function dpTestInvoke()
+    /**
+     * @return (bool|null|string)[][]
+     *
+     * @psalm-return list{array{isNi: false, separator: null, expect: 'Office of the Traffic Commissioner, The Central Licensing Office, Hillcrest House, 386 Harehills Lane, Leeds, LS9 6NF'}, array{isNi: false, separator: '</br>', expect: 'Office of the Traffic Commissioner</br>The Central Licensing Office</br>Hillcrest House</br>386 Harehills Lane</br>Leeds</br>LS9 6NF'}, array{isNi: true, separator: null, expect: 'Department for Infrastructure, The Central Licensing Office, PO Box 180, Leeds, LS9 1BU'}, array{isNi: true, separator: '<br />', expect: 'Department for Infrastructure<br />The Central Licensing Office<br />PO Box 180<br />Leeds<br />LS9 1BU'}}
+     */
+    public function dpTestInvoke(): array
     {
         return [
             [

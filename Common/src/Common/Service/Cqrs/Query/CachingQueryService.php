@@ -58,7 +58,7 @@ class CachingQueryService implements QueryServiceInterface, \Laminas\Log\LoggerA
     /**
      * Send a query to the backend
      *
-     * @param QueryContainerInterface|CustomCacheableInterface $query Query container
+     * @param QueryContainerInterface $query Query container
      *
      * @return \Common\Service\Cqrs\Response
      */
@@ -223,7 +223,7 @@ class CachingQueryService implements QueryServiceInterface, \Laminas\Log\LoggerA
      *
      *
      */
-    private function storeLocalCache(string $cacheIdentifier, string $dtoClassName, mixed $result): void
+    private function storeLocalCache(string $cacheIdentifier, string $dtoClassName, \Common\Service\Cqrs\Response $result): void
     {
         $this->logMessage(sprintf(self::CACHE_LOCAL_SAVE_MSG, $dtoClassName));
         $this->localCache[$cacheIdentifier] = $result;

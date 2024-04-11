@@ -207,8 +207,10 @@ class Runner
      * Output message
      *
      * @param string $message
+     *
+     * @psalm-param '[31m'|'[33m'|'[34m' $type
      */
-    public function output($message, $type = self::MESSAGE_OK): void
+    public function output($message, string $type = self::MESSAGE_OK): void
     {
         echo $type . $message . "\n" . self::MESSAGE_DEFAULT;
     }
@@ -595,8 +597,10 @@ class Repo
      * Output a message
      *
      * @param string $message
+     *
+     * @psalm-param '[32m'|'[34m' $type
      */
-    private function output($message, $type = Runner::MESSAGE_OK): void
+    private function output($message, string $type = Runner::MESSAGE_OK): void
     {
         $this->runner->output($this->getName() . ': ' . $message, $type);
     }

@@ -19,7 +19,12 @@ use Laminas\Form\Fieldset;
  */
 class HoursPerWeek extends Fieldset
 {
-    public function setMessages($messages): void
+    /**
+     * @param (string|string[][])[] $messages
+     *
+     * @psalm-param array{0?: 'messages', hoursPerWeekContent?: array{field: list{'MESSAGE'}}} $messages
+     */
+    public function setMessages(array $messages): void
     {
         $this->messages = $messages;
     }

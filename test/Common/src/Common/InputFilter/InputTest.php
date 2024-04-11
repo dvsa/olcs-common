@@ -112,7 +112,7 @@ class InputTest extends MockeryTestCase
         $this->assertSame(static::A_FILTERED_INPUT_VALUE, $result);
     }
 
-    protected function setUpSut(mixed $name = self::AN_INPUT_NAME)
+    protected function setUpSut(mixed $name = self::AN_INPUT_NAME): void
     {
         $this->sut = new Input($name);
     }

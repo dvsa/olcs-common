@@ -40,7 +40,7 @@ class GoodsVehiclesVehicle
     /**
      * @return array
      */
-    public static function mapFromErrors($errors, FormInterface $form)
+    public static function mapFromErrors(array $errors, FormInterface $form)
     {
         $dataFields = ['vrm', 'platedWeight'];
         $licenceVehicleFields = [

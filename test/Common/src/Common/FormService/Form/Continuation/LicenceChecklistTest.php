@@ -193,7 +193,12 @@ class LicenceChecklistTest extends MockeryTestCase
         );
     }
 
-    public function dpAlterOperatingCentresSection()
+    /**
+     * @return string[][]
+     *
+     * @psalm-return list{list{'app_veh_type_psv', 'existing-label', 'existing-not-checked-message'}, list{'app_veh_type_hgv', 'existing-label', 'existing-not-checked-message'}, list{'app_veh_type_mixed', 'existing-label', 'existing-not-checked-message'}, list{'app_veh_type_lgv', 'existing-label.lgv', 'existing-not-checked-message.lgv'}}
+     */
+    public function dpAlterOperatingCentresSection(): array
     {
         return [
             [

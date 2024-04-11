@@ -123,7 +123,12 @@ class NoOfPermitsSingleFieldsetPopulatorTest extends MockeryTestCase
         $noOfPermitsSingleFieldsetPopulator->populate($form, $fieldset, $options);
     }
 
-    public function dpPopulate()
+    /**
+     * @return string[][]
+     *
+     * @psalm-return list{list{'euro5', 'qanda.ecmt.number-of-permits.textbox.label.euro5', 'qanda.ecmt.number-of-permits.single.inset.supplement.euro5'}, list{'euro6', 'qanda.ecmt.number-of-permits.textbox.label.euro6', 'qanda.ecmt.number-of-permits.single.inset.supplement.euro6'}}
+     */
+    public function dpPopulate(): array
     {
         return [
             [

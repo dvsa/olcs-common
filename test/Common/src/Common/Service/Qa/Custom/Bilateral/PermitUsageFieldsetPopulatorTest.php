@@ -112,7 +112,12 @@ class PermitUsageFieldsetPopulatorTest extends MockeryTestCase
         $this->permitUsageFieldsetPopulator->populate($this->form, $this->fieldset, $options);
     }
 
-    public function dpPopulateSingleItem()
+    /**
+     * @return string[][]
+     *
+     * @psalm-return list{list{'journey_single', 'qanda.bilaterals.permit-usage.single-option.journey-single'}, list{'journey_multiple', 'qanda.bilaterals.permit-usage.single-option.journey-multiple'}}
+     */
+    public function dpPopulateSingleItem(): array
     {
         return [
             [

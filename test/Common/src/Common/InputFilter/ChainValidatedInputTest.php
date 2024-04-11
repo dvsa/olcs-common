@@ -1307,7 +1307,7 @@ class ChainValidatedInputTest extends MockeryTestCase
         $this->assertEquals(2, $result);
     }
 
-    protected function setUpSut(mixed $name = null)
+    protected function setUpSut(mixed $name = null): void
     {
         $this->sut = new ChainValidatedInput($name ?? static::AN_INPUT_NAME);
     }

@@ -47,7 +47,12 @@ class WithdrawnDate extends LaminasDateSelect implements InputProviderInterface
         ];
     }
 
-    public function getValidators()
+    /**
+     * @return \Common\Form\Elements\Validators\WithdrawnDate[]
+     *
+     * @psalm-return list{\Common\Form\Elements\Validators\WithdrawnDate}
+     */
+    public function getValidators(): array
     {
         return [
             new \Common\Form\Elements\Validators\WithdrawnDate()

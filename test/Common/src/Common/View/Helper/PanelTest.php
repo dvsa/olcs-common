@@ -39,7 +39,12 @@ class PanelTest extends MockeryTestCase
         static::assertEquals($expect, $sut->__invoke($params['type'], $params['title'], $params['body']));
     }
 
-    public function dpTestInvoke()
+    /**
+     * @return (string|string[])[][]
+     *
+     * @psalm-return list{array{params: array{type: 'success', title: 'title', body: 'body'}, expect: 'html_string', expected_css_class: 'govuk-panel--confirmation'}, array{params: array{type: 'does not exist', title: 'title', body: 'body'}, expect: 'html_string', expected_css_class: ''}}
+     */
+    public function dpTestInvoke(): array
     {
         return [
             //  parameter not set, no referer page

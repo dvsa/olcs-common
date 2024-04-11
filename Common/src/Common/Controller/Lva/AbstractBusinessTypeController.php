@@ -148,7 +148,7 @@ abstract class AbstractBusinessTypeController extends AbstractController
         return $this->render('business_type', $form);
     }
 
-    public function getForm($form)
+    public function getForm($form): \Laminas\Form\FormInterface
     {
         $formHelper = $this->formHelper;
 

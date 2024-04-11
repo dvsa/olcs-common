@@ -19,7 +19,12 @@ class CaseTrafficAreaTest extends MockeryTestCase
         static::assertSame($expect, $sut->format($data));
     }
 
-    public function dpTestFormat()
+    /**
+     * @return (string|string[][][])[][]
+     *
+     * @psalm-return array{'lic|app': array{data: array{licence: array{trafficArea: array{name: 'unit_TaName'}}}, expect: 'unit_TaName'}, tm: array{data: array<never, never>, expect: 'NA'}}
+     */
+    public function dpTestFormat(): array
     {
         return [
             'lic|app' => [

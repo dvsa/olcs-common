@@ -118,7 +118,7 @@ class FormDateTimeSelect extends \Common\Form\View\Helper\Extended\FormDateTimeS
         return trim($markup);
     }
 
-    protected function renderDayInput($element)
+    protected function renderDayInput(\Laminas\Form\Element\Select $element)
     {
         return $this->wrap(
             $this->renderInput($element, 2),
@@ -127,7 +127,7 @@ class FormDateTimeSelect extends \Common\Form\View\Helper\Extended\FormDateTimeS
         );
     }
 
-    protected function renderMonthInput($element)
+    protected function renderMonthInput(\Laminas\Form\Element\Select $element)
     {
         return $this->wrap(
             $this->renderInput($element, 2),
@@ -136,7 +136,7 @@ class FormDateTimeSelect extends \Common\Form\View\Helper\Extended\FormDateTimeS
         );
     }
 
-    protected function renderYearInput($element)
+    protected function renderYearInput(\Laminas\Form\Element\Select $element)
     {
         return $this->wrap(
             $this->renderInput($element, 4),
@@ -145,14 +145,17 @@ class FormDateTimeSelect extends \Common\Form\View\Helper\Extended\FormDateTimeS
         );
     }
 
-    protected function wrap($content, $label, $id)
+    protected function wrap($content, string $label, $id): string
     {
         $label = $this->getTranslator()->translate('date-' . $label);
 
         return sprintf($this->format, $id, $label, $content);
     }
 
-    protected function renderInput($element, $maxLength)
+    /**
+     * @psalm-param 2|4 $maxLength
+     */
+    protected function renderInput($element, int $maxLength)
     {
         $inputHelper = $this->getInputHelper();
 

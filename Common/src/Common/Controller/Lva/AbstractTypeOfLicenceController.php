@@ -49,7 +49,7 @@ abstract class AbstractTypeOfLicenceController extends AbstractController
     /**
      * Process error messages from API
      *
-     * @param \Laminas\Form\FormInterface $form   Form
+     * @param Form $form Form
      * @param array                    $errors Errors
      *
      * @return void

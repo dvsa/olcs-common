@@ -40,7 +40,7 @@ class PostcodeTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    private function assertArraySubsetRecursive($subset, $array): void
+    private function assertArraySubsetRecursive(array $subset, array $array): void
     {
         foreach ($subset as $key => $value) {
             $this->assertArrayHasKey($key, $array);

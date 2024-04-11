@@ -87,7 +87,12 @@ class InspectionRequestIdTest extends MockeryTestCase
         $this->assertEquals($expectedOutput, $this->sut->format($data, []));
     }
 
-    public function formatProvider()
+    /**
+     * @return (((false|int)[]|int|null|string)[]|string)[][]
+     *
+     * @psalm-return array{'licence inspection request': list{array{id: 1, licence: array{id: 2}, application: null}, 'licence/processing/inspection-request', array{action: 'edit', licence: 2, id: 1}, 'url1', '<a href="url1" class="govuk-link js-modal-ajax">1</a>'}, 'application inspection request': list{array{id: 1, licence: array{id: 2}, application: array{id: 3, isVariation: false}}, 'lva-application/processing/inspection-request', array{action: 'edit', application: 3, id: 1}, 'url2', '<a href="url2" class="govuk-link js-modal-ajax">1</a>'}}
+     */
+    public function formatProvider(): array
     {
         return [
             'licence inspection request' => [
