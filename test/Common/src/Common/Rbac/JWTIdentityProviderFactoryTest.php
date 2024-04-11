@@ -19,10 +19,7 @@ class JWTIdentityProviderFactoryTest extends MockeryTestCase
 {
     use MocksServicesTrait;
 
-    /**
-     * @var JWTIdentityProviderFactory
-     */
-    protected $sut;
+    protected JWTIdentityProviderFactory $sut;
 
     protected function setUp(): void
     {
@@ -80,7 +77,7 @@ class JWTIdentityProviderFactoryTest extends MockeryTestCase
         $this->sut = new JWTIdentityProviderFactory();
     }
 
-    protected function setUpDefaultServices()
+    protected function setUpDefaultServices(\Laminas\ServiceManager\ServiceManager $serviceManager): void
     {
         $this->serviceManager->setService('QuerySender', $this->setUpMockService(QuerySender::class));
         $this->serviceManager->setService(CacheEncryption::class, $this->setUpMockService(CacheEncryption::class));
@@ -89,7 +86,7 @@ class JWTIdentityProviderFactoryTest extends MockeryTestCase
         $this->serviceManager->setService(Session::class, $this->setUpMockService(Session::class));
     }
 
-    protected function config(array $config = [])
+    protected function config(array $config = []): void
     {
         $this->serviceManager->setService('config', $config);
     }
