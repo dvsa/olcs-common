@@ -3,6 +3,7 @@
 namespace Common\Filter;
 
 use Laminas\Filter\AbstractFilter;
+use Laminas\Filter\Decompress;
 use Laminas\Filter\Exception;
 use Common\Filesystem\Filesystem;
 
@@ -12,71 +13,39 @@ use Common\Filesystem\Filesystem;
  */
 class DecompressToTmp extends AbstractFilter
 {
-    /**
-     * @var \Laminas\Filter\Decompress
-     */
-    protected $decompressFilter;
+    protected Decompress $decompressFilter;
+    protected string $tempRootDir;
+    protected Filesystem $fileSystem;
 
-    /**
-     * @var string
-     */
-    protected $tempRootDir;
-
-    /**
-     * @var FileSystem
-     */
-    protected $fileSystem;
-
-    /**
-     * @param \Laminas\Filter\Decompress $decompressFilter
-     * @return $this
-     */
-    public function setDecompressFilter($decompressFilter)
+    public function setDecompressFilter(Decompress $decompressFilter): static
     {
         $this->decompressFilter = $decompressFilter;
         return $this;
     }
 
-    /**
-     * @return \Laminas\Filter\Decompress
-     */
-    public function getDecompressFilter()
+    public function getDecompressFilter(): Decompress
     {
         return $this->decompressFilter;
     }
 
-    /**
-     * @param string $tempRootDir
-     * @return $this
-     */
-    public function setTempRootDir($tempRootDir)
+    public function setTempRootDir(string $tempRootDir): static
     {
         $this->tempRootDir = $tempRootDir;
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getTempRootDir()
+    public function getTempRootDir(): string
     {
         return $this->tempRootDir;
     }
 
-    /**
-     * @param FileSystem $fileSystem
-     * @return $this
-     */
-    public function setFileSystem($fileSystem)
+    public function setFileSystem(Filesystem $fileSystem): static
     {
         $this->fileSystem = $fileSystem;
         return $this;
     }
 
-    /**
-     * @return FileSystem
-     */
-    public function getFileSystem()
+    public function getFileSystem(): Filesystem
     {
         return $this->fileSystem;
     }
@@ -86,13 +55,15 @@ class DecompressToTmp extends AbstractFilter
      *
      * @param  mixed $value
      * @throws Exception\RuntimeException If filtering $value is impossible
-     * @return mixed
      */
-    public function filter($value)
+    public function filter($value): string
     {
         $tmpDir = $this->createTmpDir();
 
-        $this->getDecompressFilter()->setTarget($tmpDir);
+        $adapterOptions = $this->getDecompressFilter()->getAdapterOptions();
+        $adapterOptions['target'] = $tmpDir;
+
+        $this->getDecompressFilter()->setAdapterOptions($adapterOptions);
         return $this->getDecompressFilter()->filter($value);
     }
 
@@ -102,7 +73,7 @@ class DecompressToTmp extends AbstractFilter
      *
      * @return string
      */
-    protected function createTmpDir()
+    protected function createTmpDir(): string
     {
         $filesystem = $this->getFileSystem();
         $tmpDir = $filesystem->createTmpDir($this->getTempRootDir(), 'zip');
