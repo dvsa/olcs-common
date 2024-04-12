@@ -1,21 +1,10 @@
 <?php
 
-/**
- * Selector type
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
-
 namespace Common\Service\Table\Type;
 
 use Common\Util\Escape;
 use Laminas\Mvc\I18n\Translator;
 
-/**
- * Selector type
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class Selector extends AbstractType
 {
     /**
@@ -36,18 +25,9 @@ class Selector extends AbstractType
 
     public const KEY_ACTION_LINKS_RESTORE_ARIA = 'action_links.restore.aria';
 
-    protected $format = '<input type="radio" name="%s" value="%s" %s />';
+    protected string $format = '<input type="radio" name="%s" value="%s" %s />';
 
-    /**
-     * Render the selector
-     *
-     * @param array $data
-     * @param array $column
-     * @param string $formattedContent
-     *
-     * @return string
-     */
-    public function render($data, $column, $formattedContent = null)
+    public function render(array $data, array $column, string|null $formattedContent = null): string
     {
         $fieldset = $this->getTable()->getFieldset();
 
@@ -57,19 +37,7 @@ class Selector extends AbstractType
             $name = $fieldset . '[id]';
         }
 
-        $attributes = [];
-
-        if (isset($column['data-attributes'])) {
-            foreach ($column['data-attributes'] as $attrName) {
-                if (isset($data[$attrName])) {
-                    if (is_array($data[$attrName]) && isset($data[$attrName]['id'])) {
-                        $attributes[] = 'data-' . $attrName . '="' . $data[$attrName]['id'] . '"';
-                    } else {
-                        $attributes[] = 'data-' . $attrName . '="' . $data[$attrName] . '"';
-                    }
-                }
-            }
-        }
+        list($attributes, $column, $data) = $this->transformDataAttributes($column, $data);
 
         if (isset($column['aria-attributes'])) {
             foreach ($column['aria-attributes'] as $attrName => $attrValue) {
@@ -101,6 +69,24 @@ class Selector extends AbstractType
         $attributes[] = 'id="' . $fieldset . '[id][' . $data[$idx] . ']"';
 
         return sprintf($this->format, $name, $data[$idx], implode(' ', $attributes));
+    }
+
+    public function transformDataAttributes(array $column, array $data): array
+    {
+        $attributes = [];
+
+        if (isset($column['data-attributes'])) {
+            foreach ($column['data-attributes'] as $attrName) {
+                if (isset($data[$attrName])) {
+                    if (is_array($data[$attrName]) && isset($data[$attrName]['id'])) {
+                        $attributes[] = 'data-' . $attrName . '="' . $data[$attrName]['id'] . '"';
+                    } else {
+                        $attributes[] = 'data-' . $attrName . '="' . $data[$attrName] . '"';
+                    }
+                }
+            }
+        }
+        return array($attributes, $column, $data);
     }
 
     /**

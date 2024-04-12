@@ -1,11 +1,5 @@
 <?php
 
-/**
- * ApplicationTransportManagers fieldset
- *
- * @author Shaun Lizzio <shaun@lizzio.co.uk>
- */
-
 namespace Common\Form\Elements\Types;
 
 use Laminas\Form\Fieldset;
@@ -14,11 +8,6 @@ use Laminas\Form\Element\Button;
 use Laminas\Form\Element\Select;
 use Common\Form\Elements\Types\HtmlTranslated;
 
-/**
- * ApplicationTransportManagers fieldset
- *
- * @author Shaun Lizzio <shaun@lizzio.co.uk>
- */
 class ApplicationTransportManagers extends Fieldset
 {
     /**
@@ -55,12 +44,7 @@ class ApplicationTransportManagers extends Fieldset
         $this->add($searchButton);
     }
 
-    /**
-     * @param string[] $messages
-     *
-     * @psalm-param list{'messages'} $messages
-     */
-    public function setMessages(array $messages): void
+    public function setMessages(iterable $messages): void
     {
         $this->messages = $messages;
     }

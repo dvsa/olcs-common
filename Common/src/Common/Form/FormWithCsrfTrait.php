@@ -42,7 +42,7 @@ trait FormWithCsrfTrait
         return $this->get(FormWithCsrfInterface::SECURITY);
     }
 
-    public function getCsrfInput(): \Laminas\InputFilter\InputInterface|\Laminas\InputFilter\InputFilterInterface
+    public function getCsrfInput(): \Laminas\InputFilter\InputInterface
     {
         return $this->getInputFilter()->get(FormWithCsrfInterface::SECURITY);
     }

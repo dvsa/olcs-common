@@ -4,16 +4,7 @@ namespace Common\Service\Table\Type;
 
 class VariationRecordAction extends Action
 {
-    /**
-     * Render the selector
-     *
-     * @param array  $data             Row data
-     * @param array  $column           Colunm params
-     * @param string $formattedContent Content
-     *
-     * @return string
-     */
-    public function render($data, $column, $formattedContent = null)
+    public function render(array $data, array $column, string|null $formattedContent = null): string
     {
         $prefix = null;
 

@@ -21,9 +21,9 @@ class CabotageOnlyFieldsetPopulator implements FieldsetPopulatorInterface
     /**
      * {@inheritdoc}
      *
-     * @param \Mockery\LegacyMockInterface&\Mockery\MockInterface&\Laminas\Form\Form $form
+     * @param mixed $form
      */
-    public function populate(\Laminas\Form\Form $form, Fieldset $fieldset, array $options): void
+    public function populate(mixed $form, Fieldset $fieldset, array $options): void
     {
         $valueOptions = $this->standardYesNoValueOptionsGenerator->generate();
 

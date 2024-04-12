@@ -4,24 +4,9 @@ namespace Common\Service\Table\Type;
 
 use Common\Util\Escape;
 
-/**
- * DeltaActionLinks
- *
- * @author Mat Evans <mat.evans@valtech.co.uk>
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
- */
 class DeltaActionLinks extends Selector
 {
-    /**
-     * Render
-     *
-     * @param array $data
-     * @param array $column
-     * @param string $formattedContent
-     *
-     * @return string|void
-     */
-    public function render($data, $column, $formattedContent = null)
+    public function render(array $data, array $column, string|null $formattedContent = null): string
     {
         $translator = $this->getTable()->getServiceLocator()->get('translator');
         $ariaDescription = $this->getAriaDescription($data, $column, $translator);

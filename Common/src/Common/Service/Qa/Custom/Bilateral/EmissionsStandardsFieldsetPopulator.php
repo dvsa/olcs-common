@@ -9,22 +9,11 @@ use Laminas\Form\Fieldset;
 
 class EmissionsStandardsFieldsetPopulator implements FieldsetPopulatorInterface
 {
-    /**
-     * Create service instance
-     *
-     *
-     * @return EmissionsStandardsFieldsetPopulator
-     */
     public function __construct(private WarningAdder $warningAdder, private TranslationHelperService $translator, private YesNoWithMarkupForNoPopulator $yesNoWithMarkupForNoPopulator, private YesNoValueOptionsGenerator $yesNoValueOptionsGenerator)
     {
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @param \Mockery\LegacyMockInterface&\Mockery\MockInterface&\Laminas\Form\Form $form
-     */
-    public function populate(\Laminas\Form\Form $form, Fieldset $fieldset, array $options): void
+    public function populate(mixed $form, Fieldset $fieldset, array $options): void
     {
         $valueOptions = $this->yesNoValueOptionsGenerator->generate(
             'qanda.bilaterals.emissions-standards.euro3-or-euro4',

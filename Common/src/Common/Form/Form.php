@@ -69,7 +69,7 @@ class Form extends LaminasForm\Form implements \Stringable
      *
      * @psalm-param array{html?: '<script>alert("TEST")</script>', text?: '<script>alert("TEST")</script>'} $data
      */
-    public function populateValues(array $data, $onlyBase = false): void
+    public function populateValues(iterable $data, $onlyBase = false): void
     {
         $populateDepth = &self::getPopulateDepth();
         try {

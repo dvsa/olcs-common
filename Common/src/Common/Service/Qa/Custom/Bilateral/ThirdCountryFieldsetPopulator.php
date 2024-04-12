@@ -8,22 +8,14 @@ use Laminas\Form\Fieldset;
 
 class ThirdCountryFieldsetPopulator implements FieldsetPopulatorInterface
 {
-    /**
-     * Create service instance
-     *
-     *
-     * @return ThirdCountryFieldsetPopulator
-     */
-    public function __construct(private TranslationHelperService $translator, private YesNoWithMarkupForNoPopulator $yesNoWithMarkupForNoPopulator, private StandardYesNoValueOptionsGenerator $standardYesNoValueOptionsGenerator)
-    {
+    public function __construct(
+        private TranslationHelperService $translator,
+        private YesNoWithMarkupForNoPopulator $yesNoWithMarkupForNoPopulator,
+        private StandardYesNoValueOptionsGenerator $standardYesNoValueOptionsGenerator
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @param \Mockery\LegacyMockInterface&\Mockery\MockInterface&\Laminas\Form\Form $form
-     */
-    public function populate(\Laminas\Form\Form $form, Fieldset $fieldset, array $options): void
+    public function populate(mixed $form, Fieldset $fieldset, array $options): void
     {
         $valueOptions = $this->standardYesNoValueOptionsGenerator->generate();
 

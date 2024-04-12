@@ -12,7 +12,7 @@ class NoOfPermitsFieldsetPopulator implements FieldsetPopulatorInterface
      *
      * @param \Mockery\LegacyMockInterface&\Mockery\MockInterface&\Laminas\Form\Form $form
      */
-    public function populate(\Laminas\Form\Form $form, Fieldset $fieldset, array $options): void
+    public function populate(mixed $form, Fieldset $fieldset, array $options): void
     {
         foreach ($options['texts'] as $text) {
             $fieldset->add(

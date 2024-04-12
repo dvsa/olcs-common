@@ -2,21 +2,9 @@
 
 namespace Common\Service\Table\Type;
 
-/**
- * OperatingCentreAction type
- *
- * @author Mat Evans <mat.evans@valtech.co.uk>
- */
 class OperatingCentreAction extends Action
 {
-    /**
-     * Render the selector
-     *
-     * @param array $data
-     * @param array $column
-     * @return string
-     */
-    public function render($data, $column, $formattedContent = null)
+    public function render(array $data, array $column, string|null $formattedContent = null): string
     {
         $prefix = '';
         if (isset($data['s4']) && $data['s4'] !== null) {

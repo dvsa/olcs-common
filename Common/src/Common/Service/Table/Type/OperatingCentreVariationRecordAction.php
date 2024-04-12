@@ -2,21 +2,9 @@
 
 namespace Common\Service\Table\Type;
 
-/**
- * OperatingCentreVariationRecordAction type
- *
- * @author Mat Evans <mat.evans@valtech.co.uk>
- */
 class OperatingCentreVariationRecordAction extends VariationRecordAction
 {
-    /**
-     * Render the selector
-     *
-     * @param array $data
-     * @param array $column
-     * @return string
-     */
-    public function render($data, $column, $formattedContent = null)
+    public function render(array $data, array $column, string|null $formattedContent = null): string
     {
         $content = parent::render($data, $column, $formattedContent);
 
