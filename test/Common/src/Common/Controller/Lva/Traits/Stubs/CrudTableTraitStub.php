@@ -5,6 +5,7 @@ namespace CommonTest\Common\Controller\Lva\Traits\Stubs;
 use Common\Controller\Lva\Traits\CrudTableTrait;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\FormHelperService;
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 
 /**
@@ -34,7 +35,7 @@ class CrudTableTraitStub extends AbstractActionController
         $this->formHelper = $formHelper;
     }
 
-    public function callHandlePostSave(string|null $prefix = null, array $options = []): \Laminas\Http\Response
+    public function callHandlePostSave(string|null $prefix = null, array $options = []): Response|string
     {
         return $this->handlePostSave($prefix, $options);
     }

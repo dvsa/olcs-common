@@ -1972,7 +1972,7 @@ class TableBuilder implements \Stringable
     }
 
 
-    public function getColumn(string $name): ?
+    public function getColumn(string $name): ?array
     {
         return ($this->hasColumn($name) ? $this->columns[$name] : null);
     }

@@ -4,6 +4,7 @@ namespace CommonTest\Common\Controller\Lva\Traits\Stubs;
 
 use Common\Controller\Lva\Traits\CrudActionTrait;
 use Common\Service\Helper\FlashMessengerHelperService;
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 
 /**
@@ -27,7 +28,7 @@ class CrudActionTraitStub extends AbstractActionController
     }
 
 
-    public function callGetCrudAction(array $formTables = []): array
+    public function callGetCrudAction(array $formTables = []): ?array
     {
         return $this->getCrudAction($formTables);
     }
@@ -42,7 +43,7 @@ class CrudActionTraitStub extends AbstractActionController
         array $rowsNotRequired = ['add'],
         string $childIdParamName = 'child_id',
         $route = null
-    ): \Laminas\Http\Response {
+    ): Response|string {
         return $this->handleCrudAction($data, $rowsNotRequired, $childIdParamName, $route);
     }
 

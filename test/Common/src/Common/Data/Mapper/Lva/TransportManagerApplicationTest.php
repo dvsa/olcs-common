@@ -4,6 +4,7 @@ namespace CommonTest\Data\Mapper\Lva;
 
 use Common\RefData;
 use Common\Service\Helper\TranslationHelperService;
+use Laminas\Form\FormInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Data\Mapper\Lva\TransportManagerApplication;
@@ -24,7 +25,7 @@ class TransportManagerApplicationTest extends MockeryTestCase
             'registeredUser' => ['error'],
             'global' => ['message']
         ];
-        $mockForm = m::mock()
+        $mockForm = m::mock(FormInterface::class)
             ->shouldReceive('setMessages')
             ->with($formMessages)
             ->once()

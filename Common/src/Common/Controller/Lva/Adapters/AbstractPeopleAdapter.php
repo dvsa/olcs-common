@@ -7,7 +7,12 @@ use Common\Controller\Lva\Interfaces\PeopleAdapterInterface;
 use Common\Controller\Plugin\HandleQuery;
 use Common\RefData;
 use Common\Service\Cqrs\Command\CommandService;
+use Common\Service\Cqrs\Response;
 use Common\Service\Table\TableBuilder;
+use Dvsa\Olcs\Transfer\Command\Licence\CreatePeople;
+use Dvsa\Olcs\Transfer\Command\Licence\DeletePeople;
+use Dvsa\Olcs\Transfer\Command\Licence\UpdatePeople;
+use Dvsa\Olcs\Transfer\Query\Licence\People;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
 use Psr\Container\ContainerInterface;
 use Laminas\Form\Form;
@@ -31,11 +36,11 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
 
     protected array $tableData = [];
 
-    private int $licence;
-
     private array $data;
 
-    private int $application;
+    private array $licence;
+
+    private array $application = [];
 
     public function __construct(ContainerInterface $container)
     {
@@ -62,11 +67,8 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
             throw new \RuntimeException('Failed to load people data');
         }
 
-        $data = $response->getResult();
-
-        $this->data = $data;
-
-        $this->licence = $data;
+        $this->data = $this->licence = $response->getResult();
+        $this->application = $this->data['application'];
     }
 
     protected function loadPeopleDataForApplication(int $applicationId): void
@@ -78,20 +80,16 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
             throw new \RuntimeException('Failed to load people data');
         }
 
-        $data = $response->getResult();
-
-        $this->data = $data;
-
-        $this->application = $data;
-        $this->licence = $data['licence'];
+        $this->data = $this->application = $response->getResult();
+        $this->licence = $this->data['licence'];
     }
 
-    protected function handleQuery(\Dvsa\Olcs\Transfer\Query\QueryInterface $command): \Common\Service\Cqrs\Response
+    protected function handleQuery(\Dvsa\Olcs\Transfer\Query\QueryInterface $command): Response
     {
         return $this->container->get('ControllerPluginManager')->get(HandleQuery::class)->__invoke($command);
     }
 
-    protected function handleCommand(\Dvsa\Olcs\Transfer\Command\CommandInterface $command): \Common\Service\Cqrs\Response
+    protected function handleCommand(\Dvsa\Olcs\Transfer\Command\CommandInterface $command): Response
     {
         $annotationBuilder = $this->container->get(AnnotationBuilder::class);
         $commandService = $this->container->get(CommandService::class);
@@ -119,12 +117,12 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return $this->licence['organisation']['id'];
     }
 
-    public function getLicence(): mixed
+    public function getLicence(): ?array
     {
         return $this->licence;
     }
 
-    public function getApplication(): mixed
+    public function getApplication(): ?array
     {
         return $this->application;
     }
@@ -291,7 +289,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return $newTableData;
     }
 
-    protected function formatTableData(array $results): array
+    protected function formatTableData(?array $results): array
     {
         $final = [];
         foreach ($results as $row) {
@@ -339,7 +337,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     public function delete($ids): bool
     {
         $response = $this->handleCommand($this->getDeleteCommand(['personIds' => $ids]));
-        /* @var $response \Common\Service\Cqrs\Response */
+        /* @var $response Response */
         if (!$response->isOk()) {
             throw new \RuntimeException('Error deleteing Org Person : ' . print_r($response->getResult(), true));
         }
@@ -382,24 +380,24 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return true;
     }
 
-    protected function getCreateCommand(array $params): \Dvsa\Olcs\Transfer\Command\Licence\CreatePeople
+    protected function getCreateCommand(array $params): CreatePeople
     {
         $params['id'] = $this->getLicenceId();
-        return \Dvsa\Olcs\Transfer\Command\Licence\CreatePeople::create($params);
+        return CreatePeople::create($params);
     }
 
-    protected function getUpdateCommand(array $params): \Dvsa\Olcs\Transfer\Command\Licence\UpdatePeople
+    protected function getUpdateCommand(array $params): UpdatePeople
     {
         $params['person'] = $params['id'];
         $params['id'] = $this->getLicenceId();
-        return \Dvsa\Olcs\Transfer\Command\Licence\UpdatePeople::create($params);
+        return UpdatePeople::create($params);
     }
 
 
-    protected function getDeleteCommand(array $params): \Dvsa\Olcs\Transfer\Command\Licence\DeletePeople
+    protected function getDeleteCommand(array $params): DeletePeople
     {
         $params['id'] = $this->getLicenceId();
-        return \Dvsa\Olcs\Transfer\Command\Licence\DeletePeople::create($params);
+        return DeletePeople::create($params);
     }
 
     protected function getTableConfig(): string

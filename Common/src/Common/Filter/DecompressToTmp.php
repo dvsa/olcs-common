@@ -56,7 +56,7 @@ class DecompressToTmp extends AbstractFilter
      * @param  mixed $value
      * @throws Exception\RuntimeException If filtering $value is impossible
      */
-    public function filter($value): string
+    public function filter(mixed $value): mixed
     {
         $tmpDir = $this->createTmpDir();
 

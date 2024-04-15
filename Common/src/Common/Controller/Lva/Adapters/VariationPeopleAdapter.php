@@ -2,6 +2,9 @@
 
 namespace Common\Controller\Lva\Adapters;
 
+use Dvsa\Olcs\Transfer\Command\Licence\CreatePeople;
+use Dvsa\Olcs\Transfer\Command\Licence\DeletePeople;
+use Dvsa\Olcs\Transfer\Command\Licence\UpdatePeople;
 use Psr\Container\ContainerInterface;
 
 class VariationPeopleAdapter extends AbstractPeopleAdapter
@@ -11,7 +14,7 @@ class VariationPeopleAdapter extends AbstractPeopleAdapter
         parent::__construct($container);
     }
 
-    protected function getTableConfig()
+    protected function getTableConfig(): string
     {
         if (!$this->useDeltas()) {
             return 'lva-people';
@@ -27,10 +30,10 @@ class VariationPeopleAdapter extends AbstractPeopleAdapter
      *
      * @return \Dvsa\Olcs\Transfer\Command\AbstractCommand
      */
-    protected function getCreateCommand($params)
+    protected function getCreateCommand($params): CreatePeople
     {
         $params['id'] = $this->getApplicationId();
-        return \Dvsa\Olcs\Transfer\Command\Application\CreatePeople::create($params);
+        return CreatePeople::create($params);
     }
 
     /**
@@ -40,11 +43,11 @@ class VariationPeopleAdapter extends AbstractPeopleAdapter
      *
      * @return \Dvsa\Olcs\Transfer\Command\AbstractCommand
      */
-    protected function getUpdateCommand($params)
+    protected function getUpdateCommand($params): UpdatePeople
     {
         $params['person'] = $params['id'];
         $params['id'] = $this->getApplicationId();
-        return \Dvsa\Olcs\Transfer\Command\Application\UpdatePeople::create($params);
+        return UpdatePeople::create($params);
     }
 
     /**
@@ -54,9 +57,9 @@ class VariationPeopleAdapter extends AbstractPeopleAdapter
      *
      * @return \Dvsa\Olcs\Transfer\Command\AbstractCommand
      */
-    protected function getDeleteCommand($params)
+    protected function getDeleteCommand($params): DeletePeople
     {
         $params['id'] = $this->getApplicationId();
-        return \Dvsa\Olcs\Transfer\Command\Application\DeletePeople::create($params);
+        return DeletePeople::create($params);
     }
 }

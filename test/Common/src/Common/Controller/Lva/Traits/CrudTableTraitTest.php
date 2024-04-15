@@ -5,6 +5,7 @@ namespace CommonTest\Common\Controller\Lva\Traits;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\FormHelperService;
 use CommonTest\Bootstrap;
+use Laminas\Http\Response;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
@@ -23,10 +24,14 @@ class CrudTableTraitTest extends MockeryTestCase
     /** @var  \Laminas\ServiceManager\ServiceManager */
     protected $sm;
 
+    protected Response|m\MockInterface $response;
+
     protected function setUp(): void
     {
         $this->mockFlashMessengerHelper = m::mock(FlashMessengerHelperService::class);
         $this->mockFormHelper = m::mock(FormHelperService::class);
+
+        $this->response = m::mock(Response::class);
 
         $this->sut = m::mock(Stubs\CrudTableTraitStub::class, [$this->mockFlashMessengerHelper, $this->mockFormHelper])
             ->makePartial()
@@ -125,15 +130,15 @@ class CrudTableTraitTest extends MockeryTestCase
             ->shouldReceive('getRequest')->once()->andReturn($request)
             ->shouldReceive('render')
             ->with('delete', $form, ['sectionText' => 'delete.confirmation.text'])
-            ->andReturn('render');
+            ->andReturn($this->response);
 
         $this->mockFormHelper
             ->shouldReceive('createFormWithRequest')
             ->with('GenericDeleteConfirmation', $request)
             ->andReturn($form);
 
-        $this->assertEquals(
-            'render',
+        $this->assertSame(
+            $this->response,
             $this->sut->deleteAction()
         );
     }
@@ -156,7 +161,7 @@ class CrudTableTraitTest extends MockeryTestCase
                     'query' => $queryParams,
                 ]
             )
-            ->andReturn('redirect')
+            ->andReturn($this->response)
             ->getMock();
 
         $mockRequest = m::mock(\Laminas\Http\Request::class);
@@ -177,8 +182,8 @@ class CrudTableTraitTest extends MockeryTestCase
             ->shouldReceive('redirect')
             ->andReturn($redirectMock);
 
-        $this->assertEquals(
-            'redirect',
+        $this->assertSame(
+            $this->response,
             $this->sut->deleteAction()
         );
     }
