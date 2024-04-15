@@ -14,12 +14,12 @@ class ClassList implements \Stringable
     /**
      * @var array
      */
-    private $items = [];
+    private array $items = [];
 
     /**
      * @param string|string[] $classes
      */
-    final public function __construct($classes = [])
+    final public function __construct(string|array|ClassList $classes = [])
     {
         $this->add($classes);
     }
@@ -27,7 +27,7 @@ class ClassList implements \Stringable
     /**
      * @param string|string[] $classes
      */
-    public function has($classes): bool
+    public function has(string|array|ClassList $classes): bool
     {
         if ($classes instanceof ClassList) {
             $classes = $classes->toArray();
@@ -50,7 +50,7 @@ class ClassList implements \Stringable
      * @param string|string[] $classes
      * @return $this
      */
-    public function add($classes): self
+    public function add(string|array|ClassList $classes): self
     {
         if ($classes instanceof ClassList) {
             $classes = $classes->toArray();
@@ -72,7 +72,7 @@ class ClassList implements \Stringable
      * @param string|string[] $classes
      * @return $this
      */
-    public function remove($classes): self
+    public function remove(string|array|ClassList $classes): self
     {
         if (is_string($classes)) {
             $classes = static::fromString($classes);

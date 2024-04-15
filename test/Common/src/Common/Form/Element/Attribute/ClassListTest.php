@@ -745,10 +745,10 @@ class ClassListTest extends MockeryTestCase
         $result = $this->sut->has(new ClassList(static::A_CLASS_ARRAY));
 
         // Assert
-        $this->assertEquals(true, $result);
+        $this->assertTrue($result);
     }
 
-    protected function setUpSut(array|ClassList ...$args): void
+    protected function setUpSut(array|ClassList|string ...$args): void
     {
         $this->sut = new ClassList(...$args);
     }

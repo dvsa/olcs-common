@@ -19,12 +19,10 @@ class FormRadioOption extends \Common\Form\View\Helper\Extended\FormRadio
      * @param ElementInterface|null $element       Radio element
      * @param mixed                 $labelPosition key of option to render, (strict standards do not allow changing
      *                                             method signature)
-     *
-     * @return $this|string
      */
-    public function __invoke(ElementInterface $element = null, $labelPosition = null)
+    public function __invoke(ElementInterface $element = null, mixed $labelPosition = null): self|string
     {
-        if (!$element instanceof \Laminas\Form\ElementInterface) {
+        if (!$element instanceof ElementInterface) {
             return $this;
         }
 
