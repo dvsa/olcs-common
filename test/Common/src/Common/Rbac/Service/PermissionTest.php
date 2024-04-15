@@ -68,6 +68,12 @@ class PermissionTest extends MockeryTestCase
         $this->assertFalse($this->sut->isInternalReadOnly());
     }
 
+    public function testCanManageSelfserveUsers(): void
+    {
+        $this->authService->expects('isGranted')->with(RefData::PERMISSION_CAN_MANAGE_USER_SELFSERVE)->andReturnTrue();
+        $this->assertTrue($this->sut->canManageSelfserveUsers());
+    }
+
     /**
      * @dataProvider dpIsGranted
      */

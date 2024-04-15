@@ -43,4 +43,9 @@ class Permission
 
         return (string) $currentUserId === $userId;
     }
+
+    public function canManageSelfserveUsers(): bool
+    {
+        return $this->authService->isGranted(RefData::PERMISSION_CAN_MANAGE_USER_SELFSERVE);
+    }
 }
