@@ -574,12 +574,7 @@ class TableBuilder implements \Stringable
         return ($this->variables[$name] ?? '');
     }
 
-    /**
-     * Set the columns
-     *
-     * @param array $columns
-     */
-    public function setColumns($columns): void
+    public function setColumns(array $columns): void
     {
         $this->columns = [];
 
@@ -1977,12 +1972,12 @@ class TableBuilder implements \Stringable
     }
 
 
-    public function getColumn($name)
+    public function getColumn(string $name): ?
     {
         return ($this->hasColumn($name) ? $this->columns[$name] : null);
     }
 
-    public function setColumn($name, $column): void
+    public function setColumn(string $name, array $column): void
     {
         $this->columns[$name] = $column;
     }
@@ -1992,19 +1987,14 @@ class TableBuilder implements \Stringable
         return isset($this->columns[$name]);
     }
 
-    /**
-     * Remove column on the fly
-     *
-     * @param string $name
-     */
-    public function removeColumn($name = ''): void
+    public function removeColumn(string $name = ''): void
     {
         if ($this->hasColumn($name)) {
             unset($this->columns[$name]);
         }
     }
 
-    private function authorisedToView($column): bool
+    private function authorisedToView(array $column): bool
     {
         if (isset($column['permissionRequisites'])) {
             foreach ((array) $column['permissionRequisites'] as $permission) {
@@ -2028,7 +2018,7 @@ class TableBuilder implements \Stringable
         return $this->isDisabled && isset($column['hideWhenDisabled']) && $column['hideWhenDisabled'];
     }
 
-    public function isRowDisabled(array $row)
+    public function isRowDisabled(array $row): bool
     {
         if (!isset($this->settings['row-disabled-callback'])) {
             return false;
@@ -2039,22 +2029,12 @@ class TableBuilder implements \Stringable
         return $callback($row);
     }
 
-    /**
-     * Should Paginate
-     *
-     * @return bool
-     */
-    protected function shouldPaginate()
+    protected function shouldPaginate(): bool
     {
         return isset($this->settings['paginate']);
     }
 
-    /**
-     * Setup Data Attributes
-     *
-     * @return void
-     */
-    protected function setupDataAttributes()
+    protected function setupDataAttributes(): void
     {
         if (isset($this->variables['dataAttributes']) && is_array($this->variables['dataAttributes'])) {
             $attrs = [];
@@ -2071,10 +2051,8 @@ class TableBuilder implements \Stringable
 
     /**
      * If internal user has read only permissions remove columns with particular types
-     *
-     * @return void
      */
-    protected function checkForActionLinks()
+    protected function checkForActionLinks(): void
     {
         if ($this->isInternalReadOnly()) {
             $typesToRemove = ['ActionLinks', 'DeltaActionLinks'];
@@ -2100,36 +2078,18 @@ class TableBuilder implements \Stringable
         }
     }
 
-    /**
-     * Set setting
-     *
-     * @param string $key   key
-     * @param string $value value
-     *
-     * @return TableBuilder
-     */
-    public function setSetting($key, $value)
+    public function setSetting(string $key, mixed $value): TableBuilder
     {
         $this->settings[$key] = $value;
         return $this;
     }
 
-    /**
-     * Get Csrf Element
-     *
-     * @return \Laminas\Form\Element\Csrf
-     */
-    public function getCsrfElement()
+    public function getCsrfElement(): \Laminas\Form\Element\Csrf
     {
         return $this->elmCsrf;
     }
 
-    /**
-     * Get translator service
-     *
-     * @return Translator
-     */
-    public function getTranslator()
+    public function getTranslator(): Translator
     {
         return $this->translator;
     }
