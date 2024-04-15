@@ -4,12 +4,10 @@ namespace Common\Filter;
 
 use Laminas\Filter\AbstractFilter;
 use Laminas\Filter\Decompress;
-use Laminas\Filter\Exception;
 use Common\Filesystem\Filesystem;
 
 /**
- * Class DecompressToTmp
- * @package Common\Filter
+ * @template-extends AbstractFilter<mixed, mixed>
  */
 class DecompressToTmp extends AbstractFilter
 {
@@ -51,10 +49,7 @@ class DecompressToTmp extends AbstractFilter
     }
 
     /**
-     * Returns the result of filtering $value
-     *
-     * @param  mixed $value
-     * @throws Exception\RuntimeException If filtering $value is impossible
+     * @noinspection PhpMixedReturnTypeCanBeReducedInspection -
      */
     public function filter(mixed $value): mixed
     {
@@ -67,12 +62,6 @@ class DecompressToTmp extends AbstractFilter
         return $this->getDecompressFilter()->filter($value);
     }
 
-
-    /**
-     * Creates temp directory for extracting to, registers shutdown function to remove it at script end
-     *
-     * @return string
-     */
     protected function createTmpDir(): string
     {
         $filesystem = $this->getFileSystem();
