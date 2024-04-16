@@ -29,7 +29,7 @@ class FormSelect extends AbstractHelper
             return $this->escapeHtmlHelper;
         }
 
-        if (method_exists($this->view, 'plugin')) {
+        if ($this->view !== null && method_exists($this->view, 'plugin')) {
             $this->escapeHtmlHelper = $this->view->plugin('escapehtml');
         }
 
