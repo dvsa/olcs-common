@@ -60,7 +60,7 @@ class LicenceSoleTraderTest extends MockeryTestCase
         $formActions->shouldReceive('has')->with('disqualify')->andReturn(true);
         $formActions->shouldReceive('remove')->once()->with('disqualify');
 
-        $form = m::mock();
+        $form = m::mock(\Common\Form\Form::class);
 
         $this->mockLicenceService->shouldReceive('alterForm')
             ->once()

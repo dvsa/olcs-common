@@ -5,6 +5,7 @@ namespace Common\FormService\Form\Lva;
 use Common\Service\Helper\FormHelperService;
 use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Helper\UrlHelperService;
+use Laminas\Form\Form;
 use Laminas\Validator\ValidatorPluginManager;
 use LmcRbacMvc\Service\AuthorizationService;
 
@@ -15,11 +16,7 @@ use LmcRbacMvc\Service\AuthorizationService;
  */
 class VariationFinancialEvidence extends FinancialEvidence
 {
-    public function __construct(protected FormHelperService $formHelper, protected AuthorizationService $authService, protected TranslationHelperService $translator, protected UrlHelperService $urlHelper, protected ValidatorPluginManager $validatorPluginManager)
-    {
-    }
-
-    protected function alterForm($form)
+    protected function alterForm(Form $form): void
     {
         $this->removeFormAction($form, 'saveAndContinue');
 

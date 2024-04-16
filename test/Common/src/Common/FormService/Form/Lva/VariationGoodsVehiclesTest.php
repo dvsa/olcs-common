@@ -45,7 +45,7 @@ class VariationGoodsVehiclesTest extends MockeryTestCase
         $isCrudPressed = true;
 
         // Mocks
-        $mockForm = m::mock();
+        $mockForm = m::mock(\Common\Form\Form::class);
         $mockTableElement = m::mock(\Laminas\Form\Fieldset::class);
         $mockValidator = m::mock();
 
@@ -66,7 +66,7 @@ class VariationGoodsVehiclesTest extends MockeryTestCase
         $mockForm->shouldReceive('getInputFilter->get->get->getValidatorChain->attach')
             ->with($mockValidator);
 
-        $formActions = m::mock();
+        $formActions = m::mock(\Laminas\Form\ElementInterface::class);
         $formActions->shouldReceive('has')->with('save')->andReturn(true);
         $formActions->shouldReceive('remove')->once()->with('save');
         $formActions->shouldReceive('has')->with('cancel')->andReturn(true);

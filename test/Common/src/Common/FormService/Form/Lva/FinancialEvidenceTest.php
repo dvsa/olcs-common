@@ -122,7 +122,7 @@ class FinancialEvidenceTest extends MockeryTestCase
         $inputFilterInterface->expects('get')->with('evidence')->andReturn($evidenceInputFilter);
 
         // Mocks
-        $mockForm = m::mock(FormInterface::class);
+        $mockForm = m::mock(\Laminas\Form\Form::class);
         $mockForm->expects('getInputFilter')->withNoArgs()->andReturn($inputFilterInterface);
         $mockForm->expects('get')
             ->with('evidence')

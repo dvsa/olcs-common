@@ -4,7 +4,7 @@ namespace CommonTest\Common\FormService\Form\Lva;
 
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Laminas\Form\Form;
+use Common\Form\Form;
 
 /**
  * Abstract LVA Form Service Test Case

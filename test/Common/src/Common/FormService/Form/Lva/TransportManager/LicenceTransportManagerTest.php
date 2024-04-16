@@ -34,7 +34,7 @@ class LicenceTransportManagerTest extends MockeryTestCase
 
     public function testGetForm(): void
     {
-        $formActions = m::mock();
+        $formActions = m::mock(\Laminas\Form\ElementInterface::class);
         $formActions->shouldReceive('has')->with('save')->andReturn(true);
         $formActions->shouldReceive('remove')->once()->with('save');
 
@@ -44,7 +44,7 @@ class LicenceTransportManagerTest extends MockeryTestCase
         $formActions->shouldReceive('has')->with('saveAndContinue')->andReturn(true);
         $formActions->shouldReceive('remove')->once()->with('saveAndContinue');
 
-        $form = m::mock();
+        $form = m::mock(\Common\Form\Form::class);
         $form->shouldReceive('has')->with('form-actions')->andReturn(true);
         $form->shouldReceive('get')->with('form-actions')->andReturn($formActions);
 
@@ -57,7 +57,7 @@ class LicenceTransportManagerTest extends MockeryTestCase
 
     public function testGetFormWithoutFormActions(): void
     {
-        $form = m::mock();
+        $form = m::mock(\Common\Form\Form::class);
         $form->shouldReceive('has')->with('form-actions')->andReturn(false);
 
         $this->formHelper->shouldReceive('createForm')->once()
@@ -69,7 +69,7 @@ class LicenceTransportManagerTest extends MockeryTestCase
 
     public function testGetFormWithoutFormAction(): void
     {
-        $formActions = m::mock();
+        $formActions = m::mock(\Laminas\Form\ElementInterface::class);
         $formActions->shouldReceive('has')->with('save')->andReturn(true);
         $formActions->shouldReceive('remove')->once()->with('save');
 
@@ -79,7 +79,7 @@ class LicenceTransportManagerTest extends MockeryTestCase
         $formActions->shouldReceive('has')->with('saveAndContinue')->andReturn(false);
         $formActions->shouldReceive('remove')->never()->with('saveAndContinue');
 
-        $form = m::mock();
+        $form = m::mock(\Common\Form\Form::class);
         $form->shouldReceive('has')->with('form-actions')->andReturn(true);
         $form->shouldReceive('get')->with('form-actions')->andReturn($formActions);
 

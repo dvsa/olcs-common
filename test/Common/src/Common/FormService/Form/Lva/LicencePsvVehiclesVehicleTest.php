@@ -37,7 +37,7 @@ class LicencePsvVehiclesVehicleTest extends MockeryTestCase
         ];
 
         // Mocks
-        $mockForm = m::mock();
+        $mockForm = m::mock(\Common\Form\Form::class);
         $mockPsvVehiclesVehicle = m::mock('\Common\FormService\FormServiceInterface');
         $mockGenericVehiclesVehicle = m::mock('\Common\FormService\FormServiceInterface');
 
@@ -54,7 +54,7 @@ class LicencePsvVehiclesVehicleTest extends MockeryTestCase
 
         // <<-- START SUT::alterForm
 
-        $mockLicenceVehicle = m::mock();
+        $mockLicenceVehicle = m::mock(\Laminas\Form\ElementInterface::class);
         $mockSpecifiedDate = m::mock();
 
         // Expectations
@@ -99,7 +99,7 @@ class LicencePsvVehiclesVehicleTest extends MockeryTestCase
         ];
 
         // Mocks
-        $mockForm = m::mock();
+        $mockForm = m::mock(\Common\Form\Form::class);
         $mockPsvVehiclesVehicle = m::mock('\Common\FormService\FormServiceInterface');
         $mockGenericVehiclesVehicle = m::mock('\Common\FormService\FormServiceInterface');
 
@@ -118,7 +118,7 @@ class LicencePsvVehiclesVehicleTest extends MockeryTestCase
 
         // <<-- START SUT::alterForm
 
-        $mockLicenceVehicle = m::mock();
+        $mockLicenceVehicle = m::mock(\Laminas\Form\ElementInterface::class);
         $mockSpecifiedDate = m::mock();
 
         $this->formHelper->shouldReceive('createFormWithRequest')
@@ -163,7 +163,7 @@ class LicencePsvVehiclesVehicleTest extends MockeryTestCase
         ];
 
         // Mocks
-        $mockForm = m::mock();
+        $mockForm = m::mock(\Common\Form\Form::class);
         $mockPsvVehiclesVehicle = m::mock('\Common\FormService\FormServiceInterface');
         $mockGenericVehiclesVehicle = m::mock('\Common\FormService\FormServiceInterface');
 
@@ -181,7 +181,7 @@ class LicencePsvVehiclesVehicleTest extends MockeryTestCase
 
         // <<-- START SUT::alterForm
 
-        $mockLicenceVehicle = m::mock();
+        $mockLicenceVehicle = m::mock(\Laminas\Form\ElementInterface::class);
         $mockSpecifiedDate = m::mock();
         $mockRemovalDate = m::mock();
 
@@ -219,7 +219,7 @@ class LicencePsvVehiclesVehicleTest extends MockeryTestCase
 
         // <<-- END SUT::alterForm
 
-        $mockData = m::mock();
+        $mockData = m::mock(\Laminas\Form\ElementInterface::class);
 
         $mockForm->shouldReceive('get')
             ->with('data')
