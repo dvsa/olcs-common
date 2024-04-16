@@ -6,18 +6,13 @@ use Common\Rbac\Service\Permission;
 use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Exception\MissingFormatterException;
 use Common\Service\Table\Formatter\FormatterPluginManager;
+use Dvsa\Olcs\Transfer\Query\QueryInterface;
+use Exception;
+use Laminas\Form\Element\Csrf;
+use Laminas\Mvc\Controller\Plugin\Url;
 use Psr\Container\ContainerInterface;
 use Laminas\Mvc\I18n\Translator;
-use LmcRbacMvc\Service\AuthorizationService;
 
-/**
- * Table Builder
- *
- * Builds a table from config
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- * @author Jakub Igla <jakub.igla@valtech.co.uk>
- */
 class TableBuilder implements \Stringable
 {
     public const TYPE_DEFAULT = 1;
@@ -58,180 +53,36 @@ class TableBuilder implements \Stringable
 
     public const CLASS_TABLE_CELL_NUMERIC = 'govuk-table__cell--numeric';
 
-    /**
-     * Hold the pagination helper
-     *
-     * @var object
-     */
-    private $paginationHelper;
+    private PaginationHelper $paginationHelper;
+    private ContentHelper $contentHelper;
+    private string $contentType = self::CONTENT_TYPE_HTML;
+    private array $settings = [];
+    private array $footer = [];
+    private array $variables = [];
+    private array $attributes = [];
+    private array $columns = [];
+    private array $widths = ['checkbox' => '20px'];
+    private int $total;
+    private int $unfilteredTotal;
+    private array $rows = [];
+    private int $type = self::TYPE_DEFAULT;
+    private int $limit = self::DEFAULT_LIMIT;
+    private int $page = 1;
+    private Url $url;
+    private array|QueryInterface $query = [];
+    private string $sort;
+    private string $order = 'ASC';
+    private string $actionFieldName = 'action';
+    private ?string $fieldset;
+    private bool $isDisabled = false;
+    private Csrf $elmCsrf;
+    private array $urlParameterNameMap = [];
 
-    /**
-     * Hold the contentHelper
-     *
-     * @var object
-     */
-    private $contentHelper;
-
-    /**
-     * Hold the contentType
-     *
-     * @var string
-     */
-    private $contentType = self::CONTENT_TYPE_HTML;
-
-    /**
-     * Table settings
-     *
-     * @var array
-     */
-    private $settings = [];
-
-    /**
-     * Footer settings
-     *
-     * @var array
-     */
-    private $footer = [];
-
-    /**
-     * Table variables
-     *
-     * @var array
-     */
-    private $variables = [];
-
-    /**
-     * Table attributes
-     *
-     * @var array
-     */
-    private $attributes = [];
-
-    /**
-     * Table column settings
-     *
-     * @var array
-     */
-    private $columns = [];
-
-    /**
-     * Pre-defined widths
-     *
-     * @var array
-     */
-    private $widths = ['checkbox' => '20px'];
-
-    /**
-     * Total count of results
-     *
-     * @var int
-     */
-    private $total;
-
-    /**
-     * Total of the unfiltered results
-     *
-     * @var int
-     */
-    private $unfilteredTotal;
-
-    /**
-     * Data rows
-     *
-     * @var array
-     */
-    private $rows = [];
-
-    /**
-     * Table type
-     *
-     * @var int
-     */
-    private $type = self::TYPE_DEFAULT;
-
-    /**
-     * Current limit
-     *
-     * @var int
-     */
-    private $limit = self::DEFAULT_LIMIT;
-
-    /**
-     * Current page
-     *
-     * @var int
-     */
-    private $page = 1;
-
-    /**
-     * Url plugin
-     *
-     * @var \Laminas\Mvc\Controller\Plugin\Url
-     */
-    private $url;
-
-    /**
-     * Query object
-     *
-     * @var object
-     */
-    private $query = [];
-
-    /**
-     * Current sort column
-     *
-     * @var string
-     */
-    private $sort;
-
-    /**
-     * Current sort order
-     *
-     * @var string
-     */
-    private $order = 'ASC';
-
-    /**
-     * Holds the actionFieldName
-     *
-     * @var string
-     */
-    private $actionFieldName = 'action';
-
-    /**
-     * Holds the fieldset name
-     *
-     * @var null
-     */
-    private $fieldset;
-
-    /**
-     * Is this builder inside a disabled table element?
-     *
-     * @var bool
-     */
-    private $isDisabled = false;
-
-    /** @var  \Laminas\Form\Element\Csrf */
-    private $elmCsrf;
-
-    /**
-     * @var array<string,string>
-     */
-    private $urlParameterNameMap = [];
-
-    /**
-     * @return array<string,string>
-     */
     public function getUrlParameterNameMap(): array
     {
         return $this->urlParameterNameMap;
     }
 
-    /**
-     * @param array<string,string> $urlParamNameMap
-     * @return $this
-     */
     public function setUrlParameterNameMap(array $urlParamNameMap): self
     {
         assert(array_reduce($urlParamNameMap, static fn($carry, $mappedValue) => $carry && is_string($mappedValue), true), 'Expected all mapped values to be strings');
@@ -244,48 +95,27 @@ class TableBuilder implements \Stringable
         return $this->getUrlParameterNameMap()[$urlParam] ?? $urlParam;
     }
 
-    /**
-     * @return TableBuilder
-     */
     public function __construct(
         private ContainerInterface $serviceLocator,
         private Permission $permissionService,
         private Translator $translator,
         private UrlHelperService $urlHelper,
-        /**
-         * Inject the application config from Laminas
-         */
         private array $applicationConfig,
         private FormatterPluginManager $formatterPluginManager
     ) {
     }
 
-    /**
-     * Set whether this table appears inside a disabled element
-     *
-     * @param bool $disabled
-     */
-    public function setDisabled($disabled): void
+    public function setDisabled(bool $disabled): void
     {
         $this->isDisabled = $disabled;
     }
 
-    /**
-     * Setter for actionFieldName
-     *
-     * @param string $name
-     */
-    public function setActionFieldName($name): void
+    public function setActionFieldName(string $name): void
     {
         $this->actionFieldName = $name;
     }
 
-    /**
-     * Return the actionFieldName
-     *
-     * @return string
-     */
-    public function getActionFieldName()
+    public function getActionFieldName(): string
     {
         if (!empty($this->fieldset)) {
             return $this->fieldset . '[' . $this->actionFieldName . ']';
@@ -294,138 +124,69 @@ class TableBuilder implements \Stringable
         return $this->actionFieldName;
     }
 
-    /**
-     * Setter for Fieldset
-     *
-     * @param string $name
-     */
-    public function setFieldset($name): void
+    public function setFieldset(string $name): void
     {
         $this->fieldset = $name;
     }
 
-    /**
-     * Getter for fieldset
-     *
-     * @return string
-     */
-    public function getFieldset()
+    public function getFieldset(): ?string
     {
         return $this->fieldset;
     }
 
-    /**
-     * Setter for type
-     *
-     * @param int $type
-     */
-    public function setType($type): static
+    public function setType(int $type): static
     {
         $this->type = $type;
         return $this;
     }
 
-    /**
-     * Set settings
-     *
-     * @param array $settings
-     */
-    public function setSettings($settings = []): void
+    public function setSettings(array $settings = []): void
     {
         $this->settings = $settings;
     }
 
-    /**
-     * Return a setting or the default
-     *
-     * @param string $name
-     *
-     * @return mixed
-     * @psalm-param 'default'|false|null $default
-     */
-    public function getSetting($name, string|false|null $default = null)
+    public function getSetting(string $name, string|false|null $default = null): mixed
     {
         return $this->settings[$name] ?? $default;
     }
 
-    /**
-     * Get settings
-     *
-     * @return array
-     */
-    public function getSettings()
+    public function getSettings(): array
     {
         return $this->settings;
     }
 
-    /**
-     * Setter for total
-     *
-     * @param int $total
-     */
-    public function setTotal($total): void
+    public function setTotal(int $total): void
     {
         $this->total = $total;
     }
 
-    /**
-     * Setter for unfilteredTotal
-     *
-     * @param int $unfilteredTotal
-     */
-    public function setUnfilteredTotal($unfilteredTotal): void
+    public function setUnfilteredTotal(int $unfilteredTotal): void
     {
         $this->unfilteredTotal = $unfilteredTotal;
     }
 
-    /**
-     * Setter for rows
-     *
-     * @param array $rows
-     */
-    public function setRows($rows): static
+    public function setRows(array $rows): static
     {
         $this->rows = $rows;
         return $this;
     }
 
-    /**
-     * Setter for footer
-     *
-     * @param array $footer
-     */
-    public function setFooter($footer = []): void
+    public function setFooter(array $footer = []): void
     {
         $this->footer = $footer;
     }
 
-    /**
-     * Setter for footer
-     *
-     * @param array $footer
-     */
     public function getFooter(): array
     {
         return $this->footer;
     }
 
-    /**
-     * Check if a table has an action
-     *
-     * @param string $name
-     * @return boolean
-     */
-    public function hasAction($name)
+    public function hasAction(string $name): bool
     {
         return isset($this->settings['crud']['actions'][$name]);
     }
 
-    /**
-     * Remove an action
-     *
-     * @param string $name
-     */
-    public function removeAction($name): void
+    public function removeAction(string $name): void
     {
         if ($this->hasAction($name)) {
             unset($this->settings['crud']['actions'][$name]);
@@ -452,41 +213,23 @@ class TableBuilder implements \Stringable
         $this->settings['crud']['actions'][$key] = $settings;
     }
 
-    /**
-     * Get action
-     *
-     * @param string $key key
-     *
-     * @return string
-     */
-    public function getAction($key)
+    public function getAction(string $key): string
     {
         return $this->settings['crud']['actions'][$key];
     }
 
-    /**
-     * Disable an action
-     *
-     * @param string $name
-     */
-    public function disableAction($name): void
+    public function disableAction(string $name): void
     {
         if ($this->hasAction($name)) {
             $this->settings['crud']['actions'][$name]['disabled'] = 'disabled';
         }
     }
 
-    /**
-     * Get the content helper
-     *
-     * @return object
-     * @throws \Exception
-     */
-    public function getContentHelper()
+    public function getContentHelper(): ContentHelper
     {
         if (empty($this->contentHelper)) {
             if (!isset($this->applicationConfig['tables']['partials'][$this->contentType])) {
-                throw new \Exception('Table partial location not defined in config');
+                throw new Exception('Table partial location not defined in config');
             }
 
             $this->contentHelper = new ContentHelper(
@@ -506,12 +249,7 @@ class TableBuilder implements \Stringable
         $this->contentType = $type;
     }
 
-    /**
-     * Get pagination helper
-     *
-     * @return PaginationHelper
-     */
-    public function getPaginationHelper()
+    public function getPaginationHelper(): PaginationHelper
     {
         if (empty($this->paginationHelper)) {
             $this->paginationHelper = new PaginationHelper($this->getPage(), $this->getTotal(), $this->getLimit());
@@ -521,53 +259,27 @@ class TableBuilder implements \Stringable
         return $this->paginationHelper;
     }
 
-    /**
-     * Get attributes
-     *
-     * @return array
-     */
-    public function getAttributes()
+    public function getAttributes(): array
     {
         return $this->attributes;
     }
 
-    /**
-     * Set variables
-     *
-     * @param array $variables
-     */
-    public function setVariables($variables = []): void
+    public function setVariables(array $variables = []): void
     {
         $this->variables = $variables;
     }
 
-    /**
-     * Set a single variable
-     *
-     * @param string $name
-     */
-    public function setVariable($name, string $value): void
+    public function setVariable(string $name, string $value): void
     {
         $this->variables[$name] = $value;
     }
 
-    /**
-     * Get variables
-     *
-     * @return array
-     */
-    public function getVariables()
+    public function getVariables(): array
     {
         return $this->variables;
     }
 
-    /**
-     * Get a single variable
-     *
-     * @param string $name
-     * @return mixed
-     */
-    public function getVariable($name)
+    public function getVariable(string $name): mixed
     {
         return ($this->variables[$name] ?? '');
     }
@@ -589,12 +301,7 @@ class TableBuilder implements \Stringable
         }
     }
 
-    /**
-     * Get the columns
-     *
-     * @return array
-     */
-    public function getColumns()
+    public function getColumns(): array
     {
         return $this->columns;
     }
@@ -604,162 +311,83 @@ class TableBuilder implements \Stringable
         return $this->settings['hide_title'] ?? false;
     }
 
-    /**
-     * Get the data rows
-     *
-     * @return array
-     */
-    public function getRows()
+    public function getRows(): array
     {
         return $this->rows;
     }
 
-    /**
-     * Whether the table has any rows
-     *
-     * @return bool
-     */
-    public function hasRows()
+    public function hasRows(): bool
     {
         return count($this->rows) > 0;
     }
 
-    /**
-     * Get total
-     *
-     * @return int
-     */
-    public function getTotal()
+    public function getTotal(): int
     {
         return $this->total;
     }
 
-    /**
-     * Setter for limit
-     *
-     * @param int $limit
-     */
-    public function setLimit($limit): void
+    public function setLimit(int $limit): void
     {
         $this->limit = $limit;
     }
 
-    /**
-     * Getter for limit
-     *
-     * @return int
-     */
-    public function getLimit()
+    public function getLimit(): int
     {
         return $this->limit;
     }
 
-    /**
-     * Setter for page
-     *
-     * @param int $page
-     */
-    public function setPage($page): void
+    public function setPage(int $page): void
     {
         $this->page = $page;
     }
 
-    /**
-     * Getter for page
-     *
-     * @return int
-     */
-    public function getPage()
+    public function getPage(): int
     {
         return $this->page;
     }
 
-    /**
-     * Getter for url
-     *
-     * @return \Laminas\Mvc\Controller\Plugin\Url
-     */
-    public function getUrl()
+    public function getUrl(): Url
     {
         return $this->url;
     }
 
-    /**
-     * Getter for query
-     *
-     * @return object
-     */
-    public function getQuery()
+    public function getQuery(): object|array
     {
         return $this->query;
     }
 
-    /**
-     * Setter for sort
-     *
-     * @param string $sort
-     */
-    public function setSort($sort): void
+    public function setSort(string $sort): void
     {
         $this->sort = $sort;
     }
 
-    /**
-     * Getter for sort
-     *
-     * @return string
-     */
-    public function getSort()
+    public function getSort(): string
     {
         return $this->sort;
     }
 
-    /**
-     * Setter for order
-     *
-     * @param string $order
-     */
-    public function setOrder($order): void
+    public function setOrder(string $order): void
     {
         $this->order = $order;
     }
 
-    /**
-     * Getter for order
-     *
-     * @return string
-     */
     public function getOrder()
     {
         return $this->order;
     }
 
-
     public function prepareTable(array|string $config, array $data = [], array $params = []): static
     {
         $this->loadConfig($config);
-
         $this->loadData($data);
-
         $this->loadParams($params);
-
         $this->setupAction();
-
         $this->setupDataAttributes();
 
         return $this;
     }
 
-    /**
-     * Build a table from a config file
-     *
-     * @param string|array $config
-     * @param array $data
-     * @param array $params
-     * @param boolean $render
-     * @return string
-     */
-    public function buildTable($config, $data = [], $params = [], $render = true)
+    public function buildTable(array|string $config, array $data = [], array $params = [], bool $render = true): string
     {
         $this->prepareTable($config, $data, $params);
 
@@ -770,15 +398,12 @@ class TableBuilder implements \Stringable
     }
 
     /**
-     * Load the configuration if it exists
-     *
      * @param (array|string|true)[][][]|string $config
      *
-     * @return bool
-     *
      * @psalm-param 'test'|array{settings: array{paginate: array, crud: array{actions: array}}, columns: list{list{'bar'}, array{type: 'ActionLinks', keepForReadOnly: true}, array{type: 'ActionLinks'}, array{type: 'DeltaActionLinks'}}} $config
+     * @throws Exception
      */
-    public function loadConfig(array|string $config)
+    public function loadConfig(array|string $config): bool
     {
         if (!is_array($config)) {
             $config = $this->getConfigFromFile($config);
@@ -821,9 +446,6 @@ class TableBuilder implements \Stringable
         return true;
     }
 
-    /**
-     * Set Pagination Defaults
-     */
     private function setPaginationDefaults(): void
     {
         if (!$this->shouldPaginate()) {
@@ -838,21 +460,13 @@ class TableBuilder implements \Stringable
         ];
     }
 
-    /**
-     * Translate title
-     *
-     * @param array $config Config
-     */
-    private function translateTitle(&$config): void
+    private function translateTitle(array &$config): void
     {
         if (isset($config['variables']['title'])) {
             $config['variables']['title'] = $this->translator->translate($config['variables']['title']);
         }
     }
 
-    /**
-     * Maybe set the action field name
-     */
     private function maybeSetActionFieldName(): void
     {
         if (isset($this->settings['crud']['action_field_name'])) {
@@ -860,12 +474,7 @@ class TableBuilder implements \Stringable
         }
     }
 
-    /**
-     * Load data, set the rows and the total count for pagination
-     *
-     * @param array $data
-     */
-    public function loadData($data = []): void
+    public function loadData(array $data = []): void
     {
         if (isset($data['Results'])) {
             $data['results'] = $data['Results'];
@@ -890,12 +499,7 @@ class TableBuilder implements \Stringable
         $this->setVariable('title', $this->translator->translate($this->getVariable('titleSingular')));
     }
 
-    /**
-     * Load params
-     *
-     * @param array $array
-     */
-    public function loadParams($array = []): void
+    public function loadParams(array $array = []): void
     {
         if (!isset($array['url'])) {
             $array['url'] = $this->urlHelper;
@@ -927,9 +531,6 @@ class TableBuilder implements \Stringable
         $this->setVariables(array_merge($this->getVariables(), $array));
     }
 
-    /**
-     * Setup the action
-     */
     public function setupAction(): void
     {
         $variables = $this->getVariables();
@@ -954,44 +555,30 @@ class TableBuilder implements \Stringable
      *
      * @NOTE added this for backwards compat, so we can start passing a table object around without affecting the
      * outcome
-     *
-     * @return string
      */
     public function __toString(): string
     {
         try {
             return $this->render();
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $content = $exception->getMessage();
 
             return $content . $exception->getTraceAsString();
         }
     }
 
-    /**
-     * Render the table
-     *
-     * @return string
-     */
-    public function render()
+    public function render(): string
     {
         return $this->replaceContent($this->renderTable(), $this->getVariables());
     }
 
-    /**
-     * Get config from file
-     *  Useful for unit testing
-     *
-     * @param string $name
-     * @return array
-     */
-    public function getConfigFromFile($name)
+    public function getConfigFromFile(string $name): array
     {
         if (
             !isset($this->applicationConfig['tables']['config'])
             || empty($this->applicationConfig['tables']['config'])
         ) {
-            throw new \Exception('Table config location not defined');
+            throw new Exception('Table config location not defined');
         }
 
         $found = false;
@@ -1009,17 +596,12 @@ class TableBuilder implements \Stringable
         }
 
         if (!$found) {
-            throw new \Exception('Table configuration not found');
+            throw new Exception('Table configuration not found');
         }
 
         return include($configFile);
     }
 
-    /**
-     * Render table footer
-     *
-     * return string
-     */
     public function renderTableFooter(): string
     {
         if ($this->footer === []) {
@@ -1037,13 +619,7 @@ class TableBuilder implements \Stringable
         return $this->replaceContent('{{[elements/tableFooter]}}', ['content' => $content]);
     }
 
-    /**
-     * Render a single table footer column
-     *
-     * @param array $column
-     * @return array
-     */
-    private function renderTableFooterColumn($column)
+    private function renderTableFooterColumn(array $column): array
     {
         $column = array_merge(
             [
@@ -1081,13 +657,7 @@ class TableBuilder implements \Stringable
         return $details;
     }
 
-    /**
-     * Render table footer columns
-     *
-     * @param array $columns
-     * @return string
-     */
-    private function renderTableFooterColumns($columns)
+    private function renderTableFooterColumns(array $columns): string
     {
         $content = '';
 
@@ -1098,16 +668,11 @@ class TableBuilder implements \Stringable
         return $content;
     }
 
-    /**
-     * Decide the view and begin the render
-     *
-     * @return string
-     */
-    public function renderTable()
+    public function renderTable(): string
     {
         $this->setType($this->whichType());
 
-        $this->elmCsrf = new \Laminas\Form\Element\Csrf(
+        $this->elmCsrf = new Csrf(
             'security',
             [
                 'csrf_options' => [
@@ -1134,12 +699,7 @@ class TableBuilder implements \Stringable
         return $this->renderLayout('default');
     }
 
-    /**
-     * Determine which table type we have
-     *
-     * @return int
-     */
-    private function whichType()
+    private function whichType(): int
     {
         if (isset($this->variables['within_form']) && $this->variables['within_form'] == true) {
             return self::TYPE_FORM_TABLE;
@@ -1160,13 +720,7 @@ class TableBuilder implements \Stringable
         return self::TYPE_DEFAULT;
     }
 
-    /**
-     * Wrapper for Content Helper renderLayout
-     *
-     * @param string $name
-     * @return string
-     */
-    public function renderLayout($name)
+    public function renderLayout(string $name): string
     {
         if ($name === 'default' && (empty($this->unfilteredTotal) && $this->rows === [])) {
             return $this->renderLayout('default_empty');
@@ -1175,12 +729,7 @@ class TableBuilder implements \Stringable
         return $this->getContentHelper()->renderLayout($name);
     }
 
-    /**
-     * Render the total if we have a paginated table
-     *
-     * @return string
-     */
-    public function renderTotal()
+    public function renderTotal(): string
     {
         if (
             $this->getSetting('overrideTotal', false)
@@ -1200,12 +749,7 @@ class TableBuilder implements \Stringable
         return trim($this->renderTotal() . ' ' . $this->getVariable('title'));
     }
 
-    /**
-     * Render actions
-     *
-     * @return string
-     */
-    public function renderActions()
+    public function renderActions(): string
     {
         $hasActions = in_array(
             $this->type,
@@ -1239,13 +783,7 @@ class TableBuilder implements \Stringable
         return $this->replaceContent('{{[elements/actionContainer]}}', ['content' => $content]);
     }
 
-    /**
-     * Render the dropdown version of the actions
-     *
-     * @param array $actions
-     * @return string
-     */
-    public function renderDropdownActions($actions = [], $links = [])
+    public function renderDropdownActions(array $actions = [], array $links = []): string
     {
         $options = '';
 
@@ -1265,15 +803,7 @@ class TableBuilder implements \Stringable
         );
     }
 
-    /**
-     * Render the button version of the actions
-     *
-     * @param array $actions
-     * @param int $collapseAt number of buttons to show before they are 'collapsed' into
-     * a 'more actions' dropdown
-     * @return string
-     */
-    public function renderButtonActions($actions = [], $collapseAt = 0, $links = [])
+    public function renderButtonActions(array $actions = [], int $collapseAt = 0, array $links = []): string
     {
         $content = '';
 
@@ -1336,12 +866,7 @@ class TableBuilder implements \Stringable
         return $content;
     }
 
-    /**
-     * Render footer
-     *
-     * @return string
-     */
-    public function renderFooter()
+    public function renderFooter(): string
     {
         if (!$this->shouldPaginate()) {
             return '';
@@ -1364,11 +889,6 @@ class TableBuilder implements \Stringable
         return $this->renderLayout('pagination');
     }
 
-    /**
-     * Render the limit options
-     *
-     * @string
-     */
     public function renderLimitOptions(): string
     {
         if (empty($this->settings['paginate']['limit']['options'])) {
@@ -1403,12 +923,7 @@ class TableBuilder implements \Stringable
         return $content;
     }
 
-    /**
-     * Render pagination options
-     *
-     * @return string
-     */
-    public function renderPageOptions()
+    public function renderPageOptions(): string
     {
         $options = $this->getPaginationHelper()->getOptions();
 
@@ -1447,18 +962,10 @@ class TableBuilder implements \Stringable
         return $previousContent . $content . $nextContent;
     }
 
-    /**
-     * Render a header column
-     *
-     * @param array $column
-     * @param string $wrapper
-     *
-     * @return null|string
-     */
-    public function renderHeaderColumn($column, $wrapper = '{{[elements/th]}}')
+    public function renderHeaderColumn(array $column, string $wrapper = '{{[elements/th]}}'): ?string
     {
         if ($this->shouldHide($column) || $this->getVariable('hide_column_headers')) {
-            return;
+            return null;
         }
 
         if (!isset($column['scope'])) {
@@ -1520,21 +1027,12 @@ class TableBuilder implements \Stringable
     }
 
     /**
-     * Render a body column
-     *
-     * @param array $row
-     * @param array $column
-     * @param string $wrapper
-     * @param string[] $customAttributes
-     *
-     * @return null|string
-     *
      * @psalm-param array{colspan?: '2', class?: 'a-class', 'data-empty'?: ' '} $customAttributes
      */
-    public function renderBodyColumn($row, $column, $wrapper = '{{[elements/td]}}', array $customAttributes = [])
+    public function renderBodyColumn(array $row, array $column, string $wrapper = '{{[elements/td]}}', array $customAttributes = []): ?string
     {
         if ($this->shouldHide($column)) {
-            return;
+            return null;
         }
 
         if (isset($column['formatter'])) {
@@ -1625,12 +1123,7 @@ class TableBuilder implements \Stringable
         return $plainAttributes;
     }
 
-    /**
-     * Does any of table columns has the title
-     *
-     * @return bool
-     */
-    public function hasAnyTitle()
+    public function hasAnyTitle(): bool
     {
         $columns = $this->getColumns();
         foreach ($columns as $column) {
@@ -1642,9 +1135,6 @@ class TableBuilder implements \Stringable
         return false;
     }
 
-    /**
-     * Render extra rows
-     */
     public function renderExtraRows(): string
     {
         $content = '';
@@ -1682,15 +1172,7 @@ class TableBuilder implements \Stringable
         return $this->translator->translate($message);
     }
 
-    /**
-     * Process the formatter
-     *
-     * @param array $column
-     * @param array $data
-     *
-     * @return mixed
-     */
-    private function callFormatter($column, $data)
+    private function callFormatter(array $column, array $data): mixed
     {
         if (is_string($column['formatter'])) {
             // Remove the leading namespace separator if exists
@@ -1717,39 +1199,20 @@ class TableBuilder implements \Stringable
     }
 
 
-    /**
-     * Render an attribute string
-     *
-     * @param array $attrs
-     * @return string
-     */
-    public function renderAttributes($attrs = [])
+    public function renderAttributes(array $attrs = []): string
     {
         return $this->getContentHelper()->renderAttributes($attrs);
     }
 
-    /**
-     * Replace vars into content
-     *
-     * @param string $content
-     * @param array $vars
-     * @return string
-     */
-    public function replaceContent($content, $vars = [])
+    public function replaceContent(string $content, array $vars = []): string
     {
         return $this->getContentHelper()->replaceContent($content, $vars);
     }
 
     /**
-     * Generate url
-     *
-     * @param array $data
-     * @param true $reuseMatchedParams
-     *
-     * @return string
      * @psalm-param 'licence_case_action'|'licence_case_list/pagination'|null $route
      */
-    private function generateUrl($data = [], string|null $route = null, array|false $options = [], bool $reuseMatchedParams = true)
+    private function generateUrl(array $data = [], string|null $route = null, array|false $options = [], bool $reuseMatchedParams = true): string
     {
         if (is_bool($options)) {
             $reuseMatchedParams = $options;
@@ -1769,18 +1232,10 @@ class TableBuilder implements \Stringable
         );
     }
 
-    /**
-     * Generate pagination url. Strips the controller and action params from
-     * the URL
-     *
-     * @param array $data
-     * @param string $route
-     * @return string
-     */
-    private function generatePaginationUrl($data = [], $route = null)
+    private function generatePaginationUrl(array $data = [], string $route = null): string
     {
 
-        /** @var \Laminas\Mvc\Controller\Plugin\Url $url */
+        /** @var Url $url */
         $url = $this->getUrl();
 
         /**
@@ -1806,14 +1261,7 @@ class TableBuilder implements \Stringable
         return $returnUrl;
     }
 
-    /**
-     * Format action content
-     *
-     * @param array $actions
-     * @param string $overrideFormat
-     * @return string
-     */
-    private function formatActionContent($actions, $overrideFormat, $collapseAt = 0, array $newLinks = [])
+    private function formatActionContent(array $actions, string $overrideFormat, int $collapseAt = 0, array $newLinks = []): string
     {
         switch ($overrideFormat) {
             case self::ACTION_FORMAT_DROPDOWN:
@@ -1829,14 +1277,7 @@ class TableBuilder implements \Stringable
         return $this->renderButtonActions($actions, $collapseAt, $newLinks);
     }
 
-    /**
-     * Format actions
-     *
-     * @param array $actions Actions
-     *
-     * @return array
-     */
-    private function formatActions($actions)
+    private function formatActions(array $actions): array
     {
         $newActions = [];
 
@@ -1870,14 +1311,7 @@ class TableBuilder implements \Stringable
         return $newActions;
     }
 
-    /**
-     * Format links
-     *
-     * @param array $links Links
-     *
-     * @return array
-     */
-    private function formatLinks($links)
+    private function formatLinks(array $links): array
     {
         $newLinks = [];
 
@@ -1904,39 +1338,18 @@ class TableBuilder implements \Stringable
         return $newLinks;
     }
 
-    /**
-     * Trim actions
-     *
-     * @param array $items Actions settings
-     *
-     * @return array
-     */
-    private function trimActions(array $items)
+    private function trimActions(array $items): array
     {
         $items = $this->filterByRequireRows($items);
         return $this->filterByInternalReadOnly($items);
     }
 
-    /**
-     * Trim(filter) links
-     *
-     * @param array $items Links settings
-     *
-     * @return array
-     */
-    private function trimLinks(array $items)
+    private function trimLinks(array $items): array
     {
         return $this->filterByInternalReadOnly($items);
     }
 
-    /**
-     * Remove items which require rows
-     *
-     * @param array $items Items (actions)
-     *
-     * @return array
-     */
-    private function filterByRequireRows(array $items)
+    private function filterByRequireRows(array $items): array
     {
         if (count($this->rows) !== 0) {
             return $items;
@@ -1948,14 +1361,7 @@ class TableBuilder implements \Stringable
         );
     }
 
-    /**
-     * Remove items not available for ReadOnly
-     *
-     * @param array $items Items (actions)
-     *
-     * @return array
-     */
-    private function filterByInternalReadOnly(array $items)
+    private function filterByInternalReadOnly(array $items): array
     {
         if (!$this->isInternalReadOnly()) {
             return $items;
@@ -2080,7 +1486,7 @@ class TableBuilder implements \Stringable
         return $this;
     }
 
-    public function getCsrfElement(): \Laminas\Form\Element\Csrf
+    public function getCsrfElement(): Csrf
     {
         return $this->elmCsrf;
     }
