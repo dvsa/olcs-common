@@ -13,8 +13,7 @@ use Mockery as m;
  */
 class BusRegBrowseListDataServiceTest extends AbstractDataServiceTestCase
 {
-    /** @var BusRegBrowseListDataService */
-    private $sut;
+    private BusRegBrowseListDataService $sut;
 
     protected function setUp(): void
     {
