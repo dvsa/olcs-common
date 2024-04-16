@@ -4,6 +4,7 @@ namespace CommonTest\Service\Table\Type;
 
 use Common\Service\Table\TableBuilder;
 use Common\Service\Table\Type\VariationRecordAction;
+use Laminas\Mvc\I18n\Translator;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
@@ -23,7 +24,7 @@ class VariationRecordActionTest extends MockeryTestCase
 
     protected function setUp(): void
     {
-        $this->mockTranslator = m::mock(\Laminas\I18n\Translator\TranslatorInterface::class);
+        $this->mockTranslator = m::mock(Translator::class);
 
         $this->table = m::mock(TableBuilder::class);
         $this->table->expects('isInternalReadOnly')->andReturnFalse();

@@ -145,7 +145,7 @@ class FlashMessengerTraitTest extends m\Adapter\Phpunit\MockeryTestCase
 
         $chainMock = m::mock(FlashMessengerPlugin::class);
         $chainMock->expects('setNamespace')->with($namespace)->andReturnSelf();
-        $chainMock->expects('addMessage')->with($message)->andReturn(FlashMessengerTrait::class);
+        $chainMock->expects('addMessage')->with($message)->andReturnSelf();
         $chainMock->expects('setNamespace')->with('default')->andReturnSelf();
 
         $this->sut->expects($this->once())
