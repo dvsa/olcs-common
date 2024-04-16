@@ -2,6 +2,8 @@
 
 namespace Common\Util;
 
+use Common\Controller\Lva\AbstractController;
+
 /**
  * A trait that controllers can use to easily interact with the flash messenger.
  */
@@ -23,7 +25,7 @@ trait FlashMessengerTrait
      * @param string $message
      * @param string $namespace
      */
-    public function addMessage($message, $namespace = 'default'): \Common\Controller\Lva\AbstractController
+    public function addMessage($message, $namespace = 'default'): AbstractController
     {
         $this->getFlashMessenger()->setNamespace($namespace)->addMessage($message)->setNamespace('default');
 
