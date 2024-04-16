@@ -1226,7 +1226,7 @@ class FormHelperServiceTest extends MockeryTestCase
 
     protected function createMockFormForCompanyErrors(string $message, string $fieldset): \Laminas\Form\Form
     {
-        $form = m::mock(\Laminas\Form\Form::class);
+        $form = m::mock(\Common\Form\Form::class);
         $translated = $message . '_TRANSLATED';
 
         $this->mockTransSrv

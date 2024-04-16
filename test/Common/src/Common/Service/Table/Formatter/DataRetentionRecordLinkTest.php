@@ -187,7 +187,7 @@ class DataRetentionRecordLinkTest extends TestCase
 
         $queryData = [
             'entityName' => 'undefined',
-            'organisationName' => null,
+            'organisationName' => 'org',
             'organisationId' => self::ORGANISATION_ID,
             'entityPk' => self::ENTITY_ID,
             'licenceId' => self::LICENCE_ID,
@@ -197,6 +197,7 @@ class DataRetentionRecordLinkTest extends TestCase
         ];
 
         $this->assertEquals(
+            $queryData['organisationName'] . ' / ' .
             $queryData['licNo'] . ' / ' .
             $queryData['entityName'] . ' ' .
             $queryData['entityPk'] .

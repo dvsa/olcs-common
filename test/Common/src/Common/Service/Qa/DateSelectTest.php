@@ -63,8 +63,8 @@ class DateSelectTest extends MockeryTestCase
             [
                 ['key1' => 'value1', 'key2' => 'value2']
             ],
-            [431],
-            [true],
+            [[431]],
+            [[true]],
         ];
     }
 

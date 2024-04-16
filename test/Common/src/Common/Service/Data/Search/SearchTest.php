@@ -154,7 +154,7 @@ class SearchTest extends MockeryTestCase
 
         $this->searchTypeManager->shouldReceive('get')->with($index)->andReturn($mockIndex);
 
-        $this->viewHelperManager->shouldReceive('get->getContainer->getValue')->andReturn('FORM');
+        $this->viewHelperManager->shouldReceive('get->getContainer->getValue')->andReturn(m::mock(\Common\Form\Form::class));
 
         $mockRequest = m::mock(HttpRequest::class);
         $mockRequest->shouldReceive('getPost')->withNoArgs()->andReturn([]);
@@ -188,7 +188,7 @@ class SearchTest extends MockeryTestCase
 
         $this->searchTypeManager->shouldReceive('get')->with($index)->andReturn($mockIndex);
 
-        $this->viewHelperManager->shouldReceive('get->getContainer->getValue')->andReturn('FORM');
+        $this->viewHelperManager->shouldReceive('get->getContainer->getValue')->andReturn(m::mock(\Common\Form\Form::class));
 
         $mockRequest = m::mock(HttpRequest::class);
         $mockRequest->shouldReceive('getPost')->with()->andReturn([]);

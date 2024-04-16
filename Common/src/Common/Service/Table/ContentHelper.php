@@ -58,7 +58,7 @@ class ContentHelper
     ) {
         $this->location = rtrim($location, '/') . '/';
 
-        if (method_exists($this->object, 'getTranslator')) {
+        if ($this->object !== null && method_exists($this->object, 'getTranslator')) {
             $this->setTranslator($this->object->getTranslator());
         }
 
