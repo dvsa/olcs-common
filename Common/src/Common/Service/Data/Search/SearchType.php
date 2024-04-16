@@ -110,8 +110,6 @@ class SearchType implements ListDataInterface, FactoryInterface
     }
 
     /**
-     * @param null|string $context
-     *
      * @psalm-param 'internal-search'|null $context
      */
     public function getNavigation(string|null $context = null, array $queryParams = []): Navigation

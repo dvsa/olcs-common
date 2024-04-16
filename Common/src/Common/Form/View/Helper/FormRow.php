@@ -200,14 +200,7 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow
         );
     }
 
-    /**
-     * Override the parent some more
-     *
-     * @param ElementInterface $element Element
-     *
-     * @return string
-     */
-    protected function renderRow(ElementInterface $element)
+    protected function renderRow(ElementInterface $element): string
     {
         $labelHelper         = $this->getLabelHelper();
         $elementHelper       = $this->getElementHelper();

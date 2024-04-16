@@ -13,7 +13,7 @@ trait MocksServicesTrait
     /**
      * @var ServiceManager
      */
-    private $serviceManager;
+    private ServiceManager $serviceManager;
 
     protected function serviceManager(): ServiceManager
     {

@@ -37,7 +37,7 @@ class Selector extends AbstractType
             $name = $fieldset . '[id]';
         }
 
-        list($attributes, $column, $data) = $this->transformDataAttributes($column, $data);
+        [$attributes, $column, $data] = $this->transformDataAttributes($column, $data);
 
         if (isset($column['aria-attributes'])) {
             foreach ($column['aria-attributes'] as $attrName => $attrValue) {
@@ -86,7 +86,7 @@ class Selector extends AbstractType
                 }
             }
         }
-        return array($attributes, $column, $data);
+        return [$attributes, $column, $data];
     }
 
     /**

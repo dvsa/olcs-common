@@ -26,9 +26,6 @@ class GenericUploadStub extends AbstractActionController
         return $this->deleteFile($id);
     }
 
-    /**
-     * @param \Dvsa\Olcs\Transfer\Command\Document\DeleteDocument|\Dvsa\Olcs\Transfer\Command\Document\Upload $dto
-     */
     public function handleCommand(\Dvsa\Olcs\Transfer\Command\Document\Upload|\Dvsa\Olcs\Transfer\Command\Document\DeleteDocument $dto)
     {
         $this->stubResponse->dto = $dto;

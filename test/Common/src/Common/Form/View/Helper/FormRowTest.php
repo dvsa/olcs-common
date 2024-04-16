@@ -70,6 +70,7 @@ class FormRowTest extends MockeryTestCase
         $element = $this->setUpElement('Text', ['label' => null]);
         $element->setMessages(['Message']);
 
+
         // Execute
         $result = $this->sut->__invoke($element);
 
@@ -118,6 +119,7 @@ class FormRowTest extends MockeryTestCase
     /**
      * @test
      * @depends invokeIsCallable
+     * @
      */
     public function invokeRendersActionButton(): void
     {
@@ -606,18 +608,7 @@ class FormRowTest extends MockeryTestCase
         $this->assertEquals(static::AN_EMPTY_STRING, $result);
     }
 
-    /**
-     * Prepare element for test
-     *
-     * @param string $type    Element type
-     * @param array  $options Options for element
-     * @param string[] $attributes
-     *
-     * @return \Laminas\Form\Element
-     *
-     * @psalm-param array{id?: 'security', class?: 'class'|'govuk-visually-hidden'} $attributes
-     */
-    private function setUpElement($type = 'Text', $options = [], array $attributes = ['class' => 'class'])
+    private function setUpElement(string $type = 'Text', array $options = [], array $attributes = ['class' => 'class']): Element
     {
         if (!str_contains($type, '\\')) {
             $type = '\Laminas\Form\Element\\' . ucfirst($type);
@@ -666,7 +657,7 @@ class FormRowTest extends MockeryTestCase
         $this->phpRenderer();
     }
 
-    protected function phpRenderer(): MockObject
+    protected function phpRenderer(): MockObject|PhpRenderer
     {
         if (! $this->serviceManager->has(PhpRenderer::class)) {
             $instance = $this->createPartialMock(PhpRenderer::class, ['render']);
@@ -689,7 +680,9 @@ class FormRowTest extends MockeryTestCase
             $instance->setService('translate', $translateHelper);
             $instance->setService('form_label', new LaminasHelper\FormLabel());
             $instance->setService('form_element', new CommonHelper\FormElement());
-            $instance->setService('form_text', new LaminasHelper\FormText());
+            $instance->setService('formtext', new LaminasHelper\FormText());
+            $instance->setService('formbutton', new LaminasHelper\FormButton());
+            $instance->setService('formcheckbox', new LaminasHelper\FormCheckbox());
             $instance->setService(Doctype::class, m::mock(Doctype::class));
 
             $formElementErrors = $this->setUpFormElementErrors($this->serviceManager);

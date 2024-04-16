@@ -339,10 +339,8 @@ class TableBuilder implements \Stringable
      * Return a setting or the default
      *
      * @param string $name
-     * @param false|null|string $default
      *
      * @return mixed
-     *
      * @psalm-param 'default'|false|null $default
      */
     public function getSetting($name, string|false|null $default = null)
@@ -1747,10 +1745,8 @@ class TableBuilder implements \Stringable
      *
      * @param array $data
      * @param true $reuseMatchedParams
-     * @param null|string $route
      *
      * @return string
-     *
      * @psalm-param 'licence_case_action'|'licence_case_list/pagination'|null $route
      */
     private function generateUrl($data = [], string|null $route = null, array|false $options = [], bool $reuseMatchedParams = true)

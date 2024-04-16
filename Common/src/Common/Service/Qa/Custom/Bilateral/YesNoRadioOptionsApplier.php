@@ -21,7 +21,6 @@ class YesNoRadioOptionsApplier
      *
      * @param Radio $radio
      * @param string $notSelectedMessage
-     * @param null|string $value
      *
      * @psalm-param 'N'|'Y'|'radioValue'|null $value
      */

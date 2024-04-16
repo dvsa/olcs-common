@@ -468,7 +468,6 @@ class FormHelperService
 
     /**
      * @param \Common\Service\Table\TableBuilder|\Mockery\LegacyMockInterface&\Mockery\MockInterface&\Common\Service\Table\TableBuilder $table
-     * @param null|string $tableFieldsetName
      */
     public function populateFormTable(Fieldset $fieldset, \Common\Service\Table\TableBuilder $table, string|null $tableFieldsetName = null): void
     {

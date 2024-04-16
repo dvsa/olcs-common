@@ -31,7 +31,7 @@ class CustomSelector extends Selector
             $dataField = $column['data-field'];
         }
 
-        list($attributes, $column, $data) = $this->transformDataAttributes($column, $data);
+        [$attributes, $column, $data] = $this->transformDataAttributes($column, $data);
 
         if (isset($column['disableIfRowIsDisabled']) && $this->getTable()->isRowDisabled($data)) {
             $attributes[] = 'disabled="disabled"';

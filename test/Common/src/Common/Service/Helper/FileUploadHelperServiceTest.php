@@ -220,9 +220,6 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         unlink($file);
     }
 
-    /**
-     * @param false|string $file
-     */
     private function mockVirusScan(string|false $file, bool $isClean): void
     {
         $this->mockScan
