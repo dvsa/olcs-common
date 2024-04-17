@@ -3,7 +3,7 @@
     "description": "Common library for the OLCS Project",
     "type": "library",
     "require": {
-        "php": "^8.0.0",
+        "php": "~8.0.0",
         "ezyang/htmlpurifier": "^4.17",
         "laminas/laminas-authentication": "^2.6",
         "laminas/laminas-cache": "^3.0",
