@@ -257,8 +257,7 @@ class TableBuilder implements \Stringable
          */
         private array $applicationConfig,
         private FormatterPluginManager $formatterPluginManager
-    )
-    {
+    ) {
     }
 
     /**
@@ -1253,9 +1252,9 @@ class TableBuilder implements \Stringable
         }
 
         return $content . $this->replaceContent(
-                '{{[elements/actionSelect]}}',
-                ['option' => $options, 'action_field_name' => $this->getActionFieldName()]
-            );
+            '{{[elements/actionSelect]}}',
+            ['option' => $options, 'action_field_name' => $this->getActionFieldName()]
+        );
     }
 
     /**

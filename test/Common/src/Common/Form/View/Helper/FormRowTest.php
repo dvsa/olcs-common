@@ -70,7 +70,6 @@ class FormRowTest extends MockeryTestCase
         $element = $this->setUpElement('Text', ['label' => null]);
         $element->setMessages(['Message']);
 
-
         // Execute
         $result = $this->sut->__invoke($element);
 
