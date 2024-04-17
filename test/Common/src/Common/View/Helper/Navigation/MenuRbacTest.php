@@ -29,7 +29,9 @@ class MenuRbacTest extends MockeryTestCase
             ]
         );
 
-        $sut = m::mock(MenuRbac::class)->makePartial();
+        //  @ - need because Mock::__call have different declaration vs AbstractHandler::__call
+        /** @var MenuRbac | m\MockInterface $sut */
+        $sut = @m::mock(MenuRbac::class)->makePartial();
 
         $sut->setContainer($mockCntr);
         $sut->shouldReceive('accept')->once()->with($mockPage1, false)->andReturn(false)
