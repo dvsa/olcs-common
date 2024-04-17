@@ -25,7 +25,7 @@ class CustomSelectorTest extends MockeryTestCase
 
     protected function setUp(): void
     {
-        $this->table = m::mock();
+        $this->table = m::mock(\Common\Service\Table\TableBuilder::class);
 
         $this->sut = new CustomSelector($this->table);
     }

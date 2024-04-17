@@ -21,7 +21,7 @@ class SelectorTest extends MockeryTestCase
 
     protected function setUp(): void
     {
-        $this->table = m::mock();
+        $this->table = m::mock(\Common\Service\Table\TableBuilder::class);
         $this->table->shouldIgnoreMissing();
 
         $this->sut = new Selector($this->table);
@@ -281,8 +281,9 @@ class SelectorTest extends MockeryTestCase
 
         $column = [
             'aria-attributes' => [
-                'label' => function ($data, $translator) use ($translatorMock): void {
+                'label' => function ($data, $translator) use ($translatorMock): string {
                     $this->assertSame($translatorMock, $translator);
+                    return 'Test string';
                 }
             ]
         ];
@@ -303,8 +304,9 @@ class SelectorTest extends MockeryTestCase
 
         $column = [
             'aria-attributes' => [
-                'label' => function ($data) use ($expectedData): void {
+                'label' => function ($data) use ($expectedData): string {
                     $this->assertSame($expectedData, $data);
+                    return 'Test string';
                 }
             ]
         ];
