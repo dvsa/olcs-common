@@ -1,5 +1,16 @@
 # Changelog
 
+## [7.0.0](https://github.com/dvsa/olcs-common/compare/v6.8.0...v7.0.0) (2024-04-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* PHP 8.0 Compatibility ([#96](https://github.com/dvsa/olcs-common/issues/96))
+
+### Features
+
+* PHP 8.0 Compatibility ([#96](https://github.com/dvsa/olcs-common/issues/96)) ([12ce20f](https://github.com/dvsa/olcs-common/commit/12ce20f7cf7500061d2b56597385bc597bce39e2))
+
 ## [6.8.0](https://github.com/dvsa/olcs-common/compare/v6.7.6...v6.8.0) (2024-04-17)
 
 
