@@ -55,6 +55,7 @@ class People extends InternalSearchAbstract
         if (empty($this->filters)) {
             $this->filters = [
                 new Filter\FoundType(),
+                new Filter\TransportManagerLicenceStatus(),
                 new Filter\FoundBy(),
                 new Filter\LicenceStatus(),
                 new Filter\MergedStatus(),
