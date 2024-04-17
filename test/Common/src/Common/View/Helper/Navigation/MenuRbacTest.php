@@ -29,7 +29,7 @@ class MenuRbacTest extends MockeryTestCase
             ]
         );
 
-        $sut = new MenuRbac();
+        $sut = m::mock(MenuRbac::class)->makePartial();
 
         $sut->setContainer($mockCntr);
         $sut->shouldReceive('accept')->once()->with($mockPage1, false)->andReturn(false)
