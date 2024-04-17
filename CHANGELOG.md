@@ -1,5 +1,17 @@
 # Changelog
 
+## [6.8.0](https://github.com/dvsa/olcs-common/compare/v6.7.6...v6.8.0) (2024-04-17)
+
+
+### Features
+
+* TM search filter by app/licence ([#97](https://github.com/dvsa/olcs-common/issues/97)) ([598c790](https://github.com/dvsa/olcs-common/commit/598c7908f2ec5e8b4719339333e095477ef952ca))
+
+
+### Bug Fixes
+
+* VOL-5243 permission service can now check for manage selfserve user permissions ([#98](https://github.com/dvsa/olcs-common/issues/98)) ([ee1c67c](https://github.com/dvsa/olcs-common/commit/ee1c67ce26f9baf5a6b9b895c61f73da337c459d))
+
 ## [6.7.6](https://github.com/dvsa/olcs-common/compare/v6.7.5...v6.7.6) (2024-04-08)
 
 
