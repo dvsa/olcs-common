@@ -7,6 +7,8 @@ use Laminas\Filter\AbstractFilter;
 /**
  * Class DateSelectNullifier
  * @package Common\Filter
+ *
+ * @template-extends AbstractFilter<array|string, string|null>
  */
 class DateSelectNullifier extends AbstractFilter
 {

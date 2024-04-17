@@ -7,6 +7,8 @@ use Laminas\Filter\AbstractFilter;
 /**
  * Class NotPopulatedStringToZero
  * @package Common\Filter
+ *
+ * @template-extends AbstractFilter<mixed, string>
  */
 class NotPopulatedStringToZero extends AbstractFilter
 {

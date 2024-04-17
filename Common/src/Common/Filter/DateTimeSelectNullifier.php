@@ -8,6 +8,8 @@ use Laminas\Filter\Exception;
 /**
  * Class DateTimeSelectNullifier
  * @package Common\Filter
+ *
+ * @template-extends AbstractFilter<array, string|null>
  */
 class DateTimeSelectNullifier extends AbstractFilter
 {

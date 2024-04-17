@@ -23,6 +23,10 @@ class AbstractServiceFactory implements AbstractFactoryInterface
     {
         $serviceClassName = $this->getClassName($requestedName);
 
+        if (!$serviceClassName) {
+            throw new \Exception('Service not found: ' . $requestedName);
+        }
+
         $service = new $serviceClassName();
 
         if ($service instanceof FactoryInterface) {
