@@ -30,7 +30,6 @@ class DeltaActionLinksTest extends MockeryTestCase
         $this->table = m::mock(TableBuilder::class);
         $this->table->expects('getServiceLocator')
             ->andReturn($this->sm);
-        $this->table->expects('render')->andReturn('TABLE');
 
         $this->sut = new DeltaActionLinks($this->table);
     }

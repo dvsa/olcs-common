@@ -38,6 +38,8 @@ class DeltaActionLinks extends Selector
                 Escape::htmlAttr($remove)
             );
         }
+
+        return '';
     }
 
     /**
