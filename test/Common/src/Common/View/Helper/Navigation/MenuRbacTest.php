@@ -40,7 +40,7 @@ class MenuRbacTest extends MockeryTestCase
         $actual = $sut();
         static::assertSame($sut, $actual);
 
-        $pages = $sut->getContainer()->getPages();
+        $pages = $actual->getContainer()->getPages();
         static::assertCount(1, $actual->getContainer()->getPages());
         static::assertSame($mockPage2, current($pages));
     }
