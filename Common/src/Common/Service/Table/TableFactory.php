@@ -49,7 +49,7 @@ class TableFactory implements FactoryInterface
      * @param array $params
      * @param boolean $render
      */
-    public function buildTable($name, $data = [], $params = [], $render = true): string
+    public function buildTable($name, $data = [], $params = [], $render = true)
     {
         $table = $this->getTableBuilder();
         return $table->buildTable($name, $data, $params, $render);
