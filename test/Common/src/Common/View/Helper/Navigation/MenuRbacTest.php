@@ -19,6 +19,10 @@ class MenuRbacTest extends MockeryTestCase
         $mockPage2 = m::mock(AbstractPage::class)->makePartial();
         $mockPage3 = m::mock(AbstractPage::class)->makePartial();
 
+        $mockPage1->setVisible(false);
+        $mockPage2->setVisible(true);
+        $mockPage3->setVisible(false);
+
         /** @var AbstractContainer | m\MockInterface $mockCntr */
         $mockCntr = m::mock(AbstractContainer::class)->makePartial();
         $mockCntr->setPages(
@@ -29,14 +33,9 @@ class MenuRbacTest extends MockeryTestCase
             ]
         );
 
-        //  @ - need because Mock::__call have different declaration vs AbstractHandler::__call
-        /** @var MenuRbac | m\MockInterface $sut */
-        $sut = @m::mock(MenuRbac::class)->makePartial();
+        $sut = new MenuRbac();
 
         $sut->setContainer($mockCntr);
-        $sut->shouldReceive('accept')->once()->with($mockPage1, false)->andReturn(false)
-            ->shouldReceive('accept')->once()->with($mockPage2, false)->andReturn(true)
-            ->shouldReceive('accept')->once()->with($mockPage3, false)->andReturn(false);
 
         $actual = $sut();
         static::assertSame($sut, $actual);
