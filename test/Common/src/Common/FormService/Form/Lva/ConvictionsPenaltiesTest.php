@@ -37,7 +37,11 @@ class ConvictionsPenaltiesTest extends AbstractLvaFormServiceTestCase
     }
 
 
-    public function checkGetForm($guidePath, $guideName): void
+    /**
+     * @psalm-param '/guides/convictions-and-penalties-guidance-gb/'|'/guides/convictions-and-penalties-guidance-ni/' $guidePath
+     * @psalm-param 'convictions-and-penalties-guidance-gb'|'convictions-and-penalties-guidance-ni' $guideName
+     */
+    public function checkGetForm(string $guidePath, string $guideName): void
     {
         $this->translator
             ->shouldReceive('translate')

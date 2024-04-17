@@ -43,7 +43,12 @@ class TaskCheckboxTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('checkbox markup', $this->sut->format($data, $column));
     }
 
-    public function notClosedProvider()
+    /**
+     * @return (int|null|string)[][][]
+     *
+     * @psalm-return array{N: list{array{id: 69, isClosed: 'N'}}, 'not set': list{array{id: 69}}, null: list{array{id: 69, isClosed: null}}}
+     */
+    public function notClosedProvider(): array
     {
         return [
             'N' => [

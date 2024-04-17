@@ -9,7 +9,7 @@ use Laminas\Http\Response as HttpResponse;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class Response
+class Response implements \Stringable
 {
     /** @var  array */
     protected $result;
@@ -84,7 +84,7 @@ class Response
      *
      * @return $this
      */
-    public function setResult($result)
+    public function setResult(mixed $result)
     {
         $this->result = $result;
         return $this;
@@ -146,7 +146,7 @@ class Response
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return sprintf(
             "Status = %s\nResponse = %s",

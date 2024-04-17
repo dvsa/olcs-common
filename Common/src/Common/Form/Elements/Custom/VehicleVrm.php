@@ -28,7 +28,12 @@ class VehicleVrm extends LaminasElement implements InputProviderInterface
         ];
     }
 
-    protected function getValidators()
+    /**
+     * @return (string|string[][]|true)[][]
+     *
+     * @psalm-return list{0: array{name: NotEmpty::class, break_chain_on_failure: true, options: array{messages: array{isEmpty: 'licence.vehicle.add.search.vrm-missing'}}}, 1?: array{name: VrmValidator::class}}
+     */
+    protected function getValidators(): array
     {
         $validators = [
             [

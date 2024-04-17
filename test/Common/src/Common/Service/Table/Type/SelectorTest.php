@@ -21,7 +21,7 @@ class SelectorTest extends MockeryTestCase
 
     protected function setUp(): void
     {
-        $this->table = m::mock();
+        $this->table = m::mock(\Common\Service\Table\TableBuilder::class);
         $this->table->shouldIgnoreMissing();
 
         $this->sut = new Selector($this->table);
@@ -255,7 +255,7 @@ class SelectorTest extends MockeryTestCase
     {
         $column = [
             'aria-attributes' => [
-                'label' => static fn() => 'Test translated string'
+                'label' => static fn(): string => 'Test translated string'
             ]
         ];
 
@@ -281,8 +281,9 @@ class SelectorTest extends MockeryTestCase
 
         $column = [
             'aria-attributes' => [
-                'label' => function ($data, $translator) use ($translatorMock) {
+                'label' => function ($data, $translator) use ($translatorMock): string {
                     $this->assertSame($translatorMock, $translator);
+                    return 'Test string';
                 }
             ]
         ];
@@ -303,8 +304,9 @@ class SelectorTest extends MockeryTestCase
 
         $column = [
             'aria-attributes' => [
-                'label' => function ($data) use ($expectedData) {
+                'label' => function ($data) use ($expectedData): string {
                     $this->assertSame($expectedData, $data);
+                    return 'Test string';
                 }
             ]
         ];
@@ -332,7 +334,12 @@ class SelectorTest extends MockeryTestCase
         );
     }
 
-    public function disabledCallbackProvider()
+    /**
+     * @return (int[]|string)[][]
+     *
+     * @psalm-return list{list{array{isExpiredForLicence: 1, id: 7}, '<input type="radio" name="table[id]" value="7" disabled="disabled" id="table[id][7]" />'}, list{array{isExpiredForLicence: 0, id: 7}, '<input type="radio" name="table[id]" value="7" id="table[id][7]" />'}}
+     */
+    public function disabledCallbackProvider(): array
     {
         return [
             [

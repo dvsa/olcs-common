@@ -36,7 +36,7 @@ class LicenceBusinessDetailsTest extends MockeryTestCase
         $hasNeverHadLicenceDecision = false;
 
         // Mocks
-        $mockForm = m::mock();
+        $mockForm = m::mock(\Common\Form\Form::class);
         $mockLva = m::mock('\Common\FormService\FormServiceInterface');
 
         $this->fsl->setService('lva-licence', $mockLva);

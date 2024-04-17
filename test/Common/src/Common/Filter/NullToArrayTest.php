@@ -23,7 +23,12 @@ class NullToArrayTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $filter->filter($input));
     }
 
-    public function getValueDataProvider()
+    /**
+     * @return (false|int|null|string|string[])[][]
+     *
+     * @psalm-return array{'Bool value should return bool': list{false, false}, 'Null value should return empty array': list{null, array<never, never>}, 'Integer value should return same number': list{1, 1}, 'String should return a string': list{'string', 'string'}, 'Array should return a array': list{array{a: 'b'}, array{a: 'b'}}}
+     */
+    public function getValueDataProvider(): array
     {
         return [
             'Bool value should return bool'           => [false, false],

@@ -48,7 +48,7 @@ class LanguageListener implements ListenerAggregateInterface, FactoryInterface
         if ($lang !== null) {
             try {
                 $this->languagePref->setPreference($lang);
-            } catch (\Exception $ex) {
+            } catch (\Exception) {
                 $this->flashMessenger->addCurrentErrorMessage('Only English and Welsh languages are supported');
             }
         }

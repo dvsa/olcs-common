@@ -14,15 +14,9 @@ use Laminas\Router\Http\TreeRouteStack;
  */
 class FeeUrlExternal extends FeeUrl
 {
-    private Request $request;
-
-    private UrlHelperService $urlHelper;
-
-    public function __construct(TreeRouteStack $router, Request $request, UrlHelperService $urlHelper)
+    public function __construct(TreeRouteStack $router, private Request $request, private UrlHelperService $urlHelper)
     {
-        $this->request = $request;
-        $this->urlHelper = $urlHelper;
-        parent::__construct($router, $request, $urlHelper);
+        parent::__construct($router, $this->request, $this->urlHelper);
     }
 
     /**

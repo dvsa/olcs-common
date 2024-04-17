@@ -44,27 +44,13 @@ abstract class AbstractTransportManagersController extends AbstractController
     /** @var  \Common\Service\Helper\FormHelperService */
     protected $hlpForm;
 
-    protected TransportManagerHelperService $transportManagerHelper;
-
     protected FormHelperService $formHelper;
 
     protected FlashMessengerHelperService $flashMessengerHelper;
 
-    protected FormServiceManager $formServiceManager;
-
-    protected ScriptFactory $scriptFactory;
-
     protected TableFactory $tableFactory;
 
     protected QuerySender $querySender;
-
-    protected QueryService $queryService;
-
-    protected CommandService $commandService;
-
-    protected AnnotationBuilder $transferAnnotationBuilder;
-
-    protected $lvaAdapter;
     /**
      * @param $lvaAdapter
      */
@@ -72,25 +58,17 @@ abstract class AbstractTransportManagersController extends AbstractController
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
         FormHelperService $formHelper,
-        FormServiceManager $formServiceManager,
+        protected FormServiceManager $formServiceManager,
         FlashMessengerHelperService $flashMessengerHelper,
-        ScriptFactory $scriptFactory,
-        QueryService $queryService,
-        CommandService $commandService,
-        AnnotationBuilder $transferAnnotationBuilder,
-        TransportManagerHelperService $transportManagerHelper,
-        $lvaAdapter
+        protected ScriptFactory $scriptFactory,
+        protected QueryService $queryService,
+        protected CommandService $commandService,
+        protected AnnotationBuilder $transferAnnotationBuilder,
+        protected TransportManagerHelperService $transportManagerHelper,
+        protected $lvaAdapter
     ) {
         $this->formHelper = $formHelper;
-        $this->formServiceManager = $formServiceManager;
-        $this->scriptFactory = $scriptFactory;
         $this->flashMessengerHelper = $flashMessengerHelper;
-        $this->queryService = $queryService;
-        $this->commandService = $commandService;
-        $this->transferAnnotationBuilder = $transferAnnotationBuilder;
-        $this->transportManagerHelper = $transportManagerHelper;
-
-        $this->lvaAdapter = $lvaAdapter;
 
         parent::__construct($niTextTranslationUtil, $authService);
     }
@@ -528,7 +506,7 @@ abstract class AbstractTransportManagersController extends AbstractController
 
         $tmaIdsToDelete = [];
         foreach ($ids as $id) {
-            if (strpos($id, 'L') === 0) {
+            if (str_starts_with($id, 'L')) {
                 $tmaId = $this->findTmaId($data, $id);
                 $tmaIdsToDelete[] = $tmaId;
             } else {

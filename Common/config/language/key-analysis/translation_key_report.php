@@ -90,7 +90,7 @@ function findTranslationKeyUsages(array $translations, string $path, array $igno
 /**
  * Finds markup partial filenames in PHP and Template files
  */
-function getMarkupUsage(string $path)
+function getMarkupUsage(string $path): void
 {
     echo "Generating markup partial report\n";
     $dirContents = array_diff(scandir($path . '/olcs-common/Common/config/language/partials/'), ['..', '.']);
@@ -123,7 +123,7 @@ function getMarkupUsage(string $path)
 /**
  * Outputs and saves aggregate stats on key uses. Might be useful source for choosing ignore keys cmdline parameter
  */
-function keyStats(string $langKey, array $keyArray)
+function keyStats(string $langKey, array $keyArray): void
 {
     $stats = [];
     foreach ($keyArray as $key => $keyUses) {
@@ -139,7 +139,7 @@ function keyStats(string $langKey, array $keyArray)
 /**
  * Output and save list of keys unused in any files.
  */
-function findUnusedTranslationKeys(array $translations, array $usages)
+function findUnusedTranslationKeys(array $translations, array $usages): void
 {
     foreach (array_keys($translations) as $langKey) {
         $unusedKeys = array_diff_key($translations[$langKey], $usages[$langKey]);
@@ -154,7 +154,7 @@ function findUnusedTranslationKeys(array $translations, array $usages)
 /**
  * Check for keys set in common and backend, which have different values.
  */
-function findMismatchedCommonBackendValues(array $translations, string $path)
+function findMismatchedCommonBackendValues(array $translations, string $path): void
 {
 
     $moduleLanguages = [
@@ -209,6 +209,8 @@ function jsonEncodeWrap(array $array)
  *
  * @param $completed
  * @param $total
+ *
+ * @return void
  */
 function progressBar(int $completed, int $total)
 {

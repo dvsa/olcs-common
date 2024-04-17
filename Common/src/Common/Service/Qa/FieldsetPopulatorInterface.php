@@ -8,8 +8,6 @@ interface FieldsetPopulatorInterface
 {
     /**
      * Populate the supplied fieldset with form elements in accordance with the specified options
-     *
-     * @param mixed $form
      */
-    public function populate($form, Fieldset $fieldset, array $options);
+    public function populate(mixed $form, Fieldset $fieldset, array $options);
 }

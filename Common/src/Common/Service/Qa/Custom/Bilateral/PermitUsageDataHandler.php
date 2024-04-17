@@ -8,24 +8,14 @@ use Common\Service\Qa\DataHandlerInterface;
 
 class PermitUsageDataHandler implements DataHandlerInterface
 {
-    /** @var IsValidBasedWarningAdder */
-    private $isValidBasedWarningAdder;
-
-    /** @var PermitUsageIsValidHandler */
-    private $permitUsageIsValidHandler;
-
     /**
      * Create service instance
      *
      *
      * @return PermitUsageDataHandler
      */
-    public function __construct(
-        IsValidBasedWarningAdder $isValidBasedWarningAdder,
-        PermitUsageIsValidHandler $permitUsageIsValidHandler
-    ) {
-        $this->isValidBasedWarningAdder = $isValidBasedWarningAdder;
-        $this->permitUsageIsValidHandler = $permitUsageIsValidHandler;
+    public function __construct(private IsValidBasedWarningAdder $isValidBasedWarningAdder, private PermitUsageIsValidHandler $permitUsageIsValidHandler)
+    {
     }
 
     /**

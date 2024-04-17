@@ -27,7 +27,12 @@ class IrhpPermitStockCountryTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function dpFormat()
+    /**
+     * @return (string|string[][])[][]
+     *
+     * @psalm-return array{'No country': list{array<never, never>, 'N/A'}, 'Country only': list{array{country: array{countryDesc: 'Bosnia & Herzegovina'}}, 'Bosnia &amp; Herzegovina'}, 'Country and permit category': list{array{country: array{countryDesc: 'Bosnia & Herzegovina'}, permitCategory: array{description: 'Hors contingent'}}, 'Bosnia &amp; Herzegovina Hors contingent'}}
+     */
+    public function dpFormat(): array
     {
         return [
             'No country' => [

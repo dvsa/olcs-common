@@ -66,7 +66,12 @@ class SystemInfoMessagesTest extends MockeryTestCase
         static::assertEquals($expect, $actual);
     }
 
-    public function dataProviderTest()
+    /**
+     * @return ((int|string[][])[]|null|string)[][]
+     *
+     * @psalm-return list{array{data: null, expect: null}, array{data: array{count: 2, results: list{array{description: 'unit_Desc1'}, array{description: 'unit_Desc2 &'}}}, expect: '<div class="system-messages"><div class="system-messages__wrapper"><p>unit_Desc1</p></div><div class="system-messages__wrapper"><p>unit_Desc2 &amp;</p></div></div>'}, array{data: array<never, never>, expect: null}}
+     */
+    public function dataProviderTest(): array
     {
         return [
             //  no data

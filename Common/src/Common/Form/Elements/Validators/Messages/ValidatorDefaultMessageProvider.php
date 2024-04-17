@@ -11,14 +11,8 @@ use Laminas\Validator\ValidatorPluginManager;
  */
 class ValidatorDefaultMessageProvider
 {
-    protected ValidatorPluginManager $pluginManager;
-
-    private string $validatorName;
-
-    public function __construct(ValidatorPluginManager $pluginManager, string $validatorName)
+    public function __construct(protected ValidatorPluginManager $pluginManager, private string $validatorName)
     {
-        $this->pluginManager = $pluginManager;
-        $this->validatorName = $validatorName;
     }
 
     public function getValidatorName(): string

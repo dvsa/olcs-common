@@ -85,7 +85,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
 
     public function testSetGetDeleteCallback(): void
     {
-        $callback = function () {
+        $callback = function (): void {
         };
         $this->assertEquals(
             $callback,
@@ -95,7 +95,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
 
     public function testSetGetLoadCallback(): void
     {
-        $callback = function () {
+        $callback = function (): void {
         };
         $this->assertEquals(
             $callback,
@@ -220,7 +220,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         unlink($file);
     }
 
-    private function mockVirusScan($file, $isClean): void
+    private function mockVirusScan(string|false $file, bool $isClean): void
     {
         $this->mockScan
             ->shouldReceive('isEnabled')->withNoArgs()->andReturnTrue()
@@ -284,7 +284,12 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         unlink($file);
     }
 
-    public function fileUploadProvider()
+    /**
+     * @return (int|string)[][]
+     *
+     * @psalm-return list{list{3, 'message.file-upload-error.3'}, list{4, 'message.file-upload-error.4'}, list{1, 'message.file-upload-error.1'}, list{6, 'message.file-upload-error.6'}}
+     */
+    public function fileUploadProvider(): array
     {
         return [
             [UPLOAD_ERR_PARTIAL, 'message.file-upload-error.' . UPLOAD_ERR_PARTIAL],
@@ -516,7 +521,12 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         static::assertEquals(false, $this->sut->process());
     }
 
-    public function dpTestProcessWithPostFileUploadExpection()
+    /**
+     * @return (InvalidMimeException|\Exception|string)[][]
+     *
+     * @psalm-return list{array{expection: \Exception, expect: 'message.file-upload-error.any'}, array{expection: InvalidMimeException, expect: 'ERR_MIME'}}
+     */
+    public function dpTestProcessWithPostFileUploadExpection(): array
     {
         return [
             [

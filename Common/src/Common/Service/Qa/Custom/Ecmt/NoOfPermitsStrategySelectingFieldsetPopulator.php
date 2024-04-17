@@ -7,24 +7,14 @@ use Laminas\Form\Fieldset;
 
 class NoOfPermitsStrategySelectingFieldsetPopulator implements FieldsetPopulatorInterface
 {
-    /** @var FieldsetPopulatorInterface */
-    private $singleEmissionsCategoryFieldsetPopulator;
-
-    /** @var FieldsetPopulatorInterface */
-    private $multipleEmissionsCategoryFieldsetPopulator;
-
     /**
      * Create service instance
      *
      *
      * @return NoOfPermitsStrategySelectingFieldsetPopulator
      */
-    public function __construct(
-        FieldsetPopulatorInterface $singleEmissionsCategoryFieldsetPopulator,
-        FieldsetPopulatorInterface $multipleEmissionsCategoryFieldsetPopulator
-    ) {
-        $this->singleEmissionsCategoryFieldsetPopulator = $singleEmissionsCategoryFieldsetPopulator;
-        $this->multipleEmissionsCategoryFieldsetPopulator = $multipleEmissionsCategoryFieldsetPopulator;
+    public function __construct(private FieldsetPopulatorInterface $singleEmissionsCategoryFieldsetPopulator, private FieldsetPopulatorInterface $multipleEmissionsCategoryFieldsetPopulator)
+    {
     }
 
     /**

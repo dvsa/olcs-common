@@ -9,24 +9,14 @@ use Common\Service\Qa\DataHandlerInterface;
 
 class InternationalJourneysDataHandler implements DataHandlerInterface
 {
-    /** @var IsValidBasedWarningAdder */
-    private $isValidBasedWarningAdder;
-
-    /** @var InternationalJourneysIsValidHandler */
-    private $internationalJourneysIsValidHandler;
-
     /**
      * Create service instance
      *
      *
      * @return InternationalJourneysDataHandler
      */
-    public function __construct(
-        IsValidBasedWarningAdder $isValidBasedWarningAdder,
-        InternationalJourneysIsValidHandler $internationalJourneysIsValidHandler
-    ) {
-        $this->isValidBasedWarningAdder = $isValidBasedWarningAdder;
-        $this->internationalJourneysIsValidHandler = $internationalJourneysIsValidHandler;
+    public function __construct(private IsValidBasedWarningAdder $isValidBasedWarningAdder, private InternationalJourneysIsValidHandler $internationalJourneysIsValidHandler)
+    {
     }
 
     /**

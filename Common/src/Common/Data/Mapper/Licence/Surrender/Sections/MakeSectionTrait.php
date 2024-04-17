@@ -6,7 +6,12 @@ trait MakeSectionTrait
 {
     protected $displayChangeLinkInHeading = true;
 
-    public function makeSection()
+    /**
+     * @return (array|mixed|string)[]
+     *
+     * @psalm-return array{sectionHeading: string, changeLinkInHeading: mixed, change: mixed, questions: array}
+     */
+    public function makeSection(): array
     {
         $questions = $this->makeQuestions();
 

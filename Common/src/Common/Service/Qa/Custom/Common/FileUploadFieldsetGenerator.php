@@ -9,20 +9,14 @@ use Laminas\Form\InputFilterProviderFieldset;
 
 class FileUploadFieldsetGenerator
 {
-    private FormFactory $formFactory;
-
-    private $customAnnotationBuilder;
-
     /**
      * Create service instance
      *
      * @param AnnotationBuilder $customAnnotationBuilder
      * @return FileUploadFieldsetGenerator
      */
-    public function __construct(FormFactory $formFactory, $customAnnotationBuilder)
+    public function __construct(private FormFactory $formFactory, private $customAnnotationBuilder)
     {
-        $this->formFactory = $formFactory;
-        $this->customAnnotationBuilder = $customAnnotationBuilder;
     }
 
     /**

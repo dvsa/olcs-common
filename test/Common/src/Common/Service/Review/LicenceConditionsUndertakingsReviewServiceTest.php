@@ -78,10 +78,10 @@ class LicenceConditionsUndertakingsReviewServiceTest extends MockeryTestCase
         $inputData = ['foo' => 'bar']; // Doesn't matter what this is
         $expected = [
             'subSections' => [
-                'BAR1',
-                'BAR2',
-                'BAR3',
-                'BAR4'
+                ['BAR1'],
+                ['BAR2'],
+                ['BAR3'],
+                ['BAR4'],
             ]
         ];
 
@@ -91,16 +91,16 @@ class LicenceConditionsUndertakingsReviewServiceTest extends MockeryTestCase
             ->andReturn($data)
             ->shouldReceive('formatLicenceSubSection')
             ->with(['foo' => 'bar1'], 'application', 'conditions', 'added')
-            ->andReturn('BAR1')
+            ->andReturn(['BAR1'])
             ->shouldReceive('formatLicenceSubSection')
             ->with(['foo' => 'bar2'], 'application', 'undertakings', 'added')
-            ->andReturn('BAR2')
+            ->andReturn(['BAR2'])
             ->shouldReceive('formatOcSubSection')
             ->with(['foo' => 'bar3'], 'application', 'conditions', 'added')
-            ->andReturn('BAR3')
+            ->andReturn(['BAR3'])
             ->shouldReceive('formatOcSubSection')
             ->with(['foo' => 'bar4'], 'application', 'undertakings', 'added')
-            ->andReturn('BAR4');
+            ->andReturn(['BAR4']);
 
         $this->mockTranslationHelper->shouldReceive('translate')
             ->andReturnUsing(

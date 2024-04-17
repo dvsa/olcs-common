@@ -37,7 +37,12 @@ class AbstractServiceFactoryTest extends MockeryTestCase
         static::assertEquals($expect, $this->sut->canCreate($this->mockSm, $requestedName));
     }
 
-    public function dpTestCanCreate()
+    /**
+     * @return (bool|string)[][]
+     *
+     * @psalm-return list{array{fqcn: 'Helper\Form', expect: true}, array{fqcn: 'Wrong\Wrong', expect: false}}
+     */
+    public function dpTestCanCreate(): array
     {
         //  use real classes to test
         return [

@@ -11,34 +11,14 @@ use Laminas\Form\Fieldset;
 
 class AnnualTripsAbroadFieldsetPopulator implements FieldsetPopulatorInterface
 {
-    /** @var TextFieldsetPopulator */
-    private $textFieldsetPopulator;
-
-    /** @var TranslationHelperService */
-    private $translator;
-
-    /** @var NiWarningConditionalAdder */
-    private $niWarningConditionalAdder;
-
-    /** @var HtmlAdder */
-    private $htmlAdder;
-
     /**
      * Create service instance
      *
      *
      * @return AnnualTripsAbroadFieldsetPopulator
      */
-    public function __construct(
-        TextFieldsetPopulator $textFieldsetPopulator,
-        TranslationHelperService $translator,
-        NiWarningConditionalAdder $niWarningConditionalAdder,
-        HtmlAdder $htmlAdder
-    ) {
-        $this->textFieldsetPopulator = $textFieldsetPopulator;
-        $this->translator = $translator;
-        $this->niWarningConditionalAdder = $niWarningConditionalAdder;
-        $this->htmlAdder = $htmlAdder;
+    public function __construct(private TextFieldsetPopulator $textFieldsetPopulator, private TranslationHelperService $translator, private NiWarningConditionalAdder $niWarningConditionalAdder, private HtmlAdder $htmlAdder)
+    {
     }
 
     /**

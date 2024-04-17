@@ -18,7 +18,7 @@ use LmcRbacMvc\Service\AuthorizationService;
  * @author Rob Caiger <rob@clocal.co.uk>
  * @author Jakub Igla <jakub.igla@valtech.co.uk>
  */
-class TableBuilder
+class TableBuilder implements \Stringable
 {
     public const TYPE_DEFAULT = 1;
 
@@ -78,13 +78,6 @@ class TableBuilder
      * @var string
      */
     private $contentType = self::CONTENT_TYPE_HTML;
-
-    /**
-     * Inject the application config from Laminas
-     *
-     * @var array
-     */
-    private $applicationConfig = [];
 
     /**
      * Table settings
@@ -219,18 +212,6 @@ class TableBuilder
      */
     private $isDisabled = false;
 
-    private ContainerInterface $serviceLocator;
-
-    /**
-     * @var Translator
-     */
-    private $translator;
-
-    /**
-     * @var UrlHelperService
-     */
-    private $urlHelper;
-
     /** @var  \Laminas\Form\Element\Csrf */
     private $elmCsrf;
 
@@ -238,10 +219,6 @@ class TableBuilder
      * @var array<string,string>
      */
     private $urlParameterNameMap = [];
-
-    private FormatterPluginManager $formatterPluginManager;
-
-    private Permission $permissionService;
 
     /**
      * @return array<string,string>
@@ -271,19 +248,16 @@ class TableBuilder
      * @return TableBuilder
      */
     public function __construct(
-        ContainerInterface $serviceLocator,
-        Permission $permissionService,
-        Translator $translator,
-        UrlHelperService $urlHelper,
-        array $applicationConfig,
-        FormatterPluginManager $formatterPluginManager
+        private ContainerInterface $serviceLocator,
+        private Permission $permissionService,
+        private Translator $translator,
+        private UrlHelperService $urlHelper,
+        /**
+         * Inject the application config from Laminas
+         */
+        private array $applicationConfig,
+        private FormatterPluginManager $formatterPluginManager
     ) {
-        $this->serviceLocator = $serviceLocator;
-        $this->permissionService = $permissionService;
-        $this->translator = $translator;
-        $this->urlHelper = $urlHelper;
-        $this->applicationConfig = $applicationConfig;
-        $this->formatterPluginManager = $formatterPluginManager;
     }
 
     /**
@@ -365,10 +339,9 @@ class TableBuilder
      * Return a setting or the default
      *
      * @param string $name
-     * @param mixed $default
      * @return mixed
      */
-    public function getSetting($name, $default = null)
+    public function getSetting($name, mixed $default = null)
     {
         return $this->settings[$name] ?? $default;
     }
@@ -562,9 +535,8 @@ class TableBuilder
      * Set a single variable
      *
      * @param string $name
-     * @param mixed $value
      */
-    public function setVariable($name, $value): void
+    public function setVariable($name, mixed $value): void
     {
         $this->variables[$name] = $value;
     }
@@ -977,7 +949,7 @@ class TableBuilder
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         try {
             return $this->render();
@@ -1369,17 +1341,17 @@ class TableBuilder
 
         /**
         Temporarily removed this, as if someone has set the limit to be more than the total, they would no longer see
-         the limit options to reduce
+        the limit options to reduce
         if (!in_array($this->getLimit(), $this->settings['paginate']['limit']['options'])) {
-            $this->settings['paginate']['limit']['options'][] = $this->getLimit();
-            sort($this->settings['paginate']['limit']['options']);
+        $this->settings['paginate']['limit']['options'][] = $this->getLimit();
+        sort($this->settings['paginate']['limit']['options']);
         }
 
 
         if ($this->total <= min($this->settings['paginate']['limit']['options'])) {
-            return '';
+        return '';
         }
-        */
+         */
 
         return $this->renderLayout('pagination');
     }
@@ -1406,18 +1378,18 @@ class TableBuilder
                 $class = PaginationHelper::CLASS_PAGINATION_ITEM_CURRENT;
             }
 
-                $details = [
-                    'option' => $option,
-                    'link' => $this->generatePaginationUrl([
-                        $this->mapUrlParameterName('page') => 1,
-                        $this->mapUrlParameterName('limit') => $option
-                    ]),
-                ];
-                $option = $this->replaceContent('{{[elements/limitLink]}}', $details);
+            $details = [
+                'option' => $option,
+                'link' => $this->generatePaginationUrl([
+                    $this->mapUrlParameterName('page') => 1,
+                    $this->mapUrlParameterName('limit') => $option
+                ]),
+            ];
+            $option = $this->replaceContent('{{[elements/limitLink]}}', $details);
 
-                $limitDetails = ['class' => $class, 'option' => $option];
+            $limitDetails = ['class' => $class, 'option' => $option];
 
-                $content .= $this->replaceContent('{{[elements/limitOption]}}', $limitDetails);
+            $content .= $this->replaceContent('{{[elements/limitOption]}}', $limitDetails);
         }
 
         return $content;
@@ -1708,7 +1680,14 @@ class TableBuilder
             // Remove the leading namespace separator if exists
             $formatterClass = ltrim($column['formatter'], '\\');
 
-            // Check if formatterClass exists
+            // Check if the formatter class contains a namespace
+            if (!str_contains($formatterClass, '\\')) {
+                @trigger_error(sprintf('Table formatter "%s" should be using the FQCN.', $column['formatter']), \E_USER_DEPRECATED);
+
+                // Append the namespace if it's missing
+                $formatterClass = '\\' . __NAMESPACE__ . '\\Formatter\\' . $formatterClass;
+            }
+
             if (!class_exists($formatterClass) || !$this->formatterPluginManager->has($formatterClass)) {
                 throw new MissingFormatterException('Missing table formatter: ' . $column['formatter']);
             }

@@ -53,7 +53,7 @@ class FormElementErrors extends LaminasFormElementErrors
                 sprintf(
                     '%s expects that $element->getMessages() will return an array or Traversable; received "%s"',
                     __METHOD__,
-                    (is_object($messages) ? get_class($messages) : gettype($messages))
+                    (get_debug_type($messages))
                 )
             );
         }

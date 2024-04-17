@@ -44,29 +44,14 @@ class Search extends AbstractData
      */
     protected $request;
 
-    /** @var TableFactory */
-    private $tableService;
-
-    /** @var ViewHelperManager */
-    private $viewHelperManager;
-
-    /** @var SearchTypeManager */
-    private $searchTypeManager;
-
     /**
      * Create service instance
      *
      *
      * @return Search
      */
-    public function __construct(
-        TableFactory $tableService,
-        ViewHelperManager $viewHelperManager,
-        SearchTypeManager $searchTypeManager
-    ) {
-        $this->tableService = $tableService;
-        $this->viewHelperManager = $viewHelperManager;
-        $this->searchTypeManager = $searchTypeManager;
+    public function __construct(private TableFactory $tableService, private ViewHelperManager $viewHelperManager, private SearchTypeManager $searchTypeManager)
+    {
     }
 
     /**
@@ -78,17 +63,18 @@ class Search extends AbstractData
         return $this->request;
     }
 
-    public function setRequest(HttpRequest $request)
+    public function setRequest(HttpRequest $request): static
     {
         $this->request = $request;
         return $this;
     }
 
     /**
-     * @param mixed $index
      * @return $this
+     *
+     * @psalm-param 'INDEX_NAME'|'application' $index
      */
-    public function setIndex($index)
+    public function setIndex(string $index)
     {
         $this->index = $index;
         return $this;
@@ -103,10 +89,11 @@ class Search extends AbstractData
     }
 
     /**
-     * @param mixed $search
      * @return $this
+     *
+     * @psalm-param 'SEARCH' $search
      */
-    public function setSearch($search)
+    public function setSearch(string $search)
     {
         $this->search = $search;
         return $this;
@@ -253,7 +240,7 @@ class Search extends AbstractData
              ->getValue();
     }
 
-    public function populateFiltersFormOptions()
+    public function populateFiltersFormOptions(): \Common\Form\Form
     {
         /** @var \Common\Form\Form $form */
         $form = $this->fetchFiltersFormObject();

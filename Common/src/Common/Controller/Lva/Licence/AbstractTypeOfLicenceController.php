@@ -20,28 +20,15 @@ use LmcRbacMvc\Service\AuthorizationService;
  */
 abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicenceController
 {
-    protected FlashMessengerHelperService $flashMessengerHelper;
-
-    protected ScriptFactory $scriptFactory;
-
-    protected FormServiceManager $formServiceManager;
-
-    protected VariationLvaService $variationLvaService;
-
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
-        FlashMessengerHelperService $flashMessengerHelper,
-        ScriptFactory $scriptFactory,
-        FormServiceManager $formServiceManager,
-        VariationLvaService $variationLvaService
+        protected FlashMessengerHelperService $flashMessengerHelper,
+        protected ScriptFactory $scriptFactory,
+        protected FormServiceManager $formServiceManager,
+        protected VariationLvaService $variationLvaService
     ) {
-        $this->scriptFactory = $scriptFactory;
-        $this->flashMessengerHelper = $flashMessengerHelper;
-        $this->formServiceManager = $formServiceManager;
-        $this->variationLvaService = $variationLvaService;
-
-        parent::__construct($niTextTranslationUtil, $authService, $flashMessengerHelper, $scriptFactory);
+        parent::__construct($niTextTranslationUtil, $authService, $this->flashMessengerHelper, $this->scriptFactory);
     }
 
     /**

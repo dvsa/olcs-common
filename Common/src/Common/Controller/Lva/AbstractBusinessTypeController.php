@@ -24,51 +24,22 @@ use LmcRbacMvc\Service\AuthorizationService;
  */
 abstract class AbstractBusinessTypeController extends AbstractController
 {
-    protected FormHelperService $formHelper;
-
-    protected FlashMessengerHelperService $flashMessengerHelper;
-
-    protected FormServiceManager $formServiceManager;
-
-    protected ScriptFactory $scriptFactory;
-
-    protected IdentityProviderInterface $identityProvider;
-
-    protected TranslationHelperService $translationHelper;
-
-    protected AnnotationBuilder $transferAnnotationBuilder;
-
-    protected QueryService $queryService;
-
-    protected GenericBusinessTypeAdapter $lvaAdapter;
-
     /**
      * @param GenericBusinessTypeAdapter $lvaAdapter
      */
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
-        FormHelperService $formHelper,
-        FlashMessengerHelperService $flashMessengerHelper,
-        FormServiceManager $formServiceManager,
-        ScriptFactory $scriptFactory,
-        IdentityProviderInterface $identityProvider,
-        TranslationHelperService $translationHelper,
-        AnnotationBuilder $transferAnnotationBuilder,
-        QueryService $queryService,
-        $lvaAdapter
+        protected FormHelperService $formHelper,
+        protected FlashMessengerHelperService $flashMessengerHelper,
+        protected FormServiceManager $formServiceManager,
+        protected ScriptFactory $scriptFactory,
+        protected IdentityProviderInterface $identityProvider,
+        protected TranslationHelperService $translationHelper,
+        protected AnnotationBuilder $transferAnnotationBuilder,
+        protected QueryService $queryService,
+        protected GenericBusinessTypeAdapter $lvaAdapter
     ) {
-        $this->formHelper = $formHelper;
-        $this->flashMessengerHelper = $flashMessengerHelper;
-        $this->formServiceManager = $formServiceManager;
-        $this->scriptFactory = $scriptFactory;
-        $this->identityProvider = $identityProvider;
-        $this->translationHelper = $translationHelper;
-        $this->transferAnnotationBuilder = $transferAnnotationBuilder;
-        $this->queryService = $queryService;
-
-        $this->lvaAdapter = $lvaAdapter;
-
         parent::__construct($niTextTranslationUtil, $authService);
     }
 
@@ -177,7 +148,7 @@ abstract class AbstractBusinessTypeController extends AbstractController
         return $this->render('business_type', $form);
     }
 
-    public function getForm($form)
+    public function getForm($form): \Laminas\Form\FormInterface
     {
         $formHelper = $this->formHelper;
 

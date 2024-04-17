@@ -23,8 +23,6 @@ class Address implements FormatterPluginManagerInterface
         ]
     ];
 
-    private DataHelperService $dataHelper;
-
     /**
      * Format an address
      *
@@ -99,8 +97,7 @@ class Address implements FormatterPluginManagerInterface
         return $fields;
     }
 
-    public function __construct(DataHelperService $dataHelper)
+    public function __construct(private DataHelperService $dataHelper)
     {
-        $this->dataHelper = $dataHelper;
     }
 }

@@ -29,7 +29,8 @@ class DecompressUploadToTmpTest extends MockeryTestCase
 
         $mockFilter = m::mock(\Laminas\Filter\Decompress::class);
         $mockFilter->shouldReceive('filter')->with($filename);
-        $mockFilter->shouldReceive('setTarget')->with($extractDir);
+        $mockFilter->shouldReceive('getAdapterOptions')->andReturn(['target' => '']);
+        $mockFilter->shouldReceive('setAdapterOptions')->with(['target' => $extractDir]);
 
         $mockFileSystem = m::mock(\Common\Filesystem\Filesystem::class);
         $mockFileSystem->shouldReceive('createTmpDir')->with($tmpDir, 'zip')->andReturn($extractDir);

@@ -17,14 +17,8 @@ class LicenceApplication implements FormatterPluginManagerInterface
 {
     private const LINK_WITH_STATUS = '<a class="govuk-link" href="%s">%s</a>%s';
 
-    private UrlHelper $urlHelper;
-
-    private HelperPluginManager $viewHelperManager;
-
-    public function __construct(UrlHelperService $urlHelper, HelperPluginManager $viewHelperManager)
+    public function __construct(private UrlHelper $urlHelper, private HelperPluginManager $viewHelperManager)
     {
-        $this->urlHelper = $urlHelper;
-        $this->viewHelperManager = $viewHelperManager;
     }
 
     /**

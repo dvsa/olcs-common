@@ -67,7 +67,12 @@ class FormRowTest extends MockeryTestCase
         $this->assertEquals($expected, $sut($element));
     }
 
-    public function provideTestInvoke()
+    /**
+     * @return (m\LegacyMockInterface&m\MockInterface&Elements\Types\AttachFilesButton|m\LegacyMockInterface&m\MockInterface&Elements\Types\HtmlTranslated|m\LegacyMockInterface&m\MockInterface&Elements\Types\Table|m\LegacyMockInterface&m\MockInterface&LaminasElement\Csrf|m\LegacyMockInterface&m\MockInterface&LaminasElement\Select|m\LegacyMockInterface&m\MockInterface&\Laminas\Form\ElementInterface|m\MockInterface|mixed|null|string)[][]
+     *
+     * @psalm-return array{0: array{element: null, expected: null}, 1: list{m\LegacyMockInterface&m\MockInterface&\Laminas\Form\ElementInterface, ''}, 2: list{m\MockInterface, ''}, text: array{element: m\LegacyMockInterface&m\MockInterface&\Laminas\Form\ElementInterface, expect: '<li class="definition-list__item readonly"><dt>@_Label_@</dt><dd>_Value_</dd></li>'}, select: array{element: m\LegacyMockInterface&m\MockInterface&LaminasElement\Select, expect: '<li class="definition-list__item readonly"><dt>@_Label_@</dt><dd>_Value_</dd></li>'}, 3: list{m\LegacyMockInterface&m\MockInterface&Elements\Types\Table, '<table></table>'}, htmlTranslated: array{element: m\LegacyMockInterface&m\MockInterface&Elements\Types\HtmlTranslated, expect: '<li class="definition-list__item readonly"><dt>@@</dt><dd>STANDARD-RENDER-RESULT</dd></li>'}, htmlTranslatedNoLabel: array{element: mixed, expect: '<li class="definition-list__item readonly">STANDARD-RENDER-RESULT</li>'}, 4: array{element: m\LegacyMockInterface&m\MockInterface&LaminasElement\Csrf, expected: 'STANDARD-RENDER-RESULT'}, 5: array{element: mixed, expected: 'STANDARD-RENDER-RESULT'}, 6: array{element: mixed, expected: ''}, 7: array{element: m\LegacyMockInterface&m\MockInterface&Elements\Types\AttachFilesButton, expected: ''}}
+     */
+    public function provideTestInvoke(): array
     {
         //need tests for Select, TextArea
         $mockHidden = m::mock(\Laminas\Form\ElementInterface::class);

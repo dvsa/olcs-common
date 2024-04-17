@@ -23,6 +23,10 @@ class AbstractServiceFactory implements AbstractFactoryInterface
     {
         $serviceClassName = $this->getClassName($requestedName);
 
+        if (!$serviceClassName) {
+            throw new \Exception('Service not found: ' . $requestedName);
+        }
+
         $service = new $serviceClassName();
 
         if ($service instanceof FactoryInterface) {
@@ -40,9 +44,9 @@ class AbstractServiceFactory implements AbstractFactoryInterface
      *
      * @param string $name Class name
      *
-     * @return string
+     * @return class-string|false
      */
-    protected function getClassName($name)
+    protected function getClassName($name): string|false
     {
         $namespaces = [
             'Olcs\Service\\',

@@ -36,7 +36,7 @@ class VariationBusinessDetailsTest extends MockeryTestCase
         $hasOrganisationSubmittedLicenceApplication = false;
 
         // Mocks
-        $mockForm = m::mock();
+        $mockForm = m::mock(\Common\Form\Form::class);
         $mockLva = m::mock('\Common\FormService\FormServiceInterface');
 
         $this->fsl->setService('lva-variation', $mockLva);

@@ -27,23 +27,7 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
 {
     protected FormHelperService $formHelper;
 
-    protected FlashMessengerHelperService $flashMessengerHelper;
-
-    protected FormServiceManager $formServiceManager;
-
-    protected ScriptFactory $scriptFactory;
-
-    protected TableFactory $tableFactory;
-
     protected GuidanceHelperService $guidanceHelper;
-
-    protected AnnotationBuilder $transferAnnotationBuilder;
-
-    protected CommandService $commandService;
-
-    protected $lvaAdapter;
-
-    protected FileUploadHelperService $uploadHelper;
 
     /**
      * @param $lvaAdapter
@@ -51,25 +35,15 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
-        FlashMessengerHelperService $flashMessengerHelper,
-        FormServiceManager $formServiceManager,
-        ScriptFactory $scriptFactory,
-        TableFactory $tableFactory,
-        AnnotationBuilder $transferAnnotationBuilder,
-        CommandService $commandService,
-        $lvaAdapter,
-        FileUploadHelperService $uploadHelper
+        protected FlashMessengerHelperService $flashMessengerHelper,
+        protected FormServiceManager $formServiceManager,
+        protected ScriptFactory $scriptFactory,
+        protected TableFactory $tableFactory,
+        protected AnnotationBuilder $transferAnnotationBuilder,
+        protected CommandService $commandService,
+        protected $lvaAdapter,
+        protected FileUploadHelperService $uploadHelper
     ) {
-        $this->flashMessengerHelper = $flashMessengerHelper;
-        $this->formServiceManager = $formServiceManager;
-        $this->scriptFactory = $scriptFactory;
-        $this->tableFactory = $tableFactory;
-        $this->transferAnnotationBuilder = $transferAnnotationBuilder;
-        $this->commandService = $commandService;
-        $this->uploadHelper = $uploadHelper;
-
-        $this->lvaAdapter = $lvaAdapter;
-
         parent::__construct($niTextTranslationUtil, $authService);
     }
 

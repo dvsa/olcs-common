@@ -12,14 +12,8 @@ use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
  */
 class TransportManagerName extends Name
 {
-    private UrlHelperService $urlHelper;
-
-    private TranslatorDelegator $translator;
-
-    public function __construct(UrlHelperService $urlHelperService, TranslatorDelegator $translator)
+    public function __construct(private UrlHelperService $urlHelper, private TranslatorDelegator $translator)
     {
-        $this->urlHelper = $urlHelperService;
-        $this->translator = $translator;
     }
 
     /**

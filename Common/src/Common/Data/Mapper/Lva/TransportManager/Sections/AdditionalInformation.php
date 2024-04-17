@@ -10,6 +10,9 @@ class AdditionalInformation extends AbstractSection implements TransportManagerS
 
     private $files;
 
+    /**
+     * @return static
+     */
     public function populate(array $transportManagerApplication)
     {
         $files = 0;

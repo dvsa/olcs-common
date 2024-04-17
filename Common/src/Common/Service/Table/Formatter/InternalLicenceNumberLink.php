@@ -13,11 +13,8 @@ use Common\Service\Helper\UrlHelperService;
  */
 class InternalLicenceNumberLink implements FormatterPluginManagerInterface
 {
-    private UrlHelperService $urlHelper;
-
-    public function __construct(UrlHelperService $urlHelper)
+    public function __construct(private UrlHelperService $urlHelper)
     {
-        $this->urlHelper = $urlHelper;
     }
 
     /**

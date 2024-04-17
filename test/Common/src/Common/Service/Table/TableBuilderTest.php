@@ -36,7 +36,7 @@ class TableBuilderTest extends MockeryTestCase
         $this->mockFormatterPluginManager = m::mock(FormatterPluginManager::class);
     }
 
-    private function getConcreteTableBuilder($config = true)
+    private function getConcreteTableBuilder(bool $config = true): TableBuilder
     {
         return new TableBuilder(
             $this->getMockServiceLocator(),
@@ -52,8 +52,14 @@ class TableBuilderTest extends MockeryTestCase
      * Get Mock Table Builder
      *
      * @return \Common\Service\Table\TableBuilder | MockObject
+     *
+     * @param string[] $methods
+     * @param (MockObject&Permission|MockObject&Translator|mixed)[]|null $constructorArgs
+     *
+     * @psalm-param list{0?: string, 1?: string, 2?: 'getContentHelper'|'getUrl', 3?: 'getServiceLocator'} $methods
+     * @psalm-param list{mixed, MockObject&Permission|mixed, MockObject&Translator|mixed, mixed, mixed, mixed}|null $constructorArgs
      */
-    private function getMockTableBuilder($methods = [], $constructorArgs = null)
+    private function getMockTableBuilder(array $methods = [], array|null $constructorArgs = null)
     {
         if (is_null($constructorArgs)) {
             $constructorArgs = [
@@ -72,7 +78,7 @@ class TableBuilderTest extends MockeryTestCase
             ->getMock();
     }
 
-    private function getMockTranslator()
+    private function getMockTranslator(): Translator
     {
         $mockTranslator = $this->createPartialMock(\Laminas\Mvc\I18n\Translator::class, ['translate']);
         $mockTranslator->expects(static::any())
@@ -89,17 +95,22 @@ class TableBuilderTest extends MockeryTestCase
         return $mockTranslator;
     }
 
-    private function getMockPermissionService()
+    private function getMockPermissionService(): Permission
     {
         return $this->createPartialMock(Permission::class, ['isGranted', 'isInternalReadOnly']);
     }
 
-    private function getMockUrlHelperService()
+    private function getMockUrlHelperService(): UrlHelperService
     {
         return m::mock(UrlHelperService::class);
     }
 
-    private function getMockConfig($config = true)
+    /**
+     * @return (int|string[])[][]
+     *
+     * @psalm-return array{tables?: array{config: list{'/Users/wraggj/DVSA/OLCS/code/olcs-common/test/Common/src/Common/Service/Table/TestResources/'}, partials: array{html: ''}}, csrf?: array{timeout: 9999}}
+     */
+    private function getMockConfig($config = true): array
     {
         if (!$config) {
             return [];
@@ -118,7 +129,7 @@ class TableBuilderTest extends MockeryTestCase
         ];
     }
 
-    private function getMockServiceLocator()
+    private function getMockServiceLocator(): \Laminas\ServiceManager\ServiceManager
     {
         $mockSm = $this->createPartialMock(\Laminas\ServiceManager\ServiceManager::class, ['get']);
         $mockControllerPluginManager = $this->createPartialMock(\Laminas\Mvc\Controller\PluginManager::class, ['get']);
@@ -703,7 +714,7 @@ class TableBuilderTest extends MockeryTestCase
                 'type' => 'th',
                 'colspan' => 2,
                 'content' => 'foo',
-                'formatter' => static fn() => 'ABC',
+                'formatter' => static fn(): string => 'ABC',
                 'align' => 'right',
             ],
             [
@@ -2723,7 +2734,12 @@ class TableBuilderTest extends MockeryTestCase
         ];
 
         $column = [
-            'formatter' => static fn() => ['date' => 'Something Else'],
+            'formatter' => /**
+             * @return string[]
+             *
+             * @psalm-return array{date: 'Something Else'}
+             */
+            static fn(): array => ['date' => 'Something Else'],
             'name' => 'date'
         ];
 
@@ -3167,7 +3183,12 @@ class TableBuilderTest extends MockeryTestCase
         $this->assertEquals($disabled, $sut->isRowDisabled($row));
     }
 
-    public function providerIsRowDisabled()
+    /**
+     * @return bool[][]
+     *
+     * @psalm-return list{list{true}, list{false}}
+     */
+    public function providerIsRowDisabled(): array
     {
         return [
             [true],
@@ -3399,9 +3420,14 @@ class TableBuilderTest extends MockeryTestCase
 
     /**
      * @depends getUrlParameterNameMapIsDefined
+     *
      * @test
+     *
+     * @return string[]
+     *
+     * @psalm-return array<string, string>
      */
-    public function getUrlParameterNameMapReturnsAnArray()
+    public function getUrlParameterNameMapReturnsAnArray(): array
     {
         // Set Up
         $table = $this->setUpSut();
@@ -3434,7 +3460,7 @@ class TableBuilderTest extends MockeryTestCase
         $table = $this->setUpSut();
 
         // Assert
-        $this->assertIsCallable(static fn(array $urlParamNameMap): self => $table->setUrlParameterNameMap($urlParamNameMap));
+        $this->assertIsCallable(static fn(array $urlParamNameMap): \Common\Service\Table\TableBuilder => $table->setUrlParameterNameMap($urlParamNameMap));
     }
 
     /**

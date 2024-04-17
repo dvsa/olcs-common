@@ -90,7 +90,7 @@ class NoOfPermits
     /**
      * Populates a fieldset object with form elements in accordance with permit availabilty
      */
-    protected function populateYearFieldset(Fieldset $fieldset, array $years)
+    protected function populateYearFieldset(Fieldset $fieldset, array $years): void
     {
         foreach ($years as $yearAttributes) {
             if ($yearAttributes['maxPermits'] > 0) {
@@ -108,7 +108,7 @@ class NoOfPermits
         array $irhpPermitApplications,
         array $maxPermitsByStock,
         $totAuthVehicles
-    ) {
+    ): void {
         $formElements = [];
 
         foreach ($irhpPermitApplications as $irhpPermitApplication) {
@@ -153,25 +153,20 @@ class NoOfPermits
             ['label' => $label]
         );
 
-        switch ($issuedPermits) {
-            case 0:
-                $hint = $this->translator->translateReplace(
-                    'permits.page.no-of-permits.none-issued',
-                    [$maxPermits]
-                );
-                break;
-            case 1:
-                $hint = $this->translator->translateReplace(
-                    'permits.page.no-of-permits.one-issued',
-                    [$maxPermits]
-                );
-                break;
-            default:
-                $hint = $this->translator->translateReplace(
-                    'permits.page.no-of-permits.multiple-issued',
-                    [$maxPermits, $issuedPermits]
-                );
-        }
+        $hint = match ($issuedPermits) {
+            0 => $this->translator->translateReplace(
+                'permits.page.no-of-permits.none-issued',
+                [$maxPermits]
+            ),
+            1 => $this->translator->translateReplace(
+                'permits.page.no-of-permits.one-issued',
+                [$maxPermits]
+            ),
+            default => $this->translator->translateReplace(
+                'permits.page.no-of-permits.multiple-issued',
+                [$maxPermits, $issuedPermits]
+            ),
+        };
 
         $element->setOptions(
             [
@@ -209,10 +204,9 @@ class NoOfPermits
     /**
      * Apply changes to the data and form to reflect the fact that no more permits can be applied for
      *
-     * @param mixed $form
      * @return array
      */
-    protected function applyMaxAllowableChanges(array $data, $form)
+    protected function applyMaxAllowableChanges(array $data, mixed $form)
     {
         $data['browserTitle'] = 'permits.page.multilateral.no-of-permits.maximum-authorised.browser.title';
         $data['question'] = 'permits.page.multilateral.no-of-permits.maximum-authorised.question';
@@ -240,14 +234,18 @@ class NoOfPermits
 
 
     /**
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @SuppressWarnings (PHPMD.UnusedFormalParameter)
+     *
+     * @return ((string|true)[]|mixed|string)[]
+     *
+     * @psalm-return array{browserTitle: 'permits.page.multilateral.no-of-permits.browser.title', question: 'permits.page.multilateral.no-of-permits.question', guidance?: array{value: string, disableHtmlEscape: true}|mixed,...}
      */
     protected function postProcessData(
         array $data,
-        $irhpApplicationDataKey,
-        $feePerPermitDataKey,
-        $maxPermitsByStockDataKey
-    ) {
+        string $irhpApplicationDataKey,
+        string $feePerPermitDataKey,
+        string $maxPermitsByStockDataKey
+    ): array {
         $data['browserTitle'] = 'permits.page.multilateral.no-of-permits.browser.title';
         $data['question'] = 'permits.page.multilateral.no-of-permits.question';
 
@@ -308,7 +306,7 @@ class NoOfPermits
         return $guidanceLines;
     }
 
-    protected function alterSubmitFieldsetOnMaxAllowable(Fieldset $submitFieldset)
+    protected function alterSubmitFieldsetOnMaxAllowable(Fieldset $submitFieldset): void
     {
         $submitFieldset->remove('SubmitButton');
     }

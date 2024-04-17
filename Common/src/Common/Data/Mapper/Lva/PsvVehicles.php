@@ -19,6 +19,11 @@ use Laminas\Form\Form;
  */
 class PsvVehicles implements MapperInterface
 {
+    /**
+     * @return (mixed|null|string)[][]
+     *
+     * @psalm-return array{data: array{version: mixed, hasEnteredReg: 'Y'|mixed}, shareInfo: array{shareInfo: mixed|null}}
+     */
     public static function mapFromResult(array $data)
     {
         return [

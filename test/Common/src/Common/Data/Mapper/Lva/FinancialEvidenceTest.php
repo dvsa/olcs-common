@@ -20,7 +20,12 @@ class FinancialEvidenceTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, FinancialEvidence::mapFromResult($input));
     }
 
-    public function mapFromResultProvider()
+    /**
+     * @return ((int|null)[]|int|null)[][][]
+     *
+     * @psalm-return list{list{array{financialEvidenceUploaded: 1, id: 1, version: 2}, array{id: 1, version: 2, evidence: array{uploadNowRadio: 1, uploadLaterRadio: null, sendByPostRadio: null}}}, list{array{financialEvidenceUploaded: 2, id: 1, version: 2}, array{id: 1, version: 2, evidence: array{uploadNowRadio: null, uploadLaterRadio: 2, sendByPostRadio: null}}}, list{array{financialEvidenceUploaded: 0, id: 1, version: 2}, array{id: 1, version: 2, evidence: array{uploadNowRadio: null, uploadLaterRadio: null, sendByPostRadio: 0}}}, list{array{financialEvidenceUploaded: null, id: 1, version: 2}, array{id: 1, version: 2, evidence: array{uploadNowRadio: 1, uploadLaterRadio: null, sendByPostRadio: null}}}}
+     */
+    public function mapFromResultProvider(): array
     {
         return [
             [
@@ -98,7 +103,12 @@ class FinancialEvidenceTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, FinancialEvidence::mapFromPost($input));
     }
 
-    public function mapFromPostProvider()
+    /**
+     * @return (int|null|string|string[][])[][][][]
+     *
+     * @psalm-return list{list{array{evidence: array{uploadNow: 1, files: array{list: list{'foo'}}, bar: 'cake'}}, array{evidence: array{uploadNowRadio: 1, uploadLaterRadio: null, sendByPostRadio: null, uploadedFileCount: 1, uploadNow: 1, files: array{list: list{'foo'}}, bar: 'cake'}}}, list{array{evidence: array{uploadNow: 2, files: array{list: list{'foo'}}, bar: 'cake'}}, array{evidence: array{uploadNowRadio: null, uploadLaterRadio: 2, sendByPostRadio: null, uploadedFileCount: 1, uploadNow: 2, files: array{list: list{'foo'}}, bar: 'cake'}}}, list{array{evidence: array{uploadNow: 0, files: array{list: list{'foo'}}, bar: 'cake'}}, array{evidence: array{uploadNowRadio: null, uploadLaterRadio: null, sendByPostRadio: 0, uploadedFileCount: 1, uploadNow: 0, files: array{list: list{'foo'}}, bar: 'cake'}}}, list{array<never, never>, array<never, never>}}
+     */
+    public function mapFromPostProvider(): array
     {
         return [
             [
@@ -200,7 +210,12 @@ class FinancialEvidenceTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, FinancialEvidence::mapFromForm($input));
     }
 
-    public function mapFromFormProvider()
+    /**
+     * @return ((int|null)[]|int)[][][]
+     *
+     * @psalm-return list{list{array{id: 1, version: 2, evidence: array{uploadNowRadio: 1, uploadLaterRadio: null, sendByPost: null}}, array{id: 1, version: 2, financialEvidenceUploaded: 1}}, list{array{id: 1, version: 2, evidence: array{uploadNowRadio: null, uploadLaterRadio: 2, sendByPost: null}}, array{id: 1, version: 2, financialEvidenceUploaded: 2}}, list{array{id: 1, version: 2, evidence: array{uploadNowRadio: null, uploadLaterRadio: null, sendByPost: 0}}, array{id: 1, version: 2, financialEvidenceUploaded: 0}}}
+     */
+    public function mapFromFormProvider(): array
     {
         return [
             [

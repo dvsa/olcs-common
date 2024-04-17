@@ -31,6 +31,11 @@ class CommunityLicence implements MapperInterface
         return $mappedData[$formData['communityLicenceDocument']['communityLicenceDocument']];
     }
 
+    /**
+     * @return (array|string)[][]
+     *
+     * @psalm-return array{communityLicenceDocument?: array{communityLicenceDocument: 'lost'|'possession'|'stolen', stolenContent?: array{details: mixed}, lostContent?: array{details: mixed}}}
+     */
     public static function mapFromResult(array $data)
     {
         $licenceDocumentStatus = $data["communityLicenceDocumentStatus"]["id"] ?? null;

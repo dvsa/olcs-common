@@ -14,11 +14,8 @@ use LmcRbacMvc\Service\AuthorizationService;
  */
 class SearchLicenceCaseCount implements FormatterPluginManagerInterface
 {
-    private AuthorizationService $authService;
-
-    public function __construct(AuthorizationService $authService)
+    public function __construct(private AuthorizationService $authService)
     {
-        $this->authService = $authService;
     }
 
     /**

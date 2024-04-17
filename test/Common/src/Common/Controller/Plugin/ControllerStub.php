@@ -13,14 +13,11 @@ use Laminas\View\Model\ViewModel;
  */
 class ControllerStub extends LaminasAbstractActionController
 {
-    protected Placeholder $placeholder;
-
-    public function __construct(Placeholder $placeholder)
+    public function __construct(protected Placeholder $placeholder)
     {
-        $this->placeholder = $placeholder;
     }
 
-    public function getPlaceholder()
+    public function getPlaceholder(): Placeholder
     {
         return $this->placeholder;
     }

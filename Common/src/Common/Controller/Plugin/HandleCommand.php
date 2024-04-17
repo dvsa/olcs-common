@@ -16,22 +16,10 @@ use Laminas\Mvc\Controller\Plugin\AbstractPlugin;
 class HandleCommand extends AbstractPlugin
 {
     /**
-     * @var CommandSender
-     */
-    private $commandSender;
-
-    /**
-     * @var FlashMessengerHelperService
-     */
-    private $fm;
-
-    /**
      * @param CommandSender $commandService
      */
-    public function __construct(CommandSender $sender, FlashMessengerHelperService $fm)
+    public function __construct(private CommandSender $commandSender, private FlashMessengerHelperService $fm)
     {
-        $this->commandSender = $sender;
-        $this->fm = $fm;
     }
 
     /**
@@ -41,7 +29,7 @@ class HandleCommand extends AbstractPlugin
     {
         try {
             return $this->commandSender->send($command);
-        } catch (ResourceConflictException $resourceConflictException) {
+        } catch (ResourceConflictException) {
             $this->fm->addConflictError();
             throw new BailOutException('', $this->getController()->redirect()->refresh());
         }

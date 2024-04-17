@@ -26,7 +26,12 @@ class FormItemTest extends \PHPUnit\Framework\TestCase
         static::assertSame($expect, $sut->render($element));
     }
 
-    public function dpTestRender()
+    /**
+     * @return (Elements\InputFilters\ActionButton|Elements\Types\AttachFilesButton|\Laminas\Form\Element|\Laminas\Form\Element\Button|\Laminas\Form\Element\Hidden|\Laminas\Form\Element\Submit|string)[][]
+     *
+     * @psalm-return array{common: array{element: \Laminas\Form\Element, expect: 'foo&lt;br /&gt;'}, 'common;htmlEscapeOff': array{element: \Laminas\Form\Element, expect: 'foo<br />'}, ActionButton: array{element: Elements\InputFilters\ActionButton, expect: ''}, AttachFilesButton: array{element: Elements\Types\AttachFilesButton, expect: ''}, Button: array{element: \Laminas\Form\Element\Button, expect: ''}, 'input:submit': array{element: \Laminas\Form\Element\Submit, expect: ''}, 'input:hidden': array{element: \Laminas\Form\Element\Hidden, expect: ''}}
+     */
+    public function dpTestRender(): array
     {
         return [
             'common' => [

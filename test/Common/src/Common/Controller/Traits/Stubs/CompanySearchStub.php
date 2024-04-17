@@ -14,7 +14,7 @@ class CompanySearchStub
 
     public $stubResponse;
 
-    public function handleQuery($dto)
+    public function handleQuery(\Dvsa\Olcs\Transfer\Query\CompaniesHouse\ByNumber $dto)
     {
         $this->stubResponse->dto = $dto;
         return $this->stubResponse;

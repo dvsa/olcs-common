@@ -140,7 +140,12 @@ class QaFormTest extends MockeryTestCase
         );
     }
 
-    public function dpIsValidParentReturnsTrueWithHandler()
+    /**
+     * @return bool[][]
+     *
+     * @psalm-return list{list{true}, list{false}}
+     */
+    public function dpIsValidParentReturnsTrueWithHandler(): array
     {
         return [
             [true],

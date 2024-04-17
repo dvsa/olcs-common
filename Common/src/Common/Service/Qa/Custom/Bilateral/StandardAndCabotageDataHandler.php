@@ -8,29 +8,14 @@ use Common\Service\Qa\DataHandlerInterface;
 
 class StandardAndCabotageDataHandler implements DataHandlerInterface
 {
-    /** @var StandardAndCabotageSubmittedAnswerGenerator */
-    private $standardAndCabotageSubmittedAnswerGenerator;
-
-    /** @var StandardAndCabotageIsValidHandler */
-    private $standardAndCabotageIsValidHandler;
-
-    /** @var WarningAdder */
-    private $warningAdder;
-
     /**
      * Create service instance
      *
      *
      * @return StandardAndCabotageDataHandler
      */
-    public function __construct(
-        StandardAndCabotageSubmittedAnswerGenerator $standardAndCabotageSubmittedAnswerGenerator,
-        StandardAndCabotageIsValidHandler $standardAndCabotageIsValidHandler,
-        WarningAdder $warningAdder
-    ) {
-        $this->standardAndCabotageSubmittedAnswerGenerator = $standardAndCabotageSubmittedAnswerGenerator;
-        $this->standardAndCabotageIsValidHandler = $standardAndCabotageIsValidHandler;
-        $this->warningAdder = $warningAdder;
+    public function __construct(private StandardAndCabotageSubmittedAnswerGenerator $standardAndCabotageSubmittedAnswerGenerator, private StandardAndCabotageIsValidHandler $standardAndCabotageIsValidHandler, private WarningAdder $warningAdder)
+    {
     }
 
     /**

@@ -15,6 +15,10 @@ class FinancialHistoryTextarea extends LaminasElement implements InputProviderIn
 {
     /**
      * Provide default input rules for this element.
+     *
+     * @return ((Validator\NotEmpty|\Dvsa\Olcs\Transfer\Validators\FhAdditionalInfo)[]|null|string|true)[]
+     *
+     * @psalm-return array{name: null|string, required: true, validators: list{Validator\NotEmpty, \Dvsa\Olcs\Transfer\Validators\FhAdditionalInfo}}
      */
     public function getInputSpecification(): array
     {

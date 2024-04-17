@@ -7,24 +7,14 @@ use Laminas\Form\Fieldset;
 
 class RestrictedCountriesFieldsetPopulator implements FieldsetPopulatorInterface
 {
-    /** @var YesNoRadioFactory */
-    private $yesNoRadioFactory;
-
-    /** @var RestrictedCountriesMultiCheckboxFactory */
-    private $restrictedCountriesMultiCheckboxFactory;
-
     /**
      * Create service instance
      *
      *
      * @return RestrictedCountriesFieldsetPopulator
      */
-    public function __construct(
-        YesNoRadioFactory $yesNoRadioFactory,
-        RestrictedCountriesMultiCheckboxFactory $restrictedCountriesMultiCheckboxFactory
-    ) {
-        $this->yesNoRadioFactory = $yesNoRadioFactory;
-        $this->restrictedCountriesMultiCheckboxFactory = $restrictedCountriesMultiCheckboxFactory;
+    public function __construct(private YesNoRadioFactory $yesNoRadioFactory, private RestrictedCountriesMultiCheckboxFactory $restrictedCountriesMultiCheckboxFactory)
+    {
     }
 
     /**

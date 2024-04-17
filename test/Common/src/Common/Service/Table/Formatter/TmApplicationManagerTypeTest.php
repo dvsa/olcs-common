@@ -87,7 +87,12 @@ class TmApplicationManagerTypeTest extends MockeryTestCase
         $this->assertEquals($expected, $this->sut->format($data, []));
     }
 
-    public function formatProvider()
+    /**
+     * @return ((int|string|string[])[]|string)[][]
+     *
+     * @psalm-return list{list{array{id: 1, action: 'A', tmType: array{description: 'desc1'}}, 'tm_application.table.status.new', 'status new', '<a class="govuk-link" href="url">desc1 status new</a>'}, list{array{id: 1, action: 'U', tmType: array{description: 'desc2'}}, 'tm_application.table.status.updated', 'status updated', '<a class="govuk-link" href="url">desc2 status updated</a>'}, list{array{id: 1, action: 'D', tmType: array{description: 'desc3'}}, 'tm_application.table.status.removed', 'status removed', 'desc3 status removed'}, list{array{id: 1, action: '', tmType: array{description: 'desc4'}}, '', '', '<a class="govuk-link" href="url">desc4</a>'}}
+     */
+    public function formatProvider(): array
     {
         return [
             [

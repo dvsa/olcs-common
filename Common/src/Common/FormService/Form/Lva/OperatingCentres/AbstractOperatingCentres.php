@@ -219,7 +219,7 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
     /**
      * @param $form
      */
-    protected function disableVehicleClassifications($form)
+    protected function disableVehicleClassifications(Form $form): void
     {
         $this->formHelper->remove($form, 'data->totAuthLgvVehiclesFieldset');
         $totAuthHgvVehiclesFieldset = $form->get('data')->get('totAuthHgvVehiclesFieldset');

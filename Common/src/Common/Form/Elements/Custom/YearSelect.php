@@ -58,10 +58,9 @@ class YearSelect extends LaminasElement\Select
     }
 
     /**
-     * @param  int $minYear
-     * @return MonthSelect
+     * @param int $minYear
      */
-    public function setMinYear($minYear)
+    public function setMinYear($minYear): static
     {
         $this->minYear = $minYear;
         return $this;
@@ -76,10 +75,9 @@ class YearSelect extends LaminasElement\Select
     }
 
     /**
-     * @param  int $maxYear
-     * @return MonthSelect
+     * @param int $maxYear
      */
-    public function setMaxYear($maxYear)
+    public function setMaxYear($maxYear): static
     {
         $this->maxYear = $maxYear;
         return $this;

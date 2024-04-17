@@ -12,17 +12,11 @@ use LmcRbacMvc\Service\AuthorizationService;
  */
 class PsvDiscs extends AbstractLvaFormService
 {
-    protected FormHelperService $formHelper;
-
-    protected AuthorizationService $authService;
-
-    public function __construct(FormHelperService $formHelper, AuthorizationService $authService)
+    public function __construct(protected FormHelperService $formHelper, protected AuthorizationService $authService)
     {
-        $this->formHelper = $formHelper;
-        $this->authService = $authService;
     }
 
-    public function getForm()
+    public function getForm(): \Common\Form\Form
     {
         $form = $this->formHelper->createForm('Lva\PsvDiscs');
 

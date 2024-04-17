@@ -69,7 +69,12 @@ class DynamicMultiCheckboxTest extends MockeryTestCase
         $this->assertEquals($expected, $sut->getValue());
     }
 
-    public function provideSetValue()
+    /**
+     * @return (string|string[])[][]
+     *
+     * @psalm-return list{list{'test', 'test'}, list{list{'test', 'test2'}, list{'test', 'test2'}}, list{array{id: 'test', desc: 'Test Item'}, 'test'}}
+     */
+    public function provideSetValue(): array
     {
         return [
             ['test', 'test'],

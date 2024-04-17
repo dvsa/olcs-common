@@ -131,7 +131,12 @@ class DynamicSelectTest extends TestCase
         $this->assertEquals($expected, $this->sut->getValue());
     }
 
-    public function provideSetValue()
+    /**
+     * @return ((string|string[])[]|null|string|true)[][]
+     *
+     * @psalm-return list{list{'test', 'test'}, list{list{'test', 'test2'}, list{'test', 'test2'}}, list{array{id: 'test', desc: 'Test Item'}, 'test'}, list{array<never, never>, null}, list{list{array{id: 'test', desc: 'Test Item'}, list{'test2'}}, list{'test', list{'test2'}}, true}, list{list{array{id: 'test', desc: 'Test Item'}, array{id: 'test2', desc: 'Test Item'}}, list{'test', 'test2'}, true}}
+     */
+    public function provideSetValue(): array
     {
         return [
             ['test', 'test'],

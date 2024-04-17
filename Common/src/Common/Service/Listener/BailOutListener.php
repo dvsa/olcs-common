@@ -25,6 +25,9 @@ class BailOutListener implements ListenerAggregateInterface
         $events->attach(MvcEvent::EVENT_DISPATCH_ERROR, [$this, 'onDispatchError'], $priority);
     }
 
+    /**
+     * @return MvcEvent|null
+     */
     public function onDispatchError(MvcEvent $e)
     {
         $exception = $e->getParam('exception');

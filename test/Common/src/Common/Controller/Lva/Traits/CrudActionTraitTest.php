@@ -50,7 +50,12 @@ class CrudActionTraitTest extends MockeryTestCase
         $this->assertEquals($expected, $this->sut->callGetActionFromCrudAction($input));
     }
 
-    public function providerGetCrudAction()
+    /**
+     * @return ((string|string[])[]|null)[][]
+     *
+     * @psalm-return list{list{array<never, never>, null}, list{list{array{foo: 'bar'}}, null}, list{list{array{action: 'bar'}}, array{action: 'bar'}}, list{list{array{action: 'bar'}, array{action: 'foo'}}, array{action: 'bar'}}, list{list{array{foo: 'bar'}, array{action: 'foo'}}, array{action: 'foo'}}}
+     */
+    public function providerGetCrudAction(): array
     {
         return [
             [
@@ -98,7 +103,12 @@ class CrudActionTraitTest extends MockeryTestCase
         ];
     }
 
-    public function providerGetActionFromCrudAction()
+    /**
+     * @return ((int[]|string)[]|string)[][]
+     *
+     * @psalm-return list{list{array{action: 'BAR'}, 'bar'}, list{array{action: array{BAR: 1}}, 'bar'}}
+     */
+    public function providerGetActionFromCrudAction(): array
     {
         return [
             [
@@ -143,7 +153,12 @@ class CrudActionTraitTest extends MockeryTestCase
         self::assertEquals('RESPONSE', $response);
     }
 
-    public function dpTestHandleCrudAction()
+    /**
+     * @return (((int|string[])[]|int|string)[]|null|string)[][]
+     *
+     * @psalm-return list{array{route: null, data: array{id: 9999, action: 'add'}, childIdPrmName: null, baseRoute: null, expectRoute: null, expectRouteParams: array{action: 'add'}}, array{route: 'foo/bar', data: array{id: 9999, action: 'edit'}, childIdPrmName: 'some_other_id', baseRoute: null, expectRoute: 'foo/bar', expectRouteParams: array{action: 'edit', some_other_id: 9999}}, array{route: null, data: array{id: list{9999, 222}, action: 'edit'}, childIdPrmName: null, baseRoute: null, expectRoute: null, expectRouteParams: array{action: 'edit', child_id: '9999,222'}}, array{route: null, data: array{action: array{edit: array{9999: 'foo'}}}, childIdPrmName: null, baseRoute: null, expectRoute: null, expectRouteParams: array{action: 'edit', child_id: 9999}}, array{route: null, data: array{action: 'add'}, childIdPrmName: null, baseRoute: 'unit_BaseRoute', expectRoute: 'unit_BaseRoute/action', expectRouteParams: array{action: 'add'}}}
+     */
+    public function dpTestHandleCrudAction(): array
     {
         return [
             //  test WithIdWhenNotRequired
@@ -255,7 +270,12 @@ class CrudActionTraitTest extends MockeryTestCase
         static::assertEquals($expect, $this->sut->callGetBaseRoute());
     }
 
-    public function dpTestGetBaseRoute()
+    /**
+     * @return (null|string)[][]
+     *
+     * @psalm-return list{array{baseRoute: null, lva: null, expect: null}, array{baseRoute: '', lva: null, expect: null}, array{baseRoute: 'unit base %s route', lva: 'unit_Lva', expect: 'unit base unit_Lva route'}, array{baseRoute: 'unit_BaseRoute', lva: null, expect: 'unit_BaseRoute'}}
+     */
+    public function dpTestGetBaseRoute(): array
     {
         return [
             [

@@ -12,6 +12,7 @@ use Common\Service\Cqrs\Query\QuerySender;
 use Common\Test\MocksServicesTrait;
 use Dvsa\Olcs\Transfer\Service\CacheEncryption;
 use Laminas\Authentication\Storage\Session;
+use Laminas\ServiceManager\ServiceManager;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
@@ -19,10 +20,7 @@ class JWTIdentityProviderFactoryTest extends MockeryTestCase
 {
     use MocksServicesTrait;
 
-    /**
-     * @var JWTIdentityProviderFactory
-     */
-    protected $sut;
+    protected JWTIdentityProviderFactory $sut;
 
     protected function setUp(): void
     {
@@ -80,16 +78,18 @@ class JWTIdentityProviderFactoryTest extends MockeryTestCase
         $this->sut = new JWTIdentityProviderFactory();
     }
 
-    protected function setUpDefaultServices()
+    protected function setUpDefaultServices(ServiceManager $serviceManager): ServiceManager
     {
-        $this->serviceManager->setService('QuerySender', $this->setUpMockService(QuerySender::class));
-        $this->serviceManager->setService(CacheEncryption::class, $this->setUpMockService(CacheEncryption::class));
+        $serviceManager->setService('QuerySender', $this->setUpMockService(QuerySender::class));
+        $serviceManager->setService(CacheEncryption::class, $this->setUpMockService(CacheEncryption::class));
         $this->config();
-        $this->serviceManager->setService(RefreshTokenService::class, $this->setUpMockService(RefreshTokenService::class));
-        $this->serviceManager->setService(Session::class, $this->setUpMockService(Session::class));
+        $serviceManager->setService(RefreshTokenService::class, $this->setUpMockService(RefreshTokenService::class));
+        $serviceManager->setService(Session::class, $this->setUpMockService(Session::class));
+
+        return $serviceManager;
     }
 
-    protected function config(array $config = [])
+    protected function config(array $config = []): void
     {
         $this->serviceManager->setService('config', $config);
     }

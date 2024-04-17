@@ -12,12 +12,6 @@ class DateBeforeValidator extends AbstractValidator
 {
     public const ERR_DATE_NOT_BEFORE = 'date_not_before';
 
-    /** @var DateFormat */
-    private $dateFormat;
-
-    /** @var DateTimeFactory */
-    private $dateTimeFactory;
-
     /** @var array */
     protected $messageTemplates = [
         self::ERR_DATE_NOT_BEFORE => 'Date is too far away'
@@ -34,11 +28,8 @@ class DateBeforeValidator extends AbstractValidator
      *
      * @return DateBeforeValidator
      */
-    public function __construct(DateFormat $dateFormat, DateTimeFactory $dateTimeFactory, array $options)
+    public function __construct(private DateFormat $dateFormat, private DateTimeFactory $dateTimeFactory, array $options)
     {
-        $this->dateFormat = $dateFormat;
-        $this->dateTimeFactory = $dateTimeFactory;
-
         parent::__construct($options);
     }
 

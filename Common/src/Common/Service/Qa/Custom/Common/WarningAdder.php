@@ -9,22 +9,14 @@ class WarningAdder
 {
     public const DEFAULT_PRIORITY = 10;
 
-    /** @var Partial */
-    private $partial;
-
-    /** @var HtmlAdder */
-    private $htmlAdder;
-
     /**
      * Create service instance
      *
      *
      * @return WarningAdder
      */
-    public function __construct(Partial $partial, HtmlAdder $htmlAdder)
+    public function __construct(private Partial $partial, private HtmlAdder $htmlAdder)
     {
-        $this->partial = $partial;
-        $this->htmlAdder = $htmlAdder;
     }
 
     /**

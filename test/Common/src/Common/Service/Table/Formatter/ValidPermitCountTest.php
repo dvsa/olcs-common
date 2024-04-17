@@ -29,7 +29,12 @@ class ValidPermitCountTest extends MockeryTestCase
         );
     }
 
-    public function dpFormat()
+    /**
+     * @return int[][]
+     *
+     * @psalm-return list{list{1, 7}, list{2, 7}, list{3, 7}, list{4, 7}, list{5, 7}, list{6, 1}, list{7, 1}}
+     */
+    public function dpFormat(): array
     {
         return [
             [RefData::ECMT_PERMIT_TYPE_ID, 7],

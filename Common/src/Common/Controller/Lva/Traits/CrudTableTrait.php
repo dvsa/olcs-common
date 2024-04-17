@@ -2,6 +2,7 @@
 
 namespace Common\Controller\Lva\Traits;
 
+use Common\View\Model\Section;
 use Laminas\Http\Response;
 use Olcs\View\Model\ViewModel;
 
@@ -21,7 +22,7 @@ trait CrudTableTrait
      * @param string $prefix  if our actions aren't just 'add', 'edit', provide a prefix
      * @param array  $options options to pass to assemble the route, eg ['fragment' => 'hash-ref']
      *
-     * @return \Laminas\Http\Response
+     * @return Response
      */
     protected function handlePostSave($prefix = null, $options = [])
     {
@@ -52,11 +53,9 @@ trait CrudTableTrait
      * Generic delete functionality; usually does the trick but
      * can be overridden if not
      *
-     * @return \Laminas\Http\Response
-     *
      * @psalm-suppress all
      */
-    public function deleteAction()
+    public function deleteAction(): Section|Response
     {
         /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();

@@ -59,23 +59,13 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         'application' => CommandDto\Application\CreatePsvVehicle::class
     ];
 
-    protected UrlHelperService $urlHelper;
-
-    protected ScriptFactory $scriptFactory;
-
     protected FormServiceManager $formServiceManager;
 
     protected FormHelperService $formHelper;
 
     protected FlashMessengerHelperService $flashMessengerHelper;
 
-    protected ResponseHelperService $responseHelper;
-
-    protected TableFactory $tableFactory;
-
     protected TranslationHelperService $translationHelper;
-
-    protected GuidanceHelperService $guidanceHelper;
 
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
@@ -83,22 +73,17 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         FormHelperService $formHelper,
         FormServiceManager $formServiceManager,
         FlashMessengerHelperService $flashMessengerHelper,
-        ScriptFactory $scriptFactory,
-        UrlHelperService $urlHelper,
-        ResponseHelperService $responseHelper,
-        TableFactory $tableFactory,
+        protected ScriptFactory $scriptFactory,
+        protected UrlHelperService $urlHelper,
+        protected ResponseHelperService $responseHelper,
+        protected TableFactory $tableFactory,
         TranslationHelperService $translationHelper,
-        GuidanceHelperService $guidanceHelper
+        protected GuidanceHelperService $guidanceHelper
     ) {
-        $this->urlHelper = $urlHelper;
-        $this->scriptFactory = $scriptFactory;
         $this->formServiceManager = $formServiceManager;
         $this->formHelper = $formHelper;
         $this->flashMessengerHelper = $flashMessengerHelper;
-        $this->responseHelper = $responseHelper;
-        $this->tableFactory = $tableFactory;
         $this->translationHelper = $translationHelper;
-        $this->guidanceHelper = $guidanceHelper;
         parent::__construct($niTextTranslationUtil, $authService);
     }
 
@@ -486,7 +471,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     /**
      * Remove vehicle size tables based on OC data
      *
-     * @param FormInterface $form          Form
+     * @param Form $form Form
      * @param array         $resultData    Api data
      * @param boolean       $removeActions Is need to remove actions
      *
@@ -699,7 +684,12 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         return $filters;
     }
 
-    protected function getScripts()
+    /**
+     * @return string[]
+     *
+     * @psalm-return list{'lva-crud', 'vehicle-psv'}
+     */
+    protected function getScripts(): array
     {
         return ['lva-crud', 'vehicle-psv'];
     }

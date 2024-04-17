@@ -130,7 +130,7 @@ trait DynamicTrait
         return $this->serviceName;
     }
 
-    public function setDataService($dataService)
+    public function setDataService($dataService): self
     {
         $this->dataService = $dataService;
         return $this;
@@ -138,9 +138,8 @@ trait DynamicTrait
 
     /**
      * @throws \Exception If service doesn't implement ListData
-     * @return \Common\Service\Data\Interfaces\ListData
      */
-    public function getDataService()
+    public function getDataService(): ListData
     {
         if (is_null($this->dataService)) {
             $this->dataService = $this->dataServiceManager->get($this->getServiceName());
@@ -162,48 +161,28 @@ trait DynamicTrait
         return $this->serviceLocator;
     }
 
-    /**
-     * @return $this
-     */
-    public function setExclude(array $exclude)
+    public function setExclude(array $exclude): self
     {
         $this->exclude = $exclude;
         return $this;
     }
 
-    /**
-     * @return array
-     */
-    public function getExclude()
+    public function getExclude(): array
     {
         return $this->exclude;
     }
 
-    /**
-     * Get extra options
-     *
-     * @return mixed
-     */
-    public function getExtraOption()
+    public function getExtraOption(): mixed
     {
         return $this->extraOption;
     }
 
-    /**
-     * Set extra options to appear in the drop down (eg 'unassigned' => 'Unassigned')
-     *
-     * @param array $extraOption
-     */
-    public function setExtraOption($extraOption): void
+    public function setExtraOption(array $extraOption): void
     {
         $this->extraOption = $extraOption;
     }
 
-    /**
-     * @param array|\Traversable $options
-     * @return $this
-     */
-    public function setOptions($options)
+    public function setOptions(iterable $options): self
     {
         parent::setOptions($options);
 
@@ -263,14 +242,7 @@ trait DynamicTrait
         return $this->valueOptions;
     }
 
-    /**
-     * Sets the value, if an array is passed in with an id key it assumes it's a ref_data entity and sets the value
-     * to be equal to the id
-     *
-     * @param mixed $value
-     * @return \Laminas\Form\Element
-     */
-    public function setValue($value)
+    public function setValue(mixed $value): self
     {
         if ($value === []) {
             $value = null;

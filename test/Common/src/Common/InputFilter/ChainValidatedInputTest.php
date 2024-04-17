@@ -1307,10 +1307,7 @@ class ChainValidatedInputTest extends MockeryTestCase
         $this->assertEquals(2, $result);
     }
 
-    /**
-     * @param mixed $name
-     */
-    protected function setUpSut($name = null)
+    protected function setUpSut(mixed $name = null): void
     {
         $this->sut = new ChainValidatedInput($name ?? static::AN_INPUT_NAME);
     }
@@ -1345,11 +1342,8 @@ class ChainValidatedInputTest extends MockeryTestCase
     protected function errorMessageObjectThatCastsToAString(string $errorMessage): object
     {
         return new class ($errorMessage) {
-            private $val;
-
-            public function __construct(string $val)
+            public function __construct(private string $val)
             {
-                $this->val = $val;
             }
 
             public function __toString()
@@ -1359,10 +1353,7 @@ class ChainValidatedInputTest extends MockeryTestCase
         };
     }
 
-    /**
-     * @param mixed $val
-     */
-    protected function filterChainThatConvertsAllValuesTo($val): FilterChain
+    protected function filterChainThatConvertsAllValuesTo(mixed $val): FilterChain
     {
         $filterChain = new FilterChain();
         $filterChain->attach(static fn() => $val);

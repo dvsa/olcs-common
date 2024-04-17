@@ -20,63 +20,45 @@ class HoursOfWork extends AbstractSection implements TransportManagerSectionInte
 
     private $hoursSun;
 
-    /**
-     * @param mixed $hoursMon
-     */
-    public function setHoursMon($hoursMon): void
+    public function setHoursMon(mixed $hoursMon): void
     {
         $this->hoursMon = $hoursMon;
     }
 
-    /**
-     * @param mixed $hoursTue
-     */
-    public function setHoursTue($hoursTue): void
+    public function setHoursTue(mixed $hoursTue): void
     {
         $this->hoursTue = $hoursTue;
     }
 
-    /**
-     * @param mixed $hoursWed
-     */
-    public function setHoursWed($hoursWed): void
+    public function setHoursWed(mixed $hoursWed): void
     {
         $this->hoursWed = $hoursWed;
     }
 
-    /**
-     * @param mixed $hoursThu
-     */
-    public function setHoursThu($hoursThu): void
+    public function setHoursThu(mixed $hoursThu): void
     {
         $this->hoursThu = $hoursThu;
     }
 
-    /**
-     * @param mixed $hoursFri
-     */
-    public function setHoursFri($hoursFri): void
+    public function setHoursFri(mixed $hoursFri): void
     {
         $this->hoursFri = $hoursFri;
     }
 
-    /**
-     * @param mixed $hoursSat
-     */
-    public function setHoursSat($hoursSat): void
+    public function setHoursSat(mixed $hoursSat): void
     {
         $this->hoursSat = $hoursSat;
     }
 
-    /**
-     * @param mixed $hoursSun
-     */
-    public function setHoursSun($hoursSun): void
+    public function setHoursSun(mixed $hoursSun): void
     {
         $this->hoursSun = $hoursSun;
     }
 
 
+    /**
+     * @return static
+     */
     public function populate(array $transportManagerApplication)
     {
         $properties = array_keys(get_object_vars($this));

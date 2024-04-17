@@ -252,7 +252,12 @@ class DetailsTest extends MockeryTestCase
         $this->mockTranslator = null;
     }
 
-    public function dpLgvOnlyApplication()
+    /**
+     * @return string[][]
+     *
+     * @psalm-return array{'with LGV AR ref number': array{lgvAcquiredRightsReferenceNumber: 'ABC1234', expected: 'ABC1234'}, 'without LGV AR ref number': array{lgvAcquiredRightsReferenceNumber: '', expected: 'lva-tmverify-details-checkanswer-lgvAcquiredRightsReferenceNumberNotProvided'}}
+     */
+    public function dpLgvOnlyApplication(): array
     {
         return [
             'with LGV AR ref number' => [

@@ -36,7 +36,7 @@ class SubmitButtonTest extends MockeryTestCase
         $this->assertEquals(Button::SUBMIT, $this->sut->getAttribute(static::TYPE_ATTRIBUTE));
     }
 
-    protected function setUpSut(...$args)
+    protected function setUpSut(...$args): void
     {
         $this->sut = new SubmitButton(...$args);
     }

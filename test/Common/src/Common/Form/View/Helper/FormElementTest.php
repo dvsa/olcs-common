@@ -37,9 +37,14 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
      */
     protected $element;
 
-    private function prepareElement($type = 'Text', $options = []): void
+    /**
+     * @param (mixed|string)[] $options
+     *
+     * @psalm-param array{route?: 'route', 'hint-below'?: 'HINT BELOW'|mixed, 'hint-class'?: mixed, 'hint-below-class'?: mixed} $options
+     */
+    private function prepareElement(string $type = 'Text', array $options = []): void
     {
-        if (strpos($type, '\\') === false) {
+        if (!str_contains($type, '\\')) {
             $type = '\Laminas\Form\Element\\' . ucfirst($type);
         }
 
@@ -557,7 +562,7 @@ class FormElementTest extends m\Adapter\Phpunit\MockeryTestCase
         );
     }
 
-    private function prepareViewHelper($translateMap = null)
+    private function prepareViewHelper(array|null $translateMap = null): FormElement
     {
         $translator = new DummyTranslator();
         if (!is_null($translateMap)) {

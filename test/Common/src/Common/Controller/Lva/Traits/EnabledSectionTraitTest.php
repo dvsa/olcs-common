@@ -66,7 +66,12 @@ class EnabledSectionTraitTest extends MockeryTestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function setEnabledAndCompleteProvider()
+    /**
+     * @return (((string|string[])[]|bool|string)[]|int)[][][]
+     *
+     * @psalm-return array{'single prerequisite, 1 complete': list{array{type_of_licence: array<never, never>, business_type: array{prerequisite: 'type_of_licence'}}, array{typeOfLicenceStatus: 2, businessTypeStatus: 0}, array{type_of_licence: array{enabled: true, complete: true}, business_type: array{enabled: true, complete: false}}}, 'multiple prerequisites': list{array{type_of_licence: array<never, never>, business_type: array<never, never>, business_details: array{prerequisite: list{'type_of_licence', 'business_type'}}}, array{typeOfLicenceStatus: 2, businessTypeStatus: 2, businessDetails: 1}, array{type_of_licence: array{enabled: true, complete: true}, business_type: array{enabled: true, complete: true}, business_details: array{enabled: true, complete: false}}}, 'inaccessible prerequisite': list{array{type_of_licence: array<never, never>, business_type: array<never, never>, business_details: array{prerequisite: 'foo'}}, array{typeOfLicenceStatus: 2, businessTypeStatus: 2, businessDetails: 1}, array{type_of_licence: array{enabled: true, complete: true}, business_type: array{enabled: true, complete: true}, business_details: array{enabled: true, complete: false}}}, 'multiple inaccessible prerequisites': list{array{type_of_licence: array<never, never>, business_type: array<never, never>, business_details: array{prerequisite: list{list{'foo', 'bar'}}}}, array{typeOfLicenceStatus: 2, businessTypeStatus: 2, businessDetails: 1}, array{type_of_licence: array{enabled: true, complete: true}, business_type: array{enabled: true, complete: true}, business_details: array{enabled: true, complete: false}}}}
+     */
+    public function setEnabledAndCompleteProvider(): array
     {
         return [
             'single prerequisite, 1 complete' => [

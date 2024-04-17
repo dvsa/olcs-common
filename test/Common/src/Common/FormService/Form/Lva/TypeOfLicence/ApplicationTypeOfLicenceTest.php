@@ -125,8 +125,12 @@ class ApplicationTypeOfLicenceTest extends MockeryTestCase
 
     /**
      * Lock operator location provider
+     *
+     * @return string[][]
+     *
+     * @psalm-return list{list{'alternative-operator-location-lock-message-ni', 'NI', 'Y'}, list{'alternative-operator-location-lock-message-gb', 'GB', 'N'}}
      */
-    public function lockOperatorLocationProvider()
+    public function lockOperatorLocationProvider(): array
     {
         return [
             ['alternative-operator-location-lock-message-ni', 'NI', 'Y'],
@@ -245,7 +249,12 @@ class ApplicationTypeOfLicenceTest extends MockeryTestCase
         $this->sut->maybeAlterFormForGoodsStandardInternational($form);
     }
 
-    public function dpMaybeAlterFormForGoodsStandardInternationalNoChange()
+    /**
+     * @return string[][]
+     *
+     * @psalm-return array{'ni, psv, standard international, lgv': list{'Y', 'lcat_psv', 'ltyp_si', 'app_veh_type_lgv'}, 'ni, goods, standard international, lgv': list{'Y', 'lcat_gv', 'ltyp_si', 'app_veh_type_lgv'}, 'gb, goods, standard international, lgv': list{'N', 'lcat_gv', 'ltyp_si', 'app_veh_type_lgv'}}
+     */
+    public function dpMaybeAlterFormForGoodsStandardInternationalNoChange(): array
     {
         return [
             'ni, psv, standard international, lgv' => [
@@ -353,7 +362,12 @@ class ApplicationTypeOfLicenceTest extends MockeryTestCase
         $this->sut->maybeAlterFormForGoodsStandardInternational($form);
     }
 
-    public function dpMaybeAlterFormForGoodsStandardInternationalRemoveDeclarationRequirement()
+    /**
+     * @return string[][]
+     *
+     * @psalm-return array{'ni, psv, standard international, mixed': list{'Y', 'lcat_psv', 'ltyp_si', 'app_veh_type_mixed'}, 'ni, goods, standard international, mixed': list{'Y', 'lcat_gv', 'ltyp_si', 'app_veh_type_mixed'}, 'gb, goods, standard international, mixed': list{'N', 'lcat_gv', 'ltyp_si', 'app_veh_type_mixed'}}
+     */
+    public function dpMaybeAlterFormForGoodsStandardInternationalRemoveDeclarationRequirement(): array
     {
         return [
             'ni, psv, standard international, mixed' => [
@@ -457,7 +471,12 @@ class ApplicationTypeOfLicenceTest extends MockeryTestCase
         $this->sut->maybeAlterFormForGoodsStandardInternational($form);
     }
 
-    public function dpMaybeAlterFormForGoodsStandardInternationalRemoveVehicleTypeAndDeclarationRequirement()
+    /**
+     * @return string[][]
+     *
+     * @psalm-return array{'gb, goods, restricted': list{'N', 'lcat_gv', 'ltyp_r'}, 'gb, goods, standard national': list{'N', 'lcat_gv', 'ltyp_sn'}, 'gb, goods, special restricted': list{'N', 'lcat_gv', 'ltyp_sr'}, 'gb, psv, restricted': list{'N', 'lcat_psv', 'ltyp_r'}, 'gb, psv, standard national': list{'N', 'lcat_psv', 'ltyp_sn'}, 'gb, psv, special restricted': list{'N', 'lcat_psv', 'ltyp_sr'}, 'ni, goods, restricted': list{'Y', 'lcat_gv', 'ltyp_r'}, 'ni, goods, standard national': list{'Y', 'lcat_gv', 'ltyp_sn'}, 'ni, goods, special restricted': list{'Y', 'lcat_gv', 'ltyp_sr'}, 'ni, psv, restricted': list{'Y', 'lcat_psv', 'ltyp_r'}, 'ni, psv, standard national': list{'Y', 'lcat_psv', 'ltyp_sn'}, 'ni, psv, special restricted': list{'Y', 'lcat_psv', 'ltyp_sr'}}
+     */
+    public function dpMaybeAlterFormForGoodsStandardInternationalRemoveVehicleTypeAndDeclarationRequirement(): array
     {
         return [
             'gb, goods, restricted' => [

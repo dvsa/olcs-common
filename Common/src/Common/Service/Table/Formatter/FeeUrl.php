@@ -13,17 +13,8 @@ use Laminas\Router\Http\TreeRouteStack;
  */
 class FeeUrl implements FormatterPluginManagerInterface
 {
-    private TreeRouteStack $router;
-
-    private Request $request;
-
-    private UrlHelperService $urlHelper;
-
-    public function __construct(TreeRouteStack $router, Request $request, UrlHelperService $urlHelper)
+    public function __construct(private TreeRouteStack $router, private Request $request, private UrlHelperService $urlHelper)
     {
-        $this->router = $router;
-        $this->request = $request;
-        $this->urlHelper = $urlHelper;
     }
 
     /**
@@ -51,32 +42,21 @@ class FeeUrl implements FormatterPluginManagerInterface
                 break;
         }
 
-        switch ($matchedRouteName) {
-            case 'operator/fees':
-            case 'licence/bus-fees':
-            case 'licence/fees':
-            case 'licence/irhp-fees':
-            case 'licence/irhp-application-fees':
-            case 'lva-application/fees':
-                $url = $this->urlHelper->fromRoute(
-                    $matchedRouteName . '/fee_action',
-                    ['fee' => $row['id'], 'action' => 'edit-fee'],
-                    ['query' => $query],
-                    true
-                );
-                break;
-            case 'fees':
-                $url = $this->urlHelper->fromRoute('fees/pay', ['fee' => $row['id']], ['query' => $query], true);
-                break;
-            default:
-                $url = $this->urlHelper->fromRoute(
-                    'admin-dashboard/admin-payment-processing/misc-fees/fee_action',
-                    ['fee' => $row['id'], 'action' => 'edit-fee', 'controller' => 'Admin\PaymentProcessingController'],
-                    ['query' => $query],
-                    true
-                );
-                break;
-        }
+        $url = match ($matchedRouteName) {
+            'operator/fees', 'licence/bus-fees', 'licence/fees', 'licence/irhp-fees', 'licence/irhp-application-fees', 'lva-application/fees' => $this->urlHelper->fromRoute(
+                $matchedRouteName . '/fee_action',
+                ['fee' => $row['id'], 'action' => 'edit-fee'],
+                ['query' => $query],
+                true
+            ),
+            'fees' => $this->urlHelper->fromRoute('fees/pay', ['fee' => $row['id']], ['query' => $query], true),
+            default => $this->urlHelper->fromRoute(
+                'admin-dashboard/admin-payment-processing/misc-fees/fee_action',
+                ['fee' => $row['id'], 'action' => 'edit-fee', 'controller' => 'Admin\PaymentProcessingController'],
+                ['query' => $query],
+                true
+            ),
+        };
 
         return '<a class="govuk-link" href="' . $url . '">' . $row['description'] . '</a>';
     }

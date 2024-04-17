@@ -8,14 +8,8 @@ use Dvsa\Olcs\Transfer\Command\User\UpdateUserLastLoginAt;
 
 class LastLoginService
 {
-    /**
-     * @var CommandSender
-     */
-    private $commandSender;
-
-    public function __construct(CommandSender $commandSender)
+    public function __construct(private CommandSender $commandSender)
     {
-        $this->commandSender = $commandSender;
     }
 
     /**

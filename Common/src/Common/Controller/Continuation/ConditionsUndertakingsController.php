@@ -64,7 +64,7 @@ class ConditionsUndertakingsController extends AbstractContinuationController
         return $this->getViewModel($data['licence']['licNo'], $form, $params);
     }
 
-    protected function addExtraConditionsUndertakings($data): array
+    protected function addExtraConditionsUndertakings(array $data): array
     {
         $data['conditionsUndertakings']['licence']['psv_restricted']['comment'] = $this->translationHelper->translate('markup-continuation-psv-restricted-comment');
         $data['conditionsUndertakings']['licence']['psv_restricted']['undertakings'] = $this->translationHelper->translate('markup-continuation-psv-restricted-required-undertaking');

@@ -37,30 +37,18 @@ abstract class AbstractTaxiPhvController extends AbstractController
 
     protected FlashMessengerHelperService $flashMessengerHelper;
 
-    protected FormServiceManager $formServiceManager;
-
-    protected ScriptFactory $scriptFactory;
-
-    protected TableFactory $tableFactory;
-
-    protected TranslationHelperService $translationHelper;
-
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
         FormHelperService $formHelper,
-        FormServiceManager $formServiceManager,
+        protected FormServiceManager $formServiceManager,
         FlashMessengerHelperService $flashMessengerHelper,
-        TableFactory $tableFactory,
-        ScriptFactory $scriptFactory,
-        TranslationHelperService $translationHelper
+        protected TableFactory $tableFactory,
+        protected ScriptFactory $scriptFactory,
+        protected TranslationHelperService $translationHelper
     ) {
         $this->formHelper = $formHelper;
-        $this->formServiceManager = $formServiceManager;
-        $this->scriptFactory = $scriptFactory;
         $this->flashMessengerHelper = $flashMessengerHelper;
-        $this->tableFactory = $tableFactory;
-        $this->translationHelper = $translationHelper;
 
         parent::__construct($niTextTranslationUtil, $authService);
     }
@@ -74,7 +62,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
     {
         try {
             $this->loadData();
-        } catch (\RuntimeException $runtimeException) {
+        } catch (\RuntimeException) {
             return $this->notFoundAction();
         }
 
@@ -525,9 +513,8 @@ abstract class AbstractTaxiPhvController extends AbstractController
      * get traffic area validation message
      *
      * @param array $message message array
-     *
      */
-    private function getTrafficAreaValidationMessage(array $message)
+    private function getTrafficAreaValidationMessage(array $message): array|string
     {
         if (key($message) === 'PHL_INVALID_TA') {
             return $message;

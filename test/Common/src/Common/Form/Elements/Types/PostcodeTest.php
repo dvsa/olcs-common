@@ -11,7 +11,7 @@ use Laminas\Form\Element\Text;
  */
 class PostcodeTest extends \PHPUnit\Framework\TestCase
 {
-    public function testConstructorPostcodeElement()
+    public function testConstructorPostcodeElement(): void
     {
         $sut = new PostcodeSearch('foo');
 
@@ -19,7 +19,7 @@ class PostcodeTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf(Text::class, $postcodeElement);
 
         $attributes = $postcodeElement->getAttributes();
-        Assert::assertArraySubset(
+        $this->assertArraySubsetRecursive(
             [
                 'class' => 'short js-input',
                 'data-container-class' => 'inline',
@@ -29,7 +29,7 @@ class PostcodeTest extends \PHPUnit\Framework\TestCase
         $this->assertMatchesRegularExpression('/postcodeInput[0-9]/', $attributes['id']);
     }
 
-    public function testConstructorPostcodeElementNumberIsIncremented()
+    public function testConstructorPostcodeElementNumberIsIncremented(): void
     {
         $sut1 = new PostcodeSearch('foo');
         $sut2 = new PostcodeSearch('bar');
@@ -38,5 +38,17 @@ class PostcodeTest extends \PHPUnit\Framework\TestCase
             $sut1->get('postcode')->getAttributes()['id'],
             $sut2->get('postcode')->getAttributes()['id']
         );
+    }
+
+    private function assertArraySubsetRecursive(array $subset, array $array): void
+    {
+        foreach ($subset as $key => $value) {
+            $this->assertArrayHasKey($key, $array);
+            if (is_array($value)) {
+                $this->assertArraySubsetRecursive($value, $array[$key]);
+            } else {
+                $this->assertEquals($value, $array[$key]);
+            }
+        }
     }
 }

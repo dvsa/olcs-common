@@ -9,14 +9,8 @@ namespace Common\Service\Table\Formatter;
  */
 class FeeAmountSum implements FormatterPluginManagerInterface
 {
-    private Sum $sumFormatter;
-
-    private FeeAmount $feeAmountFormatter;
-
-    public function __construct(Sum $sumFormatter, FeeAmount $feeAmountFormatter)
+    public function __construct(private Sum $sumFormatter, private FeeAmount $feeAmountFormatter)
     {
-        $this->sumFormatter = $sumFormatter;
-        $this->feeAmountFormatter = $feeAmountFormatter;
     }
 
     /**

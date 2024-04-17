@@ -11,29 +11,14 @@ use Laminas\Form\Fieldset;
 
 class PermitUsageFieldsetPopulator implements FieldsetPopulatorInterface
 {
-    /** @var RadioFieldsetPopulator */
-    private $radioFieldsetPopulator;
-
-    /** @var TranslationHelperService */
-    private $translator;
-
-    /** @var HtmlAdder */
-    private $htmlAdder;
-
     /**
      * Create service instance
      *
      *
      * @return PermitUsageFieldsetPopulator
      */
-    public function __construct(
-        RadioFieldsetPopulator $radioFieldsetPopulator,
-        TranslationHelperService $translator,
-        HtmlAdder $htmlAdder
-    ) {
-        $this->radioFieldsetPopulator = $radioFieldsetPopulator;
-        $this->translator = $translator;
-        $this->htmlAdder = $htmlAdder;
+    public function __construct(private RadioFieldsetPopulator $radioFieldsetPopulator, private TranslationHelperService $translator, private HtmlAdder $htmlAdder)
+    {
     }
 
     /**
@@ -88,10 +73,8 @@ class PermitUsageFieldsetPopulator implements FieldsetPopulatorInterface
 
     /**
      * Populate the fieldset with radio buttons in a multiple option scenario
-     *
-     * @param mixed $form
      */
-    private function populateMultipleOptions($form, Fieldset $fieldset, array $options): void
+    private function populateMultipleOptions(mixed $form, Fieldset $fieldset, array $options): void
     {
         foreach ($options['options'] as $key => $option) {
             $options['options'][$key]['label'] = $this->generateTranslationKey($option['value'], 'multiple-options');

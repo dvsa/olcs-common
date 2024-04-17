@@ -54,7 +54,12 @@ class SurrenderSectionTest extends MockeryTestCase
         $this->assertSame($expected, $sut->makeSection());
     }
 
-    public function surrenderDiscs()
+    /**
+     * @return (((null|string)[]|string|true)[]|int|null|string)[][][]
+     *
+     * @psalm-return array{DestroyedDiscs: list{array{discDestroyed: '10', version: 1, possessionSection: array{inPossession: 'Y', info: array{number: '10'}}, lostSection: array{lost: 'N', info: array{number: null, details: null}}, stolenSection: array{stolen: 'N', info: array{number: null, details: null}}}, list{array{label: 'Number destroyed', answer: '10', changeLinkInHeading: true, change: array{sectionLink: 'discBackLInk'}}, array{label: 'Number lost', answer: '0', changeLinkInHeading: true, change: array{sectionLink: 'discBackLInk'}}, array{label: 'Number stolen', answer: '0', changeLinkInHeading: true, change: array{sectionLink: 'discBackLInk'}}}}, LostDiscs: list{array{discLost: '10', discLostInfo: 'dog ate them', version: 1, possessionSection: array{inPossession: 'N', info: array{number: null}}, lostSection: array{lost: 'Y', info: array{number: '10', details: 'dog ate them'}}, stolenSection: array{stolen: 'N', info: array{number: null, details: null}}}, list{array{label: 'Number destroyed', answer: '0', changeLinkInHeading: true, change: array{sectionLink: 'discBackLInk'}}, array{label: 'Number lost', answer: '10', changeLinkInHeading: true, change: array{sectionLink: 'discBackLInk'}}, array{label: 'Number stolen', answer: '0', changeLinkInHeading: true, change: array{sectionLink: 'discBackLInk'}}}}, StolenDiscs: list{array{discStolen: '9', discLost: null, discStolenInfo: 'Crime ref #1 - it was a fair cop', version: 1, possessionSection: array{inPossession: 'N', info: array{number: null}}, lostSection: array{lost: 'Y', info: array{number: '0', details: 'dog ate them'}}, stolenSection: array{stolen: 'Y', info: array{number: '9', details: 'Crime ref #1 - it was a fair cop'}}}, list{array{label: 'Number destroyed', answer: '0', changeLinkInHeading: true, change: array{sectionLink: 'discBackLInk'}}, array{label: 'Number lost', answer: '0', changeLinkInHeading: true, change: array{sectionLink: 'discBackLInk'}}, array{label: 'Number stolen', answer: '9', changeLinkInHeading: true, change: array{sectionLink: 'discBackLInk'}}}}, AllTypesDiscs: list{array{discStolen: '10', discLost: '10', discLostInfo: 'dog ate them', discStolenInfo: 'Crime ref #1 - it was a fair cop', discDestroyed: '10', version: 1, possessionSection: array{inPossession: 'N', info: array{number: '10'}}, lostSection: array{lost: 'Y', info: array{number: '10', details: 'dog ate them'}}, stolenSection: array{stolen: 'Y', info: array{number: '10', details: 'Crime ref #1 - it was a fair cop'}}}, list{array{label: 'Number destroyed', answer: '10', changeLinkInHeading: true, change: array{sectionLink: 'discBackLInk'}}, array{label: 'Number lost', answer: '10', changeLinkInHeading: true, change: array{sectionLink: 'discBackLInk'}}, array{label: 'Number stolen', answer: '10', changeLinkInHeading: true, change: array{sectionLink: 'discBackLInk'}}}}}
+     */
+    public function surrenderDiscs(): array
     {
         $changeLinkInHeading = true;
         return [
@@ -296,7 +301,12 @@ class SurrenderSectionTest extends MockeryTestCase
         $this->assertSame($expected, $sut->makeSection());
     }
 
-    public function operatorLicenceSection()
+    /**
+     * @return ((string|string[]|true)[]|null|string)[][][]
+     *
+     * @psalm-return array{OperatorLicenceDestroyed: list{array{licenceDocumentStatus: array{id: 'doc_sts_destroyed'}, licenceDocumentInfo: null}, list{array{label: 'Operator licence', answer: 'to be destroyed', changeLinkInHeading: true, change: array{sectionLink: 'operator-licence'}}}}, OperatorLicenceLost: list{array{licenceDocumentStatus: array{id: 'doc_sts_lost'}, licenceDocumentInfo: 'lost content'}, list{array{label: 'Operator licence', answer: 'lost', changeLinkInHeading: true, change: array{sectionLink: 'operator-licence'}}}}, OperatorLicenceStolen: list{array{licenceDocumentStatus: array{id: 'doc_sts_stolen'}, licenceDocumentInfo: 'stolen content'}, list{array{label: 'Operator licence', answer: 'stolen', changeLinkInHeading: true, change: array{sectionLink: 'operator-licence'}}}}}
+     */
+    public function operatorLicenceSection(): array
     {
         $changeLinkInHeading = true;
         return [
@@ -417,7 +427,12 @@ class SurrenderSectionTest extends MockeryTestCase
         $this->assertSame($expected, $sut->makeSection());
     }
 
-    public function communityLicenceSection()
+    /**
+     * @return ((string|string[]|true)[]|null|string)[][][]
+     *
+     * @psalm-return array{communityLicenceDestroyed: list{array{communityLicenceDocumentStatus: array{id: 'doc_sts_destroyed'}, communityLicenceDocumentInfo: null}, list{array{label: 'Community licence', answer: 'to be destroyed', changeLinkInHeading: true, change: array{sectionLink: 'community-licence'}}}}, communityLicenceLost: list{array{communityLicenceDocumentStatus: array{id: 'doc_sts_lost'}, communityLicenceDocumentInfo: 'lost content'}, list{array{label: 'Community licence', answer: 'lost', changeLinkInHeading: true, change: array{sectionLink: 'community-licence'}}}}, communityLicenceStolen: list{array{communityLicenceDocumentStatus: array{id: 'doc_sts_stolen'}, communityLicenceDocumentInfo: 'stolen content'}, list{array{label: 'Community licence', answer: 'stolen', changeLinkInHeading: true, change: array{sectionLink: 'community-licence'}}}}}
+     */
+    public function communityLicenceSection(): array
     {
         $changeLinkInHeading = true;
         return [

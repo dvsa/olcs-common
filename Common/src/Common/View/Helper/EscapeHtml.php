@@ -12,17 +12,15 @@ use Laminas\View\Helper\AbstractHelper;
  */
 class EscapeHtml extends AbstractHelper
 {
-    /** @var HtmlPurifier $htmlPurifierService */
-    private $htmlPurifierService;
-
     /**
      * EscapeHtml constructor.
      *
      * @return void
      */
-    public function __construct(HtmlPurifier $htmlPurifierService)
-    {
-        $this->htmlPurifierService = $htmlPurifierService;
+    public function __construct(
+        /** @var HtmlPurifier $htmlPurifierService */
+        private HtmlPurifier $htmlPurifierService
+    ) {
     }
 
     /**

@@ -91,7 +91,12 @@ class AnnualTripsAbroadFieldsetPopulatorTest extends MockeryTestCase
         $annualTripsAbroadFieldsetPopulator->populate($form, $fieldset, $options);
     }
 
-    public function dpTrueFalse()
+    /**
+     * @return bool[][]
+     *
+     * @psalm-return list{list{true}, list{false}}
+     */
+    public function dpTrueFalse(): array
     {
         return [
             [true],

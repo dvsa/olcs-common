@@ -11,11 +11,8 @@ namespace Common\Service\Table\Formatter;
  */
 class VenueAddress implements FormatterPluginManagerInterface
 {
-    private Address $addressFormatter;
-
-    public function __construct(Address $addressFormatter)
+    public function __construct(private Address $addressFormatter)
     {
-        $this->addressFormatter = $addressFormatter;
     }
 
     /**

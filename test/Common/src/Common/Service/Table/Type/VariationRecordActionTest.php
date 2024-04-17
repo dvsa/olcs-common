@@ -4,6 +4,7 @@ namespace CommonTest\Service\Table\Type;
 
 use Common\Service\Table\TableBuilder;
 use Common\Service\Table\Type\VariationRecordAction;
+use Laminas\Mvc\I18n\Translator;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
@@ -23,7 +24,7 @@ class VariationRecordActionTest extends MockeryTestCase
 
     protected function setUp(): void
     {
-        $this->mockTranslator = m::mock(\Laminas\I18n\Translator\TranslatorInterface::class);
+        $this->mockTranslator = m::mock(Translator::class);
 
         $this->table = m::mock(TableBuilder::class);
         $this->table->expects('isInternalReadOnly')->andReturnFalse();
@@ -66,7 +67,12 @@ class VariationRecordActionTest extends MockeryTestCase
         );
     }
 
-    public function provider()
+    /**
+     * @return (null|string)[][]
+     *
+     * @psalm-return list{array{action: 'A', expectPrefix: 'new', expect: '(TRSLTD_STATUS) <button data-prevent-double-click="true" data-module="govuk-button" role="link" type="submit" class="action-button-link " name="table[action][foo][7]" >link-text</button>'}, array{action: 'U', expectPrefix: 'updated', expect: '(TRSLTD_STATUS) <button data-prevent-double-click="true" data-module="govuk-button" role="link" type="submit" class="action-button-link " name="table[action][foo][7]" >link-text</button>'}, array{action: 'C', expectPrefix: 'current', expect: '(TRSLTD_STATUS) <button data-prevent-double-click="true" data-module="govuk-button" role="link" type="submit" class="action-button-link " name="table[action][foo][7]" disabled="disabled">link-text</button>'}, array{action: 'D', expectPrefix: 'removed', expect: '(TRSLTD_STATUS) <button data-prevent-double-click="true" data-module="govuk-button" role="link" type="submit" class="action-button-link " name="table[action][foo][7]" disabled="disabled">link-text</button>'}, array{action: 'ABC', expectPrefix: null, expect: '<button data-prevent-double-click="true" data-module="govuk-button" role="link" type="submit" class="action-button-link " name="table[action][foo][7]" >link-text</button>'}}
+     */
+    public function provider(): array
     {
         return [
             [

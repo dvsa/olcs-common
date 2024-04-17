@@ -13,11 +13,8 @@ use Laminas\Form\FormInterface;
  */
 class GoodsVehiclesVehicle
 {
-    protected VehicleDiscNo $vehicleDiscNo;
-
-    public function __construct(VehicleDiscNo $vehicleDiscNo)
+    public function __construct(protected VehicleDiscNo $vehicleDiscNo)
     {
-        $this->vehicleDiscNo = $vehicleDiscNo;
     }
 
     /**
@@ -43,7 +40,7 @@ class GoodsVehiclesVehicle
     /**
      * @return array
      */
-    public static function mapFromErrors($errors, FormInterface $form)
+    public static function mapFromErrors(array $errors, FormInterface $form)
     {
         $dataFields = ['vrm', 'platedWeight'];
         $licenceVehicleFields = [

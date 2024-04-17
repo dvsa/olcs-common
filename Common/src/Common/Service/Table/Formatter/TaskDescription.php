@@ -19,17 +19,8 @@ use Laminas\Router\Http\TreeRouteStack;
  */
 class TaskDescription implements FormatterPluginManagerInterface
 {
-    private TreeRouteStack $router;
-
-    private Request $request;
-
-    private UrlHelperService $urlHelper;
-
-    public function __construct(TreeRouteStack $router, Request $request, UrlHelperService $urlHelper)
+    public function __construct(private TreeRouteStack $router, private Request $request, private UrlHelperService $urlHelper)
     {
-        $this->router = $router;
-        $this->request = $request;
-        $this->urlHelper = $urlHelper;
     }
 
     /**
@@ -48,43 +39,27 @@ class TaskDescription implements FormatterPluginManagerInterface
         // the edit URL should pass the context of the page we're on,
         // rather than the type of each task
         // (see https://jira.i-env.net/browse/OLCS-6041)
-        switch ($routeMatch->getMatchedRouteName()) {
-            case 'licence/processing/tasks':
-                $routeParams = ['type' => 'licence', 'typeId' => $params['licence']];
-                break;
-            case 'lva-application/processing/tasks':
-                $routeParams = ['type' => 'application', 'typeId' => $params['application']];
-                break;
-            case 'transport-manager/processing/tasks':
-                $routeParams = ['type' => 'tm', 'typeId' => $params['transportManager']];
-                break;
-            case 'licence/bus-processing/tasks':
-                $routeParams = [
-                'type'    => 'busreg',
-                'typeId'  => $params['busRegId'],
-                'licence' => $params['licence']
-                ];
-                break;
-            case 'licence/irhp-application-processing/tasks':
-                $routeParams = [
-                'type'    => 'irhpapplication',
-                'typeId'  => $params['irhpAppId'],
-                'licence' => $params['licence']
-                ];
-                break;
-            case 'case_processing_tasks':
-                $routeParams = ['type' => 'case', 'typeId' => $params['case']];
-                break;
-            case 'operator/processing/tasks':
-                $routeParams = [
-                'type'    => 'organisation',
-                'typeId'  => $params['organisation']
-                ];
-                break;
-            default:
-                $routeParams = [];
-                break;
-        }
+        $routeParams = match ($routeMatch->getMatchedRouteName()) {
+            'licence/processing/tasks' => ['type' => 'licence', 'typeId' => $params['licence']],
+            'lva-application/processing/tasks' => ['type' => 'application', 'typeId' => $params['application']],
+            'transport-manager/processing/tasks' => ['type' => 'tm', 'typeId' => $params['transportManager']],
+            'licence/bus-processing/tasks' => [
+            'type'    => 'busreg',
+            'typeId'  => $params['busRegId'],
+            'licence' => $params['licence']
+            ],
+            'licence/irhp-application-processing/tasks' => [
+            'type'    => 'irhpapplication',
+            'typeId'  => $params['irhpAppId'],
+            'licence' => $params['licence']
+            ],
+            'case_processing_tasks' => ['type' => 'case', 'typeId' => $params['case']],
+            'operator/processing/tasks' => [
+            'type'    => 'organisation',
+            'typeId'  => $params['organisation']
+            ],
+            default => [],
+        };
 
         $url = $this->urlHelper->fromRoute(
             'task_action',

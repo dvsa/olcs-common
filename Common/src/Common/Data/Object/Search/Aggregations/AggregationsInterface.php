@@ -28,8 +28,7 @@ interface AggregationsInterface
     /**
      * Set the aggregation value.
      *
-     * @param mixed $value
      * @return $this
      */
-    public function setValue($value);
+    public function setValue(mixed $value);
 }

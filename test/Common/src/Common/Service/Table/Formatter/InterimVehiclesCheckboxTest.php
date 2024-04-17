@@ -28,7 +28,12 @@ class InterimVehiclesCheckboxTest extends MockeryTestCase
         $this->assertEquals($expected, (new \Common\Service\Table\Formatter\InterimVehiclesCheckbox())->format($data));
     }
 
-    public function formatProvider()
+    /**
+     * @return ((int|int[])[]|string)[][]
+     *
+     * @psalm-return list{list{array{interimApplication: array{id: 2}, id: 1}, '<input type="checkbox" value="1" name="vehicles[id][]" checked>'}, list{array{interimApplication: array<never, never>, id: 1}, '<input type="checkbox" value="1" name="vehicles[id][]" >'}, list{array{id: 1}, '<input type="checkbox" value="1" name="vehicles[id][]" >'}}
+     */
+    public function formatProvider(): array
     {
         return [
             [

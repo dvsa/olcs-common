@@ -18,14 +18,8 @@ use Laminas\View\HelperPluginManager;
  */
 class ValidityPeriod implements FormatterPluginManagerInterface
 {
-    private HelperPluginManager $viewHelperManager;
-
-    private TranslatorDelegator $translator;
-
-    public function __construct(HelperPluginManager $viewHelperManager, TranslatorDelegator $translator)
+    public function __construct(private HelperPluginManager $viewHelperManager, private TranslatorDelegator $translator)
     {
-        $this->viewHelperManager = $viewHelperManager;
-        $this->translator = $translator;
     }
 
     /**

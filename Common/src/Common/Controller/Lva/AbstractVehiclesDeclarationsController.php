@@ -36,30 +36,18 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
 
     protected $data;
 
-    protected DataHelperService $dataHelper;
-
-    protected ScriptFactory $scriptFactory;
-
-    protected FormServiceManager $formServiceManager;
-
-    protected FormHelperService $formHelper;
-
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
-        FormHelperService $formHelper,
-        FormServiceManager $formServiceManager,
-        ScriptFactory $scriptFactory,
-        DataHelperService $dataHelper
+        protected FormHelperService $formHelper,
+        protected FormServiceManager $formServiceManager,
+        protected ScriptFactory $scriptFactory,
+        protected DataHelperService $dataHelper
     ) {
-        $this->dataHelper = $dataHelper;
-        $this->scriptFactory = $scriptFactory;
-        $this->formServiceManager = $formServiceManager;
-        $this->formHelper = $formHelper;
         parent::__construct($niTextTranslationUtil, $authService);
     }
 
-    public function indexAction()
+    public function indexAction(): \Common\View\Model\Section|\Laminas\Http\Response
     {
         $request = $this->getRequest();
 
@@ -87,7 +75,7 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
             ->getForm();
     }
 
-    protected function getFormData()
+    protected function getFormData(): array
     {
         return $this->formatDataForForm($this->loadData());
     }
@@ -146,7 +134,7 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
      * Add customisation to the form dependent on which of five scenarios
      * is in play for OLCS-2855
      */
-    protected function alterForm(\Laminas\Form\Form $form, $formData)
+    protected function alterForm(\Laminas\Form\Form $form, $formData): void
     {
         $this->alterFormForLva($form);
 
@@ -223,6 +211,8 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
      *
      * @param array $data
      * @param string $service
+     *
+     * @return void
      */
     protected function save($data)
     {

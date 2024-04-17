@@ -28,12 +28,18 @@ class MockeryTestCase extends \Mockery\Adapter\Phpunit\MockeryTestCase
      */
     private $originalAllowMockingNonExistingMethods;
 
+    /**
+     * @return void
+     */
     protected function mockeryTestSetUp()
     {
         $this->configureMockeryGlobalConfiguration();
         parent::mockeryTestSetUp();
     }
 
+    /**
+     * @return void
+     */
     protected function mockeryTestTearDown()
     {
         $this->restoreMockeryGlobalConfiguration();

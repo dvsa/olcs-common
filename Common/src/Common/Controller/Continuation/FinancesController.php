@@ -20,29 +20,21 @@ class FinancesController extends AbstractContinuationController
 {
     protected $currentStep = self::STEP_FINANCE;
 
-    protected FormHelperService $formHelper;
-
-    protected GuidanceHelperService $guidanceHelper;
-
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
         FormServiceManager $formServiceManager,
         TranslationHelperService $translationHelper,
-        FormHelperService $formHelper,
-        GuidanceHelperService $guidanceHelper
+        protected FormHelperService $formHelper,
+        protected GuidanceHelperService $guidanceHelper
     ) {
-        $this->formHelper = $formHelper;
-        $this->guidanceHelper = $guidanceHelper;
         parent::__construct($niTextTranslationUtil, $authService, $formServiceManager, $translationHelper);
     }
 
     /**
      * Index page
-     *
-     * @return ViewModel
      */
-    public function indexAction()
+    public function indexAction(): ViewModel|\Laminas\Http\Response
     {
         $continuationDetail = $this->getContinuationDetailData();
 

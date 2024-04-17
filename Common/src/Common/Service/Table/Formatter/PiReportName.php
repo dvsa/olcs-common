@@ -11,14 +11,8 @@ namespace Common\Service\Table\Formatter;
  */
 class PiReportName implements FormatterPluginManagerInterface
 {
-    private OrganisationLink $organisationLinkformatter;
-
-    private Name $nameFormatter;
-
-    public function __construct(OrganisationLink $organisationLinkformatter, Name $nameFormatter)
+    public function __construct(private OrganisationLink $organisationLinkformatter, private Name $nameFormatter)
     {
-        $this->organisationLinkformatter = $organisationLinkformatter;
-        $this->nameFormatter = $nameFormatter;
     }
 
     /**

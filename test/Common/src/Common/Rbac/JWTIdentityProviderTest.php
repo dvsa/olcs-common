@@ -443,7 +443,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
         $this->setUpServiceManager();
     }
 
-    protected function setupSut()
+    protected function setupSut(): void
     {
         $this->sut = new JWTIdentityProvider(
             $this->identitySession(),
@@ -454,12 +454,13 @@ class JWTIdentityProviderTest extends MockeryTestCase
         );
     }
 
-    protected function setUpDefaultServices(ServiceManager $serviceManager)
+    protected function setUpDefaultServices(ServiceManager $serviceManager): ServiceManager
     {
         $this->cacheService();
         $this->querySender();
         $this->identitySession();
         $this->tokenSession();
+        return $serviceManager;
     }
 
     /**
@@ -499,7 +500,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
         return $identity;
     }
 
-    private function identitySessionWithCachedIdentity($identity): void
+    private function identitySessionWithCachedIdentity(MockInterface $identity): void
     {
         $this->identitySession()->expects('offsetGet')->with('identity')->andReturn($identity);
         $this->identitySession()->expects('offsetSet')->with('identity', $identity);

@@ -92,16 +92,6 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
 
     protected FormServiceManager $formServiceManager;
 
-    protected ScriptFactory $scriptFactory;
-
-    protected TableFactory $tableFactory;
-
-    protected GuidanceHelperService $guidanceHelper;
-
-    protected VariationLvaService $variationLvaService;
-
-    protected GoodsVehiclesVehicle $goodsVehiclesVehicleMapper;
-
     protected TranslationHelperService $translationHelper;
 
     public function __construct(
@@ -110,21 +100,16 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         FormHelperService $formHelper,
         FlashMessengerHelperService $flashMessengerHelper,
         FormServiceManager $formServiceManager,
-        TableFactory $tableFactory,
-        GuidanceHelperService $guidanceHelper,
+        protected TableFactory $tableFactory,
+        protected GuidanceHelperService $guidanceHelper,
         TranslationHelperService $translationHelper,
-        ScriptFactory $scriptFactory,
-        VariationLvaService $variationLvaService,
-        GoodsVehiclesVehicle $goodsVehiclesVehicleMapper
+        protected ScriptFactory $scriptFactory,
+        protected VariationLvaService $variationLvaService,
+        protected GoodsVehiclesVehicle $goodsVehiclesVehicleMapper
     ) {
         $this->formHelper = $formHelper;
         $this->flashMessengerHelper = $flashMessengerHelper;
         $this->formServiceManager = $formServiceManager;
-        $this->tableFactory = $tableFactory;
-        $this->guidanceHelper = $guidanceHelper;
-        $this->scriptFactory = $scriptFactory;
-        $this->variationLvaService = $variationLvaService;
-        $this->goodsVehiclesVehicleMapper = $goodsVehiclesVehicleMapper;
         $this->translationHelper = $translationHelper;
 
         parent::__construct($niTextTranslationUtil, $authService);
@@ -628,7 +613,12 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         return $this->render('vehicles', $form, $params);
     }
 
-    protected function getScripts()
+    /**
+     * @return string[]
+     *
+     * @psalm-return list{'lva-crud', 'vehicle-goods'}
+     */
+    protected function getScripts(): array
     {
         return ['lva-crud', 'vehicle-goods'];
     }

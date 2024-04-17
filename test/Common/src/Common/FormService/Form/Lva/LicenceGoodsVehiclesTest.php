@@ -44,7 +44,7 @@ class LicenceGoodsVehiclesTest extends MockeryTestCase
         $isCrudPressed = true;
 
         // Mocks
-        $mockForm = m::mock();
+        $mockForm = m::mock(\Common\Form\Form::class);
         $mockTableElement = m::mock(\Laminas\Form\Fieldset::class);
         $mockValidator = m::mock();
 

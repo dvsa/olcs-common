@@ -20,7 +20,7 @@ class YesNoRadioTest extends MockeryTestCase
         $this->yesNoRadio = new YesNoRadio();
     }
 
-    public function testAttributes()
+    public function testAttributes(): void
     {
         $expectedAttributes = [
             'id' => 'yesNoRadio',
@@ -37,7 +37,7 @@ class YesNoRadioTest extends MockeryTestCase
         );
     }
 
-    public function testSetStandardValueOptions()
+    public function testSetStandardValueOptions(): void
     {
         $expectedValueOptions = [
             'yes' => [
@@ -55,9 +55,21 @@ class YesNoRadioTest extends MockeryTestCase
 
         $this->yesNoRadio->setStandardValueOptions();
 
-        Assert::assertArraySubset(
+        $this->assertArraySubsetRecursive(
             $expectedValueOptions,
             $this->yesNoRadio->getValueOptions()
         );
+    }
+
+    private function assertArraySubsetRecursive(array $subset, $array): void
+    {
+        foreach ($subset as $key => $value) {
+            $this->assertArrayHasKey($key, $array);
+            if (is_array($value)) {
+                $this->assertArraySubsetRecursive($value, $array[$key]);
+            } else {
+                $this->assertEquals($value, $array[$key]);
+            }
+        }
     }
 }

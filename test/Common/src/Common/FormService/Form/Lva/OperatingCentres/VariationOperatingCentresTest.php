@@ -187,7 +187,7 @@ class VariationOperatingCentresTest extends MockeryTestCase
         $this->assertSame($this->form, $form);
     }
 
-    protected function mockPopulateFormTable($data)
+    protected function mockPopulateFormTable(array $data): Table
     {
         $columns = [
             'noOfVehiclesRequired' => [

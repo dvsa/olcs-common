@@ -4,18 +4,14 @@ namespace Common\Service\Qa\DataTransformer;
 
 class ApplicationStepsPostDataTransformer
 {
-    /** @var DataTransformerProvider */
-    private $dataTransformerProvider;
-
     /**
      * Create service instance
      *
      *
      * @return ApplicationStepsPostDataTransformer
      */
-    public function __construct(DataTransformerProvider $dataTransformerProvider)
+    public function __construct(private DataTransformerProvider $dataTransformerProvider)
     {
-        $this->dataTransformerProvider = $dataTransformerProvider;
     }
 
     /**

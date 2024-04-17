@@ -34,7 +34,10 @@ class FormCollectionTest extends MockeryTestCase
     /** @var  \Laminas\Form\FieldsetInterface | \Laminas\Form\ElementInterface */
     protected $element;
 
-    private function prepareElement($targetElement = 'Text'): void
+    /**
+     * @psalm-param 'Fieldset'|'Text' $targetElement
+     */
+    private function prepareElement(string $targetElement = 'Text'): void
     {
         $this->element = new Collection('test');
         $this->element->setOptions(

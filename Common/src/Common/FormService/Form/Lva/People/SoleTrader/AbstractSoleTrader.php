@@ -14,20 +14,8 @@ use LmcRbacMvc\Service\AuthorizationService;
  */
 abstract class AbstractSoleTrader extends AbstractLvaFormService
 {
-    protected FormHelperService $formHelper;
-
-    protected AuthorizationService $authService;
-
-    protected PeopleLvaService $peopleLvaService;
-
-    public function __construct(
-        FormHelperService $formHelper,
-        AuthorizationService $authService,
-        PeopleLvaService $peopleLvaService
-    ) {
-        $this->formHelper = $formHelper;
-        $this->authService = $authService;
-        $this->peopleLvaService = $peopleLvaService;
+    public function __construct(protected FormHelperService $formHelper, protected AuthorizationService $authService, protected PeopleLvaService $peopleLvaService)
+    {
     }
 
     /**

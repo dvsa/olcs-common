@@ -27,7 +27,12 @@ class CommunityLicenceIssueNoTest extends MockeryTestCase
         $this->assertEquals($expected, $sut->format($data, $column));
     }
 
-    public function formatProvider()
+    /**
+     * @return ((int|string)[]|string)[][]
+     *
+     * @psalm-return list{list{array{issueNo: 0}, array{name: 'issueNo'}, '00000 (Office copy)'}, list{array{issueNo: 1}, array{name: 'issueNo'}, '00001'}, list{array{foo: 0}, array{name: 'foo'}, '00000 (Office copy)'}}
+     */
+    public function formatProvider(): array
     {
         return [
             [

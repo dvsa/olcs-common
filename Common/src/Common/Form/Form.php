@@ -9,7 +9,7 @@ use Laminas\Form as LaminasForm;
 /**
  * Form
  */
-class Form extends LaminasForm\Form
+class Form extends LaminasForm\Form implements \Stringable
 {
     /**
      * Form constructor. Prevents browser HTML5 form validations
@@ -27,9 +27,9 @@ class Form extends LaminasForm\Form
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
-        return get_class($this);
+        return static::class;
     }
 
     /**
@@ -64,7 +64,12 @@ class Form extends LaminasForm\Form
         return parent::isValid();
     }
 
-    public function populateValues($data, $onlyBase = false): void
+    /**
+     * @param string[] $data
+     *
+     * @psalm-param array{html?: '<script>alert("TEST")</script>', text?: '<script>alert("TEST")</script>'} $data
+     */
+    public function populateValues(iterable $data, $onlyBase = false): void
     {
         $populateDepth = &self::getPopulateDepth();
         try {
@@ -88,7 +93,7 @@ class Form extends LaminasForm\Form
         return $populateDepth;
     }
 
-    public static function isPopulating()
+    public static function isPopulating(): bool
     {
         return self::getPopulateDepth() !== 0;
     }

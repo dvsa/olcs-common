@@ -48,7 +48,12 @@ class GenericUploadTest extends MockeryTestCase
         $this->assertInstanceOf(FileContent::class, $dto->getContent());
     }
 
-    public function dpTestUploadFile()
+    /**
+     * @return string[][][]
+     *
+     * @psalm-return list{array{fileData: array{tmp_name: 'unit_FileName', type: 'unit_Mime'}, data: array{filename: 'unit_FileName1'}, expect: array{fileName: 'unit_FileName1'}}, array{fileData: array{name: 'unit_Name2', tmp_name: 'unit_FileName', type: 'unit_Mime'}, data: array<never, never>, expect: array{fileName: 'unit_Name2'}}, array{fileData: array{filename: 'unit_FileName3', tmp_name: 'unit_FileName', type: 'unit_Mime'}, data: array<never, never>, expect: array{fileName: 'unit_FileName3'}}}
+     */
+    public function dpTestUploadFile(): array
     {
         return [
             [

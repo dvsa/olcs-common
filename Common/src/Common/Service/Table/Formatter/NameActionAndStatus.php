@@ -7,14 +7,11 @@ use Common\Util\Escape;
 
 class NameActionAndStatus implements FormatterPluginManagerInterface
 {
-    private Permission $permissionService;
-
     public const BUTTON_FORMAT = '<button data-prevent-double-click="true" class="action-button-link" role="link" '
     . 'data-module="govuk-button" type="submit" name="table[action][edit][%d]">%s</button>';
 
-    public function __construct(Permission $permissionService)
+    public function __construct(private Permission $permissionService)
     {
-        $this->permissionService = $permissionService;
     }
 
     /**

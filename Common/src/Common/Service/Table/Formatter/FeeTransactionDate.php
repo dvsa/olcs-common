@@ -15,14 +15,8 @@ namespace Common\Service\Table\Formatter;
  */
 class FeeTransactionDate implements FormatterPluginManagerInterface
 {
-    private StackValue $stackValueFormatter;
-
-    private Date $dateFormatter;
-
-    public function __construct(StackValue $stackValueFormatter, Date $dateFormatter)
+    public function __construct(private StackValue $stackValueFormatter, private Date $dateFormatter)
     {
-        $this->stackValueFormatter = $stackValueFormatter;
-        $this->dateFormatter = $dateFormatter;
     }
 
     /**

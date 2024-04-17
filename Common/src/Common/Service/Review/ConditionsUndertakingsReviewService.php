@@ -22,7 +22,16 @@ class ConditionsUndertakingsReviewService extends AbstractReviewService
         // noop
     }
 
-    public function formatLicenceSubSection($list, $lva, $conditionOrUndertaking, $action)
+    /**
+     * @psalm-param 'application' $lva
+     * @psalm-param 'conditions'|'undertakings' $conditionOrUndertaking
+     * @psalm-param 'added' $action
+     *
+     * @return (array[][][][][]|string)[]
+     *
+     * @psalm-return array{title: string, mainItems: list{array{multiItems: list{list{array{list: array}}}}}}
+     */
+    public function formatLicenceSubSection($list, string $lva, string $conditionOrUndertaking, string $action): array
     {
         return [
             'title' => $lva . '-review-conditions-undertakings-licence-' . $conditionOrUndertaking . '-' . $action,
@@ -40,7 +49,16 @@ class ConditionsUndertakingsReviewService extends AbstractReviewService
         ];
     }
 
-    public function formatOcSubSection($list, $lva, $conditionOrUndertaking, $action)
+    /**
+     * @psalm-param 'application' $lva
+     * @psalm-param 'conditions'|'undertakings' $conditionOrUndertaking
+     * @psalm-param 'added' $action
+     *
+     * @return ((array[][][]|mixed)[][]|string)[]
+     *
+     * @psalm-return array{title: string, mainItems: list{0?: array{header: mixed, multiItems: list{list{array{list: array}}}},...}}
+     */
+    public function formatOcSubSection($list, string $lva, string $conditionOrUndertaking, string $action): array
     {
         $mainItems = [];
 
@@ -119,25 +137,25 @@ class ConditionsUndertakingsReviewService extends AbstractReviewService
         return [$licConds, $licUnds, $ocConds, $ocUnds];
     }
 
-    protected function isLicenceCondition($condition)
+    protected function isLicenceCondition($condition): bool
     {
         return $condition['conditionType']['id'] === RefData::TYPE_CONDITION
             && $condition['attachedTo']['id'] === RefData::ATTACHED_TO_LICENCE;
     }
 
-    protected function isLicenceUndertaking($condition)
+    protected function isLicenceUndertaking($condition): bool
     {
         return $condition['conditionType']['id'] === RefData::TYPE_UNDERTAKING
             && $condition['attachedTo']['id'] === RefData::ATTACHED_TO_LICENCE;
     }
 
-    protected function isOcCondition($condition)
+    protected function isOcCondition($condition): bool
     {
         return $condition['conditionType']['id'] === RefData::TYPE_CONDITION
             && $condition['attachedTo']['id'] === RefData::ATTACHED_TO_OPERATING_CENTRE;
     }
 
-    protected function isOcUndertaking($condition)
+    protected function isOcUndertaking($condition): bool
     {
         return $condition['conditionType']['id'] === RefData::TYPE_UNDERTAKING
             && $condition['attachedTo']['id'] === RefData::ATTACHED_TO_OPERATING_CENTRE;

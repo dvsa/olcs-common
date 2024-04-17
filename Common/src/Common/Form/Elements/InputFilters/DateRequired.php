@@ -35,6 +35,11 @@ class DateRequired extends LaminasDateSelect implements InputProviderInterface
         ];
     }
 
+    /**
+     * @return (string|string[])[][]
+     *
+     * @psalm-return list{array{name: 'Date', options: array{format: 'Y-m-d'}}}
+     */
     public function getValidators()
     {
         return [

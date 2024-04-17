@@ -37,7 +37,12 @@ class FormFieldsetTest extends MockeryTestCase
         static::assertEquals($expect, $sut($element));
     }
 
-    public function dpTestInvoke()
+    /**
+     * @return (m\LegacyMockInterface&m\MockInterface&Elements\Types\FileUploadList|m\LegacyMockInterface&m\MockInterface&\Laminas\Form\FieldsetInterface|string)[][]
+     *
+     * @psalm-return list{array{element: m\LegacyMockInterface&m\MockInterface&\Laminas\Form\FieldsetInterface, expect: 'FORM_COLLECTION_RENDER_RESULT'}, array{element: m\LegacyMockInterface&m\MockInterface&Elements\Types\FileUploadList, expect: 'FORM_FILE_UPLOAD_LIST_RENDER_RESULT'}}
+     */
+    public function dpTestInvoke(): array
     {
         return [
             [

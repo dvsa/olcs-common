@@ -8,6 +8,7 @@ use Common\RefData;
 use Common\Service\Helper\DataHelperService;
 use Common\Service\Helper\FormHelperService;
 use Common\Service\Script\ScriptFactory;
+use Common\View\Model\Section;
 use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Mockery as m;
 use LmcRbacMvc\Service\AuthorizationService;
@@ -151,7 +152,7 @@ class AbstractVehiclesDeclarationsControllerTest extends AbstractLvaControllerTe
         $this->assertEquals('vehicles_declarations', $this->view);
     }
 
-    protected function shouldRemoveElements($form, $elements)
+    protected function shouldRemoveElements(\Common\Form\Form $form, array $elements): void
     {
         $helper = $this->mockFormHelper;
         foreach ($elements as $e) {
@@ -178,7 +179,7 @@ class AbstractVehiclesDeclarationsControllerTest extends AbstractLvaControllerTe
                      * of what 'render' would normally do
                      */
 
-                    return $this->view;
+                    return new Section();
                 }
             );
 

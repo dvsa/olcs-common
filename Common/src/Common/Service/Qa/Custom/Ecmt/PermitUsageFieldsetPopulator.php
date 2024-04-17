@@ -8,24 +8,14 @@ use Laminas\Form\Fieldset;
 
 class PermitUsageFieldsetPopulator implements FieldsetPopulatorInterface
 {
-    /** @var RadioFieldsetPopulator */
-    private $radioFieldsetPopulator;
-
-    /** @var InfoIconAdder */
-    private $infoIconAdder;
-
     /**
      * Create service instance
      *
      *
      * @return PermitUsageFieldsetPopulator
      */
-    public function __construct(
-        RadioFieldsetPopulator $radioFieldsetPopulator,
-        InfoIconAdder $infoIconAdder
-    ) {
-        $this->radioFieldsetPopulator = $radioFieldsetPopulator;
-        $this->infoIconAdder = $infoIconAdder;
+    public function __construct(private RadioFieldsetPopulator $radioFieldsetPopulator, private InfoIconAdder $infoIconAdder)
+    {
     }
 
     /**

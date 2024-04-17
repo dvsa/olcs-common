@@ -107,6 +107,10 @@ class Text extends LaminasElement\Text implements InputProviderInterface
 
     /**
      * Provide default input rules for this element.
+     *
+     * @return (array|mixed|null|string)[]
+     *
+     * @psalm-return array{name: null|string, required: mixed, filters: list{array{name: \Laminas\Filter\StringTrim::class}}, validators: array}
      */
     public function getInputSpecification(): array
     {

@@ -37,7 +37,12 @@ class SumContextTest extends MockeryTestCase
         $this->assertEquals($expected, $this->sut->isValid(null, $context));
     }
 
-    public function providerIsValid()
+    /**
+     * @return ((float|int|null)[]|bool|int|null)[][]
+     *
+     * @psalm-return array{'Hours Per Week invalid example with all contexts are null': list{1, null, array{hoursMon: null, hoursTue: null, hoursWed: null, hoursThu: null, hoursFri: null, hoursSat: null, hoursSun: null}, false}, 'Hours Per Week invalid example with a zero digit in any 1 context': list{1, null, array{hoursMon: null, hoursTue: 0, hoursWed: null, hoursThu: null, hoursFri: null, hoursSat: null, hoursSun: null}, false}, 'Hours Per Week invalid example with a zero digit in any other context': list{1, null, array{hoursMon: null, hoursTue: null, hoursWed: null, hoursThu: null, hoursFri: null, hoursSat: null, hoursSun: 0}, false}, 'Hours Per Week valid example with one float value, rest are null': list{1, null, array{hoursMon: null, hoursTue: null, hoursWed: null, hoursThu: null, hoursFri: null, hoursSat: null, hoursSun: float}, true}, 'Hours Per Week valid example with two float values, rest are null': list{1, null, array{hoursMon: null, hoursTue: null, hoursWed: float, hoursThu: null, hoursFri: null, hoursSat: null, hoursSun: float}, true}, 'Hours Per Week valid example with all float value, none are null': list{1, null, array{hoursMon: float, hoursTue: 8, hoursWed: 12, hoursThu: float, hoursFri: float, hoursSat: float, hoursSun: float}, true}, 0: list{null, 10, array{foo: 3, bar: 3}, true}, 1: list{null, 10, array{foo: 3, bar: 3, cake: 3, box: 3}, false}, 2: list{null, 10, array{foo: 3, bar: 3, cake: 3, box: 1}, true}, 3: list{10, null, array{foo: 3, bar: 3, cake: 3, box: 1}, true}, 4: list{10, null, array{foo: 3, bar: 3, cake: 3}, false}, 5: list{10, null, array{foo: 3, bar: 3, cake: 3, box: 3}, true}, 6: list{1, 5, array{foo: 1}, true}, 7: list{1, 5, array{foo: 5}, true}, 8: list{1, 5, array{foo: 0}, false}, 9: list{1, 5, array{foo: 6}, false}}
+     */
+    public function providerIsValid(): array
     {
         return [
             // Data sets that match requirements for the Hours Per Week fieldset

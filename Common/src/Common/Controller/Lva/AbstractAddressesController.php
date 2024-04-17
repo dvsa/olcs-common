@@ -30,36 +30,23 @@ abstract class AbstractAddressesController extends AbstractController
 
     protected string $baseRoute = 'lva-%s/addresses';
 
-    protected FormHelperService $formHelper;
-
-    protected FlashMessengerHelperService $flashMessengerHelper;
-
-    protected FormServiceManager $formServiceManager;
-
-    protected ScriptFactory $scriptFactory;
-
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
-        FormHelperService $formHelper,
-        FlashMessengerHelperService $flashMessengerHelper,
-        FormServiceManager $formServiceManager,
-        ScriptFactory $scriptFactory
+        protected FormHelperService $formHelper,
+        protected FlashMessengerHelperService $flashMessengerHelper,
+        protected FormServiceManager $formServiceManager,
+        protected ScriptFactory $scriptFactory
     ) {
-        $this->formHelper = $formHelper;
-        $this->flashMessengerHelper = $flashMessengerHelper;
-        $this->formServiceManager = $formServiceManager;
-        $this->scriptFactory = $scriptFactory;
-
         parent::__construct($niTextTranslationUtil, $authService);
     }
 
     /**
      * Process action - Index
      *
-     * @return \Common\Service\Cqrs\Response|\Common\View\Model\Section
+     * @return \Laminas\Http\Response|\Laminas\View\Model\ViewModel|array|false
      */
-    public function indexAction()
+    public function indexAction(): array|false|\Laminas\View\Model\ViewModel|\Laminas\Http\Response
     {
         /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();

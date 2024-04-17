@@ -67,30 +67,18 @@ abstract class AbstractDiscsController extends AbstractController
 
     protected FlashMessengerHelperService $flashMessengerHelper;
 
-    protected FormServiceManager $formServiceManager;
-
-    protected ScriptFactory $scriptFactory;
-
-    protected TableFactory $tableFactory;
-
-    protected GuidanceHelperService $guidanceHelper;
-
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
         FormHelperService $formHelper,
         FlashMessengerHelperService $flashMessengerHelper,
-        FormServiceManager $formServiceManager,
-        TableFactory $tableFactory,
-        GuidanceHelperService $guidanceHelper,
-        ScriptFactory $scriptFactory
+        protected FormServiceManager $formServiceManager,
+        protected TableFactory $tableFactory,
+        protected GuidanceHelperService $guidanceHelper,
+        protected ScriptFactory $scriptFactory
     ) {
         $this->formHelper = $formHelper;
         $this->flashMessengerHelper = $flashMessengerHelper;
-        $this->formServiceManager = $formServiceManager;
-        $this->tableFactory = $tableFactory;
-        $this->guidanceHelper = $guidanceHelper;
-        $this->scriptFactory = $scriptFactory;
 
         parent::__construct($niTextTranslationUtil, $authService);
     }
@@ -246,10 +234,8 @@ abstract class AbstractDiscsController extends AbstractController
 
     /**
      * Get Table of disks form
-     *
-     * @return \Common\Form\Form
      */
-    protected function getDiscsForm()
+    protected function getDiscsForm(): \Common\Form\Form|null
     {
         $formHelper = $this->formHelper;
 
@@ -271,10 +257,8 @@ abstract class AbstractDiscsController extends AbstractController
 
     /**
      * Get disks table
-     *
-     * @return TableBuilder
      */
-    protected function getDiscsTable()
+    protected function getDiscsTable(): TableBuilder|null
     {
         $tableParams = $this->getFilters();
         $tableParams['query'] = $tableParams;

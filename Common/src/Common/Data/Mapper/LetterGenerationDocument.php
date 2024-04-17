@@ -15,6 +15,11 @@ namespace Common\Data\Mapper;
  */
 class LetterGenerationDocument implements MapperInterface
 {
+    /**
+     * @return (array|mixed)[]
+     *
+     * @psalm-return array{data: array, details: array{category: mixed, documentSubCategory: mixed, documentTemplate: mixed, bookmarks: mixed}, bookmarks: mixed}
+     */
     public static function mapFromResult(array $data)
     {
         $meta = json_decode($data['metadata'], true);

@@ -32,16 +32,13 @@ class DeclarationController extends AbstractContinuationController
 
     protected $currentStep = self::STEP_DECLARATION;
 
-    protected FormHelperService $formHelper;
-
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
         FormServiceManager $formServiceManager,
         TranslationHelperService $translationHelper,
-        FormHelperService $formHelper
+        protected FormHelperService $formHelper
     ) {
-        $this->formHelper = $formHelper;
         parent::__construct($niTextTranslationUtil, $authService, $formServiceManager, $translationHelper);
     }
 

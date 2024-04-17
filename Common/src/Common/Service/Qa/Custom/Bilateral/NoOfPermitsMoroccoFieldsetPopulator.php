@@ -7,10 +7,7 @@ use Laminas\Form\Fieldset;
 
 class NoOfPermitsMoroccoFieldsetPopulator implements FieldsetPopulatorInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function populate($form, Fieldset $fieldset, array $options): void
+    public function populate(mixed $form, Fieldset $fieldset, array $options): void
     {
         $fieldset->add(
             [

@@ -59,11 +59,11 @@ class NoOfPermitsFormTest extends TestCase
     }
 
     private function createParentValidForm(
-        $element1NonZeroValue,
-        $element2NonZeroValue,
-        $element3NonZeroValue,
-        $element4NonZeroValue
-    ) {
+        bool $element1NonZeroValue,
+        bool $element2NonZeroValue,
+        bool $element3NonZeroValue,
+        bool $element4NonZeroValue
+    ): m\LegacyMockInterface {
         $topLevelFieldset1 = new Fieldset('topLevelFieldset1');
         $topLevelFieldset1->add($this->createNoOfPermitsElementMock('noOfPermitsElement1', $element1NonZeroValue));
         $topLevelFieldset1->add($this->createNoOfPermitsElementMock('noOfPermitsElement2', $element2NonZeroValue));
@@ -95,7 +95,7 @@ class NoOfPermitsFormTest extends TestCase
         return $noOfPermitsForm;
     }
 
-    private function createNoOfPermitsElementMock($name, $hasNonZeroValue)
+    private function createNoOfPermitsElementMock(string $name, $hasNonZeroValue): NoOfPermitsElement
     {
         $noOfPermitsElement = m::mock(NoOfPermitsElement::class);
         $noOfPermitsElement->shouldReceive('getName')

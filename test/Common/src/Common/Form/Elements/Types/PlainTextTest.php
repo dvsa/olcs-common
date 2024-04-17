@@ -77,7 +77,7 @@ class PlainTextTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(self::INITIAL_TEXT_PAYLOAD, $this->render());
     }
 
-    private function render()
+    private function render(): string
     {
         return $this->helper->render($this->plainTextElement);
     }

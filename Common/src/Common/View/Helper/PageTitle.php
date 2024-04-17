@@ -12,20 +12,8 @@ use Olcs\Logging\Log\Logger;
  */
 class PageTitle extends AbstractHelper
 {
-    private Translate $translator;
-
-    private Placeholder $placeholder;
-
-    private $routeMatchName;
-
-    private $action;
-
-    public function __construct(Translate $translator, Placeholder $placeholder, $routeMatchName = null, $action = null)
+    public function __construct(private Translate $translator, private Placeholder $placeholder, private $routeMatchName = null, private $action = null)
     {
-        $this->translator = $translator;
-        $this->placeholder = $placeholder;
-        $this->routeMatchName = $routeMatchName;
-        $this->action = $action;
     }
 
     /**

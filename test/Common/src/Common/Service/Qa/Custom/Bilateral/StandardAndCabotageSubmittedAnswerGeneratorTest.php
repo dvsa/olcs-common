@@ -33,7 +33,12 @@ class StandardAndCabotageSubmittedAnswerGeneratorTest extends MockeryTestCase
         );
     }
 
-    public function dpGenerate()
+    /**
+     * @return (string|string[])[][]
+     *
+     * @psalm-return list{list{array{qaElement: 'N', yesContent: ''}, 'qanda.bilaterals.cabotage.answer.standard-only'}, list{array{qaElement: 'Y', yesContent: 'qanda.bilaterals.cabotage.answer.standard-and-cabotage'}, 'qanda.bilaterals.cabotage.answer.standard-and-cabotage'}, list{array{qaElement: 'Y', yesContent: 'qanda.bilaterals.cabotage.answer.standard-only'}, 'qanda.bilaterals.cabotage.answer.standard-only'}, list{array{qaElement: 'Y', yesContent: ''}, ''}}
+     */
+    public function dpGenerate(): array
     {
         return [
             [

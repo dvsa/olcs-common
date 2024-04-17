@@ -60,18 +60,12 @@ abstract class AbstractContinuationController extends AbstractController
 
     protected $currentStep = self::STEP_DEFAULT;
 
-    protected FormServiceManager $formServiceManager;
-
-    protected TranslationHelperService $translationHelper;
-
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
-        FormServiceManager $formServiceManager,
-        TranslationHelperService $translationHelper
+        protected FormServiceManager $formServiceManager,
+        protected TranslationHelperService $translationHelper
     ) {
-        $this->formServiceManager = $formServiceManager;
-        $this->translationHelper = $translationHelper;
         parent::__construct($niTextTranslationUtil, $authService);
     }
 
@@ -316,9 +310,11 @@ abstract class AbstractContinuationController extends AbstractController
      * @param int    $path path
      * @param string $step step
      *
-     * @return array
+     * @return int[]|string
+     *
+     * @psalm-return ''|array{current: int, total: 2|3|4}
      */
-    protected function getStepDetails($path, $step)
+    protected function getStepDetails($path, $step): array|string
     {
         $steps = [];
 

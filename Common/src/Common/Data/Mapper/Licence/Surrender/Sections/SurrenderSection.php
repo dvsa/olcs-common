@@ -26,40 +26,22 @@ class SurrenderSection
     private $heading;
 
     /**
-     * @var array
-     */
-    private $data;
-
-    /**
-     * @var Url
-     */
-    private $urlHelper;
-
-    /**
      * @var TranslationHelperService
      */
     private $translator;
 
-    private $section;
-
 
     public function __construct(
-        array $data,
-        Url $urlHelper,
+        private array $data,
+        private Url $urlHelper,
         TranslationHelperService $translator,
-        $section
+        private $section
     ) {
 
-        $this->data = $data;
-        $this->urlHelper = $urlHelper;
         $this->translator = $translator;
-        $this->section = $section;
     }
 
-    /**
-     * @param mixed $heading
-     */
-    public function setHeading($heading): void
+    public function setHeading(string $heading): void
     {
         $this->heading = $heading;
     }
@@ -96,6 +78,11 @@ class SurrenderSection
     }
 
 
+    /**
+     * @param (int|string)|false|null $label
+     *
+     * @psalm-param array-key|false|null $label
+     */
     protected function makeChangeLink($label = null)
     {
         $returnRoutes = [

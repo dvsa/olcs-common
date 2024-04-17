@@ -20,15 +20,12 @@ class LicenceSoleTrader extends AbstractSoleTrader
 
     protected PeopleLvaService $peopleLvaService;
 
-    private FormServiceManager $formServiceLocator;
-
     public function __construct(
         FormHelperService $formHelper,
         AuthorizationService $authService,
         PeopleLvaService $peopleLvaService,
-        FormServiceManager $formServiceLocator
+        private FormServiceManager $formServiceLocator
     ) {
-        $this->formServiceLocator = $formServiceLocator;
         parent::__construct($formHelper, $authService, $peopleLvaService);
     }
 

@@ -15,7 +15,12 @@ namespace Common\Data\Mapper\Lva;
  */
 class LicenceHistory
 {
-    public static function mapFromResult(array $data)
+    /**
+     * @return array[]
+     *
+     * @psalm-return array{data: array}
+     */
+    public static function mapFromResult(array $data): array
     {
         return [
             'data' => $data

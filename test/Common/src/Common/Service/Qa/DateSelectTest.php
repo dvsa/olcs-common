@@ -52,14 +52,19 @@ class DateSelectTest extends MockeryTestCase
         $this->dateSelect->setValue($value);
     }
 
-    public function dpSetValueWithOther()
+    /**
+     * @return (int|string[]|true)[][]
+     *
+     * @psalm-return list{list{array{key1: 'value1', key2: 'value2'}}, list{431}, list{true}}
+     */
+    public function dpSetValueWithOther(): array
     {
         return [
             [
                 ['key1' => 'value1', 'key2' => 'value2']
             ],
-            [431],
-            [true],
+            [[431]],
+            [[true]],
         ];
     }
 

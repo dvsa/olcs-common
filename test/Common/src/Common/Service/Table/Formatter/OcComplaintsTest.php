@@ -22,7 +22,12 @@ class OcComplaintsTest extends TestCase
         $this->assertEquals((new OcComplaints())->format($data), $complaints);
     }
 
-    public function dpFormatDataProvider()
+    /**
+     * @return ((int[][][]|string)[]|int)[][]
+     *
+     * @psalm-return list{list{array{operatingCentre: array{complaints: list{array{id: 1}, array{id: 2}, array{id: 3}}}}, 3}, list{list{'operatingCentre'}, 0}}
+     */
+    public function dpFormatDataProvider(): array
     {
         return [
             [

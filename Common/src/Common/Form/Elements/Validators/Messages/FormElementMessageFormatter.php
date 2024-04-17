@@ -37,7 +37,7 @@ class FormElementMessageFormatter
     public function enableReplacementOfMessage(string $messageKey, $defaultMessageOrProvider): void
     {
         if (is_string($defaultMessageOrProvider)) {
-            $defaultMessageOrProvider = static fn() => $defaultMessageOrProvider;
+            $defaultMessageOrProvider = static fn(): string => $defaultMessageOrProvider;
         }
 
         assert(is_callable($defaultMessageOrProvider), 'Expected default message provider to be callable or string');
@@ -54,9 +54,8 @@ class FormElementMessageFormatter
 
     /**
      * @param string $message
-     * @param mixed $messageKey
      */
-    public function formatElementMessage(ElementInterface $element, $message, $messageKey = null): string
+    public function formatElementMessage(ElementInterface $element, $message, mixed $messageKey = null): string
     {
         $label = $this->getElementShortLabel($element);
         if ($label === '' || $label === '0') {
@@ -151,10 +150,7 @@ class FormElementMessageFormatter
         return $this->translator->translate($label);
     }
 
-    /**
-     * @param mixed $messageKey
-     */
-    protected function replaceDefaultValidationMessages(ElementInterface $element, $messageKey, string $message): string
+    protected function replaceDefaultValidationMessages(ElementInterface $element, mixed $messageKey, string $message): string
     {
         if ($this->isDefaultMessageForKey($messageKey, $message)) {
             $elementType = $element->getAttribute('type');

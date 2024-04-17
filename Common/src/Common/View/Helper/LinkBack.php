@@ -12,12 +12,10 @@ use Laminas\View\Helper\AbstractHelper;
  */
 class LinkBack extends AbstractHelper
 {
-    /** @var  \Laminas\Http\PhpEnvironment\Request */
-    private Request $request;
-
-    public function __construct(Request $request)
-    {
-        $this->request = $request;
+    public function __construct(
+        /** @var  \Laminas\Http\PhpEnvironment\Request */
+        private Request $request
+    ) {
     }
 
     /**

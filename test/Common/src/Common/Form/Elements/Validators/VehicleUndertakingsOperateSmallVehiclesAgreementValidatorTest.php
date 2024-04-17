@@ -33,7 +33,12 @@ class VehicleUndertakingsOperateSmallVehiclesAgreementValidatorTest extends \PHP
         $this->assertEquals($expected, $this->validator->isValid($value, $context));
     }
 
-    public function providerIsValid()
+    /**
+     * @return (bool|string|string[])[][]
+     *
+     * @psalm-return list{list{'N', array<never, never>, false}, list{'Y', array<never, never>, true}, list{'N', array{psvOperateSmallVhl: 'Y'}, true}, list{'Y', array{psvOperateSmallVhl: 'Y'}, true}, list{'Y', array{psvOperateSmallVhl: 'N'}, true}, list{'N', array{psvOperateSmallVhl: 'N'}, false}}
+     */
+    public function providerIsValid(): array
     {
         return [
             // no context means scotland, therefore required

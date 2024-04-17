@@ -21,7 +21,12 @@ class PrepareAttributesTraitStub extends AbstractHelper
         ],
     ];
 
-    public function getTranslatableAttributes()
+    /**
+     * @return bool[]
+     *
+     * @psalm-return array<string, bool>
+     */
+    public function getTranslatableAttributes(): array
     {
         return $this->translatableAttributes;
     }

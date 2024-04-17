@@ -109,7 +109,7 @@ trait CheckForCrudAction
             return '';
         }
 
-        if (strstr($action, '-') === '' || strstr($action, '-') === '0' || strstr($action, '-') === false) {
+        if (strstr($action, '-') === '' || strstr($action, '-') === '0' || !str_contains($action, '-')) {
             return $action;
         }
 

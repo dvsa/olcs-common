@@ -6,12 +6,8 @@ use Laminas\I18n\Translator\TranslatorInterface;
 
 class TranslationHelperService
 {
-    protected TranslatorInterface $translator;
-
-    public function __construct(
-        TranslatorInterface $translator
-    ) {
-        $this->translator = $translator;
+    public function __construct(protected TranslatorInterface $translator)
+    {
     }
 
     /**
@@ -69,7 +65,7 @@ class TranslationHelperService
      * @param string $message
      * @return string
      */
-    public function translate($message, $translateToWelsh = 'N')
+    public function translate($message, string $translateToWelsh = 'N')
     {
         $locale = ($translateToWelsh === 'Y') ? 'cy_GB' : null;
         return $this->translator->translate($message, 'default', $locale);

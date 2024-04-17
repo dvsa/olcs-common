@@ -7,6 +7,8 @@ use Laminas\Filter\AbstractFilter;
 /**
  * Class NullToFloat
  * @package Common\Filter
+ *
+ * @template-extends AbstractFilter<mixed, float>
  */
 class NullToFloat extends AbstractFilter
 {

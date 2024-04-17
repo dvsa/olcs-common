@@ -32,7 +32,7 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
         'checkForUnexpectedResponseCode'
     ];
 
-    public function getSutMock($methods = null)
+    public function getSutMock(array|null $methods = null): RestClient
     {
         if ($methods === null) {
             $methods = [];

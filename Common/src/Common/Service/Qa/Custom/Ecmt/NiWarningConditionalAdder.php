@@ -7,18 +7,14 @@ use Laminas\Form\Fieldset;
 
 class NiWarningConditionalAdder
 {
-    /** @var WarningAdder */
-    private $warningAdder;
-
     /**
      * Create service instance
      *
      *
      * @return NiWarningConditionalAdder
      */
-    public function __construct(WarningAdder $warningAdder)
+    public function __construct(private WarningAdder $warningAdder)
     {
-        $this->warningAdder = $warningAdder;
     }
 
     /**

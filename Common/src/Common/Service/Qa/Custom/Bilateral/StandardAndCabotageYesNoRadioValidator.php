@@ -6,18 +6,14 @@ use Laminas\Validator\AbstractValidator;
 
 class StandardAndCabotageYesNoRadioValidator extends AbstractValidator
 {
-    /** @var Radio */
-    private $yesContentElement;
-
     /**
      * Create service instance
      *
      *
      * @return StandardAndCabotageYesNoRadioValidator
      */
-    public function __construct(Radio $yesContentElement)
+    public function __construct(private Radio $yesContentElement)
     {
-        $this->yesContentElement = $yesContentElement;
     }
 
     /**

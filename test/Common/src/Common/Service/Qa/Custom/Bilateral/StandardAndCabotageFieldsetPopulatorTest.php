@@ -180,7 +180,12 @@ class StandardAndCabotageFieldsetPopulatorTest extends MockeryTestCase
         $this->standardAndCabotageFieldsetPopulator->populate($this->form, $this->fieldset, $options);
     }
 
-    public function dpPopulateCabotageRequired()
+    /**
+     * @return string[][]
+     *
+     * @psalm-return list{list{'qanda.bilaterals.cabotage.answer.cabotage-only'}, list{'qanda.bilaterals.cabotage.answer.standard-and-cabotage'}}
+     */
+    public function dpPopulateCabotageRequired(): array
     {
         return [
             [StandardAndCabotageFieldsetPopulator::ANSWER_CABOTAGE_ONLY],

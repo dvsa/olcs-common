@@ -27,7 +27,12 @@ class FileUploadCountTest extends MockeryTestCase
         $this->assertSame($expected, $valid);
     }
 
-    public function dataProviderTestIsValid()
+    /**
+     * @return (bool|int|int[])[][]
+     *
+     * @psalm-return list{list{false, 2, array<never, never>}, list{false, 2, array{uploadedFileCount: 1}}, list{true, 2, array{uploadedFileCount: 2}}, list{true, 1, array{uploadedFileCount: 1}}, list{true, 2, array{uploadedFileCount: 2}}}
+     */
+    public function dataProviderTestIsValid(): array
     {
         return [
             // isValid, min, context

@@ -4,28 +4,13 @@ namespace Common\Service\Table\Type;
 
 use Common\Util\Escape;
 
-/**
- * ActionLinks type
- *
- * @author Mat Evans <mat.evans@valtech.co.uk>
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
- */
 class ActionLinks extends Selector
 {
     public const DEFAULT_INPUT_NAME = 'table[action][delete][%d]';
 
     public const BUTTON_MARKUP = '<button data-prevent-double-click="true" data-module="govuk-button" type="submit" class="%s" name="%s" aria-label="%s">%s</button>';
 
-    /**
-     * Render
-     *
-     * @param array $data
-     * @param array $column
-     * @param string $formattedContent
-     *
-     * @return string
-     */
-    public function render($data, $column, $formattedContent = null)
+    public function render(array $data, array $column, string|null $formattedContent = null): string
     {
         $translator = $this->getTable()->getServiceLocator()->get('translator');
         $remove = $translator->translate(self::KEY_ACTION_LINKS_REMOVE);
@@ -34,9 +19,7 @@ class ActionLinks extends Selector
         $replaceAria = $translator->translate(self::KEY_ACTION_LINKS_REPLACE_ARIA);
         $ariaDescription = $this->getAriaDescription($data, $column, $translator);
 
-        $content = '';
-
-        $content .= $this->renderRemoveLink($data, $column, $remove, $removeAria, $ariaDescription);
+        $content = $this->renderRemoveLink($data, $column, $remove, $removeAria, $ariaDescription);
 
         return $content . $this->renderReplaceLink($data, $column, $replace, $replaceAria, $ariaDescription);
     }
@@ -63,7 +46,7 @@ class ActionLinks extends Selector
      *
      * @return bool
      */
-    private function isLinkVisible($data, $column, $link, $default = true)
+    private function isLinkVisible($data, $column, $link, bool $default = true)
     {
         $setting = 'is' . $link . 'Visible';
         if (isset($column[$setting]) && is_callable($column[$setting])) {
@@ -83,7 +66,7 @@ class ActionLinks extends Selector
      *
      * @return string
      */
-    private function renderRemoveLink($data, $column, $remove, $removeAria, $ariaDescription)
+    private function renderRemoveLink($data, $column, $remove, $removeAria, string $ariaDescription)
     {
         $content = '';
         if ($this->isLinkVisible($data, $column, 'Remove')) {
@@ -97,7 +80,7 @@ class ActionLinks extends Selector
         return $content;
     }
 
-    private function getClasses($column): string
+    private function getClasses(array $column): string
     {
         if (isset($column['actionClasses'])) {
             return $column['actionClasses'];
@@ -117,7 +100,7 @@ class ActionLinks extends Selector
      *
      * @return string
      */
-    private function renderReplaceLink($data, $column, $replace, $replaceAria, $ariaDescription)
+    private function renderReplaceLink($data, $column, $replace, $replaceAria, string $ariaDescription)
     {
         $content = '';
         if ($this->isLinkVisible($data, $column, 'Replace', false)) {

@@ -52,7 +52,12 @@ class LocalAuthorityTest extends AbstractDataServiceTestCase
         $this->assertEquals($expected, $this->sut->fetchListOptions('', $useGroups));
     }
 
-    public function provideFetchListOptions()
+    /**
+     * @return (array|bool)[][]
+     *
+     * @psalm-return list{list{array, array, false}, list{false, array<never, never>, false}, list{array, array, true}}
+     */
+    public function provideFetchListOptions(): array
     {
         return [
             [$this->getSingleSource(), $this->getSingleExpected(), false],
@@ -105,7 +110,12 @@ class LocalAuthorityTest extends AbstractDataServiceTestCase
         $this->sut->fetchListData();
     }
 
-    public function provideFetchListData()
+    /**
+     * @return (array|false)[][]
+     *
+     * @psalm-return list{list{false, false}, list{array{Results: array}, array}, list{array{some: 'data'}, false}}
+     */
+    public function provideFetchListData(): array
     {
         return [
             [false, false],

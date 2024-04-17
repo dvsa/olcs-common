@@ -77,13 +77,14 @@ class SessionFactoryTest extends MockeryTestCase
         $this->sut = new SessionFactory();
     }
 
-    protected function config(array $config = [])
+    protected function config(array $config = []): void
     {
         $this->serviceManager->setService('config', $config);
     }
 
-    protected function setUpDefaultServices(ServiceManager $serviceManager)
+    protected function setUpDefaultServices(ServiceManager $serviceManager): ServiceManager
     {
-        $this->serviceManager->setService('CommandSender', m::mock(CommandSender::class));
+        $serviceManager->setService('CommandSender', m::mock(CommandSender::class));
+        return $serviceManager;
     }
 }

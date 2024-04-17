@@ -32,7 +32,12 @@ class ReceivedAmountTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $this->sut->isValid($value, $context));
     }
 
-    public function isValidProvider()
+    /**
+     * @return (bool|null|string|string[])[][]
+     *
+     * @psalm-return list{list{'0', null, true}, list{'100', null, true}, list{'100', array{minAmountForValidator: '10'}, true}, list{'10', array{minAmountForValidator: '10'}, true}, list{'9.99', array{minAmountForValidator: '10'}, false}}
+     */
+    public function isValidProvider(): array
     {
         return [
             [

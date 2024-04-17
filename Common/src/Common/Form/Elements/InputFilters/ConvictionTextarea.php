@@ -25,6 +25,10 @@ class ConvictionTextarea extends LaminasElement implements InputProviderInterfac
 
     /**
      * Provide default input rules for this element.
+     *
+     * @return (array|bool|null|string)[]
+     *
+     * @psalm-return array{name: null|string, required: true, allow_empty: false, validators: array<never, never>}
      */
     public function getInputSpecification(): array
     {

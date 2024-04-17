@@ -101,7 +101,12 @@ class CheckboxFieldsetPopulatorTest extends MockeryTestCase
         $sut->populate($form, $fieldset, $options);
     }
 
-    public function dpTestPopulate()
+    /**
+     * @return bool[][]
+     *
+     * @psalm-return list{list{true}, list{false}}
+     */
+    public function dpTestPopulate(): array
     {
         return [
             [true],

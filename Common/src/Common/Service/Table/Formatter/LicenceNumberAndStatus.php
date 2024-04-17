@@ -8,11 +8,8 @@ use Common\Util\Escape;
 
 class LicenceNumberAndStatus implements FormatterPluginManagerInterface
 {
-    private UrlHelperService $urlHelper;
-
-    public function __construct(UrlHelperService $urlHelper)
+    public function __construct(private UrlHelperService $urlHelper)
     {
-        $this->urlHelper = $urlHelper;
     }
 
     /**
@@ -41,7 +38,7 @@ class LicenceNumberAndStatus implements FormatterPluginManagerInterface
         return $escapedLicNo;
     }
 
-    private function markupWithLink($row): string
+    private function markupWithLink(array $row): string
     {
         return vsprintf(
             '<a class="govuk-link" href="%s">%s</a>',

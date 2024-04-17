@@ -41,10 +41,9 @@ class SumCompare extends AbstractCompare
     protected $sumWith;
 
     /**
-     * @param mixed $sumWith
      * @return $this
      */
-    public function setSumWith($sumWith)
+    public function setSumWith(mixed $sumWith)
     {
         $this->sumWith = $sumWith;
         return $this;
@@ -79,10 +78,9 @@ class SumCompare extends AbstractCompare
     /**
      * Sets options
      *
-     * @param  array $options
-     * @return NumberCompare
+     * @param array $options
      */
-    public function setOptions($options = [])
+    public function setOptions($options = []): static
     {
         if (isset($options['sum_with'])) {
             $this->setSumWith($options['sum_with']);

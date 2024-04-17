@@ -40,7 +40,12 @@ class DashboardTmActionLinkTest extends MockeryTestCase
         m::close();
     }
 
-    public function dataProviderFormat()
+    /**
+     * @return (bool|string)[][]
+     *
+     * @psalm-return list{array{statusId: 'tmap_st_awaiting_signature', isVariation: true, expectTextKey: 'provide-details'}, array{0: 'tmap_st_incomplete', isVariation: false, 1: 'provide-details'}, array{0: 'tmap_st_operator_signed', isVariation: false, 1: 'view-details'}, array{0: 'tmap_st_postal_application', isVariation: false, 1: 'view-details'}, array{0: 'tmap_st_tm_signed', isVariation: false, 1: 'view-details'}}
+     */
+    public function dataProviderFormat(): array
     {
         return [
             [

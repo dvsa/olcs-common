@@ -22,13 +22,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
 
     protected FlashMessengerHelperService $flashMessengerHelper;
 
-    protected FormServiceManager $formServiceManager;
-
     protected ScriptFactory $scriptFactory;
-
-    protected TableFactory $tableFactory;
-
-    protected $lvaAdapter;
     /**
      * @param $lvaAdapter
      */
@@ -37,15 +31,12 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
         AuthorizationService $authService,
         FormHelperService $formHelper,
         FlashMessengerHelperService $flashMessengerHelper,
-        FormServiceManager $formServiceManager,
-        TableFactory $tableFactory,
-        $lvaAdapter
+        protected FormServiceManager $formServiceManager,
+        protected TableFactory $tableFactory,
+        protected $lvaAdapter
     ) {
         $this->formHelper = $formHelper;
         $this->flashMessengerHelper = $flashMessengerHelper;
-        $this->formServiceManager = $formServiceManager;
-        $this->tableFactory = $tableFactory;
-        $this->lvaAdapter = $lvaAdapter;
 
         parent::__construct($niTextTranslationUtil, $authService);
     }
@@ -165,7 +156,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
         return $this->render($mode . '_condition_undertaking', $form);
     }
 
-    protected function updateCompletion()
+    protected function updateCompletion(): void
     {
         if ($this->lva != 'licence') {
             $this->handleCommand(
@@ -202,7 +193,10 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
      * Create a new ConditionUndertaking
      *
      * @param array $formData
+     *
      * @throws \RuntimeException
+     *
+     * @return void
      */
     protected function create($formData)
     {
@@ -220,7 +214,10 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
      * Update a ConditionUndertaking
      *
      * @param array $formData
+     *
      * @throws \RuntimeException
+     *
+     * @return void
      */
     protected function update($formData)
     {
@@ -236,7 +233,10 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
 
     /**
      * Delete one or more ConditionUndertaking
+     *
      * @throws \RuntimeException
+     *
+     * @return void
      */
     protected function delete()
     {

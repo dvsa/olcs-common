@@ -17,6 +17,7 @@ use Common\Data\Mapper\Lva\TransportManager\Sections\OtherLicences;
 use Common\Data\Mapper\Lva\TransportManager\Sections\Responsibilities;
 use Common\Data\Mapper\Lva\TransportManager\Sections\RevokedLicences;
 use Common\Service\Helper\TranslationHelperService;
+use Laminas\Form\FormInterface;
 
 /**
  * Transport Manager Application
@@ -25,7 +26,7 @@ use Common\Service\Helper\TranslationHelperService;
  */
 class TransportManagerApplication
 {
-    public static function mapFromErrors($form, array $errors)
+    public static function mapFromErrors(FormInterface $form, array $errors): array
     {
         $details = [
             'registeredUser'

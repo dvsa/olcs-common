@@ -187,7 +187,7 @@ class DataRetentionRecordLinkTest extends TestCase
 
         $queryData = [
             'entityName' => 'undefined',
-            'organisationName' => null,
+            'organisationName' => 'org',
             'organisationId' => self::ORGANISATION_ID,
             'entityPk' => self::ENTITY_ID,
             'licenceId' => self::LICENCE_ID,
@@ -197,6 +197,7 @@ class DataRetentionRecordLinkTest extends TestCase
         ];
 
         $this->assertEquals(
+            $queryData['organisationName'] . ' / ' .
             $queryData['licNo'] . ' / ' .
             $queryData['entityName'] . ' ' .
             $queryData['entityPk'] .
@@ -205,7 +206,13 @@ class DataRetentionRecordLinkTest extends TestCase
         );
     }
 
-    private function getViewHelperWithStatusMock($statusArray, $statusLabel): void
+    /**
+     * @param string[] $statusArray
+     *
+     * @psalm-param 'status label'|'statusLabel' $statusLabel
+     * @psalm-param array{value: 'To review', colour: 'green'} $statusArray
+     */
+    private function getViewHelperWithStatusMock(array $statusArray, string $statusLabel): void
     {
         $mockStatusHelper = m::mock(StatusHelper::class);
         $mockStatusHelper->shouldReceive('__invoke')

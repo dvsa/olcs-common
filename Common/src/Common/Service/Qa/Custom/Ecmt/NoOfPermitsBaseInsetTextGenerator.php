@@ -7,22 +7,14 @@ use Common\View\Helper\CurrencyFormatter;
 
 class NoOfPermitsBaseInsetTextGenerator
 {
-    /** @var TranslationHelperService */
-    private $translator;
-
-    /** @var CurrencyFormatter */
-    private $currencyFormatter;
-
     /**
      * Create service instance
      *
      *
      * @return NoOfPermitsBaseInsetTextGenerator
      */
-    public function __construct(TranslationHelperService $translator, CurrencyFormatter $currencyFormatter)
+    public function __construct(private TranslationHelperService $translator, private CurrencyFormatter $currencyFormatter)
     {
-        $this->translator = $translator;
-        $this->currencyFormatter = $currencyFormatter;
     }
 
     /**

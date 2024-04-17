@@ -118,6 +118,7 @@ class FormRowTest extends MockeryTestCase
     /**
      * @test
      * @depends invokeIsCallable
+     * @group questionable
      */
     public function invokeRendersActionButton(): void
     {
@@ -135,6 +136,7 @@ class FormRowTest extends MockeryTestCase
     /**
      * @test
      * @depends invokeIsCallable
+     * @group questionable
      */
     public function invokeRendersNoRender(): void
     {
@@ -538,6 +540,7 @@ class FormRowTest extends MockeryTestCase
     /**
      * @test
      * @depends invokeIsCallable
+     * @group questionable
      */
     public function invokeRendersSingleRadio(): void
     {
@@ -606,16 +609,9 @@ class FormRowTest extends MockeryTestCase
         $this->assertEquals(static::AN_EMPTY_STRING, $result);
     }
 
-    /**
-     * Prepare element for test
-     *
-     * @param string $type    Element type
-     * @param array  $options Options for element
-     * @return \Laminas\Form\Element
-     */
-    private function setUpElement($type = 'Text', $options = [], $attributes = ['class' => 'class'])
+    private function setUpElement(string $type = 'Text', array $options = [], array $attributes = ['class' => 'class']): Element
     {
-        if (strpos($type, '\\') === false) {
+        if (!str_contains($type, '\\')) {
             $type = '\Laminas\Form\Element\\' . ucfirst($type);
         }
 
@@ -640,7 +636,7 @@ class FormRowTest extends MockeryTestCase
         $this->setUpServiceManager();
     }
 
-    protected function setUpSut()
+    protected function setUpSut(): void
     {
         $this->sut = new CommonHelper\FormRow([]);
         $this->sut->setView($this->phpRenderer());
@@ -652,27 +648,24 @@ class FormRowTest extends MockeryTestCase
         return (new CommonHelper\FormElementErrorsFactory())->__invoke($serviceLocator, CommonHelper\FormElementErrors::class);
     }
 
-    protected function setUpDefaultServices(ServiceManager $serviceManager)
+    protected function setUpDefaultServices(ServiceManager $serviceManager): ServiceManager
     {
         $serviceManager->setFactory(FormElementMessageFormatter::class, new FormElementMessageFormatterFactory());
         $serviceManager->setService(static::VALIDATOR_MANAGER, $this->setUpValidatorPluginManager());
         $this->phpRenderer();
+        return $serviceManager;
     }
 
-    /**
-     * @return MockInterface|PhpRenderer
-     */
-    protected function phpRenderer(): MockObject
+    protected function phpRenderer(): MockObject|PhpRenderer
     {
         if (! $this->serviceManager->has(PhpRenderer::class)) {
             $instance = $this->createPartialMock(PhpRenderer::class, ['render']);
+            $instance->method('render')->willReturn('');
             $this->serviceManager->setService(PhpRenderer::class, $instance);
             $instance->setHelperPluginManager($this->viewHelperPluginManager());
         }
 
-        $instance = $this->serviceManager->get(PhpRenderer::class);
-        assert($instance instanceof MockObject);
-        return $instance;
+        return $this->serviceManager->get(PhpRenderer::class);
     }
 
     protected function viewHelperPluginManager(): HelperPluginManager
@@ -687,7 +680,6 @@ class FormRowTest extends MockeryTestCase
             $instance->setService('form_element', new CommonHelper\FormElement());
             $instance->setService('form_text', new LaminasHelper\FormText());
             $instance->setService(Doctype::class, m::mock(Doctype::class));
-
             $formElementErrors = $this->setUpFormElementErrors($this->serviceManager);
             $formElementErrors->setView($this->phpRenderer());
             $instance->setService('form_element_errors', $formElementErrors);
@@ -695,9 +687,7 @@ class FormRowTest extends MockeryTestCase
             $this->serviceManager->setService(HelperPluginManager::class, $instance);
         }
 
-        $instance = $this->serviceManager->get(HelperPluginManager::class);
-        assert($instance instanceof HelperPluginManager);
-        return $instance;
+        return $this->serviceManager->get(HelperPluginManager::class);
     }
 
     protected function translator(): Translator
@@ -707,9 +697,7 @@ class FormRowTest extends MockeryTestCase
             $this->serviceManager->setService(TranslatorInterface::class, $instance);
         }
 
-        $instance = $this->serviceManager->get(TranslatorInterface::class);
-        assert($instance instanceof Translator);
-        return $instance;
+        return $this->serviceManager->get(TranslatorInterface::class);
     }
 
     protected function setUpValidatorPluginManager(): ValidatorPluginManager

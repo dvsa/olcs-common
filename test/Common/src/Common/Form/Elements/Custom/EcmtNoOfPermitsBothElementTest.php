@@ -109,7 +109,12 @@ class EcmtNoOfPermitsBothElementTest extends MockeryTestCase
         );
     }
 
-    public function dpGetInputSpecification()
+    /**
+     * @return (bool|string)[][]
+     *
+     * @psalm-return list{list{'euro5', false, true}, list{'euro5', true, false}, list{'euro6', false, true}, list{'euro6', true, false}}
+     */
+    public function dpGetInputSpecification(): array
     {
         return [
             ['euro5', false, true],

@@ -17,11 +17,8 @@ use Common\Service\Helper\DataHelperService;
  */
 class Name implements FormatterPluginManagerInterface
 {
-    private DataHelperService $dataHelper;
-
-    public function __construct(DataHelperService $dataHelper)
+    public function __construct(private DataHelperService $dataHelper)
     {
-        $this->dataHelper = $dataHelper;
     }
 
     /**

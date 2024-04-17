@@ -21,6 +21,10 @@ class Email extends LaminasElement implements InputProviderInterface
 {
     /**
      * Provide default input rules for this element.
+     *
+     * @return ((int[]|string)[][]|false|null|string)[]
+     *
+     * @psalm-return array{name: null|string, required: false, filters: list{array{name: \Laminas\Filter\StringTrim::class}}, validators: list{array{name: \Dvsa\Olcs\Transfer\Validators\EmailAddress::class}, array{name: \Laminas\Validator\StringLength::class, options: array{min: 5, max: 255}}}}
      */
     public function getInputSpecification(): array
     {

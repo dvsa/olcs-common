@@ -35,7 +35,6 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * Get an instance of an Lva Adapter
      *
-     * @param string|null $lva
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */

@@ -17,7 +17,7 @@ abstract class AbstractPsvVehiclesVehicle
 
     protected FormServiceManager $formServiceLocator;
 
-    public function getForm($request, $params)
+    public function getForm($request, $params): \Laminas\Form\FormInterface
     {
         $form = $this->formHelper->createFormWithRequest('Lva\PsvVehiclesVehicle', $request);
 
@@ -31,6 +31,8 @@ abstract class AbstractPsvVehiclesVehicle
      *
      * @param \Laminas\Form\Form $form
      * @param array $params
+     *
+     * @return void
      */
     protected function alterForm($form, $params)
     {

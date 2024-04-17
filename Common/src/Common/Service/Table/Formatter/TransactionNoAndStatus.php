@@ -15,14 +15,8 @@ namespace Common\Service\Table\Formatter;
  */
 class TransactionNoAndStatus implements FormatterPluginManagerInterface
 {
-    protected TransactionUrl $transactionUrlFormatter;
-
-    private TransactionStatus $transactionStatusFormatter;
-
-    public function __construct(TransactionUrl $transactionUrlFormatter, TransactionStatus $transactionStatusFormatter)
+    public function __construct(protected TransactionUrl $transactionUrlFormatter, private TransactionStatus $transactionStatusFormatter)
     {
-            $this->transactionUrlFormatter = $transactionUrlFormatter;
-            $this->transactionStatusFormatter = $transactionStatusFormatter;
     }
 
     /**

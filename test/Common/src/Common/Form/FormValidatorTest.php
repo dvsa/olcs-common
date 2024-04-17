@@ -74,14 +74,11 @@ class FormValidatorTest extends MockeryTestCase
         $this->assertFalse($this->sut->isValid($form));
     }
 
-    protected function setUpSut()
+    protected function setUpSut(): void
     {
         $this->sut = new FormValidator();
     }
 
-    /**
-     * @return MockInterface|Form
-     */
     protected function form(): MockInterface
     {
         $instance = Mockery::mock(Form::class);
@@ -89,9 +86,6 @@ class FormValidatorTest extends MockeryTestCase
         return $instance;
     }
 
-    /**
-     * @return MockInterface|Form
-     */
     protected function formThatIsValid(): MockInterface
     {
         $instance = $this->form();
@@ -99,9 +93,6 @@ class FormValidatorTest extends MockeryTestCase
         return $instance;
     }
 
-    /**
-     * @return MockInterface|Form
-     */
     protected function formThatIsInvalid(): MockInterface
     {
         $instance = $this->form();

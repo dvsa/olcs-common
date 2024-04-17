@@ -2,16 +2,17 @@
 
 namespace Common\Form\View\Helper;
 
+use Common\Form\View\Helper\Extended\FormRadio;
 use Laminas\Form\ElementInterface;
 
 /**
  * Class FormRadioOption
  *
- * The decision to implement like this was to minimize the amout of code that would need to be copied from Laminas Helpers
+ * The decision to implement like this was to minimize the amount of code that would need to be copied from Laminas Helpers
  *
  * @package Common\Form\View\Helper
  */
-class FormRadioOption extends \Common\Form\View\Helper\Extended\FormRadio
+class FormRadioOption extends FormRadio
 {
     /**
      * Invoke helper
@@ -19,18 +20,16 @@ class FormRadioOption extends \Common\Form\View\Helper\Extended\FormRadio
      * @param ElementInterface|null $element       Radio element
      * @param mixed                 $labelPosition key of option to render, (strict standards do not allow changing
      *                                             method signature)
-     *
-     * @return $this|string
      */
-    public function __invoke(ElementInterface $element = null, $labelPosition = null)
+    public function __invoke(ElementInterface $element = null, mixed $labelPosition = null): self|string
     {
-        if (!$element instanceof \Laminas\Form\ElementInterface) {
+        if (!$element instanceof ElementInterface) {
             return $this;
         }
 
         $key = $labelPosition;
 
-        // Only want to render one option, so store all options in tmp varaiable
+        // Only want to render one option, so store all options in tmp variable
         $savedOptions = $element->getValueOptions();
         $element->setValueOptions([$key => $savedOptions[$key]]);
         $rendered = $this->render($element);

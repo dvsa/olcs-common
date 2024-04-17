@@ -20,13 +20,8 @@ use Laminas\Router\Http\RouteMatch;
  */
 class InternalConversationLink implements FormatterPluginManagerInterface
 {
-    private UrlHelperService $urlHelper;
-    private RouteMatch $route;
-
-    public function __construct(UrlHelperService $urlHelper, RefDataStatus $refDataStatus, RouteMatch $route)
+    public function __construct(private UrlHelperService $urlHelper, RefDataStatus $refDataStatus, private RouteMatch $route)
     {
-        $this->urlHelper = $urlHelper;
-        $this->route = $route;
     }
 
     /**

@@ -27,7 +27,7 @@ class VariationPsvVehiclesTest extends AbstractLvaFormServiceTestCase
     public function testGetFormWithoutFormActions(): void
     {
         // Mocks
-        $mockForm = m::mock();
+        $mockForm = m::mock(\Common\Form\Form::class);
 
         $mockForm->shouldReceive('has')->with('form-actions')->andReturn(false);
 
@@ -45,7 +45,7 @@ class VariationPsvVehiclesTest extends AbstractLvaFormServiceTestCase
 
     public function testGetForm(): void
     {
-        $formActions = m::mock();
+        $formActions = m::mock(\Laminas\Form\ElementInterface::class);
         $formActions->shouldReceive('has')->with('save')->andReturn(true);
         $formActions->shouldReceive('remove')->once()->with('save');
         $formActions->shouldReceive('has')->with('cancel')->andReturn(true);
@@ -54,7 +54,7 @@ class VariationPsvVehiclesTest extends AbstractLvaFormServiceTestCase
         $formActions->shouldReceive('remove')->once()->with('saveAndContinue');
 
         // Mocks
-        $mockForm = m::mock();
+        $mockForm = m::mock(\Common\Form\Form::class);
 
         $mockForm->shouldReceive('has')->with('form-actions')->andReturn(true);
         $mockForm->shouldReceive('get')->with('form-actions')->andReturn($formActions);

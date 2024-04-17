@@ -32,7 +32,12 @@ class EcmtNoOfPermitsSingleDataTransformerTest extends MockeryTestCase
         );
     }
 
-    public function dpGetTransformed()
+    /**
+     * @return string[][][]
+     *
+     * @psalm-return list{list{array{emissionsCategory: 'euro5', permitsRequired: '12'}, array{euro5: '12', euro6: '0'}}, list{array{emissionsCategory: 'euro6', permitsRequired: '8'}, array{euro5: '0', euro6: '8'}}}
+     */
+    public function dpGetTransformed(): array
     {
         return [
             [
@@ -82,7 +87,12 @@ class EcmtNoOfPermitsSingleDataTransformerTest extends MockeryTestCase
         $this->sut->getTransformed($data);
     }
 
-    public function dpGetTransformedUnexpectedData()
+    /**
+     * @return string[][][]
+     *
+     * @psalm-return list{list{array{permitsRequired: '7', euro5: '6'}}, list{array{permitsRequired: '8', euro5: '12'}}, list{array{permitsRequired: '10', euro5: '5', euro6: '7'}}}
+     */
+    public function dpGetTransformedUnexpectedData(): array
     {
         return [
             [

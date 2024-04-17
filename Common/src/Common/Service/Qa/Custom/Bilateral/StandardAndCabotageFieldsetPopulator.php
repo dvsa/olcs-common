@@ -19,34 +19,14 @@ class StandardAndCabotageFieldsetPopulator implements FieldsetPopulatorInterface
         self::ANSWER_STANDARD_AND_CABOTAGE => self::ANSWER_STANDARD_AND_CABOTAGE
     ];
 
-    /** @var RadioFactory */
-    private $radioFactory;
-
-    /** @var StandardAndCabotageYesNoRadioFactory */
-    private $standardAndCabotageYesNoRadioFactory;
-
-    /** @var YesNoRadioOptionsApplier */
-    private $yesNoRadioOptionsApplier;
-
-    /** @var StandardYesNoValueOptionsGenerator */
-    private $standardYesNoValueOptionsGenerator;
-
     /**
      * Create service instance
      *
      *
      * @return StandardAndCabotageFieldsetPopulator
      */
-    public function __construct(
-        RadioFactory $radioFactory,
-        StandardAndCabotageYesNoRadioFactory $standardAndCabotageYesNoRadioFactory,
-        YesNoRadioOptionsApplier $yesNoRadioOptionsApplier,
-        StandardYesNoValueOptionsGenerator $standardYesNoValueOptionsGenerator
-    ) {
-        $this->radioFactory = $radioFactory;
-        $this->standardAndCabotageYesNoRadioFactory = $standardAndCabotageYesNoRadioFactory;
-        $this->yesNoRadioOptionsApplier = $yesNoRadioOptionsApplier;
-        $this->standardYesNoValueOptionsGenerator = $standardYesNoValueOptionsGenerator;
+    public function __construct(private RadioFactory $radioFactory, private StandardAndCabotageYesNoRadioFactory $standardAndCabotageYesNoRadioFactory, private YesNoRadioOptionsApplier $yesNoRadioOptionsApplier, private StandardYesNoValueOptionsGenerator $standardYesNoValueOptionsGenerator)
+    {
     }
 
     /**

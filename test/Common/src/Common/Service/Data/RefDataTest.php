@@ -49,7 +49,12 @@ class RefDataTest extends RefDataTestCase
         $this->assertEquals($expected, $this->sut->fetchListOptions('test', $useGroups));
     }
 
-    public function provideFetchListOptions()
+    /**
+     * @return (array|bool|mixed)[][]
+     *
+     * @psalm-return list{list{false, array<never, never>, false}, list{array, array, false}, list{mixed, array, true}}
+     */
+    public function provideFetchListOptions(): array
     {
         return [
             [false, [], false],
@@ -110,7 +115,12 @@ class RefDataTest extends RefDataTestCase
         ];
     }
 
-    protected function getGroupSource()
+    /**
+     * @return (string|string[])[][]
+     *
+     * @psalm-return list{array{id: 'parent', description: 'Parent'}, array{id: 'val-1', description: 'Value 1', parent: array{id: 'p1', description: 'd1'}}, array{id: 'val-2', description: 'Value 2', parent: array{id: 'p2', description: 'd2'}}, array{id: 'val-3', description: 'Value 3', parent: array{id: 'p3', description: 'd3'}}}
+     */
+    protected function getGroupSource(): array
     {
         return [
             ['id' => 'parent', 'description' => 'Parent'],

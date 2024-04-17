@@ -12,14 +12,8 @@ use LmcRbacMvc\Service\AuthorizationService;
  */
 class LicenceTaxiPhv extends TaxiPhv
 {
-    protected FormHelperService $formHelper;
-
-    protected AuthorizationService $authService;
-
-    public function __construct(FormHelperService $formHelper, AuthorizationService $authService)
+    public function __construct(protected FormHelperService $formHelper, protected AuthorizationService $authService)
     {
-        $this->formHelper = $formHelper;
-        $this->authService = $authService;
     }
 
     /**

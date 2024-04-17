@@ -42,32 +42,44 @@ class FlashMessengerHelperService
         $this->flashMessenger = $flashMessenger;
     }
 
-    public function addCurrentMessage($namespace, $message): void
+    /**
+     * @psalm-param 'success message 2' $message
+     */
+    public function addCurrentMessage(string $namespace, string $message): void
     {
         $this->currentMessages[$namespace][] = $message;
     }
 
-    public function getCurrentMessages($namespace)
+    public function getCurrentMessages(string $namespace)
     {
         return $this->currentMessages[$namespace];
     }
 
-    public function addCurrentSuccessMessage($message): void
+    /**
+     * @psalm-param 'success message' $message
+     */
+    public function addCurrentSuccessMessage(string $message): void
     {
         $this->addCurrentMessage('success', $message);
     }
 
-    public function addCurrentErrorMessage($message): void
+    public function addCurrentErrorMessage(string $message): void
     {
         $this->addCurrentMessage('error', $message);
     }
 
-    public function addCurrentWarningMessage($message): void
+    /**
+     * @psalm-param 'warning message' $message
+     */
+    public function addCurrentWarningMessage(string $message): void
     {
         $this->addCurrentMessage('warning', $message);
     }
 
-    public function addCurrentInfoMessage($message): void
+    /**
+     * @psalm-param 'info message 2'|'info message' $message
+     */
+    public function addCurrentInfoMessage(string $message): void
     {
         $this->addCurrentMessage('info', $message);
     }
@@ -94,7 +106,7 @@ class FlashMessengerHelperService
         return $this->getFlashMessenger()->addErrorMessage($message);
     }
 
-    public function addProminentErrorMessage($message)
+    public function addProminentErrorMessage(string $message): static
     {
         $namespace = $this->getFlashMessenger()->getNamespace();
 
@@ -139,12 +151,12 @@ class FlashMessengerHelperService
         return $this->flashMessenger;
     }
 
-    public function addUnknownError()
+    public function addUnknownError(): FlashMessenger
     {
         return $this->addErrorMessage('unknown-error');
     }
 
-    public function addConflictError()
+    public function addConflictError(): FlashMessenger
     {
         return $this->addErrorMessage('conflict-error');
     }

@@ -15,6 +15,8 @@ abstract class AbstractLvaAdapter extends AbstractControllerAwareAdapter impleme
 
     /**
      * Alter the form based on the LVA rules
+     *
+     * @return void
      */
     public function alterForm(Form $form)
     {

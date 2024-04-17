@@ -116,7 +116,7 @@ class ScriptFactory implements FactoryInterface
      *
      * @return bool
      */
-    protected function exists($file)
+    protected function exists(string $file)
     {
         return file_exists($file);
     }
@@ -158,18 +158,18 @@ class ScriptFactory implements FactoryInterface
         return $this->filePaths;
     }
 
-    public function setFilePaths(array $filePaths)
+    public function setFilePaths(array $filePaths): static
     {
         $this->filePaths = $filePaths;
         return $this;
     }
 
-    public function getViewHelperManager()
+    public function getViewHelperManager(): HelperPluginManager
     {
         return $this->viewHelperManager;
     }
 
-    public function setViewHelperManager(\Laminas\View\HelperPluginManager $viewHelperManager)
+    public function setViewHelperManager(\Laminas\View\HelperPluginManager $viewHelperManager): static
     {
         $this->viewHelperManager = $viewHelperManager;
         return $this;

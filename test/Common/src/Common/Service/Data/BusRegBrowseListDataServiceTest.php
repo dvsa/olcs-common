@@ -13,8 +13,7 @@ use Mockery as m;
  */
 class BusRegBrowseListDataServiceTest extends AbstractDataServiceTestCase
 {
-    /** @var BusRegBrowseListDataService */
-    private $sut;
+    private BusRegBrowseListDataService $sut;
 
     protected function setUp(): void
     {
@@ -33,7 +32,12 @@ class BusRegBrowseListDataServiceTest extends AbstractDataServiceTestCase
         $this->assertEquals($expected, $this->sut->fetchListOptions($context));
     }
 
-    public function provideFetchListOptions()
+    /**
+     * @return ((string|string[])[]|false|string)[][]
+     *
+     * @psalm-return list{list{'eventRegistrationStatus', false, array<never, never>}, list{'eventRegistrationStatus', list{array{eventRegistrationStatus: 'A'}, array{eventRegistrationStatus: 'B'}, array{eventRegistrationStatus: 'C'}}, array{A: 'A', B: 'B', C: 'C'}}}
+     */
+    public function provideFetchListOptions(): array
     {
         return [
             [
@@ -98,7 +102,12 @@ class BusRegBrowseListDataServiceTest extends AbstractDataServiceTestCase
         $this->assertEquals($expected, $this->sut->fetchListData($context));
     }
 
-    public function provideFetchListData()
+    /**
+     * @return (string|string[][])[][]
+     *
+     * @psalm-return list{list{'eventRegistrationStatus', list{array{eventRegistrationStatus: 'A'}, array{eventRegistrationStatus: 'B'}, array{eventRegistrationStatus: 'C'}}, list{array{eventRegistrationStatus: 'A'}, array{eventRegistrationStatus: 'B'}, array{eventRegistrationStatus: 'C'}}}}
+     */
+    public function provideFetchListData(): array
     {
         return [
             [

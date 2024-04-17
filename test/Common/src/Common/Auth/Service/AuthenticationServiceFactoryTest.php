@@ -58,8 +58,12 @@ class AuthenticationServiceFactoryTest extends MockeryTestCase
         $this->sut = new AuthenticationServiceFactory();
     }
 
-    protected function setUpDefaultServices(ServiceManager $serviceManager)
+    /**
+     * @return void
+     */
+    protected function setUpDefaultServices(ServiceManager $serviceManager): ServiceManager
     {
         $serviceManager->setService(Session::class, $this->setUpMockService(Session::class));
+        return $serviceManager;
     }
 }

@@ -35,7 +35,12 @@ class StandardAndCabotageYesNoRadioValidatorTest extends MockeryTestCase
         );
     }
 
-    public function dpIsValidTrue()
+    /**
+     * @return ((null|string)[]|string)[][]
+     *
+     * @psalm-return list{array{value: 'Y', context: array{yesContent: 'yes_content_value'}}, array{value: 'N', context: array{yesContent: null}}}
+     */
+    public function dpIsValidTrue(): array
     {
         return [
             [

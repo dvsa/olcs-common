@@ -1114,7 +1114,12 @@ class FormHelperServiceTest extends MockeryTestCase
         $this->sut->processCompanyNumberLookupForm($form, $data, 'data', 'registeredAddress');
     }
 
-    public function companyProfileProvider()
+    /**
+     * @return (string|string[])[][][]
+     *
+     * @psalm-return array{'full profile data': array{companyProfile: array{company_name: 'Acme Ltd', registered_office_address: array{postal_code: 'CF10 1NS', locality: 'CARDIFF', address_line_1: 'MILLENNIUM STADIUM', address_line_2: 'WESTGATE STREET', address_line_3: 'In a town', address_line_4: 'Somewhere'}}, expected: array{name: 'Acme Ltd', address: array{postcode: 'CF10 1NS', town: 'CARDIFF', addressLine1: 'MILLENNIUM STADIUM', addressLine2: 'WESTGATE STREET', addressLine3: 'In a town', addressLine4: 'Somewhere'}}}, 'missing company name': array{companyProfile: array{registered_office_address: array{postal_code: 'CF10 1NS', locality: 'CARDIFF', address_line_1: 'MILLENNIUM STADIUM', address_line_2: 'WESTGATE STREET', address_line_3: 'In a town', address_line_4: 'Somewhere'}}, expected: array{name: '', address: array{postcode: 'CF10 1NS', town: 'CARDIFF', addressLine1: 'MILLENNIUM STADIUM', addressLine2: 'WESTGATE STREET', addressLine3: 'In a town', addressLine4: 'Somewhere'}}}, 'partial address': array{companyProfile: array{company_name: 'Acme Ltd', registered_office_address: array{postal_code: 'CF10 1NS', locality: 'CARDIFF', address_line_1: 'MILLENNIUM STADIUM'}}, expected: array{name: 'Acme Ltd', address: array{postcode: 'CF10 1NS', town: 'CARDIFF', addressLine1: 'MILLENNIUM STADIUM', addressLine2: '', addressLine3: '', addressLine4: ''}}}, 'missing address': array{companyProfile: array{company_name: 'Acme Ltd'}, expected: array{name: 'Acme Ltd', address: array<never, never>}}}
+     */
+    public function companyProfileProvider(): array
     {
         return [
             'full profile data' => [
@@ -1219,9 +1224,9 @@ class FormHelperServiceTest extends MockeryTestCase
         $this->sut->setInvalidCompanyNumberErrors($form, 'data');
     }
 
-    protected function createMockFormForCompanyErrors(string $message, $fieldset)
+    protected function createMockFormForCompanyErrors(string $message, string $fieldset): \Laminas\Form\Form
     {
-        $form = m::mock(\Laminas\Form\Form::class);
+        $form = m::mock(\Common\Form\Form::class);
         $translated = $message . '_TRANSLATED';
 
         $this->mockTransSrv

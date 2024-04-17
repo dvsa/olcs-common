@@ -10,24 +10,14 @@ use Laminas\Form\Fieldset;
 
 class InternationalJourneysFieldsetPopulator implements FieldsetPopulatorInterface
 {
-    /** @var RadioFieldsetPopulator */
-    private $radioFieldsetPopulator;
-
-    /** @var NiWarningConditionalAdder */
-    private $niWarningConditionalAdder;
-
     /**
      * Create service instance
      *
      *
      * @return InternationalJourneysFieldsetPopulator
      */
-    public function __construct(
-        RadioFieldsetPopulator $radioFieldsetPopulator,
-        NiWarningConditionalAdder $niWarningConditionalAdder
-    ) {
-        $this->radioFieldsetPopulator = $radioFieldsetPopulator;
-        $this->niWarningConditionalAdder = $niWarningConditionalAdder;
+    public function __construct(private RadioFieldsetPopulator $radioFieldsetPopulator, private NiWarningConditionalAdder $niWarningConditionalAdder)
+    {
     }
 
     /**

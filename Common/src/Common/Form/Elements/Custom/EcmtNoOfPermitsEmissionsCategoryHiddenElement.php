@@ -10,6 +10,10 @@ class EcmtNoOfPermitsEmissionsCategoryHiddenElement extends Hidden implements In
 {
     /**
      * {@inheritdoc}
+     *
+     * @return ((array|string)[][]|null|string|true)[]
+     *
+     * @psalm-return array{name: null|string, required: true, validators: list{array{name: Identical::class, options: array{token: mixed}}}}
      */
     public function getInputSpecification(): array
     {

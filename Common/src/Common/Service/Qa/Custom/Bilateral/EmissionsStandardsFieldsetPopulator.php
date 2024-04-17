@@ -9,40 +9,11 @@ use Laminas\Form\Fieldset;
 
 class EmissionsStandardsFieldsetPopulator implements FieldsetPopulatorInterface
 {
-    /** @var WarningAdder */
-    private $warningAdder;
-
-    /** @var TranslationHelperService */
-    private $translator;
-
-    /** @var YesNoWithMarkupForNoPopulator */
-    private $yesNoWithMarkupForNoPopulator;
-
-    /** @var YesNoValueOptionsGenerator */
-    private $yesNoValueOptionsGenerator;
-
-    /**
-     * Create service instance
-     *
-     *
-     * @return EmissionsStandardsFieldsetPopulator
-     */
-    public function __construct(
-        WarningAdder $warningAdder,
-        TranslationHelperService $translator,
-        YesNoWithMarkupForNoPopulator $yesNoWithMarkupForNoPopulator,
-        YesNoValueOptionsGenerator $yesNoValueOptionsGenerator
-    ) {
-        $this->warningAdder = $warningAdder;
-        $this->translator = $translator;
-        $this->yesNoWithMarkupForNoPopulator = $yesNoWithMarkupForNoPopulator;
-        $this->yesNoValueOptionsGenerator = $yesNoValueOptionsGenerator;
+    public function __construct(private WarningAdder $warningAdder, private TranslationHelperService $translator, private YesNoWithMarkupForNoPopulator $yesNoWithMarkupForNoPopulator, private YesNoValueOptionsGenerator $yesNoValueOptionsGenerator)
+    {
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function populate($form, Fieldset $fieldset, array $options): void
+    public function populate(mixed $form, Fieldset $fieldset, array $options): void
     {
         $valueOptions = $this->yesNoValueOptionsGenerator->generate(
             'qanda.bilaterals.emissions-standards.euro3-or-euro4',

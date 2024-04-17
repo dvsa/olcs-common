@@ -49,34 +49,19 @@ abstract class AbstractTrailersController extends AbstractController
 
     protected FlashMessengerHelperService $flashMessengerHelper;
 
-    protected FormServiceManager $formServiceManager;
-
-    protected ScriptFactory $scriptFactory;
-
-    protected TableFactory $tableFactory;
-
-    protected DateHelperService $dateHelper;
-
-    protected QuerySender $querySender;
-
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
         FormHelperService $formHelper,
-        FormServiceManager $formServiceManager,
+        protected FormServiceManager $formServiceManager,
         FlashMessengerHelperService $flashMessengerHelper,
-        TableFactory $tableFactory,
-        ScriptFactory $scriptFactory,
-        DateHelperService $dateHelper,
-        QuerySender $querySender
+        protected TableFactory $tableFactory,
+        protected ScriptFactory $scriptFactory,
+        protected DateHelperService $dateHelper,
+        protected QuerySender $querySender
     ) {
         $this->formHelper = $formHelper;
-        $this->formServiceManager = $formServiceManager;
-        $this->scriptFactory = $scriptFactory;
         $this->flashMessengerHelper = $flashMessengerHelper;
-        $this->tableFactory = $tableFactory;
-        $this->dateHelper = $dateHelper;
-        $this->querySender = $querySender;
 
         parent::__construct($niTextTranslationUtil, $authService);
     }

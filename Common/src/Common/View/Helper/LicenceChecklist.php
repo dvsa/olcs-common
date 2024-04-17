@@ -11,11 +11,8 @@ use Common\RefData;
  */
 class LicenceChecklist extends AbstractHelper
 {
-    private Translate $translator;
-
-    public function __construct(Translate $translator)
+    public function __construct(private Translate $translator)
     {
-        $this->translator = $translator;
     }
 
     /**
@@ -26,44 +23,21 @@ class LicenceChecklist extends AbstractHelper
     public function __invoke($type, $data)
     {
         $preparedData = [];
-        switch ($type) {
-            case RefData::LICENCE_CHECKLIST_TYPE_OF_LICENCE:
-                $preparedData = $this->prepareTypeOfLicence($data['typeOfLicence']);
-                break;
-            case RefData::LICENCE_CHECKLIST_BUSINESS_TYPE:
-                $preparedData = $this->prepareBusinessType($data['businessType']);
-                break;
-            case RefData::LICENCE_CHECKLIST_BUSINESS_DETAILS:
-                $preparedData = $this->prepareBusinessDetails($data['businessDetails']);
-                break;
-            case RefData::LICENCE_CHECKLIST_ADDRESSES:
-                $preparedData = $this->prepareAddresses($data['addresses']);
-                break;
-            case RefData::LICENCE_CHECKLIST_PEOPLE:
-                $preparedData = $this->preparePeople($data['people']);
-                break;
-            case RefData::LICENCE_CHECKLIST_VEHICLES:
-                $preparedData = $this->prepareVehicles($data['vehicles']);
-                break;
-            case RefData::LICENCE_CHECKLIST_USERS:
-                $preparedData = $this->prepareUsers($data['users']);
-                break;
-            case RefData::LICENCE_CHECKLIST_OPERATING_CENTRES:
-                $preparedData = $this->prepareOperatingCentres($data['operatingCentres']);
-                break;
-            case RefData::LICENCE_CHECKLIST_OPERATING_CENTRES_AUTHORITY:
-                $preparedData = $this->prepareOperatingCentresAuthority($data['operatingCentres']);
-                break;
-            case RefData::LICENCE_CHECKLIST_TRANSPORT_MANAGERS:
-                $preparedData = $this->prepareTransportManagers($data['transportManagers']);
-                break;
-            case RefData::LICENCE_CHECKLIST_SAFETY_INSPECTORS:
-                $preparedData = $this->prepareSafetyInspectors($data['safety']);
-                break;
-            case RefData::LICENCE_CHECKLIST_SAFETY_DETAILS:
-                $preparedData = $this->prepareSafetyDetails($data['safety']);
-                break;
-        }
+        $preparedData = match ($type) {
+            RefData::LICENCE_CHECKLIST_TYPE_OF_LICENCE => $this->prepareTypeOfLicence($data['typeOfLicence']),
+            RefData::LICENCE_CHECKLIST_BUSINESS_TYPE => $this->prepareBusinessType($data['businessType']),
+            RefData::LICENCE_CHECKLIST_BUSINESS_DETAILS => $this->prepareBusinessDetails($data['businessDetails']),
+            RefData::LICENCE_CHECKLIST_ADDRESSES => $this->prepareAddresses($data['addresses']),
+            RefData::LICENCE_CHECKLIST_PEOPLE => $this->preparePeople($data['people']),
+            RefData::LICENCE_CHECKLIST_VEHICLES => $this->prepareVehicles($data['vehicles']),
+            RefData::LICENCE_CHECKLIST_USERS => $this->prepareUsers($data['users']),
+            RefData::LICENCE_CHECKLIST_OPERATING_CENTRES => $this->prepareOperatingCentres($data['operatingCentres']),
+            RefData::LICENCE_CHECKLIST_OPERATING_CENTRES_AUTHORITY => $this->prepareOperatingCentresAuthority($data['operatingCentres']),
+            RefData::LICENCE_CHECKLIST_TRANSPORT_MANAGERS => $this->prepareTransportManagers($data['transportManagers']),
+            RefData::LICENCE_CHECKLIST_SAFETY_INSPECTORS => $this->prepareSafetyInspectors($data['safety']),
+            RefData::LICENCE_CHECKLIST_SAFETY_DETAILS => $this->prepareSafetyDetails($data['safety']),
+            default => $preparedData,
+        };
 
         return $preparedData;
     }

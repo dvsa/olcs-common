@@ -60,16 +60,8 @@ class FileUploadHelperService extends AbstractHelperService
      */
     private $request;
 
-    protected UrlHelperService $urlHelper;
-
-    protected Scan $antiVirusService;
-
-    public function __construct(
-        UrlHelperService $urlHelper,
-        Scan $antiVirusService
-    ) {
-        $this->urlHelper = $urlHelper;
-        $this->antiVirusService = $antiVirusService;
+    public function __construct(protected UrlHelperService $urlHelper, protected Scan $antiVirusService)
+    {
     }
 
     /**
@@ -412,7 +404,7 @@ class FileUploadHelperService extends AbstractHelperService
                 $callback,
                 $fileData['file-controls']['file']
             );
-        } catch (InvalidMimeException $ex) {
+        } catch (InvalidMimeException) {
             $this->invalidMime();
 
             return false;

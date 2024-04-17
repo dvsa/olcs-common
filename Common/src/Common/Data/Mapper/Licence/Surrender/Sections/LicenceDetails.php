@@ -7,6 +7,11 @@ class LicenceDetails extends AbstractSection
     public $licence;
     protected $heading = 'licence-details';
 
+    /**
+     * @return (mixed|string)[][]
+     *
+     * @psalm-return list{0: array{label: string, answer: mixed, changeLinkInHeading: mixed}, 1: array{label: string, answer: mixed, changeLinkInHeading: mixed}, 2?: array{label: string, answer: string, changeLinkInHeading: mixed}}
+     */
     protected function makeQuestions()
     {
 
@@ -43,6 +48,9 @@ class LicenceDetails extends AbstractSection
         return $questions;
     }
 
+    /**
+     * @return false
+     */
     protected function makeChangeLink()
     {
         return false;

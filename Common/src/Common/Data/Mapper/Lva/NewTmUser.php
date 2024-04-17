@@ -19,6 +19,9 @@ use Laminas\Form\Form;
  */
 class NewTmUser implements MapperInterface
 {
+    /**
+     * @return array
+     */
     public static function mapFromResult(array $data)
     {
         return $data;

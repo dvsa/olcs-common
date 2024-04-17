@@ -14,14 +14,11 @@ use Common\Service\Helper\FormHelperService;
  */
 abstract class AbstractBusinessDetails
 {
-    protected FormHelperService $formHelper;
-
-    public function __construct(FormHelperService $formHelper)
+    public function __construct(protected FormHelperService $formHelper)
     {
-        $this->formHelper = $formHelper;
     }
 
-    public function getForm($orgType, $hasInforceLicences, bool $hasOrganisationSubmittedLicenceApplication)
+    public function getForm($orgType, $hasInforceLicences, bool $hasOrganisationSubmittedLicenceApplication): \Common\Form\Form
     {
         $form = $this->formHelper->createForm('Lva\BusinessDetails');
 
@@ -36,7 +33,14 @@ abstract class AbstractBusinessDetails
         return $form;
     }
 
-    protected function alterForm($form, $params)
+    /**
+     * @param (bool|mixed)[] $params
+     *
+     * @psalm-param array{orgType: mixed, hasInforceLicences: mixed, hasOrganisationSubmittedLicenceApplication: bool} $params
+     *
+     * @return void
+     */
+    protected function alterForm(\Common\Form\Form $form, array $params)
     {
         switch ($params['orgType']) {
             case RefData::ORG_TYPE_REGISTERED_COMPANY:
@@ -59,7 +63,7 @@ abstract class AbstractBusinessDetails
         }
     }
 
-    protected function appendToLabel($element, $append)
+    protected function appendToLabel($element, string $append): void
     {
         $this->formHelper->alterElementLabel($element, $append, FormHelperService::ALTER_LABEL_APPEND);
     }
@@ -69,7 +73,7 @@ abstract class AbstractBusinessDetails
      *
      * @param \Laminas\Form\Form $form
      */
-    protected function alterFormForNonRegisteredCompany($form)
+    protected function alterFormForNonRegisteredCompany($form): void
     {
         $this->formHelper->remove($form, 'table')
             ->remove($form, 'data->companyNumber')

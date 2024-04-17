@@ -48,7 +48,12 @@ class VehiclePlatedWeightTest extends MockeryTestCase
         }
     }
 
-    public function dpTestGetInputSpecificationOptions()
+    /**
+     * @return true[][][]
+     *
+     * @psalm-return list{array{options: array{required: true, allow_empty: true}, expect: array{required: true, allow_empty: true}}}
+     */
+    public function dpTestGetInputSpecificationOptions(): array
     {
         return [
             [

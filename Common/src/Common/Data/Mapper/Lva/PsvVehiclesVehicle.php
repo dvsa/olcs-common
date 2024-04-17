@@ -19,6 +19,11 @@ use Laminas\Form\Form;
  */
 class PsvVehiclesVehicle implements MapperInterface
 {
+    /**
+     * @return array[]
+     *
+     * @psalm-return array{data: array{id: mixed, version: mixed, vrm: mixed, makeModel: mixed}, 'licence-vehicle': array{receivedDate: mixed, specifiedDate: mixed, removalDate: mixed}}
+     */
     public static function mapFromResult(array $data)
     {
         return [
@@ -36,7 +41,10 @@ class PsvVehiclesVehicle implements MapperInterface
         ];
     }
 
-    public static function mapFromForm($data)
+    /**
+     * @psalm-return array{version: mixed, vrm: mixed, receivedDate: mixed, specifiedDate: mixed, removalDate: mixed, makeModel?: mixed}
+     */
+    public static function mapFromForm(array|object $data): array
     {
         $licenceVehicle = [
             'receivedDate' => null,

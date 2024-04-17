@@ -2,6 +2,7 @@
 
 namespace CommonTest\Filter;
 
+use Laminas\Filter\Decompress;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Filter\DecompressToTmp;
 use Mockery as m;
@@ -28,13 +29,16 @@ class DecompressToTmpTest extends MockeryTestCase
             eval('namespace Common\Filter; function register_shutdown_function ($callback) { $callback(); }');
         }
 
-        $mockFilter = m::mock(\Laminas\Filter\Decompress::class);
+        $mockFilter = m::mock(Decompress::class);
         $mockFilter->shouldReceive('filter')->with($filename)->andReturn($filePath);
         $mockFilter->shouldReceive('setTarget')->with($extractDir);
 
         $mockFileSystem = m::mock(\Common\Filesystem\Filesystem::class);
         $mockFileSystem->shouldReceive('createTmpDir')->with($tmpDir, 'zip')->andReturn($extractDir);
         $mockFileSystem->shouldReceive('remove')->with($extractDir);
+
+        $mockFilter->shouldReceive('getAdapterOptions')->once()->andReturn([]);
+        $mockFilter->shouldReceive('setAdapterOptions')->once()->andReturn(Decompress::class);
 
         $sut = new DecompressToTmp();
         $sut->setDecompressFilter($mockFilter);

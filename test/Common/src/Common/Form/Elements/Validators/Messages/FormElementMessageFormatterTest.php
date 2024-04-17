@@ -558,10 +558,14 @@ class FormElementMessageFormatterTest extends MockeryTestCase
         return (new FormElementMessageFormatterFactory())->__invoke($serviceLocator, FormElementMessageFormatter::class);
     }
 
-    protected function setUpDefaultServices(ServiceManager $serviceManager)
+    /**
+     * @return void
+     */
+    protected function setUpDefaultServices(ServiceManager $serviceManager): ServiceManager
     {
         $serviceManager->setService(TranslatorInterface::class, $this->setUpDefaultTranslator());
         $serviceManager->setService(static::VALIDATOR_MANAGER, m::mock(ValidatorPluginManager::class));
         $serviceManager->setFactory(FormElementMessageFormatter::class, new FormElementMessageFormatterFactory());
+        return $serviceManager;
     }
 }

@@ -150,7 +150,12 @@ class FinancialHistoryTest extends MockeryTestCase
         $this->assertSame($mockForm, $form);
     }
 
-    public function provideDirectorChangeWordingVariations()
+    /**
+     * @return string[][]
+     *
+     * @psalm-return list{list{'org_t_rc', 'director'}, list{'org_t_st', 'person'}, list{'org_t_llp', 'partner'}, list{'org_t_p', 'partner'}, list{'org_t_pa', 'person'}, list{'org_t_ir', 'person'}, list{'anything-else', 'person'}}
+     */
+    public function provideDirectorChangeWordingVariations(): array
     {
         return [
             [RefData::ORG_TYPE_REGISTERED_COMPANY, 'director'],

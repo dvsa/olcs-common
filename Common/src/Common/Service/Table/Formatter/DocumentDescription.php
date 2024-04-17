@@ -12,14 +12,8 @@ use Dvsa\Olcs\Utils\Translation\TranslatorDelegator;
  */
 class DocumentDescription implements FormatterPluginManagerInterface
 {
-    private TranslatorDelegator $translator;
-
-    private UrlHelperService $urlHelper;
-
-    public function __construct(TranslatorDelegator $translator, UrlHelperService $urlHelper)
+    public function __construct(private TranslatorDelegator $translator, private UrlHelperService $urlHelper)
     {
-        $this->translator = $translator;
-        $this->urlHelper = $urlHelper;
     }
 
     /**
@@ -59,7 +53,7 @@ class DocumentDescription implements FormatterPluginManagerInterface
      *
      * @return string
      */
-    private function getAnchor($data, $translator)
+    private function getAnchor($data, TranslatorDelegator $translator)
     {
         if (isset($data['description'])) {
             return $data['description'];

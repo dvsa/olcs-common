@@ -39,14 +39,14 @@ class TaxiPhvTest extends MockeryTestCase
 
     public function testGetForm(): void
     {
-        $formActions = m::mock();
+        $formActions = m::mock(\Laminas\Form\ElementInterface::class);
         $formActions->shouldReceive('has')->with('save')->andReturn(true);
         $formActions->shouldReceive('has')->with('cancel')->andReturn(true);
 
         $formActions->shouldReceive('remove')->with('save');
         $formActions->shouldReceive('remove')->with('cancel');
 
-        $form = m::mock();
+        $form = m::mock(\Common\Form\Form::class);
         $form->shouldReceive('has')->with('form-actions')->andReturn(true);
         $form->shouldReceive('get')->with('form-actions')->andReturn($formActions);
 

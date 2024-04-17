@@ -40,23 +40,8 @@ class CachingQueryService implements QueryServiceInterface, \Laminas\Log\LoggerA
 
     public const MISSING_TTL_INTERFACE_TYPE = 'No TTL value found for this query';
 
-    /** @var QueryServiceInterface */
-    private $queryService;
-
     /** @var array */
     private $localCache;
-
-    /** @var CacheEncryptionService */
-    private $cacheService;
-
-    /** @var AnnotationBuilder */
-    private $annotationBuilder;
-
-    /** @var bool */
-    private $enabled;
-
-    /** @var array */
-    private $ttl;
 
     /**
      * Constructor
@@ -66,24 +51,14 @@ class CachingQueryService implements QueryServiceInterface, \Laminas\Log\LoggerA
      * @param bool                   $enabled      Whether the cache is enabled
      * @param array                  $ttl          Ttl of the various cache types
      */
-    public function __construct(
-        QueryServiceInterface $queryService,
-        CacheEncryptionService $cache,
-        AnnotationBuilder $annotationBuilder,
-        $enabled,
-        array $ttl
-    ) {
-        $this->queryService = $queryService;
-        $this->cacheService = $cache;
-        $this->annotationBuilder = $annotationBuilder;
-        $this->enabled = $enabled;
-        $this->ttl = $ttl;
+    public function __construct(private QueryServiceInterface $queryService, private CacheEncryptionService $cacheService, private AnnotationBuilder $annotationBuilder, private $enabled, private array $ttl)
+    {
     }
 
     /**
      * Send a query to the backend
      *
-     * @param QueryContainerInterface|CustomCacheableInterface $query Query container
+     * @param QueryContainerInterface $query Query container
      *
      * @return \Common\Service\Cqrs\Response
      */
@@ -246,10 +221,9 @@ class CachingQueryService implements QueryServiceInterface, \Laminas\Log\LoggerA
     /**
      * Retrieve a record from the local cache
      *
-     * @param mixed  $result
      *
      */
-    private function storeLocalCache(string $cacheIdentifier, string $dtoClassName, $result): void
+    private function storeLocalCache(string $cacheIdentifier, string $dtoClassName, \Common\Service\Cqrs\Response $result): void
     {
         $this->logMessage(sprintf(self::CACHE_LOCAL_SAVE_MSG, $dtoClassName));
         $this->localCache[$cacheIdentifier] = $result;

@@ -44,7 +44,12 @@ class DateNotInPastValidatorTest extends MockeryTestCase
         );
     }
 
-    public function dpIsValidTrue()
+    /**
+     * @return string[][]
+     *
+     * @psalm-return list{list{'2019-11-27'}, list{'2019-11-28'}, list{'2019-12-01'}, list{'2020-11-25'}}
+     */
+    public function dpIsValidTrue(): array
     {
         return [
             ['2019-11-27'],
@@ -73,7 +78,12 @@ class DateNotInPastValidatorTest extends MockeryTestCase
         );
     }
 
-    public function dpIsValidFalse()
+    /**
+     * @return string[][]
+     *
+     * @psalm-return list{list{'2019-11-26'}, list{'2019-11-01'}, list{'2019-10-30'}, list{'2018-06-06'}, list{'2018-12-12'}}
+     */
+    public function dpIsValidFalse(): array
     {
         return [
             ['2019-11-26'],

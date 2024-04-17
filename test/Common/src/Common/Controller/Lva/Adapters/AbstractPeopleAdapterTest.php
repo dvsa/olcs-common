@@ -4,6 +4,7 @@ namespace CommonTest\Common\Controller\Lva\Adapters;
 
 use Common\Controller\Lva\AbstractController;
 use Common\Controller\Lva\Adapters\AbstractPeopleAdapter;
+use Common\Service\Cqrs\Response;
 use Common\Service\Table\TableBuilder;
 use Psr\Container\ContainerInterface;
 use Mockery as m;
@@ -28,7 +29,7 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
     protected function setUp(): void
     {
         $this->container = m::mock(ContainerInterface::class);
-        $this->mockResp = m::mock(\Laminas\Http\Response::class);
+        $this->mockResp = m::mock(Response::class);
         $this->mockResp->shouldReceive('isOk')->andReturn(true);
 
         $this->sut = m::mock(AbstractPeopleAdapter::class, [$this->container])
@@ -55,7 +56,12 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
 
     public function testHasInforceLicences(): void
     {
-        $this->mockResp->shouldReceive('getResult')->once()->andReturn(['hasInforceLicences' => 'unit_EXPECT']);
+        $this->mockResp->shouldReceive('getResult')->once()->andReturn(
+            [
+                'application' => [],
+                'hasInforceLicences' => 'unit_EXPECT'
+            ]
+        );
 
         $this->sut->loadPeopleData(AbstractController::LVA_LIC, self::LIC_ID);
 
@@ -64,7 +70,12 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
 
     public function testIsExceptionalOrganisation(): void
     {
-        $this->mockResp->shouldReceive('getResult')->once()->andReturn(['isExceptionalType' => 'unit_EXPECT']);
+        $this->mockResp->shouldReceive('getResult')->once()->andReturn(
+            [
+                'application' => [],
+                'isExceptionalType' => 'unit_EXPECT'
+            ]
+        );
 
         $this->sut->loadPeopleData(AbstractController::LVA_LIC, self::LIC_ID);
 
@@ -73,7 +84,12 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
 
     public function testIsSoleTrader(): void
     {
-        $this->mockResp->shouldReceive('getResult')->once()->andReturn(['isSoleTrader' => 'unit_EXPECT']);
+        $this->mockResp->shouldReceive('getResult')->once()->andReturn(
+            [
+                'application' => [],
+                'isSoleTrader' => 'unit_EXPECT'
+            ]
+        );
 
         $this->sut->loadPeopleData(AbstractController::LVA_LIC, self::LIC_ID);
 
@@ -86,6 +102,7 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
             ->once()
             ->andReturn(
                 [
+                    'application' => [],
                     'organisation' => [
                         'type' => [
                             'id' => \Common\RefData::ORG_TYPE_PARTNERSHIP,
@@ -124,7 +141,12 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
         $this->sut->alterFormForOrganisation(m::mock(Form::class), $mockTable);
     }
 
-    public function dpTestAlterFormForOrganisation()
+    /**
+     * @return string[][]
+     *
+     * @psalm-return array{ltd: list{'org_t_rc', 'lva.section.title.add_director'}, llp: list{'org_t_llp', 'lva.section.title.add_partner'}, partnership: list{'org_t_p', 'lva.section.title.add_partner'}, other: list{'org_t_pa', 'lva.section.title.add_person'}, irfo: list{'org_t_ir', 'lva.section.title.add_person'}}
+     */
+    public function dpTestAlterFormForOrganisation(): array
     {
         return [
             'ltd' => [
@@ -218,7 +240,7 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
         $this->container
             ->shouldReceive('get')
             ->with('ControllerPluginManager')
-        ->andReturn($mockControllerPluginManager);
+            ->andReturn($mockControllerPluginManager);
 
         $mockControllerPluginManager->shouldReceive('get')->andReturn($mockFM);
 
@@ -256,6 +278,7 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
             ->andReturnUsing(
                 function ($tableConfig, $tableData) use ($expected) {
                     $this->assertSame($expected, $tableData);
+                    return m::mock(TableBuilder::class);
                 }
             );
 

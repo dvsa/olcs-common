@@ -38,8 +38,12 @@ class DateTimeTest extends MockeryTestCase
 
     /**
      * Data provider
+     *
+     * @return (\DateTime|string)[][]
+     *
+     * @psalm-return list{list{\DateTime, 'd/m/Y H:i', '10/06/2016 12:00'}, list{\DateTime, 'd/m/Y H:i', '10/12/2016 12:00'}, list{\DateTime, 'd/m/Y H:i', '10/06/2016 11:00'}}
      */
-    public function provider()
+    public function provider(): array
     {
         return [
             [

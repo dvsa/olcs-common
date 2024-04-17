@@ -29,10 +29,7 @@ class FormRadioVertical extends \Common\Form\View\Helper\Extended\FormCollection
         return $this->view->render('partials/form/radio-vertical', $variables);
     }
 
-    /**
-     * @param mixed $element
-     */
-    protected function wrapInFieldSet($element): Fieldset
+    protected function wrapInFieldSet(ElementInterface $element): Fieldset
     {
         $fieldset = $element;
         if (! ($fieldset instanceof Fieldset)) {

@@ -6,15 +6,12 @@ use Common\Service\Helper\TranslationHelperService;
 
 abstract class AbstractSection
 {
-    private $translator;
-
     private $translationTemplate = 'lva-tmverify-details-checkanswer-';
 
     private $displayChangeLinkInHeading = true;
 
-    public function __construct(TranslationHelperService $translator)
+    public function __construct(private TranslationHelperService $translator)
     {
-        $this->translator = $translator;
     }
 
     protected function getTranslationTemplate(): string
@@ -22,7 +19,7 @@ abstract class AbstractSection
         return $this->translationTemplate;
     }
 
-    protected function populateTemplate($template, $data): string
+    protected function populateTemplate(string $template, array $data): string
     {
         return $this->translator->translateReplace($template, $data);
     }

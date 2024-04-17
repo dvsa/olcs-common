@@ -58,7 +58,12 @@ class SearchTest extends MockeryTestCase
         $this->assertEquals($expected, $this->sut->getLimit());
     }
 
-    public function provideGetLimit()
+    /**
+     * @return (ArrayObject|\ArrayObject|int|null)[][]
+     *
+     * @psalm-return list{list{\ArrayObject, 15}, list{ArrayObject<never, never>, 10}, list{null, 10}}
+     */
+    public function provideGetLimit(): array
     {
         $stubQuery = new \ArrayObject();
         $stubQuery->limit = 15;
@@ -80,7 +85,12 @@ class SearchTest extends MockeryTestCase
         $this->assertEquals($expected, $this->sut->getPage());
     }
 
-    public function provideGetPage()
+    /**
+     * @return (ArrayObject|\ArrayObject|int|null)[][]
+     *
+     * @psalm-return list{list{\ArrayObject, 3}, list{ArrayObject<never, never>, 1}, list{null, 1}}
+     */
+    public function provideGetPage(): array
     {
         $stubQuery = new \ArrayObject();
         $stubQuery->page = 3;
@@ -144,7 +154,7 @@ class SearchTest extends MockeryTestCase
 
         $this->searchTypeManager->shouldReceive('get')->with($index)->andReturn($mockIndex);
 
-        $this->viewHelperManager->shouldReceive('get->getContainer->getValue')->andReturn('FORM');
+        $this->viewHelperManager->shouldReceive('get->getContainer->getValue')->andReturn(m::mock(\Common\Form\Form::class));
 
         $mockRequest = m::mock(HttpRequest::class);
         $mockRequest->shouldReceive('getPost')->withNoArgs()->andReturn([]);
@@ -178,7 +188,7 @@ class SearchTest extends MockeryTestCase
 
         $this->searchTypeManager->shouldReceive('get')->with($index)->andReturn($mockIndex);
 
-        $this->viewHelperManager->shouldReceive('get->getContainer->getValue')->andReturn('FORM');
+        $this->viewHelperManager->shouldReceive('get->getContainer->getValue')->andReturn(m::mock(\Common\Form\Form::class));
 
         $mockRequest = m::mock(HttpRequest::class);
         $mockRequest->shouldReceive('getPost')->with()->andReturn([]);

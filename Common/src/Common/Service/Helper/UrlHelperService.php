@@ -63,12 +63,12 @@ class UrlHelperService
     }
 
     public function fromRouteWithHost(
-        $hostKey,
-        $route = null,
+        string $hostKey,
+        string|null $route = null,
         $params = [],
         $options = [],
         $reuseMatchedParams = false
-    ) {
+    ): string {
         $hostname = $this->getHostname($hostKey);
         // this method isn't compatible with the canonical option
         $options['use_canonical'] = false;

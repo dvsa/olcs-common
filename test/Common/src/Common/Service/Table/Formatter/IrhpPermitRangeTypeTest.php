@@ -38,7 +38,12 @@ class IrhpPermitRangeTypeTest extends MockeryTestCase
         );
     }
 
-    public function dpFormat()
+    /**
+     * @return ((((bool|string)[]|string)[]|bool)[]|string)[][]
+     *
+     * @psalm-return list{list{array{irhpPermitStock: array{irhpPermitType: array{isBilateral: false}}}, 'N/A'}, list{array{irhpPermitStock: array{irhpPermitType: array{isBilateral: true}}, cabotage: false, journey: array{id: 'journey_single'}}, '_TRNSLT_permits.irhp.range.type.standard.single'}, list{array{irhpPermitStock: array{irhpPermitType: array{isBilateral: true}}, cabotage: false, journey: array{id: 'journey_multiple'}}, '_TRNSLT_permits.irhp.range.type.standard.multiple'}, list{array{irhpPermitStock: array{irhpPermitType: array{isBilateral: true}}, cabotage: true, journey: array{id: 'journey_single'}}, '_TRNSLT_permits.irhp.range.type.cabotage.single'}, list{array{irhpPermitStock: array{irhpPermitType: array{isBilateral: true}}, cabotage: true, journey: array{id: 'journey_multiple'}}, '_TRNSLT_permits.irhp.range.type.cabotage.multiple'}, list{array{irhpPermitStock: array{irhpPermitType: array{isBilateral: true}, permitCategory: array{description: 'category'}}}, '_TRNSLT_category'}}
+     */
+    public function dpFormat(): array
     {
         return [
             [

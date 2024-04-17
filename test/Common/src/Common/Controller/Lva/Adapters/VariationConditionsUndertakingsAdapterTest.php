@@ -36,7 +36,12 @@ class VariationConditionsUndertakingsAdapterTest extends MockeryTestCase
         $this->sut->attachMainScripts();
     }
 
-    public function providerGetTableDataEmpty()
+    /**
+     * @return (int|null|string|string[][])[][][][]
+     *
+     * @psalm-return list{list{array<never, never>, array<never, never>}, list{list{array{id: 12, action: 'A'}, array{id: 13, action: null, variationRecords: array<never, never>}, array{id: 14, action: null, variationRecords: list{array{action: 'D'}}}}, list{array{id: 12, action: 'A'}, array{id: 13, action: 'E', variationRecords: array<never, never>}}}}
+     */
+    public function providerGetTableDataEmpty(): array
     {
         return [
             [
@@ -77,7 +82,12 @@ class VariationConditionsUndertakingsAdapterTest extends MockeryTestCase
         ];
     }
 
-    public function providerDetermineAction()
+    /**
+     * @return ((null|string|string[][])[]|string)[][]
+     *
+     * @psalm-return array{Added: list{array{action: 'A'}, 'A'}, Updated: list{array{action: 'U'}, 'U'}, Existing: list{array{action: null, variationRecords: array<never, never>}, 'E'}, Removed: list{array{variationRecords: list{array{action: 'D'}}}, 'R'}, Current: list{array{variationRecords: list{array{action: 'U'}}}, 'C'}}
+     */
+    public function providerDetermineAction(): array
     {
         return [
             'Added' => [
@@ -103,7 +113,12 @@ class VariationConditionsUndertakingsAdapterTest extends MockeryTestCase
         ];
     }
 
-    public function providerCanEditRecord()
+    /**
+     * @return ((null|string|string[][])[]|bool)[][]
+     *
+     * @psalm-return array{Added: list{array{action: 'A'}, true}, Updated: list{array{action: 'U'}, true}, Existing: list{array{action: null, variationRecords: array<never, never>}, true}, Removed: list{array{variationRecords: list{array{action: 'D'}}}, false}, Current: list{array{variationRecords: list{array{action: 'U'}}}, false}}
+     */
+    public function providerCanEditRecord(): array
     {
         return [
             'Added' => [
@@ -129,7 +144,12 @@ class VariationConditionsUndertakingsAdapterTest extends MockeryTestCase
         ];
     }
 
-    public function providerSaveEdit()
+    /**
+     * @return string[][]
+     *
+     * @psalm-return list{list{'A'}, list{'U'}}
+     */
+    public function providerSaveEdit(): array
     {
         return [
             ['A'],

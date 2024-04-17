@@ -25,7 +25,7 @@ class PsvVehiclesTest extends AbstractLvaFormServiceTestCase
 
     public function testGetForm(): void
     {
-        $mockForm = m::mock();
+        $mockForm = m::mock(\Common\Form\Form::class);
 
         $this->formHelper->shouldReceive('createForm')
             ->with($this->formName)

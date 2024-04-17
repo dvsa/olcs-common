@@ -19,17 +19,8 @@ use Laminas\Router\Http\TreeRouteStack;
  */
 class CommunityLicenceStatus implements FormatterPluginManagerInterface
 {
-    private UrlHelperService $urlHelper;
-
-    private TreeRouteStack $router;
-
-    private Request $request;
-
-    public function __construct(UrlHelperService $urlHelper, TreeRouteStack $router, Request $request)
+    public function __construct(private UrlHelperService $urlHelper, private TreeRouteStack $router, private Request $request)
     {
-        $this->urlHelper = $urlHelper;
-        $this->router = $router;
-        $this->request = $request;
     }
 
     /**

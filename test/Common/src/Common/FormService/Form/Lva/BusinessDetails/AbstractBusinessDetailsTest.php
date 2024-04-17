@@ -34,7 +34,7 @@ class AbstractBusinessDetailsTest extends MockeryTestCase
         $hasOrganisationSubmittedLicenceApplication = false;
 
         // Mocks
-        $mockForm = m::mock();
+        $mockForm = m::mock(\Common\Form\Form::class);
 
         // Expectations
         $this->formHelper->shouldReceive('createForm')
@@ -54,7 +54,7 @@ class AbstractBusinessDetailsTest extends MockeryTestCase
         $hasOrganisationSubmittedLicenceApplication = false;
 
         // Mocks
-        $mockForm = m::mock();
+        $mockForm = m::mock(\Common\Form\Form::class);
 
         // Expectations
         $this->formHelper->shouldReceive('createForm')
@@ -74,7 +74,7 @@ class AbstractBusinessDetailsTest extends MockeryTestCase
         $hasOrganisationSubmittedLicenceApplication = false;
 
         // Mocks
-        $mockForm = m::mock();
+        $mockForm = m::mock(\Common\Form\Form::class);
 
         // Expectations
         $this->formHelper->shouldReceive('createForm')
@@ -106,7 +106,7 @@ class AbstractBusinessDetailsTest extends MockeryTestCase
         $hasOrganisationSubmittedLicenceApplication = false;
 
         // Mocks
-        $mockForm = m::mock();
+        $mockForm = m::mock(\Common\Form\Form::class);
         $mockName = m::mock();
 
         // Expectations
@@ -142,7 +142,7 @@ class AbstractBusinessDetailsTest extends MockeryTestCase
         $hasOrganisationSubmittedLicenceApplication = false;
 
         // Mocks
-        $mockForm = m::mock();
+        $mockForm = m::mock(\Common\Form\Form::class);
         $mockName = m::mock();
 
         // Expectations

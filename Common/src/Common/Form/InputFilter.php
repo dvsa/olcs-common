@@ -23,7 +23,7 @@ class InputFilter extends LaminasInputFilter
                 sprintf(
                     '%s expects an array or Traversable argument; received %s',
                     __METHOD__,
-                    (is_object($data) ? get_class($data) : gettype($data))
+                    (get_debug_type($data))
                 )
             );
         }

@@ -2,28 +2,11 @@
 
 namespace Common\Service\Table\Type;
 
-/**
- * Action type
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class Action extends AbstractType
 {
-    /**
-     * Holds the format
-     *
-     * @var string
-     */
-    private $format = '<button data-prevent-double-click="true" data-module="govuk-button" role="link" type="submit" class="action-button-link %s" name="%s" %s>%s</button>';
+    private string $format = '<button data-prevent-double-click="true" data-module="govuk-button" role="link" type="submit" class="action-button-link %s" name="%s" %s>%s</button>';
 
-    /**
-     * Render the selector
-     *
-     * @param array $data
-     * @param array $column
-     * @return string
-     */
-    public function render($data, $column, $formattedContent = null)
+    public function render(array $data, array $column, string|null $formattedContent = null): string
     {
         $class = $column['class'] ?? '';
 

@@ -55,7 +55,12 @@ class StandardAndCabotageIsValidHandlerTest extends MockeryTestCase
     }
 
 
-    public function dpIsValid()
+    /**
+     * @return (bool|null|string)[][]
+     *
+     * @psalm-return array{'stored answer is null, valid answer selected': list{null, 'qanda.bilaterals.cabotage.answer.cabotage-only', 'none', true}, 'submitted answer is invalid': list{'qanda.bilaterals.cabotage.answer.standard-and-cabotage', '', 'none', true}, 'stored answer equals submitted answer, warning not visible': list{'qanda.bilaterals.cabotage.answer.standard-and-cabotage', 'qanda.bilaterals.cabotage.answer.standard-and-cabotage', 'none', true}, 'stored answer equals submitted answer, warning visible': list{'qanda.bilaterals.cabotage.answer.standard-and-cabotage', 'qanda.bilaterals.cabotage.answer.standard-and-cabotage', 'qanda.bilaterals.cabotage.answer.standard-only', true}, 'stored answer different to submitted answer, warning not visible': list{'qanda.bilaterals.cabotage.answer.standard-and-cabotage', 'qanda.bilaterals.cabotage.answer.standard-only', 'none', false}, 'stored answer different to submitted answer, warning visible': list{'qanda.bilaterals.cabotage.answer.standard-and-cabotage', 'qanda.bilaterals.cabotage.answer.standard-only', 'qanda.bilaterals.cabotage.answer.standard-only', true}}
+     */
+    public function dpIsValid(): array
     {
         return [
             'stored answer is null, valid answer selected' => [

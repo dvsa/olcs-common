@@ -29,7 +29,12 @@ class NoOfPermitsTest extends TestCase
         $this->assertEquals($expectedResult, $sut->hasNonZeroValue());
     }
 
-    public function dpTestHasNonZeroValue()
+    /**
+     * @return (bool|int)[][]
+     *
+     * @psalm-return list{list{0, false}, list{1, true}, list{2, true}}
+     */
+    public function dpTestHasNonZeroValue(): array
     {
         return [
             [0, false],

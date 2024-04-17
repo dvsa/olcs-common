@@ -75,7 +75,12 @@ class YesNoWithMarkupForNoPopulatorTest extends MockeryTestCase
         );
     }
 
-    public function dpPopulate()
+    /**
+     * @return (null|string)[][]
+     *
+     * @psalm-return list{list{'answer.value', 'Y'}, list{null, null}}
+     */
+    public function dpPopulate(): array
     {
         return [
             ['answer.value', 'Y'],

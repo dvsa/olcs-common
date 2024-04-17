@@ -37,7 +37,12 @@ class OperatorLicenceTest extends MockeryTestCase
         );
     }
 
-    public function dpTestMapFromForm()
+    /**
+     * @return ((string|string[])[]|null|string)[][][]
+     *
+     * @psalm-return array{case_01: array{form_data: array{operatorLicenceDocument: array{operatorLicenceDocument: 'lost', lostContent: array{details: 'lost info'}, stolenContent: array{details: ''}}}, mapped_form_data: array{licenceDocumentStatus: 'doc_sts_lost', licenceDocumentInfo: 'lost info'}}, case_02: array{form_data: array{operatorLicenceDocument: array{operatorLicenceDocument: 'stolen', stolenContent: array{details: 'stolen info'}, lostContent: array{details: ''}}}, mapped_form_data: array{licenceDocumentStatus: 'doc_sts_stolen', licenceDocumentInfo: 'stolen info'}}, case_03: array{form_data: array{operatorLicenceDocument: array{operatorLicenceDocument: 'possession', lostContent: array{details: 'lost info'}, stolenContent: array{details: ''}}}, mapped_form_data: array{licenceDocumentStatus: 'doc_sts_destroyed', licenceDocumentInfo: null}}, case_04: array{form_data: array{operatorLicenceDocument: array{operatorLicenceDocument: 'possession'}}, mapped_form_data: array{licenceDocumentStatus: 'doc_sts_destroyed', licenceDocumentInfo: null}}}
+     */
+    public function dpTestMapFromForm(): array
     {
         return [
             'case_01' =>
@@ -129,7 +134,12 @@ class OperatorLicenceTest extends MockeryTestCase
         ];
     }
 
-    public function dpTestMapFromResult()
+    /**
+     * @return ((string|string[])[]|null|string)[][][]
+     *
+     * @psalm-return array{case_01: array{mapped_api_data: array{operatorLicenceDocument: array{operatorLicenceDocument: 'lost', lostContent: array{details: 'lost info'}}}, api_data: array{licenceDocumentStatus: array{id: 'doc_sts_lost'}, licenceDocumentInfo: 'lost info'}}, case_02: array{mapped_api_data: array{operatorLicenceDocument: array{operatorLicenceDocument: 'stolen', stolenContent: array{details: 'stolen info'}}}, api_data: array{licenceDocumentStatus: array{id: 'doc_sts_stolen'}, licenceDocumentInfo: 'stolen info'}}, case_03: array{mapped_api_data: array{operatorLicenceDocument: array{operatorLicenceDocument: 'possession'}}, api_data: array{licenceDocumentStatus: array{id: 'doc_sts_destroyed'}, licenceDocumentInfo: null}}}
+     */
+    public function dpTestMapFromResult(): array
     {
         return [
             'case_01' =>

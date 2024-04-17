@@ -7,7 +7,12 @@ use Common\Controller\Lva\Interfaces\PeopleAdapterInterface;
 use Common\Controller\Plugin\HandleQuery;
 use Common\RefData;
 use Common\Service\Cqrs\Command\CommandService;
+use Common\Service\Cqrs\Response;
 use Common\Service\Table\TableBuilder;
+use Dvsa\Olcs\Transfer\Command\Licence\CreatePeople;
+use Dvsa\Olcs\Transfer\Command\Licence\DeletePeople;
+use Dvsa\Olcs\Transfer\Command\Licence\UpdatePeople;
+use Dvsa\Olcs\Transfer\Query\Licence\People;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
 use Psr\Container\ContainerInterface;
 use Laminas\Form\Form;
@@ -29,28 +34,20 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
 
     public const SOURCE_ORGANISATION = 'O';
 
-    protected $tableData = [];
+    protected array $tableData = [];
 
-    private $licence;
+    private array $data;
 
-    private $data;
+    private array $licence;
 
-    private $application;
+    private array $application = [];
 
     public function __construct(ContainerInterface $container)
     {
         parent::__construct($container);
     }
 
-    /**
-     * Load the people dataa
-     *
-     * @param string $lva Lic|App|Var
-     * @param int    $id  Either an Application or Licence ID
-     *
-     * @return bool If successful
-     */
-    public function loadPeopleData($lva, $id)
+    public function loadPeopleData(string $lva, int $id): bool
     {
         if ($lva === AbstractController::LVA_LIC) {
             $this->loadPeopleDataForLicence($id);
@@ -61,14 +58,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return true;
     }
 
-    /**
-     * Load People data for a Licence
-     *
-     * @param int $licenceId Licence Id
-     *
-     * @return void
-     */
-    protected function loadPeopleDataForLicence($licenceId)
+    protected function loadPeopleDataForLicence(int $licenceId): void
     {
         $command = \Dvsa\Olcs\Transfer\Query\Licence\People::create(['id' => $licenceId]);
 
@@ -77,21 +67,11 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
             throw new \RuntimeException('Failed to load people data');
         }
 
-        $data = $response->getResult();
-
-        $this->data = $data;
-
-        $this->licence = $data;
+        $this->data = $this->licence = $response->getResult();
+        $this->application = $this->data['application'];
     }
 
-    /**
-     * Load People data for an Application/Variation
-     *
-     * @param int $applicationId Application Id
-     *
-     * @return void
-     */
-    protected function loadPeopleDataForApplication($applicationId)
+    protected function loadPeopleDataForApplication(int $applicationId): void
     {
         $command = \Dvsa\Olcs\Transfer\Query\Application\People::create(['id' => $applicationId]);
 
@@ -100,34 +80,16 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
             throw new \RuntimeException('Failed to load people data');
         }
 
-        $data = $response->getResult();
-
-        $this->data = $data;
-
-        $this->application = $data;
-        $this->licence = $data['licence'];
+        $this->data = $this->application = $response->getResult();
+        $this->licence = $this->data['licence'];
     }
 
-    /**
-     * Handle query
-     *
-     * @param \Dvsa\Olcs\Transfer\Query\QueryInterface $command Query
-     *
-     * @return \Common\Service\Cqrs\Response
-     */
-    protected function handleQuery(\Dvsa\Olcs\Transfer\Query\QueryInterface $command)
+    protected function handleQuery(\Dvsa\Olcs\Transfer\Query\QueryInterface $command): Response
     {
         return $this->container->get('ControllerPluginManager')->get(HandleQuery::class)->__invoke($command);
     }
 
-    /**
-     * Handle Command
-     *
-     * @param \Dvsa\Olcs\Transfer\Command\CommandInterface $command Commnand
-     *
-     * @return \Common\Service\Cqrs\Response
-     */
-    protected function handleCommand(\Dvsa\Olcs\Transfer\Command\CommandInterface $command)
+    protected function handleCommand(\Dvsa\Olcs\Transfer\Command\CommandInterface $command): Response
     {
         $annotationBuilder = $this->container->get(AnnotationBuilder::class);
         $commandService = $this->container->get(CommandService::class);
@@ -135,102 +97,52 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return $commandService->send($annotationBuilder->createCommand($command));
     }
 
-    /**
-     * Has Inforce Licences
-     *
-     * @return bool
-     */
-    public function hasInforceLicences()
+    public function hasInforceLicences(): bool
     {
         return $this->data['hasInforceLicences'];
     }
 
-    /**
-     * Is Exceptional Organisation
-     *
-     * @return bool
-     */
-    public function isExceptionalOrganisation()
+    public function isExceptionalOrganisation(): bool
     {
         return $this->data['isExceptionalType'];
     }
 
-    /**
-     * Get Organisation data
-     *
-     * @return array|null
-     */
-    public function getOrganisation()
+    public function getOrganisation(): ?array
     {
         return $this->licence['organisation'] ?? null;
     }
 
-    /**
-     * Get organisation Id
-     *
-     * @return int
-     */
-    public function getOrganisationId()
+    public function getOrganisationId(): int
     {
         return $this->licence['organisation']['id'];
     }
 
-    /**
-     * Get the licence
-     *
-     * @return mixed
-     */
-    public function getLicence()
+    public function getLicence(): ?array
     {
         return $this->licence;
     }
 
-    /**
-     * Get the Application
-     *
-     * @return mixed
-     */
-    public function getApplication()
+    public function getApplication(): ?array
     {
         return $this->application;
     }
 
-    /**
-     * Organisation is Sole Traider
-     *
-     * @return bool
-     */
-    public function isSoleTrader()
+    public function isSoleTrader(): bool
     {
         return $this->data['isSoleTrader'];
     }
 
-    /**
-     * Organisation is Partner Ship
-     *
-     * @return bool
-     */
-    public function isPartnership()
+    public function isPartnership(): bool
     {
         return $this->getOrganisationType() === \Common\RefData::ORG_TYPE_PARTNERSHIP;
     }
 
-    /**
-     * Check if has more than one suspended Curtailed licences
-     *
-     * @return mixed
-     */
-    public function hasMoreThanOneValidCurtailedOrSuspendedLicences()
+    public function hasMoreThanOneValidCurtailedOrSuspendedLicences(): mixed
     {
         return $this->data['hasMoreThanOneValidCurtailedOrSuspendedLicences'];
     }
 
-    /**
-     * Is the Organisation an LLP or LTD company
-     *
-     * @return bool
-     */
-    public function isOrganisationLimited()
+    public function isOrganisationLimited(): bool
     {
         $limitedTypes = [
             \Common\RefData::ORG_TYPE_LLP,
@@ -239,12 +151,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return in_array($this->getOrganisationType(), $limitedTypes, false);
     }
 
-    /**
-     * Is the Organisation type other
-     *
-     * @return bool
-     */
-    public function isOrganisationOther()
+    public function isOrganisationOther(): bool
     {
         $types = [
             \Common\RefData::ORG_TYPE_OTHER,
@@ -252,22 +159,12 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return in_array($this->getOrganisationType(), $types, false);
     }
 
-    /**
-     * use Deltas
-     *
-     * @return bool
-     */
-    public function useDeltas()
+    public function useDeltas(): bool
     {
         return (isset($this->data['useDeltas']) && $this->data['useDeltas']);
     }
 
-    /**
-     * Get and array of all people
-     *
-     * @return array
-     */
-    public function getPeople()
+    public function getPeople(): ?array
     {
         if ($this->getApplication()) {
             // need to merge the orgPeople with the appOrgPeople
@@ -287,7 +184,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
      *
      * @return array|false person data or false if not found
      */
-    public function getPersonData($personId)
+    public function getPersonData(int $personId): bool|array
     {
         foreach ($this->getPeople() as $organisationPerson) {
             if ($organisationPerson['person']['id'] == $personId) {
@@ -344,22 +241,12 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     {
     }
 
-    /**
-     * Can the form be modified
-     *
-     * @return bool
-     */
-    public function canModify()
+    public function canModify(): bool
     {
         return true;
     }
 
-    /**
-     * Create table
-     *
-     * @return TableBuilder
-     */
-    public function createTable()
+    public function createTable(): TableBuilder
     {
         /** @var TableBuilder $table */
         $table = $this->container
@@ -374,12 +261,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return $table;
     }
 
-    /**
-     * Get the table data for the main form
-     *
-     * @return array
-     */
-    protected function getTableData()
+    protected function getTableData(): array
     {
         if (empty($this->tableData)) {
             $this->tableData = $this->addNewStatuses(
@@ -390,14 +272,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return $this->tableData;
     }
 
-    /**
-     * addNewStatuses function
-     *
-     * @param array $tableData Table Data
-     *
-     * @return array Table Data
-     */
-    private function addNewStatuses(array $tableData)
+    private function addNewStatuses(array $tableData): array
     {
         /** @var FlashMessenger $flashMessenger */
         $flashMessenger = $this->container->get('ControllerPluginManager')->get(FlashMessenger::class);
@@ -414,14 +289,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return $newTableData;
     }
 
-    /**
-     * Prepare data to display in table
-     *
-     * @param array $results Results
-     *
-     * @return array
-     */
-    protected function formatTableData($results)
+    protected function formatTableData(?array $results): array
     {
         $final = [];
         foreach ($results as $row) {
@@ -441,43 +309,23 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return $final;
     }
 
-    /**
-     * Get Licence Id
-     *
-     * @return int
-     */
-    public function getLicenceId()
+    public function getLicenceId(): int
     {
         return $this->getLicence()['id'];
     }
 
-    /**
-     * Get application Id
-     *
-     * @return int
-     */
-    public function getApplicationId()
+    public function getApplicationId(): int
     {
         return $this->getApplication()['id'];
     }
 
-    /**
-     * Get the Organisation Type ID eg "org_t_p"
-     *
-     * @return string
-     */
-    public function getOrganisationType()
+    public function getOrganisationType(): ?string
     {
         $orgData = $this->getOrganisation();
         return $orgData['type']['id'] ?? null;
     }
 
-    /**
-     * Get Licence Type
-     *
-     * @return mixed
-     */
-    public function getLicenceType()
+    public function getLicenceType(): mixed
     {
         if ($this->application !== null) {
             return $this->application['licenceType']['id'];
@@ -486,17 +334,10 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return $this->licence['licenceType']['id'];
     }
 
-    /**
-     * Delete a person from the organisation, and then delete the person if they are now an orphan
-     *
-     * @param array $ids list of identifiers of Deleted Persons
-     *
-     * @return bool
-     */
-    public function delete($ids)
+    public function delete($ids): bool
     {
         $response = $this->handleCommand($this->getDeleteCommand(['personIds' => $ids]));
-        /* @var $response \Common\Service\Cqrs\Response */
+        /* @var $response Response */
         if (!$response->isOk()) {
             throw new \RuntimeException('Error deleteing Org Person : ' . print_r($response->getResult(), true));
         }
@@ -504,14 +345,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return true;
     }
 
-    /**
-     * Respore Persons
-     *
-     * @param array $ids list of identifiers of Restored Persons
-     *
-     * @return bool
-     */
-    public function restore($ids)
+    public function restore($ids): bool
     {
         // Can only restore in an application\variation
         $response = $this->handleCommand(
@@ -526,14 +360,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return true;
     }
 
-    /**
-     * Create
-     *
-     * @param array $data Command Data
-     *
-     * @return bool
-     */
-    public function create($data)
+    public function create(array $data): bool
     {
         $response = $this->handleCommand($this->getCreateCommand($data));
         if (!$response->isOk()) {
@@ -543,14 +370,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return true;
     }
 
-    /**
-     * Update
-     *
-     * @param array $data Update data
-     *
-     * @return bool
-     */
-    public function update($data)
+    public function update(array $data): bool
     {
         $response = $this->handleCommand($this->getUpdateCommand($data));
         if (!$response->isOk()) {
@@ -560,66 +380,32 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return true;
     }
 
-    /**
-     * Get the backend command to create a Person
-     *
-     * @param array $params Params
-     *
-     * @return \Dvsa\Olcs\Transfer\Command\AbstractCommand
-     */
-    protected function getCreateCommand($params)
+    protected function getCreateCommand(array $params): CreatePeople
     {
         $params['id'] = $this->getLicenceId();
-        return \Dvsa\Olcs\Transfer\Command\Licence\CreatePeople::create($params);
+        return CreatePeople::create($params);
     }
 
-    /**
-     * Get the backend command to update a Person
-     *
-     * @param array $params Params
-     *
-     * @return \Dvsa\Olcs\Transfer\Command\AbstractCommand
-     */
-    protected function getUpdateCommand($params)
+    protected function getUpdateCommand(array $params): UpdatePeople
     {
         $params['person'] = $params['id'];
         $params['id'] = $this->getLicenceId();
-        return \Dvsa\Olcs\Transfer\Command\Licence\UpdatePeople::create($params);
+        return UpdatePeople::create($params);
     }
 
 
-    /**
-     * Get the backend command to delete a Person
-     *
-     * @param array $params Params
-     *
-     * @return \Dvsa\Olcs\Transfer\Command\AbstractCommand
-     */
-    protected function getDeleteCommand($params)
+    protected function getDeleteCommand(array $params): DeletePeople
     {
         $params['id'] = $this->getLicenceId();
-        return \Dvsa\Olcs\Transfer\Command\Licence\DeletePeople::create($params);
+        return DeletePeople::create($params);
     }
 
-    /**
-     * Get the name of the table config
-     *
-     * @return string
-     */
-    protected function getTableConfig()
+    protected function getTableConfig(): string
     {
         return 'lva-people';
     }
 
-    /**
-     * Update and filter the table data for variations
-     *
-     * @param array $orgData         Org Data
-     * @param array $applicationData Appl Data
-     *
-     * @return array
-     */
-    private function updateAndFilterTableData($orgData, $applicationData)
+    private function updateAndFilterTableData(array $orgData, array $applicationData): array
     {
         $data = [];
 
@@ -637,15 +423,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return array_merge($data, $applicationData);
     }
 
-    /**
-     * Attach id value as key to persons array (data)
-     *
-     * @param string $key  Key ???
-     * @param array  $data Array of persons
-     *
-     * @return array
-     */
-    private function indexRows($key, $data)
+    private function indexRows(string $key, array $data): array
     {
         $indexed = [];
 
@@ -661,13 +439,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return $indexed;
     }
 
-    /**
-     * Get the add label text
-     * Defaults to null if organisation type not set
-     *
-     * @return mixed | null or string
-     */
-    public function getAddLabelTextForOrganisation()
+    public function getAddLabelTextForOrganisation(): ?string
     {
         $type = [
             RefData::ORG_TYPE_RC => 'lva.section.title.add_director',
@@ -679,14 +451,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return $type[$this->getOrganisationType()] ?? null;
     }
 
-    /**
-     * amend licence people list
-     *
-     * @param TableBuilder $table table
-     *
-     * @return TableBuilder
-     */
-    public function amendLicencePeopleListTable(TableBuilder $table)
+    public function amendLicencePeopleListTable(TableBuilder $table): TableBuilder
     {
         $table->setSetting(
             'crud',

@@ -26,29 +26,21 @@ class PaymentController extends AbstractContinuationController
 
     protected $layout = 'pages/fees/pay-one';
 
-    protected UrlHelperService $urlHelper;
-
-    protected TableFactory $tableFactory;
-
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
         FormServiceManager $formServiceManager,
         TranslationHelperService $translationHelper,
-        UrlHelperService $urlHelper,
-        TableFactory $tableFactory
+        protected UrlHelperService $urlHelper,
+        protected TableFactory $tableFactory
     ) {
-        $this->urlHelper = $urlHelper;
-        $this->tableFactory = $tableFactory;
         parent::__construct($niTextTranslationUtil, $authService, $formServiceManager, $translationHelper);
     }
 
     /**
      * Index page
-     *
-     * @return ViewModel
      */
-    public function indexAction()
+    public function indexAction(): ViewModel|\Laminas\Http\Response
     {
         $data = $this->getContinuationDetailData();
         $fees = $data['fees'];
@@ -101,10 +93,8 @@ class PaymentController extends AbstractContinuationController
      * @param array        $feeIds              fee id
      * @param int          $organisationId      organisation id
      * @param string|false $storedCardReference a reference to the stored card to use
-     *
-     * @return ViewModel
      */
-    protected function payFees($feeIds, $organisationId, $storedCardReference = false)
+    protected function payFees($feeIds, $organisationId, $storedCardReference = false): ViewModel|\Laminas\Http\Response
     {
         $cpmsRedirectUrl = $this->url()->fromRoute(
             'continuation/payment/result',

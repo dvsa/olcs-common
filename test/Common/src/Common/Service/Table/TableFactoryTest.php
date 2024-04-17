@@ -50,14 +50,16 @@ class TableFactoryTest extends MockeryTestCase
 
         $mockTable->expects($this->once())
             ->method('buildTable')
-            ->with($name, $data, $params, $render);
+            ->with($name, $data, $params, $render)
+            ->willReturn('TABLE');
 
         $tableFactory = $this->createPartialMock(TableFactory::class, ['getTableBuilder']);
 
         $tableFactory->expects($this->once())
             ->method('getTableBuilder')
-            ->will($this->returnValue($mockTable));
+            ->willReturn($mockTable);
 
-        $tableFactory->buildTable($name, $data, $params, $render);
+        $result = $tableFactory->buildTable($name, $data, $params, $render);
+        $this->assertEquals('TABLE', $result);
     }
 }

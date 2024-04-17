@@ -9,16 +9,8 @@ namespace Common\Service\Data;
  */
 class OcContextListDataService implements ListDataInterface
 {
-    private LicenceOperatingCentre $licenceOperatingCentreDataService;
-
-    private ApplicationOperatingCentre $applicationOperatingCentreDataService;
-
-    public function __construct(
-        LicenceOperatingCentre $licenceOperatingCentreDataService,
-        ApplicationOperatingCentre $applicationOperatingCentreDataService
-    ) {
-        $this->licenceOperatingCentreDataService = $licenceOperatingCentreDataService;
-        $this->applicationOperatingCentreDataService = $applicationOperatingCentreDataService;
+    public function __construct(private LicenceOperatingCentre $licenceOperatingCentreDataService, private ApplicationOperatingCentre $applicationOperatingCentreDataService)
+    {
     }
 
     /**

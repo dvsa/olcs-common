@@ -18,11 +18,8 @@ use Common\RefData as Ref;
  */
 class TransactionAmountSum implements FormatterPluginManagerInterface
 {
-    private Money $moneyFormatter;
-
-    public function __construct(Money $moneyFormatter)
+    public function __construct(private Money $moneyFormatter)
     {
-        $this->moneyFormatter = $moneyFormatter;
     }
 
     /**

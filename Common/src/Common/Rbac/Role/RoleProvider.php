@@ -14,18 +14,12 @@ use Dvsa\Olcs\Transfer\Query\User\RoleList;
 class RoleProvider implements RoleProviderInterface
 {
     /**
-     * @var QuerySender
-     */
-    private $queryService;
-
-    /**
      * @var Role[]
      */
     private $roles = [];
 
-    public function __construct(QuerySender $queryService)
+    public function __construct(private QuerySender $queryService)
     {
-        $this->queryService = $queryService;
     }
 
     /**

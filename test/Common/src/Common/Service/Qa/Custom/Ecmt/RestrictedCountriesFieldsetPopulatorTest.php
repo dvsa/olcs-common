@@ -89,7 +89,12 @@ class RestrictedCountriesFieldsetPopulatorTest extends MockeryTestCase
         $restrictedCountriesFieldsetPopulator->populate($form, $fieldset, $options);
     }
 
-    public function dpTestPopulate()
+    /**
+     * @return ((((bool|string)[]|bool|string)[]|bool|null|string)[]|null|string)[][]
+     *
+     * @psalm-return list{array{options: array{yesNo: null, questionKey: 'question.key', countries: array<never, never>}, expectedValueOptions: array<never, never>, expectedSetValue: null}, array{options: array{yesNo: false, questionKey: 'question.key', countries: array<never, never>}, expectedValueOptions: array<never, never>, expectedSetValue: 'N'}, array{options: array{yesNo: true, questionKey: 'question.key', countries: list{array{code: 'GR', labelTranslationKey: 'Greece', checked: true}, array{code: 'HU', labelTranslationKey: 'Hungary', checked: false}, array{code: 'IT', labelTranslationKey: 'Italy', checked: true}}}, expectedValueOptions: list{array{value: 'GR', label: 'Greece', selected: true, attributes: array{id: 'RestrictedCountriesList'}}, array{value: 'HU', label: 'Hungary', selected: false}, array{value: 'IT', label: 'Italy', selected: true}}, expectedSetValue: 'Y'}}
+     */
+    public function dpTestPopulate(): array
     {
         return [
             [

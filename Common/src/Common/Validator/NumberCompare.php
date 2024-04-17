@@ -49,10 +49,9 @@ class NumberCompare extends AbstractCompare
     protected $maxDiff;
 
     /**
-     * @param mixed $maxDiff
      * @return $this
      */
-    public function setMaxDiff($maxDiff)
+    public function setMaxDiff(mixed $maxDiff)
     {
         $this->maxDiff = $maxDiff;
         return $this;
@@ -108,11 +107,9 @@ class NumberCompare extends AbstractCompare
     /**
      * Returns true if and only if numbers are within max_diff (if set).
      *
-     * @param  mixed $value
-     * @param  mixed $compareToValue
      * @return bool
      */
-    private function isWithinMaxDiff($value, $compareToValue)
+    private function isWithinMaxDiff(mixed $value, mixed $compareToValue)
     {
         $maxDiff = $this->getMaxDiff();
 

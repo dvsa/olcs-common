@@ -27,7 +27,7 @@ class AbstractBusinessTypeControllerTest extends AbstractLvaControllerTestCase
         $this->assertTrue(true);
     }
 
-    protected function mockController($className, array $constructorParams = [])
+    protected function mockController(string $className, array $constructorParams = []): void
     {
         $this->request = m::mock(\Laminas\Http\Request::class)->makePartial();
 

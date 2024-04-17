@@ -27,7 +27,13 @@ class AddTagsTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $output);
     }
 
-    public function provideStrings()
+    /**
+     * @return string[][]
+     *
+     * @psalm-return list{list{'no text to replace', 'no text to replace'}, list{'text to replace (if applicable)', 'text to replace <span class=js-hidden>(if applicable)</span>'}, list{'multiline to replace (if
+                applicable)', 'multiline to replace <span class=js-hidden>(if applicable)</span>'}}
+     */
+    public function provideStrings(): array
     {
         return [
             ['no text to replace', 'no text to replace'],

@@ -22,15 +22,12 @@ abstract class AbstractTypeOfLicenceController extends AbstractController
 
     protected FlashMessengerHelperService $flashMessengerHelper;
 
-    protected ScriptFactory $scriptFactory;
-
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
         FlashMessengerHelperService $flashMessengerHelper,
-        ScriptFactory $scriptFactory
+        protected ScriptFactory $scriptFactory
     ) {
-        $this->scriptFactory = $scriptFactory;
         $this->flashMessengerHelper = $flashMessengerHelper;
         parent::__construct($niTextTranslationUtil, $authService);
     }
@@ -52,7 +49,7 @@ abstract class AbstractTypeOfLicenceController extends AbstractController
     /**
      * Process error messages from API
      *
-     * @param \Laminas\Form\FormInterface $form   Form
+     * @param Form $form Form
      * @param array                    $errors Errors
      *
      * @return void

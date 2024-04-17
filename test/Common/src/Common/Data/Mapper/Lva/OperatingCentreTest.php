@@ -74,7 +74,12 @@ class OperatingCentreTest extends MockeryTestCase
         $this->assertEquals($expected, OperatingCentre::mapFromResult($result));
     }
 
-    public function adProvider()
+    /**
+     * @return (int|string)[][]
+     *
+     * @psalm-return list{list{1, 'adPlaced'}, list{0, 'adSendByPost'}, list{2, 'adPlacedLater'}}
+     */
+    public function adProvider(): array
     {
         return [
             [RefData::AD_UPLOAD_NOW, OperatingCentre::VALUE_OPTION_AD_PLACED_NOW],
@@ -91,7 +96,12 @@ class OperatingCentreTest extends MockeryTestCase
         $this->assertEquals($expected, OperatingCentre::mapFromForm($data));
     }
 
-    public function mapFromFormProvider()
+    /**
+     * @return ((int|string|string[])[]|int|string)[][][]
+     *
+     * @psalm-return list{list{array{version: 1, address: array{foo: 'bar'}, data: array{noOfVehiclesRequired: 10, noOfTrailersRequired: 11, permission: array{permission: 'Y'}}, advertisements: array{radio: 'adPlaced', adPlacedContent: array{adPlacedIn: 'Donny Star', adPlacedDate: '2015-01-01'}}}, array{version: 1, address: array{foo: 'bar'}, noOfVehiclesRequired: 10, noOfTrailersRequired: 11, permission: 'Y', adPlaced: 1, adPlacedIn: 'Donny Star', adPlacedDate: '2015-01-01', taIsOverridden: 'N'}}, list{array{version: 1, address: array{foo: 'bar'}, data: array{noOfVehiclesRequired: 10, noOfTrailersRequired: 11, permission: array{permission: 'Y'}}, advertisements: array{radio: 'adSendByPost', adPlacedContent: array{adPlacedIn: 'Donny Star', adPlacedDate: '2015-01-01'}}}, array{version: 1, address: array{foo: 'bar'}, noOfVehiclesRequired: 10, noOfTrailersRequired: 11, permission: 'Y', adPlaced: 0, adPlacedIn: 'Donny Star', adPlacedDate: '2015-01-01', taIsOverridden: 'N'}}, list{array{version: 1, address: array{foo: 'bar'}, data: array{noOfVehiclesRequired: 10, noOfTrailersRequired: 11, permission: array{permission: 'Y'}}, advertisements: array{radio: 'adPlacedLater', adPlacedContent: array{adPlacedIn: 'Donny Star', adPlacedDate: '2015-01-01'}}}, array{version: 1, address: array{foo: 'bar'}, noOfVehiclesRequired: 10, noOfTrailersRequired: 11, permission: 'Y', adPlaced: 2, adPlacedIn: 'Donny Star', adPlacedDate: '2015-01-01', taIsOverridden: 'N'}}}
+     */
+    public function mapFromFormProvider(): array
     {
         return [
             [
@@ -282,7 +292,12 @@ class OperatingCentreTest extends MockeryTestCase
         $this->assertEquals($expected, OperatingCentre::mapFromPost($data));
     }
 
-    public function mapFromPostProvider()
+    /**
+     * @return ((int|string|string[][][])[]|string)[][][]
+     *
+     * @psalm-return list{list{array{advertisements: array{radio: 'adSendByPost', adPlacedContent: array{file: array{list: list{'foo'}}}}, bar: 'cake'}, array{advertisements: array{radio: 'adSendByPost', uploadedFileCount: 1, adPlacedContent: array{file: array{list: list{'foo'}}}}, bar: 'cake'}}, list{array{advertisements: array{radio: 'adPlacedLater'}, bar: 'cake'}, array{advertisements: array{radio: 'adPlacedLater', uploadedFileCount: 0}, bar: 'cake'}}, list{array{advertisements: array{radio: 'adPlaced'}, bar: 'cake'}, array{advertisements: array{radio: 'adPlaced', uploadedFileCount: 0}, bar: 'cake'}}}
+     */
+    public function mapFromPostProvider(): array
     {
         return [
             [
@@ -383,7 +398,12 @@ class OperatingCentreTest extends MockeryTestCase
         OperatingCentre::mapFormErrors($form, $errors, $mockFm, $mockTranslatorService, $location, $taGuidesUrl);
     }
 
-    public function dpConfirmation()
+    /**
+     * @return ((string|string[])[][][]|string)[][]
+     *
+     * @psalm-return array{externalUser: list{'external', array{address: array{postcode: list{array{ERR_OC_PC_TA_GB: 'translated'}}}}}, internalUserConfirmed: list{'internal', array{'form-actions': list{array{ERR_OC_PC_TA_GB: 'translated'}}}}, internalUserNotConfirmed: list{'internal', array{'form-actions': list{array{ERR_OC_PC_TA_GB: 'translated'}}}}}
+     */
+    public function dpConfirmation(): array
     {
 
         return [

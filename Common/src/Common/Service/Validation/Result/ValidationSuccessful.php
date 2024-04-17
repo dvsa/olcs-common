@@ -11,25 +11,15 @@ use Common\Service\Validation\CommandInterface;
 class ValidationSuccessful extends Validation
 {
     /**
-     * @var array
-     */
-    protected $result;
-
-    /**
-     * @var array
-     */
-    protected $context;
-
-    /**
      * @param $command
      * @param $result
      * @param $context
+     * @param mixed[] $result
+     * @param mixed[] $context
      */
-    public function __construct(CommandInterface $command, $result, $context = [])
+    public function __construct(CommandInterface $command, protected $result, protected $context = [])
     {
         parent::__construct($command);
-        $this->result = $result;
-        $this->context = $context;
     }
 
     /**

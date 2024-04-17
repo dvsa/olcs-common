@@ -42,7 +42,12 @@ class VehicleSearchTraitTest extends MockeryTestCase
         $this->sut->callAddRemovedVehiclesActions($filters, $mockTbl);
     }
 
-    public function dpTestAddRemovedVehiclesActions()
+    /**
+     * @return ((bool|string)[]|string)[][][]
+     *
+     * @psalm-return list{array{filters: array{includeRemoved: '1'}, actionParams: list{'hide-removed-vehicles', array{label: 'label-hide-removed-vehciles', requireRows: true, keepForReadOnly: true}}}, array{filters: array{includeRemoved: '0'}, actionParams: list{'show-removed-vehicles', array{label: 'label-show-removed-vehciles', requireRows: false, keepForReadOnly: true}}}}
+     */
+    public function dpTestAddRemovedVehiclesActions(): array
     {
         return [
             [

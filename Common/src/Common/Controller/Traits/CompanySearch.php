@@ -15,7 +15,7 @@ trait CompanySearch
     {
         try {
             $response = $this->handleQuery(ByNumber::create(['companyNumber' => $companyNumber]));
-        } catch (NotFoundException $notFoundException) {
+        } catch (NotFoundException) {
             $formHelper->setCompanyNotFoundError($form, $detailsFieldset);
             return $form;
         }
@@ -34,7 +34,7 @@ trait CompanySearch
         return $form;
     }
 
-    public function isValidCompanyNumber($companyNumber)
+    public function isValidCompanyNumber($companyNumber): bool
     {
         return strlen($companyNumber) === self::$companyNameLength;
     }

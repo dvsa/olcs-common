@@ -604,7 +604,7 @@ class ClassListTest extends MockeryTestCase
     public function fromStringIsCallable(): void
     {
         // Assert
-        $this->assertIsCallable(static fn(string $str): self => \Common\Form\Element\Attribute\ClassList::fromString($str));
+        $this->assertIsCallable(static fn(string $str): \Common\Form\Element\Attribute\ClassList => \Common\Form\Element\Attribute\ClassList::fromString($str));
     }
 
     /**
@@ -745,13 +745,10 @@ class ClassListTest extends MockeryTestCase
         $result = $this->sut->has(new ClassList(static::A_CLASS_ARRAY));
 
         // Assert
-        $this->assertEquals(true, $result);
+        $this->assertTrue($result);
     }
 
-    /**
-     * @param mixed ...$args
-     */
-    protected function setUpSut(...$args)
+    protected function setUpSut(array|ClassList|string ...$args): void
     {
         $this->sut = new ClassList(...$args);
     }

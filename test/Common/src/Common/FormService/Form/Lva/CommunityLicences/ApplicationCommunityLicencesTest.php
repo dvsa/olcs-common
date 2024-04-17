@@ -5,7 +5,6 @@ namespace CommonTest\Common\FormService\Form\Lva\CommunityLicences;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Lva\CommunityLicences\ApplicationCommunityLicences as Sut;
-use Laminas\Form\Form;
 use LmcRbacMvc\Service\AuthorizationService;
 
 /**
@@ -33,13 +32,13 @@ class ApplicationCommunityLicencesTest extends MockeryTestCase
 
     public function testGetForm(): void
     {
-        $formActions = m::mock();
+        $formActions = m::mock(\Laminas\Form\ElementInterface::class);
         $formActions->shouldReceive('has')->with('save')->andReturn(true);
         $formActions->shouldReceive('remove')->once()->with('save');
         $formActions->shouldReceive('has')->with('cancel')->andReturn(true);
         $formActions->shouldReceive('remove')->once()->with('cancel');
 
-        $form = m::mock();
+        $form = m::mock(\Common\Form\Form::class);
         $form->shouldReceive('has')->with('form-actions')->andReturn(true);
         $form->shouldReceive('get')->with('form-actions')->andReturn($formActions);
 

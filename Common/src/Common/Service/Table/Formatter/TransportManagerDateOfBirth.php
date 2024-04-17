@@ -6,11 +6,8 @@ use Laminas\View\HelperPluginManager;
 
 class TransportManagerDateOfBirth extends Date
 {
-    private HelperPluginManager $viewHelperManager;
-
-    public function __construct(HelperPluginManager $viewHelperManager)
+    public function __construct(private HelperPluginManager $viewHelperManager)
     {
-        $this->viewHelperManager = $viewHelperManager;
     }
 
     /**

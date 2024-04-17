@@ -22,28 +22,8 @@ class JWTIdentityProvider implements IdentityProviderInterface
 {
     private ?IdentityInterface $identity = null;
 
-    private Container $identitySession;
-
-    private QuerySender $querySender;
-
-    private CacheEncryption $cacheService;
-
-    private RefreshTokenService $refreshTokenService;
-
-    private Session $tokenSession;
-
-    public function __construct(
-        Container $session,
-        QuerySender $querySender,
-        CacheEncryption $cacheService,
-        RefreshTokenService $refreshTokenService,
-        Session $tokenSession
-    ) {
-        $this->identitySession = $session;
-        $this->querySender = $querySender;
-        $this->cacheService = $cacheService;
-        $this->refreshTokenService = $refreshTokenService;
-        $this->tokenSession = $tokenSession;
+    public function __construct(private Container $identitySession, private QuerySender $querySender, private CacheEncryption $cacheService, private RefreshTokenService $refreshTokenService, private Session $tokenSession)
+    {
     }
 
     public function getIdentity()
@@ -136,7 +116,7 @@ class JWTIdentityProvider implements IdentityProviderInterface
         try {
             $newTokens = $this->refreshTokenService->refreshTokens($tokens, $identifier);
             $this->tokenSession->write($newTokens);
-        } catch (Exception $exception) {
+        } catch (Exception) {
             return;
         }
     }

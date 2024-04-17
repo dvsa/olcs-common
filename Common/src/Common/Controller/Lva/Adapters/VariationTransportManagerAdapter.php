@@ -47,7 +47,7 @@ class VariationTransportManagerAdapter extends AbstractTransportManagerAdapter
         $tmaIds = [];
         foreach ($ids as $id) {
             // if has "L" prefix then its a TM Licence ID, else it is a TM Application ID
-            if (strpos($id, 'L') === 0) {
+            if (str_starts_with($id, 'L')) {
                 $tmlIds[] = (int) trim($id, 'L');
             } else {
                 $tmaIds[] = (int) $id;

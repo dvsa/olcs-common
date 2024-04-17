@@ -107,7 +107,12 @@ class IsAllowedListenerTest extends MockeryTestCase
         static::assertEquals($expect, $sut->isGranted($mockPage));
     }
 
-    public function dataProviderTestIsGranted()
+    /**
+     * @return (bool|null|string|string[][])[][]
+     *
+     * @psalm-return list{array{route: 'unit_Route', rules: array{unit_RouteOther: array<never, never>}, policy: 'deny', isGranted: null, expect: false}, array{route: 'unit_Route', rules: array{unit_Route: list{'*'}}, policy: null, isGranted: null, expect: true}, array{route: 'unit_Route', rules: array{unit_Route: array<never, never>}, policy: null, isGranted: null, expect: true}, array{route: 'unit_Route', rules: array{unit_Route: list{'unit_Permission'}}, policy: null, isGranted: false, expect: false}}
+     */
+    public function dataProviderTestIsGranted(): array
     {
         return [
             //  rules not presented for route, policy DENY
@@ -158,7 +163,7 @@ class IsAllowedListenerTest extends MockeryTestCase
      */
     private function mockServiceLocator()
     {
-        $closure = function ($class) {
+        $closure = function ($class): \Mockery\MockInterface|\LmcRbacMvc\Options\ModuleOptions|\LmcRbacMvc\Service\AuthorizationService {
             $map = [
                 AuthorizationService::class => $this->mockAuthSrv,
                 ModuleOptions::class => $this->mockModuleOptions,

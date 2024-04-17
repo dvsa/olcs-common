@@ -104,7 +104,7 @@ class UrlHelperServiceTest extends MockeryTestCase
 
     public function testFromRouteWithHostWithAndMatchingKey(): void
     {
-        $urlMock = function ($route, $params, $options) {
+        $urlMock = function ($route, $params, $options): string {
             $this->assertEquals('a_route', $route);
             $this->assertEquals(
                 [

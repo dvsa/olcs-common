@@ -43,7 +43,12 @@ class CommunityLicenceTest extends MockeryTestCase
         );
     }
 
-    public function resultData()
+    /**
+     * @return ((string|string[])[]|null|string)[][][]
+     *
+     * @psalm-return array{possession: array{apiData: array{communityLicenceDocumentStatus: array{id: 'doc_sts_destroyed'}, communityLicenceDocumentInfo: null}, formData: array{communityLicenceDocument: array{communityLicenceDocument: 'possession'}}}, lost: array{apiData: array{communityLicenceDocumentStatus: array{id: 'doc_sts_lost'}, communityLicenceDocumentInfo: 'lost info'}, formData: array{communityLicenceDocument: array{communityLicenceDocument: 'lost', lostContent: array{details: 'lost info'}}}}, stolen: array{apiData: array{communityLicenceDocumentStatus: array{id: 'doc_sts_stolen'}, communityLicenceDocumentInfo: 'stolen info'}, formData: array{communityLicenceDocument: array{communityLicenceDocument: 'stolen', stolenContent: array{details: 'stolen info'}}}}}
+     */
+    public function resultData(): array
     {
         return [
             'possession' => [
@@ -94,17 +99,13 @@ class CommunityLicenceTest extends MockeryTestCase
         ];
     }
 
-    public function getStatusForId(string $id)
+    public function getStatusForId(string $id): string
     {
-        switch ($id) {
-            case 'doc_sts_destroyed':
-                return 'possession';
-            case 'doc_sts_lost':
-                return 'lost';
-            case 'doc_sts_stolen':
-                return 'stolen';
-        }
-
-        return '';
+        return match ($id) {
+            'doc_sts_destroyed' => 'possession',
+            'doc_sts_lost' => 'lost',
+            'doc_sts_stolen' => 'stolen',
+            default => '',
+        };
     }
 }

@@ -23,7 +23,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
         'checkForUnexpectedResponseCode'
     ];
 
-    public function getSutMock($methods = [])
+    public function getSutMock(array|null $methods = []): \Common\Util\ResponseHelper
     {
         if ($methods === null) {
             $methods = [];

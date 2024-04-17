@@ -11,18 +11,13 @@ use Common\Service\Validation\CommandInterface;
 class ValidationFailed extends Validation
 {
     /**
-     * @var array
-     */
-    protected $messages;
-
-    /**
      * @param $command
      * @param $messages
+     * @param mixed[] $messages
      */
-    public function __construct(CommandInterface $command, $messages)
+    public function __construct(CommandInterface $command, protected $messages)
     {
         parent::__construct($command);
-        $this->messages = $messages;
     }
 
     /**

@@ -13,7 +13,7 @@ trait MocksServicesTrait
     /**
      * @var ServiceManager
      */
-    private $serviceManager;
+    private ServiceManager $serviceManager;
 
     protected function serviceManager(): ServiceManager
     {
@@ -68,7 +68,7 @@ trait MocksServicesTrait
     /**
      * Sets up default services.
      */
-    abstract protected function setUpDefaultServices(ServiceManager $serviceManager);
+    abstract protected function setUpDefaultServices(ServiceManager $serviceManager): ServiceManager|array;
 
     /**
      * @deprecated Use $this->serviceManager()->get($name) instead

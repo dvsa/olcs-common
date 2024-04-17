@@ -54,7 +54,7 @@ class TableRequiredValidator extends AbstractValidator
      *
      * @param string $label
      */
-    protected function setLabel($label)
+    protected function setLabel($label): void
     {
         $this->label = $label;
     }

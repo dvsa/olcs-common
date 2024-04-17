@@ -42,7 +42,12 @@ class RoadworthinessMakeAndModelFieldsetModifierTest extends MockeryTestCase
         );
     }
 
-    public function dpShouldModify()
+    /**
+     * @return (bool|string)[][]
+     *
+     * @psalm-return list{list{'fieldset40', true}, list{'fieldset47', true}, list{'fieldset39', false}, list{'fieldset48', false}}
+     */
+    public function dpShouldModify(): array
     {
         return [
             [Fieldsets::ROADWORTHINESS_VEHICLE_MAKE_AND_MODEL, true],

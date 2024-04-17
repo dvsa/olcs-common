@@ -73,7 +73,12 @@ class FieldsetPopulatorTest extends MockeryTestCase
         $fieldsetPopulator->populate($fieldset, $applicationSteps, $usageContext);
     }
 
-    public function dpTestPopulate()
+    /**
+     * @return string[][]
+     *
+     * @psalm-return list{list{'USAGE_CONTEXT_SELFSERVE'}, list{'USAGE_CONTEXT_INTERNAL'}}
+     */
+    public function dpTestPopulate(): array
     {
         return [
             [UsageContext::CONTEXT_SELFSERVE],

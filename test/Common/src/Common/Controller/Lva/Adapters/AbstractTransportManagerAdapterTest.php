@@ -79,7 +79,12 @@ class AbstractTransportManagerAdapterTest extends MockeryTestCase
         static::assertEquals($expect, $actual);
     }
 
-    public function dataProviderTestMapResultForTable()
+    /**
+     * @return ((int|string)[]|int|null|string)[][][][]
+     *
+     * @psalm-return list{array{licTms: list{array{id: 201, tmid: 70001, birthDate: 'unit_BirthDate', forename: 'unit_Forename', familyName: 'unit_FamilyName', emailAddress: 'unit_LicEmail'}}, appTms: list{array{id: 101, action: 'unit_Action', tmid: 80001, tmasid: 'unit_TmAppStatusId', tmasdesc: 'unit_TmAppStatusDesc', birthDate: 'unit_BirthDate', forename: 'unit_Forename', familyName: 'unit_FamilyName', emailAddress: 'unit_AppEmail'}}, expect: array{80001a: array{id: 101, name: array{familyName: 'unit_FamilyName', forename: 'unit_Forename'}, status: array{id: 'unit_TmAppStatusId', description: 'unit_TmAppStatusDesc'}, email: 'unit_AppEmail', dob: 'unit_BirthDate', transportManager: array{id: 80001}, action: 'unit_Action'}, 70001: array{id: 'L201', name: array{familyName: 'unit_FamilyName', forename: 'unit_Forename'}, status: null, email: 'unit_LicEmail', dob: 'unit_BirthDate', transportManager: array{id: 70001}, action: 'E'}}}, array{licTms: list{array{id: 301, tmid: 8888, birthDate: 'unit_BirthDate', forename: 'unit_Forename', familyName: 'unit_FamilyName', emailAddress: 'unit_LicEmail'}}, appTms: list{array{id: 101, tmid: 8888, tmasid: 'unit_TmAppStatusId', tmasdesc: 'unit_TmAppStatusDesc', birthDate: 'unit_BirthDate', forename: 'unit_Forename', familyName: 'unit_FamilyName', emailAddress: 'unit_AppEmail', action: 'U'}}, expect: array{8888: array{id: 'L301', name: array{familyName: 'unit_FamilyName', forename: 'unit_Forename'}, status: null, email: 'unit_LicEmail', dob: 'unit_BirthDate', transportManager: array{id: 8888}, action: 'C'}, 8888a: array{id: 101, name: array{familyName: 'unit_FamilyName', forename: 'unit_Forename'}, status: array{id: 'unit_TmAppStatusId', description: 'unit_TmAppStatusDesc'}, email: 'unit_AppEmail', dob: 'unit_BirthDate', transportManager: array{id: 8888}, action: 'U'}}}, array{licTms: list{array{id: 301, tmid: 8888, birthDate: 'unit_BirthDate', forename: 'unit_Forename', familyName: 'unit_FamilyName', emailAddress: 'unit_LicEmail'}}, appTms: list{array{id: 101, tmid: 8888, tmasid: 'unit_TmAppStatusId', tmasdesc: 'unit_TmAppStatusDesc', birthDate: 'unit_BirthDate', forename: 'unit_Forename', familyName: 'unit_FamilyName', emailAddress: 'unit_AppEmail', action: 'D'}}, expect: array{8888a: array{id: 101, name: array{familyName: 'unit_FamilyName', forename: 'unit_Forename'}, status: array{id: 'unit_TmAppStatusId', description: 'unit_TmAppStatusDesc'}, email: 'unit_AppEmail', dob: 'unit_BirthDate', transportManager: array{id: 8888}, action: 'D'}}}}
+     */
+    public function dataProviderTestMapResultForTable(): array
     {
         $expectedName = [
             'familyName' => 'unit_FamilyName',
@@ -231,7 +236,12 @@ class AbstractTransportManagerAdapterTest extends MockeryTestCase
         static::assertEquals($expect, $actual);
     }
 
-    public function dataProviderTestSortResultForTable()
+    /**
+     * @return ((string|string[])[][]|int)[][]
+     *
+     * @psalm-return list{array{method: 1, data: list{array{name: array{familyName: 'Xlast', forename: 'Afirst'}}, array{name: array{familyName: 'Alast', forename: 'Bfirst'}}, array{name: array{familyName: 'Alast', forename: 'Cfirst'}}}, expect: list{array{name: array{familyName: 'Alast', forename: 'Bfirst'}}, array{name: array{familyName: 'Alast', forename: 'Cfirst'}}, array{name: array{familyName: 'Xlast', forename: 'Afirst'}}}}, array{method: 2, data: list{array{name: array{familyName: 'Xlast', forename: 'Afirst'}, action: 'A'}, array{name: array{familyName: 'Alast', forename: 'Bfirst'}, action: 'A'}, array{name: array{familyName: 'Alast', forename: 'Cfirst'}, action: 'X'}}, expect: list{array{name: array{familyName: 'Alast', forename: 'Cfirst'}, action: 'X'}, array{name: array{familyName: 'Alast', forename: 'Bfirst'}, action: 'A'}, array{name: array{familyName: 'Xlast', forename: 'Afirst'}, action: 'A'}}}}
+     */
+    public function dataProviderTestSortResultForTable(): array
     {
         return [
             //  test sorting method by Last and First name

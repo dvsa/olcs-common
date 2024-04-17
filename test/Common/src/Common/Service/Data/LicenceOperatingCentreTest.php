@@ -109,7 +109,12 @@ class LicenceOperatingCentreTest extends AbstractDataServiceTestCase
         }
     }
 
-    public function providerOutputType()
+    /**
+     * @return int[][]
+     *
+     * @psalm-return list{list{1}, list{2}}
+     */
+    public function providerOutputType(): array
     {
         return [
             [LicenceOperatingCentre::OUTPUT_TYPE_FULL],

@@ -60,7 +60,7 @@ class FormElement extends LaminasFormElement
 
         /** @var \Laminas\View\Renderer\PhpRenderer $renderer */
         $renderer = $this->getView();
-        if (!method_exists($renderer, 'plugin')) {
+        if ($renderer === null || !method_exists($renderer, 'plugin')) {
             return '';
         }
 

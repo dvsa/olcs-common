@@ -31,7 +31,7 @@ class EnabledSectionTraitStub extends AbstractActionController
         $this->stringHelper = $stringHelper;
     }
 
-    public function callSetEnabledAndCompleteFlagOnSections($accessibleSections, $applicationCompletion)
+    public function callSetEnabledAndCompleteFlagOnSections($accessibleSections, $applicationCompletion): array
     {
         return $this->setEnabledAndCompleteFlagOnSections($accessibleSections, $applicationCompletion);
     }

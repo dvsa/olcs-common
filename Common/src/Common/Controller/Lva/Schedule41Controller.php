@@ -23,23 +23,13 @@ use LmcRbacMvc\Service\AuthorizationService;
  */
 class Schedule41Controller extends AbstractController
 {
-    protected FormHelperService $formHelper;
-
-    protected TableFactory $tableFactory;
-
-    protected FlashMessengerHelperService $flashMessengerHelper;
-
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
         AuthorizationService $authService,
-        FormHelperService $formHelper,
-        TableFactory $tableFactory,
-        FlashMessengerHelperService $flashMessengerHelper
+        protected FormHelperService $formHelper,
+        protected TableFactory $tableFactory,
+        protected FlashMessengerHelperService $flashMessengerHelper
     ) {
-        $this->formHelper = $formHelper;
-        $this->tableFactory = $tableFactory;
-        $this->flashMessengerHelper = $flashMessengerHelper;
-
         parent::__construct($niTextTranslationUtil, $authService);
     }
 
@@ -167,9 +157,9 @@ class Schedule41Controller extends AbstractController
     /**
      * Approve the registered schedule 4/1 request for the application.
      *
-     * @return \Laminas\Http\Response|ViewModel
+     * @return \Common\View\Model\Section|\Laminas\Http\Response|\Laminas\View\Helper\ViewModel
      */
-    public function approveSchedule41Action()
+    public function approveSchedule41Action(): \Common\View\Model\Section|\Laminas\View\Helper\ViewModel|\Laminas\Http\Response
     {
         $request = $this->getRequest();
 
@@ -230,10 +220,8 @@ class Schedule41Controller extends AbstractController
      * Get a form with the cannot publish validation messages
      *
      * @param array $errors Errors
-     *
-     * @return \Laminas\View\Helper\ViewModel
      */
-    private function cannotPublish($errors)
+    private function cannotPublish($errors): \Common\View\Model\Section
     {
         $formHelper = $this->formHelper;
         $form = $formHelper->createFormWithRequest('Message', $this->getRequest());

@@ -15,7 +15,12 @@ namespace Common\Data\Mapper\Lva;
  */
 class OtherLicence
 {
-    public static function mapFromResult(array $data)
+    /**
+     * @return (array|mixed)[]
+     *
+     * @psalm-return array{id: mixed, version: mixed, licNo: mixed, willSurrender: mixed, holderName: mixed, disqualificationDate: mixed, disqualificationLength: mixed, previousLicenceType: array{id: mixed}}
+     */
+    public static function mapFromResult(array $data): array
     {
         return [
             'id' => $data['id'],

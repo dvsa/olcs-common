@@ -10,22 +10,14 @@ use Laminas\Form\Fieldset;
 
 class PermitStartDateFieldsetPopulator implements FieldsetPopulatorInterface
 {
-    /** @var TranslationHelperService */
-    private $translator;
-
-    /** @var HtmlAdder */
-    private $htmlAdder;
-
     /**
      * Create service instance
      *
      *
      * @return PermitStartDateFieldsetPopulator
      */
-    public function __construct(TranslationHelperService $translator, HtmlAdder $htmlAdder)
+    public function __construct(private TranslationHelperService $translator, private HtmlAdder $htmlAdder)
     {
-        $this->translator = $translator;
-        $this->htmlAdder = $htmlAdder;
     }
 
     /**

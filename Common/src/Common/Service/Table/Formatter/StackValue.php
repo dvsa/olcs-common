@@ -17,11 +17,8 @@ use Common\Service\Helper\StackHelperService;
  */
 class StackValue implements FormatterPluginManagerInterface
 {
-    private StackHelperService $stackHelper;
-
-    public function __construct(StackHelperService $stackHelper)
+    public function __construct(private StackHelperService $stackHelper)
     {
-        $this->stackHelper = $stackHelper;
     }
 
     /**

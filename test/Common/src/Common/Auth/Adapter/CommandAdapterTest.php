@@ -85,7 +85,12 @@ class CommandAdapterTest extends MockeryTestCase
         static::assertEquals($messages, $result->getMessages());
     }
 
-    public function commandResultDataProvider()
+    /**
+     * @return ((int|string)[]|int)[][]
+     *
+     * @psalm-return array{'with id and messages': array{code: 1, identity: array{id: 1}, messages: list{'message'}}, 'with id and mo messages': array{code: 1, identity: array{id: 1}, messages: array<never, never>}, 'with messages and no id': array{code: 1, identity: array<never, never>, messages: list{'message'}}}
+     */
+    public function commandResultDataProvider(): array
     {
         return [
             'with id and messages' => [
@@ -114,10 +119,7 @@ class CommandAdapterTest extends MockeryTestCase
         ];
     }
 
-    /**
-     * @return Response|MockInterface
-     */
-    protected function response(bool $isOk, array $result)
+    protected function response(bool $isOk, array $result): MockInterface|Response
     {
         $mockResponse = m::mock(Response::class);
         $mockResponse->shouldReceive('isOk')
@@ -128,11 +130,7 @@ class CommandAdapterTest extends MockeryTestCase
         return $mockResponse;
     }
 
-    /**
-     * @param $response
-     * @return CommandSender|MockInterface
-     */
-    protected function commandSender(Response $response)
+    protected function commandSender(Response $response): MockInterface|CommandSender
     {
         $mockSender = m::mock(CommandSender::class);
         $mockSender->shouldReceive('send')
@@ -141,16 +139,14 @@ class CommandAdapterTest extends MockeryTestCase
         return $mockSender;
     }
 
-    /**
-     * @param $commandSender
-     */
     protected function setupSut(CommandSender $commandSender): CommandAdapter
     {
         return new CommandAdapter($commandSender);
     }
 
-    protected function setUpDefaultServices(ServiceManager $serviceManager)
+    protected function setUpDefaultServices(ServiceManager $serviceManager): ServiceManager
     {
-        $this->serviceManager->setService('CommandSender', m::mock(CommandSender::class));
+        $serviceManager->setService('CommandSender', m::mock(CommandSender::class));
+        return $serviceManager;
     }
 }

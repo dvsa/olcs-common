@@ -25,26 +25,26 @@ abstract class AbstractReviewService implements ReviewServiceInterface
     /** @var TranslationHelperService */
     protected $translationHelper;
 
-    private Address $addressFormatter;
-
     /**
      * Create service instance
      *
      *
      * @return AbstractReviewService
      */
-    public function __construct(AbstractReviewServiceServices $abstractReviewServiceServices, Address $addressFormatter)
+    public function __construct(AbstractReviewServiceServices $abstractReviewServiceServices, private Address $addressFormatter)
     {
         $this->translationHelper = $abstractReviewServiceServices->getTranslationHelper();
-        $this->addressFormatter = $addressFormatter;
     }
 
-    protected function formatText($text)
+    protected function formatText($text): string
     {
         return nl2br($text);
     }
 
-    protected function findFiles($files, $category, $subCategory)
+    /**
+     * @psalm-return list<mixed>
+     */
+    protected function findFiles($files, $category, $subCategory): array
     {
         $foundFiles = [];
 
@@ -61,12 +61,12 @@ abstract class AbstractReviewService implements ReviewServiceInterface
         return $foundFiles;
     }
 
-    protected function formatNumber($number)
+    protected function formatNumber($number): string
     {
         return number_format($number);
     }
 
-    protected function formatAmount($amount)
+    protected function formatAmount($amount): string
     {
         return '£' . number_format($amount, 0);
     }
@@ -76,32 +76,32 @@ abstract class AbstractReviewService implements ReviewServiceInterface
         return $refData['description'];
     }
 
-    protected function formatShortAddress($address)
+    protected function formatShortAddress($address): string
     {
         return $this->addressFormatter->format($address);
     }
 
-    protected function formatFullAddress($address)
+    protected function formatFullAddress($address): string
     {
         return $this->addressFormatter->format($address, ['addressFields' => 'FULL']);
     }
 
-    protected function formatConfirmed($value)
+    protected function formatConfirmed($value): string
     {
         return $value === 'Y' ? 'Confirmed' : 'Unconfirmed';
     }
 
-    protected function formatDate($date, $format = 'd F Y')
+    protected function formatDate($date, $format = 'd F Y'): string
     {
         return date($format, strtotime($date));
     }
 
-    protected function formatYesNo($value)
+    protected function formatYesNo($value): string
     {
         return $value === 'Y' ? 'Yes' : 'No';
     }
 
-    protected function formatPersonFullName($person)
+    protected function formatPersonFullName($person): string
     {
         $parts = [];
 
@@ -115,12 +115,12 @@ abstract class AbstractReviewService implements ReviewServiceInterface
         return implode(' ', $parts);
     }
 
-    protected function isPsv($data)
+    protected function isPsv($data): bool
     {
         return $data['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_PSV;
     }
 
-    protected function translate($string)
+    protected function translate($string): string
     {
         return $this->translationHelper->translate($string);
     }

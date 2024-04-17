@@ -17,6 +17,11 @@ use Common\Data\Mapper\MapperInterface;
  */
 class LicenceGoodsVehicles implements MapperInterface
 {
+    /**
+     * @return array[]
+     *
+     * @psalm-return array{shareInfo: array{shareInfo: mixed}}
+     */
     public static function mapFromResult(array $data)
     {
         return [

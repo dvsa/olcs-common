@@ -11,18 +11,12 @@ trait MocksTranslatorsTrait
 {
     abstract protected function serviceManager(): ServiceManager;
 
-    /**
-     * @return MockInterface|TranslatorInterface
-     */
-    protected function translator(): MockInterface
+    protected function translator(): \Mockery\MockInterface
     {
         return $this->serviceManager()->get(TranslatorInterface::class);
     }
 
-    /**
-     * @return MockInterface|Translator
-     */
-    protected function setUpDefaultTranslator(): MockInterface
+    protected function setUpDefaultTranslator(): \Mockery\MockInterface
     {
         $instance = $this->setUpMockService(Translator::class);
         $instance->shouldReceive('translate')->andReturnUsing(static fn($key) => $key)->byDefault();

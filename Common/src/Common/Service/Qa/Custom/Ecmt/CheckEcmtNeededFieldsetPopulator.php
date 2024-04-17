@@ -8,22 +8,14 @@ use Laminas\Form\Fieldset;
 
 class CheckEcmtNeededFieldsetPopulator implements FieldsetPopulatorInterface
 {
-    /** @var CheckboxFieldsetPopulator */
-    private $checkboxFieldsetPopulator;
-
-    /** @var InfoIconAdder */
-    private $infoIconAdder;
-
     /**
      * Create service instance
      *
      *
      * @return CheckEcmtNeededFieldsetPopulator
      */
-    public function __construct(CheckboxFieldsetPopulator $checkboxFieldsetPopulator, InfoIconAdder $infoIconAdder)
+    public function __construct(private CheckboxFieldsetPopulator $checkboxFieldsetPopulator, private InfoIconAdder $infoIconAdder)
     {
-        $this->checkboxFieldsetPopulator = $checkboxFieldsetPopulator;
-        $this->infoIconAdder = $infoIconAdder;
     }
 
     /**

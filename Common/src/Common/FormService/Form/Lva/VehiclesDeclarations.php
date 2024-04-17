@@ -11,14 +11,11 @@ use Common\Service\Helper\FormHelperService;
  */
 class VehiclesDeclarations
 {
-    protected FormHelperService $formHelper;
-
-    public function __construct(FormHelperService $formHelper)
+    public function __construct(protected FormHelperService $formHelper)
     {
-        $this->formHelper = $formHelper;
     }
 
-    public function getForm()
+    public function getForm(): \Common\Form\Form
     {
         $form = $this->formHelper->createForm('Lva\VehiclesDeclarations');
 

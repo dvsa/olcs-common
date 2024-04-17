@@ -11,11 +11,8 @@ use Laminas\View\Helper\AbstractHelper;
  */
 class TranslateReplace extends AbstractHelper
 {
-    private TranslationHelperService $translator;
-
-    public function __construct(TranslationHelperService $translator)
+    public function __construct(private TranslationHelperService $translator)
     {
-        $this->translator = $translator;
     }
 
     /**

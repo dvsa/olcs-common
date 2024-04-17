@@ -11,12 +11,9 @@ class RefDataStatus implements FormatterPluginManagerInterface
 {
     protected $viewHelperManager;
 
-    private RefData $refDataFormatter;
-
-    public function __construct(HelperPluginManager $viewHelperManager, RefData $refDataFormatter)
+    public function __construct(HelperPluginManager $viewHelperManager, private RefData $refDataFormatter)
     {
         $this->viewHelperManager = $viewHelperManager;
-        $this->refDataFormatter = $refDataFormatter;
     }
 
     /**

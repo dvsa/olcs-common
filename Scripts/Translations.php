@@ -47,7 +47,7 @@ class Translator
     /**
      * Translate Text Translations
      */
-    protected function translateTextTranslations()
+    protected function translateTextTranslations(): void
     {
         $this->organiseTranslations();
         $this->outputEnContent();
@@ -57,7 +57,7 @@ class Translator
     /**
      * Translate Markup Translations
      */
-    protected function translateMarkupTranslations()
+    protected function translateMarkupTranslations(): void
     {
         $this->iterateAndTranslate($this->getFilename(self::EN_MARKUP));
     }
@@ -67,7 +67,7 @@ class Translator
      *
      * @param $path
      */
-    protected function iterateAndTranslate($path)
+    protected function iterateAndTranslate(string $path): void
     {
         $partials = new DirectoryIterator($path);
 
@@ -91,7 +91,7 @@ class Translator
      *
      * @param $source
      */
-    protected function translateMarkupFile($source)
+    protected function translateMarkupFile(string $source): void
     {
         $dest = str_replace('en_GB', 'cy_GB', $source);
         $translatedDest = str_replace('en_GB', 'cy_GB-translated', $source);
@@ -110,7 +110,7 @@ class Translator
     /**
      * Generate and output the english file
      */
-    protected function outputEnContent()
+    protected function outputEnContent(): void
     {
         $this->outputContent(self::EN, fn($key, $value): string => $this->formatEnRow($key, $value));
     }
@@ -118,7 +118,7 @@ class Translator
     /**
      * Generate and output the welsh file
      */
-    protected function outputCyContent()
+    protected function outputCyContent(): void
     {
         $this->outputContent(self::CY, fn($key, $value): string => $this->formatCyRow($key, $value));
     }
@@ -154,8 +154,11 @@ class Translator
      *
      * @param $locale
      * @param $callback
+     *
+     * @psalm-param 'CY'|'EN' $locale
+     * @psalm-param Closure(mixed, mixed):string $callback
      */
-    protected function outputContent($locale, $callback)
+    protected function outputContent(string $locale, Closure $callback): void
     {
         $content = $this->generateContent($callback);
 
@@ -166,9 +169,12 @@ class Translator
      * Grab the appropriate filename
      *
      * @param $locale
+     *
      * @return string
+     *
+     * @psalm-param 'EN-MARKUP' $locale
      */
-    protected function getFilename($locale)
+    protected function getFilename(string $locale)
     {
         return $this->translationLocation . $this->filenameMap[$locale];
     }
@@ -203,7 +209,7 @@ class Translator
     /**
      * Standardise the translations
      */
-    protected function organiseTranslations()
+    protected function organiseTranslations(): void
     {
         foreach ($this->enTranslations as $key => $value) {
 
@@ -223,7 +229,7 @@ class Translator
      *
      * @param $translations
      */
-    protected function sortTranslations(&$translations)
+    protected function sortTranslations(&$translations): void
     {
         ksort($translations);
     }
@@ -253,10 +259,15 @@ class Translator
     /**
      * Escape quotes
      *
-     * @param $string
-     * @return string
+     * @param null|string|string[] $string
+     *
+     * @return string|string[]
+     *
+     * @psalm-param array<string>|null|string $string
+     *
+     * @psalm-return array<string>|string
      */
-    protected function escapeQuotes($string)
+    protected function escapeQuotes(array|string|null $string): array|string
     {
         return str_replace("'", "\'", $string);
     }

@@ -72,7 +72,12 @@ Response = unit_Result',
         static::assertSame($expect, $this->sut->getResult());
     }
 
-    public function dpTestGetResult()
+    /**
+     * @return (string|string[])[][]
+     *
+     * @psalm-return list{array{body: '{"unit_Key": "unit_Value"}', expect: array{unit_Key: 'unit_Value'}}, array{body: 'not Json or broken', expect: array<never, never>}}
+     */
+    public function dpTestGetResult(): array
     {
         return [
             [

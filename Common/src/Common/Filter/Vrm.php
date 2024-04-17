@@ -14,6 +14,8 @@ use Laminas\Filter\AbstractFilter;
  * VRM filter
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
+ *
+ * @template-extends AbstractFilter<string, string>
  */
 class Vrm extends AbstractFilter
 {
