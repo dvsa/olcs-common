@@ -119,10 +119,7 @@ class CommandAdapterTest extends MockeryTestCase
         ];
     }
 
-    /**
-     * @return Response|MockInterface
-     */
-    protected function response(bool $isOk, array $result)
+    protected function response(bool $isOk, array $result): MockInterface|Response
     {
         $mockResponse = m::mock(Response::class);
         $mockResponse->shouldReceive('isOk')
@@ -133,11 +130,7 @@ class CommandAdapterTest extends MockeryTestCase
         return $mockResponse;
     }
 
-    /**
-     * @param $response
-     * @return CommandSender|MockInterface
-     */
-    protected function commandSender(Response $response)
+    protected function commandSender(Response $response): MockInterface|CommandSender
     {
         $mockSender = m::mock(CommandSender::class);
         $mockSender->shouldReceive('send')
@@ -146,19 +139,14 @@ class CommandAdapterTest extends MockeryTestCase
         return $mockSender;
     }
 
-    /**
-     * @param $commandSender
-     */
     protected function setupSut(CommandSender $commandSender): CommandAdapter
     {
         return new CommandAdapter($commandSender);
     }
 
-    /**
-     * @return void
-     */
-    protected function setUpDefaultServices(ServiceManager $serviceManager)
+    protected function setUpDefaultServices(ServiceManager $serviceManager): ServiceManager
     {
-        $this->serviceManager->setService('CommandSender', m::mock(CommandSender::class));
+        $serviceManager->setService('CommandSender', m::mock(CommandSender::class));
+        return $serviceManager;
     }
 }

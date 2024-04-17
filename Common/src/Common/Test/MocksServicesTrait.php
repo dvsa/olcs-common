@@ -68,7 +68,7 @@ trait MocksServicesTrait
     /**
      * Sets up default services.
      */
-    abstract protected function setUpDefaultServices(ServiceManager $serviceManager);
+    abstract protected function setUpDefaultServices(ServiceManager $serviceManager): ServiceManager|array;
 
     /**
      * @deprecated Use $this->serviceManager()->get($name) instead

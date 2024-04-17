@@ -454,15 +454,13 @@ class JWTIdentityProviderTest extends MockeryTestCase
         );
     }
 
-    /**
-     * @return void
-     */
-    protected function setUpDefaultServices(ServiceManager $serviceManager)
+    protected function setUpDefaultServices(ServiceManager $serviceManager): ServiceManager
     {
         $this->cacheService();
         $this->querySender();
         $this->identitySession();
         $this->tokenSession();
+        return $serviceManager;
     }
 
     /**

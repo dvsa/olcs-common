@@ -30,12 +30,10 @@ class RefreshTokenServiceTest extends MockeryTestCase
         $this->setUpServiceManager();
     }
 
-    /**
-     * @return void
-     */
-    protected function setUpDefaultServices(ServiceManager $serviceManager)
+    protected function setUpDefaultServices(ServiceManager $serviceManager): ServiceManager
     {
         $this->commandSender();
+        return $serviceManager;
     }
 
     protected function setUpSut(): RefreshTokenService

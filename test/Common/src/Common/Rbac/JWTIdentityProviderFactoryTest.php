@@ -80,13 +80,13 @@ class JWTIdentityProviderFactoryTest extends MockeryTestCase
 
     protected function setUpDefaultServices(ServiceManager $serviceManager): ServiceManager
     {
-        $this->serviceManager->setService('QuerySender', $this->setUpMockService(QuerySender::class));
-        $this->serviceManager->setService(CacheEncryption::class, $this->setUpMockService(CacheEncryption::class));
+        $serviceManager->setService('QuerySender', $this->setUpMockService(QuerySender::class));
+        $serviceManager->setService(CacheEncryption::class, $this->setUpMockService(CacheEncryption::class));
         $this->config();
-        $this->serviceManager->setService(RefreshTokenService::class, $this->setUpMockService(RefreshTokenService::class));
-        $this->serviceManager->setService(Session::class, $this->setUpMockService(Session::class));
+        $serviceManager->setService(RefreshTokenService::class, $this->setUpMockService(RefreshTokenService::class));
+        $serviceManager->setService(Session::class, $this->setUpMockService(Session::class));
 
-        return $this->serviceManager;
+        return $serviceManager;
     }
 
     protected function config(array $config = []): void

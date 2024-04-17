@@ -92,15 +92,13 @@ class QueryServiceFactoryTest extends MockeryTestCase
         $this->sut = new QueryServiceFactory();
     }
 
-    /**
-     * @return void
-     */
-    protected function setUpDefaultServices(ServiceManager $serviceManager)
+    protected function setUpDefaultServices(ServiceManager $serviceManager): ServiceManager
     {
         $this->config();
-        $this->serviceManager->setService('CqrsRequest', $this->setUpMockService(Request::class));
-        $this->serviceManager->setService('ApiRouter', $this->setUpMockService(RouteInterface::class));
-        $this->serviceManager->setService('Helper\FlashMessenger', $this->setUpMockService(FlashMessengerHelperService::class));
+        $serviceManager->setService('CqrsRequest', $this->setUpMockService(Request::class));
+        $serviceManager->setService('ApiRouter', $this->setUpMockService(RouteInterface::class));
+        $serviceManager->setService('Helper\FlashMessenger', $this->setUpMockService(FlashMessengerHelperService::class));
+        return $serviceManager;
     }
 
     protected function config(array $config = []): void

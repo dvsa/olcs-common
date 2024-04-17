@@ -649,14 +649,12 @@ class FormRowTest extends MockeryTestCase
         return (new CommonHelper\FormElementErrorsFactory())->__invoke($serviceLocator, CommonHelper\FormElementErrors::class);
     }
 
-    /**
-     * @return void
-     */
-    protected function setUpDefaultServices(ServiceManager $serviceManager)
+    protected function setUpDefaultServices(ServiceManager $serviceManager): ServiceManager
     {
         $serviceManager->setFactory(FormElementMessageFormatter::class, new FormElementMessageFormatterFactory());
         $serviceManager->setService(static::VALIDATOR_MANAGER, $this->setUpValidatorPluginManager());
         $this->phpRenderer();
+        return $serviceManager;
     }
 
     protected function phpRenderer(): MockObject|PhpRenderer

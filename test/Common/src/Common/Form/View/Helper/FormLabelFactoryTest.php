@@ -50,11 +50,9 @@ class FormLabelFactoryTest extends MockeryTestCase
         return new FormLabelFactory();
     }
 
-    /**
-     * @return void
-     */
-    protected function setUpDefaultServices(ServiceManager $serviceManager)
+    protected function setUpDefaultServices(ServiceManager $serviceManager): ServiceManager
     {
         $serviceManager->setService(TranslatorInterface::class, $this->setUpMockService(TranslatorInterface::class));
+        return $serviceManager;
     }
 }

@@ -861,11 +861,12 @@ class FormErrorsTest extends MockeryTestCase
     /**
      * @return void
      */
-    protected function setUpDefaultServices(ServiceManager $serviceManager)
+    protected function setUpDefaultServices(ServiceManager $serviceManager): ServiceManager
     {
         $serviceManager->setService(TranslatorInterface::class, $this->setUpTranslator());
         $serviceManager->setFactory(FormElementMessageFormatter::class, new FormElementMessageFormatterFactory());
         $serviceManager->setService(static::VALIDATOR_MANAGER, m::mock(ValidatorPluginManager::class));
+        return $serviceManager;
     }
 
     protected function setUpTranslator(): MockInterface

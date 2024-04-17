@@ -126,15 +126,13 @@ class FormElementErrorsTest extends MockeryTestCase
         return (new FormLabelFactory())->__invoke($container, FormLabel::class);
     }
 
-    /**
-     * @return void
-     */
-    protected function setUpDefaultServices(ServiceManager $serviceManager)
+    protected function setUpDefaultServices(ServiceManager $serviceManager): ServiceManager
     {
         $serviceManager->setService(TranslatorInterface::class, $this->setUpTranslator());
         $serviceManager->setService(HTMLPurifier::class, new HTMLPurifier());
         $serviceManager->setFactory(FormLabel::class, new FormLabelFactory());
         $serviceManager->setFactory(FormElementMessageFormatter::class, new FormElementMessageFormatterFactory());
         $serviceManager->setService(static::VALIDATOR_MANAGER, m::mock(ValidatorPluginManager::class));
+        return $serviceManager;
     }
 }
