@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.0.1](https://github.com/dvsa/olcs-common/compare/v7.0.0...v7.0.1) (2024-04-18)
+
+
+### Bug Fixes
+
+* locked php version to ~8.0.0 ([#101](https://github.com/dvsa/olcs-common/issues/101)) ([bd1f1a6](https://github.com/dvsa/olcs-common/commit/bd1f1a6bc64449d02363d652726d71b60d22bb19))
+
 ## [7.0.0](https://github.com/dvsa/olcs-common/compare/v6.8.0...v7.0.0) (2024-04-17)
 
 
