@@ -152,7 +152,7 @@ class AbstractVehiclesDeclarationsControllerTest extends AbstractLvaControllerTe
         $this->assertEquals('vehicles_declarations', $this->view);
     }
 
-    protected function shouldRemoveElements(\Common\Form\Form $form, array $elements): void
+    protected function shouldRemoveElements($form, array $elements): void
     {
         $helper = $this->mockFormHelper;
         foreach ($elements as $e) {

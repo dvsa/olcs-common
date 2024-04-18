@@ -18,7 +18,7 @@ abstract class AbstractBusinessDetails
     {
     }
 
-    public function getForm($orgType, $hasInforceLicences, bool $hasOrganisationSubmittedLicenceApplication): \Common\Form\Form
+    public function getForm($orgType, $hasInforceLicences, bool $hasOrganisationSubmittedLicenceApplication)
     {
         $form = $this->formHelper->createForm('Lva\BusinessDetails');
 
@@ -40,7 +40,7 @@ abstract class AbstractBusinessDetails
      *
      * @return void
      */
-    protected function alterForm(\Common\Form\Form $form, array $params)
+    protected function alterForm($form, array $params)
     {
         switch ($params['orgType']) {
             case RefData::ORG_TYPE_REGISTERED_COMPANY:

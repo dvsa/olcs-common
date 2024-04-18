@@ -25,7 +25,7 @@ trait StoredCardsTrait
      *
      * @return void
      */
-    protected function setupSelectStoredCards(\Common\Form\Form $form, $isNi)
+    protected function setupSelectStoredCards($form, $isNi)
     {
         $options = [];
         $response = $this->handleQuery(StoredCardList::create(['isNi' => $isNi]));

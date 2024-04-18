@@ -15,7 +15,7 @@ abstract class AbstractCommunityLicences extends AbstractLvaFormService
 {
     protected FormHelperService $formHelper;
 
-    public function getForm(): \Common\Form\Form
+    public function getForm()
     {
         $form = $this->formHelper->createForm('Lva\CommunityLicences');
 

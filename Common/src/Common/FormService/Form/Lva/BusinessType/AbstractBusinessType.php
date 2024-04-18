@@ -19,7 +19,7 @@ abstract class AbstractBusinessType extends AbstractLvaFormService
 
     protected GuidanceHelperService $guidanceHelper;
 
-    public function getForm(bool $inForceLicences, bool $hasOrganisationSubmittedLicenceApplication): \Common\Form\Form
+    public function getForm(bool $inForceLicences, bool $hasOrganisationSubmittedLicenceApplication)
     {
         $form = $this->formHelper->createForm('Lva\BusinessType');
 

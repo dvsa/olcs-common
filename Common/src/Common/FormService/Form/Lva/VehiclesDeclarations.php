@@ -15,7 +15,7 @@ class VehiclesDeclarations
     {
     }
 
-    public function getForm(): \Common\Form\Form
+    public function getForm()
     {
         $form = $this->formHelper->createForm('Lva\VehiclesDeclarations');
 

@@ -240,7 +240,7 @@ class Search extends AbstractData
              ->getValue();
     }
 
-    public function populateFiltersFormOptions(): \Common\Form\Form
+    public function populateFiltersFormOptions()
     {
         /** @var \Common\Form\Form $form */
         $form = $this->fetchFiltersFormObject();

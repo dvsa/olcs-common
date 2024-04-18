@@ -75,7 +75,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         parent::__construct($niTextTranslationUtil, $authService);
     }
 
-    public function indexAction(): \Common\View\Model\Section|\Laminas\Http\Response
+    public function indexAction()
     {
         /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
@@ -168,7 +168,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         return 'delete-other-licence';
     }
 
-    protected function saveLicenceHistory(\Common\Form\Form $form, iterable $data, bool $inProgress): bool
+    protected function saveLicenceHistory($form, iterable $data, bool $inProgress): bool
     {
         $data = $this->formatDataForSave($data);
 
@@ -724,7 +724,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         return false;
     }
 
-    protected function mapErrors(\Common\Form\Form $form, array $errors, array $fields = [], string $fieldsetName = ''): void
+    protected function mapErrors($form, array $errors, array $fields = [], string $fieldsetName = ''): void
     {
         $formMessages = [];
 

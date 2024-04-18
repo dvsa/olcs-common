@@ -235,7 +235,7 @@ abstract class AbstractDiscsController extends AbstractController
     /**
      * Get Table of disks form
      */
-    protected function getDiscsForm(): \Common\Form\Form|null
+    protected function getDiscsForm()
     {
         $formHelper = $this->formHelper;
 
