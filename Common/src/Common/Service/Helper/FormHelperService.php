@@ -709,7 +709,7 @@ class FormHelperService
     /**
      * @psalm-param 'data' $detailsFieldset
      */
-    public function setInvalidCompanyNumberErrors(\Common\Form\Form $form, string $detailsFieldset): void
+    public function setInvalidCompanyNumberErrors($form, string $detailsFieldset): void
     {
         $message = 'company_number.length.validation.error';
         $this->setCompaniesHouseFormMessage($form, $detailsFieldset, $message);

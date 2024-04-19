@@ -18,7 +18,7 @@ class PsvVehicles extends AbstractLvaFormService
 
     protected $showShareInfo = false;
 
-    public function getForm(): \Common\Form\Form
+    public function getForm()
     {
         $form = $this->formHelper->createForm('Lva\PsvVehicles');
 

@@ -16,7 +16,7 @@ class PsvDiscs extends AbstractLvaFormService
     {
     }
 
-    public function getForm(): \Common\Form\Form
+    public function getForm()
     {
         $form = $this->formHelper->createForm('Lva\PsvDiscs');
 

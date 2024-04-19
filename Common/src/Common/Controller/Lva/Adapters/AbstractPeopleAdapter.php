@@ -10,8 +10,12 @@ use Common\Service\Cqrs\Command\CommandService;
 use Common\Service\Cqrs\Response;
 use Common\Service\Table\TableBuilder;
 use Dvsa\Olcs\Transfer\Command\Licence\CreatePeople;
+use Dvsa\Olcs\Transfer\Command\Application\CreatePeople as CreatePeopleApplication;
 use Dvsa\Olcs\Transfer\Command\Licence\DeletePeople;
+use Dvsa\Olcs\Transfer\Command\Application\DeletePeople as DeletePeopleApplication;
+use Dvsa\Olcs\Transfer\Command\Licence\DeletePeopleViaVariation;
 use Dvsa\Olcs\Transfer\Command\Licence\UpdatePeople;
+use Dvsa\Olcs\Transfer\Command\Application\UpdatePeople as UpdatePeopleApplication;
 use Dvsa\Olcs\Transfer\Query\Licence\People;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
 use Psr\Container\ContainerInterface;
@@ -40,7 +44,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
 
     private array $licence;
 
-    private array $application = [];
+    private $application = [];
 
     public function __construct(ContainerInterface $container)
     {
@@ -246,7 +250,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return true;
     }
 
-    public function createTable(): TableBuilder
+    public function createTable()
     {
         /** @var TableBuilder $table */
         $table = $this->container
@@ -380,13 +384,13 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return true;
     }
 
-    protected function getCreateCommand(array $params): CreatePeople
+    protected function getCreateCommand(array $params): CreatePeople|CreatePeopleApplication
     {
         $params['id'] = $this->getLicenceId();
         return CreatePeople::create($params);
     }
 
-    protected function getUpdateCommand(array $params): UpdatePeople
+    protected function getUpdateCommand(array $params): UpdatePeople|UpdatePeopleApplication
     {
         $params['person'] = $params['id'];
         $params['id'] = $this->getLicenceId();
@@ -394,7 +398,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     }
 
 
-    protected function getDeleteCommand(array $params): DeletePeople
+    protected function getDeleteCommand(array $params): DeletePeople|DeletePeopleViaVariation|DeletePeopleApplication
     {
         $params['id'] = $this->getLicenceId();
         return DeletePeople::create($params);
@@ -451,7 +455,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return $type[$this->getOrganisationType()] ?? null;
     }
 
-    public function amendLicencePeopleListTable(TableBuilder $table): TableBuilder
+    public function amendLicencePeopleListTable(TableBuilder $table)
     {
         $table->setSetting(
             'crud',
