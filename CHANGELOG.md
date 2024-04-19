@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.0.2](https://github.com/dvsa/olcs-common/compare/v7.0.1...v7.0.2) (2024-04-19)
+
+
+### Bug Fixes
+
+* release bugfixes merged in previous PR ([#105](https://github.com/dvsa/olcs-common/issues/105)) ([7a95eaf](https://github.com/dvsa/olcs-common/commit/7a95eaf2a7824e8732742ee5242b85b2213d26f2))
+
 ## [7.0.1](https://github.com/dvsa/olcs-common/compare/v7.0.0...v7.0.1) (2024-04-18)
 
 
