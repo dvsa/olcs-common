@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.0.3](https://github.com/dvsa/olcs-common/compare/v7.0.2...v7.0.3) (2024-04-22)
+
+
+### Bug Fixes
+
+* What happens next detail missing text ([#104](https://github.com/dvsa/olcs-common/issues/104)) ([5bb5756](https://github.com/dvsa/olcs-common/commit/5bb57568af63807db8b4116de201d2d9385f5bac))
+
 ## [7.0.2](https://github.com/dvsa/olcs-common/compare/v7.0.1...v7.0.2) (2024-04-19)
 
 
