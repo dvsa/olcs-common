@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace Common\Data\Object\Search\Aggregations\Terms;
 
-class TransportManagerLicenceStatus extends TermsAbstract
+use Common\Data\Object\Search\ComplexTermInterface;
+
+class TransportManagerLicenceStatus extends TermsAbstract implements ComplexTermInterface
 {
     protected $title = 'search.form.filter.transport-manager-licence-status';
-    protected $key = 'licStatus|appStatusId';
+    protected $key = 'TransportManagerLicenceStatus';
 
     public function getType(): string
     {
-        return self::TYPE_FIXED;
+        return self::TYPE_COMPLEX;
     }
 
     public function getOptionsKvp(): array
@@ -22,7 +24,37 @@ class TransportManagerLicenceStatus extends TermsAbstract
     public function getOptions(): array
     {
         return [
-            'lsts_valid|lsts_granted|lsts_consideration|apsts_valid|apsts_granted|apsts_consideration' => 'Active only',
+            '1' => 'Active only',
+        ];
+    }
+
+    public function applySearch(array &$params): void
+    {
+        $params['must_not'][] = [
+            'terms' => [
+                'app_status_id' => [
+                    'apsts_refused',
+                    'apsts_valid',
+                    'apsts_curtailed',
+                    'apsts_withdrawn',
+                    'apsts_cancelled',
+                    'apsts_not_submitted',
+                ],
+            ],
+        ];
+        $params['must_not'][] = [
+            'terms' => [
+                'lic_status' => [
+                    'lsts_cancelled',
+                    'lsts_terminated',
+                    'lsts_withdrawn',
+                ],
+            ],
+        ];
+        $params['must_not'][] = [
+            'exists' => [
+                'field' => 'date_removed',
+            ],
         ];
     }
 }

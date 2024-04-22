@@ -7,52 +7,31 @@ use Common\RefData;
 use Common\Service\Data\Interfaces\ListData as ListDataInterface;
 use Common\Service\NavigationFactory;
 use Laminas\Navigation\Navigation;
-use Laminas\Navigation\Service\AbstractNavigationFactory;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use LmcRbacMvc\Service\RoleService;
 use Psr\Container\ContainerInterface;
 
 class SearchType implements ListDataInterface, FactoryInterface
 {
-    /**
-     * @var SearchTypeManager
-     */
-    protected $searchTypeManager;
+    protected SearchTypeManager $searchTypeManager;
+    protected NavigationFactory $navigationFactory;
+    protected RoleService $roleService;
 
-    /**
-     * @var AbstractNavigationFactory
-     */
-    protected $navigationFactory;
-
-    /**
-     * @var RoleService
-     */
-    protected $roleService;
-
-    /**
-     * @return mixed
-     */
-    public function getSearchTypeManager()
+    public function getSearchTypeManager(): SearchTypeManager
     {
         return $this->searchTypeManager;
     }
 
-    public function setSearchTypeManager(\Mockery\MockInterface $searchTypeManager): void
+    public function setSearchTypeManager(SearchTypeManager $searchTypeManager): void
     {
         $this->searchTypeManager = $searchTypeManager;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getNavigationFactory()
+    public function getNavigationFactory(): NavigationFactory
     {
         return $this->navigationFactory;
     }
 
-    /**
-     * @param NavigationFactory|\Mockery\LegacyMockInterface&\Mockery\MockInterface&NavigationFactory $navigationFactory
-     */
     public function setNavigationFactory(NavigationFactory $navigationFactory): void
     {
         $this->navigationFactory = $navigationFactory;

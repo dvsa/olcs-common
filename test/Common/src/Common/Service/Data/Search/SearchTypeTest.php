@@ -31,7 +31,7 @@ class SearchTypeTest extends TestCase
             2 => 'user',
         ];
 
-        $mockStm = m::mock(ContainerInterface::class);
+        $mockStm = m::mock(SearchTypeManager::class);
         $mockStm->shouldReceive('getRegisteredServices')->andReturn($servicesArray);
         $mockStm->shouldReceive('get')->with('application')->andReturn(new Application());
         $mockStm->shouldReceive('get')->with('licence')->andReturn(new Licence());
