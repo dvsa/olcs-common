@@ -21,6 +21,7 @@ abstract class TermsAbstract extends AggregationsAbstract
 
     public const TYPE_DYNAMIC = 'DYNAMIC';
     public const TYPE_FIXED = 'FIXED';
+    public const TYPE_COMPLEX = 'COMPLEX';
     public const TYPE_BOOLEAN = 'BOOLEAN';
 
     public function getType(): string

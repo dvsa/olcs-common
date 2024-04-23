@@ -5,7 +5,6 @@ namespace Common\Service\Data\Search;
 use Common\Data\Object\Search\Aggregations\Terms\TermsAbstract;
 use Common\Service\Data\AbstractData;
 use Common\Service\Table\TableFactory;
-use Elastica\Query\Terms;
 use Laminas\Http\Request as HttpRequest;
 use Laminas\View\HelperPluginManager as ViewHelperManager;
 
