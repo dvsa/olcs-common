@@ -12,7 +12,7 @@ class Details
 {
     /**
      * @Form\Options({"label":"lva-tm-details-details-name"})
-     * @Form\Type("\Common\Form\Elements\Types\Readonly")
+     * @Form\Type("\Common\Form\Elements\Types\ReadonlyElement")
      * @Form\Flags({"priority": -10})
      */
     public $name;

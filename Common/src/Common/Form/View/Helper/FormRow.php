@@ -13,7 +13,7 @@ use Laminas\Form\Element\Hidden;
 use Laminas\Form\ElementInterface;
 use Laminas\Form\LabelAwareInterface;
 use Common\Form\Elements\Types\AttachFilesButton;
-use Common\Form\Elements\Types\Readonly as ReadonlyElement;
+use Common\Form\Elements\Types\ReadonlyElement;
 
 /**
  * @see \CommonTest\Form\View\Helper\FormRowTest
@@ -104,9 +104,11 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow
             $wrap = false;
         }
 
-        if (! ($element instanceof Hidden) && $wrap) {
-            $class = $element->getMessages() === [] ? $element->getAttribute('data-container-class') : '';
-            if (str_starts_with($element->getAttribute('class'), 'govuk-visually-hidden')) {
+        if (!($element instanceof Hidden) && $wrap) {
+            $classAttribute = $element->getAttribute('class');
+            $class = ($element->getMessages() === []) ? $element->getAttribute('data-container-class') : '';
+
+            if ($classAttribute !== null && str_starts_with($classAttribute, 'govuk-visually-hidden')) {
                 $markup = sprintf(self::$format, 'govuk-visually-hidden', $markup);
             } elseif ($element->getOption('render-container') !== false) {
                 $renderAsFieldset = $element->getOption('render_as_fieldset');

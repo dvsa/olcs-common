@@ -22,7 +22,7 @@ class IrhpPermitSectorName implements FormatterPluginManagerInterface
      */
     public function format($data, $column = [])
     {
-        if (strlen($data['sector']['description']) < 1) {
+        if (empty($data['sector']['description'])) {
             return Escape::html($data['sector']['name']);
         }
 

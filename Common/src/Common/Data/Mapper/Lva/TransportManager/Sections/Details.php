@@ -89,7 +89,9 @@ class Details extends AbstractSection
                 'markup-' . $this->getTranslationTemplate() . "answer-address",
                 $address
             );
-            $this->birthDate = (new \DateTime($this->birthDate))->format('d M Y');
+            if ($this->birthDate && strtotime($this->birthDate) !== false) {
+                $this->birthDate = (new \DateTime($this->birthDate))->format('d M Y');
+            }
             $this->$addresses = $address;
         }
 

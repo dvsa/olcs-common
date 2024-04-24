@@ -1788,8 +1788,11 @@ class TableBuilder implements \Stringable
 
         $returnUrl = $url->fromRoute($route, [], $options, true);
 
-        // strip out controller and action params - not sure if this is still needed.
-        $returnUrl = preg_replace('/\/controller\/[a-zA-Z0-9\-_]+\/action\/[a-zA-Z0-9\-_]+/', '', $returnUrl);
+        if ($returnUrl !== null) {
+            $returnUrl = preg_replace('/\/controller\/[a-zA-Z0-9\-_]+\/action\/[a-zA-Z0-9\-_]+/', '', $returnUrl);
+        } else {
+            $returnUrl = ''; // maintain previous behaviour and reurn empty string when url is null
+        }
 
         return $returnUrl;
     }

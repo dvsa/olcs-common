@@ -32,6 +32,14 @@ class DisqualifyUrlTest extends MockeryTestCase
 
     protected function setUp(): void
     {
+        // Upstream wont fix this, so we need to suppress the deprecation - https://github.com/laminas/laminas-stdlib/issues/85
+        set_error_handler(function ($severity, $message, $file, $line) {
+            if (strpos($message, 'Serializable') !== false) {
+                return true;
+            }
+            return false;
+        }, E_DEPRECATED);
+
         $this->urlHelper = m::mock(UrlHelperService::class);
         $this->router = m::mock(TreeRouteStack::class);
         $this->request = m::mock(Request::class);

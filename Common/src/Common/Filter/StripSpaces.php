@@ -21,6 +21,9 @@ class StripSpaces extends AbstractFilter
      */
     public function filter($value)
     {
+        if ($value === null) {
+            return null;
+        }
         return str_replace(' ', '', $value);
     }
 }

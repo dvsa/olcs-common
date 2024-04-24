@@ -32,6 +32,17 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
         'checkForUnexpectedResponseCode'
     ];
 
+    public function setUp(): void
+    {
+        // Upstream wont fix this, so we need to suppress the deprecation - https://github.com/laminas/laminas-stdlib/issues/85
+        set_error_handler(function ($severity, $message, $file, $line) {
+            if (strpos($message, 'Serializable') !== false) {
+                return true;
+            }
+            return false;
+        }, E_DEPRECATED);
+    }
+
     public function getSutMock(array|null $methods = null): RestClient
     {
         if ($methods === null) {

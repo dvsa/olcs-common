@@ -180,8 +180,22 @@ class FormDateTimeSelect extends \Common\Form\View\Helper\Extended\FormDateTimeS
      */
     protected function getMinutesOptions(string $pattern): array
     {
-        $keyFormatter   = new IntlDateFormatter($this->getLocale(), null, null, null, null, 'mm');
-        $valueFormatter = new IntlDateFormatter($this->getLocale(), null, null, null, null, $pattern);
+        $keyFormatter   = new IntlDateFormatter(
+            $this->getLocale(),
+            IntlDateFormatter::NONE,
+            IntlDateFormatter::SHORT,
+            null,
+            IntlDateFormatter::GREGORIAN,
+            'mm');
+
+        $valueFormatter = new IntlDateFormatter(
+            $this->getLocale(),
+            IntlDateFormatter::NONE,
+            IntlDateFormatter::SHORT,
+            null,
+            IntlDateFormatter::GREGORIAN,
+            $pattern);
+
         $date           = new DateTime('1970-01-01 00:00:00');
 
         $displayEveryMinute = $this->getDisplayEveryMinute();
