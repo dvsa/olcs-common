@@ -186,7 +186,8 @@ class FormDateTimeSelect extends \Common\Form\View\Helper\Extended\FormDateTimeS
             IntlDateFormatter::SHORT,
             null,
             IntlDateFormatter::GREGORIAN,
-            'mm');
+            'mm'
+        );
 
         $valueFormatter = new IntlDateFormatter(
             $this->getLocale(),
@@ -194,7 +195,8 @@ class FormDateTimeSelect extends \Common\Form\View\Helper\Extended\FormDateTimeS
             IntlDateFormatter::SHORT,
             null,
             IntlDateFormatter::GREGORIAN,
-            $pattern);
+            $pattern
+        );
 
         $date           = new DateTime('1970-01-01 00:00:00');
 
