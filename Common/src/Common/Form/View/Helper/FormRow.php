@@ -106,8 +106,7 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow
 
         if (!($element instanceof Hidden) && $wrap) {
             $classAttribute = $element->getAttribute('class');
-            $class = ($element->getMessages() === []) ? $element->getAttribute('data-container-class') : '';
-
+            $class = $element->getMessages() === [] ? $element->getAttribute('data-container-class') : '';
             if ($classAttribute !== null && str_starts_with($classAttribute, 'govuk-visually-hidden')) {
                 $markup = sprintf(self::$format, 'govuk-visually-hidden', $markup);
             } elseif ($element->getOption('render-container') !== false) {
