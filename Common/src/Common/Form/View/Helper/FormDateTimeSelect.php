@@ -180,7 +180,7 @@ class FormDateTimeSelect extends \Common\Form\View\Helper\Extended\FormDateTimeS
      */
     protected function getMinutesOptions(string $pattern): array
     {
-        $keyFormatter   = new IntlDateFormatter(
+        $keyFormatter = new IntlDateFormatter(
             $this->getLocale(),
             IntlDateFormatter::NONE,
             IntlDateFormatter::SHORT,
