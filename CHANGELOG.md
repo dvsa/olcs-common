@@ -1,5 +1,13 @@
 # Changelog
 
+## [7.1.0](https://github.com/dvsa/olcs-common/compare/v7.0.3...v7.1.0) (2024-04-29)
+
+
+### Features
+
+* Filter active TM's only ([#108](https://github.com/dvsa/olcs-common/issues/108)) ([32198ba](https://github.com/dvsa/olcs-common/commit/32198ba529ccd3ac2e9ac1dceddb33af71077589))
+* Support all PHP ^8.0 versions ([#111](https://github.com/dvsa/olcs-common/issues/111)) ([d644260](https://github.com/dvsa/olcs-common/commit/d644260e8a1dfcc1b463ca7157079cf9b94f3f14))
+
 ## [7.0.3](https://github.com/dvsa/olcs-common/compare/v7.0.2...v7.0.3) (2024-04-22)
 
 
