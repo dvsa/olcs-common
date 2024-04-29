@@ -22,6 +22,8 @@ class DateBeforeValidator extends AbstractValidator
         'dateMustBeBefore'  => 'formattedDateMustBeBefore',
     ];
 
+    public string $formattedDateMustBeBefore;
+
     /**
      * Create service instance
      *

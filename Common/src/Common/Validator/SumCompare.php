@@ -39,6 +39,7 @@ class SumCompare extends AbstractCompare
      * @var mixed
      */
     protected $sumWith;
+    private bool $allowEmpty;
 
     /**
      * @return $this

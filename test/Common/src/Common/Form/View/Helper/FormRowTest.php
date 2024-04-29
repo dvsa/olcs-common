@@ -419,7 +419,7 @@ class FormRowTest extends MockeryTestCase
         // Setup
         $this->setUpSut();
         $element = $this->setUpElement(
-            \Common\Form\Elements\Types\Readonly::class,
+            \Common\Form\Elements\Types\ReadonlyElement::class,
             [
                 'name'  => 'readonly',
                 'label' => 'Foo',

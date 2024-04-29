@@ -65,8 +65,7 @@ class SearchTest extends MockeryTestCase
      */
     public function provideGetLimit(): array
     {
-        $stubQuery = new \ArrayObject();
-        $stubQuery->limit = 15;
+        $stubQuery = new QueryStub(15);
 
         return [
             [$stubQuery, 15],
@@ -92,8 +91,7 @@ class SearchTest extends MockeryTestCase
      */
     public function provideGetPage(): array
     {
-        $stubQuery = new \ArrayObject();
-        $stubQuery->page = 3;
+        $stubQuery = new QueryStub(15, 3);
 
         return [
             [$stubQuery, 3],
