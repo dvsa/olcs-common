@@ -3,6 +3,7 @@
 namespace Common\Form\Model\Form\Lva;
 
 use Laminas\Form\Annotation as Form;
+use Laminas\Form\Element\Hidden;
 
 /**
  * @Form\Attributes({"method":"post"})
@@ -12,6 +13,12 @@ use Laminas\Form\Annotation as Form;
  */
 class UploadEvidence
 {
+    /**
+     * @Form\Attributes({"value": ""})
+     * @Form\Type(Hidden::class)
+     */
+    public ?Hidden $correlationId = null;
+
     /**
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\UploadEvidenceFinancialEvidence")
      * @Form\Options({
