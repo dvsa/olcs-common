@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.2.0](https://github.com/dvsa/olcs-common/compare/v7.1.0...v7.2.0) (2024-04-30)
+
+
+### Bug Fixes
+
+* Missing form field ([#112](https://github.com/dvsa/olcs-common/issues/112)) ([c59cf08](https://github.com/dvsa/olcs-common/commit/c59cf08b2f52dbadec4b39eb9ff998928afd161d))
+
 ## [7.1.0](https://github.com/dvsa/olcs-common/compare/v7.0.3...v7.1.0) (2024-04-29)
 
 
