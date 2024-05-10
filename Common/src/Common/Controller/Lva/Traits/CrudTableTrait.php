@@ -55,7 +55,7 @@ trait CrudTableTrait
      *
      * @psalm-suppress all
      */
-    public function deleteAction(): Section|Response
+    public function deleteAction()
     {
         /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
