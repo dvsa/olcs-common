@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.2.1](https://github.com/dvsa/olcs-common/compare/v7.2.0...v7.2.1) (2024-05-10)
+
+
+### Bug Fixes
+
+* Remove return type causing errors on may journeys ([#114](https://github.com/dvsa/olcs-common/issues/114)) ([aeed864](https://github.com/dvsa/olcs-common/commit/aeed8641f9d3d44cf669e0231ada2e34d9ce7422))
+
 ## [7.2.0](https://github.com/dvsa/olcs-common/compare/v7.1.0...v7.2.0) (2024-04-30)
 
 
