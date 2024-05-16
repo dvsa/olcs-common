@@ -37,11 +37,11 @@ class DateSelect extends LaminasDateSelect
     /**
      * Call setValue from parent class (to facilitate unit testing)
      *
-     * @param string[] $value
+     * @param null|string[] $value
      *
      * @psalm-param array{year: string, month: string, day: string} $value
      */
-    protected function callParentSetValue(array $value): void
+    protected function callParentSetValue(?array $value): void
     {
         parent::setValue($value);
     }
