@@ -29,7 +29,7 @@ class ErrorController extends LaminasAbstractActionController
         return $view;
     }
 
-    public function serverErrorAction(): ViewModel
+    public function serverErrorAction()
     {
         $view = new ViewModel(
             [

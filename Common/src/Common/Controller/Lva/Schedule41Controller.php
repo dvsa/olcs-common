@@ -157,9 +157,8 @@ class Schedule41Controller extends AbstractController
     /**
      * Approve the registered schedule 4/1 request for the application.
      *
-     * @return \Common\View\Model\Section|\Laminas\Http\Response|\Laminas\View\Helper\ViewModel
      */
-    public function approveSchedule41Action(): \Common\View\Model\Section|\Laminas\View\Helper\ViewModel|\Laminas\Http\Response
+    public function approveSchedule41Action()
     {
         $request = $this->getRequest();
 

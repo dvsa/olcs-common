@@ -339,9 +339,8 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     /**
      * Add prevHasLicence licence
      *
-     * @return \Common\View\Model\Section|\Laminas\Http\Response|array
      */
-    public function prevHasLicenceAddAction(): array|\Common\View\Model\Section|\Laminas\Http\Response
+    public function prevHasLicenceAddAction()
     {
         $this->scriptFactory->loadFiles(['add-licence-history']);
         return $this->addOrEdit('add', 'prevHasLicence');
@@ -350,9 +349,8 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     /**
      * Edit prevHasLicence licence
      *
-     * @return \Common\View\Model\Section|\Laminas\Http\Response|array
      */
-    public function prevHasLicenceEditAction(): array|\Common\View\Model\Section|\Laminas\Http\Response
+    public function prevHasLicenceEditAction()
     {
         return $this->addOrEdit('edit', 'prevHasLicence');
     }
@@ -360,7 +358,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     /**
      * Delete prevHasLicence licence
      */
-    public function prevHasLicenceDeleteAction(): \Laminas\Http\Response
+    public function prevHasLicenceDeleteAction()
     {
         return $this->deleteAction();
     }
@@ -368,9 +366,8 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     /**
      * Add prevHadLicence licence
      *
-     * @return \Common\View\Model\Section|\Laminas\Http\Response|array
      */
-    public function prevHadLicenceAddAction(): array|\Common\View\Model\Section|\Laminas\Http\Response
+    public function prevHadLicenceAddAction()
     {
         return $this->addOrEdit('add', 'prevHadLicence');
     }
@@ -378,9 +375,8 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     /**
      * Edit prevHadLicence licence
      *
-     * @return \Common\View\Model\Section|\Laminas\Http\Response|array
      */
-    public function prevHadLicenceEditAction(): array|\Common\View\Model\Section|\Laminas\Http\Response
+    public function prevHadLicenceEditAction()
     {
         return $this->addOrEdit('edit', 'prevHadLicence');
     }
@@ -388,7 +384,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     /**
      * Delete prevHadLicence licence
      */
-    public function prevHadLicenceDeleteAction(): \Laminas\Http\Response
+    public function prevHadLicenceDeleteAction()
     {
         return $this->deleteAction();
     }
@@ -396,9 +392,8 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     /**
      * Add prevBeenRefused licence
      *
-     * @return \Common\View\Model\Section|\Laminas\Http\Response|array
      */
-    public function prevBeenRefusedAddAction(): array|\Common\View\Model\Section|\Laminas\Http\Response
+    public function prevBeenRefusedAddAction()
     {
         return $this->addOrEdit('add', 'prevBeenRefused');
     }
@@ -406,9 +401,8 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     /**
      * Edit prevBeenRefused licence
      *
-     * @return \Common\View\Model\Section|\Laminas\Http\Response|array
      */
-    public function prevBeenRefusedEditAction(): array|\Common\View\Model\Section|\Laminas\Http\Response
+    public function prevBeenRefusedEditAction()
     {
         return $this->addOrEdit('edit', 'prevBeenRefused');
     }
@@ -416,7 +410,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     /**
      * Delete refused licence
      */
-    public function prevBeenRefusedDeleteAction(): \Laminas\Http\Response
+    public function prevBeenRefusedDeleteAction()
     {
         return $this->deleteAction();
     }
@@ -424,9 +418,8 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     /**
      * Add prevBeenRevoked licence
      *
-     * @return \Common\View\Model\Section|\Laminas\Http\Response|array
      */
-    public function prevBeenRevokedAddAction(): array|\Common\View\Model\Section|\Laminas\Http\Response
+    public function prevBeenRevokedAddAction()
     {
         return $this->addOrEdit('add', 'prevBeenRevoked');
     }
@@ -434,9 +427,8 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     /**
      * Edit prevBeenRevoked licence
      *
-     * @return \Common\View\Model\Section|\Laminas\Http\Response|array
      */
-    public function prevBeenRevokedEditAction(): array|\Common\View\Model\Section|\Laminas\Http\Response
+    public function prevBeenRevokedEditAction()
     {
         return $this->addOrEdit('edit', 'prevBeenRevoked');
     }
@@ -444,7 +436,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     /**
      * Delete prevBeenRevoked licence
      */
-    public function prevBeenRevokedDeleteAction(): \Laminas\Http\Response
+    public function prevBeenRevokedDeleteAction()
     {
         return $this->deleteAction();
     }
@@ -452,9 +444,8 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     /**
      * Add prevBeenDisqualifiedTc licence
      *
-     * @return \Common\View\Model\Section|\Laminas\Http\Response|array
      */
-    public function prevBeenDisqualifiedTcAddAction(): array|\Common\View\Model\Section|\Laminas\Http\Response
+    public function prevBeenDisqualifiedTcAddAction()
     {
         return $this->addOrEdit('add', 'prevBeenDisqualifiedTc');
     }

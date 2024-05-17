@@ -40,7 +40,7 @@ class PaymentController extends AbstractContinuationController
     /**
      * Index page
      */
-    public function indexAction(): ViewModel|\Laminas\Http\Response
+    public function indexAction()
     {
         $data = $this->getContinuationDetailData();
         $fees = $data['fees'];

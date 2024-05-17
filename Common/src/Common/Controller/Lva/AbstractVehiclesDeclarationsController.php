@@ -47,7 +47,7 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
         parent::__construct($niTextTranslationUtil, $authService);
     }
 
-    public function indexAction(): \Common\View\Model\Section|\Laminas\Http\Response
+    public function indexAction()
     {
         $request = $this->getRequest();
 
