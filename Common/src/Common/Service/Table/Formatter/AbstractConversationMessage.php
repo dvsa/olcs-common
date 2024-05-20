@@ -60,7 +60,11 @@ abstract class AbstractConversationMessage implements FormatterPluginManagerInte
      */
     protected function getFirstReadBy(array $row): string
     {
-        if (count($row['userMessageReads']) === 0) {
+        if (
+            !isset($row['userMessageReads'])
+            || !is_array($row['userMessageReads'])
+            || count($row['userMessageReads']) === 0
+        ) {
             return '';
         }
 
