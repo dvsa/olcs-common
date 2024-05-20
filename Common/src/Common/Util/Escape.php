@@ -15,7 +15,7 @@ class Escape
     /** @var  callable */
     private static $fncHtml;
 
-    public static function html(string $html)
+    public static function html($html)
     {
         if (self::$fncHtml === null) {
             self::$fncHtml = new EscapeHtml();
