@@ -1,5 +1,16 @@
 # Changelog
 
+## [7.2.2](https://github.com/dvsa/olcs-common/compare/v7.2.1...v7.2.2) (2024-05-20)
+
+
+### Bug Fixes
+
+* Check other cases before trying count() with a null. ([#121](https://github.com/dvsa/olcs-common/issues/121)) ([25b255b](https://github.com/dvsa/olcs-common/commit/25b255bd0dc1e478d05c9cfba7776243e08c7959))
+* Fix journey issues caused by typing added in php 8 upgrade ([#118](https://github.com/dvsa/olcs-common/issues/118)) ([96a143d](https://github.com/dvsa/olcs-common/commit/96a143db61f32a69695aba2cfcfd6cec09f1e76c))
+* Local view operator journey broken by typing on Escape util. Removed. ([#119](https://github.com/dvsa/olcs-common/issues/119)) ([3db85a5](https://github.com/dvsa/olcs-common/commit/3db85a51f5f8864eadea4cedcb2686429729b2bf))
+* Loosen typing - journeys require this to be nullable in some scenarios ([#116](https://github.com/dvsa/olcs-common/issues/116)) ([6132991](https://github.com/dvsa/olcs-common/commit/6132991a44b3c7e13c2baa628fd1b8a67d06f587))
+* Remove typing breaking journeys ([#120](https://github.com/dvsa/olcs-common/issues/120)) ([f45c018](https://github.com/dvsa/olcs-common/commit/f45c018045943cf9edda1deeec877fc02f22277a))
+
 ## [7.2.1](https://github.com/dvsa/olcs-common/compare/v7.2.0...v7.2.1) (2024-05-10)
 
 
