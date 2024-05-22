@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.2.3](https://github.com/dvsa/olcs-common/compare/v7.2.2...v7.2.3) (2024-05-22)
+
+
+### Bug Fixes
+
+* Remove typing from more areas breaking journeys ([#122](https://github.com/dvsa/olcs-common/issues/122)) ([9b90c5d](https://github.com/dvsa/olcs-common/commit/9b90c5d53e2fdf7f61f3827b59daf971d5b96af3))
+
 ## [7.2.2](https://github.com/dvsa/olcs-common/compare/v7.2.1...v7.2.2) (2024-05-20)
 
 
