@@ -28,7 +28,7 @@ class Escape
     /**
      * @codeCoverageIgnore only a proxy to Laminas escaper
      */
-    public static function htmlAttr(string $value)
+    public static function htmlAttr($value)
     {
         $escaper = new EscapeHtmlAttr();
         return $escaper($value);
