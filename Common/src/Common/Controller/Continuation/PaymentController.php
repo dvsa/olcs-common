@@ -94,7 +94,7 @@ class PaymentController extends AbstractContinuationController
      * @param int          $organisationId      organisation id
      * @param string|false $storedCardReference a reference to the stored card to use
      */
-    protected function payFees($feeIds, $organisationId, $storedCardReference = false): ViewModel|\Laminas\Http\Response
+    protected function payFees($feeIds, $organisationId, $storedCardReference = false)
     {
         $cpmsRedirectUrl = $this->url()->fromRoute(
             'continuation/payment/result',

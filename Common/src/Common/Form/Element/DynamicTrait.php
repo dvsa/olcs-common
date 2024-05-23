@@ -161,13 +161,13 @@ trait DynamicTrait
         return $this->serviceLocator;
     }
 
-    public function setExclude(array $exclude): self
+    public function setExclude($exclude): self
     {
         $this->exclude = $exclude;
         return $this;
     }
 
-    public function getExclude(): array
+    public function getExclude()
     {
         return $this->exclude;
     }
@@ -177,7 +177,7 @@ trait DynamicTrait
         return $this->extraOption;
     }
 
-    public function setExtraOption(array $extraOption): void
+    public function setExtraOption($extraOption): void
     {
         $this->extraOption = $extraOption;
     }

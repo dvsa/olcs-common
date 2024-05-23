@@ -258,7 +258,7 @@ abstract class AbstractDiscsController extends AbstractController
     /**
      * Get disks table
      */
-    protected function getDiscsTable(): TableBuilder|null
+    protected function getDiscsTable()
     {
         $tableParams = $this->getFilters();
         $tableParams['query'] = $tableParams;

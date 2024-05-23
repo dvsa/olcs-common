@@ -90,7 +90,7 @@ function findTranslationKeyUsages(array $translations, string $path, array $igno
 /**
  * Finds markup partial filenames in PHP and Template files
  */
-function getMarkupUsage(string $path): void
+function getMarkupUsage($path): void
 {
     echo "Generating markup partial report\n";
     $dirContents = array_diff(scandir($path . '/olcs-common/Common/config/language/partials/'), ['..', '.']);
