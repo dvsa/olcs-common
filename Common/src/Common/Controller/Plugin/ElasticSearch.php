@@ -183,7 +183,7 @@ class ElasticSearch extends AbstractPlugin
      * This is Olcs\Form\Model\Form\SearchFilter from within olcs-internal,
      * so we can't use a return type due to static analysis
      */
-    public function getFiltersForm(): \Laminas\Form\Form
+    public function getFiltersForm()
     {
         /** @var \Laminas\Form\Form $form */
         $form = $this->getController()->getPlaceholder()
@@ -323,7 +323,7 @@ class ElasticSearch extends AbstractPlugin
         return $view;
     }
 
-    public function setContainerName(mixed $containerName): static
+    public function setContainerName($containerName)
     {
         $this->containerName = $containerName;
         return $this;

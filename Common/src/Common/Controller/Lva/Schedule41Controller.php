@@ -220,7 +220,7 @@ class Schedule41Controller extends AbstractController
      *
      * @param array $errors Errors
      */
-    private function cannotPublish($errors): \Common\View\Model\Section
+    private function cannotPublish($errors)
     {
         $formHelper = $this->formHelper;
         $form = $formHelper->createFormWithRequest('Message', $this->getRequest());

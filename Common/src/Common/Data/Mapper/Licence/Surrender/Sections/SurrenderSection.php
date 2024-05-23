@@ -41,7 +41,7 @@ class SurrenderSection
         $this->translator = $translator;
     }
 
-    public function setHeading(string $heading): void
+    public function setHeading($heading): void
     {
         $this->heading = $heading;
     }

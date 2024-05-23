@@ -75,7 +75,7 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
             ->getForm();
     }
 
-    protected function getFormData(): array
+    protected function getFormData()
     {
         return $this->formatDataForForm($this->loadData());
     }
