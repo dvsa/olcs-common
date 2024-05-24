@@ -31,7 +31,7 @@ class ConditionsUndertakingsReviewService extends AbstractReviewService
      *
      * @psalm-return array{title: string, mainItems: list{array{multiItems: list{list{array{list: array}}}}}}
      */
-    public function formatLicenceSubSection($list, string $lva, string $conditionOrUndertaking, string $action): array
+    public function formatLicenceSubSection($list, $lva, $conditionOrUndertaking, $action): array
     {
         return [
             'title' => $lva . '-review-conditions-undertakings-licence-' . $conditionOrUndertaking . '-' . $action,
@@ -58,7 +58,7 @@ class ConditionsUndertakingsReviewService extends AbstractReviewService
      *
      * @psalm-return array{title: string, mainItems: list{0?: array{header: mixed, multiItems: list{list{array{list: array}}}},...}}
      */
-    public function formatOcSubSection($list, string $lva, string $conditionOrUndertaking, string $action): array
+    public function formatOcSubSection($list, $lva, $conditionOrUndertaking, $action): array
     {
         $mainItems = [];
 

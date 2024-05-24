@@ -15,7 +15,7 @@ namespace Common\Service\Helper;
  */
 class DateHelperService
 {
-    public function getDate(string $format = 'Y-m-d'): string
+    public function getDate($format = 'Y-m-d')
     {
         return date($format);
     }

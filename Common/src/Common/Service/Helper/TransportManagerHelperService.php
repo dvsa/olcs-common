@@ -46,7 +46,7 @@ class TransportManagerHelperService
      *
      * @psalm-return array{transportManager: mixed, description: mixed, issuedDate: mixed, category: 5, subCategory: 98}
      */
-    public function getCertificateFileData(int $tmId, array $file): array
+    public function getCertificateFileData($tmId, $file): array
     {
         return [
             'transportManager' => $tmId,
@@ -74,7 +74,7 @@ class TransportManagerHelperService
      *
      * @psalm-return array{transportManager: mixed, issuedDate: mixed, category: 5, subCategory: 100}
      */
-    public function getResponsibilityFileData(int $tmId): array
+    public function getResponsibilityFileData($tmId): array
     {
         return [
             'transportManager' => $tmId,
@@ -87,7 +87,7 @@ class TransportManagerHelperService
     /**
      * @psalm-param 111 $transportManagerId
      */
-    public function getConvictionsAndPenaltiesTable(int $transportManagerId)
+    public function getConvictionsAndPenaltiesTable($transportManagerId)
     {
         $result = $this->handleQuery(
             \Dvsa\Olcs\Transfer\Query\PreviousConviction\GetList::create(['transportManager' => $transportManagerId])
@@ -163,7 +163,7 @@ class TransportManagerHelperService
     /**
      * @psalm-param 111 $tmId
      */
-    public function alterPreviousHistoryFieldset(\Laminas\Form\Fieldset $fieldset, int $tmId): void
+    public function alterPreviousHistoryFieldset(\Laminas\Form\Fieldset $fieldset, $tmId): void
     {
         $transportManager = $this->getTransportManager($tmId);
         $convictionsAndPenaltiesTable = $this->getConvictionsAndPenaltiesTable($transportManager['id']);
@@ -194,7 +194,7 @@ class TransportManagerHelperService
         }
     }
 
-    private function getTransportManager($tmId): array
+    private function getTransportManager($tmId)
     {
         return $this->handleQuery(
             \Dvsa\Olcs\Transfer\Query\Tm\TransportManager::create(

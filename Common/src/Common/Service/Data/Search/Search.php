@@ -73,7 +73,7 @@ class Search extends AbstractData
      *
      * @psalm-param 'INDEX_NAME'|'application' $index
      */
-    public function setIndex(string $index)
+    public function setIndex($index)
     {
         $this->index = $index;
         return $this;
@@ -92,7 +92,7 @@ class Search extends AbstractData
      *
      * @psalm-param 'SEARCH' $search
      */
-    public function setSearch(string $search)
+    public function setSearch($search)
     {
         $this->search = $search;
         return $this;

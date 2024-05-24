@@ -20,7 +20,7 @@ class FieldsetPopulator
      * @param string $usageContext
      * @param \Mockery\LegacyMockInterface&\Mockery\MockInterface&\Laminas\Form\Fieldset $form
      */
-    public function populate(\Laminas\Form\Fieldset $form, array $applicationSteps, $usageContext): void
+    public function populate($form, array $applicationSteps, $usageContext): void
     {
         foreach ($applicationSteps as $applicationStep) {
             $this->fieldsetAdder->add($form, $applicationStep, $usageContext);

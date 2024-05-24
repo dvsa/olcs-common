@@ -26,7 +26,7 @@ abstract class AbstractLvaFormService
         'variation' => BackToVariationActionLink::class
     ];
 
-    protected function addBackToOverviewLink(\Laminas\Form\Form $form, string $lva, $isPrimary = true): void
+    protected function addBackToOverviewLink($form, string $lva, $isPrimary = true): void
     {
         $backToOverviewClass = $this->backToLinkMap[$lva];
         /** @var ActionLink $back */
@@ -39,7 +39,7 @@ abstract class AbstractLvaFormService
         $form->get('form-actions')->add($back);
     }
 
-    protected function removeStandardFormActions(\Laminas\Form\Form $form): void
+    protected function removeStandardFormActions($form): void
     {
         $this->removeFormAction($form, 'save');
         $this->removeFormAction($form, 'saveAndContinue');
@@ -49,7 +49,7 @@ abstract class AbstractLvaFormService
     /**
      * @return void
      */
-    protected function removeFormAction(\Laminas\Form\Form $form, string $action)
+    protected function removeFormAction($form, $action)
     {
         if (!$form->has('form-actions')) {
             return;
@@ -67,7 +67,7 @@ abstract class AbstractLvaFormService
      *
      * @return void
      */
-    protected function setPrimaryAction($form, string $action)
+    protected function setPrimaryAction($form, $action)
     {
         if (!$form->has('form-actions')) {
             return;

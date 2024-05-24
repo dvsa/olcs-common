@@ -19,7 +19,7 @@ abstract class AbstractBusinessType extends AbstractLvaFormService
 
     protected GuidanceHelperService $guidanceHelper;
 
-    public function getForm(bool $inForceLicences, bool $hasOrganisationSubmittedLicenceApplication)
+    public function getForm($inForceLicences, bool $hasOrganisationSubmittedLicenceApplication)
     {
         $form = $this->formHelper->createForm('Lva\BusinessType');
 
@@ -40,7 +40,7 @@ abstract class AbstractBusinessType extends AbstractLvaFormService
      *
      * @return void
      */
-    protected function alterForm(Form $form, array $params)
+    protected function alterForm(Form $form, $params)
     {
         // Noop
     }

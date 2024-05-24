@@ -81,7 +81,7 @@ class FormDateSelect extends \Common\Form\View\Helper\Extended\FormDateSelect
         return $markup;
     }
 
-    protected function renderDayInput(\Laminas\Form\Element\Select $element)
+    protected function renderDayInput($element)
     {
 
         return $this->wrap(
@@ -91,7 +91,7 @@ class FormDateSelect extends \Common\Form\View\Helper\Extended\FormDateSelect
         );
     }
 
-    protected function renderMonthInput(\Laminas\Form\Element\Select $element)
+    protected function renderMonthInput($element)
     {
 
         return $this->wrap(
@@ -101,7 +101,7 @@ class FormDateSelect extends \Common\Form\View\Helper\Extended\FormDateSelect
         );
     }
 
-    protected function renderYearInput(\Laminas\Form\Element\Select $element)
+    protected function renderYearInput($element)
     {
 
         return $this->wrap(
@@ -111,7 +111,7 @@ class FormDateSelect extends \Common\Form\View\Helper\Extended\FormDateSelect
         );
     }
 
-    protected function wrap($content, string $label, $id): string
+    protected function wrap($content, $label, $id): string
     {
         $label = $this->getTranslator()->translate('date-' . $label);
 
@@ -121,7 +121,7 @@ class FormDateSelect extends \Common\Form\View\Helper\Extended\FormDateSelect
     /**
      * @psalm-param 2|4 $maxLength
      */
-    protected function renderInput($element, int $maxLength)
+    protected function renderInput($element, $maxLength)
     {
         $inputHelper = $this->getInputHelper();
         $element->setAttribute('maxlength', $maxLength);

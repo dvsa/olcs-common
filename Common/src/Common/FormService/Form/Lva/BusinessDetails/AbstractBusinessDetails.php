@@ -40,7 +40,7 @@ abstract class AbstractBusinessDetails
      *
      * @return void
      */
-    protected function alterForm($form, array $params)
+    protected function alterForm($form, $params)
     {
         switch ($params['orgType']) {
             case RefData::ORG_TYPE_REGISTERED_COMPANY:
@@ -63,7 +63,7 @@ abstract class AbstractBusinessDetails
         }
     }
 
-    protected function appendToLabel($element, string $append): void
+    protected function appendToLabel($element, $append): void
     {
         $this->formHelper->alterElementLabel($element, $append, FormHelperService::ALTER_LABEL_APPEND);
     }

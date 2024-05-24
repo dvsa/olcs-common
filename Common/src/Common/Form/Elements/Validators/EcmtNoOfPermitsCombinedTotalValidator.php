@@ -13,7 +13,7 @@ class EcmtNoOfPermitsCombinedTotalValidator
      *
      * @psalm-param 3 $value
      */
-    public static function validateMin(int $value, $context)
+    public static function validateMin($value, $context)
     {
         return (self::getTotal($context) >= 1);
     }
@@ -29,7 +29,7 @@ class EcmtNoOfPermitsCombinedTotalValidator
      *
      * @psalm-param 3 $value
      */
-    public static function validateMax(int $value, $context, $maxValue)
+    public static function validateMax($value, $context, $maxValue)
     {
         return (self::getTotal($context) <= $maxValue);
     }

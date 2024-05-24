@@ -29,7 +29,7 @@ class NoOfPermitsEitherValidator extends AbstractValidator
      *
      * @psalm-param array{emissionsCategory: mixed}|null $context
      */
-    public function isValid($value, array|null $context = null)
+    public function isValid($value, $context = null)
     {
         $emissionsCategoryPermitsRemaining = $this->getOption('emissionsCategoryPermitsRemaining');
         $maxPermitted = $this->getOption('maxPermitted');

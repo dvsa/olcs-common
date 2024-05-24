@@ -116,7 +116,7 @@ class ScriptFactory implements FactoryInterface
      *
      * @return bool
      */
-    protected function exists(string $file)
+    protected function exists($file)
     {
         return file_exists($file);
     }
@@ -158,7 +158,7 @@ class ScriptFactory implements FactoryInterface
         return $this->filePaths;
     }
 
-    public function setFilePaths(array $filePaths): static
+    public function setFilePaths($filePaths): static
     {
         $this->filePaths = $filePaths;
         return $this;

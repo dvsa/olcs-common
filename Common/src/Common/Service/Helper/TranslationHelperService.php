@@ -65,7 +65,7 @@ class TranslationHelperService
      * @param string $message
      * @return string
      */
-    public function translate($message, string $translateToWelsh = 'N')
+    public function translate($message, $translateToWelsh = 'N')
     {
         $locale = ($translateToWelsh === 'Y') ? 'cy_GB' : null;
         return $this->translator->translate($message, 'default', $locale);

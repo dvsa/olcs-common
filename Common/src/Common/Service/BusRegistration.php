@@ -111,7 +111,7 @@ class BusRegistration
      *
      * @psalm-param array{id: 123, licNo: 'AB12563'} $licence
      */
-    public function createNew(array $licence)
+    public function createNew($licence)
     {
         $data = array_merge($this->defaultAll, $this->defaultNew);
         $data['status'] = self::STATUS_NEW;
@@ -134,7 +134,7 @@ class BusRegistration
      *
      * @psalm-param array{variationNo: 3} $mostRecent
      */
-    public function createVariation($previous, array $mostRecent)
+    public function createVariation($previous, $mostRecent)
     {
         $data = $previous;
 
@@ -178,7 +178,7 @@ class BusRegistration
      *
      * @psalm-param array{variationNo: mixed} $mostRecent
      */
-    public function createCancellation($parent, array $mostRecent)
+    public function createCancellation($parent, $mostRecent)
     {
         $data = $this->createVariation($parent, $mostRecent);
 
