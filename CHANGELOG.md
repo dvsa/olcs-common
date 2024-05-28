@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.2.5](https://github.com/dvsa/olcs-common/compare/v7.2.4...v7.2.5) (2024-05-28)
+
+
+### Bug Fixes
+
+* convert methods `mapFromForm` and `mapFromErrors` to static ([#126](https://github.com/dvsa/olcs-common/issues/126)) ([f985ed6](https://github.com/dvsa/olcs-common/commit/f985ed6f77fbe55fb451e3540da15b04e9b3448c))
+
 ## [7.2.4](https://github.com/dvsa/olcs-common/compare/v7.2.3...v7.2.4) (2024-05-28)
 
 
