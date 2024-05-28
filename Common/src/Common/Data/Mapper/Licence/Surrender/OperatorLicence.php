@@ -12,7 +12,7 @@ class OperatorLicence implements MapperInterface
      *
      * @param array $formData Form data
      */
-    public function mapFromForm(array $formData): array
+    public static function mapFromForm(array $formData): array
     {
         $mappedData = [
             'possession' => [
