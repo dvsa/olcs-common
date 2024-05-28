@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.2.4](https://github.com/dvsa/olcs-common/compare/v7.2.3...v7.2.4) (2024-05-28)
+
+
+### Reverts
+
+* revert some potentially risky typing ([#124](https://github.com/dvsa/olcs-common/issues/124)) ([19fb66f](https://github.com/dvsa/olcs-common/commit/19fb66f6b84a82f44a672aef98bb5019142b63aa))
+
 ## [7.2.3](https://github.com/dvsa/olcs-common/compare/v7.2.2...v7.2.3) (2024-05-22)
 
 
