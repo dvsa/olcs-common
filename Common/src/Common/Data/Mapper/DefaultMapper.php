@@ -24,7 +24,7 @@ class DefaultMapper implements MapperInterface
      *
      * @param array $data Data from form
      */
-    public function mapFromForm(array $data): array
+    public static function mapFromForm(array $data): array
     {
         return $data['fields'];
     }
@@ -36,7 +36,7 @@ class DefaultMapper implements MapperInterface
      * @param FormInterface $form   Form interface
      * @param array         $errors array response from errors
      */
-    public function mapFromErrors(FormInterface $form, array $errors): array
+    public static function mapFromErrors(FormInterface $form, array $errors): array
     {
         return $errors;
     }
