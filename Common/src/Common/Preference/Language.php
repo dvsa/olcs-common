@@ -32,7 +32,7 @@ class Language implements FactoryInterface
     /**
      * @psalm-param 'XX'|'en' $preference
      */
-    public function setPreference(string $preference): void
+    public function setPreference($preference): void
     {
         if (!array_key_exists($preference, $this->options)) {
             throw new \Exception('Invalid language preference option');

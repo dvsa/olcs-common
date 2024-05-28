@@ -53,7 +53,7 @@ class DocumentDescription implements FormatterPluginManagerInterface
      *
      * @return string
      */
-    private function getAnchor($data, TranslatorDelegator $translator)
+    private function getAnchor($data, $translator)
     {
         if (isset($data['description'])) {
             return $data['description'];

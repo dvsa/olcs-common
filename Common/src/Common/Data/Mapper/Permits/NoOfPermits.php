@@ -242,9 +242,9 @@ class NoOfPermits
      */
     protected function postProcessData(
         array $data,
-        string $irhpApplicationDataKey,
-        string $feePerPermitDataKey,
-        string $maxPermitsByStockDataKey
+        $irhpApplicationDataKey,
+        $feePerPermitDataKey,
+        $maxPermitsByStockDataKey
     ): array {
         $data['browserTitle'] = 'permits.page.multilateral.no-of-permits.browser.title';
         $data['question'] = 'permits.page.multilateral.no-of-permits.question';

@@ -469,7 +469,7 @@ class FormHelperService
     /**
      * @param \Common\Service\Table\TableBuilder|\Mockery\LegacyMockInterface&\Mockery\MockInterface&\Common\Service\Table\TableBuilder $table
      */
-    public function populateFormTable(Fieldset $fieldset, \Common\Service\Table\TableBuilder $table, string|null $tableFieldsetName = null): void
+    public function populateFormTable(Fieldset $fieldset, $table, $tableFieldsetName = null): void
     {
         $fieldset->get('table')->setTable($table, $tableFieldsetName);
         $fieldset->get('rows')->setValue(count($table->getRows()));
@@ -700,7 +700,7 @@ class FormHelperService
         );
     }
 
-    public function setCompanyNotFoundError(FormInterface $form, string $detailsFieldset): void
+    public function setCompanyNotFoundError($form, $detailsFieldset): void
     {
         $message = 'company_number.search_no_results.error';
         $this->setCompaniesHouseFormMessage($form, $detailsFieldset, $message);
@@ -709,7 +709,7 @@ class FormHelperService
     /**
      * @psalm-param 'data' $detailsFieldset
      */
-    public function setInvalidCompanyNumberErrors($form, string $detailsFieldset): void
+    public function setInvalidCompanyNumberErrors($form, $detailsFieldset): void
     {
         $message = 'company_number.length.validation.error';
         $this->setCompaniesHouseFormMessage($form, $detailsFieldset, $message);
@@ -804,7 +804,7 @@ class FormHelperService
      * @param string                   $reference      Field Ref
      * @param string                   $validatorClass Validator Class
      */
-    public function getValidator(FormInterface $form, $reference, $validatorClass): \Laminas\Validator\ValidatorInterface|null
+    public function getValidator(FormInterface $form, $reference, $validatorClass)
     {
         /** @var InputFilterInterface $filter */
         [, $filter, $field] = $this->getElementAndInputParents($form, $form->getInputFilter(), $reference);

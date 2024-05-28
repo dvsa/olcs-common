@@ -314,7 +314,7 @@ abstract class AbstractContinuationController extends AbstractController
      *
      * @psalm-return ''|array{current: int, total: 2|3|4}
      */
-    protected function getStepDetails($path, $step): array|string
+    protected function getStepDetails($path, $step)
     {
         $steps = [];
 

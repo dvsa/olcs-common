@@ -223,7 +223,7 @@ class CachingQueryService implements QueryServiceInterface, \Laminas\Log\LoggerA
      *
      *
      */
-    private function storeLocalCache(string $cacheIdentifier, string $dtoClassName, \Common\Service\Cqrs\Response $result): void
+    private function storeLocalCache(string $cacheIdentifier, string $dtoClassName, $result): void
     {
         $this->logMessage(sprintf(self::CACHE_LOCAL_SAVE_MSG, $dtoClassName));
         $this->localCache[$cacheIdentifier] = $result;

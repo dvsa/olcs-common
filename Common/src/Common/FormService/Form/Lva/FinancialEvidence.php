@@ -27,7 +27,7 @@ class FinancialEvidence extends AbstractLvaFormService
         return $form;
     }
 
-    protected function alterForm(Form $form): void
+    protected function alterForm($form): void
     {
         $evidenceFieldset = $form->get('evidence');
         $evidenceFieldset->get('uploadNowRadio')->setName('uploadNow');

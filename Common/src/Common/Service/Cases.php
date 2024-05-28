@@ -21,7 +21,7 @@ class Cases
      *
      * @psalm-param array{case: 29} $data
      */
-    public function createNrCase(array $data)
+    public function createNrCase($data)
     {
         $data['erruCaseType'] = self::NR_CATEGORY_DEFAULT;
         $data['caseType'] = self::CASE_CATEGORY_NR;

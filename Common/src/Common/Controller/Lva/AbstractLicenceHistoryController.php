@@ -168,7 +168,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         return 'delete-other-licence';
     }
 
-    protected function saveLicenceHistory($form, iterable $data, bool $inProgress): bool
+    protected function saveLicenceHistory($form, $data, $inProgress): bool
     {
         $data = $this->formatDataForSave($data);
 
@@ -331,7 +331,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         return $this->otherLicences[$which];
     }
 
-    protected function getLicenceTypeFromSection(string $section): string
+    protected function getLicenceTypeFromSection($section)
     {
         return $this->stringHelper->camelToUnderscore($section);
     }
@@ -715,7 +715,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         return false;
     }
 
-    protected function mapErrors($form, array $errors, array $fields = [], string $fieldsetName = ''): void
+    protected function mapErrors($form, array $errors, array $fields = [], $fieldsetName = ''): void
     {
         $formMessages = [];
 

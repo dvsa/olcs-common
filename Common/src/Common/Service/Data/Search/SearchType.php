@@ -91,7 +91,7 @@ class SearchType implements ListDataInterface, FactoryInterface
     /**
      * @psalm-param 'internal-search'|null $context
      */
-    public function getNavigation(string|null $context = null, array $queryParams = []): Navigation
+    public function getNavigation($context = null, array $queryParams = []): Navigation
     {
         $nav = [];
         foreach ($this->getSearchTypes() as $searchIndex) {

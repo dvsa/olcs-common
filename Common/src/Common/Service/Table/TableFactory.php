@@ -36,7 +36,7 @@ class TableFactory implements FactoryInterface
     }
 
 
-    public function prepareTable(string $name, array $data = [], array $params = [])
+    public function prepareTable($name, array $data = [], array $params = [])
     {
         return $this->getTableBuilder()->prepareTable($name, $data, $params);
     }

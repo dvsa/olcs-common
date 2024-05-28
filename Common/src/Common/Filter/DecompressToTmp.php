@@ -26,7 +26,7 @@ class DecompressToTmp extends AbstractFilter
         return $this->decompressFilter;
     }
 
-    public function setTempRootDir(string $tempRootDir): static
+    public function setTempRootDir($tempRootDir): static
     {
         $this->tempRootDir = $tempRootDir;
         return $this;
@@ -37,13 +37,13 @@ class DecompressToTmp extends AbstractFilter
         return $this->tempRootDir;
     }
 
-    public function setFileSystem(Filesystem $fileSystem): static
+    public function setFileSystem($fileSystem): static
     {
         $this->fileSystem = $fileSystem;
         return $this;
     }
 
-    public function getFileSystem(): Filesystem
+    public function getFileSystem()
     {
         return $this->fileSystem;
     }

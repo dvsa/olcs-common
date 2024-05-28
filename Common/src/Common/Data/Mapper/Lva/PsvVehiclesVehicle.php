@@ -44,7 +44,7 @@ class PsvVehiclesVehicle implements MapperInterface
     /**
      * @psalm-return array{version: mixed, vrm: mixed, receivedDate: mixed, specifiedDate: mixed, removalDate: mixed, makeModel?: mixed}
      */
-    public static function mapFromForm(array|object $data): array
+    public static function mapFromForm($data): array
     {
         $licenceVehicle = [
             'receivedDate' => null,

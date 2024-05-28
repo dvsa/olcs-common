@@ -21,7 +21,7 @@ class FormItem extends AbstractHelper
      *
      * @return static|string
      */
-    public function __invoke(ElementInterface $element = null): string|static
+    public function __invoke(ElementInterface $element = null)
     {
         if (!$element instanceof \Laminas\Form\ElementInterface) {
             return $this;

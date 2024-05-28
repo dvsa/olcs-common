@@ -242,7 +242,7 @@ class OperatingCentre implements MapperInterface
     protected static function setConfirmation(
         Form $form,
         TranslationHelperService $translator,
-        bool $isExternal,
+        $isExternal,
         string $k
     ): void {
         if (!$isExternal) {

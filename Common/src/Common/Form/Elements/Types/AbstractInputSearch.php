@@ -24,7 +24,7 @@ abstract class AbstractInputSearch extends Fieldset
         $this->addSubmit();
     }
 
-    public function setMessages(iterable $messages): void
+    public function setMessages($messages): void
     {
         $this->messages = $messages;
     }
