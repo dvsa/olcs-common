@@ -24,4 +24,6 @@ class FeatureToggle
     public const TOP_REPORTS_LINK = 'top_reports_link';
 
     public const MESSAGING = 'messaging';
+
+    public const USE_NEW_ADDRESS_SERVICE = 'use_new_address_service';
 }
