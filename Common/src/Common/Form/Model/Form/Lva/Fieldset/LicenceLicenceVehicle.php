@@ -45,7 +45,6 @@ class LicenceLicenceVehicle
      *     "label": "application_vehicle-safety_vehicle-sub-action.licence-vehicle.specifiedDate",
      *     "create_empty_option": false,
      *     "render_delimiters": true,
-     *     "pattern": "d MMMM y '</fieldset><fieldset><div class=""field""><label for=""hearingDate"">Specified time</label>'HH:mm:ss'</div>'",
      *     "field": "specifiedDate",
      *     "default_date": "now",
      *     "display_every_minute": true
