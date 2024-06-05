@@ -1,5 +1,18 @@
 # Changelog
 
+## [7.3.0](https://github.com/dvsa/olcs-common/compare/v7.2.5...v7.3.0) (2024-06-05)
+
+
+### Features
+
+* feature toggle for dvsa address service ([#129](https://github.com/dvsa/olcs-common/issues/129)) ([3d19f5d](https://github.com/dvsa/olcs-common/commit/3d19f5dd183f3ded8ab6aafe11a1d331115bf56f))
+
+
+### Bug Fixes
+
+* VOL-5389 Variation and Application now call the correct Application command ([#130](https://github.com/dvsa/olcs-common/issues/130)) ([5ec26bc](https://github.com/dvsa/olcs-common/commit/5ec26bc87e44123c83aafee21342c7c3adb702df))
+* VOL-5466 compatibility with latest Laminas form (return formatting to default INTL pattern) ([#128](https://github.com/dvsa/olcs-common/issues/128)) ([6fffe40](https://github.com/dvsa/olcs-common/commit/6fffe407ba633709147cee5cf9856f96aa84efe0))
+
 ## [7.2.5](https://github.com/dvsa/olcs-common/compare/v7.2.4...v7.2.5) (2024-05-28)
 
 
