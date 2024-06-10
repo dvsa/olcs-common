@@ -14,8 +14,6 @@ use Common\Service\Table\Formatter\SearchPeopleRecord;
  */
 class People extends InternalSearchAbstract
 {
-    public const FOUND_AS_HISTORICAL_TM = 'Historical TM';
-
     /**
      * @var string
      */
@@ -155,10 +153,6 @@ class People extends InternalSearchAbstract
                 'title' => 'Disq?',
                 'name' => 'disqualified',
                 'formatter' => static function ($row) {
-                    if ($row['foundAs'] === self::FOUND_AS_HISTORICAL_TM) {
-                        return 'NA';
-                    }
-
                     return $row['disqualified'];
                 }
             ]

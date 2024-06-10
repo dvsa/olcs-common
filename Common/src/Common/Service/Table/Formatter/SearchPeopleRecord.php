@@ -2,17 +2,11 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Common\Data\Object\Search\People;
 use Common\RefData;
 use Common\Service\Helper\UrlHelperService;
 use Common\Util\Escape;
 use LmcRbacMvc\Service\AuthorizationService;
 
-/**
- * @package Common\Service\Table\Formatter
- *
-*
- */
 class SearchPeopleRecord implements FormatterPluginManagerInterface
 {
     public function __construct(private AuthorizationService $authService, private UrlHelperService $urlHelper)
@@ -44,7 +38,7 @@ class SearchPeopleRecord implements FormatterPluginManagerInterface
                 Escape::html($data['applicationId'])
             );
         }
-        if (!empty($data['tmId']) && $data['foundAs'] !== People::FOUND_AS_HISTORICAL_TM) {
+        if (!empty($data['tmId'])) {
             if ($showAsText) {
                 $tmLink = sprintf('TM %s', Escape::html($data['tmId']));
             } else {
