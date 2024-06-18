@@ -10,6 +10,7 @@ use Common\RefData;
 use LmcRbacMvc\Service\AuthorizationService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
+use PHPUnit\Framework\MockObject\MockObject;
 
 class PermissionTest extends MockeryTestCase
 {
@@ -25,9 +26,7 @@ class PermissionTest extends MockeryTestCase
 
     public function testIsSelf(): void
     {
-        $user = $this->createMock(User::class);
-        $user->method('getUserData')->willReturn(['id' => 1]);
-
+        $user = $this->getUser('1');
         $this->authService->expects('getIdentity')->twice()->andReturn($user);
 
         $this->assertTrue($this->sut->isSelf('1'));
@@ -74,6 +73,31 @@ class PermissionTest extends MockeryTestCase
         $this->assertTrue($this->sut->canManageSelfserveUsers());
     }
 
+    public function testCanRemoveSelfserveUserWhenNotSelfserveUser(): void
+    {
+        $this->authService->expects('isGranted')->with(RefData::PERMISSION_CAN_MANAGE_USER_SELFSERVE)->andReturnFalse();
+        $this->assertFalse($this->sut->canRemoveSelfserveUser('userId'));
+    }
+
+    public function testCanRemoveSelfserveUserWhenUserIsSelf(): void
+    {
+        $userId = 'userId1';
+        $user = $this->getUser($userId);
+        $this->authService->expects('isGranted')->with(RefData::PERMISSION_CAN_MANAGE_USER_SELFSERVE)->andReturnTrue();
+        $this->authService->expects('getIdentity')->andReturn($user);
+
+        $this->assertFalse($this->sut->canRemoveSelfserveUser($userId));
+    }
+
+    public function testCanRemoveSelfserveUserWhenNotSelf(): void
+    {
+        $user = $this->getUser('userId1');
+        $this->authService->expects('isGranted')->with(RefData::PERMISSION_CAN_MANAGE_USER_SELFSERVE)->andReturnTrue();
+        $this->authService->expects('getIdentity')->andReturn($user);
+
+        $this->assertTrue($this->sut->canRemoveSelfserveUser('userId2'));
+    }
+
     /**
      * @dataProvider dpIsGranted
      */
@@ -92,5 +116,13 @@ class PermissionTest extends MockeryTestCase
             [true],
             [false]
         ];
+    }
+
+    public function getUser(string $userId): MockObject
+    {
+        $user = $this->createMock(User::class);
+        $user->method('getUserData')->willReturn(['id' => $userId]);
+
+        return $user;
     }
 }
