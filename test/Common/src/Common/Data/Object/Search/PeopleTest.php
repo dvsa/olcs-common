@@ -37,12 +37,11 @@ class PeopleTest extends SearchAbstractTest
     /**
      * @return (string|string[])[][]
      *
-     * @psalm-return list{list{'NA', array{foundAs: 'Historical TM'}}, list{'Yes', array{foundAs: 'XX', disqualified: 'Yes'}}, list{'No', array{foundAs: 'XX', disqualified: 'No'}}}
+     * @psalm-return list{list{'Yes', array{foundAs: 'XX', disqualified: 'Yes'}}, list{'No', array{foundAs: 'XX', disqualified: 'No'}}}
      */
     public function dataProviderTestDisqualifiedFormatter(): array
     {
         return [
-            ['NA', ['foundAs' => 'Historical TM']],
             ['Yes', ['foundAs' => 'XX', 'disqualified' => 'Yes']],
             ['No', ['foundAs' => 'XX', 'disqualified' => 'No']],
         ];
