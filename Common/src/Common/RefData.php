@@ -706,11 +706,6 @@ class RefData
 
     public const QUESTION_TYPE_CUSTOM = 'question_type_custom';
 
-    // user operating system
-    public const USER_OS_TYPE_WINDOWS_7 = 'windows_7';
-
-    public const USER_OS_TYPE_WINDOWS_10 = 'windows_10';
-
     // Business process
     public const BUSINESS_PROCESS_APG = 'app_business_process_apg';
 
