@@ -1,5 +1,18 @@
 # Changelog
 
+## [7.4.0](https://github.com/dvsa/olcs-common/compare/v7.3.0...v7.4.0) (2024-06-18)
+
+
+### Features
+
+* VOL-4529 remove historic tm code ([#132](https://github.com/dvsa/olcs-common/issues/132)) ([0b2fee7](https://github.com/dvsa/olcs-common/commit/0b2fee7846c4d121d33a143b9705ef02481ed455))
+* VOL-4635 remove docman support ([#134](https://github.com/dvsa/olcs-common/issues/134)) ([ce6f429](https://github.com/dvsa/olcs-common/commit/ce6f42981782dfd8b8968a3746f3a5c2a2f39c52))
+
+
+### Bug Fixes
+
+* VOL-5530 selfserve users don't now have a button to remove themselves ([#133](https://github.com/dvsa/olcs-common/issues/133)) ([fa62db4](https://github.com/dvsa/olcs-common/commit/fa62db4bf42117ab65450289e2ad2aafe7732f7d))
+
 ## [7.3.0](https://github.com/dvsa/olcs-common/compare/v7.2.5...v7.3.0) (2024-06-05)
 
 
