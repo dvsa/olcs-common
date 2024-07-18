@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.5.0](https://github.com/dvsa/olcs-common/compare/v7.4.0...v7.5.0) (2024-07-18)
+
+
+### Features
+
+* make messaging timeframe string an editable translation ([01bd7a4](https://github.com/dvsa/olcs-common/commit/01bd7a421150e8ff6df951fb7bc52e936d5f012c))
+
 ## [7.4.0](https://github.com/dvsa/olcs-common/compare/v7.3.0...v7.4.0) (2024-06-18)
 
 
