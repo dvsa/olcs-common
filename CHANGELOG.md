@@ -1,5 +1,13 @@
 # Changelog
 
+## [7.5.1](https://github.com/dvsa/olcs-common/compare/v7.5.0...v7.5.1) (2024-07-18)
+
+
+### Bug Fixes
+
+* Revert translation key fallback view ([#138](https://github.com/dvsa/olcs-common/issues/138)) ([f6e53d9](https://github.com/dvsa/olcs-common/commit/f6e53d9d14f4b61a70259b724f3daf22b23e05fd))
+* Revert translation key fallback view ([#140](https://github.com/dvsa/olcs-common/issues/140)) ([671cd31](https://github.com/dvsa/olcs-common/commit/671cd31315b52213bc5ad64ecd0d276b389344dd))
+
 ## [7.5.0](https://github.com/dvsa/olcs-common/compare/v7.4.0...v7.5.0) (2024-07-18)
 
 
