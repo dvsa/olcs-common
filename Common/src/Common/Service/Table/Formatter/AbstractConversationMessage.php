@@ -34,7 +34,7 @@ abstract class AbstractConversationMessage implements FormatterPluginManagerInte
         $internalCaseworkerTeam = (empty($row['createdBy']['team'])) ? '' : '<p class="govuk-caption-m">' . $senderName . '<br/>Caseworker Team</p>';
 
         // If running on 'selfserve' remove caseworker's family name.
-        if (str_contains(__FILE__, 'selfserve')) {
+        if (str_contains(__FILE__, 'selfserve') && $internalCaseworkerTeam) {
             $caseworkerFamilyName = explode(' ', $senderName)[1];
             $senderName = str_replace($caseworkerFamilyName, '', $senderName);
             $internalCaseworkerTeam = str_replace($caseworkerFamilyName, '', $internalCaseworkerTeam);
