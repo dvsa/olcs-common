@@ -84,6 +84,7 @@ class LanguageTest extends MockeryTestCase
         $this->assertInstanceOf(SetCookie::class, $this->setCookie);
 
         $this->assertEquals('cy', $this->setCookie->getValue());
+        $this->assertEquals('Strict', $this->setCookie->getSameSite());
     }
 
     public function testSetPreferenceException(): void
