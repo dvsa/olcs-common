@@ -22,7 +22,8 @@ class ExternalConversationMessage extends AbstractConversationMessage
         </div>
     ';
 
-    protected function getSenderName(array $row): string {
+    protected function getSenderName(array $row): string
+    {
         if (!empty($row['createdBy']['contactDetails']['person'])) {
             $person = $row['createdBy']['contactDetails']['person'];
             $senderName = $person['forename'];
