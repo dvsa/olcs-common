@@ -33,13 +33,6 @@ abstract class AbstractConversationMessage implements FormatterPluginManagerInte
         // If createdBy (User) has a Team, they are an internal user.
         $internalCaseworkerTeam = (empty($row['createdBy']['team'])) ? '' : '<p class="govuk-caption-m">' . $senderName . '<br/>Caseworker Team</p>';
 
-        // If running on 'selfserve' remove caseworker's family name.
-        if (str_contains(__FILE__, 'selfserve') && $internalCaseworkerTeam) {
-            $caseworkerFamilyName = explode(' ', $senderName)[1];
-            $senderName = str_replace($caseworkerFamilyName, '', $senderName);
-            $internalCaseworkerTeam = str_replace($caseworkerFamilyName, '', $internalCaseworkerTeam);
-        }
-
         return strtr($this->rowTemplate, [
             '{senderName}' => $senderName,
             '{messageDate}' => $date,
@@ -48,6 +41,11 @@ abstract class AbstractConversationMessage implements FormatterPluginManagerInte
             '{fileList}' => $fileList,
             '{firstReadBy}' => $firstReadBy,
         ]);
+    }
+
+    protected function isInternalUser($row): bool
+    {
+        return !empty($row['createdBy']['team']);
     }
 
     /**
