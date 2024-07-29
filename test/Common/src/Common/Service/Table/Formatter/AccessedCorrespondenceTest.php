@@ -72,7 +72,7 @@ class AccessedCorrespondenceTest extends MockeryTestCase
                     ],
                 ],
                 'isNew' => true,
-                'expect' => '<a class="govuk-link" href="LICENCE_URL"><b>Description (doc)</b></a>' .
+                'expect' => '<a class="govuk-link" href="LICENCE_URL" target="_blank"><b>Description (doc)</b></a>' .
                     '<span class="status green">unit_New</span> ',
             ],
             [
@@ -87,7 +87,7 @@ class AccessedCorrespondenceTest extends MockeryTestCase
                     ],
                 ],
                 'isNew' => false,
-                'expect' => '<a class="govuk-link" href="LICENCE_URL"><b>Description (doc)</b></a>',
+                'expect' => '<a class="govuk-link" href="LICENCE_URL" target="_blank"><b>Description (doc)</b></a>',
             ],
             [
                 'data' => [
@@ -101,7 +101,7 @@ class AccessedCorrespondenceTest extends MockeryTestCase
                     ],
                 ],
                 'isNew' => false,
-                'expect' => '<a class="govuk-link" href="LICENCE_URL"><b>Description</b></a>',
+                'expect' => '<a class="govuk-link" href="LICENCE_URL" target="_blank"><b>Description</b></a>',
             ],
         ];
     }
