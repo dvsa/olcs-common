@@ -82,6 +82,7 @@ class Language implements FactoryInterface
         $this->requestCookie->setValue($this->preference);
         $this->requestCookie->setPath('/');
         $this->requestCookie->setExpires(strtotime('+10 years'));
+        $this->requestCookie->setSameSite('Strict');
         /** @var Response $response */
         $response = $container->get('Response');
         $response->getHeaders()->addHeader($this->requestCookie);
