@@ -21,4 +21,19 @@ class ExternalConversationMessage extends AbstractConversationMessage
             </div>
         </div>
     ';
+
+    protected function getSenderName(array $row): string
+    {
+        if (!empty($row['createdBy']['contactDetails']['person'])) {
+            $person = $row['createdBy']['contactDetails']['person'];
+            $senderName = $person['forename'];
+            if (!$this->isInternalUser($row)) {
+                $senderName .= " " . $person['familyName'];
+            }
+        } else {
+            $senderName = $row['createdBy']['loginId'];
+        }
+
+        return $senderName;
+    }
 }

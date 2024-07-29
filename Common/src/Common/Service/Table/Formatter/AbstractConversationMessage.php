@@ -43,6 +43,11 @@ abstract class AbstractConversationMessage implements FormatterPluginManagerInte
         ]);
     }
 
+    protected function isInternalUser($row): bool
+    {
+        return !empty($row['createdBy']['team']);
+    }
+
     /**
      * From https://stackoverflow.com/questions/2510434/format-bytes-to-kilobytes-megabytes-gigabytes
      * originally from Chris Jester-Young.
