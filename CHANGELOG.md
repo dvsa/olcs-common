@@ -1,5 +1,14 @@
 # Changelog
 
+## [7.6.0](https://github.com/dvsa/olcs-common/compare/v7.5.1...v7.6.0) (2024-07-29)
+
+
+### Features
+
+* Make document links open in new browser window to accommodate html file snapshots better. ([#143](https://github.com/dvsa/olcs-common/issues/143)) ([7cebbb7](https://github.com/dvsa/olcs-common/commit/7cebbb71edfbaecb79b789fbdfd479936557ef9b))
+* remove caseworkers family name on `selfserve` ([#141](https://github.com/dvsa/olcs-common/issues/141)) ([409b7b1](https://github.com/dvsa/olcs-common/commit/409b7b1e2a8123e97f582d90ed0f5c8f642d9f96))
+* Set SameSite cookie attr to clean up some browser console warnings. ([#142](https://github.com/dvsa/olcs-common/issues/142)) ([4dcca2c](https://github.com/dvsa/olcs-common/commit/4dcca2cd24586106d19e0e82ed6cf00eceecd10c))
+
 ## [7.5.1](https://github.com/dvsa/olcs-common/compare/v7.5.0...v7.5.1) (2024-07-18)
 
 
