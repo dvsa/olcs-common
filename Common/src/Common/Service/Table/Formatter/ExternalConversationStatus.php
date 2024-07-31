@@ -26,7 +26,7 @@ class ExternalConversationStatus implements FormatterPluginManagerInterface
         return sprintf(
             '<strong class="govuk-tag %s">%s</strong>',
             $tagColor,
-            str_replace('_', ' ', $row['userContextStatus']),
+            ucfirst(strtolower(str_replace('_', ' ', $row['userContextStatus']))),
         );
     }
 }
