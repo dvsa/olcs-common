@@ -48,4 +48,3 @@ class ExternalConversationStatusTest extends TestCase
         ];
     }
 }
-
