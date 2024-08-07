@@ -55,7 +55,7 @@ class EbsrVariationNumber implements FormatterPluginManagerInterface
 
             $status = [
                 'colour' => 'orange',
-                'value' => $this->translator->translate(self::SN_TRANSLATION_KEY)
+                'value' => ucfirst(strtolower($this->translator->translate(self::SN_TRANSLATION_KEY)))
             ];
 
             return $variationNo . $statusHelper->__invoke($status);

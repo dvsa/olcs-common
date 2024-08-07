@@ -30,15 +30,15 @@ class EbsrDocumentStatus implements FormatterPluginManagerInterface
         $status = match ($data['ebsrSubmissionStatus']['id']) {
             RefData::EBSR_STATUS_PROCESSING, RefData::EBSR_STATUS_VALIDATING, RefData::EBSR_STATUS_SUBMITTED => [
             'colour' => 'orange',
-            'value' => 'processing'
+            'value' => 'Processing'
             ],
             RefData::EBSR_STATUS_PROCESSED => [
             'colour' => 'green',
-            'value' => 'successful'
+            'value' => 'Successful'
             ],
             default => [
             'colour' => 'red',
-            'value' => 'failed'
+            'value' => 'Failed'
             ],
         };
 

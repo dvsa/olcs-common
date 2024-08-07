@@ -87,7 +87,7 @@ class EbsrVariationNumberTest extends MockeryTestCase
      */
     public function testFormatWithShortNotice($data): void
     {
-        $statusLabel = 'status label';
+        $statusLabel = 'Status label';
 
         $statusArray = [
             'colour' => 'orange',
