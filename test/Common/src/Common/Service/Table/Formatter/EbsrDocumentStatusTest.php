@@ -73,11 +73,11 @@ class EbsrDocumentStatusTest extends MockeryTestCase
     public function dataProviderFormat()
     {
         return [
-            [RefData::EBSR_STATUS_PROCESSING, 'orange', 'processing'],
-            [RefData::EBSR_STATUS_VALIDATING, 'orange', 'processing'],
-            [RefData::EBSR_STATUS_SUBMITTED, 'orange', 'processing'],
-            [RefData::EBSR_STATUS_PROCESSED, 'green', 'successful'],
-            [RefData::EBSR_STATUS_FAILED, 'red', 'failed'],
+            [RefData::EBSR_STATUS_PROCESSING, 'orange', 'Processing'],
+            [RefData::EBSR_STATUS_VALIDATING, 'orange', 'Processing'],
+            [RefData::EBSR_STATUS_SUBMITTED, 'orange', 'Processing'],
+            [RefData::EBSR_STATUS_PROCESSED, 'green', 'Successful'],
+            [RefData::EBSR_STATUS_FAILED, 'red', 'Failed'],
         ];
     }
 }
