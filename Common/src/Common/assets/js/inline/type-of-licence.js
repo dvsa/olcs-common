@@ -58,15 +58,21 @@ OLCS.ready(function () {
                     return operatorType.filter(':checked').val() === 'lcat_psv';
                 },
                 'selector:#ltyp_sr_radio_group': function () {
-                    return operatorType.filter(':checked').val() === 'lcat_psv';
+                    var shouldShow = operatorType.filter(':checked').val() === 'lcat_psv';
+                    if (shouldShow) {
+                        $('#ltyp_sr_radio_group').removeAttr('style');
+                    } else {
+                        $('#ltyp_sr_radio_group').css('display', 'none');
+                    }
+                    return shouldShow;
                 },
-                'selector:div[id$=\'ltyp_si_content\']': function() {
+                'selector:div[id$=\'ltyp_si_content\']': function () {
                     var isGoods = niFlag.filter(':checked').val() === 'Y' ||
                         operatorType.filter(':checked').val() == 'lcat_gv';
 
                     return isGoods && licenceType.filter(':checked').val() == 'ltyp_si';
                 },
-                '#lgv-declaration': function() {
+                '#lgv-declaration': function () {
                     var isGoods = niFlag.filter(':checked').val() === 'Y' ||
                         operatorType.filter(':checked').val() == 'lcat_gv';
 
@@ -74,10 +80,10 @@ OLCS.ready(function () {
                         licenceType.filter(':checked').val() == 'ltyp_si' &&
                         vehicleType.filter(':checked').val() == 'app_veh_type_lgv';
                 },
-                '.typeOfLicence-guidance-restricted': function() {
+                '.typeOfLicence-guidance-restricted': function () {
                     return operatorType.filter(':checked').val() == 'lcat_gv' && licenceType.filter(':checked').val() == 'ltyp_r';
                 },
-                'selector:div[id$=\'typeOfLicence-guidance-restricted\']': function() {
+                'selector:div[id$=\'typeOfLicence-guidance-restricted\']': function () {
                     return licenceType.filter(':checked').val() == 'ltyp_r';
                 },
             }
