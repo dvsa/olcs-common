@@ -39,7 +39,7 @@ class InternalConversationLink implements FormatterPluginManagerInterface
             case 'application':
                 $route = 'lva-application/conversation/view';
                 $params = [
-                    'application' => $row['task']['application']['id'],
+                    'application' => $this->route->getParam('application'),
                 ];
                 break;
             case 'licence':
