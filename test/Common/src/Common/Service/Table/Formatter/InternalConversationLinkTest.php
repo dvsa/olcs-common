@@ -15,6 +15,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class InternalConversationLinkTest extends MockeryTestCase
 {
     protected $mockRouteMatch;
+    protected $mockRefDataStatus;
     protected $urlHelper;
     protected $sut;
 
