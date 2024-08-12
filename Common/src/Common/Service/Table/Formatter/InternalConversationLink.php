@@ -102,12 +102,7 @@ class InternalConversationLink implements FormatterPluginManagerInterface
             $idMatrix = Escape::html($row['task']['licence']['licNo']);
         }
 
-        $html = '
-            <a class="govuk-body govuk-link govuk-!-padding-right-1 %s" href="%s">%s: %s</a>
-            <strong class="govuk-tag %s">%s</strong>
-            <br>
-            <p class="govuk-body govuk-!-margin-1">%s</p>
-        ';
+        $html = '<a class="govuk-body govuk-link govuk-!-padding-right-1 %s" href="%s">%s: %s</a><strong class="govuk-tag %s">%s</strong><br><p class="govuk-body govuk-!-margin-1">%s</p>';
 
         return sprintf(
             $html,
@@ -116,7 +111,7 @@ class InternalConversationLink implements FormatterPluginManagerInterface
             $idMatrix,
             $row["subject"],
             $tagColor,
-            str_replace('_', ' ', $row['userContextStatus']),
+            ucfirst(strtolower(str_replace('_', ' ', $row['userContextStatus']))),
             $dtOutput,
         );
     }
