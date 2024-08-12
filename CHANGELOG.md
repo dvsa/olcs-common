@@ -1,5 +1,22 @@
 # Changelog
 
+## [7.7.0](https://github.com/dvsa/olcs-common/compare/v7.6.0...v7.7.0) (2024-08-08)
+
+
+### Features
+
+* VOL-5249 add feature toggle for transport consultant role ([#147](https://github.com/dvsa/olcs-common/issues/147)) ([ab6dcec](https://github.com/dvsa/olcs-common/commit/ab6dcec0baf6a31c974faf06614684c9e89f7a9e))
+
+
+### Bug Fixes
+
+* Adds a unit test for the message status formatter ([918df29](https://github.com/dvsa/olcs-common/commit/918df29d655510e108a86c058fc1943d5dad2db6))
+* correct case of EBSR Variation and File Status tags. ([#151](https://github.com/dvsa/olcs-common/issues/151)) ([00e6938](https://github.com/dvsa/olcs-common/commit/00e69382e288da3d0c3cc98d7071db932e05ded1))
+* fix "Special Restricted" radio alignment ([#148](https://github.com/dvsa/olcs-common/issues/148)) ([918df29](https://github.com/dvsa/olcs-common/commit/918df29d655510e108a86c058fc1943d5dad2db6))
+* fix pattern escape console error align with validator ([#152](https://github.com/dvsa/olcs-common/issues/152)) ([917bce6](https://github.com/dvsa/olcs-common/commit/917bce6e6631e678a7648637a52f575e65ef6612))
+* Make messaging status tags the correct case for GDS frontend ([#145](https://github.com/dvsa/olcs-common/issues/145)) ([cf42f69](https://github.com/dvsa/olcs-common/commit/cf42f6993868fba36c10d457f05af5ec73cc0717))
+* Stop using display:block to unhide an element and just remove display:none ([918df29](https://github.com/dvsa/olcs-common/commit/918df29d655510e108a86c058fc1943d5dad2db6))
+
 ## [7.6.0](https://github.com/dvsa/olcs-common/compare/v7.5.1...v7.6.0) (2024-07-29)
 
 
