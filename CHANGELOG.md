@@ -1,5 +1,13 @@
 # Changelog
 
+## [7.7.1](https://github.com/dvsa/olcs-common/compare/v7.7.0...v7.7.1) (2024-08-12)
+
+
+### Bug Fixes
+
+* **bug:** now shows conversations for licence variations ([#150](https://github.com/dvsa/olcs-common/issues/150)) ([35e1d50](https://github.com/dvsa/olcs-common/commit/35e1d5029588a01d1eb804fbd04757e50b32ad0c))
+* Message status tags - case fix and add unit test for Formatter. ([#153](https://github.com/dvsa/olcs-common/issues/153)) ([2e0fccb](https://github.com/dvsa/olcs-common/commit/2e0fccb9f4be887bd404bb5460ff8e940fc08eb6))
+
 ## [7.7.0](https://github.com/dvsa/olcs-common/compare/v7.6.0...v7.7.0) (2024-08-08)
 
 
