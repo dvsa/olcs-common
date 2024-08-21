@@ -345,6 +345,8 @@ class RefData
 
     public const ROLE_INTERNAL_IRHP_ADMIN = 'internal-irhp-admin';
 
+    public const ROLE_OPERATOR_TC = 'operator-tc';
+
     public const ROLE_OPERATOR_ADMIN = 'operator-admin';
 
     public const ROLE_OPERATOR_USER = 'operator-user';
