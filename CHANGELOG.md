@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.8.0](https://github.com/dvsa/olcs-common/compare/v7.7.1...v7.8.0) (2024-08-21)
+
+
+### Features
+
+* VOL-5305 add TC Consultant role ([#155](https://github.com/dvsa/olcs-common/issues/155)) ([f3ff4c6](https://github.com/dvsa/olcs-common/commit/f3ff4c618078484c2681340899dd503a5ea52312))
+
 ## [7.7.1](https://github.com/dvsa/olcs-common/compare/v7.7.0...v7.7.1) (2024-08-12)
 
 
