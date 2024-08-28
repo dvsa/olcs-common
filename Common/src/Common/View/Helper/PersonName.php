@@ -31,13 +31,15 @@ class PersonName extends AbstractHelper
         $parts = [];
 
         foreach ($fields as $item) {
-            if (!isset($person[$item])) {
-                continue;
-            }
             if (empty($person[$item])) {
                 continue;
             }
-            $parts[] = htmlspecialchars($person[$item]);
+
+            if (is_array($person[$item]) && isset($person[$item]['description'])) {
+                $parts[] = htmlspecialchars((string) $person[$item]['description']);
+            } else {
+                $parts[] = htmlspecialchars((string) $person[$item]);
+            }
         }
 
         return implode(' ', $parts);
