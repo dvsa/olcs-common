@@ -14,18 +14,15 @@ class ReturnToAddress extends AbstractHelper
     protected static $addresses = [
         'ni' => [
             'Department for Infrastructure',
-            'The Central Licensing Office',
-            'PO Box 180',
+            'Quarry House',
             'Leeds',
-            'LS9 1BU'
+            'LS2 7UE',
         ],
         'gb' => [
             'Office of the Traffic Commissioner',
-            'The Central Licensing Office',
-            'Hillcrest House',
-            '386 Harehills Lane',
+            'Quarry House',
             'Leeds',
-            'LS9 6NF'
+            'LS2 7UE',
         ]
     ];
 
