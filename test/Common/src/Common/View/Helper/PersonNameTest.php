@@ -83,6 +83,17 @@ class PersonNameTest extends \PHPUnit\Framework\TestCase
                 ],
                 't s'
             ],
+            [
+                [
+                    'person' => [
+                        'title' => ['description' => 'Mr'],
+                        'forename' => 'John',
+                        'familyName' => 'Doe'
+                    ],
+                    'fields' => null
+                ],
+                'Mr John Doe'
+            ],
         ];
     }
 }
