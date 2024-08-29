@@ -1,5 +1,18 @@
 # Changelog
 
+## [7.9.0](https://github.com/dvsa/olcs-common/compare/v7.8.0...v7.9.0) (2024-08-29)
+
+
+### Features
+
+* VOL-5536 update addresses to the new Quarry House ([#161](https://github.com/dvsa/olcs-common/issues/161)) ([4e3c899](https://github.com/dvsa/olcs-common/commit/4e3c899e7c28f07d6430b30b6b4fffc214237783))
+* VOL-5748 update ReturnToAddress formatter for new Quarry House address ([#160](https://github.com/dvsa/olcs-common/issues/160)) ([ab115d5](https://github.com/dvsa/olcs-common/commit/ab115d5c39163e53e40a92508aaeb24aad70e4d8))
+
+
+### Bug Fixes
+
+* add PersonName helper support for title field RefData array. ([#158](https://github.com/dvsa/olcs-common/issues/158)) ([4c83d4d](https://github.com/dvsa/olcs-common/commit/4c83d4d5c9985a77d35498f5f1e29135bee9744d))
+
 ## [7.8.0](https://github.com/dvsa/olcs-common/compare/v7.7.1...v7.8.0) (2024-08-21)
 
 
