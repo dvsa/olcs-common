@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.10.0](https://github.com/dvsa/olcs-common/compare/v7.9.0...v7.10.0) (2024-09-06)
+
+
+### Features
+
+* Render form elements in order defined; not fieldset first ([#162](https://github.com/dvsa/olcs-common/issues/162)) ([d2facff](https://github.com/dvsa/olcs-common/commit/d2facffa69c21892df838eedc745a1d620c76feb))
+
 ## [7.9.0](https://github.com/dvsa/olcs-common/compare/v7.8.0...v7.9.0) (2024-08-29)
 
 
