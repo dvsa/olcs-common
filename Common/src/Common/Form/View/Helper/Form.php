@@ -25,7 +25,6 @@ class Form extends \Laminas\Form\View\Helper\Form
         if (method_exists($form, 'prepare')) {
             $form->prepare();
         }
-        $fieldsets = [];
         $elements = [];
         $hiddenSubmitElement = '';
 
@@ -70,7 +69,7 @@ class Form extends \Laminas\Form\View\Helper\Form
                     $element->get('table')->setMessages($errors);
                 }
 
-                $fieldsets[] = $view->addTags(
+                $elements[] = $view->addTags(
                     $view->formCollection($element)
                 );
             } elseif ($element->getName() === 'form-actions[continue]') {
@@ -81,10 +80,9 @@ class Form extends \Laminas\Form\View\Helper\Form
         }
 
         return sprintf(
-            '%s%s%s%s%s',
+            '%s%s%s%s',
             $includeFormTags ? $this->openTag($form) : '',
             $hiddenSubmitElement,
-            implode("\n", $fieldsets),
             implode("\n", $elements),
             $includeFormTags ? $this->closeTag() : ''
         );
