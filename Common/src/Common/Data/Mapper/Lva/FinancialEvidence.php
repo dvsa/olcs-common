@@ -46,7 +46,6 @@ class FinancialEvidence implements MapperInterface
         $evidenceFieldset = [
             'uploadNowRadio' => $uploadNow,
             'uploadLaterRadio' => $uploadLater,
-            'sendByPostRadio' => $sendByPost
         ];
 
         return [
@@ -87,7 +86,6 @@ class FinancialEvidence implements MapperInterface
             [
                 'uploadNowRadio' => $uploadNow,
                 'uploadLaterRadio' => $uploadLater,
-                'sendByPostRadio' => $sendByPost,
                 'uploadedFileCount' => isset($data['evidence']['files']['list'])
                     ? count($data['evidence']['files']['list'])
                     : 0
@@ -119,11 +117,6 @@ class FinancialEvidence implements MapperInterface
             && (int) $dataEvidence['uploadLaterRadio'] === RefData::AD_UPLOAD_LATER
         ) {
             $uploadNow = RefData::AD_UPLOAD_LATER;
-        } elseif (
-            isset($dataEvidence['sendByPostRadio'])
-            && (int) $dataEvidence['sendByPostRadio'] === RefData::AD_POST
-        ) {
-            $uploadNow = RefData::AD_POST;
         }
 
         return [

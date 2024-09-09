@@ -40,7 +40,6 @@ class FinancialEvidenceTest extends \PHPUnit\Framework\TestCase
                     'evidence' => [
                         'uploadNowRadio' => RefData::AD_UPLOAD_NOW,
                         'uploadLaterRadio' => null,
-                        'sendByPostRadio' => null
                     ]
                 ]
             ],
@@ -56,23 +55,6 @@ class FinancialEvidenceTest extends \PHPUnit\Framework\TestCase
                     'evidence' => [
                         'uploadNowRadio' => null,
                         'uploadLaterRadio' => RefData::AD_UPLOAD_LATER,
-                        'sendByPostRadio' => null
-                    ]
-                ]
-            ],
-            [
-                [
-                    'financialEvidenceUploaded' => RefData::AD_POST,
-                    'id' => 1,
-                    'version' => 2
-                ],
-                [
-                    'id'       => 1,
-                    'version'  => 2,
-                    'evidence' => [
-                        'uploadNowRadio' => null,
-                        'uploadLaterRadio' => null,
-                        'sendByPostRadio' => RefData::AD_POST,
                     ]
                 ]
             ],
@@ -88,7 +70,6 @@ class FinancialEvidenceTest extends \PHPUnit\Framework\TestCase
                     'evidence' => [
                         'uploadNowRadio' => RefData::AD_UPLOAD_NOW,
                         'uploadLaterRadio' => null,
-                        'sendByPostRadio' => null,
                     ]
                 ]
             ]
@@ -127,7 +108,6 @@ class FinancialEvidenceTest extends \PHPUnit\Framework\TestCase
                     'evidence' => [
                         'uploadNowRadio' => RefData::AD_UPLOAD_NOW,
                         'uploadLaterRadio' => null,
-                        'sendByPostRadio' => null,
                         'uploadedFileCount' => 1,
                         'uploadNow' => RefData::AD_UPLOAD_NOW,
                         'files' => [
@@ -155,37 +135,8 @@ class FinancialEvidenceTest extends \PHPUnit\Framework\TestCase
                     'evidence' => [
                         'uploadNowRadio' => null,
                         'uploadLaterRadio' => RefData::AD_UPLOAD_LATER,
-                        'sendByPostRadio' => null,
                         'uploadedFileCount' => 1,
                         'uploadNow' => RefData::AD_UPLOAD_LATER,
-                        'files' => [
-                            'list' => [
-                                'foo'
-                            ]
-                        ],
-                        'bar' => 'cake'
-                    ]
-                ]
-            ],
-            [
-                [
-                    'evidence' => [
-                        'uploadNow' => RefData::AD_POST,
-                        'files' => [
-                            'list' => [
-                                'foo'
-                            ]
-                        ],
-                        'bar' => 'cake'
-                    ]
-                ],
-                [
-                    'evidence' => [
-                        'uploadNowRadio' => null,
-                        'uploadLaterRadio' => null,
-                        'sendByPostRadio' => RefData::AD_POST,
-                        'uploadedFileCount' => 1,
-                        'uploadNow' => RefData::AD_POST,
                         'files' => [
                             'list' => [
                                 'foo'

@@ -18,7 +18,6 @@ class Advertisements
      *     "value_options": {
      *          "adPlaced": "Yes",
      *          "adPlacedLater": "No (operator to upload)",
-     *          "adSendByPost": "No (operator to post)",
      *      },
      * })
      * @Form\ErrorMessage("advertisements_adPlaced-error")
@@ -29,12 +28,6 @@ class Advertisements
      * @Form\ComposedObject("\Common\Form\Model\Form\Lva\Fieldset\AdvertisementsAdPlacedNow")
      */
     public $adPlacedContent;
-
-    /**
-     * @Form\Attributes({"data-container-class":"ad-send-by-post"})
-     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
-     */
-    public $adSendByPostContent;
 
     /**
      * @Form\Attributes({"data-container-class":"ad-upload-later"})

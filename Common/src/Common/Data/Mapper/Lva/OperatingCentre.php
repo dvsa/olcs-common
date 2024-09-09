@@ -18,8 +18,6 @@ class OperatingCentre implements MapperInterface
 {
     public const VALUE_OPTION_AD_PLACED_NOW = 'adPlaced';
 
-    public const VALUE_OPTION_AD_POST = 'adSendByPost';
-
     public const VALUE_OPTION_AD_UPLOAD_LATER = 'adPlacedLater';
 
     public const LOC_INTERNAL = 'internal';
@@ -37,7 +35,6 @@ class OperatingCentre implements MapperInterface
     {
         $adPlaceMapping = [
             RefData::AD_UPLOAD_NOW => self::VALUE_OPTION_AD_PLACED_NOW,
-            RefData::AD_POST => self::VALUE_OPTION_AD_POST,
             RefData::AD_UPLOAD_LATER => self::VALUE_OPTION_AD_UPLOAD_LATER,
         ];
         $mappedData = [
@@ -93,7 +90,6 @@ class OperatingCentre implements MapperInterface
             $adv = $data['advertisements'];
             $adPlaceMapping = [
                 self::VALUE_OPTION_AD_PLACED_NOW => RefData::AD_UPLOAD_NOW,
-                self::VALUE_OPTION_AD_POST => RefData::AD_POST,
                 self::VALUE_OPTION_AD_UPLOAD_LATER => RefData::AD_UPLOAD_LATER
             ];
 

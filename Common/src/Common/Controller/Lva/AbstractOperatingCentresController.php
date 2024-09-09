@@ -662,7 +662,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
     {
         //overwrite fields, and remove file upload fields
         $data['advertisements'] = [
-            'radio' => 'adSendByPost',
+            'radio' => 'adPlacedLater',
             'adPlacedContent' => [
                 'adPlacedIn' => '',
                 'adPlacedDate' => [

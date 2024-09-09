@@ -93,13 +93,9 @@ class VariationFinancialEvidenceTest extends MockeryTestCase
         $uploadLaterRadioElement = m::mock(ElementInterface::class);
         $uploadLaterRadioElement->expects('setName')->with('uploadNow');
 
-        $sendByPostRadioElement = m::mock(ElementInterface::class);
-        $sendByPostRadioElement->expects('setName')->with('uploadNow');
-
         $evidenceFieldset = m::mock(FieldsetInterface::class);
         $evidenceFieldset->expects('get')->with('uploadNowRadio')->andReturn($uploadNowRadioElement);
         $evidenceFieldset->expects('get')->with('uploadLaterRadio')->andReturn($uploadLaterRadioElement);
-        $evidenceFieldset->expects('get')->with('sendByPostRadio')->andReturn($sendByPostRadioElement);
         $evidenceFieldset->expects('setOption')->with('hint', 'BAR');
 
         $validateIfValidator = m::mock(ValidateIf::class);
