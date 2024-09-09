@@ -112,14 +112,10 @@ class VariationFinancialEvidenceTest extends MockeryTestCase
         $uploadLaterInput = m::mock(InputInterface::class);
         $uploadLaterInput->expects('setRequired')->with(false);
 
-        $sendByPostInput = m::mock(InputInterface::class);
-        $sendByPostInput->expects('setRequired')->with(false);
-
         $evidenceInputFilter = m::mock(InputFilterInterface::class);
         $evidenceInputFilter->expects('get')->with('uploadedFileCount')->andReturn($fileCountInput);
         $evidenceInputFilter->expects('get')->with('uploadNowRadio')->andReturn($uploadNowInput);
         $evidenceInputFilter->expects('get')->with('uploadLaterRadio')->andReturn($uploadLaterInput);
-        $evidenceInputFilter->expects('get')->with('sendByPostRadio')->andReturn($sendByPostInput);
 
         $inputFilterInterface = m::mock(InputFilterInterface::class);
         $inputFilterInterface->expects('get')->with('evidence')->andReturn($evidenceInputFilter);
