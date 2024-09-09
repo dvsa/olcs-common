@@ -105,7 +105,6 @@ class FinancialEvidenceTest extends MockeryTestCase
         $uploadLaterInput = m::mock(InputInterface::class);
         $uploadLaterInput->expects('setRequired')->with(false);
 
-
         $evidenceInputFilter = m::mock(InputFilterInterface::class);
         $evidenceInputFilter->expects('get')->with('uploadedFileCount')->andReturn($fileCountInput);
         $evidenceInputFilter->expects('get')->with('uploadNowRadio')->andReturn($uploadNowInput);
