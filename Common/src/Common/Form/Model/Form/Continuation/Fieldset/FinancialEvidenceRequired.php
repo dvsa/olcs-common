@@ -31,14 +31,6 @@ class FinancialEvidenceRequired
     public $uploadContent;
 
     /**
-     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
-     * @Form\Attributes({
-     *     "value": "markup-continuation-insufficient-finances-send-by-post",
-     * })
-     */
-    public $sendContent;
-
-    /**
      * @Form\Attributes({
      *     "data-module": "govuk-button",
      *     "type": "submit",

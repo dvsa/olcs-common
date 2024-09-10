@@ -77,13 +77,12 @@ class OperatingCentreTest extends MockeryTestCase
     /**
      * @return (int|string)[][]
      *
-     * @psalm-return list{list{1, 'adPlaced'}, list{0, 'adSendByPost'}, list{2, 'adPlacedLater'}}
+     * @psalm-return list{list{1, 'adPlaced'}, list{2, 'adPlacedLater'}}
      */
     public function adProvider(): array
     {
         return [
             [RefData::AD_UPLOAD_NOW, OperatingCentre::VALUE_OPTION_AD_PLACED_NOW],
-            [RefData::AD_POST, OperatingCentre::VALUE_OPTION_AD_POST],
             [RefData::AD_UPLOAD_LATER, OperatingCentre::VALUE_OPTION_AD_UPLOAD_LATER]
         ];
     }
@@ -130,38 +129,6 @@ class OperatingCentreTest extends MockeryTestCase
                     'noOfTrailersRequired' => 11,
                     'permission' => 'Y',
                     'adPlaced' => RefData::AD_UPLOAD_NOW,
-                    'adPlacedIn' => 'Donny Star',
-                    'adPlacedDate' => '2015-01-01',
-                    'taIsOverridden' => 'N'
-
-                ]
-            ],
-            [
-                [
-                    'version' => 1,
-                    'address' => ['foo' => 'bar'],
-                    'data' => [
-                        'noOfVehiclesRequired' => 10,
-                        'noOfTrailersRequired' => 11,
-                        'permission' => [
-                            'permission' => 'Y'
-                        ]
-                    ],
-                    'advertisements' => [
-                        'radio' => OperatingCentre::VALUE_OPTION_AD_POST,
-                        'adPlacedContent' => [
-                            'adPlacedIn' => 'Donny Star',
-                            'adPlacedDate' => '2015-01-01'
-                        ]
-                    ]
-                ],
-                [
-                    'version' => 1,
-                    'address' => ['foo' => 'bar'],
-                    'noOfVehiclesRequired' => 10,
-                    'noOfTrailersRequired' => 11,
-                    'permission' => 'Y',
-                    'adPlaced' => RefData::AD_POST,
                     'adPlacedIn' => 'Donny Star',
                     'adPlacedDate' => '2015-01-01',
                     'taIsOverridden' => 'N'
@@ -300,31 +267,6 @@ class OperatingCentreTest extends MockeryTestCase
     public function mapFromPostProvider(): array
     {
         return [
-            [
-                [
-                    'advertisements' => [
-                        'radio' => OperatingCentre::VALUE_OPTION_AD_POST,
-                        'adPlacedContent' => [
-                            'file' => [
-                                'list' => ['foo']
-                            ]
-                        ]
-                    ],
-                    'bar' => 'cake'
-                ],
-                [
-                    'advertisements' => [
-                        'radio' => OperatingCentre::VALUE_OPTION_AD_POST,
-                        'uploadedFileCount' => 1,
-                        'adPlacedContent' => [
-                            'file' => [
-                                'list' => ['foo']
-                            ]
-                        ]
-                    ],
-                    'bar' => 'cake'
-                ]
-            ],
             [
                 [
                     'advertisements' => [

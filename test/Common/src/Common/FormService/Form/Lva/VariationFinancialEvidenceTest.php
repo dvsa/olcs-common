@@ -93,13 +93,9 @@ class VariationFinancialEvidenceTest extends MockeryTestCase
         $uploadLaterRadioElement = m::mock(ElementInterface::class);
         $uploadLaterRadioElement->expects('setName')->with('uploadNow');
 
-        $sendByPostRadioElement = m::mock(ElementInterface::class);
-        $sendByPostRadioElement->expects('setName')->with('uploadNow');
-
         $evidenceFieldset = m::mock(FieldsetInterface::class);
         $evidenceFieldset->expects('get')->with('uploadNowRadio')->andReturn($uploadNowRadioElement);
         $evidenceFieldset->expects('get')->with('uploadLaterRadio')->andReturn($uploadLaterRadioElement);
-        $evidenceFieldset->expects('get')->with('sendByPostRadio')->andReturn($sendByPostRadioElement);
         $evidenceFieldset->expects('setOption')->with('hint', 'BAR');
 
         $validateIfValidator = m::mock(ValidateIf::class);
@@ -116,14 +112,10 @@ class VariationFinancialEvidenceTest extends MockeryTestCase
         $uploadLaterInput = m::mock(InputInterface::class);
         $uploadLaterInput->expects('setRequired')->with(false);
 
-        $sendByPostInput = m::mock(InputInterface::class);
-        $sendByPostInput->expects('setRequired')->with(false);
-
         $evidenceInputFilter = m::mock(InputFilterInterface::class);
         $evidenceInputFilter->expects('get')->with('uploadedFileCount')->andReturn($fileCountInput);
         $evidenceInputFilter->expects('get')->with('uploadNowRadio')->andReturn($uploadNowInput);
         $evidenceInputFilter->expects('get')->with('uploadLaterRadio')->andReturn($uploadLaterInput);
-        $evidenceInputFilter->expects('get')->with('sendByPostRadio')->andReturn($sendByPostInput);
 
         $inputFilterInterface = m::mock(InputFilterInterface::class);
         $inputFilterInterface->expects('get')->with('evidence')->andReturn($evidenceInputFilter);

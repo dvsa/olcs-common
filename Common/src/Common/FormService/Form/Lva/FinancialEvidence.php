@@ -32,7 +32,6 @@ class FinancialEvidence extends AbstractLvaFormService
         $evidenceFieldset = $form->get('evidence');
         $evidenceFieldset->get('uploadNowRadio')->setName('uploadNow');
         $evidenceFieldset->get('uploadLaterRadio')->setName('uploadNow');
-        $evidenceFieldset->get('sendByPostRadio')->setName('uploadNow');
         $this->formHelper->remove($form, 'evidence->uploadNow');
 
         $evidenceHint = $this->translator->translateReplace(
@@ -49,7 +48,6 @@ class FinancialEvidence extends AbstractLvaFormService
 
         $evidenceInputFilter->get('uploadNowRadio')->setRequired(false);
         $evidenceInputFilter->get('uploadLaterRadio')->setRequired(false);
-        $evidenceInputFilter->get('sendByPostRadio')->setRequired(false);
 
         $uploadedFileCountInput = $evidenceInputFilter->get('uploadedFileCount');
         $validateIfValidator = $this->validatorPluginManager->get(ValidateIf::class);
