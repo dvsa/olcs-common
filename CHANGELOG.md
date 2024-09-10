@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.11.0](https://github.com/dvsa/olcs-common/compare/v7.10.0...v7.11.0) (2024-09-10)
+
+
+### Features
+
+* remove send by post radios ([#164](https://github.com/dvsa/olcs-common/issues/164)) ([a95bca8](https://github.com/dvsa/olcs-common/commit/a95bca8bd5645c59b70f2de4aa2b686c076f60fa))
+
 ## [7.10.0](https://github.com/dvsa/olcs-common/compare/v7.9.0...v7.10.0) (2024-09-06)
 
 
