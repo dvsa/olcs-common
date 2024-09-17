@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.11.1](https://github.com/dvsa/olcs-common/compare/v7.11.0...v7.11.1) (2024-09-17)
+
+
+### Bug Fixes
+
+* VOL-5798 fix formatting for file upload radio buttons ([#166](https://github.com/dvsa/olcs-common/issues/166)) ([8cedfa8](https://github.com/dvsa/olcs-common/commit/8cedfa8027b3dd3fb481dccacfd0f337ae58127c))
+
 ## [7.11.0](https://github.com/dvsa/olcs-common/compare/v7.10.0...v7.11.0) (2024-09-10)
 
 
