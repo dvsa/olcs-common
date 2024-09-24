@@ -61,6 +61,7 @@ class UploadEvidence
      * })
      * @Form\Options({"label": "Save and continue"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
+     * @Form\Flags({"priority": -10})
      */
     public $saveAndContinue;
 }
