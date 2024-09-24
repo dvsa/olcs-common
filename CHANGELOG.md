@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.11.2](https://github.com/dvsa/olcs-common/compare/v7.11.1...v7.11.2) (2024-09-24)
+
+
+### Bug Fixes
+
+* ensure submit button renders at the end of the Submit evidence form ([#168](https://github.com/dvsa/olcs-common/issues/168)) ([9ce54e6](https://github.com/dvsa/olcs-common/commit/9ce54e6f57fbc7c774e60509783797340101a7f2))
+
 ## [7.11.1](https://github.com/dvsa/olcs-common/compare/v7.11.0...v7.11.1) (2024-09-17)
 
 
