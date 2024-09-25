@@ -23,6 +23,7 @@ class Finances
      * })
      * @Form\Options({"label":"Continue"})
      * @Form\Type("\Laminas\Form\Element\Button")
+     * @Form\Flags({"priority": -10})
      */
     public $submit;
 }
