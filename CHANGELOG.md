@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.11.3](https://github.com/dvsa/olcs-common/compare/v7.11.2...v7.11.3) (2024-09-25)
+
+
+### Bug Fixes
+
+* ensure submit button renders at the end of the continuation finance form ([#170](https://github.com/dvsa/olcs-common/issues/170)) ([6ef8fc9](https://github.com/dvsa/olcs-common/commit/6ef8fc9f4a3177d18c9508a9294282d13860b19f))
+
 ## [7.11.2](https://github.com/dvsa/olcs-common/compare/v7.11.1...v7.11.2) (2024-09-24)
 
 
