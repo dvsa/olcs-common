@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.12.0](https://github.com/dvsa/olcs-common/compare/v7.11.3...v7.12.0) (2024-10-02)
+
+
+### Features
+
+* added markup for operator admin login required information box ([#172](https://github.com/dvsa/olcs-common/issues/172)) ([1019004](https://github.com/dvsa/olcs-common/commit/1019004877c9b0e2e3b7c82738b2f159353f24f0))
+
 ## [7.11.3](https://github.com/dvsa/olcs-common/compare/v7.11.2...v7.11.3) (2024-09-25)
 
 
