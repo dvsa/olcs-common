@@ -24,7 +24,7 @@ class EmploymentDetails
     public $version;
 
     /**
-     * @Form\Attributes({"class":"long"})
+     * @Form\Attributes({"class":"govuk-input"})
      * @Form\Options({
      *     "label":"transport-manager.employment.form.position",
      *     "short-label":"transport-manager.employment.form.position"
@@ -41,7 +41,7 @@ class EmploymentDetails
 
     /**
      * @Form\Attributes({
-     *     "class":"long",
+     *     "class":"govuk-input",
      *     "placeholder": "transport-manager.employment.form.hoursPerWeek.placeholder",
      * })
      * @Form\Options({

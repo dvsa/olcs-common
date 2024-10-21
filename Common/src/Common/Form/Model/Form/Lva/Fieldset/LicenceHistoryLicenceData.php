@@ -22,7 +22,7 @@ class LicenceHistoryLicenceData
     public $previousLicenceType;
 
     /**
-     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Attributes({"class":"govuk-input","id":""})
      * @Form\Options({
      *     "label":"selfserve-app-subSection-previous-history-licence-history-licNo",
      *     "label_attributes": {"class": "form-element__question"},
@@ -34,7 +34,7 @@ class LicenceHistoryLicenceData
     public $licNo;
 
     /**
-     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Attributes({"class":"govuk-input","id":""})
      * @Form\Options({
      *     "label": "selfserve-app-subSection-previous-history-licence-history-holderName",
      *     "label_attributes": {"class": "form-element__question"},
@@ -85,7 +85,7 @@ class LicenceHistoryLicenceData
     public $disqualificationDate;
 
     /**
-     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Attributes({"class":"govuk-input","id":""})
      * @Form\Options({
      *     "label": "selfserve-app-subSection-previous-history-licence-history-disqualificationLength",
      *     "label_attributes": {"class": "form-element__question"}

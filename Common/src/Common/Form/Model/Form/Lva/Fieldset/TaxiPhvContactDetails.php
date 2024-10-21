@@ -23,7 +23,7 @@ class TaxiPhvContactDetails
     public $version;
 
     /**
-     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Attributes({"class":"govuk-input","id":""})
      * @Form\Options({
      *     "label": "application_taxi-phv_licence-sub-action.contactDetails.description",
      * })

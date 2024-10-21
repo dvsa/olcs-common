@@ -39,7 +39,7 @@ class Person
     public $title;
 
     /**
-     * @Form\Attributes({"class":"long","id":"forename"})
+     * @Form\Attributes({"class":"govuk-input","id":"forename"})
      * @Form\Options({
      *     "label":"First name",
      *     "label_attributes": {"class": "form-element__question"},
@@ -52,7 +52,7 @@ class Person
     public $forename;
 
     /**
-     * @Form\Attributes({"class":"long","id":"familyname"})
+     * @Form\Attributes({"class":"govuk-input","id":"familyname"})
      * @Form\Options({
      *    "label":"Last name",
      *     "label_attributes": {"class": "form-element__question"},
@@ -65,7 +65,7 @@ class Person
     public $familyName;
 
     /**
-     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Attributes({"class":"govuk-input","id":""})
      * @Form\Options({
      *    "label":"Other names (optional)",
      *     "label_attributes": {"class": "form-element__question"}

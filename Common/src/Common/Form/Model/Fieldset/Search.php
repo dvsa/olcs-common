@@ -34,7 +34,7 @@ class Search
     public $postcode;
 
     /**
-     * @Form\Attributes({"placeholder":"","class":"long"})
+     * @Form\Attributes({"placeholder":"","class":"govuk-input"})
      * @Form\Options({"label":"First name(s)"})
      * @Form\Required(false)
      * @Form\Type("Text")
@@ -44,7 +44,7 @@ class Search
     public $forename;
 
     /**
-     * @Form\Attributes({"placeholder":"","class":"long"})
+     * @Form\Attributes({"placeholder":"","class":"govuk-input"})
      * @Form\Options({"label":"Last name"})
      * @Form\Required(false)
      * @Form\Type("Text")

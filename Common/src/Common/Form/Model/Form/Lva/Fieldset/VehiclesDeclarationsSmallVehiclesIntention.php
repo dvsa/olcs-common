@@ -28,7 +28,7 @@ class VehiclesDeclarationsSmallVehiclesIntention
     public $psvOperateSmallVhl;
 
     /**
-     * @Form\Attributes({"id":"","class":"long"})
+     * @Form\Attributes({"id":"","class":"govuk-input"})
      * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
      * @Form\Options({
      *     "legend-attributes": {"class": "form-element__label"},

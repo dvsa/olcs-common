@@ -34,19 +34,20 @@ class FormRadio extends \Laminas\Form\View\Helper\FormRadio
 
     protected function renderOptions(
         MultiCheckboxElement $element,
-        array $options,
-        array $selectedOptions,
-        array $attributes
-    ): string {
+        array                $options,
+        array                $selectedOptions,
+        array                $attributes
+    ): string
+    {
         $translator = $this->getTranslator();
         $escapeHtmlHelper = $this->getEscapeHtmlHelper();
         $labelHelper = $this->getLabelHelper();
         $labelClose = $labelHelper->closeTag();
         $labelPosition = $this->getLabelPosition();
-        $globalLabelAttributes = [];
         $closingBracket = $this->getInlineClosingBracket();
         $radiosWrapperAttributes = $this->makeRadiosWrapperAttributes($attributes);
-
+        $elementOptions = $element->getOptions();
+        $valueOptionHints = $elementOptions['value_option_hints'] ?? [];
         $globalLabelAttributes = $element->getLabelAttributes();
 
         if ($globalLabelAttributes === []) {
@@ -89,23 +90,6 @@ class FormRadio extends \Laminas\Form\View\Helper\FormRadio
                 $label = $optionSpec['label'];
             }
 
-            if (isset($optionSpec['hint_attributes'])) {
-                $hintAttributes = $this->createAttributesString($optionSpec['hint_attributes']);
-            }
-
-            if (isset($optionSpec['hint'])) {
-                $hintText = $optionSpec['hint'];
-
-                if (null !== $translator) {
-                    $hintText = $translator->translate(
-                        $hintText,
-                        $this->getTranslatorTextDomain()
-                    );
-                }
-
-                $hint = $this->wrapWithTag($hintText, $hintAttributes);
-            }
-
             if (isset($optionSpec['selected'])) {
                 $selected = $optionSpec['selected'];
             }
@@ -136,8 +120,34 @@ class FormRadio extends \Laminas\Form\View\Helper\FormRadio
             $inputAttributes['checked'] = $selected;
             $inputAttributes['disabled'] = $disabled;
 
-            $inputAttributes = $this->maybeAddInputId($inputAttributes);
+            $hasOptionHint = isset($valueOptionHints[$key]);
+            $inputAttributes = $this->maybeAddInputId($inputAttributes, $hasOptionHint);
             $labelAttributes['for'] = $inputAttributes['id'];
+
+            if ($hasOptionHint) {
+                $optionSpec['hint'] = $valueOptionHints[$key];
+                $optionSpec['hint_attributes'] = [
+                    'id' => $inputAttributes['aria-describedby'],
+                    'class' => 'govuk-hint govuk-radios__hint',
+                ];
+            }
+
+            if (isset($optionSpec['hint_attributes'])) {
+                $hintAttributes = $this->createAttributesString($optionSpec['hint_attributes']);
+            }
+
+            if (isset($optionSpec['hint'])) {
+                $hintText = $optionSpec['hint'];
+
+                if (null !== $translator) {
+                    $hintText = $translator->translate(
+                        $hintText,
+                        $this->getTranslatorTextDomain()
+                    );
+                }
+
+                $hint = $this->wrapWithTag($hintText, $hintAttributes);
+            }
 
             $input = sprintf(
                 '<input %s%s',
@@ -227,10 +237,14 @@ class FormRadio extends \Laminas\Form\View\Helper\FormRadio
         return $valueOptions;
     }
 
-    protected function maybeAddInputId(array $inputAttributes): array
+    protected function maybeAddInputId(array $inputAttributes, bool $hasOptionHint): array
     {
         if (!isset($inputAttributes['id'])) {
             $inputAttributes['id'] = $this->idGenerator->generateId();
+        }
+
+        if ($hasOptionHint) {
+            $inputAttributes['aria-describedby'] = $this->getItemHintId($inputAttributes['id']);
         }
 
         return $inputAttributes;
@@ -253,5 +267,10 @@ class FormRadio extends \Laminas\Form\View\Helper\FormRadio
         }
 
         return $radiosWrapperAttributes;
+    }
+
+    private function getItemHintId(string $inputId): string
+    {
+        return $inputId . '-item-hint';
     }
 }

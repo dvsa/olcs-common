@@ -25,7 +25,7 @@ class VehiclesDeclarationsMainOccupation
     public $psvMediumVhlConfirmation;
 
     /**
-     * @Form\Attributes({"id":"","class":"long"})
+     * @Form\Attributes({"id":"","class":"govuk-input"})
      * @Form\Options({
      *     "label": "application_vehicle-safety_undertakings.mainOccupation.notes",
      * })

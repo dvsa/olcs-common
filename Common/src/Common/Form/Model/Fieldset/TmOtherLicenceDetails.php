@@ -62,7 +62,7 @@ class TmOtherLicenceDetails
     public $role;
 
     /**
-     * @Form\Attributes({"class":"long","id":"operatingCentres"})
+     * @Form\Attributes({"class":"govuk-input","id":"operatingCentres"})
      * @Form\Options({"label":"transport-manager.other-licence.form.operating-centres"})
      * @Form\Required(true)
      * @Form\Type("Textarea")

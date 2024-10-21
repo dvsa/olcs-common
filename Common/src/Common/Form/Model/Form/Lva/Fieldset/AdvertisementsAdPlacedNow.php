@@ -11,7 +11,7 @@ class AdvertisementsAdPlacedNow
 {
     /**
      * @Form\Required(false)
-     * @Form\Attributes({"class":"long","id":"adPlacedIn"})
+     * @Form\Attributes({"class":"govuk-input","id":"adPlacedIn"})
      * @Form\Options({
      *     "label": "application_operating-centres_authorisation-sub-action.advertisements.adPlacedIn"
      * })

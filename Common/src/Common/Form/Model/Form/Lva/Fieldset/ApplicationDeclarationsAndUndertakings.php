@@ -29,6 +29,10 @@ class ApplicationDeclarationsAndUndertakings
      *         "class":"form-control form-control--radio form-control--advanced"
      *     },
      *     "value_options": {"Y": "application.signature.options.verify", "N": "application.signature.options.sign"},
+     *     "value_option_hints": {
+     *         "Y": "application.signature.options.verify.hint",
+     *         "N": "application.signature.options.sign.hint"
+     *     },
      *     "label_options": {
      *         "disable_html_escape": "true"
      *     }

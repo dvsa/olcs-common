@@ -10,7 +10,7 @@ use Laminas\Form\Annotation as Form;
 class TradingNames extends Base
 {
     /**
-     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Attributes({"class":"govuk-input","id":""})
      * @Form\Required(false)
      * @Form\Type("Text")
      * @Form\Filter("Laminas\Filter\StringTrim")

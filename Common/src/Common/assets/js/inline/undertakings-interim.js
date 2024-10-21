@@ -7,7 +7,7 @@ $(function () {
       "interim": {
         "#applicationInterimReason": function () {
           var check = OLCS.formHelper.isChecked("interim", "goodsApplicationInterim");
-          $("#applicationInterimReason").parents('.validation-wrapper').toggle(check);
+          $("#applicationInterimReason").parents('.govuk-form-group--error').toggle(check);
           return check
         },
         ".interimFee": function () {
@@ -19,12 +19,12 @@ $(function () {
 
           ".typeOfLicence-guidance-restricted": function () {
             var check = OLCS.formHelper.isChecked("interim", "goodsApplicationInterim");
-            $("#applicationInterimReason").parents('.validation-wrapper').toggle(check);
+            $("#applicationInterimReason").parents('.govuk-form-group--error').toggle(check);
             return check;
           },
         "#interimFee": function ()  {
           var check = OLCS.formHelper.isChecked("interim", "goodsApplicationInterim");
-          $("#applicationInterimReason").parents('.validation-wrapper').toggle(check);
+          $("#applicationInterimReason").parents('.govuk-form-group--error').toggle(check);
           return check;
           },
         }

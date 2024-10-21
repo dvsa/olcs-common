@@ -266,6 +266,6 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
 
         $elementErrors = $this->view->plugin('form_element_errors')->render($element);
 
-        return sprintf('<div class="validation-wrapper">%s%s</div>', $elementErrors, $markup);
+        return sprintf('<div class="govuk-error-summary" data-module="govuk-error-summary">%s%s</div>', $elementErrors, $markup);
     }
 }

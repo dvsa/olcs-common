@@ -19,7 +19,7 @@ class BusinessDetails
     public $companyNumber;
 
     /**
-     * @Form\Attributes({"class":"long"})
+     * @Form\Attributes({"class":"govuk-input"})
      * @Form\Options({
      *     "label":"application_your-business_business-details.data.company_name",
      *     "label_attributes": {"class": "form-element__question"}

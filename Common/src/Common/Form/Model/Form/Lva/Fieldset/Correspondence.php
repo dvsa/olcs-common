@@ -22,7 +22,7 @@ class Correspondence
     public $version;
 
     /**
-     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Attributes({"class":"govuk-input","id":""})
      * @Form\Options({
      *    "label":"application_your-business_fao.label",
      *    "label_attributes": {

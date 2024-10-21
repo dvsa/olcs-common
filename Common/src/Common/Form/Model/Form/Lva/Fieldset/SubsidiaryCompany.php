@@ -19,7 +19,7 @@ class SubsidiaryCompany
     public $id;
 
     /**
-     * @Form\Attributes({"class":"long","id":"name"})
+     * @Form\Attributes({"class":"govuk-input","id":"name"})
      * @Form\Options({
      *     "label":"application_your-business_business-details-formName",
      *     "label_attributes": {"class": "form-element__question"},
@@ -32,7 +32,7 @@ class SubsidiaryCompany
 
     /**
      * @Form\Attributes({
-     *     "class":"long",
+     *     "class":"govuk-input",
      *     "id":"companyNo",
      *     "pattern":"\d*"
      * })

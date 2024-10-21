@@ -74,6 +74,7 @@ return [
             \Common\Controller\GuidesController::class => \Common\Controller\GuidesController::class,
         ],
         'factories' => [
+            \Common\Controller\FormTestController::class => \Common\Controller\Factory\FormTestControllerFactory::class,
             ContinuationControllers\ChecklistController::class => ChecklistControllerFactory::class,
             ContinuationControllers\ConditionsUndertakingsController::class => ConditionsUndertakingsControllerFactory::class,
             ContinuationControllers\DeclarationController::class => DeclarationControllerFactory::class,

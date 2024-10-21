@@ -23,7 +23,7 @@ class Trailer
 
     /**
      * @Form\Type("Text")
-     * @Form\Attributes({"class":"long"})
+     * @Form\Attributes({"class":"govuk-input"})
      * @Form\Options({
      *     "label": "licence_goods-trailers_trailer.form.add.trailernumber",
      *     "hint": "licence_goods-trailers_trailer.form.add.trailernumber.hint"

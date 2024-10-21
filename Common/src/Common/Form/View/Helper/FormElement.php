@@ -42,7 +42,7 @@ class FormElement extends LaminasFormElement
      */
     private static $topFormat = '<p class="%s">%s</p>%s';
 
-    private $hintClass = 'hint';
+    private $hintClass = 'govuk-hint';
 
     /**
      * Render an element

@@ -23,7 +23,7 @@ class PreviousLicencesDetails
     public $version;
 
     /**
-     * @Form\Attributes({"class":"long","id":"lic-no"})
+     * @Form\Attributes({"class":"govuk-input","id":"lic-no"})
      * @Form\Options({"label":"transport-manager.previous-licences.form.lic-no"})
      * @Form\Required(true)
      * @Form\Type("Text")
@@ -33,7 +33,7 @@ class PreviousLicencesDetails
     public $licNo;
 
     /**
-     * @Form\Attributes({"class":"long","id":"holderName"})
+     * @Form\Attributes({"class":"govuk-input","id":"holderName"})
      * @Form\Options({"label":"transport-manager.previous-licences.form.holder-name"})
      * @Form\Required(true)
      * @Form\Type("Text")

@@ -70,17 +70,19 @@ class FormErrors extends AbstractHelper
         }
 
         $messagesOpenFormat = '
-<div class="validation-summary" role="alert" id="validationSummary">
-    <h2 class="govuk-heading-m">%s</h2>
-    <p>%s</p>
-    <ol class="validation-summary__list">
-        <li class="validation-summary__item">';
-            $messageSeparatorString = '
-        </li>
-        <li class="validation-summary__item">';
-            $messageCloseString = '
-        </li>
-    </ol>
+<div class="govuk-error-summary" data-module="govuk-error-summary" id="validationSummary">
+    <div role="alert">
+        <h2 class="govuk-error-summary__title">%s</h2>
+        <p class="govuk-error-summary__body">%s</p>
+        <ul class="govuk-list govuk-error-summary__list">
+            <li>';
+                $messageSeparatorString = '
+            </li>
+            <li>';
+                $messageCloseString = '
+            </li>
+        </ul>
+    </div>
 </div>';
 
         $messagesTitle = $form->getOption('formErrorsTitle') ?

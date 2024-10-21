@@ -50,7 +50,7 @@ class Contact
     public $phone_secondary_version;
 
     /**
-     * @Form\Attributes({"class":"long","id":"email"})
+     * @Form\Attributes({"class":"govuk-input","id":"email"})
      * @Form\Options({
      *    "label":"application_your-business_business-type.contact-details.email",
      *    "label_attributes": {

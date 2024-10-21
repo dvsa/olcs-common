@@ -47,7 +47,7 @@ class ContactOptional
     public $phone_secondary_version;
 
     /**
-     * @Form\Attributes({"class":"long"})
+     * @Form\Attributes({"class":"govuk-input"})
      * @Form\Options({
      *     "label": "email-address-optional",
      *     "error-message": "contactOptional_email-error"

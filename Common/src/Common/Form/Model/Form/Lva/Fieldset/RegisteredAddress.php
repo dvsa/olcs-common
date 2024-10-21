@@ -30,7 +30,7 @@ class RegisteredAddress
 
     /**
      * @Form\Attributes({
-     *   "class" : "long",
+     *   "class" : "govuk-input",
      *   "id" : "addressLine1",
      *   "data-container-class" : "compound"
      * })
@@ -51,7 +51,7 @@ class RegisteredAddress
 
     /**
      * @Form\Attributes({
-     *   "class" : "long",
+     *   "class" : "govuk-input",
      *   "id" : "",
      *   "data-container-class" : "compound"
      * })
@@ -69,7 +69,7 @@ class RegisteredAddress
 
     /**
      * @Form\Attributes({
-     *   "class" : "long",
+     *   "class" : "govuk-input",
      *   "id" : "",
      *   "data-container-class" : "compound"
      * })
@@ -87,7 +87,7 @@ class RegisteredAddress
 
     /**
      * @Form\Attributes({
-     *   "class" : "long",
+     *   "class" : "govuk-input",
      *   "id" : "",
      *   "data-container-class" : "compound"
      * })
@@ -105,7 +105,7 @@ class RegisteredAddress
 
     /**
      * @Form\Attributes({
-     *   "class" : "long",
+     *   "class" : "govuk-input",
      *   "id" : ""
      * })
      * @Form\Options({

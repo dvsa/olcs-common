@@ -38,7 +38,7 @@ class TransportConsultant
 
     /**
      * @Form\Type("Text")
-     * @Form\Attributes({"class":"long"})
+     * @Form\Attributes({"class":"govuk-input"})
      * @Form\Options({"label":"application_your-business_business-type.consultant-name.label"})
      * @Form\Filter("Laminas\Filter\StringTrim")
      */

@@ -79,7 +79,7 @@ class Responsibilities
     /**
      * @Form\Type("TextArea")
      * @Form\Attributes({
-     *      "class":"long",
+     *      "class":"govuk-input",
      *      "label": "transport-manager.responsibilities.additional-information.title",
      *      "autocomplete": "nope",
      * })

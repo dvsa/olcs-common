@@ -38,7 +38,7 @@ class Address
 
     /**
      * @Form\Attributes({
-     *   "class" : "long",
+     *   "class" : "govuk-input",
      *   "id" : "addressLine1",
      *   "data-container-class" : "compound"
      * })
@@ -58,7 +58,7 @@ class Address
 
     /**
      * @Form\Attributes({
-     *   "class" : "long",
+     *   "class" : "govuk-input",
      *   "id" : "",
      *   "data-container-class" : "compound"
      * })
@@ -71,7 +71,7 @@ class Address
 
     /**
      * @Form\Attributes({
-     *   "class" : "long",
+     *   "class" : "govuk-input",
      *   "id" : "",
      *   "data-container-class" : "compound"
      * })
@@ -83,7 +83,7 @@ class Address
     public $addressLine3;
 
     /**
-     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Attributes({"class":"govuk-input","id":""})
      * @Form\Options({"label":"address_addressLine4","label_attributes":{"class":"govuk-visually-hidden"}})
      * @Form\Required(false)
      * @Form\Type("Text")
@@ -92,7 +92,7 @@ class Address
     public $addressLine4;
 
     /**
-     * @Form\Attributes({"class":"long","id":"addressTown"})
+     * @Form\Attributes({"class":"govuk-input","id":"addressTown"})
      * @Form\Options({
      *     "label":"address_townCity",
      *     "short-label":"address_townCity",

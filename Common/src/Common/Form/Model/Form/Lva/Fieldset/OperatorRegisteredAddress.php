@@ -28,7 +28,7 @@ class OperatorRegisteredAddress
 
     /**
      * @Form\Attributes({
-     *   "class" : "long",
+     *   "class" : "govuk-input",
      *   "id" : "",
      *   "data-container-class" : "compound"
      * })
@@ -40,7 +40,7 @@ class OperatorRegisteredAddress
 
     /**
      * @Form\Attributes({
-     *   "class" : "long",
+     *   "class" : "govuk-input",
      *   "id" : "",
      *   "data-container-class" : "compound"
      * })
@@ -52,7 +52,7 @@ class OperatorRegisteredAddress
 
     /**
      * @Form\Attributes({
-     *   "class" : "long",
+     *   "class" : "govuk-input",
      *   "id" : "",
      *   "data-container-class" : "compound"
      * })
@@ -64,7 +64,7 @@ class OperatorRegisteredAddress
 
     /**
      * @Form\Attributes({
-     *   "class" : "long",
+     *   "class" : "govuk-input",
      *   "id" : "",
      *   "data-container-class" : "compound"
      * })
@@ -75,7 +75,7 @@ class OperatorRegisteredAddress
     public $addressLine4;
 
     /**
-     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Attributes({"class":"govuk-input","id":""})
      * @Form\Options({"label":"address_townCity","label_attributes":{"class":"govuk-visually-hidden"}})
      * @Form\Required(false)
      * @Form\Type("Text")

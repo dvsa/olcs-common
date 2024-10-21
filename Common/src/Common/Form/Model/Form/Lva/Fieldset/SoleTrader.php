@@ -34,7 +34,7 @@ class SoleTrader
     public $title;
 
     /**
-     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Attributes({"class":"govuk-input","id":""})
      * @Form\Options({
      *     "label": "application_your-business_people-sub-action-formFirstName",
      * })
@@ -44,7 +44,7 @@ class SoleTrader
     public $forename;
 
     /**
-     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Attributes({"class":"govuk-input","id":""})
      * @Form\Options({
      *     "label": "application_your-business_people-sub-action-formSurname",
      * })
@@ -54,7 +54,7 @@ class SoleTrader
     public $familyName;
 
     /**
-     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Attributes({"class":"govuk-input","id":""})
      * @Form\Options({
      *     "label":"application_your-business_people-sub-action-formOtherNames",
      *     "hint":"application_your-business_people-sub-action-formOtherNames-hint"

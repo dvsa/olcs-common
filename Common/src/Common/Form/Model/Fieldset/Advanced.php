@@ -23,7 +23,7 @@ class Advanced
     public $address;
 
     /**
-     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Attributes({"class":"govuk-input","id":""})
      * @Form\Options({"label":"Town"})
      * @Form\Required(false)
      * @Form\Type("Text")

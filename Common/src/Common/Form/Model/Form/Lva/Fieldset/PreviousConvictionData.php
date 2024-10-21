@@ -29,7 +29,7 @@ class PreviousConvictionData
     public $title;
 
     /**
-     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Attributes({"class":"govuk-input","id":""})
      * @Form\Options({
      *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-formFirstName",
      *     "label_attributes": {"class": "form-element__question"},
@@ -41,7 +41,7 @@ class PreviousConvictionData
     public $forename;
 
     /**
-     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Attributes({"class":"govuk-input","id":""})
      * @Form\Options({
      *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-formLastName",
      *     "label_attributes": {"class": "form-element__question"},
@@ -71,7 +71,7 @@ class PreviousConvictionData
     public $convictionDate;
 
     /**
-     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Attributes({"class":"govuk-input","id":""})
      * @Form\Options({
      *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-formOffence",
      *     "label_attributes": {"class": "form-element__question"}
@@ -82,7 +82,7 @@ class PreviousConvictionData
     public $categoryText;
 
     /**
-     * @Form\Attributes({"id":"","class":"long"})
+     * @Form\Attributes({"id":"","class":"govuk-input"})
      * @Form\Options({
      *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-formOffenceDetails",
      *     "label_attributes": {"class": "form-element__question"},
@@ -96,7 +96,7 @@ class PreviousConvictionData
     public $notes;
 
     /**
-     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Attributes({"class":"govuk-input","id":""})
      * @Form\Options({
      *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-formNameOfCourt",
      *     "label_attributes": {"class": "form-element__question"},
@@ -108,7 +108,7 @@ class PreviousConvictionData
     public $courtFpn;
 
     /**
-     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Attributes({"class":"govuk-input","id":""})
      * @Form\Options({
      *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-formPenalty",
      *     "label_attributes": {"class": "form-element__question"},

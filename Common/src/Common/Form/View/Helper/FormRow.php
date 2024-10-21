@@ -25,19 +25,19 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow
      *
      * @var string
      */
-    private static $format = '<div class="field %s">%s</div>';
+    private static $format = '<div class="govuk-form-group %s">%s</div>';
 
     private static $formatNoDivClass = '<div class="%s">%s</div>';
 
-    private static $readonlyFormat = '<div class="field read-only %s"><p>%s<br><b>%s</b></p></div>';
+    private static $readonlyFormat = '<div class="govuk-form-group field read-only %s"><p>%s<br><b>%s</b></p></div>';
 
-    private static $errorClass = '<div class="validation-wrapper">%s</div>';
+    private static $errorClass = '<div class="govuk-form-group govuk-form-group--error">%s</div>';
 
     protected $fieldsetWrapper = '<fieldset%4$s>%2$s%1$s%3$s</fieldset>';
 
-    protected $fieldsetLabelWrapper = '<legend>%s</legend>';
+    protected $fieldsetLabelWrapper = '<legend class="govuk-fieldset__legend">%s</legend>';
 
-    protected $fieldsetHintFormat = '<p class="hint">%s</p>';
+    protected $fieldsetHintFormat = '<div class="govuk-hint">%s</div>';
 
     public function __construct()
     {
@@ -141,6 +141,7 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow
      */
     protected function renderFieldset(ElementInterface $element, $primary = true)
     {
+        echo'rendering as fieldset';
         $hintText = $element->getOption('hint');
         $legend = '';
         $label = $element->getLabel();
@@ -197,15 +198,17 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow
             $markup,
             $legend,
             '',
-            isset($fieldsetClass) ? ' class="' . $fieldsetClass . '"' : ''
+            isset($fieldsetClass) ? ' class="govuk-fieldset ' . $fieldsetClass . '"' : ' class="govuk-fieldset"'
         );
     }
 
     protected function renderRow(ElementInterface $element): string
     {
+        echo'rendering as row</br>';
         $labelHelper         = $this->getLabelHelper();
         $elementHelper       = $this->getElementHelper();
-
+        echo get_class($labelHelper) . '<br />';
+echo get_class($elementHelper) . '<br />';
         $label           = $element->getLabel();
         $inputErrorClass = $this->getInputErrorClass();
 

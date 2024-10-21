@@ -25,7 +25,7 @@ class ConvictionsAndPenaltiesDetails
     public $version;
 
     /**
-     * @Form\Attributes({"id":"conviction-date","required":false,"class":"long"})
+     * @Form\Attributes({"id":"conviction-date","required":false,"class":"govuk-input"})
      * @Form\Options({
      *     "label": "transport-manager.convictions-and-penalties.form.conviction-date",
      *     "create_empty_option": true,
@@ -41,7 +41,7 @@ class ConvictionsAndPenaltiesDetails
     public $convictionDate;
 
     /**
-     * @Form\Attributes({"class":"long","id":"category-text"})
+     * @Form\Attributes({"class":"govuk-input","id":"category-text"})
      * @Form\Options({"label":"transport-manager.convictions-and-penalties.form.offence"})
      * @Form\Type("Text")
      * @Form\Required(true)
@@ -50,7 +50,7 @@ class ConvictionsAndPenaltiesDetails
     public $categoryText;
 
     /**
-     * @Form\Attributes({"class":"long","id":"notes"})
+     * @Form\Attributes({"class":"govuk-input","id":"notes"})
      * @Form\Options({"label":"transport-manager.convictions-and-penalties.form.offence-details"})
      * @Form\Type("Textarea")
      * @Form\Required(true)
@@ -59,7 +59,7 @@ class ConvictionsAndPenaltiesDetails
     public $notes;
 
     /**
-     * @Form\Attributes({"class":"long","id":"court-fpn"})
+     * @Form\Attributes({"class":"govuk-input","id":"court-fpn"})
      * @Form\Options({"label":"transport-manager.convictions-and-penalties.form.court-fpn"})
      * @Form\Type("Text")
      * @Form\Required(true)
@@ -68,7 +68,7 @@ class ConvictionsAndPenaltiesDetails
     public $courtFpn;
 
     /**
-     * @Form\Attributes({"class":"long","id":"penalty"})
+     * @Form\Attributes({"class":"govuk-input","id":"penalty"})
      * @Form\Options({"label":"transport-manager.convictions-and-penalties.form.penalty"})
      * @Form\Type("Text")
      * @Form\Required(true)

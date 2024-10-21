@@ -35,7 +35,7 @@ class Person
     public $title;
 
     /**
-     * @Form\Attributes({"class":"long","id":"forename"})
+     * @Form\Attributes({"class":"govuk-input","id":"forename"})
      * @Form\Options({
      *     "label":"application_your-business_people-sub-action-formFirstName",
      *     "label_attributes": {"class": "form-element__question"},
@@ -48,7 +48,7 @@ class Person
     public $forename;
 
     /**
-     * @Form\Attributes({"class":"long","id":"familyname"})
+     * @Form\Attributes({"class":"govuk-input","id":"familyname"})
      * @Form\Options({
      *    "label":"application_your-business_people-sub-action-formSurname",
      *     "label_attributes": {"class": "form-element__question"},
@@ -61,7 +61,7 @@ class Person
     public $familyName;
 
     /**
-     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Attributes({"class":"govuk-input","id":""})
      * @Form\Options({
      *    "label":"application_your-business_people-sub-action-formOtherNames",
      *     "label_attributes": {"class": "form-element__question"}
@@ -73,7 +73,7 @@ class Person
     public $otherName;
 
     /**
-     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Attributes({"class":"govuk-input","id":""})
      * @Form\Options({"label":"application_your-business_people-sub-action-formPosition"})
      * @Form\Type("Text")
      * @Form\Filter("Laminas\Filter\StringTrim")

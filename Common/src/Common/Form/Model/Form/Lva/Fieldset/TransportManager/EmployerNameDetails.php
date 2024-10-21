@@ -11,7 +11,7 @@ use Laminas\Form\Annotation as Form;
 class EmployerNameDetails
 {
     /**
-     * @Form\Attributes({"class":"long"})
+     * @Form\Attributes({"class":"govuk-input"})
      * @Form\Options({
      *     "label":"transport-manager.employment.form.employerName",
      *     "short-label":"transport-manager.employment.form.employerName"

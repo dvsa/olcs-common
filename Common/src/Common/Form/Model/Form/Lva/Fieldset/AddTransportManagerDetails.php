@@ -12,7 +12,7 @@ use Laminas\Form\Annotation as Form;
 class AddTransportManagerDetails
 {
     /**
-     * @Form\Attributes({"class":"long","id":"", "disabled":"disabled"})
+     * @Form\Attributes({"class":"govuk-input","id":"", "disabled":"disabled"})
      * @Form\Options({"label":"lva-tm-details-forename"})
      * @Form\Type("Text")
      * @Form\Filter("Laminas\Filter\StringTrim")
@@ -20,7 +20,7 @@ class AddTransportManagerDetails
     public $forename;
 
     /**
-     * @Form\Attributes({"class":"long","id":"", "disabled":"disabled"})
+     * @Form\Attributes({"class":"govuk-input","id":"", "disabled":"disabled"})
      * @Form\Options({"label":"lva-tm-details-familyName"})
      * @Form\Type("Text")
      * @Form\Filter("Laminas\Filter\StringTrim")
