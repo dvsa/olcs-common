@@ -46,8 +46,8 @@ class Permission
         return $this->authService->isGranted(RefData::PERMISSION_CAN_MANAGE_USER_SELFSERVE);
     }
 
-    public function canRemoveSelfserveUser(string $userId): bool
+    public function canRemoveSelfserveUser(string $userId, bool $disableRemove = false): bool
     {
-        return $this->canManageSelfserveUsers() && !$this->isSelf($userId);
+        return $this->canManageSelfserveUsers() && !$this->isSelf($userId) && !$disableRemove;
     }
 }
