@@ -383,6 +383,23 @@ class TableBuilder implements \Stringable
      */
     public function setRows($rows)
     {
+        $operatorAdminKeys = [];
+        foreach ($rows as $key => $row) {
+            $rows[$key]['disableRemove'] = false;
+            if (isset($row['roles']) && is_array($row['roles'])) {
+                $roles = array_column($row['roles'], 'role');
+
+                if (in_array('operator-admin', $roles, true)) {
+                    $operatorAdminKeys[] = $key;
+                }
+            }
+        }
+
+        if (count($operatorAdminKeys) === 1) {
+            $adminKey = $operatorAdminKeys[0];
+            $rows[$adminKey]['disableRemove'] = true;
+        }
+
         $this->rows = $rows;
         return $this;
     }
