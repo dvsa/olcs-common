@@ -385,8 +385,8 @@ class TableBuilder implements \Stringable
     {
         $operatorAdminKeys = [];
         foreach ($rows as $key => $row) {
-            $rows[$key]['disableRemove'] = false;
             if (isset($row['roles']) && is_array($row['roles'])) {
+                $rows[$key]['disableRemove'] = false;
                 $roles = array_column($row['roles'], 'role');
 
                 if (in_array('operator-admin', $roles, true)) {
