@@ -35,12 +35,6 @@ class BusinessDetails
     public $table;
 
     /**
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\BusinessDetailsAllowEmail")
-     * @Form\Name("allow-email")
-     */
-    public $allowEmail;
-
-    /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
      * @Form\Attributes({"class":"govuk-button-group"})
