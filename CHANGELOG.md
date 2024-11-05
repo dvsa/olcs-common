@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.13.0](https://github.com/dvsa/olcs-common/compare/v7.12.0...v7.13.0) (2024-11-05)
+
+
+### Features
+
+* remove option to change correspondence type ([#176](https://github.com/dvsa/olcs-common/issues/176)) ([74c6f6c](https://github.com/dvsa/olcs-common/commit/74c6f6c5c3e6754b457690335a83b21a8dedff9d))
+
 ## [7.12.0](https://github.com/dvsa/olcs-common/compare/v7.11.3...v7.12.0) (2024-10-02)
 
 
