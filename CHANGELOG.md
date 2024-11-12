@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.13.1](https://github.com/dvsa/olcs-common/compare/v7.13.0...v7.13.1) (2024-11-12)
+
+
+### Bug Fixes
+
+* span `status` col by 2 ([#178](https://github.com/dvsa/olcs-common/issues/178)) ([9a48391](https://github.com/dvsa/olcs-common/commit/9a48391b641c1ff551866088a494887dc6736616))
+
 ## [7.13.0](https://github.com/dvsa/olcs-common/compare/v7.12.0...v7.13.0) (2024-11-05)
 
 
