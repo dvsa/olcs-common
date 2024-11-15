@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Rbac;
 
 use Common\Rbac\User;
@@ -96,5 +98,19 @@ class UserTest extends TestCase
         $this->sut->setRoles($roles);
         $this->assertEquals($roles, $this->sut->getRoles());
         $this->assertFalse($this->sut->hasRole(RefData::ROLE_INTERNAL_ADMIN));
+    }
+
+    public function testHasAgreedTermsTrue(): void
+    {
+        $userData = ['termsAgreed' => true];
+        $this->sut->setUserData($userData);
+        $this->assertTrue($this->sut->hasAgreedTerms());
+    }
+
+    public function testHasAgreedTermsFalse(): void
+    {
+        $userData = ['termsAgreed' => false];
+        $this->sut->setUserData($userData);
+        $this->assertFalse($this->sut->hasAgreedTerms());
     }
 }
