@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.14.0](https://github.com/dvsa/olcs-common/compare/v7.13.1...v7.14.0) (2024-11-15)
+
+
+### Features
+
+* check whether terms agreed VOL-5664 ([#180](https://github.com/dvsa/olcs-common/issues/180)) ([d2b9b79](https://github.com/dvsa/olcs-common/commit/d2b9b795ec3aa2862db7d72c6253788f51c78673))
+
 ## [7.13.1](https://github.com/dvsa/olcs-common/compare/v7.13.0...v7.13.1) (2024-11-12)
 
 
