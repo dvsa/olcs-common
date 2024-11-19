@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.15.0](https://github.com/dvsa/olcs-common/compare/v7.14.0...v7.15.0) (2024-11-19)
+
+
+### Features
+
+* VOL-4718 permission service prevents last operator admin being deleted ([#182](https://github.com/dvsa/olcs-common/issues/182)) ([0e98b2a](https://github.com/dvsa/olcs-common/commit/0e98b2a16a915fe2712baec4fab6d8a5d4e1373a))
+
 ## [7.14.0](https://github.com/dvsa/olcs-common/compare/v7.13.1...v7.14.0) (2024-11-15)
 
 
