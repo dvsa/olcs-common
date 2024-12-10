@@ -374,6 +374,8 @@ class RefData
 
     public const USER_TYPE_TM = 'transport-manager';
 
+    public const USER_TYPE_OPERATOR = 'operator';
+
     /**
      * Operator CPID.
      */
