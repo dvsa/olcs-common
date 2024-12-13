@@ -5,7 +5,7 @@
 
 ### Features
 
-* operator user type now avialable in RefData ([#184](https://github.com/dvsa/olcs-common/issues/184)) ([20803c4](https://github.com/dvsa/olcs-common/commit/20803c463a71f6988da09b59d25810714d75df5c))
+* operator user type now available in RefData ([#184](https://github.com/dvsa/olcs-common/issues/184)) ([20803c4](https://github.com/dvsa/olcs-common/commit/20803c463a71f6988da09b59d25810714d75df5c))
 
 ## [7.15.0](https://github.com/dvsa/olcs-common/compare/v7.14.0...v7.15.0) (2024-11-19)
 
