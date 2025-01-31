@@ -72,6 +72,10 @@ class FileUploadList extends Fieldset
                 . $file['description'] . '</a> <span>' . $file['size'] . '</span>'
             );
 
+            $html->setValue(
+                '<strong class="govuk-tag">Uploaded</strong>'
+            );
+
             $remove = new Submit('remove', ['render-container' => false]);
             $remove->setValue('Remove');
             $remove->setAttribute('class', 'file__remove action-button-link');
