@@ -1,5 +1,14 @@
 # Changelog
 
+## [7.17.0](https://github.com/dvsa/olcs-common/compare/v7.16.0...v7.17.0) (2025-02-06)
+
+
+### Features
+
+* added new validator to make sure user is operator admin VOL-5918 ([#191](https://github.com/dvsa/olcs-common/issues/191)) ([1a184a3](https://github.com/dvsa/olcs-common/commit/1a184a38f38be70a39fbc416f73f3e5ae8bb2d18))
+* notify user document has been uploaded ([#186](https://github.com/dvsa/olcs-common/issues/186)) ([17ee465](https://github.com/dvsa/olcs-common/commit/17ee465d7795a5206eb78ddc5935d70cc5b96e9b))
+* notify user document has been uploaded ([#188](https://github.com/dvsa/olcs-common/issues/188)) ([897e972](https://github.com/dvsa/olcs-common/commit/897e972930b343fd144a9d371c9133e2e9a4857d))
+
 ## [7.16.0](https://github.com/dvsa/olcs-common/compare/v7.15.0...v7.16.0) (2024-12-10)
 
 
