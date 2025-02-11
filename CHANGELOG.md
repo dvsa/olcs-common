@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.17.1](https://github.com/dvsa/olcs-common/compare/v7.17.0...v7.17.1) (2025-02-11)
+
+
+### Bug Fixes
+
+* VOL-6064 internal search navigation now follows GDS pattern ([#192](https://github.com/dvsa/olcs-common/issues/192)) ([c9ab5a4](https://github.com/dvsa/olcs-common/commit/c9ab5a47bac27d35b49915cf23a4434233cc7eb6))
+
 ## [7.17.0](https://github.com/dvsa/olcs-common/compare/v7.16.0...v7.17.0) (2025-02-06)
 
 
