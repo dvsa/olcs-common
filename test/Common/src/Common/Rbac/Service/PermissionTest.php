@@ -75,8 +75,18 @@ class PermissionTest extends MockeryTestCase
 
     public function testCanRemoveSelfserveUserWhenNotSelfserveUser(): void
     {
+        $user = $this->getUser('userId1');
         $this->authService->expects('isGranted')->with(RefData::PERMISSION_CAN_MANAGE_USER_SELFSERVE)->andReturnFalse();
-        $this->assertFalse($this->sut->canRemoveSelfserveUser('userId'));
+        $this->authService->expects('getIdentity')->withNoArgs()->andReturn($user);
+        $this->assertFalse($this->sut->canRemoveSelfserveUser('userId2', RefData::ROLE_OPERATOR_ADMIN));
+    }
+
+    public function testCanRemoveSelfserveUserWhenUsingBeingDeletedNotOperatorAdmin(): void
+    {
+        $user = $this->getUser('userId1');
+        $this->authService->expects('isGranted')->with(RefData::PERMISSION_CAN_MANAGE_USER_SELFSERVE)->andReturnTrue();
+        $this->authService->expects('getIdentity')->withNoArgs()->andReturn($user);
+        $this->assertTrue($this->sut->canRemoveSelfserveUser('userId2', RefData::ROLE_OPERATOR_TC));
     }
 
     public function testCanRemoveSelfserveUserWhenUserIsSelf(): void
@@ -84,18 +94,27 @@ class PermissionTest extends MockeryTestCase
         $userId = 'userId1';
         $user = $this->getUser($userId);
         $this->authService->expects('isGranted')->with(RefData::PERMISSION_CAN_MANAGE_USER_SELFSERVE)->andReturnTrue();
-        $this->authService->expects('getIdentity')->andReturn($user);
+        $this->authService->expects('getIdentity')->twice()->withNoArgs()->andReturn($user);
 
-        $this->assertFalse($this->sut->canRemoveSelfserveUser($userId));
+        $this->assertFalse($this->sut->canRemoveSelfserveUser($userId, RefData::ROLE_OPERATOR_ADMIN));
     }
 
     public function testCanRemoveSelfserveUserWhenNotSelf(): void
     {
         $user = $this->getUser('userId1');
         $this->authService->expects('isGranted')->with(RefData::PERMISSION_CAN_MANAGE_USER_SELFSERVE)->andReturnTrue();
-        $this->authService->expects('getIdentity')->andReturn($user);
+        $this->authService->expects('getIdentity')->twice()->withNoArgs()->andReturn($user);
 
-        $this->assertTrue($this->sut->canRemoveSelfserveUser('userId2'));
+        $this->assertTrue($this->sut->canRemoveSelfserveUser('userId2', RefData::ROLE_OPERATOR_ADMIN));
+    }
+
+    public function testFinalOperatorAdminNotRemovable(): void
+    {
+        $user = $this->getUser('userId1', false);
+        $this->authService->expects('isGranted')->with(RefData::PERMISSION_CAN_MANAGE_USER_SELFSERVE)->never();
+        $this->authService->expects('getIdentity')->withNoArgs()->andReturn($user);
+
+        $this->assertFalse($this->sut->canRemoveSelfserveUser('userId2', RefData::ROLE_OPERATOR_ADMIN));
     }
 
     /**
@@ -118,10 +137,15 @@ class PermissionTest extends MockeryTestCase
         ];
     }
 
-    public function getUser(string $userId): MockObject
+    public function getUser(string $userId, $canDeleteOperatorAdmin = true): MockObject
     {
+        $data = [
+            'id' => $userId,
+            'canDeleteOperatorAdmin' => $canDeleteOperatorAdmin,
+        ];
+
         $user = $this->createMock(User::class);
-        $user->method('getUserData')->willReturn(['id' => $userId]);
+        $user->method('getUserData')->willReturn($data);
 
         return $user;
     }

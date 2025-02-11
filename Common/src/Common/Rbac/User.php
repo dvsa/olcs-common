@@ -208,4 +208,9 @@ class User implements IdentityInterface
     {
         return in_array($role, $this->getRoles(), true);
     }
+
+    public function hasAgreedTerms(): bool
+    {
+        return $this->userData['termsAgreed'];
+    }
 }

@@ -710,6 +710,7 @@ return [
     ],
     'validators' => [
         'invokables' => [
+            \Common\Validator\MustRemainOperatorAdmin::class => \Common\Validator\MustRemainOperatorAdmin::class,
             \Common\Validator\ValidateIfMultiple::class => \Common\Validator\ValidateIfMultiple::class,
             \Common\Validator\DateCompare::class => \Common\Validator\DateCompare::class,
             \Common\Validator\NumberCompare::class => \Common\Validator\NumberCompare::class,

@@ -1,5 +1,56 @@
 # Changelog
 
+## [7.17.1](https://github.com/dvsa/olcs-common/compare/v7.17.0...v7.17.1) (2025-02-11)
+
+
+### Bug Fixes
+
+* VOL-6064 internal search navigation now follows GDS pattern ([#192](https://github.com/dvsa/olcs-common/issues/192)) ([c9ab5a4](https://github.com/dvsa/olcs-common/commit/c9ab5a47bac27d35b49915cf23a4434233cc7eb6))
+
+## [7.17.0](https://github.com/dvsa/olcs-common/compare/v7.16.0...v7.17.0) (2025-02-06)
+
+
+### Features
+
+* added new validator to make sure user is operator admin VOL-5918 ([#191](https://github.com/dvsa/olcs-common/issues/191)) ([1a184a3](https://github.com/dvsa/olcs-common/commit/1a184a38f38be70a39fbc416f73f3e5ae8bb2d18))
+* notify user document has been uploaded ([#186](https://github.com/dvsa/olcs-common/issues/186)) ([17ee465](https://github.com/dvsa/olcs-common/commit/17ee465d7795a5206eb78ddc5935d70cc5b96e9b))
+* notify user document has been uploaded ([#188](https://github.com/dvsa/olcs-common/issues/188)) ([897e972](https://github.com/dvsa/olcs-common/commit/897e972930b343fd144a9d371c9133e2e9a4857d))
+
+## [7.16.0](https://github.com/dvsa/olcs-common/compare/v7.15.0...v7.16.0) (2024-12-10)
+
+
+### Features
+
+* operator user type now available in RefData ([#184](https://github.com/dvsa/olcs-common/issues/184)) ([20803c4](https://github.com/dvsa/olcs-common/commit/20803c463a71f6988da09b59d25810714d75df5c))
+
+## [7.15.0](https://github.com/dvsa/olcs-common/compare/v7.14.0...v7.15.0) (2024-11-19)
+
+
+### Features
+
+* VOL-4718 permission service prevents last operator admin being deleted ([#182](https://github.com/dvsa/olcs-common/issues/182)) ([0e98b2a](https://github.com/dvsa/olcs-common/commit/0e98b2a16a915fe2712baec4fab6d8a5d4e1373a))
+
+## [7.14.0](https://github.com/dvsa/olcs-common/compare/v7.13.1...v7.14.0) (2024-11-15)
+
+
+### Features
+
+* check whether terms agreed VOL-5664 ([#180](https://github.com/dvsa/olcs-common/issues/180)) ([d2b9b79](https://github.com/dvsa/olcs-common/commit/d2b9b795ec3aa2862db7d72c6253788f51c78673))
+
+## [7.13.1](https://github.com/dvsa/olcs-common/compare/v7.13.0...v7.13.1) (2024-11-12)
+
+
+### Bug Fixes
+
+* span `status` col by 2 ([#178](https://github.com/dvsa/olcs-common/issues/178)) ([9a48391](https://github.com/dvsa/olcs-common/commit/9a48391b641c1ff551866088a494887dc6736616))
+
+## [7.13.0](https://github.com/dvsa/olcs-common/compare/v7.12.0...v7.13.0) (2024-11-05)
+
+
+### Features
+
+* remove option to change correspondence type ([#176](https://github.com/dvsa/olcs-common/issues/176)) ([74c6f6c](https://github.com/dvsa/olcs-common/commit/74c6f6c5c3e6754b457690335a83b21a8dedff9d))
+
 ## [7.12.0](https://github.com/dvsa/olcs-common/compare/v7.11.3...v7.12.0) (2024-10-02)
 
 
