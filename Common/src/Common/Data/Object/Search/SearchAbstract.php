@@ -179,7 +179,8 @@ abstract class SearchAbstract
             'label' => $this->getTitle(),
             'route' => 'search',
             'params' => ['index' => $this->getKey(), 'action' => 'reset'],
-            'query' => $queryParams
+            'query' => $queryParams,
+            'class' => 'govuk-link',
         ];
     }
 
