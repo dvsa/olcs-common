@@ -11,6 +11,8 @@ abstract class AbstractConversationMessage implements FormatterPluginManagerInte
 {
     protected string $rowTemplate;
 
+    protected string $defaultSenderName = "Sent by user now deleted";
+
     /**
      * status
      *
@@ -130,11 +132,15 @@ abstract class AbstractConversationMessage implements FormatterPluginManagerInte
 
     protected function getSenderName(array $row): string
     {
-        if (!empty($row['createdBy']['contactDetails']['person'])) {
-            $person = $row['createdBy']['contactDetails']['person'];
-            $senderName = $person['forename'] . " " . $person['familyName'];
-        } else {
-            $senderName = $row['createdBy']['loginId'];
+        $senderName = $this->defaultSenderName;
+
+        if(!empty($row['createdBy'])) {
+            if (!empty($row['createdBy']['contactDetails']['person'])) {
+                $person = $row['createdBy']['contactDetails']['person'];
+                $senderName = $person['forename'] . " " . $person['familyName'];
+            } else {
+                $senderName = $row['createdBy']['loginId'];
+            }
         }
 
         return $senderName;

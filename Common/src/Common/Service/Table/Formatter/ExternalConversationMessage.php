@@ -24,14 +24,18 @@ class ExternalConversationMessage extends AbstractConversationMessage
 
     protected function getSenderName(array $row): string
     {
-        if (!empty($row['createdBy']['contactDetails']['person'])) {
-            $person = $row['createdBy']['contactDetails']['person'];
-            $senderName = $person['forename'];
-            if (!$this->isInternalUser($row)) {
-                $senderName .= " " . $person['familyName'];
+        $senderName = $this->defaultSenderName;
+
+        if (!empty($row['createdBy'])) {
+            if (!empty($row['createdBy']['contactDetails']['person'])) {
+                $person = $row['createdBy']['contactDetails']['person'];
+                $senderName = $person['forename'];
+                if (!$this->isInternalUser($row)) {
+                    $senderName .= " " . $person['familyName'];
+                }
+            } else {
+                $senderName = $row['createdBy']['loginId'];
             }
-        } else {
-            $senderName = $row['createdBy']['loginId'];
         }
 
         return $senderName;
