@@ -134,7 +134,7 @@ abstract class AbstractConversationMessage implements FormatterPluginManagerInte
     {
         $senderName = $this->defaultSenderName;
 
-        if(!empty($row['createdBy'])) {
+        if (!empty($row['createdBy'])) {
             if (!empty($row['createdBy']['contactDetails']['person'])) {
                 $person = $row['createdBy']['contactDetails']['person'];
                 $senderName = $person['forename'] . " " . $person['familyName'];
