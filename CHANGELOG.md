@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.17.2](https://github.com/dvsa/olcs-common/compare/v7.17.1...v7.17.2) (2025-02-28)
+
+
+### Bug Fixes
+
+* hidden messages when a user is deleted ([#198](https://github.com/dvsa/olcs-common/issues/198)) ([d91f507](https://github.com/dvsa/olcs-common/commit/d91f507b55f25948bcf31cb30848be9662e784cd))
+
 ## [7.17.1](https://github.com/dvsa/olcs-common/compare/v7.17.0...v7.17.1) (2025-02-11)
 
 
