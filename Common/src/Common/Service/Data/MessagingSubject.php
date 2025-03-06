@@ -15,18 +15,14 @@ class MessagingSubject extends AbstractListDataService
 
     /**
      * Fetch list data
-     *
-     * @param array $context Parameters
-     *
-     * @return array
      * @throw DataServiceException
      */
-    public function fetchListData($context = null)
+    public function fetchListData($context = null): array
     {
         $data = (array)$this->getData('subjects');
 
         if ($data !== []) {
-            return $data;
+            return $this->filterComplianceItems($data);
         }
 
         $response = $this->handleQuery(
@@ -42,8 +38,18 @@ class MessagingSubject extends AbstractListDataService
 
         $result = $response->getResult();
 
-        $this->setData('subjects', ($result['results'] ?? null));
+        $this->setData('subjects', ($this->filterComplianceItems($result['results'])));
 
         return $this->getData('subjects');
+    }
+
+    /**
+     * Filter out compliance items from the list
+     */
+    private function filterComplianceItems(array $data): array
+    {
+        return array_filter($data, function ($item) {
+            return $item['category']['id'] !== 2;
+        });
     }
 }
