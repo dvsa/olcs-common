@@ -13,6 +13,8 @@ class MessagingSubject extends AbstractListDataService
 
     public const SORT_ORDER = 'ASC';
 
+    public const IS_ACTIVE = 1;
+
     /**
      * Fetch list data
      *
@@ -33,6 +35,7 @@ class MessagingSubject extends AbstractListDataService
             TransferQry\Messaging\Subjects\All::create([
                 'sort' => static::SORT_BY,
                 'order' => static::SORT_ORDER,
+                'isActive' => static::IS_ACTIVE,
             ])
         );
 
