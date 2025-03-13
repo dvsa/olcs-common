@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.18.0](https://github.com/dvsa/olcs-common/compare/v7.17.2...v7.18.0) (2025-03-13)
+
+
+### Features
+
+* filter messaging subjects by active categories VOL-6069 ([#201](https://github.com/dvsa/olcs-common/issues/201)) ([e719a31](https://github.com/dvsa/olcs-common/commit/e719a3198908a58ef6635e1463a16ab15423e44c))
+
 ## [7.17.2](https://github.com/dvsa/olcs-common/compare/v7.17.1...v7.17.2) (2025-02-28)
 
 
