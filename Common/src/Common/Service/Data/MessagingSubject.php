@@ -13,7 +13,7 @@ class MessagingSubject extends AbstractListDataService
 
     public const SORT_ORDER = 'ASC';
 
-    public const ONLY_ACTIVE = TRUE;
+    public const ONLY_ACTIVE = true;
 
     /**
      * Fetch list data
