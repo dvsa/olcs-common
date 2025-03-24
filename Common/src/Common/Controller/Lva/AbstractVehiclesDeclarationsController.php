@@ -71,7 +71,7 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
     protected function getForm()
     {
         return $this->formServiceManager
-            ->get('lva-' . $this->lva . '-vehicles_declarations')
+            ->get('lva-' . $this->lva . 'new-vehicles_declarations')
             ->getForm();
     }
 
@@ -201,6 +201,14 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
             if (isset($validationGroup['mainOccupation'])) {
                 unset($validationGroup['mainOccupation']);
             }
+        }
+
+        if ($data['received_date'] === null) {
+            $form->remove('limousinesNoveltyVehicles');
+            $form->remove('mainOccupation');
+            $form->remove( 'nineOrMore');
+            $form->remove( 'smallVehiclesIntention');
+
         }
 
         $form->setValidationGroup($validationGroup);
