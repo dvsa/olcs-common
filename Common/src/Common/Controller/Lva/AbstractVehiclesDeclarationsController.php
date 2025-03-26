@@ -203,29 +203,29 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
             }
         }
 
-        if ($data['received_date'] === null) {
-            $form->remove('limousinesNoveltyVehicles');
-            $form->remove('mainOccupation');
-            $form->remove('smallVehiclesIntention');
-            $form->remove('nineOrMore');
-
-            if (isset($validationGroup['limousinesNoveltyVehicles'][2])) {
-                unset($validationGroup['limousinesNoveltyVehicles'][2]);
-            }
-            if (isset($validationGroup['smallVehiclesIntention'][0])) {
-                unset($validationGroup['smallVehiclesIntention'][0]);
-            }
-            if (isset($validationGroup['smallVehiclesIntention'][1])) {
-                unset($validationGroup['smallVehiclesIntention'][1]);
-            }
-            if (isset($validationGroup['mainOccupation'])) {
-                unset($validationGroup['mainOccupation']);
-            }
-            if (isset($validationGroup['nineOrMore'])) {
-                unset($validationGroup['nineOrMore']);
-            }
-
-        }
+//        if ($data['received_date'] === null) {
+//            $form->remove('limousinesNoveltyVehicles');
+//            $form->remove('mainOccupation');
+//            $form->remove('smallVehiclesIntention');
+//            $form->remove('nineOrMore');
+//
+//            if (isset($validationGroup['limousinesNoveltyVehicles'][2])) {
+//                unset($validationGroup['limousinesNoveltyVehicles'][2]);
+//            }
+//            if (isset($validationGroup['smallVehiclesIntention'][0])) {
+//                unset($validationGroup['smallVehiclesIntention'][0]);
+//            }
+//            if (isset($validationGroup['smallVehiclesIntention'][1])) {
+//                unset($validationGroup['smallVehiclesIntention'][1]);
+//            }
+//            if (isset($validationGroup['mainOccupation'])) {
+//                unset($validationGroup['mainOccupation']);
+//            }
+//            if (isset($validationGroup['nineOrMore'])) {
+//                unset($validationGroup['nineOrMore']);
+//            }
+//
+//        }
 
         $form->setValidationGroup($validationGroup);
     }

@@ -19,7 +19,7 @@ class VehiclesDeclarationsSmallVehiclesIntention
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
      *     "label": "application_vehicle-safety_undertakings.smallVehiclesIntention.yesNo",
-     *     "legend-attributes": {"class": "form-element__label"},
+     *     "legend-attributes": {"class": "form-element__label psv-small-vh-section"},
      *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
      *     "value_options": {"Y": "Yes", "N": "No"}
      * })
@@ -46,18 +46,19 @@ class VehiclesDeclarationsSmallVehiclesIntention
      * @Form\Options({
      *     "label": "application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.title"
      * })
-     * @Form\Type("Common\Form\Elements\Types\TermsBox")
+     * @Form\Type("Common\Form\Elements\Types\PlainText")
      */
     public $psvSmallVhlScotland;
 
     /**
      * @Form\Attributes({
-     *     "value": "markup-application_vehicle-safety_undertakings-smallVehiclesUndertakings"
+     *     "value": "markup-application_vehicle-safety_undertakings-smallVehiclesUndertakings",
+     *     "data-container-class":"form-control__fieldset-title"
      * })
      * @Form\Options({
      *     "label": "application_vehicle-safety_undertakings.smallVehiclesUndertakings.title"
      * })
-     * @Form\Type("Common\Form\Elements\Types\TermsBox")
+     * @Form\Type("Common\Form\Elements\Types\PlainText")
      */
     public $psvSmallVhlUndertakings;
 
