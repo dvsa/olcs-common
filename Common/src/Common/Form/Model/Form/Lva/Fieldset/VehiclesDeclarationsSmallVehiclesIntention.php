@@ -28,7 +28,10 @@ class VehiclesDeclarationsSmallVehiclesIntention
     public $psvOperateSmallVhl;
 
     /**
-     * @Form\Attributes({"id":"","class":"long"})
+     * @Form\Attributes({
+     *     "id":"","class":"long",
+     *     "data-container-class":"form-control__fieldset-notes"
+     * })
      * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
      * @Form\Options({
      *     "legend-attributes": {"class": "form-element__label"},
@@ -63,7 +66,7 @@ class VehiclesDeclarationsSmallVehiclesIntention
     public $psvSmallVhlUndertakings;
 
     /**
-     * @Form\Attributes({"id":"","placeholder":""})
+     * @Form\Attributes({"id":"","placeholder":"", "data-container-class":"form-control__checkbox"})
      * @Form\Required(false)
      * @Form\AllowEmpty(false)
      * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")

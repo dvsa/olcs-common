@@ -84,7 +84,7 @@ $(function () {
 
   // === Map of what elements to show for each vehicle size and step ===
   var elementVisabilityMaps = {
-    "psvvs_small": [[".psv-small-vh-section", ".psv-show-small"], [], []],
+    "psvvs_small": [[".psv-small-vh-section", ".psv-show-small", ".form-control__checkbox"], [], []],
     "psvvs_medium_large": [[], [], []],
     "psvvs_both": [[], [], []]
   };
@@ -102,10 +102,10 @@ $(function () {
         $(".psv-show-both").hide();
         $("fieldset[name=\"psvVehicleSize\"]").hide();
         $(".psv-small-vh-section").parent().hide();
+        $(".form-control__fieldset-notes").hide();
 
         // Set the correct step list and show first step
         activeElements = elementVisabilityMaps.psvvs_small;
-        showElementMap(activeElements);
         break;
 
       case "psvvs_medium_large":
@@ -140,28 +140,15 @@ $(function () {
   // Utility to hide a group of elements
   function hideElements(elements) {
     for (var i = 0; i < elements.length; i++) {
-      $(elements[i]).hide();
+      var $el = $(elements[i]);
+      $el.hide();
     }
   }
-
-
 
   // Utility to show a group of elements
   function showElements(elements) {
     for (var i = 0; i < elements.length; i++) {
-      var selector = elements[i];
-      var $el = $(selector);
-
-      // Special handling for this specific element
-      if (selector === ".form-control__checkbox") {
-        // Stop OLCS from re-hiding it
-        OLCS.eventEmitter.off("hide:smallVehiclesIntention:psvSmallVhlConfirmation");
-
-        // Remove inline styles and 'hidden' class
-        $el.removeAttr("style").removeClass("hidden");
-      }
-
-      // Show the element (safe even if it was handled above)
+      var $el = $(elements[i]);
       $el.show();
     }
   }
@@ -189,16 +176,18 @@ $(function () {
     };
   }
 
+  // === NOTE: Delete before merging pr, could be used as refrence for now ===
+
   // Helper for handling small vehicle intention logic
-  function smallOperation(answer) {
-    return function () {
-      var elem = OLCS.formHelper("smallVehiclesIntention", "psvOperateSmallVhl");
-      if (elem.length === 0) {
-        return true;
-      }
-      return OLCS.formHelper.isChecked("smallVehiclesIntention", "psvOperateSmallVhl", answer);
-    };
-  }
+  // function smallOperation(answer) {
+  //   return function () {
+  //     var elem = OLCS.formHelper("smallVehiclesIntention", "psvOperateSmallVhl");
+  //     if (elem.length === 0) {
+  //       return true;
+  //     }
+  //     return OLCS.formHelper.isChecked("smallVehiclesIntention", "psvOperateSmallVhl", answer);
+  //   };
+  // }
 
   // Show specific fields (15g) only when vehicle size is NOT small and limousines is 'Y'
   function show15g() {
@@ -212,12 +201,7 @@ $(function () {
   OLCS.cascadeForm({
     cascade: false,
     rulesets: {
-      "smallVehiclesIntention": {
-        "psvSmallVhlNotes": smallOperation("Y"),
-        "psvSmallVhlScotland": smallOperation("N"),
-        "psvSmallVhlUndertakings": smallOperation("N"),
-        "psvSmallVhlConfirmation": smallOperation("Y")
-      },
+      // BUG: Checkbox is automatically shown
       "limousinesNoveltyVehicles": {
         "label:limousinesNoveltyVehicles\\[psvNoLimousineConfirmationLabel\\]": limoChecked("N"),
         "date:limousinesNoveltyVehicles\\[psvNoLimousineConfirmation\\]": limoChecked("N"),
