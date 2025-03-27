@@ -12,17 +12,36 @@ $(function () {
   // === Event Listeners ===
 
   // When vehicle size radio button changes, update steps shown
-  $('input[name="psvVehicleSize[size]"]').change(function () {
-    updateVehicleSize();
+  $("input[name=\"psvVehicleSize[size]\"]").change(function () {
+    // Do nothing yet
   });
 
   // Handle Save and Continue button click
   $("button[id=\"form-actions[saveAndContinue]\"]").on("click", function () {
+    var $vehicleSizeFieldset = $("fieldset[name='psvVehicleSize']");
+
+    // Check if we're still on the first screen (vehicle size selection)
+    if (!$vehicleSizeFieldset.is(":hidden")) {
+      var selectedSize = getVehicleSize();
+
+      // If no vehicle size is selected, show an alert and stop here
+      if (!selectedSize) {
+        window.alert("Please select a vehicle size.");
+        return;
+      }
+
+      // A vehicle size is selected — set up the flow
+      updateVehicleSize();       // Configure which steps to show
+      formStage = 0;             // Start from the first step
+      showElementMap(activeElements);  // Show the first step
+      return;
+    }
+
+    // If we're already in the step flow, move to the next step
     if (formStage < activeElements.length - 1) {
       formStage++;
       showElementMap(activeElements);
     }
-    // Otherwise, allow form submission (handled separately)
   });
 
   // Handle Save button click — redirect back to overview
@@ -125,18 +144,32 @@ $(function () {
     }
   }
 
+
+
   // Utility to show a group of elements
   function showElements(elements) {
     for (var i = 0; i < elements.length; i++) {
-      $(elements[i]).show();
+      var selector = elements[i];
+      var $el = $(selector);
+
+      // Special handling for this specific element
+      if (selector === ".form-control__checkbox") {
+        // Stop OLCS from re-hiding it
+        OLCS.eventEmitter.off("hide:smallVehiclesIntention:psvSmallVhlConfirmation");
+
+        // Remove inline styles and 'hidden' class
+        $el.removeAttr("style").removeClass("hidden");
+      }
+
+      // Show the element (safe even if it was handled above)
+      $el.show();
     }
   }
 
   // Redirect back to previous page (removes "vehicles-declarations" from the URL)
   function returnToOverview() {
     var currentUrl = window.location.href;
-    var newUrl = currentUrl.replace("/vehicles-declarations/", "");
-    window.location.href = newUrl;
+    window.location.href = currentUrl.replace("/vehicles-declarations/", "");
   }
 
   // Get the selected vehicle size value
@@ -183,7 +216,7 @@ $(function () {
         "psvSmallVhlNotes": smallOperation("Y"),
         "psvSmallVhlScotland": smallOperation("N"),
         "psvSmallVhlUndertakings": smallOperation("N"),
-        "psvSmallVhlConfirmation": smallOperation("N")
+        "psvSmallVhlConfirmation": smallOperation("Y")
       },
       "limousinesNoveltyVehicles": {
         "label:limousinesNoveltyVehicles\\[psvNoLimousineConfirmationLabel\\]": limoChecked("N"),
