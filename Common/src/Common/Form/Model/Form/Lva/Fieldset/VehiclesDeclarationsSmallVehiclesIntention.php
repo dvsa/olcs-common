@@ -19,7 +19,7 @@ class VehiclesDeclarationsSmallVehiclesIntention
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
      *     "label": "application_vehicle-safety_undertakings.smallVehiclesIntention.yesNo",
-     *     "legend-attributes": {"class": "form-element__label psv-small-vh-section"},
+     *     "legend-attributes": {"class": "form-element__label psv-operate-small-vh-section"},
      *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
      *     "value_options": {"Y": "Yes", "N": "No"}
      * })
@@ -80,4 +80,11 @@ class VehiclesDeclarationsSmallVehiclesIntention
      * @Form\Validator( "Common\Form\Elements\Validators\VehicleUndertakingsOperateSmallVehiclesAgreementValidator")
      */
     public $psvSmallVhlConfirmation;
+
+    /**
+     * @Form\Name("miniStep")
+     * @Form\Type("Hidden")
+     * @Form\Attributes({"id": "miniStep"})
+     */
+    public $miniStep;
 }

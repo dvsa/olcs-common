@@ -1,211 +1,209 @@
 $(function () {
   "use strict";
 
-  // Global variables
-  var allowSubmit = false;
-  var activeElements = []; // Will hold the currently active steps for the selected vehicle size
-  var formStage = 0; // Current step index
+  var allowSubmit = true;
+  var formStage = parseInt($("#miniStep").val(), 10) || 0;
+  var steps = [];
 
-  // Initial setup based on selected vehicle size
-  updateVehicleSize();
+  // === Get selected vehicle size ===
+  var initialSize = getVehicleSize();
+  steps = getStepsForSize(initialSize);
 
-  // === Event Listeners ===
+  // === Initial load ===
+  showStep(formStage);
 
-  // When vehicle size radio button changes, update steps shown
-  $("input[name=\"psvVehicleSize[size]\"]").change(function () {
-    // Do nothing yet
-  });
+  // === Adjust button text ===
+  $("button[id='form-actions[saveAndContinue]']").text("continue");
+  $("button[id='form-actions[save]']").text("return to overview");
 
-  // Handle Save and Continue button click
-  $("button[id=\"form-actions[saveAndContinue]\"]").on("click", function () {
-    var $vehicleSizeFieldset = $("fieldset[name='psvVehicleSize']");
-
-    // Check if we're still on the first screen (vehicle size selection)
-    if (!$vehicleSizeFieldset.is(":hidden")) {
+  // === Save and Continue ===
+  $("button[id='form-actions[saveAndContinue]']").on("click", function () {
+    if (formStage === 0) {
       var selectedSize = getVehicleSize();
 
-      // If no vehicle size is selected, show an alert and stop here
       if (!selectedSize) {
-        window.alert("Please select a vehicle size.");
+        $("#miniStep").val(0);
         return;
       }
 
-      // A vehicle size is selected — set up the flow
-      updateVehicleSize();       // Configure which steps to show
-      formStage = 0;             // Start from the first step
-      showElementMap(activeElements);  // Show the first step
-      return;
+      // Generate step list based on selected size
+      steps = getStepsForSize(selectedSize);
+
+      // Clear next step inputs
+      if (steps[1]) {
+        steps[1].resetFn();
+      }
+
+      // Auto-select "No" for small vehicle undertakings
+      if (selectedSize === "psvvs_small" || selectedSize === "psvvs_both") {
+        $("input[name='smallVehiclesIntention[psvOperateSmallVhl]'][value='N']")
+          .prop("checked", true)
+          .trigger("change");
+      }
+
+      showStep(1);
+      return false;
     }
 
-    // If we're already in the step flow, move to the next step
-    if (formStage < activeElements.length - 1) {
-      formStage++;
-      showElementMap(activeElements);
+    // Allow form to submit for steps beyond step 1
+    $("#miniStep").val(formStage);
+  });
+
+  // === Back link ===
+  $("a.govuk-back-link").on("click", function (e) {
+    e.preventDefault();
+    clearValidationErrors();
+
+    if (formStage > 0) {
+      showStep(formStage - 1);
+    } else {
+      returnToOverview();
     }
   });
 
-  // Handle Save button click — redirect back to overview
-  $("button[id=\"form-actions[save]\"]").on("click", function () {
+  // === Save and return ===
+  $("button[id='form-actions[save]']").on("click", function (e) {
+    e.preventDefault();
     returnToOverview();
   });
 
-  // Handle the Back link
-  $("a.govuk-back-link").on("click", function (e) {
-    e.preventDefault();
-
-    // If we're still on the vehicle size selector, go back to overview
-    if (!$("fieldset[name=\"psvVehicleSize\"]").is(":hidden")) {
-      returnToOverview();
-    }
-
-    // If we're on a later stage, move back one step
-    if (formStage > 0) {
-      formStage--;
-      showElementMap(activeElements);
-    }
-    // If we're on the first stage of the form (not vehicle size), reset to start
-    else if (formStage === 0) {
-      var formStages = activeElements[formStage];
-      for (var i = 0; i < formStages.length; i++) {
-        $(formStages[i]).hide();
-      }
-
-      $("fieldset[name=\"psvVehicleSize\"]").show();
-      $("input[name=\"psvVehicleSize[size]\"]").prop("checked", false);
-    }
-  });
-
-  // Prevent form submission unless allowSubmit is true
+  // === Form block ===
   $("#lva-vehicles-declarations").on("submit", function (e) {
     if (!allowSubmit) {
       e.preventDefault();
     }
   });
 
-  // === Map of what elements to show for each vehicle size and step ===
-  var elementVisabilityMaps = {
-    "psvvs_small": [[".psv-small-vh-section", ".psv-show-small", ".form-control__checkbox"], [], []],
-    "psvvs_medium_large": [[], [], []],
-    "psvvs_both": [[], [], []]
-  };
-
-  // === Functions ===
-
-  // Decide which steps to show based on selected vehicle size
-  function updateVehicleSize() {
-    var selectedSize = getVehicleSize();
-
-    switch (selectedSize) {
-      case "psvvs_small":
-        // Hide irrelevant elements
-        $(".psv-show-large").hide();
-        $(".psv-show-both").hide();
-        $("fieldset[name=\"psvVehicleSize\"]").hide();
-        $(".psv-small-vh-section").parent().hide();
-        $(".form-control__fieldset-notes").hide();
-
-        // Set the correct step list and show first step
-        activeElements = elementVisabilityMaps.psvvs_small;
-        break;
-
-      case "psvvs_medium_large":
-        $(".psv-show-small").hide();
-        $(".psv-show-both").hide();
-        $(".psv-show-large").show();
-        break;
-
-      case "psvvs_both":
-        $(".psv-show-small").hide();
-        $(".psv-show-large").hide();
-        $(".psv-show-both").show();
-        break;
-
-      default:
-        // Fallback — hide all
-        $(".psv-show-small, .psv-show-large, .psv-show-both").hide();
+  // === Step functions ===
+  function showStep(index) {
+    hideAllFormSteps();
+    if (steps[index]) {
+      showElements(steps[index].elements);
     }
+    formStage = index;
+    $("#miniStep").val(index);
+    triggerCascade();
   }
 
-  // Show the current step and hide the previous one (if any)
-  function showElementMap(elementMap) {
-    if (formStage > 0) {
-      console.log("Hiding form stage: " + (formStage - 1));
-      hideElements(elementMap[formStage - 1]);
+  function hideAllFormSteps() {
+    for (var i = 0; i < steps.length; i++) {
+      hideElements(steps[i].elements);
     }
-
-    console.log("Showing form stage: " + formStage);
-    showElements(elementMap[formStage]);
+    $(".psv-operate-small-vh-section").parent().hide();
   }
 
-  // Utility to hide a group of elements
   function hideElements(elements) {
     for (var i = 0; i < elements.length; i++) {
-      var $el = $(elements[i]);
-      $el.hide();
+      $(elements[i]).hide();
     }
   }
 
-  // Utility to show a group of elements
   function showElements(elements) {
     for (var i = 0; i < elements.length; i++) {
-      var $el = $(elements[i]);
-      $el.show();
+      $(elements[i]).show();
     }
   }
 
-  // Redirect back to previous page (removes "vehicles-declarations" from the URL)
+  function getVehicleSize() {
+    return $("input[name='psvVehicleSize[size]']:checked").val();
+  }
+
   function returnToOverview() {
     var currentUrl = window.location.href;
     window.location.href = currentUrl.replace("/vehicles-declarations/", "");
   }
 
-  // Get the selected vehicle size value
-  function getVehicleSize() {
-    return $("input[name=\"psvVehicleSize[size]\"]:checked").val();
+  function clearValidationErrors() {
+    $(".validation-summary").remove();
+    $(".validation-wrapper").removeClass("validation-wrapper");
+    $(".govuk-error-message").remove();
   }
 
-  // Check if selected size is "small"
-  function isVehicleSizeSmall() {
-    return getVehicleSize() === "psvvs_small";
+  function triggerCascade() {
+    $("input[type='radio']:checked, input[type='checkbox'], select").each(function () {
+      $(this).trigger("change");
+    });
   }
 
-  // Helper function for limo confirmation rule (value is 'Y' or 'N')
+  // === Dynamic steps based on vehicle size ===
+  function getStepsForSize(size) {
+    switch (size) {
+      case "psvvs_small":
+        return [
+          {
+            name: "vehicleSize",
+            elements: ["fieldset[name='psvVehicleSize']"],
+            resetFn: function () {}
+          },
+          {
+            name: "smallVehicleDetails",
+            elements: [
+              "fieldset[name='smallVehiclesIntention']",
+              "fieldset[name='limousinesNoveltyVehicles']"
+            ],
+            resetFn: function () {
+              // Clear values for step 2 inputs
+              $("fieldset[name='smallVehiclesIntention'] input[type='checkbox']").prop("checked", false);
+              $("fieldset[name='limousinesNoveltyVehicles'] input[type='radio']").prop("checked", false);
+            }
+          }
+        ];
+      case "psvvs_medium_large":
+        return [
+          {}
+        ];
+      case "psvvs_both":
+        return [
+          {},
+        ];
+      default:
+        return [
+          {
+            name: "vehicleSize",
+            elements: ["fieldset[name='psvVehicleSize']"],
+            resetFn: function () {}
+          }
+        ];
+    }
+  }
+
+  // === Cascade Rules ===
+  // might need to changed depending on vehicle size
   function limoChecked(value) {
+    if (getVehicleSize() === "psvvs_small") {
+      return false;
+    }
+  }
+
+  function smallOperation(answer) {
     return function () {
-      return OLCS.formHelper.isChecked("limousinesNoveltyVehicles", "psvLimousines", value);
+      var elem = OLCS.formHelper("smallVehiclesIntention", "psvOperateSmallVhl");
+      if (elem.length === 0) {
+        return true;
+      }
+      return OLCS.formHelper.isChecked("smallVehiclesIntention", "psvOperateSmallVhl", answer);
     };
   }
 
-  // === NOTE: Delete before merging pr, could be used as refrence for now ===
-
-  // Helper for handling small vehicle intention logic
-  // function smallOperation(answer) {
-  //   return function () {
-  //     var elem = OLCS.formHelper("smallVehiclesIntention", "psvOperateSmallVhl");
-  //     if (elem.length === 0) {
-  //       return true;
-  //     }
-  //     return OLCS.formHelper.isChecked("smallVehiclesIntention", "psvOperateSmallVhl", answer);
-  //   };
-  // }
-
-  // Show specific fields (15g) only when vehicle size is NOT small and limousines is 'Y'
   function show15g() {
     return function () {
-      return !isVehicleSizeSmall() &&
+      return getVehicleSize() !== "psvvs_small" &&
         OLCS.formHelper.isChecked("limousinesNoveltyVehicles", "psvLimousines", "Y");
     };
   }
 
-  // Cascading logic for conditionally showing/hiding related fields
   OLCS.cascadeForm({
     cascade: false,
     rulesets: {
-      // BUG: Checkbox is automatically shown
+      "smallVehiclesIntention": {
+        "psvSmallVhlNotes": smallOperation("Y"),
+        "psvSmallVhlScotland": smallOperation("N"),
+        "psvSmallVhlUndertakings": smallOperation("N"),
+        "psvSmallVhlConfirmation": smallOperation("N")
+      },
       "limousinesNoveltyVehicles": {
         "label:limousinesNoveltyVehicles\\[psvNoLimousineConfirmationLabel\\]": limoChecked("N"),
         "date:limousinesNoveltyVehicles\\[psvNoLimousineConfirmation\\]": limoChecked("N"),
-
         "label:limousinesNoveltyVehicles\\[psvOnlyLimousinesConfirmationLabel\\]": show15g(),
         "date:limousinesNoveltyVehicles\\[psvOnlyLimousinesConfirmation\\]": show15g()
       }
