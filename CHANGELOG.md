@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.18.1](https://github.com/dvsa/olcs-common/compare/v7.18.0...v7.18.1) (2025-03-31)
+
+
+### Bug Fixes
+
+* set unlink flag so unwanted uploads are unlinked from licence before deletion to keep change history clean ([#205](https://github.com/dvsa/olcs-common/issues/205)) ([77fe082](https://github.com/dvsa/olcs-common/commit/77fe082d1e5fc2a04a920522c87e61fa9827b4b5))
+
 ## [7.18.0](https://github.com/dvsa/olcs-common/compare/v7.17.2...v7.18.0) (2025-03-13)
 
 
