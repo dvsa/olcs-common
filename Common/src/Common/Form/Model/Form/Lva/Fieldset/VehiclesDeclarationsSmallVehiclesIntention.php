@@ -44,7 +44,7 @@ class VehiclesDeclarationsSmallVehiclesIntention
 
     /**
      * @Form\Attributes({
-     *     "id":"", "value":"markup-application_vehicle-safety_undertakings-smallVehiclesUndertakingsScotland"
+     *     "id":"", "value":"markup-application_vehicle-safety_undertakings-smallVehiclesUndertakingsScotland", "data-container-class":"form-element__conditions"
      * })
      * @Form\Options({
      *     "label": "application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.title"
