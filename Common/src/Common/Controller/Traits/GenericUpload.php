@@ -103,7 +103,7 @@ trait GenericUpload
     public function deleteFile($id)
     {
         /** @var \Common\Service\Cqrs\Response $response */
-        $response = $this->handleCommand(DeleteDocument::create(['id' => $id]));
+        $response = $this->handleCommand(DeleteDocument::create(['id' => $id, 'unlinkLicence' => true]));
 
         return $response->isOk();
     }
