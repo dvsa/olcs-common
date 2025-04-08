@@ -1,13 +1,44 @@
-<div class="gem-c-govspeak govuk-govspeak govuk-!-margin-top-7" data-module="govspeak">
-    <h2 class="govuk-heading-m" style="font-size: 24px !important">Third-party cookies</h2>
-    <p>These are cookies set on your computer by external websites whose services are used on the Vehicle Operator Licensing website.</p>
+<div class="govuk-!-margin-top-7">
+  <h2 class="govuk-heading-m">Third-party cookies</h2>
 
-    <h3 class="govuk-heading-s govuk-!-margin-top-6" id="messages-across-govuk">{{SIGNING_SERVICE_NAME}}</h3>
-    <p>We use {{SIGNING_SERVICE_NAME}} to prevent identity fraud, protect users' privacy and make sure we are giving the right people access to our service. The {{SIGNING_SERVICE_NAME}} uses <a class="govuk-link" rel="external noreferrer noopener" href="{{URL_VERIFY_COOKIE}}" target="_blank">extra cookies <?php echo $this->escapeHtml($this->translate('link.opens-new-window')); ?></a> to track their website.</p>
+  <p class="govuk-body">
+    These are cookies set on your computer by external websites whose services are used on the Vehicle Operator Licensing website.
+  </p>
 
-    <h3 class="govuk-heading-s govuk-!-margin-top-6" id="messages-across-govuk">Capita Pay360</h3>
-    <p>Vehicles Operator Licensing payments are hosted by <a class="govuk-link" rel="external noreferrer noopener" href="{{URL_PAY_360}}" target="_blank">Capita Pay 360 <?php echo $this->escapeHtml($this->translate('link.opens-new-window')); ?></a>. Capita uses <a class="govuk-link" rel="external noreferrer noopener" href="{{URL_PAY_360_COOKIE}}" target="_blank">extra cookies <?php echo $this->escapeHtml($this->translate('link.opens-new-window')); ?></a> to track your progress on their website.</p>
+  <h3 class="govuk-heading-s govuk-!-margin-top-6" id="messages-across-govuk">
+    {{SIGNING_SERVICE_NAME}}
+  </h3>
+  <p class="govuk-body">
+    We use {{SIGNING_SERVICE_NAME}} to prevent identity fraud, protect users' privacy and make sure we are giving the right people access to our service.
+    {{SIGNING_SERVICE_NAME}} uses
+    <a class="govuk-link" rel="external noreferrer noopener" href="{{URL_VERIFY_COOKIE}}" target="_blank">
+      extra cookies <?php echo $this->escapeHtml($this->translate('link.opens-new-window')); ?>
+    </a>
+    to track their website.
+  </p>
 
-    <h3 class="govuk-heading-s govuk-!-margin-top-6" id="messages-across-govuk">SmartSurvey</h3>
-    <p>We use <a class="govuk-link" rel="external noreferrer noopener" href="{{URL_SMART_SURVEY}}" target="_blank">SmartSurvey <?php echo $this->escapeHtml($this->translate('link.opens-new-window')); ?></a> to get feedback about service satisfaction. If you take part, SmartSurvey <a class="govuk-link" rel="external noreferrer noopener" href="{{URL_SMART_SURVEY_COOKIE}}" target="_blank">will save extra cookies <?php echo $this->escapeHtml($this->translate('link.opens-new-window')); ?></a> to track your progress on their website.</p>
+  <h3 class="govuk-heading-s govuk-!-margin-top-6">Capita Pay360</h3>
+  <p class="govuk-body">
+    Vehicles Operator Licensing payments are hosted by
+    <a class="govuk-link" rel="external noreferrer noopener" href="{{URL_PAY_360}}" target="_blank">
+      Capita Pay360 <?php echo $this->escapeHtml($this->translate('link.opens-new-window')); ?>
+    </a>. Capita uses
+    <a class="govuk-link" rel="external noreferrer noopener" href="{{URL_PAY_360_COOKIE}}" target="_blank">
+      extra cookies <?php echo $this->escapeHtml($this->translate('link.opens-new-window')); ?>
+    </a>
+    to track your progress on their website.
+  </p>
+
+  <h3 class="govuk-heading-s govuk-!-margin-top-6">SmartSurvey</h3>
+  <p class="govuk-body">
+    We use
+    <a class="govuk-link" rel="external noreferrer noopener" href="{{URL_SMART_SURVEY}}" target="_blank">
+      SmartSurvey <?php echo $this->escapeHtml($this->translate('link.opens-new-window')); ?>
+    </a>
+    to get feedback about service satisfaction. If you take part, SmartSurvey
+    <a class="govuk-link" rel="external noreferrer noopener" href="{{URL_SMART_SURVEY_COOKIE}}" target="_blank">
+      will save extra cookies <?php echo $this->escapeHtml($this->translate('link.opens-new-window')); ?>
+    </a>
+    to track your progress on their website.
+  </p>
 </div>
