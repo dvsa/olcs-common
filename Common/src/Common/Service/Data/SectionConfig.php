@@ -106,9 +106,9 @@ class SectionConfig
                 ]
             ]
         ],
-        'vehicles_declarations' => [
+        'vehicles_size' => [
             'prerequisite' => [
-                'operating_centres'
+                'operating_centres',
             ],
             'restricted' => [
                 [
@@ -117,8 +117,157 @@ class SectionConfig
                     [
                         RefData::LICENCE_TYPE_RESTRICTED,
                         RefData::LICENCE_TYPE_STANDARD_NATIONAL,
-                        RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
-                    ]
+                        RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL,
+                    ],
+                ],
+            ],
+        ],
+        'vehicles_size_nine' => [
+            'prerequisite' => [
+                'vehicles_size',
+            ],
+            'restricted' => [
+                [
+                    'application',
+                    RefData::LICENCE_CATEGORY_PSV,
+                    [
+                        RefData::LICENCE_TYPE_RESTRICTED,
+                        RefData::LICENCE_TYPE_STANDARD_NATIONAL,
+                        RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL,
+                    ],
+                    RefData::PSV_VEHICLE_SIZE_MEDIUM_LARGE,
+                ],
+            ],
+        ],
+        'operating_small_vehicles' => [
+            'prerequisite' => [
+                'vehicles_size',
+            ],
+            'restricted' => [
+                [
+                    'application',
+                    RefData::LICENCE_CATEGORY_PSV,
+                    [
+                        RefData::LICENCE_TYPE_RESTRICTED,
+                        RefData::LICENCE_TYPE_STANDARD_NATIONAL,
+                        RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL,
+                    ],
+                    RefData::PSV_VEHICLE_SIZE_BOTH,
+                ],
+            ],
+        ],
+        'written_explanation_small_part' => [
+            'prerequisite' => [
+                'operating_small_vehicles',
+            ],
+            'restricted' => [
+                [
+                    'application',
+                    RefData::LICENCE_CATEGORY_PSV,
+                    [
+                        RefData::LICENCE_TYPE_RESTRICTED,
+                        RefData::LICENCE_TYPE_STANDARD_NATIONAL,
+                        RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL,
+                    ],
+                    RefData::PSV_VEHICLE_SIZE_BOTH,
+                    'isEnglandWales',
+                    'isNotOperatingSmallVehicles',
+                ],
+            ],
+        ],
+        'small_vehicles_condition_undertakings' => [
+            'prerequisite' => [
+                'vehicles_size',
+            ],
+            'restricted' => [
+                [
+                    'application',
+                    RefData::LICENCE_CATEGORY_PSV,
+                    [
+                        RefData::LICENCE_TYPE_RESTRICTED,
+                        RefData::LICENCE_TYPE_STANDARD_NATIONAL,
+                        RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL,
+                    ],
+                    [
+                        RefData::PSV_VEHICLE_SIZE_SMALL,
+                        [
+                            RefData::PSV_VEHICLE_SIZE_BOTH,
+                            'isScotland',
+                        ],
+                        [
+                            RefData::PSV_VEHICLE_SIZE_BOTH,
+                            'isEnglandWales',
+                            'isOperatingSmallVehicles',
+                        ],
+                    ],
+                ],
+            ],
+        ],
+        'documentary_evidence_small_vehicles' => [
+            'prerequisite' => [
+                'vehicles_size'
+            ],
+            'restricted' => [
+                [
+                    'application',
+                    RefData::LICENCE_CATEGORY_PSV,
+                    [
+                        RefData::LICENCE_TYPE_RESTRICTED,
+                        RefData::LICENCE_TYPE_STANDARD_NATIONAL,
+                        RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL,
+                    ],
+                    [
+                        RefData::PSV_VEHICLE_SIZE_SMALL,
+                        [
+                            RefData::PSV_VEHICLE_SIZE_BOTH,
+                            'isScotland',
+                        ],
+                        [
+                            RefData::PSV_VEHICLE_SIZE_BOTH,
+                            'isEnglandWales',
+                            'isOperatingSmallVehicles',
+                        ],
+                    ],
+                ],
+            ],
+        ],
+        'documentary_evidence_main_occupation' => [
+            'prerequisite' => [
+                'vehicles_size'
+            ],
+            'restricted' => [
+                [
+                    'application',
+                    RefData::LICENCE_CATEGORY_PSV,
+                    [
+                        RefData::LICENCE_TYPE_RESTRICTED,
+                        RefData::LICENCE_TYPE_STANDARD_NATIONAL,
+                        RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL,
+                    ],
+                    [
+                        RefData::PSV_VEHICLE_SIZE_MEDIUM_LARGE,
+                        RefData::PSV_VEHICLE_SIZE_BOTH,
+                    ],
+                ],
+            ],
+        ],
+        'main_occupation_undertakings' => [
+            'prerequisite' => [
+                'documentary_evidence_main_occupation'
+            ],
+            'restricted' => [
+                [
+                    'application',
+                    RefData::LICENCE_CATEGORY_PSV,
+                    [
+                        RefData::LICENCE_TYPE_RESTRICTED,
+                        RefData::LICENCE_TYPE_STANDARD_NATIONAL,
+                        RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL,
+                    ],
+                    [
+                        RefData::PSV_VEHICLE_SIZE_MEDIUM_LARGE,
+                        RefData::PSV_VEHICLE_SIZE_BOTH
+                    ],
                 ]
             ]
         ],

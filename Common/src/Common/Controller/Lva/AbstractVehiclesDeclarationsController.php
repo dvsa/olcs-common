@@ -47,37 +47,192 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
         parent::__construct($niTextTranslationUtil, $authService);
     }
 
-    public function indexAction()
+    public function sizeAction()
     {
         $request = $this->getRequest();
+        $isPost = $request->isPost();
 
-        $data = $request->isPost() ? (array)$request->getPost() : $this->getFormData();
+        $data = $isPost ? $request->getPost() : $this->getSizeFormData();
 
-        $form = $this->getForm()->setData($data);
+        $form = $this->formServiceManager->get('lva-' . $this->lva . '-vehicles_declarations_size')->getForm();
+        $form->setData($data);
 
-        $this->alterForm($form, $data);
+        if ($isPost && $form->isValid()) {
+            $this->saveDataForSize($data);
 
-        $this->scriptFactory->loadFile('vehicle-declarations');
-
-        if ($request->isPost() && $form->isValid()) {
-            $this->save($data);
-
-            return $this->completeSection('vehicles_declarations');
+            return $this->completeSection('vehicles_size');
         }
 
-        return $this->render('vehicles_declarations', $form);
+        return $this->render('vehicles_size', $form);
     }
 
-    protected function getForm()
+    protected function getSizeFormData()
     {
-        return $this->formServiceManager
-            ->get('lva-' . $this->lva . '-vehicles_declarations')
-            ->getForm();
+        return $this->formatDataForSizeForm($this->loadData());
     }
 
-    protected function getFormData()
+    protected function formatDataForSizeForm(array $data): array
     {
-        return $this->formatDataForForm($this->loadData());
+        return [
+            'version' => $data['version'],
+            'psvVehicleSize' => [
+                'size' => $data['psvWhichVehicleSizes']['id'] ?? null,
+            ],
+        ];
+    }
+
+    protected function saveDataForSize($data): void
+    {
+        $saveData['version'] = $data['version'];
+        $saveData['id'] = $this->getApplicationId();
+        $saveData['psvVehicleSize'] = $data['psvVehicleSize']['size'];
+
+        $command = \Dvsa\Olcs\Transfer\Command\Application\UpdateVehicleSize::create($saveData);
+        $response = $this->handleCommand($command);
+
+        if (!$response->isOk()) {
+            throw new \RuntimeException('Error updating vehicle size');
+        }
+    }
+
+    public function sizeNineAction()
+    {
+        $request = $this->getRequest();
+        $isPost = $request->isPost();
+
+        $data = $isPost ? $request->getPost() : $this->getSizeNineFormData();
+
+        $this->scriptFactory->loadFile('vehicle-limo');
+        $form = $this->formServiceManager->get('lva-' . $this->lva . '-vehicles_declarations_large')->getForm();
+        $form->setData($data);
+
+        if ($isPost && $form->isValid()) {
+            $this->saveDataForSize($data);
+
+            return $this->completeSection('vehicles_size_nine');
+        }
+
+        return $this->render('vehicles_size_nine', $form);
+    }
+
+    protected function getSizeNineFormData()
+    {
+        return $this->formatDataForSizeForm($this->loadData());
+    }
+
+    protected function formatDataForSizeNineForm(array $data): array
+    {
+        return [
+            'version' => $data['version'],
+            'psvVehicleSize' => [
+                'size' => $data['psvWhichVehicleSizes']['id'] ?? null,
+            ],
+        ];
+    }
+
+    protected function saveDataForSizeNine($data): void
+    {
+        $saveData['version'] = $data['version'];
+        $saveData['id'] = $this->getApplicationId();
+        $saveData['psvVehicleSize'] = $data['psvVehicleSize']['size'];
+
+        $response = $this->handleCommand(
+            \Dvsa\Olcs\Transfer\Command\Application\UpdateVehicleSize::create($saveData)
+        );
+
+        if (!$response->isOk()) {
+            throw new \RuntimeException('Error updating vehicle size nine seats or less');
+        }
+    }
+
+    public function operatingSmallAction()
+    {
+        $request = $this->getRequest();
+        $isPost = $request->isPost();
+
+        $data = $isPost ? $request->getPost() : $this->getSizeFormData();
+
+        $form = $this->formServiceManager->get('lva-' . $this->lva . '-vehicles_declarations_both')->getForm();
+        $form->setData($data);
+
+        if ($isPost && $form->isValid()) {
+            $this->saveDataForSize($data);
+
+            return $this->completeSection('operating_small_vehicles');
+        }
+
+        return $this->render('operating_small_vehicles', $form);
+    }
+
+    protected function getOperatingSmallFormData()
+    {
+        return $this->formatDataForSizeForm($this->loadData());
+    }
+
+    protected function formatDataForOperatingSmallForm(array $data): array
+    {
+        return [
+            'version' => $data['version'],
+            'smallVehiclesIntention' => [
+                'psvOperateSmallVhl' => $data['psvOperateSmallVhl'],
+                'psvSmallVhlConfirmation' => $data['psvSmallVhlConfirmation']
+            ],
+        ];
+    }
+
+    public function smallConditionsAction()
+    {
+        $request = $this->getRequest();
+        $isPost = $request->isPost();
+
+        $data = $isPost ? $request->getPost() : $this->getSmallConditionsFormData();
+
+        $this->scriptFactory->loadFile('vehicle-limo');
+        $form = $this->formServiceManager->get('lva-' . $this->lva . '-vehicles_declarations_small')->getForm();
+        $form->setData($data);
+
+        if ($isPost && $form->isValid()) {
+            $this->saveDataForSmallConditions($data);
+
+            return $this->completeSection('small_vehicles_condition_undertakings');
+        }
+
+        return $this->render('small_vehicles_condition_undertakings', $form);
+    }
+
+    protected function getSmallConditionsFormData()
+    {
+        return $this->formatDataForSmallConditionsForm($this->loadData());
+    }
+
+    protected function formatDataForSmallConditionsForm(array $data): array
+    {
+        return [
+            'version' => $data['version'],
+            'smallVehiclesIntention' => [
+                'psvSmallVhlConfirmation' => $data['psvSmallVhlConfirmation']
+            ],
+            'limousinesNoveltyVehicles' => [
+                'psvLimousines' => $data['psvLimousines'],
+                'psvNoLimousineConfirmation' => $data['psvNoLimousineConfirmation'],
+                'psvOnlyLimousinesConfirmation' => $data['psvOnlyLimousinesConfirmation']
+            ]
+        ];
+    }
+
+    protected function saveDataForSmallConditions($data): void
+    {
+        $saveData['version'] = $data['version'];
+        $saveData['id'] = $this->getApplicationId();
+        $saveData['psvVehicleSize'] = $data['psvVehicleSize']['size'];
+
+        $response = $this->handleCommand(
+            \Dvsa\Olcs\Transfer\Command\Application\UpdateVehicleSize::create($saveData)
+        );
+
+        if (!$response->isOk()) {
+            throw new \RuntimeException('Error updating small vehicle condition and undertakings');
+        }
     }
 
     protected function loadData()
