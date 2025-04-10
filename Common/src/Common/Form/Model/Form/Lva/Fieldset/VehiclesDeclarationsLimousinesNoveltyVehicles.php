@@ -7,14 +7,10 @@ use Laminas\Form\Annotation as Form;
 /**
  * @Form\Name("limousinesNoveltyVehicles")
  * @Form\Options({"label":"application_vehicle-safety_undertakings-limousines"})
- * @Form\Attributes({
- *      "class": "psv-show-small psv-show-large psv-show-both"
- * })
  */
 class VehiclesDeclarationsLimousinesNoveltyVehicles
 {
     /**
-     * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
      *     "label": "application_vehicle-safety_undertakings.limousinesApplication.yesNo",
      *     "legend-attributes": {"class": "form-element__label"},
@@ -34,7 +30,6 @@ class VehiclesDeclarationsLimousinesNoveltyVehicles
     public $psvNoLimousineConfirmationLabel;
 
     /**
-     * @Form\Attributes({"class": "js-no-confirmation"})
      * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
      * @Form\Options({
      *     "label": "application_vehicle-safety_undertakings.limousinesApplication.agreement",
@@ -50,7 +45,6 @@ class VehiclesDeclarationsLimousinesNoveltyVehicles
     public $psvNoLimousineConfirmation;
 
     /**
-     * @Form\Attributes({"data-container-class":"psv-show-large psv-show-both"})
      * @Form\Options({
      *     "label": "application_vehicle-safety_undertakings.limousinesNine.agreement.label"
      * })
@@ -59,7 +53,6 @@ class VehiclesDeclarationsLimousinesNoveltyVehicles
     public $psvOnlyLimousinesConfirmationLabel;
 
     /**
-     * @Form\Attributes({"class": "js-only-confirmation", "data-container-class":"psv-show-large psv-show-both"})
      * @Form\Options({
      *     "label": "application_vehicle-safety_undertakings.limousinesNine.agreement",
      *     "label_attributes": {"class": "form-control form-control--checkbox form-control--advanced"},
@@ -67,11 +60,16 @@ class VehiclesDeclarationsLimousinesNoveltyVehicles
      *     "unchecked_value": "N"
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
-     * @Form\Validator("Common\Form\Elements\Validators\VehicleUndertakingsNoLimousineConfirmationValidator",
+     * @Form\Validator("Common\Form\Elements\Validators\VehicleUndertakingsOnlyLimousineConfirmationValidator",
      *     options={
      *         "required_context_value": "Y"
      *     }
      * )
      */
     public $psvOnlyLimousinesConfirmation;
+
+    /**
+    * @Form\Type("Hidden")
+    */
+    public $size;
 }
