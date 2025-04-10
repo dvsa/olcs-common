@@ -1,15 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Common\FormService\Form\Lva;
 
 use Common\Service\Helper\FormHelperService;
 
-/**
- * Vehicles Declarations Form
- *
- * @author Dan Eggleston <dan@stolenegg.com>
- */
-class VehiclesDeclarations
+class VehiclesDeclarationsWritten
 {
     public function __construct(protected FormHelperService $formHelper)
     {
@@ -17,7 +14,7 @@ class VehiclesDeclarations
 
     public function getForm()
     {
-        $form = $this->formHelper->createForm('Lva\VehiclesDeclarations');
+        $form = $this->formHelper->createForm('Lva\VehiclesDeclarationsWritten');
 
         $this->alterForm($form);
 

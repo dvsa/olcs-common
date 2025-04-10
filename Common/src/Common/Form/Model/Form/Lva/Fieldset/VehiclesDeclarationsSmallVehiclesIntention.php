@@ -16,37 +16,13 @@ use Laminas\Form\Annotation as Form;
 class VehiclesDeclarationsSmallVehiclesIntention
 {
     /**
-     * @Form\Attributes({"id":"","placeholder":""})
-     * @Form\Options({
-     *     "label": "application_vehicle-safety_undertakings.smallVehiclesIntention.yesNo",
-     *     "legend-attributes": {"class": "form-element__label"},
-     *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
-     *     "value_options": {"Y": "Yes", "N": "No"}
-     * })
-     * @Form\Type("\Laminas\Form\Element\Radio")
-     */
-    public $psvOperateSmallVhl;
-
-    /**
-     * @Form\Attributes({"id":"","class":"long"})
-     * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
-     * @Form\Options({
-     *     "legend-attributes": {"class": "form-element__label"},
-     *     "label": "application_vehicle-safety_undertakings.smallVehiclesIntentionDetails.title"
-     * })
-     * @Form\Validator("Common\Form\Elements\Validators\VehicleUndertakingsOperateSmallVehiclesValidator")
-     * @Form\Type("Textarea")
-     */
-    public $psvSmallVhlNotes;
-
-    /**
      * @Form\Attributes({
      *     "id":"", "value":"markup-application_vehicle-safety_undertakings-smallVehiclesUndertakingsScotland"
      * })
      * @Form\Options({
      *     "label": "application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.title"
      * })
-     * @Form\Type("Common\Form\Elements\Types\TermsBox")
+     * @Form\Type("Common\Form\Elements\Types\HtmlTranslated")
      */
     public $psvSmallVhlScotland;
 
@@ -57,7 +33,7 @@ class VehiclesDeclarationsSmallVehiclesIntention
      * @Form\Options({
      *     "label": "application_vehicle-safety_undertakings.smallVehiclesUndertakings.title"
      * })
-     * @Form\Type("Common\Form\Elements\Types\TermsBox")
+     * @Form\Type("Common\Form\Elements\Types\HtmlTranslated")
      */
     public $psvSmallVhlUndertakings;
 
@@ -73,7 +49,6 @@ class VehiclesDeclarationsSmallVehiclesIntention
      *     "unchecked_value": "N"
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
-     * @Form\Validator( "Common\Form\Elements\Validators\VehicleUndertakingsOperateSmallVehiclesAgreementValidator")
      */
     public $psvSmallVhlConfirmation;
 }
