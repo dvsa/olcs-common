@@ -106,9 +106,9 @@ class SectionConfig
                 ]
             ]
         ],
-        'vehicles_declarations' => [
+        'vehicles_size' => [
             'prerequisite' => [
-                'operating_centres'
+                'operating_centres',
             ],
             'restricted' => [
                 [
@@ -117,8 +117,158 @@ class SectionConfig
                     [
                         RefData::LICENCE_TYPE_RESTRICTED,
                         RefData::LICENCE_TYPE_STANDARD_NATIONAL,
-                        RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
-                    ]
+                        RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL,
+                    ],
+                ],
+            ],
+        ],
+        'psv_operate_large' => [
+            'prerequisite' => [
+                'vehicles_size',
+            ],
+            'restricted' => [
+                [
+                    'application',
+                    RefData::LICENCE_CATEGORY_PSV,
+                    [
+                        RefData::LICENCE_TYPE_RESTRICTED,
+                        RefData::LICENCE_TYPE_STANDARD_NATIONAL,
+                        RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL,
+                    ],
+                    RefData::PSV_VEHICLE_SIZE_MEDIUM_LARGE,
+                ],
+            ],
+        ],
+        'psv_operate_small' => [
+            'prerequisite' => [
+                'vehicles_size',
+            ],
+            'restricted' => [
+                [
+                    'application',
+                    RefData::LICENCE_CATEGORY_PSV,
+                    [
+                        RefData::LICENCE_TYPE_RESTRICTED,
+                        RefData::LICENCE_TYPE_STANDARD_NATIONAL,
+                        RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL,
+                    ],
+                    RefData::PSV_VEHICLE_SIZE_BOTH,
+                ],
+            ],
+        ],
+        'psv_small_part_written' => [
+            'prerequisite' => [
+                'psv_operate_small',
+            ],
+            'restricted' => [
+                [
+                    'application',
+                    RefData::LICENCE_CATEGORY_PSV,
+                    [
+                        RefData::LICENCE_TYPE_RESTRICTED,
+                        RefData::LICENCE_TYPE_STANDARD_NATIONAL,
+                        RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL,
+                    ],
+                    RefData::PSV_VEHICLE_SIZE_BOTH,
+                    'isOperatingSmallVehiclesSmallPart',
+                ],
+            ],
+        ],
+        'psv_small_conditions' => [
+            'prerequisite' => [
+                'vehicles_size',
+            ],
+            'restricted' => [
+                [
+                    'application',
+                    RefData::LICENCE_CATEGORY_PSV,
+                    [
+                        RefData::LICENCE_TYPE_RESTRICTED,
+                        RefData::LICENCE_TYPE_STANDARD_NATIONAL,
+                        RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL,
+                    ],
+                    [
+                        RefData::PSV_VEHICLE_SIZE_SMALL,
+                        [
+                            RefData::PSV_VEHICLE_SIZE_BOTH,
+                            'isNotOperatingSmallVehiclesSmallPart'
+                        ],
+                    ],
+                ],
+            ],
+        ],
+        'psv_operate_novelty' => [
+            'prerequisite' => [
+                'vehicles_size',
+            ],
+            'restricted' => [
+                [
+                    'application',
+                    RefData::LICENCE_CATEGORY_PSV,
+                    [
+                        RefData::LICENCE_TYPE_RESTRICTED,
+                        RefData::LICENCE_TYPE_STANDARD_NATIONAL,
+                        RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL,
+                    ],
+                ],
+            ],
+        ],
+        'psv_documentary_evidence_small' => [
+            'prerequisite' => [
+                'vehicles_size'
+            ],
+            'restricted' => [
+                [
+                    'application',
+                    RefData::LICENCE_CATEGORY_PSV,
+                    [
+                        RefData::LICENCE_TYPE_RESTRICTED,
+                        RefData::LICENCE_TYPE_STANDARD_NATIONAL,
+                        RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL,
+                    ],
+                    [
+                        RefData::PSV_VEHICLE_SIZE_SMALL,
+                        [
+                            RefData::PSV_VEHICLE_SIZE_BOTH,
+                            'isNotOperatingSmallVehiclesSmallPart',
+                        ],
+                    ],
+                ],
+            ],
+        ],
+        'psv_documentary_evidence_large' => [
+            'prerequisite' => [
+                'vehicles_size'
+            ],
+            'restricted' => [
+                [
+                    'application',
+                    RefData::LICENCE_CATEGORY_PSV,
+                    [
+                        RefData::LICENCE_TYPE_RESTRICTED,
+                    ],
+                    [
+                        RefData::PSV_VEHICLE_SIZE_MEDIUM_LARGE,
+                        RefData::PSV_VEHICLE_SIZE_BOTH,
+                    ],
+                ],
+            ],
+        ],
+        'psv_main_occupation_undertakings' => [
+            'prerequisite' => [
+                'vehicles_size',
+            ],
+            'restricted' => [
+                [
+                    'application',
+                    RefData::LICENCE_CATEGORY_PSV,
+                    [
+                        RefData::LICENCE_TYPE_RESTRICTED,
+                    ],
+                    [
+                        RefData::PSV_VEHICLE_SIZE_MEDIUM_LARGE,
+                        RefData::PSV_VEHICLE_SIZE_BOTH
+                    ],
                 ]
             ]
         ],
