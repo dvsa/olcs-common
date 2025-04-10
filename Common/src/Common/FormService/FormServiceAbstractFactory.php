@@ -62,6 +62,15 @@ use Common\FormService\Form\Lva\VariationFinancialEvidence;
 use Common\FormService\Form\Lva\VariationGoodsVehicles;
 use Common\FormService\Form\Lva\VariationPsvVehicles;
 use Common\FormService\Form\Lva\VehiclesDeclarations;
+use Common\FormService\Form\Lva\VehiclesDeclarationsMainUndertakings;
+use Common\FormService\Form\Lva\VehiclesDeclarationsNovelty;
+use Common\FormService\Form\Lva\VehiclesDeclarationsPsvOperateLarge;
+use Common\FormService\Form\Lva\VehiclesDeclarationsPsvOperateSmall;
+use Common\FormService\Form\Lva\VehiclesDeclarationsSize;
+use Common\FormService\Form\Lva\VehiclesDeclarationsEvidenceLarge;
+use Common\FormService\Form\Lva\VehiclesDeclarationsEvidenceSmall;
+use Common\FormService\Form\Lva\VehiclesDeclarationsSmallConditions;
+use Common\FormService\Form\Lva\VehiclesDeclarationsWritten;
 use Common\Rbac\Service\Permission;
 use Common\Service\Helper\FormHelperService;
 use Common\Service\Helper\GuidanceHelperService;
@@ -188,9 +197,29 @@ class FormServiceAbstractFactory implements AbstractFactoryInterface
         'lva-variation-convictions_penalties' => ConvictionsPenalties::class,
         'lva-application-convictions_penalties' => ConvictionsPenalties::class,
 
-        // Vehicles Declaratinos form services
+        // Vehicles Declarations form services
         'lva-variation-vehicles_declarations' => VehiclesDeclarations::class,
         'lva-application-vehicles_declarations' => VehiclesDeclarations::class,
+
+        // New vehicle declarations form services (PSV restricted)
+        'lva-variation-vehicles_declarations_vehicles_size' => VehiclesDeclarationsSize::class,
+        'lva-application-vehicles_declarations_vehicles_size' => VehiclesDeclarationsSize::class,
+        'lva-variation-vehicles_declarations_psv_operate_large' => VehiclesDeclarationsPsvOperateLarge::class,
+        'lva-application-vehicles_declarations_psv_operate_large' => VehiclesDeclarationsPsvOperateLarge::class,
+        'lva-variation-vehicles_declarations_psv_operate_small' => VehiclesDeclarationsPsvOperateSmall::class,
+        'lva-application-vehicles_declarations_psv_operate_small' => VehiclesDeclarationsPsvOperateSmall::class,
+        'lva-variation-vehicles_declarations_psv_small_conditions' => VehiclesDeclarationsSmallConditions::class,
+        'lva-application-vehicles_declarations_psv_small_conditions' => VehiclesDeclarationsSmallConditions::class,
+        'lva-variation-vehicles_declarations_psv_operate_novelty' => VehiclesDeclarationsNovelty::class,
+        'lva-application-vehicles_declarations_psv_operate_novelty' => VehiclesDeclarationsNovelty::class,
+        'lva-variation-vehicles_declarations_psv_small_part_written' => VehiclesDeclarationsWritten::class,
+        'lva-application-vehicles_declarations_psv_small_part_written' => VehiclesDeclarationsWritten::class,
+        'lva-variation-vehicles_declarations_psv_documentary_evidence_small' => VehiclesDeclarationsEvidenceSmall::class,
+        'lva-application-vehicles_declarations_psv_documentary_evidence_small' => VehiclesDeclarationsEvidenceSmall::class,
+        'lva-variation-vehicles_declarations_psv_documentary_evidence_large' => VehiclesDeclarationsEvidenceLarge::class,
+        'lva-application-vehicles_declarations_psv_documentary_evidence_large' => VehiclesDeclarationsEvidenceLarge::class,
+        'lva-variation-vehicles_declarations_psv_main_occupation_undertakings' => VehiclesDeclarationsMainUndertakings::class,
+        'lva-application-vehicles_declarations_psv_main_occupation_undertakings' => VehiclesDeclarationsMainUndertakings::class,
 
         // PSV Vehicles form services
         'lva-licence-vehicles_psv' => PsvVehicles::class,
@@ -465,6 +494,11 @@ class FormServiceAbstractFactory implements AbstractFactoryInterface
             case self::FORM_SERVICE_CLASS_ALIASES['lva-application-vehicles_declarations']:
             case self::FORM_SERVICE_CLASS_ALIASES['lva-variation-vehicles_declarations']:
                 return new VehiclesDeclarations($formHelper);
+
+            // Vehicles Declaratinos form services
+            case self::FORM_SERVICE_CLASS_ALIASES['lva-application-vehicles_size']:
+            case self::FORM_SERVICE_CLASS_ALIASES['lva-variation-vehicles_size']:
+                return new VehiclesSize($formHelper);
 
             // PSV Vehicles form services
             case self::FORM_SERVICE_CLASS_ALIASES['lva-application-vehicles_psv']:

@@ -1,20 +1,18 @@
 <?php
 
-namespace Common\Form\Model\Form\Lva\Fieldset;
+namespace Common\Form\Model\Form\Lva;
 
 use Laminas\Form\Annotation as Form;
 
 /**
- * @Form\Name("smallVehiclesIntention")
- * @Form\Options({
- *     "label": "application_vehicle-safety_undertakings-smallVehiclesUndertakings",
- * })
- * @Form\Attributes({
- *     "class": "psv-show-small psv-show-both"
- * })
+ * @Form\Options({"prefer_form_input_filter":true})
+ * @Form\Name("lva-vehicles-declarations-small-conditions")
+ * @Form\Attributes({"method":"post"})
+ * @Form\Type("Common\Form\Form")
  */
-class VehiclesDeclarationsSmallVehiclesIntention
+class VehiclesDeclarationsSmallConditions
 {
+
     /**
      * @Form\Attributes({
      *     "id":"", "value":"markup-application_vehicle-safety_undertakings-smallVehiclesUndertakingsScotland"
@@ -39,9 +37,7 @@ class VehiclesDeclarationsSmallVehiclesIntention
 
     /**
      * @Form\Attributes({"id":"","placeholder":""})
-     * @Form\Required(false)
-     * @Form\AllowEmpty(false)
-     * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
+     * @Form\Required(true)
      * @Form\Options({
      *     "label": "application_vehicle-safety_undertakings.smallVehiclesConfirmation",
      *     "label_attributes": {"class": "form-control form-control--checkbox form-control--advanced"},
@@ -51,4 +47,17 @@ class VehiclesDeclarationsSmallVehiclesIntention
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      */
     public $psvSmallVhlConfirmation;
+
+    /**
+     * @Form\Name("version")
+     * @Form\Type("Hidden")
+     */
+    public $version;
+
+    /**
+     * @Form\Name("form-actions")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
+     * @Form\Attributes({"class":"govuk-button-group"})
+     */
+    public $formActions;
 }
