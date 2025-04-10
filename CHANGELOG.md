@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.18.2](https://github.com/dvsa/olcs-common/compare/v7.18.1...v7.18.2) (2025-04-10)
+
+
+### Miscellaneous Chores
+
+* updated cookie related markups to meet GUDS standards ([#207](https://github.com/dvsa/olcs-common/issues/207)) ([1bd6a9d](https://github.com/dvsa/olcs-common/commit/1bd6a9dc6d9a3e4749821a98470beae2616a3bc4))
+
 ## [7.18.1](https://github.com/dvsa/olcs-common/compare/v7.18.0...v7.18.1) (2025-03-31)
 
 
