@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.19.0](https://github.com/dvsa/olcs-common/compare/v7.18.2...v7.19.0) (2025-04-23)
+
+
+### Features
+
+* updated wording on Ts ans Cs plus updated markup to meet GDS ([#209](https://github.com/dvsa/olcs-common/issues/209)) ([3756725](https://github.com/dvsa/olcs-common/commit/3756725789be1df3cd8419344000c7d7231382ea))
+
 ## [7.18.2](https://github.com/dvsa/olcs-common/compare/v7.18.1...v7.18.2) (2025-04-10)
 
 
