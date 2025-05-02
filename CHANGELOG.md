@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.20.0](https://github.com/dvsa/olcs-common/compare/v7.19.0...v7.20.0) (2025-05-02)
+
+
+### Features
+
+* new main occupation criteria guidance page ([#211](https://github.com/dvsa/olcs-common/issues/211)) ([4aad9dd](https://github.com/dvsa/olcs-common/commit/4aad9dd3c3572e54526798b20ff05c61de65d74f))
+
 ## [7.19.0](https://github.com/dvsa/olcs-common/compare/v7.18.2...v7.19.0) (2025-04-23)
 
 
