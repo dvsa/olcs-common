@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.20.1](https://github.com/dvsa/olcs-common/compare/v7.20.0...v7.20.1) (2025-05-02)
+
+
+### Bug Fixes
+
+* made changes to make up to fix irregularities VOL 5871 ([#213](https://github.com/dvsa/olcs-common/issues/213)) ([cd1ed32](https://github.com/dvsa/olcs-common/commit/cd1ed329c128dfec942e5c3c168d1df67eea83cc))
+
 ## [7.20.0](https://github.com/dvsa/olcs-common/compare/v7.19.0...v7.20.0) (2025-05-02)
 
 
