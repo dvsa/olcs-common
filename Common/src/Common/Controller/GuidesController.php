@@ -31,6 +31,8 @@ class GuidesController extends LaminasAbstractActionController
 
     public const GUIDE_RIGHT_FIRST_TIME = 'right-first-time';
 
+    public const MAIN_OCCUPATION_CRITERIA_GUIDANCE = 'main-occupation-criteria-guidance';
+
     protected $guideMap = [
         self::GUIDE_OC_ADV_GB_NEW => 'oc_advert',
         self::GUIDE_OC_ADV_GB_VAR => 'oc_advert',
@@ -44,6 +46,7 @@ class GuidesController extends LaminasAbstractActionController
         self::GUIDE_TRAFFIC_AREA => 'default',
         self::GUIDE_CONVICTIONS_AND_PENALTIES_GUIDANCE_GB => 'default',
         self::GUIDE_CONVICTIONS_AND_PENALTIES_GUIDANCE_NI => 'default',
+        self::MAIN_OCCUPATION_CRITERIA_GUIDANCE => 'default',
     ];
 
     public function indexAction()
