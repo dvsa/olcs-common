@@ -2,7 +2,6 @@
 
 namespace Common\Controller\Continuation;
 
-use Common\Controller\Traits\StoredCardsTrait;
 use Common\FormService\FormServiceManager;
 use Common\RefData;
 use Common\Service\Helper\TranslationHelperService;
@@ -22,7 +21,6 @@ use LmcRbacMvc\Service\AuthorizationService;
  */
 class PaymentController extends AbstractContinuationController
 {
-    use StoredCardsTrait;
 
     protected $layout = 'pages/fees/pay-one';
 
