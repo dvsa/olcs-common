@@ -196,7 +196,7 @@ class AbstractBusinessDetailsTest extends MockeryTestCase
         $this->formHelper->expects('remove')
             ->with($mockForm, 'table')
             ->andReturnSelf();
-        
+
         $form = $this->sut->getForm(
             $orgType,
             $hasInforceLicences,
