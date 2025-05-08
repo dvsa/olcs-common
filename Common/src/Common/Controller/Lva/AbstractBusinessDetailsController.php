@@ -13,6 +13,7 @@ use Common\Service\Helper\FormHelperService;
 use Common\Service\Script\ScriptFactory;
 use Common\Service\Table\TableFactory;
 use Dvsa\Olcs\Transfer\Command as TransferCmd;
+use Dvsa\Olcs\Transfer\Query\Application\Application as ApplicationEntity;
 use Dvsa\Olcs\Transfer\Query\CompanySubsidiary\CompanySubsidiary;
 use Dvsa\Olcs\Transfer\Query\Licence\BusinessDetails;
 use Dvsa\Olcs\Transfer\Query\QueryInterface;
@@ -94,8 +95,16 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         // need to reset Input Filter defaults after the data has been set on the form
         $form->attachInputFilterDefaults($form->getInputFilter(), $form);
 
+        $response = $this->handleQuery(ApplicationEntity::create(['id' => $this->getIdentifier()]));
+        $application = $response->getResult();
+
+        // Remove option to add subsidiary companies to PSV applications
         if ($form->has('table')) {
-            $this->populateTable($form, $orgData);
+            if ( $application['goodsOrPsv']['olbsKey'] === 'PSV' ) {
+                $form->remove('table');
+            } else {
+                $this->populateTable($form, $orgData);
+            }
         }
 
         // Added an early return for non-posts to improve the readability of the code
