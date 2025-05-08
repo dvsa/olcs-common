@@ -1,5 +1,18 @@
 # Changelog
 
+## [7.21.0](https://github.com/dvsa/olcs-common/compare/v7.20.1...v7.21.0) (2025-05-08)
+
+
+### Features
+
+* removed logic for stored cards from payment controller ([#216](https://github.com/dvsa/olcs-common/issues/216)) ([4a21e15](https://github.com/dvsa/olcs-common/commit/4a21e15b9ec5784c6d6614a176220d60cf924b9b))
+* updated terms-and-conditions pages ([#217](https://github.com/dvsa/olcs-common/issues/217)) ([c84db20](https://github.com/dvsa/olcs-common/commit/c84db20b14a50c213db275fb6a6035344599218c))
+
+
+### Bug Fixes
+
+* use get not POST for payment form based on gatway url ([#215](https://github.com/dvsa/olcs-common/issues/215)) ([75ff07e](https://github.com/dvsa/olcs-common/commit/75ff07e7409ec6d86a84b9ebb73a69ad13696b7b))
+
 ## [7.20.1](https://github.com/dvsa/olcs-common/compare/v7.20.0...v7.20.1) (2025-05-02)
 
 
