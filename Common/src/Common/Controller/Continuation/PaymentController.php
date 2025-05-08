@@ -21,7 +21,6 @@ use LmcRbacMvc\Service\AuthorizationService;
  */
 class PaymentController extends AbstractContinuationController
 {
-
     protected $layout = 'pages/fees/pay-one';
 
     public function __construct(
