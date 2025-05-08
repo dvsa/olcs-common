@@ -2,7 +2,6 @@
 
 namespace Common\Controller\Continuation;
 
-use Common\Controller\Traits\StoredCardsTrait;
 use Common\FormService\FormServiceManager;
 use Common\RefData;
 use Common\Service\Helper\TranslationHelperService;
@@ -22,8 +21,6 @@ use LmcRbacMvc\Service\AuthorizationService;
  */
 class PaymentController extends AbstractContinuationController
 {
-    use StoredCardsTrait;
-
     protected $layout = 'pages/fees/pay-one';
 
     public function __construct(
@@ -68,7 +65,6 @@ class PaymentController extends AbstractContinuationController
         /* @var $form \Common\Form\Form */
         $form = $this->getForm('continuations-payment', $data);
         $fee = reset($fees);
-        $this->setupSelectStoredCards($form, $fee['feeType']['isNi']);
 
         $viewVariables = [
             'form' => $form,
@@ -92,9 +88,8 @@ class PaymentController extends AbstractContinuationController
      *
      * @param array        $feeIds              fee id
      * @param int          $organisationId      organisation id
-     * @param string|false $storedCardReference a reference to the stored card to use
      */
-    protected function payFees($feeIds, $organisationId, $storedCardReference = false)
+    protected function payFees($feeIds, $organisationId)
     {
         $cpmsRedirectUrl = $this->url()->fromRoute(
             'continuation/payment/result',
@@ -104,7 +99,7 @@ class PaymentController extends AbstractContinuationController
         );
 
         $paymentMethod = RefData::FEE_PAYMENT_METHOD_CARD_ONLINE;
-        $dtoData = ['cpmsRedirectUrl' => $cpmsRedirectUrl, 'feeIds' => $feeIds, 'paymentMethod' => $paymentMethod, 'organisationId' => $organisationId, 'storedCardReference' => $storedCardReference];
+        $dtoData = ['cpmsRedirectUrl' => $cpmsRedirectUrl, 'feeIds' => $feeIds, 'paymentMethod' => $paymentMethod, 'organisationId' => $organisationId ];
 
         /** @var \Common\Service\Cqrs\Response $response */
         $response = $this->handleCommand(PayOutstandingFees::create($dtoData));
