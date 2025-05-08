@@ -13,6 +13,7 @@ use Common\Service\Helper\FormHelperService;
 use Common\Service\Script\ScriptFactory;
 use Common\Service\Table\TableFactory;
 use Dvsa\Olcs\Transfer\Command as TransferCmd;
+use Dvsa\Olcs\Transfer\Query\Application\Application as ApplicationEntity;
 use Dvsa\Olcs\Transfer\Query\CompanySubsidiary\CompanySubsidiary;
 use Dvsa\Olcs\Transfer\Query\Licence\BusinessDetails;
 use Dvsa\Olcs\Transfer\Query\QueryInterface;
@@ -85,11 +86,16 @@ abstract class AbstractBusinessDetailsController extends AbstractController
             $data = Mapper::mapFromResult($orgData);
         }
 
+        $response = $this->handleQuery(ApplicationEntity::create(['id' => $this->getIdentifier()]));
+        $application = $response->getResult();
+        // Remove option to add subsidiary companies on PSV applications
+        $isLicenseApplicationPSV = $application['goodsOrPsv']['olbsKey'] === 'PSV';
+
         // Gets a fully configured/altered form for any version of this section
         /** @var \Common\Form\Form $form */
         $form = $this->formServiceManager
             ->get('lva-' . $this->lva . '-' . $this->section)
-            ->getForm($orgData['type']['id'], $orgData['hasInforceLicences'], $hasOrganisationSubmittedLicenceApplication)
+            ->getForm($orgData['type']['id'], $orgData['hasInforceLicences'], $hasOrganisationSubmittedLicenceApplication, $isLicenseApplicationPSV)
             ->setData($data);
         // need to reset Input Filter defaults after the data has been set on the form
         $form->attachInputFilterDefaults($form->getInputFilter(), $form);
