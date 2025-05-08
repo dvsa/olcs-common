@@ -86,25 +86,22 @@ abstract class AbstractBusinessDetailsController extends AbstractController
             $data = Mapper::mapFromResult($orgData);
         }
 
+        $response = $this->handleQuery(ApplicationEntity::create(['id' => $this->getIdentifier()]));
+        $application = $response->getResult();
+        // Remove option to add subsidiary companies on PSV applications
+        $isLicenseApplicationPSV = $application['goodsOrPsv']['olbsKey'] === 'PSV';
+
         // Gets a fully configured/altered form for any version of this section
         /** @var \Common\Form\Form $form */
         $form = $this->formServiceManager
             ->get('lva-' . $this->lva . '-' . $this->section)
-            ->getForm($orgData['type']['id'], $orgData['hasInforceLicences'], $hasOrganisationSubmittedLicenceApplication)
+            ->getForm($orgData['type']['id'], $orgData['hasInforceLicences'], $hasOrganisationSubmittedLicenceApplication, $isLicenseApplicationPSV)
             ->setData($data);
         // need to reset Input Filter defaults after the data has been set on the form
         $form->attachInputFilterDefaults($form->getInputFilter(), $form);
 
-        $response = $this->handleQuery(ApplicationEntity::create(['id' => $this->getIdentifier()]));
-        $application = $response->getResult();
-
-        // Remove option to add subsidiary companies to PSV applications
         if ($form->has('table')) {
-            if ( $application['goodsOrPsv']['olbsKey'] === 'PSV' ) {
-                $form->remove('table');
-            } else {
-                $this->populateTable($form, $orgData);
-            }
+            $this->populateTable($form, $orgData);
         }
 
         // Added an early return for non-posts to improve the readability of the code

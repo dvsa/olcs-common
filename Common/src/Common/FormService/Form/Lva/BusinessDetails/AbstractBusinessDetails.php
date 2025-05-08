@@ -18,7 +18,7 @@ abstract class AbstractBusinessDetails
     {
     }
 
-    public function getForm($orgType, $hasInforceLicences, bool $hasOrganisationSubmittedLicenceApplication)
+    public function getForm($orgType, $hasInforceLicences, bool $hasOrganisationSubmittedLicenceApplication, bool $isLicenseApplicationPSV = false)
     {
         $form = $this->formHelper->createForm('Lva\BusinessDetails');
 
@@ -26,6 +26,7 @@ abstract class AbstractBusinessDetails
             'orgType' => $orgType,
             'hasInforceLicences' => $hasInforceLicences,
             'hasOrganisationSubmittedLicenceApplication' => $hasOrganisationSubmittedLicenceApplication,
+            'isLicenseApplicationPSV' => $isLicenseApplicationPSV,
         ];
 
         $this->alterForm($form, $params);
@@ -60,6 +61,10 @@ abstract class AbstractBusinessDetails
                 $this->formHelper->remove($form, 'data->tradingNames');
                 $this->appendToLabel($form->get('data')->get('name'), '.other');
                 break;
+        }
+
+        if ($params['isLicenseApplicationPSV'] && $form->has('table')) {
+            $this->formHelper->remove($form, 'table');
         }
     }
 

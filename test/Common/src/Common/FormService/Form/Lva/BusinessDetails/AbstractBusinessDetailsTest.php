@@ -172,4 +172,39 @@ class AbstractBusinessDetailsTest extends MockeryTestCase
 
         $this->assertSame($mockForm, $form);
     }
+
+    public function testAlterFormRemovesSubsidiariesTableWhenPsvAndFormHasTable(): void
+    {
+        // Params
+        $orgType = RefData::ORG_TYPE_LLP;
+        $hasInforceLicences = true;
+        $hasOrganisationSubmittedLicenceApplication = false;
+        $isLicenseApplicationPSV = true;
+
+        // Mocks
+        $mockForm = m::mock(\Common\Form\Form::class);
+
+        // Expectations
+        $this->formHelper->expects('createForm')
+            ->with('Lva\BusinessDetails')
+            ->andReturns($mockForm);
+
+        $mockForm->expects('has')
+            ->with('table')
+            ->andReturns(true);
+
+        $this->formHelper->expects('remove')
+            ->with($mockForm, 'table')
+            ->andReturnSelf();
+        
+        $form = $this->sut->getForm(
+            $orgType,
+            $hasInforceLicences,
+            $hasOrganisationSubmittedLicenceApplication,
+            $isLicenseApplicationPSV
+        );
+
+        // Assert
+        $this->assertSame($mockForm, $form);
+    }
 }
