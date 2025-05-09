@@ -15,35 +15,31 @@ abstract class AbstractConversationMessage implements FormatterPluginManagerInte
 
     /**
      * status
-     *
-     * @param array $row Row data
-     * @param array $column Column data
-     *
      * @inheritdoc
      */
-    public function format($row, $column = null): string
+    public function format(array $data, array $column = null): string
     {
-        $senderName = $this->getSenderName($row);
+        $senderName = $this->getSenderName($data);
 
-        // $row["createdOn"] already contains a timezone so createFromFormat will ignore any timezone passed as the
+        // $data["createdOn"] already contains a timezone so createFromFormat will ignore any timezone passed as the
         // third parameter. to override it we need to force set the timezone to the default one
         $latestMessageCreatedAt = DateTimeImmutable::createFromFormat(
-            DateTimeInterface::ATOM, $row["createdOn"]
-        )->setTimezone(new \DateTimeZone(date_default_timezone_get()));;
+            DateTimeInterface::ATOM, $data["createdOn"]
+        )->setTimezone(new \DateTimeZone(date_default_timezone_get()));
 
         $date = $latestMessageCreatedAt->format('l j F Y \a\t H:ia');
 
-        $fileList = $this->getFileList($row);
+        $fileList = $this->getFileList($data);
 
-        $firstReadBy = $this->getFirstReadBy($row);
+        $firstReadBy = $this->getFirstReadBy($data);
 
         // If createdBy (User) has a Team, they are an internal user.
-        $internalCaseworkerTeam = (empty($row['createdBy']['team'])) ? '' : '<p class="govuk-caption-m">' . $senderName . '<br/>Caseworker Team</p>';
+        $internalCaseworkerTeam = (empty($data['createdBy']['team'])) ? '' : '<p class="govuk-caption-m">' . $senderName . '<br/>Caseworker Team</p>';
 
         return strtr($this->rowTemplate, [
             '{senderName}' => $senderName,
             '{messageDate}' => $date,
-            '{messageBody}' => nl2br($row['messagingContent']['text']),
+            '{messageBody}' => nl2br($data['messagingContent']['text']),
             '{caseworkerFooter}' => $internalCaseworkerTeam,
             '{fileList}' => $fileList,
             '{firstReadBy}' => $firstReadBy,
