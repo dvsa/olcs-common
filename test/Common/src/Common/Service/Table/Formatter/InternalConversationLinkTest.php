@@ -5,6 +5,7 @@ namespace CommonTest\Service\Table\Formatter;
 use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Formatter\InternalConversationLink;
 use Common\Service\Table\Formatter\RefDataStatus;
+use DateTimeInterface;
 use Laminas\Router\Http\RouteMatch;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -26,6 +27,8 @@ class InternalConversationLinkTest extends MockeryTestCase
         $this->mockRefDataStatus = m::mock(RefDataStatus::class);
 
         $this->sut = new InternalConversationLink($this->urlHelper, $this->mockRefDataStatus, $this->mockRouteMatch);
+
+        date_default_timezone_set('Europe/London');
     }
 
     protected function tearDown(): void
@@ -65,6 +68,51 @@ class InternalConversationLinkTest extends MockeryTestCase
             ->andReturn($expectedUrl);
 
         $this->assertEquals($expectedOutput, $this->sut->format($row));
+    }
+
+    /**
+     * @dataProvider conversationTimezoneProvider
+     */
+    public function testInternalFormatSetsCreatedOnToDefaultTimezone(
+        $routeType,
+        $row,
+        $expectedRoute,
+        $expectedParams,
+        $expectedUrl,
+    ): void {
+        $this->mockRouteMatch
+            ->expects('getParam')
+            ->with('type')
+            ->andReturns($routeType);
+
+        foreach ($expectedParams as $param => $value) {
+            $this->mockRouteMatch
+                ->allows('getParam')
+                ->with($param)
+                ->andReturns($value);
+        }
+
+        $this->urlHelper
+            ->allows('fromRoute')
+            ->with($expectedRoute, $expectedParams)
+            ->andReturns($expectedUrl);
+
+        $result = $this->sut->format($row);
+
+        // Extract formatted date string
+        preg_match('/<p class="govuk-body govuk-!-margin-1">(.*?)<\/p>/', $result, $matches);
+        $formattedDate = $matches[1] ?? null;
+
+        // Parse createdOn and convert to default timezone
+        $createdOn = \DateTimeImmutable::createFromFormat(
+            \DateTimeInterface::ATOM,
+            $row['createdOn']
+        )->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+
+        $expectedFormatted = $createdOn->format('l j F Y \a\t H:ia');
+
+        $this->assertNotNull($formattedDate, 'Formatted date was not found in output.');
+        $this->assertSame($expectedFormatted, $formattedDate);
     }
 
     /**
@@ -165,6 +213,46 @@ class InternalConversationLinkTest extends MockeryTestCase
                 '',
                 'DomainException'
             ]
+        ];
+    }
+    /**
+    * @dataProvider conversationTimezoneProvider
+    **/
+    public function conversationTimezoneProvider(): array
+    {
+        return [
+            'UTC date (winter)' => [
+                'application',
+                [
+                    'id' => 101,
+                    'userContextStatus' => 'NEW_MESSAGE',
+                    'subject' => 'Winter Test',
+                    'createdOn' => '2025-01-15T10:00:00+00:00', // UTC in winter
+                    'task' => [
+                        'application' => ['id' => 2001],
+                        'licence' => ['id' => 1, 'licNo' => 'LIC001']
+                    ]
+                ],
+                'lva-application/conversation/view',
+                ['application' => 2001, 'conversation' => 101],
+                '/application/2001/conversation/101/'
+            ],
+            'BST date (summer)' => [
+                'application',
+                [
+                    'id' => 102,
+                    'userContextStatus' => 'NEW_MESSAGE',
+                    'subject' => 'Summer Test',
+                    'createdOn' => '2025-05-15T10:00:00+00:00', // Should convert to 11:00am in BST
+                    'task' => [
+                        'application' => ['id' => 2002],
+                        'licence' => ['id' => 1, 'licNo' => 'LIC002']
+                    ]
+                ],
+                'lva-application/conversation/view',
+                ['application' => 2002, 'conversation' => 102],
+                '/application/2002/conversation/102/'
+            ],
         ];
     }
 }
