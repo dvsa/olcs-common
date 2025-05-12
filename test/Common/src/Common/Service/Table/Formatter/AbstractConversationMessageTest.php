@@ -11,7 +11,6 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class AbstractConversationMessageTest extends MockeryTestCase
 {
-
     /** @var AbstractConversationMessage */
     private $sut;
 
