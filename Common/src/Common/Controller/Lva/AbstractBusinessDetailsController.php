@@ -89,7 +89,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         $response = $this->handleQuery(ApplicationEntity::create(['id' => $this->getIdentifier()]));
         $application = $response->getResult();
         // Remove option to add subsidiary companies on PSV applications
-        $isLicenseApplicationPSV = $application['goodsOrPsv']['olbsKey'] === 'PSV';
+        $isLicenseApplicationPSV = $application->isPsv();
 
         // Gets a fully configured/altered form for any version of this section
         /** @var \Common\Form\Form $form */
