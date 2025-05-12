@@ -96,7 +96,8 @@ class InternalConversationLink implements FormatterPluginManagerInterface
         // $row["createdOn"] already contains a timezone so createFromFormat will ignore any timezone passed as the
         // third parameter. to override it we need to force set the timezone to the default one
         $latestMessageCreatedOn = DateTimeImmutable::createFromFormat(
-            DateTimeInterface::ATOM, $row["createdOn"]
+            DateTimeInterface::ATOM,
+            $row["createdOn"]
         )->setTimezone(new \DateTimeZone(date_default_timezone_get()));
 
         $dtOutput = $latestMessageCreatedOn->format('l j F Y \a\t H:ia');

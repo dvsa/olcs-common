@@ -24,7 +24,8 @@ abstract class AbstractConversationMessage implements FormatterPluginManagerInte
         // $data["createdOn"] already contains a timezone so createFromFormat will ignore any timezone passed as the
         // third parameter. to override it we need to force set the timezone to the default one
         $latestMessageCreatedAt = DateTimeImmutable::createFromFormat(
-            DateTimeInterface::ATOM, $data["createdOn"]
+            DateTimeInterface::ATOM,
+            $data["createdOn"]
         )->setTimezone(new \DateTimeZone(date_default_timezone_get()));
 
         $date = $latestMessageCreatedAt->format('l j F Y \a\t H:ia');

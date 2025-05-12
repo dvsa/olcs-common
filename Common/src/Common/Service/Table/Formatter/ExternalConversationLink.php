@@ -6,7 +6,6 @@ namespace Common\Service\Table\Formatter;
 
 use Common\Service\Helper\UrlHelperService;
 use Common\Util\Escape;
-use DateInvalidTimeZoneException;
 use DateTimeImmutable;
 use DateTimeInterface;
 
@@ -18,10 +17,8 @@ class ExternalConversationLink implements FormatterPluginManagerInterface
 
     /**
      * status
-     *
-     * @throws DateInvalidTimeZoneException
      */
-    public function format( array $data, array $column = null): string
+    public function format(array $data, array $column = null): string
     {
         $route = 'conversations/view';
         $params = [
@@ -42,7 +39,8 @@ class ExternalConversationLink implements FormatterPluginManagerInterface
         // $data["createdOn"] already contains a timezone so createFromFormat will ignore any timezone passed as the
         // third parameter. to override it we need to force set the timezone to the default one
         $latestMessageCreatedOn = DateTimeImmutable::createFromFormat(
-            DateTimeInterface::ATOM, $data["createdOn"]
+            DateTimeInterface::ATOM,
+            $data["createdOn"]
         )->setTimezone(new \DateTimeZone(date_default_timezone_get()));
 
         $dtOutput = $latestMessageCreatedOn->format('l j F Y \a\t H:ia');

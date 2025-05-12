@@ -4,11 +4,9 @@ namespace CommonTest\Common\Service\Table\Formatter;
 
 use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Formatter\ExternalConversationLink;
-use DateTimeImmutable;
 use DateTimeInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use PHPUnit\Framework\TestCase;
 
 /**
  * ExternalConversationLinkLink test
@@ -26,7 +24,6 @@ class ExternalConversationLinkTest extends MockeryTestCase
         $this->urlHelper = m::mock(UrlHelperService::class);
         $this->sut = new ExternalConversationLink($this->urlHelper);
         date_default_timezone_set('Europe/London');
-
     }
 
     protected function tearDown(): void

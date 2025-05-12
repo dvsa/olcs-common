@@ -2,13 +2,9 @@
 
 namespace CommonTest\Common\Service\Table\Formatter;
 
-use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Formatter\AbstractConversationMessage;
-use DateTimeImmutable;
-use DateTimeInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use PHPUnit\Framework\TestCase;
 
 /**
  * ExternalConversationLinkLink test

@@ -5,7 +5,6 @@ namespace CommonTest\Service\Table\Formatter;
 use Common\Service\Helper\UrlHelperService;
 use Common\Service\Table\Formatter\InternalConversationLink;
 use Common\Service\Table\Formatter\RefDataStatus;
-use DateTimeInterface;
 use Laminas\Router\Http\RouteMatch;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -138,7 +137,7 @@ class InternalConversationLinkTest extends MockeryTestCase
                 'lva-application/conversation/view',
                 ['application' => 1000001, 'conversation' => 123],
                 '/application/1000001/conversation/123/',
-                '<a class="govuk-body govuk-link govuk-!-padding-right-1 govuk-!-font-weight-bold" href="/application/1000001/conversation/123/">OK2000001 / 1000001: Test Conversation 1</a><strong class="govuk-tag govuk-tag--red">New message</strong><br><p class="govuk-body govuk-!-margin-1">Saturday 12 August 2023 at 12:00pm</p>'
+                '<a class="govuk-body govuk-link govuk-!-padding-right-1 govuk-!-font-weight-bold" href="/application/1000001/conversation/123/">OK2000001 / 1000001: Test Conversation 1</a><strong class="govuk-tag govuk-tag--red">New message</strong><br><p class="govuk-body govuk-!-margin-1">Saturday 12 August 2023 at 13:00pm</p>'
             ],
             'licence_route' => [
                 'licence',
@@ -154,7 +153,7 @@ class InternalConversationLinkTest extends MockeryTestCase
                 'licence/conversation/view',
                 ['licence' => 710, 'conversation' => 124],
                 '/licence/710/conversation/124/',
-                '<a class="govuk-body govuk-link govuk-!-padding-right-1 " href="/licence/710/conversation/124/">OK2000002: Test Conversation 2</a><strong class="govuk-tag govuk-tag--blue">Open</strong><br><p class="govuk-body govuk-!-margin-1">Saturday 12 August 2023 at 13:00pm</p>'
+                '<a class="govuk-body govuk-link govuk-!-padding-right-1 " href="/licence/710/conversation/124/">OK2000002: Test Conversation 2</a><strong class="govuk-tag govuk-tag--blue">Open</strong><br><p class="govuk-body govuk-!-margin-1">Saturday 12 August 2023 at 14:00pm</p>'
             ],
             'case_route' => [
                 'case',
@@ -171,7 +170,7 @@ class InternalConversationLinkTest extends MockeryTestCase
                 'case_conversation/view',
                 ['licence' => 710, 'case' => 101, 'conversation' => 125],
                 '/case/101/conversation/125/',
-                '<a class="govuk-body govuk-link govuk-!-padding-right-1 " href="/case/101/conversation/125/">OK2000003: Test Conversation 3</a><strong class="govuk-tag govuk-tag--grey">Closed</strong><br><p class="govuk-body govuk-!-margin-1">Saturday 12 August 2023 at 14:00pm</p>'
+                '<a class="govuk-body govuk-link govuk-!-padding-right-1 " href="/case/101/conversation/125/">OK2000003: Test Conversation 3</a><strong class="govuk-tag govuk-tag--grey">Closed</strong><br><p class="govuk-body govuk-!-margin-1">Saturday 12 August 2023 at 15:00pm</p>'
             ],
             'busReg_route' => [
                 'busReg',
@@ -187,7 +186,7 @@ class InternalConversationLinkTest extends MockeryTestCase
                 'licence/bus_conversation/view',
                 ['licence' => 710, 'busRegId' => 201, 'conversation' => 127],
                 '/licence/710/bus-registration/201/conversation/127/',
-                '<a class="govuk-body govuk-link govuk-!-padding-right-1 " href="/licence/710/bus-registration/201/conversation/127/">OK2000004: Test Conversation 4</a><strong class="govuk-tag govuk-tag--blue">Open</strong><br><p class="govuk-body govuk-!-margin-1">Saturday 12 August 2023 at 16:00pm</p>'
+                '<a class="govuk-body govuk-link govuk-!-padding-right-1 " href="/licence/710/bus-registration/201/conversation/127/">OK2000004: Test Conversation 4</a><strong class="govuk-tag govuk-tag--blue">Open</strong><br><p class="govuk-body govuk-!-margin-1">Saturday 12 August 2023 at 17:00pm</p>'
             ],
             'irhp-application_route' => [
                 'irhp-application',
@@ -203,7 +202,7 @@ class InternalConversationLinkTest extends MockeryTestCase
                 'licence/irhp-application-conversation/view',
                 ['licence' => 710, 'irhpAppId' => 301, 'conversation' => 128],
                 '/licence/710/irhp-application/301/conversation/128/',
-                '<a class="govuk-body govuk-link govuk-!-padding-right-1 govuk-!-font-weight-bold" href="/licence/710/irhp-application/301/conversation/128/">OK2000005: Test Conversation 5</a><strong class="govuk-tag govuk-tag--red">New message</strong><br><p class="govuk-body govuk-!-margin-1">Saturday 12 August 2023 at 17:00pm</p>'
+                '<a class="govuk-body govuk-link govuk-!-padding-right-1 govuk-!-font-weight-bold" href="/licence/710/irhp-application/301/conversation/128/">OK2000005: Test Conversation 5</a><strong class="govuk-tag govuk-tag--red">New message</strong><br><p class="govuk-body govuk-!-margin-1">Saturday 12 August 2023 at 18:00pm</p>'
             ],
             'invalid_route' => [
                 'invalid',
@@ -227,7 +226,7 @@ class InternalConversationLinkTest extends MockeryTestCase
                     'id' => 101,
                     'userContextStatus' => 'NEW_MESSAGE',
                     'subject' => 'Winter Test',
-                    'createdOn' => '2025-01-15T10:00:00+00:00', // UTC in winter
+                    'createdOn' => '2025-12-15T10:00:00+00:00', // UTC in winter
                     'task' => [
                         'application' => ['id' => 2001],
                         'licence' => ['id' => 1, 'licNo' => 'LIC001']
@@ -243,7 +242,7 @@ class InternalConversationLinkTest extends MockeryTestCase
                     'id' => 102,
                     'userContextStatus' => 'NEW_MESSAGE',
                     'subject' => 'Summer Test',
-                    'createdOn' => '2025-05-15T10:00:00+00:00', // Should convert to 11:00am in BST
+                    'createdOn' => '2023-05-15T10:00:00+00:00', // Should convert to 11:00am in BST
                     'task' => [
                         'application' => ['id' => 2002],
                         'licence' => ['id' => 1, 'licNo' => 'LIC002']
