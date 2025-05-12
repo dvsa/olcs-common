@@ -179,7 +179,7 @@ class AbstractBusinessDetailsTest extends MockeryTestCase
         $orgType = RefData::ORG_TYPE_LLP;
         $hasInforceLicences = true;
         $hasOrganisationSubmittedLicenceApplication = false;
-        $isLicenseApplicationPSV = true;
+        $isLicenseApplicationPsv = true;
 
         // Mocks
         $mockForm = m::mock(\Common\Form\Form::class);
@@ -201,7 +201,7 @@ class AbstractBusinessDetailsTest extends MockeryTestCase
             $orgType,
             $hasInforceLicences,
             $hasOrganisationSubmittedLicenceApplication,
-            $isLicenseApplicationPSV
+            $isLicenseApplicationPsv
         );
 
         // Assert

@@ -90,14 +90,14 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         $response = $this->handleQuery(ApplicationQuery::create(['id' => $this->getIdentifier()]));
         $application = $response->getResult();
 
-        // Remove option to add subsidiary companies on PSV applications
-        $isLicenseApplicationPSV = $application['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_PSV;
+        // Remove option to add subsidiary companies on Psv applications
+        $isLicenseApplicationPsv = $application['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_PSV;
 
         // Gets a fully configured/altered form for any version of this section
         /** @var \Common\Form\Form $form */
         $form = $this->formServiceManager
             ->get('lva-' . $this->lva . '-' . $this->section)
-            ->getForm($orgData['type']['id'], $orgData['hasInforceLicences'], $hasOrganisationSubmittedLicenceApplication, $isLicenseApplicationPSV)
+            ->getForm($orgData['type']['id'], $orgData['hasInforceLicences'], $hasOrganisationSubmittedLicenceApplication, $isLicenseApplicationPsv)
             ->setData($data);
         // need to reset Input Filter defaults after the data has been set on the form
         $form->attachInputFilterDefaults($form->getInputFilter(), $form);
