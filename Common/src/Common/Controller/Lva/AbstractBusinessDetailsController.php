@@ -13,7 +13,7 @@ use Common\Service\Helper\FormHelperService;
 use Common\Service\Script\ScriptFactory;
 use Common\Service\Table\TableFactory;
 use Dvsa\Olcs\Transfer\Command as TransferCmd;
-use Dvsa\Olcs\Transfer\Query\Application\Application as ApplicationEntity;
+use Dvsa\Olcs\Transfer\Query\Application\Application as ApplicationQuery;
 use Dvsa\Olcs\Transfer\Query\CompanySubsidiary\CompanySubsidiary;
 use Dvsa\Olcs\Transfer\Query\Licence\BusinessDetails;
 use Dvsa\Olcs\Transfer\Query\QueryInterface;
@@ -21,6 +21,7 @@ use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\Form\Form;
 use LmcRbacMvc\Identity\IdentityProviderInterface;
 use LmcRbacMvc\Service\AuthorizationService;
+use Common\RefData;
 
 /**
  * Shared logic between Business Details Controller
@@ -86,10 +87,11 @@ abstract class AbstractBusinessDetailsController extends AbstractController
             $data = Mapper::mapFromResult($orgData);
         }
 
-        $response = $this->handleQuery(ApplicationEntity::create(['id' => $this->getIdentifier()]));
+        $response = $this->handleQuery(ApplicationQuery::create(['id' => $this->getIdentifier()]));
         $application = $response->getResult();
+
         // Remove option to add subsidiary companies on PSV applications
-        $isLicenseApplicationPSV = $application->isPsv();
+        $isLicenseApplicationPSV = $application['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_PSV;
 
         // Gets a fully configured/altered form for any version of this section
         /** @var \Common\Form\Form $form */
