@@ -22,6 +22,7 @@ class AbstractConversationMessageTest extends MockeryTestCase
 
         $reflection = new \ReflectionClass($this->sut);
         $property = $reflection->getProperty('rowTemplate');
+        $property->setAccessible(true);
         $property->setValue($this->sut, '<<<HTML
 <div>
     <p>{senderName}</p>
