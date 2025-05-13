@@ -17,6 +17,7 @@ class DateTimeSelectTest extends \PHPUnit\Framework\TestCase
     protected function setUp(): void
     {
         $this->sut = new DateTimeSelect();
+        date_default_timezone_set('UTC');
     }
 
     public function testSetValueNull(): void

@@ -22,15 +22,14 @@ class DateTimeTest extends MockeryTestCase
     protected function setUp(): void
     {
         $this->sut = new \Common\View\Helper\DateTime();
+
+        date_default_timezone_set('UTC');
     }
 
     /**
      * @dataProvider provider
-     *
-     * @param $format
-     * @param $expected
      */
-    public function testInvoke(\DateTime $dateTime, $format, $expected): void
+    public function testInvoke(\DateTime $dateTime, string $format, string $expected): void
     {
         $sut = $this->sut;
         $this->assertEquals($expected, $sut($dateTime, $format));
@@ -47,19 +46,19 @@ class DateTimeTest extends MockeryTestCase
     {
         return [
             [
-                new \DateTime('2016-06-10 12:00', new \DateTimeZone('UTC')),
+                new \DateTime('2016-06-11 12:00', new \DateTimeZone('UTC')),
                 'd/m/Y H:i',
-                '10/06/2016 12:00'
+                '11/06/2016 12:00'
             ],
             [
-                new \DateTime('2016-12-10 12:00', new \DateTimeZone('UTC')),
+                new \DateTime('2016-12-12 12:00', new \DateTimeZone('UTC')),
                 'd/m/Y H:i',
-                '10/12/2016 12:00'
+                '12/12/2016 12:00'
             ],
             [
-                new \DateTime('2016-06-10 12:00', new \DateTimeZone('Europe/London')),
+                new \DateTime('2016-06-13 12:00', new \DateTimeZone('Europe/London')),
                 'd/m/Y H:i',
-                '10/06/2016 11:00'
+                '13/06/2016 11:00'
             ],
         ];
     }

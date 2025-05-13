@@ -4,5 +4,5 @@ namespace Common\Service\Table\Formatter;
 
 interface FormatterPluginManagerInterface
 {
-    public function format($data, $column = []);
+    public function format(array $data, array $column = []);
 }
