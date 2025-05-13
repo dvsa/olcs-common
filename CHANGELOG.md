@@ -1,5 +1,14 @@
 # Changelog
 
+## [7.22.0](https://github.com/dvsa/olcs-common/compare/v7.21.0...v7.22.0) (2025-05-13)
+
+
+### Features
+
+* remove subsidiary companies option for PSV applications ([#219](https://github.com/dvsa/olcs-common/issues/219)) ([96723aa](https://github.com/dvsa/olcs-common/commit/96723aa16cecebe044b70c2f13e1a83681602762))
+* removed old version of one of the paragraphs that was in addition to the new one ([#221](https://github.com/dvsa/olcs-common/issues/221)) ([960489e](https://github.com/dvsa/olcs-common/commit/960489e859fcb2388183b269ca57a0eccae47726))
+* update time on VOL messaging to use correct timezone ([#220](https://github.com/dvsa/olcs-common/issues/220)) ([febca28](https://github.com/dvsa/olcs-common/commit/febca28239327da740b186a48afbaf208b7e1531))
+
 ## [7.21.0](https://github.com/dvsa/olcs-common/compare/v7.20.1...v7.21.0) (2025-05-08)
 
 
