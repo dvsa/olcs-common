@@ -17,7 +17,7 @@ abstract class AbstractConversationMessage implements FormatterPluginManagerInte
      * status
      * @inheritdoc
      */
-    public function format(array $data, array $column = null): string
+    public function format(array $data, array $column = []): string
     {
         $senderName = $this->getSenderName($data);
 

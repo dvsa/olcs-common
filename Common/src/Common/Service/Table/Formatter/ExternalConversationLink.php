@@ -18,7 +18,7 @@ class ExternalConversationLink implements FormatterPluginManagerInterface
     /**
      * status
      */
-    public function format(array $data, array $column = null): string
+    public function format(array $data, array $column = []): string
     {
         $route = 'conversations/view';
         $params = [
