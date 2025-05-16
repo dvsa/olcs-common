@@ -87,11 +87,11 @@ abstract class AbstractBusinessDetailsController extends AbstractController
             $data = Mapper::mapFromResult($orgData);
         }
 
-        $response = $this->handleQuery(ApplicationQuery::create(['id' => $this->getIdentifier()]));
-        $application = $response->getResult();
+        // This could replace the BusinessDetails query above but will require a fair amount of refactoring
+        $lvaData = $this->fetchDataForLva();
 
         // Remove option to add subsidiary companies on Psv applications
-        $isLicenseApplicationPsv = $application['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_PSV;
+        $isLicenseApplicationPsv = $lvaData['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_PSV;
 
         // Gets a fully configured/altered form for any version of this section
         /** @var \Common\Form\Form $form */
