@@ -1,5 +1,13 @@
 # Changelog
 
+## [7.23.0](https://github.com/dvsa/olcs-common/compare/v7.22.0...v7.23.0) (2025-05-19)
+
+
+### Features
+
+* added missing brackets in the legislation for Ts&Cs ([#223](https://github.com/dvsa/olcs-common/issues/223)) ([0ece675](https://github.com/dvsa/olcs-common/commit/0ece675432c93b5b5ff9cbeb81b4b4b8672bf787))
+* remove defective query ([#225](https://github.com/dvsa/olcs-common/issues/225)) ([ba6622a](https://github.com/dvsa/olcs-common/commit/ba6622a51f0c49bb5efbe5f0eb009f03ac4b6541))
+
 ## [7.22.0](https://github.com/dvsa/olcs-common/compare/v7.21.0...v7.22.0) (2025-05-13)
 
 
