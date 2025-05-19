@@ -7,13 +7,13 @@ use Common\Controller\Traits\CompanySearch;
 use Common\Data\Mapper\Lva\BusinessDetails as Mapper;
 use Common\Data\Mapper\Lva\CompanySubsidiary as CompanySubsidiaryMapper;
 use Common\FormService\FormServiceManager;
+use Common\RefData;
 use Common\Service\Helper\FileUploadHelperService;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\FormHelperService;
 use Common\Service\Script\ScriptFactory;
 use Common\Service\Table\TableFactory;
 use Dvsa\Olcs\Transfer\Command as TransferCmd;
-use Dvsa\Olcs\Transfer\Query\Application\Application as ApplicationQuery;
 use Dvsa\Olcs\Transfer\Query\CompanySubsidiary\CompanySubsidiary;
 use Dvsa\Olcs\Transfer\Query\Licence\BusinessDetails;
 use Dvsa\Olcs\Transfer\Query\QueryInterface;
@@ -21,7 +21,6 @@ use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\Form\Form;
 use LmcRbacMvc\Identity\IdentityProviderInterface;
 use LmcRbacMvc\Service\AuthorizationService;
-use Common\RefData;
 
 /**
  * Shared logic between Business Details Controller
@@ -87,11 +86,11 @@ abstract class AbstractBusinessDetailsController extends AbstractController
             $data = Mapper::mapFromResult($orgData);
         }
 
-        $response = $this->handleQuery(ApplicationQuery::create(['id' => $this->getIdentifier()]));
-        $application = $response->getResult();
+        // This could replace the BusinessDetails query above but will require a fair amount of refactoring
+        $lvaData = $this->fetchDataForLva();
 
         // Remove option to add subsidiary companies on Psv applications
-        $isLicenseApplicationPsv = $application['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_PSV;
+        $isLicenseApplicationPsv = $lvaData['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_PSV;
 
         // Gets a fully configured/altered form for any version of this section
         /** @var \Common\Form\Form $form */
