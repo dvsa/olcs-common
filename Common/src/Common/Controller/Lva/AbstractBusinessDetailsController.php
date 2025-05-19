@@ -7,6 +7,7 @@ use Common\Controller\Traits\CompanySearch;
 use Common\Data\Mapper\Lva\BusinessDetails as Mapper;
 use Common\Data\Mapper\Lva\CompanySubsidiary as CompanySubsidiaryMapper;
 use Common\FormService\FormServiceManager;
+use Common\RefData;
 use Common\Service\Helper\FileUploadHelperService;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\FormHelperService;
@@ -20,7 +21,6 @@ use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\Form\Form;
 use LmcRbacMvc\Identity\IdentityProviderInterface;
 use LmcRbacMvc\Service\AuthorizationService;
-use Common\RefData;
 
 /**
  * Shared logic between Business Details Controller
