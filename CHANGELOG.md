@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.23.1](https://github.com/dvsa/olcs-common/compare/v7.23.0...v7.23.1) (2025-05-27)
+
+
+### Bug Fixes
+
+* remove stored cards field and code from continuations VOL-6370 ([#226](https://github.com/dvsa/olcs-common/issues/226)) ([65c741c](https://github.com/dvsa/olcs-common/commit/65c741cac3235c6a7b484a91105b3f2b88f35184))
+
 ## [7.23.0](https://github.com/dvsa/olcs-common/compare/v7.22.0...v7.23.0) (2025-05-19)
 
 
