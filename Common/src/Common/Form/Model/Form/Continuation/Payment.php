@@ -17,12 +17,6 @@ class Payment
      */
     public $amount;
 
-
-    /**
-     * @Form\ComposedObject("Common\Form\Model\Form\Continuation\Fieldset\FeeStoredCards")
-     */
-    public $storedCards;
-
     /**
      * @Form\Name("form-actions")
      * @Form\Attributes({"class":"govuk-button-group"})

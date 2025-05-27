@@ -45,15 +45,9 @@ class PaymentController extends AbstractContinuationController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            $storedCards = $request->getPost('storedCards');
-            $storedCardReference = (is_array($storedCards) && $storedCards['card'] !== '0')
-                ? $storedCards['card']
-                : false;
-
             return $this->payFees(
                 array_column($fees, 'id'),
-                $data['licence']['organisation']['id'],
-                $storedCardReference
+                $data['licence']['organisation']['id']
             );
         }
 
