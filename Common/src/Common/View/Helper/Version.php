@@ -87,6 +87,12 @@ class Version extends AbstractHelper
             return '';
         }
 
-        return sprintf(self::MARKUP_TEMPLATE, $this->environment, phpversion(), $this->description, $this->release);
+        return sprintf(
+            self::MARKUP_TEMPLATE,
+            htmlspecialchars($this->environment, ENT_QUOTES, 'UTF-8'),
+            htmlspecialchars(phpversion(), ENT_QUOTES, 'UTF-8'),
+            htmlspecialchars($this->description, ENT_QUOTES, 'UTF-8'),
+            htmlspecialchars($this->release, ENT_QUOTES, 'UTF-8')
+        );
     }
 }
