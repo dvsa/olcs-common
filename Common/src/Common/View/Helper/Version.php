@@ -20,9 +20,9 @@ class Version extends AbstractHelper
     public const DEFAULT_EMPTY = 'empty';
 
     private bool $shouldRender = false;
-    private string $environment;
-    private string $description;
-    private string $release;
+    private string $environment = self::DEFAULT_UNDEFINED;
+    private string $description = self::DEFAULT_UNDEFINED;
+    private string $release = self::DEFAULT_UNDEFINED;
 
     /**
      * Create service instance
