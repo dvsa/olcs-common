@@ -134,7 +134,7 @@ class VersionTest extends MockeryTestCase
     public function testRenderReturnsEmptyString(array $config): void
     {
         $sut = new Version($config);
-        $this->assertEquals('', $sut->render());
+        $this->assertSame('', $sut->render());
     }
 
     /**
