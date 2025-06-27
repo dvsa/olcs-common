@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace CommonTest\View\Helper;
 
 use Common\View\Helper\Version;
+use Laminas\View\Renderer\RendererInterface;
+use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
@@ -13,11 +15,15 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class VersionTest extends MockeryTestCase
 {
     /**
-     * Helper method to build expected markup
+     * Create a mock view that captures the data passed to template
      */
-    private function buildExpectedMarkup(string $environment, string $description, string $release): string
+    private function createMockViewWithDataCapture(array &$capturedData): RendererInterface
     {
-        return sprintf(Version::MARKUP_TEMPLATE, $environment, phpversion(), $description, $release);
+        $mockView = m::mock(RendererInterface::class);
+        $mockView->shouldReceive('render')
+            ->with(Version::TEMPLATE_PATH, m::capture($capturedData))
+            ->andReturn('template rendered with captured data');
+        return $mockView;
     }
 
     /**
@@ -140,16 +146,42 @@ class VersionTest extends MockeryTestCase
     /**
      * @dataProvider renderingProvider
      */
-    public function testRenderReturnsMarkup(
+    public function testRenderCallsPartialWithCorrectData(
         array $config,
         string $expectedEnvironment,
         string $expectedDescription,
         string $expectedRelease
     ): void {
-        $sut = new Version($config);
-        $expected = $this->buildExpectedMarkup($expectedEnvironment, $expectedDescription, $expectedRelease);
+        $capturedData = [];
+        $mockView = $this->createMockViewWithDataCapture($capturedData);
 
-        $this->assertSame($expected, $sut->render());
+        $sut = new Version($config);
+        $sut->setView($mockView);
+
+        $result = $sut->render();
+
+        // Assert the template was called and we got the expected data
+        $this->assertSame('template rendered with captured data', $result);
+        $this->assertSame(
+            $expectedEnvironment,
+            $capturedData['environment'],
+            "Environment value mismatch. Expected: '{$expectedEnvironment}', Actual: '{$capturedData['environment']}'"
+        );
+        $this->assertSame(
+            phpversion(),
+            $capturedData['phpVersion'],
+            "PHP version value mismatch. Expected: '" . phpversion() . "', Actual: '{$capturedData['phpVersion']}'"
+        );
+        $this->assertSame(
+            $expectedDescription,
+            $capturedData['description'],
+            "Description value mismatch. Expected: '{$expectedDescription}', Actual: '{$capturedData['description']}'"
+        );
+        $this->assertSame(
+            $expectedRelease,
+            $capturedData['release'],
+            "Release value mismatch. Expected: '{$expectedRelease}', Actual: '{$capturedData['release']}'"
+        );
     }
 
     /**
@@ -165,7 +197,13 @@ class VersionTest extends MockeryTestCase
                 'release' => '2.0'
             ]
         ];
+        $mockView = m::mock(RendererInterface::class);
+        $mockView->shouldReceive('render')
+            ->with(Version::TEMPLATE_PATH, m::any())
+            ->twice()
+            ->andReturn('test output');
         $sut = new Version($config);
+        $sut->setView($mockView);
 
         $this->assertEquals($sut->render(), $sut());
     }

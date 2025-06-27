@@ -15,12 +15,7 @@ use Laminas\View\Helper\AbstractHelper;
  */
 class Version extends AbstractHelper
 {
-    public const MARKUP_TEMPLATE = '<div class="version-header">
-        <p class="environment">Environment: <span class="environment-marker">%s</span></p>
-        <p class="version">PHP: <span>%s</span></p>
-        <p class="version">Description: <span>%s</span></p>
-        <p class="version">Version: <span>%s</span></p>
-    </div>';
+    public const TEMPLATE_PATH = 'helper/version.phtml';
     public const DEFAULT_UNDEFINED = 'undefined';
     public const DEFAULT_EMPTY = 'empty';
 
@@ -64,8 +59,8 @@ class Version extends AbstractHelper
     /**
      * Invoke the view helper
      *
-     * @see render()
      * @return string
+     * @see render()
      */
     public function __invoke(): string
     {
@@ -87,12 +82,11 @@ class Version extends AbstractHelper
             return '';
         }
 
-        return sprintf(
-            self::MARKUP_TEMPLATE,
-            htmlspecialchars($this->environment, ENT_QUOTES, 'UTF-8'),
-            htmlspecialchars(phpversion(), ENT_QUOTES, 'UTF-8'),
-            htmlspecialchars($this->description, ENT_QUOTES, 'UTF-8'),
-            htmlspecialchars($this->release, ENT_QUOTES, 'UTF-8')
-        );
+        return $this->getView()->render(self::TEMPLATE_PATH, [
+            'environment' => $this->environment,
+            'phpVersion' => phpversion(),
+            'description' => $this->description,
+            'release' => $this->release
+        ]);
     }
 }
