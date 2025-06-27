@@ -149,7 +149,7 @@ class VersionTest extends MockeryTestCase
         $sut = new Version($config);
         $expected = $this->buildExpectedMarkup($expectedEnvironment, $expectedDescription, $expectedRelease);
 
-        $this->assertEquals($expected, $sut->render());
+        $this->assertSame($expected, $sut->render());
     }
 
     /**
