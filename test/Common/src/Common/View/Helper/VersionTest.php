@@ -205,6 +205,6 @@ class VersionTest extends MockeryTestCase
         $sut = new Version($config);
         $sut->setView($mockView);
 
-        $this->assertEquals($sut->render(), $sut());
+        $this->assertSame($sut->render(), $sut());
     }
 }
