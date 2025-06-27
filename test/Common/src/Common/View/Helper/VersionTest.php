@@ -1,79 +1,172 @@
 <?php
 
-/**
- * Test Version view helper
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
+declare(strict_types=1);
 
 namespace CommonTest\View\Helper;
 
 use Common\View\Helper\Version;
-use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
  * Test Version view helper
- *
- * @author Rob Caiger <rob@clocal.co.uk>
  */
 class VersionTest extends MockeryTestCase
 {
     /**
-     * Test render without version
+     * Helper method to build expected markup
      */
-    public function testRenderWithoutVersion(): void
+    private function buildExpectedMarkup(string $environment, string $description, string $release): string
     {
-        $config = [];
-        $sut = new Version($config);
+        return sprintf(Version::MARKUP_TEMPLATE, $environment, phpversion(), $description, $release);
+    }
 
+    /**
+     * Data provider for scenarios that should return empty string
+     *
+     * @return array<string, array<string, mixed>>
+     */
+    public function emptyResultProvider(): array
+    {
+        return [
+            'missing version config' => [
+                'config' => []
+            ],
+            'invalid version config' => [
+                'config' => ['version' => 'invalid']
+            ],
+            'information bar disabled' => [
+                'config' => [
+                    'version' => [
+                        'show_information_bar' => false,
+                        'environment' => 'test',
+                        'description' => 'test',
+                        'release' => '1.0'
+                    ]
+                ]
+            ],
+            'missing show_information_bar (defaults to false)' => [
+                'config' => [
+                    'version' => [
+                        'environment' => 'test',
+                        'description' => 'test',
+                        'release' => '1.0'
+                    ]
+                ]
+            ]
+        ];
+    }
+
+    /**
+     * Data provider for scenarios that should render markup
+     *
+     * @return array<string, array<string, mixed>>
+     */
+    public function renderingProvider(): array
+    {
+        return [
+            'full version information' => [
+                'config' => [
+                    'version' => [
+                        'show_information_bar' => true,
+                        'environment' => 'Unit Test',
+                        'description' => 'DESCRIPTION',
+                        'release' => '1.0'
+                    ]
+                ],
+                'expectedEnvironment' => 'Unit Test',
+                'expectedDescription' => 'DESCRIPTION',
+                'expectedRelease' => '1.0'
+            ],
+            'missing values (null)' => [
+                'config' => [
+                    'version' => [
+                        'show_information_bar' => true,
+                        'environment' => null,
+                        'release' => null
+                    ]
+                ],
+                'expectedEnvironment' => Version::DEFAULT_UNDEFINED,
+                'expectedDescription' => Version::DEFAULT_UNDEFINED,
+                'expectedRelease' => Version::DEFAULT_UNDEFINED
+            ],
+            'completely missing details' => [
+                'config' => [
+                    'version' => [
+                        'show_information_bar' => true
+                    ]
+                ],
+                'expectedEnvironment' => Version::DEFAULT_UNDEFINED,
+                'expectedDescription' => Version::DEFAULT_UNDEFINED,
+                'expectedRelease' => Version::DEFAULT_UNDEFINED
+            ],
+            'empty string values' => [
+                'config' => [
+                    'version' => [
+                        'show_information_bar' => true,
+                        'environment' => '',
+                        'description' => '',
+                        'release' => ''
+                    ]
+                ],
+                'expectedEnvironment' => Version::DEFAULT_EMPTY,
+                'expectedDescription' => Version::DEFAULT_EMPTY,
+                'expectedRelease' => Version::DEFAULT_EMPTY
+            ],
+            'mixed missing and empty values' => [
+                'config' => [
+                    'version' => [
+                        'show_information_bar' => true,
+                        'environment' => 'Production',
+                        'description' => '',
+                        // release is missing (will be null)
+                    ]
+                ],
+                'expectedEnvironment' => 'Production',
+                'expectedDescription' => Version::DEFAULT_EMPTY,
+                'expectedRelease' => Version::DEFAULT_UNDEFINED
+            ]
+        ];
+    }
+
+    /**
+     * @dataProvider emptyResultProvider
+     */
+    public function testRenderReturnsEmptyString(array $config): void
+    {
+        $sut = new Version($config);
         $this->assertEquals('', $sut->render());
     }
 
     /**
-     * Test render with version
+     * @dataProvider renderingProvider
      */
-    public function testRenderWithVersion(): void
-    {
-        $config = [
-            'version' => [
-                'environment' => 'Unit Test',
-                'description' => 'DESCRIPTION',
-                'release' => '1.0'
-            ]
-        ];
+    public function testRenderReturnsMarkup(
+        array $config,
+        string $expectedEnvironment,
+        string $expectedDescription,
+        string $expectedRelease
+    ): void {
         $sut = new Version($config);
+        $expected = $this->buildExpectedMarkup($expectedEnvironment, $expectedDescription, $expectedRelease);
 
-        $expected = '<div class="version-header">
-    <p class="environment">Environment: <span class="environment-marker">Unit Test</span></p>
-    <p class="version">PHP: <span>' . phpversion() . '</span></p>
-    <p class="version">Description: <span>DESCRIPTION</span></p>
-    <p class="version">Version: <span>1.0</span></p>
-</div>';
-
-        $this->assertEquals($expected, $sut());
+        $this->assertEquals($expected, $sut->render());
     }
 
     /**
-     * Test render with version
+     * Test that __invoke() method delegates to render()
      */
-    public function testRenderWithoutDetails(): void
+    public function testInvokeMethodDelegatesToRender(): void
     {
         $config = [
             'version' => [
-                'environment' => null,
-                'release' => null
+                'show_information_bar' => true,
+                'environment' => 'Test Environment',
+                'description' => 'Test Description',
+                'release' => '2.0'
             ]
         ];
         $sut = new Version($config);
 
-        $expected = '<div class="version-header">
-    <p class="environment">Environment: <span class="environment-marker">unknown</span></p>
-    <p class="version">PHP: <span>' . phpversion() . '</span></p>
-    <p class="version">Description: <span>NA</span></p>
-    <p class="version">Version: <span>unknown</span></p>
-</div>';
-
-        $this->assertEquals($expected, $sut());
+        $this->assertEquals($sut->render(), $sut());
     }
 }

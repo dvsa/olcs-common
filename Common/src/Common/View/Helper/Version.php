@@ -1,10 +1,6 @@
 <?php
 
-/**
- * Version view helper
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
+declare(strict_types=1);
 
 namespace Common\View\Helper;
 
@@ -13,61 +9,84 @@ use Laminas\View\Helper\AbstractHelper;
 /**
  * Version view helper
  *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * Conditionally renders application version information including environment,
+ * PHP version, description, and release details based on the
+ * ['version']['show_information_bar'] configuration setting.
  */
 class Version extends AbstractHelper
 {
-    protected $markup = '<div class="version-header">
-    <p class="environment">Environment: <span class="environment-marker">%s</span></p>
-    <p class="version">PHP: <span>%s</span></p>
-    <p class="version">Description: <span>%s</span></p>
-    <p class="version">Version: <span>%s</span></p>
-</div>';
+    public const MARKUP_TEMPLATE = '<div class="version-header">
+        <p class="environment">Environment: <span class="environment-marker">%s</span></p>
+        <p class="version">PHP: <span>%s</span></p>
+        <p class="version">Description: <span>%s</span></p>
+        <p class="version">Version: <span>%s</span></p>
+    </div>';
+    public const DEFAULT_UNDEFINED = 'undefined';
+    public const DEFAULT_EMPTY = 'empty';
+
+    private bool $shouldRender = false;
+    private string $environment;
+    private string $description;
+    private string $release;
 
     /**
      * Create service instance
-     *
-     *
-     * @return Version
      */
-    public function __construct(private array $config)
+    public function __construct(array $config)
     {
+        // Check if version config exists and is valid
+        if (!isset($config['version']) || !is_array($config['version'])) {
+            return;
+        }
+
+        // Check if information bar should be displayed
+        $this->shouldRender = $config['version']['show_information_bar'] ?? false;
+
+        // Pre-calculate version values if rendering is enabled
+        if ($this->shouldRender) {
+            $this->environment = $config['version']['environment'] ?? self::DEFAULT_UNDEFINED;
+            $this->description = $config['version']['description'] ?? self::DEFAULT_UNDEFINED;
+            $this->release = $config['version']['release'] ?? self::DEFAULT_UNDEFINED;
+
+            // Handle explicitly set empty strings
+            if ($this->environment === '') {
+                $this->environment = self::DEFAULT_EMPTY;
+            }
+            if ($this->description === '') {
+                $this->description = self::DEFAULT_EMPTY;
+            }
+            if ($this->release === '') {
+                $this->release = self::DEFAULT_EMPTY;
+            }
+        }
     }
 
     /**
-     * Render the version
+     * Invoke the view helper
      *
+     * @see render()
      * @return string
      */
-    public function __invoke()
+    public function __invoke(): string
     {
         return $this->render();
     }
 
     /**
-     * Render the version
+     * Render the version information bar
      *
-     * @return string
+     * Returns formatted HTML containing environment, PHP version, description,
+     * and release information if show_information_bar is enabled in config.
+     * Returns empty string if rendering is disabled or config is invalid.
+     *
+     * @return string HTML markup or empty string
      */
-    public function render()
+    public function render(): string
     {
-        if (!isset($this->config['version']) || !is_array($this->config['version'])) {
+        if (!$this->shouldRender) {
             return '';
         }
 
-        $environment = $this->valOrAlt($this->config['version'], 'environment');
-        $description = $this->valOrAlt($this->config['version'], 'description', 'NA');
-        $release = $this->valOrAlt($this->config['version'], 'release');
-
-        return sprintf($this->markup, $environment, phpversion(), $description, $release);
-    }
-
-    /**
-     * @psalm-param 'description'|'environment'|'release' $index
-     * @psalm-param 'NA'|'unknown' $alt
-     */
-    protected function valOrAlt(array $array, string $index, string $alt = 'unknown')
-    {
-        return (empty($array[$index]) ? $alt : $array[$index]);
+        return sprintf(self::MARKUP_TEMPLATE, $this->environment, phpversion(), $this->description, $this->release);
     }
 }
