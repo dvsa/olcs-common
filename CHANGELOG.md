@@ -1,5 +1,16 @@
 # Changelog
 
+## [8.0.0](https://github.com/dvsa/olcs-common/compare/v7.23.1...v8.0.0) (2025-06-30)
+
+
+### ⚠ BREAKING CHANGES
+
+* Version Helper CD trigger ([#229](https://github.com/dvsa/olcs-common/issues/229))
+
+### Code Refactoring
+
+* Version Helper CD trigger ([#229](https://github.com/dvsa/olcs-common/issues/229)) ([e62bc70](https://github.com/dvsa/olcs-common/commit/e62bc70a8b8160c4f21972ac239ab5858ecbbebd))
+
 ## [7.23.1](https://github.com/dvsa/olcs-common/compare/v7.23.0...v7.23.1) (2025-05-27)
 
 
