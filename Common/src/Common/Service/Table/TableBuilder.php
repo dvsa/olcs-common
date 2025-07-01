@@ -1189,7 +1189,8 @@ class TableBuilder implements \Stringable
 
     public function renderCaption()
     {
-        return trim($this->renderTotal() . ' ' . $this->getVariable('title'));
+        $caption = $this->getVariable('table_caption') ?: $this->getVariable('title');
+        return trim($this->renderTotal() . ' ' . $caption);
     }
 
     /**
