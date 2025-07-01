@@ -1052,6 +1052,110 @@ class TableBuilderTest extends MockeryTestCase
     }
 
     /**
+     * Test renderCaption with `table_caption` variable
+     */
+    public function testRenderCaptionWithTableCaption(): void
+    {
+        $total = 10;
+        $title = "Test Title";
+        $table_caption = "Test Caption";
+        $expectedCaption = "10 Test Caption";
+
+        $mockContentHelper = $this->createPartialMock(ContentHelper::class, ['replaceContent']);
+
+        $mockContentHelper->expects($this->once())
+            ->method('replaceContent')
+            ->with(' {{[elements/total]}}', ['total' => $total])
+            ->will($this->returnValue(strval($total)));
+
+        $table = $this->getMockTableBuilder(['getContentHelper', 'shouldPaginate']);
+
+        $table->expects($this->once())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $table->expects($this->once())
+            ->method('shouldPaginate')
+            ->will($this->returnValue(true));
+
+        $table->setTotal($total);
+        $table->setVariables([
+            'title' => $title,
+            'table_caption' => $table_caption
+        ]);
+
+        $this->assertEquals($expectedCaption, $table->renderCaption());
+    }
+
+    /**
+     * Test renderCaption with empty `table_caption` variable
+     */
+    public function testRenderCaptionWithEmptyTableCaption(): void
+    {
+        $total = 10;
+        $title = "Test Title";
+        $table_caption = "";
+        $expectedCaption = "10 Test Title";
+
+        $mockContentHelper = $this->createPartialMock(ContentHelper::class, ['replaceContent']);
+
+        $mockContentHelper->expects($this->once())
+            ->method('replaceContent')
+            ->with(' {{[elements/total]}}', ['total' => $total])
+            ->will($this->returnValue(strval($total)));
+
+        $table = $this->getMockTableBuilder(['getContentHelper', 'shouldPaginate']);
+
+        $table->expects($this->once())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $table->expects($this->once())
+            ->method('shouldPaginate')
+            ->will($this->returnValue(true));
+
+        $table->setTotal($total);
+        $table->setVariables([
+            'title' => $title,
+            'table_caption' => $table_caption
+        ]);
+
+        $this->assertEquals($expectedCaption, $table->renderCaption());
+    }
+
+    /**
+     * Test renderCaption with no `table_caption` variable
+     */
+    public function testRenderCaptionWithNoTableCaption(): void
+    {
+        $total = 10;
+        $title = "Test Title";
+        $expectedCaption = "10 Test Title";
+
+        $mockContentHelper = $this->createPartialMock(ContentHelper::class, ['replaceContent']);
+
+        $mockContentHelper->expects($this->once())
+            ->method('replaceContent')
+            ->with(' {{[elements/total]}}', ['total' => $total])
+            ->will($this->returnValue(strval($total)));
+
+        $table = $this->getMockTableBuilder(['getContentHelper', 'shouldPaginate']);
+
+        $table->expects($this->once())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $table->expects($this->once())
+            ->method('shouldPaginate')
+            ->will($this->returnValue(true));
+
+        $table->setTotal($total);
+        $table->setVariable('title', $title);
+
+        $this->assertEquals($expectedCaption, $table->renderCaption());
+    }
+
+    /**
      * Test renderActions With Pagination
      */
     public function testRenderActionsWithoutCrud(): void
