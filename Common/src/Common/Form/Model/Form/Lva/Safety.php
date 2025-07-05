@@ -22,7 +22,10 @@ class Safety
      * @Form\Name("table")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\TableRequired")
      * @Form\Options({
-     *     "label" : "safety-inspection-providers.table.title"
+     *     "label": "safety-inspection-providers.table.title",
+     *     "label_options": {
+     *         "disable_html_escape": "true"
+     *     }
      * })
      * @Form\Attributes({"id":"table"})
      */
