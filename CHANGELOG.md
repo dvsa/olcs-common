@@ -1,5 +1,12 @@
 # Changelog
 
+## [8.1.0](https://github.com/dvsa/olcs-common/compare/v8.0.0...v8.1.0) (2025-07-16)
+
+
+### Features
+
+* add link to mprs ([#231](https://github.com/dvsa/olcs-common/issues/231)) ([9533933](https://github.com/dvsa/olcs-common/commit/9533933a9346a310cebac243297f4ee9f7f52821))
+
 ## [8.0.0](https://github.com/dvsa/olcs-common/compare/v7.23.1...v8.0.0) (2025-06-30)
 
 
