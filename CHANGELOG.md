@@ -1,5 +1,12 @@
 # Changelog
 
+## [8.2.0](https://github.com/dvsa/olcs-common/compare/v8.1.0...v8.2.0) (2025-07-24)
+
+
+### Features
+
+* enhance PSV restricted app journey VOL-5882 ([#233](https://github.com/dvsa/olcs-common/issues/233)) ([9bdd684](https://github.com/dvsa/olcs-common/commit/9bdd684ba49297390873143e42e1da7146bb76b5))
+
 ## [8.1.0](https://github.com/dvsa/olcs-common/compare/v8.0.0...v8.1.0) (2025-07-16)
 
 
