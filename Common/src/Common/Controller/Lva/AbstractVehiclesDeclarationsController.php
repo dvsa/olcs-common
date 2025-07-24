@@ -1,40 +1,85 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Common\Controller\Lva;
 
+use Common\Category;
+use Common\Controller\Traits\GenericUpload;
+use Common\Data\Mapper\Lva\PsvSmallEvidence;
+use Common\Data\Mapper\Lva\PsvLargeEvidence;
+use Common\Data\Mapper\Lva\PsvMainOccupationUndertakings;
+use Common\Data\Mapper\Lva\PsvOperateLarge;
+use Common\Data\Mapper\Lva\PsvOperateNovelty;
+use Common\Data\Mapper\Lva\PsvOperateSmall;
+use Common\Data\Mapper\Lva\PsvSmallConditions;
+use Common\Data\Mapper\Lva\PsvWrittenExplanation;
+use Common\Data\Mapper\Lva\VehicleSize;
+use Common\Form\Form;
 use Common\FormService\FormServiceManager;
-use Common\RefData;
-use Common\Service\Helper\DataHelperService;
+use Common\Service\Helper\FileUploadHelperService;
+use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\FormHelperService;
 use Common\Service\Script\ScriptFactory;
+use Dvsa\Olcs\Transfer\Command\Application\UpdateMainOccupationEvidence;
+use Dvsa\Olcs\Transfer\Command\Application\UpdateMainOccupationUndertakings;
+use Dvsa\Olcs\Transfer\Command\Application\UpdateNoveltyVehicles;
+use Dvsa\Olcs\Transfer\Command\Application\UpdateSmallVehicleConditionsAndUndertaking;
+use Dvsa\Olcs\Transfer\Command\Application\UpdateSmallVehicleEvidence;
+use Dvsa\Olcs\Transfer\Command\Application\UpdateVehicleNinePassengers;
+use Dvsa\Olcs\Transfer\Command\Application\UpdateVehicleOperatingSmall;
+use Dvsa\Olcs\Transfer\Command\Application\UpdateVehicleSize;
+use Dvsa\Olcs\Transfer\Command\Application\UpdateWrittenExplanation;
+use Dvsa\Olcs\Transfer\Command\CommandInterface;
+use Dvsa\Olcs\Transfer\Query\Application\Documents;
+use Dvsa\Olcs\Transfer\Query\Application\VehicleDeclaration;
 use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
+use Laminas\Http\Response;
+use Laminas\View\Model\ViewModel;
 use LmcRbacMvc\Service\AuthorizationService;
 
-/**
- * Vehicles Declarations Controller
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 abstract class AbstractVehiclesDeclarationsController extends AbstractController
 {
-    /**
-     * Action data map
-     *
-     * @var array
-     */
-    protected $dataMap = [
-        'main' => [
-            'mapFrom' => [
-                'application',
-                'smallVehiclesIntention',
-                'nineOrMore',
-                'mainOccupation',
-                'limousinesNoveltyVehicles'
-            ]
-        ]
+    use GenericUpload;
+
+    private const SECTION_VEHICLES_SIZE = 'vehicles_size';
+    private const SECTION_PSV_OPERATE_LARGE = 'psv_operate_large';
+    private const SECTION_PSV_OPERATE_SMALL = 'psv_operate_small';
+    private const SECTION_SMALL_CONDITIONS = 'psv_small_conditions';
+    private const SECTION_PSV_OPERATE_NOVELTY = 'psv_operate_novelty';
+    private const SECTION_PSV_SMALL_PART_WRITTEN = 'psv_small_part_written';
+    private const SECTION_PSV_DOCUMENTARY_EVIDENCE_SMALL = 'psv_documentary_evidence_small';
+    private const PSV_DOCUMENTARY_EVIDENCE_LARGE = 'psv_documentary_evidence_large';
+    private const SECTION_PSV_MAIN_OCCUPATION_UNDERTAKINGS = 'psv_main_occupation_undertakings';
+
+    private array $documents = [];
+    private int $uploadCategory = Category::CATEGORY_APPLICATION;
+    private int $uploadSubCategory;
+    private array $data = [];
+
+    private array $mapperClasses = [
+        self::SECTION_VEHICLES_SIZE => VehicleSize::class,
+        self::SECTION_PSV_OPERATE_LARGE => PsvOperateLarge::class,
+        self::SECTION_PSV_OPERATE_SMALL => PsvOperateSmall::class,
+        self::SECTION_PSV_SMALL_PART_WRITTEN => PsvWrittenExplanation::class,
+        self::SECTION_SMALL_CONDITIONS => PsvSmallConditions::class,
+        self::SECTION_PSV_OPERATE_NOVELTY => PsvOperateNovelty::class,
+        self::SECTION_PSV_DOCUMENTARY_EVIDENCE_SMALL => PsvSmallEvidence::class,
+        self::PSV_DOCUMENTARY_EVIDENCE_LARGE => PsvLargeEvidence::class,
+        self::SECTION_PSV_MAIN_OCCUPATION_UNDERTAKINGS => PsvMainOccupationUndertakings::class,
     ];
 
-    protected $data;
+    private array $updateCommands = [
+        self::SECTION_VEHICLES_SIZE => UpdateVehicleSize::class,
+        self::SECTION_PSV_OPERATE_LARGE => UpdateVehicleNinePassengers::class,
+        self::SECTION_PSV_OPERATE_SMALL => UpdateVehicleOperatingSmall::class,
+        self::SECTION_PSV_SMALL_PART_WRITTEN => UpdateWrittenExplanation::class,
+        self::SECTION_SMALL_CONDITIONS => UpdateSmallVehicleConditionsAndUndertaking::class,
+        self::SECTION_PSV_OPERATE_NOVELTY => UpdateNoveltyVehicles::class,
+        self::SECTION_PSV_DOCUMENTARY_EVIDENCE_SMALL => UpdateSmallVehicleEvidence::class,
+        self::PSV_DOCUMENTARY_EVIDENCE_LARGE => UpdateMainOccupationEvidence::class,
+        self::SECTION_PSV_MAIN_OCCUPATION_UNDERTAKINGS => UpdateMainOccupationUndertakings::class,
+    ];
 
     public function __construct(
         NiTextTranslation $niTextTranslationUtil,
@@ -42,49 +87,219 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
         protected FormHelperService $formHelper,
         protected FormServiceManager $formServiceManager,
         protected ScriptFactory $scriptFactory,
-        protected DataHelperService $dataHelper
+        protected FileUploadHelperService $uploadHelper,
+        protected FlashMessengerHelperService $flashMessengerHelper
     ) {
         parent::__construct($niTextTranslationUtil, $authService);
     }
 
-    public function indexAction()
+    private function handleSection(string $section): Response|ViewModel
     {
         $request = $this->getRequest();
+        $isPost = $request->isPost();
 
-        $data = $request->isPost() ? (array)$request->getPost() : $this->getFormData();
+        $data = $isPost ? $request->getPost()->getArrayCopy() : $this->fetchFormData($section);
 
-        $form = $this->getForm()->setData($data);
+        /** @var Form $form */
+        $form = $this->formServiceManager->get('lva-' . $this->lva . '-vehicles_declarations_' . $section)->getForm();
+        $this->alterFormForSection($section, $form, $data);
+        $form->setData($data);
 
-        $this->alterForm($form, $data);
-
-        $this->scriptFactory->loadFile('vehicle-declarations');
-
-        if ($request->isPost() && $form->isValid()) {
-            $this->save($data);
-
-            return $this->completeSection('vehicles_declarations');
+        if ($isPost && $form->isValid() && $this->saveSection($section, $data)) {
+            return $this->completeSection($section);
         }
 
-        return $this->render('vehicles_declarations', $form);
+        return $this->render($section, $form);
     }
 
-    protected function getForm()
+    private function alterFormForSection(string $section, Form $form, array $data): Form
     {
-        return $this->formServiceManager
-            ->get('lva-' . $this->lva . '-vehicles_declarations')
-            ->getForm();
+        switch ($section) {
+            case self::SECTION_SMALL_CONDITIONS:
+                if ($data['isOperatingSmallPsvAsPartOfLarge'] === true) {
+                    $this->formHelper->remove($form, 'psvSmallVhlConditions');
+                }
+                break;
+        }
+
+        return $form;
     }
 
-    protected function getFormData()
+    private function saveSection(string $section, array $data): bool
     {
-        return $this->formatDataForForm($this->loadData());
+        $mapperClass = $this->getMapperForSection($section);
+        $saveData = $mapperClass::mapFromForm($data);
+        $saveData['id'] = $this->getApplicationId();
+
+        $updateClass = $this->getUpdateClassForSection($section);
+
+        /** @var CommandInterface $updateCmd */
+        $updateCmd = $updateClass::create($saveData);
+        $response = $this->handleCommand($updateCmd);
+
+        if ($response->isOk()) {
+            return true;
+        }
+
+        $this->flashMessengerHelper->addCurrentErrorMessage('unknown-error');
+        return false;
     }
 
-    protected function loadData()
+    private function fetchFormData(string $section): array
     {
-        if ($this->data === null) {
+        $mapperClass = $this->getMapperForSection($section);
+
+        // Load data and map it to the form
+        $data = $this->loadData();
+        return $mapperClass::mapFromResult($data);
+    }
+
+    private function getMapperForSection(string $section): string
+    {
+        $mapperClass = $this->mapperClasses[$section] ?? null;
+
+        if ($mapperClass === null) {
+            throw new \RuntimeException('No mapper class found for section: ' . $section);
+        }
+
+        return $mapperClass;
+    }
+
+    private function getUpdateClassForSection(string $section): string
+    {
+        $updateClass = $this->updateCommands[$section] ?? null;
+
+        if ($updateClass === null) {
+            throw new \RuntimeException('No transfer object found to update section: ' . $section);
+        }
+
+        return $updateClass;
+    }
+
+    public function sizeAction(): Response|ViewModel
+    {
+        return $this->handleSection(self::SECTION_VEHICLES_SIZE);
+    }
+
+    public function operateLargeAction(): Response|ViewModel
+    {
+        return $this->handleSection(self::SECTION_PSV_OPERATE_LARGE);
+    }
+
+    public function noveltyAction(): Response|ViewModel
+    {
+        $this->scriptFactory->loadFile('vehicle-limo');
+        return $this->handleSection(self::SECTION_PSV_OPERATE_NOVELTY);
+    }
+
+    public function operateSmallAction(): Response|ViewModel
+    {
+        return $this->handleSection(self::SECTION_PSV_OPERATE_SMALL);
+    }
+
+    public function smallConditionsAction(): Response|ViewModel
+    {
+        return $this->handleSection(self::SECTION_SMALL_CONDITIONS);
+    }
+
+    public function mainOccupationAction(): Response|ViewModel
+    {
+        return $this->handleSection(self::SECTION_PSV_MAIN_OCCUPATION_UNDERTAKINGS);
+    }
+
+    public function writtenExplanationAction(): Response|ViewModel
+    {
+        return $this->handleSection(self::SECTION_PSV_SMALL_PART_WRITTEN);
+    }
+
+    public function smallEvidenceAction(): Response|ViewModel
+    {
+        $this->uploadSubCategory = Category::DOC_SUB_CATEGORY_SMALL_PSV_EVIDENCE_DIGITAL;
+        return $this->handleEvidenceSection(self::SECTION_PSV_DOCUMENTARY_EVIDENCE_SMALL);
+    }
+
+    public function largeEvidenceAction(): Response|ViewModel
+    {
+        $this->uploadSubCategory = Category::DOC_SUB_CATEGORY_LARGE_PSV_EVIDENCE_DIGITAL;
+        return $this->handleEvidenceSection(self::PSV_DOCUMENTARY_EVIDENCE_LARGE);
+    }
+
+    private function handleEvidenceSection(string $section): Response|ViewModel
+    {
+        $request = $this->getRequest();
+        $isPost = $request->isPost();
+
+        if ($isPost) {
+            $mapperClass = $this->getMapperForSection($section);
+            $data = $mapperClass::mapFromPost($request->getPost()->getArrayCopy());
+        } else {
+            $data = $this->fetchFormData($section);
+        }
+
+        /** @var Form $form */
+        $form = $this->formServiceManager->get('lva-' . $this->lva . '-vehicles_declarations_' . $section)->getForm($this->getRequest());
+        $form->setData($data);
+
+        $hasProcessedFiles = $this->processFiles(
+            $form,
+            'evidence->files',
+            $this->processFileUpload(...),
+            $this->deleteFile(...),
+            $this->getDocuments(...),
+            'evidence->uploadedFileCount'
+        );
+
+        // update application record and redirect
+        if (!$hasProcessedFiles && $isPost && $form->isValid() && $this->saveSection($section, $data)) {
+            return $this->completeSection($section);
+        }
+
+        // load scripts
+        $this->scriptFactory->loadFile('financial-evidence');
+
+        return $this->render($section, $form);
+    }
+
+    private function processFileUpload($file): void
+    {
+        $this->documents = [];
+
+        $data = [
+            'description' => $file['name'],
+            'category' => $this->uploadCategory,
+            'subCategory' => $this->uploadSubCategory,
+            'isExternal' => $this->isExternal(),
+            'application' => $this->getApplicationId(),
+            'licence' => $this->getLicenceId(),
+        ];
+
+        $this->uploadFile($file, $data);
+    }
+
+    /**
+     * Get documents relating to the application
+     */
+    private function getDocuments(): array
+    {
+        if (empty($this->documents)) {
+            $params = [
+                'id' => $this->getApplicationId(),
+                'category' => $this->uploadCategory,
+                'subCategory' => $this->uploadSubCategory,
+            ];
+
+            $response = $this->handleQuery(Documents::create($params));
+            $this->documents = $response->getResult();
+        }
+
+        return $this->documents;
+    }
+
+    private function loadData(): array
+    {
+        if (empty($this->data)) {
             $response = $this->handleQuery(
-                \Dvsa\Olcs\Transfer\Query\Application\VehicleDeclaration::create(['id' => $this->getApplicationId()])
+                VehicleDeclaration::create(['id' => $this->getApplicationId()])
             );
             if (!$response->isOk()) {
                 throw new \RuntimeException('Error getting vehicle declaration');
@@ -94,138 +309,5 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
         }
 
         return $this->data;
-    }
-
-    /**
-     * Format data for dorm
-     *
-     * @param array $data
-     * @return array
-     */
-    protected function formatDataForForm($data)
-    {
-        $psvVehicleSize = $data['psvWhichVehicleSizes']['id'] ?? null;
-        return [
-            'version' => $data['version'],
-            'psvVehicleSize' => [
-                'size' => $psvVehicleSize,
-            ],
-            'smallVehiclesIntention' => [
-                'psvOperateSmallVhl' => $data['psvOperateSmallVhl'],
-                'psvSmallVhlNotes' => $data['psvSmallVhlNotes'],
-                'psvSmallVhlConfirmation' => $data['psvSmallVhlConfirmation']
-            ],
-            'nineOrMore' => [
-                'psvNoSmallVhlConfirmation' => $data['psvNoSmallVhlConfirmation']
-            ],
-            'mainOccupation' => [
-                'psvMediumVhlConfirmation' => $data['psvMediumVhlConfirmation'],
-                'psvMediumVhlNotes' => $data['psvMediumVhlNotes']
-            ],
-            'limousinesNoveltyVehicles' => [
-                'psvLimousines' => $data['psvLimousines'],
-                'psvNoLimousineConfirmation' => $data['psvNoLimousineConfirmation'],
-                'psvOnlyLimousinesConfirmation' => $data['psvOnlyLimousinesConfirmation']
-            ]
-        ];
-    }
-
-    /**
-     * Add customisation to the form dependent on which of five scenarios
-     * is in play for OLCS-2855
-     */
-    protected function alterForm(\Laminas\Form\Form $form, $formData): void
-    {
-        $this->alterFormForLva($form);
-
-        // We always need to load data, even if we have posted, so we know how to alter the form
-        $data = $this->loadData();
-
-        $formHelper = $this->formHelper;
-
-        $isScotland = isset($data['licence']['trafficArea']['isScotland']) &&
-            $data['licence']['trafficArea']['isScotland'];
-
-        // if Vehicle size not selected then
-        if (!isset($formData['psvVehicleSize']['size'])) {
-            // only validate the vehicle size
-            $validationGroup = ['psvVehicleSize'];
-        } else {
-            // start with validating everything
-            $validationGroup = [
-                'psvVehicleSize',
-                // 15bi, 15bii, 15c/d
-                'smallVehiclesIntention' => ['psvOperateSmallVhl', 'psvSmallVhlNotes', 'psvSmallVhlConfirmation'],
-                // 15e
-                'nineOrMore' => ['psvNoSmallVhlConfirmation'],
-                // section 10, 8
-                'mainOccupation' => ['psvMediumVhlConfirmation', 'psvMediumVhlNotes'],
-                // 15fi, 15fii, 15g
-                'limousinesNoveltyVehicles' => [
-                    'psvLimousines',
-                    'psvNoLimousineConfirmation',
-                    'psvOnlyLimousinesConfirmation',
-                ],
-            ];
-
-            if ($formData['psvVehicleSize']['size'] === \Common\RefData::PSV_VEHICLE_SIZE_SMALL) {
-                unset($validationGroup['mainOccupation']);
-                unset($validationGroup['limousinesNoveltyVehicles'][2]);
-            }
-
-            if ($formData['psvVehicleSize']['size'] === \Common\RefData::PSV_VEHICLE_SIZE_MEDIUM_LARGE) {
-                unset($validationGroup['smallVehiclesIntention']);
-            }
-
-            if ($formData['psvVehicleSize']['size'] !== \Common\RefData::PSV_VEHICLE_SIZE_MEDIUM_LARGE) {
-                unset($validationGroup['nineOrMore']);
-            }
-        }
-
-        // if Scotland remove 15bi and 15bii
-        if ($isScotland) {
-            $formHelper->remove($form, 'smallVehiclesIntention->psvOperateSmallVhl');
-            $formHelper->remove($form, 'smallVehiclesIntention->psvSmallVhlNotes');
-            if (isset($validationGroup['smallVehiclesIntention'][0])) {
-                unset($validationGroup['smallVehiclesIntention'][0]);
-            }
-
-            if (isset($validationGroup['smallVehiclesIntention'][1])) {
-                unset($validationGroup['smallVehiclesIntention'][1]);
-            }
-        }
-
-        // Section 10 only visible for Restricted licences
-        if ($data['licenceType']['id'] !== RefData::LICENCE_TYPE_RESTRICTED) {
-            $formHelper->remove($form, 'mainOccupation');
-            if (isset($validationGroup['mainOccupation'])) {
-                unset($validationGroup['mainOccupation']);
-            }
-        }
-
-        $form->setValidationGroup($validationGroup);
-    }
-
-    /**
-     * Save the form data
-     *
-     * @param array $data
-     * @param string $service
-     *
-     * @return void
-     */
-    protected function save($data)
-    {
-        $saveData = $this->dataHelper->processDataMap($data, $this->dataMap);
-        $saveData['version'] = $data['version'];
-        $saveData['id'] = $this->getApplicationId();
-        $saveData['psvVehicleSize'] = $data['psvVehicleSize']['size'];
-
-        $response = $this->handleCommand(
-            \Dvsa\Olcs\Transfer\Command\Application\UpdateVehicleDeclaration::create($saveData)
-        );
-        if (!$response->isOk()) {
-            throw new \RuntimeException('Error updating vehicle declaration');
-        }
     }
 }
