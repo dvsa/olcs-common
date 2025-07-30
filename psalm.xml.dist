@@ -13,6 +13,15 @@
     <directory name="test"/>
     <ignoreFiles>
       <directory name="vendor"/>
+      <file name="Common/src/Common/Form/Elements/Validators/EmailConfirm.php" />
+      <file name="Common/src/Common/Form/Elements/Validators/FeeAmountValidator.php" />
+      <file name="Common/src/Common/Form/Elements/Validators/FeeExactAmountValidator.php" />
+      <file name="Common/src/Common/Form/Elements/Validators/NoOfPermitsMax.php" />
+      <file name="Common/src/Common/Form/Elements/Validators/NoOfPermitsMin.php" />
+      <file name="Common/src/Common/Form/Elements/Validators/NoOfPermitsNotEmpty.php" />
+      <file name="Common/src/Common/Form/Elements/Validators/PasswordConfirm.php" />
+      <file name="Common/src/Common/Form/Elements/Validators/ReceivedAmount.php" />
     </ignoreFiles>
   </projectFiles>
 </psalm>
+
