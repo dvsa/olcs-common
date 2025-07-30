@@ -31,6 +31,7 @@ class TaskDescription implements FormatterPluginManagerInterface
      * @return     string
      * @inheritdoc
      */
+    #[\Override]
     public function format($row, $column = [])
     {
         $routeMatch = $this->router->match($this->request);

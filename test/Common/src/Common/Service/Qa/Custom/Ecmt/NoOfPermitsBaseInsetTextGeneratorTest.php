@@ -23,6 +23,7 @@ class NoOfPermitsBaseInsetTextGeneratorTest extends MockeryTestCase
 
     private $noOfPermitsBaseInsetTextGenerator;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->translator = m::mock(TranslationHelperService::class);

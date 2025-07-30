@@ -12,6 +12,7 @@ class FlashMessengerTraitTest extends m\Adapter\Phpunit\MockeryTestCase
 {
     private $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->sut = $this->getMockForTrait(

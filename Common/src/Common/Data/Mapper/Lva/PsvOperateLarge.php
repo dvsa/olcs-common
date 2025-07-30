@@ -8,6 +8,7 @@ use Common\Data\Mapper\MapperInterface;
 
 class PsvOperateLarge implements MapperInterface
 {
+    #[\Override]
     public static function mapFromResult(array $data): array
     {
         return [

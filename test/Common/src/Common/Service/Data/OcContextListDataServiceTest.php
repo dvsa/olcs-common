@@ -34,6 +34,7 @@ class OcContextListDataServiceTest extends MockeryTestCase
     /**
      * Setup the sut
      */
+    #[\Override]
     protected function setUp(): void
     {
         $this->licenceOperatingCentreDataService = m::mock(LicenceOperatingCentre::class);

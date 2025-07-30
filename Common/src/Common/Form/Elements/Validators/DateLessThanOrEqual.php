@@ -92,6 +92,7 @@ class DateLessThanOrEqual extends AbstractValidator
      * @param  mixed $value
      * @return bool
      */
+    #[\Override]
     public function isValid($value, array $context = null)
     {
         $thisValue = $value;

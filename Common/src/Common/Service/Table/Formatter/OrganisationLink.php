@@ -31,6 +31,7 @@ class OrganisationLink implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         $url = $this->urlHelper->fromRoute('operator/business-details', ['organisation' => $data['organisation']['id']]);

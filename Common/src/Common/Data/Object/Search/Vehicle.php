@@ -39,6 +39,7 @@ class Vehicle extends InternalSearchAbstract
      *
      * @return array
      */
+    #[\Override]
     public function getFilters()
     {
         if ($this->filters === []) {
@@ -50,6 +51,7 @@ class Vehicle extends InternalSearchAbstract
         return $this->filters;
     }
 
+    #[\Override]
     public function getSettings()
     {
         $settings = parent::getSettings();
@@ -78,6 +80,7 @@ class Vehicle extends InternalSearchAbstract
     /**
      * @return array
      */
+    #[\Override]
     public function getColumns()
     {
         return [

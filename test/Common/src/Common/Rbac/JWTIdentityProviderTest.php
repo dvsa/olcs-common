@@ -438,6 +438,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
         $this->sut->clearSession();
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->setUpServiceManager();
@@ -454,6 +455,7 @@ class JWTIdentityProviderTest extends MockeryTestCase
         );
     }
 
+    #[\Override]
     protected function setUpDefaultServices(ServiceManager $serviceManager): ServiceManager
     {
         $this->cacheService();

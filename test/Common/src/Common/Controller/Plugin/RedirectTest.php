@@ -28,6 +28,7 @@ class RedirectTest extends MockeryTestCase
      * @NOTE I am creating a mock of the SUT here, as this class wraps Laminas Redirect plugin, and I want to mock it's
      *  default toRoute method
      */
+    #[\Override]
     protected function setUp(): void
     {
         $this->sut = m::mock(\Common\Controller\Plugin\Redirect::class)->makePartial();

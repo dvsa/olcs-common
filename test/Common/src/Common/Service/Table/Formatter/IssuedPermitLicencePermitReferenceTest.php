@@ -17,12 +17,14 @@ class IssuedPermitLicencePermitReferenceTest extends MockeryTestCase
 
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->urlHelper = m::mock(UrlHelper::class);
         $this->sut = new IssuedPermitLicencePermitReference($this->urlHelper);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

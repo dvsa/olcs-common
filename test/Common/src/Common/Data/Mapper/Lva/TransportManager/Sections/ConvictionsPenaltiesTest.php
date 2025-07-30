@@ -13,6 +13,7 @@ class ConvictionsPenaltiesTest extends TestCase
 
     private $mockTranslator;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->mockTranslator = m::mock(TranslationHelperService::class);

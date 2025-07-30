@@ -23,6 +23,7 @@ class TaskCheckboxTest extends \PHPUnit\Framework\TestCase
 
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->tableBuilder = m::mock(TableBuilder::class);

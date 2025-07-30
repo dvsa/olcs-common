@@ -26,6 +26,7 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
 
     private $container;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->container = m::mock(ContainerInterface::class);

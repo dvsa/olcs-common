@@ -21,6 +21,7 @@ class IrhpPermitRangeRestrictedCountries implements FormatterPluginManagerInterf
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         $countryNames = [];

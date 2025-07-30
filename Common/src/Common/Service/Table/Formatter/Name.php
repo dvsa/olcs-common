@@ -28,6 +28,7 @@ class Name implements FormatterPluginManagerInterface
      * @param  array $column column specification
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         // if column[name] is specified, look within that index for the data

@@ -54,6 +54,7 @@ class CommandServiceTest extends MockeryTestCase
     private $mockFlashMsgr;
 
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->mockDto = m::mock(CommandInterface::class);

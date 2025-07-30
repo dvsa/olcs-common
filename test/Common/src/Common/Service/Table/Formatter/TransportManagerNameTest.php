@@ -20,6 +20,7 @@ class TransportManagerNameTest extends MockeryTestCase
 
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->urlHelper = m::mock(UrlHelperService::class);
@@ -27,6 +28,7 @@ class TransportManagerNameTest extends MockeryTestCase
         $this->sut = new TransportManagerName($this->urlHelper, $this->translator);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

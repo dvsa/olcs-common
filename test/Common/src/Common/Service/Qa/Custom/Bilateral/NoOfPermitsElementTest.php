@@ -21,6 +21,7 @@ class NoOfPermitsElementTest extends MockeryTestCase
 
     private $noOfPermitsElement;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->noOfPermitsElement = new NoOfPermitsElement(self::ELEMENT_NAME);

@@ -15,6 +15,7 @@ class CaseEntityName implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         if ($data['caseType']['id'] === \Common\RefData::CASE_TYPE_TM) {

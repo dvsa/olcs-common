@@ -8,6 +8,7 @@ use Common\Data\Mapper\MapperInterface;
 
 class PsvDocumentaryEvidenceSmall implements MapperInterface
 {
+    #[\Override]
     public static function mapFromResult(array $data): array
     {
         return [

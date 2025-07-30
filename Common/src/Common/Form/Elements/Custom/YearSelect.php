@@ -40,6 +40,7 @@ class YearSelect extends LaminasElement\Select
      * @param  array $options
      * @return YearSelect
      */
+    #[\Override]
     public function setOptions($options)
     {
         // set Min/Max Year based on element's options

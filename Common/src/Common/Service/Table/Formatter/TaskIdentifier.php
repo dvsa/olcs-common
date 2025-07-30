@@ -29,6 +29,7 @@ class TaskIdentifier implements FormatterPluginManagerInterface
      * @param  array $column
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         $identifier = $data['linkDisplay'];

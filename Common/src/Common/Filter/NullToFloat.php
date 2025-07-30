@@ -19,6 +19,7 @@ class NullToFloat extends AbstractFilter
      *
      * @return mixed
      */
+    #[\Override]
     public function filter($value)
     {
         if ($value === false || empty($value)) {

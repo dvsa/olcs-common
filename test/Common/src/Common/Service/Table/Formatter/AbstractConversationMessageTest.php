@@ -14,6 +14,7 @@ class AbstractConversationMessageTest extends MockeryTestCase
     /** @var AbstractConversationMessage */
     private $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->sut = m::mock(AbstractConversationMessage::class)
@@ -68,6 +69,7 @@ HTML;');
         $this->assertStringContainsString($expectedDate, $output);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

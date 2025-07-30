@@ -28,6 +28,7 @@ class Date extends LaminasDate
      *
      * @return bool
      */
+    #[\Override]
     public function isValid($value)
     {
         if (is_null($value)) {

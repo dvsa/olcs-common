@@ -18,6 +18,7 @@ class StandardAndCabotageYesNoRadioValidatorTest extends MockeryTestCase
 
     private $yesNoRadioValidator;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->yesContentElement = m::mock(Radio::class);

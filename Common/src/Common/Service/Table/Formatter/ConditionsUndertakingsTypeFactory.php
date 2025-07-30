@@ -12,6 +12,7 @@ class ConditionsUndertakingsTypeFactory implements FactoryInterface
      * @param  array|null         $options
      * @return ConditionsUndertakingsType
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $translator = $container->get('translator');

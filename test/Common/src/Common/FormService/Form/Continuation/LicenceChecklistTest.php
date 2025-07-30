@@ -27,6 +27,7 @@ class LicenceChecklistTest extends MockeryTestCase
     /** @var  m\MockInterface */
     protected $urlHelper;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->formHelper = m::mock(FormHelperService::class);

@@ -11,6 +11,7 @@ class RevokedLicences extends AbstractSection implements TransportManagerSection
     /**
      * @return static
      */
+    #[\Override]
     public function populate(array $transportManagerApplication)
     {
 

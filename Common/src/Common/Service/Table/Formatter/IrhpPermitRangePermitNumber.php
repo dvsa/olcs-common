@@ -26,6 +26,7 @@ class IrhpPermitRangePermitNumber implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         unset($column);

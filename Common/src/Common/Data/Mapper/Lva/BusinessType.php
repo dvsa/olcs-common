@@ -22,6 +22,7 @@ class BusinessType implements MapperInterface
      *
      * @psalm-return array{version: mixed, data: array{type: mixed}}
      */
+    #[\Override]
     public static function mapFromResult(array $data)
     {
         return [

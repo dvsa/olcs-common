@@ -17,6 +17,7 @@ class FormRadioHorizontal extends \Common\Form\View\Helper\Extended\FormCollecti
      *
      * @return string HTML
      */
+    #[\Override]
     public function render(ElementInterface $element): string
     {
         $view = $this->view;

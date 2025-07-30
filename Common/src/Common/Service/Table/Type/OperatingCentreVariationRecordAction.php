@@ -4,6 +4,7 @@ namespace Common\Service\Table\Type;
 
 class OperatingCentreVariationRecordAction extends VariationRecordAction
 {
+    #[\Override]
     public function render(array $data, array $column, string|null $formattedContent = null): string
     {
         $content = parent::render($data, $column, $formattedContent);

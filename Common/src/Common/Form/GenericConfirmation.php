@@ -3,9 +3,8 @@
 namespace Common\Form;
 
 /**
- * GenericConfirmation
- *
- * @author Mat Evans <mat.evans@valtech.co.uk>
+ * @template TFilteredValues
+ * @extends Form<TFilteredValues>
  */
 class GenericConfirmation extends Form
 {

@@ -22,6 +22,7 @@ class NoOfPermitsMaxTest extends \PHPUnit\Framework\TestCase
     /**
      * Set up the validator
      */
+    #[\Override]
     protected function setUp(): void
     {
         $this->validator = new NoOfPermitsMax(15);

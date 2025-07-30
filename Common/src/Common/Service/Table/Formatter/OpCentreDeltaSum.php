@@ -26,6 +26,7 @@ class OpCentreDeltaSum implements FormatterPluginManagerInterface
      *
      * @return string The total count.
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         $sum = 0;

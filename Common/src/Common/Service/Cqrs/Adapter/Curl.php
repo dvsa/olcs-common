@@ -18,6 +18,7 @@ class Curl extends \Laminas\Http\Client\Adapter\Curl
      *
      * @return string
      */
+    #[\Override]
     public function write($method, $uri, $httpVersion = 1.1, $headers = [], $body = '')
     {
         $this->response = '';

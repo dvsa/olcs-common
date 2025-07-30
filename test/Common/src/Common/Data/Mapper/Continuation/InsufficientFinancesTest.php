@@ -15,6 +15,7 @@ class InsufficientFinancesTest extends MockeryTestCase
      */
     private $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->sut = new InsufficientFinances();

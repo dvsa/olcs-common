@@ -12,6 +12,7 @@ class LicenceStatusSelfserveFactory implements FactoryInterface
      * @param  array|null         $options
      * @return LicenceStatusSelfserve
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $translator = $container->get('translator');

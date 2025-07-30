@@ -25,6 +25,7 @@ class PsvDiscsTest extends AbstractLvaFormServiceTestCase
 
     protected $formName = 'Lva\PsvDiscs';
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->authService = m::mock(AuthorizationService::class);

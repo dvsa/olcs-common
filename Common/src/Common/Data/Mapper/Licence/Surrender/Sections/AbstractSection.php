@@ -28,5 +28,6 @@ abstract class AbstractSection
 
     abstract protected function makeQuestions();
 
+    #[\Override]
     abstract protected function makeChangeLink();
 }

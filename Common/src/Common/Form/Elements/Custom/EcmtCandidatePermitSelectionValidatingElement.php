@@ -16,6 +16,7 @@ class EcmtCandidatePermitSelectionValidatingElement extends Hidden implements In
      *
      * @psalm-return array{name: null|string, continue_if_empty: true, validators: list{array{name: Callback::class, options: array{callback: \Closure(mixed, array):bool, messages: array{callbackValue: 'permits.page.irhp.candidate-permit-selection.error'}}}}}
      */
+    #[\Override]
     public function getInputSpecification(): array
     {
         return [

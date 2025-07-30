@@ -14,6 +14,7 @@ class ReviewDetailsTest extends TestCase
 
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->sut = new ReviewDetails();

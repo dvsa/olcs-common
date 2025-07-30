@@ -30,6 +30,7 @@ class TmApplicationManagerTypeTest extends MockeryTestCase
 
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->urlHelper = m::mock(UrlHelperService::class);
@@ -38,6 +39,7 @@ class TmApplicationManagerTypeTest extends MockeryTestCase
         $this->sut = new TmApplicationManagerType($this->application, $this->urlHelper, $this->translator);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

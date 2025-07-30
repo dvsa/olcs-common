@@ -14,6 +14,7 @@ class OtherEmploymentsTest extends MockeryTestCase
     private $sut;
 
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->mockTranslator = m::mock(TranslationHelperService::class);

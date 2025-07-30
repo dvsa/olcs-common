@@ -29,6 +29,7 @@ class IssuedPermitLicencePermitReference implements FormatterPluginManagerInterf
      *
      * @return string
      */
+    #[\Override]
     public function format($row, $column = null)
     {
         $route = 'licence/irhp-application/irhp-permits';

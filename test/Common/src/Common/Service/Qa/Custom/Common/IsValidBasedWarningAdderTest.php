@@ -30,6 +30,7 @@ class IsValidBasedWarningAdderTest extends MockeryTestCase
 
     private $isValidBasedWarningAdder;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->qaForm = m::mock(QaForm::class);

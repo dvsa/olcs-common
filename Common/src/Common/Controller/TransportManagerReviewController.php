@@ -19,6 +19,7 @@ use Laminas\View\Model\ViewModel;
  */
 class TransportManagerReviewController extends LaminasAbstractActionController
 {
+    #[\Override]
     public function indexAction()
     {
         $response = $this->handleQuery(Review::create(['id' => $this->params('id')]));

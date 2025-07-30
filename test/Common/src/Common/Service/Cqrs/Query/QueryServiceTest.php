@@ -53,6 +53,7 @@ class QueryServiceTest extends MockeryTestCase
      */
     private $mockContainer;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->mockRouter = m::mock(RouteInterface::class);

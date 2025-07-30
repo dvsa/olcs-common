@@ -22,6 +22,7 @@ class InternationalJourneysDataHandler implements DataHandlerInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setData(QaForm $form): void
     {
         $this->isValidBasedWarningAdder->add(

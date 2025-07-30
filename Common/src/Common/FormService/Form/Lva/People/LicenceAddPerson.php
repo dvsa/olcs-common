@@ -23,6 +23,7 @@ class LicenceAddPerson extends AbstractPeople
      *
      * @return Form $form form
      */
+    #[\Override]
     public function getForm(array $params = [])
     {
         return $this->formHelper->createForm(AddPerson::class);

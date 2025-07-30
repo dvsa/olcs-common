@@ -18,6 +18,7 @@ abstract class AbstractLvaAdapter extends AbstractControllerAwareAdapter impleme
      *
      * @return void
      */
+    #[\Override]
     public function alterForm(Form $form)
     {
     }

@@ -20,6 +20,7 @@ class IdentityProviderFactory implements FactoryInterface
      * @param array|null $options
      * @throws RunTimeException
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): IdentityProviderInterface
     {
         $identityProvider = $container->get('config')['auth']['identity_provider'] ?? '';

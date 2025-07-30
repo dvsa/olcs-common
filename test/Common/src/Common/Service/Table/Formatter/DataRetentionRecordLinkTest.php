@@ -30,6 +30,7 @@ class DataRetentionRecordLinkTest extends TestCase
 
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->urlHelper = m::mock(UrlHelperService::class);
@@ -37,6 +38,7 @@ class DataRetentionRecordLinkTest extends TestCase
         $this->sut = new DataRetentionRecordLink($this->urlHelper, $this->viewHelperManager);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

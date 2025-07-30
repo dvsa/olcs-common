@@ -6,6 +6,7 @@ use Laminas\Form\Element\MultiCheckbox;
 
 class RestrictedCountriesMultiCheckbox extends MultiCheckbox
 {
+    #[\Override]
     public function getInputSpecification(): array
     {
         $spec = parent::getInputSpecification();

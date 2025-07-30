@@ -23,6 +23,7 @@ class GenericMethodsTest extends MockeryTestCase
     /** @var  m\MockInterface | FormHelperService */
     private $mockHlpForm;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->mockHlpForm = m::mock(FormHelperService::class);

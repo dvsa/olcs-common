@@ -25,6 +25,7 @@ class SystemInfoMessagesTest extends MockeryTestCase
     /**
      * Setup the view helper
      */
+    #[\Override]
     protected function setUp(): void
     {
         $this->mockAnnotationBuilder = m::mock(AnnotationBuilder::class);

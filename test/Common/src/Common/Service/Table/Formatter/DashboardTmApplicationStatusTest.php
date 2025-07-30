@@ -13,12 +13,14 @@ class DashboardTmApplicationStatusTest extends MockeryTestCase
 
     protected $viewHelperManager;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->viewHelperManager = m::mock(HelperPluginManager::class);
         $this->sut = new DashboardTmApplicationStatus($this->viewHelperManager);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

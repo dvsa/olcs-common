@@ -94,6 +94,7 @@ class DateCompareWithInterval extends DateCompare
      * @param  array $options
      * @return DateCompare
      */
+    #[\Override]
     public function setOptions($options = [])
     {
         if (isset($options['date_interval'])) {
@@ -112,6 +113,7 @@ class DateCompareWithInterval extends DateCompare
      *
      * @param array $context
      */
+    #[\Override]
     protected function getCompareToDate($context): \DateTime|false
     {
         $compareDateValue = parent::getCompareToDate($context);
@@ -143,6 +145,7 @@ class DateCompareWithInterval extends DateCompare
      * @param  mixed $compareToValue
      * @return bool
      */
+    #[\Override]
     protected function isValidForOperator($value, $compareToValue)
     {
         switch ($this->getOperator()) {

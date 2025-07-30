@@ -24,6 +24,7 @@ class BusRegNumberLinkTest extends MockeryTestCase
 
     protected $statusHelper;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->urlHelper = m:: mock(UrlHelperService::class);
@@ -33,6 +34,7 @@ class BusRegNumberLinkTest extends MockeryTestCase
         $this->sut = new BusRegNumberLink($this->translator, $this->viewHelperManager, $this->urlHelper);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

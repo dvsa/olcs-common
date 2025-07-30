@@ -26,6 +26,7 @@ class TaskDate implements FormatterPluginManagerInterface
      * @param  array $column
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         $date = $this->dateFormatter->format($data, $column);

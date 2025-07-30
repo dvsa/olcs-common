@@ -22,6 +22,7 @@ class Trailers implements MapperInterface
      *
      * @psalm-return array{trailers: array{shareInfo: mixed}}
      */
+    #[\Override]
     public static function mapFromResult(array $data)
     {
         return [

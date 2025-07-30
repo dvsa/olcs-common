@@ -48,6 +48,7 @@ class People extends InternalSearchAbstract
      *
      * @return array
      */
+    #[\Override]
     public function getFilters()
     {
         if (empty($this->filters)) {
@@ -68,6 +69,7 @@ class People extends InternalSearchAbstract
      *
      * @return array
      */
+    #[\Override]
     public function getDateRanges()
     {
         if ($this->dateRanges === []) {
@@ -79,6 +81,7 @@ class People extends InternalSearchAbstract
         return $this->dateRanges;
     }
 
+    #[\Override]
     public function getVariables()
     {
         return [
@@ -96,6 +99,7 @@ class People extends InternalSearchAbstract
      *
      * @return array
      */
+    #[\Override]
     public function getSettings()
     {
         return [
@@ -121,6 +125,7 @@ class People extends InternalSearchAbstract
      *
      * @return array
      */
+    #[\Override]
     public function getColumns()
     {
         return [

@@ -18,6 +18,7 @@ use Common\Form\Elements\Validators\ChequeDate;
 class ChequeDateTest extends \PHPUnit\Framework\TestCase
 {
     public $sut;
+    #[\Override]
     protected function setUp(): void
     {
         $this->sut = new ChequeDate();

@@ -24,6 +24,7 @@ abstract class AbstractControllerAwareAdapter extends AbstractAdapter implements
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
+    #[\Override]
     protected function getLvaAdapter(string $lva = null): AbstractLvaAdapter
     {
         $adapter = parent::getLvaAdapter($lva);

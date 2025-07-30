@@ -37,6 +37,7 @@ class StaticList extends AbstractDataService implements ListData
      * @return array
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
+    #[\Override]
     public function fetchListOptions($context, $useGroups = false)
     {
         $data = $this->fetchListData($context);

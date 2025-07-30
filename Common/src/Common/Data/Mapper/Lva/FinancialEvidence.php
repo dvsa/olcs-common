@@ -22,6 +22,7 @@ class FinancialEvidence implements MapperInterface
      *
      * @return array
      */
+    #[\Override]
     public static function mapFromResult(array $data)
     {
         $uploadNow = null;

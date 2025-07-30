@@ -16,12 +16,14 @@ class DataRetentionRuleLinkTest extends TestCase
 
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->urlHelper = m::mock(UrlHelperService::class);
         $this->sut = new DataRetentionRuleLink($this->urlHelper);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

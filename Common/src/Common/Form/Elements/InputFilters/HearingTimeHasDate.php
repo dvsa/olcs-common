@@ -22,6 +22,7 @@ class HearingTimeHasDate extends LaminasTimeSelect implements InputProviderInter
     /**
      * Provide default input rules for this element.
      */
+    #[\Override]
     public function getInputSpecification(): array
     {
         return [

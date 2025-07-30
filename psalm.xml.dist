@@ -15,4 +15,32 @@
       <directory name="vendor"/>
     </ignoreFiles>
   </projectFiles>
+  <issueHandlers>
+    <UndefinedClass>
+      <errorLevel type="suppress">
+        <!-- see ticket VOL-5194 -->
+        <file name="Common/src/Common/Controller/Lva/AbstractCommunityLicencesController.php" />
+        <!-- see ticket VOL-5191 -->
+        <file name="Common/src/Common/Controller/Lva/Traits/CrudTableTrait.php" />
+      </errorLevel>
+    </UndefinedClass>
+    <InvalidExtendClass>
+      <errorLevel type="suppress">
+        <!-- Laminas have added annotations to some classes we extend, to signify they will be final in upcoming versions -->
+        <file name="Common/src/Common/Form/Elements/Validators/EmailConfirm.php" />
+        <file name="Common/src/Common/Form/Elements/Validators/FeeAmountValidator.php" />
+        <file name="Common/src/Common/Form/Elements/Validators/FeeExactAmountValidator.php" />
+        <file name="Common/src/Common/Form/Elements/Validators/NoOfPermitsMax.php" />
+        <file name="Common/src/Common/Form/Elements/Validators/NoOfPermitsMin.php" />
+        <file name="Common/src/Common/Form/Elements/Validators/NoOfPermitsNotEmpty.php" />
+        <file name="Common/src/Common/Form/Elements/Validators/PasswordConfirm.php" />
+        <file name="Common/src/Common/Form/Elements/Validators/ReceivedAmount.php" />
+        <file name="Common/src/Common/View/Model/ReceiptViewModel.php" />
+        <file name="Common/src/Common/View/Model/Section.php" />
+        <file name="Common/src/Common/View/Helper/FlashMessenger.php" />
+        <file name="Common/src/Common/Form/View/Model/FormRadioContentViewModel.php" />
+      </errorLevel>
+    </InvalidExtendClass>
+  </issueHandlers>
 </psalm>
+

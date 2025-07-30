@@ -27,6 +27,7 @@ class Selector extends AbstractType
 
     protected string $format = '<input type="radio" name="%s" value="%s" %s />';
 
+    #[\Override]
     public function render(array $data, array $column, string|null $formattedContent = null): string
     {
         $fieldset = $this->getTable()->getFieldset();

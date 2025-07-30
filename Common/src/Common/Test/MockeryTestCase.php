@@ -31,6 +31,7 @@ class MockeryTestCase extends \Mockery\Adapter\Phpunit\MockeryTestCase
     /**
      * @return void
      */
+    #[\Override]
     protected function mockeryTestSetUp()
     {
         $this->configureMockeryGlobalConfiguration();
@@ -40,6 +41,7 @@ class MockeryTestCase extends \Mockery\Adapter\Phpunit\MockeryTestCase
     /**
      * @return void
      */
+    #[\Override]
     protected function mockeryTestTearDown()
     {
         $this->restoreMockeryGlobalConfiguration();

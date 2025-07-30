@@ -61,6 +61,7 @@ abstract class AbstractPeopleController extends AbstractController
      *
      * @return array|\Common\View\Model\Section|\Laminas\Http\Response
      */
+    #[\Override]
     public function indexAction()
     {
         /* @var $adapter Adapters\AbstractPeopleAdapter */

@@ -21,6 +21,7 @@ class NotPopulatedStringToZero extends AbstractFilter
      *
      * @return string
      */
+    #[\Override]
     public function filter($value)
     {
         if (!is_string($value)) {

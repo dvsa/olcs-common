@@ -112,6 +112,7 @@ class Text extends LaminasElement\Text implements InputProviderInterface
      *
      * @psalm-return array{name: null|string, required: mixed, filters: list{array{name: \Laminas\Filter\StringTrim::class}}, validators: array}
      */
+    #[\Override]
     public function getInputSpecification(): array
     {
         return [

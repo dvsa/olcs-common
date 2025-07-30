@@ -844,6 +844,7 @@ class FormErrorsTest extends MockeryTestCase
     /**
      * @inheritDoc
      */
+    #[\Override]
     protected function setUp(): void
     {
         $this->view = m::mock(\Laminas\View\Renderer\RendererInterface::class);
@@ -861,6 +862,7 @@ class FormErrorsTest extends MockeryTestCase
     /**
      * @return void
      */
+    #[\Override]
     protected function setUpDefaultServices(ServiceManager $serviceManager): ServiceManager
     {
         $serviceManager->setService(TranslatorInterface::class, $this->setUpTranslator());

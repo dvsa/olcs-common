@@ -29,6 +29,7 @@ class EbsrDocumentLink implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         $url = $this->urlHelper->fromRoute(

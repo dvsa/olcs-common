@@ -38,6 +38,7 @@ class OperatingCentreSelfserve extends InternalSearchAbstract
      *
      * @return array
      */
+    #[\Override]
     public function getSettings()
     {
         return [
@@ -55,6 +56,7 @@ class OperatingCentreSelfserve extends InternalSearchAbstract
      *
      * @return array
      */
+    #[\Override]
     public function getFilters()
     {
         if (empty($this->filters)) {
@@ -72,6 +74,7 @@ class OperatingCentreSelfserve extends InternalSearchAbstract
      *
      * @return array
      */
+    #[\Override]
     public function getColumns()
     {
         return [

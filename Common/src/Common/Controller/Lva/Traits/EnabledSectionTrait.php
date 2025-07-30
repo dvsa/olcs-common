@@ -58,12 +58,7 @@ trait EnabledSectionTrait
         return $sections;
     }
 
-    /**
-     * @return array|null
-     *
-     * @psalm-return list{0?: mixed,...}|null
-     */
-    protected function removeInaccessible($prerequisites, $accessibleSections)
+    protected function removeInaccessible($prerequisites, $accessibleSections): ?array
     {
         if (is_string($prerequisites)) {
             if (!in_array($prerequisites, array_keys($accessibleSections))) {
@@ -84,5 +79,7 @@ trait EnabledSectionTrait
 
             return $keep;
         }
+
+        return null;
     }
 }

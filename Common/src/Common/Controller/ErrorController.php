@@ -19,6 +19,7 @@ use Laminas\View\Model\ViewModel;
  */
 class ErrorController extends LaminasAbstractActionController
 {
+    #[\Override]
     public function notFoundAction()
     {
         $view = new ViewModel(['stopRedirect' => true]);

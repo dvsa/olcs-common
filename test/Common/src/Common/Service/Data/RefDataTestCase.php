@@ -17,6 +17,7 @@ class RefDataTestCase extends AbstractListDataServiceTestCase
     /** @var LanguagePreference */
     protected $languagePreferenceService;
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

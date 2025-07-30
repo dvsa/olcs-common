@@ -51,6 +51,7 @@ class Dispatcher extends AbstractOlcsController
     /**
      * @inheritDoc
      */
+    #[\Override]
     public static function getMethodFromAction($action)
     {
         // Delegate all action calls to $this->callAction

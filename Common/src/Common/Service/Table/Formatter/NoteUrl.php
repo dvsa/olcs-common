@@ -31,6 +31,7 @@ class NoteUrl implements FormatterPluginManagerInterface
      * @return     string
      * @inheritdoc
      */
+    #[\Override]
     public function format($row, $column = [])
     {
         $url = $this->urlHelper->fromRoute(

@@ -19,6 +19,7 @@ class IrhpPermitRangeReserve implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         return $data['ssReserve'] ? 'Yes' : 'N/A';

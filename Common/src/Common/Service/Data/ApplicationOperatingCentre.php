@@ -48,6 +48,7 @@ class ApplicationOperatingCentre extends AbstractDataService implements ListData
      * @return array
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
+    #[\Override]
     public function fetchListOptions($context = null, $useGroups = false)
     {
         $id = $this->getId();

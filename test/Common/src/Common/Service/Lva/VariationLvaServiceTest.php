@@ -33,6 +33,7 @@ class VariationLvaServiceTest extends MockeryTestCase
     /** @var UrlHelperService */
     private $urlHelper;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->translationHelper = m::mock(TranslationHelperService::class);

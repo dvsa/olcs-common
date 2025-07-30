@@ -16,6 +16,7 @@ class InternalLicencePermitReferenceTest extends MockeryTestCase
 
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->urlHelper = m::mock(UrlHelper::class);
@@ -24,6 +25,7 @@ class InternalLicencePermitReferenceTest extends MockeryTestCase
         $this->sut = new InternalLicencePermitReference($this->urlHelper, $this->permissionService);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

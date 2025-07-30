@@ -21,6 +21,7 @@ class RadioFieldsetPopulator implements FieldsetPopulatorInterface
      *
      * @param mixed $form
      */
+    #[\Override]
     public function populate($form, Fieldset $fieldset, array $options): void
     {
         $radio = $this->radioFactory->create('qaElement');

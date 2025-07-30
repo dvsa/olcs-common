@@ -191,6 +191,7 @@ class ValidateIf extends AbstractValidator implements ValidatorPluginManagerAwar
     /**
      * @return $this
      */
+    #[\Override]
     public function setValidatorPluginManager(ValidatorPluginManager $validatorPluginManager)
     {
         $this->validatorPluginManager = $validatorPluginManager;
@@ -200,6 +201,7 @@ class ValidateIf extends AbstractValidator implements ValidatorPluginManagerAwar
     /**
      * @return ValidatorPluginManager
      */
+    #[\Override]
     public function getValidatorPluginManager()
     {
         return $this->validatorPluginManager;
@@ -217,6 +219,7 @@ class ValidateIf extends AbstractValidator implements ValidatorPluginManagerAwar
      * @param null $context
      * @return bool
      */
+    #[\Override]
     public function isValid($value, $context = null)
     {
         $this->injectPostData($context);
@@ -269,6 +272,7 @@ class ValidateIf extends AbstractValidator implements ValidatorPluginManagerAwar
      * @param array $options
      * @return AbstractValidator
      */
+    #[\Override]
     public function setOptions($options = [])
     {
         if (isset($options['context_field'])) {

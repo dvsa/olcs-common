@@ -22,6 +22,7 @@ class InterimOcCheckbox implements FormatterPluginManagerInterface
      * @param  array $column
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         $format = '<input type="checkbox" value="' . $data['id'] . '" name="operatingCentres[id][]" %s>';

@@ -26,6 +26,7 @@ class TableRequiredTest extends \PHPUnit\Framework\TestCase
     /**
      * Setup the element
      */
+    #[\Override]
     protected function setUp(): void
     {
         $this->element = new TableRequired();

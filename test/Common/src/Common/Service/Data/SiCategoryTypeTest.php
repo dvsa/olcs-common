@@ -16,6 +16,7 @@ class SiCategoryTypeTest extends AbstractDataServiceTestCase
     /** @var SiCategoryType */
     private $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

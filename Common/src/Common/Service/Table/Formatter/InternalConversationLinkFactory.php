@@ -9,6 +9,7 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class InternalConversationLinkFactory implements FactoryInterface
 {
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $formatterPluginManager = $container->get(FormatterPluginManager::class);

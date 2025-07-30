@@ -21,6 +21,7 @@ class VehicleSafetyTachographAnalyserContractorValidatorTest extends \PHPUnit\Fr
     /**
      * Set up the validator
      */
+    #[\Override]
     protected function setUp(): void
     {
         $this->validator = new VehicleSafetyTachographAnalyserContractorValidator();

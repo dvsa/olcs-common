@@ -20,6 +20,7 @@ class PageIdTest extends MockeryTestCase
      */
     private $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $action = 'someaction';

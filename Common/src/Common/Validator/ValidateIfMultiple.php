@@ -26,6 +26,7 @@ class ValidateIfMultiple extends ValidateIf
      * @param null $context
      * @return bool
      */
+    #[\Override]
     public function isValid($value, $context = null)
     {
         if (array_key_exists($this->getContextField(), $context)) {

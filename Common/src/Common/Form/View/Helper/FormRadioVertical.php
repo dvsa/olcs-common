@@ -17,6 +17,7 @@ class FormRadioVertical extends \Common\Form\View\Helper\Extended\FormCollection
      * @param ElementInterface $element Element to render
      * @return string HTML
      */
+    #[\Override]
     public function render(ElementInterface $element): string
     {
         $variables = $this->view->vars()->getArrayCopy();

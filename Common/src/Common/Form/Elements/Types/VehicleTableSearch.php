@@ -12,6 +12,7 @@ class VehicleTableSearch extends AbstractInputSearch
     /**
      * @return void
      */
+    #[\Override]
     protected function addHint()
     {
         $this->add(
@@ -31,6 +32,7 @@ class VehicleTableSearch extends AbstractInputSearch
     /**
      * @return void
      */
+    #[\Override]
     protected function addInput()
     {
         $this->add(
@@ -50,6 +52,7 @@ class VehicleTableSearch extends AbstractInputSearch
     /**
      * @return void
      */
+    #[\Override]
     protected function addSubmit()
     {
         $this->add(

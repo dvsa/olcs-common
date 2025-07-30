@@ -18,6 +18,7 @@ class ConstrainedCountriesListTest extends MockeryTestCase
     public $sut;
     protected $translator;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->translator = m::mock(TranslatorDelegator::class);

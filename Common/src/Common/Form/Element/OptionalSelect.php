@@ -9,6 +9,7 @@ use Laminas\Form\Element\Select;
  */
 class OptionalSelect extends Select
 {
+    #[\Override]
     public function getInputSpecification(): array
     {
         $spec = parent::getInputSpecification();

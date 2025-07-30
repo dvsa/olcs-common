@@ -36,6 +36,7 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
      *
      * @return \Common\View\Model\Section|Response
      */
+    #[\Override]
     public function indexAction()
     {
         $response = $this->handleQuery(TypeOfLicence::create(['id' => $this->getIdentifier()]));

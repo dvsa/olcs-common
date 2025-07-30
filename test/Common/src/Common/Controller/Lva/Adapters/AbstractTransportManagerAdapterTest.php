@@ -23,6 +23,7 @@ class AbstractTransportManagerAdapterTest extends MockeryTestCase
     /** @var  ContainerInterface|\Mockery\MockInterface */
     protected $container;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->container = m::mock(ContainerInterface::class);

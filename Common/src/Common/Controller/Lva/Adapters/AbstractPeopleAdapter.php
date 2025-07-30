@@ -214,6 +214,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
      *
      * @return void
      */
+    #[\Override]
     public function addMessages()
     {
     }
@@ -224,6 +225,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
      * @param Form         $form  form
      * @param TableBuilder $table table
      */
+    #[\Override]
     public function alterFormForOrganisation(Form $form, $table): void
     {
         $labelTextForOrganisation = $this->getAddLabelTextForOrganisation();
@@ -241,15 +243,18 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
      *
      * @return void
      */
+    #[\Override]
     public function alterAddOrEditFormForOrganisation(Form $form)
     {
     }
 
+    #[\Override]
     public function canModify(): bool
     {
         return true;
     }
 
+    #[\Override]
     public function createTable()
     {
         /** @var TableBuilder $table */
@@ -338,6 +343,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return $this->licence['licenceType']['id'];
     }
 
+    #[\Override]
     public function delete($ids)
     {
         $response = $this->handleCommand($this->getDeleteCommand(['personIds' => $ids]));
@@ -349,6 +355,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return true;
     }
 
+    #[\Override]
     public function restore($ids)
     {
         // Can only restore in an application\variation

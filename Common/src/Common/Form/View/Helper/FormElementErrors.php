@@ -40,6 +40,7 @@ class FormElementErrors extends LaminasFormElementErrors
      *
      * @throws Exception\DomainException
      */
+    #[\Override]
     public function render(ElementInterface $element, array $attributes = []): string
     {
         $messages = $element->getMessages();

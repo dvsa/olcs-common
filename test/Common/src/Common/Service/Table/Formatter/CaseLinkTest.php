@@ -21,12 +21,14 @@ class CaseLinkTest extends TestCase
     public $sut;
     protected $urlHelper;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->urlHelper = m::mock(UrlHelperService::class);
         $this->sut = new CaseLink($this->urlHelper);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

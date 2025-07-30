@@ -20,6 +20,7 @@ class StopDateBeforeRequestDate extends DateRequired implements InputProviderInt
      *
      * @psalm-return list{\Common\Form\Elements\Validators\DateNotInFuture, \Common\Form\Elements\Validators\DateLessThanOrEqual, DateValidator}
      */
+    #[\Override]
     public function getValidators()
     {
         return [

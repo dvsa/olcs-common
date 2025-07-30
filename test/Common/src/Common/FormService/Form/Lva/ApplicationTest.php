@@ -25,6 +25,7 @@ class ApplicationTest extends MockeryTestCase
     public $authService;
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->formHelper = m::mock(FormHelperService::class);

@@ -17,6 +17,7 @@ use Olcs\Logging\Log\Logger;
  */
 class TranslationLoaderTest extends MockeryTestCase
 {
+    #[\Override]
     protected function setUp(): void
     {
         self::setupLogger();

@@ -18,6 +18,7 @@ class CommunityLicence implements MapperInterface
      *
      * @return array
      */
+    #[\Override]
     public static function mapFromResult(array $data)
     {
         $dates = [];

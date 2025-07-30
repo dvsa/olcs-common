@@ -31,6 +31,7 @@ class ApplicationSoleTraderTest extends MockeryTestCase
 
     protected $sm;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);

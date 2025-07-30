@@ -16,6 +16,7 @@ class PsvVehiclesTest extends AbstractLvaFormServiceTestCase
 
     protected $formName = 'Lva\PsvVehicles';
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->authService = m::mock(AuthorizationService::class);
@@ -23,6 +24,7 @@ class PsvVehiclesTest extends AbstractLvaFormServiceTestCase
         parent::setUp();
     }
 
+    #[\Override]
     public function testGetForm(): void
     {
         $mockForm = m::mock(\Common\Form\Form::class);

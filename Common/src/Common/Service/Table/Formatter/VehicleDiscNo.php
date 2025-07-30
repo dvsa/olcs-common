@@ -17,6 +17,7 @@ class VehicleDiscNo implements FormatterPluginManagerInterface
      *
      * @return string '', 'Pending' or a Disc no
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         // if no specified date AND no removal date, then pending

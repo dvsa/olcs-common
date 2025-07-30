@@ -64,11 +64,13 @@ class CompanyNumber extends Fieldset
     }
 
 
+    #[\Override]
     public function setMessages($messages): void
     {
         $this->messages = $messages;
     }
 
+    #[\Override]
     public function getMessages(?string $elementName = null): array
     {
         return is_array($current = current($this->messages)) ? $current : [];

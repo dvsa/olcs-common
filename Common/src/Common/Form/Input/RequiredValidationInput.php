@@ -9,6 +9,7 @@ class RequiredValidationInput extends Input
 {
     protected $isEmptyMessage = "Value is required and can't be empty";
 
+    #[\Override]
     protected function prepareRequiredValidationFailureMessage()
     {
         return [

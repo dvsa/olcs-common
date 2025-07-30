@@ -24,6 +24,7 @@ class AbstractControllerFactoryTest extends MockeryTestCase
     /** @var  m\MockInterface | ContainerInterface */
     protected $mockSm;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->sut = new AbstractControllerFactory();

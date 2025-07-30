@@ -16,6 +16,7 @@ class VariationLvaAdapterTest extends MockeryTestCase
 
     protected $controller;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->container = m::mock(ContainerInterface::class);

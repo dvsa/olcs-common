@@ -38,6 +38,7 @@ class ModuleTest extends MockeryTestCase
     /** @var  m\MockInterface */
     private $mockApp;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->sut = new Module();

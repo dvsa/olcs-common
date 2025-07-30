@@ -21,6 +21,7 @@ class WithdrawnDate extends LaminasDateSelect implements InputProviderInterface
     /**
      * Provide default input rules for this element.
      */
+    #[\Override]
     public function getInputSpecification(): array
     {
         return [

@@ -29,6 +29,7 @@ class DispatcherTest extends MockeryTestCase
     public $pluginManager;
     public $mvcEvent;
     public $dispatcher;
+    #[\Override]
     protected function setUp(): void
     {
         $this->delegate = new ControllerDelegateStub();

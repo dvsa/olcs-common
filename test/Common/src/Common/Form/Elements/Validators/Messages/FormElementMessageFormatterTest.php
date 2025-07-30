@@ -548,6 +548,7 @@ class FormElementMessageFormatterTest extends MockeryTestCase
         return MatchesPattern::matchesPattern(sprintf('/validation\.element\.%s\.%s/', $type, $messageKey));
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->setUpServiceManager();
@@ -561,6 +562,7 @@ class FormElementMessageFormatterTest extends MockeryTestCase
     /**
      * @return void
      */
+    #[\Override]
     protected function setUpDefaultServices(ServiceManager $serviceManager): ServiceManager
     {
         $serviceManager->setService(TranslatorInterface::class, $this->setUpDefaultTranslator());

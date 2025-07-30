@@ -7,6 +7,7 @@ use Laminas\Form\Element\MultiCheckbox;
 
 class FormRadioStub extends FormRadio
 {
+    #[\Override]
     public function renderOptions(MultiCheckbox $element, array $options, array $selectedOptions, array $attributes): string
     {
         return parent::renderOptions($element, $options, $selectedOptions, $attributes);

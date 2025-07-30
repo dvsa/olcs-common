@@ -74,6 +74,7 @@ class OneOf extends AbstractValidator
      * @param array $options
      * @return \Laminas\Validator\AbstractValidator
      */
+    #[\Override]
     public function setOptions($options = [])
     {
         if (isset($options['fields'])) {
@@ -104,6 +105,7 @@ class OneOf extends AbstractValidator
      * @return bool
      * @throws Exception\RuntimeException If validation of $value is impossible
      */
+    #[\Override]
     public function isValid($value, $context = null)
     {
         $valid = false;

@@ -47,6 +47,7 @@ class PublicationSelfserve extends InternalSearchAbstract
      *
      * @return array
      */
+    #[\Override]
     public function getDateRanges()
     {
         if (empty($this->dateRanges)) {
@@ -64,6 +65,7 @@ class PublicationSelfserve extends InternalSearchAbstract
      *
      * @return array
      */
+    #[\Override]
     public function getFilters()
     {
         if (empty($this->filters)) {
@@ -84,6 +86,7 @@ class PublicationSelfserve extends InternalSearchAbstract
      *
      * @return array
      */
+    #[\Override]
     public function getColumns()
     {
         return [
@@ -97,6 +100,7 @@ class PublicationSelfserve extends InternalSearchAbstract
      *
      * @return array
      */
+    #[\Override]
     public function getSettings()
     {
         return [

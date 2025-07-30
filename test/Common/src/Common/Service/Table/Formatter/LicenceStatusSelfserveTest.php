@@ -16,12 +16,14 @@ class LicenceStatusSelfserveTest extends MockeryTestCase
 
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->translator = m::mock(TranslatorDelegator::class);
         $this->sut = new LicenceStatusSelfserve($this->translator);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

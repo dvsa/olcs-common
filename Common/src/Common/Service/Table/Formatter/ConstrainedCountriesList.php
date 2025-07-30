@@ -29,6 +29,7 @@ class ConstrainedCountriesList implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         $columnName = $column['name'] ?? 'constrainedCountries';

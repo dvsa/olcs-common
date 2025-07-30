@@ -26,6 +26,7 @@ class OneContactPhoneRequired extends LaminasElement\Hidden implements InputProv
      *
      * @psalm-return array{name: null|string, required: false, allow_empty: true, validators: list{LaminasValidator\Callback}}
      */
+    #[\Override]
     public function getInputSpecification(): array
     {
         return [

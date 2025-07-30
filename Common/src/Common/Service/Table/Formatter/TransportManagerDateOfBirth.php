@@ -13,6 +13,7 @@ class TransportManagerDateOfBirth extends Date
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         $dob = parent::format($data, $column);

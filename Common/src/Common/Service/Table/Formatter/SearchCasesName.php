@@ -26,6 +26,7 @@ class SearchCasesName implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         if (!empty($data['tmId'])) {

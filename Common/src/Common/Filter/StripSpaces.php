@@ -19,6 +19,7 @@ class StripSpaces extends AbstractFilter
      *
      * @return string
      */
+    #[\Override]
     public function filter($value)
     {
         if ($value === null) {

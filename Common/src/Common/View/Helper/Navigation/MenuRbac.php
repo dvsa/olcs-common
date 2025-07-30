@@ -21,6 +21,7 @@ class MenuRbac extends Menu
      *
      * @return self
      */
+    #[\Override]
     public function __invoke($container = null)
     {
         parent::__invoke($container);

@@ -20,6 +20,7 @@ class VariationTest extends MockeryTestCase
     public $formHelper;
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->authService = m::mock(AuthorizationService::class);

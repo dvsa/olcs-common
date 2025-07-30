@@ -39,6 +39,7 @@ class FeeType extends AbstractDataService implements ListData
      * @return array
      * @throws DataServiceException
      */
+    #[\Override]
     public function fetchListOptions($category, $useGroups = false)
     {
         $data = $this->fetchListData();

@@ -21,6 +21,7 @@ class DataRetentionAssignedTo implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         if (isset($data['assignedTo']['contactDetails']['person'])) {

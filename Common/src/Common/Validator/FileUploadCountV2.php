@@ -15,6 +15,7 @@ class FileUploadCountV2 extends FileUploadCount
      *
      * @return bool
      */
+    #[\Override]
     public function isValid($value, $context = null)
     {
         // Expects to see an index "list" in context which is an array of uploaded files

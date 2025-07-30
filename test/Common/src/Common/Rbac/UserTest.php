@@ -17,6 +17,7 @@ class UserTest extends TestCase
     private $sut;
 
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->sut = new User();

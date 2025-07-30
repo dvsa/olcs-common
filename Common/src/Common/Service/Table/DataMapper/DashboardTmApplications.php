@@ -22,6 +22,7 @@ class DashboardTmApplications implements DataMapperInterface
      *
      * @return array
      */
+    #[\Override]
     public function map(array $data)
     {
         $newData = [];

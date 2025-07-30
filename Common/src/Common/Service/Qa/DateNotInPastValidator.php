@@ -28,6 +28,7 @@ class DateNotInPastValidator extends AbstractValidator
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function isValid($value)
     {
         $formattedCurrentDateTime = $this->dateTimeFactory->create()->format('Y-m-d');

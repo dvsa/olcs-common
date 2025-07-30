@@ -27,6 +27,7 @@ class TransactionNoAndStatus implements FormatterPluginManagerInterface
      * @return     string
      * @inheritdoc
      */
+    #[\Override]
     public function format($row, $column = null)
     {
         $link = $this->transactionUrlFormatter->format($row, $column);

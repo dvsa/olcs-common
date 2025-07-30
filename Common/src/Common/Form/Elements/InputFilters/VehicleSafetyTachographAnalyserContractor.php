@@ -20,6 +20,7 @@ class VehicleSafetyTachographAnalyserContractor extends Text
      *
      * @return array
      */
+    #[\Override]
     protected function getValidators()
     {
         $validators = parent::getValidators();

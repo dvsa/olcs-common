@@ -31,6 +31,7 @@ class CommunityLicenceStatus implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
 

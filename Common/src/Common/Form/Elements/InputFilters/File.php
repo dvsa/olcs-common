@@ -35,6 +35,7 @@ class File extends LaminasFile
     /**
      * Add validator
      */
+    #[\Override]
     public function getInputSpecification(): array
     {
         $spec = parent::getInputSpecification();

@@ -36,6 +36,7 @@ class AbstractVariationControllerTest extends MockeryTestCase
     public $mockFlashMessengerHelper;
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->mockNiTextTranslationUtil = m::mock(NiTextTranslation::class);

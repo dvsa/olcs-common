@@ -29,6 +29,7 @@ class LicenceSoleTrader extends AbstractSoleTrader
         parent::__construct($formHelper, $authService, $peopleLvaService);
     }
 
+    #[\Override]
     protected function alterForm($form, array $params)
     {
         $form = parent::alterForm($form, $params);

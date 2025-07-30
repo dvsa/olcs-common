@@ -20,6 +20,7 @@ class EcmtCandidatePermitSelectionValidatingElementTest extends MockeryTestCase
 
     private $ecmtCandidatePermitSelectionValidatingElement;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->ecmtCandidatePermitSelectionValidatingElement = new EcmtCandidatePermitSelectionValidatingElement(

@@ -46,6 +46,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
      *
      * @return mixed
      */
+    #[\Override]
     public function indexAction()
     {
         $request = $this->getRequest();

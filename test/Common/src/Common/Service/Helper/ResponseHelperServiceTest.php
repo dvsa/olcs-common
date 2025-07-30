@@ -15,6 +15,7 @@ class ResponseHelperServiceTest extends MockeryTestCase
     /** @var  ResponseHelperService */
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->sut = new ResponseHelperService();

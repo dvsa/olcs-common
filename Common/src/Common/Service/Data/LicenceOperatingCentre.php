@@ -48,6 +48,7 @@ class LicenceOperatingCentre extends AbstractDataService implements ListDataInte
      * @return array
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
+    #[\Override]
     public function fetchListOptions($context = null, $useGroups = false)
     {
         $id = $this->getId();

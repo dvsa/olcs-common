@@ -26,6 +26,7 @@ class NoOfPermitsElement extends Text implements InputProviderInterface
      *
      * @psalm-return array{name: null|string, required: false, continue_if_empty: true, filters: list{array{name: StringTrim::class}}, validators: list{array{name: StringLength::class, options: array{min: 1, max: '4', break_chain_on_failure: true, messages: array{stringLengthTooShort: 'qanda.bilaterals.number-of-permits.error.enter-permits-required', stringLengthTooLong: 'qanda.bilaterals.number-of-permits.error.enter-permits-required'}}}, array{name: Digits::class, options: array{break_chain_on_failure: true, messages: array{notDigits: 'qanda.bilaterals.number-of-permits.error.enter-permits-required'}}}, array{name: GreaterThan::class, options: array{min: 0, inclusive: false, messages: array{notGreaterThan: 'qanda.bilaterals.number-of-permits.error.enter-permits-required'}}}}}
      */
+    #[\Override]
     public function getInputSpecification(): array
     {
         return [

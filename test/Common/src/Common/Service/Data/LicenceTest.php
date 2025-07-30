@@ -17,6 +17,7 @@ class LicenceTest extends AbstractDataServiceTestCase
     /** @var Licence */
     private $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

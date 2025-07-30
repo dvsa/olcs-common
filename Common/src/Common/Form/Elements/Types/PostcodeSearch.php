@@ -126,6 +126,7 @@ class PostcodeSearch extends Fieldset
      *
      * @param mixed $messages Messages
      */
+    #[\Override]
     public function setMessages($messages): void
     {
         $this->messages = $messages;
@@ -135,6 +136,7 @@ class PostcodeSearch extends Fieldset
      * Get messages
      * NB Not sure if this is used
      */
+    #[\Override]
     public function getMessages(?string $elementName = null): array
     {
         return $this->messages;

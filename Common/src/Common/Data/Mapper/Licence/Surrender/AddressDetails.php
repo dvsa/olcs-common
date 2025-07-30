@@ -16,6 +16,7 @@ class AddressDetails implements MapperInterface
      *
      * @param array $data Api data
      */
+    #[\Override]
     public static function mapFromResult(array $data): array
     {
         $mappedData = [];

@@ -21,6 +21,7 @@ class FormRadioOption extends FormRadio
      * @param mixed                 $labelPosition key of option to render, (strict standards do not allow changing
      *                                             method signature)
      */
+    #[\Override]
     public function __invoke(ElementInterface $element = null, mixed $labelPosition = null)
     {
         if (!$element instanceof ElementInterface) {

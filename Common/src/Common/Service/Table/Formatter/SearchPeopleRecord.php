@@ -20,6 +20,7 @@ class SearchPeopleRecord implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         $showAsText = $this->authService->isGranted(RefData::PERMISSION_INTERNAL_IRHP_ADMIN);

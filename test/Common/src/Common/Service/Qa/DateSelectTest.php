@@ -17,6 +17,7 @@ class DateSelectTest extends MockeryTestCase
 {
     private $dateSelect;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->dateSelect = m::mock(DateSelect::class)->makePartial()

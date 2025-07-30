@@ -14,6 +14,7 @@ class VariationPeopleAdapter extends AbstractPeopleAdapter
         parent::__construct($container);
     }
 
+    #[\Override]
     protected function getTableConfig(): string
     {
         if (!$this->useDeltas()) {
@@ -28,6 +29,7 @@ class VariationPeopleAdapter extends AbstractPeopleAdapter
      *
      * @param array $params
      */
+    #[\Override]
     protected function getCreateCommand($params): CreatePeople
     {
         $params['id'] = $this->getApplicationId();
@@ -39,6 +41,7 @@ class VariationPeopleAdapter extends AbstractPeopleAdapter
      *
      * @param array $params
      */
+    #[\Override]
     protected function getUpdateCommand($params): UpdatePeople
     {
         $params['person'] = $params['id'];
@@ -51,6 +54,7 @@ class VariationPeopleAdapter extends AbstractPeopleAdapter
      *
      * @param array $params
      */
+    #[\Override]
     protected function getDeleteCommand($params): DeletePeople
     {
         $params['id'] = $this->getApplicationId();

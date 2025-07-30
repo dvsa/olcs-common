@@ -40,6 +40,7 @@ class Application extends InternalSearchAbstract
      *
      * @return array
      */
+    #[\Override]
     public function getFilters()
     {
         if (empty($this->filters)) {
@@ -59,6 +60,7 @@ class Application extends InternalSearchAbstract
      *
      * @return array
      */
+    #[\Override]
     public function getColumns()
     {
         return [

@@ -94,6 +94,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController
      *
      * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
+    #[\Override]
     public function indexAction()
     {
         /** @var \Laminas\Http\Request $request */

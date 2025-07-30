@@ -57,6 +57,7 @@ abstract class AbstractTransportManagerAdapter extends AbstractControllerAwareAd
      *
      * @return \Common\Service\Table\TableBuilder
      */
+    #[\Override]
     public function getTable($template = 'lva-transport-manangers')
     {
         return $this->container->get(TableFactory::class)->prepareTable($template);
@@ -67,6 +68,7 @@ abstract class AbstractTransportManagerAdapter extends AbstractControllerAwareAd
      *
      * @return boolean
      */
+    #[\Override]
     public function mustHaveAtLeastOneTm()
     {
         return false;
@@ -79,6 +81,7 @@ abstract class AbstractTransportManagerAdapter extends AbstractControllerAwareAd
      *
      * @return void
      */
+    #[\Override]
     public function addMessages($licenceId)
     {
     }
@@ -222,6 +225,7 @@ abstract class AbstractTransportManagerAdapter extends AbstractControllerAwareAd
      *
      * @return int
      */
+    #[\Override]
     public function getNumberOfRows($applicationId, $licenceId)
     {
         return count($this->getTableData($applicationId, $licenceId));

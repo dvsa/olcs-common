@@ -12,6 +12,7 @@ class DashboardTmApplicationStatusFactory implements FactoryInterface
      * @param  array|null         $options
      * @return DashboardTmApplicationStatus
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $viewHelperManager = $container->get('ViewHelperManager');

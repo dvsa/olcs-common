@@ -15,6 +15,7 @@ class EcmtNoOfPermitsEmissionsCategoryHiddenElement extends Hidden implements In
      *
      * @psalm-return array{name: null|string, required: true, validators: list{array{name: Identical::class, options: array{token: mixed}}}}
      */
+    #[\Override]
     public function getInputSpecification(): array
     {
         return [

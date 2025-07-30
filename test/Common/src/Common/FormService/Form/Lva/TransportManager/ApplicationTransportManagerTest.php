@@ -23,6 +23,7 @@ class ApplicationTransportManagerTest extends MockeryTestCase
 
     protected $formHelper;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);

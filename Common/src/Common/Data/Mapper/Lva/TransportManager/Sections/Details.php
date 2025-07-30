@@ -44,6 +44,7 @@ class Details extends AbstractSection
      * Replaces SectionSerializeTrait::sectionSerialize as one section is conditional
      * @return array
      */
+    #[\Override]
     public function sectionSerialize()
     {
         $templatePrefix = $this->getTranslationTemplate();

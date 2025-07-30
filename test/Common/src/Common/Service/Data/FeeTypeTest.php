@@ -16,6 +16,7 @@ class FeeTypeTest extends AbstractDataServiceTestCase
     /** @var FeeType */
     private $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

@@ -14,6 +14,7 @@ class DataRetentionRuleIsEnabled implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         return htmlspecialchars($data['isEnabled'] ? 'Yes' : 'No');

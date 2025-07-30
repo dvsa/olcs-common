@@ -23,6 +23,7 @@ class IrhpPermitTypeWithValidityDate implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         $value = $data[$column['name']];

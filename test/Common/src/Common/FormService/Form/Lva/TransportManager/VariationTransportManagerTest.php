@@ -25,6 +25,7 @@ class VariationTransportManagerTest extends MockeryTestCase
 
     protected $fsm;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);

@@ -11,6 +11,7 @@ class InternationalJourneysIsValidHandler implements IsValidHandlerInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function isValid(QaForm $form)
     {
         $questionData = $form->getQuestionFieldsetData();

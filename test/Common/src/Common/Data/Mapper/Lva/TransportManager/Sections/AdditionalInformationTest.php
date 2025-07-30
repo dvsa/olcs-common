@@ -13,6 +13,7 @@ class AdditionalInformationTest extends MockeryTestCase
 
     private $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->mockTranslator = m::mock(TranslationHelperService::class);
