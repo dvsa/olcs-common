@@ -95,7 +95,13 @@ class PeopleSelfserve extends InternalSearchAbstract
             ],
             [
                 'title' => 'Name',
-                'formatter' => static fn($row) => $row['personFullname']
+                'formatter' => static function ($data) {
+                    $text = $data['personFullname'];
+                    if (!empty(($data['dateRemoved'] ?? false))) {
+                        $text .= ' (Removed)';
+                    }
+                    return $text;
+                }
             ],
             [
                 'permissionRequisites' => ['partner-user', 'partner-admin'],
