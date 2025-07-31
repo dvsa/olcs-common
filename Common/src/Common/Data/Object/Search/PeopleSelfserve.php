@@ -5,6 +5,7 @@ namespace Common\Data\Object\Search;
 use Common\Data\Object\Search\Aggregations\Terms as Filter;
 use Common\Service\Table\Formatter\Date;
 use Common\Service\Table\Formatter\Translate;
+use Common\Util\Escape;
 
 /**
  * Class People
@@ -81,7 +82,7 @@ class PeopleSelfserve extends InternalSearchAbstract
             [
                 'title' => 'Licence number',
                 'name' => 'licNo',
-                'formatter' => static fn($data) => '<a class="govuk-link" href="/view-details/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>'
+                'formatter' => static fn($data) => '<a class="govuk-link" href="/view-details/licence/' . Escape::html($data['licId']) . '">' . Escape::html($data['licNo']) . '</a>'
             ],
             [
                 'title' => 'Licence status',
@@ -91,11 +92,17 @@ class PeopleSelfserve extends InternalSearchAbstract
             [
                 'title' => 'Operator name',
                 'name' => 'orgName',
-                'formatter' => static fn($data) => $data['orgName']
+                'formatter' => static fn($data) => Escape::html($data['orgName'])
             ],
             [
                 'title' => 'Name',
-                'formatter' => static fn($row) => $row['personFullname']
+                'formatter' => static function ($data) {
+                    $text = Escape::html($data['personFullname']);
+                    if (!empty(($data['dateRemoved'] ?? false))) {
+                        $text .= ' (Removed)';
+                    }
+                    return $text;
+                }
             ],
             [
                 'permissionRequisites' => ['partner-user', 'partner-admin'],
