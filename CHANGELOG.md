@@ -1,5 +1,13 @@
 # Changelog
 
+## [8.3.0](https://github.com/dvsa/olcs-common/compare/v8.2.0...v8.3.0) (2025-07-31)
+
+
+### Features
+
+* add removal status indicator in name formatter for PeopleSelfserve Search object ([#235](https://github.com/dvsa/olcs-common/issues/235)) ([06a1a79](https://github.com/dvsa/olcs-common/commit/06a1a797b5577451f0a05b8fc18e8cc1cc32b0cc))
+* added youtube embed for add operating centre newspaper adverts ([#236](https://github.com/dvsa/olcs-common/issues/236)) ([7139459](https://github.com/dvsa/olcs-common/commit/71394597728c41aefaa22a2ea2d60d9b4a81c457))
+
 ## [8.2.0](https://github.com/dvsa/olcs-common/compare/v8.1.0...v8.2.0) (2025-07-24)
 
 
