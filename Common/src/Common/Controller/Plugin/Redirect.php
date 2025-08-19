@@ -8,7 +8,6 @@
 
 namespace Common\Controller\Plugin;
 
-use Laminas\Json\Json;
 use Laminas\Mvc\Controller\Plugin\Redirect as LaminasRedirect;
 use Laminas\Stdlib\ArrayUtils;
 
@@ -61,7 +60,7 @@ class Redirect extends LaminasRedirect
                 'location' => $controller->url()->fromRoute($route, $params, $options, $reuseMatchedParams)
             ];
             $this->getResponse()->getHeaders()->addHeaders(['Content-Type' => 'application/json']);
-            $this->getResponse()->setContent(Json::encode($data));
+            $this->getResponse()->setContent(json_encode($data));
             return $this->getResponse();
         }
         return $this->toRoute($route, $params, $options, $reuseMatchedParams);
