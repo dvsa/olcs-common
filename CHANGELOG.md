@@ -1,5 +1,12 @@
 # Changelog
 
+## [8.4.0](https://github.com/dvsa/olcs-common/compare/v8.3.0...v8.4.0) (2025-09-08)
+
+
+### Features
+
+* removed laminas-serializer package and laminas-json from relevant code ([#238](https://github.com/dvsa/olcs-common/issues/238)) ([cc0c940](https://github.com/dvsa/olcs-common/commit/cc0c940a80e17a09a0ac2d6b8cfcf1d36f9dc9c4))
+
 ## [8.3.0](https://github.com/dvsa/olcs-common/compare/v8.2.0...v8.3.0) (2025-07-31)
 
 
