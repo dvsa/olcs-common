@@ -22,6 +22,7 @@ class ExternalConversationMessage extends AbstractConversationMessage
         </div>
     ';
 
+    #[\Override]
     protected function getSenderName(array $row): string
     {
         $senderName = $this->defaultSenderName;

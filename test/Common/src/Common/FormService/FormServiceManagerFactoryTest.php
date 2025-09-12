@@ -13,6 +13,7 @@ class FormServiceManagerFactoryTest extends \PHPUnit\Framework\TestCase
 
     protected $sm;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->sut = new FormServiceManagerFactory();

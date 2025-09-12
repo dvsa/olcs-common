@@ -51,6 +51,7 @@ class DecompressToTmp extends AbstractFilter
     /**
      * @noinspection PhpMixedReturnTypeCanBeReducedInspection -
      */
+    #[\Override]
     public function filter(mixed $value): mixed
     {
         $tmpDir = $this->createTmpDir();

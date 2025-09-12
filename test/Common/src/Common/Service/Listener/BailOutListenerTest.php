@@ -27,6 +27,7 @@ class BailOutListenerTest extends MockeryTestCase
      */
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->sut = new BailOutListener();

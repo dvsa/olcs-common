@@ -16,6 +16,7 @@ class InsufficientFinancesFormTest extends TestCase
      */
     private $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->sut = new InsufficientFinancesForm();

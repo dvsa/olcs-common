@@ -11,6 +11,7 @@ class CustomSelector extends Selector
      * To override name Use existing $column['name'] default is 'id'
      * To override value element use new $column['data-field'] default is 'id'
      */
+    #[\Override]
     public function render(array $data, array $column, string|null $formattedContent = null): string
     {
         $fieldset = $this->getTable()->getFieldset();

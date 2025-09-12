@@ -3,13 +3,15 @@
 namespace Common\Form;
 
 /**
- * Class InsufficientFinancesForm
+ * @template TFilteredValues
+ * @extends Form<TFilteredValues>
  */
 class InsufficientFinancesForm extends Form
 {
     /**
      * Override how this form is validated
      */
+    #[\Override]
     public function isValid(): bool
     {
         $yesContentInput = $this->getInputFilter()->get('insufficientFinances')->get('yesContent');

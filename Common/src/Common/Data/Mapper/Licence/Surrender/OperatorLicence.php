@@ -36,6 +36,7 @@ class OperatorLicence implements MapperInterface
      *
      * @psalm-return array{operatorLicenceDocument?: array{operatorLicenceDocument: 'lost'|'possession'|'stolen', stolenContent?: array{details: mixed}, lostContent?: array{details: mixed}}}
      */
+    #[\Override]
     public static function mapFromResult(array $data)
     {
         $licenceDocumentStatus = $data["licenceDocumentStatus"]["id"] ?? null;

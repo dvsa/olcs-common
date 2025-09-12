@@ -18,12 +18,14 @@ class EbsrDocumentStatusTest extends MockeryTestCase
 
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->viewHelperManager = m::mock(HelperPluginManager::class);
         $this->sut = new EbsrDocumentStatus($this->viewHelperManager);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

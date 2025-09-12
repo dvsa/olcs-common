@@ -37,6 +37,7 @@ class User extends InternalSearchAbstract
      *
      * @return array
      */
+    #[\Override]
     public function getFilters()
     {
         if (empty($this->filters)) {
@@ -54,6 +55,7 @@ class User extends InternalSearchAbstract
     /**
      * @return array
      */
+    #[\Override]
     public function getVariables()
     {
         return [
@@ -69,6 +71,7 @@ class User extends InternalSearchAbstract
     /**
      * @return array
      */
+    #[\Override]
     public function getSettings()
     {
         return [
@@ -101,6 +104,7 @@ class User extends InternalSearchAbstract
     /**
      * @return array
      */
+    #[\Override]
     public function getColumns()
     {
          return [

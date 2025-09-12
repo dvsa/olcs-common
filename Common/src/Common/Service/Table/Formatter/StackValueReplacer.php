@@ -30,6 +30,7 @@ class StackValueReplacer implements FormatterPluginManagerInterface
      * @param  array $column
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         $stringFormat = $column['stringFormat'];

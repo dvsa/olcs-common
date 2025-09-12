@@ -30,6 +30,7 @@ class InternalLicencePermitReference implements FormatterPluginManagerInterface
      * @return     string
      * @inheritdoc
      */
+    #[\Override]
     public function format($row, $column = null)
     {
         $applicationRef = Escape::html($row['applicationRef']);

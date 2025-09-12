@@ -24,6 +24,7 @@ class Radio extends ErrorOverrideRadio
      *
      * @param string $name Name of radio element
      */
+    #[\Override]
     public function setName($name): void
     {
         parent::setName($name);
@@ -38,6 +39,7 @@ class Radio extends ErrorOverrideRadio
      *
      * @param array $options Options
      */
+    #[\Override]
     public function setValueOptions(array $options): void
     {
         foreach ($options as $key => &$optionSpec) {

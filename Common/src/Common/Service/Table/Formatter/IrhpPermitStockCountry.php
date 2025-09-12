@@ -19,6 +19,7 @@ class IrhpPermitStockCountry implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         $value = 'N/A';

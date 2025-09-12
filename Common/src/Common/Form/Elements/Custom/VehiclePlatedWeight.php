@@ -13,6 +13,7 @@ class VehiclePlatedWeight extends LaminasElement implements InputProviderInterfa
     /**
      * Get Input Specification
      */
+    #[\Override]
     public function getInputSpecification(): array
     {
         return array_filter(

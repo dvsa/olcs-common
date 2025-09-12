@@ -13,6 +13,7 @@ class VehicleUndertakingsOnlyLimousineConfirmationValidator extends AbstractVali
         'required' => 'application_vehicle-safety_undertakings.limousines.required'
     ];
 
+    #[\Override]
     public function isValid(mixed $value, ?array $context = [])
     {
         $requiredContext = $this->getOption('required_context_value');

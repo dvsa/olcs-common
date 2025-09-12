@@ -32,6 +32,7 @@ class FormRadio extends \Laminas\Form\View\Helper\FormRadio
         $this->idGenerator = $idGenerator ?? new UniqidGenerator();
     }
 
+    #[\Override]
     protected function renderOptions(
         MultiCheckboxElement $element,
         array $options,

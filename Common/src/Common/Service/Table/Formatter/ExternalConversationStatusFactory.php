@@ -14,6 +14,7 @@ class ExternalConversationStatusFactory implements FactoryInterface
      * @param  array|null         $options
      * @return ExternalConversationStatus
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         return new ExternalConversationStatus();

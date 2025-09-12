@@ -30,6 +30,7 @@ class TranslationHelperServiceTest extends \PHPUnit\Framework\TestCase
     /**
      * Setup the sut
      */
+    #[\Override]
     protected function setUp(): void
     {
         $this->mockTranslator = $this->createPartialMock(Translator::class, ['translate']);

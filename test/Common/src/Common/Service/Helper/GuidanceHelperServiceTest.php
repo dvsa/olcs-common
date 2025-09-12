@@ -25,6 +25,7 @@ class GuidanceHelperServiceTest extends MockeryTestCase
     /** @var Placeholder */
     private $placeholder;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->placeholder = m::mock(Placeholder::class);

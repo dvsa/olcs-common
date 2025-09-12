@@ -18,6 +18,7 @@ class LicenceGoodsVehiclesFilters extends CommonGoodsVehiclesFilters
         parent::__construct($formHelper);
     }
 
+    #[\Override]
     public function getForm()
     {
         $form = parent::getForm();

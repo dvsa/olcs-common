@@ -30,6 +30,7 @@ class LicenceTransportManagerAdapter extends AbstractTransportManagerAdapter
      *
      * @return array|null
      */
+    #[\Override]
     public function getTableData($applicationId, $licenceId)
     {
         $query = $this->transferAnnotationBuilder->createQuery(
@@ -50,6 +51,7 @@ class LicenceTransportManagerAdapter extends AbstractTransportManagerAdapter
      *
      * @return bool
      */
+    #[\Override]
     public function delete(array $ids, $applicationId)
     {
         $command = $this->transferAnnotationBuilder->createCommand(

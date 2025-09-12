@@ -16,6 +16,7 @@ class LicenceConditionsUndertakings extends AbstractConditionsUndertakings
     {
     }
 
+    #[\Override]
     protected function alterForm($form)
     {
         parent::alterForm($form);

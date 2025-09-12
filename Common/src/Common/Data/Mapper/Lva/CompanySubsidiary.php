@@ -22,6 +22,7 @@ class CompanySubsidiary implements MapperInterface
      *
      * @psalm-return array{data: array}
      */
+    #[\Override]
     public static function mapFromResult(array $data)
     {
         return [

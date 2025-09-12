@@ -10,6 +10,7 @@ use Psr\Container\ContainerInterface;
 
 class PermissionFactory implements FactoryInterface
 {
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): Permission
     {
         return new Permission(

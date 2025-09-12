@@ -9,6 +9,7 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class FormAnnotationBuilderFactory implements FactoryInterface
 {
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): AnnotationBuilder
     {
         // set up a form factory which can use custom form elements

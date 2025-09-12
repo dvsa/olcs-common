@@ -18,6 +18,7 @@ class VariationPsvVehiclesTest extends AbstractLvaFormServiceTestCase
 
     protected $formName = 'Lva\PsvVehicles';
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->classArgs = [m::mock(AuthorizationService::class)];
@@ -43,6 +44,7 @@ class VariationPsvVehiclesTest extends AbstractLvaFormServiceTestCase
         $this->assertSame($mockForm, $form);
     }
 
+    #[\Override]
     public function testGetForm(): void
     {
         $formActions = m::mock(\Laminas\Form\ElementInterface::class);

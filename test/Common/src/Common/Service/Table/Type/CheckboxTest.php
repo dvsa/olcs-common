@@ -28,6 +28,7 @@ class CheckboxTest extends MockeryTestCase
     /**
      * Set up
      */
+    #[\Override]
     protected function setUp(): void
     {
         $this->table = m::mock(\Common\Service\Table\TableBuilder::class);

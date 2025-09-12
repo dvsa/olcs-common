@@ -26,6 +26,7 @@ class Name extends LaminasElement implements InputProviderInterface
      *
      * @psalm-return array{name: null|string, required: false, filters: list{array{name: \Laminas\Filter\StringTrim::class}}, validators: list{array{name: \Laminas\Validator\StringLength::class, options: array{min: 2, max: 35}}}}
      */
+    #[\Override]
     public function getInputSpecification(): array
     {
         return [

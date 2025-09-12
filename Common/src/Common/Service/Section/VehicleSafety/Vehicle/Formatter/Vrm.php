@@ -33,6 +33,7 @@ class Vrm implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         $action = 'edit';

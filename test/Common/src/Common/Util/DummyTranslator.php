@@ -26,6 +26,7 @@ class DummyTranslator implements \Laminas\I18n\Translator\TranslatorInterface
      * @param  string $locale
      * @return string
      */
+    #[\Override]
     public function translate($message, $textDomain = 'default', $locale = null)
     {
         if (array_key_exists($message, $this->map)) {
@@ -45,6 +46,7 @@ class DummyTranslator implements \Laminas\I18n\Translator\TranslatorInterface
      * @param  string|null $locale
      * @return string
      */
+    #[\Override]
     public function translatePlural(
         $singular,
         $plural,

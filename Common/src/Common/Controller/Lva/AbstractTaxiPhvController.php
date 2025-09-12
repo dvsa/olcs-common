@@ -58,6 +58,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
      *
      * @return array|\Common\View\Model\Section|\Laminas\Http\Response
      */
+    #[\Override]
     public function indexAction()
     {
         try {
@@ -648,6 +649,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
      *
      * @return int
      */
+    #[\Override]
     protected function getLicenceId($applicationId = null)
     {
         // parameter is required by parent

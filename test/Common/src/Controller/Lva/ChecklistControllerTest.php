@@ -20,6 +20,7 @@ class ChecklistControllerTest extends MockeryTestCase
     public $mockTranslationHelper;
     public $request;
     public $sut;
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

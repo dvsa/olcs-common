@@ -949,6 +949,7 @@ class TableBuilder implements \Stringable
      *
      * @return string
      */
+    #[\Override]
     public function __toString(): string
     {
         try {

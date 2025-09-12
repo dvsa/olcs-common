@@ -27,6 +27,7 @@ class FeeNoAndStatus implements FormatterPluginManagerInterface
      * @return     string
      * @inheritdoc
      */
+    #[\Override]
     public function format($row, $column = null)
     {
         return $row['id'] . ' ' . $this->feeStatusFormatter->format($row);

@@ -20,6 +20,7 @@ class IrhpPermitSectorName implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         if (empty($data['sector']['description'])) {

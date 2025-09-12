@@ -25,6 +25,7 @@ class InternationalJourneysFieldsetPopulator implements FieldsetPopulatorInterfa
      *
      * @param mixed $form
      */
+    #[\Override]
     public function populate($form, Fieldset $fieldset, array $options): void
     {
         $this->niWarningConditionalAdder->addIfRequired($fieldset, $options['showNiWarning']);

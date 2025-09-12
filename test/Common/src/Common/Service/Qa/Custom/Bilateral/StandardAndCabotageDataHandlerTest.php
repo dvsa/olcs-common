@@ -29,6 +29,7 @@ class StandardAndCabotageDataHandlerTest extends MockeryTestCase
 
     private $standardAndCabotageDataHandler;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->qaForm = m::mock(QaForm::class);

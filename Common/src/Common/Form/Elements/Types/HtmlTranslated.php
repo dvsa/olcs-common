@@ -30,6 +30,7 @@ class HtmlTranslated extends Html
         return $this->tokens;
     }
 
+    #[\Override]
     public function setOptions($options)
     {
         parent::setOptions($options);

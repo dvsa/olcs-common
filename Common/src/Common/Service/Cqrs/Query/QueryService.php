@@ -70,6 +70,7 @@ class QueryService implements QueryServiceInterface
      *
      * @return Response
      */
+    #[\Override]
     public function send(QueryContainerInterface $query)
     {
         if (!$query->isValid()) {

@@ -39,6 +39,7 @@ class Cases extends InternalSearchAbstract
      *
      * @return array
      */
+    #[\Override]
     public function getFilters()
     {
         if (empty($this->filters)) {
@@ -56,6 +57,7 @@ class Cases extends InternalSearchAbstract
     /**
      * @return array
      */
+    #[\Override]
     public function getColumns()
     {
         return [

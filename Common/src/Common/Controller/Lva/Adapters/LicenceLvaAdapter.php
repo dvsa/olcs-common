@@ -15,6 +15,7 @@ class LicenceLvaAdapter extends AbstractLvaAdapter
     /**
      * @return void
      */
+    #[\Override]
     public function getIdentifier()
     {
     }
@@ -22,6 +23,7 @@ class LicenceLvaAdapter extends AbstractLvaAdapter
     /**
      * Alter the form based on the LVA rules
      */
+    #[\Override]
     public function alterForm(Form $form): void
     {
         $form->get('form-actions')->remove('saveAndContinue');

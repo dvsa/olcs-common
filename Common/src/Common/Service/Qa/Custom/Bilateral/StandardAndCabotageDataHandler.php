@@ -21,6 +21,7 @@ class StandardAndCabotageDataHandler implements DataHandlerInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setData(QaForm $form): void
     {
         if ($this->standardAndCabotageIsValidHandler->isValid($form)) {

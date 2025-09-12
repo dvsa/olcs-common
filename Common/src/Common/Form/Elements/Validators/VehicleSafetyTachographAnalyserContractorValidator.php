@@ -32,6 +32,7 @@ class VehicleSafetyTachographAnalyserContractorValidator extends AbstractValidat
      * @param mixed $value
      * @param array $context
      */
+    #[\Override]
     public function isValid($value, $context = null)
     {
         unset($value);

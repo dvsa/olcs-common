@@ -31,6 +31,7 @@ class TableBuilderTest extends MockeryTestCase
 
     private $mockFormatterPluginManager;
 
+    #[\Override]
     protected function setup(): void
     {
         $this->mockFormatterPluginManager = m::mock(FormatterPluginManager::class);

@@ -40,6 +40,7 @@ class FilesystemTest extends \PHPUnit\Framework\TestCase
         vfsStream::setup('tmp');
 
         $sut = new class extends Filesystem {
+            #[\Override]
             protected function getLock(string $path): LockInterface
             {
                 return m::mock(FlockStore::class, LockInterface::class)

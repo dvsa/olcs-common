@@ -27,6 +27,7 @@ class DashboardTmActionLink implements FormatterPluginManagerInterface
      *
      * @return string HTML
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         $provideStatuses = [

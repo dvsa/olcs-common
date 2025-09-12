@@ -48,6 +48,7 @@ class Vrm extends AbstractFilter
      * @param  string $input
      * @return string
      */
+    #[\Override]
     public function filter($input)
     {
         // ab04 CVA -> AB04CVA

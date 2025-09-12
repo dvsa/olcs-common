@@ -26,6 +26,7 @@ class CrudTableTraitTest extends MockeryTestCase
 
     protected Response|m\MockInterface $response;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->mockFlashMessengerHelper = m::mock(FlashMessengerHelperService::class);

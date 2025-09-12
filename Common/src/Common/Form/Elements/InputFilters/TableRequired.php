@@ -24,6 +24,7 @@ class TableRequired extends Table implements InputProviderInterface
      *
      * @psalm-return array{name: null|string, required: true, continue_if_empty: true, allow_empty: false, filters: array<never, never>, validators: list{TableRequiredValidator}}
      */
+    #[\Override]
     public function getInputSpecification(): array
     {
         $label = 'row to the table';

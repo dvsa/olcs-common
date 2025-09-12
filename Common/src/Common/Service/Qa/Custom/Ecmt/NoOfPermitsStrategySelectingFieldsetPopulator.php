@@ -22,6 +22,7 @@ class NoOfPermitsStrategySelectingFieldsetPopulator implements FieldsetPopulator
      *
      * @param mixed $form
      */
+    #[\Override]
     public function populate($form, Fieldset $fieldset, array $options): void
     {
         if (count($options['emissionsCategories']) == 1) {

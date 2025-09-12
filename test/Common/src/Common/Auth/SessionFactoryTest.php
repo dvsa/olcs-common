@@ -21,6 +21,7 @@ class SessionFactoryTest extends MockeryTestCase
      */
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->setUpServiceManager();
@@ -82,6 +83,7 @@ class SessionFactoryTest extends MockeryTestCase
         $this->serviceManager->setService('config', $config);
     }
 
+    #[\Override]
     protected function setUpDefaultServices(ServiceManager $serviceManager): ServiceManager
     {
         $serviceManager->setService('CommandSender', m::mock(CommandSender::class));

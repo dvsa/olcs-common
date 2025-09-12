@@ -30,6 +30,7 @@ class TmApplicationManagerType implements FormatterPluginManagerInterface
      * @param  array $column
      * @return string
      */
+    #[\Override]
     public function format($row, $column = [])
     {
         $routeParams = [

@@ -25,6 +25,7 @@ class OcComplaints implements FormatterPluginManagerInterface
      *
      * @return mixed
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         unset($column);

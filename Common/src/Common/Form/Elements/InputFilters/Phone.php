@@ -18,6 +18,7 @@ class Phone extends LaminasElement implements InputProviderInterface
     /**
      * Initialise the form
      */
+    #[\Override]
     public function init(): void
     {
         $this->setAttribute('pattern', '\d(\+|-|\(|\))*');
@@ -28,6 +29,7 @@ class Phone extends LaminasElement implements InputProviderInterface
     /**
      * Provide default input rules for this element.
      */
+    #[\Override]
     public function getInputSpecification(): array
     {
         return [

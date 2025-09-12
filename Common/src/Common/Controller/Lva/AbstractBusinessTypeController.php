@@ -46,6 +46,7 @@ abstract class AbstractBusinessTypeController extends AbstractController
     /**
      * Business type section
      */
+    #[\Override]
     public function indexAction()
     {
         $orgId = $this->getCurrentOrganisationId();

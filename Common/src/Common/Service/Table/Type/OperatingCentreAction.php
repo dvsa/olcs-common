@@ -4,6 +4,7 @@ namespace Common\Service\Table\Type;
 
 class OperatingCentreAction extends Action
 {
+    #[\Override]
     public function render(array $data, array $column, string|null $formattedContent = null): string
     {
         $prefix = '';

@@ -64,6 +64,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
      *
      * @return \Laminas\Http\Response|\Laminas\View\Model\ViewModel
      */
+    #[\Override]
     public function indexAction()
     {
         /** @var \Laminas\Http\Request $request */

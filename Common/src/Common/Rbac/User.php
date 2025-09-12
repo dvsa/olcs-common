@@ -139,6 +139,7 @@ class User implements IdentityInterface
      *
      * @return array
      */
+    #[\Override]
     public function getRoles()
     {
         return $this->roles;

@@ -22,6 +22,7 @@ class FileExtension implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         $extPos = strrpos($data['documentStoreIdentifier'], '.');

@@ -30,6 +30,7 @@ class VariationConditionsUndertakingsAdapter extends AbstractConditionsUndertaki
     /**
      * Attach the relevant scripts to the main page
      */
+    #[\Override]
     public function attachMainScripts(): void
     {
         $this->container->get(ScriptFactory::class)->loadFile('lva-crud-delta');
@@ -41,6 +42,7 @@ class VariationConditionsUndertakingsAdapter extends AbstractConditionsUndertaki
      * @param int $id
      * @return bool
      */
+    #[\Override]
     public function canEditRecord($data)
     {
         if (!isset($data['action'])) {
@@ -53,6 +55,7 @@ class VariationConditionsUndertakingsAdapter extends AbstractConditionsUndertaki
     /**
      * Remove the restore button
      */
+    #[\Override]
     public function alterTable(TableBuilder $table): void
     {
         // prevent PMD error
@@ -64,6 +67,7 @@ class VariationConditionsUndertakingsAdapter extends AbstractConditionsUndertaki
      *
      * @param array  $ids List of ConditionUndertaking ID to delete
      */
+    #[\Override]
     public function getDeleteCommand($id, $ids): \Dvsa\Olcs\Transfer\Command\Variation\DeleteListConditionUndertaking
     {
         return \Dvsa\Olcs\Transfer\Command\Variation\DeleteListConditionUndertaking::create(
@@ -77,6 +81,7 @@ class VariationConditionsUndertakingsAdapter extends AbstractConditionsUndertaki
      * @param array $formData Form data
      * @param int   $id Application ID
      */
+    #[\Override]
     public function getUpdateCommand($formData, $id): \Dvsa\Olcs\Transfer\Command\Variation\UpdateConditionUndertaking
     {
         $data = $this->processDataForSave($formData, null);

@@ -25,6 +25,7 @@ abstract class AbstractFinancialEvidenceAdapter extends AbstractControllerAwareA
      *
      * @return array
      */
+    #[\Override]
     abstract public function getDocuments($id);
 
     /**
@@ -35,6 +36,7 @@ abstract class AbstractFinancialEvidenceAdapter extends AbstractControllerAwareA
      *
      * @return array
      */
+    #[\Override]
     abstract public function getUploadMetaData($file, $id);
 
     /**
@@ -44,6 +46,7 @@ abstract class AbstractFinancialEvidenceAdapter extends AbstractControllerAwareA
      *
      * @return void
      */
+    #[\Override]
     abstract public function alterFormForLva($form);
 
     /**
@@ -54,5 +57,6 @@ abstract class AbstractFinancialEvidenceAdapter extends AbstractControllerAwareA
      *
      * @return array
      */
+    #[\Override]
     abstract public function getData($applicationId, $noCache = false);
 }

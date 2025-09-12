@@ -24,6 +24,7 @@ class RefDataStatus implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         $description = $this->refDataFormatter->format($data, $column);

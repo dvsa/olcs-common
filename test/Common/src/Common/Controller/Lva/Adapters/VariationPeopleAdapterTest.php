@@ -13,6 +13,7 @@ class VariationPeopleAdapterTest extends MockeryTestCase
 
     protected $container;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->container = m::mock(ContainerInterface::class);

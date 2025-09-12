@@ -11,6 +11,7 @@ class ApplicationLvaAdapter extends AbstractLvaAdapter
         parent::__construct($container);
     }
 
+    #[\Override]
     public function getIdentifier()
     {
         $id = $this->getController()->params('application');

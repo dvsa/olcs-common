@@ -33,6 +33,7 @@ class InternalConversationLink implements FormatterPluginManagerInterface
      * @return     string
      * @inheritdoc
      */
+    #[\Override]
     public function format($row, $column = null)
     {
         switch ($this->route->getParam('type')) {

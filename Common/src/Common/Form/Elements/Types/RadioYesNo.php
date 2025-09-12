@@ -10,6 +10,7 @@ class RadioYesNo extends Radio
     /**
      * Initial value options
      */
+    #[\Override]
     public function init(): void
     {
         $this->setValueOptions(['Y' => 'Yes', 'N' => 'No']);

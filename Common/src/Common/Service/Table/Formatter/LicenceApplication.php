@@ -29,6 +29,7 @@ class LicenceApplication implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($row, $column = null)
     {
         /**

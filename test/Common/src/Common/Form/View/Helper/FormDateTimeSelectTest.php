@@ -24,6 +24,7 @@ class FormDateTimeSelectTest extends MockeryTestCase
 {
     private $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $formInput = m::mock(FormInput::class)->makePartial();

@@ -24,6 +24,7 @@ class LastLoginServiceTest extends MockeryTestCase
      */
     private $commandSender;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->commandSender = m::mock(CommandSender::class);

@@ -25,6 +25,7 @@ class LicenceConditionsUndertakingsReviewService extends AbstractReviewService
      *
      * @return array
      */
+    #[\Override]
     public function getConfigFromData(array $data = [])
     {
         [$licConds, $licUnds, $ocConds, $ocUnds] = $this->helper

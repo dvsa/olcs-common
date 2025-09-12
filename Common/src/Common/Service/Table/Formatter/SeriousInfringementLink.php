@@ -27,6 +27,7 @@ class SeriousInfringementLink implements FormatterPluginManagerInterface
      * @param  array $column The column
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         unset($column);

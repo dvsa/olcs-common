@@ -15,6 +15,7 @@ class BusRegBrowseListDataServiceTest extends AbstractDataServiceTestCase
 {
     private BusRegBrowseListDataService $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

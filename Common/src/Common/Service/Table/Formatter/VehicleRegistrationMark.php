@@ -24,6 +24,7 @@ class VehicleRegistrationMark implements FormatterPluginManagerInterface
      *
      * @return string The formatted Vehicle Registration Mark
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         $vrm = $data['vehicle']['vrm'];

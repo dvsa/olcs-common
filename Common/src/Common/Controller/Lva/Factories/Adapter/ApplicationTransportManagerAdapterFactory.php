@@ -19,6 +19,7 @@ class ApplicationTransportManagerAdapterFactory implements FactoryInterface
      * @throws NotFoundExceptionInterface
      * @throws ContainerExceptionInterface
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): ApplicationTransportManagerAdapter
     {
         $transferAnnotationBuilder = $container->get(AnnotationBuilder::class);

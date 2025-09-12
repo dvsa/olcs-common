@@ -37,6 +37,7 @@ class PaymentController extends AbstractContinuationController
     /**
      * Index page
      */
+    #[\Override]
     public function indexAction()
     {
         $data = $this->getContinuationDetailData();

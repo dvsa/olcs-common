@@ -21,6 +21,7 @@ class CrudActionTraitTest extends MockeryTestCase
     /** @var \Laminas\ServiceManager\ServiceManager | m\MockInterface */
     protected $sm;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->mockFlashMessengerHelper = m::mock(FlashMessengerHelperService::class);
@@ -29,6 +30,7 @@ class CrudActionTraitTest extends MockeryTestCase
             ->shouldAllowMockingProtectedMethods();
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

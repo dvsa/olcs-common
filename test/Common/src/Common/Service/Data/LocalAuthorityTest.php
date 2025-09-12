@@ -16,6 +16,7 @@ class LocalAuthorityTest extends AbstractDataServiceTestCase
     /** @var LocalAuthority */
     private $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

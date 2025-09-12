@@ -18,6 +18,7 @@ class FormElementMessageFormatterFactory implements FactoryInterface
      * @param mixed $requestedName
      * @param array|null $options
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): FormElementMessageFormatter
     {
         $formatter = new FormElementMessageFormatter($container->get(TranslatorInterface::class));

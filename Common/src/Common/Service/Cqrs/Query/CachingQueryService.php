@@ -62,6 +62,7 @@ class CachingQueryService implements QueryServiceInterface, \Laminas\Log\LoggerA
      *
      * @return \Common\Service\Cqrs\Response
      */
+    #[\Override]
     public function send(QueryContainerInterface $query)
     {
         $this->queryService->setRecoverHttpClientException($this->getRecoverHttpClientException());

@@ -140,6 +140,7 @@ abstract class AbstractSafetyController extends AbstractController
      *
      * @return array|\Common\View\Model\Section|Response
      */
+    #[\Override]
     public function indexAction()
     {
         /** @var \Laminas\Http\Request $request */

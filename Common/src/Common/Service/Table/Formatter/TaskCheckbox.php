@@ -29,6 +29,7 @@ class TaskCheckbox implements FormatterPluginManagerInterface
      * @return     string
      * @inheritdoc
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         if (isset($data['isClosed']) && $data['isClosed'] === 'Y') {

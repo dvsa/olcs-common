@@ -18,6 +18,7 @@ class RoleTest extends AbstractDataServiceTestCase
     /** @var Role */
     private $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

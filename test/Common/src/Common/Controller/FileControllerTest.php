@@ -20,6 +20,7 @@ class FileControllerTest extends TestCase
     /** @var  m\MockInterface */
     private $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->mockParams = m::mock(Plugin\Params::class . '[fromRoute, fromQuery]');

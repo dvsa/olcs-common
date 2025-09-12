@@ -50,6 +50,7 @@ final class FormValidatorBuilder
                 $this->populateCsrfDataBeforeValidating = $disabled;
             }
 
+            #[\Override]
             public function isValid(Form $form): bool
             {
                 if ($this->populateCsrfDataBeforeValidating) {

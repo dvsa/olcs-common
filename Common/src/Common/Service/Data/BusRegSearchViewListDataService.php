@@ -23,6 +23,7 @@ class BusRegSearchViewListDataService extends AbstractDataService implements Lis
      *
      * @return array
      */
+    #[\Override]
     public function fetchListOptions($context, $useGroups = false)
     {
         $data = $this->fetchListData($context);

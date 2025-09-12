@@ -38,6 +38,7 @@ class Hidden extends LaminasElement implements InputProviderInterface
     /**
      * Provide default input rules for this element.
      */
+    #[\Override]
     public function getInputSpecification(): array
     {
         $specification = [

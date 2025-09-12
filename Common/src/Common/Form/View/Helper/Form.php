@@ -20,6 +20,7 @@ class Form extends \Laminas\Form\View\Helper\Form
      * @param LaminasFormInterface $form            Form
      * @param bool              $includeFormTags Is include form tags
      */
+    #[\Override]
     public function render(LaminasFormInterface $form, $includeFormTags = true): string
     {
         if (method_exists($form, 'prepare')) {

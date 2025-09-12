@@ -20,6 +20,7 @@ class FinancialHistoryTextarea extends LaminasElement implements InputProviderIn
      *
      * @psalm-return array{name: null|string, required: true, validators: list{Validator\NotEmpty, \Dvsa\Olcs\Transfer\Validators\FhAdditionalInfo}}
      */
+    #[\Override]
     public function getInputSpecification(): array
     {
         return [

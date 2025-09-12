@@ -16,6 +16,7 @@ class LicenceTypeOfLicence extends AbstractTypeOfLicence
     {
     }
 
+    #[\Override]
     protected function alterForm(Form $form, $params = [])
     {
         parent::alterForm($form, $params);
@@ -25,6 +26,7 @@ class LicenceTypeOfLicence extends AbstractTypeOfLicence
         $this->lockElements($form, $params);
     }
 
+    #[\Override]
     protected function allElementsLocked(Form $form)
     {
         $this->removeStandardFormActions($form);

@@ -18,6 +18,7 @@ class ApplicationTest extends AbstractDataServiceTestCase
     /** @var Application */
     private $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

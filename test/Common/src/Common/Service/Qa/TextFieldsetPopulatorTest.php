@@ -50,6 +50,7 @@ class TextFieldsetPopulatorTest extends MockeryTestCase
 
     private $value = 'value';
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->text = m::mock(Text::class);

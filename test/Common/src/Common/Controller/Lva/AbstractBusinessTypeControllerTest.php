@@ -15,6 +15,7 @@ class AbstractBusinessTypeControllerTest extends AbstractLvaControllerTestCase
 {
     public $request;
     public $sut;
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

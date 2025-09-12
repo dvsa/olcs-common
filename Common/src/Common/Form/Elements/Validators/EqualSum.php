@@ -29,6 +29,7 @@ class EqualSum extends AbstractValidator
      *
      * @psalm-param array{foo: 5, bar?: 5|6}|null $context
      */
+    #[\Override]
     public function isValid($value, $context = null)
     {
         $contextFields = $this->getOption('fields');

@@ -27,6 +27,7 @@ class DeclarationTest extends MockeryTestCase
     /** @var  m\MockInterface */
     private $formHelper;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->formHelper = m::mock(FormHelperService::class);

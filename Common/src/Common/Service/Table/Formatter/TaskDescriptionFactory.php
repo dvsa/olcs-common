@@ -12,6 +12,7 @@ class TaskDescriptionFactory implements FactoryInterface
      * @param  array|null         $options
      * @return TaskDescription
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $router = $container->get('Router');

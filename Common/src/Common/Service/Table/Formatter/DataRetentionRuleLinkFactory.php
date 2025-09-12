@@ -12,6 +12,7 @@ class DataRetentionRuleLinkFactory implements FactoryInterface
      * @param  array|null         $options
      * @return DataRetentionRuleLink
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $urlHelper = $container->get('Helper\Url');

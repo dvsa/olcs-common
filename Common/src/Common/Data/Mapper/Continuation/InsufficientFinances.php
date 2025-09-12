@@ -16,6 +16,7 @@ class InsufficientFinances implements MapperInterface
      *
      * @return array data for the form
      */
+    #[\Override]
     public static function mapFromResult(array $data)
     {
         $uploadSendValue = $data['financialEvidenceUploaded'] === false ? 'send' : 'upload';

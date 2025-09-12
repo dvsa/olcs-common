@@ -29,6 +29,7 @@ class VariationOperatingCentres extends AbstractOperatingCentres
 
     protected $mainTableConfigName = 'lva-variation-operating-centres';
 
+    #[\Override]
     protected function alterForm(Form $form, array $params)
     {
         $this->formServiceLocator->get('lva-variation')->alterForm($form);

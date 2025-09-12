@@ -20,6 +20,7 @@ use Common\Service\Helper\DateHelperService;
 class DateHelperServiceTest extends MockeryTestCase
 {
     public $sut;
+    #[\Override]
     protected function setUp(): void
     {
         $this->sut = new DateHelperService();

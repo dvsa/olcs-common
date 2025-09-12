@@ -25,11 +25,13 @@ class RefreshTokenServiceTest extends MockeryTestCase
 
     private RefreshTokenService $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->setUpServiceManager();
     }
 
+    #[\Override]
     protected function setUpDefaultServices(ServiceManager $serviceManager): ServiceManager
     {
         $this->commandSender();

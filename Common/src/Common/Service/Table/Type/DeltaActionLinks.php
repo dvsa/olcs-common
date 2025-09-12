@@ -6,6 +6,7 @@ use Common\Util\Escape;
 
 class DeltaActionLinks extends Selector
 {
+    #[\Override]
     public function render(array $data, array $column, string|null $formattedContent = null): string
     {
         $translator = $this->getTable()->getServiceLocator()->get('translator');

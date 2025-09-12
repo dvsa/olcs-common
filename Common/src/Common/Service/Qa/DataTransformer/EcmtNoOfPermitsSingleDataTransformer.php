@@ -19,6 +19,7 @@ class EcmtNoOfPermitsSingleDataTransformer implements DataTransformerInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getTransformed(array $data)
     {
         if (!isset($data[self::PERMITS_REQUIRED_KEY])) {

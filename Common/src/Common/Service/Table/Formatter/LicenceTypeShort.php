@@ -35,6 +35,7 @@ class LicenceTypeShort implements FormatterPluginManagerInterface
      * @param  array $data
      * @return string
      */
+    #[\Override]
     public function format($data, $column = null)
     {
         $ref = [];

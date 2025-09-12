@@ -2,6 +2,10 @@
 
 namespace Common\Form;
 
+/**
+ * @template TFilteredValues
+ * @extends Form<TFilteredValues>
+ */
 class BaseQaForm extends Form
 {
     public const QA_FIELDSET_NAME = 'qa';

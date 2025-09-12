@@ -25,6 +25,7 @@ class DashboardApplicationLink implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         if ($data['status']['id'] !== RefData::APPLICATION_STATUS_NOT_SUBMITTED) {

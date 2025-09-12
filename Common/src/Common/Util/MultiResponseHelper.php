@@ -10,6 +10,7 @@ use Laminas\Http\Response;
  */
 class MultiResponseHelper extends ResponseHelper
 {
+    #[\Override]
     public function handleResponse(): array|bool|null
     {
         $this->body = $this->response->getBody();

@@ -19,6 +19,7 @@ class MonthSelect extends LaminasElement\MonthSelect
 {
     use Traits\YearDelta;
 
+    #[\Override]
     public function getInputSpecification(): array
     {
         return [

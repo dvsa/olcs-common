@@ -26,6 +26,7 @@ class ApplicationTransportManagerAdapter extends AbstractTransportManagerAdapter
     /**
      * Load data into the table
      */
+    #[\Override]
     public function getTableData($applicationId, $licenceId)
     {
         $query = $this->transferAnnotationBuilder->createQuery(
@@ -46,6 +47,7 @@ class ApplicationTransportManagerAdapter extends AbstractTransportManagerAdapter
      *
      * @return bool
      */
+    #[\Override]
     public function mustHaveAtLeastOneTm()
     {
         if (!isset($this->applicationData['licenceType']['id'])) {
@@ -67,6 +69,7 @@ class ApplicationTransportManagerAdapter extends AbstractTransportManagerAdapter
      *
      * @return bool whether successful
      */
+    #[\Override]
     public function delete(array $ids, $applicationId)
     {
         $command = $this->transferAnnotationBuilder->createCommand(

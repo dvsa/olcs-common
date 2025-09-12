@@ -88,6 +88,7 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
      *
      * @param ElementInterface $element Element
      */
+    #[\Override]
     public function render(ElementInterface $element): string
     {
         foreach ($this->classMap as $class => $helperName) {

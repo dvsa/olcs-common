@@ -12,6 +12,7 @@ class LicenceDetails extends AbstractSection
      *
      * @psalm-return list{0: array{label: string, answer: mixed, changeLinkInHeading: mixed}, 1: array{label: string, answer: mixed, changeLinkInHeading: mixed}, 2?: array{label: string, answer: string, changeLinkInHeading: mixed}}
      */
+    #[\Override]
     protected function makeQuestions()
     {
 
@@ -51,6 +52,7 @@ class LicenceDetails extends AbstractSection
     /**
      * @return false
      */
+    #[\Override]
     protected function makeChangeLink()
     {
         return false;

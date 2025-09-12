@@ -10,6 +10,7 @@ class OperatorLicenceTest extends MockeryTestCase
 {
     private $operatorLicence;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->operatorLicence = new OperatorLicence();

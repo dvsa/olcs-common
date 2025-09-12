@@ -30,6 +30,7 @@ class CommandAdapter extends AbstractAdapter
     {
     }
 
+    #[\Override]
     public function authenticate()
     {
         $command = Login::create([

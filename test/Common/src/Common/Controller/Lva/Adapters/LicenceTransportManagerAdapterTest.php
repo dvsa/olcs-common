@@ -31,6 +31,7 @@ class LicenceTransportManagerAdapterTest extends MockeryTestCase
     /** @var CommandService $mockCommandSrv */
     protected $mockCommandSrv;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->container = m::mock(ContainerInterface::class);

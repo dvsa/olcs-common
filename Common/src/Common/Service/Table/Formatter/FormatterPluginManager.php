@@ -22,6 +22,7 @@ class FormatterPluginManager extends PluginManager
      * @param mixed $plugin
      * @throws InvalidServiceException If plugin is invalid.
      */
+    #[\Override]
     public function validate($plugin): void
     {
         if (!($plugin instanceof $this->instanceOf)) {

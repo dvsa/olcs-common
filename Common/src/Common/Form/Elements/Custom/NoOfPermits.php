@@ -23,6 +23,7 @@ class NoOfPermits extends LaminasElement implements InputProviderInterface
      *
      * @psalm-return array{type: \Laminas\InputFilter\Input::class, name: null|string, filters: list{array{name: \Laminas\Filter\StringTrim::class}}, required: true, validators: list{NoOfPermitsNotEmptyValidator, RegexValidator, NoOfPermitsMinValidator, NoOfPermitsMaxValidator}}
      */
+    #[\Override]
     public function getInputSpecification(): array
     {
         return [

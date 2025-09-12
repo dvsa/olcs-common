@@ -23,6 +23,7 @@ class DateNotInFuture extends DateRequired implements InputProviderInterface
      *
      * @psalm-return list{array{name: 'Date', options: array{format: 'Y-m-d'}}, array{name: \Common\Form\Elements\Validators\DateNotInFuture::class}}
      */
+    #[\Override]
     public function getValidators()
     {
         return [

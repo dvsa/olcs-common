@@ -16,6 +16,7 @@ class RefDataTest extends RefDataTestCase
     /** @var RefData */
     private $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

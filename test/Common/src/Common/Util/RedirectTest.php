@@ -14,6 +14,7 @@ class RedirectTest extends MockeryTestCase
 
     protected $redirectPlugin;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->sut = new Redirect();

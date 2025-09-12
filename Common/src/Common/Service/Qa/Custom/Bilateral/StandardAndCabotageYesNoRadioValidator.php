@@ -19,6 +19,7 @@ class StandardAndCabotageYesNoRadioValidator extends AbstractValidator
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function isValid($value, $context = null)
     {
         if ($value == 'Y' && $context['yesContent'] == '') {

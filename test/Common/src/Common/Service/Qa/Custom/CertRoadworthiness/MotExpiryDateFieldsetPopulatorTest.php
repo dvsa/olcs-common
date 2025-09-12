@@ -32,6 +32,7 @@ class MotExpiryDateFieldsetPopulatorTest extends MockeryTestCase
 
     private $motExpiryDateFieldsetPopulator;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->translator = m::mock(TranslationHelperService::class);

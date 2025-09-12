@@ -6,7 +6,8 @@ use Common\Form\Elements\Custom\NoOfPermits as NoOfPermitsElement;
 use Laminas\Form\Fieldset;
 
 /**
- * Class NoOfPermitsForm
+ * @template TFilteredValues
+ * @extends Form<TFilteredValues>
  */
 class NoOfPermitsForm extends Form
 {
@@ -16,6 +17,7 @@ class NoOfPermitsForm extends Form
     /**
      * Add a further error message if all fields are found to have a zero value
      */
+    #[\Override]
     public function getMessages(?string $elementName = null): array
     {
         $messages = $this->callParentGetMessages();
@@ -30,6 +32,7 @@ class NoOfPermitsForm extends Form
     /**
      * Check all NoOfPermits elements if the form is found to be otherwise valid
      */
+    #[\Override]
     public function isValid(): bool
     {
         $this->addAllFieldsZeroError = false;

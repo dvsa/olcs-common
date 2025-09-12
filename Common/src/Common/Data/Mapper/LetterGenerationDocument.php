@@ -20,6 +20,7 @@ class LetterGenerationDocument implements MapperInterface
      *
      * @psalm-return array{data: array, details: array{category: mixed, documentSubCategory: mixed, documentTemplate: mixed, bookmarks: mixed}, bookmarks: mixed}
      */
+    #[\Override]
     public static function mapFromResult(array $data)
     {
         $meta = json_decode($data['metadata'], true);

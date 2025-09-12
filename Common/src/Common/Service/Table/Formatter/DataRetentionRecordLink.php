@@ -56,6 +56,7 @@ class DataRetentionRecordLink implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         $statusHelper = $this->viewHelperManager->get('status');

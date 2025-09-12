@@ -32,6 +32,7 @@ class RestClientTest extends m\Adapter\Phpunit\MockeryTestCase
         'checkForUnexpectedResponseCode'
     ];
 
+    #[\Override]
     public function setUp(): void
     {
         // Upstream wont fix this, so we need to suppress the deprecation - https://github.com/laminas/laminas-stdlib/issues/85

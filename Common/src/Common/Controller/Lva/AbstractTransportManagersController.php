@@ -78,6 +78,7 @@ abstract class AbstractTransportManagersController extends AbstractController
      *
      * @return array|\Common\View\Model\Section|\Laminas\Http\Response
      */
+    #[\Override]
     public function indexAction()
     {
         $this->lvaAdapter->addMessages($this->getLicenceId());

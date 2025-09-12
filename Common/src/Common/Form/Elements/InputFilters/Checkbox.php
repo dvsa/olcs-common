@@ -20,6 +20,7 @@ class Checkbox extends LaminasElement\Checkbox
     /**
      * Provide default input rules for checkbox element.
      */
+    #[\Override]
     public function getInputSpecification(): array
     {
         $options = $this->getOptions();

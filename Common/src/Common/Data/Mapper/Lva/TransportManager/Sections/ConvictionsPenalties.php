@@ -11,6 +11,7 @@ class ConvictionsPenalties extends AbstractSection implements TransportManagerSe
     /**
      * @return static
      */
+    #[\Override]
     public function populate(array $transportManagerApplication)
     {
         $convictions = $transportManagerApplication['transportManager']['previousConvictions'];

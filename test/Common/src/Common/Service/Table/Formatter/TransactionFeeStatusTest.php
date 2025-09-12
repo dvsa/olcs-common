@@ -32,6 +32,7 @@ class TransactionFeeStatusTest extends MockeryTestCase
 
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->urlHelper = m::mock(UrlHelperService::class);
@@ -46,6 +47,7 @@ class TransactionFeeStatusTest extends MockeryTestCase
             ->andReturn($this->mockRouteMatch);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

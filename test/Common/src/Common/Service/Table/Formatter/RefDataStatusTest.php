@@ -21,6 +21,7 @@ class RefDataStatusTest extends MockeryTestCase
 
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->viewHelperManager = m::mock(HelperPluginManager::class);
@@ -28,6 +29,7 @@ class RefDataStatusTest extends MockeryTestCase
         $this->sut = new RefDataStatus($this->viewHelperManager, new RefData($this->translator));
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

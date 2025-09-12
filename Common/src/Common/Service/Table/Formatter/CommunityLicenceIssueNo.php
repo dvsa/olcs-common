@@ -22,6 +22,7 @@ class CommunityLicenceIssueNo implements FormatterPluginManagerInterface
      * @param  array $column
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         return str_pad($data[$column['name']], 5, '0', STR_PAD_LEFT) .

@@ -17,6 +17,7 @@ class PiHearingStatus implements FormatterPluginManagerInterface
      * @param  array $row
      * @return string
      */
+    #[\Override]
     public function format($row, $column = [])
     {
         if (!empty($row['isCancelled']) && ($row['isCancelled'] === 'Y')) {

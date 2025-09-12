@@ -21,6 +21,7 @@ class TranslateableTextParameterHandlerTest extends MockeryTestCase
 
     private $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->sut = new TranslateableTextParameterHandler();

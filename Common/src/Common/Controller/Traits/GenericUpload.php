@@ -8,11 +8,10 @@ use Common\Util\FileContent;
 use Dvsa\Olcs\Transfer\Command\Document\DeleteDocument;
 use Dvsa\Olcs\Transfer\Command\Document\Upload;
 
-/**
- * @property FileUploadHelperService $uploadHelper
- */
 trait GenericUpload
 {
+    protected FileUploadHelperService $uploadHelper;
+
     /**
      * Process files
      *

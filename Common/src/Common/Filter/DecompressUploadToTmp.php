@@ -10,6 +10,7 @@ class DecompressUploadToTmp extends DecompressToTmp
     /**
      * @throws Exception\RuntimeException If filtering $value is impossible
      */
+    #[\Override]
     public function filter(mixed $value): mixed
     {
         $tmpDir = $this->createTmpDir();

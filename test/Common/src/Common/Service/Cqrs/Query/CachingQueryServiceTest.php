@@ -36,6 +36,7 @@ class CachingQueryServiceTest extends MockeryTestCase
     /** @var m\MockInterface */
     private $mockResult;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->mockQuery = m::mock(QueryContainerInterface::class);

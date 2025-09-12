@@ -11,16 +11,19 @@ class TransportManagerLicenceStatus extends TermsAbstract implements ComplexTerm
     protected $title = 'search.form.filter.transport-manager-licence-status';
     protected $key = 'TransportManagerLicenceStatus';
 
+    #[\Override]
     public function getType(): string
     {
         return self::TYPE_COMPLEX;
     }
 
+    #[\Override]
     public function getOptionsKvp(): array
     {
         return $this->getOptions();
     }
 
+    #[\Override]
     public function getOptions(): array
     {
         return [
@@ -28,6 +31,7 @@ class TransportManagerLicenceStatus extends TermsAbstract implements ComplexTerm
         ];
     }
 
+    #[\Override]
     public function applySearch(array &$params): void
     {
         $params['must_not'][] = [

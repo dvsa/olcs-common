@@ -25,6 +25,7 @@ class DateBeforeValidatorTest extends MockeryTestCase
 
     private $dateBeforeValidator;
 
+    #[\Override]
     protected function setUp(): void
     {
         $options = [

@@ -27,6 +27,7 @@ class FeeUrlExternal extends FeeUrl
      *
      * @return string
      */
+    #[\Override]
     public function format($row, $column = [])
     {
         if (isset($row['isExpiredForLicence']) && $row['isExpiredForLicence']) {

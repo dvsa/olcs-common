@@ -23,12 +23,14 @@ class AddressLinesTest extends MockeryTestCase
     public $sut;
     protected $dataHelper;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->dataHelper = m::mock(DataHelperService::class);
         $this->sut =  new AddressLines($this->dataHelper);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

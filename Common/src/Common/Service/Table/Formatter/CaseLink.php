@@ -27,6 +27,7 @@ class CaseLink implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         if (empty($data['id'])) {

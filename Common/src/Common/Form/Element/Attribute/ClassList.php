@@ -90,6 +90,7 @@ class ClassList implements \Stringable
         return $this;
     }
 
+    #[\Override]
     public function __toString(): string
     {
         return implode(' ', $this->toArray());

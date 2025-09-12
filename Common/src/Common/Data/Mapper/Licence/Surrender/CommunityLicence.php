@@ -36,6 +36,7 @@ class CommunityLicence implements MapperInterface
      *
      * @psalm-return array{communityLicenceDocument?: array{communityLicenceDocument: 'lost'|'possession'|'stolen', stolenContent?: array{details: mixed}, lostContent?: array{details: mixed}}}
      */
+    #[\Override]
     public static function mapFromResult(array $data)
     {
         $licenceDocumentStatus = $data["communityLicenceDocumentStatus"]["id"] ?? null;

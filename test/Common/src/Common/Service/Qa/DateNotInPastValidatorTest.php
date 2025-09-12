@@ -22,6 +22,7 @@ class DateNotInPastValidatorTest extends MockeryTestCase
 {
     private $dateNotInPastValidator;
 
+    #[\Override]
     protected function setUp(): void
     {
         $options = [];

@@ -59,6 +59,7 @@ abstract class AbstractFinancialHistoryController extends AbstractController
      *
      * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
+    #[\Override]
     public function indexAction()
     {
         /** @var \Laminas\Http\Request $request */
@@ -124,6 +125,7 @@ abstract class AbstractFinancialHistoryController extends AbstractController
      *
      * @return Form
      */
+    #[\Override]
     protected function alterFormForLva(Form $form, $data = null)
     {
         return $form;

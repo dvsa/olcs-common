@@ -31,6 +31,7 @@ class Address implements FormatterPluginManagerInterface
      *
      * @return string                         The formatted address
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         if (isset($column['name'])) {

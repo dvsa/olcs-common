@@ -19,6 +19,7 @@ class DateSelectNullifier extends AbstractFilter
      *
      * @return string|null
      */
+    #[\Override]
     public function filter($value): ?string
     {
         if (empty($value)) {

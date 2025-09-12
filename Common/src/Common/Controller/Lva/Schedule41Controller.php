@@ -485,6 +485,7 @@ class Schedule41Controller extends AbstractController
      *
      * @return void
      */
+    #[\Override]
     protected function checkForRedirect($lvaId)
     {
         unset($lvaId);

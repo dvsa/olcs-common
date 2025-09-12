@@ -25,6 +25,7 @@ class DateInFuture extends \Laminas\Validator\AbstractValidator
      *
      * @return bool
      */
+    #[\Override]
     public function isValid($value)
     {
         $valueDateTime = new \DateTime($value);

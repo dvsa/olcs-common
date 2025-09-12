@@ -24,6 +24,7 @@ class SectorsFieldsetPopulator implements FieldsetPopulatorInterface
      *
      * @param mixed $form
      */
+    #[\Override]
     public function populate($form, Fieldset $fieldset, array $options): void
     {
         $this->radioFieldsetPopulator->populate($form, $fieldset, $options);

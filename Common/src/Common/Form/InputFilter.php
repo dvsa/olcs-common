@@ -6,6 +6,10 @@ use Traversable;
 use Laminas\Stdlib\ArrayUtils;
 use Laminas\InputFilter\InputFilter as LaminasInputFilter;
 
+/**
+ * @template TFilteredValues
+ * @extends LaminasInputFilter<TFilteredValues>
+ */
 class InputFilter extends LaminasInputFilter
 {
     /**
@@ -16,6 +20,7 @@ class InputFilter extends LaminasInputFilter
      * @return InputFilter
      * @throws \InvalidArgumentException
      */
+    #[\Override]
     public function setData($data)
     {
         if (!is_array($data) && !$data instanceof Traversable) {

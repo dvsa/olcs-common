@@ -23,6 +23,7 @@ class IrhpPermitStockValidity implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         if (is_null($data['validFrom']) || is_null($data['validTo'])) {

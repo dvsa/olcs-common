@@ -31,6 +31,7 @@ class EnabledSectionTraitTest extends MockeryTestCase
 
     protected $sm;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->mockRestrictionHelper = m::mock(RestrictionHelperService::class);

@@ -24,6 +24,7 @@ class DateSelect extends LaminasElement\DateSelect
      *
      * @return $this
      */
+    #[\Override]
     public function setOptions($options)
     {
         if (!isset($options['hint'])) {
@@ -38,6 +39,7 @@ class DateSelect extends LaminasElement\DateSelect
     /**
      * Get Input Specification
      */
+    #[\Override]
     public function getInputSpecification(): array
     {
         return [
@@ -72,6 +74,7 @@ class DateSelect extends LaminasElement\DateSelect
      *
      * @return DateValidator
      */
+    #[\Override]
     protected function getValidator(): ValidatorInterface
     {
         if (null === $this->validator) {

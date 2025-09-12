@@ -28,6 +28,7 @@ abstract class AggregationsAbstract implements AggregationsInterface
     /**
      * @return mixed
      */
+    #[\Override]
     public function getKey()
     {
         return $this->key;
@@ -41,6 +42,7 @@ abstract class AggregationsAbstract implements AggregationsInterface
     /**
      * @return mixed
      */
+    #[\Override]
     public function getValue()
     {
         return $this->value;
@@ -49,6 +51,7 @@ abstract class AggregationsAbstract implements AggregationsInterface
     /**
      * @param mixed $value
      */
+    #[\Override]
     public function setValue($value): void
     {
         $this->value = $value;
@@ -57,6 +60,7 @@ abstract class AggregationsAbstract implements AggregationsInterface
     /**
      * @return mixed
      */
+    #[\Override]
     public function getTitle()
     {
         return $this->title;

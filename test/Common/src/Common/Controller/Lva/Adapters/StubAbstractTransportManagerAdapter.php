@@ -13,16 +13,19 @@ class StubAbstractTransportManagerAdapter extends AbstractTransportManagerAdapte
 {
     protected $tableSortMethod;
 
+    #[\Override]
     public function mapResultForTable(array $applicationTms, array $licenceTms = [])
     {
         return parent::mapResultForTable($applicationTms, $licenceTms);
     }
 
+    #[\Override]
     public function sortResultForTable(array $data, $method = null)
     {
         return parent::sortResultForTable($data, $method);
     }
 
+    #[\Override]
     public function getTableData($applicationId, $licenceId)
     {
         return [
@@ -36,6 +39,7 @@ class StubAbstractTransportManagerAdapter extends AbstractTransportManagerAdapte
      *
      * @phpstan-ignore-next-line
      */
+    #[\Override]
     public function delete(array $ids, $applicationId)
     {
     }

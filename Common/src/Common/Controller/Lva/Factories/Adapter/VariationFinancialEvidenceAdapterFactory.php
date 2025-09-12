@@ -10,6 +10,7 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class VariationFinancialEvidenceAdapterFactory implements FactoryInterface
 {
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): VariationFinancialEvidenceAdapter
     {
         return new VariationFinancialEvidenceAdapter($container);

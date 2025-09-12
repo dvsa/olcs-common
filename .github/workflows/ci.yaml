@@ -16,7 +16,8 @@ jobs:
   static-analysis:
     uses: dvsa/.github/.github/workflows/php-library-static.yml@main
     with:
-      php-version: '8.2'
+      php-version: '8.3'
+      stability: '["prefer-stable"]'
 
   tests:
     uses: dvsa/.github/.github/workflows/php-library-tests.yml@main

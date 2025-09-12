@@ -30,6 +30,7 @@ class Responsibilities extends AbstractSection implements TransportManagerSectio
      *
      * @return static
      */
+    #[\Override]
     public function populate(array $transportManagerApplication)
     {
         $this->setOwnerTm($transportManagerApplication['isOwner']);

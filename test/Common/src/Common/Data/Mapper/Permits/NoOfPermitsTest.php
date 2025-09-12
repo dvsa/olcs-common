@@ -24,6 +24,7 @@ class NoOfPermitsTest extends TestCase
 
     private $noOfPermits;
 
+    #[\Override]
     protected function setUp(): void
     {
         $submitButton = new Submit();

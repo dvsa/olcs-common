@@ -47,6 +47,7 @@ class DeclarationController extends AbstractContinuationController
      *
      * @return ViewModel|Response
      */
+    #[\Override]
     public function indexAction()
     {
         $continuationDetail = $this->getContinuationDetailData();

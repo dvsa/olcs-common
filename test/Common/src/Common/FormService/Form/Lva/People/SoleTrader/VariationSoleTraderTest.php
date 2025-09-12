@@ -30,6 +30,7 @@ class VariationSoleTraderTest extends MockeryTestCase
 
     protected $mockVariationService;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);

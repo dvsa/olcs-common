@@ -27,6 +27,7 @@ class NoOfPermitsSingleFieldsetPopulator implements FieldsetPopulatorInterface
      * @param mixed $form
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
+    #[\Override]
     public function populate($form, Fieldset $fieldset, array $options): void
     {
         $emissionsCategory = $options['emissionsCategories'][0];

@@ -28,6 +28,7 @@ class ApplicationTypeOfLicenceTest extends MockeryTestCase
     /** @var  m\MockInterface|FormHelperService */
     protected $fh;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->fsm = m::mock(FormServiceManager::class)->makePartial();

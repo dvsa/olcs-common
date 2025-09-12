@@ -15,6 +15,7 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
  */
 class TableBuilderFactory implements FactoryInterface
 {
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         return new TableBuilder(

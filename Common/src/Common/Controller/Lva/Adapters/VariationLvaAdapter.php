@@ -11,6 +11,7 @@ class VariationLvaAdapter extends AbstractLvaAdapter
         parent::__construct($container);
     }
 
+    #[\Override]
     public function getIdentifier()
     {
         return $this->getApplicationAdapter()->getIdentifier();

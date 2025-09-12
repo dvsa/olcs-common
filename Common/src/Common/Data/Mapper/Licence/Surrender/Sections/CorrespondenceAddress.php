@@ -12,6 +12,7 @@ class CorrespondenceAddress extends AbstractSection
      *
      * @psalm-return list{array{label: string, answer: string, changeLinkInHeading: mixed}, array{label: string, answer: mixed, changeLinkInHeading: mixed}, array{label: string, answer: mixed, changeLinkInHeading: mixed}}
      */
+    #[\Override]
     protected function makeQuestions()
     {
 
@@ -52,6 +53,7 @@ class CorrespondenceAddress extends AbstractSection
      *
      * @psalm-return array{sectionLink: string}
      */
+    #[\Override]
     protected function makeChangeLink()
     {
         return [

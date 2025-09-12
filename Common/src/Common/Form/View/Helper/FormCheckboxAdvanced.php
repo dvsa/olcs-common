@@ -17,6 +17,7 @@ class FormCheckboxAdvanced extends \Common\Form\View\Helper\Extended\FormCollect
      *
      * @return string HTML
      */
+    #[\Override]
     public function render(ElementInterface $element): string
     {
         $view = $this->view;

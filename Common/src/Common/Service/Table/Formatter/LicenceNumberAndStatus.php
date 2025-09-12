@@ -21,6 +21,7 @@ class LicenceNumberAndStatus implements FormatterPluginManagerInterface
      * @return     string
      * @inheritdoc
      */
+    #[\Override]
     public function format($row, $column = null)
     {
         $activeLink = true;

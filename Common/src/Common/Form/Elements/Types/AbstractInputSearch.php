@@ -24,11 +24,13 @@ abstract class AbstractInputSearch extends Fieldset
         $this->addSubmit();
     }
 
+    #[\Override]
     public function setMessages($messages): void
     {
         $this->messages = $messages;
     }
 
+    #[\Override]
     public function getMessages(?string $elementName = null): array
     {
         return current($this->messages) ?: [];

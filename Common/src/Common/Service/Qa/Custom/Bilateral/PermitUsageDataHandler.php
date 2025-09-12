@@ -21,6 +21,7 @@ class PermitUsageDataHandler implements DataHandlerInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setData(QaForm $form): void
     {
         $this->isValidBasedWarningAdder->add(

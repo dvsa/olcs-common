@@ -14,6 +14,7 @@ abstract class LicenceOperatingCentresTestCase extends OperatingCentresTestCase
     /**
      * @return void
      */
+    #[\Override]
     protected function setUpDefaultServices()
     {
         parent::setUpDefaultServices();

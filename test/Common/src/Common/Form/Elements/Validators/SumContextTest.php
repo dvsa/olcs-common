@@ -21,6 +21,7 @@ class SumContextTest extends MockeryTestCase
 {
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->sut = new SumContext();

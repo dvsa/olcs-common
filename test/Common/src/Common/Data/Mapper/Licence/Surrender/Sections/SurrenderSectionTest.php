@@ -18,6 +18,7 @@ class SurrenderSectionTest extends MockeryTestCase
     protected $mockUrlHelper;
 
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->mockTranslator = m::mock(TranslationHelperService::class);

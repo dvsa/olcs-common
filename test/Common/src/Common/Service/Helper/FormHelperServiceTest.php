@@ -59,6 +59,7 @@ class FormHelperServiceTest extends MockeryTestCase
     /** @var  AddressDataService| m\MockInterface */
     private $mockDataAddress;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->mockBuilder = new AnnotationBuilder();

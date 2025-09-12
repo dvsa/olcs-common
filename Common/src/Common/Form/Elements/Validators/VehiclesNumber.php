@@ -45,6 +45,7 @@ class VehiclesNumber extends AbstractValidator
      * @param mixed $value
      * @param array $context
      */
+    #[\Override]
     public function isValid($value, $context = null)
     {
         if ($value > 0) {

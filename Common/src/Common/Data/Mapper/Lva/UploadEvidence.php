@@ -18,6 +18,7 @@ class UploadEvidence implements MapperInterface
      *
      * @return array
      */
+    #[\Override]
     public static function mapFromResult(array $data)
     {
         $formData = [];

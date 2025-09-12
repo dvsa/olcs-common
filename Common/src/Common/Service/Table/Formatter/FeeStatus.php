@@ -25,6 +25,7 @@ class FeeStatus implements FormatterPluginManagerInterface
      * @return     string
      * @inheritdoc
      */
+    #[\Override]
     public function format($row, $column = null)
     {
         $statusClass = match ($row['feeStatus']['id']) {

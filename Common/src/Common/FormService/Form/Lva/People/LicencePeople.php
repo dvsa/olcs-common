@@ -25,6 +25,7 @@ class LicencePeople extends AbstractPeople
      *
      * @return Form
      */
+    #[\Override]
     protected function alterForm(Form $form, array $params = [])
     {
         $form = parent::alterForm($form, $params);

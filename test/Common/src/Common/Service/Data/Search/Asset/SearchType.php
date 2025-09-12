@@ -35,6 +35,7 @@ class SearchType extends SearchAbstract
     /**
      * @return array
      */
+    #[\Override]
     public function getColumns()
     {
         return [

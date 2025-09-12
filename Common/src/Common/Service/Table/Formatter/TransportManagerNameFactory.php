@@ -12,6 +12,7 @@ class TransportManagerNameFactory implements FactoryInterface
      * @param  array|null         $options
      * @return TransportManagerName
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $translator = $container->get('translator');

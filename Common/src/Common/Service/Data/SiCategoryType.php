@@ -38,6 +38,7 @@ class SiCategoryType extends AbstractDataService implements ListData
      *
      * @return array
      */
+    #[\Override]
     public function fetchListOptions($category, $useGroups = false)
     {
         $data = $this->fetchListData();

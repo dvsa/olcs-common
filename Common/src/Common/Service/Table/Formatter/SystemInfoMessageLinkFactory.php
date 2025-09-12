@@ -12,6 +12,7 @@ class SystemInfoMessageLinkFactory implements FactoryInterface
      * @param  array|null         $options
      * @return SystemInfoMessageLink
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $urlHelper = $container->get('Helper\Url');

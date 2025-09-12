@@ -81,6 +81,7 @@ class SumCompare extends AbstractCompare
      *
      * @param array $options
      */
+    #[\Override]
     public function setOptions($options = []): static
     {
         if (isset($options['sum_with'])) {
@@ -101,6 +102,7 @@ class SumCompare extends AbstractCompare
      * @param  mixed $value
      * @return bool
      */
+    #[\Override]
     public function isValid($value, array $context = null)
     {
         if ($this->getAllowEmpty() && empty($value)) {

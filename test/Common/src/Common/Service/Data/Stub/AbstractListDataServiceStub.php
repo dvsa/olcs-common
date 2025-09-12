@@ -18,6 +18,7 @@ class AbstractListDataServiceStub extends AbstractListDataService
      *
      * @return mixed
      */
+    #[\Override]
     public function fetchListData($context = null)
     {
         return $this->mockFetchListData;

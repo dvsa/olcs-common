@@ -22,6 +22,7 @@ class EbsrVariationNumberTest extends MockeryTestCase
 
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->translator = m::mock(TranslatorDelegator::class);
@@ -29,6 +30,7 @@ class EbsrVariationNumberTest extends MockeryTestCase
         $this->sut = new EbsrVariationNumber($this->viewHelperManager, $this->translator);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

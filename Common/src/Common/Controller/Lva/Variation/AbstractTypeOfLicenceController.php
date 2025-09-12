@@ -35,6 +35,7 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
     /**
      * Licence type of licence section
      */
+    #[\Override]
     public function indexAction()
     {
         $prg = $this->prg();

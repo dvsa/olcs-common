@@ -25,6 +25,7 @@ class OperatingCentresTest extends MockeryTestCase
     /** @var  m\MockInterface | FlashMessengerHelperService */
     private $mockFlashMsg;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->mockTranslator = m::mock(TranslationHelperService::class);

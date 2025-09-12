@@ -14,12 +14,14 @@ class TransportManagerDateOfBirthTest extends MockeryTestCase
 
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->viewHelperManager = m::mock(HelperPluginManager::class);
         $this->sut = new TransportManagerDateOfBirth($this->viewHelperManager);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

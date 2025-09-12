@@ -28,6 +28,7 @@ class ReviewController extends AbstractContinuationController
      *
      * @return ViewModel
      */
+    #[\Override]
     public function indexAction()
     {
         $reviewData = $this->getReviewData($this->getContinuationDetailId());

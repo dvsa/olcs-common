@@ -19,6 +19,7 @@ class IrhpPermitRangeReplacement implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         return $data['lostReplacement'] ? 'Yes' : 'N/A';

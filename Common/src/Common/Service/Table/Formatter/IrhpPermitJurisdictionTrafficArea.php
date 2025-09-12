@@ -20,6 +20,7 @@ class IrhpPermitJurisdictionTrafficArea implements FormatterPluginManagerInterfa
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         return Escape::html($data['trafficArea']['name']);

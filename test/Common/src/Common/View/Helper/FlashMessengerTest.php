@@ -27,6 +27,7 @@ class FlashMessengerTest extends MockeryTestCase
 
     private $mockPluginManager;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->mockPluginManager = m::mock(\Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger::class);

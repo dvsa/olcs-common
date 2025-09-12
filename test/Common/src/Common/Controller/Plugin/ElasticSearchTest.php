@@ -43,6 +43,7 @@ class ElasticSearchTest extends MockeryTestCase
 
     protected $pluginManagerHelper;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->request = m::mock(Request::class);

@@ -16,6 +16,7 @@ class VariationTypeOfLicence extends AbstractTypeOfLicence
     {
     }
 
+    #[\Override]
     protected function alterForm(Form $form, $params = [])
     {
         parent::alterForm($form, $params);
@@ -37,6 +38,7 @@ class VariationTypeOfLicence extends AbstractTypeOfLicence
         );
     }
 
+    #[\Override]
     protected function allElementsLocked(Form $form)
     {
         $this->removeStandardFormActions($form);

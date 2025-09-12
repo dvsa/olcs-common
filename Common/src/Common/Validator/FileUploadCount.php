@@ -65,6 +65,7 @@ class FileUploadCount extends \Laminas\Validator\AbstractValidator
      *
      * @return bool
      */
+    #[\Override]
     public function isValid($value, $context = null)
     {
         if ($this->getNumberOfFilesUploaded($context) >= $this->getMin()) {

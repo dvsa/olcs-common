@@ -7,6 +7,10 @@ use Common\Service\Qa\DataHandlerInterface;
 use RuntimeException;
 use Laminas\Form\Fieldset;
 
+/**
+ * @template TFilteredValues
+ * @extends BaseQaForm<TFilteredValues>
+ */
 class QaForm extends BaseQaForm
 {
     public const QUESTION_FIELDSET_PREFIX = 'fieldset';
@@ -28,6 +32,7 @@ class QaForm extends BaseQaForm
      *
      * @param mixed $data
      */
+    #[\Override]
     public function setData($data): void
     {
         $data = $this->updateDataForQa($data);
@@ -53,6 +58,7 @@ class QaForm extends BaseQaForm
     /**
      * Whether the form passes validation
      */
+    #[\Override]
     public function isValid(): bool
     {
         $isValid = $this->callParentIsValid();

@@ -14,6 +14,7 @@ class DefaultMapper implements MapperInterface
      *
      * @param array $data Data from command
      */
+    #[\Override]
     public static function mapFromResult(array $data): array
     {
         return ['fields' => $data];

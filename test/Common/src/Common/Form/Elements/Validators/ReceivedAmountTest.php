@@ -19,6 +19,7 @@ class ReceivedAmountTest extends \PHPUnit\Framework\TestCase
 {
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->sut = new Sut();

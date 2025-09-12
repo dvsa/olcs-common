@@ -52,6 +52,7 @@ class FormElement extends LaminasFormElement
      *
      * @param LaminasElementInterface $element Form Element
      */
+    #[\Override]
     public function render(LaminasElementInterface $element): string
     {
         if (!$element->getAttribute('id')) {

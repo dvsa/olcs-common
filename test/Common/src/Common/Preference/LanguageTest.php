@@ -35,6 +35,7 @@ class LanguageTest extends MockeryTestCase
      */
     protected $setCookie;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->sut = new Language();

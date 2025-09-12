@@ -13,6 +13,7 @@ class AbstractListDataServiceTest extends AbstractListDataServiceTestCase
     /** @var  AbstractListDataServiceStub */
     private $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

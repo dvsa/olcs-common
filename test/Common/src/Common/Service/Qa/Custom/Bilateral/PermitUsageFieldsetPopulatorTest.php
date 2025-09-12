@@ -32,6 +32,7 @@ class PermitUsageFieldsetPopulatorTest extends MockeryTestCase
 
     private $permitUsageFieldsetPopulator;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->form = m::mock(Form::class);

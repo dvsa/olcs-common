@@ -26,6 +26,7 @@ class NoOfPermitsStrategySelectingFieldsetPopulatorTest extends MockeryTestCase
 
     private $noOfPermitsStrategySelectingFieldsetPopulator;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->form = m::mock(Form::class);

@@ -24,6 +24,7 @@ class CommonLicenceTrailersTest extends MockeryTestCase
      */
     private $formHelper;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->formHelper = m::mock(FormHelperService::class);

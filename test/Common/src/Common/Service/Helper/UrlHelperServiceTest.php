@@ -35,6 +35,7 @@ class UrlHelperServiceTest extends MockeryTestCase
     /**
      * Setup the sut
      */
+    #[\Override]
     protected function setUp(): void
     {
         $this->mockUrlViewHelper = $this->createPartialMock(Url::class, ['__invoke']);

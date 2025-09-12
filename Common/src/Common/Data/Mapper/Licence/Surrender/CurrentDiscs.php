@@ -6,6 +6,7 @@ use Common\Data\Mapper\MapperInterface;
 
 class CurrentDiscs implements MapperInterface
 {
+    #[\Override]
     public static function mapFromResult(array $data): array
     {
         $inPossession = isset($data['discDestroyed']) ? 'Y' : 'N';

@@ -35,6 +35,7 @@ class FeeUrlTest extends MockeryTestCase
 
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->urlHelper = m::mock(UrlHelperService::class);
@@ -63,6 +64,7 @@ class FeeUrlTest extends MockeryTestCase
             ->getMock();
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

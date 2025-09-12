@@ -15,6 +15,7 @@ class YesNoRadioTest extends MockeryTestCase
 {
     private $yesNoRadio;
 
+    #[\Override]
     public function setUp(): void
     {
         $this->yesNoRadio = new YesNoRadio();

@@ -12,6 +12,7 @@ class TranslateReplaceFactory implements FactoryInterface
      * @param array|null $options
      *
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): TranslateReplace
     {
         $translator = $container->get('Helper\Translation');

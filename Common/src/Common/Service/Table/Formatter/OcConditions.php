@@ -27,6 +27,7 @@ class OcConditions implements FormatterPluginManagerInterface
      *
      * @return mixed
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         unset($column);

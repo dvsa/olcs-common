@@ -29,6 +29,7 @@ class HtmlAdderTest extends MockeryTestCase
 
     private $fieldset;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->fieldset = m::mock(Fieldset::class);

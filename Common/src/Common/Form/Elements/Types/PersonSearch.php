@@ -125,11 +125,13 @@ class PersonSearch extends Fieldset
         $this->add($addNewButton);
     }
 
+    #[\Override]
     public function setMessages($messages): void
     {
         $this->messages = $messages;
     }
 
+    #[\Override]
     public function getMessages(?string $elementName = null): array
     {
         return $this->messages;

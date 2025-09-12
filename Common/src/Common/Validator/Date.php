@@ -27,6 +27,7 @@ class Date extends AbstractValidator
         self::DATE_ERR_YEAR_LENGTH => self::DATE_ERR_YEAR_LENGTH
     ];
 
+    #[\Override]
     public function isValid($value, $context = null)
     {
         if (empty($value)) {

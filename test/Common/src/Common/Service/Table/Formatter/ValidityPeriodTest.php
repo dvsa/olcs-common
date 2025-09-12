@@ -23,6 +23,7 @@ class ValidityPeriodTest extends MockeryTestCase
 
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->translator = m::mock(TranslatorDelegator::class);
@@ -30,6 +31,7 @@ class ValidityPeriodTest extends MockeryTestCase
         $this->sut = new ValidityPeriod($this->viewHelperManager, $this->translator);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

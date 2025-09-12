@@ -20,6 +20,7 @@ class ActionTest extends MockeryTestCase
     /** @var  m\MockInterface */
     protected $table;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->table = m::mock(TableBuilder::class);

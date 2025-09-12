@@ -25,6 +25,7 @@ class PublicationNumber implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         if ($data['pubStatus']['id'] === 'pub_s_new') {

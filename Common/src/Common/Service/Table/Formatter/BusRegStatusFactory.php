@@ -12,6 +12,7 @@ class BusRegStatusFactory implements FactoryInterface
      * @param  array|null         $options
      * @return BusRegStatus
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $translator = $container->get('translator');

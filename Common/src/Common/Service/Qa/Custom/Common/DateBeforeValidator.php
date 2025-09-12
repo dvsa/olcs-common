@@ -38,6 +38,7 @@ class DateBeforeValidator extends AbstractValidator
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function isValid($value)
     {
         $dateMustBeBefore = $this->getOption('dateMustBeBefore');

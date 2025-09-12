@@ -21,6 +21,7 @@ class NiWarningConditionalAdderTest extends MockeryTestCase
 
     private $niWarningConditionalAdder;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->fieldset = m::mock(Fieldset::class);

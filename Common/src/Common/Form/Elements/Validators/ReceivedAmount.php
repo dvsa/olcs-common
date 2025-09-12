@@ -26,6 +26,7 @@ class ReceivedAmount extends \Laminas\Validator\GreaterThan
         self::NOT_GREATER => "The input is not greater than '%min%'",
     ];
 
+    #[\Override]
     public function isValid($value, $context = null)
     {
         if (isset($context['minAmountForValidator'])) {

@@ -18,6 +18,7 @@ class PageTitleTest extends MockeryTestCase
     public $placeholder;
     public $translate;
     public $routeMatch;
+    #[\Override]
     protected function setUp(): void
     {
         $placeholder = m::mock(Placeholder::class);

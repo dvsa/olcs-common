@@ -14,6 +14,7 @@ class PhoneRequired extends Phone
     /**
      * Initialise the form
      */
+    #[\Override]
     public function init(): void
     {
         parent::init();

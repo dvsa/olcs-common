@@ -91,6 +91,7 @@ class DateCompare extends AbstractCompare
      * @param  array $options
      * @return DateCompare
      */
+    #[\Override]
     public function setOptions($options = [])
     {
         if (isset($options['has_time'])) {
@@ -113,6 +114,7 @@ class DateCompare extends AbstractCompare
      * @param  mixed $value
      * @return bool
      */
+    #[\Override]
     public function isValid($value, array $context = null)
     {
         if (empty($value) && $this->getAllowEmpty()) {

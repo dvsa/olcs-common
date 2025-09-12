@@ -25,6 +25,7 @@ class ConditionsUndertakingsReviewServiceTest extends \PHPUnit\Framework\TestCas
 {
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $mockTranslationHelper = m::mock(TranslationHelperService::class);

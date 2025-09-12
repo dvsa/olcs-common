@@ -17,6 +17,7 @@ class DashboardTmApplicationStatus implements FormatterPluginManagerInterface
      * @param  array $column
      * @return string HTML
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         $viewHelper = $this->viewHelperManager->get('transportManagerApplicationStatus');

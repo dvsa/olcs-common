@@ -22,6 +22,7 @@ class VariationRecordActionTest extends MockeryTestCase
     /** @var  m\MockInterface */
     private $mockTranslator;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->mockTranslator = m::mock(Translator::class);

@@ -31,6 +31,7 @@ class FlashMessengerHelperServiceTest extends MockeryTestCase
     /**
      * Setup the sut
      */
+    #[\Override]
     protected function setUp(): void
     {
         $this->mockFlashMessenger = m::mock(\Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger::class);

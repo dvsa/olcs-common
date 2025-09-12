@@ -18,12 +18,14 @@ class EventHistoryUserTest extends MockeryTestCase
 
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->translator = m::mock(TranslatorDelegator::class);
         $this->sut = new EventHistoryUser($this->translator);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

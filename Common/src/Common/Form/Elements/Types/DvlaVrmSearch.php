@@ -10,6 +10,7 @@ class DvlaVrmSearch extends AbstractInputSearch
     /**
      * @return void
      */
+    #[\Override]
     protected function addHint()
     {
         $this->add(
@@ -29,6 +30,7 @@ class DvlaVrmSearch extends AbstractInputSearch
     /**
      * @return void
      */
+    #[\Override]
     protected function addInput()
     {
         $this->add(
@@ -45,6 +47,7 @@ class DvlaVrmSearch extends AbstractInputSearch
     /**
      * @return void
      */
+    #[\Override]
     protected function addSubmit()
     {
         $this->add(

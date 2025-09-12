@@ -50,6 +50,7 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
     /** @var QueryContainerInterface */
     private $query;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->transferAnnotationBuilder = m::mock(TransferAnnotationBuilder::class);

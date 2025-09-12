@@ -19,6 +19,7 @@ class FieldsetPopulatorProviderTest extends MockeryTestCase
 
     private $populator2;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->populator2 = m::mock(FieldsetPopulatorInterface::class);

@@ -48,6 +48,7 @@ class LicenceOperatingCentresTest extends MockeryTestCase
 
     protected $translator;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->tableBuilder = m::mock(TableFactory::class);

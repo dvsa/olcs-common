@@ -7,7 +7,8 @@ use ReflectionClass;
 use Laminas\Form as LaminasForm;
 
 /**
- * Form
+ * @template TFilteredValues
+ * @extends LaminasForm\Form<TFilteredValues>
  */
 class Form extends LaminasForm\Form implements \Stringable
 {
@@ -27,6 +28,7 @@ class Form extends LaminasForm\Form implements \Stringable
      *
      * @return string
      */
+    #[\Override]
     public function __toString(): string
     {
         return static::class;
@@ -37,6 +39,7 @@ class Form extends LaminasForm\Form implements \Stringable
      *
      * @return void
      */
+    #[\Override]
     public function __clone()
     {
         $reflect = new ReflectionClass($this);
@@ -55,6 +58,7 @@ class Form extends LaminasForm\Form implements \Stringable
     /**
      * Prevent a form from being validated (and thus saved) if it is set read only
      */
+    #[\Override]
     public function isValid(): bool
     {
         if ($this->getOption('readonly')) {
@@ -69,6 +73,7 @@ class Form extends LaminasForm\Form implements \Stringable
      *
      * @psalm-param array{html?: '<script>alert("TEST")</script>', text?: '<script>alert("TEST")</script>'} $data
      */
+    #[\Override]
     public function populateValues($data, $onlyBase = false): void
     {
         $populateDepth = &self::getPopulateDepth();

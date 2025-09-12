@@ -21,6 +21,7 @@ class PrinterException implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         if (!$data['user']) {

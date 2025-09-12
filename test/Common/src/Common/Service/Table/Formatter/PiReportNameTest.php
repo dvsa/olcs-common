@@ -25,12 +25,14 @@ class PiReportNameTest extends TestCase
 
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->urlHelper = m::mock(UrlHelperService::class);
         $this->sut = new PiReportName(new OrganisationLink($this->urlHelper), new Name(new DataHelperService()));
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

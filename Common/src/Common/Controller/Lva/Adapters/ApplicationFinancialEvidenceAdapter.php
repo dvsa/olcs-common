@@ -24,6 +24,7 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
     /**
      * @param Common\Form\Form
      */
+    #[\Override]
     public function alterFormForLva($form): void
     {
         $form->get('finance')->get('requiredFinance')
@@ -34,6 +35,7 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
      * @param int $applicationId
      * @return array
      */
+    #[\Override]
     public function getDocuments($applicationId)
     {
         $documents = $this->getData($applicationId)['documents'];
@@ -46,6 +48,7 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
      * @param int $applicationId
      * @return array
      */
+    #[\Override]
     public function getUploadMetaData($file, $applicationId)
     {
         $licenceId = $this->getData($applicationId)['licence']['id'];
@@ -63,6 +66,7 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
      * Single call to get all the application data from the backend, including
      * financial evidence data and documents.
      */
+    #[\Override]
     public function getData($applicationId, $noCache = false)
     {
         if (is_null($this->applicationData) || $noCache) {

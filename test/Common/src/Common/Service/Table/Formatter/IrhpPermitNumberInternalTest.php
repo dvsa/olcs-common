@@ -17,6 +17,7 @@ class IrhpPermitNumberInternalTest extends MockeryTestCase
 
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->urlHelper = m::mock(UrlHelper::class);

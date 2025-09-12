@@ -38,6 +38,7 @@ class PsvDisc extends InternalSearchAbstract
      *
      * @return array
      */
+    #[\Override]
     public function getFilters()
     {
         if ($this->filters === []) {
@@ -52,6 +53,7 @@ class PsvDisc extends InternalSearchAbstract
     /**
      * @return array
      */
+    #[\Override]
     public function getColumns()
     {
         return [

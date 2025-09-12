@@ -15,6 +15,7 @@ class AddressLines extends Address implements FormatterPluginManagerInterface
      * @param  $parts
      * @return string
      */
+    #[\Override]
     protected static function formatAddress($parts)
     {
         return '<p>' . implode(',<br />', $parts) . '</p>';

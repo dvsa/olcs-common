@@ -59,6 +59,7 @@ class HoursOfWork extends AbstractSection implements TransportManagerSectionInte
     /**
      * @return static
      */
+    #[\Override]
     public function populate(array $transportManagerApplication)
     {
         $properties = array_keys(get_object_vars($this));

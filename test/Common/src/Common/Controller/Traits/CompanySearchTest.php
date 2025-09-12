@@ -20,6 +20,7 @@ class CompanySearchTest extends MockeryTestCase
     /** @var  m\MockInterface */
     protected $mockResp;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->sut = new CompanySearchStub();

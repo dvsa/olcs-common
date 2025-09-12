@@ -20,6 +20,7 @@ class LicenceGoodsVehicles extends AbstractGoodsVehicles
     /**
      * @return void
      */
+    #[\Override]
     protected function alterForm($form)
     {
         $this->formServiceLocator->get('lva-licence')->alterForm($form);

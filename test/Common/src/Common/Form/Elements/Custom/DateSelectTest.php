@@ -13,6 +13,7 @@ class DateSelectTest extends \PHPUnit\Framework\TestCase
     /** @var  DateSelect */
     private $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->sut = new DateSelect('foo');

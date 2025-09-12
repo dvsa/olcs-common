@@ -51,6 +51,7 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow
      *
      * @throws \Laminas\Form\Exception\DomainException
      */
+    #[\Override]
     public function render(ElementInterface $element, ?string $labelPosition = null): string
     {
         if ($element instanceof ReadonlyElement) {

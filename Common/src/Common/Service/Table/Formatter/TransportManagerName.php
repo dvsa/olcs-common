@@ -24,6 +24,7 @@ class TransportManagerName extends Name
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         $name = parent::format($data['name'], $column);

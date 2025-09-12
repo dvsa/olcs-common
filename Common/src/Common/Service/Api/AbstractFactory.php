@@ -14,11 +14,13 @@ use Psr\Container\ContainerInterface;
 
 class AbstractFactory implements AbstractFactoryInterface
 {
+    #[\Override]
     public function canCreate(ContainerInterface $container, $requestedName): bool
     {
         return str_contains($requestedName, 'Olcs\\RestService\\');
     }
 
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): RestClient
     {
         $api = str_replace('Olcs\\RestService\\', '', $requestedName);

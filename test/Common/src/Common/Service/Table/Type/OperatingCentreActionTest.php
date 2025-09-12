@@ -18,6 +18,7 @@ class OperatingCentreActionTest extends MockeryTestCase
 
     protected $table;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->table = m::mock(TableBuilder::class);

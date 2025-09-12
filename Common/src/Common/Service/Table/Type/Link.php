@@ -8,6 +8,7 @@ use Common\Service\Table\Formatter\StackValueReplacer;
 
 class Link extends AbstractType
 {
+    #[\Override]
     public function render(array $data, array $column, string|null $formattedContent = null): array|string
     {
         $params = $column['params'] ?? [];

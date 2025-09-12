@@ -57,6 +57,7 @@ class SearchType implements ListDataInterface, FactoryInterface
      * @param bool $useGroups
      * @return array
      */
+    #[\Override]
     public function fetchListOptions($context, $useGroups = false)
     {
         $options = [];
@@ -110,6 +111,7 @@ class SearchType implements ListDataInterface, FactoryInterface
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): SearchType
     {
         $this->setNavigationFactory(new NavigationFactory($container));

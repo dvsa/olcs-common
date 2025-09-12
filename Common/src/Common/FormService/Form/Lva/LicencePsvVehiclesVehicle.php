@@ -20,6 +20,7 @@ class LicencePsvVehiclesVehicle extends AbstractPsvVehiclesVehicle
     /**
      * @return void
      */
+    #[\Override]
     protected function alterForm($form, $params)
     {
         if ($params['mode'] == 'edit') {

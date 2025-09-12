@@ -12,6 +12,7 @@ class ErrorOverrideRadio extends Radio
 {
     public const INPUT_CLASS_KEY = 'input_class';
 
+    #[\Override]
     public function getInputSpecification(): array
     {
         $spec = parent::getInputSpecification();

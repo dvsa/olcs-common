@@ -13,6 +13,7 @@ class HoursOfWorkTest extends MockeryTestCase
 
     private $mockTranslator;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->mockTranslator = m::mock(TranslationHelperService::class);

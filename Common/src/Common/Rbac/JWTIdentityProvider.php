@@ -26,6 +26,7 @@ class JWTIdentityProvider implements IdentityProviderInterface
     {
     }
 
+    #[\Override]
     public function getIdentity()
     {
         $this->refreshTokenIfRequired();

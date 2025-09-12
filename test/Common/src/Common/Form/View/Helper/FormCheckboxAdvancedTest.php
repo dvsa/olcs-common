@@ -12,6 +12,7 @@ class FormCheckboxAdvancedTest extends MockeryTestCase
 {
     protected FormCheckboxAdvanced $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->sut = new FormCheckboxAdvanced();

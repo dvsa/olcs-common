@@ -21,6 +21,7 @@ class DocumentDescriptionTest extends MockeryTestCase
 
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->translator = m::mock(TranslatorDelegator::class);
@@ -28,6 +29,7 @@ class DocumentDescriptionTest extends MockeryTestCase
         $this->sut = new DocumentDescription($this->translator, $this->urlHelper);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

@@ -19,6 +19,7 @@ class LicenceChecklistTest extends MockeryTestCase
      */
     private $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->translator = m::mock(Translate::class);

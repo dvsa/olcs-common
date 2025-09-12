@@ -13,6 +13,7 @@ class PageIdFactory implements FactoryInterface
      * @param array|null $options
      *
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): PageId
     {
         /** @var RouteMatch $routeMatch */

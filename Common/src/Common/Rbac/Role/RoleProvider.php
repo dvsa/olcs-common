@@ -28,6 +28,7 @@ class RoleProvider implements RoleProviderInterface
      * @param  string[] $roleNames
      * @return \Rbac\Role\RoleInterface[]
      */
+    #[\Override]
     public function getRoles(array $roleNames)
     {
         if ($this->roles === []) {

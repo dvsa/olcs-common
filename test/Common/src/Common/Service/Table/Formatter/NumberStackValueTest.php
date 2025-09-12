@@ -15,12 +15,14 @@ class NumberStackValueTest extends \PHPUnit\Framework\TestCase
 
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->stackHelper = m::mock(StackHelperService::class);
         $this->sut = new NumberStackValue($this->stackHelper);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

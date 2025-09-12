@@ -21,6 +21,7 @@ class GenericUploadTest extends MockeryTestCase
     /** @var  m\MockInterface */
     private $mockResp;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->mockResp = m::mock(\Laminas\Http\Response::class);

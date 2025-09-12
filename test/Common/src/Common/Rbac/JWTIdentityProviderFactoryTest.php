@@ -22,6 +22,7 @@ class JWTIdentityProviderFactoryTest extends MockeryTestCase
 
     protected JWTIdentityProviderFactory $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->setUpServiceManager();
@@ -78,6 +79,7 @@ class JWTIdentityProviderFactoryTest extends MockeryTestCase
         $this->sut = new JWTIdentityProviderFactory();
     }
 
+    #[\Override]
     protected function setUpDefaultServices(ServiceManager $serviceManager): ServiceManager
     {
         $serviceManager->setService('QuerySender', $this->setUpMockService(QuerySender::class));

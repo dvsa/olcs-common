@@ -20,6 +20,7 @@ class CompanyNumber extends \Laminas\Form\Element implements InputProviderInterf
      *
      * @psalm-return array{name: null|string, required: true, filters: list{array{name: \Laminas\Filter\StringTrim::class}}, validators: list{array{name: StringLength::class, options: array{min: 1, max: 8, messages: array{stringLengthTooLong: 'common.form.validation.company_number.too_long'}}}, array{name: 'Alnum', options: array{messages: array{notAlnum: 'common.form.validation.company_number.not_alnum'}}}}}
      */
+    #[\Override]
     public function getInputSpecification(): array
     {
         return [

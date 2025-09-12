@@ -24,6 +24,7 @@ class StatusTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
     /**
      * Setup the view helper
      */
+    #[\Override]
     protected function setUp(): void
     {
         $this->sut = new Status();

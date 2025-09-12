@@ -144,6 +144,7 @@ class CommandAdapterTest extends MockeryTestCase
         return new CommandAdapter($commandSender);
     }
 
+    #[\Override]
     protected function setUpDefaultServices(ServiceManager $serviceManager): ServiceManager
     {
         $serviceManager->setService('CommandSender', m::mock(CommandSender::class));

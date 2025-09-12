@@ -26,6 +26,7 @@ class Interim implements MapperInterface
      *
      * @return array
      */
+    #[\Override]
     public static function mapFromResult(array $data)
     {
         return [

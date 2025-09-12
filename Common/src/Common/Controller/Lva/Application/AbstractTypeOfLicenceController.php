@@ -38,6 +38,7 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
      *
      * @return array|\Common\View\Model\Section|Response
      */
+    #[\Override]
     public function indexAction()
     {
         $prg = $this->prg();

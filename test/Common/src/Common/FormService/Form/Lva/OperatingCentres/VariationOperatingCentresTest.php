@@ -49,6 +49,7 @@ class VariationOperatingCentresTest extends MockeryTestCase
 
     private $validatorChain;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->tableBuilder = m::mock(TableFactory::class);

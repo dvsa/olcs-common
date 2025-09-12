@@ -14,6 +14,7 @@ abstract class AbstractEvidenceMapper implements MapperInterface
 {
     protected const EVIDENCE_FIELD = '';
 
+    #[\Override]
     public static function mapFromResult(array $data): array
     {
         $uploadNow = null;

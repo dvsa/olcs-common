@@ -17,6 +17,7 @@ class RefDataFactory implements FactoryInterface
      * @return mixed
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         return new $requestedName(

@@ -19,6 +19,7 @@ class NullToArray extends AbstractFilter
      *
      * @return []
      */
+    #[\Override]
     public function filter($value)
     {
         if (is_null($value)) {

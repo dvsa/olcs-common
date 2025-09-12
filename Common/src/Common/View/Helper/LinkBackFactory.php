@@ -12,6 +12,7 @@ class LinkBackFactory implements FactoryInterface
      * @param array|null $options
      *
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): LinkBack
     {
         $request = $container->get('Request');

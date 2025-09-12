@@ -24,12 +24,14 @@ class NameTest extends MockeryTestCase
 
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->dataHelper = m::mock(DataHelperService::class);
         $this->sut = new Name($this->dataHelper);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

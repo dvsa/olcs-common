@@ -22,6 +22,7 @@ class LicencePermitReferenceTest extends MockeryTestCase
 
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->urlHelper = m::mock(UrlHelper::class);
@@ -29,6 +30,7 @@ class LicencePermitReferenceTest extends MockeryTestCase
         $this->sut = new LicencePermitReference($this->translator, $this->urlHelper);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

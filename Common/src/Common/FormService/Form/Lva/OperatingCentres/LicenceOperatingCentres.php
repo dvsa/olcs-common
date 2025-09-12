@@ -25,12 +25,14 @@ class LicenceOperatingCentres extends AbstractOperatingCentres
         parent::__construct($formHelper);
     }
 
+    #[\Override]
     protected function alterForm(Form $form, array $params)
     {
         $this->formServiceLocator->get('lva-licence')->alterForm($form);
         return parent::alterForm($form, $params);
     }
 
+    #[\Override]
     protected function alterFormForPsvLicences(Form $form, array $params)
     {
         parent::alterFormForPsvLicences($form, $params);
@@ -40,6 +42,7 @@ class LicenceOperatingCentres extends AbstractOperatingCentres
     /**
      * @inheritDoc
      */
+    #[\Override]
     protected function alterFormForGoodsLicences(Form $form, array $params): void
     {
         parent::alterFormForGoodsLicences($form, $params);

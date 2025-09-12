@@ -17,6 +17,7 @@ class YesNoTableRequiredValidatorTest extends MockeryTestCase
     /**
      * Set up the validator
      */
+    #[\Override]
     protected function setUp(): void
     {
         $this->validator = new YesNoTableRequiredValidator([

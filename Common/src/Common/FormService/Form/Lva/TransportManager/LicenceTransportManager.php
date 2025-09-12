@@ -16,6 +16,7 @@ class LicenceTransportManager extends AbstractTransportManager
     {
     }
 
+    #[\Override]
     protected function alterForm($form)
     {
         $form = parent::alterForm($form);

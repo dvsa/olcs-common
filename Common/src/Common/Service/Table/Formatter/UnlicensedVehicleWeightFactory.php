@@ -9,6 +9,7 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class UnlicensedVehicleWeightFactory implements FactoryInterface
 {
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): UnlicensedVehicleWeight
     {
         $stackHelper = $container->get('Helper\Stack');

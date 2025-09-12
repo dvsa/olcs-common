@@ -24,6 +24,7 @@ class VariationTransportManagerAdapter extends AbstractTransportManagerAdapter
     /**
      * Load data into the table
      */
+    #[\Override]
     public function getTableData($variationId, $licenceId)
     {
         $query = $this->transferAnnotationBuilder->createQuery(
@@ -41,6 +42,7 @@ class VariationTransportManagerAdapter extends AbstractTransportManagerAdapter
      *
      * @param array $ids Transport Manager and Transport Manager Application ID's, Licence TM's are prefixed with "L"
      */
+    #[\Override]
     public function delete(array $ids, $applicationId): void
     {
         $tmlIds = [];

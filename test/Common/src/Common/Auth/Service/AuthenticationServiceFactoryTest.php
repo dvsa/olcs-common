@@ -20,6 +20,7 @@ class AuthenticationServiceFactoryTest extends MockeryTestCase
      */
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->setUpServiceManager();
@@ -61,6 +62,7 @@ class AuthenticationServiceFactoryTest extends MockeryTestCase
     /**
      * @return void
      */
+    #[\Override]
     protected function setUpDefaultServices(ServiceManager $serviceManager): ServiceManager
     {
         $serviceManager->setService(Session::class, $this->setUpMockService(Session::class));

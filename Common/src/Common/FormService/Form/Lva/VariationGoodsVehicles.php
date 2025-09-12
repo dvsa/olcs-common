@@ -22,6 +22,7 @@ class VariationGoodsVehicles extends AbstractGoodsVehicles
     /**
      * @return void
      */
+    #[\Override]
     protected function alterForm($form)
     {
         $this->removeStandardFormActions($form);

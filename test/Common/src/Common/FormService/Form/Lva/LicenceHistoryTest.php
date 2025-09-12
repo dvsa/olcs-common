@@ -17,6 +17,7 @@ class LicenceHistoryTest extends AbstractLvaFormServiceTestCase
 
     protected $urlHelper;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->translator = m::mock(TranslationHelperService::class);

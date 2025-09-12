@@ -23,6 +23,7 @@ class CommandServiceFactoryTest extends MockeryTestCase
      */
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->setUpServiceManager();
@@ -88,6 +89,7 @@ class CommandServiceFactoryTest extends MockeryTestCase
         $this->sut = new CommandServiceFactory();
     }
 
+    #[\Override]
     protected function setUpDefaultServices(ServiceManager $serviceManager): ServiceManager
     {
         $this->config();

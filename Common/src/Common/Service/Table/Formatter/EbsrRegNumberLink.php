@@ -22,6 +22,7 @@ class EbsrRegNumberLink implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         //standardise the format of the data, so this can be used by multiple tables

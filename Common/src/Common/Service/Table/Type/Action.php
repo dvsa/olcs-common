@@ -6,6 +6,7 @@ class Action extends AbstractType
 {
     private string $format = '<button data-prevent-double-click="true" data-module="govuk-button" role="link" type="submit" class="action-button-link %s" name="%s" %s>%s</button>';
 
+    #[\Override]
     public function render(array $data, array $column, string|null $formattedContent = null): string
     {
         $class = $column['class'] ?? '';

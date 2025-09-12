@@ -17,12 +17,14 @@ class ConditionsUndertakingsTypeTest extends TestCase
     public $sut;
     protected $translator;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->translator = m::mock(TranslatorDelegator::class);
         $this->sut = new ConditionsUndertakingsType($this->translator);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

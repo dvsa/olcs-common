@@ -10,6 +10,7 @@ use Laminas\Authentication\Result;
 
 class AuthenticationService extends LaminasAuthenticationService implements AuthenticationServiceInterface
 {
+    #[\Override]
     public function authenticate(AdapterInterface $adapter = null): Result
     {
         return parent::authenticate($adapter);

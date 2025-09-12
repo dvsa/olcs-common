@@ -16,6 +16,7 @@ class AddressesTest extends MockeryTestCase
     /** @var  array */
     private $formData;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->apiData = [

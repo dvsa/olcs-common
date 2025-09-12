@@ -16,6 +16,7 @@ class OtherLicences extends AbstractSection implements TransportManagerSectionIn
     /**
      * @return static
      */
+    #[\Override]
     public function populate(array $transportManagerApplication)
     {
         $licences = $transportManagerApplication['otherLicences'];

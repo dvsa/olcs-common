@@ -19,6 +19,7 @@ class InternalConversationLinkTest extends MockeryTestCase
     protected $urlHelper;
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->urlHelper = m::mock(UrlHelperService::class);
@@ -30,6 +31,7 @@ class InternalConversationLinkTest extends MockeryTestCase
         date_default_timezone_set('Europe/London');
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

@@ -15,6 +15,7 @@ class SelectEmptyTest extends \PHPUnit\Framework\TestCase
     /**
      * test setup
      */
+    #[\Override]
     protected function setUp(): void
     {
         $this->filter = new InputFilters\SelectEmpty("test");

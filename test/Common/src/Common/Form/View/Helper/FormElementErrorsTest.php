@@ -126,6 +126,7 @@ class FormElementErrorsTest extends MockeryTestCase
         return (new FormLabelFactory())->__invoke($container, FormLabel::class);
     }
 
+    #[\Override]
     protected function setUpDefaultServices(ServiceManager $serviceManager): ServiceManager
     {
         $serviceManager->setService(TranslatorInterface::class, $this->setUpTranslator());

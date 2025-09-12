@@ -14,6 +14,7 @@ class RadioYesNoTest extends \PHPUnit\Framework\TestCase
      */
     private $sut;
 
+    #[\Override]
     public function setUp(): void
     {
         $this->sut = new RadioYesNo();

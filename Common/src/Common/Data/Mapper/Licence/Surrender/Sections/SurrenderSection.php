@@ -83,6 +83,7 @@ class SurrenderSection
      *
      * @psalm-param array-key|false|null $label
      */
+    #[\Override]
     protected function makeChangeLink($label = null)
     {
         $returnRoutes = [

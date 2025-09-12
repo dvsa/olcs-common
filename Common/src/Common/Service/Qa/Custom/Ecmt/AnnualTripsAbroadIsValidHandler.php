@@ -10,6 +10,7 @@ class AnnualTripsAbroadIsValidHandler implements IsValidHandlerInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function isValid(QaForm $form)
     {
         $applicationStep = $form->getApplicationStep();

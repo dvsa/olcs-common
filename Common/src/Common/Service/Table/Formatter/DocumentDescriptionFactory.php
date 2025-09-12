@@ -12,6 +12,7 @@ class DocumentDescriptionFactory implements FactoryInterface
      * @param  array|null         $options
      * @return DocumentDescription
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $translator = $container->get('translator');

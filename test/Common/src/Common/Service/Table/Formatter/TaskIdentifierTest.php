@@ -26,12 +26,14 @@ class TaskIdentifierTest extends \PHPUnit\Framework\TestCase
 
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->urlHelper = m::mock(UrlHelperService::class);
         $this->sut = new TaskIdentifier($this->urlHelper);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

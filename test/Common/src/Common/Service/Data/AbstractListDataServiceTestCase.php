@@ -12,6 +12,7 @@ class AbstractListDataServiceTestCase extends AbstractDataServiceTestCase
     /** @var  AbstractListDataServiceServices */
     protected $abstractListDataServiceServices;
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

@@ -33,6 +33,7 @@ class Gpw extends LaminasElement implements InputProviderInterface
      *
      * @psalm-return array{name: null|string, required: true, validators: list{array{name: Digits::class}, array{name: GreaterThan::class, options: array{min: 0}}}}
      */
+    #[\Override]
     public function getInputSpecification(): array
     {
         return [

@@ -20,6 +20,7 @@ class AbstractServiceFactoryTest extends MockeryTestCase
     /** @var  m\MockInterface | ContainerInterface */
     protected $mockSm;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->sut = m::mock(AbstractServiceFactory::class)

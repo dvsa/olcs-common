@@ -12,6 +12,7 @@ class TmApplicationManagerTypeFactory implements FactoryInterface
      * @param  array|null         $options
      * @return TmApplicationManagerType
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $application = $container->get('Application');

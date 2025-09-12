@@ -49,6 +49,7 @@ class GuidesController extends LaminasAbstractActionController
         self::MAIN_OCCUPATION_CRITERIA_GUIDANCE => 'default',
     ];
 
+    #[\Override]
     public function indexAction()
     {
         $guide = (string)$this->params('guide');

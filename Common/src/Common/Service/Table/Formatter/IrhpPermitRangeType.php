@@ -25,6 +25,7 @@ class IrhpPermitRangeType implements FormatterPluginManagerInterface
       * @return                                        string
       * @SuppressWarnings(PHPMD.UnusedFormalParameter)
       */
+    #[\Override]
     public function format($data, $column = [])
     {
         if (!$data['irhpPermitStock']['irhpPermitType']['isBilateral']) {

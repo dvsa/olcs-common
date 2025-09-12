@@ -17,6 +17,7 @@ class CaseTrafficArea implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         $taData = [

@@ -18,6 +18,7 @@ class TableFactory implements FactoryInterface
     /**
      * Create the table factory service
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $this->serviceLocator = $container;

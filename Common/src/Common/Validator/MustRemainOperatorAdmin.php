@@ -16,6 +16,7 @@ class MustRemainOperatorAdmin extends AbstractValidator
         self::NOT_OPERATOR_ADMIN => 'The user must remain an Operator Admin',
     ];
 
+    #[\Override]
     public function isValid($value)
     {
         if ($value === RefData::ROLE_OPERATOR_ADMIN) {

@@ -18,6 +18,7 @@ class PermissionTest extends MockeryTestCase
 
     private $authService;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->authService = m::mock(AuthorizationService::class);
