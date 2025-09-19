@@ -1,5 +1,16 @@
 # Changelog
 
+## [9.0.0](https://github.com/dvsa/olcs-common/compare/v8.4.0...v9.0.0) (2025-09-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* CI passing on PHP 8.2 and 8.3, bump dependencies, fix staic analysis VOL-6497 ([#239](https://github.com/dvsa/olcs-common/issues/239))
+
+### Code Refactoring
+
+* CI passing on PHP 8.2 and 8.3, bump dependencies, fix staic analysis VOL-6497 ([#239](https://github.com/dvsa/olcs-common/issues/239)) ([5b598ce](https://github.com/dvsa/olcs-common/commit/5b598ce22b860ab992a6e49319f5cebe9ae7ef99))
+
 ## [8.4.0](https://github.com/dvsa/olcs-common/compare/v8.3.0...v8.4.0) (2025-09-08)
 
 
