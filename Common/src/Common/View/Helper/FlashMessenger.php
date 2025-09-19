@@ -53,6 +53,7 @@ class FlashMessenger extends LaminasFlashMessenger
      *
      * @return static|string
      */
+    #[\Override]
     public function __invoke($namespace = null): string|static
     {
         if ($namespace === 'norender') {
@@ -109,6 +110,7 @@ class FlashMessenger extends LaminasFlashMessenger
      * @return string
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
+    #[\Override]
     public function render(
         $namespace = PluginFlashMessenger::NAMESPACE_DEFAULT,
         array $classes = [],
@@ -158,6 +160,7 @@ class FlashMessenger extends LaminasFlashMessenger
      *
      * @return string
      */
+    #[\Override]
     public function renderCurrent(
         $namespace = PluginFlashMessenger::NAMESPACE_DEFAULT,
         array $classes = [],
@@ -186,6 +189,7 @@ class FlashMessenger extends LaminasFlashMessenger
      * @return string
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
+    #[\Override]
     protected function renderMessages(
         $namespace = PluginFlashMessenger::NAMESPACE_DEFAULT,
         array $messages = [],

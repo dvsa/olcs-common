@@ -21,6 +21,7 @@ class RefData implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
 

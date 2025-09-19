@@ -32,6 +32,7 @@ class EventHistoryDescription implements FormatterPluginManagerInterface
      * @return                                        string
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         $routeMatch = $this->router->match($this->request);

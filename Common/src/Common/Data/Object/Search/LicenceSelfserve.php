@@ -38,6 +38,7 @@ class LicenceSelfserve extends InternalSearchAbstract
      *
      * @return array
      */
+    #[\Override]
     public function getSettings()
     {
         return [
@@ -55,6 +56,7 @@ class LicenceSelfserve extends InternalSearchAbstract
      *
      * @return array
      */
+    #[\Override]
     public function getFilters()
     {
         if (empty($this->filters)) {
@@ -75,6 +77,7 @@ class LicenceSelfserve extends InternalSearchAbstract
      *
      * @return array
      */
+    #[\Override]
     public function getColumns()
     {
         return [

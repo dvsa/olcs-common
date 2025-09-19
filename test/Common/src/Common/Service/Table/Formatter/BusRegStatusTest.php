@@ -21,6 +21,7 @@ class BusRegStatusTest extends MockeryTestCase
 
     protected $statusHelper;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->viewHelperManager = m::mock(HelperPluginManager::class);
@@ -29,6 +30,7 @@ class BusRegStatusTest extends MockeryTestCase
         $this->sut = new BusRegStatus($this->translator, $this->viewHelperManager);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

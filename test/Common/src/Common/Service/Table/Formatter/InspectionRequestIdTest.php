@@ -30,6 +30,7 @@ class InspectionRequestIdTest extends MockeryTestCase
 
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->urlHelper = m::mock(UrlHelperService::class);
@@ -38,6 +39,7 @@ class InspectionRequestIdTest extends MockeryTestCase
         $this->sut = new InspectionRequestId($this->urlHelper, $this->router, $this->request);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

@@ -15,6 +15,7 @@ class HiddenTest extends \PHPUnit\Framework\TestCase
     /**
      * test setup
      */
+    #[\Override]
     protected function setUp(): void
     {
         $this->filter = new InputFilters\Hidden("test");

@@ -146,6 +146,7 @@ class Response implements \Stringable
      *
      * @return string
      */
+    #[\Override]
     public function __toString(): string
     {
         return sprintf(

@@ -41,6 +41,7 @@ abstract class AbstractVariationController extends AbstractController
      *
      * @return \Common\View\Model\Section
      */
+    #[\Override]
     public function indexAction()
     {
         $form = $this->processForm();

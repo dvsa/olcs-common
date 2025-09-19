@@ -12,6 +12,7 @@ class TransportManagerDateOfBirthFactory implements FactoryInterface
      * @param  array|null         $options
      * @return TransportManagerDateOfBirth
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $viewHelperManager = $container->get('ViewHelperManager');

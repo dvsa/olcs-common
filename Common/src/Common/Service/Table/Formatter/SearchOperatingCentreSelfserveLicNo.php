@@ -25,6 +25,7 @@ class SearchOperatingCentreSelfserveLicNo implements FormatterPluginManagerInter
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         return sprintf(

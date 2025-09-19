@@ -17,12 +17,14 @@ class AccessedCorrespondenceTest extends MockeryTestCase
 
     protected $translator;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->urlHelper = m::mock(UrlHelperService::class);
         $this->translator = m::mock(TranslatorDelegator::class);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

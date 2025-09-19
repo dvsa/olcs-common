@@ -67,6 +67,7 @@ class LocalAuthority extends AbstractDataService implements ListData
      *
      * @return array
      */
+    #[\Override]
     public function fetchListOptions($context, $useGroups = false)
     {
         $data = $this->fetchListData();

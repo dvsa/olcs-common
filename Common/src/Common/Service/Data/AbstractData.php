@@ -29,6 +29,7 @@ abstract class AbstractData implements RestClientAware
     /**
      * @return $this
      */
+    #[\Override]
     public function setRestClient(RestClient $restClient)
     {
         $this->restClient = $restClient;
@@ -38,6 +39,7 @@ abstract class AbstractData implements RestClientAware
     /**
      * @return \Common\Util\RestClient
      */
+    #[\Override]
     public function getRestClient()
     {
         return $this->restClient;
@@ -46,6 +48,7 @@ abstract class AbstractData implements RestClientAware
     /**
      * @return string
      */
+    #[\Override]
     public function getServiceName()
     {
         return $this->serviceName;

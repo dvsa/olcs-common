@@ -20,6 +20,7 @@ class BusRegBrowseListDataService extends AbstractDataService implements ListDat
      *
      * @return array
      */
+    #[\Override]
     public function fetchListOptions($context, $useGroups = false)
     {
         $data = $this->fetchListData($context);

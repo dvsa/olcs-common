@@ -12,6 +12,7 @@ class EbsrVariationNumberFactory implements FactoryInterface
      * @param  array|null         $options
      * @return EbsrVariationNumber
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $viewHelperManager = $container->get('ViewHelperManager');

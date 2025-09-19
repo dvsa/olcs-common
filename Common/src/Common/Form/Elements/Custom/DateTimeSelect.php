@@ -24,6 +24,7 @@ class DateTimeSelect extends LaminasElement\DateTimeSelect
      * Should return an array specification compatible with
      * {@link Laminas\InputFilter\Factory::createInput()}.
      */
+    #[\Override]
     public function getInputSpecification(): array
     {
         if ($this->getOption('max_year_delta')) {
@@ -88,6 +89,7 @@ class DateTimeSelect extends LaminasElement\DateTimeSelect
      *
      * @param mixed $value Date time value to set
      */
+    #[\Override]
     public function setValue($value): void
     {
         if (null === $value) {

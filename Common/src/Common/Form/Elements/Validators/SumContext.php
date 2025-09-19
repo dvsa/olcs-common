@@ -75,6 +75,7 @@ class SumContext extends AbstractValidator
      *
      * @return bool
      */
+    #[\Override]
     public function isValid($value, $context = null)
     {
         unset($value); // Removes CS violation

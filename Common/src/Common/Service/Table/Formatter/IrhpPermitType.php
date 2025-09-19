@@ -18,6 +18,7 @@ class IrhpPermitType implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         $type = isset($data['irhpPermitType']) ?

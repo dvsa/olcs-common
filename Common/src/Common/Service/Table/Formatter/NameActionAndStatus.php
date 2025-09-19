@@ -22,6 +22,7 @@ class NameActionAndStatus implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         $title = empty($data['title']['description']) ? '' : $data['title']['description'] . ' ';

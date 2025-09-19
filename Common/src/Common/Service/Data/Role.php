@@ -22,6 +22,7 @@ class Role extends AbstractDataService implements ListData
      *
      * @return array
      */
+    #[\Override]
     public function fetchListOptions($context, $useGroups = false)
     {
         $optionData = [];

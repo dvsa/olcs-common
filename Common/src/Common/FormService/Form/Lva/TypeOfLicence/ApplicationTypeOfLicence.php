@@ -16,6 +16,7 @@ class ApplicationTypeOfLicence extends AbstractTypeOfLicence
     {
     }
 
+    #[\Override]
     protected function alterForm(Form $form, $params = [])
     {
         if ($this->permissionService->isInternalReadOnly()) {

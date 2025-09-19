@@ -12,6 +12,7 @@ class VenueFactory implements FactoryInterface
      * @param array|null $options
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): Venue
     {
         return new Venue(

@@ -19,6 +19,7 @@ class UserTypesListDataService implements ListDataInterface
      * @return array
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
+    #[\Override]
     public function fetchListOptions($context = null, $useGroups = false)
     {
         return [

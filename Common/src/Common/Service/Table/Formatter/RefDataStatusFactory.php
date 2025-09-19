@@ -12,6 +12,7 @@ class RefDataStatusFactory implements FactoryInterface
      * @param  array|null         $options
      * @return RefDataStatus
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $refDataFormatter = $container->get(FormatterPluginManager::class)->get(RefData::class);

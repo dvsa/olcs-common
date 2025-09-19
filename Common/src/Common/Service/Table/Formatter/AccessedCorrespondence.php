@@ -29,6 +29,7 @@ class AccessedCorrespondence implements FormatterPluginManagerInterface
      *
      * @return string The document link and accessed indicator
      */
+    #[\Override]
     public function format($data, $column = [])
     {
 

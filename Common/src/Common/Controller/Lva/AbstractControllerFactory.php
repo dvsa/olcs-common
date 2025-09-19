@@ -16,6 +16,7 @@ class AbstractControllerFactory implements AbstractFactoryInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function canCreate(ContainerInterface $container, $requestedName)
     {
         $config = $container->get('Config');
@@ -26,6 +27,7 @@ class AbstractControllerFactory implements AbstractFactoryInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $config = $container->get('Config');

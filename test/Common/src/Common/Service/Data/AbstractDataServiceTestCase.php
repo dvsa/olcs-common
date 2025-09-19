@@ -32,6 +32,7 @@ class AbstractDataServiceTestCase extends MockeryTestCase
     /** @var  AbstractDataServiceServices */
     protected $abstractDataServiceServices;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->query = m::mock(QueryContainerInterface::class);

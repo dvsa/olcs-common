@@ -1,24 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Common\Controller\Traits\Stubs;
 
 use Common\Controller\Traits;
 use Common\Service\Helper\FormHelperService;
+use Common\Service\Script\ScriptFactory;
+use Common\Service\Table\TableFactory;
 
-/**
- * @author Dmitry Golubev <dmitrij.golubev@valtech.com>
- */
 class GenericMethodsStub
 {
     use Traits\GenericMethods;
 
-    /**
-     * @var \Common\Service\Helper\FormHelperService
-     */
-    public $formHelper;
+    public FormHelperService $formHelperService;
+    private ScriptFactory $scriptFactory;
+    private TableFactory $tableFactory;
 
-    public function __construct(FormHelperService $formHelper)
+    public function __construct(FormHelperService $formHelperService)
     {
-        $this->formHelper = $formHelper;
+        $this->formHelperService = $formHelperService;
     }
 }

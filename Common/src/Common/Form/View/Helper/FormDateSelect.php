@@ -31,6 +31,7 @@ class FormDateSelect extends \Common\Form\View\Helper\Extended\FormDateSelect
      * @throws \Laminas\Form\Exception\InvalidArgumentException
      * @throws \Laminas\Form\Exception\DomainException
      */
+    #[\Override]
     public function render(ElementInterface $element): string
     {
         if (!$element instanceof DateSelectElement) {

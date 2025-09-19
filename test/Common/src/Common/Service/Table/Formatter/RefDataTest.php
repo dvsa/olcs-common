@@ -16,12 +16,14 @@ class RefDataTest extends MockeryTestCase
 
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->translator = m::mock(TranslatorDelegator::class);
         $this->sut = new RefData($this->translator);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

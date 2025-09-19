@@ -23,6 +23,7 @@ class CabotageOnlyFieldsetPopulator implements FieldsetPopulatorInterface
      *
      * @param mixed $form
      */
+    #[\Override]
     public function populate(mixed $form, Fieldset $fieldset, array $options): void
     {
         $valueOptions = $this->standardYesNoValueOptionsGenerator->generate();

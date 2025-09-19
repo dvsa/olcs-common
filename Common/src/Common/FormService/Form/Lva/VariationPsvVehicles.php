@@ -21,6 +21,7 @@ class VariationPsvVehicles extends PsvVehicles
         parent::__construct($formHelper, $authService);
     }
 
+    #[\Override]
     protected function alterForm($form)
     {
         $this->removeStandardFormActions($form);

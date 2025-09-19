@@ -200,6 +200,7 @@ abstract class AbstractContinuationController extends AbstractController
      *
      * @return null|\Laminas\Http\Response
      */
+    #[\Override]
     public function onDispatch(MvcEvent $e)
     {
         // If Internal user, then redirect rules do not apply

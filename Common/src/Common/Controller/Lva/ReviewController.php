@@ -26,6 +26,7 @@ class ReviewController extends AbstractController
      *
      * @return ViewModel
      */
+    #[\Override]
     public function indexAction()
     {
         $response = $this->handleQuery(Review::create(['id' => $this->params('application')]));

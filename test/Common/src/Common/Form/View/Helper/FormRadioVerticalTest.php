@@ -377,6 +377,7 @@ class FormRadioVerticalTest extends MockeryTestCase
         $this->sut->render($element);
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->setUpServiceManager();
@@ -388,6 +389,7 @@ class FormRadioVerticalTest extends MockeryTestCase
         $this->sut->setView($this->renderer());
     }
 
+    #[\Override]
     protected function setUpDefaultServices(ServiceManager $serviceManager): ServiceManager
     {
         $serviceManager->setService(PhpRenderer::class, $this->renderer());

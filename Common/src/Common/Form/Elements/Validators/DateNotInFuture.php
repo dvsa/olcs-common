@@ -29,6 +29,7 @@ class DateNotInFuture extends AbstractValidator
      * @param  mixed $value
      * @return bool
      */
+    #[\Override]
     public function isValid($value)
     {
         $date = strtotime($value);

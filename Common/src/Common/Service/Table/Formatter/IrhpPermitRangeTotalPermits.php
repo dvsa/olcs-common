@@ -16,6 +16,7 @@ class IrhpPermitRangeTotalPermits implements FormatterPluginManagerInterface
      *
      * @param array $data
      */
+    #[\Override]
     public function format($data, $column = []): int
     {
         // Need to add one to get a count of all the permits inclusive

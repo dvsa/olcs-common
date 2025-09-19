@@ -25,6 +25,7 @@ class InternalLicenceNumberLink implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         $licenceNo = $data['licence']['licNo'];

@@ -11,6 +11,7 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
  */
 final class CurrentUserFactory implements FactoryInterface
 {
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): CurrentUser
     {
         return new CurrentUser($container->get(\LmcRbacMvc\Service\AuthorizationService::class));

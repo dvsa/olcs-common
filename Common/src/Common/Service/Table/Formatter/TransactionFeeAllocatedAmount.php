@@ -22,6 +22,7 @@ class TransactionFeeAllocatedAmount extends Money
      * @param  array $column
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         $amount = parent::format($data, $column);

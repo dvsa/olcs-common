@@ -25,6 +25,7 @@ class IrhpPermitApplicationRefLink implements FormatterPluginManagerInterface
      * @return                                        string
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         return isset($data['irhpPermitApplication']['relatedApplication']) ? sprintf(

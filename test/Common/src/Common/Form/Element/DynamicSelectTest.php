@@ -20,6 +20,7 @@ class DynamicSelectTest extends TestCase
 
     private $pluginManager;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->mockRefDataService = $this->createMock(RefData::class);

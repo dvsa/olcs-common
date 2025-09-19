@@ -10,6 +10,7 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class VariationConditionsUndertakingsAdapterFactory implements FactoryInterface
 {
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): VariationConditionsUndertakingsAdapter
     {
         return new VariationConditionsUndertakingsAdapter($container);

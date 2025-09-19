@@ -20,6 +20,7 @@ class IrhpPermitNumberInternal implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($row, $column = null)
     {
         $route = 'licence/irhp-permits/permit';

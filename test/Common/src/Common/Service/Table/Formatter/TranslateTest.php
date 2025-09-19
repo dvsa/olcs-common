@@ -18,6 +18,7 @@ class TranslateTest extends \PHPUnit\Framework\TestCase
 
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->translator = m::mock(TranslatorDelegator::class);
@@ -25,6 +26,7 @@ class TranslateTest extends \PHPUnit\Framework\TestCase
         $this->sut = new Translate($this->translator, $this->dataHelper);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

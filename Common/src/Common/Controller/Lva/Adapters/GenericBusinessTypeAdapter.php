@@ -13,6 +13,7 @@ class GenericBusinessTypeAdapter extends AbstractAdapter implements BusinessType
         parent::__construct($container);
     }
 
+    #[\Override]
     public function alterFormForOrganisation(Form $form, $orgId): void
     {
         // no-op

@@ -9,16 +9,19 @@ class DeletedStatus extends TermsAbstract
     protected $title = 'search.form.filter.deleted-status';
     protected $key = 'personDeleted';
 
+    #[\Override]
     public function getType(): string
     {
         return self::TYPE_BOOLEAN;
     }
 
+    #[\Override]
     public function getOptionsKvp(): array
     {
         return $this->getOptions();
     }
 
+    #[\Override]
     public function getOptions(): array
     {
         return [

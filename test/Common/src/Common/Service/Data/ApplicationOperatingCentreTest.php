@@ -18,6 +18,7 @@ class ApplicationOperatingCentreTest extends AbstractDataServiceTestCase
     /** @var ApplicationDataService */
     protected $applicationDataService;
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

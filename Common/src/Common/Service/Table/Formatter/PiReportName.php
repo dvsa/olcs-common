@@ -23,6 +23,7 @@ class PiReportName implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         if (!empty($data['pi']['case']['licence']['organisation'])) {

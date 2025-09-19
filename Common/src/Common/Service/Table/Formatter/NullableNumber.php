@@ -24,6 +24,7 @@ class NullableNumber implements FormatterPluginManagerInterface
      * @param  array $column
      * @return int either the input number or 0 for null values
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         $name = $data[$column['name']];

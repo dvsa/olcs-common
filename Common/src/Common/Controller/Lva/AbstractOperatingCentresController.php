@@ -117,6 +117,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
      *
      * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
+    #[\Override]
     public function indexAction()
     {
         $resultData = $this->fetchOcData();

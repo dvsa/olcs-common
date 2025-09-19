@@ -14,6 +14,7 @@ class ExternalConversationStatus implements FormatterPluginManagerInterface
      *
      * @inheritdoc
      */
+    #[\Override]
     public function format($row, $column = null): string
     {
         $tagColor = match ($row['userContextStatus']) {

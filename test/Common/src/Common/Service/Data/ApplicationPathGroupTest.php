@@ -16,6 +16,7 @@ class ApplicationPathGroupTest extends AbstractDataServiceTestCase
     /** @var ApplicationPathGroup */
     private $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

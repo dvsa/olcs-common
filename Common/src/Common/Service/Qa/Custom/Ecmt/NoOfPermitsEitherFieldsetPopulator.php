@@ -27,6 +27,7 @@ class NoOfPermitsEitherFieldsetPopulator implements FieldsetPopulatorInterface
      * @param mixed $form
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
+    #[\Override]
     public function populate($form, Fieldset $fieldset, array $options): void
     {
         $insetAndSection1Header = sprintf(

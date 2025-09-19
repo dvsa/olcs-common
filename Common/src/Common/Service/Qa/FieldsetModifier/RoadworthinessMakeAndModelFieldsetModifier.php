@@ -9,6 +9,7 @@ class RoadworthinessMakeAndModelFieldsetModifier implements FieldsetModifierInte
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function shouldModify(Fieldset $fieldset)
     {
         $eligibleFieldsetNames = [
@@ -25,6 +26,7 @@ class RoadworthinessMakeAndModelFieldsetModifier implements FieldsetModifierInte
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function modify(Fieldset $fieldset): void
     {
         $qaElement = $fieldset->get('qaElement');

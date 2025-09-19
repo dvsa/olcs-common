@@ -21,6 +21,7 @@ class Time extends LaminasElement\Time
      * Should return an array specification compatible with
      * {@link Laminas\InputFilter\Factory::createInput()}.
      */
+    #[\Override]
     public function getInputSpecification(): array
     {
         return [

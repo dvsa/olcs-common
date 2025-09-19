@@ -71,6 +71,7 @@ class NumberCompare extends AbstractCompare
      * @param  array $options
      * @return NumberCompare
      */
+    #[\Override]
     public function setOptions($options = [])
     {
         if (isset($options['max_diff'])) {
@@ -87,6 +88,7 @@ class NumberCompare extends AbstractCompare
      * @param  mixed $value
      * @return bool
      */
+    #[\Override]
     public function isValid($value, array $context = null)
     {
         if (empty($value)) {

@@ -24,6 +24,7 @@ class PsvVehiclesVehicle implements MapperInterface
      *
      * @psalm-return array{data: array{id: mixed, version: mixed, vrm: mixed, makeModel: mixed}, 'licence-vehicle': array{receivedDate: mixed, specifiedDate: mixed, removalDate: mixed}}
      */
+    #[\Override]
     public static function mapFromResult(array $data)
     {
         return [

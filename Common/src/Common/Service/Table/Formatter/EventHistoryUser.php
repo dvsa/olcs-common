@@ -23,6 +23,7 @@ class EventHistoryUser implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         $internalMarker = isset($data['user']['team'])

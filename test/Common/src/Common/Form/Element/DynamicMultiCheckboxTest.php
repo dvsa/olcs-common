@@ -14,6 +14,7 @@ class DynamicMultiCheckboxTest extends MockeryTestCase
 {
     private $pluginManager;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->pluginManager = m::mock(PluginManager::class);

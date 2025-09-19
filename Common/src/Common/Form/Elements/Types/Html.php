@@ -23,6 +23,7 @@ class Html extends Element
      *
      * @param mixed $value value
      */
+    #[\Override]
     public function setValue($value): void
     {
         /**  #OLCS-17989 - overridden to ensure any injection cannot happen **/

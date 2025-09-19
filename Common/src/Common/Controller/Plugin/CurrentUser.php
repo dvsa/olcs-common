@@ -35,6 +35,7 @@ class CurrentUser extends AbstractPlugin implements CurrentUserInterface
      *
      * @return array
      */
+    #[\Override]
     public function getUserData()
     {
         return $this->getIdentity()->getUserData();

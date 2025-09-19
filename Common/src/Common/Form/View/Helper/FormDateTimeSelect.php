@@ -35,6 +35,7 @@ class FormDateTimeSelect extends \Common\Form\View\Helper\Extended\FormDateTimeS
      * @throws \Laminas\Form\Exception\InvalidArgumentException
      * @throws \Laminas\Form\Exception\DomainException
      */
+    #[\Override]
     public function render(ElementInterface $element): string
     {
         $this->pattern = $element->getOption('pattern');
@@ -178,6 +179,7 @@ class FormDateTimeSelect extends \Common\Form\View\Helper\Extended\FormDateTimeS
      *
      * @param  string $pattern Pattern to use for minutes
      */
+    #[\Override]
     protected function getMinutesOptions(string $pattern): array
     {
         $keyFormatter = new IntlDateFormatter(

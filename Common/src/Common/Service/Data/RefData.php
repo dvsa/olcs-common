@@ -36,6 +36,7 @@ class RefData extends AbstractListDataService
      * @return array
      * @throw DataServiceException
      */
+    #[\Override]
     public function fetchListData($category = null)
     {
         if (is_null($this->getData($category))) {

@@ -9,6 +9,7 @@ class DateValidator extends LaminasDateValidator
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     protected function error($messageKey, $value = null)
     {
         // suppress the creation of the FALSEFORMAT error message to prevent an invalid date from generating two

@@ -22,6 +22,7 @@ class LicenceApplicationTest extends MockeryTestCase
 
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->urlHelper = m::mock(UrlHelper::class);
@@ -29,6 +30,7 @@ class LicenceApplicationTest extends MockeryTestCase
         $this->sut = new LicenceApplication($this->urlHelper, $this->viewHelperManager);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

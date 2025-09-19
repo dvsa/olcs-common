@@ -22,6 +22,7 @@ class GoodsVehicles implements MapperInterface
      *
      * @psalm-return array{data: array{version: mixed, hasEnteredReg: 'N'|'Y'}}
      */
+    #[\Override]
     public static function mapFromResult(array $data)
     {
         return [

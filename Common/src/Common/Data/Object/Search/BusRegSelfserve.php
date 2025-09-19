@@ -33,6 +33,7 @@ class BusRegSelfserve extends InternalSearchAbstract
      *
      * @return array
      */
+    #[\Override]
     public function getSettings()
     {
         return [
@@ -57,6 +58,7 @@ class BusRegSelfserve extends InternalSearchAbstract
      *
      * @return array
      */
+    #[\Override]
     public function getFilters()
     {
         if (count($this->filters) === 0) {
@@ -74,6 +76,7 @@ class BusRegSelfserve extends InternalSearchAbstract
      *
      * @return array
      */
+    #[\Override]
     public function getColumns()
     {
         return [

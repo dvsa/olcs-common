@@ -22,6 +22,7 @@ class InterimVehiclesCheckbox implements FormatterPluginManagerInterface
      * @param  array $column
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         $format = '<input type="checkbox" value="' . $data['id'] . '" name="vehicles[id][]" %s>';

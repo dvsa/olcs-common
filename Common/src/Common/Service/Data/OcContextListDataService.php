@@ -22,6 +22,7 @@ class OcContextListDataService implements ListDataInterface
      *
      * @return array
      */
+    #[\Override]
     public function fetchListOptions($context, $useGroups = false)
     {
         if ($context == 'licence') {

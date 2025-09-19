@@ -12,6 +12,7 @@ class VehicleRegistrationMarkTest extends \PHPUnit\Framework\TestCase
 
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->translator = m::mock(TranslatorDelegator::class);
@@ -23,6 +24,7 @@ class VehicleRegistrationMarkTest extends \PHPUnit\Framework\TestCase
             ->andReturn('TEST_INTERIM_TRANSLATION');
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

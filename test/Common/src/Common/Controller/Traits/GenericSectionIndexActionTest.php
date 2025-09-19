@@ -17,6 +17,7 @@ class GenericSectionIndexActionTest extends \PHPUnit\Framework\TestCase
 {
     private $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->sut = $this->getMockForTrait(

@@ -24,6 +24,7 @@ class DocumentDescription implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         if (!isset($data['documentStoreIdentifier']) || empty($data['documentStoreIdentifier'])) {

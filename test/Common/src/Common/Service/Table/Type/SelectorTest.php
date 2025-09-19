@@ -19,6 +19,7 @@ class SelectorTest extends MockeryTestCase
 
     protected $table;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->table = m::mock(\Common\Service\Table\TableBuilder::class);

@@ -27,6 +27,7 @@ class CommonOperatingCentreTest extends MockeryTestCase
 
     protected $mockFormHelper;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->form = m::mock(Form::class);

@@ -15,6 +15,7 @@ class CompanyNumberTest extends \PHPUnit\Framework\TestCase
     /** @var  CompanyNumber */
     private $element;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->element = new CompanyNumber();

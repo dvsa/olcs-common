@@ -30,6 +30,7 @@ class DisqualifyUrlTest extends MockeryTestCase
 
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         // Upstream wont fix this, so we need to suppress the deprecation - https://github.com/laminas/laminas-stdlib/issues/85
@@ -48,6 +49,7 @@ class DisqualifyUrlTest extends MockeryTestCase
         $this->sut = new DisqualifyUrl($this->urlHelper, $this->router, $this->request, $this->permissionService);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

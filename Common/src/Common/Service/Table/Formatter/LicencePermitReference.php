@@ -70,6 +70,7 @@ class LicencePermitReference implements FormatterPluginManagerInterface
      * @return     string
      * @inheritdoc
      */
+    #[\Override]
     public function format($row, $column = null)
     {
         $referenceNumberMarkup = sprintf(

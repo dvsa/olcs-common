@@ -27,6 +27,7 @@ class ConvictionsPenaltiesTest extends AbstractLvaFormServiceTestCase
     /** @var  m\MockInterface|\Laminas\Form\Form */
     private $mockedForm;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->translator = m::mock(TranslationHelperService::class);
@@ -103,6 +104,7 @@ class ConvictionsPenaltiesTest extends AbstractLvaFormServiceTestCase
         );
     }
 
+    #[\Override]
     public function testGetForm(): void
     {
         $this->checkGetFormGb();

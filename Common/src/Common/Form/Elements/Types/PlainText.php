@@ -34,6 +34,7 @@ class PlainText extends Element
      *
      * @param mixed $value value
      */
+    #[\Override]
     public function setValue($value): void
     {
         /**  #OLCS-17989 - overridden to ensure any injection cannot happen **/
@@ -51,6 +52,7 @@ class PlainText extends Element
      *
      * @return Element|ElementInterface
      */
+    #[\Override]
     public function setOptions($options)
     {
         parent::setOptions($options);

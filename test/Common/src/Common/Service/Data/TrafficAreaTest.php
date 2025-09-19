@@ -16,6 +16,7 @@ class TrafficAreaTest extends AbstractDataServiceTestCase
     /** @var TrafficArea */
     private $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

@@ -16,12 +16,14 @@ class DashboardApplicationLinkTest extends MockeryTestCase
     public $sut;
     protected $urlHelper;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->urlHelper = m::mock(UrlHelperService::class);
         $this->sut = new DashboardApplicationLink($this->urlHelper);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

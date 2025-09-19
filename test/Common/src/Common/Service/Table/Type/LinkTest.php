@@ -18,6 +18,7 @@ class LinkTest extends MockeryTestCase
 
     protected $sm;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->sm = new ServiceManager();

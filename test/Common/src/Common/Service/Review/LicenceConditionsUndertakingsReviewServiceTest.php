@@ -32,6 +32,7 @@ class LicenceConditionsUndertakingsReviewServiceTest extends MockeryTestCase
     /** @var ConditionsUndertakingsReviewService */
     protected $mockConditionsUndertakings;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->mockTranslationHelper = m::mock(TranslationHelperService::class);

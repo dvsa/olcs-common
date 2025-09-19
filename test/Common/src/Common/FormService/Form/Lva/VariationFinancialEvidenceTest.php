@@ -40,6 +40,7 @@ class VariationFinancialEvidenceTest extends MockeryTestCase
     /** @var  m\MockInterface */
     protected $translator;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);

@@ -75,6 +75,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         parent::__construct($niTextTranslationUtil, $authService);
     }
 
+    #[\Override]
     public function indexAction()
     {
         /** @var \Laminas\Http\Request $request */

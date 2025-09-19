@@ -34,6 +34,7 @@ class FinancesController extends AbstractContinuationController
     /**
      * Index page
      */
+    #[\Override]
     public function indexAction()
     {
         $continuationDetail = $this->getContinuationDetailData();

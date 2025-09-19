@@ -24,6 +24,7 @@ class CommunityLicenceStatusTest extends MockeryTestCase
 
     protected $request;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->urlHelper = m::mock(UrlHelperService::class);

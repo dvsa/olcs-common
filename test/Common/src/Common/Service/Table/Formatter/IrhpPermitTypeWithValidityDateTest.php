@@ -18,6 +18,7 @@ class IrhpPermitTypeWithValidityDateTest extends MockeryTestCase
 
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->translator = m::mock(TranslatorDelegator::class);

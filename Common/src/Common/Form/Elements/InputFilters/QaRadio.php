@@ -15,6 +15,7 @@ class QaRadio extends Radio
     /**
      * Provide default input rules for radio element.
      */
+    #[\Override]
     public function getInputSpecification(): array
     {
         return [

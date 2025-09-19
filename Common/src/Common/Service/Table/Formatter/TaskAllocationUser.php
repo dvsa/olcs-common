@@ -17,6 +17,7 @@ class TaskAllocationUser extends Name implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         $userName = parent::format($data, $column);

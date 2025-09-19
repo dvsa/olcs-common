@@ -13,6 +13,7 @@ class GenericBusinessTypeAdapterTest extends MockeryTestCase
 
     protected $container;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->container = m::mock(ContainerInterface::class);

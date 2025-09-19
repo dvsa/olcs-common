@@ -33,6 +33,7 @@ class TransactionFeeStatus implements FormatterPluginManagerInterface
      * @return     string
      * @inheritdoc
      */
+    #[\Override]
     public function format($row, $column = [])
     {
         $status = 'Applied';

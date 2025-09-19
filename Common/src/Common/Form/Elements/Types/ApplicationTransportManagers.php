@@ -44,11 +44,13 @@ class ApplicationTransportManagers extends Fieldset
         $this->add($searchButton);
     }
 
+    #[\Override]
     public function setMessages($messages): void
     {
         $this->messages = $messages;
     }
 
+    #[\Override]
     public function getMessages(?string $elementName = null): array
     {
         return $this->messages;

@@ -19,6 +19,7 @@ class NameRequired extends Name implements InputProviderInterface
     /**
      * Provide default input rules for this element.
      */
+    #[\Override]
     public function getInputSpecification(): array
     {
         $specification = parent::getInputSpecification();

@@ -35,6 +35,7 @@ class SearchTest extends MockeryTestCase
     /** @var Search */
     private $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->tableService = m::mock(TableFactory::class);

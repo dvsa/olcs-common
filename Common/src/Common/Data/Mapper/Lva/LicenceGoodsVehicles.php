@@ -22,6 +22,7 @@ class LicenceGoodsVehicles implements MapperInterface
      *
      * @psalm-return array{shareInfo: array{shareInfo: mixed}}
      */
+    #[\Override]
     public static function mapFromResult(array $data)
     {
         return [

@@ -18,6 +18,7 @@ class LanguageLinkTest extends MockeryTestCase
 
     protected $sm;
 
+    #[\Override]
     protected function setUp(): void
     {
         $languagePref = m::mock(Language::class);

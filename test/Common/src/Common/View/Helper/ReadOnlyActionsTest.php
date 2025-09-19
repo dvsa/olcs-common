@@ -24,6 +24,7 @@ class ReadOnlyActionsTest extends MockeryTestCase
 
     private $mockView;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->mockView = m::mock(RendererInterface::class)

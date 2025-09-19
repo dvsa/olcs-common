@@ -631,6 +631,7 @@ class FormRowTest extends MockeryTestCase
         return $element;
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->setUpServiceManager();
@@ -648,6 +649,7 @@ class FormRowTest extends MockeryTestCase
         return (new CommonHelper\FormElementErrorsFactory())->__invoke($serviceLocator, CommonHelper\FormElementErrors::class);
     }
 
+    #[\Override]
     protected function setUpDefaultServices(ServiceManager $serviceManager): ServiceManager
     {
         $serviceManager->setFactory(FormElementMessageFormatter::class, new FormElementMessageFormatterFactory());

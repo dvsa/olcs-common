@@ -15,6 +15,7 @@ class ApplicationLvaAdapterTest extends MockeryTestCase
 
     protected $controller;
 
+    #[\Override]
     protected function setUp(): void
     {
 

@@ -12,6 +12,7 @@ class DateFactory implements FactoryInterface
      * @param array|null $options
      *
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): Date
     {
         $viewHelperManager = $container->get('ViewHelperManager');

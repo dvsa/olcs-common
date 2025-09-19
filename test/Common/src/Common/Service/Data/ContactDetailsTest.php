@@ -15,6 +15,7 @@ class ContactDetailsTest extends AbstractListDataServiceTestCase
     /** @var ContactDetails */
     private $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

@@ -16,6 +16,7 @@ class BusinessDetails implements MapperInterface
      *
      * @return array data for the form
      */
+    #[\Override]
     public static function mapFromResult(array $data)
     {
         // Strip out all trading names properties except name

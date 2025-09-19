@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Form\View\Helper;
+namespace CommonTest\Common\Form;
 
 use Common\Test\MockeryTestCase;
 use Laminas\Form\Element\Csrf;
@@ -158,14 +158,6 @@ class FormWithCsrfTraitTest extends MockeryTestCase
 
     protected function setUpSut(): void
     {
-        $this->sut = new class extends Form implements FormWithCsrfInterface {
-            use FormWithCsrfTrait;
-
-            public function __construct($name = null)
-            {
-                parent::__construct($name);
-                $this->initialiseCsrf();
-            }
-        };
+        $this->sut = new FormWithCsrfStub();
     }
 }

@@ -13,6 +13,7 @@ class NoOfPermitsFactory implements FactoryInterface
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): NoOfPermits
     {
         return new NoOfPermits(

@@ -26,6 +26,7 @@ class VariationGoodsVehiclesTest extends MockeryTestCase
 
     protected $sm;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->authService = m::mock(AuthorizationService::class);

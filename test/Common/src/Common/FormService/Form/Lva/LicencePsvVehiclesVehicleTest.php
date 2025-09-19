@@ -19,6 +19,7 @@ class LicencePsvVehiclesVehicleTest extends MockeryTestCase
 
     protected $formService;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);

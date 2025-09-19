@@ -36,6 +36,7 @@ class IrfoOrganisation extends InternalSearchAbstract
     /**
      * @return array
      */
+    #[\Override]
     public function getSettings()
     {
         return [
@@ -50,6 +51,7 @@ class IrfoOrganisation extends InternalSearchAbstract
     /**
      * @return array
      */
+    #[\Override]
     public function getColumns()
     {
         return [

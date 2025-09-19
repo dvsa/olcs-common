@@ -12,6 +12,7 @@ class StackValueFactory implements FactoryInterface
      * @param  array|null         $options
      * @return StackValue
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $stackHelper = $container->get('Helper\Stack');

@@ -33,6 +33,7 @@ class LicenceTypeOfLicenceTest extends MockeryTestCase
 
     protected $fh;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->fsm = m::mock(FormServiceManager::class)->makePartial();

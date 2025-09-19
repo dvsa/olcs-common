@@ -28,6 +28,7 @@ class ValidityPeriod implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($row, $column = null)
     {
         $dateFormatter = $this->viewHelperManager->get('DateFormat');

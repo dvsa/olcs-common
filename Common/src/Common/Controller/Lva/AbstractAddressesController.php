@@ -45,6 +45,7 @@ abstract class AbstractAddressesController extends AbstractController
      * Process action - Index
      *
      */
+    #[\Override]
     public function indexAction()
     {
         /** @var \Laminas\Http\Request $request */

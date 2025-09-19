@@ -23,6 +23,7 @@ class VehicleLink implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         return sprintf(

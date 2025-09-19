@@ -20,6 +20,7 @@ class IrhpPermitSectorQuota implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         $quotaNumber = $data['quotaNumber'] ? Escape::html($data['quotaNumber']) : 0;

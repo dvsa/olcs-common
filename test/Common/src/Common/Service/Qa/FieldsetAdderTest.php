@@ -37,6 +37,7 @@ class FieldsetAdderTest extends MockeryTestCase
 
     private $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->fieldset = m::mock(Fieldset::class);

@@ -17,6 +17,7 @@ class TranslationLoaderFactory implements FactoryInterface
      * @param array|null         $options
      *
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): TranslationLoader
     {
         return new TranslationLoader($container->get('QueryService'));

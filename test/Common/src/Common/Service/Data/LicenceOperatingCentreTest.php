@@ -18,6 +18,7 @@ class LicenceOperatingCentreTest extends AbstractDataServiceTestCase
     /** @var LicenceDataService */
     protected $licenceDataService;
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

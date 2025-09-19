@@ -18,6 +18,7 @@ use Common\Service\Table\DataMapper\DashboardTmApplications;
 class DashboardTmApplicationsTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
 {
     public $sut;
+    #[\Override]
     protected function setUp(): void
     {
         $this->sut = new DashboardTmApplications();

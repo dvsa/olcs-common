@@ -40,6 +40,7 @@ abstract class BinaryFeatureToggleAwareControllerFactory implements FactoryInter
      * @param array|null $options
      * @return mixed
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         if ($this->featureTogglesAreEnabled($container, $this->getFeatureToggleNames())) {

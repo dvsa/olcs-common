@@ -31,6 +31,7 @@ class LanguageListener implements ListenerAggregateInterface, FactoryInterface
      */
     private $translator;
 
+    #[\Override]
     public function attach(EventManagerInterface $events, $priority = 1): void
     {
         $this->listeners[] = $events->attach(MvcEvent::EVENT_ROUTE, [$this, 'onRoute'], $priority);
@@ -62,6 +63,7 @@ class LanguageListener implements ListenerAggregateInterface, FactoryInterface
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): LanguageListener
     {
         $this->languagePref = $container->get('LanguagePreference');

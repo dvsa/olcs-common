@@ -16,6 +16,7 @@ abstract class SearchAbstractTest extends MockeryTestCase
     /** @var InternalSearchAbstract */
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->sut = new $this->class();

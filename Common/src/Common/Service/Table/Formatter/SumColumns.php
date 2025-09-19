@@ -22,6 +22,7 @@ class SumColumns implements FormatterPluginManagerInterface
      * @param  array $column
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         $total = 0;

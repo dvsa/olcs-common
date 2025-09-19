@@ -31,6 +31,7 @@ class SlaTargetDate implements FormatterPluginManagerInterface
      * @param  array $column
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         $routeMatch = $this->router->match($this->request);

@@ -21,6 +21,7 @@ class VenueAddress implements FormatterPluginManagerInterface
      * @param  array $data
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         if (!empty($data['venue'])) {

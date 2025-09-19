@@ -30,6 +30,7 @@ class EventHistoryDescriptionTest extends MockeryTestCase
 
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->urlHelper = m::mock(UrlHelperService::class);
@@ -38,6 +39,7 @@ class EventHistoryDescriptionTest extends MockeryTestCase
         $this->sut = new EventHistoryDescription($this->router, $this->request, $this->urlHelper);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

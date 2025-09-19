@@ -12,6 +12,7 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
  */
 class FormRowFactory implements FactoryInterface
 {
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): FormRow
     {
         $mainConfig = $container->get('Config');

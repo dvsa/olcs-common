@@ -37,6 +37,7 @@ class ConditionsUndertakingsController extends AbstractContinuationController
      *
      * @return ViewModel
      */
+    #[\Override]
     public function indexAction()
     {
         $data = $this->getContinuationDetailData();

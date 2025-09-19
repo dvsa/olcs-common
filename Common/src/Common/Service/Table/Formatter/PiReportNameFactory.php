@@ -16,6 +16,7 @@ class PiReportNameFactory implements FactoryInterface
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $formatterPluginManager = $container->get(FormatterPluginManager::class);

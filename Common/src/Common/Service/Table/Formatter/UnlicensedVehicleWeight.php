@@ -20,6 +20,7 @@ class UnlicensedVehicleWeight extends StackValue implements FormatterPluginManag
      * @param  array $column
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         $value = parent::format($data, $column);

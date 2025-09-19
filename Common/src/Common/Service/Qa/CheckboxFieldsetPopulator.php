@@ -21,6 +21,7 @@ class CheckboxFieldsetPopulator implements FieldsetPopulatorInterface
      *
      * @param mixed $form
      */
+    #[\Override]
     public function populate($form, Fieldset $fieldset, array $options): void
     {
         $label = $this->translateableTextHandler->translate($options['label']);

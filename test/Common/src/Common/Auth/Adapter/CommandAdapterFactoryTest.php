@@ -21,6 +21,7 @@ class CommandAdapterFactoryTest extends MockeryTestCase
      */
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->setUpServiceManager();
@@ -59,6 +60,7 @@ class CommandAdapterFactoryTest extends MockeryTestCase
         $this->sut = new CommandAdapterFactory();
     }
 
+    #[\Override]
     protected function setUpDefaultServices(ServiceManager $serviceManager): ServiceManager
     {
         $serviceManager->setService('CommandSender', m::mock(CommandSender::class));

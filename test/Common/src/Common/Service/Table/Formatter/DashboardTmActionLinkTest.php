@@ -27,6 +27,7 @@ class DashboardTmActionLinkTest extends MockeryTestCase
 
     protected $request;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->urlHelper = m::mock(UrlHelperService::class);
@@ -35,6 +36,7 @@ class DashboardTmActionLinkTest extends MockeryTestCase
         $this->sut = new DashboardTmActionLink($this->urlHelper, $this->viewHelperManager, $this->translator);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

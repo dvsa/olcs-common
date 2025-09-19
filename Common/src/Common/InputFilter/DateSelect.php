@@ -13,6 +13,7 @@ class DateSelect extends LaminasInput
     /**
      * @return mixed
      */
+    #[\Override]
     public function getRawValue()
     {
         // if all elements of the date are empty then return null

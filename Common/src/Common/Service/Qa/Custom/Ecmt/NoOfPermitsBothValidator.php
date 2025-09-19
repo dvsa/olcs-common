@@ -24,6 +24,7 @@ class NoOfPermitsBothValidator extends AbstractValidator
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function isValid($value)
     {
         $this->permitsRemaining = $this->getOption('permitsRemaining');

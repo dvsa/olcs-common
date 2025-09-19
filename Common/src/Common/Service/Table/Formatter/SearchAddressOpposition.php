@@ -22,6 +22,7 @@ class SearchAddressOpposition implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         if ($data['opposition'] === 'Yes') {

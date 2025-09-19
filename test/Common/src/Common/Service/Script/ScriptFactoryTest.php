@@ -14,6 +14,7 @@ class ScriptFactoryTest extends \PHPUnit\Framework\TestCase
     /**
      * test before hook
      */
+    #[\Override]
     protected function setUp(): void
     {
         $this->config = [

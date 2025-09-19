@@ -27,6 +27,7 @@ class FormTest extends TestCase
     /** @var \Laminas\Form\Form */
     protected $form;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->form = new \Laminas\Form\Form('test');

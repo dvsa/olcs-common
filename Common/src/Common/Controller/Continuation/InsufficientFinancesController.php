@@ -39,6 +39,7 @@ class InsufficientFinancesController extends AbstractContinuationController
      *
      * @return ViewModel
      */
+    #[\Override]
     public function indexAction()
     {
         $continuationDetail = $this->getContinuationDetailData();

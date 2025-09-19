@@ -12,6 +12,7 @@ class YesNoFactory implements FactoryInterface
      * @param  array|null         $options
      * @return YesNo
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $stackHelper = $container->get('Helper\Stack');

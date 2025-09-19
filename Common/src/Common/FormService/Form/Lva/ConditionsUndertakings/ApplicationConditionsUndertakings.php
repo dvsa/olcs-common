@@ -16,6 +16,7 @@ class ApplicationConditionsUndertakings extends AbstractConditionsUndertakings
     {
     }
 
+    #[\Override]
     protected function alterForm($form)
     {
         parent::alterForm($form);

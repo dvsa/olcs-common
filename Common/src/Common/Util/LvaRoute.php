@@ -17,6 +17,7 @@ use Laminas\Router\Http\Segment;
  */
 class LvaRoute extends Segment
 {
+    #[\Override]
     public function assemble(array $params = [], array $options = [])
     {
         if (isset($params['action']) && $params['action'] === 'index') {

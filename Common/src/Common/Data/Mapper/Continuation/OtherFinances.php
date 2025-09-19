@@ -16,6 +16,7 @@ class OtherFinances implements MapperInterface
      *
      * @return array data for the form
      */
+    #[\Override]
     public static function mapFromResult(array $data)
     {
         return [

@@ -18,6 +18,7 @@ class FormLabelFactory implements FactoryInterface
      * @param $requestedName
      * @param array|null $options
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): FormLabel
     {
         $instance = new FormLabel();

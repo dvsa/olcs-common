@@ -28,6 +28,7 @@ class FinancialHistoryTest extends MockeryTestCase
     /** @var FormServiceManager|m\Mock */
     protected $fsm;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->formHelper = m::mock(FormHelperService::class);

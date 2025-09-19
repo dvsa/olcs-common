@@ -36,6 +36,7 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
      * @param int $parentId
      * @return bool
      */
+    #[\Override]
     public function canEditRecord($data)
     {
         // prevent PMD errors
@@ -58,6 +59,7 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
      * @param int $id
      * @return array
      */
+    #[\Override]
     public function processDataForSave($data, $id)
     {
         // prevent PMD errors
@@ -77,6 +79,7 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
      *
      * @param array $data
      */
+    #[\Override]
     public function alterForm(Form $form, $data): void
     {
         $licNo = 'Unknown';

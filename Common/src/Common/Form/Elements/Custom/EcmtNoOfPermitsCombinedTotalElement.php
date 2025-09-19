@@ -16,6 +16,7 @@ class EcmtNoOfPermitsCombinedTotalElement extends Hidden implements InputProvide
      *
      * @psalm-return array{name: null|string, continue_if_empty: true, validators: list{array{name: Callback::class, options: array{callback: \Closure(mixed, array, int):bool, callbackOptions: list{mixed}, messages: array{callbackValue: 'qanda.ecmt.number-of-permits.error.total-max-exceeded'}}, break_chain_on_failure: true}, array{name: Callback::class, options: array{callback: \Closure(mixed, array):bool, messages: array{callbackValue: 'qanda.ecmt.number-of-permits.error.total-min-exceeded'}}}}}
      */
+    #[\Override]
     public function getInputSpecification(): array
     {
         return [

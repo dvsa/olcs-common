@@ -33,6 +33,7 @@ class WithdrawnDate extends LaminasValidator\AbstractValidator
         self::DATE_IN_FUTURE    => "Withdrawn date can't be in the future",
     ];
 
+    #[\Override]
     public function isValid($value, $context = null)
     {
         $this->setValue($value);

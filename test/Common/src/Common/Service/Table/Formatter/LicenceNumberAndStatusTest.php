@@ -25,12 +25,14 @@ class LicenceNumberAndStatusTest extends MockeryTestCase
 
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->urlHelper = m::mock(UrlHelperService::class);
         $this->sut = new LicenceNumberAndStatus($this->urlHelper);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

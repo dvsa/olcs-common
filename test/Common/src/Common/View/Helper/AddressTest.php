@@ -21,6 +21,7 @@ class AddressTest extends \PHPUnit\Framework\TestCase
     /**
      * Setup the view helper
      */
+    #[\Override]
     protected function setUp(): void
     {
         $this->viewHelper = new Address();

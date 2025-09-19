@@ -18,6 +18,7 @@ class OperatingCentreVariationRecordActionTest extends MockeryTestCase
     /** @var  m\MockInterface */
     protected $table;
 
+    #[\Override]
     protected function setUp(): void
     {
         $mockTranslator = m::mock(\Laminas\I18n\Translator\TranslatorInterface::class);

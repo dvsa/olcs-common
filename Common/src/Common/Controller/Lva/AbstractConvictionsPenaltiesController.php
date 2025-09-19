@@ -53,6 +53,7 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
      *
      * @return \Common\View\Model\Section|\Laminas\Http\Response
      */
+    #[\Override]
     public function indexAction()
     {
         $request = $this->getRequest();

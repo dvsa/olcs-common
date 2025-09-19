@@ -10,6 +10,7 @@ class ActionLinks extends Selector
 
     public const BUTTON_MARKUP = '<button data-prevent-double-click="true" data-module="govuk-button" type="submit" class="%s" name="%s" aria-label="%s">%s</button>';
 
+    #[\Override]
     public function render(array $data, array $column, string|null $formattedContent = null): string
     {
         $translator = $this->getTable()->getServiceLocator()->get('translator');

@@ -12,6 +12,7 @@ class SurrenderTest extends AbstractDataServiceTestCase
     /** @var Surrender */
     private $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

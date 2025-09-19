@@ -34,11 +34,13 @@ class FeeTransactionDateTest extends MockeryTestCase
 
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->sut = new FeeTransactionDate(new StackValue(new StackHelperService()), new Date());
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         m::close();

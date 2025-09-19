@@ -15,6 +15,7 @@ class HtmlDateTime extends Html
      *
      * @param mixed $value Value
      */
+    #[\Override]
     public function setValue($value): void
     {
         $this->value = empty($value)

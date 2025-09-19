@@ -27,6 +27,7 @@ class QueryServiceFactoryTest extends MockeryTestCase
      */
     protected $sut;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->setUpServiceManager();
@@ -92,6 +93,7 @@ class QueryServiceFactoryTest extends MockeryTestCase
         $this->sut = new QueryServiceFactory();
     }
 
+    #[\Override]
     protected function setUpDefaultServices(ServiceManager $serviceManager): ServiceManager
     {
         $this->config();

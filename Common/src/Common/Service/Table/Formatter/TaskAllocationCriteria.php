@@ -15,6 +15,7 @@ class TaskAllocationCriteria implements FormatterPluginManagerInterface
      * @param  array $data
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         $content = 'N/A';

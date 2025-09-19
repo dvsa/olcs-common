@@ -77,6 +77,7 @@ class TableRequiredValidator extends AbstractValidator
      * @param mixed $value
      * @param array $context
      */
+    #[\Override]
     public function isValid($value, $context = null)
     {
         if (empty($context['action']) && $context['rows'] < $this->rowsRequired) {

@@ -12,6 +12,7 @@ class IrhpPermitTypeWithValidityDateFactory implements FactoryInterface
      * @param  array|null         $options
      * @return IrhpPermitTypeWithValidityDate
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $formatterPluginManager = $container->get(FormatterPluginManager::class);

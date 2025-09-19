@@ -46,6 +46,7 @@ class LicenceHistoryLicenceValidator extends AbstractValidator
      * @param array $context
      * @return bool
      */
+    #[\Override]
     public function isValid($value, $context = [])
     {
         if ($context[$this->table]['rows'] < 1 && $value == 'Y') {

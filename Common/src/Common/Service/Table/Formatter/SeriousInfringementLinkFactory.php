@@ -12,6 +12,7 @@ class SeriousInfringementLinkFactory implements FactoryInterface
      * @param  array|null         $options
      * @return SeriousInfringementLink
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $urlHelper = $container->get('Helper\Url');

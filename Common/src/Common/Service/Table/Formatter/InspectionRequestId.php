@@ -30,6 +30,7 @@ class InspectionRequestId implements FormatterPluginManagerInterface
      * @param  array $column
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         unset($column); // parameter not used

@@ -13,6 +13,7 @@ class DateSelect extends LaminasDateSelect
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setValue($value): void
     {
         // in order to redisplay an invalid date value back to the user, we have to convert it back to an array
@@ -49,6 +50,7 @@ class DateSelect extends LaminasDateSelect
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getInputSpecification(): array
     {
         return [

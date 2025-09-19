@@ -21,6 +21,7 @@ class FeaturesEnabledTest extends MockeryTestCase
 
     protected $querySender;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->mvcEvent = m::mock(MvcEvent::class);

@@ -11,6 +11,7 @@ class SearchPeopleName implements FormatterPluginManagerInterface
      *
      * @return string
      */
+    #[\Override]
     public function format($data, $column = [])
     {
         return $data['personFullname'];

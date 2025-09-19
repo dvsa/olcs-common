@@ -16,6 +16,7 @@ use LmcRbacMvc\Service\AuthorizationService;
  */
 class VariationFinancialEvidence extends FinancialEvidence
 {
+    #[\Override]
     protected function alterForm($form): void
     {
         $this->removeFormAction($form, 'saveAndContinue');
