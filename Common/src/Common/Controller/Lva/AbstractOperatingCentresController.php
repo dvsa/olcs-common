@@ -356,7 +356,11 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
         $resultData = $this->fetchOcItemData();
 
-        $this->documents = $resultData['operatingCentre']['adDocuments'];
+        $this->documents = array_filter(
+            $resultData['operatingCentre']['adDocuments'],
+            fn($doc) => isset($doc['application']['id']) && $doc['application']['id'] === $this->getIdentifier()
+        );
+
         // need to store the operating centre ID so that uploaded documents can be attached
         $this->operatingCentreId = $resultData['operatingCentre']['id'];
 
