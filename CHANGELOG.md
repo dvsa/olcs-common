@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.1.0](https://github.com/dvsa/olcs-common/compare/v9.0.0...v9.1.0) (2025-09-25)
+
+
+### Features
+
+* filter documents by current application ([#243](https://github.com/dvsa/olcs-common/issues/243)) ([72f2229](https://github.com/dvsa/olcs-common/commit/72f2229bb61f69b6f2c297a3c4e1ed4a5db16bca))
+
 ## [9.0.0](https://github.com/dvsa/olcs-common/compare/v8.4.0...v9.0.0) (2025-09-19)
 
 
