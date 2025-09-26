@@ -30,3 +30,5 @@ phpcs.xml
 phpstan.neon
 phpunit.xml
 psalm.xml
+
+# Trigger CD - 2025-09-26-16:26
