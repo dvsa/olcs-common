@@ -355,6 +355,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $request = $this->getRequest();
 
         $resultData = $this->fetchOcItemData();
+        dd($resultData);
 
         $this->documents = array_filter(
             $resultData['operatingCentre']['adDocuments'],
