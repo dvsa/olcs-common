@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.1.1](https://github.com/dvsa/olcs-common/compare/v9.1.0...v9.1.1) (2025-09-26)
+
+
+### Bug Fixes
+
+* trigger release after operating centre document revert ([#246](https://github.com/dvsa/olcs-common/issues/246)) ([8b78ee1](https://github.com/dvsa/olcs-common/commit/8b78ee1b20e17b6de63bfed9052af1ca71704801))
+
 ## [9.1.0](https://github.com/dvsa/olcs-common/compare/v9.0.0...v9.1.0) (2025-09-25)
 
 
