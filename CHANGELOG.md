@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.1.3](https://github.com/dvsa/olcs-common/compare/v9.1.2...v9.1.3) (2025-10-07)
+
+
+### Miscellaneous Chores
+
+* vol-5649 - bumped olcs-transfer version ([#250](https://github.com/dvsa/olcs-common/issues/250)) ([64335ca](https://github.com/dvsa/olcs-common/commit/64335caf2f4a177c22e33222e046f208536e8c21))
+
 ## [9.1.2](https://github.com/dvsa/olcs-common/compare/v9.1.1...v9.1.2) (2025-10-07)
 
 
