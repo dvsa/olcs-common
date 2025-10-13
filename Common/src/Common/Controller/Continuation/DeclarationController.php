@@ -2,23 +2,17 @@
 
 namespace Common\Controller\Continuation;
 
-use Common\FeatureToggle;
-use Common\Form\Declaration;
 use Common\FormService\FormServiceManager;
 use Common\RefData;
 use Common\Service\Helper\FormHelperService;
 use Common\Service\Helper\TranslationHelperService;
 use Dvsa\Olcs\Transfer\Command\ContinuationDetail\Submit;
 use Dvsa\Olcs\Transfer\Command\GovUkAccount\GetGovUkAccountRedirect;
-use Dvsa\Olcs\Transfer\Query\FeatureToggle\IsEnabled as IsEnabledQry;
 use Dvsa\Olcs\Utils\Translation\NiTextTranslation;
 use Laminas\Http\Response;
 use Laminas\View\Model\ViewModel;
 use LmcRbacMvc\Service\AuthorizationService;
 
-/**
- * DeclarationController
- */
 class DeclarationController extends AbstractContinuationController
 {
     protected $signatures = [
@@ -70,16 +64,6 @@ class DeclarationController extends AbstractContinuationController
             if ($form->isValid()) {
                 // If using Verify to sign
                 if ($this->isButtonPressed('sign')) {
-                    $featureEnabled = $this->handleQuery(IsEnabledQry::create(['ids' => [FeatureToggle::GOVUK_ACCOUNT]]))->getResult()['isEnabled'];
-                    if (!$featureEnabled) {
-                        return $this->redirect()->toRoute(
-                            'verify/initiate-request',
-                            [
-                                'continuationDetailId' => $continuationDetail['id'],
-                            ]
-                        );
-                    }
-
                     $returnUrl = $this->url()->fromRoute(
                         'continuation/declaration',
                         ['continuationDetailId' => $continuationDetail['id']],
