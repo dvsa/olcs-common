@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.1.4](https://github.com/dvsa/olcs-common/compare/v9.1.3...v9.1.4) (2025-10-13)
+
+
+### Bug Fixes
+
+* Fix continuation declarations following removal of Verify VOL-4379 ([#253](https://github.com/dvsa/olcs-common/issues/253)) ([52642f7](https://github.com/dvsa/olcs-common/commit/52642f7c42e64f39aae2ed67f7cd00684d0d15a3))
+
 ## [9.1.3](https://github.com/dvsa/olcs-common/compare/v9.1.2...v9.1.3) (2025-10-07)
 
 
