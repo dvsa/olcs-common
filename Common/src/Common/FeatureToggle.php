@@ -19,8 +19,6 @@ class FeatureToggle
 
     public const LONGER_SEMI_TRAILERS = 'longer_semi_trailers';
 
-    public const GOVUK_ACCOUNT = 'govuk_signin';
-
     public const TOP_REPORTS_LINK = 'top_reports_link';
 
     public const MESSAGING = 'messaging';
