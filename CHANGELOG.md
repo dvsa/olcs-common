@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.2.0](https://github.com/dvsa/olcs-common/compare/v9.1.4...v9.2.0) (2025-11-04)
+
+
+### Features
+
+* add new letters system feature toggle ([#255](https://github.com/dvsa/olcs-common/issues/255)) ([8225b5c](https://github.com/dvsa/olcs-common/commit/8225b5c94cea316dfa4d7a16cabcf642fd5adf48))
+
 ## [9.1.4](https://github.com/dvsa/olcs-common/compare/v9.1.3...v9.1.4) (2025-10-13)
 
 
