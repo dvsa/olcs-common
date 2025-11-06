@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.3.0](https://github.com/dvsa/olcs-common/compare/v9.2.0...v9.3.0) (2025-11-06)
+
+
+### Features
+
+* update content relating to survey provider ([#257](https://github.com/dvsa/olcs-common/issues/257)) ([e811876](https://github.com/dvsa/olcs-common/commit/e811876083e5f69690dc5804011aa27f17680a1a))
+
 ## [9.2.0](https://github.com/dvsa/olcs-common/compare/v9.1.4...v9.2.0) (2025-11-04)
 
 
