@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.4.0](https://github.com/dvsa/olcs-common/compare/v9.3.0...v9.4.0) (2025-11-20)
+
+
+### Features
+
+* update wording within the traffic area guidance ([#259](https://github.com/dvsa/olcs-common/issues/259)) ([099c1bd](https://github.com/dvsa/olcs-common/commit/099c1bd20e70aefd2ed6a79a84d8810b027c3e19))
+
 ## [9.3.0](https://github.com/dvsa/olcs-common/compare/v9.2.0...v9.3.0) (2025-11-06)
 
 
