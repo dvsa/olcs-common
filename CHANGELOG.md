@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.5.0](https://github.com/dvsa/olcs-common/compare/v9.4.0...v9.5.0) (2025-11-24)
+
+
+### Features
+
+* update wording within convictions and penalty guidance ([#261](https://github.com/dvsa/olcs-common/issues/261)) ([3e49f6a](https://github.com/dvsa/olcs-common/commit/3e49f6a410fa044d0a1e4eb1bb3f3314d2f32e2b))
+
 ## [9.4.0](https://github.com/dvsa/olcs-common/compare/v9.3.0...v9.4.0) (2025-11-20)
 
 
