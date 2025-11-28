@@ -677,7 +677,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
         return $data;
     }
 
-    function filterDocumentsByCurrentApplication(array $documents): array
+    private function filterDocumentsByCurrentApplication(array $documents): array
     {
         if ($this->lva === 'licence') {
             return $documents;
