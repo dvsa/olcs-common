@@ -356,7 +356,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
         $resultData = $this->fetchOcItemData();
 
-        $this->documents = $resultData['operatingCentre']['adDocuments'];
+        $this->documents = $this->filterDocumentsByCurrentApplication($resultData['operatingCentre']['adDocuments']);
         // need to store the operating centre ID so that uploaded documents can be attached
         $this->operatingCentreId = $resultData['operatingCentre']['id'];
 
@@ -475,9 +475,9 @@ abstract class AbstractOperatingCentresController extends AbstractController
     {
         if ($this->documents === null) {
             if ($this->params('child_id')) {
-                $this->documents = $this->fetchOcItemData()['operatingCentre']['adDocuments'];
+                $this->documents = $this->filterDocumentsByCurrentApplication($this->fetchOcItemData()['operatingCentre']['adDocuments']);
             } else {
-                $this->documents = $this->fetchOcData()['documents'];
+                $this->documents = $this->filterDocumentsByCurrentApplication($this->fetchOcData()['documents']);
             }
         }
 
@@ -675,5 +675,19 @@ abstract class AbstractOperatingCentresController extends AbstractController
         ];
 
         return $data;
+    }
+
+    private function filterDocumentsByCurrentApplication(array $documents): array
+    {
+        if ($this->lva === 'licence') {
+            return $documents;
+        }
+
+        $currentApplicationId = $this->getIdentifier();
+
+        return array_filter(
+            $documents,
+            fn($doc) => isset($doc['application']['id']) && $doc['application']['id'] === $currentApplicationId
+        );
     }
 }
