@@ -1,5 +1,17 @@
 # Changelog
 
+## [9.6.0](https://github.com/dvsa/olcs-common/compare/v9.5.0...v9.6.0) (2025-12-02)
+
+
+### Features
+
+* filter advert documents by current application ([#264](https://github.com/dvsa/olcs-common/issues/264)) ([c6cfe1b](https://github.com/dvsa/olcs-common/commit/c6cfe1b20dff24c8fcfc8b8539c4e8f22a37abd3))
+
+
+### Bug Fixes
+
+* update codeowners ([#265](https://github.com/dvsa/olcs-common/issues/265)) ([9c411c5](https://github.com/dvsa/olcs-common/commit/9c411c5b920a6ceab5f142ddf940e04728eb312e))
+
 ## [9.5.0](https://github.com/dvsa/olcs-common/compare/v9.4.0...v9.5.0) (2025-11-24)
 
 
