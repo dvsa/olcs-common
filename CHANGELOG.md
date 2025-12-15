@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.6.1](https://github.com/dvsa/olcs-common/compare/v9.6.0...v9.6.1) (2025-12-15)
+
+
+### Bug Fixes
+
+* cast application id for comparison ([#268](https://github.com/dvsa/olcs-common/issues/268)) ([e252b14](https://github.com/dvsa/olcs-common/commit/e252b1436934739234f12445e252f7b4918b9954))
+
 ## [9.6.0](https://github.com/dvsa/olcs-common/compare/v9.5.0...v9.6.0) (2025-12-02)
 
 
