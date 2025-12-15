@@ -683,7 +683,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
             return $documents;
         }
 
-        $currentApplicationId = $this->getIdentifier();
+        $currentApplicationId = (int) $this->getIdentifier();
 
         return array_filter(
             $documents,
