@@ -17,16 +17,39 @@
     to track their website.
   </p>
 
-  <h3 class="govuk-heading-s govuk-!-margin-top-6">Capita Pay360</h3>
+  <h3 class="govuk-heading-s govuk-!-margin-top-6">GOV.UK Pay</h3>
   <p class="govuk-body">
-    Vehicles Operator Licensing payments are hosted by
-    <a class="govuk-link" rel="external noreferrer noopener" href="{{URL_PAY_360}}" target="_blank">
-      Capita Pay360 <?php echo $this->escapeHtml($this->translate('link.opens-new-window')); ?>
-    </a>. Capita uses
-    <a class="govuk-link" rel="external noreferrer noopener" href="{{URL_PAY_360_COOKIE}}" target="_blank">
-      extra cookies <?php echo $this->escapeHtml($this->translate('link.opens-new-window')); ?>
+    If you pay for a government service using a credit or debit card,
+    <a class="govuk-link" rel="external noreferrer noopener" href="{{URL_GOV_PAY}}" target="_blank">
+      GOV.UK Pay <?php echo $this->escapeHtml($this->translate('link.opens-new-window')); ?>
+    </a> uses cookies to keep your payment session secure.
+  </p>
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Name</th>
+      <th scope="col" class="govuk-table__header">Purpose</th>
+      <th scope="col" class="govuk-table__header">Expires</th>
+    </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">frontend_session_2</td>
+      <td class="govuk-table__cell">We use this to secure your payment session</td>
+      <td class="govuk-table__cell">3 hours</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">session</td>
+      <td class="govuk-table__cell">We use this to secure your payment session</td>
+      <td class="govuk-table__cell">1 hour</td>
+    </tr>
+    </tbody>
+  </table>
+  <p>
+    More information is available on
+    <a class="govuk-link" rel="external noreferrer noopener" href="{{URL_GOV_PAY_COOKIES}}" target="_blank">
+      Cookies - GOV.UK Pay. <?php echo $this->escapeHtml($this->translate('link.opens-new-window')); ?>
     </a>
-    to track your progress on their website.
   </p>
 
   <h3 class="govuk-heading-s govuk-!-margin-top-6">Qualtrics</h3>
