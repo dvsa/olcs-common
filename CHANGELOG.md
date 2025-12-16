@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.7.0](https://github.com/dvsa/olcs-common/compare/v9.6.1...v9.7.0) (2025-12-16)
+
+
+### Features
+
+* vol-6580 edited content of cookie page ([#263](https://github.com/dvsa/olcs-common/issues/263)) ([aecf89e](https://github.com/dvsa/olcs-common/commit/aecf89e48141cdf63dd4744bc36ed6b996f2d7bb))
+
 ## [9.6.1](https://github.com/dvsa/olcs-common/compare/v9.6.0...v9.6.1) (2025-12-15)
 
 
