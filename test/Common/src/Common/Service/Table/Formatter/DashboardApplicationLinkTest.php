@@ -125,9 +125,9 @@ class DashboardApplicationLinkTest extends MockeryTestCase
                 'column' => [
                     'lva' => 'application'
                 ],
-                'expectedRoute' => 'lva-application/submission-summary',
-                'expectedParams' => ['application' => 2],
-                'expect' => '<a class="govuk-link" href="lva-application/submission-summary/2">OB123/2</a>',
+                'expectedRoute' => 'fees/pay',
+                'expectedParams' => ['fee' => 2],
+                'expect' => '<a class="govuk-link" href="fees/pay/2">OB123/2</a>',
             ],
             'Withdrawn' => [
                 'data' => [
