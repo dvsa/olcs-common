@@ -28,7 +28,7 @@ class DashboardApplicationLink implements FormatterPluginManagerInterface
     #[\Override]
     public function format($data, $column = [])
     {
-        if ($data['status']['id'] === RefData::APPLICATION_STATUS_GRANTED) {
+        if ($data['status']['id'] === RefData::APPLICATION_STATUS_GRANTED && !empty($data['awaitingGrantFeeId'])) {
             $route = 'fees/pay';
             $params = ['fee' => $data['awaitingGrantFeeId']];
         } elseif ($data['status']['id'] !== RefData::APPLICATION_STATUS_NOT_SUBMITTED) {
