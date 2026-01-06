@@ -37,7 +37,6 @@ class DashboardApplicationLinkTest extends MockeryTestCase
     public function testFormat($data, $column, $expectedRoute, $expectedParams, $expected): void
     {
         $value = reset($expectedParams);
-        
         $this->urlHelper
             ->shouldReceive('fromRoute')
             ->with($expectedRoute, $expectedParams)
