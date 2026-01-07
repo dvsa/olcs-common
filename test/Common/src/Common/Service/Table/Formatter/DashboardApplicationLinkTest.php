@@ -36,10 +36,11 @@ class DashboardApplicationLinkTest extends MockeryTestCase
      */
     public function testFormat($data, $column, $expectedRoute, $expectedParams, $expected): void
     {
+        $value = reset($expectedParams);
         $this->urlHelper
             ->shouldReceive('fromRoute')
             ->with($expectedRoute, $expectedParams)
-            ->andReturn($expectedRoute . '/' . $expectedParams['application'])
+            ->andReturn($expectedRoute . '/' . $value)
             ->getMock();
 
         $this->assertEquals($expected, $this->sut->format($data, $column));
@@ -120,14 +121,15 @@ class DashboardApplicationLinkTest extends MockeryTestCase
                         'id' => RefData::APPLICATION_STATUS_GRANTED,
                     ],
                     'licNo' => 'OB123',
-                    'id' => 2
+                    'id' => 2,
+                    'awaitingGrantFeeId' => 2
                 ],
                 'column' => [
                     'lva' => 'application'
                 ],
-                'expectedRoute' => 'lva-application/submission-summary',
-                'expectedParams' => ['application' => 2],
-                'expect' => '<a class="govuk-link" href="lva-application/submission-summary/2">OB123/2</a>',
+                'expectedRoute' => 'fees/pay',
+                'expectedParams' => ['fee' => 2],
+                'expect' => '<a class="govuk-link" href="fees/pay/2">OB123/2</a>',
             ],
             'Withdrawn' => [
                 'data' => [

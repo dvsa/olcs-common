@@ -28,13 +28,18 @@ class DashboardApplicationLink implements FormatterPluginManagerInterface
     #[\Override]
     public function format($data, $column = [])
     {
-        if ($data['status']['id'] !== RefData::APPLICATION_STATUS_NOT_SUBMITTED) {
+        if ($data['status']['id'] === RefData::APPLICATION_STATUS_GRANTED && !empty($data['awaitingGrantFeeId'])) {
+            $route = 'fees/pay';
+            $params = ['fee' => $data['awaitingGrantFeeId']];
+        } elseif ($data['status']['id'] !== RefData::APPLICATION_STATUS_NOT_SUBMITTED) {
             $route = 'lva-' . $column['lva'] . '/submission-summary';
+            $params = ['application' => $data['id']];
         } else {
             $route = 'lva-' . $column['lva'];
+            $params = ['application' => $data['id']];
         }
 
-        $url = $this->urlHelper->fromRoute($route, ['application' => $data['id']]);
+        $url = $this->urlHelper->fromRoute($route, $params);
 
         return vsprintf(
             '<a class="govuk-link" href="%s">%s</a>',
