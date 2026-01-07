@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.8.0](https://github.com/dvsa/olcs-common/compare/v9.7.0...v9.8.0) (2026-01-07)
+
+
+### Features
+
+* awaiting Grant Fee application redirect to fee page vol-6780 ([#272](https://github.com/dvsa/olcs-common/issues/272)) ([3a185d5](https://github.com/dvsa/olcs-common/commit/3a185d5ec524039ea5341570e492a987b1e65979))
+
 ## [9.7.0](https://github.com/dvsa/olcs-common/compare/v9.6.1...v9.7.0) (2025-12-16)
 
 
