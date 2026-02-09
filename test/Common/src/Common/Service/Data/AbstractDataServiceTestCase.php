@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CommonTest\Common\Service\Data;
 
 use Common\Service\Cqrs\Command\CommandService;
@@ -10,11 +12,6 @@ use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder as TransferAnnotationBu
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
-/**
- * Abstract Data Service Test
- *
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
- */
 class AbstractDataServiceTestCase extends MockeryTestCase
 {
     /** @var  m\MockInterface */
@@ -31,6 +28,24 @@ class AbstractDataServiceTestCase extends MockeryTestCase
 
     /** @var  AbstractDataServiceServices */
     protected $abstractDataServiceServices;
+
+    protected const array SINGLE_EXPECTED = [
+        'val-1' => 'Value 1',
+        'val-2' => 'Value 2',
+        'val-3' => 'Value 3',
+    ];
+
+    protected const array SINGLE_EXPECTED_WITH_ID = [
+        'val-1' => 'val-1 - Value 1',
+        'val-2' => 'val-2 - Value 2',
+        'val-3' => 'val-3 - Value 3',
+    ];
+
+    protected const array SINGLE_SOURCE = [
+        ['id' => 'val-1', 'description' => 'Value 1'],
+        ['id' => 'val-2', 'description' => 'Value 2'],
+        ['id' => 'val-3', 'description' => 'Value 3'],
+    ];
 
     #[\Override]
     protected function setUp(): void
