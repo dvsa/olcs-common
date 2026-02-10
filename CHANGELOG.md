@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.9.0](https://github.com/dvsa/olcs-common/compare/v9.8.0...v9.9.0) (2026-02-10)
+
+
+### Features
+
+* added some shared variables to make internal/selfserve data service tests compatible with PHPUnit 12 (static data providers) ([#274](https://github.com/dvsa/olcs-common/issues/274)) ([c395f7a](https://github.com/dvsa/olcs-common/commit/c395f7a2f1646533506b9532dd3ce58bacaca3e9))
+
 ## [9.8.0](https://github.com/dvsa/olcs-common/compare/v9.7.0...v9.8.0) (2026-01-07)
 
 
