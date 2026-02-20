@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.10.1](https://github.com/dvsa/olcs-common/compare/v9.10.0...v9.10.1) (2026-02-20)
+
+
+### Bug Fixes
+
+* remove PHP 8.3 typed constants for PHP 8.2 compatibility ([#278](https://github.com/dvsa/olcs-common/issues/278)) ([f470b5b](https://github.com/dvsa/olcs-common/commit/f470b5bd96c9e93ac7c8bb111a0179a4515cbdcd))
+
 ## [9.10.0](https://github.com/dvsa/olcs-common/compare/v9.9.0...v9.10.0) (2026-02-20)
 
 
