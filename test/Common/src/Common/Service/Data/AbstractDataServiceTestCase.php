@@ -29,19 +29,19 @@ class AbstractDataServiceTestCase extends MockeryTestCase
     /** @var  AbstractDataServiceServices */
     protected $abstractDataServiceServices;
 
-    protected const array SINGLE_EXPECTED = [
+    protected const SINGLE_EXPECTED = [
         'val-1' => 'Value 1',
         'val-2' => 'Value 2',
         'val-3' => 'Value 3',
     ];
 
-    protected const array SINGLE_EXPECTED_WITH_ID = [
+    protected const SINGLE_EXPECTED_WITH_ID = [
         'val-1' => 'val-1 - Value 1',
         'val-2' => 'val-2 - Value 2',
         'val-3' => 'val-3 - Value 3',
     ];
 
-    protected const array SINGLE_SOURCE = [
+    protected const SINGLE_SOURCE = [
         ['id' => 'val-1', 'description' => 'Value 1'],
         ['id' => 'val-2', 'description' => 'Value 2'],
         ['id' => 'val-3', 'description' => 'Value 3'],
