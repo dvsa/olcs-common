@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.10.0](https://github.com/dvsa/olcs-common/compare/v9.9.0...v9.10.0) (2026-02-20)
+
+
+### Features
+
+* new Constants for new categories for letter appendix doc type ([#276](https://github.com/dvsa/olcs-common/issues/276)) ([7fcb8a7](https://github.com/dvsa/olcs-common/commit/7fcb8a76145a5d4544d798edebfeba2c0a019675))
+
 ## [9.9.0](https://github.com/dvsa/olcs-common/compare/v9.8.0...v9.9.0) (2026-02-10)
 
 
