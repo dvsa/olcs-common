@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.11.0](https://github.com/dvsa/olcs-common/compare/v9.10.1...v9.11.0) (2026-02-25)
+
+
+### Features
+
+* updated accessibility statement VOL-7005 ([#280](https://github.com/dvsa/olcs-common/issues/280)) ([f2f18fa](https://github.com/dvsa/olcs-common/commit/f2f18fad921f4d6c04f6b6d4855d5097954227e8))
+
 ## [9.10.1](https://github.com/dvsa/olcs-common/compare/v9.10.0...v9.10.1) (2026-02-20)
 
 
