@@ -2,7 +2,7 @@
 
 namespace CommonTest\Common\Form\View\Helper\Extended\Stub;
 
-use Common\Form\View\Helper\Extended\FormRadio;
+use Common\Form\View\Helper\FormRadio;
 use Laminas\Form\Element\MultiCheckbox;
 
 class FormRadioStub extends FormRadio

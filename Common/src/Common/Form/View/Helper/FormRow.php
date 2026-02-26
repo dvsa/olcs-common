@@ -18,7 +18,7 @@ use Common\Form\Elements\Types\ReadonlyElement;
 /**
  * @see \CommonTest\Form\View\Helper\FormRowTest
  */
-class FormRow extends \Common\Form\View\Helper\Extended\FormRow
+class FormRow extends \Laminas\Form\View\Helper\FormRow
 {
     /**
      * The form row output format.

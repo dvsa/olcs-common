@@ -7,7 +7,7 @@ namespace Common\Form\View\Helper;
 use Laminas\Form\ElementInterface;
 use Laminas\View\Renderer\PhpRenderer;
 
-class FormInputSearch extends Extended\FormCollection
+class FormInputSearch extends \Laminas\Form\View\Helper\FormCollection
 {
     #[\Override]
     public function render(ElementInterface $element): string

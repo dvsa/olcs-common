@@ -8,7 +8,7 @@ use Laminas\View\Renderer\PhpRenderer;
 /**
  * Helper to render the GDS horizontal radio button pattern
  */
-class FormRadioHorizontal extends \Common\Form\View\Helper\Extended\FormCollection
+class FormRadioHorizontal extends \Laminas\Form\View\Helper\FormCollection
 {
     /**
      * Render

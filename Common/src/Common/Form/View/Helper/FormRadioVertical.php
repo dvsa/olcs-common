@@ -11,7 +11,7 @@ use Laminas\Form\Element\MultiCheckbox;
  *
  * @see \CommonTest\Form\View\Helper\FormRadioVerticalTest
  */
-class FormRadioVertical extends \Common\Form\View\Helper\Extended\FormCollection
+class FormRadioVertical extends \Laminas\Form\View\Helper\FormCollection
 {
     /**
      * @param ElementInterface $element Element to render

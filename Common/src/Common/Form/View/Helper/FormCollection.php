@@ -29,7 +29,7 @@ use Laminas\Form\LabelAwareInterface;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
+class FormCollection extends \Laminas\Form\View\Helper\FormCollection
 {
     /**
      * Instance map to view helper

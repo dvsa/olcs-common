@@ -51,7 +51,7 @@ class ApplicationDeclarationsAndUndertakings
      * @Form\Type("\Laminas\Form\Element\Radio")
      */
     public $signatureVerifyMandate;
-    
+
     /**
      * @Form\Attributes({"value": "markup-signature-disabled-text"})
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
