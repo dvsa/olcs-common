@@ -4,7 +4,6 @@ namespace CommonTest\Form\View\Helper\Extended;
 
 use Common\Form\View\Helper\FormRow;
 use Common\View\Helper\UniqidGenerator;
-use CommonTest\Common\Form\View\Helper\Extended\Stub\FormRadioChildContentStub;
 use CommonTest\Common\Form\View\Helper\Extended\Stub\FormRadioStub;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Form\Element\MultiCheckbox;
@@ -144,7 +143,7 @@ class FormRadioTest extends MockeryTestCase
                 ],
                 'globalAttributes' => [],
                 'labelPosition' => null,
-                'expected' => '<div class="govuk-radios"><div class="govuk-radios__item"><input class="input_class govuk-radios__input" value="B" checked="1" id="generated_id"><label class="label_class govuk-label govuk-radios__label" for="generated_id">default-translated-bbb</label><div class="hint_class govuk-hint govuk-radios__hint">default-translated-hint_text</div></div></div>'
+                'expected' => '<div class="govuk-radios"><div class="govuk-radios__item"><input class="input_class govuk-radios__input" value="B" checked="checked" id="generated_id"><label class="label_class govuk-label govuk-radios__label" for="generated_id">default-translated-bbb</label><div class="hint_class govuk-hint govuk-radios__hint">default-translated-hint_text</div></div></div>'
             ],
         ];
     }

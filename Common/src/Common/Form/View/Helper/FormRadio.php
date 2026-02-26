@@ -1,32 +1,17 @@
 <?php
 
-/**
- * Here we extend the View helper to allow us to add attributes that aren't in ZF2's whitelist
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
+declare(strict_types=1);
 
-namespace Common\Form\View\Helper\Extended;
+namespace Common\Form\View\Helper;
 
 use Common\View\Helper\UniqidGenerator;
-use Laminas\Form\LabelAwareInterface;
 use Laminas\Form\Element\MultiCheckbox as MultiCheckboxElement;
+use Laminas\Form\LabelAwareInterface;
 
-/**
- * Here we extend the View helper to allow us to add attributes that aren't in ZF2's whitelist
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class FormRadio extends \Laminas\Form\View\Helper\FormRadio
 {
-    use PrepareAttributesTrait;
-
-    /** @var UniqidGenerator */
     protected $idGenerator;
 
-    /**
-     * FormRadio constructor.
-     */
     public function __construct(UniqidGenerator $idGenerator = null)
     {
         $this->idGenerator = $idGenerator ?? new UniqidGenerator();
@@ -44,7 +29,6 @@ class FormRadio extends \Laminas\Form\View\Helper\FormRadio
         $labelHelper = $this->getLabelHelper();
         $labelClose = $labelHelper->closeTag();
         $labelPosition = $this->getLabelPosition();
-        $globalLabelAttributes = [];
         $closingBracket = $this->getInlineClosingBracket();
         $radiosWrapperAttributes = $this->makeRadiosWrapperAttributes($attributes);
 
@@ -199,20 +183,11 @@ class FormRadio extends \Laminas\Form\View\Helper\FormRadio
 
     protected function addGovUkRadioStyles(array $valueOptions): array
     {
-
         $gdsAttributes = [
-            'item_wrapper_attributes' => [
-                'class' => 'govuk-radios__item',
-            ],
-            'attributes' => [
-                'class' => 'govuk-radios__input',
-            ],
-            'label_attributes' => [
-                'class' => 'govuk-label govuk-radios__label',
-            ],
-            'hint_attributes' => [
-                'class' => 'govuk-hint govuk-radios__hint',
-            ],
+            'item_wrapper_attributes' => ['class' => 'govuk-radios__item'],
+            'attributes'              => ['class' => 'govuk-radios__input'],
+            'label_attributes'        => ['class' => 'govuk-label govuk-radios__label'],
+            'hint_attributes'         => ['class' => 'govuk-hint govuk-radios__hint'],
         ];
 
         foreach ($gdsAttributes as $key => $attributes) {
@@ -239,14 +214,12 @@ class FormRadio extends \Laminas\Form\View\Helper\FormRadio
 
     protected function makeRadiosWrapperAttributes(array $attributes): array
     {
-        $radiosWrapperAttributes = [
-            'class' => 'govuk-radios'
-        ];
+        $radiosWrapperAttributes = ['class' => 'govuk-radios'];
 
         if (isset($attributes['radios_wrapper_attributes'])) {
             foreach ($attributes['radios_wrapper_attributes'] as $key => $value) {
                 if (isset($radiosWrapperAttributes[$key])) {
-                    $radiosWrapperAttributes[$key] = $radiosWrapperAttributes[$key] . ' ' . $value;
+                    $radiosWrapperAttributes[$key] .= ' ' . $value;
                 } else {
                     $radiosWrapperAttributes[$key] = $value;
                 }

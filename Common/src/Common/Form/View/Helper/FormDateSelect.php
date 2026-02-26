@@ -19,7 +19,7 @@ use Laminas\Form\View\Helper\FormMonthSelect as FormMonthSelectHelper;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormDateSelect extends \Common\Form\View\Helper\Extended\FormDateSelect
+class FormDateSelect extends LaminasFormDateSelect
 {
     private $inputHelper;
 

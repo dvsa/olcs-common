@@ -21,7 +21,7 @@ use Laminas\Form\View\Helper\FormDateSelect as FormDateSelectHelper;
  *
  * @author Ian Lindsay <ian@hemera-business-services.co.uk>
  */
-class FormDateTimeSelect extends \Common\Form\View\Helper\Extended\FormDateTimeSelect
+class FormDateTimeSelect extends LaminasFormDateTimeSelect
 {
     private $inputHelper;
 

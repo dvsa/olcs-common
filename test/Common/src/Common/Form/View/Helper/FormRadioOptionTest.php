@@ -2,7 +2,7 @@
 
 namespace CommonTest\Form\View\Helper;
 
-use Common\Form\View\Helper\Extended\FormLabel;
+use Laminas\Form\View\Helper\FormLabel;
 use Common\Form\View\Helper\FormRadioOption;
 use Common\View\Helper\UniqidGenerator;
 use Laminas\View\HelperPluginManager;

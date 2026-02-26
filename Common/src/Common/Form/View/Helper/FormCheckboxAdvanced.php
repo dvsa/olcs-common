@@ -8,7 +8,7 @@ use Laminas\View\Renderer\PhpRenderer;
 /**
  * Helper to render the advanced checkbox control for continuation
  */
-class FormCheckboxAdvanced extends \Common\Form\View\Helper\Extended\FormCollection
+class FormCheckboxAdvanced extends \Laminas\Form\View\Helper\FormCollection
 {
     /**
      * Render

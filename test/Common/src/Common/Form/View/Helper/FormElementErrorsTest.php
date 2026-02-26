@@ -6,8 +6,8 @@ namespace CommonTest\Form\View\Helper;
 
 use Common\Form\Elements\Validators\Messages\FormElementMessageFormatter;
 use Common\Form\Elements\Validators\Messages\FormElementMessageFormatterFactory;
-use Common\Form\View\Helper\Extended\FormLabel;
-use Common\Form\View\Helper\Extended\FormLabelFactory;
+use Common\Form\View\Helper\FormLabelFactory;
+use Laminas\Form\View\Helper\FormLabel;
 use Common\Form\View\Helper\FormElementErrors;
 use Common\Form\View\Helper\FormElementErrorsFactory;
 use Common\Test\MockeryTestCase;
@@ -123,7 +123,7 @@ class FormElementErrorsTest extends MockeryTestCase
 
     protected function setUpFormLabel(ContainerInterface $container): FormLabel
     {
-        return (new FormLabelFactory())->__invoke($container, FormLabel::class);
+        return (new FormLabelFactory())->__invoke($container, \Laminas\Form\View\Helper\FormLabel::class);
     }
 
     #[\Override]
@@ -131,7 +131,7 @@ class FormElementErrorsTest extends MockeryTestCase
     {
         $serviceManager->setService(TranslatorInterface::class, $this->setUpTranslator());
         $serviceManager->setService(HTMLPurifier::class, new HTMLPurifier());
-        $serviceManager->setFactory(FormLabel::class, new FormLabelFactory());
+        $serviceManager->setFactory(\Laminas\Form\View\Helper\FormLabel::class, new FormLabelFactory());
         $serviceManager->setFactory(FormElementMessageFormatter::class, new FormElementMessageFormatterFactory());
         $serviceManager->setService(static::VALIDATOR_MANAGER, m::mock(ValidatorPluginManager::class));
         return $serviceManager;
