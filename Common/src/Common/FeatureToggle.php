@@ -28,4 +28,6 @@ class FeatureToggle
     public const TRANSPORT_CONSULTANT_ROLE = 'transport_consultant_role';
 
     public const LETTERS_DATABASE_DRIVEN = 'letters_database_driven';
+
+    public const INTERNAL_WEBDAV = 'internal_webdav';
 }
