@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.12.0](https://github.com/dvsa/olcs-common/compare/v9.11.0...v9.12.0) (2026-03-01)
+
+
+### Features
+
+* new Constant for internal webdav ([#282](https://github.com/dvsa/olcs-common/issues/282)) ([ac36be1](https://github.com/dvsa/olcs-common/commit/ac36be10a705c04ef798a5c9e737c2f744737bdf))
+
 ## [9.11.0](https://github.com/dvsa/olcs-common/compare/v9.10.1...v9.11.0) (2026-02-25)
 
 
