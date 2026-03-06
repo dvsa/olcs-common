@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.13.0](https://github.com/dvsa/olcs-common/compare/v9.12.0...v9.13.0) (2026-03-06)
+
+
+### Features
+
+* edited review declaration for gv common ([#284](https://github.com/dvsa/olcs-common/issues/284)) ([c7ce302](https://github.com/dvsa/olcs-common/commit/c7ce30280c8fe8e93a6bafd99627f5ee531c3624))
+
 ## [9.12.0](https://github.com/dvsa/olcs-common/compare/v9.11.0...v9.12.0) (2026-03-01)
 
 
