@@ -7,7 +7,6 @@ use Common\Service\Cqrs\RecoverHttpClientExceptionTrait;
 use Dvsa\Olcs\Transfer\Query\Cache\ById;
 use Dvsa\Olcs\Transfer\Query\CacheableLongTermQueryInterface;
 use Dvsa\Olcs\Transfer\Query\CacheableMediumTermQueryInterface;
-use Dvsa\Olcs\Transfer\Query\CustomCacheableInterface;
 use Dvsa\Olcs\Transfer\Query\QueryContainerInterface;
 use Dvsa\Olcs\Transfer\Query\QueryInterface;
 use Dvsa\Olcs\Transfer\Service\CacheEncryption as CacheEncryptionService;
@@ -119,7 +118,6 @@ class CachingQueryService implements QueryServiceInterface, \Laminas\Log\LoggerA
     /**
      * Feed a DTO through the annotation builder and then send the query
      *
-     *
      * @return \Common\Service\Cqrs\Response
      */
     public function sendFromDto(QueryInterface $dto)
@@ -130,7 +128,6 @@ class CachingQueryService implements QueryServiceInterface, \Laminas\Log\LoggerA
 
     /**
      * Retrieve data that is not found in the usual CQRS cache
-     *
      *
      * @return mixed|null
      * @throws \Exception
@@ -163,7 +160,6 @@ class CachingQueryService implements QueryServiceInterface, \Laminas\Log\LoggerA
 
     /**
      * Retrieve data that is not found in the usual CQRS cache
-     *
      *
      * @return mixed|null
      * @throws \Exception
@@ -199,8 +195,6 @@ class CachingQueryService implements QueryServiceInterface, \Laminas\Log\LoggerA
 
     /**
      * Check if the local cache has the item
-     *
-     *
      */
     private function localCacheHasItem(string $cacheIdentifier): bool
     {
@@ -209,7 +203,6 @@ class CachingQueryService implements QueryServiceInterface, \Laminas\Log\LoggerA
 
     /**
      * Retrieve a record from the local cache
-     *
      *
      * @return mixed
      */
@@ -221,8 +214,6 @@ class CachingQueryService implements QueryServiceInterface, \Laminas\Log\LoggerA
 
     /**
      * Retrieve a record from the local cache
-     *
-     *
      */
     private function storeLocalCache(string $cacheIdentifier, string $dtoClassName, $result): void
     {
@@ -239,7 +230,7 @@ class CachingQueryService implements QueryServiceInterface, \Laminas\Log\LoggerA
      */
     private function handlePersistentCache(QueryContainerInterface $query)
     {
-        $cacheIdentifier = $query->getCacheIdentifier();
+        $cacheIdentifier = CacheEncryptionService::CQRS_IDENTIFIER . $query->getCacheIdentifier();
         $dtoClassName = $query->getDtoClassName();
 
         //check the local cache first
@@ -286,7 +277,6 @@ class CachingQueryService implements QueryServiceInterface, \Laminas\Log\LoggerA
 
     /**
      * Get the cache ttl depending on the query type
-     *
      *
      * @throws CacheTtlException
      */
