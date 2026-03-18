@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.14.0](https://github.com/dvsa/olcs-common/compare/v9.13.0...v9.14.0) (2026-03-18)
+
+
+### Features
+
+* vol 6119 remove post references from continuation journey wording ([#286](https://github.com/dvsa/olcs-common/issues/286)) ([817dddf](https://github.com/dvsa/olcs-common/commit/817dddf15712b2d1e94040977ae766ed42dec4e1))
+
 ## [9.13.0](https://github.com/dvsa/olcs-common/compare/v9.12.0...v9.13.0) (2026-03-06)
 
 
