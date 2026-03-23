@@ -37,6 +37,22 @@ class VariationDeclarationsAndUndertakings
     public $declarationConfirmation;
 
     /**
+     * @Form\Type("Radio")
+     * @Form\Options({
+     *      "label": "variation.review-notransportmanager.confirm-text",
+     *      "value_options":{
+     *          "Y":"Yes",
+     *          "N":"N/A",
+     *      },
+     *      "label_attributes": {
+     *         "class": "form-control form-control--checkbox form-control--advanced",
+     *         "id": "label-noTmConfirmation"
+     *     }
+     * })
+     */
+    public $noTmConfirmation;
+
+    /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
