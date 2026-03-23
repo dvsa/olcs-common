@@ -1,5 +1,13 @@
 # Changelog
 
+## [9.14.0](https://github.com/dvsa/olcs-common/compare/v9.13.0...v9.14.0) (2026-03-23)
+
+
+### Features
+
+* added new field to varaition application ([#288](https://github.com/dvsa/olcs-common/issues/288)) ([3a20213](https://github.com/dvsa/olcs-common/commit/3a202138f88ceab198eafb8bd856aea72e40ba54))
+* vol 6119 remove post references from continuation journey wording ([#286](https://github.com/dvsa/olcs-common/issues/286)) ([817dddf](https://github.com/dvsa/olcs-common/commit/817dddf15712b2d1e94040977ae766ed42dec4e1))
+
 ## [9.13.0](https://github.com/dvsa/olcs-common/compare/v9.12.0...v9.13.0) (2026-03-06)
 
 
