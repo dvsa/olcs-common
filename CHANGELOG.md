@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.15.0](https://github.com/dvsa/olcs-common/compare/v9.14.0...v9.15.0) (2026-04-28)
+
+
+### Features
+
+* Mandate GOV One login for Licence application and fallback to Print retun and sign ([#289](https://github.com/dvsa/olcs-common/issues/289)) ([c3355b1](https://github.com/dvsa/olcs-common/commit/c3355b194ebf9052a910fb8f8515145b3e0a806a))
+
 ## [9.14.0](https://github.com/dvsa/olcs-common/compare/v9.13.0...v9.14.0) (2026-03-23)
 
 
