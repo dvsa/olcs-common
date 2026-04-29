@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.15.1](https://github.com/dvsa/olcs-common/compare/v9.15.0...v9.15.1) (2026-04-29)
+
+
+### Miscellaneous Chores
+
+* vol 6349 secrets scan ([#291](https://github.com/dvsa/olcs-common/issues/291)) ([a1323b4](https://github.com/dvsa/olcs-common/commit/a1323b49181c5bfab86f9a39ff556e10423f119b))
+
 ## [9.15.0](https://github.com/dvsa/olcs-common/compare/v9.14.0...v9.15.0) (2026-04-28)
 
 
