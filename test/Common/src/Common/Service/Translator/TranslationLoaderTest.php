@@ -108,10 +108,6 @@ class TranslationLoaderTest extends MockeryTestCase
 
     public static function setupLogger(): void
     {
-        $logWriter = new \Laminas\Log\Writer\Mock();
-        $logger = new \Laminas\Log\Logger();
-        $logger->addWriter($logWriter);
-
-        Logger::setLogger($logger);
+        Logger::setLogger(new \Psr\Log\NullLogger());
     }
 }
