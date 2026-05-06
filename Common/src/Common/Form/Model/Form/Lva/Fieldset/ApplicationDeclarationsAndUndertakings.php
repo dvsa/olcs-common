@@ -51,24 +51,7 @@ class ApplicationDeclarationsAndUndertakings
      * @Form\Type("\Laminas\Form\Element\Radio")
      */
     public $signatureVerifyMandate;
-
-    /**
-     * @Form\Attributes({"id":"","placeholder":""})
-     * @Form\Options({
-     *     "label": "application.signature.options.label",
-     *     "label_attributes": {
-     *         "class":"form-control form-control--radio form-control--advanced"
-     *     },
-     *     "value_options": {"N": "application.signature.options.sign"},
-     *     "label_options": {
-     *         "disable_html_escape": "true"
-     *     }
-     * })
-     * @Form\Type("\Laminas\Form\Element\Radio")
-     */
-    public $printSignReturnFallBack;
-
-
+    
     /**
      * @Form\Attributes({"value": "markup-signature-disabled-text"})
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
