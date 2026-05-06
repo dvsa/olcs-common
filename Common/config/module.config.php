@@ -160,7 +160,6 @@ return [
             'Cache' => \Laminas\Cache\Storage\StorageInterface::class,
             'DataServiceManager' => \Common\Service\Data\PluginManager::class,
             'translator' => 'MvcTranslator',
-            'Laminas\Log' => 'Logger',
             'TableBuilder' => \Common\Service\Table\TableBuilderFactory::class,
             'NavigationFactory' => \Common\Service\NavigationFactory::class,
             'QueryService' => \Common\Service\Cqrs\Query\CachingQueryService::class,
