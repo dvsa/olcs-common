@@ -1,5 +1,18 @@
 # Changelog
 
+## [9.16.0](https://github.com/dvsa/olcs-common/compare/v9.15.0...v9.16.0) (2026-05-06)
+
+
+### Features
+
+* in fallback business wants Govlogin along with print sign and return option ([#294](https://github.com/dvsa/olcs-common/issues/294)) ([2003d26](https://github.com/dvsa/olcs-common/commit/2003d26c909e6ca12ccd2b120488e9d65f997915))
+* swapped old-logging for laminas-log to monolog VOL-6099 ([#293](https://github.com/dvsa/olcs-common/issues/293)) ([eb42cf8](https://github.com/dvsa/olcs-common/commit/eb42cf83e790b54fbed11a40208fe959e949412e))
+
+
+### Miscellaneous Chores
+
+* vol 6349 secrets scan ([#291](https://github.com/dvsa/olcs-common/issues/291)) ([a1323b4](https://github.com/dvsa/olcs-common/commit/a1323b49181c5bfab86f9a39ff556e10423f119b))
+
 ## [9.15.0](https://github.com/dvsa/olcs-common/compare/v9.14.0...v9.15.0) (2026-04-28)
 
 
