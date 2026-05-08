@@ -17,9 +17,9 @@ use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder;
  * Class CachingQueryService
  * @package Common\Service\Cqrs\Query
  */
-class CachingQueryService implements QueryServiceInterface, \Psr\Log\LoggerAwareInterface
+class CachingQueryService implements QueryServiceInterface, \Laminas\Log\LoggerAwareInterface
 {
-    use \Psr\Log\LoggerAwareTrait;
+    use \Laminas\Log\LoggerAwareTrait;
     use RecoverHttpClientExceptionTrait;
 
     public const BACKEND_FAIL_MSG = 'Backend DB failure HTTP code: %s';
@@ -310,8 +310,8 @@ class CachingQueryService implements QueryServiceInterface, \Psr\Log\LoggerAware
      */
     private function logMessage($message): void
     {
-        if ($this->logger) {
-            $this->logger->debug($message);
+        if ($this->getLogger()) {
+            $this->getLogger()->debug($message);
         }
     }
 
@@ -322,8 +322,8 @@ class CachingQueryService implements QueryServiceInterface, \Psr\Log\LoggerAware
      */
     private function logError(string $error): void
     {
-        if ($this->logger) {
-            $this->logger->error($error);
+        if ($this->getLogger()) {
+            $this->getLogger()->err($error);
         }
     }
 }
