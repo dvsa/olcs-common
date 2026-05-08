@@ -21,7 +21,8 @@ class RequestFactory implements FactoryInterface
         $contentType = new ContentType();
         $contentType->setMediaType('application/json');
 
-        $identifier = $container->get(\Olcs\Logging\Log\Processor\RequestId::class)->getIdentifier();
+        $identifier = $container->get('LogProcessorManager')->get(\Olcs\Logging\Log\Processor\RequestId::class)
+            ->getIdentifier();
         $correlationHeader = new \Laminas\Http\Header\GenericHeader('X-Correlation-Id', $identifier);
 
         $headers = new Headers();

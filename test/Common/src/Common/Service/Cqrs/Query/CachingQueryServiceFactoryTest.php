@@ -26,7 +26,7 @@ class CachingQueryServiceFactoryTest extends MockeryTestCase
 
         $mockSl = m::mock(ContainerInterface::class);
         $mockSl->shouldReceive('get')->with('Config')->andReturn($config);
-        $mockSl->shouldReceive('get')->with('Logger')->andReturn(m::mock(\Psr\Log\LoggerInterface::class));
+        $mockSl->shouldReceive('get')->with('Logger')->andReturn(m::mock(\Laminas\Log\LoggerInterface::class));
         $mockSl->shouldReceive('get')->with('TransferAnnotationBuilder')->andReturn(m::mock(AnnotationBuilder::class));
         $mockSl->shouldReceive('get')->with(QueryService::class)->andReturn(m::mock(QueryService::class));
         $mockSl->shouldReceive('get')->with(CacheEncryption::class)->andReturn(m::mock(CacheEncryption::class));
