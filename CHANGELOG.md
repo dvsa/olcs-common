@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.16.1](https://github.com/dvsa/olcs-common/compare/v9.16.0...v9.16.1) (2026-05-08)
+
+
+### Miscellaneous Chores
+
+* trigger ci ([#296](https://github.com/dvsa/olcs-common/issues/296)) ([f7426b9](https://github.com/dvsa/olcs-common/commit/f7426b9bf06ce19aa38dc219ab8b42793f58d01c))
+
 ## [9.16.0](https://github.com/dvsa/olcs-common/compare/v9.15.0...v9.16.0) (2026-05-06)
 
 
