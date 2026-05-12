@@ -6,7 +6,6 @@ use Common\Exception\ResourceNotFoundException;
 use Common\Preference\LanguageListener;
 use Common\Service\Cqrs\Exception\AccessDeniedException;
 use Common\Service\Cqrs\Exception\NotFoundException;
-use Dvsa\Olcs\Utils\Translation\MissingTranslationProcessor;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Stdlib\RequestInterface;
 use Olcs\Logging\Log\Logger;
@@ -244,16 +243,13 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
         $translator = $sm->get('translator');
         $translator->setCache($cache);
 
+        // MissingTranslationProcessor is attached to the translator's own event
+        // manager by olcs-utils' MissingTranslationDelegatorFactory when the
+        // translator service is resolved above.
+
         /** @var LanguageListener $languagePrefListener */
         $languagePrefListener = $sm->get('LanguageListener');
         $languagePrefListener->attach($eventManager, 1);
-
-        /** @var  MissingTranslationProcessor $missingTranslationProcessor */
-        $missingTranslationProcessor = $sm->get('Utils\MissingTranslationProcessor');
-        $missingTranslationProcessor->attach($eventManager);
-
-        $translator->enableEventManager();
-        $translator->setEventManager($eventManager);
     }
 
     /**
