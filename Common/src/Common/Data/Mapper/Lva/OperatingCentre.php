@@ -202,6 +202,7 @@ class OperatingCentre implements MapperInterface
                 foreach ($message as $k => $v) {
                     if ($k === 'ERR_OC_PC_TA_GB') {
                         $message[$k] = $translator->translateReplace($k, [$taGuidesUrl]);
+                        $form->get('form-actions')->setOption('shouldEscapeMessages', false);
                         self::setConfirmation($form, $translator, $isExternal, $k);
                     } elseif (in_array($k, OperatingCentres::API_ERR_KEYS)) {
                         $message[$k] = $translator->translateReplace($k . '_' . strtoupper($location), [$v]);
