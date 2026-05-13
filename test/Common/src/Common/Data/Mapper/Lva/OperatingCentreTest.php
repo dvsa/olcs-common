@@ -240,7 +240,7 @@ class OperatingCentreTest extends MockeryTestCase
             'cake' => 'bar'
         ];
 
-        $formActions = m::mock();
+        $formActions = m::mock(\Laminas\Form\ElementInterface::class);
         $formActions->shouldReceive('setOption')->once()->with('shouldEscapeMessages', false);
         $form->shouldReceive('get')->once()->with('form-actions')->andReturn($formActions);
 
@@ -335,12 +335,12 @@ class OperatingCentreTest extends MockeryTestCase
         if ($location === OperatingCentre::LOC_INTERNAL) {
             $mockTranslatorService->shouldReceive('translate')->with('ERR_OC_PC_TA_GB-confirm')->once();
             $mockTranslatorService->shouldReceive('translate')->with('ERR_OC_PC_TA_GB-internalwarning')->once();
-            $mockFormActions = m::mock();
+            $mockFormActions = m::mock(\Laminas\Form\ElementInterface::class);
             $mockFormActions->shouldReceive('setOption')->once()->with('shouldEscapeMessages', false);
             $mockFormActions->shouldReceive('add')->once();
             $form->shouldReceive('get')->with('form-actions')->twice()->andReturn($mockFormActions);
         } else {
-            $mockFormActions = m::mock();
+            $mockFormActions = m::mock(\Laminas\Form\ElementInterface::class);
             $mockFormActions->shouldReceive('setOption')->once()->with('shouldEscapeMessages', false);
             $form->shouldReceive('get')->once()->with('form-actions')->andReturn($mockFormActions);
         }
