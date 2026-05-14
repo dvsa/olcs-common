@@ -114,9 +114,7 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
 
         $this->setLoggerUser($sm);
 
-        $identifier = $sm->get('LogProcessorManager')
-            ->get(\Olcs\Logging\Log\Processor\RequestId::class)
-            ->getIdentifier();
+        $identifier = $sm->get(\Olcs\Logging\Log\Processor\RequestId::class)->getIdentifier();
 
         $this->onFatalError($identifier);
 
@@ -305,7 +303,7 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
     private function setLoggerUser(ServiceManager $serviceManager): void
     {
         $authService = $serviceManager->get(\LmcRbacMvc\Service\AuthorizationService::class);
-        $serviceManager->get('LogProcessorManager')->get(\Olcs\Logging\Log\Processor\UserId::class)
+        $serviceManager->get(\Olcs\Logging\Log\Processor\UserId::class)
             ->setUserId($authService->getIdentity()->getUsername());
     }
 
