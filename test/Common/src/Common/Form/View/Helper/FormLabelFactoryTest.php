@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace CommonTest\Form\View\Helper;
 
-use Common\Form\View\Helper\Extended\FormLabel;
-use Common\Form\View\Helper\Extended\FormLabelFactory;
+use Common\Form\View\Helper\FormLabelFactory;
+use Laminas\Form\View\Helper\FormLabel;
 use Common\Form\View\Helper\FormErrors;
 use Common\Test\MockeryTestCase;
 use Common\Test\MocksServicesTrait;
@@ -25,7 +25,7 @@ class FormLabelFactoryTest extends MockeryTestCase
         $sut = $this->setUpSut();
 
         // Assert
-        $this->assertIsCallable(static fn(\Psr\Container\ContainerInterface $container, string $requestedName, ?array $options = null): \Common\Form\View\Helper\Extended\FormLabel => $sut->__invoke($container, $requestedName, $options));
+        $this->assertIsCallable(static fn(\Psr\Container\ContainerInterface $container, string $requestedName, ?array $options = null): \Laminas\Form\View\Helper\FormLabel => $sut->__invoke($container, $requestedName, $options));
     }
 
     /**

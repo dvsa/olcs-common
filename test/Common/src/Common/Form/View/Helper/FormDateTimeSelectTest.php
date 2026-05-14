@@ -52,7 +52,7 @@ class FormDateTimeSelectTest extends MockeryTestCase
     public function testRender(): void
     {
         $element = new DateTimeSelect('date');
-        $element->setOption('pattern', "d MMMM y 'at' HH:mm:ss");
+        $element->setOption('pattern', "d MMMM y 'time' HH:mm:ss");
 
         $markup = $this->sut->render($element);
 
@@ -67,7 +67,7 @@ class FormDateTimeSelectTest extends MockeryTestCase
             . '<label for="_year">translated-date-Year</label>'
             . '<input type="select" name="year" id="_year" maxlength="4" value="">'
         . '</div>'
-        . ' at <select name="hour" id="_hour">'
+        . ' time <select name="hour" id="_hour">'
             . '<option value="00">00</option>'
             . '<option value="01">01</option>'
             . '<option value="02">02</option>'
@@ -106,7 +106,7 @@ class FormDateTimeSelectTest extends MockeryTestCase
     public function testRenderWithAllMinutes(): void
     {
         $element = new DateTimeSelect('date');
-        $element->setOption('pattern', "d MMMM y 'at' HH:mm:ss");
+        $element->setOption('pattern', "d MMMM y 'time' HH:mm:ss");
         $element->setOption('display_every_minute', true);
 
         $markup = $this->sut->render($element);
@@ -122,7 +122,7 @@ class FormDateTimeSelectTest extends MockeryTestCase
             . '<label for="_year">translated-date-Year</label>'
             . '<input type="select" name="year" id="_year" maxlength="4" value="">'
             . '</div>'
-            . ' at <select name="hour" id="_hour">'
+            . ' time <select name="hour" id="_hour">'
             . '<option value="00">00</option>'
             . '<option value="01">01</option>'
             . '<option value="02">02</option>'
@@ -165,7 +165,7 @@ class FormDateTimeSelectTest extends MockeryTestCase
         $element = new DateTimeSelect('date');
         $element->setShouldCreateEmptyOption(true);
         $element->setShouldShowSeconds(true);
-        $element->setOption('pattern', "d MMMM y 'at' HH:mm:ss");
+        $element->setOption('pattern', "d MMMM y 'time' HH:mm:ss");
 
         $markup = $this->sut->render($element);
 
@@ -180,7 +180,7 @@ class FormDateTimeSelectTest extends MockeryTestCase
             . '<label for="_year">translated-date-Year</label>'
             . '<input type="select" name="year" id="_year" maxlength="4" value="">'
             . '</div>'
-            . ' at <select name="hour" id="_hour">'
+            . ' time <select name="hour" id="_hour">'
             . '<option value=""></option>'
             . '<option value="00">00</option>'
             . '<option value="01">01</option>'

@@ -2,7 +2,7 @@
 
 namespace Common\Form\View\Helper;
 
-use Common\Form\View\Helper\Extended\FormRadio;
+use Common\Form\View\Helper\FormRadio;
 use Laminas\Form\ElementInterface;
 
 /**

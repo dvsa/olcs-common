@@ -218,6 +218,9 @@ trait DynamicTrait
 
     /**
      * Returns the value options for this select, fetching from the refdata service if requried
+     *
+     * @psalm-suppress MissingImmutableAnnotation Laminas marks the parent method @psalm-external-mutation-free,
+     *   but this override caches into $valueOptions, so cannot honour that contract.
      */
     public function getValueOptions(): array
     {
