@@ -1,5 +1,18 @@
 # Changelog
 
+## [9.17.0](https://github.com/dvsa/olcs-common/compare/v9.16.1...v9.17.0) (2026-05-14)
+
+
+### Features
+
+* remove unecessary VOL code, fall back to Laminas, fix static analysis VOL-6800 ([#300](https://github.com/dvsa/olcs-common/issues/300)) ([487bc1a](https://github.com/dvsa/olcs-common/commit/487bc1ac492ec8af5bb79e140f99ffe87284d799))
+* swapped old-logging for laminas-log to monolog VOL-6099 ([#293](https://github.com/dvsa/olcs-common/issues/293)) ([#298](https://github.com/dvsa/olcs-common/issues/298)) ([9f069d5](https://github.com/dvsa/olcs-common/commit/9f069d52f305c9f98bebe421395735e57eda486d))
+
+
+### Bug Fixes
+
+* vol 5399 guidance error render bug ([#299](https://github.com/dvsa/olcs-common/issues/299)) ([eda6734](https://github.com/dvsa/olcs-common/commit/eda67346a5c87180f989cd02220032f40d5c68d7))
+
 ## [9.16.1](https://github.com/dvsa/olcs-common/compare/v9.16.0...v9.16.1) (2026-05-08)
 
 
