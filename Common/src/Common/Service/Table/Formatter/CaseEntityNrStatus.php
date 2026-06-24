@@ -63,6 +63,9 @@ class CaseEntityNrStatus implements FormatterPluginManagerInterface
 
         //  application
         $app = $data['application'];
+        if (empty($app)) {
+            return sprintf(self::TEMPLATE_LIC, $licLink, $licStatus);
+        }
         $appId = $app['id'];
 
         $appLink = sprintf(
