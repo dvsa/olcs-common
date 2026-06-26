@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.22.1](https://github.com/dvsa/olcs-common/compare/v9.22.0...v9.22.1) (2026-06-26)
+
+
+### Bug Fixes
+
+* vol 5401 schedule 41 licence validation bug ([#319](https://github.com/dvsa/olcs-common/issues/319)) ([2f754cb](https://github.com/dvsa/olcs-common/commit/2f754cb2fa3a25210309fa58100c6005a0035863))
+
 ## [9.22.0](https://github.com/dvsa/olcs-common/compare/v9.21.0...v9.22.0) (2026-06-08)
 
 
