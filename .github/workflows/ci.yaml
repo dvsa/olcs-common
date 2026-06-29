@@ -32,6 +32,6 @@ jobs:
       fail-fast: false
 
   secrets:
-    uses: dvsa/.github/.github/workflows/secrets-scan.yaml@v5.0.11
+    uses: dvsa/.github/.github/workflows/secrets-scan.yaml@v5.2.0
     with:
       scan-history: ${{ github.event_name == 'schedule' }}
